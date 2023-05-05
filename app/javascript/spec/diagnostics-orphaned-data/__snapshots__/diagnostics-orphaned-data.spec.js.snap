@@ -1,0 +1,1895 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DiagnosticsOrphanedData component should render a DiagnosticsOrphanedData component 1`] = `
+<DiagnosticsOrphanedData
+  initialData={
+    Object {
+      "headers": Array [
+        Object {
+          "header": "Username",
+          "key": "username",
+        },
+        Object {
+          "header": "Count",
+          "key": "count",
+        },
+        Object {
+          "header": "Actions",
+          "key": "actions",
+        },
+      ],
+      "pageTitle": "Orphaned Data",
+      "rows": Array [
+        Object {
+          "cells": Array [
+            Object {
+              "text": "username",
+            },
+            Object {
+              "text": "count",
+            },
+            Object {
+              "alt": "Delete this data",
+              "className": "delete_data",
+              "disabled": false,
+              "is_button": "true",
+              "kind": "danger",
+              "onclick": "delete_orphaned_data_link",
+              "text": "Delete",
+              "title": "Data cannot be deleted",
+            },
+          ],
+          "id": 100,
+        },
+        Object {
+          "cells": Array [
+            Object {
+              "text": "username",
+            },
+            Object {
+              "text": "count",
+            },
+            Object {
+              "alt": "Delete this data",
+              "className": "delete_data",
+              "disabled": true,
+              "is_button": "true",
+              "kind": "danger",
+              "onclick": "delete_orphaned_data_link",
+              "text": "Delete",
+              "title": "Click to delete Orphaned Records for this user",
+            },
+          ],
+          "id": 101,
+        },
+        Object {
+          "cells": Array [
+            Object {
+              "text": "username",
+            },
+            Object {
+              "text": "count",
+            },
+            Object {
+              "alt": "Delete this data",
+              "className": "delete_data",
+              "disabled": false,
+              "is_button": "true",
+              "kind": "danger",
+              "onclick": "delete_orphaned_data_link",
+              "text": "Delete",
+              "title": "Data cannot be deleted",
+            },
+          ],
+          "id": 102,
+        },
+        Object {
+          "cells": Array [
+            Object {
+              "text": "username",
+            },
+            Object {
+              "text": "count",
+            },
+            Object {
+              "alt": "Delete this data",
+              "className": "delete_data",
+              "disabled": true,
+              "is_button": "true",
+              "kind": "danger",
+              "onclick": "delete_orphaned_data_link",
+              "text": "Delete",
+              "title": "Click to delete Orphaned Records for this user",
+            },
+          ],
+          "id": 103,
+        },
+      ],
+    }
+  }
+>
+  <div
+    className="miq-custom-tab-content-header"
+  >
+    <div
+      className="tab-content-header-title"
+    >
+      <h3>
+        Orphaned Data
+      </h3>
+    </div>
+  </div>
+  <MiqDataTable
+    gridChecks={Array []}
+    headers={
+      Array [
+        Object {
+          "header": "Username",
+          "key": "username",
+        },
+        Object {
+          "header": "Count",
+          "key": "count",
+        },
+        Object {
+          "header": "Actions",
+          "key": "actions",
+        },
+      ]
+    }
+    mode="diagnostics-orphaned-data-list"
+    pageOptions={
+      Object {
+        "page": 1,
+        "pageSize": 20,
+        "pageSizes": Array [
+          5,
+          10,
+          20,
+          50,
+          100,
+          200,
+        ],
+        "totalItems": 10,
+      }
+    }
+    rowCheckBox={false}
+    rows={
+      Array [
+        Object {
+          "actions": Object {
+            "alt": "Delete this data",
+            "className": "delete_data",
+            "disabled": false,
+            "is_button": "true",
+            "kind": "danger",
+            "onclick": "delete_orphaned_data_link",
+            "text": "Delete",
+            "title": "Data cannot be deleted",
+          },
+          "clickable": undefined,
+          "count": Object {
+            "text": "count",
+          },
+          "id": 100,
+          "username": Object {
+            "text": "username",
+          },
+        },
+        Object {
+          "actions": Object {
+            "alt": "Delete this data",
+            "className": "delete_data",
+            "disabled": true,
+            "is_button": "true",
+            "kind": "danger",
+            "onclick": "delete_orphaned_data_link",
+            "text": "Delete",
+            "title": "Click to delete Orphaned Records for this user",
+          },
+          "clickable": undefined,
+          "count": Object {
+            "text": "count",
+          },
+          "id": 101,
+          "username": Object {
+            "text": "username",
+          },
+        },
+        Object {
+          "actions": Object {
+            "alt": "Delete this data",
+            "className": "delete_data",
+            "disabled": false,
+            "is_button": "true",
+            "kind": "danger",
+            "onclick": "delete_orphaned_data_link",
+            "text": "Delete",
+            "title": "Data cannot be deleted",
+          },
+          "clickable": undefined,
+          "count": Object {
+            "text": "count",
+          },
+          "id": 102,
+          "username": Object {
+            "text": "username",
+          },
+        },
+        Object {
+          "actions": Object {
+            "alt": "Delete this data",
+            "className": "delete_data",
+            "disabled": true,
+            "is_button": "true",
+            "kind": "danger",
+            "onclick": "delete_orphaned_data_link",
+            "text": "Delete",
+            "title": "Click to delete Orphaned Records for this user",
+          },
+          "clickable": undefined,
+          "count": Object {
+            "text": "count",
+          },
+          "id": 103,
+          "username": Object {
+            "text": "username",
+          },
+        },
+      ]
+    }
+    showPagination={false}
+    size="lg"
+    sortable={false}
+    stickyHeader={false}
+    truncateText={true}
+  >
+    <div
+      className="miq-data-table diagnostics-orphaned-data-list"
+    >
+      <DataTable
+        filterRows={[Function]}
+        headers={
+          Array [
+            Object {
+              "header": "Username",
+              "key": "username",
+            },
+            Object {
+              "header": "Count",
+              "key": "count",
+            },
+            Object {
+              "header": "Actions",
+              "key": "actions",
+            },
+          ]
+        }
+        isSortable={false}
+        locale="en"
+        overflowMenuOnHover={true}
+        rows={
+          Array [
+            Object {
+              "actions": Object {
+                "alt": "Delete this data",
+                "className": "delete_data",
+                "disabled": false,
+                "is_button": "true",
+                "kind": "danger",
+                "onclick": "delete_orphaned_data_link",
+                "text": "Delete",
+                "title": "Data cannot be deleted",
+              },
+              "clickable": undefined,
+              "count": Object {
+                "text": "count",
+              },
+              "id": 100,
+              "username": Object {
+                "text": "username",
+              },
+            },
+            Object {
+              "actions": Object {
+                "alt": "Delete this data",
+                "className": "delete_data",
+                "disabled": true,
+                "is_button": "true",
+                "kind": "danger",
+                "onclick": "delete_orphaned_data_link",
+                "text": "Delete",
+                "title": "Click to delete Orphaned Records for this user",
+              },
+              "clickable": undefined,
+              "count": Object {
+                "text": "count",
+              },
+              "id": 101,
+              "username": Object {
+                "text": "username",
+              },
+            },
+            Object {
+              "actions": Object {
+                "alt": "Delete this data",
+                "className": "delete_data",
+                "disabled": false,
+                "is_button": "true",
+                "kind": "danger",
+                "onclick": "delete_orphaned_data_link",
+                "text": "Delete",
+                "title": "Data cannot be deleted",
+              },
+              "clickable": undefined,
+              "count": Object {
+                "text": "count",
+              },
+              "id": 102,
+              "username": Object {
+                "text": "username",
+              },
+            },
+            Object {
+              "actions": Object {
+                "alt": "Delete this data",
+                "className": "delete_data",
+                "disabled": true,
+                "is_button": "true",
+                "kind": "danger",
+                "onclick": "delete_orphaned_data_link",
+                "text": "Delete",
+                "title": "Click to delete Orphaned Records for this user",
+              },
+              "clickable": undefined,
+              "count": Object {
+                "text": "count",
+              },
+              "id": 103,
+              "username": Object {
+                "text": "username",
+              },
+            },
+          ]
+        }
+        size="lg"
+        sortDirection="ASC"
+        sortRow={[Function]}
+        stickyHeader={false}
+        translateWithId={[Function]}
+      >
+        <Table
+          isSortable={false}
+          overflowMenuOnHover={true}
+          size="lg"
+          stickyHeader={false}
+        >
+          <div
+            className="bx--data-table-content"
+          >
+            <table
+              className="bx--data-table bx--data-table--lg bx--data-table--no-border"
+            >
+              <TableHead>
+                <thead>
+                  <TableRow>
+                    <tr>
+                      <TableHeader
+                        className="miq-data-table-header"
+                        isSortHeader={false}
+                        isSortable={false}
+                        key="username"
+                        onClick={[Function]}
+                        scope="col"
+                        sortDirection="NONE"
+                        translateWithId={[Function]}
+                      >
+                        <th
+                          className="miq-data-table-header"
+                          scope="col"
+                        >
+                          <div
+                            className="bx--table-header-label"
+                          >
+                            <Component />
+                          </div>
+                        </th>
+                      </TableHeader>
+                      <TableHeader
+                        className="miq-data-table-header"
+                        isSortHeader={false}
+                        isSortable={false}
+                        key="count"
+                        onClick={[Function]}
+                        scope="col"
+                        sortDirection="NONE"
+                        translateWithId={[Function]}
+                      >
+                        <th
+                          className="miq-data-table-header"
+                          scope="col"
+                        >
+                          <div
+                            className="bx--table-header-label"
+                          >
+                            <Component />
+                          </div>
+                        </th>
+                      </TableHeader>
+                      <TableHeader
+                        className="miq-data-table-header"
+                        isSortHeader={false}
+                        isSortable={false}
+                        key="actions"
+                        onClick={[Function]}
+                        scope="col"
+                        sortDirection="NONE"
+                        translateWithId={[Function]}
+                      >
+                        <th
+                          className="miq-data-table-header"
+                          scope="col"
+                        >
+                          <div
+                            className="bx--table-header-label"
+                          >
+                            <Component />
+                          </div>
+                        </th>
+                      </TableHeader>
+                    </tr>
+                  </TableRow>
+                </thead>
+              </TableHead>
+              <TableBody
+                aria-live="polite"
+              >
+                <tbody
+                  aria-live="polite"
+                >
+                  <TableRow
+                    ariaLabel="Expand current row"
+                    className=""
+                    disabled={false}
+                    isExpanded={false}
+                    isSelected={false}
+                    key="100"
+                    onExpand={[Function]}
+                    onKeyPress={[Function]}
+                    tabIndex="0"
+                    title=""
+                  >
+                    <tr
+                      disabled={false}
+                      onKeyPress={[Function]}
+                      tabIndex="0"
+                      title=""
+                    >
+                      <MiqTableCell
+                        cell={
+                          Object {
+                            "data": Object {
+                              "text": "username",
+                            },
+                            "errors": null,
+                            "id": "100:username",
+                            "info": Object {
+                              "header": "username",
+                            },
+                            "isEditable": false,
+                            "isEditing": false,
+                            "isValid": true,
+                            "value": "username",
+                          }
+                        }
+                        key="0-cellKey"
+                        row={
+                          Object {
+                            "cells": Array [
+                              Object {
+                                "data": Object {
+                                  "text": "username",
+                                },
+                                "errors": null,
+                                "id": "100:username",
+                                "info": Object {
+                                  "header": "username",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "username",
+                              },
+                              Object {
+                                "data": Object {
+                                  "text": "count",
+                                },
+                                "errors": null,
+                                "id": "100:count",
+                                "info": Object {
+                                  "header": "count",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "count",
+                              },
+                              Object {
+                                "data": Object {
+                                  "alt": "Delete this data",
+                                  "className": "delete_data",
+                                  "disabled": false,
+                                  "is_button": "true",
+                                  "kind": "danger",
+                                  "onclick": "delete_orphaned_data_link",
+                                  "text": "Delete",
+                                  "title": "Data cannot be deleted",
+                                },
+                                "errors": null,
+                                "id": "100:actions",
+                                "info": Object {
+                                  "header": "actions",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "Delete",
+                              },
+                            ],
+                            "disabled": false,
+                            "id": 100,
+                            "isExpanded": false,
+                            "isSelected": false,
+                          }
+                        }
+                        truncate={true}
+                      >
+                        <TableCell
+                          className=""
+                          key="100:username"
+                          onClick={[Function]}
+                        >
+                          <td
+                            onClick={[Function]}
+                          >
+                            <div
+                              className="cell"
+                            >
+                              <span
+                                className="bx--front-line"
+                                title="username"
+                              >
+                                username
+                              </span>
+                            </div>
+                          </td>
+                        </TableCell>
+                      </MiqTableCell>
+                      <MiqTableCell
+                        cell={
+                          Object {
+                            "data": Object {
+                              "text": "count",
+                            },
+                            "errors": null,
+                            "id": "100:count",
+                            "info": Object {
+                              "header": "count",
+                            },
+                            "isEditable": false,
+                            "isEditing": false,
+                            "isValid": true,
+                            "value": "count",
+                          }
+                        }
+                        key="1-cellKey"
+                        row={
+                          Object {
+                            "cells": Array [
+                              Object {
+                                "data": Object {
+                                  "text": "username",
+                                },
+                                "errors": null,
+                                "id": "100:username",
+                                "info": Object {
+                                  "header": "username",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "username",
+                              },
+                              Object {
+                                "data": Object {
+                                  "text": "count",
+                                },
+                                "errors": null,
+                                "id": "100:count",
+                                "info": Object {
+                                  "header": "count",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "count",
+                              },
+                              Object {
+                                "data": Object {
+                                  "alt": "Delete this data",
+                                  "className": "delete_data",
+                                  "disabled": false,
+                                  "is_button": "true",
+                                  "kind": "danger",
+                                  "onclick": "delete_orphaned_data_link",
+                                  "text": "Delete",
+                                  "title": "Data cannot be deleted",
+                                },
+                                "errors": null,
+                                "id": "100:actions",
+                                "info": Object {
+                                  "header": "actions",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "Delete",
+                              },
+                            ],
+                            "disabled": false,
+                            "id": 100,
+                            "isExpanded": false,
+                            "isSelected": false,
+                          }
+                        }
+                        truncate={true}
+                      >
+                        <TableCell
+                          className=""
+                          key="100:count"
+                          onClick={[Function]}
+                        >
+                          <td
+                            onClick={[Function]}
+                          >
+                            <div
+                              className="cell"
+                            >
+                              <span
+                                className="bx--front-line"
+                                title="count"
+                              >
+                                count
+                              </span>
+                            </div>
+                          </td>
+                        </TableCell>
+                      </MiqTableCell>
+                      <MiqTableCell
+                        cell={
+                          Object {
+                            "data": Object {
+                              "alt": "Delete this data",
+                              "className": "delete_data",
+                              "disabled": false,
+                              "is_button": "true",
+                              "kind": "danger",
+                              "onclick": "delete_orphaned_data_link",
+                              "text": "Delete",
+                              "title": "Data cannot be deleted",
+                            },
+                            "errors": null,
+                            "id": "100:actions",
+                            "info": Object {
+                              "header": "actions",
+                            },
+                            "isEditable": false,
+                            "isEditing": false,
+                            "isValid": true,
+                            "value": "Delete",
+                          }
+                        }
+                        key="2-cellKey"
+                        row={
+                          Object {
+                            "cells": Array [
+                              Object {
+                                "data": Object {
+                                  "text": "username",
+                                },
+                                "errors": null,
+                                "id": "100:username",
+                                "info": Object {
+                                  "header": "username",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "username",
+                              },
+                              Object {
+                                "data": Object {
+                                  "text": "count",
+                                },
+                                "errors": null,
+                                "id": "100:count",
+                                "info": Object {
+                                  "header": "count",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "count",
+                              },
+                              Object {
+                                "data": Object {
+                                  "alt": "Delete this data",
+                                  "className": "delete_data",
+                                  "disabled": false,
+                                  "is_button": "true",
+                                  "kind": "danger",
+                                  "onclick": "delete_orphaned_data_link",
+                                  "text": "Delete",
+                                  "title": "Data cannot be deleted",
+                                },
+                                "errors": null,
+                                "id": "100:actions",
+                                "info": Object {
+                                  "header": "actions",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "Delete",
+                              },
+                            ],
+                            "disabled": false,
+                            "id": 100,
+                            "isExpanded": false,
+                            "isSelected": false,
+                          }
+                        }
+                        truncate={true}
+                      >
+                        <TableCell
+                          className=""
+                          key="100:actions"
+                          onClick={[Function]}
+                        >
+                          <td
+                            onClick={[Function]}
+                          >
+                            <div
+                              className="cell"
+                            >
+                              <Button
+                                className="miq-data-table-button"
+                                disabled={false}
+                                kind="danger"
+                                onClick={[Function]}
+                                onKeyPress={[Function]}
+                                tabIndex={0}
+                                title="Data cannot be deleted"
+                              >
+                                <button
+                                  aria-describedby="danger-description-4"
+                                  aria-pressed={null}
+                                  className="miq-data-table-button bx--btn bx--btn--danger"
+                                  disabled={false}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onKeyPress={[Function]}
+                                  onMouseEnter={[Function]}
+                                  onMouseLeave={[Function]}
+                                  tabIndex={0}
+                                  title="Data cannot be deleted"
+                                  type="button"
+                                >
+                                  <span
+                                    className="bx--visually-hidden"
+                                    id="danger-description-4"
+                                  >
+                                    danger
+                                  </span>
+                                  <span
+                                    className="bx--front-line"
+                                    title="Delete"
+                                  >
+                                    Delete
+                                  </span>
+                                </button>
+                              </Button>
+                            </div>
+                          </td>
+                        </TableCell>
+                      </MiqTableCell>
+                    </tr>
+                  </TableRow>
+                  <TableRow
+                    ariaLabel="Expand current row"
+                    className=""
+                    disabled={false}
+                    isExpanded={false}
+                    isSelected={false}
+                    key="101"
+                    onExpand={[Function]}
+                    onKeyPress={[Function]}
+                    tabIndex="1"
+                    title=""
+                  >
+                    <tr
+                      disabled={false}
+                      onKeyPress={[Function]}
+                      tabIndex="1"
+                      title=""
+                    >
+                      <MiqTableCell
+                        cell={
+                          Object {
+                            "data": Object {
+                              "text": "username",
+                            },
+                            "errors": null,
+                            "id": "101:username",
+                            "info": Object {
+                              "header": "username",
+                            },
+                            "isEditable": false,
+                            "isEditing": false,
+                            "isValid": true,
+                            "value": "username",
+                          }
+                        }
+                        key="0-cellKey"
+                        row={
+                          Object {
+                            "cells": Array [
+                              Object {
+                                "data": Object {
+                                  "text": "username",
+                                },
+                                "errors": null,
+                                "id": "101:username",
+                                "info": Object {
+                                  "header": "username",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "username",
+                              },
+                              Object {
+                                "data": Object {
+                                  "text": "count",
+                                },
+                                "errors": null,
+                                "id": "101:count",
+                                "info": Object {
+                                  "header": "count",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "count",
+                              },
+                              Object {
+                                "data": Object {
+                                  "alt": "Delete this data",
+                                  "className": "delete_data",
+                                  "disabled": true,
+                                  "is_button": "true",
+                                  "kind": "danger",
+                                  "onclick": "delete_orphaned_data_link",
+                                  "text": "Delete",
+                                  "title": "Click to delete Orphaned Records for this user",
+                                },
+                                "errors": null,
+                                "id": "101:actions",
+                                "info": Object {
+                                  "header": "actions",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "Delete",
+                              },
+                            ],
+                            "disabled": false,
+                            "id": 101,
+                            "isExpanded": false,
+                            "isSelected": false,
+                          }
+                        }
+                        truncate={true}
+                      >
+                        <TableCell
+                          className=""
+                          key="101:username"
+                          onClick={[Function]}
+                        >
+                          <td
+                            onClick={[Function]}
+                          >
+                            <div
+                              className="cell"
+                            >
+                              <span
+                                className="bx--front-line"
+                                title="username"
+                              >
+                                username
+                              </span>
+                            </div>
+                          </td>
+                        </TableCell>
+                      </MiqTableCell>
+                      <MiqTableCell
+                        cell={
+                          Object {
+                            "data": Object {
+                              "text": "count",
+                            },
+                            "errors": null,
+                            "id": "101:count",
+                            "info": Object {
+                              "header": "count",
+                            },
+                            "isEditable": false,
+                            "isEditing": false,
+                            "isValid": true,
+                            "value": "count",
+                          }
+                        }
+                        key="1-cellKey"
+                        row={
+                          Object {
+                            "cells": Array [
+                              Object {
+                                "data": Object {
+                                  "text": "username",
+                                },
+                                "errors": null,
+                                "id": "101:username",
+                                "info": Object {
+                                  "header": "username",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "username",
+                              },
+                              Object {
+                                "data": Object {
+                                  "text": "count",
+                                },
+                                "errors": null,
+                                "id": "101:count",
+                                "info": Object {
+                                  "header": "count",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "count",
+                              },
+                              Object {
+                                "data": Object {
+                                  "alt": "Delete this data",
+                                  "className": "delete_data",
+                                  "disabled": true,
+                                  "is_button": "true",
+                                  "kind": "danger",
+                                  "onclick": "delete_orphaned_data_link",
+                                  "text": "Delete",
+                                  "title": "Click to delete Orphaned Records for this user",
+                                },
+                                "errors": null,
+                                "id": "101:actions",
+                                "info": Object {
+                                  "header": "actions",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "Delete",
+                              },
+                            ],
+                            "disabled": false,
+                            "id": 101,
+                            "isExpanded": false,
+                            "isSelected": false,
+                          }
+                        }
+                        truncate={true}
+                      >
+                        <TableCell
+                          className=""
+                          key="101:count"
+                          onClick={[Function]}
+                        >
+                          <td
+                            onClick={[Function]}
+                          >
+                            <div
+                              className="cell"
+                            >
+                              <span
+                                className="bx--front-line"
+                                title="count"
+                              >
+                                count
+                              </span>
+                            </div>
+                          </td>
+                        </TableCell>
+                      </MiqTableCell>
+                      <MiqTableCell
+                        cell={
+                          Object {
+                            "data": Object {
+                              "alt": "Delete this data",
+                              "className": "delete_data",
+                              "disabled": true,
+                              "is_button": "true",
+                              "kind": "danger",
+                              "onclick": "delete_orphaned_data_link",
+                              "text": "Delete",
+                              "title": "Click to delete Orphaned Records for this user",
+                            },
+                            "errors": null,
+                            "id": "101:actions",
+                            "info": Object {
+                              "header": "actions",
+                            },
+                            "isEditable": false,
+                            "isEditing": false,
+                            "isValid": true,
+                            "value": "Delete",
+                          }
+                        }
+                        key="2-cellKey"
+                        row={
+                          Object {
+                            "cells": Array [
+                              Object {
+                                "data": Object {
+                                  "text": "username",
+                                },
+                                "errors": null,
+                                "id": "101:username",
+                                "info": Object {
+                                  "header": "username",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "username",
+                              },
+                              Object {
+                                "data": Object {
+                                  "text": "count",
+                                },
+                                "errors": null,
+                                "id": "101:count",
+                                "info": Object {
+                                  "header": "count",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "count",
+                              },
+                              Object {
+                                "data": Object {
+                                  "alt": "Delete this data",
+                                  "className": "delete_data",
+                                  "disabled": true,
+                                  "is_button": "true",
+                                  "kind": "danger",
+                                  "onclick": "delete_orphaned_data_link",
+                                  "text": "Delete",
+                                  "title": "Click to delete Orphaned Records for this user",
+                                },
+                                "errors": null,
+                                "id": "101:actions",
+                                "info": Object {
+                                  "header": "actions",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "Delete",
+                              },
+                            ],
+                            "disabled": false,
+                            "id": 101,
+                            "isExpanded": false,
+                            "isSelected": false,
+                          }
+                        }
+                        truncate={true}
+                      >
+                        <TableCell
+                          className=""
+                          key="101:actions"
+                          onClick={[Function]}
+                        >
+                          <td
+                            onClick={[Function]}
+                          >
+                            <div
+                              className="cell"
+                            >
+                              <Button
+                                className="miq-data-table-button"
+                                disabled={true}
+                                kind="danger"
+                                onClick={[Function]}
+                                onKeyPress={[Function]}
+                                tabIndex={0}
+                                title="Click to delete Orphaned Records for this user"
+                              >
+                                <button
+                                  aria-describedby="danger-description-5"
+                                  aria-pressed={null}
+                                  className="miq-data-table-button bx--btn bx--btn--danger bx--btn--disabled"
+                                  disabled={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onKeyPress={[Function]}
+                                  onMouseEnter={[Function]}
+                                  onMouseLeave={[Function]}
+                                  tabIndex={0}
+                                  title="Click to delete Orphaned Records for this user"
+                                  type="button"
+                                >
+                                  <span
+                                    className="bx--visually-hidden"
+                                    id="danger-description-5"
+                                  >
+                                    danger
+                                  </span>
+                                  <span
+                                    className="bx--front-line"
+                                    title="Delete"
+                                  >
+                                    Delete
+                                  </span>
+                                </button>
+                              </Button>
+                            </div>
+                          </td>
+                        </TableCell>
+                      </MiqTableCell>
+                    </tr>
+                  </TableRow>
+                  <TableRow
+                    ariaLabel="Expand current row"
+                    className=""
+                    disabled={false}
+                    isExpanded={false}
+                    isSelected={false}
+                    key="102"
+                    onExpand={[Function]}
+                    onKeyPress={[Function]}
+                    tabIndex="2"
+                    title=""
+                  >
+                    <tr
+                      disabled={false}
+                      onKeyPress={[Function]}
+                      tabIndex="2"
+                      title=""
+                    >
+                      <MiqTableCell
+                        cell={
+                          Object {
+                            "data": Object {
+                              "text": "username",
+                            },
+                            "errors": null,
+                            "id": "102:username",
+                            "info": Object {
+                              "header": "username",
+                            },
+                            "isEditable": false,
+                            "isEditing": false,
+                            "isValid": true,
+                            "value": "username",
+                          }
+                        }
+                        key="0-cellKey"
+                        row={
+                          Object {
+                            "cells": Array [
+                              Object {
+                                "data": Object {
+                                  "text": "username",
+                                },
+                                "errors": null,
+                                "id": "102:username",
+                                "info": Object {
+                                  "header": "username",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "username",
+                              },
+                              Object {
+                                "data": Object {
+                                  "text": "count",
+                                },
+                                "errors": null,
+                                "id": "102:count",
+                                "info": Object {
+                                  "header": "count",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "count",
+                              },
+                              Object {
+                                "data": Object {
+                                  "alt": "Delete this data",
+                                  "className": "delete_data",
+                                  "disabled": false,
+                                  "is_button": "true",
+                                  "kind": "danger",
+                                  "onclick": "delete_orphaned_data_link",
+                                  "text": "Delete",
+                                  "title": "Data cannot be deleted",
+                                },
+                                "errors": null,
+                                "id": "102:actions",
+                                "info": Object {
+                                  "header": "actions",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "Delete",
+                              },
+                            ],
+                            "disabled": false,
+                            "id": 102,
+                            "isExpanded": false,
+                            "isSelected": false,
+                          }
+                        }
+                        truncate={true}
+                      >
+                        <TableCell
+                          className=""
+                          key="102:username"
+                          onClick={[Function]}
+                        >
+                          <td
+                            onClick={[Function]}
+                          >
+                            <div
+                              className="cell"
+                            >
+                              <span
+                                className="bx--front-line"
+                                title="username"
+                              >
+                                username
+                              </span>
+                            </div>
+                          </td>
+                        </TableCell>
+                      </MiqTableCell>
+                      <MiqTableCell
+                        cell={
+                          Object {
+                            "data": Object {
+                              "text": "count",
+                            },
+                            "errors": null,
+                            "id": "102:count",
+                            "info": Object {
+                              "header": "count",
+                            },
+                            "isEditable": false,
+                            "isEditing": false,
+                            "isValid": true,
+                            "value": "count",
+                          }
+                        }
+                        key="1-cellKey"
+                        row={
+                          Object {
+                            "cells": Array [
+                              Object {
+                                "data": Object {
+                                  "text": "username",
+                                },
+                                "errors": null,
+                                "id": "102:username",
+                                "info": Object {
+                                  "header": "username",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "username",
+                              },
+                              Object {
+                                "data": Object {
+                                  "text": "count",
+                                },
+                                "errors": null,
+                                "id": "102:count",
+                                "info": Object {
+                                  "header": "count",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "count",
+                              },
+                              Object {
+                                "data": Object {
+                                  "alt": "Delete this data",
+                                  "className": "delete_data",
+                                  "disabled": false,
+                                  "is_button": "true",
+                                  "kind": "danger",
+                                  "onclick": "delete_orphaned_data_link",
+                                  "text": "Delete",
+                                  "title": "Data cannot be deleted",
+                                },
+                                "errors": null,
+                                "id": "102:actions",
+                                "info": Object {
+                                  "header": "actions",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "Delete",
+                              },
+                            ],
+                            "disabled": false,
+                            "id": 102,
+                            "isExpanded": false,
+                            "isSelected": false,
+                          }
+                        }
+                        truncate={true}
+                      >
+                        <TableCell
+                          className=""
+                          key="102:count"
+                          onClick={[Function]}
+                        >
+                          <td
+                            onClick={[Function]}
+                          >
+                            <div
+                              className="cell"
+                            >
+                              <span
+                                className="bx--front-line"
+                                title="count"
+                              >
+                                count
+                              </span>
+                            </div>
+                          </td>
+                        </TableCell>
+                      </MiqTableCell>
+                      <MiqTableCell
+                        cell={
+                          Object {
+                            "data": Object {
+                              "alt": "Delete this data",
+                              "className": "delete_data",
+                              "disabled": false,
+                              "is_button": "true",
+                              "kind": "danger",
+                              "onclick": "delete_orphaned_data_link",
+                              "text": "Delete",
+                              "title": "Data cannot be deleted",
+                            },
+                            "errors": null,
+                            "id": "102:actions",
+                            "info": Object {
+                              "header": "actions",
+                            },
+                            "isEditable": false,
+                            "isEditing": false,
+                            "isValid": true,
+                            "value": "Delete",
+                          }
+                        }
+                        key="2-cellKey"
+                        row={
+                          Object {
+                            "cells": Array [
+                              Object {
+                                "data": Object {
+                                  "text": "username",
+                                },
+                                "errors": null,
+                                "id": "102:username",
+                                "info": Object {
+                                  "header": "username",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "username",
+                              },
+                              Object {
+                                "data": Object {
+                                  "text": "count",
+                                },
+                                "errors": null,
+                                "id": "102:count",
+                                "info": Object {
+                                  "header": "count",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "count",
+                              },
+                              Object {
+                                "data": Object {
+                                  "alt": "Delete this data",
+                                  "className": "delete_data",
+                                  "disabled": false,
+                                  "is_button": "true",
+                                  "kind": "danger",
+                                  "onclick": "delete_orphaned_data_link",
+                                  "text": "Delete",
+                                  "title": "Data cannot be deleted",
+                                },
+                                "errors": null,
+                                "id": "102:actions",
+                                "info": Object {
+                                  "header": "actions",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "Delete",
+                              },
+                            ],
+                            "disabled": false,
+                            "id": 102,
+                            "isExpanded": false,
+                            "isSelected": false,
+                          }
+                        }
+                        truncate={true}
+                      >
+                        <TableCell
+                          className=""
+                          key="102:actions"
+                          onClick={[Function]}
+                        >
+                          <td
+                            onClick={[Function]}
+                          >
+                            <div
+                              className="cell"
+                            >
+                              <Button
+                                className="miq-data-table-button"
+                                disabled={false}
+                                kind="danger"
+                                onClick={[Function]}
+                                onKeyPress={[Function]}
+                                tabIndex={0}
+                                title="Data cannot be deleted"
+                              >
+                                <button
+                                  aria-describedby="danger-description-6"
+                                  aria-pressed={null}
+                                  className="miq-data-table-button bx--btn bx--btn--danger"
+                                  disabled={false}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onKeyPress={[Function]}
+                                  onMouseEnter={[Function]}
+                                  onMouseLeave={[Function]}
+                                  tabIndex={0}
+                                  title="Data cannot be deleted"
+                                  type="button"
+                                >
+                                  <span
+                                    className="bx--visually-hidden"
+                                    id="danger-description-6"
+                                  >
+                                    danger
+                                  </span>
+                                  <span
+                                    className="bx--front-line"
+                                    title="Delete"
+                                  >
+                                    Delete
+                                  </span>
+                                </button>
+                              </Button>
+                            </div>
+                          </td>
+                        </TableCell>
+                      </MiqTableCell>
+                    </tr>
+                  </TableRow>
+                  <TableRow
+                    ariaLabel="Expand current row"
+                    className=""
+                    disabled={false}
+                    isExpanded={false}
+                    isSelected={false}
+                    key="103"
+                    onExpand={[Function]}
+                    onKeyPress={[Function]}
+                    tabIndex="3"
+                    title=""
+                  >
+                    <tr
+                      disabled={false}
+                      onKeyPress={[Function]}
+                      tabIndex="3"
+                      title=""
+                    >
+                      <MiqTableCell
+                        cell={
+                          Object {
+                            "data": Object {
+                              "text": "username",
+                            },
+                            "errors": null,
+                            "id": "103:username",
+                            "info": Object {
+                              "header": "username",
+                            },
+                            "isEditable": false,
+                            "isEditing": false,
+                            "isValid": true,
+                            "value": "username",
+                          }
+                        }
+                        key="0-cellKey"
+                        row={
+                          Object {
+                            "cells": Array [
+                              Object {
+                                "data": Object {
+                                  "text": "username",
+                                },
+                                "errors": null,
+                                "id": "103:username",
+                                "info": Object {
+                                  "header": "username",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "username",
+                              },
+                              Object {
+                                "data": Object {
+                                  "text": "count",
+                                },
+                                "errors": null,
+                                "id": "103:count",
+                                "info": Object {
+                                  "header": "count",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "count",
+                              },
+                              Object {
+                                "data": Object {
+                                  "alt": "Delete this data",
+                                  "className": "delete_data",
+                                  "disabled": true,
+                                  "is_button": "true",
+                                  "kind": "danger",
+                                  "onclick": "delete_orphaned_data_link",
+                                  "text": "Delete",
+                                  "title": "Click to delete Orphaned Records for this user",
+                                },
+                                "errors": null,
+                                "id": "103:actions",
+                                "info": Object {
+                                  "header": "actions",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "Delete",
+                              },
+                            ],
+                            "disabled": false,
+                            "id": 103,
+                            "isExpanded": false,
+                            "isSelected": false,
+                          }
+                        }
+                        truncate={true}
+                      >
+                        <TableCell
+                          className=""
+                          key="103:username"
+                          onClick={[Function]}
+                        >
+                          <td
+                            onClick={[Function]}
+                          >
+                            <div
+                              className="cell"
+                            >
+                              <span
+                                className="bx--front-line"
+                                title="username"
+                              >
+                                username
+                              </span>
+                            </div>
+                          </td>
+                        </TableCell>
+                      </MiqTableCell>
+                      <MiqTableCell
+                        cell={
+                          Object {
+                            "data": Object {
+                              "text": "count",
+                            },
+                            "errors": null,
+                            "id": "103:count",
+                            "info": Object {
+                              "header": "count",
+                            },
+                            "isEditable": false,
+                            "isEditing": false,
+                            "isValid": true,
+                            "value": "count",
+                          }
+                        }
+                        key="1-cellKey"
+                        row={
+                          Object {
+                            "cells": Array [
+                              Object {
+                                "data": Object {
+                                  "text": "username",
+                                },
+                                "errors": null,
+                                "id": "103:username",
+                                "info": Object {
+                                  "header": "username",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "username",
+                              },
+                              Object {
+                                "data": Object {
+                                  "text": "count",
+                                },
+                                "errors": null,
+                                "id": "103:count",
+                                "info": Object {
+                                  "header": "count",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "count",
+                              },
+                              Object {
+                                "data": Object {
+                                  "alt": "Delete this data",
+                                  "className": "delete_data",
+                                  "disabled": true,
+                                  "is_button": "true",
+                                  "kind": "danger",
+                                  "onclick": "delete_orphaned_data_link",
+                                  "text": "Delete",
+                                  "title": "Click to delete Orphaned Records for this user",
+                                },
+                                "errors": null,
+                                "id": "103:actions",
+                                "info": Object {
+                                  "header": "actions",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "Delete",
+                              },
+                            ],
+                            "disabled": false,
+                            "id": 103,
+                            "isExpanded": false,
+                            "isSelected": false,
+                          }
+                        }
+                        truncate={true}
+                      >
+                        <TableCell
+                          className=""
+                          key="103:count"
+                          onClick={[Function]}
+                        >
+                          <td
+                            onClick={[Function]}
+                          >
+                            <div
+                              className="cell"
+                            >
+                              <span
+                                className="bx--front-line"
+                                title="count"
+                              >
+                                count
+                              </span>
+                            </div>
+                          </td>
+                        </TableCell>
+                      </MiqTableCell>
+                      <MiqTableCell
+                        cell={
+                          Object {
+                            "data": Object {
+                              "alt": "Delete this data",
+                              "className": "delete_data",
+                              "disabled": true,
+                              "is_button": "true",
+                              "kind": "danger",
+                              "onclick": "delete_orphaned_data_link",
+                              "text": "Delete",
+                              "title": "Click to delete Orphaned Records for this user",
+                            },
+                            "errors": null,
+                            "id": "103:actions",
+                            "info": Object {
+                              "header": "actions",
+                            },
+                            "isEditable": false,
+                            "isEditing": false,
+                            "isValid": true,
+                            "value": "Delete",
+                          }
+                        }
+                        key="2-cellKey"
+                        row={
+                          Object {
+                            "cells": Array [
+                              Object {
+                                "data": Object {
+                                  "text": "username",
+                                },
+                                "errors": null,
+                                "id": "103:username",
+                                "info": Object {
+                                  "header": "username",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "username",
+                              },
+                              Object {
+                                "data": Object {
+                                  "text": "count",
+                                },
+                                "errors": null,
+                                "id": "103:count",
+                                "info": Object {
+                                  "header": "count",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "count",
+                              },
+                              Object {
+                                "data": Object {
+                                  "alt": "Delete this data",
+                                  "className": "delete_data",
+                                  "disabled": true,
+                                  "is_button": "true",
+                                  "kind": "danger",
+                                  "onclick": "delete_orphaned_data_link",
+                                  "text": "Delete",
+                                  "title": "Click to delete Orphaned Records for this user",
+                                },
+                                "errors": null,
+                                "id": "103:actions",
+                                "info": Object {
+                                  "header": "actions",
+                                },
+                                "isEditable": false,
+                                "isEditing": false,
+                                "isValid": true,
+                                "value": "Delete",
+                              },
+                            ],
+                            "disabled": false,
+                            "id": 103,
+                            "isExpanded": false,
+                            "isSelected": false,
+                          }
+                        }
+                        truncate={true}
+                      >
+                        <TableCell
+                          className=""
+                          key="103:actions"
+                          onClick={[Function]}
+                        >
+                          <td
+                            onClick={[Function]}
+                          >
+                            <div
+                              className="cell"
+                            >
+                              <Button
+                                className="miq-data-table-button"
+                                disabled={true}
+                                kind="danger"
+                                onClick={[Function]}
+                                onKeyPress={[Function]}
+                                tabIndex={0}
+                                title="Click to delete Orphaned Records for this user"
+                              >
+                                <button
+                                  aria-describedby="danger-description-7"
+                                  aria-pressed={null}
+                                  className="miq-data-table-button bx--btn bx--btn--danger bx--btn--disabled"
+                                  disabled={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onKeyPress={[Function]}
+                                  onMouseEnter={[Function]}
+                                  onMouseLeave={[Function]}
+                                  tabIndex={0}
+                                  title="Click to delete Orphaned Records for this user"
+                                  type="button"
+                                >
+                                  <span
+                                    className="bx--visually-hidden"
+                                    id="danger-description-7"
+                                  >
+                                    danger
+                                  </span>
+                                  <span
+                                    className="bx--front-line"
+                                    title="Delete"
+                                  >
+                                    Delete
+                                  </span>
+                                </button>
+                              </Button>
+                            </div>
+                          </td>
+                        </TableCell>
+                      </MiqTableCell>
+                    </tr>
+                  </TableRow>
+                </tbody>
+              </TableBody>
+            </table>
+          </div>
+        </Table>
+      </DataTable>
+    </div>
+  </MiqDataTable>
+</DiagnosticsOrphanedData>
+`;

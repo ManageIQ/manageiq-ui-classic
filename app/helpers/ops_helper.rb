@@ -14,6 +14,7 @@ module OpsHelper
   include SettingsRbacTagHelper
   include GroupRbacDetailsHelper
   include RoleRbacDetailsHelper
+  include DiagnosticsOrphanedDataTabHelper
 
   def row_data(label, value)
     {:cells => {:label => label, :value => value}}
