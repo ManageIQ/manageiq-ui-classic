@@ -1,14 +1,4 @@
 ---
-AlertsListController:
-- class_icons
-- index
-- report_data
-AlertsMostRecentController:
-- index
-- report_data
-AlertsOverviewController:
-- index
-- report_data
 AnsibleCredentialController:
 - index
 - report_data

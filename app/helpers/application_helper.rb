@@ -612,8 +612,6 @@ module ApplicationHelper
       miq_ae_tools
       miq_policy_export
       miq_policy_rsop
-      monitor_alerts_list
-      monitor_alerts_overview
       ops
       pxe
       report
@@ -1032,8 +1030,6 @@ module ApplicationHelper
                              auth_key_pair_cloud
                              automation_manager_configured_system
                              availability_zone
-                             alerts_overview
-                             alerts_list
                              cloud_database
                              cloud_network
                              cloud_object_store_container
@@ -1086,8 +1082,6 @@ module ApplicationHelper
                              manageiq/providers/embedded_automation_manager/configuration_script_source
                              miq_schedule
                              miq_template
-                             monitor_alerts_overview
-                             monitor_alerts_list
                              network_port
                              network_router
                              network_service

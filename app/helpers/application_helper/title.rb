@@ -47,10 +47,6 @@ module ApplicationHelper
         _("Hosts")
       when "miq_server"
         _("Servers")
-      when "monitor_alerts_list"
-        _("Monitor Alerts")
-      when "monitor_alerts_overview"
-        _("Monitor Alerts Overview")
       when "services"
         _("Services")
       when "usage"

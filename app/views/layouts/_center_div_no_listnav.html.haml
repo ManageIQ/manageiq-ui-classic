@@ -8,7 +8,7 @@
         .row.toolbar-pf#toolbar
           .col-sm-12
             = miq_toolbar toolbar_from_hash
-      .row#main-content.miq-layout-center_div_no_listnav{:class => (@lastaction == "show_dashboard" || @layout == "monitor_alerts_overview") && !@in_a_form ? 'miq-body' : ''}
+      .row#main-content.miq-layout-center_div_no_listnav{:class => @lastaction == "show_dashboard" && !@in_a_form ? 'miq-body' : ''}
         .col-md-12
           .row
             .col-md-7

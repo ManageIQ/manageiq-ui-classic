@@ -15,9 +15,6 @@ module Menu
 
           control_menu_section,
 
-          # TODO: Remove all monitor related code
-          # monitor_menu_section,
-
           settings_menu_section,
           logout_item,
         ]
@@ -218,19 +215,6 @@ module Menu
           Menu::Item.new('miq_ae_export',        N_('Import / Export'), 'miq_ae_class_import_export',    {:feature => 'miq_ae_class_import_export'},    '/miq_ae_tools/import_export'),
           Menu::Item.new('miq_ae_logs',          N_('Log'),             'miq_ae_class_log',              {:feature => 'miq_ae_class_log'},              '/miq_ae_tools/log'),
           Menu::Item.new('miq_request_ae',       N_('Requests'),        'ae_miq_request',                {:feature => 'ae_miq_request_show_list'},      '/miq_request/show_list?typ=ae')
-        ])
-      end
-
-      def alerts_menu_section
-        Menu::Section.new(:monitor_alerts, N_("Alerts"), nil, [
-                            Menu::Item.new('monitor_alerts_overview', N_('Overview'), 'monitor_alerts_overview', {:feature => 'monitor_alerts_overview', :any => true}, '/alerts_overview/show'),
-                            Menu::Item.new('monitor_alerts_list', N_('All Alerts'), 'monitor_alerts_list', {:feature => 'monitor_alerts_list', :any => true}, '/alerts_list/show'),
-                          ])
-      end
-
-      def monitor_menu_section
-        Menu::Section.new(:monitor, N_("Monitor"), 'carbon--Activity', [
-          alerts_menu_section,
         ])
       end
 
