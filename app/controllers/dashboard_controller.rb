@@ -1,7 +1,7 @@
 class DashboardController < ApplicationController
   include Mixins::BreadcrumbsMixin
   include DashboardHelper
-  include StartUrl
+  include Mixins::StartUrl
 
   menu_section :vi
 

@@ -1,5 +1,5 @@
 class TreeState
-  include Sandbox
+  include Mixins::Sandbox
 
   def initialize(sandbox)
     @sb = sandbox

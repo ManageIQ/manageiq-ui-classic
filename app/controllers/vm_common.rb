@@ -1,7 +1,7 @@
 module VmCommon
   extend ActiveSupport::Concern
   include ActionView::Helpers::JavaScriptHelper
-  include ChargebackPreview
+  include Mixins::ChargebackPreviewMixin
   include ProvisionCustomizeHelper
   include HidePartialHelper
 

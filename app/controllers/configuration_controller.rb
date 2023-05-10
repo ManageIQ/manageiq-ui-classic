@@ -1,7 +1,7 @@
 require 'miq_bulk_import'
 
 class ConfigurationController < ApplicationController
-  include StartUrl
+  include Mixins::StartUrl
   include Mixins::GenericSessionMixin
   include Mixins::BreadcrumbsMixin
 

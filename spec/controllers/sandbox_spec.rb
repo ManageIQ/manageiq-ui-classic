@@ -1,6 +1,6 @@
-describe Sandbox do
+describe Mixins::Sandbox do
   let(:sb) do
-    Object.new.extend(Sandbox).tap { |sb| sb.instance_eval { @sb = {} } }
+    Object.new.extend(described_class).tap { |sb| sb.instance_eval { @sb = {} } }
   end
 
   context '#x_active_tree=' do

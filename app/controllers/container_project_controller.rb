@@ -1,5 +1,5 @@
 class ContainerProjectController < ApplicationController
-  include ContainersCommonMixin
+  include Mixins::ContainersCommonMixin
   include Mixins::DashboardViewMixin
   include Mixins::BreadcrumbsMixin
 
