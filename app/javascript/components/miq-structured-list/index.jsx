@@ -25,7 +25,7 @@ const MiqStructuredList = ({
 }) => {
   const clickEvents = hasClickEvents(mode);
 
-  const borderedList = ['simple_table', 'multilink_table'];
+  const borderedList = ['simple_table', 'multilink_table', 'table_list_view'];
 
   const hasBorder = borderedList.includes(mode);
 
