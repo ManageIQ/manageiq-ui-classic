@@ -92,6 +92,21 @@ const createSchema = (fields, edit, ems, loadSchema, emptySchema) => {
         ...fields.slice(idx + 1),
       ]),
       {
+        component: 'compliance-button',
+        name: 'Compliance',
+        id: 'compliant-resources-button',
+        skipSubmit: true,
+        hideField: !edit,
+        condition: { when: 'compression', isNotEmpty: true },
+        fields: [
+          {
+            component: componentTypes.SWITCH,
+            name: 'Check Compliance',
+            hideField: true,
+          },
+        ],
+      },
+      {
         component: 'enhanced-select',
         name: 'storage_resource_id',
         id: 'storage_resource_id',
