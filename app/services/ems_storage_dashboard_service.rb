@@ -28,7 +28,7 @@ class EmsStorageDashboardService < EmsDashboardService
 
   def attributes_data
     attributes = if @ems.supports?(:block_storage)
-                   %i[physical_storages storage_resources cloud_volumes volume_mappings host_initiators host_initiator_groups storage_services]
+                   %i[physical_storages storage_resources cloud_volumes cloud_volume_snapshots volume_mappings host_initiators host_initiator_groups storage_services]
                  else
                    %i[cloud_object_store_containers cloud_object_store_objects]
                  end
@@ -37,6 +37,7 @@ class EmsStorageDashboardService < EmsDashboardService
       :physical_storages             => 'pficon pficon-container-node',
       :storage_resources             => 'pficon pficon-resource-pool',
       :cloud_volumes                 => 'pficon pficon-volume',
+      :cloud_volume_snapshots        => 'fa fa-camera',
       :volume_mappings               => 'pficon pficon-topology',
       :host_initiators               => 'pficon pficon-virtual-machine',
       :host_initiator_groups         => 'ff ff-relationship',
@@ -48,6 +49,7 @@ class EmsStorageDashboardService < EmsDashboardService
     attr_url = {
       :storage_resources             => 'storage_resources',
       :cloud_volumes                 => 'cloud_volumes',
+      :cloud_volume_snapshots        => 'cloud_volume_snapshots',
       :physical_storages             => 'physical_storages',
       :volume_mappings               => 'volume_mappings',
       :host_initiators               => 'host_initiators',
@@ -60,6 +62,7 @@ class EmsStorageDashboardService < EmsDashboardService
     attr_hsh = {
       :storage_resources             => _('Resources (Pools)'),
       :cloud_volumes                 => _('Volumes'),
+      :cloud_volume_snapshots        => _('Volume Snapshots'),
       :physical_storages             => _('Physical Storages'),
       :volume_mappings               => _('Volume Mappings'),
       :host_initiators               => _('Host Initiators'),

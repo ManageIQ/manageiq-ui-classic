@@ -344,7 +344,7 @@ class ApplicationHelper::ToolbarChooser
     # Original non vmx view code follows
     # toolbar buttons on sub-screens
     to_display = %w[availability_zones cloud_networks cloud_object_store_containers cloud_subnets configured_systems
-                    cloud_tenants cloud_volumes ems_clusters flavors floating_ips host_aggregates hosts host_initiators host_initiator_groups
+                    cloud_tenants cloud_volumes cloud_volume_snapshots ems_clusters flavors floating_ips host_aggregates hosts host_initiators host_initiator_groups
                     volume_mappings network_ports network_routers network_services orchestration_stacks resource_pools
                     security_groups security_policies security_policy_rules storages physical_storages storage_services]
     to_display_center = %w[stack_orchestration_template cloud_object_store_objects generic_objects physical_servers guest_devices]
