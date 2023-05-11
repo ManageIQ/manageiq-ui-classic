@@ -8,7 +8,7 @@ describe('TableListView', () => {
   it('renders just fine...', () => {
     const row = mount(<TableListView
       title={tableListViewData.title}
-      headers={tableListViewData.headers}
+      headers={tableListViewData.headers.map((item) => item.label)}
       values={tableListViewData.values}
       colOrder={tableListViewData.colOrder}
       rowLabel="View the table"

@@ -24,14 +24,20 @@ exports[`TableListView renders just fine... 1`] = `
         "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');",
         "name": "vim_performance_states",
         "title": "vim_performance_states",
-        "value": "676,150",
+        "value": Array [
+          "676",
+          "150",
+        ],
       },
       Object {
         "explorer": true,
         "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');",
         "name": "miq_report_result_details",
         "title": "miq_report_result_details",
-        "value": "280,848",
+        "value": Array [
+          "280",
+          "848",
+        ],
       },
     ]
   }
