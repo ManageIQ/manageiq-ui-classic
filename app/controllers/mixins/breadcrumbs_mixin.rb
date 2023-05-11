@@ -44,7 +44,7 @@ module Mixins
         # Append title breadcrumb if they exist and not same as previous breadcrumb (eg "Editing name")
         # Also do not append when user is on show_list page, the menu title is used instead of it
         if @title && !same_as_last_breadcrumb?(breadcrumbs, @title) && !show_list_page? && !options[:hide_title]
-          breadcrumbs.push(:title => @title)
+          breadcrumbs.push(:title => _(@title))
         end
       else
         options[:x_node] ||= x_node
