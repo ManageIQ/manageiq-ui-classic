@@ -7,7 +7,8 @@
     - tabname = (@tabactive || options[:current_tab_key]).to_s
     - prov_tab_labels, prov_tab_keys = provision_tab_configuration(wf)
 
-    = react('MiqCustomTab', {:containerId => 'request-info-tabs',
+    .miq_custom_tab_wrapper
+      = react('MiqCustomTab', {:containerId => 'request-info-tabs',
                              :tabLabels => prov_tab_labels,
                              :type => 'CATALOG_REQUEST_INFO'})
 
