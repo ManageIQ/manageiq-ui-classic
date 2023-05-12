@@ -255,8 +255,8 @@ module OpsController::Settings::Common
   def save_advanced_settings(resource)
     resource.add_settings_for_resource_yaml(@edit[:new][:file_data])
   rescue Vmdb::Settings::ConfigurationInvalid => err
-    err.errors.each do |field, msg|
-      add_flash("#{field.to_s.titleize}: #{msg}", :error)
+    err.errors.each do |error|
+      add_flash("#{error.attribute.to_s.titleize}: #{error.message}", :error)
     end
     @changed = (@edit[:new] != @edit[:current])
     javascript_flash
@@ -315,8 +315,8 @@ module OpsController::Settings::Common
     if valid
       add_flash(_("LDAP Settings validation was successful"))
     else
-      errors.each do |field, msg|
-        add_flash("#{field.titleize}: #{msg}", :error)
+      errors.each do |error|
+        add_flash("#{error.attribute.to_s.titleize}: #{error.message}", :error)
       end
     end
 
@@ -336,8 +336,8 @@ module OpsController::Settings::Common
     if valid
       add_flash(_("Amazon Settings validation was successful"))
     else
-      errors.each do |field, msg|
-        add_flash("#{field.titleize}: #{msg}", :error)
+      errors.each do |error|
+        add_flash("#{error.attribute.to_s.titleize}: #{error.message}", :error)
       end
     end
     javascript_flash
