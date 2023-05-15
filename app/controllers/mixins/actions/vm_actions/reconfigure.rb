@@ -20,7 +20,6 @@ module Mixins
           if @reconfigitems.size == 1
             vm = @reconfigitems.first
             @vlan_options = vm.try(:available_vlans) || get_vlan_options(vm.host_id)
-
             @avail_adapter_names = vm.try(:available_adapter_names) || []
             @iso_options = get_iso_options(vm)
           end
@@ -216,13 +215,13 @@ module Mixins
           # determine available switches for this host...
           switch_ids = []
           Rbac.filtered(HostSwitch.where("host_id = ?", host_id)).each do |host_switch|
-            switch_ids << host_switch.switch_id
+            switch_ids << host_switch.switch_id unless switch_ids.include?(host_switch.switch_id)
           end
 
           Rbac.filtered(Lan.where("switch_id IN (?)", switch_ids)).each do |lan|
-            vlan_options << lan.name
+            vlan_options << lan.name unless vlan_options.include?(lan.name)
           end
-          vlan_options.sort
+          vlan_options.uniq.sort
         end
 
         def get_iso_options(vm)
