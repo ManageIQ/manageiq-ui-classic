@@ -25,3 +25,15 @@
     }
   }
 }
+.key-value-list-component-wrapper {
+  .key-value-list-pair {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+
+    .key-value-delete {
+      height: 20px;
+      top: 20px;
+    }
+  }
+}
