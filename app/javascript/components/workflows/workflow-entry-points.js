@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Loading } from 'carbon-components-react';
 import MiqDataTable from '../miq-data-table';
-import { workflowsEntryPoints } from './workflows-dummy-data';
+import { workflowsEntryPoints, treeProps } from './workflows-dummy-data';
+import { TreeViewRedux } from '../tree-view';
 
 const WorkflowEntryPoints = ({ fieldName, entryPoint }) => {
   const [data, setData] = useState({ isLoading: true, list: {}, selectedItemId: undefined });
@@ -43,6 +44,7 @@ const WorkflowEntryPoints = ({ fieldName, entryPoint }) => {
   };
   return (
     <>
+      {/* <TreeViewRedux {...treeProps} /> */}
       <MiqDataTable
         headers={data.list.headers}
         rows={data.list.rows}
