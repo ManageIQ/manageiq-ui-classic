@@ -163,7 +163,13 @@ module OpsHelper::TextualSummary
 
   def textual_tenant_quota_allocations
     h = {:title     => _("Tenant Quota"),
-         :headers   => [_("Name"), _("Total Quota"), _("In Use"), _("Allocated"), _("Available")],
+         :headers   => [
+           {:key => :name,         :label => _("Name")},
+           {:key => :total_quota,  :label => _("Total Quota")},
+           {:key => :in_use,       :label => _("In Use")},
+           {:key => :allocated,    :label => _("Allocated")},
+           {:key => :available,    :label => _("Available")},
+         ],
          :col_order => %w[name total in_use allocated available]}
     h[:value] = get_tenant_quota_allocations
     h
@@ -194,17 +200,18 @@ module OpsHelper::TextualSummary
 
   def get_tenant_quota_allocations
     rows = @record.combined_quotas.values.to_a
+
     rows.collect do |row|
       {
-        :title     => row[:description],
-        :name      => row[:description],
-        :in_use    => convert_to_format_with_default_text(row[:format], row[:text_modifier], row[:used], :in_use),
-        :allocated => convert_to_format_with_default_text(row[:format], row[:text_modifier], row[:allocated],
-                                                          :allocated),
-        :available => convert_to_format_with_default_text(row[:format], row[:text_modifier], row[:available],
-                                                          :available),
-        :total     => convert_to_format_with_default_text(row[:format], row[:text_modifier], row[:value], :total),
-        :explorer  => true
+        :title       => row[:description],
+        :name        => row[:description],
+        :in_use      => convert_to_format_with_default_text(row[:format], row[:text_modifier], row[:used], :in_use),
+        :allocated   => convert_to_format_with_default_text(row[:format], row[:text_modifier], row[:allocated],
+                                                            :allocated),
+        :available   => convert_to_format_with_default_text(row[:format], row[:text_modifier], row[:available],
+                                                            :available),
+        :total_quota => convert_to_format_with_default_text(row[:format], row[:text_modifier], row[:value], :total),
+        :explorer    => true
       }
     end
   end
