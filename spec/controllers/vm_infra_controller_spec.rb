@@ -77,7 +77,7 @@ describe VmInfraController do
     vm_vmware.ems_custom_attributes.push(custom_attr1, custom_attr2)
     expect(controller).to receive(:identify_record).and_return(vm_vmware)
 
-    get :show, :params => { :id => vm_vmware.id }
+    get :show, :params => {:id => vm_vmware.id}
     expect(response).to redirect_to(:action => 'explorer')
 
     post :explorer
@@ -159,19 +159,19 @@ describe VmInfraController do
 
   it 'can open VM Compare tab' do
     vm = FactoryBot.create(:vm_vmware,
-                            :host     => host_1x1,
-                            :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '04'))
+                           :host     => host_1x1,
+                           :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '04'))
     vm2 = FactoryBot.create(:vm_vmware,
-                             :host     => host_1x1,
-                             :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '05'))
+                            :host     => host_1x1,
+                            :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '05'))
     FactoryBot.create(:miq_report, :filename      => 'vms.yaml',
-                                    :template_type => 'compare',
-                                    :name          => "Test Report",
-                                    :rpt_type      => "Custom",
-                                    :tz            => "Eastern Time (US & canada)",
-                                    :headers       => ["Name", "Boot time", "Disks aligned"],
-                                    :col_order     => %w(name boot_time disks_aligned),
-                                    :cols          => %w(name boot_time disks_aligned))
+                                   :template_type => 'compare',
+                                   :name          => "Test Report",
+                                   :rpt_type      => "Custom",
+                                   :tz            => "Eastern Time (US & canada)",
+                                   :headers       => ["Name", "Boot time", "Disks aligned"],
+                                   :col_order     => %w[name boot_time disks_aligned],
+                                   :cols          => %w[name boot_time disks_aligned])
 
     allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
 
@@ -255,8 +255,8 @@ describe VmInfraController do
 
   it 'can open Policies Simulation' do
     vm = FactoryBot.create(:vm_vmware,
-                            :host     => host_1x1,
-                            :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '04'))
+                           :host     => host_1x1,
+                           :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '04'))
     allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
 
     get :show, :params => {:id => vm_vmware.id}
@@ -273,11 +273,11 @@ describe VmInfraController do
   it 'can open Edit Tags' do
     classification = FactoryBot.create(:classification, :name => "department", :description => "D    epartment")
     @tag1 = FactoryBot.create(:classification_tag,
-                               :name   => "tag1",
-                               :parent => classification)
+                              :name   => "tag1",
+                              :parent => classification)
     @tag2 = FactoryBot.create(:classification_tag,
-                               :name   => "tag2",
-                               :parent => classification)
+                              :name   => "tag2",
+                              :parent => classification)
     get :show, :params => {:id => vm_vmware.id}
     expect(response).to redirect_to(:action => 'explorer')
 
@@ -292,11 +292,11 @@ describe VmInfraController do
   it 'The VM quadicons on the tagging screen do not links' do
     classification = FactoryBot.create(:classification, :name => "department", :description => "D    epartment")
     @tag1 = FactoryBot.create(:classification_tag,
-                               :name   => "tag1",
-                               :parent => classification)
+                              :name   => "tag1",
+                              :parent => classification)
     @tag2 = FactoryBot.create(:classification_tag,
-                               :name   => "tag2",
-                               :parent => classification)
+                              :name   => "tag2",
+                              :parent => classification)
     get :show, :params => {:id => vm_vmware.id}
     expect(response).to redirect_to(:action => 'explorer')
 
@@ -392,8 +392,8 @@ describe VmInfraController do
 
   it 'can Publish selected VM' do
     vm = FactoryBot.create(:vm_vmware,
-                            :host     => host_1x1,
-                            :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '04'))
+                           :host     => host_1x1,
+                           :hardware => FactoryBot.create(:hardware, :cpu1x1, :ram1GB, :virtual_hw_version => '04'))
     allow(controller).to receive(:x_node).and_return("v-#{vm.id}")
 
     get :show, :params => {:id => vm_vmware.id}
@@ -499,7 +499,7 @@ describe VmInfraController do
     context 'operations on Templates' do
       let(:template) { FactoryBot.create(:template, :ext_management_system => ems) }
 
-      %w(vm_guest_shutdown vm_guest_restart vm_start vm_stop vm_suspend vm_reset).zip(['Shutdown Guest', 'Restart Guest', 'Start', 'Stop', 'Suspend', 'Reset']).each do |action, action_name|
+      %w[vm_guest_shutdown vm_guest_restart vm_start vm_stop vm_suspend vm_reset].zip(['Shutdown Guest', 'Restart Guest', 'Start', 'Stop', 'Suspend', 'Reset']).each do |action, action_name|
         it "cannot #{action_name}" do
           post :x_button, :params => {:pressed => action, :id => template.id}
           expect(response.status).to eq(200)
@@ -510,7 +510,7 @@ describe VmInfraController do
   end
 
   it 'can run Utilization' do
-    post :x_button, :params => {:display => "performance",  :pressed => 'vm_perf', :id => vm_vmware.id}
+    post :x_button, :params => {:display => "performance", :pressed => 'vm_perf', :id => vm_vmware.id}
     expect(response.status).to eq(200)
   end
 
@@ -570,7 +570,7 @@ describe VmInfraController do
         expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
           :model_name => 'VmOrTemplate',
           :parent_id  => nil,
-          :explorer   => true,
+          :explorer   => true
         )
 
         post :x_search_by_name, :params => {:search_text => 'foobar'}
@@ -589,7 +589,7 @@ describe VmInfraController do
         report_data_request(
           :model     => 'VmOrTemplate',
           :parent_id => nil,
-          :explorer  => true,
+          :explorer  => true
         )
         results = assert_report_data_response
         expect(results['data']['rows'].length).to eq(1)
@@ -637,7 +637,7 @@ describe VmInfraController do
     expect(assigns(:edit)[:new]).to_not include(:expression)
   end
 
-  %w(ems_clusters hosts storages vms miq_templates).each do |custom_button_class|
+  %w[ems_clusters hosts storages vms miq_templates].each do |custom_button_class|
     include_examples "relationship table screen with custom buttons", custom_button_class
   end
 end

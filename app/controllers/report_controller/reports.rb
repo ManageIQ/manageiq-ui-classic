@@ -66,6 +66,7 @@ module ReportController::Reports
     else
       begin
         raise StandardError, _("Default Report \"%{name}\" cannot be deleted") % {:name => rpt.name} if rpt.rpt_type == "Default"
+
         rpt_name = rpt.name
         menu_repname_update(rpt_name, nil)
         audit = {:event => "report_record_delete", :message => "[#{rpt_name}] Record deleted", :target_id => rpt.id, :target_class => "MiqReport", :userid => session[:userid]}
@@ -89,7 +90,7 @@ module ReportController::Reports
   def download_report
     assert_privileges("miq_report_export")
     @yaml_string = MiqReport.export_to_yaml(params[:id] ? [params[:id]] : @sb[:choices_chosen], MiqReport)
-    file_name    = "Reports_#{format_timezone(Time.now, Time.zone, "export_filename")}.yaml"
+    file_name    = "Reports_#{format_timezone(Time.zone.now, Time.zone, "export_filename")}.yaml"
     disable_client_cache
     send_data(@yaml_string, :filename => file_name)
   end
@@ -116,7 +117,7 @@ module ReportController::Reports
     @sb[:miq_report_id] = nodeid
     @record = @miq_report = MiqReport.for_user(current_user).find(@sb[:miq_report_id])
     if @sb[:active_tab] == "saved_reports" || x_active_tree == :savedreports_tree
-      @force_no_grid_xml   = true
+      @force_no_grid_xml = true
       @no_checkboxes = !role_allows?(:feature => "miq_report_saved_reports_admin", :any => true)
 
       if params[:ppsetting]                                             # User selected new per page value
@@ -166,6 +167,7 @@ module ReportController::Reports
       rec = MiqGroup.find_by(:description => role.name)
       menu = rec.settings[:report_menus] if rec.settings
       next if menu.nil?
+
       menu.each_with_index do |lvl1, i|
         lvl1[1].each_with_index do |lvl2, j|
           lvl2[1].each_with_index do |rep, k|
@@ -190,13 +192,12 @@ module ReportController::Reports
     retname = ""
     # The rest are table names
     if tables.length > 1
-      tables[1..-1].each do |t|
+      tables[1..].each do |t|
         retname += "." if retname.present?
         retname += Dictionary.gettext(t, :type => :table, :notfound => :titleize)
       end
     end
-    retname = retname.blank? ? " " : retname + " : " # Use space for base fields, add : to others
-    retname
+    retname.blank? ? " " : "#{retname} : " # Use space for base fields, add : to others
   end
 
   # Create a report object from the current edit fields

@@ -5,7 +5,7 @@ module Mixins
     #
 
     def sandbox
-      @sb ||= {}
+      @sandbox ||= {}
     end
 
     # Return the current tree history array
@@ -97,7 +97,7 @@ module Mixins
       vms_filter_tree
       vms_instances_filter_tree
       widgets_tree
-    ].each_with_object({}) { |value, acc| acc[value] = value.to_sym }.freeze
+    ].index_with(&:to_sym).freeze
 
     ACCORD_WHITELIST = %w[
       ab
@@ -150,7 +150,7 @@ module Mixins
       vms_filter
       vms_instances_filter
       widgets
-    ].each_with_object({}) { |value, acc| acc[value] = value.to_sym }.freeze
+    ].index_with(&:to_sym).freeze
 
     def x_active_tree=(tree)
       sandbox[:active_tree] = nil

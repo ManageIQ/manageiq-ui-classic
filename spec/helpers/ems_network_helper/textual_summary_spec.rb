@@ -4,9 +4,9 @@ describe EmsNetworkHelper::TextualSummary do
     allow(self).to receive(:textual_authentications).and_return([])
   end
 
-  include_examples "textual_group", "Properties", %i(provider_region hostname ipaddress type port guid)
+  include_examples "textual_group", "Properties", %i[provider_region hostname ipaddress type port guid]
 
-  include_examples "textual_group", "Relationships", %i(
+  include_examples "textual_group", "Relationships", %i[
     parent_ems_cloud
     cloud_tenants
     cloud_networks
@@ -18,9 +18,9 @@ describe EmsNetworkHelper::TextualSummary do
     network_ports
     network_services
     custom_button_events
-  )
+  ]
 
-  include_examples "textual_group", "Status", %i(refresh_status refresh_date)
+  include_examples "textual_group", "Status", %i[refresh_status refresh_date]
 
-  include_examples "textual_group_smart_management", %i(zone)
+  include_examples "textual_group_smart_management", %i[zone]
 end

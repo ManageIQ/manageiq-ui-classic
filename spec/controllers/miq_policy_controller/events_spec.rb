@@ -19,9 +19,9 @@ describe MiqPolicyController do
           :actions_false => []
         }
         edit = {
-          :new      => new_hash,
-          :current  => new_hash,
-          :key      => "event_edit__#{@event.id}"
+          :new     => new_hash,
+          :current => new_hash,
+          :key     => "event_edit__#{@event.id}"
         }
         controller.instance_variable_set(:@edit, edit)
         session[:edit] = edit
@@ -42,9 +42,9 @@ describe MiqPolicyController do
           :actions_false => []
         }
         edit = {
-          :new      => new_hash,
-          :current  => new_hash,
-          :key      => "event_edit__#{@event.id}"
+          :new     => new_hash,
+          :current => new_hash,
+          :key     => "event_edit__#{@event.id}"
         }
         controller.instance_variable_set(:@edit, edit)
         session[:edit] = edit

@@ -18,7 +18,7 @@ describe MiqAlertSetController do
 
     it "Test reset button" do
       controller.params = {:button => "reset", :id => @ap.id}
-      expect(controller).to receive(:javascript_redirect).with(:action       => 'edit_assignment',
+      expect(controller).to receive(:javascript_redirect).with(:action        => 'edit_assignment',
                                                                :id            => @ap.id,
                                                                :flash_msg     => _("All changes have been reset"),
                                                                :flash_warning => true)
@@ -47,10 +47,10 @@ describe MiqAlertSetController do
       controller.instance_variable_set(:@assign, assign)
       controller.instance_variable_set(:@sb, {:assign => assign})
       controller.params = {:id => @ap.id, :button => "save"}
-      expect(controller).to receive(:javascript_redirect).with(:action    => 'show',
-                                                               :controller=> "miq_alert_set",
-                                                               :flash_msg => _("Alert Profile \"%{name}\" assignments successfully saved") % {:name => @ap.description},
-                                                               :id        => @ap.id)
+      expect(controller).to receive(:javascript_redirect).with(:action     => 'show',
+                                                               :controller => "miq_alert_set",
+                                                               :flash_msg  => _("Alert Profile \"%{name}\" assignments successfully saved") % {:name => @ap.description},
+                                                               :id         => @ap.id)
       controller.edit_assignment
     end
   end

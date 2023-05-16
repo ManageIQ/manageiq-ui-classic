@@ -105,7 +105,7 @@ describe EmsClusterController do
         allow(controller).to receive(:drop_breadcrumb)
         allow(controller).to receive(:records_support_feature?).and_return(true)
         allow(controller).to receive(:render)
-        controller.params = {:id => cluster.id.to_s, :miq_grid_checks => vm.id.to_s, :pressed => 'vm_scan' }
+        controller.params = {:id => cluster.id.to_s, :miq_grid_checks => vm.id.to_s, :pressed => 'vm_scan'}
       end
 
       %w[vms all_vms].each do |display|

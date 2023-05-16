@@ -48,13 +48,13 @@ describe InfraNetworkingController do
       end
 
       it "renders list of All Distributed Switches for infra_networking_tree root node" do
-        post :tree_select, :params => { :id => 'root', :format => :js }
+        post :tree_select, :params => {:id => 'root', :format => :js}
 
         expect(response.status).to eq(200)
       end
 
       it "renders textual summary for an infrastructure switch" do
-        post :tree_select, :params => { :id => "sw-#{switch.id}", :tree => :infra_networking_tree, :format => :js }
+        post :tree_select, :params => {:id => "sw-#{switch.id}", :tree => :infra_networking_tree, :format => :js}
 
         expect(response.status).to eq(200)
         expect(response.body).to include('Department')
@@ -65,7 +65,7 @@ describe InfraNetworkingController do
       it 'renders the network switch center toolbar' do
         nodeid = [ems, cluster, switch].map { |item| TreeNode.new(item).key }.join('_')
         expect(ApplicationHelper::Toolbar::InfraNetworkingCenter).to receive(:definition).and_call_original.at_least(:once)
-        post :tree_select, :params => { :id => nodeid }
+        post :tree_select, :params => {:id => nodeid}
       end
 
       context 'right cell text' do
@@ -101,20 +101,20 @@ describe InfraNetworkingController do
     end
 
     it "build switch tagging screen" do
-      post :x_button, :params => { :pressed => "infra_networking_tag", :format => :js, :id => switch.id }
+      post :x_button, :params => {:pressed => "infra_networking_tag", :format => :js, :id => switch.id}
       expect(assigns(:flash_array)).to be_nil
       expect(response.status).to eq(200)
     end
 
     it "cancels tags edit" do
-      post :tagging_edit, :params => { :button => "cancel", :format => :js, :id => switch.id }
+      post :tagging_edit, :params => {:button => "cancel", :format => :js, :id => switch.id}
       expect(assigns(:flash_array).first[:message]).to include("was cancelled by the user")
       expect(assigns(:edit)).to be_nil
       expect(response.status).to eq(200)
     end
 
     it "save tags" do
-      post :tagging_edit, :params => { :button => "save", :format => :js, :id => switch.id, :data => get_tags_json([tag1, tag2]) }
+      post :tagging_edit, :params => {:button => "save", :format => :js, :id => switch.id, :data => get_tags_json([tag1, tag2])}
       expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
       expect(assigns(:edit)).to be_nil
       expect(response.status).to eq(200)

@@ -49,7 +49,7 @@ module TermOfServiceHelper
     "PhysicalServer"      => {
       "physical_server" => N_("Selected Servers")
     }
-  }
+  }.freeze
 
   ASSIGN_TOS[:chargeback_storage] = ASSIGN_TOS["Storage"]
 

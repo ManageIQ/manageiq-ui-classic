@@ -42,7 +42,7 @@ module ReportHelper
                            groupings.each_with_object([]) do |(field, col_options), options|
                              model = @edit[:new][:model]
                              col_options[:grouping].each do |fun|
-                               field_key = if field =~ /\./
+                               field_key = if field.include?('.')
                                              f = field.sub('.', '-')
                                              "#{model}.#{f}"
                                            else

@@ -9,6 +9,7 @@ module ApplicationHelper
       # Don't render flash message in gtl, partial is already being rendered on screen
       return false if request.parameters[:controller] == "miq_request" && @lastaction == "show_list"
       return false if request.parameters[:controller] == "service" && @lastaction == "show" && @view
+
       true
     end
 

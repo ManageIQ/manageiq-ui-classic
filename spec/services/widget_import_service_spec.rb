@@ -42,7 +42,7 @@ describe WidgetImportService do
         :sched_action  => {:method => 'generate_widget'},
         :filter        => expression,
         :resource_type => "MiqWidget",
-        :run_at        => { :start_time => "2019-05-30 00:00:00 UTC", :tz => "UTC", :interval => { :unit => "hourly", :value => 1 } }
+        :run_at        => {:start_time => "2019-05-30 00:00:00 UTC", :tz => "UTC", :interval => {:unit => "hourly", :value => 1}}
       }
     end
 
@@ -70,7 +70,7 @@ describe WidgetImportService do
     let(:import_file_upload) do
       double("ImportFileUpload", :id => 42, :uploaded_content => yaml_data)
     end
-    let(:widgets_to_import) { %w(potato not_potato) }
+    let(:widgets_to_import) { %w[potato not_potato] }
 
     let(:miq_report_contents) do
       [{
@@ -90,7 +90,7 @@ describe WidgetImportService do
         "description"   => "new schedule description",
         "resource_type" => "MiqWidget",
         "run_at"        => {
-          :start_time => Time.now,
+          :start_time => Time.zone.now,
           :tz         => "UTC",
           :interval   => {
             :unit  => "daily",
@@ -232,7 +232,7 @@ describe WidgetImportService do
               :description   => "old schedule description",
               :resource_type => "MiqWidget",
               :run_at        => {
-                :start_time => Time.now,
+                :start_time => Time.zone.now,
                 :tz         => "UTC",
                 :interval   => {:unit => "daily", :value => "6"}
               }

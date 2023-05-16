@@ -24,10 +24,10 @@ describe MiqActionController do
 
     it "Test reset button" do
       controller.params = {:button => "reset", :id => @action.id}
-      expect(controller).to receive(:javascript_redirect).with(:action       => 'edit',
-                                                              :id            => @action.id,
-                                                              :flash_msg     => _("All changes have been reset"),
-                                                              :flash_warning => true)
+      expect(controller).to receive(:javascript_redirect).with(:action        => 'edit',
+                                                               :id            => @action.id,
+                                                               :flash_msg     => _("All changes have been reset"),
+                                                               :flash_warning => true)
       controller.send(:edit)
     end
   end
@@ -77,8 +77,7 @@ describe MiqActionController do
     let(:cat1) { FactoryBot.create(:classification, :description => res.first) }
     let(:cat2) { FactoryBot.create(:classification, :description => res.second) }
 
-
-    let(:res) { %w(test1 test2) }
+    let(:res) { %w[test1 test2] }
     let(:action) do
       FactoryBot.create(:miq_action,
                         :action_type => 'inherit_parent_tags',

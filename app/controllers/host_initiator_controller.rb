@@ -16,6 +16,13 @@ class HostInitiatorController < ApplicationController
     %w[cloud_volumes]
   end
 
+  def show
+    if params[:id].nil?
+      @breadcrumbs.clear
+    end
+    super
+  end
+
   def new
     assert_privileges("host_initiator_new")
 
@@ -25,13 +32,6 @@ class HostInitiatorController < ApplicationController
     end
     drop_breadcrumb(:name => _("Define New %{table}") % {:table => ui_lookup(:table => table_name)},
                     :url  => "/#{controller_name}/new")
-  end
-
-  def show
-    if params[:id].nil?
-      @breadcrumbs.clear
-    end
-    super
   end
 
   private

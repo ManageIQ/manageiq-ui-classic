@@ -12,7 +12,7 @@ class ApplicationController
           @edit[:new][:user_script_text] = params[:upload][:file].read
           msg = _('User script "%{params}" upload was successful') % {:params => params[:upload][:file].original_filename}
           add_flash(msg)
-        rescue StandardError => bang
+        rescue => bang
           @edit[:new][:user_script] = nil
           msg = _("Error during User Script \"%{params}\" file upload: %{message}") % {:params => params[:upload][:file].original_filename, :message => bang.message}
           add_flash(msg, :error)

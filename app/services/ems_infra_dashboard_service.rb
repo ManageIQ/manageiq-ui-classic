@@ -78,6 +78,7 @@ class EmsInfraDashboardService < EmsDashboardService
 
     metrics.each do |m|
       next if m.resource.nil? # Metrics are purged asynchronously and might be missing their node
+
       provider_name = @ems.present? ? @ems.name : m.resource.ext_management_system.name
 
       cluster_cpu_usage << {
@@ -127,7 +128,7 @@ class EmsInfraDashboardService < EmsDashboardService
     current_user = @controller.current_user
     tp = TimeProfile.profile_for_user_tz(current_user.id, current_user.get_timezone) || TimeProfile.default_time_profile
 
-    @daily_metrics ||= begin
+    @daily_provider_metrics ||= begin
       metric_rollup_scope = MetricRollup.where(:capture_interval_name => 'daily', :time_profile => tp)
       metric_rollup_scope = metric_rollup_scope.where(:resource => @ems)
       metric_rollup_scope.where('timestamp > ?', 30.days.ago.utc).order('timestamp')

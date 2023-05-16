@@ -24,7 +24,7 @@ describe AuthKeyPairCloudController do
     end
 
     it "builds tagging screen" do
-      post :button, :params => { :pressed => "auth_key_pair_cloud_tag", :format => :js, :id => kp.id }
+      post :button, :params => {:pressed => "auth_key_pair_cloud_tag", :format => :js, :id => kp.id}
 
       expect(assigns(:flash_array)).to be_nil
       expect(response.status).to eq(200)
@@ -32,7 +32,7 @@ describe AuthKeyPairCloudController do
 
     it "cancels tags edit" do
       session[:breadcrumbs] = [{:url => "auth_key_pair_cloud/show/#{kp.id}"}, 'placeholder']
-      post :tagging_edit, :params => { :button => "cancel", :format => :js, :id => kp.id }
+      post :tagging_edit, :params => {:button => "cancel", :format => :js, :id => kp.id}
 
       expect(assigns(:flash_array).first[:message]).to include("was cancelled by the user")
       expect(assigns(:edit)).to be_nil
@@ -41,7 +41,7 @@ describe AuthKeyPairCloudController do
 
     it "save tags" do
       session[:breadcrumbs] = [{:url => "auth_key_pair_cloud/show/#{kp.id}"}, 'placeholder']
-      post :tagging_edit, :params => { :button => "save", :format => :js, :id => kp.id, :data => get_tags_json([tag1, tag2]) }
+      post :tagging_edit, :params => {:button => "save", :format => :js, :id => kp.id, :data => get_tags_json([tag1, tag2])}
       expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
       expect(assigns(:edit)).to be_nil
       expect(response.status).to eq(200)
@@ -50,14 +50,14 @@ describe AuthKeyPairCloudController do
 
   describe "parse error messages" do
     it "simplifies fog error message" do
-      raw_msg = "Expected(200) <=> Actual(400 Bad Request)\nexcon.error.response\n  :body          => "\
-                "\"{\\\"badRequest\\\": {\\\"message\\\": \\\"Keypair data is invalid: failed to generate "\
-                "fingerprint\\\", \\\"code\\\": 400}}\"\n  :cookies       => [\n  ]\n  :headers       => {\n "\
-                "\"Content-Length\"       => \"99\"\n    \"Content-Type\"         => \"application/json; "\
-                "charset=UTF-8\"\n    \"Date\"                 => \"Mon, 02 May 2016 08:15:51 GMT\"\n ..."\
-                ":reason_phrase => \"Bad Request\"\n  :remote_ip     => \"10....\"\n  :status        => 400\n  "\
+      raw_msg = "Expected(200) <=> Actual(400 Bad Request)\nexcon.error.response\n  :body          => " \
+                "\"{\\\"badRequest\\\": {\\\"message\\\": \\\"Keypair data is invalid: failed to generate " \
+                "fingerprint\\\", \\\"code\\\": 400}}\"\n  :cookies       => [\n  ]\n  :headers       => {\n " \
+                "\"Content-Length\"       => \"99\"\n    \"Content-Type\"         => \"application/json; " \
+                "charset=UTF-8\"\n    \"Date\"                 => \"Mon, 02 May 2016 08:15:51 GMT\"\n ..." \
+                ":reason_phrase => \"Bad Request\"\n  :remote_ip     => \"10....\"\n  :status        => 400\n  " \
                 ":status_line   => \"HTTP/1.1 400 Bad Request\\r\\n\"\n"
-      expect(subject.send(:get_error_message_from_fog, raw_msg)).to eq "Keypair data is invalid: failed to generate "\
+      expect(subject.send(:get_error_message_from_fog, raw_msg)).to eq "Keypair data is invalid: failed to generate " \
                                                                        "fingerprint"
     end
   end

@@ -101,7 +101,7 @@ class CatalogController < ApplicationController
     @sb[:st_form_active_tab] = "basic"
     composite_type = @record.service_type == "composite"
     new_atomic_item = params[:pressed] == "atomic_catalogitem_new" || (params[:button].present? && session[:edit][:new][:service_type] == "atomic")
-    if checked_id.present? && composite_type || checked_id.nil? && !new_atomic_item
+    if (checked_id.present? && composite_type) || (checked_id.nil? && !new_atomic_item)
       st_edit
     else
       atomic_st_edit
@@ -233,6 +233,7 @@ class CatalogController < ApplicationController
     # need to check req_id in session since we are using common code for prov requests and atomic ST screens
     id = session[:edit][:req_id] || "new"
     return unless load_edit("prov_edit__#{id}", "replace_cell__explorer")
+
     get_form_vars
     build_automate_tree(:automate_catalog) if automate_tree_needed?
     if params[:st_prov_type] # build request screen for selected item type
@@ -299,7 +300,7 @@ class CatalogController < ApplicationController
           page.replace("basic_info_div", :partial => "form_basic_info")
         end
         if params[:display]
-          page << "miq_tabs_show_hide('#details_tab', '#{(params[:display] == "1")}')"
+          page << "miq_tabs_show_hide('#details_tab', '#{params[:display] == "1"}')"
         end
         page.replace_html("provision_entry_point", :partial => "provision_entry_point") if params[:provision_entry_point_type]
         page.replace_html("reconfigure_entry_point", :partial => "reconfigure_entry_point") if params[:reconfigure_entry_point_type]
@@ -332,7 +333,7 @@ class CatalogController < ApplicationController
       redirect_to(:controller => "catalog",
                   :action     => "explorer",
                   :id         => tree_node_id)
-      return
+      nil
     else
       redirect_to(:action => 'show', :controller => record.class.base_model.to_s.underscore, :id => record.id)
     end
@@ -479,7 +480,7 @@ class CatalogController < ApplicationController
         end
       else
         javascript_flash
-        return
+        nil
       end
     when "reset", nil # Reset or first time in
       st_set_form_vars
@@ -488,7 +489,7 @@ class CatalogController < ApplicationController
       end
       @changed = session[:changed] = false
       replace_right_cell(:action => "st_new")
-      return
+      nil
     end
   end
 
@@ -509,7 +510,7 @@ class CatalogController < ApplicationController
       page.replace("basic_info_div", :partial => "form_basic_info") if params[:resource_id] || params[:display]
       page.replace("resources_info_div", :partial => "form_resources_info") if params[:resource_id] || @group_idx
       if params[:display]
-        page << "miq_tabs_show_hide('#details_tab', '#{(params[:display] == "1")}')"
+        page << "miq_tabs_show_hide('#details_tab', '#{params[:display] == "1"}')"
       end
       if changed != session[:changed]
         session[:changed] = changed
@@ -531,7 +532,7 @@ class CatalogController < ApplicationController
     elsif params[:upload] && params[:upload][:image] &&
           params[:upload][:image].respond_to?(:read)
       ext = params[:upload][:image].original_filename.split(".").last.downcase
-      if !%w[png jpg].include?(ext)
+      if %w[png jpg].exclude?(ext)
         msg = _("Custom Image must be a .png or .jpg file")
         err = true
       else
@@ -557,7 +558,7 @@ class CatalogController < ApplicationController
       format.html do # HTML, send error screen
         explorer
       end
-      format.any { head :not_found } # Anything else, just send 404
+      format.any { head 404 } # Anything else, just send 404
     end
   end
 
@@ -749,7 +750,7 @@ class CatalogController < ApplicationController
   end
 
   def st_catalog_edit
-    assert_privileges((params[:id] || session&.fetch_path(:edit, :rec_id)) ? "st_catalog_edit" : "st_catalog_new")
+    assert_privileges(params[:id] || session&.fetch_path(:edit, :rec_id) ? "st_catalog_edit" : "st_catalog_new")
 
     case params[:button]
     when "cancel"
@@ -820,7 +821,7 @@ class CatalogController < ApplicationController
         begin
           ot.remote_proxy = true
           ot.destroy
-        rescue StandardError => bang
+        rescue => bang
           add_flash(_("Error during 'Orchestration Template Deletion': %{error_message}") %
             {:error_message => bang.message}, :error)
         else
@@ -1026,17 +1027,16 @@ class CatalogController < ApplicationController
     # Check the validity of the entry points
     %i[fqname reconfigure_fqname retire_fqname].each do |fqname|
       type = entry_point_fields(fqname)[:type]
-      if embedded_automate(@edit[:new][type])
-        next if @edit[:new][fqname].blank? || !MiqAeClass.find_homonymic_instances_across_domains(current_user, @edit[:new][fqname]).empty?
+      next unless embedded_automate(@edit[:new][type])
+      next if @edit[:new][fqname].blank? || !MiqAeClass.find_homonymic_instances_across_domains(current_user, @edit[:new][fqname]).empty?
 
-        case fqname
-        when :fqname
-          add_flash(_('Please correct invalid Provisioning Entry Point prior to saving'), :error)
-        when :reconfigure_fqname
-          add_flash(_('Please correct invalid Reconfigure Entry Point prior to saving'), :error)
-        when :retire_fqname
-          add_flash(_('Please correct invalid Retirement Entry Point prior to saving'), :error)
-        end
+      case fqname
+      when :fqname
+        add_flash(_('Please correct invalid Provisioning Entry Point prior to saving'), :error)
+      when :reconfigure_fqname
+        add_flash(_('Please correct invalid Reconfigure Entry Point prior to saving'), :error)
+      when :retire_fqname
+        add_flash(_('Please correct invalid Retirement Entry Point prior to saving'), :error)
       end
     end
 
@@ -1310,15 +1310,16 @@ class CatalogController < ApplicationController
       # To display the automation_type and its entry point values in edit page.
       entry_point = resource_action_entry_point(ra)
 
-      if ra.action.downcase == 'provision'
+      case ra.action.downcase
+      when 'provision'
         @edit[:new][:fqname] = entry_point[:name]
         @edit[:new][:provision_entry_point_type] = entry_point[:type]
         @edit[:new][:provision_configuration_script_id] = entry_point[:configuration_script_id]
-      elsif ra.action.downcase == 'reconfigure'
+      when 'reconfigure'
         @edit[:new][:reconfigure_fqname] = entry_point[:name]
         @edit[:new][:reconfigure_entry_point_type] = entry_point[:type]
         @edit[:new][:reconfigure_configuration_script_id] = entry_point[:configuration_script_id]
-      elsif ra.action.downcase == 'retirement'
+      when 'retirement'
         @edit[:new][:retire_fqname] = entry_point[:name]
         @edit[:new][:retire_entry_point_type] = entry_point[:type]
         @edit[:new][:retire_configuration_script_id] = entry_point[:configuration_script_id]
@@ -1429,7 +1430,7 @@ class CatalogController < ApplicationController
     @edit[:new][:available_resources] = {}
     Rbac.filtered(kls.constantize.public_service_templates.where("(type is null or type != 'ServiceTemplateAnsiblePlaybook') and service_type != 'composite'")).select(:id, :name).each do |r|
       # don't add the servicetemplate record that's being edited, or add all vm templates
-      if r.id.to_s != @edit[:rec_id].to_s && !@edit[:new][:selected_resources].include?(r.id)
+      if r.id.to_s != @edit[:rec_id].to_s && @edit[:new][:selected_resources].exclude?(r.id)
         @edit[:new][:available_resources][r.id] = r.name
       end
     end
@@ -1477,7 +1478,7 @@ class CatalogController < ApplicationController
     @edit[:new][:display] = params[:display] == "1" if params[:display] # @edit[:new][:display] should't be changed if params[:display] is not set
     # saving it in @edit as well, to use it later because prov_set_form_vars resets @edit[:new]
     @edit[:st_prov_type] = @edit[:new][:st_prov_type]
-    @edit[:new][:long_description] = @edit[:new][:long_description].to_s + "..." if params[:transOne]
+    @edit[:new][:long_description] = "#{@edit[:new][:long_description]}..." if params[:transOne]
     fetch_zones
     checked_tenants if params[:check] # Save checked Additional Tenants to @edit
 
@@ -1615,9 +1616,9 @@ class CatalogController < ApplicationController
     all_job_templates, all_workflow_templates = fetch_all_templates(manager_id)
     @edit[:new][:available_templates].push(["",
                                             [["<#{_('Choose a Template')}>",
-                                              :selected => "<#{_('Choose a Template')}>",
-                                              :disabled => "<#{_('Choose a Template')}>",
-                                              :style    => 'display:none']]])
+                                              {:selected => "<#{_('Choose a Template')}>",
+                                               :disabled => "<#{_('Choose a Template')}>",
+                                               :style    => 'display:none'}]]])
     @edit[:new][:available_templates].push(["Job Templates", all_job_templates]) if all_job_templates.present?
     @edit[:new][:available_templates].push(["Workflow Templates", all_workflow_templates]) if all_workflow_templates.present?
   end
@@ -2213,9 +2214,9 @@ class CatalogController < ApplicationController
       # Check for parent nodes missing from vandt tree and return them if any
       parent_rec = ServiceTemplateCatalog.find_by(:id => record.service_template_catalog_id) # nil is a valid value
       parents = if parent_rec.nil?
-                  [parent_rec, :id => "-Unassigned"]
+                  [parent_rec, {:id => "-Unassigned"}]
                 else
-                  [parent_rec, :id => "stc-#{record.service_template_catalog_id}"]
+                  [parent_rec, {:id => "stc-#{record.service_template_catalog_id}"}]
                 end
     end
     # Go up thru the parents and find the highest level unopened, mark all as opened along the way
@@ -2272,7 +2273,7 @@ class CatalogController < ApplicationController
           if TreeBuilder.get_model_for_prefix(@nodetype) == "MiqTemplate"
             build_toolbar("summary_view_tb")
           end
-        elsif !%w[xx csb cbg cb].include?(@nodetype) && !@in_a_form
+        elsif %w[xx csb cbg cb].exclude?(@nodetype) && !@in_a_form
           build_toolbar("download_view_tb")
         end
       when :svccat_tree, :stcat_tree, :ot_tree
@@ -2287,10 +2288,8 @@ class CatalogController < ApplicationController
     )
     reload_trees_by_presenter(presenter, trees)
 
-    if @sb[:buttons_node]
-      if action == "group_reorder"
-        right_cell_text = _("Button Group Reorder")
-      end
+    if @sb[:buttons_node] && (action == "group_reorder")
+      right_cell_text = _("Button Group Reorder")
     end
     presenter[:right_cell_text] = right_cell_text
 
@@ -2381,7 +2380,7 @@ class CatalogController < ApplicationController
     presenter.reload_toolbars(:center => c_tb, :view => v_tb)
 
     presenter[:record_id] = determine_record_id_for_presenter
-    presenter[:lock_sidebar] = @edit && @edit[:current] || action == 'copy_catalog'
+    presenter[:lock_sidebar] = (@edit && @edit[:current]) || action == 'copy_catalog'
     presenter[:osf_node] = x_node
     presenter.reset_one_trans
 
@@ -2416,7 +2415,7 @@ class CatalogController < ApplicationController
     @showtype = "config"
     identify_catalog(id)
 
-    return if record_no_longer_exists?(@record)
+    nil if record_no_longer_exists?(@record)
   end
 
   def get_session_data

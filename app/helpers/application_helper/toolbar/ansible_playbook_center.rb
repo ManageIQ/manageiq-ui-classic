@@ -10,7 +10,7 @@ class ApplicationHelper::Toolbar::AnsiblePlaybookCenter < ApplicationHelper::Too
                        :embedded_configuration_script_payload_tag,
                        'pficon pficon-edit fa-lg',
                        N_('Edit Tags for this Ansible Playbook'),
-                       N_('Edit Tags'),
+                       N_('Edit Tags')
                      ),
                    ]
                  )

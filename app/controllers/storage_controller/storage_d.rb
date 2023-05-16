@@ -5,7 +5,7 @@ module StorageController::StorageD
   def storage_list
     assert_privileges('storage_show_list')
     @lastaction = "storage_list"
-    @force_no_grid_xml   = true
+    @force_no_grid_xml = true
     if params[:ppsetting]                                             # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                       # Set the new per page value
       @settings.store_path(:perpage, :list, @items_per_page) # Set the per page setting for this gtl type

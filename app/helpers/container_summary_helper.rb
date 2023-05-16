@@ -80,6 +80,7 @@ module ContainerSummaryHelper
   def textual_miq_custom_attributes
     attrs = @record.custom_attributes
     return nil if attrs.blank?
+
     attrs.sort_by(&:name).collect { |a| {:label => a.name.tr("_", " "), :value => a.value} }
   end
 
@@ -125,7 +126,7 @@ module ContainerSummaryHelper
         :controller => controller.controller_name,
         :action     => 'openscap_rule_results',
         :id         => @record,
-        :db         => controller.controller_name,
+        :db         => controller.controller_name
       )
     )
   end

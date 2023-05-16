@@ -33,10 +33,10 @@ describe MiqAeCustomizationController do
       edit = {
         :new               => {:available_dialogs => {:id => '01', :name => '02'},
                                :instance_name     => 'CustomButton_1',
-                               :attrs             => [%w(Attr1 01), %w(Attr2 02), %w(Attr3 03), %w(Attr4 04), %w(Attr5 05)],
+                               :attrs             => [%w[Attr1 01], %w[Attr2 02], %w[Attr3 03], %w[Attr4 04], %w[Attr5 05]],
                                :visibility_typ    => 'Type1'},
-        :instance_names    => %w(CustomButton_1 CustomButton_2),
-        :visibility_types  => %w(Type1 Type2),
+        :instance_names    => %w[CustomButton_1 CustomButton_2],
+        :visibility_types  => %w[Type1 Type2],
         :ansible_playbooks => [],
         :current           => {}
       }
@@ -44,7 +44,7 @@ describe MiqAeCustomizationController do
       session[:edit] = edit
       session[:resolve] = {}
 
-      post :automate_button_field_changed, :params => { :instance_name => 'CustomButton', :name => 'test', :button_icon => 'fa fa-star' }
+      post :automate_button_field_changed, :params => {:instance_name => 'CustomButton', :name => 'test', :button_icon => 'fa fa-star'}
       expect(response.status).to eq(200)
     end
 
@@ -59,16 +59,16 @@ describe MiqAeCustomizationController do
       controller.instance_variable_set(:@sb, @sb)
       controller.instance_variable_set(:@breadcrumbs, [])
 
-      edit = {:new                   => {:button_images  => %w(01 02 03), :available_dialogs => {:id => '01', :name => '02'},
+      edit = {:new                   => {:button_images  => %w[01 02 03], :available_dialogs => {:id => '01', :name => '02'},
                                          :display_for    => 'single',
                                          :instance_name  => 'CustomButton_1',
-                                         :attrs          => [%w(Attr1 01), %w(Attr2 02), %w(Attr3 03), %w(Attr4 04), %w(Attr5 05)],
+                                         :attrs          => [%w[Attr1 01], %w[Attr2 02], %w[Attr3 03], %w[Attr4 04], %w[Attr5 05]],
                                          :disabled_text  => 'a_disabled_text',
                                          :visibility_typ => 'Type1'},
-              :instance_names        => %w(CustomButton_1 CustomButton_2),
+              :instance_names        => %w[CustomButton_1 CustomButton_2],
               :visibility_expression => v_expression.exp,
               :enablement_expression => e_expression.exp,
-              :visibility_types      => %w(Type1 Type2),
+              :visibility_types      => %w[Type1 Type2],
               :ansible_playbooks     => [],
               :current               => {}}
       controller.instance_variable_set(:@edit, edit)
@@ -89,13 +89,13 @@ describe MiqAeCustomizationController do
       controller.instance_variable_set(:@sb, @sb)
       controller.instance_variable_set(:@breadcrumbs, [])
 
-      edit = {:new               => {:button_images => %w(01 02 03), :available_dialogs => {:id => '01', :name => '02'},
+      edit = {:new               => {:button_images => %w[01 02 03], :available_dialogs => {:id => '01', :name => '02'},
                                     :instance_name  => 'MiqEvent',
-                                    :attrs          => [%w(Attr1 01), %w(Attr2 02), %w(Attr3 03), %w(Attr4 04), %w(Attr5 05)],
+                                    :attrs          => [%w[Attr1 01], %w[Attr2 02], %w[Attr3 03], %w[Attr4 04], %w[Attr5 05]],
                                     :disabled_text  => 'a_disabled_text',
                                     :visibility_typ => 'Type1'},
-              :instance_names    => %w(CustomButton_1 CustomButton_2),
-              :visibility_types  => %w(Type1 Type2),
+              :instance_names    => %w[CustomButton_1 CustomButton_2],
+              :visibility_types  => %w[Type1 Type2],
               :ansible_playbooks => [],
               :current           => {}}
       controller.instance_variable_set(:@edit, edit)
@@ -112,14 +112,14 @@ describe MiqAeCustomizationController do
       controller.instance_variable_set(:@sb, @sb)
       controller.instance_variable_set(:@breadcrumbs, [])
 
-      edit = {:new               => {:button_images  => %w(01 02 03), :available_dialogs => {:id => '01', :name => '02'},
+      edit = {:new               => {:button_images  => %w[01 02 03], :available_dialogs => {:id => '01', :name => '02'},
                                      :instance_name  => 'MiqEvent',
-                                     :attrs          => [%w(Attr1 01), %w(Attr2 02), %w(Attr3 03), %w(Attr4 04), %w(Attr5 05)],
+                                     :attrs          => [%w[Attr1 01], %w[Attr2 02], %w[Attr3 03], %w[Attr4 04], %w[Attr5 05]],
                                      :disabled_text  => 'a_disabled_text',
                                      :object_request => CustomButton::PLAYBOOK_METHOD,
                                      :button_type    => 'ansible_playbook'},
-              :instance_names    => %w(CustomButton_1 CustomButton_2),
-              :visibility_types  => %w(Type1 Type2),
+              :instance_names    => %w[CustomButton_1 CustomButton_2],
+              :visibility_types  => %w[Type1 Type2],
               :ansible_playbooks => [],
               :current           => {}}
       controller.instance_variable_set(:@edit, edit)
@@ -141,11 +141,11 @@ describe MiqAeCustomizationController do
       controller.instance_variable_set(:@sb, @sb)
       controller.instance_variable_set(:@breadcrumbs, [])
 
-      edit = {:new               => {:button_images         => %w(01 02 03), :available_dialogs => {:id => '01', :name => '02'},
+      edit = {:new               => {:button_images         => %w[01 02 03], :available_dialogs => {:id => '01', :name => '02'},
                                      :instance_name         => 'CustomButton_1',
-                                     :attrs                 => [%w(Attr1 01), %w(Attr2 02), %w(Attr3 03), %w(Attr4 04), %w(Attr5 05)],
+                                     :attrs                 => [%w[Attr1 01], %w[Attr2 02], %w[Attr3 03], %w[Attr4 04], %w[Attr5 05]],
                                      :enablement_expression => e_exp.exp},
-              :instance_names    => %w(CustomButton_1 CustomButton_2),
+              :instance_names    => %w[CustomButton_1 CustomButton_2],
               :exp_key           => 'foo',
               :ansible_playbooks => [],
               :current           => {}}

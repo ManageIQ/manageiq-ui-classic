@@ -48,12 +48,12 @@ module OpsController::Settings::CapAndU
   end
 
   def set_perf_collection_for_clusters
-    cluster_ids = @edit[:new][:clusters].collect { |c| c[:id] }.uniq
+    cluster_ids = @edit[:new][:clusters].pluck(:id).uniq
     clusters = EmsCluster.where(:id => cluster_ids).includes(:hosts)
 
     clusters.each do |cl|
       enabled_hosts = @edit[:new][cl.id].select { |h| h[:capture] }
-      enabled_host_ids = enabled_hosts.collect { |h| h[:id] }.uniq
+      enabled_host_ids = enabled_hosts.pluck(:id).uniq
       cl.perf_capture_enabled_host_ids = enabled_host_ids
     end
   end

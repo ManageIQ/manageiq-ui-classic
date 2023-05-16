@@ -5,6 +5,7 @@ class TreeBuilder
 
   def self.class_for_type(type)
     raise('Obsolete tree type.') if type == :filter
+
     @x_tree_node_classes ||= {}
     @x_tree_node_classes[type] ||= LEFT_TREE_CLASSES[type].constantize
   end

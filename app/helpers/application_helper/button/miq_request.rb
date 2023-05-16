@@ -14,7 +14,8 @@ class ApplicationHelper::Button::MiqRequest < ApplicationHelper::Button::Generic
 
   def visible?
     return false if @record.resource_type == "AutomationRequest" &&
-                    !%w[miq_request_approval miq_request_delete].include?(@feature)
+                    %w[miq_request_approval miq_request_delete].exclude?(@feature)
+
     true
   end
 
@@ -22,6 +23,7 @@ class ApplicationHelper::Button::MiqRequest < ApplicationHelper::Button::Generic
   # on list view @record is not set so parent skipped method always returns true that makes button not visible.
   def skipped?
     return false if @feature == 'miq_request_reload' && role_allows_feature?
+
     super
   end
 end

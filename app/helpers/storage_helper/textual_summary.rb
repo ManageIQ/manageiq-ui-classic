@@ -24,6 +24,7 @@ module StorageHelper::TextualSummary
 
   def textual_group_content
     return nil if @record["total_space"].nil?
+
     TextualGroup.new(_("Content"), %i[files disk_files snapshot_files vm_ram_files vm_misc_files debris_files])
   end
 
@@ -38,13 +39,15 @@ module StorageHelper::TextualSummary
   def textual_free_space
     return nil if @record["free_space"].nil? && @record["total_space"].nil?
     return nil if @record["free_space"].nil?
+
     {:label => _("Free Space"),
-     :value => "#{number_to_human_size(@record["free_space"], :precision => 2)} "\
+     :value => "#{number_to_human_size(@record["free_space"], :precision => 2)} " \
                "(#{@record.free_space_percent_of_total}%)"}
   end
 
   def textual_used_space
     return nil if @record["free_space"].nil? && @record["total_space"].nil?
+
     {:label => _("Used Space"),
      :value => "#{number_to_human_size(@record.used_space, :precision => 2)} (#{@record.used_space_percent_of_total}%)"}
   end
@@ -52,11 +55,13 @@ module StorageHelper::TextualSummary
   def textual_total_space
     return nil if @record["free_space"].nil? && @record["total_space"].nil?
     return nil if @record["total_space"].nil?
+
     {:label => _("Total Space"), :value => "#{number_to_human_size(@record["total_space"], :precision => 2)} (100%)"}
   end
 
   def textual_uncommitted_space
     return nil if @record["total_space"].nil?
+
     space = if @record["uncommitted"].blank?
               _("None")
             else
@@ -67,8 +72,9 @@ module StorageHelper::TextualSummary
 
   def textual_used_uncommitted_space
     return nil if @record["total_space"].nil?
+
     {:label => _("Used + Uncommitted Space"),
-     :value => "#{number_to_human_size(@record.v_total_provisioned, :precision => 2)} "\
+     :value => "#{number_to_human_size(@record.v_total_provisioned, :precision => 2)} " \
                "(#{@record.v_provisioned_percent_of_total}%)"}
   end
 
@@ -153,7 +159,7 @@ module StorageHelper::TextualSummary
        "%{number} (%{percentage} of Used Space, %{amount} files)",
        amount) % {
          :number     => number_to_human_size(number, :precision => 2),
-         :percentage => percentage.to_s + '%',
+         :percentage => "#{percentage}%",
          :amount     => amount
        }
   end

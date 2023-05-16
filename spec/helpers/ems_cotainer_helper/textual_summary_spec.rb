@@ -9,8 +9,8 @@ describe EmsContainerHelper::TextualSummary do
 
     it "should parse custom attributes to labels and values" do
       @record.custom_attributes << FactoryBot.build(:custom_attribute,
-                                                     :name  => "Example_custom_attribute",
-                                                     :value => 4)
+                                                    :name  => "Example_custom_attribute",
+                                                    :value => 4)
 
       expect(textual_miq_custom_attributes.first[:label]).to eq("Example custom attribute")
 
@@ -24,8 +24,8 @@ describe EmsContainerHelper::TextualSummary do
 
   describe 'Creates correctly textual groups' do
     let(:textual_authentications_status) { [] }
-    include_examples "textual_group", "Properties", %i(name type hostname port cpu_cores memory_resources)
-    include_examples "textual_group", "Relationships", %i(
+    include_examples "textual_group", "Properties", %i[name type hostname port cpu_cores memory_resources]
+    include_examples "textual_group", "Relationships", %i[
       container_projects
       container_services
       container_replicators
@@ -38,8 +38,8 @@ describe EmsContainerHelper::TextualSummary do
       container_builds
       container_templates
       custom_button_events
-    )
-    include_examples "textual_group", "Status", %i(authentications_status metrics_status refresh_status refresh_date data_collection_state)
-    include_examples "textual_group_smart_management", %i(zone)
+    ]
+    include_examples "textual_group", "Status", %i[authentications_status metrics_status refresh_status refresh_date data_collection_state]
+    include_examples "textual_group_smart_management", %i[zone]
   end
 end

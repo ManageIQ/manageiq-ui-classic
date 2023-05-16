@@ -51,9 +51,9 @@ module ContainerServiceMixin
     if create_trend.any?
       {
         :dataAvailable => true,
-        :xData    => create_trend.keys,
-        :yCreated => create_trend.values.map(&:round),
-        :yDeleted => delete_trend.values.map(&:round)
+        :xData         => create_trend.keys,
+        :yCreated      => create_trend.values.map(&:round),
+        :yDeleted      => delete_trend.values.map(&:round)
       }
     end
   end
@@ -73,8 +73,8 @@ module ContainerServiceMixin
     if trend.any?
       {
         :dataAvailable => true,
-        :xData => trend.keys,
-        :yData => trend.values.map { |value| (value || 0).round }
+        :xData         => trend.keys,
+        :yData         => trend.values.map { |value| (value || 0).round }
       }
     end
   end

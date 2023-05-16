@@ -12,8 +12,10 @@ class ApplicationHelper::Button::ContainerTimeline < ApplicationHelper::Button::
   end
 
   def disabled?
-    @error_message = _('No Timeline data has been collected for this %{entity}') %
-                     {:entity => @entity} unless proper_events?
+    unless proper_events?
+      @error_message = _('No Timeline data has been collected for this %{entity}') %
+                       {:entity => @entity}
+    end
     @error_message.present?
   end
 

@@ -13,18 +13,18 @@ describe OpsController do
 
     def use_form_to_create_mapping
       post :label_tag_mapping_edit
-      post :label_tag_mapping_field_changed, :params => { :id => 'new', :entity => 'ContainerProject' }
-      post :label_tag_mapping_field_changed, :params => { :id => 'new', :label_name => 'my-label' }
-      post :label_tag_mapping_field_changed, :params => { :id => 'new', :category => 'My Cat' }
-      post :label_tag_mapping_edit, :params => { :button => 'add' }
+      post :label_tag_mapping_field_changed, :params => {:id => 'new', :entity => 'ContainerProject'}
+      post :label_tag_mapping_field_changed, :params => {:id => 'new', :label_name => 'my-label'}
+      post :label_tag_mapping_field_changed, :params => {:id => 'new', :category => 'My Cat'}
+      post :label_tag_mapping_edit, :params => {:button => 'add'}
     end
 
     def use_form_to_create_amazon_mapping
       post :label_tag_mapping_edit
-      post :label_tag_mapping_field_changed, :params => { :id => 'new', :entity => 'VmAmazon' }
-      post :label_tag_mapping_field_changed, :params => { :id => 'new', :label_name => 'some-amazon-label' }
-      post :label_tag_mapping_field_changed, :params => { :id => 'new', :category => 'Amazon Vms' }
-      post :label_tag_mapping_edit, :params => { :button => 'add' }
+      post :label_tag_mapping_field_changed, :params => {:id => 'new', :entity => 'VmAmazon'}
+      post :label_tag_mapping_field_changed, :params => {:id => 'new', :label_name => 'some-amazon-label'}
+      post :label_tag_mapping_field_changed, :params => {:id => 'new', :category => 'Amazon Vms'}
+      post :label_tag_mapping_edit, :params => {:button => 'add'}
     end
 
     def use_form_to_create_all_entities_mapping(label_name, category)
@@ -67,14 +67,14 @@ describe OpsController do
       controller.instance_variable_set(:@flash_array, nil)
 
       use_form_to_create_all_entities_mapping(label_name, classification_department.description)
-      error_message = controller.instance_variable_get(:@flash_array).select { |x| x[:level] == :error }.first[:message]
+      error_message = controller.instance_variable_get(:@flash_array).find { |x| x[:level] == :error }[:message]
       expect(error_message).to eq("Mapping for \"All Entities\", Label \"#{label_name}\" and Tag Category \"#{classification_department.description}\" already exists")
     end
 
     it "doesn't create mapping for all entities when category name doesn't exist" do
       use_form_to_create_all_entities_mapping(label_name, "XXX")
 
-      error_message = controller.instance_variable_get(:@flash_array).select { |x| x[:level] == :error }.first[:message]
+      error_message = controller.instance_variable_get(:@flash_array).find { |x| x[:level] == :error }[:message]
       expect(error_message).to eq("Mapping for \"All Entities\", Label \"#{label_name}\": Tag Category \"XXX\" must exist")
     end
 
@@ -88,7 +88,7 @@ describe OpsController do
       controller.instance_variable_set(:@flash_array, nil)
 
       use_form_to_create_all_entities_mapping(label_name, classification_department.description)
-      error_message = controller.instance_variable_get(:@flash_array).select { |x| x[:level] == :error }.first[:message]
+      error_message = controller.instance_variable_get(:@flash_array).find { |x| x[:level] == :error }[:message]
       expect(error_message).to eq("Mapping for \"All Entities\", Label \"#{label_name}\" and Tag Category \"#{classification_department.description}\" already exists")
     end
 
@@ -131,14 +131,14 @@ describe OpsController do
 
       mapping = ProviderTagMapping.last
 
-      expect(ProviderTagMapping.where(:label_name => label_name, :tag => classification_department.tag).exists?).to be_truthy
+      expect(ProviderTagMapping.exists?(:label_name => label_name, :tag => classification_department.tag)).to be_truthy
 
       post :label_tag_mapping_delete, :params => {:id => mapping.id.to_s}
 
       errors = controller.instance_variable_get(:@flash_array).select { |x| x[:level] == :error }
       expect(errors).to be_empty
 
-      expect(ProviderTagMapping.where(:label_name => label_name, :tag => classification_department.tag).exists?).to be_falsey
+      expect(ProviderTagMapping.exists?(:label_name => label_name, :tag => classification_department.tag)).to be_falsey
       expect(Classification.lookup_by_name(classification_department.name).name).to eq(classification_department.name)
     end
 
@@ -152,7 +152,7 @@ describe OpsController do
       post :label_tag_mapping_field_changed, :params => {:id => mapping.id.to_s, :category => 'XXX'}
       post :label_tag_mapping_edit, :params => {:id => mapping.id.to_s, :button => 'save'}
 
-      error_message = controller.instance_variable_get(:@flash_array).select { |x| x[:level] == :error }.first[:message]
+      error_message = controller.instance_variable_get(:@flash_array).find { |x| x[:level] == :error }[:message]
       expect(error_message).to eq("Mapping for \"All Entities\", Label \"#{label_name}\": Tag Category \"XXX\" must exist")
     end
 
@@ -160,22 +160,22 @@ describe OpsController do
       use_form_to_create_mapping
       mapping = ProviderTagMapping.last
 
-      post :label_tag_mapping_edit, :params => { :id => mapping.id.to_s }
+      post :label_tag_mapping_edit, :params => {:id => mapping.id.to_s}
       expect(assigns(:edit)[:new]).to include(:entity     => 'ContainerProject',
                                               :label_name => 'my-label',
                                               :category   => 'My Cat')
 
-      post :label_tag_mapping_field_changed, :params => { :id => mapping.id.to_s, :category => 'Edited Cat' }
+      post :label_tag_mapping_field_changed, :params => {:id => mapping.id.to_s, :category => 'Edited Cat'}
       expect(assigns(:edit)[:new]).to include(:entity     => 'ContainerProject',
                                               :label_name => 'my-label',
                                               :category   => 'Edited Cat')
 
-      post :label_tag_mapping_edit, :params => { :id => mapping.id.to_s, :button => 'reset' }
+      post :label_tag_mapping_edit, :params => {:id => mapping.id.to_s, :button => 'reset'}
       expect(assigns(:edit)[:new]).to include(:entity     => 'ContainerProject',
                                               :label_name => 'my-label',
                                               :category   => 'My Cat')
 
-      post :label_tag_mapping_field_changed, :params => { :id => mapping.id.to_s, :category => 'Edited Again Cat' }
+      post :label_tag_mapping_field_changed, :params => {:id => mapping.id.to_s, :category => 'Edited Again Cat'}
       expect(assigns(:edit)[:new]).to include(:entity     => 'ContainerProject',
                                               :label_name => 'my-label',
                                               :category   => 'Edited Again Cat')
@@ -183,7 +183,7 @@ describe OpsController do
       # Kludge: @flash_array contains "was added" from previous actions since
       # we're reusing one controller in the test.
       controller.instance_variable_set :@flash_array, nil
-      post :label_tag_mapping_edit, :params => { :id => mapping.id.to_s, :button => 'save' }
+      post :label_tag_mapping_edit, :params => {:id => mapping.id.to_s, :button => 'save'}
       expect(mapping.tag.classification.description).to eq('kubernetes:container_project|Edited Again Cat')
     end
 
@@ -191,28 +191,28 @@ describe OpsController do
       use_form_to_create_amazon_mapping
       mapping = ProviderTagMapping.last
 
-      post :label_tag_mapping_edit, :params => { :id => mapping.id.to_s }
+      post :label_tag_mapping_edit, :params => {:id => mapping.id.to_s}
       expect(assigns(:edit)[:new]).to include(:entity     => 'VmAmazon',
                                               :label_name => 'some-amazon-label',
                                               :category   => 'Amazon Vms')
 
-      post :label_tag_mapping_field_changed, :params => { :id => mapping.id.to_s, :category => 'Edited Amazon' }
+      post :label_tag_mapping_field_changed, :params => {:id => mapping.id.to_s, :category => 'Edited Amazon'}
       expect(assigns(:edit)[:new]).to include(:entity     => 'VmAmazon',
                                               :label_name => 'some-amazon-label',
                                               :category   => 'Edited Amazon')
 
-      post :label_tag_mapping_edit, :params => { :id => mapping.id.to_s, :button => 'reset' }
+      post :label_tag_mapping_edit, :params => {:id => mapping.id.to_s, :button => 'reset'}
       expect(assigns(:edit)[:new]).to include(:entity     => 'VmAmazon',
                                               :label_name => 'some-amazon-label',
                                               :category   => 'Amazon Vms')
 
-      post :label_tag_mapping_field_changed, :params => { :id => mapping.id.to_s, :category => 'Edited Again Amazon' }
+      post :label_tag_mapping_field_changed, :params => {:id => mapping.id.to_s, :category => 'Edited Again Amazon'}
       expect(assigns(:edit)[:new]).to include(:entity     => 'VmAmazon',
                                               :label_name => 'some-amazon-label',
                                               :category   => 'Edited Again Amazon')
 
       controller.instance_variable_set :@flash_array, nil
-      post :label_tag_mapping_edit, :params => { :id => mapping.id.to_s, :button => 'save' }
+      post :label_tag_mapping_edit, :params => {:id => mapping.id.to_s, :button => 'save'}
       expect(mapping.tag.name).to eq('/managed/amazon:vm:edited_again_amazon')
       expect(mapping.tag.classification.description).to eq('amazon:vm|Edited Again Amazon')
     end

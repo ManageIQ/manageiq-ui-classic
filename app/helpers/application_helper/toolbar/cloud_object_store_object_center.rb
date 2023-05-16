@@ -24,18 +24,19 @@ class ApplicationHelper::Toolbar::CloudObjectStoreObjectCenter < ApplicationHelp
     ]
   )
   button_group('cloud_object_store_object_policy', [
-    select(
-      :cloud_object_store_object_policy_choice,
-      nil,
-      t = N_('Policy'),
-      t,
-      :items => [
-        button(
-          :cloud_object_store_object_tag,
-          'pficon pficon-edit fa-lg',
-          N_('Edit tags for this Cloud Object'),
-          N_('Edit Tags'))
-      ]
-    )
-  ])
+                 select(
+                   :cloud_object_store_object_policy_choice,
+                   nil,
+                   t = N_('Policy'),
+                   t,
+                   :items => [
+                     button(
+                       :cloud_object_store_object_tag,
+                       'pficon pficon-edit fa-lg',
+                       N_('Edit tags for this Cloud Object'),
+                       N_('Edit Tags')
+                     )
+                   ]
+                 )
+               ])
 end

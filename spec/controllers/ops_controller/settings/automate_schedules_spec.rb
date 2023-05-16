@@ -40,7 +40,7 @@ describe OpsController do
         params[:id] = "new"
         post :automate_schedules_set_vars, :params => params, :session => session
 
-        json = JSON.parse(response.body)
+        json = response.parsed_body
         expect(json["object_request"]).to eq ""
       end
 
@@ -48,7 +48,7 @@ describe OpsController do
         params[:id] = schedule.id
         post :automate_schedules_set_vars, :params => params, :session => session
 
-        json = JSON.parse(response.body)
+        json = response.parsed_body
         expect(schedule.filter[:parameters]['request']).to eq "test_request"
         expect(schedule.filter[:parameters]['key1']).to eq 'value1'
         expect(schedule.filter[:ui][:ui_object]).to be_a Hash
@@ -69,7 +69,7 @@ describe OpsController do
 
     [nil, 'null'].each do |target|
       it "skips Rbac if :target_class is #{target}" do
-        ops.params = {:target_class => target }
+        ops.params = {:target_class => target}
         expect(ops).to receive(:render).once
         expect(Rbac).to receive(:filtered).never
         ops.fetch_target_ids
@@ -107,10 +107,10 @@ describe OpsController do
     end
 
     it "saves ui attrs under the :ui key" do
-      schedule.filter[:ui][:ui_attrs] = [%w(key1 value1), %w(key2 value2)]
+      schedule.filter[:ui][:ui_attrs] = [%w[key1 value1], %w[key2 value2]]
       schedule.save
       automate_request = ops.fetch_automate_request_vars(schedule)
-      expect(automate_request[:ui_attrs]).to eq [%w(key1 value1), %w(key2 value2), [], [], [], [], []]
+      expect(automate_request[:ui_attrs]).to eq [%w[key1 value1], %w[key2 value2], [], [], [], [], []]
     end
 
     it "instantiates an empty hash for a new schedule" do

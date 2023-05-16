@@ -11,36 +11,36 @@ describe MiqAeCustomizationController do
 
     context "#move_cols_up" do
       it "move one button up" do
-        post :group_reorder_field_changed, :params => { :id => 'seq', :button => 'up', 'selected_fields' => ['101'] }
+        post :group_reorder_field_changed, :params => {:id => 'seq', :button => 'up', 'selected_fields' => ['101']}
         expect(controller.instance_variable_get(:@edit)).to eql(:new => {:fields => [['test1', 101], ['test', 100], ['test2', 102], ['test3', 103]]})
       end
 
       it "move 2 button up" do
-        post :group_reorder_field_changed, :params => { :id => 'seq', :button => 'up', 'selected_fields' => ['101', '102'] }
+        post :group_reorder_field_changed, :params => {:id => 'seq', :button => 'up', 'selected_fields' => ['101', '102']}
         expect(controller.instance_variable_get(:@edit)).to eql(:new => {:fields => [['test1', 101], ['test2', 102], ['test', 100], ['test3', 103]]})
       end
     end
 
     context "#move_cols_down" do
       it "move one button down" do
-        post :group_reorder_field_changed, :params => { :id => 'seq', :button => 'down', 'selected_fields' => ['101'] }
+        post :group_reorder_field_changed, :params => {:id => 'seq', :button => 'down', 'selected_fields' => ['101']}
         expect(controller.instance_variable_get(:@edit)).to eql(:new => {:fields => [['test', 100], ['test2', 102], ['test1', 101], ['test3', 103]]})
       end
 
       it "move 2 buttons down" do
-        post :group_reorder_field_changed, :params => { :id => 'seq', :button => 'down', 'selected_fields' => ['101', '102'] }
+        post :group_reorder_field_changed, :params => {:id => 'seq', :button => 'down', 'selected_fields' => ['101', '102']}
         expect(controller.instance_variable_get(:@edit)).to eql(:new => {:fields => [['test', 100], ['test3', 103], ['test1', 101], ['test2', 102]]})
       end
     end
 
     context "no button selected" do
       it "moves up and display error message" do
-        post :group_reorder_field_changed, :params => { :id => 'seq', :button => 'up' }
+        post :group_reorder_field_changed, :params => {:id => 'seq', :button => 'up'}
         expect(response.body).to include("flash")
       end
 
       it "moves down and display error message" do
-        post :group_reorder_field_changed, :params => { :id => 'seq', :button => 'down' }
+        post :group_reorder_field_changed, :params => {:id => 'seq', :button => 'down'}
         expect(response.body).to include("flash")
       end
     end
@@ -55,13 +55,13 @@ describe MiqAeCustomizationController do
       MiqAeCustomizationController::AE_CUSTOM_X_BUTTON_ALLOWED_ACTIONS.each_pair do |action_name, method|
         it "calls the appropriate method: '#{method}' for action '#{action_name}'" do
           expect(controller).to receive(method)
-          get :x_button, :params => { :pressed => action_name }
+          get :x_button, :params => {:pressed => action_name}
         end
       end
     end
 
     it 'exception is raised for unknown action' do
-      get :x_button, :params => { :pressed => 'random_dude', :format => :html }
+      get :x_button, :params => {:pressed => 'random_dude', :format => :html}
       expect(response).to render_template('layouts/exception')
     end
   end
@@ -77,7 +77,7 @@ describe MiqAeCustomizationController do
       controller.instance_variable_set(:@sb, :flash_msg => sandbox_flash_messages)
       bypass_rescue
       EvmSpecHelper.seed_specific_product_features(
-        %w(dialog_accord old_dialogs_accord ab_buttons_accord miq_ae_class_import_export)
+        %w[dialog_accord old_dialogs_accord ab_buttons_accord miq_ae_class_import_export]
       )
     end
 
@@ -388,7 +388,7 @@ describe MiqAeCustomizationController do
     end
 
     context "when there are service dialogs" do
-      let(:service_dialogs) { %w(1 2 3) }
+      let(:service_dialogs) { %w[1 2 3] }
 
       before do
         allow(DialogYamlSerializer).to receive(:new).and_return(dialog_yaml_serializer)
@@ -470,14 +470,14 @@ describe MiqAeCustomizationController do
         array_including(
           instance_of(TreeBuilderButtons),
           instance_of(TreeBuilderProvisioningDialogs),
-          instance_of(TreeBuilderServiceDialogs),
+          instance_of(TreeBuilderServiceDialogs)
         )
       )
 
       # FIXME: this tree is an exceptional one, it's going to be removed when we replace the
       # dialog editor.
       expect(controller).to receive(:render)
-      controller.send(:replace_right_cell, :replace_trees => %i(ab old_dialogs dialogs))
+      controller.send(:replace_right_cell, :replace_trees => %i[ab old_dialogs dialogs])
     end
   end
 

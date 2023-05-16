@@ -19,11 +19,11 @@ class MiqAlertController < ApplicationController
 
   def alert_edit_cancel
     @alert = params[:id] ? MiqAlert.find_by(:id => params[:id]) : MiqAlert.new
-    if @alert.id.blank?
-      flash_msg = _("Add of new Alert was cancelled by the user")
-    else
-      flash_msg = _("Edit of Alert \"%{name}\" was cancelled by the user") % {:name => @alert.description}
-    end
+    flash_msg = if @alert.id.blank?
+                  _("Add of new Alert was cancelled by the user")
+                else
+                  _("Edit of Alert \"%{name}\" was cancelled by the user") % {:name => @alert.description}
+                end
     @edit = session[:edit] = nil # clean out the saved info
     session[:changed] = false
     javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg => flash_msg)
@@ -57,10 +57,47 @@ class MiqAlertController < ApplicationController
 
   def alert_edit_reset
     alert_build_edit_screen
-    javascript_redirect(:action        => 'edit',
-                        :id            => params[:id],
-                        :flash_msg     => _("All changes have been reset"),
-                        :flash_warning => true) if params[:button] == "reset"
+    if params[:button] == "reset"
+      javascript_redirect(:action        => 'edit',
+                          :id            => params[:id],
+                          :flash_msg     => _("All changes have been reset"),
+                          :flash_warning => true)
+    end
+  end
+
+  # Get information for an alert
+  def show
+    super
+    @alert = @record
+    @email_to = []
+    if @alert.responds_to_events == "_hourly_timer_"
+      @event = _("Hourly Timer")
+    else
+      e = MiqEventDefinition.find_by(:name => @alert.responds_to_events)
+      @event = e.nil? ? _("<No Event configured>") : "#{e.etype.description}: #{e.description}"
+    end
+    if @alert.options && @alert.options[:notifications] && @alert.options[:notifications][:email] && @alert.options[:notifications][:email][:to]
+      @alert.options[:notifications][:email][:to].each do |to|
+        user = User.find_by(:email => to)
+        @email_to.push(user ? "#{user.name} (#{to})" : to)
+      end
+    end
+
+    @expression_table = exp_build_table(@alert.expression.exp) if @alert.expression.kind_of?(MiqExpression)
+    @alert_profiles = @alert.memberof.sort_by { |p| p.description.downcase }
+
+    if @alert.expression && !@alert.expression.kind_of?(MiqExpression) # Get the EMS if it's in the expression
+      @ems = ExtManagementSystem.find_by(:id => @alert.expression[:options][:ems_id])
+    end
+    if @alert.expression.kind_of?(Hash) && @alert.expression[:eval_method]
+      @expression_options = MiqAlert.expression_options(@alert.expression[:eval_method])
+      @expression_options.each do |eo|
+        case eo[:name]
+        when :perf_column
+          @perf_column_unit = alert_get_perf_column_unit(eo[:values][@alert.db][@alert.expression[:options][:perf_column]])
+        end
+      end
+    end
   end
 
   def new
@@ -144,7 +181,7 @@ class MiqAlertController < ApplicationController
                                                                           value_mw_less_than
                                                                           value_mw_garbage_collector
                                                                           value_mw_threshold])
-    @edit[:new][:expression][:options][:event_types] = [params[:event_types]].reject(&:blank?) if params[:event_types]
+    @edit[:new][:expression][:options][:event_types] = [params[:event_types]].compact_blank if params[:event_types]
     @edit[:new][:expression][:options][:time_threshold] = params[:time_threshold].to_i if params[:time_threshold]
     @edit[:new][:expression][:options][:hourly_time_threshold] = params[:hourly_time_threshold].to_i if params[:hourly_time_threshold]
     if params[:perf_column]
@@ -227,41 +264,6 @@ class MiqAlertController < ApplicationController
     send_button_changes
   end
 
-  # Get information for an alert
-  def show
-    super
-    @alert = @record
-    @email_to = []
-    if @alert.responds_to_events == "_hourly_timer_"
-      @event = _("Hourly Timer")
-    else
-      e = MiqEventDefinition.find_by(:name => @alert.responds_to_events)
-      @event = e.nil? ? _("<No Event configured>") : e.etype.description + ": " + e.description
-    end
-    if @alert.options && @alert.options[:notifications] && @alert.options[:notifications][:email] && @alert.options[:notifications][:email][:to]
-      @alert.options[:notifications][:email][:to].each do |to|
-        user = User.find_by(:email => to)
-        @email_to.push(user ? "#{user.name} (#{to})" : to)
-      end
-    end
-
-    @expression_table = exp_build_table(@alert.expression.exp) if @alert.expression.kind_of?(MiqExpression)
-    @alert_profiles = @alert.memberof.sort_by { |p| p.description.downcase }
-
-    if @alert.expression && !@alert.expression.kind_of?(MiqExpression) # Get the EMS if it's in the expression
-      @ems = ExtManagementSystem.find_by(:id => @alert.expression[:options][:ems_id])
-    end
-    if @alert.expression.kind_of?(Hash) && @alert.expression[:eval_method]
-      @expression_options = MiqAlert.expression_options(@alert.expression[:eval_method])
-      @expression_options.each do |eo|
-        case eo[:name]
-        when :perf_column
-          @perf_column_unit = alert_get_perf_column_unit(eo[:values][@alert.db][@alert.expression[:options][:perf_column]])
-        end
-      end
-    end
-  end
-
   private
 
   def display_driving_event?
@@ -324,7 +326,7 @@ class MiqAlertController < ApplicationController
     # Build hash of arrays of all events by event type
     @edit[:events] = {}
     MiqEventDefinition.all_control_events.each do |e|
-      @edit[:events][e.id] = (_(e.etype.description) + ": " + _(e.description))
+      @edit[:events][e.id] = "#{_(e.etype.description)}: #{_(e.description)}"
     end
 
     # Build hash of all mgmt systems by id
@@ -370,7 +372,7 @@ class MiqAlertController < ApplicationController
 
     # Build hash of alarms if mgmt system option is present is present
     if !@alert.expression.kind_of?(MiqExpression) &&
-      @edit[:new][:expression][:options] && @edit[:new][:expression][:options][:ems_id]
+       @edit[:new][:expression][:options] && @edit[:new][:expression][:options][:ems_id]
       @edit[:ems_alarms] = alert_build_ems_alarms
     end
 
@@ -413,8 +415,7 @@ class MiqAlertController < ApplicationController
 
     e_point = val.rindex(')')
     s_point = val.rindex('(')
-    res = e_point && s_point ? "#{val[s_point + 1..e_point - 1]} " : nil
-    res
+    e_point && s_point ? "#{val[s_point + 1..e_point - 1]} " : nil
   end
 
   def alert_build_snmp_variables
@@ -501,10 +502,10 @@ class MiqAlertController < ApplicationController
       EmsEvent.event_groups.each_value do |v|
         name = v[:name]
         v[:detail]&.each do |d|
-          @sb[:alert][:events][d] = name + ": " + d if vm_events.include?(d)
+          @sb[:alert][:events][d] = "#{name}: #{d}" if vm_events.include?(d)
         end
         v[:critical]&.each do |c|
-          @sb[:alert][:events][c] = name + ": " + c if vm_events.include?(c)
+          @sb[:alert][:events][c] = "#{name}: #{c}" if vm_events.include?(c)
         end
       end
     end
@@ -551,7 +552,7 @@ class MiqAlertController < ApplicationController
     alarms = {}
     begin
       alarms = MiqAlert.ems_alarms(@edit[:new][:db], @edit[:new][:expression][:options][:ems_id])
-    rescue StandardError => bang
+    rescue => bang
       add_flash(_("Error during alarms: %{messages}") % {:messages => bang.message}, :error)
     end
     alarms
@@ -600,17 +601,17 @@ class MiqAlertController < ApplicationController
     if alert.expression.nil?
       add_flash(_("A valid expression must be present"), :error)
     end
-    unless display_driving_event?
-      add_flash(_("A Driving Event must be selected"), :error) if alert.responds_to_events.blank?
+    if !display_driving_event? && alert.responds_to_events.blank?
+      add_flash(_("A Driving Event must be selected"), :error)
     end
     if alert.severity.nil?
       add_flash(_('Severity must be selected'), :error)
     end
-    if alert.options[:notifications][:automate]
-      add_flash(_("Event name is required"), :error) if alert.options[:notifications][:automate][:event_name].blank?
+    if alert.options[:notifications][:automate] && alert.options[:notifications][:automate][:event_name].blank?
+      add_flash(_("Event name is required"), :error)
     end
-    if alert.expression.kind_of?(Hash) && alert.expression[:eval_method] == 'event_threshold'
-      add_flash(_("Event to Check is required"), :error) if alert.expression[:options][:event_types].blank?
+    if alert.expression.kind_of?(Hash) && alert.expression[:eval_method] == 'event_threshold' && alert.expression[:options][:event_types].blank?
+      add_flash(_("Event to Check is required"), :error)
     end
 
     if @edit.fetch_path(:new, :expression, :eval_method) == "realtime_performance"
@@ -700,7 +701,7 @@ class MiqAlertController < ApplicationController
              else
                _("Adding a new Alert")
              end
-    @layout =  "miq_alert"
+    @layout = "miq_alert"
     @lastaction = session[:miq_alert_lastaction]
     @display = session[:miq_alert_display]
     @current_page = session[:miq_alert_current_page]
@@ -723,6 +724,6 @@ class MiqAlertController < ApplicationController
     }
   end
 
-  toolbar :miq_alert,:miq_alerts
+  toolbar :miq_alert, :miq_alerts
   menu_section :con
 end

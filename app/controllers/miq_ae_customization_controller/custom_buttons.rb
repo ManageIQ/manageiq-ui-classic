@@ -68,8 +68,8 @@ module MiqAeCustomizationController::CustomButtons
                                %w[request]
                              end
         @custom_button.uri_attributes.each do |attr|
-          if attr[0] != "object_name" && attr[0] != "request" && !default_attributes.include?(attr[0].to_s)
-            @resolve[:new][:attrs].push(attr) unless @resolve[:new][:attrs].include?(attr)
+          if attr[0] != "object_name" && attr[0] != "request" && default_attributes.exclude?(attr[0].to_s) && @resolve[:new][:attrs].exclude?(attr)
+            @resolve[:new][:attrs].push(attr)
           end
         end
         @resolve[:new][:object_request] = @custom_button.uri_attributes["request"]

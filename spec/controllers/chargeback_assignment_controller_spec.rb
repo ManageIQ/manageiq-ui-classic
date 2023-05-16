@@ -13,7 +13,7 @@ describe ChargebackAssignmentController do
         controller.instance_variable_set(:@edit, :cb_assign => {:tags => {}})
         controller.send(:get_tags_all)
 
-        result = {category.id => {tag.id.to_s => tag.description}, tag.id => { entry.id.to_s => entry.description}, entry.id => {}}
+        result = {category.id => {tag.id.to_s => tag.description}, tag.id => {entry.id.to_s => entry.description}, entry.id => {}}
 
         expect(assigns(:edit)[:cb_assign][:tags]).to eq(result)
       end

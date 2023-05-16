@@ -4,6 +4,7 @@ class ApplicationHelper::Button::Reload < ApplicationHelper::Button::Basic
   def visible?
     return saved_report? if reports_tree?
     return root? if savedreports_tree?
+
     true
   end
 

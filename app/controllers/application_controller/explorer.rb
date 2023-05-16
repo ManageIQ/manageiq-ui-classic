@@ -208,9 +208,9 @@ module ApplicationController::Explorer
       format.html do # HTML, redirect to explorer
         tree_node_id = TreeBuilder.build_node_id(@record)
         session[:exp_parms] = {:id => tree_node_id}
-        redirect_to :action => "explorer"
+        redirect_to(:action => "explorer")
       end
-      format.any { head :not_found } # Anything else, just send 404
+      format.any { head 404 } # Anything else, just send 404
     end
   end
 
@@ -254,7 +254,7 @@ module ApplicationController::Explorer
     kls = modelname.constantize
     return treenodeid if kls == Hash
 
-    unless kls.where(:id => rec_id).exists?
+    unless kls.exists?(:id => rec_id)
       @replace_trees = [@sb[:active_accord]] # refresh trees
       self.x_node = "root"
       unless @report_deleted

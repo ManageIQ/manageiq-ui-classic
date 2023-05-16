@@ -69,7 +69,7 @@ module ReportController::Schedules
     end
     schedule_edit
   end
-  alias_method :miq_report_schedule_add, :schedule_new
+  alias miq_report_schedule_add schedule_new
 
   # Delete all selected or single displayed action(s)
   def miq_report_schedule_delete
@@ -137,6 +137,7 @@ module ReportController::Schedules
     assert_privileges(@edit && @edit[:rpt_id] ? "miq_report_schedule_edit" : "miq_report_schedule_add")
 
     return unless load_edit("schedule_edit__#{params[:id]}", "replace_cell__explorer")
+
     schedule_get_form_vars
     if @edit[:new][:filter]
       @folders ||= []
@@ -153,7 +154,7 @@ module ReportController::Schedules
       page.replace("form_filter_div", :partial => "schedule_form_filter")
       javascript_for_timer_type(params[:timer_typ]).each { |js| page << js }
       if params[:time_zone]
-        page << "ManageIQ.calendar.calDateFrom = new Date(#{(Time.zone.now - 1.month).in_time_zone(@edit[:tz]).strftime("%Y,%m,%d")});"
+        page << "ManageIQ.calendar.calDateFrom = new Date(#{1.month.ago.in_time_zone(@edit[:tz]).strftime("%Y,%m,%d")});"
         page << "miqBuildCalendar();"
         page << "$('#miq_date_1').val('#{@edit[:new][:timer].start_date}');"
         page << "$('#start_hour').val('#{@edit[:new][:timer].start_hour.to_i}');"
@@ -173,7 +174,7 @@ module ReportController::Schedules
         @edit[:new][:timer].start_date = if params[:timer_typ] == 'Hourly'
                                            Time.zone.now.strftime("%m/%d/%Y")
                                          else
-                                           (Time.zone.now + 1.day).strftime("%m/%d/%Y")
+                                           1.day.from_now.strftime("%m/%d/%Y")
                                          end
       end
       page << "$('#miq_date_1').val('#{@edit[:new][:timer].start_date}');"
@@ -204,8 +205,9 @@ module ReportController::Schedules
 
       replace_right_cell
     when "save", "add"
-      id = params[:id] ? params[:id] : "new"
+      id = params[:id] || "new"
       return unless load_edit("schedule_edit__#{id}", "replace_cell__explorer")
+
       schedule = @edit[:sched_id] ? MiqSchedule.find(@edit[:sched_id]) : MiqSchedule.new(:userid => session[:userid])
       if !@edit[:new][:repfilter] || @edit[:new][:repfilter] == ""
         add_flash(_("A Report must be selected"), :error)
@@ -254,7 +256,7 @@ module ReportController::Schedules
       replace_right_cell
     end
   end
-  alias_method :miq_report_schedule_edit, :schedule_edit
+  alias miq_report_schedule_edit schedule_edit
 
   private
 
@@ -282,12 +284,10 @@ module ReportController::Schedules
         add_flash(_("One of e-mail addresses 'To' is not valid"), :error)
       end
     end
-    unless flash_errors?
-      if sched.run_at[:interval][:unit] == "once" &&
+    if !flash_errors? && (sched.run_at[:interval][:unit] == "once" &&
          sched.run_at[:start_time].to_time.utc < Time.now.utc &&
-         sched.enabled == true
-        add_flash(_("Warning: This 'Run Once' timer is in the past and will never run as currently configured"), :warning)
-      end
+         sched.enabled == true)
+      add_flash(_("Warning: This 'Run Once' timer is in the past and will never run as currently configured"), :warning)
     end
     valid
   end
@@ -335,7 +335,8 @@ module ReportController::Schedules
       @menu.each do |m|
         m[1].each do |f|
           f.each do |r|
-            next if r.class == String
+            next if r.instance_of?(String)
+
             r.each do |rep|
               if rep == record.name
                 @edit[:new][:filter] = m[0]

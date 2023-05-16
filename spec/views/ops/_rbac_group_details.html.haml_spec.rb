@@ -5,8 +5,8 @@ describe 'ops/_rbac_group_details.html.haml' do
       edit = {:new                 => {:description => ''},
               :key                 => "settings_authentication_edit__#{miq_server.id}",
               :ldap_groups_by_user => [],
-              :roles               => %w(fred wilma),
-              :projects_tenants    => [["projects", %w(foo bar)]]}
+              :roles               => %w[fred wilma],
+              :projects_tenants    => [["projects", %w[foo bar]]]}
       view.instance_variable_set(:@edit, edit)
       @group = FactoryBot.create(:miq_group, :description => 'flintstones')
       allow(view).to receive(:current_tenant).and_return(Tenant.seed)
@@ -35,35 +35,35 @@ describe 'ops/_rbac_group_details.html.haml' do
     end
 
     it 'should not show "Look up groups" checkbox and label for auth mode amazon' do
-      stub_settings(:authentication => { :mode => 'amazon' }, :server => {})
+      stub_settings(:authentication => {:mode => 'amazon'}, :server => {})
       render :partial => 'ops/rbac_group_details'
       expect(rendered).not_to have_selector('input#lookup')
       expect(rendered).not_to include('Look up Amazon Groups')
     end
 
     it 'should show "Look up groups" checkbox and label for auth mode httpd' do
-      stub_settings(:authentication => { :mode => 'httpd', :saml_enabled => false, :oidc_enabled => false}, :server => {})
+      stub_settings(:authentication => {:mode => 'httpd', :saml_enabled => false, :oidc_enabled => false}, :server => {})
       render :partial => 'ops/rbac_group_details'
       expect(rendered).to have_selector('input#lookup')
       expect(rendered).to include('Look up External Authentication Groups')
     end
 
     it 'should not show "Look up groups" checkbox and label for auth mode httpd with SAML enabled' do
-      stub_settings(:authentication => { :mode => 'httpd', :saml_enabled => true, :oidc_enabled => false}, :server => {})
+      stub_settings(:authentication => {:mode => 'httpd', :saml_enabled => true, :oidc_enabled => false}, :server => {})
       render :partial => 'ops/rbac_group_details'
       expect(rendered).not_to have_selector('input#lookup')
       expect(rendered).not_to include('Look up External Authentication Groups')
     end
 
     it 'should not show "Look up groups" checkbox and label for auth mode httpd with OIDC enabled' do
-      stub_settings(:authentication => { :mode => 'httpd', :saml_enabled => false, :oidc_enabled => true}, :server => {})
+      stub_settings(:authentication => {:mode => 'httpd', :saml_enabled => false, :oidc_enabled => true}, :server => {})
       render :partial => 'ops/rbac_group_details'
       expect(rendered).not_to have_selector('input#lookup')
       expect(rendered).not_to include('Look up External Authentication Groups')
     end
 
     it 'should not show "Look up groups" checkbox and label for auth mode database' do
-      stub_settings(:authentication => { :mode => 'database' }, :server => {})
+      stub_settings(:authentication => {:mode => 'database'}, :server => {})
       render :partial => 'ops/rbac_group_details'
       expect(rendered).not_to have_selector('input#lookup')
       expect(rendered).not_to include('Look up External Authentication Groups')

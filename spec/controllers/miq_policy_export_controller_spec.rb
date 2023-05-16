@@ -112,7 +112,7 @@ describe MiqPolicyExportController do
               post :upload, :params => params
               expect(response).to redirect_to(
                 :action => "index",
-                :dbtype => "dbtype",
+                :dbtype => "dbtype"
               )
               expect(session[:flash_msgs]).to match [a_hash_including(:message => "Error during 'Policy Import': message", :level => :error)]
             end
@@ -146,8 +146,8 @@ describe MiqPolicyExportController do
 
     describe '#get_session_data' do
       it "Sets variables correctly" do
-        allow(controller).to receive(:session).and_return(:miq_policy_export_lastaction   => lastaction,
-                                                          :layout                         => layout)
+        allow(controller).to receive(:session).and_return(:miq_policy_export_lastaction => lastaction,
+                                                          :layout                       => layout)
         controller.send(:get_session_data)
 
         expect(controller.instance_variable_get(:@title)).to eq("Import / Export")

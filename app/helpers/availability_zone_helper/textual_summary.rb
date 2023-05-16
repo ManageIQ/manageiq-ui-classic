@@ -40,11 +40,13 @@ module AvailabilityZoneHelper::TextualSummary
 
   def textual_block_storage_disk_capacity
     return nil unless @record.respond_to?(:block_storage_disk_capacity) && !@record.ext_management_system.provider.nil?
+
     {:label => _('Block storage disk capacity'), :value => number_to_human_size(@record.block_storage_disk_capacity.gigabytes, :precision => 2)}
   end
 
   def textual_block_storage_disk_usage
     return nil unless @record.respond_to?(:block_storage_disk_usage)
+
     {:label => _('Block storage disk usage'),
      :value => number_to_human_size(@record.block_storage_disk_usage.bytes, :precision => 2)}
   end

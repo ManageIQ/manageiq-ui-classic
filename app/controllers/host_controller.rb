@@ -227,7 +227,7 @@ class HostController < ApplicationController
       # Handle Host power buttons
       if %w[host_shutdown host_reboot host_standby host_enter_maint_mode host_exit_maint_mode host_start
             host_stop host_reset].include?(params[:pressed])
-        powerbutton_hosts(params[:pressed].split("_")[1..-1].join("_")) # Handle specific power button
+        powerbutton_hosts(params[:pressed].split("_")[1..].join("_")) # Handle specific power button
       end
 
       perf_chart_chooser if params[:pressed] == "perf_reload"
@@ -256,7 +256,7 @@ class HostController < ApplicationController
       single_delete_redirect
     elsif params[:pressed].ends_with?("_edit") ||
           ["#{pfx}_miq_request_new", "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed]) ||
-          ["#{pfx}_clone", 'vm_rename'].include?(params[:pressed]) && @flash_array.nil?
+          (["#{pfx}_clone", 'vm_rename'].include?(params[:pressed]) && @flash_array.nil?)
       if @flash_array
         show_list
         replace_gtl_main_div

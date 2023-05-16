@@ -3,7 +3,7 @@ describe VmCloudHelper::TextualSummary do
     instance_variable_set(:@record, FactoryBot.create(:vm))
   end
 
-  include_examples "textual_group", "Properties", %i(
+  include_examples "textual_group", "Properties", %i[
     name
     region
     server
@@ -25,7 +25,7 @@ describe VmCloudHelper::TextualSummary do
     root_device_type
     protected
     ems_ref
-  )
+  ]
 
-  include_examples "textual_group", "Security", %i(users groups patches key_pairs)
+  include_examples "textual_group", "Security", %i[users groups patches key_pairs]
 end

@@ -1,5 +1,6 @@
 class EmsDashboardService < DashboardService
   attr_reader :ems
+
   include TextualSummaryHelper
   include Mixins::CheckedIdMixin
   include TextualMixins::TextualRefreshStatus

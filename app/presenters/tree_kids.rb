@@ -19,8 +19,9 @@ module TreeKids
   def x_get_tree_kids(parent, count_only, parents)
     generator = self.class.kids_generators.detect { |k, v| v if parent.kind_of?(k) }
     return nil unless generator
+
     method = generator[1][0]
-    attributes = generator[1][1..-1].collect do |attribute_name|
+    attributes = generator[1][1..].collect do |attribute_name|
       case attribute_name
       when :parents then parents
       end

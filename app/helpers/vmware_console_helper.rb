@@ -12,6 +12,6 @@ module VmwareConsoleHelper
   ].freeze
 
   def webmks_assets_provided?
-    Rails.root.join('public', 'webmks').exist?
+    Rails.public_path.join('webmks').exist?
   end
 end

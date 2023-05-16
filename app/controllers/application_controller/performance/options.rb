@@ -80,7 +80,7 @@ module ApplicationController::Performance
 
       if hourly_date.present? &&
          (hourly_date.to_date < sdate.to_date || hourly_date.to_date > edate.to_date || # it is out of range
-         (typ == 'Hourly' && time_profile && !time_profile_days.include?(hourly_date.to_date.wday))) # or out of profile
+         (typ == 'Hourly' && time_profile && time_profile_days.exclude?(hourly_date.to_date.wday))) # or out of profile
         self.hourly_date = nil
       end
       if daily_date.present? &&
@@ -119,10 +119,12 @@ module ApplicationController::Performance
           ret_cats = {'<None>' => '<None>'}
           case model
           when 'Host', 'Storage', 'AvailabilityZone', 'HostAggregate'
-            cats.each { |c| ret_cats['Vm:' + c.name] = 'VM ' + c.description }
+            cats.each { |c| ret_cats["Vm:#{c.name}"] = "VM #{c.description}" }
           when 'EmsCluster'
-            cats.each { |c| ret_cats['Host:' + c.name] = 'Host ' + c.description }
-            cats.each { |c| ret_cats['Vm:' + c.name] = 'VM ' + c.description }
+            cats.each do |c|
+              ret_cats["Host:#{c.name}"] = "Host #{c.description}"
+              ret_cats["Vm:#{c.name}"] = "VM #{c.description}"
+            end
           end
           ret_cats
         end
@@ -139,9 +141,9 @@ module ApplicationController::Performance
 
     def to_calendar
       if typ == 'Hourly'
-        { :skip_days => skip_days, :date_from => sdate, :date_to => edate }
+        {:skip_days => skip_days, :date_from => sdate, :date_to => edate}
       else
-        { :skip_days => skip_days, :date_from => sdate_daily, :date_to => edate_daily }
+        {:skip_days => skip_days, :date_from => sdate_daily, :date_to => edate_daily}
       end
     end
   end

@@ -6,7 +6,7 @@ describe RestfulRedirectController do
   end
 
   before do
-    post '/dashboard/authenticate', :params => { :user_name => user.userid, :user_password => user.password }
+    post '/dashboard/authenticate', :params => {:user_name => user.userid, :user_password => user.password}
   end
 
   context 'for MiqRequest' do
@@ -17,12 +17,12 @@ describe RestfulRedirectController do
     before do
       # Load just one dialog instead of calling `MiqDialog.seed`
       MiqDialog.seed_dialog(
-        Rails.root.join('product', 'dialogs', 'miq_dialogs', 'miq_provision_dialogs.yaml').to_s,
+        Rails.root.join("product/dialogs/miq_dialogs/miq_provision_dialogs.yaml").to_s
       )
     end
 
     it 'redirects' do
-      get '/restful_redirect', :params => { :model => 'MiqRequest', :id => req.id }
+      get '/restful_redirect', :params => {:model => 'MiqRequest', :id => req.id}
       expect(response).to redirect_to(:controller => 'miq_request', :action => 'show', :id => req.id)
       follow_redirect!
       expect(response).to have_http_status(:ok)

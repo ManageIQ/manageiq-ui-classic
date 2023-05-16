@@ -15,7 +15,7 @@ class StaticOrHaml
     return @rack_file.call(env) unless path.to_s.ends_with?('.haml')
 
     raw = File.read(path)
-    lookup_context = ActionView::LookupContext.new(File.expand_path("../app/views", __FILE__))
+    lookup_context = ActionView::LookupContext.new(File.expand_path('app/views', __dir__))
     controller = ActionController::Base.new
 
     # Rails 6.1 ActionView::Base now has 3 required arguments
@@ -34,7 +34,7 @@ class StaticOrHaml
 end
 
 class WebpackPack
-  def initialize(dir = Rails.root.join('public', 'packs'))
+  def initialize(dir = Rails.public_path.join('packs'))
     @dir = dir
     @manifest = JSON.parse(File.read(Pathname.new(@dir).join('manifest.json')))
   end
@@ -70,11 +70,11 @@ Jasmine.configure do |config|
   # Determine the chrome binary and which version, so we can choose the correct headless mode
   chrome_binary = Jasmine::Runners::ChromeHeadless.new(nil, nil, config).chrome_binary
   chrome_version = `"#{chrome_binary}" --version`.strip
-  headless_mode = Gem::Version.new(chrome_version.sub(/ beta$/, "-beta").split(" ").last) >= Gem::Version.new("110.0.5481.30") ? "new" : nil
+  headless_mode = Gem::Version.new(chrome_version.sub(/ beta$/, "-beta").split.last) >= Gem::Version.new("110.0.5481.30") ? "new" : nil
 
   config.chrome_cli_options = {
-    'headless' => headless_mode,
-    'disable-gpu' => nil,
+    'headless'              => headless_mode,
+    'disable-gpu'           => nil,
     'remote-debugging-port' => 9222,
   }
   config.chrome_startup_timeout = 20

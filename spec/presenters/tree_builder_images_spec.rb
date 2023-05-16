@@ -1,8 +1,8 @@
 describe TreeBuilderImages do
   before do
     @template_cloud_with_az = FactoryBot.create(:template_cloud,
-                                                 :ext_management_system => FactoryBot.create(:ems_google),
-                                                 :storage               => FactoryBot.create(:storage))
+                                                :ext_management_system => FactoryBot.create(:ems_google),
+                                                :storage               => FactoryBot.create(:storage))
 
     login_as FactoryBot.create(:user_with_group, :role => "operator", :settings => {})
 

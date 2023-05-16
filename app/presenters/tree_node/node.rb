@@ -40,6 +40,7 @@ module TreeNode
 
     def escape(string)
       return string if string.nil? || string.blank? || string.html_safe?
+
       ERB::Util.html_escape(string)
     end
 
@@ -76,12 +77,12 @@ module TreeNode
           result = instance_variable_get(atvar)
 
           if result.nil?
-            if block_given?
-              # All blocks here are either to_procs that only take the receiver or a block with no arguments.
-              result = instance_exec(@object, &block)
-            else
-              result = value
-            end
+            result = if block
+                       # All blocks here are either to_procs that only take the receiver or a block with no arguments.
+                       instance_exec(@object, &block)
+                     else
+                       value
+                     end
             instance_variable_set(atvar, result)
           end
 

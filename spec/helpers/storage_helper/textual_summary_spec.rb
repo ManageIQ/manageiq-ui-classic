@@ -80,12 +80,12 @@ describe StorageHelper do
     instance_variable_set(:@record, "total_space" => 150)
   end
 
-  include_examples "textual_group", "Properties", %i(store_type free_space used_space total_space)
+  include_examples "textual_group", "Properties", %i[store_type free_space used_space total_space]
 
-  include_examples "textual_group", "Information for Registered VMs", %i(uncommitted_space used_uncommitted_space),
+  include_examples "textual_group", "Information for Registered VMs", %i[uncommitted_space used_uncommitted_space],
                    "registered_vms"
 
-  include_examples "textual_group", "Relationships", %i(
+  include_examples "textual_group", "Relationships", %i[
     hosts
     managed_vms
     managed_miq_templates
@@ -93,9 +93,9 @@ describe StorageHelper do
     unregistered_vms
     unmanaged_vms
     custom_button_events
-  )
+  ]
 
   include_examples "textual_group_smart_management"
 
-  include_examples "textual_group", "Content", %i(files disk_files snapshot_files vm_ram_files vm_misc_files debris_files)
+  include_examples "textual_group", "Content", %i[files disk_files snapshot_files vm_ram_files vm_misc_files debris_files]
 end

@@ -230,7 +230,7 @@ class ExplorerPresenter
   end
 
   def escape_if_unsafe(string)
-    ActiveSupport::SafeBuffer === string ? string : ERB::Util.html_escape(string)
+    string.kind_of?(ActiveSupport::SafeBuffer) ? string : ERB::Util.html_escape(string)
   end
 
   def for_render_default
@@ -312,6 +312,7 @@ class ExplorerPresenter
 
   def format_calendar_dates(options)
     return {} unless @options[:build_calendar].kind_of?(Hash)
+
     %i[date_from date_to].each_with_object({}) do |key, h|
       h[key] = options[key].iso8601 if options[key].present?
     end

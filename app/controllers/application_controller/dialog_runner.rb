@@ -38,7 +38,7 @@ module ApplicationController::DialogRunner
 
       begin
         result = @edit[:wf].submit_request
-      rescue StandardError => bang
+      rescue => bang
         add_flash(_("Error during 'Provisioning': %{error_message}") % {:error_message => bang.message}, :error)
         javascript_flash(:spinner_off => true)
       else
@@ -91,7 +91,7 @@ module ApplicationController::DialogRunner
 
     dialog_get_form_vars
 
-    head :ok
+    head 200
   end
 
   # for non-explorer screen
@@ -186,7 +186,7 @@ module ApplicationController::DialogRunner
         new = parameter_value
 
         # keep the chosen time if DateTime
-        new += old[10..-1] if old && old.length > 10
+        new += old[10..] if old && old.length > 10
 
         @edit[:wf].set_value(field_name, new)
 
@@ -201,10 +201,10 @@ module ApplicationController::DialogRunner
         # need to set that value in wf before adding hour/min
         old = @edit[:wf].value(field_name)
         if old.nil?
-          t = Time.zone.now + 1.day
+          t = 1.day.from_now
           date_val = [t.strftime('%m/%d/%Y'), t.strftime('%H:%M')]
         else
-          date_val = old.split(" ")
+          date_val = old.split
         end
 
         start_hour = date_val.length >= 2 ? date_val[1].split(":").first.to_i : 0

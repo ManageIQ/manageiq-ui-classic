@@ -1,7 +1,6 @@
 describe ApplicationHelper::Toolbar::Basic do
   describe "extension_classes_filtered" do
     it "filteres toolbar extensions using record_valid? if available" do
- 
       # create a Vmdb plugin
       ext_name = 'MyExtension'
       Object.const_set(
@@ -16,12 +15,12 @@ describe ApplicationHelper::Toolbar::Basic do
       Vmdb::Plugins.send(:instance).instance_eval { @all = nil }
 
       # create a toolbar under the plugin
-      overrides = MyExtension.const_set('ToolbarOverrides', Module.new)
+      overrides = MyExtension.const_set(:ToolbarOverrides, Module.new)
       toolbar_ext_name = 'Basic'
       overrides.const_set(
         toolbar_ext_name,
         Class.new(ApplicationHelper::Toolbar::Override) do
-          def self.record_valid?(rec)
+          def self.record_valid?(_rec)
             true
           end
         end

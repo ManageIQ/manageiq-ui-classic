@@ -16,6 +16,13 @@ class StorageServiceController < ApplicationController
     _("Storage Services")
   end
 
+  def show
+    if params[:id].nil?
+      @breadcrumbs.clear
+    end
+    super
+  end
+
   def new
     assert_privileges("storage_service_new")
 
@@ -36,13 +43,6 @@ class StorageServiceController < ApplicationController
       :name => _("Edit Storage Service \"%{name}\"") % {:name => @service.name},
       :url  => "/storage_service/edit/#{@service.id}"
     )
-  end
-
-  def show
-    if params[:id].nil?
-      @breadcrumbs.clear
-    end
-    super
   end
 
   private

@@ -25,10 +25,11 @@ module ApplicationController::PolicySupport
 
     elsif params[:button] # Button was pressed
       session[:changed] = false
-      if params[:button] == "cancel"
+      case params[:button]
+      when "cancel"
         add_flash(_("Edit policy assignments was cancelled by the user"))
         @sb[:action] = nil
-      elsif params[:button] == "reset"
+      when "reset"
         add_flash(_("All changes have been reset"), :warning)
         @explorer = true if @edit && @edit[:explorer]       # resetting @explorer from @edit incase reset button was pressed with explorer
         protect_build_screen                                #    build the protect screen
@@ -40,7 +41,7 @@ module ApplicationController::PolicySupport
           render "shared/views/protect"
         end
         return
-      elsif params[:button] == "save"
+      when "save"
         ppids = @edit[:new].keys + @edit[:current].keys # Get union of policy profile ids
         ppids.uniq.each do |ppid|
           next if @edit[:new][ppid] == @edit[:current][ppid] # Only process changes
@@ -189,7 +190,7 @@ module ApplicationController::PolicySupport
   def protect_audit(pp, mode, db, recs)
     msg = "[#{pp.name}] Policy Profile #{mode} (db:[#{db}]"
     msg += ", ids:[#{recs.sort_by(&:to_i).join(',')}])"
-    event = "policyset_" + mode
+    event = "policyset_#{mode}"
     {:event => event, :target_id => pp.id, :target_class => pp.class.base_class.name, :userid => session[:userid], :message => msg}
   end
 

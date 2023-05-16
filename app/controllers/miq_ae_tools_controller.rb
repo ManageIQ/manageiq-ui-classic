@@ -109,7 +109,7 @@ class MiqAeToolsController < ApplicationController
     assert_privileges('miq_ae_class_import_export')
     begin
       automate_json = automate_import_json_serializer.serialize(ImportFileUpload.find(params[:import_file_upload_id]))
-    rescue StandardError => e
+    rescue => e
       add_flash(_("Error: import processing failed: %{message}") % {:message => e.message}, :error)
     end
 
@@ -138,7 +138,7 @@ class MiqAeToolsController < ApplicationController
       git_based_domain_import_service.import(params[:git_repo_id], params[:git_branch_or_tag], current_tenant.id)
 
       add_flash(_("Imported from git"), :info)
-    rescue StandardError => error
+    rescue => error
       add_flash(_("Error: import failed: %{message}") % {:message => error.message}, :error)
     end
 
@@ -234,7 +234,7 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
 
         task_id = git_based_domain_import_service.queue_refresh(git_repo_id)
         response_json = {:task_id => task_id, :git_repo_id => git_repo_id, :new_git_repo => new_git_repo}
-      rescue StandardError => err
+      rescue => err
         add_flash(_("Error during repository setup: %{error_message}") % {:error_message => err.message}, :error)
         response_json = {:message => @flash_array.first}
       end
@@ -292,7 +292,7 @@ Classes updated/added: %{class_stats}
 Instances updated/added: %{instance_stats}
 Methods updated/added: %{method_stats}") % stat_options)
         redirect_to(:action => 'import_export')
-      rescue StandardError => bang
+      rescue => bang
         flash_to_session(_("Error during 'upload': %{message}") % {:message => bang.message}, :error)
         redirect_to(:action => 'import_export')
       end
@@ -307,7 +307,7 @@ Methods updated/added: %{method_stats}") % stat_options)
   # Send all classes and instances
   def export_datastore
     assert_privileges('miq_ae_class_import_export')
-    filename = "datastore_" + format_timezone(Time.now, Time.zone, "fname") + ".zip"
+    filename = "datastore_#{format_timezone(Time.zone.now, Time.zone, "fname")}.zip"
     disable_client_cache
     send_data(MiqAeDatastore.export(current_tenant), :filename => filename)
   end
@@ -394,7 +394,7 @@ Methods updated/added: %{method_stats}") % stat_options)
       txt += "<#{xml.root.name}>\n"
       xml.root.each_element do |e|
         txt += "  "
-        txt += e.inspect + "\n"
+        txt += "#{e.inspect}\n"
         txt += ws_text_from_xml(e, depth + 2)
         txt += "  "
         txt += "<\\#{e.name}>\n"
@@ -403,7 +403,7 @@ Methods updated/added: %{method_stats}") % stat_options)
     else
       xml.each_element do |e|
         depth.times { txt += "  " }
-        txt += e.inspect + "\n"
+        txt += "#{e.inspect}\n"
         txt += ws_text_from_xml(e, depth + 1)
         depth.times { txt += "  " }
         txt += "<\\#{e.name}>\n"
@@ -419,8 +419,8 @@ Methods updated/added: %{method_stats}") % stat_options)
     end
     add_flash(_("Request is required"), :error) if @resolve[:new][:object_request].blank?
     ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
-      f = ("attribute_" + (i + 1).to_s)
-      v = ("value_" + (i + 1).to_s)
+      f = "attribute_#{i + 1}"
+      v = "value_#{i + 1}"
       add_flash(_("%{val} missing for %{field}") % {:val => f.titleize, :field => v.titleize}, :error) if @resolve[:new][:attrs][i][0].blank? && @resolve[:new][:attrs][i][1].present?
       add_flash(_("%{val} missing for %{field}") % {:val => v.titleize, :field => f.titleize}, :error) if @resolve[:new][:attrs][i][0].present? && @resolve[:new][:attrs][i][1].blank?
     end
@@ -439,8 +439,8 @@ Methods updated/added: %{method_stats}") % stat_options)
     copy_params_if_present(@resolve[:new], params, %i[instance_name other_name object_message object_request target_class target_id])
 
     ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
-      f = ("attribute_" + (i + 1).to_s)
-      v = ("value_" + (i + 1).to_s)
+      f = "attribute_#{i + 1}"
+      v = "value_#{i + 1}"
       @resolve[:new][:attrs][i][0] = params[f] if params[f.to_sym]
       @resolve[:new][:attrs][i][1] = params[v] if params[v.to_sym]
     end

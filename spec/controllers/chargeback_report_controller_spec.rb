@@ -43,7 +43,7 @@ describe ChargebackReportController do
       miq_report_result.report = chargeback_report.to_hash.merge(:extras=> {:total_html_rows => 100})
       miq_report_result.save
       controller.instance_variable_set(:@sb, {})
-      controller.instance_variable_set(:@settings, :perpage => { :reports => 20 })
+      controller.instance_variable_set(:@settings, :perpage => {:reports => 20})
     end
 
     it "fetch existing report" do
@@ -62,8 +62,8 @@ describe ChargebackReportController do
 
     describe '#get_session_data' do
       it "Sets variables correctly" do
-        allow(controller).to receive(:session).and_return(:chargeback_report_lastaction   => lastaction,
-                                                          :chargeback_report_display      => display)
+        allow(controller).to receive(:session).and_return(:chargeback_report_lastaction => lastaction,
+                                                          :chargeback_report_display    => display)
         controller.send(:get_session_data)
 
         expect(controller.instance_variable_get(:@title)).to eq("Chargeback Saved Reports")

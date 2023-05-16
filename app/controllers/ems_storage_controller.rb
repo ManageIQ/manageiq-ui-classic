@@ -63,7 +63,7 @@ class EmsStorageController < ApplicationController
     super
   end
 
-  def feature_role(record)
+  def feature_role(_record)
     'ems_storage_show'
   end
 

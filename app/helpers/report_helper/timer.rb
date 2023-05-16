@@ -42,7 +42,7 @@ module ReportHelper
     :hours,
     :start_date,
     :start_hour,
-    :start_min,
+    :start_min
   ) do
     def initialize(typ = nil, months = 1, weeks = 1, days = 1, hours = 1, start_date = nil, start_hour = '00',
                    start_min = '00')

@@ -15,9 +15,8 @@ module ApplicationHelper::Dialogs
     classification = Classification.find_by(:id => category_id)
     return [] if classification.nil?
 
-    available_tags = classification.entries.collect do |category|
+    classification.entries.collect do |category|
       {:name => category.name, :description => category.description}
     end
-    available_tags
   end
 end

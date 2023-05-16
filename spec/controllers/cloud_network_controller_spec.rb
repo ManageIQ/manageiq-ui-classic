@@ -12,7 +12,7 @@ describe CloudNetworkController do
     EvmSpecHelper.create_guid_miq_server_zone
   end
 
-  include_examples :shared_examples_for_cloud_network_controller, %w(openstack azure google amazon)
+  include_examples :shared_examples_for_cloud_network_controller, %w[openstack azure google amazon]
 
   describe "#tags_edit" do
     before do
@@ -28,7 +28,7 @@ describe CloudNetworkController do
     end
 
     it "builds tagging screen" do
-      post :button, :params => { :pressed => "cloud_network_tag", :format => :js, :id => ct.id }
+      post :button, :params => {:pressed => "cloud_network_tag", :format => :js, :id => ct.id}
 
       expect(assigns(:flash_array)).to be_nil
       expect(response.status).to eq(200)
@@ -37,7 +37,7 @@ describe CloudNetworkController do
     it "cancels tags edit" do
       session[:breadcrumbs] = [{:url => "cloud_network/show/#{ct.id}"}, 'placeholder']
 
-      post :tagging_edit, :params => { :button => "cancel", :format => :js, :id => ct.id }
+      post :tagging_edit, :params => {:button => "cancel", :format => :js, :id => ct.id}
 
       expect(assigns(:flash_array).first[:message]).to include("was cancelled by the user")
       expect(assigns(:edit)).to be_nil
@@ -46,7 +46,7 @@ describe CloudNetworkController do
 
     it "save tags" do
       session[:breadcrumbs] = [{:url => "cloud_network/show/#{ct.id}"}, 'placeholder']
-      post :tagging_edit, :params => { :button => "save", :format => :js, :id => ct.id, :data => get_tags_json([tag1, tag2]) }
+      post :tagging_edit, :params => {:button => "save", :format => :js, :id => ct.id, :data => get_tags_json([tag1, tag2])}
       expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
       expect(assigns(:edit)).to be_nil
       expect(response.status).to eq(200)
@@ -76,23 +76,23 @@ describe CloudNetworkController do
     before do
       bypass_rescue
 
-      EvmSpecHelper.seed_specific_product_features(%w(cloud_network_new ems_network_show_list))
+      EvmSpecHelper.seed_specific_product_features(%w[cloud_network_new ems_network_show_list])
 
-      feature = MiqProductFeature.find_all_by_identifier(%w(cloud_network_new))
+      feature = MiqProductFeature.find_all_by_identifier(%w[cloud_network_new])
       role = FactoryBot.create(:miq_user_role, :miq_product_features => feature)
       group = FactoryBot.create(:miq_group, :miq_user_role => role)
       login_as FactoryBot.create(:user, :miq_groups => [group])
     end
 
     it "raises exception when user don't have privilege" do
-      expect { post :new, :params => { :button => "new", :format => :js } }.to raise_error(MiqException::RbacPrivilegeException)
+      expect { post :new, :params => {:button => "new", :format => :js} }.to raise_error(MiqException::RbacPrivilegeException)
     end
 
     context "user don't have privilege for cloud tenants" do
-      let(:feature) { MiqProductFeature.find_all_by_identifier(%w(cloud_network_new ems_network_show_list)) }
+      let(:feature) { MiqProductFeature.find_all_by_identifier(%w[cloud_network_new ems_network_show_list]) }
 
       it "raises exception" do
-        expect { post :new, :params => { :button => "new", :format => :js } }.to raise_error(MiqException::RbacPrivilegeException)
+        expect { post :new, :params => {:button => "new", :format => :js} }.to raise_error(MiqException::RbacPrivilegeException)
       end
     end
   end
@@ -125,7 +125,7 @@ describe CloudNetworkController do
     before { stub_user(:features => :all) }
 
     it "builds create screen" do
-      post :button, :params => { :pressed => "cloud_network_new", :format => :js }
+      post :button, :params => {:pressed => "cloud_network_new", :format => :js}
 
       expect(assigns(:flash_array)).to be_nil
     end
@@ -172,7 +172,7 @@ describe CloudNetworkController do
     end
 
     it "builds edit screen" do
-      post :button, :params => { :pressed => "cloud_network_edit", :format => :js, :id => network.id }
+      post :button, :params => {:pressed => "cloud_network_edit", :format => :js, :id => network.id}
 
       expect(assigns(:flash_array)).to be_nil
     end
@@ -180,7 +180,7 @@ describe CloudNetworkController do
     it "queues the update action" do
       expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
 
-      post :update, :params => { :button => "save", :format => :js, :id => network.id, :name => "test2" }
+      post :update, :params => {:button => "save", :format => :js, :id => network.id, :name => "test2"}
     end
   end
 
@@ -291,10 +291,10 @@ describe CloudNetworkController do
       context "#{action} for selected Instances displayed in a nested list" do
         let(:params) { {:pressed => "instance_#{action}"} }
 
-        it "calls #{action + 'vms'} method" do
+        it "calls #{"#{action}vms"} method" do
           allow(controller).to receive(:show)
           allow(controller).to receive(:performed?).and_return(true)
-          expect(controller).to receive((action + 'vms').to_sym)
+          expect(controller).to receive("#{action}vms".to_sym)
           controller.send(:button)
         end
       end

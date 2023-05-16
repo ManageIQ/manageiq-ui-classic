@@ -81,7 +81,7 @@ class EmsPhysicalInfraDashboardService < DashboardService
     attributes.each do |attr|
       attr_notification = []
       current_data = {
-        :id           => attr_hsh[attr] + 'Id',
+        :id           => "#{attr_hsh[attr]}Id",
         :iconClass    => attr.to_s.classify.safe_constantize.try(:decorate).try(:fonticon),
         :title        => attr_hsh[attr],
         :count        => 0,
@@ -144,7 +144,8 @@ class EmsPhysicalInfraDashboardService < DashboardService
       :title => _('Recent Servers'),
       :label => _('Servers')
     }
-    return { :dataAvailable => false, :config => config} if all_servers.blank?
+    return {:dataAvailable => false, :config => config} if all_servers.blank?
+
     {
       :dataAvailable => true,
       :xData         => all_servers.keys,
@@ -205,7 +206,7 @@ class EmsPhysicalInfraDashboardService < DashboardService
     warning_servers = Hash.new(0)
     critical_servers = Hash.new(0)
     all_physical_servers = PhysicalServer.where('created_at > ?', 30.days.ago.utc)
-    all_physical_servers = all_physical_servers.where('ems_id = ?', @ems_id) if @ems_id
+    all_physical_servers = all_physical_servers.where(:ems_id => @ems_id) if @ems_id
     all_physical_servers.sort_by(&:created_at).each do |server|
       date = server.created_at.strftime("%Y-%m-%d")
       all_servers[date] += 1
@@ -259,13 +260,13 @@ class EmsPhysicalInfraDashboardService < DashboardService
     all_records = Hash.new(0)
     records = model.where('created_at > ?', 30.days.ago.utc)
     records = if @ems_id
-                records.where('ems_id = ?', @ems_id)
+                records.where(:ems_id => @ems_id)
               else
                 records.includes(:resource => [:ext_management_system])
               end
     records.sort_by(&:created_at).uniq.each do |r|
       date = r.created_at.strftime("%Y-%m-%d")
-      all_records[date] += model.where('created_at = ?', r.created_at).count
+      all_records[date] += model.where(:created_at => r.created_at).count
     end
     all_records
   end

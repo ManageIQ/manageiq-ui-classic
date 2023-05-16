@@ -38,7 +38,7 @@ module VmHelper::TextualSummary
   end
 
   def textual_id
-    { :label => _("ID"), :value => @record.id }
+    {:label => _("ID"), :value => @record.id}
   end
 
   def textual_group_multi_region
@@ -138,11 +138,11 @@ module VmHelper::TextualSummary
 
   def textual_load_balancer_health_check_state
     return nil if @record.try(:load_balancer_health_check_states).blank?
-    h = {:label    => _("Load Balancer Status"),
-         :value    => @record.load_balancer_health_check_state,
-         :title    => @record.load_balancer_health_check_states_with_reason.join("\n"),
-         :explorer => true}
-    h
+
+    {:label    => _("Load Balancer Status"),
+     :value    => @record.load_balancer_health_check_state,
+     :title    => @record.load_balancer_health_check_states_with_reason.join("\n"),
+     :explorer => true}
   end
 
   def textual_container
@@ -185,6 +185,7 @@ module VmHelper::TextualSummary
 
   def textual_storage_profile
     return nil if @record.storage_profile.nil?
+
     {:label => _("Storage Profile"), :value => @record.storage_profile.name}
   end
 
@@ -200,6 +201,7 @@ module VmHelper::TextualSummary
 
   def textual_retirement_date
     return nil if @record.kind_of?(ManageIQ::Providers::Openstack::CloudManager::Template)
+
     {:label => _("Retirement Date"),
      :icon  => "fa fa-clock-o",
      :value => @record.retires_on.nil? ? _("Never") : format_timezone(@record.retires_on)}
@@ -210,8 +212,9 @@ module VmHelper::TextualSummary
   end
 
   def textual_provisioned
-    req = @record.miq_provision.nil? ? nil : @record.miq_provision.miq_request
+    req = @record.miq_provision&.miq_request
     return nil if req.nil?
+
     {:label => _("Provisioned On"), :value => req.fulfilled_on.nil? ? "" : format_timezone(req.fulfilled_on)}
   end
 
@@ -226,6 +229,7 @@ module VmHelper::TextualSummary
   def textual_cluster
     cluster = @record.try(:ems_cluster)
     return nil if cluster.nil?
+
     h = {:label => _("Cluster"), :icon => "pficon pficon-cluster", :value => (cluster.nil? ? _("None") : cluster.name)}
     if cluster && role_allows?(:feature => "ems_cluster_show")
       h[:title] = _("Show this VM's Cluster")
@@ -237,6 +241,7 @@ module VmHelper::TextualSummary
   def textual_host
     host = @record.host
     return nil if host.nil?
+
     h = {:label => _("Host"), :icon => "pficon pficon-cluster", :value => (host.nil? ? _("None") : host.name)}
     if host && role_allows?(:feature => "host_show")
       h[:title] = _("Show this VM's Host")
@@ -320,6 +325,7 @@ module VmHelper::TextualSummary
 
   def textual_parent_vm
     return nil unless @record.template?
+
     h = {:label => _("Parent VM"), :icon => "pficon pficon-virtual-machine"}
     parent_vm = @record.with_relationship_type("genealogy", &:parent)
     if parent_vm.nil?

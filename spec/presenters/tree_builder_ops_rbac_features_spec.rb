@@ -1,6 +1,6 @@
 describe TreeBuilderOpsRbacFeatures do
   let(:features) do
-    %w(
+    %w[
       all_vm_rules
       api_exclusive
       common_features
@@ -10,7 +10,7 @@ describe TreeBuilderOpsRbacFeatures do
       instance_control
       instance_scan
       sui
-    )
+    ]
   end
 
   let(:role) do
@@ -28,7 +28,7 @@ describe TreeBuilderOpsRbacFeatures do
   end
 
   let(:main_keys) do
-    bs_tree.first["nodes"].map { |n| n['key'] }
+    bs_tree.first["nodes"].pluck('key')
   end
 
   let(:bs_tree) { JSON.parse(tree.locals_for_render[:bs_tree]) }
@@ -38,7 +38,7 @@ describe TreeBuilderOpsRbacFeatures do
       expect(bs_tree).not_to be_nil
     end
 
-    %w(aut compute con net set sto svc vi).each do |i|
+    %w[aut compute con net set sto svc vi].each do |i|
       it "includes #{i}" do
         expect(main_keys).to include("100000002___tab_#{i}")
       end

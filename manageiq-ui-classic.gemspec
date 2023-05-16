@@ -1,4 +1,4 @@
-$:.push File.expand_path("../lib", __FILE__)
+$:.push(File.expand_path('lib', __dir__))
 
 # Maintain your gem's version:
 require "manageiq/ui/classic/version"
@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", ">= 6.0.4", "< 7.0"
 
-  s.add_dependency "execjs", "2.8.1" # Note: 2.8.1 requires uglifier 4.2.0 to defer uglifier asset compilation until asset compilation time: https://github.com/rails/execjs/issues/105
+  s.add_dependency "execjs", "2.8.1" # NOTE: 2.8.1 requires uglifier 4.2.0 to defer uglifier asset compilation until asset compilation time: https://github.com/rails/execjs/issues/105
   s.add_dependency "high_voltage", "~> 3.0.0"
 
   # TODO: fix manageiq-decorators so we can eager load after manageiq-ui-classic
@@ -38,7 +38,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency "simplecov", ">= 0.21.2"
 
   # core because jasmine gem depends on major version only, meaning breakages when not the latest
+  s.add_development_dependency "chrome_remote", "~> 0.3.0"
   s.add_development_dependency "jasmine", "~> 3.4.0"
   s.add_development_dependency "jasmine-core", "~> 3.4.0"
-  s.add_development_dependency "chrome_remote", "~> 0.3.0"
+  s.metadata['rubygems_mfa_required'] = 'true'
 end

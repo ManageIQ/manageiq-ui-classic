@@ -79,17 +79,19 @@ module PhysicalServerHelper::TextualSummary
   def textual_physical_rack
     rack_id = @record.physical_rack_id
     return nil if rack_id.nil?
+
     textual_link(PhysicalRack.find(rack_id))
   end
 
   def textual_physical_chassis
     chassis_id = @record.physical_chassis_id
     return nil if chassis_id.nil?
+
     textual_link(PhysicalChassis.find(chassis_id))
   end
 
   def textual_name
-    {:label => _("Server name"), :value => @record.name }
+    {:label => _("Server name"), :value => @record.name}
   end
 
   def textual_product_name
@@ -109,7 +111,7 @@ module PhysicalServerHelper::TextualSummary
   end
 
   def textual_ems_ref
-    {:label => _("UUID"), :value => @record.ems_ref }
+    {:label => _("UUID"), :value => @record.ems_ref}
   end
 
   def textual_model
@@ -121,11 +123,11 @@ module PhysicalServerHelper::TextualSummary
   end
 
   def textual_memory
-    {:label => _("Total memory (mb)"), :value => @record.hardware.memory_mb }
+    {:label => _("Total memory (mb)"), :value => @record.hardware.memory_mb}
   end
 
   def textual_cores
-    {:label => _("CPU total cores"), :value => @record.hardware.cpu_total_cores }
+    {:label => _("CPU total cores"), :value => @record.hardware.cpu_total_cores}
   end
 
   def textual_power_state
@@ -136,7 +138,7 @@ module PhysicalServerHelper::TextualSummary
     # Currently, we only want to display the MAC addresses of devices that
     # are associated with an entry in the networks table. This ensures that
     # we only display management addresses.
-    {:label => _("MAC Address"), :value => @record.hardware.guest_devices.reject { |device| device.network.nil? }.collect { |device| device[:address] }.join(", ") }
+    {:label => _("MAC Address"), :value => @record.hardware.guest_devices.reject { |device| device.network.nil? }.pluck(:address).join(", ")}
   end
 
   def textual_ipv4
@@ -168,7 +170,7 @@ module PhysicalServerHelper::TextualSummary
     # It is possible for guest devices not to have network data (or a network
     # hash). As a result, we need to exclude guest devices that don't have
     # network data to prevent a nil class error from occurring.
-    {:label => _("IPv6 Address"), :value => @record.hardware.guest_devices.reject { |device| device.network.nil? }.collect { |device| device.network.ipv6address }.join(", ") }
+    {:label => _("IPv6 Address"), :value => @record.hardware.guest_devices.reject { |device| device.network.nil? }.collect { |device| device.network.ipv6address }.join(", ")}
   end
 
   def textual_loc_led_state
@@ -226,11 +228,11 @@ module PhysicalServerHelper::TextualSummary
   end
 
   def textual_compliance_name
-    {:label => _("Name"), :value => @record.ems_compliance_name }
+    {:label => _("Name"), :value => @record.ems_compliance_name}
   end
 
   def textual_compliance_status
-    {:label => _("Status"), :value => @record.ems_compliance_status }
+    {:label => _("Status"), :value => @record.ems_compliance_status}
   end
 
   def textual_assigned_server_profile

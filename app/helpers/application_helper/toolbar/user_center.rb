@@ -1,48 +1,52 @@
 class ApplicationHelper::Toolbar::UserCenter < ApplicationHelper::Toolbar::Basic
   button_group('user_vmdb', [
-    select(
-      :user_vmdb_choice,
-      nil,
-      t = N_('Configuration'),
-      t,
-      :items => [
-        button(
-          :rbac_user_edit,
-          'pficon pficon-edit fa-lg',
-          t = N_('Edit this User'),
-          t),
-        button(
-          :rbac_user_copy,
-          'fa fa-files-o fa-lg',
-          t = N_('Copy this User to a new User'),
-          t,
-          :klass => ApplicationHelper::Button::RbacUserCopy),
-        button(
-          :rbac_user_delete,
-          'pficon pficon-delete fa-lg',
-          t = N_('Delete this User'),
-          t,
-          :url_parms => "&refresh=y",
-          :confirm   => N_("Are you sure you want to delete this User?"),
-          :klass     => ApplicationHelper::Button::RbacUserDelete),
-      ]
-    ),
-  ])
+                 select(
+                   :user_vmdb_choice,
+                   nil,
+                   t = N_('Configuration'),
+                   t,
+                   :items => [
+                     button(
+                       :rbac_user_edit,
+                       'pficon pficon-edit fa-lg',
+                       t = N_('Edit this User'),
+                       t
+                     ),
+                     button(
+                       :rbac_user_copy,
+                       'fa fa-files-o fa-lg',
+                       t = N_('Copy this User to a new User'),
+                       t,
+                       :klass => ApplicationHelper::Button::RbacUserCopy
+                     ),
+                     button(
+                       :rbac_user_delete,
+                       'pficon pficon-delete fa-lg',
+                       t = N_('Delete this User'),
+                       t,
+                       :url_parms => "&refresh=y",
+                       :confirm   => N_("Are you sure you want to delete this User?"),
+                       :klass     => ApplicationHelper::Button::RbacUserDelete
+                     ),
+                   ]
+                 ),
+               ])
   button_group('rbac_user_policy', [
-    select(
-      :rbac_user_policy_choice,
-      nil,
-      t = N_('Policy'),
-      t,
-      :items => [
-        button(
-          :rbac_user_tags_edit,
-          'pficon pficon-edit fa-lg',
-          t = proc do
-            _('Edit \'%{customer_name}\' Tags for this User') % {:customer_name => @view_context.session[:customer_name]}
-          end,
-          t),
-      ]
-    ),
-  ])
+                 select(
+                   :rbac_user_policy_choice,
+                   nil,
+                   t = N_('Policy'),
+                   t,
+                   :items => [
+                     button(
+                       :rbac_user_tags_edit,
+                       'pficon pficon-edit fa-lg',
+                       t = proc do
+                         _('Edit \'%{customer_name}\' Tags for this User') % {:customer_name => @view_context.session[:customer_name]}
+                       end,
+                       t
+                     ),
+                   ]
+                 ),
+               ])
 end

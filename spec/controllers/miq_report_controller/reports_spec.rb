@@ -10,11 +10,11 @@ describe ReportController, "::Reports" do
       FactoryBot.create(:miq_report)
       report = FactoryBot.create(:miq_report, :rpt_type => "Custom", :miq_group => user.current_group)
       session['sandboxes'] = {
-        controller.controller_name => { :active_tree => 'report_1',
-                                        :trees       => {'report_1' => {:active_node => "xx-0_xx-0-0_rep-#{report.id}"}}}
+        controller.controller_name => {:active_tree => 'report_1',
+                                       :trees       => {'report_1' => {:active_node => "xx-0_xx-0-0_rep-#{report.id}"}}}
       }
 
-      get :x_button, :params => { :id => report.id, :pressed => 'miq_report_delete' }
+      get :x_button, :params => {:id => report.id, :pressed => 'miq_report_delete'}
       expect(response.status).to eq(200)
       expect(MiqReport.find_by(:id => report.id)).to be_nil
     end
@@ -23,11 +23,11 @@ describe ReportController, "::Reports" do
       report = FactoryBot.create(:miq_report, :rpt_type => "Custom", :miq_group => user.current_group)
       report.miq_group.update(:settings => {"report_menus" => [["foo", [["bar", [report.name]]]]]})
       session['sandboxes'] = {
-        controller.controller_name => { :active_tree => 'report_1',
-                                        :trees       => {'report_1' => {:active_node => "xx-0_xx-0-0_rep-#{report.id}"}}}
+        controller.controller_name => {:active_tree => 'report_1',
+                                       :trees       => {'report_1' => {:active_node => "xx-0_xx-0-0_rep-#{report.id}"}}}
       }
 
-      get :x_button, :params => { :id => report.id, :pressed => 'miq_report_delete' }
+      get :x_button, :params => {:id => report.id, :pressed => 'miq_report_delete'}
       report.miq_group.reload
       expect(response.status).to eq(200)
       expect(MiqReport.find_by(:id => report.id)).to be_nil
@@ -38,11 +38,11 @@ describe ReportController, "::Reports" do
       FactoryBot.create(:miq_report)
       report = FactoryBot.create(:miq_report, :rpt_type => "Default")
       session['sandboxes'] = {
-        controller.controller_name => { :active_tree => 'report_1',
-                                        :trees       => {'report_1' => {:active_node => "xx-0_xx-0-0_rep-#{report.id}"}}}
+        controller.controller_name => {:active_tree => 'report_1',
+                                       :trees       => {'report_1' => {:active_node => "xx-0_xx-0-0_rep-#{report.id}"}}}
       }
 
-      get :x_button, :params => { :id => report.id, :pressed => 'miq_report_delete' }
+      get :x_button, :params => {:id => report.id, :pressed => 'miq_report_delete'}
       expect(response.status).to eq(200)
       expect(MiqReport.find_by(:id => report.id)).not_to be_nil
     end

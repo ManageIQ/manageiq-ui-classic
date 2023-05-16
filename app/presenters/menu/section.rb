@@ -56,6 +56,7 @@ module Menu
 
     def item(item_id)
       return self if item_id == id
+
       items.each do |el|
         child_match = el.item(item_id)
         return child_match if child_match.present?

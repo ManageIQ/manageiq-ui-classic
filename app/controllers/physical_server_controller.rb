@@ -63,6 +63,7 @@ class PhysicalServerController < ApplicationController
 
     return if %w[physical_server_protect physical_server_tag].include?(params[:pressed]) &&
               @flash_array.nil? # Some other screen is showing, so return
+
     case params[:pressed]
     when "physical_server_timeline"
       @record = find_record_with_rbac(PhysicalServer, params[:id])

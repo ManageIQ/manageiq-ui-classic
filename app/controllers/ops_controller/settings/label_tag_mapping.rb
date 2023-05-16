@@ -248,7 +248,7 @@ module OpsController::Settings::LabelTagMapping
 
   def validate_mapping(cat_description, entity, label_name)
     tag = classification_lookup_with_cache_by(cat_description)&.tag
-    return :unique_mapping if tag && ProviderTagMapping.where(:label_name => label_name, :tag => tag).exists?
+    return :unique_mapping if tag && ProviderTagMapping.exists?(:label_name => label_name, :tag => tag)
 
     if entity == ALL_ENTITIES
       :tag_not_found unless classification_lookup_with_cache_by(cat_description)
@@ -270,7 +270,7 @@ module OpsController::Settings::LabelTagMapping
                                    :label_name            => label_name,
                                    :tag                   => category.tag)
       end
-    rescue StandardError => bang
+    rescue => bang
       add_flash(_("Error during 'add': %{message}") % {:message => bang.message}, :error)
       javascript_flash
     else
@@ -300,7 +300,7 @@ module OpsController::Settings::LabelTagMapping
         update_category.description = cat_description_with_prefix(mapping.labeled_resource_type, cat_description)
         update_category.save!
       end
-    rescue StandardError => bang
+    rescue => bang
       add_flash(_("Error during 'save': %{message}") % {:message => bang.message}, :error)
       javascript_flash
     else

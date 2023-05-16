@@ -2,11 +2,12 @@ class PictureController < ApplicationController
   skip_before_action :get_global_session_data
   skip_after_action :set_global_session_data
 
-  def show # GET /pictures/:basename
+  # GET /pictures/:basename
+  def show
     id, extension = params[:basename].split('.')
 
     picture = Picture.where(:extension => extension).find_by(:id => id)
-    return head(:not_found) unless picture
+    return head(404) unless picture
 
     fresh_when(:etag => picture.md5, :public => true)
 

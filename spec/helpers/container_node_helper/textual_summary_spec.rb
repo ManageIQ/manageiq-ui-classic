@@ -1,5 +1,5 @@
 describe ContainerNodeHelper::TextualSummary do
-  include_examples "textual_group", "Relationships", %i(
+  include_examples "textual_group", "Relationships", %i[
     ems
     container_routes
     container_services
@@ -9,8 +9,8 @@ describe ContainerNodeHelper::TextualSummary do
     lives_on
     container_images
     custom_button_events
-  )
-  include_examples "textual_group", "Properties", %i(
+  ]
+  include_examples "textual_group", "Properties", %i[
     name
     creation_timestamp
     resource_version
@@ -25,6 +25,6 @@ describe ContainerNodeHelper::TextualSummary do
     kubernetes_proxy_version
     os_distribution
     kernel_version
-  )
+  ]
   include_examples "textual_group_smart_management"
 end

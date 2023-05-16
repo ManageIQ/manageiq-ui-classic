@@ -3,11 +3,11 @@ describe MiqAeCustomizationController do
     context "#old_dialogs_button_operation" do
       it "Only non-default dialogs should get deleted" do
         dialog1 = FactoryBot.create(:miq_dialog, :name        => "Test_Dialog1",
-                                                  :description => "Test Description 1",
-                                                  :default     => true)
+                                                 :description => "Test Description 1",
+                                                 :default     => true)
         dialog2 = FactoryBot.create(:miq_dialog, :name        => "Test_Dialog2",
-                                                  :description => "Test Description 2",
-                                                  :default     => false)
+                                                 :description => "Test Description 2",
+                                                 :default     => false)
         controller.instance_variable_set(:@sb,
                                          :active_tree => :old_dialogs_tree,
                                          :trees       => {
@@ -31,8 +31,8 @@ describe MiqAeCustomizationController do
 
       it "Default Dialog should not be deleted" do
         dialog = FactoryBot.create(:miq_dialog, :name        => "Test_Dialog",
-                                                 :description => "Test Description",
-                                                 :default     => true)
+                                                :description => "Test Description",
+                                                :default     => true)
         controller.instance_variable_set(:@sb,
                                          :trees       => {:old_dialogs_tree => {:active_node => "odg-#{dialog.id}"}},
                                          :active_tree => :old_dialogs_tree)
@@ -64,7 +64,7 @@ describe MiqAeCustomizationController do
         controller.instance_variable_set(:@edit, :new    => {:name        => 'name',
                                                              :description => 'description',
                                                              :dialog_type => '',
-                                                             :content     => '', },
+                                                             :content     => '',},
                                                  :dialog => MiqDialog.new)
         allow(controller).to receive(:render)
         controller.send(:old_dialogs_update)

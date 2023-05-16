@@ -15,7 +15,7 @@ describe ContainerNodeController do
     EvmSpecHelper.create_guid_miq_server_zone
     ems = FactoryBot.create(:ems_kubernetes)
     container_node = FactoryBot.create(:container_node, :ext_management_system => ems, :name => "Test Node")
-    get :show, :params => { :id => container_node.id }
+    get :show, :params => {:id => container_node.id}
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
     expect(assigns(:breadcrumbs)).to eq([{:name => "Container Nodes",
@@ -59,8 +59,8 @@ describe ContainerNodeController do
       end
 
       it 'displays a flash message' do
-        post :button, :params => { :pressed => 'container_node_check_compliance', :id => node.id }
-        expect(JSON.parse(response.body)['replacePartials']).to have_key('flash_msg_div')
+        post :button, :params => {:pressed => 'container_node_check_compliance', :id => node.id}
+        expect(response.parsed_body['replacePartials']).to have_key('flash_msg_div')
       end
     end
   end

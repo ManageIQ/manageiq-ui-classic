@@ -48,7 +48,7 @@ class ChargebackReportController < ApplicationController
       return
     end
     @title ||= _("Saved Chargeback Report [%{name}]") % {:name => rr.name}
-    if !current_user.miq_group_ids.include?(rr.miq_group_id) && !report_admin_user?
+    if current_user.miq_group_ids.exclude?(rr.miq_group_id) && !report_admin_user?
       add_flash(_("Report is not authorized for the logged in user"), :error)
     else
       @report_result_id = session[:report_result_id] = rr.id
@@ -70,7 +70,7 @@ class ChargebackReportController < ApplicationController
             add_flash(_("No records found for this report"), :warning)
           end
         else
-          return MiqReport.find(rr.miq_report_id)
+          MiqReport.find(rr.miq_report_id)
         end
       end
     end

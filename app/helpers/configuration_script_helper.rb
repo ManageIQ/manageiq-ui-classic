@@ -94,6 +94,7 @@ module ConfigurationScriptHelper
 
   def textual_survey_group(items)
     return unless items
+
     h = {:title     => _("Surveys"),
          :headers   => [_('Question Name'), _('Question Description'), _('Variable'),
                         _('Type'),  _('Min'), _('Max'), _('Default'), _('Required'), _('Choices')],
@@ -132,4 +133,3 @@ module ConfigurationScriptHelper
     TextualTags.new(_("Smart Management"), %i[tags])
   end
 end
-#

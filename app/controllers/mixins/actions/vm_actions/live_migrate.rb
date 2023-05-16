@@ -45,7 +45,7 @@ module Mixins
               hosts = connection.hosts.select { |h| h.service_name == "compute" && h.host_name != current_hostname }.map do |h|
                 {:name => h.host_name, :id => h.host_name}
               end
-            rescue StandardError
+            rescue
               hosts = []
             end
           end

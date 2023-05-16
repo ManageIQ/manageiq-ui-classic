@@ -30,7 +30,7 @@ module Mixins
           javascript_flash(:text        => _("Cannot validate certificate to '%{hostname}. " \
                                              "Make sure that you use a certificate signed by the root Openshift Cert." \
                                              "error message: %{err}") %
-                                              {:hostname => url.hostname, :err => e.message },
+                                              {:hostname => url.hostname, :err => e.message},
                            :severity    => :error,
                            :spinner_off => true)
         else
@@ -46,7 +46,7 @@ module Mixins
         end
       else
         javascript_flash(:text        => _("A route named '%{route_name}' is configured to connect to the " \
-                                            "external logging server but it doesn't exist") %
+                                           "external logging server but it doesn't exist") %
                                            {:route_name => route_name},
                          :severity    => :error,
                          :spinner_off => true)

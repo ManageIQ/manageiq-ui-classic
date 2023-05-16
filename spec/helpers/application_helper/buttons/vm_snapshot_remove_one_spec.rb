@@ -6,11 +6,11 @@ describe ApplicationHelper::Button::VmSnapshotRemoveOne do
   let(:record) do
     record = FactoryBot.create(:vm_redhat, :ems_id => ems.id, :host_id => host.id)
     record.snapshots = [FactoryBot.create(:snapshot,
-                                           :create_time       => 1.minute.ago,
-                                           :vm_or_template_id => record.id,
-                                           :name              => 'EvmSnapshot',
-                                           :description       => "Some Description",
-                                           :current           => 1)]
+                                          :create_time       => 1.minute.ago,
+                                          :vm_or_template_id => record.id,
+                                          :name              => 'EvmSnapshot',
+                                          :description       => "Some Description",
+                                          :current           => 1)]
     record
   end
   let(:button) { described_class.new(view_context, {}, {'record' => record, 'active' => active}, {}) }
@@ -31,11 +31,11 @@ describe ApplicationHelper::Button::VmSnapshotRemoveOne do
       let(:record) do
         record = FactoryBot.create(:vm_vmware, :ems_id => ems.id, :host_id => host.id)
         record.snapshots = [FactoryBot.create(:snapshot,
-                                               :create_time       => 1.minute.ago,
-                                               :vm_or_template_id => record.id,
-                                               :name              => 'EvmSnapshot',
-                                               :description       => "Some Description",
-                                               :current           => 1)]
+                                              :create_time       => 1.minute.ago,
+                                              :vm_or_template_id => record.id,
+                                              :name              => 'EvmSnapshot',
+                                              :description       => "Some Description",
+                                              :current           => 1)]
         record
       end
       it { is_expected.to be_falsey }

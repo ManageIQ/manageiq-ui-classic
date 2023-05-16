@@ -132,60 +132,70 @@ module ResourcePoolHelper::TextualSummary
   def textual_memory_reserve
     value = @record.memory_reserve
     return nil if value.nil?
+
     {:label => _("Memory Reserve"), :value => value}
   end
 
   def textual_memory_reserve_expand
     value = @record.memory_reserve_expand
     return nil if value.nil?
+
     {:label => _("Memory Reserve Expand"), :value => value}
   end
 
   def textual_memory_limit
     value = @record.memory_limit
     return nil if value.nil?
+
     {:label => _("Memory Limit"), :value => (value == -1 ? _("Unlimited") : value)}
   end
 
   def textual_memory_shares
     value = @record.memory_shares
     return nil if value.nil?
+
     {:label => _("Memory Shares"), :value => value}
   end
 
   def textual_memory_shares_level
     value = @record.memory_shares_level
     return nil if value.nil?
+
     {:label => _("Memory Shares Level"), :value => value}
   end
 
   def textual_cpu_reserve
     value = @record.cpu_reserve
     return nil if value.nil?
+
     {:label => _("CPU Reserve"), :value => value}
   end
 
   def textual_cpu_reserve_expand
     value = @record.cpu_reserve_expand
     return nil if value.nil?
+
     {:label => _("CPU Reserve Expand"), :value => value}
   end
 
   def textual_cpu_limit
     value = @record.cpu_limit
     return nil if value.nil?
+
     {:label => _("CPU Limit"), :value => (value == -1 ? _("Unlimited") : value)}
   end
 
   def textual_cpu_shares
     value = @record.cpu_shares
     return nil if value.nil?
+
     {:label => _("CPU Shares"), :value => value}
   end
 
   def textual_cpu_shares_level
     value = @record.cpu_shares_level
     return nil if value.nil?
+
     {:label => _("CPU Shares Level"), :value => value}
   end
 end

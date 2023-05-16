@@ -101,7 +101,7 @@ module ApplicationHelper::PageLayouts
              when 'container_dashboard', 'dashboard', 'ems_infra_dashboard', 'exception', 'physical_infra_overview'
                false
              when 'report'
-               !%w[new create edit copy update explorer].include?(controller.action_name)
+               %w[new create edit copy update explorer].exclude?(controller.action_name)
              when 'timeline'
                @in_a_form
              else
@@ -137,11 +137,9 @@ module ApplicationHelper::PageLayouts
 
   def inner_layout_present?
     @inner_layout_present ||=
-      begin
-        @explorer || params[:action] == "explorer" ||
-          (params[:controller] == "miq_ae_tools" && (params[:action] == "resolve" || params[:action] == "show")) ||
-          params[:controller] == "miq_policy_rsop" || params[:controller] == "utilization"
-      end
+      @explorer || params[:action] == "explorer" ||
+      (params[:controller] == "miq_ae_tools" && (params[:action] == "resolve" || params[:action] == "show")) ||
+      params[:controller] == "miq_policy_rsop" || params[:controller] == "utilization"
   end
 
   def simulate?

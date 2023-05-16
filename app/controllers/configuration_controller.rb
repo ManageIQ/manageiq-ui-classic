@@ -5,10 +5,10 @@ class ConfigurationController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::BreadcrumbsMixin
 
-  logo_dir = File.expand_path(Rails.root.join('public', 'upload'))
-  Dir.mkdir(logo_dir) unless File.exist?(logo_dir)
+  logo_dir = Rails.public_path.join('upload').expand_path
+  FileUtils.mkdir_p(logo_dir)
 
-  VIEW_RESOURCES = DEFAULT_SETTINGS[:views].keys.each_with_object({}) { |value, acc| acc[value.to_s] = value }.freeze
+  VIEW_RESOURCES = DEFAULT_SETTINGS[:views].keys.index_by(&:to_s).freeze
 
   before_action :check_privileges
   before_action :get_session_data
@@ -62,6 +62,10 @@ class ConfigurationController < ApplicationController
     end
   end
 
+  def show
+    show_timeprofiles if params[:typ] == "timeprofiles"
+  end
+
   def edit
     set_form_vars # Go fetch the settings into the object for the form
     session[:changed] = @changed = false
@@ -71,7 +75,7 @@ class ConfigurationController < ApplicationController
   # New tab was pressed
   def change_tab
     assert_privileges('my_settings_admin')
-    @tabform = "ui_" + params['uib-tab'] if params['uib-tab'] != "5"
+    @tabform = "ui_#{params['uib-tab']}" if params['uib-tab'] != "5"
     edit
     render :action => "show"
   end
@@ -140,7 +144,7 @@ class ConfigurationController < ApplicationController
         add_flash(_("Default Filters saved successfully"))
         edit
         render :action => "show"
-        return # No config file for Visuals yet, just return
+        nil # No config file for Visuals yet, just return
       end
     elsif params["reset"]
       edit
@@ -187,8 +191,7 @@ class ConfigurationController < ApplicationController
          @timeprofile_details[timeprofile.description][:hours].last.split('-').last == "12AM"
         # manipulating midnight hours to be displayed on show screen
         @timeprofile_details[timeprofile.description][:hours][0] =
-          @timeprofile_details[timeprofile.description][:hours].last.split('-').first + '-' +
-          @timeprofile_details[timeprofile.description][:hours].first.split('-').last
+          "#{@timeprofile_details[timeprofile.description][:hours].last.split('-').first}-#{@timeprofile_details[timeprofile.description][:hours].first.split('-').last}"
         @timeprofile_details[timeprofile.description][:hours].delete_at(@timeprofile_details[timeprofile.description][:hours].length - 1)
       end
       @timeprofile_details[timeprofile.description][:tz] = if timeprofile.profile[:tz].nil?
@@ -208,7 +211,7 @@ class ConfigurationController < ApplicationController
     when 12..22 then from = to = "PM"
     else             from, to = %w[PM AM]
     end
-    hour = hour >= 12 ? hour - 12 : hour
+    hour -= 12 if hour >= 12
     "#{hours[hour - 1]}#{from}-#{hours[hour]}#{to}"
   end
 
@@ -289,10 +292,6 @@ class ConfigurationController < ApplicationController
     drop_breadcrumb(:name => _("Adding copy of '%{description}'") % {:description => @timeprofile.description},
                     :url  => "/configuration/timeprofile_edit")
     render :action => "timeprofile_edit"
-  end
-
-  def show
-    show_timeprofiles if params[:typ] == "timeprofiles"
   end
 
   def time_profile_form_fields

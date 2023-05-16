@@ -122,7 +122,7 @@ class NetworkRouterController < ApplicationController
         add_flash(_("Add Interface not supported by Router \"%{name}\"") % {
           :name => @router.name
         }, :error)
-        @breadcrumbs.pop if @breadcrumbs
+        @breadcrumbs&.pop
         javascript_flash
       end
     end
@@ -148,7 +148,7 @@ class NetworkRouterController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs.pop if @breadcrumbs
+    @breadcrumbs&.pop
     session[:edit] = nil
     flash_to_session
     javascript_redirect(:action => "show", :id => router_id)
@@ -215,7 +215,7 @@ class NetworkRouterController < ApplicationController
         add_flash(_("Remove Interface not supported by Router \"%{name}\"") % {
           :name => @router.name
         }, :error)
-        @breadcrumbs.pop if @breadcrumbs
+        @breadcrumbs&.pop
         javascript_flash
       end
     end
@@ -241,7 +241,7 @@ class NetworkRouterController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs.pop if @breadcrumbs
+    @breadcrumbs&.pop
     session[:edit] = nil
     flash_to_session
     javascript_redirect(:action => "show", :id => router_id)
@@ -270,7 +270,7 @@ class NetworkRouterController < ApplicationController
       opt[param] = params[param] if params[param]
     end
 
-    options[:cloud_network_id].gsub!(/number:/, '') if options[:cloud_network_id]
+    options[:cloud_network_id]&.gsub!("number:", '')
     if params.fetch_path(:cloud_tenant, :id)
       options[:cloud_tenant] = find_record_with_rbac(CloudTenant, params.fetch_path(:cloud_tenant, :id))
     end

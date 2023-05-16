@@ -100,17 +100,15 @@ module ApplicationController::AdvancedSearch
     sname = s.description
     begin
       s.destroy
-    rescue StandardError => bang
+    rescue => bang
       add_flash(_("Search \"%{name}\": Error during 'delete': %{error_message}") %
         {:name => sname, :error_message => bang.message}, :error)
     else
-      if (def_search = settings(:default_search, @edit[@expkey][:exp_model].to_s.to_sym)) # See if a default search exists
-        if id.to_i == def_search.to_i
-          user_settings = current_user.settings || {}
-          user_settings[:default_search].delete(@edit[@expkey][:exp_model].to_s.to_sym)
-          current_user.update(:settings => user_settings)
-          @edit[:adv_search_applied] = nil # clearing up applied search results
-        end
+      if (def_search = settings(:default_search, @edit[@expkey][:exp_model].to_s.to_sym)) && (id.to_i == def_search.to_i)
+        user_settings = current_user.settings || {}
+        user_settings[:default_search].delete(@edit[@expkey][:exp_model].to_s.to_sym)
+        current_user.update(:settings => user_settings)
+        @edit[:adv_search_applied] = nil # clearing up applied search results
       end
       add_flash(_("%{model} search \"%{name}\": Delete successful") %
         {:model => ui_lookup(:model => @edit[@expkey][:exp_model]), :name => sname})
@@ -186,7 +184,7 @@ module ApplicationController::AdvancedSearch
 
   def adv_search_redraw_left_div
     if @edit[:in_explorer] || %w[storage_tree configuration_scripts_tree].include?(x_active_tree.to_s)
-      tree_type = x_active_tree.to_s.sub(/_tree/, '').to_sym
+      tree_type = x_active_tree.to_s.sub("_tree", '').to_sym
       builder = TreeBuilder.class_for_type(tree_type)
       tree = builder.new(x_active_tree, @sb)
       if tree_for_building_accordions?
@@ -313,7 +311,7 @@ module ApplicationController::AdvancedSearch
       format.js do
         @explorer = true
         if x_active_tree.to_s =~ /_filter_tree$/ &&
-           !%w[Vm MiqTemplate].include?(TreeBuilder.get_model_for_prefix(@nodetype))
+           %w[Vm MiqTemplate].exclude?(TreeBuilder.get_model_for_prefix(@nodetype))
           search_id = 0
           adv_search_build(model_from_active_tree(x_active_tree))
           session[:edit] = @edit # Set because next method will restore @edit from session
@@ -337,11 +335,11 @@ module ApplicationController::AdvancedSearch
           @edit[:selected] = false
         else
           @edit[@expkey][:selected] = {:id => 0}
-          @edit[:selected] = true     # Set a flag, this is checked whether to load initial default or clear was clicked
+          @edit[:selected] = true # Set a flag, this is checked whether to load initial default or clear was clicked
         end
         redirect_to(:action => "show_list")
       end
-      format.any { head :not_found }  # Anything else, just send 404
+      format.any { head 404 }  # Anything else, just send 404
     end
   end
 end

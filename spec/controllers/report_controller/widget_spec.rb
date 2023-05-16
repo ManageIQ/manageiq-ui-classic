@@ -56,7 +56,8 @@ describe ReportController do
           :name        => 'Fred',
           :description => 'FRED',
           :row_count   => 10,
-          :timer       => timer}
+          :timer       => timer
+        }
       }
       controller.instance_variable_set(:@edit, @edit_hash)
       session[:edit] = @edit_hash
@@ -78,5 +79,4 @@ describe ReportController do
       expect(@widget.visibility[:groups]).to eq([group.description])
     end
   end
-
 end

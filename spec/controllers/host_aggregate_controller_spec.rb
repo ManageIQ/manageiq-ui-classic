@@ -33,12 +33,12 @@ describe HostAggregateController do
       {
         :class_name  => aggregate.class.name,
         :method_name => "create_aggregate",
-        :args        => [ems.id, {:name => "foo", :ems_id => ems.id.to_s }]
+        :args        => [ems.id, {:name => "foo", :ems_id => ems.id.to_s}]
       }
     end
 
     it "builds create screen" do
-      post :create, :params => { :button => "add", :format => :js, :name => 'foo', :ems_id => ems.id }
+      post :create, :params => {:button => "add", :format => :js, :name => 'foo', :ems_id => ems.id}
       expect(assigns(:flash_array)).to be_nil
     end
   end
@@ -70,7 +70,7 @@ describe HostAggregateController do
     end
 
     it "builds edit screen" do
-      post :update, :params => { :button => "save", :format => :js, :id => aggregate.id, :name => "foo" }
+      post :update, :params => {:button => "save", :format => :js, :id => aggregate.id, :name => "foo"}
       expect(assigns(:flash_array)).to be_nil
     end
   end
@@ -152,13 +152,13 @@ describe HostAggregateController do
     end
 
     it "builds add host screen" do
-      post :button, :params => { :pressed => "host_aggregate_add_host", :format => :js, :id => aggregate.id }
+      post :button, :params => {:pressed => "host_aggregate_add_host", :format => :js, :id => aggregate.id}
       expect(assigns(:flash_array)).to be_nil
     end
 
     it "queues the add host action" do
       expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
-      post :add_host, :params => { :button => "addHost", :format => :js, :id => aggregate.id, :host_id => host.id }
+      post :add_host, :params => {:button => "addHost", :format => :js, :id => aggregate.id, :host_id => host.id}
     end
 
     context 'canceling the action' do
@@ -230,7 +230,7 @@ describe HostAggregateController do
     end
 
     it "builds remove host screen" do
-      post :button, :params => { :pressed => "host_aggregate_remove_host", :format => :js, :id => aggregate.id }
+      post :button, :params => {:pressed => "host_aggregate_remove_host", :format => :js, :id => aggregate.id}
       expect(assigns(:flash_array)).to be_nil
     end
 

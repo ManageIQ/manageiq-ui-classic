@@ -5,61 +5,61 @@ describe TreeBuilderDefaultFilters do
       @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Default filters Group")
       login_as FactoryBot.create(:user, :userid => 'default_filters__wilma', :miq_groups => [@group])
       @filters = [FactoryBot.create(:miq_search,
-                                     :name        => "default_Platform / HyperV",
-                                     :description => "Platform / HyperV",
-                                     :options     => nil,
-                                     :db          => "Host",
-                                     :search_type => "default",
-                                     :search_key  => nil)]
+                                    :name        => "default_Platform / HyperV",
+                                    :description => "Platform / HyperV",
+                                    :options     => nil,
+                                    :db          => "Host",
+                                    :search_type => "default",
+                                    :search_key  => nil)]
       @filters.push(FactoryBot.create(:miq_search,
-                                       :name        => "default_Environment / UAT",
-                                       :description => "Environment / UAT",
-                                       :options     => nil,
-                                       :db          => "MiqTemplate",
-                                       :search_type => "default",
-                                       :search_key  => "_hidden_"))
+                                      :name        => "default_Environment / UAT",
+                                      :description => "Environment / UAT",
+                                      :options     => nil,
+                                      :db          => "MiqTemplate",
+                                      :search_type => "default",
+                                      :search_key  => "_hidden_"))
       @filters.push(FactoryBot.create(:miq_search,
-                                       :name        => "default_Environment / Prod",
-                                       :description => "Environment / Prod",
-                                       :options     => nil,
-                                       :db          => "MiqTemplate",
-                                       :search_type => "default",
-                                       :search_key  => "_hidden_"))
+                                      :name        => "default_Environment / Prod",
+                                      :description => "Environment / Prod",
+                                      :options     => nil,
+                                      :db          => "MiqTemplate",
+                                      :search_type => "default",
+                                      :search_key  => "_hidden_"))
       @filters.push(FactoryBot.create(:miq_search,
-                                       :name        => "default_Environment / Prod",
-                                       :description => "Environment / Prod",
-                                       :options     => nil,
-                                       :db          => "Container",
-                                       :search_type => "default",
-                                       :search_key  => "_hidden_"))
+                                      :name        => "default_Environment / Prod",
+                                      :description => "Environment / Prod",
+                                      :options     => nil,
+                                      :db          => "Container",
+                                      :search_type => "default",
+                                      :search_key  => "_hidden_"))
       @filters.push(FactoryBot.create(:miq_search,
-                                       :name        => "default_Environment / Prod",
-                                       :description => "Environment / Prod",
-                                       :options     => nil,
-                                       :db          => "ContainerGroup",
-                                       :search_type => "default",
-                                       :search_key  => "_hidden_"))
+                                      :name        => "default_Environment / Prod",
+                                      :description => "Environment / Prod",
+                                      :options     => nil,
+                                      :db          => "ContainerGroup",
+                                      :search_type => "default",
+                                      :search_key  => "_hidden_"))
       @filters.push(FactoryBot.create(:miq_search,
-                                       :name        => "default_Environment / Prod",
-                                       :description => "Environment / Prod",
-                                       :options     => nil,
-                                       :db          => "ContainerService",
-                                       :search_type => "default",
-                                       :search_key  => "_hidden_"))
+                                      :name        => "default_Environment / Prod",
+                                      :description => "Environment / Prod",
+                                      :options     => nil,
+                                      :db          => "ContainerService",
+                                      :search_type => "default",
+                                      :search_key  => "_hidden_"))
       @filters.push(FactoryBot.create(:miq_search,
-                                       :name        => "default_Environment / Prod",
-                                       :description => "Environment / Prod",
-                                       :options     => nil,
-                                       :db          => "Storage",
-                                       :search_type => "default",
-                                       :search_key  => "_hidden_"))
+                                      :name        => "default_Environment / Prod",
+                                      :description => "Environment / Prod",
+                                      :options     => nil,
+                                      :db          => "Storage",
+                                      :search_type => "default",
+                                      :search_key  => "_hidden_"))
       @filters.push(FactoryBot.create(:miq_search,
-                                       :name        => "default_Environment / Prod",
-                                       :description => "Environment / Prod",
-                                       :options     => nil,
-                                       :db          => "Vm",
-                                       :search_type => "default",
-                                       :search_key  => "_hidden_"))
+                                      :name        => "default_Environment / Prod",
+                                      :description => "Environment / Prod",
+                                      :options     => nil,
+                                      :db          => "Vm",
+                                      :search_type => "default",
+                                      :search_key  => "_hidden_"))
       @sb = {:active_tree => :default_filters_tree}
       @default_filters_tree = TreeBuilderDefaultFilters.new(:df_tree, @sb, true, :data => @filters)
     end
@@ -86,8 +86,8 @@ describe TreeBuilderDefaultFilters do
         parents.each do |parent|
           path = parent[:id].split('_')
           offsprings = data.fetch_path(path)
+          kids = @default_filters_tree.send(:x_get_tree_hash_kids, parent, false)
           if offsprings.kind_of?(Hash)
-            kids = @default_filters_tree.send(:x_get_tree_hash_kids, parent, false)
             kids.each do |kid|
               expect(kid[:icon]).to eq('pficon pficon-folder-close')
               expect(kid[:hideCheckbox]).to eq(true)
@@ -99,7 +99,6 @@ describe TreeBuilderDefaultFilters do
               end
             end
           else
-            kids = @default_filters_tree.send(:x_get_tree_hash_kids, parent, false)
             kids.each_with_index do |kid, index|
               expect(kid[:icon]).to eq('fa fa-filter')
               expect(kid[:checked]).to eq(offsprings[index][:search_key] != "_hidden_")

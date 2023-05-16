@@ -81,7 +81,7 @@ describe EmsPhysicalInfraController do
     context "when previous breadcrumbs path contained 'Cloud Providers'" do
       it "shows 'Physical Infrastructure Providers -> (Dashboard)' breadcrumb path" do
         ems = FactoryBot.create(:ems_physical_infra)
-        get :show, :params => { :id => ems.id }
+        get :show, :params => {:id => ems.id}
         breadcrumbs = controller.instance_variable_get(:@breadcrumbs)
         expect(breadcrumbs).to eq([{:name => "#{ems.name} (Dashboard)", :url => "/ems_physical_infra/#{ems.id}"}])
       end

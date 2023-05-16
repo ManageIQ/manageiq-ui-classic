@@ -33,7 +33,7 @@ end
 
 shared_examples_for 'textual_description' do |value|
   describe "#textual_description" do
-    subject { send("textual_description") }
+    subject { send(:textual_description) }
 
     it { is_expected.to eq(value) }
   end
@@ -41,7 +41,7 @@ end
 
 shared_examples_for 'textual_tenant' do |value|
   describe "#textual_tenant" do
-    subject { send("textual_tenant") }
+    subject { send(:textual_tenant) }
 
     it { is_expected.to eq(value) }
   end

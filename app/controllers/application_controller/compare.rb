@@ -166,7 +166,7 @@ module ApplicationController::Compare
   def compare_set_state
     @keep_compare = true
     session[:compare_state] ||= {}
-    if !session[:compare_state].include?(params["rowId"])
+    if session[:compare_state].exclude?(params["rowId"])
       session[:compare_state][params["rowId"]] = params["state"]
     elsif session[:compare_state].include?(params["rowId"]) && params["state"].to_i == -1
       session[:compare_state].delete(params["rowId"])
@@ -192,7 +192,7 @@ module ApplicationController::Compare
   def compare_to_txt
     @compare = Marshal.load(session[:miq_compare])
     rpt = create_compare_report
-    filename = "compare_report_" + format_timezone(Time.now, Time.zone, "fname")
+    filename = "compare_report_#{format_timezone(Time.zone.now, Time.zone, "fname")}"
     disable_client_cache
     send_data(rpt.to_text, :filename => "#{filename}.txt")
   end
@@ -201,7 +201,7 @@ module ApplicationController::Compare
   def compare_to_csv
     @compare = Marshal.load(session[:miq_compare])
     rpt = create_compare_report(true)
-    filename = "compare_report_" + format_timezone(Time.now, Time.zone, "fname")
+    filename = "compare_report_#{format_timezone(Time.zone.now, Time.zone, "fname")}"
     disable_client_cache
     send_data(rpt.to_csv, :filename => "#{filename}.csv")
   end
@@ -263,13 +263,14 @@ module ApplicationController::Compare
     @drift_obj = nil
     begin
       db = @sb[:compare_db].constantize
-      @record = @drift_obj = if @sb[:compare_db] == "Host"
+      @record = @drift_obj = case @sb[:compare_db]
+                             when "Host"
                                @host = find_record_with_rbac(db, params[:id])
-                             elsif @sb[:compare_db] == "MiqTemplate"
+                             when "MiqTemplate"
                                @miq_templates = find_record_with_rbac(db, params[:id])
-                             elsif @sb[:compare_db] == "Vm"
+                             when "Vm"
                                @vm = find_record_with_rbac(db, params[:id])
-                             elsif @sb[:compare_db] == "EmsCluster"
+                             when "EmsCluster"
                                find_record_with_rbac(db, params[:id])
                              else
                                find_record_with_rbac(db, params[:id])
@@ -459,7 +460,7 @@ module ApplicationController::Compare
   def drift_to_txt
     @compare = Marshal.load(session[:miq_compare])
     rpt = create_drift_report
-    filename = "drift_report_" + format_timezone(Time.now, Time.zone, "fname")
+    filename = "drift_report_#{format_timezone(Time.zone.now, Time.zone, "fname")}"
     disable_client_cache
     send_data(rpt.to_text, :filename => "#{filename}.txt")
   end
@@ -468,7 +469,7 @@ module ApplicationController::Compare
   def drift_to_csv
     @compare = Marshal.load(session[:miq_compare])
     rpt = create_drift_report(true)
-    filename = "drift_report_" + format_timezone(Time.now, Time.zone, "fname")
+    filename = "drift_report_#{format_timezone(Time.zone.now, Time.zone, "fname")}"
     disable_client_cache
     send_data(rpt.to_csv, :filename => "#{filename}.csv")
   end
@@ -539,9 +540,9 @@ module ApplicationController::Compare
               val = "Missing"
             end
             if mode == :compare && bas.to_s != val.to_s # Mark the ones that don't match the base
-              rval = "* " + rval
+              rval = "* #{rval}"
             elsif @compare.results[r][section[:name]][attr] && !@compare.results[r][section[:name]][attr][:_match_] # Mark the ones that don't match the base
-              rval = "* " + rval
+              rval = "* #{rval}"
             end
             cols.push(rval)
           end
@@ -560,9 +561,9 @@ module ApplicationController::Compare
                    end
             unless idx.zero? # If not generating CSV
               if mode == :compare
-                rval = "* " + rval.to_s if @compare.results[@compare.ids[0]][section[:name]][attr[:name]][:_value_].to_s != rval.to_s # Mark the ones that don't match the base
+                rval = "* #{rval}" if @compare.results[@compare.ids[0]][section[:name]][attr[:name]][:_value_].to_s != rval.to_s # Mark the ones that don't match the base
               else
-                rval = "* " + rval.to_s unless @compare.results[@compare.ids[idx]][section[:name]][attr[:name]][:_match_] # Mark the ones that don't match the base
+                rval = "* #{rval}" unless @compare.results[@compare.ids[idx]][section[:name]][attr[:name]][:_match_] # Mark the ones that don't match the base
               end
             end
             cols.push(rval)
@@ -584,13 +585,13 @@ module ApplicationController::Compare
               if idx.positive?
                 # Mark the ones that don't match the base
                 if mode == :compare && @compare.results[@compare.ids[1]][section[:name]][level2].present? && @compare.results[@compare.ids[0]][section[:name]][level2][attr[:name]][:_value_].to_s != rval.to_s
-                  rval = "* " + rval.to_s
+                  rval = "* #{rval}"
                 # Mark the ones that don't match the base
                 elsif mode == :compare && @compare.results[@compare.ids[0]][section[:name]][level2].nil? && rval.to_s != "(missing)"
-                  rval = "* " + rval.to_s
+                  rval = "* #{rval}"
                 elsif @compare.results[r][section[:name]][level2] && @compare.results[r][section[:name]][level2][attr[:name]] && !@compare.results[r][section[:name]][level2][attr[:name]][:_match_]
                   # Mark the ones that don't match the prior VM
-                  rval = "* " + rval
+                  rval = "* #{rval}"
                 end
               end
               cols.push(rval)
@@ -612,7 +613,7 @@ module ApplicationController::Compare
         if mode == :compare
           next if r[0] == @compare.records[0]["id"] # Skip the base VM
 
-          cols.push(r[1][section[:name]][:_match_].to_s + "%") # Grab the % value for this attr for this VM
+          cols.push("#{r[1][section[:name]][:_match_]}%") # Grab the % value for this attr for this VM
         elsif r[1][section[:name]][:_match_] # Does it match?
           cols.push("") # Yes, push a blank string
         else
@@ -629,13 +630,13 @@ module ApplicationController::Compare
 
     if mode == :compare
       column_names << @compare.records[0].name
-      @compare.records[1..-1].each do |r|
+      @compare.records[1..].each do |r|
         column_names.push(r["name"]) unless r["id"] == @compare.records[0]["id"]
       end
     else
       @compare.ids.each do |r|
         t = r.getgm
-        column_names.push(t.strftime("%m/%d/%y") + " " + t.strftime("%H:%M ") + t.zone)
+        column_names.push("#{t.strftime("%m/%d/%y")} #{t.strftime("%H:%M ")}#{t.zone}")
       end
     end
 
@@ -812,7 +813,7 @@ module ApplicationController::Compare
   # Build the total row of the compare grid xml
   def drift_add_total(view)
     row = {
-      :col0  => "<span class='cell-effort-driven cell-plain'>" + _("All Sections") + "</span>",
+      :col0  => "<span class='cell-effort-driven cell-plain'>#{_("All Sections")}</span>",
       :id    => "id_#{@rows.length}",
       :total => true
     }
@@ -1175,7 +1176,7 @@ module ApplicationController::Compare
 
     # Build the sections, records, and fields rows
     view.master_list.each_slice(3) do |section, records, fields| # section is a symbol, records and fields are arrays
-      session[:selected_sections].push(section[:name]) if view.include[section[:name]][:checked] && !session[:selected_sections].include?(section[:name])
+      session[:selected_sections].push(section[:name]) if view.include[section[:name]][:checked] && session[:selected_sections].exclude?(section[:name])
       next unless view.include[section[:name]][:checked]
 
       comp_add_section(view, section, records, fields) # Go build the section row if it's checked
@@ -1269,13 +1270,13 @@ module ApplicationController::Compare
         </a>"
     end
     if i.zero?
-      html_text << "<a title='" + _("%{name} is the base") % {:name => h[:name]} + "'> #{txt.truncate(16)}</a>"
+      html_text << ("<a title='#{_("%{name} is the base") % {:name => h[:name]}}'> #{txt.truncate(16)}</a>")
     else
       url = "/#{controller_name}/compare_choose_base/#{view.ids[i]}"
       html_text <<
-        "<a title = '" + _("Make %{name} the base") % {:name => h[:name]} + "'
+        ("<a title = '" + (_("Make %{name} the base") % {:name => h[:name]}) + "'
             onclick = \"miqJqueryRequest('#{url}',
-                      {beforeSend: true, complete: true});\" href='#'>"
+                      {beforeSend: true, complete: true});\" href='#'>")
       html_text << "  #{txt.truncate(16)}"
       html_text << "</a>"
     end
@@ -1345,7 +1346,7 @@ module ApplicationController::Compare
   # Build the total row of the compare grid xml
   def comp_add_total(view)
     row = {
-      :col0  => "<span class='cell-effort-driven cell-plain'>" + _("Total Matches") + "</span>",
+      :col0  => "<span class='cell-effort-driven cell-plain'>#{_("Total Matches")}</span>",
       :id    => "id_#{@rows.length}",
       :total => true
     }
@@ -1769,17 +1770,17 @@ module ApplicationController::Compare
 
     # Build the sections, records, and fields rows
     view.master_list.each_slice(3) do |section, records, fields| # section is a symbol, records and fields are arrays
-      session[:selected_sections].push(section[:name]) if view.include[section[:name]][:checked] && !session[:selected_sections].include?(section[:name])
-      if view.include[section[:name]][:checked]
-        drift_add_section(view, section, records, fields) # Go build the section row if it's checked
-        if !records.nil? # If we have records, build record rows
-          drift_build_record_rows(view, section, records, fields)
-        else # Here if we have fields, with no records
-          drift_build_field_rows(view, section, fields)
-        end
+      session[:selected_sections].push(section[:name]) if view.include[section[:name]][:checked] && session[:selected_sections].exclude?(section[:name])
+      next unless view.include[section[:name]][:checked]
+
+      drift_add_section(view, section, records, fields) # Go build the section row if it's checked
+      if !records.nil? # If we have records, build record rows
+        drift_build_record_rows(view, section, records, fields)
+      else # Here if we have fields, with no records
+        drift_build_field_rows(view, section, fields)
       end
     end
-    
+
     @lastaction = "drift"
     @explorer = true if request.xml_http_request? && explorer_controller?
   end
@@ -1818,7 +1819,7 @@ module ApplicationController::Compare
 
   def collapsed_state(id)
     s = session[:compare_state] || []
-    !s.include?(id)
+    s.exclude?(id)
   end
 
   # Common evaluation of section fields total for comparation and drifts
@@ -1861,7 +1862,7 @@ module ApplicationController::Compare
   # else, the child_names are retrived from the selected_parent item.
   def selection_names(name)
     if validate_name(name)
-      count = name.scan(/xx-group/).count
+      count = name.scan("xx-group").count
       count == 1 ? child_names(name) : [name.split(':')[1]]
     end
   end

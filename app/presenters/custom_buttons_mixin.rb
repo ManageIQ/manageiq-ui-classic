@@ -25,7 +25,7 @@ module CustomButtonsMixin
     else
       button_order = buttons_ordered?(object) ? object[:set_data][:button_order] : nil
       Array(button_order).each_with_object([]) do |bidx, arr|
-        object.members.each { |b| arr.push(b) if bidx == b.id && !arr.include?(b) }
+        object.members.each { |b| arr.push(b) if bidx == b.id && arr.exclude?(b) }
       end
     end
   end

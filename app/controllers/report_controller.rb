@@ -32,7 +32,7 @@ class ReportController < ApplicationController
     assert_privileges("miq_report_export")
 
     @sb[:choices_chosen] = params[:choices_chosen] ? params[:choices_chosen].split(',') : []
-    head :ok
+    head 200
   end
 
   REPORT_X_BUTTON_ALLOWED_ACTIONS = {
@@ -73,7 +73,7 @@ class ReportController < ApplicationController
     assert_privileges("miq_report_export")
 
     @sb[:flash_msg] = []
-    if params.fetch_path(:upload, :file) && File.size(params[:upload][:file].tempfile).zero?
+    if params.fetch_path(:upload, :file) && File.empty?(params[:upload][:file].tempfile)
       redirect_to(:action      => 'explorer',
                   :flash_msg   => _("Import file cannot be empty"),
                   :flash_error => true)
@@ -189,7 +189,7 @@ class ReportController < ApplicationController
 
       replace_right_cell(:replace_trees => trees_to_replace)
     else
-      head :ok
+      head 200
     end
   end
 
@@ -361,8 +361,10 @@ class ReportController < ApplicationController
     @menu.each do |r|
       @folders.push(r[0])
       next if @edit[:new][:filter].blank?
+
       @sub_folders ||= []
       next unless r[0] == @edit[:new][:filter]
+
       r[1].each do |subfolder, reps|
         Array.wrap(subfolder).each do |s|
           @sub_folders.push(s)
@@ -377,6 +379,7 @@ class ReportController < ApplicationController
     reports = MiqReport.where(:name => reps)
     reports.each do |report|
       next if x_active_tree == :widgets_tree && report.db == "VimPerformanceTrend"
+
       temp_arr = []
       temp_arr.push(report.name)
       temp_arr.push(report.id)
@@ -407,6 +410,7 @@ class ReportController < ApplicationController
   def rebuild_trees
     rep = MiqReportResult.with_current_user_groups_and_report.maximum("created_on")
     return false unless rep
+
     build_trees = @sb[:rep_tree_build_time].nil? || rep > @sb[:rep_tree_build_time]
     # save last tree build time to decide if tree needs to be refreshed automatically
     @sb[:rep_tree_build_time] = Time.now.utc if build_trees
@@ -421,11 +425,11 @@ class ReportController < ApplicationController
       @export = true
       get_export_reports unless x_node == "root"
       @right_cell_text ||= _("Import / Export")
-      @help_topic        = request.parameters["controller"] + "-import_export"
+      @help_topic        = "#{request.parameters["controller"]}-import_export"
     when :roles_tree
       menu_get_all
       @changed = session[:changed] = false
-      @help_topic = request.parameters["controller"] + "-menus_editor"
+      @help_topic = "#{request.parameters["controller"]}-menus_editor"
     when :reports_tree
       @right_cell_text ||= _("All Reports")
     when :savedreports_tree
@@ -433,7 +437,7 @@ class ReportController < ApplicationController
     when :schedules_tree
       @schedule = nil
       schedule_get_all
-      @help_topic = request.parameters["controller"] + "-schedules_list"
+      @help_topic = "#{request.parameters["controller"]}-schedules_list"
     when :widgets_tree
       widget_get_node_info
     end
@@ -524,7 +528,7 @@ class ReportController < ApplicationController
     end
 
     @right_cell_div ||= "report_list"
-    @right_cell_text ||= _("All Reports")
+    @reports_get_node_info ||= _("All Reports")
   end
 
   # Get all info for the node about to be displayed
@@ -559,6 +563,7 @@ class ReportController < ApplicationController
 
   def determine_msc_node_info(nodeid)
     return if nodeid.blank?
+
     get_schedule(nodeid)
     @sb[:selected_sched_id] = nodeid
   end
@@ -589,21 +594,21 @@ class ReportController < ApplicationController
       end
     elsif x_active_tree == :schedules_tree || params[:pressed] == "miq_report_schedule_add"
       action_url = "schedule_edit"
-      record_id = @edit[:sched_id] ? @edit[:sched_id] : nil
+      record_id = @edit[:sched_id] || nil
     elsif x_active_tree == :widgets_tree
       action_url = "widget_edit"
-      record_id = @edit[:widget_id] ? @edit[:widget_id] : nil
+      record_id = @edit[:widget_id] || nil
     elsif x_active_tree == :db_tree
       if @edit[:new] && @edit[:new][:dashboard_order]
         action_url = "db_seq_edit"
         locals[:multi_record] = true
       else
         action_url = "db_edit"
-        record_id = @edit[:db_id] ? @edit[:db_id] : nil
+        record_id = @edit[:db_id] || nil
       end
     elsif x_active_tree == :reports_tree
       action_url = "miq_report_edit"
-      record_id = @edit[:rpt_id] ? @edit[:rpt_id] : nil
+      record_id = @edit[:rpt_id] || nil
     elsif x_active_tree == :roles_tree
       action_url = "menu_update"
       locals[:default_button] = true
@@ -662,14 +667,14 @@ class ReportController < ApplicationController
     get_node_info unless @in_a_form
     replace_trees = @replace_trees if @replace_trees # get_node_info might set this
     # nodetype is special for menu editor, so set it to :menu_edit_action if passed in, else use x_node prefix
-    nodetype = options[:menu_edit_action] ? options[:menu_edit_action] : x_node.split('-').first
+    nodetype = options[:menu_edit_action] || x_node.split('-').first
 
-    @sb[:active_tab] = params[:tab_id] ? params[:tab_id] : "report_info" if x_active_tree == :reports_tree &&
-                                                                            params[:action] != "reload" && !%w[miq_report_run saved_report_delete].include?(params[:pressed]) # do not reset if reload saved reports buttons is pressed
+    @sb[:active_tab] = params[:tab_id] || "report_info" if x_active_tree == :reports_tree &&
+                                                           params[:action] != "reload" && %w[miq_report_run saved_report_delete].exclude?(params[:pressed]) # do not reset if reload saved reports buttons is pressed
 
     rebuild = @in_a_form ? false : rebuild_trees
     valid_trees = %i[reports schedules savedreports db widgets].find_all do |tree|
-      tree_exists?(tree.to_s + "_tree")
+      tree_exists?("#{tree}_tree")
     end
     trees = build_replaced_trees(rebuild ? valid_trees : replace_trees, valid_trees)
 
@@ -685,7 +690,7 @@ class ReportController < ApplicationController
     presenter[:open_accord] = params[:accord] if params[:accord] # Open new accordion
 
     locals = set_form_locals if @in_a_form
-    partial = options[:partial] ? options[:partial] : set_partial_name
+    partial = options[:partial] || set_partial_name
     unless @in_a_form
       c_tb = build_toolbar(center_toolbar_filename)
       v_tb = build_toolbar("report_view_tb") if @report && %i[reports_tree savedreports_tree].include?(x_active_tree)
@@ -939,12 +944,12 @@ class ReportController < ApplicationController
 
   def breadcrumbs_options
     {
-      :breadcrumbs => [
+      :breadcrumbs   => [
         {:title => _("Overview")},
         {:title => _("Reports")},
       ],
-      :expanded_node  => x_active_tree == :reports_tree,
-      :x_node         => x_node_right_cell
+      :expanded_node => x_active_tree == :reports_tree,
+      :x_node        => x_node_right_cell
     }
   end
 

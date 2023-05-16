@@ -30,9 +30,9 @@ describe TreeBuilder do
   context "build_tree" do
     it "builds tree object and sets all settings and add nodes to tree object" do
       tree = TreeBuilderInstances.new("instances_tree", {})
-      nodes = [{'key'     => "root",
-                'nodes'   => [],
-                'state'      => { 'expanded' => true },
+      nodes = [{'key'        => "root",
+                'nodes'      => [],
+                'state'      => {'expanded' => true},
                 'text'       => "Instances by Provider",
                 'tooltip'    => "All Instances by Provider that I can see",
                 'selectable' => true,
@@ -121,7 +121,7 @@ describe TreeBuilder do
     it 'counts things in an Array' do
       expect(builder.count_only_or_objects(true, [])).to eq(0)
       expect(builder.count_only_or_objects(true, [:x])).to eq(1)
-      expect(builder.count_only_or_objects(true, %i(x y z z y))).to eq(5)
+      expect(builder.count_only_or_objects(true, %i[x y z z y])).to eq(5)
     end
 
     it 'returns a collection when not counting' do
@@ -135,16 +135,16 @@ describe TreeBuilder do
 
       expect(builder.count_only_or_objects(false, [])).to eq([])
       expect(builder.count_only_or_objects(false, [:x])).to eq([:x])
-      expect(builder.count_only_or_objects(false, %i(x y z z y))).to eq(%i(x y z z y))
+      expect(builder.count_only_or_objects(false, %i[x y z z y])).to eq(%i[x y z z y])
     end
 
     it 'sorts the collection' do
-      expect(builder.count_only_or_objects(false, %w(), 'to_s')).to eq(%w())
-      expect(builder.count_only_or_objects(false, %w(x), 'to_s')).to eq(%w(x))
-      expect(builder.count_only_or_objects(false, %w(c a b), 'to_s')).to eq(%w(a b c))
+      expect(builder.count_only_or_objects(false, %w[], 'to_s')).to eq(%w[])
+      expect(builder.count_only_or_objects(false, %w[x], 'to_s')).to eq(%w[x])
+      expect(builder.count_only_or_objects(false, %w[c a b], 'to_s')).to eq(%w[a b c])
 
       expect(
-        builder.count_only_or_objects(false, [['c', 1], ['a', 0], ['b', 1], ['d', 0]], %w(second first))
+        builder.count_only_or_objects(false, [['c', 1], ['a', 0], ['b', 1], ['d', 0]], %w[second first])
       ).to eq([['a', 0], ['d', 0], ['b', 1], ['c', 1]])
 
       expect(builder.count_only_or_objects(false, 1..5, ->(i) { [i % 2, i] })).to eq([2, 4, 1, 3, 5])

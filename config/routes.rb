@@ -2,33 +2,33 @@ Rails.application.routes.draw do
   # rubocop:disable Layout/HashAlignment
   # rubocop:disable Layout/MultilineOperationIndentation
   # default routes for each controller
-  default_routes = %w(
+  default_routes = %w[
     report_data
-  )
+  ]
 
   # grouped routes
-  adv_search_post = %w(
+  adv_search_post = %w[
     adv_search_button
     adv_search_clear
     adv_search_load_choice
     adv_search_name_typed
     adv_search_toggle
     search_clear
-  )
+  ]
 
-  button_post = %w(
+  button_post = %w[
     button_create
     button_update
-  )
+  ]
 
-  compare_get = %w(
+  compare_get = %w[
     compare_miq
     compare_to_csv
     compare_to_pdf
     compare_to_txt
-  )
+  ]
 
-  compare_post = %w(
+  compare_post = %w[
     compare_cancel
     compare_choose_base
     compare_compress
@@ -39,9 +39,9 @@ Rails.application.routes.draw do
     compare_mode
     compare_remove
     compare_set_state
-  )
+  ]
 
-  dialog_runner_post = %w(
+  dialog_runner_post = %w[
     dialog_field_changed
     dialog_form_button_pressed
     dynamic_checkbox_refresh
@@ -49,68 +49,68 @@ Rails.application.routes.draw do
     dynamic_radio_button_refresh
     dynamic_text_box_refresh
     open_url_after_dialog
-  )
+  ]
 
-  drift_get = %w(
+  drift_get = %w[
     drift
     drift_history
     drift_to_csv
     drift_to_pdf
     drift_to_txt
-  )
+  ]
 
-  drift_post = %w(
+  drift_post = %w[
     drift_all
     drift_compress
     drift_differences
     drift_history
     drift_mode
     drift_same
-  )
+  ]
 
-  exp_post = %w(
+  exp_post = %w[
     exp_button
     exp_changed
     exp_token_pressed
-  )
+  ]
 
-  ownership_post = %w(
+  ownership_post = %w[
     ownership
     ownership_update
-  )
+  ]
 
-  perf_post = %w(
+  perf_post = %w[
     perf_chart_chooser
     perf_top_chart
-  )
+  ]
 
-  policy_post = %w(
+  policy_post = %w[
     policy_options
     policy_show_options
     policy_sim
     policy_sim_add
     policy_sim_remove
-  )
+  ]
 
-  pre_prov_post = %w(
+  pre_prov_post = %w[
     pre_prov
     pre_prov_continue
-  )
+  ]
 
-  save_post = %w(
+  save_post = %w[
     save_default_search
-  )
+  ]
 
-  snap_post = %w(
+  snap_post = %w[
     snap_pressed
-  )
+  ]
 
-  x_post = %w(
+  x_post = %w[
     x_button
     x_history
     x_search_by_name
     x_show
-  )
+  ]
 
   controller_routes = {
 
@@ -124,7 +124,7 @@ Rails.application.routes.draw do
     },
 
     :auth_key_pair_cloud      => {
-      :get  => %w(
+      :get  => %w[
         download_data
         download_summary_pdf
         index
@@ -136,9 +136,9 @@ Rails.application.routes.draw do
         download_private_key
         ownership
 
-      ) +
+      ] +
         compare_get,
-      :post => %w(
+      :post => %w[
         button
         dynamic_checkbox_refresh
         listnav_search_selected
@@ -150,7 +150,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         wait_for_task
-      ) +
+      ] +
         adv_search_post +
         compare_post +
         exp_post +
@@ -158,31 +158,31 @@ Rails.application.routes.draw do
     },
 
     :placement_group => {
-      :get  => %w(
+      :get  => %w[
         show_list
         index
         show
         download_data
         download_summary_pdf
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         quick_search
         show_list
         show
-      ) +
+      ] +
         adv_search_post +
         exp_post
     },
 
     :automation_manager_configured_system => {
-      :get => %w(
+      :get => %w[
         download_data
         download_summary_pdf
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         listnav_search_selected
         quick_search
@@ -190,20 +190,20 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      )  +
+      ] +
         adv_search_post +
         exp_post
     },
 
     :configuration_script => {
-      :get  => %w(
+      :get  => %w[
         configuration_script_service_dialog
         download_summary_pdf
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         listnav_search_selected
         quick_search
@@ -211,14 +211,14 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) +
+      ] +
         adv_search_post +
         exp_post +
         save_post
     },
 
     :availability_zone        => {
-      :get  => %w(
+      :get  => %w[
         dialog_load
         download_data
         download_summary_pdf
@@ -228,9 +228,9 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) +
+      ] +
         compare_get,
-      :post => %w(
+      :post => %w[
         button
         listnav_search_selected
         protect
@@ -241,7 +241,7 @@ Rails.application.routes.draw do
         tagging_edit
         tl_chooser
         wait_for_task
-      ) +
+      ] +
         adv_search_post +
         compare_post +
         dialog_runner_post +
@@ -251,7 +251,7 @@ Rails.application.routes.draw do
     },
 
     :host_aggregate           => {
-      :get  => %w(
+      :get  => %w[
         add_host_select
         delete_host_aggregates
         download_data
@@ -266,9 +266,9 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) +
+      ] +
         compare_get,
-      :post => %w(
+      :post => %w[
         add_host
         add_host_select
         button
@@ -286,7 +286,7 @@ Rails.application.routes.draw do
         tl_chooser
         update
         wait_for_task
-      ) +
+      ] +
         adv_search_post +
         compare_post +
         exp_post +
@@ -295,7 +295,7 @@ Rails.application.routes.draw do
     },
 
     :catalog                  => {
-      :get  => %w(
+      :get  => %w[
         download_data
         explorer
         ot_edit
@@ -303,8 +303,8 @@ Rails.application.routes.draw do
         ot_show
         servicetemplates_names
         show
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         ab_group_reorder
         accordion_select
         ae_tree_select
@@ -347,31 +347,31 @@ Rails.application.routes.draw do
         x_button
         x_history
         x_show
-      ) +
+      ] +
                button_post +
                exp_post +
                dialog_runner_post
     },
 
     :chargeback_assignment => {
-      :get  => %w(
+      :get  => %w[
         change_tab
         index
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         form_field_changed
         update
-      )
+      ]
     },
     :chargeback_rate => {
-      :get  => %w(
+      :get  => %w[
         copy
         edit
         new
         show_list
         show
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         delete
         edit
         form_field_changed
@@ -379,26 +379,26 @@ Rails.application.routes.draw do
         show
         tier_add
         tier_remove
-      )
+      ]
     },
 
     :chargeback_report => {
-      :get  => %w(
+      :get  => %w[
         show
         show_list
         render_csv
         render_pdf
         render_txt
         report_only
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         saved_report_paging
         show
-      )
+      ]
     },
 
     :configuration_job      => {
-      :get  => %w(
+      :get  => %w[
         download_data
         download_summary_pdf
         index
@@ -407,8 +407,8 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         protect
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         listnav_search_selected
         parameters
@@ -418,20 +418,20 @@ Rails.application.routes.draw do
         show_list
         protect
         tagging_edit
-      ) +
+      ] +
         adv_search_post +
         exp_post +
         save_post
     },
 
     :consumption                  => {
-      :get => %w(
+      :get => %w[
         show
-      )
+      ]
     },
 
     :cloud_object_store_container => {
-      :get => %w(
+      :get => %w[
         dialog_load
         download_data
         download_summary_pdf
@@ -440,8 +440,8 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         new
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         dynamic_checkbox_refresh
         listnav_search_selected
@@ -450,11 +450,11 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         wait_for_task
-      ) + adv_search_post + exp_post + save_post + dialog_runner_post
+      ] + adv_search_post + exp_post + save_post + dialog_runner_post
     },
 
     :cloud_tenant             => {
-      :get => %w(
+      :get => %w[
         delete_cloud_tenants
         dialog_load
         download_data
@@ -466,9 +466,9 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) +
+      ] +
         compare_get,
-      :post => %w(
+      :post => %w[
         button
         listnav_search_selected
         protect
@@ -478,7 +478,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         wait_for_task
-      ) +
+      ] +
         adv_search_post +
         compare_post +
         dialog_runner_post +
@@ -487,24 +487,24 @@ Rails.application.routes.draw do
     },
 
     :cloud_tenant_dashboard      => {
-      :get => %w(
+      :get => %w[
         data
         recent_instances_data
         recent_images_data
         aggregate_status_data
-      )
+      ]
     },
 
     :cloud_object_store_object => {
-      :get => %w(
+      :get => %w[
         download_data
         download_summary_pdf
         index
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         dynamic_checkbox_refresh
         listnav_search_selected
@@ -512,11 +512,11 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) + adv_search_post + exp_post + save_post
+      ] + adv_search_post + exp_post + save_post
     },
 
     :cloud_volume             => {
-      :get  => %w(
+      :get  => %w[
         dialog_load
         download_data
         download_summary_pdf
@@ -532,9 +532,9 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) +
+      ] +
         compare_get,
-      :post => %w(
+      :post => %w[
         button
         create
         dynamic_checkbox_refresh
@@ -547,7 +547,7 @@ Rails.application.routes.draw do
         tagging_edit
         update
         wait_for_task
-      ) +
+      ] +
         adv_search_post +
         compare_post +
         dialog_runner_post +
@@ -556,15 +556,15 @@ Rails.application.routes.draw do
     },
 
     :cloud_volume_snapshot    => {
-      :get  => %w(
+      :get  => %w[
         download_data
         download_summary_pdf
         index
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         dynamic_checkbox_refresh
         listnav_search_selected
@@ -572,11 +572,11 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) + adv_search_post + exp_post + save_post
+      ] + adv_search_post + exp_post + save_post
     },
 
     :cloud_volume_backup    => {
-      :get  => %w(
+      :get  => %w[
         volume_select
         volume_form_choices
         download_data
@@ -584,8 +584,8 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         backup_restore
         button
         dynamic_checkbox_refresh
@@ -595,18 +595,18 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         wait_for_task
-      ) + adv_search_post + exp_post + save_post
+      ] + adv_search_post + exp_post + save_post
     },
 
     :cloud_volume_type        => {
-      :get  => %w(
+      :get  => %w[
         download_data
         index
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         dynamic_checkbox_refresh
         listnav_search_selected
@@ -615,13 +615,13 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         wait_for_task
-      ) + adv_search_post + exp_post + save_post
+      ] + adv_search_post + exp_post + save_post
     },
 
     :configuration            => {
       # TODO: routes for new/edit/copy buttons need to be revisited
       # TODO: so they can be changed to send up POST request instead of GET
-      :get  => %w(
+      :get  => %w[
         change_tab
         index
         show
@@ -629,8 +629,8 @@ Rails.application.routes.draw do
         timeprofile_edit
         timeprofile_new
         time_profile_form_fields
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         filters_field_changed
         theme_changed
@@ -638,11 +638,11 @@ Rails.application.routes.draw do
         tree_autoload
         update
         view_selected
-      )
+      ]
     },
 
     :container                => {
-      :get  => %w(
+      :get  => %w[
         download_data
         download_summary_pdf
         perf_top_chart
@@ -651,8 +651,8 @@ Rails.application.routes.draw do
         wait_for_task
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         accordion_select
         button
         show
@@ -668,7 +668,7 @@ Rails.application.routes.draw do
         x_button
         x_history
         x_search_by_name
-      ) +
+      ] +
                adv_search_post +
                exp_post +
                perf_post +
@@ -676,7 +676,7 @@ Rails.application.routes.draw do
     },
 
     :container_group          => {
-      :get  => %w(
+      :get  => %w[
         dialog_load
         download_data
         download_summary_pdf
@@ -686,8 +686,8 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         protect
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         dynamic_checkbox_refresh
         listnav_search_selected
@@ -699,7 +699,7 @@ Rails.application.routes.draw do
         wait_for_task
         tagging_edit
         protect
-      ) +
+      ] +
                adv_search_post +
                exp_post +
                perf_post +
@@ -708,7 +708,7 @@ Rails.application.routes.draw do
     },
 
     :container_node           => {
-      :get  => %w(
+      :get  => %w[
         dialog_load
         download_data
         download_summary_pdf
@@ -718,8 +718,8 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         protect
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         dynamic_checkbox_refresh
         listnav_search_selected
@@ -732,7 +732,7 @@ Rails.application.routes.draw do
         tagging_edit
         protect
         launch_external_logging
-      ) +
+      ] +
                adv_search_post +
                dialog_runner_post +
                exp_post +
@@ -741,7 +741,7 @@ Rails.application.routes.draw do
     },
 
     :container_replicator     => {
-      :get  => %w(
+      :get  => %w[
         download_data
         download_summary_pdf
         index
@@ -750,8 +750,8 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         protect
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         dynamic_checkbox_refresh
         listnav_search_selected
@@ -763,7 +763,7 @@ Rails.application.routes.draw do
         wait_for_task
         tagging_edit
         protect
-      ) +
+      ] +
                adv_search_post +
                exp_post +
                perf_post +
@@ -771,7 +771,7 @@ Rails.application.routes.draw do
     },
 
     :container_image          => {
-      :get  => %w(
+      :get  => %w[
         dialog_load
         download_data
         download_summary_pdf
@@ -783,8 +783,8 @@ Rails.application.routes.draw do
         openscap_rule_results
         openscap_html
         protect
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         dynamic_checkbox_refresh
         listnav_search_selected
@@ -796,19 +796,19 @@ Rails.application.routes.draw do
         guest_applications
         openscap_rule_results
         protect
-      ) + adv_search_post + exp_post + save_post + dialog_runner_post
+      ] + adv_search_post + exp_post + save_post + dialog_runner_post
     },
 
     :container_image_registry => {
-      :get  => %w(
+      :get  => %w[
         download_data
         download_summary_pdf
         index
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         dynamic_checkbox_refresh
         listnav_search_selected
@@ -817,11 +817,11 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) + adv_search_post + exp_post + save_post
+      ] + adv_search_post + exp_post + save_post
     },
 
     :container_service        => {
-      :get  => %w(
+      :get  => %w[
         download_data
         download_summary_pdf
         index
@@ -829,8 +829,8 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         dynamic_checkbox_refresh
         listnav_search_selected
@@ -840,7 +840,7 @@ Rails.application.routes.draw do
         show_list
         wait_for_task
         tagging_edit
-      ) +
+      ] +
                adv_search_post +
                exp_post +
                perf_post +
@@ -848,7 +848,7 @@ Rails.application.routes.draw do
     },
 
     :container_project        => {
-      :get  => %w(
+      :get  => %w[
         dialog_load
         download_data
         download_summary_pdf
@@ -857,8 +857,8 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         dynamic_checkbox_refresh
         listnav_search_selected
@@ -869,7 +869,7 @@ Rails.application.routes.draw do
         tl_chooser
         wait_for_task
         tagging_edit
-      ) +
+      ] +
                adv_search_post +
                exp_post +
                perf_post +
@@ -878,15 +878,15 @@ Rails.application.routes.draw do
     },
 
     :container_route          => {
-      :get  => %w(
+      :get  => %w[
         download_data
         download_summary_pdf
         index
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         dynamic_checkbox_refresh
         listnav_search_selected
@@ -895,11 +895,11 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) + adv_search_post + exp_post + save_post
+      ] + adv_search_post + exp_post + save_post
     },
 
     :persistent_volume        => {
-      :get  => %w(
+      :get  => %w[
         dialog_load
         download_data
         download_summary_pdf
@@ -907,8 +907,8 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         dynamic_checkbox_refresh
         listnav_search_selected
@@ -917,19 +917,19 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) + adv_search_post + exp_post + save_post + dialog_runner_post
+      ] + adv_search_post + exp_post + save_post + dialog_runner_post
     },
 
     :container_build          => {
-      :get  => %w(
+      :get  => %w[
         download_data
         download_summary_pdf
         index
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         dynamic_checkbox_refresh
         listnav_search_selected
@@ -938,11 +938,11 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) + adv_search_post + exp_post + save_post
+      ] + adv_search_post + exp_post + save_post
     },
 
     :container_template          => {
-      :get  => %w(
+      :get  => %w[
         dialog_load
         download_data
         download_summary_pdf
@@ -951,8 +951,8 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         ct_form_field_changed
         dynamic_checkbox_refresh
@@ -963,17 +963,17 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) + adv_search_post + exp_post + save_post + dialog_runner_post
+      ] + adv_search_post + exp_post + save_post + dialog_runner_post
     },
 
     :physical_infra_overview => {
-      :get => %w(
+      :get => %w[
         show
-      )
+      ]
     },
 
     :container_dashboard      => {
-      :get => %w(
+      :get => %w[
         data
         ems_utilization_data
         heatmaps_data
@@ -983,12 +983,11 @@ Rails.application.routes.draw do
         project_data
         refresh_status_data
         show
-      )
+      ]
     },
 
-
     :dashboard                => {
-      :get  => %w(
+      :get  => %w[
         auth_error
         iframe
         change_tab
@@ -1009,8 +1008,8 @@ Rails.application.routes.draw do
         widget_chart_data
         widget_menu_data
         widget_report_data
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         external_authenticate
         kerberos_authenticate
         initiate_saml_login
@@ -1026,11 +1025,11 @@ Rails.application.routes.draw do
         widget_add
         widget_close
         widget_dd_done
-      )
+      ]
     },
 
     :ems_cloud                => {
-      :get  => %w(
+      :get  => %w[
         dialog_load
         download_data
         download_summary_pdf
@@ -1039,9 +1038,9 @@ Rails.application.routes.draw do
         show_list
         sync_users
         tagging_edit
-      ) +
+      ] +
         compare_get,
-      :post => %w(
+      :post => %w[
         new
         button
         dynamic_checkbox_refresh
@@ -1058,7 +1057,7 @@ Rails.application.routes.draw do
         tl_chooser
         wait_for_task
         launch_console
-      ) +
+      ] +
                adv_search_post +
                compare_post +
                dialog_runner_post +
@@ -1067,16 +1066,16 @@ Rails.application.routes.draw do
     },
 
     :ems_cloud_dashboard      => {
-      :get => %w(
+      :get => %w[
         data
         recent_instances_data
         recent_images_data
         aggregate_status_data
-      )
+      ]
     },
 
     :ems_cluster              => {
-      :get  => %w(
+      :get  => %w[
         dialog_load
         download_data
         download_summary_pdf
@@ -1086,10 +1085,10 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) +
+      ] +
                compare_get +
                drift_get,
-      :post => %w(
+      :post => %w[
         button
         listnav_search_selected
         protect
@@ -1101,7 +1100,7 @@ Rails.application.routes.draw do
         tl_chooser
         tree_autoload
         wait_for_task
-      ) +
+      ] +
                adv_search_post +
                compare_post +
                dialog_runner_post +
@@ -1112,7 +1111,7 @@ Rails.application.routes.draw do
     },
 
     :ems_infra                => {
-      :get  => %w(
+      :get  => %w[
         dialog_load
         download_data
         download_summary_pdf
@@ -1123,9 +1122,9 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) +
+      ] +
                compare_get,
-      :post => %w(
+      :post => %w[
         new
         button
         register_nodes
@@ -1144,7 +1143,7 @@ Rails.application.routes.draw do
         open_admin_ui
         open_admin_ui_done
         launch_console
-      ) +
+      ] +
                adv_search_post +
                compare_post +
                dialog_runner_post +
@@ -1153,18 +1152,18 @@ Rails.application.routes.draw do
     },
 
     :ems_infra_dashboard      => {
-      :get => %w(
+      :get => %w[
         data
         cluster_metrics_data
         ems_utilization_data
         recent_hosts_data
         recent_vms_data
         aggregate_status_data
-      )
+      ]
     },
 
     :ems_physical_infra                => {
-      :get  => %w(
+      :get  => %w[
         dialog_load
         download_data
         download_summary_pdf
@@ -1172,8 +1171,8 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         new
         button
         listnav_search_selected
@@ -1186,7 +1185,7 @@ Rails.application.routes.draw do
         tree_autoload
         wait_for_task
         launch_console
-      ) +
+      ] +
                adv_search_post +
                dialog_runner_post +
                exp_post +
@@ -1194,24 +1193,24 @@ Rails.application.routes.draw do
     },
 
     :physical_switch    =>  {
-      :get  =>  %w(
+      :get  =>  %w[
         dialog_load
         download_data
         download_summary_pdf
         show_list
         show
-      ),
+      ],
 
-      :post   =>  %w(
+      :post   =>  %w[
         button
         listnav_search_selected
         show_list
         quick_search
-      ) + adv_search_post + save_post + dialog_runner_post,
+      ] + adv_search_post + save_post + dialog_runner_post,
     },
 
     :physical_server    =>  {
-      :get  =>  %w(
+      :get  =>  %w[
         dialog_load
         download_data
         download_summary_pdf
@@ -1221,9 +1220,9 @@ Rails.application.routes.draw do
         show
         tagging_edit
         console_file
-      ),
+      ],
 
-      :post   =>  %w(
+      :post   =>  %w[
         button
         show_list
         listnav_search_selected
@@ -1234,7 +1233,7 @@ Rails.application.routes.draw do
         wait_for_task
         provision
         console
-      ) +
+      ] +
           adv_search_post +
           exp_post +
           save_post +
@@ -1242,32 +1241,32 @@ Rails.application.routes.draw do
     },
 
     :physical_rack    =>  {
-      :get  =>  %w(
+      :get  =>  %w[
         dialog_load
         download_data
         download_summary_pdf
         protect
         show_list
         show
-      ),
-      :post   =>  %w(
+      ],
+      :post   =>  %w[
         button
         show_list
         quick_search
-      ) + dialog_runner_post
+      ] + dialog_runner_post
     },
 
     :physical_network_port    => {
-      :get  => %w(
+      :get  => %w[
         download_data
         download_summary_pdf
         show_list
         show
-      ),
+      ],
 
-      :post  => %w(
+      :post  => %w[
         show_list
-      )
+      ]
     },
 
     :physical_storage   => {
@@ -1291,47 +1290,47 @@ Rails.application.routes.draw do
     },
 
     :physical_chassis    => {
-      :get  => %w(
+      :get  => %w[
         dialog_load
         download_data
         download_summary_pdf
         protect
         show_list
         show
-      ),
+      ],
 
-      :post  => %w(
+      :post  => %w[
         button
         show_list
         quick_search
-      ) + dialog_runner_post,
+      ] + dialog_runner_post,
     },
 
     :guest_device    =>  {
-      :get  =>  %w(
+      :get  =>  %w[
         show_list
         show
         quick_search
-      ),
+      ],
 
-      :post   =>  %w(
+      :post   =>  %w[
         show_list
-      ) +
+      ] +
           adv_search_post +
           exp_post +
           save_post
     },
 
     :ems_physical_infra_dashboard      => {
-      :get => %w(
+      :get => %w[
         recent_servers_data
         aggregate_status_data
         servers_group_data
-      )
+      ]
     },
 
     :ems_container            => {
-      :get  => %w(
+      :get  => %w[
         dialog_load
         download_data
         download_summary_pdf
@@ -1340,8 +1339,8 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         new
         button
         dynamic_checkbox_refresh
@@ -1355,7 +1354,7 @@ Rails.application.routes.draw do
         wait_for_task
         tagging_edit
         launch_external_logging
-      ) +
+      ] +
                adv_search_post +
                dialog_runner_post +
                exp_post +
@@ -1364,7 +1363,7 @@ Rails.application.routes.draw do
     },
 
     :ems_network              => {
-      :get  => %w(
+      :get  => %w[
         dialog_load
         download_data
         download_summary_pdf
@@ -1372,8 +1371,8 @@ Rails.application.routes.draw do
         protect
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         new
         button
         dynamic_checkbox_refresh
@@ -1387,7 +1386,7 @@ Rails.application.routes.draw do
         tagging_edit
         tl_chooser
         wait_for_task
-      ) +
+      ] +
         adv_search_post +
         dialog_runner_post +
         exp_post +
@@ -1395,7 +1394,7 @@ Rails.application.routes.draw do
     },
 
     :security_group           => {
-      :get  => %w(
+      :get  => %w[
         dialog_load
         edit
         download_data
@@ -1406,9 +1405,9 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) +
+      ] +
         compare_get,
-      :post => %w(
+      :post => %w[
         button
         create
         listnav_search_selected
@@ -1420,7 +1419,7 @@ Rails.application.routes.draw do
         tagging_edit
         update
         wait_for_task
-      ) +
+      ] +
         adv_search_post +
         compare_post +
         save_post +
@@ -1477,7 +1476,7 @@ Rails.application.routes.draw do
     },
 
     :floating_ip              => {
-      :get  => %w(
+      :get  => %w[
         download_data
         download_summary_pdf
         edit
@@ -1486,8 +1485,8 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         create
         listnav_search_selected
@@ -1496,14 +1495,14 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         wait_for_task
-      ) +
+      ] +
         adv_search_post +
         save_post +
         exp_post
     },
 
     :cloud_subnet             => {
-      :get  => %w(
+      :get  => %w[
         dialog_load
         download_data
         download_summary_pdf
@@ -1514,9 +1513,9 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) +
+      ] +
         compare_get,
-      :post => %w(
+      :post => %w[
         button
         dynamic_checkbox_refresh
         listnav_search_selected
@@ -1527,7 +1526,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         wait_for_task
-      ) +
+      ] +
         adv_search_post +
         compare_post +
         save_post +
@@ -1535,7 +1534,7 @@ Rails.application.routes.draw do
         dialog_runner_post
     },
     :cloud_database             => {
-      :get  => %w(
+      :get  => %w[
         show_list
         index
         show
@@ -1543,18 +1542,18 @@ Rails.application.routes.draw do
         download_summary_pdf
         edit
         new
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         quick_search
         show_list
         show
         button
-      ) +
+      ] +
         adv_search_post +
         exp_post
     },
     :cloud_network             => {
-      :get  => %w(
+      :get  => %w[
         dialog_load
         download_data
         download_summary_pdf
@@ -1565,9 +1564,9 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) +
+      ] +
         compare_get,
-      :post => %w(
+      :post => %w[
         button
         create
         dynamic_checkbox_refresh
@@ -1580,7 +1579,7 @@ Rails.application.routes.draw do
         tagging_edit
         update
         wait_for_task
-      ) +
+      ] +
         adv_search_post +
         compare_post +
         save_post +
@@ -1589,15 +1588,15 @@ Rails.application.routes.draw do
     },
 
     :network_port             => {
-      :get  => %w(
+      :get  => %w[
         download_data
         download_summary_pdf
         index
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         quick_search
         listnav_search_selected
@@ -1606,14 +1605,14 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         wait_for_task
-      ) +
+      ] +
         adv_search_post +
         save_post +
         exp_post
     },
 
     :network_router           => {
-      :get  => %w(
+      :get  => %w[
         add_interface_select
         dialog_load
         download_data
@@ -1626,9 +1625,9 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) +
+      ] +
         compare_get,
-      :post => %w(
+      :post => %w[
         add_interface
         add_interface_select
         button
@@ -1642,7 +1641,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         wait_for_task
-      ) +
+      ] +
         adv_search_post +
         compare_post +
         save_post +
@@ -1677,7 +1676,7 @@ Rails.application.routes.draw do
       # in app/controllers/application_controller/tags.rb#tag that are used in
       # a role of a method call.
       # Then remove this route from all other controllers too.
-      :get  => %w(
+      :get  => %w[
         download_data
         download_summary_pdf
         index
@@ -1688,9 +1687,9 @@ Rails.application.routes.draw do
         tagging_edit
         ems_list
         cloud_tenants
-      ) +
+      ] +
         compare_get,
-      :post => %w(
+      :post => %w[
         button
         listnav_search_selected
         protect
@@ -1699,7 +1698,7 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) +
+      ] +
                adv_search_post +
                compare_post +
                exp_post +
@@ -1707,7 +1706,7 @@ Rails.application.routes.draw do
     },
 
     :host                     => {
-      :get  => %w(
+      :get  => %w[
         advanced_settings
         dialog_load
         download_data
@@ -1731,10 +1730,10 @@ Rails.application.routes.draw do
         start
         tagging_edit
         users
-      ) +
+      ] +
                compare_get +
                drift_get,
-      :post => %w(
+      :post => %w[
         advanced_settings
         button
         drift_all
@@ -1760,7 +1759,7 @@ Rails.application.routes.draw do
         tree_autoload
         users
         wait_for_task
-      ) +
+      ] +
                adv_search_post +
                compare_post +
                dialog_runner_post +
@@ -1770,7 +1769,7 @@ Rails.application.routes.draw do
     },
 
     :infra_networking         => {
-      :get  => %w(
+      :get  => %w[
         dialog_load
         download_data
         download_summary_pdf
@@ -1780,8 +1779,8 @@ Rails.application.routes.draw do
         tagging
         tagging_edit
         x_show
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         custom_button_events
         explorer
@@ -1797,7 +1796,7 @@ Rails.application.routes.draw do
         x_button
         x_show
         x_search_by_name
-      ) +
+      ] +
         adv_search_post +
         exp_post +
         save_post +
@@ -1806,19 +1805,19 @@ Rails.application.routes.draw do
     },
 
     :generic_object => {
-      :get => %w(
+      :get => %w[
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         tagging_edit
-      )
+      ]
     },
 
     :generic_object_definition => {
-      :get => %w(
+      :get => %w[
         custom_buttons_in_set
         download_data
         download_summary_pdf
@@ -1829,8 +1828,8 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         add_button_in_group
         button
         custom_button_group_new
@@ -1844,14 +1843,14 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tree_select
-      ) +
+      ] +
         adv_search_post +
         exp_post +
         save_post
     },
 
     :ansible_credential => {
-      :get => %w(
+      :get => %w[
         download_data
         download_summary_pdf
         edit
@@ -1859,33 +1858,33 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         search_clear
         button
         show_list
         tagging_edit
-      )
+      ]
     },
 
     :ansible_playbook => {
-      :get => %w(
+      :get => %w[
         download_data
         download_summary_pdf
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         search_clear
         button
         show_list
         tagging_edit
-      )
+      ]
     },
 
     :ansible_repository => {
-      :get => %w(
+      :get => %w[
         download_data
         download_summary_pdf
         edit
@@ -1893,8 +1892,8 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         search_clear
         button
         edit
@@ -1902,17 +1901,17 @@ Rails.application.routes.draw do
         repository_refresh
         show_list
         tagging_edit
-      )
+      ]
     },
 
     :miq_ae_class             => {
-      :get  => %w(
+      :get  => %w[
         explorer
         method_form_fields
         namespace
         show
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         add_update_method
         ae_tree_select
         ae_tree_select_discard
@@ -1955,17 +1954,17 @@ Rails.application.routes.draw do
         x_button
         x_history
         x_show
-      ) + adv_search_post +
+      ] + adv_search_post +
         exp_post
     },
     :miq_ae_customization     => {
-      :get  => %w(
+      :get  => %w[
         explorer
         editor
         export_service_dialogs
         show
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         ab_group_reorder
         accordion_select
         automate_button_field_changed
@@ -1991,12 +1990,12 @@ Rails.application.routes.draw do
         x_button
         x_history
         x_show
-      ) +
+      ] +
                button_post + exp_post
     },
 
     :miq_ae_tools             => {
-      :get  => %w(
+      :get  => %w[
         automate_json
         check_git_task
         export_datastore
@@ -2005,8 +2004,8 @@ Rails.application.routes.draw do
         log
         resolve
         review_import
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         cancel_import
         form_field_changed
@@ -2018,41 +2017,41 @@ Rails.application.routes.draw do
         upload
         upload_import_file
         wait_for_task
-      )
+      ]
     },
 
     :utilization              => {
-      :get  => %w(
+      :get  => %w[
         index
         report_download
         timeline_data
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         change_tab
         chart_chooser
         tree_autoload
         tree_select
         wait_for_task
-      )
+      ]
     },
 
     :miq_policy_export       => {
-      :get  => %w(
+      :get  => %w[
         export
         fetch_yaml
         get_json
         import
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         export
         export_field_changed
         import
         upload
-      )
+      ]
     },
 
     :miq_policy               => {
-      :get  => %w(
+      :get  => %w[
         copy
         edit
         miq_event_edit
@@ -2061,8 +2060,8 @@ Rails.application.routes.draw do
         new
         show
         show_list
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         edit
         event_build_action_values
         miq_event_edit
@@ -2074,86 +2073,86 @@ Rails.application.routes.draw do
         reload
         show
         show_list
-      ) +
+      ] +
          adv_search_post +
          exp_post
     },
 
     :miq_policy_log   => {
-      :get => %w(
+      :get => %w[
         fetch_log
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
-      )
+      ]
     },
 
     :miq_policy_rsop         => {
-      :post => %w(
+      :post => %w[
         rsop
         rsop_option_changed
         rsop_show_options
         rsop_toggle
         wait_for_task
-      )
+      ]
     },
 
     :miq_policy_set => {
-      :get  => %w(
+      :get  => %w[
         edit
         new
         show
         show_list
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         reload
         show
         show_list
-      )
+      ]
     },
 
     :miq_action       => {
-      :get  => %w(
+      :get  => %w[
         edit
         new
         show
         show_list
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         miq_action_edit
         action_field_changed
         edit
         show
         show_list
-      )
+      ]
     },
 
     :miq_alert => {
-      :get  => %w(
+      :get  => %w[
         copy
         edit
         new
         show
         show_list
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         alert_field_changed
         edit
         show
         show_list
-      ) +
+      ] +
         exp_post
     },
 
     :miq_alert_set  => {
-      :get  => %w(
+      :get  => %w[
         edit
         edit_assignment
         new
         show
         show_list
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         alert_profile_assign_changed
         alert_profile_field_changed
         edit
@@ -2161,38 +2160,38 @@ Rails.application.routes.draw do
         new
         show
         show_list
-      )
+      ]
     },
 
     :miq_event_definition => {
-      :get  => %w(
+      :get  => %w[
         show
         show_list
-      ),
+      ],
     },
 
     :condition => {
-      :get  => %w(
+      :get  => %w[
         copy
         edit
         new
         show
         show_list
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         condition_edit
         condition_field_changed
         edit
         show
         show_list
-      ) +
+      ] +
           adv_search_post +
           exp_post
     },
 
     :miq_request              => {
       # FIXME: Change stamp to POST only; We need to remove the redirect
-      :get  => %w(
+      :get  => %w[
         index
         post_install_callback
         pre_prov
@@ -2201,8 +2200,8 @@ Rails.application.routes.draw do
         show
         show_list
         stamp
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         post_install_callback
         pre_prov
@@ -2227,38 +2226,38 @@ Rails.application.routes.draw do
         stamp
         stamp_field_changed
         vm_pre_prov
-      ) +
+      ] +
                dialog_runner_post
     },
 
     :miq_task                 => {
-      :get  => %w(
+      :get  => %w[
         change_tab
         index
         jobs
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         button
         jobs
-      )
+      ]
     },
 
     :miq_template             => {
-      :get  => %w(
+      :get  => %w[
         download_summary_pdf
         edit
         show
         ownership
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         edit
         show
-      ) +
+      ] +
                ownership_post
     },
 
     :ems_storage              => {
-      :get  => %w(
+      :get  => %w[
         dialog_load
         download_data
         download_summary_pdf
@@ -2269,8 +2268,8 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         new
         button
         dynamic_checkbox_refresh
@@ -2286,7 +2285,7 @@ Rails.application.routes.draw do
         tagging_edit
         tl_chooser
         wait_for_task
-      ) +
+      ] +
         adv_search_post +
         dialog_runner_post +
         exp_post +
@@ -2394,7 +2393,7 @@ Rails.application.routes.draw do
     },
 
     :ops                      => {
-      :get  => %w(
+      :get  => %w[
         all_categories
         category_entries
         category_information
@@ -2406,8 +2405,8 @@ Rails.application.routes.draw do
         log_collection_form_fields
         pglogical_subscriptions_form_fields
         schedule_form_fields
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         accordion_select
         apply_imports
         ap_ce_delete
@@ -2487,7 +2486,7 @@ Rails.application.routes.draw do
         wait_for_task
         x_button
         zone_edit
-      ) + exp_post + dialog_runner_post
+      ] + exp_post + dialog_runner_post
     },
 
     :optimization => {
@@ -2503,7 +2502,7 @@ Rails.application.routes.draw do
     },
 
     :orchestration_stack      => {
-      :get  => %w(
+      :get  => %w[
         cloud_networks
         dialog_load
         download_data
@@ -2518,9 +2517,9 @@ Rails.application.routes.draw do
         stacks_ot_info
         tagging_edit
         protect
-      ) +
+      ] +
         compare_get,
-      :post => %w(
+      :post => %w[
         button
         cloud_networks
         outputs
@@ -2534,7 +2533,7 @@ Rails.application.routes.draw do
         stacks_ot_copy
         protect
         tagging_edit
-      ) +
+      ] +
                adv_search_post +
                compare_post +
                exp_post +
@@ -2543,7 +2542,7 @@ Rails.application.routes.draw do
     },
 
     :ems_automation => {
-      :get  => %w(
+      :get  => %w[
         download_data
         download_summary_pdf
         edit
@@ -2552,8 +2551,8 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         authentication_validate
         button
         edit
@@ -2564,7 +2563,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         wait_for_task
-      ) +
+      ] +
         adv_search_post +
         exp_post
     },
@@ -2648,11 +2647,11 @@ Rails.application.routes.draw do
     },
 
     :pxe                      => {
-      :get  => %w(
+      :get  => %w[
         explorer
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         accordion_select
         explorer
         iso_datastore_list
@@ -2672,11 +2671,11 @@ Rails.application.routes.draw do
         tree_select
         x_button
         x_history
-      )
+      ]
     },
 
     :report                   => {
-      :get  => %w(
+      :get  => %w[
         dashboard_get
         db_copy
         db_widget_dd_done
@@ -2693,8 +2692,8 @@ Rails.application.routes.draw do
         send_report_data
         tree_autoload
         tree_select
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         accordion_select
         change_tab
         dashboard_render
@@ -2735,12 +2734,12 @@ Rails.application.routes.draw do
         x_button
         x_history
         x_show
-      ) +
+      ] +
                exp_post
     },
 
     :resource_pool            => {
-      :get  => %w(
+      :get  => %w[
         download_data
         download_summary_pdf
         index
@@ -2748,9 +2747,9 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
-      ) +
+      ] +
         compare_get,
-      :post => %w(
+      :post => %w[
         button
         listnav_search_selected
         protect
@@ -2760,7 +2759,7 @@ Rails.application.routes.draw do
         tagging_edit
         tree_autoload
         quick_search
-      ) +
+      ] +
                adv_search_post +
                compare_post +
                exp_post +
@@ -2768,13 +2767,13 @@ Rails.application.routes.draw do
     },
 
     :restful_redirect => {
-      :get => %w(
+      :get => %w[
         index
-      )
+      ]
     },
 
     :service                  => {
-      :get  => %w(
+      :get  => %w[
         dialog_load
         download_data
         reconfigure_form_fields
@@ -2786,8 +2785,8 @@ Rails.application.routes.draw do
         edit
         ownership
         tagging_edit
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         listnav_search_selected
         ownership_update
         quick_search
@@ -2800,7 +2799,7 @@ Rails.application.routes.draw do
         show
         ownership
         wait_for_task
-      ) +
+      ] +
                dialog_runner_post +
                adv_search_post +
                exp_post +
@@ -2808,7 +2807,7 @@ Rails.application.routes.draw do
     },
 
     :storage                  => {
-      :get  => %w(
+      :get  => %w[
         button
         debris_files
         dialog_load
@@ -2827,9 +2826,9 @@ Rails.application.routes.draw do
         vm_ram_files
         vm_misc_files
         x_show
-      ) +
+      ] +
                compare_get,
-      :post => %w(
+      :post => %w[
         accordion_select
         button
         debris_files
@@ -2856,7 +2855,7 @@ Rails.application.routes.draw do
         wait_for_task
         x_search_by_name
         x_show
-      ) +
+      ] +
                adv_search_post +
                compare_post +
                dialog_runner_post +
@@ -2866,11 +2865,11 @@ Rails.application.routes.draw do
     },
 
     :support                  => {
-      :get  => %w(index)
+      :get  => %w[index]
     },
 
     :vm                       => {
-      :get  => %w(
+      :get  => %w[
         download_data
         download_summary_pdf
         edit
@@ -2893,8 +2892,8 @@ Rails.application.routes.draw do
         right_size
         show
         show_list
-      ),
-      :post => %w(
+      ],
+      :post => %w[
         policy_sim
         policy_sim_add
         policy_sim_cancel
@@ -2913,13 +2912,13 @@ Rails.application.routes.draw do
         genealogy_tree_selected
         ownership_update
         wait_for_task
-      ) +
+      ] +
                ownership_post +
                pre_prov_post
     },
 
     :vm_cloud                 => {
-      :get  => %w(
+      :get  => %w[
         download_data
         download_summary_pdf
         drift_to_csv
@@ -2948,9 +2947,9 @@ Rails.application.routes.draw do
         disassociate_floating_ip_form_fields
         add_security_group
         remove_security_group
-      ) +
+      ] +
                compare_get,
-      :post => %w(
+      :post => %w[
         advanced_settings
         accordion_select
         button
@@ -3004,7 +3003,7 @@ Rails.application.routes.draw do
         ownership_update
         associate_floating_ip_vm
         disassociate_floating_ip_vm
-      ) +
+      ] +
                adv_search_post +
                compare_post +
                dialog_runner_post +
@@ -3017,7 +3016,7 @@ Rails.application.routes.draw do
     },
 
     :vm_infra                 => {
-      :get  => %w(
+      :get  => %w[
         download_data
         download_summary_pdf
         drift_to_csv
@@ -3036,9 +3035,9 @@ Rails.application.routes.draw do
         retire
         show
         tagging_edit
-      ) +
+      ] +
                compare_get,
-      :post => %w(
+      :post => %w[
         accordion_select
         advanced_settings
         button
@@ -3085,7 +3084,7 @@ Rails.application.routes.draw do
         wait_for_task
         win32_services
         ownership_update
-      ) +
+      ] +
                adv_search_post +
                compare_post +
                dialog_runner_post +
@@ -3098,7 +3097,7 @@ Rails.application.routes.draw do
     },
 
     :vm_or_template           => {
-      :get  => %w(
+      :get  => %w[
         download_data
         download_summary_pdf
         drift_to_csv
@@ -3115,9 +3114,9 @@ Rails.application.routes.draw do
         show
         tagging_edit
         vm_show
-      ) +
+      ] +
                compare_get,
-      :post => %w(
+      :post => %w[
         accordion_select
         advanced_settings
         button
@@ -3176,7 +3175,7 @@ Rails.application.routes.draw do
         x_search_by_name
         x_show
         ownership_update
-      ) +
+      ] +
                adv_search_post +
                compare_post +
                dialog_runner_post +
@@ -3300,32 +3299,30 @@ Rails.application.routes.draw do
   controller_routes.each do |controller_name, controller_actions|
     # Default route with no action to controller's index action
     unless routes_without_index.include?(controller_name)
-      match controller_name.to_s, :controller => controller_name, :action => :index, :via => :get
+      get controller_name.to_s, :controller => controller_name, :action => :index
     end
 
     default_routes.each do |action_name|
       post "#{controller_name}/#{action_name}(/:id)",
+           :action     => action_name,
+           :controller => controller_name
+    end
+
+    # One-by-one get/post routes for defined controllers
+    next unless controller_actions.kind_of?(Hash)
+
+    controller_actions[:get]&.each do |action_name|
+      get "#{controller_name}/#{action_name}(/:id)",
           :action     => action_name,
           :controller => controller_name
     end
 
-    # One-by-one get/post routes for defined controllers
-    if controller_actions.kind_of?(Hash)
-      unless controller_actions[:get].nil?
-        controller_actions[:get].each do |action_name|
-          get "#{controller_name}/#{action_name}(/:id)",
-              :action     => action_name,
-              :controller => controller_name
-        end
-      end
+    next if controller_actions[:post].nil?
 
-      unless controller_actions[:post].nil?
-        controller_actions[:post].each do |action_name|
-          post "#{controller_name}/#{action_name}(/:id)",
-               :action     => action_name,
-               :controller => controller_name
-        end
-      end
+    controller_actions[:post].each do |action_name|
+      post "#{controller_name}/#{action_name}(/:id)",
+           :action     => action_name,
+           :controller => controller_name
     end
   end
 

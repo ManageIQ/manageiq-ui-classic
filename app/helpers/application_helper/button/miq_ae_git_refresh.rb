@@ -2,7 +2,7 @@ class ApplicationHelper::Button::MiqAeGitRefresh < ApplicationHelper::Button::Mi
   needs :@record
 
   def disabled?
-    nil
+    false
   end
 
   def visible?

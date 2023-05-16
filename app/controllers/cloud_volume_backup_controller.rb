@@ -73,12 +73,13 @@ class CloudVolumeBackupController < ApplicationController
   end
 
   def button
-    if params[:pressed] == 'cloud_volume_backup_restore_to_volume'
+    case params[:pressed]
+    when 'cloud_volume_backup_restore_to_volume'
       javascript_redirect(:action => 'volume_select', :id => checked_item_id)
-    elsif params[:pressed] == 'cloud_volume_backup_delete'
+    when 'cloud_volume_backup_delete'
       backups_delete
-    elsif params[:pressed] == 'cloud_volume_backup_tag'
-      tag("CloudVolumeBackup")
+    when 'cloud_volume_backup_tag'
+      tag.cloud_volume_backup
     end
   end
 
@@ -95,7 +96,7 @@ class CloudVolumeBackupController < ApplicationController
     backups.each do |backup|
       backup.delete_queue(session[:userid])
       add_flash(_("Delete of Backup \"%{name}\" was successfully initiated.") % {:name => backup.name})
-    rescue StandardError => error
+    rescue => error
       add_flash(_("Unable to delete Backup \"%{name}\": %{details}") % {:name    => backup.name,
                                                                         :details => error},
                 :error)

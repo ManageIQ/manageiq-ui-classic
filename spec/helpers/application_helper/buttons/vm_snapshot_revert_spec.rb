@@ -6,11 +6,11 @@ describe ApplicationHelper::Button::VmSnapshotRevert do
   let(:record) do
     record = FactoryBot.create(:vm_vmware, :ems_id => ems.id, :host_id => host.id)
     record.snapshots = [FactoryBot.create(:snapshot,
-                                           :create_time       => 1.minute.ago,
-                                           :vm_or_template_id => record.id,
-                                           :name              => 'EvmSnapshot',
-                                           :description       => "Some Description",
-                                           :current           => 1)]
+                                          :create_time       => 1.minute.ago,
+                                          :vm_or_template_id => record.id,
+                                          :name              => 'EvmSnapshot',
+                                          :description       => "Some Description",
+                                          :current           => 1)]
     record
   end
   let(:active) { true }

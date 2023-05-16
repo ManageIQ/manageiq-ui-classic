@@ -1,24 +1,24 @@
 describe EmsPhysicalInfraDashboardService do
   let(:physical_infra1) do
     FactoryBot.create(:physical_infra,
-                       :name     => "foo",
-                       :hostname => "test1.com")
+                      :name     => "foo",
+                      :hostname => "test1.com")
   end
 
   let(:physical_infra2) do
     FactoryBot.create(:physical_infra,
-                       :name     => "bar",
-                       :hostname => "test2.com")
+                      :name     => "bar",
+                      :hostname => "test2.com")
   end
 
   context "aggregate_status_card" do
     it "should display either a single provider or sum of all providers" do
       FactoryBot.create(:lenovo_physical_server,
-                         :name                  => "foo",
-                         :ext_management_system => physical_infra1)
+                        :name                  => "foo",
+                        :ext_management_system => physical_infra1)
       FactoryBot.create(:lenovo_physical_server,
-                         :name                  => "bar",
-                         :ext_management_system => physical_infra2)
+                        :name                  => "bar",
+                        :ext_management_system => physical_infra2)
 
       multiple_providers_status_data = EmsPhysicalInfraDashboardService.new(nil, nil).aggregate_status_data
 
@@ -41,21 +41,21 @@ describe EmsPhysicalInfraDashboardService do
       old_date = 31.days.ago
 
       FactoryBot.create(:lenovo_physical_server,
-                         :name                  => "foo",
-                         :created_at            => current_date,
-                         :ext_management_system => physical_infra1)
+                        :name                  => "foo",
+                        :created_at            => current_date,
+                        :ext_management_system => physical_infra1)
       FactoryBot.create(:lenovo_physical_server,
-                         :created_at            => old_date,
-                         :name                  => "bar",
-                         :ext_management_system => physical_infra2)
+                        :created_at            => old_date,
+                        :name                  => "bar",
+                        :ext_management_system => physical_infra2)
       FactoryBot.create(:lenovo_physical_server,
-                         :name                  => "foo2",
-                         :created_at            => old_date,
-                         :ext_management_system => physical_infra1)
+                        :name                  => "foo2",
+                        :created_at            => old_date,
+                        :ext_management_system => physical_infra1)
       FactoryBot.create(:lenovo_physical_server,
-                         :created_at            => current_date,
-                         :name                  => "bar2",
-                         :ext_management_system => physical_infra2)
+                        :created_at            => current_date,
+                        :name                  => "bar2",
+                        :ext_management_system => physical_infra2)
       providers_status_data_multiple_providers = EmsPhysicalInfraDashboardService.new(nil, nil).servers_group_data
       provider_status_data_single_provider = EmsPhysicalInfraDashboardService.new(physical_infra1.id, nil).servers_group_data
 

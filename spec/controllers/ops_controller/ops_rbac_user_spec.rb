@@ -22,7 +22,7 @@ describe OpsController do
         :userid   => 'username',
         :group    => group.id.to_s,
         :password => "foo",
-        :verify   => "bar",
+        :verify   => "bar"
       )
 
       user = FactoryBot.build(:user)
@@ -49,7 +49,7 @@ describe OpsController do
         :userid   => 'username',
         :group    => group.id.to_s,
         :password => "foo", # fails rbac_user_validate
-        :verify   => "bar",
+        :verify   => "bar"
       )
 
       controller.send(:rbac_edit_save_or_add, 'user')
@@ -134,7 +134,7 @@ describe OpsController do
         :userid   => 'username',
         :group    => group.id.to_s,
         :password => "foo",
-        :verify   => "foo",
+        :verify   => "foo"
       )
 
       controller.params = {:typ    => nil,

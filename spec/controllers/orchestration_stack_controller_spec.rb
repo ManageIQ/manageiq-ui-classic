@@ -94,9 +94,9 @@ describe OrchestrationStackController do
   describe "#stacks_ot_info" do
     it "returns all the orchestration template attributes" do
       stack = FactoryBot.create(:orchestration_stack_cloud_with_template)
-      get :stacks_ot_info, :params => { :id => stack.id }
+      get :stacks_ot_info, :params => {:id => stack.id}
       expect(response.status).to eq(200)
-      ret = JSON.parse(response.body)
+      ret = response.parsed_body
       expect(ret).to have_key('template_id')
       expect(ret).to have_key('template_name')
       expect(ret).to have_key('template_description')

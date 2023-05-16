@@ -69,7 +69,7 @@ class ServiceController < ApplicationController
     resource_action = service_template.resource_actions.find_by(:action => 'Reconfigure') if service_template
 
     @right_cell_text = _("Reconfigure Service \"%{name}\"") % {:name => service.name}
-    dialog_locals = {:resource_action_id => resource_action.id, :target_id => service.id}
+    {:resource_action_id => resource_action.id, :target_id => service.id}
   end
 
   def service_form_fields
@@ -142,7 +142,7 @@ class ServiceController < ApplicationController
   helper_method :sanitize_output
 
   def textual_group_list
-    if @item && @item.kind_of?(GenericObject)
+    if @item.kind_of?(GenericObject)
       [%i[go_properties attribute_details_list methods go_relationships]]
     elsif %w[ServiceAnsiblePlaybook ServiceAnsibleTower].include?(@record.type)
       [%i[properties miq_custom_attributes], %i[lifecycle tags generic_objects]]

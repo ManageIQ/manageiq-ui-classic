@@ -61,14 +61,9 @@ class WorkflowRepositoryController < ApplicationController
     end
   end
 
-  def edit
-    assert_privileges('embedded_configuration_script_source_edit')
-    @record = self.class.model.find(params[:id])
-    drop_breadcrumb(:name => _("Edit a Repository \"%{name}\"") % {:name => @record.name},
-                    :url  => "/workflow_repository/edit/#{@record.id}")
-    @title = _("Edit Repository \"%{name}\"") % {:name => @record.name}
-    @id = @record.id
-    @in_a_form = true
+  def show
+    assert_privileges('embedded_configuration_script_source_view')
+    super
   end
 
   def new
@@ -76,6 +71,16 @@ class WorkflowRepositoryController < ApplicationController
     drop_breadcrumb(:name => _("Add a new Repository"), :url => "workflow_repository/new")
     @title = _("Add new Repository")
     @id = 'new'
+    @in_a_form = true
+  end
+
+  def edit
+    assert_privileges('embedded_configuration_script_source_edit')
+    @record = self.class.model.find(params[:id])
+    drop_breadcrumb(:name => _("Edit a Repository \"%{name}\"") % {:name => @record.name},
+                    :url  => "/workflow_repository/edit/#{@record.id}")
+    @title = _("Edit Repository \"%{name}\"") % {:name => @record.name}
+    @id = @record.id
     @in_a_form = true
   end
 
@@ -89,11 +94,6 @@ class WorkflowRepositoryController < ApplicationController
   end
 
   def show_list
-    assert_privileges('embedded_configuration_script_source_view')
-    super
-  end
-
-  def show
     assert_privileges('embedded_configuration_script_source_view')
     super
   end
@@ -115,7 +115,7 @@ class WorkflowRepositoryController < ApplicationController
     self.class.model.where(:id => checked).each do |repo|
       repo.sync_queue
       add_flash(_("Refresh of Repository \"%{name}\" was successfully initiated.") % {:name => repo.name})
-    rescue StandardError => ex
+    rescue => ex
       add_flash(_("Unable to refresh Repository \"%{name}\": %{details}") % {:name    => repo.name,
                                                                              :details => ex},
                 :error)
@@ -153,7 +153,7 @@ class WorkflowRepositoryController < ApplicationController
   end
 
   helper_method :show_output_link
-  
+
   def breadcrumbs_options
     {
       :breadcrumbs => [

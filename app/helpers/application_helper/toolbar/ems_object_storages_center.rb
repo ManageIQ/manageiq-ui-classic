@@ -15,7 +15,8 @@ class ApplicationHelper::Toolbar::EmsObjectStoragesCenter < ApplicationHelper::T
                        :send_checked => true,
                        :confirm      => N_("Refresh relationships and power states for all items related to the selected Object Storage Managers?"),
                        :enabled      => false,
-                       :onwhen       => "1+"),
+                       :onwhen       => "1+"
+                     ),
                      separator,
                      button(
                        :ems_object_storage_delete,
@@ -26,7 +27,8 @@ class ApplicationHelper::Toolbar::EmsObjectStoragesCenter < ApplicationHelper::T
                        :send_checked => true,
                        :confirm      => N_("Warning: The selected Object Storage Managers and ALL of their components will be permanently removed!"),
                        :enabled      => false,
-                       :onwhen       => "1+"),
+                       :onwhen       => "1+"
+                     ),
                    ]
                  ),
                ])
@@ -47,7 +49,8 @@ class ApplicationHelper::Toolbar::EmsObjectStoragesCenter < ApplicationHelper::T
                        :url_parms    => "main_div",
                        :send_checked => true,
                        :enabled      => false,
-                       :onwhen       => "1+"),
+                       :onwhen       => "1+"
+                     ),
                      button(
                        :ems_object_storage_tag,
                        'pficon pficon-edit fa-lg',
@@ -56,7 +59,8 @@ class ApplicationHelper::Toolbar::EmsObjectStoragesCenter < ApplicationHelper::T
                        :url_parms    => "main_div",
                        :send_checked => true,
                        :enabled      => false,
-                       :onwhen       => "1+"),
+                       :onwhen       => "1+"
+                     ),
                    ]
                  ),
                ])

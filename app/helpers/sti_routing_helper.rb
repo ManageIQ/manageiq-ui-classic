@@ -25,7 +25,7 @@ module StiRoutingHelper
   def polymorphic_path(record, *)
     if record.kind_of?(ActiveRecord::Base)
       klass = ui_base_model(record.class)
-      record = record.becomes(klass) unless record.class == klass
+      record = record.becomes(klass) unless record.instance_of?(klass)
     end
     super
   end
@@ -33,7 +33,7 @@ module StiRoutingHelper
   def polymorphic_url(record, *)
     if record.kind_of?(ActiveRecord::Base)
       klass = ui_base_model(record.class)
-      record = record.becomes(klass) unless record.class == klass
+      record = record.becomes(klass) unless record.instance_of?(klass)
     end
     super
   end

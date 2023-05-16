@@ -5,11 +5,11 @@ describe "routes for PlacementGroupController" do
 
   it_behaves_like "A controller that has advanced search routes"
 
-  %w(
+  %w[
     show_list
     show
     index
-  ).each do |task|
+  ].each do |task|
     describe "##{task}" do
       it 'routes with GET' do
         expect(get("/#{controller_name}/#{task}")).to route_to("#{controller_name}##{task}")
@@ -17,11 +17,11 @@ describe "routes for PlacementGroupController" do
     end
   end
 
-  %w(
+  %w[
     quick_search
     show_list
     show
-  ).each do |task|
+  ].each do |task|
     describe "##{task}" do
       it 'routes with POST' do
         expect(post("/#{controller_name}/#{task}")).to route_to("#{controller_name}##{task}")

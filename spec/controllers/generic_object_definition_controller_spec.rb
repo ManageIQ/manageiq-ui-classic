@@ -128,12 +128,12 @@ describe GenericObjectDefinitionController do
 
     it "does not display toolbar and paging div when custom button is edited" do
       custom_button = FactoryBot.create(:custom_button,
-                                         :applies_to_class => "GenericObjectDefinition",
-                                         :options          => {
-                                           'button_icon'  => 'ff ff-view-expanded',
-                                           'button_color' => '#4727ff',
-                                           'display'      => true,
-                                         },)
+                                        :applies_to_class => "GenericObjectDefinition",
+                                        :options          => {
+                                          'button_icon'  => 'ff ff-view-expanded',
+                                          'button_color' => '#4727ff',
+                                          'display'      => true,
+                                        })
 
       allow(controller).to receive(:x_node) { "cb-#{custom_button.id}" }
       post :tree_select, :params => {'id' => "cb-#{custom_button.id}"}

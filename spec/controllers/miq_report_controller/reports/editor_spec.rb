@@ -5,13 +5,13 @@ describe ReportController do
 
       let(:chargeback_report) do
         FactoryBot.create(:miq_report,
-                           :db         => "ChargebackVm",
-                           :name       => 'name',
-                           :title      => 'title',
-                           :db_options => {:options => {:owner => user.userid}},
-                           :col_order  => ["name"],
-                           :headers    => ["Name"],
-                           :tz         => nil)
+                          :db         => "ChargebackVm",
+                          :name       => 'name',
+                          :title      => 'title',
+                          :db_options => {:options => {:owner => user.userid}},
+                          :col_order  => ["name"],
+                          :headers    => ["Name"],
+                          :tz         => nil)
       end
 
       let(:report_edit_options) do
@@ -55,7 +55,7 @@ describe ReportController do
         controller.instance_variable_set(:@edit, report_edit_options)
         session[:edit] = assigns(:edit)
 
-        post :miq_report_edit, :params => { :id => chargeback_report.id, :button => 'save' }
+        post :miq_report_edit, :params => {:id => chargeback_report.id, :button => 'save'}
 
         chargeback_report.reload
 
@@ -75,7 +75,7 @@ describe ReportController do
         controller.instance_variable_set(:@edit, report_edit_options)
         session[:edit] = assigns(:edit)
 
-        post :miq_report_edit, :params => { :id => chargeback_report.id, :button => 'save' }
+        post :miq_report_edit, :params => {:id => chargeback_report.id, :button => 'save'}
         chargeback_report.reload
         expected_tag_categories = report_edit_options[:new][:cb_tag_value].split(",").map { |x| "/managed/#{report_edit_options[:new][:cb_tag_cat]}/#{x}" }
         tag_categories = chargeback_report.reload.db_options[:options][:tag]
@@ -131,16 +131,16 @@ describe ReportController do
 
         allow(controller).to receive(:replace_right_cell)
 
-        post :miq_report_edit, :params => { :id => rep.id, :button => 'reset' }
+        post :miq_report_edit, :params => {:id => rep.id, :button => 'reset'}
         expect(assigns(:sb)[:miq_tab]).to eq("edit_1")
         expect(assigns(:tabs)).to include(["edit_1", "Columns"])
         expect(assigns(:active_tab)).to eq("edit_1")
       end
 
       it "should allow user with miq_report_edit access to edit a report" do
-        user = FactoryBot.create(:user, :features => %w(miq_report_edit))
+        user = FactoryBot.create(:user, :features => %w[miq_report_edit])
         login_as user
-        EvmSpecHelper.seed_specific_product_features(%w(miq_report_edit))
+        EvmSpecHelper.seed_specific_product_features(%w[miq_report_edit])
         ApplicationController.handle_exceptions = true
 
         rep = FactoryBot.create(
@@ -164,8 +164,8 @@ describe ReportController do
       end
 
       it "should allow user with miq_report_new access to add a new report" do
-        login_as FactoryBot.create(:user, :features => %w(miq_report_new))
-        EvmSpecHelper.seed_specific_product_features(%w(miq_report_new))
+        login_as FactoryBot.create(:user, :features => %w[miq_report_new])
+        EvmSpecHelper.seed_specific_product_features(%w[miq_report_new])
         ApplicationController.handle_exceptions = true
 
         allow(controller).to receive(:load_edit).and_return(true)
@@ -196,17 +196,18 @@ describe ReportController do
       end
 
       it "sets proper UI var(cb_show_typ) for chargeback filters in chargeback report" do
-        %w(owner tenant tag entity).each do |show_typ|
+        %w[owner tenant tag entity].each do |show_typ|
           chargeback_report.db_options = {}
           chargeback_report.db_options[:options] = {}
 
-          if show_typ == "owner"
+          case show_typ
+          when "owner"
             chargeback_report.db_options[:options] = {:owner => fake_id}
-          elsif show_typ == "tenant"
+          when "tenant"
             chargeback_report.db_options[:options] = {:tenant_id => fake_id}
-          elsif show_typ == "tag"
+          when "tag"
             chargeback_report.db_options[:options] = {:tag => "/managed/prov_max_cpu/1"}
-          elsif show_typ == "entity"
+          when "entity"
             chargeback_report.db_options[:options] = {:provider_id => fake_id, :entity_id => fake_id}
           end
 
@@ -318,7 +319,7 @@ describe ReportController do
 
   tabs = {:formatting => 2, :filter => 3, :summary => 4, :charts => 5, :preview => 7,
           :consolidation => 8, :styling => 9}
-  chargeback_tabs = %i(formatting filter preview)
+  chargeback_tabs = %i[formatting filter preview]
 
   describe '#build_edit_screen' do
     let(:default_tenant) { Tenant.seed }
@@ -366,21 +367,21 @@ describe ReportController do
       controller.instance_variable_set(:@edit, :new => {:model => ApplicationController::TREND_MODEL})
 
       controller.send(:build_tabs)
-      expect(controller.instance_variable_get(:@tabs)).to eq([%w(edit_1 Columns), %w(edit_3 Filter), %w(edit_7 Preview)])
+      expect(controller.instance_variable_get(:@tabs)).to eq([%w[edit_1 Columns], %w[edit_3 Filter], %w[edit_7 Preview]])
     end
 
     it "display title tabs for chargeback model" do
       controller.instance_variable_set(:@edit, :new => {:model => ChargebackVm})
 
       controller.send(:build_tabs)
-      expect(controller.instance_variable_get(:@tabs)).to eq([%w(edit_1 Columns), %w(edit_2 Formatting), %w(edit_3 Filter), %w(edit_7 Preview)])
+      expect(controller.instance_variable_get(:@tabs)).to eq([%w[edit_1 Columns], %w[edit_2 Formatting], %w[edit_3 Filter], %w[edit_7 Preview]])
     end
 
     it "display title tabs for any model" do
       controller.instance_variable_set(:@edit, :new => {:model => Vm})
 
       controller.send(:build_tabs)
-      expect(controller.instance_variable_get(:@tabs)).to eq([%w(edit_1 Columns), %w(edit_8 Consolidation), %w(edit_2 Formatting), %w(edit_9 Styling), %w(edit_3 Filter), %w(edit_4 Summary), %w(edit_5 Charts), %w(edit_7 Preview)])
+      expect(controller.instance_variable_get(:@tabs)).to eq([%w[edit_1 Columns], %w[edit_8 Consolidation], %w[edit_2 Formatting], %w[edit_9 Styling], %w[edit_3 Filter], %w[edit_4 Summary], %w[edit_5 Charts], %w[edit_7 Preview]])
     end
   end
 

@@ -1,5 +1,5 @@
 describe ReportController, "::Schedules" do
-  let(:user) { FactoryBot.create(:user, :features => %w(miq_report_schedule_delete)) }
+  let(:user) { FactoryBot.create(:user, :features => %w[miq_report_schedule_delete]) }
 
   before do
     EvmSpecHelper.create_guid_miq_server_zone

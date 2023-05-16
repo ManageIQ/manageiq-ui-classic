@@ -38,17 +38,20 @@ module EmsCloudHelper::TextualSummary
   #
   def textual_description
     return nil if @record.try(:description).blank?
+
     {:label => _("Description"), :value => @record.description}
   end
 
   def textual_region
     return nil if @record.provider_region.blank?
+
     label_val = _('Region')
     {:label => label_val, :value => @record.provider_region}
   end
 
   def textual_keystone_v3_domain_id
     return nil if !@record.respond_to?(:keystone_v3_domain_id) || @record.keystone_v3_domain_id.nil?
+
     label_val = _("Keystone V3 Domain ID")
     {:label => label_val, :value => @record.keystone_v3_domain_id}
   end

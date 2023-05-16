@@ -14,6 +14,6 @@ class ApplicationHelper::Button::SummaryReload < ApplicationHelper::Button::Butt
   end
 
   def proper_showtype?
-    !%w[details item].include?(@showtype)
+    %w[details item].exclude?(@showtype)
   end
 end

@@ -10,8 +10,8 @@ shared_examples 'hiding tenant column for non admin user' do |expected_result|
     controller.send(:view_to_hash, assigns(:view))
   end
 
-  let(:first_row) { subject[:rows][0][:cells].map { |x| x[:text] }.compact }
-  let(:headers) { subject[:head].map { |x| x[:text] }.compact }
+  let(:first_row) { subject[:rows][0][:cells].pluck(:text).compact }
+  let(:headers) { subject[:head].pluck(:text).compact }
   let(:result_array) { expected_result.keys.map { |column| record.send(column) } }
 
   context "when not admin" do

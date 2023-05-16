@@ -11,7 +11,7 @@ class ApplicationHelper::Button::GenericObjectDefinitionButtonButtonDelete < App
           :entity       => "custom_buttons",
           :redirect_url => "/generic_object_definition/",
           :name         => @record.name,
-          :labels       => { :single => _("Button") }
+          :labels       => {:single => _("Button")}
         }
       }
     }

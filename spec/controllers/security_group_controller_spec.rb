@@ -1,5 +1,5 @@
 describe SecurityGroupController do
-  include_examples :shared_examples_for_security_group_controller, %w(openstack azure google amazon)
+  include_examples :shared_examples_for_security_group_controller, %w[openstack azure google amazon]
 
   let(:ems) { FactoryBot.create(:ems_openstack).network_manager }
 
@@ -26,7 +26,7 @@ describe SecurityGroupController do
     end
 
     it "builds tagging screen" do
-      post :button, :params => { :pressed => "security_group_tag", :format => :js, :id => ct.id }
+      post :button, :params => {:pressed => "security_group_tag", :format => :js, :id => ct.id}
 
       expect(assigns(:flash_array)).to be_nil
       expect(response.status).to eq(200)
@@ -35,7 +35,7 @@ describe SecurityGroupController do
     it "cancels tags edit" do
       session[:breadcrumbs] = [{:url => "security_group/show/#{ct.id}"}, 'placeholder']
 
-      post :tagging_edit, :params => { :button => "cancel", :format => :js, :id => ct.id }
+      post :tagging_edit, :params => {:button => "cancel", :format => :js, :id => ct.id}
 
       expect(assigns(:flash_array).first[:message]).to include("was cancelled by the user")
       expect(assigns(:edit)).to be_nil
@@ -44,7 +44,7 @@ describe SecurityGroupController do
 
     it "save tags" do
       session[:breadcrumbs] = [{:url => "security_group/show/#{ct.id}"}, 'placeholder']
-      post :tagging_edit, :params => { :button => "save", :format => :js, :id => ct.id, :data => get_tags_json([tag1, tag2]) }
+      post :tagging_edit, :params => {:button => "save", :format => :js, :id => ct.id, :data => get_tags_json([tag1, tag2])}
       expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
       expect(assigns(:edit)).to be_nil
       expect(response.status).to eq(200)
@@ -125,15 +125,15 @@ describe SecurityGroupController do
     end
 
     it "builds create screen" do
-      post :button, :params => { :pressed => "security_group_new", :format => :js }
+      post :button, :params => {:pressed => "security_group_new", :format => :js}
 
       expect(assigns(:flash_array)).to be_nil
     end
 
     it "queues the create action" do
       expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
-      post :create, :params => { :button => "add", :format => :js, :name => 'test',
-                                 :tenant_id => 'id', :ems_id => ems.id }
+      post :create, :params => {:button => "add", :format => :js, :name => 'test',
+                                 :tenant_id => 'id', :ems_id => ems.id}
     end
   end
 
@@ -164,13 +164,13 @@ describe SecurityGroupController do
         :class_name  => security_group.class.name,
         :method_name => 'raw_create_security_group_rule',
         :instance_id => security_group.id,
-        :args        => [security_group.ems_ref, "outbound", { :ethertype => "", :port_range_min => nil,
-           :port_range_max => nil, :protocol => "tcp", :remote_group_id => nil, :remote_ip_prefix => nil }]
+        :args        => [security_group.ems_ref, "outbound", {:ethertype => "", :port_range_min => nil,
+           :port_range_max => nil, :protocol => "tcp", :remote_group_id => nil, :remote_ip_prefix => nil}]
       }
     end
 
     it "builds edit screen" do
-      post :button, :params => { :pressed => "security_group_edit", :format => :js, :id => security_group.id }
+      post :button, :params => {:pressed => "security_group_edit", :format => :js, :id => security_group.id}
 
       expect(assigns(:flash_array)).to be_nil
     end
@@ -180,12 +180,12 @@ describe SecurityGroupController do
         .with(security_group_task_options, hash_including(security_group_queue_options))
       expect(MiqTask).to receive(:generic_action_with_callback)
         .with(firewall_rule_task_options, hash_including(firewall_rule_queue_options))
-      post :update, :params => { :button          => "save",
-                                 :format          => :js,
-                                 :id              => security_group.id,
-                                 :name            => "foo2",
-                                 :description     => "New desc",
-                                 "firewall_rules" => { "0" => { "id" => "", "host_protocol" => "TCP", "direction" => "outbound" }}}
+      post :update, :params => {:button          => "save",
+                                :format          => :js,
+                                :id              => security_group.id,
+                                :name            => "foo2",
+                                :description     => "New desc",
+                                "firewall_rules" => {"0" => {"id" => "", "host_protocol" => "TCP", "direction" => "outbound"}}}
     end
   end
 
@@ -208,7 +208,7 @@ describe SecurityGroupController do
 
     it "queues the delete action" do
       expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
-      post :button, :params => { :id => security_group.id, :pressed => "security_group_delete", :format => :js }
+      post :button, :params => {:id => security_group.id, :pressed => "security_group_delete", :format => :js}
     end
   end
 
@@ -286,10 +286,10 @@ describe SecurityGroupController do
       context "#{action} for selected Instances displayed in a nested list" do
         let(:params) { {:pressed => "instance_#{action}"} }
 
-        it "calls #{action + 'vms'} method" do
+        it "calls #{"#{action}vms"} method" do
           allow(controller).to receive(:show)
           allow(controller).to receive(:performed?).and_return(true)
-          expect(controller).to receive((action + 'vms').to_sym)
+          expect(controller).to receive("#{action}vms".to_sym)
           controller.send(:button)
         end
       end

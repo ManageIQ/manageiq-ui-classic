@@ -3,6 +3,7 @@ class ApplicationHelper::Button::VmSnapshotRevert < ApplicationHelper::Button::B
 
   def visible?
     return false if @record.kind_of?(ManageIQ::Providers::Openstack::CloudManager::Vm)
+
     super
   end
 

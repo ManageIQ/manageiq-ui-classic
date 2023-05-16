@@ -106,6 +106,7 @@ module ContainerGroupHelper::TextualSummary
   def textual_lives_on
     lives_on_ems = @record.container_node.try(:lives_on).try(:ext_management_system)
     return nil if lives_on_ems.nil?
+
     # TODO: handle the case where the node is a bare-metal
     lives_on_entity_name = lives_on_ems.kind_of?(EmsCloud) ? _("Instance") : _("Virtual Machine")
     {

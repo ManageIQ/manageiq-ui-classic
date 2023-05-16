@@ -41,4 +41,3 @@ module AutomationManagerConfiguredSystemHelper
     TextualTags.new(_("Smart Management"), %i[tags])
   end
 end
-#

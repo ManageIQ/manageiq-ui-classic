@@ -31,7 +31,7 @@ class WidgetPresenter
                                       "from the Dashboard?") % {:title => @widget.title},
                      :dataRemote => true,
                      :sparkleOn  => true,
-                     :href       => '/dashboard/widget_close?widget=' + @widget.id.to_s,
+                     :href       => "/dashboard/widget_close?widget=#{@widget.id}",
                      :fonticon   => 'fa fa-times fa-fw',
                      :dataMethod => 'post')
       end
@@ -42,7 +42,7 @@ class WidgetPresenter
                    :name       => title,
                    :confirm    => false,
                    :dataRemote => true,
-                   :href       => '/dashboard/widget_toggle_minmax?widget=' + @widget.id.to_s,
+                   :href       => "/dashboard/widget_toggle_minmax?widget=#{@widget.id}",
                    :fonticon   => "fa fa-caret-square-o-#{minimized ? 'down' : 'up'} fa-fw",
                    :dataMethod => 'post')
     end
@@ -68,7 +68,7 @@ class WidgetPresenter
       buttons.push(:id       => "w_#{@widget.id}_pdf",
                    :title    => _("Print the full report (all rows) or export it as a PDF file"),
                    :name     => _("Print or export to PDF"),
-                   :href     => '/dashboard/widget_to_pdf?rr_id=' + @widget.contents_for_user(current_user).miq_report_result_id.to_s,
+                   :href     => "/dashboard/widget_to_pdf?rr_id=#{@widget.contents_for_user(current_user).miq_report_result_id}",
                    :target   => '_blank',
                    :fonticon => 'pficon pficon-print fa-fw')
     end
@@ -77,7 +77,7 @@ class WidgetPresenter
       buttons.push(:id         => "w_#{@widget.id}_zoom",
                    :title      => _("Zoom in on this chart"),
                    :name       => _("Zoom in"),
-                   :href       => '/dashboard/widget_zoom?widget=' + @widget.id.to_s,
+                   :href       => "/dashboard/widget_zoom?widget=#{@widget.id}",
                    :fonticon   => 'fa fa-plus fa-fw',
                    :dataRemote => true,
                    :sparkleOn  => true,

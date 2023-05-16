@@ -14,7 +14,7 @@ describe ApplicationHelper::Button::ViewGHT do
   before { allow(report).to receive(:graph).and_return(graph) }
 
   describe '#visible?' do
-    %w(reports_tree savedreports_tree).each do |tree|
+    %w[reports_tree savedreports_tree].each do |tree|
       context "when x_active_tree == #{tree}" do
         let(:tree) { tree.to_sym }
         context 'when ght_type != tabular' do

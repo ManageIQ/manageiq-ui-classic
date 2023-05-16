@@ -183,7 +183,7 @@ module ApplicationController::MiqRequestMethods
 
     unless %w[image_miq_request_new miq_template_miq_request_new].include?(params[:pressed])
       path_to_report = ManageIQ::UI::Classic::Engine.root.join("product", "views", provisioning_report).to_s
-      @view = MiqReport.new(YAML.load(File.read(path_to_report)))
+      @view = MiqReport.new(YAML.load_file(path_to_report))
       @view.db = get_template_kls.to_s
       report_scopes = %i[eligible_for_provisioning non_deprecated]
       options = options_for_provisioning(@view.db, report_scopes)
@@ -492,12 +492,12 @@ module ApplicationController::MiqRequestMethods
     options = @edit || @options
 
     # editable grid for vm/migrate prov screens
-    headers = { "name"        => _("Name"),
-                "v_total_vms" => _("Total VMs"),
-                "vmm_product" => _("Platform"),
-                "vmm_version" => _("Version"),
-                "state"       => _("State"),
-                "maintenance" => _("Maintenance") }
+    headers = {"name"        => _("Name"),
+               "v_total_vms" => _("Total VMs"),
+               "vmm_product" => _("Platform"),
+               "vmm_version" => _("Version"),
+               "state"       => _("State"),
+               "maintenance" => _("Maintenance")}
 
     integer_fields = %w[v_total_vms]
 
@@ -509,31 +509,32 @@ module ApplicationController::MiqRequestMethods
     when MiqProvisionConfiguredSystemWorkflow
       build_dialog_page_miq_provision_configured_system_workflow
     when MiqProvisionVirtWorkflow
-      if @edit[:new][:current_tab_key] == :service
+      case @edit[:new][:current_tab_key]
+      when :service
         if @edit[:new][:st_prov_type]
           build_vm_grid(@edit[:wf].get_field(:src_vm_id, :service)[:values], @edit[:vm_sortdir], @edit[:vm_sortcol], build_template_filter)
         else
           @vm = VmOrTemplate.find(@edit[:new][:src_vm_id] && @edit[:new][:src_vm_id][0])
         end
         if @edit[:wf].supports_pxe?
-          build_pxe_img_grid(@edit[:wf].send("allowed_images"), @edit[:pxe_img_sortdir], @edit[:pxe_img_sortcol])
+          build_pxe_img_grid(@edit[:wf].send(:allowed_images), @edit[:pxe_img_sortdir], @edit[:pxe_img_sortcol])
         end
         if @edit[:wf].supports_iso?
-          build_iso_img_grid(@edit[:wf].send("allowed_iso_images"), @edit[:iso_img_sortdir], @edit[:iso_img_sortcol])
+          build_iso_img_grid(@edit[:wf].send(:allowed_iso_images), @edit[:iso_img_sortdir], @edit[:iso_img_sortcol])
         end
-      elsif @edit[:new][:current_tab_key] == :environment
+      when :environment
         build_host_grid(@edit[:wf].get_field(:placement_host_name, :environment)[:values], @edit[:host_sortdir], @edit[:host_sortcol]) if @edit[:wf].get_field(:placement_host_name, :environment).present?
         build_ds_grid(@edit[:wf].get_field(:placement_ds_name, :environment)[:values], @edit[:ds_sortdir], @edit[:ds_sortcol]) if @edit[:wf].get_field(:placement_ds_name, :environment).present?
-      elsif @edit[:new][:current_tab_key] == :customize
+      when :customize
         @edit[:template_sortdir] ||= "ASC"
         @edit[:template_sortcol] ||= "name"
         if @edit[:wf].supports_customization_template?
-          build_template_grid(@edit[:wf].send("allowed_customization_templates"), @edit[:template_sortdir], @edit[:template_sortcol])
+          build_template_grid(@edit[:wf].send(:allowed_customization_templates), @edit[:template_sortdir], @edit[:template_sortcol])
         else
           build_vc_grid(@edit[:wf].get_field(:sysprep_custom_spec, :customize)[:values], @edit[:vc_sortdir], @edit[:vc_sortcol])
         end
         @sb[:vm_os] = VmOrTemplate.find(@edit.fetch_path(:new, :src_vm_id, 0)).platform if @edit.fetch_path(:new, :src_vm_id, 0)
-      elsif @edit[:new][:current_tab_key] == :purpose
+      when :purpose
         build_tags_for_provisioning(@edit[:wf], @edit[:new][:vm_tags], true)
       end
     when VmMigrateWorkflow
@@ -542,15 +543,16 @@ module ApplicationController::MiqRequestMethods
         build_ds_grid(@edit[:wf].get_field(:placement_ds_name, :environment)[:values], @edit[:ds_sortdir], @edit[:ds_sortcol]) if @edit[:wf].get_field(:placement_ds_name, :environment).present?
       end
     else
-      if @edit[:new][:current_tab_key] == :service
+      case @edit[:new][:current_tab_key]
+      when :service
         build_host_grid(@edit[:wf].get_field(:src_host_ids, :service)[:values], @edit[:host_sortdir], @edit[:host_sortcol])
         build_pxe_img_grid(@edit[:wf].get_field(:pxe_image_id, :service)[:values], @edit[:pxe_img_sortdir], @edit[:pxe_img_sortcol])
         build_iso_img_grid(@edit[:wf].get_field(:iso_image_id, :service)[:values], @edit[:iso_img_sortdir], @edit[:iso_img_sortcol]) if @edit[:wf].supports_iso?
-      elsif @edit[:new][:current_tab_key] == :purpose
+      when :purpose
         build_tags_for_provisioning(@edit[:wf], @edit.fetch_path(:new, tag_symbol_for_workflow), true)
-      elsif @edit[:new][:current_tab_key] == :environment
+      when :environment
         build_ds_grid(@edit[:wf].get_field(:attached_ds, :environment)[:values], @edit[:ds_sortdir], @edit[:ds_sortcol])
-      elsif @edit[:new][:current_tab_key] == :customize
+      when :customize
         build_template_grid(@edit[:wf].get_field(:customization_template_id, :customize)[:values], @edit[:template_sortdir], @edit[:template_sortcol])
       end
     end
@@ -597,7 +599,7 @@ module ApplicationController::MiqRequestMethods
 
     send("build_#{what}_grid", values, @edit[sortdir], @edit[sortcol])
     spec = params[:spec] == 'true'
-    render :json => {:initialData => prov_grid_component( params[:field].to_sym,  params[:field_id].to_sym, spec, "data")}
+    render :json => {:initialData => prov_grid_component(params[:field].to_sym, params[:field_id].to_sym, spec, "data")}
   end
 
   def tag_symbol_for_workflow
@@ -647,7 +649,7 @@ module ApplicationController::MiqRequestMethods
 
     begin
       request = @edit[:wf].make_request(@edit[:req_id], @edit[:new])
-    rescue StandardError => bang
+    rescue => bang
       request = false
       add_flash(bang.message, :error)
     end
@@ -700,8 +702,8 @@ module ApplicationController::MiqRequestMethods
       # for some reason if tree is not expanded clicking on radiobuttons this.getAllChecked() sends up extra blanks
       @edit.store_path(:new, tag_symbol_for_workflow, ids.select(&:present?).collect(&:to_i))
     end
-    id = params[:ou_id].gsub(/_-_/, ",") if params[:ou_id]
-    @edit[:new][:ldap_ous] = id.match(/(.*)\,(.*)/)[1..2] if id # ou selected in a tree
+    id = params[:ou_id].gsub("_-_", ",") if params[:ou_id]
+    @edit[:new][:ldap_ous] = id.match(/(.*),(.*)/)[1..2] if id # ou selected in a tree
 
     copy_params_if_present(@edit[:new], params, %i[start_hour start_min])
     @edit[:new][:start_date]    = params[:miq_date_1] if params[:miq_date_1]
@@ -773,7 +775,7 @@ module ApplicationController::MiqRequestMethods
               elsif v.id.to_i == val.to_i
                 @edit[:new][f.to_sym] = [val, v.name] # Save [value, description]
               end
-            elsif evm_object_class == :PxeImage || evm_object_class == :WindowsImage
+            elsif [:PxeImage, :WindowsImage].include?(evm_object_class)
               if params[key] == "__PXE_IMG__NONE__" # Added this to deselect datastore in grid
                 @edit[:new][f.to_sym] = [nil, nil] # Save [value, description]
               elsif v.id == val
@@ -804,7 +806,7 @@ module ApplicationController::MiqRequestMethods
         end
         begin
           @edit[:wf].refresh_field_values(@edit[:new])
-        rescue StandardError => bang
+        rescue => bang
           add_flash(bang.message, :error)
           @edit[:new][f.to_sym] = val # Save value
           # No need to refresh dialog divs
@@ -910,8 +912,8 @@ module ApplicationController::MiqRequestMethods
       end
       @edit[:new][:src_vm_id] = [nil, nil] unless @edit[:new][:src_vm_id]
       # Check that the provisioning template exists
-      if @edit[:wf].request_type == 'template' && @edit[:new][:src_vm_id][0].present?
-        @edit[:new][:src_vm_id][0] = nil unless MiqTemplate.exists?(@edit[:new][:src_vm_id][0])
+      if @edit[:wf].request_type == 'template' && @edit[:new][:src_vm_id][0].present? && !MiqTemplate.exists?(@edit[:new][:src_vm_id][0])
+        @edit[:new][:src_vm_id][0] = nil
       end
       @edit[:new][tag_symbol_for_workflow] ||= [] # Initialize for new record
       @edit[:current] ||= {}
@@ -932,8 +934,8 @@ module ApplicationController::MiqRequestMethods
         @edit[:ds_sortcol] ||= "free_space"
         @edit[:host_sortdir] ||= "ASC"
         @edit[:host_sortcol] ||= "name"
-        build_host_grid(@edit[:wf].send("allowed_hosts"), @edit[:host_sortdir], @edit[:host_sortcol])
-        build_ds_grid(@edit[:wf].send("allowed_storages"), @edit[:ds_sortdir], @edit[:ds_sortcol])
+        build_host_grid(@edit[:wf].send(:allowed_hosts), @edit[:host_sortdir], @edit[:host_sortcol])
+        build_ds_grid(@edit[:wf].send(:allowed_storages), @edit[:ds_sortdir], @edit[:ds_sortcol])
         if @edit[:wf].kind_of?(MiqProvisionWorkflow)
           @edit[:vm_sortdir] ||= "ASC"
           @edit[:vm_sortcol] ||= "name"
@@ -941,24 +943,23 @@ module ApplicationController::MiqRequestMethods
           @edit[:vc_sortcol] ||= "name"
           @edit[:template_sortdir] ||= "ASC"
           @edit[:template_sortcol] ||= "name"
-          build_vm_grid(@edit[:wf].send("allowed_templates"), @edit[:vm_sortdir], @edit[:vm_sortcol], build_template_filter)
+          build_vm_grid(@edit[:wf].send(:allowed_templates), @edit[:vm_sortdir], @edit[:vm_sortcol], build_template_filter)
           if @edit[:wf].supports_pxe?
-            build_pxe_img_grid(@edit[:wf].send("allowed_images"), @edit[:pxe_img_sortdir], @edit[:pxe_img_sortcol])
-            build_host_grid(@edit[:wf].send("allowed_hosts"), @edit[:host_sortdir], @edit[:host_sortcol])
-            build_template_grid(@edit[:wf].send("allowed_customization_templates"), @edit[:template_sortdir], @edit[:template_sortcol])
+            build_pxe_img_grid(@edit[:wf].send(:allowed_images), @edit[:pxe_img_sortdir], @edit[:pxe_img_sortcol])
+            build_host_grid(@edit[:wf].send(:allowed_hosts), @edit[:host_sortdir], @edit[:host_sortcol])
+            build_template_grid(@edit[:wf].send(:allowed_customization_templates), @edit[:template_sortdir], @edit[:template_sortcol])
           elsif @edit[:wf].supports_iso?
-            build_iso_img_grid(@edit[:wf].send("allowed_iso_images"), @edit[:iso_img_sortdir], @edit[:iso_img_sortcol])
+            build_iso_img_grid(@edit[:wf].send(:allowed_iso_images), @edit[:iso_img_sortdir], @edit[:iso_img_sortcol])
           else
-            build_vc_grid(@edit[:wf].send("allowed_customization_specs"), @edit[:vc_sortdir], @edit[:vc_sortcol])
+            build_vc_grid(@edit[:wf].send(:allowed_customization_specs), @edit[:vc_sortdir], @edit[:vc_sortcol])
           end
-        elsif @edit[:wf].kind_of?(VmMigrateWorkflow)
         else
           @edit[:template_sortdir] ||= "ASC"
           @edit[:template_sortcol] ||= "name"
-          build_pxe_img_grid(@edit[:wf].send("allowed_images"), @edit[:pxe_img_sortdir], @edit[:pxe_img_sortcol])
-          build_iso_img_grid(@edit[:wf].send("allowed_iso_images"), @edit[:iso_img_sortdir], @edit[:iso_img_sortcol])
-          build_host_grid(@edit[:wf].send("allowed_hosts"), @edit[:host_sortdir], @edit[:host_sortcol])
-          build_template_grid(@edit[:wf].send("allowed_customization_templates"), @edit[:template_sortdir], @edit[:template_sortcol])
+          build_pxe_img_grid(@edit[:wf].send(:allowed_images), @edit[:pxe_img_sortdir], @edit[:pxe_img_sortcol])
+          build_iso_img_grid(@edit[:wf].send(:allowed_iso_images), @edit[:iso_img_sortdir], @edit[:iso_img_sortcol])
+          build_host_grid(@edit[:wf].send(:allowed_hosts), @edit[:host_sortdir], @edit[:host_sortcol])
+          build_template_grid(@edit[:wf].send(:allowed_customization_templates), @edit[:template_sortdir], @edit[:template_sortcol])
         end
       end
     else
@@ -1029,7 +1030,7 @@ module ApplicationController::MiqRequestMethods
     end
 
     [wf_type.new(@edit[:new], current_user, options), pre_prov_values] # Return the new workflow and any pre_prov_values
-  rescue StandardError => bang
+  rescue => bang
     # only add this message if showing a list of Catalog items, show screen already handles this
     @no_wf_msg = _("Cannot create Request Info, error: %{error_message}") % {:error_message => bang.message}
     _log.log_backtrace(bang)
@@ -1061,7 +1062,7 @@ module ApplicationController::MiqRequestMethods
           end,
           tag.parent.single_value
         ).map do |assignment|
-          { :description => assignment.description, :id => assignment.id }
+          {:description => assignment.description, :id => assignment.id}
         end
       }
     end.uniq

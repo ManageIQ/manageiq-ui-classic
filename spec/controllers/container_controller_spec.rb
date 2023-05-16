@@ -1,4 +1,3 @@
-
 describe ContainerController do
   render_views
   before do
@@ -20,7 +19,7 @@ describe ContainerController do
                                             :name                  => "Test Group")
     container = FactoryBot.create(:container, :container_group => container_group, :name => "Test Container")
 
-    get :show, :params => { :id => container.id }
+    get :show, :params => {:id => container.id}
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
     expect(assigns(:breadcrumbs)).to eq([{:name => "Containers",

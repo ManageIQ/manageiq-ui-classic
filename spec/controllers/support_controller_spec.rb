@@ -21,7 +21,7 @@ describe SupportController do
     end
 
     it "with PDF help documents" do
-      doc_path = Rails.root.join("public/doc")
+      doc_path = Rails.public_path.join('doc')
       allow(controller).to receive(:pdf_document_files).and_return(
         [
           doc_path.join("help_doc_1.pdf").to_s,

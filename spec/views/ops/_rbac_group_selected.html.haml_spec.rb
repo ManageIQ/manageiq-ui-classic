@@ -9,6 +9,6 @@ describe 'ops/_rbac_group_selected.html.haml' do
 
   it 'renders sorted selected groups' do
     render :partial => 'ops/rbac_group_selected'
-    expect(rendered).to eq("<div id=\'group_selected\'>\n<i class=\'ff ff-group\'></i>\n#{group1.description}\n<br>\n<i class=\'ff ff-group\'></i>\n#{group2.description}\n<br>\n</div>\n")
+    expect(rendered).to eq("<div id='group_selected'>\n<i class='ff ff-group'></i>\n#{group1.description}\n<br>\n<i class='ff ff-group'></i>\n#{group2.description}\n<br>\n</div>\n")
   end
 end

@@ -8,6 +8,7 @@ module VmHelper
   def last_date(request_type)
     @last_date ||= {}
     return @last_date[request_type] if @last_date.key?(request_type)
+
     @last_date[request_type] = send("last_date_#{request_type}")
   end
 
@@ -23,11 +24,13 @@ module VmHelper
 
   def textual_cloud_network
     return nil unless @record.kind_of?(ManageIQ::Providers::CloudManager::Vm)
+
     {:label => _("Virtual Private Cloud"), :value => @record.cloud_network ? @record.cloud_network.name : _('None')}
   end
 
   def textual_cloud_subnet
     return nil unless @record.kind_of?(ManageIQ::Providers::CloudManager::Vm)
+
     {:label => _("Cloud Subnet"), :value => @record.cloud_subnet ? @record.cloud_subnet.name : _('None')}
   end
 

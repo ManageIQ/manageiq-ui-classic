@@ -15,7 +15,7 @@ describe CloudTenantController do
     it "when Instance Retire button is pressed" do
       expect(controller).to receive(:retirevms).once
 
-      post :button, :params => { :pressed => "instance_retire", :format => :js }
+      post :button, :params => {:pressed => "instance_retire", :format => :js}
 
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
@@ -23,7 +23,7 @@ describe CloudTenantController do
     it "when Instance Tag is pressed" do
       expect(controller).to receive(:tag).with(VmOrTemplate)
 
-      post :button, :params => { :pressed => "instance_tag", :format => :js }
+      post :button, :params => {:pressed => "instance_tag", :format => :js}
 
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
@@ -87,7 +87,7 @@ describe CloudTenantController do
     end
 
     it "builds tagging screen" do
-      post :button, :params => { :pressed => "cloud_tenant_tag", :format => :js, :id => ct.id }
+      post :button, :params => {:pressed => "cloud_tenant_tag", :format => :js, :id => ct.id}
 
       expect(assigns(:flash_array)).to be_nil
       expect(response.status).to eq(200)
@@ -96,7 +96,7 @@ describe CloudTenantController do
     it "cancels tags edit" do
       session[:breadcrumbs] = [{:url => "cloud_tenant/show/#{ct.id}"}, 'placeholder']
 
-      post :tagging_edit, :params => { :button => "cancel", :format => :js, :id => ct.id }
+      post :tagging_edit, :params => {:button => "cancel", :format => :js, :id => ct.id}
 
       expect(assigns(:flash_array).first[:message]).to include("was cancelled by the user")
       expect(assigns(:edit)).to be_nil
@@ -105,7 +105,7 @@ describe CloudTenantController do
 
     it "save tags" do
       session[:breadcrumbs] = [{:url => "cloud_tenant/show/#{ct.id}"}, 'placeholder']
-      post :tagging_edit, :params => { :button => "save", :format => :js, :id => ct.id, :data => get_tags_json([tag1, tag2]) }
+      post :tagging_edit, :params => {:button => "save", :format => :js, :id => ct.id, :data => get_tags_json([tag1, tag2])}
       expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
       expect(assigns(:edit)).to be_nil
       expect(response.status).to eq(200)
@@ -153,7 +153,7 @@ describe CloudTenantController do
     end
 
     it "builds edit screen" do
-      post :button, :params => { :pressed => "cloud_tenant_edit", :format => :js, :id => tenant.id }
+      post :button, :params => {:pressed => "cloud_tenant_edit", :format => :js, :id => tenant.id}
 
       expect(assigns(:flash_array)).to be_nil
     end
@@ -181,7 +181,7 @@ describe CloudTenantController do
     it "queues the delete action" do
       expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
 
-      post :button, :params => { :id => tenant.id, :pressed => "cloud_tenant_delete", :format => :js }
+      post :button, :params => {:id => tenant.id, :pressed => "cloud_tenant_delete", :format => :js}
     end
   end
 

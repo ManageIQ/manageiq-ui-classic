@@ -8,9 +8,8 @@ module ApplicationController::Filter
   end
 
   def filters_present?
-    @def_searches.present? || @my_searches.present? || self.respond_to?(:display_tree)
+    @def_searches.present? || @my_searches.present? || respond_to?(:display_tree)
   end
-
 
   # Handle buttons pressed in the expression editor
   def exp_button
@@ -100,7 +99,7 @@ module ApplicationController::Filter
       @edit[:edit_exp] = copy_hash(exp)
       begin
         @edit[@expkey].update_from_exp_tree(@edit[:edit_exp])
-      rescue StandardError => bang
+      rescue => bang
         @exp_atom_errors = [_("There is an error in the selected expression element, perhaps it was imported or edited manually."),
                             _("This element should be removed and recreated or you can report the error to your %{product} administrator.") % {:product => Vmdb::Appliance.PRODUCT_NAME},
                             _("Error details: %{message}") % {:message => bang}]
@@ -212,11 +211,11 @@ module ApplicationController::Filter
           if @quick_search_active
             quick_search_show
           else
-            javascript_redirect :action => 'show_list' # Redirect to build the list screen
+            javascript_redirect(:action => 'show_list') # Redirect to build the list screen
           end
         end
         format.html do
-          redirect_to :action => 'show_list' # Redirect to build the list screen
+          redirect_to(:action => 'show_list') # Redirect to build the list screen
         end
       end
     end
@@ -299,7 +298,7 @@ module ApplicationController::Filter
   def save_default_search
     @edit = session[:edit]
     @view = session[:view]
-    cols_key = @view.scoped_association.nil? ? @view.db.to_sym : (@view.db + "-" + @view.scoped_association).to_sym
+    cols_key = @view.scoped_association.nil? ? @view.db.to_sym : "#{@view.db}-#{@view.scoped_association}".to_sym
     if params[:id]
       if params[:id] != "0"
         s = MiqSearch.find_by(:id => params[:id])
@@ -323,10 +322,10 @@ module ApplicationController::Filter
     if @flash_array.blank?
       respond_to do |format|
         format.js do
-          javascript_redirect :action => 'show_list' # Redirect to build the list screen
+          javascript_redirect(:action => 'show_list') # Redirect to build the list screen
         end
         format.html do
-          redirect_to :action => 'show_list' # Redirect to build the list screen
+          redirect_to(:action => 'show_list') # Redirect to build the list screen
         end
       end
     else
@@ -457,8 +456,8 @@ module ApplicationController::Filter
 
   # Add a joiner (and/or) above an expression
   def exp_add_joiner(exp, token, joiner)
-    if exp[:token] && exp[:token] == token                # If the token matches
-      exp.keys.each do |key|                              # Find the key
+    if exp[:token] && exp[:token] == token # If the token matches
+      exp.each_key do |key| # Find the key
         if key == :token
           exp.delete(key)                                 # Remove the :token key
         else
@@ -495,8 +494,8 @@ module ApplicationController::Filter
 
   # Add a NOT above an expression
   def exp_add_not(exp, token)
-    if exp[:token] && exp[:token] == token            # If the token matches
-      exp.keys.each do |key|                          # Find the key
+    if exp[:token] && exp[:token] == token # If the token matches
+      exp.each_key do |key| # Find the key
         next if key == :token                         # Skip the :token key
         next if exp[key].nil?                         # Check for the key already gone
 
@@ -549,14 +548,12 @@ module ApplicationController::Filter
     elsif @edit[@expkey][:exp_value] != :user_input &&
           (e = MiqExpression.atom_error(@edit[@expkey][:exp_field],
                                         @edit[@expkey][:exp_key],
-                                        @edit[@expkey][:exp_value].kind_of?(Array) ?
-                                          @edit[@expkey][:exp_value] :
-                                          (@edit[@expkey][:exp_value].to_s + Expression.prefix_by_dot(@edit[@expkey].val1_suffix))))
+                                        @edit[@expkey][:exp_value].kind_of?(Array) ? @edit[@expkey][:exp_value] : (@edit[@expkey][:exp_value].to_s + Expression.prefix_by_dot(@edit[@expkey].val1_suffix))))
       add_flash(_("Field Value Error: %{msg}") % {:msg => e}, :error)
     else
       # Change datetime and date values from single element arrays to text string
-      if [:datetime, :date].include?(@edit[@expkey][:val1][:type])
-        @edit[@expkey][:exp_value] = @edit[@expkey][:exp_value].first.to_s if @edit[@expkey][:exp_value].length == 1
+      if [:datetime, :date].include?(@edit[@expkey][:val1][:type]) && (@edit[@expkey][:exp_value].length == 1)
+        @edit[@expkey][:exp_value] = @edit[@expkey][:exp_value].first.to_s
       end
 
       exp.delete(@edit[@expkey][:exp_orig_key])                                                      # Remove the old exp fields
@@ -632,23 +629,19 @@ module ApplicationController::Filter
       add_flash(_("The check count value must be an integer to commit this expression element"), :error)
     elsif (e = MiqExpression.atom_error(@edit[@expkey][:exp_field],
                                         @edit[@expkey][:exp_skey],
-                                        @edit[@expkey][:exp_value].kind_of?(Array) ?
-                                          @edit[@expkey][:exp_value] :
-                                          (@edit[@expkey][:exp_value].to_s + Expression.prefix_by_dot(@edit[@expkey].val1_suffix))))
+                                        @edit[@expkey][:exp_value].kind_of?(Array) ? @edit[@expkey][:exp_value] : (@edit[@expkey][:exp_value].to_s + Expression.prefix_by_dot(@edit[@expkey].val1_suffix))))
       add_flash(_("Find Value Error: %{msg}") % {:msg => e}, :error)
     elsif (e = MiqExpression.atom_error(@edit[@expkey][:exp_check] == "checkcount" ? :count : @edit[@expkey][:exp_cfield],
                                         @edit[@expkey][:exp_ckey],
-                                        @edit[@expkey][:exp_cvalue].kind_of?(Array) ?
-                                          @edit[@expkey][:exp_cvalue] :
-                                          (@edit[@expkey][:exp_cvalue].to_s + Expression.prefix_by_dot(@edit[@expkey].val2_suffix))))
+                                        @edit[@expkey][:exp_cvalue].kind_of?(Array) ? @edit[@expkey][:exp_cvalue] : (@edit[@expkey][:exp_cvalue].to_s + Expression.prefix_by_dot(@edit[@expkey].val2_suffix))))
       add_flash(_("Check Value Error: %{msg}") % {:msg => e}, :error)
     else
       # Change datetime and date values from single element arrays to text string
-      if [:datetime, :date].include?(@edit[@expkey][:val1][:type])
-        @edit[@expkey][:exp_value] = @edit[@expkey][:exp_value].first.to_s if @edit[@expkey][:exp_value].length == 1
+      if [:datetime, :date].include?(@edit[@expkey][:val1][:type]) && (@edit[@expkey][:exp_value].length == 1)
+        @edit[@expkey][:exp_value] = @edit[@expkey][:exp_value].first.to_s
       end
-      if @edit[@expkey][:val2][:type] && [:datetime, :date].include?(@edit[@expkey][:val2][:type])
-        @edit[@expkey][:exp_cvalue] = @edit[@expkey][:exp_cvalue].first.to_s if @edit[@expkey][:exp_cvalue].length == 1
+      if @edit[@expkey][:val2][:type] && [:datetime, :date].include?(@edit[@expkey][:val2][:type]) && (@edit[@expkey][:exp_cvalue].length == 1)
+        @edit[@expkey][:exp_cvalue] = @edit[@expkey][:exp_cvalue].first.to_s
       end
 
       exp.delete(@edit[@expkey][:exp_orig_key])                                             # Remove the old exp fields
@@ -749,7 +742,7 @@ module ApplicationController::Filter
     temp.name = _("ALL")
     temp.id = 0
     @def_searches = MiqSearch.where(:db => [db, db.constantize.to_s]).visible_to_all.sort_by { |s| s.description.downcase }
-    @def_searches = @def_searches.unshift(temp) unless @def_searches.empty?
+    @def_searches.unshift(temp) unless @def_searches.empty?
 
     @def_searches.each do |search|
       search.description = search_description(search)
@@ -757,7 +750,7 @@ module ApplicationController::Filter
     end
     @my_searches = MiqSearch.where(:search_type => "user", :search_key => session[:userid], :db => [db, db.constantize.to_s]).sort_by { |s| s.description.downcase }
     @my_searches.each do |search|
-      @selected_filter = search if (my_searches_active_filter?(search) == 'active' && @selected_filter.nil?)
+      @selected_filter = search if my_searches_active_filter?(search) == 'active' && @selected_filter.nil?
       search.description = search_description(search)
     end
   end

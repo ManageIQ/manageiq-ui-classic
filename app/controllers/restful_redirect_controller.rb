@@ -42,7 +42,7 @@ class RestfulRedirectController < ApplicationController
 
   def handle_vm_redirect(record)
     klass = record.class
-    controller = if klass && (VmCloud > klass || TemplateCloud > klass)
+    controller = if klass && (klass < VmCloud || klass < TemplateCloud)
                    'vm_cloud'
                  else
                    'vm_infra'

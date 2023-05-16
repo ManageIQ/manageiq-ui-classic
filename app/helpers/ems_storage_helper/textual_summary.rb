@@ -12,9 +12,9 @@ module EmsStorageHelper::TextualSummary
 
   def textual_group_relationships
     relationships = %i[
-                       parent_ems_cloud cloud_volumes cloud_volume_snapshots cloud_volume_backups
-                       cloud_object_store_containers custom_button_events host_initiators host_initiator_groups volume_mappings physical_storages storage_resources storage_services
-      ]
+      parent_ems_cloud cloud_volumes cloud_volume_snapshots cloud_volume_backups
+      cloud_object_store_containers custom_button_events host_initiators host_initiator_groups volume_mappings physical_storages storage_resources storage_services
+    ]
     relationships.push(:cloud_volume_types) if @record.kind_of?(ManageIQ::Providers::Openstack::StorageManager::CinderManager)
     TextualGroup.new(_("Relationships"), relationships)
   end
@@ -32,6 +32,7 @@ module EmsStorageHelper::TextualSummary
   #
   def textual_provider_region
     return nil if @record.provider_region.nil?
+
     {:label => _("Region"), :value => @record.provider_region}
   end
 

@@ -24,7 +24,7 @@ class TreeBuilderReportReports < TreeBuilderReportReportsClass
 
   # Get root node and all children report folders. (will call get_tree_custom_kids to get report details)
   def x_get_tree_roots
-    @rpt_menu.each_with_index.each_with_object({}) do |(r, node_id), a|
+    @rpt_menu.each_with_index.with_object({}) do |(r, node_id), a|
       open_node("xx-#{node_id}")
 
       root_node = folder_hash(node_id.to_s, r[0], @grp_title == r[0])
@@ -32,7 +32,7 @@ class TreeBuilderReportReports < TreeBuilderReportReportsClass
         folder_hash("#{node_id}-#{child_id}", child_r[0], @grp_title == @rpt_menu[node_id][0])
       end
       # returning a child hash says "there are no children"
-      child_nodes = child_nodes.each_with_object({}) { |c, cn| cn[c] = {} } unless REPORTS_IN_TREE
+      child_nodes = child_nodes.index_with { |_c| {} } unless REPORTS_IN_TREE
 
       a[root_node] = child_nodes
     end

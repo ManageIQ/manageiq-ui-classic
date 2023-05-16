@@ -8,9 +8,9 @@ describe TreeBuilderStorageAdapters do
       class << host
         def hardware
           OpenStruct.new(:storage_adapters => [FactoryBot.create(:miq_scsi_target,
-                                                                  :miq_scsi_luns => [FactoryBot.create(:miq_scsi_lun),
-                                                                                     FactoryBot.create(:miq_scsi_lun),
-                                                                                     FactoryBot.create(:miq_scsi_lun)])])
+                                                                 :miq_scsi_luns => [FactoryBot.create(:miq_scsi_lun),
+                                                                                    FactoryBot.create(:miq_scsi_lun),
+                                                                                    FactoryBot.create(:miq_scsi_lun)])])
         end
       end
       @sa_tree = TreeBuilderStorageAdapters.new(:sa_tree, {}, true, :root => host)

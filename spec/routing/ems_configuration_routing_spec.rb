@@ -6,7 +6,7 @@ describe 'routes for EmsConfiguration' do
   it_behaves_like 'A controller that has advanced search routes'
   it_behaves_like 'A controller that has download_data routes'
 
-  %w(
+  %w[
     button
     download_data
     download_summary_pdf
@@ -16,7 +16,7 @@ describe 'routes for EmsConfiguration' do
     show
     show_list
     tagging_edit
-  ).each do |task|
+  ].each do |task|
     describe "##{task}" do
       it 'routes with GET' do
         expect(get("/#{controller_name}/#{task}")).to route_to("#{controller_name}##{task}")
@@ -24,7 +24,7 @@ describe 'routes for EmsConfiguration' do
     end
   end
 
-  %w(
+  %w[
     authentication_validate
     button
     change_tab
@@ -36,7 +36,7 @@ describe 'routes for EmsConfiguration' do
     show_list
     tagging_edit
     wait_for_task
-  ).each do |task|
+  ].each do |task|
     describe "##{task}" do
       it 'routes with POST' do
         expect(post("/#{controller_name}/#{task}")).to route_to("#{controller_name}##{task}")

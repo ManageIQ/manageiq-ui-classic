@@ -6,13 +6,13 @@ describe "routing for SecurityGroupController" do
   it_behaves_like "A controller that has advanced search routes"
   it_behaves_like "A controller that has tagging routes"
 
-  %w(
+  %w[
     download_data
     index
     show
     show_list
     tagging_edit
-  ).each do |task|
+  ].each do |task|
     describe "##{task}" do
       it 'routes with GET' do
         expect(get("/#{controller_name}/#{task}")).to route_to("#{controller_name}##{task}")
@@ -20,13 +20,13 @@ describe "routing for SecurityGroupController" do
     end
   end
 
-  %w(
+  %w[
     button
     quick_search
     show
     show_list
     tagging_edit
-  ).each do |task|
+  ].each do |task|
     describe "##{task}" do
       it 'routes with POST' do
         expect(post("/#{controller_name}/#{task}")).to route_to("#{controller_name}##{task}")

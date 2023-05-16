@@ -1,5 +1,5 @@
 describe Mixins::GenericShowMixin do
-  class GenericShowMixinTestController < ActionController::Base
+  class GenericShowMixinTestController < ApplicationController
     include Mixins::GenericShowMixin
   end
 

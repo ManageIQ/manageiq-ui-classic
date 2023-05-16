@@ -61,7 +61,7 @@ module Mixins
 
       @lastaction = "guest_applications"
 
-      breadcrumb_name = if Regexp.new(/linux/).match(@record.os_image_name.downcase)
+      breadcrumb_name = if @record.os_image_name.downcase.include?('linux')
                           _("Packages")
                         else
                           _("Applications")

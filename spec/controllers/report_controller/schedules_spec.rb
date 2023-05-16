@@ -34,7 +34,7 @@ describe ReportController do
 
     it "sets params accord only when schedule is added from Reports accordion" do
       allow(controller).to receive(:x_active_accord).and_return(:reports)
-      post :schedule_edit, :params => { :button => "add", :id => schedule.id }
+      post :schedule_edit, :params => {:button => "add", :id => schedule.id}
       params = ActionController::Parameters.new('button'     => 'add',
                                                 'id'         => schedule.id.to_s,
                                                 'controller' => 'report',
@@ -45,7 +45,7 @@ describe ReportController do
 
     it "does not set params accord when adding/editing schedule from Schedules accordion" do
       allow(controller).to receive(:x_active_accord).and_return(:schedules)
-      post :schedule_edit, :params => { :button => "add", :id => schedule.id }
+      post :schedule_edit, :params => {:button => "add", :id => schedule.id}
       params = ActionController::Parameters.new('button'     => 'add',
                                                 'id'         => schedule.id.to_s,
                                                 'controller' => 'report',

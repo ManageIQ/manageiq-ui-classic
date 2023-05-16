@@ -11,7 +11,7 @@ Rails::Controller::Testing.install
 require 'manageiq/ui/classic'
 
 support_path = Pathname.new(__dir__).join('support')
-Dir[support_path.join("**/*.rb")].each { |f| require f }
+Dir[support_path.join("**/*.rb")].sort.each { |f| require f }
 
 require 'miq-hash_struct'
 
@@ -29,9 +29,9 @@ require 'miq-hash_struct'
 #
 # Known:
 # require core_support_path.join("rake_task_example_group.rb")
-Dir[Rails.root.join('spec', 'shared', '**', '*.rb')].each { |f| require f }
+Dir[Rails.root.join("spec/shared/**/*.rb")].sort.each { |f| require f }
 
-Dir[ManageIQ::UI::Classic::Engine.root.join('spec/shared/**/*.rb')].each { |f| require f }
+Dir[ManageIQ::UI::Classic::Engine.root.join('spec/shared/**/*.rb')].sort.each { |f| require f }
 
 RSpec.configure do |config|
   config.fixture_path = Rails.root.join("spec/fixtures")
@@ -68,6 +68,6 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do |example|
-    ApplicationController.handle_exceptions = false if %w(controller requests).include?(example.metadata[:type])
+    ApplicationController.handle_exceptions = false if %w[controller requests].include?(example.metadata[:type])
   end
 end

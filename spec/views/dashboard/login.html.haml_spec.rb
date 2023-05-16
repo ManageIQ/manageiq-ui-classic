@@ -25,7 +25,7 @@ describe "dashboard/login.html.haml" do
   end
 
   context "on screen region/zone/appliance info" do
-    let(:labels) { %w(Region: Zone: Appliance:) }
+    let(:labels) { %w[Region: Zone: Appliance:] }
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       MiqRegion.seed

@@ -1,15 +1,15 @@
 describe VmCloudController do
   let(:vm_openstack) do
     FactoryBot.create(:vm_openstack,
-                       :ext_management_system => FactoryBot.create(:ems_openstack))
+                      :ext_management_system => FactoryBot.create(:ems_openstack))
   end
   let(:vm_openstack_tmd) do
     FactoryBot.create(:vm_openstack,
-                       :ext_management_system => FactoryBot.create(:ems_openstack, :tenant_mapping_enabled => false))
+                      :ext_management_system => FactoryBot.create(:ems_openstack, :tenant_mapping_enabled => false))
   end
   let(:vm_openstack_tme) do
     FactoryBot.create(:vm_openstack,
-                       :ext_management_system => FactoryBot.create(:ems_openstack, :tenant_mapping_enabled => true))
+                      :ext_management_system => FactoryBot.create(:ems_openstack, :tenant_mapping_enabled => true))
   end
 
   before do
@@ -33,7 +33,7 @@ describe VmCloudController do
         prefixes = ["image", "instance"]
         prefixes.each do |prefix|
           actual_action = "#{prefix}_#{action_name}"
-          actual_method = %i(s1 s2).include?(method) ? actual_action : method.to_s
+          actual_method = %i[s1 s2].include?(method) ? actual_action : method.to_s
 
           it "calls the appropriate method: '#{actual_method}' for action '#{actual_action}'" do
             unless controller.respond_to?(actual_method.to_sym)
@@ -88,7 +88,7 @@ describe VmCloudController do
 
     context 'for an unknown action' do
       it 'exception is raised for unknown action' do
-        get :x_button, :params => { :id => nil, :pressed => 'random_dude', :format => :html }
+        get :x_button, :params => {:id => nil, :pressed => 'random_dude', :format => :html}
         expect(response).to render_template('layouts/exception')
         expect(response.body).to include('Action not implemented')
       end
@@ -162,7 +162,7 @@ describe VmCloudController do
     it 'can open the instance Ownership form' do
       post :explorer
       expect(response.status).to eq(200)
-      post :x_button, :params => { :pressed => 'instance_ownership', :id => vm_openstack.id }
+      post :x_button, :params => {:pressed => 'instance_ownership', :id => vm_openstack.id}
       expect(response.status).to eq(200)
       expect(response).to render_template(:partial => 'shared/views/_ownership')
     end
@@ -170,7 +170,7 @@ describe VmCloudController do
     it 'can open the instance Ownership form from a list' do
       post :explorer
       expect(response.status).to eq(200)
-      post :x_button, :params => { :pressed => 'instance_ownership', "check_#{vm_openstack.id}" => "1"}
+      post :x_button, :params => {:pressed => 'instance_ownership', "check_#{vm_openstack.id}" => "1"}
       expect(response.status).to eq(200)
       expect(response).to render_template(:partial => 'shared/views/_ownership')
     end
@@ -214,12 +214,12 @@ describe VmCloudController do
       it 'skips dropping a breadcrumb when a button action is executed' do
         ApplicationController.handle_exceptions = true
 
-        post :x_button, :params => { :id => nil, :pressed => 'instance_ownership' }
+        post :x_button, :params => {:id => nil, :pressed => 'instance_ownership'}
         expect(subject).to eq([{:name => "Instances", :url => "/vm_cloud/explorer"}])
       end
 
       it 'drops a breadcrumb when an action allowing breadcrumbs is executed' do
-        post :accordion_select, :params => { :id => "images_filter" }
+        post :accordion_select, :params => {:id => "images_filter"}
         expect(subject).to eq([{:name => "Images", :url => "/vm_cloud/explorer"}])
       end
     end
@@ -227,14 +227,14 @@ describe VmCloudController do
 
   describe "#parse error messages" do
     it "simplifies fog error message" do
-      raw_msg = "Expected(200) <=> Actual(400 Bad Request)\nexcon.error.response\n  :body          => "\
-                "\"{\\\"badRequest\\\": {\\\"message\\\": \\\"Keypair data is invalid: failed to generate "\
-                "fingerprint\\\", \\\"code\\\": 400}}\"\n  :cookies       => [\n  ]\n  :headers       => {\n "\
-                "\"Content-Length\"       => \"99\"\n    \"Content-Type\"         => \"application/json; "\
-                "charset=UTF-8\"\n    \"Date\"                 => \"Mon, 02 May 2016 08:15:51 GMT\"\n ..."\
-                ":reason_phrase => \"Bad Request\"\n  :remote_ip     => \"10....\"\n  :status        => 400\n  "\
+      raw_msg = "Expected(200) <=> Actual(400 Bad Request)\nexcon.error.response\n  :body          => " \
+                "\"{\\\"badRequest\\\": {\\\"message\\\": \\\"Keypair data is invalid: failed to generate " \
+                "fingerprint\\\", \\\"code\\\": 400}}\"\n  :cookies       => [\n  ]\n  :headers       => {\n " \
+                "\"Content-Length\"       => \"99\"\n    \"Content-Type\"         => \"application/json; " \
+                "charset=UTF-8\"\n    \"Date\"                 => \"Mon, 02 May 2016 08:15:51 GMT\"\n ..." \
+                ":reason_phrase => \"Bad Request\"\n  :remote_ip     => \"10....\"\n  :status        => 400\n  " \
                 ":status_line   => \"HTTP/1.1 400 Bad Request\\r\\n\"\n"
-      expect(subject.send(:get_error_message_from_fog, raw_msg)).to eq "Keypair data is invalid: failed to generate "\
+      expect(subject.send(:get_error_message_from_fog, raw_msg)).to eq "Keypair data is invalid: failed to generate " \
                                                                        "fingerprint"
     end
   end

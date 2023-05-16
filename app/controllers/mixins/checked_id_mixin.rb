@@ -19,7 +19,7 @@ module Mixins
         params.each do |var, val|
           vars = var.to_s.split("_")
           if vars[0] == prefix && val == "1"
-            ids = vars[1..-1]
+            ids = vars[1..]
             items << ids.join("_")
           end
         end

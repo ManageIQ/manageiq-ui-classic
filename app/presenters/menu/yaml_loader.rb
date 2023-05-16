@@ -3,7 +3,7 @@ module Menu
     def load
       sections = []
       items    = []
-      Dir.glob(Rails.root.join('product/menubar/*.yml')).each do |f|
+      Rails.root.glob('product/menubar/*.yml').each do |f|
         load_custom_item(f, sections, items)
       end
       [sections, items]
@@ -12,7 +12,7 @@ module Menu
     private
 
     def load_custom_item(file_name, sections, items)
-      properties = YAML.load(File.read(file_name))
+      properties = YAML.load_file(file_name)
       if properties['type'] == 'section'
         sections << create_custom_menu_section(properties)
       else
@@ -26,7 +26,7 @@ module Menu
     # Else assume string and return:
     #   { :feature => rbac }
     def parse_rbac_property(rbac)
-      rbac.kind_of?(Hash) ? rbac.symbolize_keys : { :feature => rbac }
+      rbac.kind_of?(Hash) ? rbac.symbolize_keys : {:feature => rbac}
     end
 
     def create_custom_menu_item(properties)
@@ -40,7 +40,7 @@ module Menu
       rbac = parse_rbac_property(properties['rbac'])
       item_type = properties.fetch('item_type', :default).to_sym
 
-      item = Item.new(
+      Item.new(
         properties['id'],
         properties['name'],
         properties['feature'],
@@ -51,7 +51,6 @@ module Menu
         nil,
         properties['icon']
       )
-      item
     end
 
     def create_custom_menu_section(properties)

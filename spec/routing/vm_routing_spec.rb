@@ -3,7 +3,7 @@ require "routing/shared_examples"
 describe VmOrTemplateController do
   let(:controller_name) { "vm" }
 
-  %w(
+  %w[
     download_data
     edit
     ownership
@@ -13,7 +13,7 @@ describe VmOrTemplateController do
     right_size
     show
     show_list
-  ).each do |path|
+  ].each do |path|
     describe "##{path}" do
       it "routes with GET" do
         expect(get("/#{controller_name}/#{path}")).to route_to("#{controller_name}##{path}")
@@ -21,7 +21,7 @@ describe VmOrTemplateController do
     end
   end
 
-  %w(
+  %w[
     ownership
     ownership_update
     policy_sim
@@ -36,7 +36,7 @@ describe VmOrTemplateController do
     set_checked_items
     show_list
     genealogy_tree_selected
-  ).each do |path|
+  ].each do |path|
     describe "##{path}" do
       it "routes with POST" do
         expect(post("/#{controller_name}/#{path}")).to route_to("#{controller_name}##{path}")

@@ -15,7 +15,7 @@ module GenericObjectDefinitionHelper
 
   def generic_object_definition_button_group_summary(button_group)
     @custom_buttons_table_data = custom_buttons_table_data(button_group.set_data[:button_order].map { |id| CustomButton.find_by(:id => id) })
-    style = button_group.set_data[:button_color] ? button_group.set_data[:button_color].to_s : nil
+    style = button_group.set_data[:button_color]&.to_s
     icon = button_group.set_data[:button_icon].to_s == "" ? "pficon-folder-close" : button_group.set_data[:button_icon].to_s
     data = {:title => _('Basic Information')}
     data[:rows] = [

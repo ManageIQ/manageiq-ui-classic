@@ -20,10 +20,12 @@ module MiqPolicyController::Events
       end
 
       event_build_edit_screen
-      javascript_redirect(:action        => 'miq_event_edit',
-                          :id            => params[:id],
-                          :flash_msg     => _("All changes have been reset"),
-                          :flash_warning => true) if params[:button] == "reset"
+      if params[:button] == "reset"
+        javascript_redirect(:action        => 'miq_event_edit',
+                            :id            => params[:id],
+                            :flash_msg     => _("All changes have been reset"),
+                            :flash_warning => true)
+      end
       return
     end
 
@@ -63,7 +65,7 @@ module MiqPolicyController::Events
 
     if flash_errors?
       javascript_flash
-      return
+      nil
     else
       render :update do |page|
         page << javascript_prologue
@@ -79,6 +81,7 @@ module MiqPolicyController::Events
     # Reload @edit/vars for other buttons
     id = params[:id] || "new"
     return unless load_edit("event_edit__#{id}")
+
     @edit[:new][:event_id] = params[:event_id] if params[:event_id]
     get_event_actions
 

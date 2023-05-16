@@ -239,7 +239,7 @@ module OpsController::Settings::Tags
     params["entry"].each do |k, _v|
       msg += ", " if i.positive?
       i += 1
-      msg = msg + k.to_s + ":[" + params["entry"][k].to_s + "]"
+      msg = "#{msg}#{k}:[#{params["entry"][k]}]"
     end
     msg += ")"
     {:event => event, :target_id => entry.id, :target_class => entry.class.base_class.name, :userid => session[:userid], :message => msg}

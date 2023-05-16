@@ -2,7 +2,7 @@ class TreeBuilderVmsFilter < TreeBuilder
   include TreeBuilderFiltersMixin
 
   def initialize(*args)
-    @root_class ||= 'ManageIQ::Providers::InfraManager::Vm'
+    @root_class = 'ManageIQ::Providers::InfraManager::Vm'
     super(*args)
   end
 

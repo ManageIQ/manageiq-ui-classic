@@ -7,11 +7,11 @@ describe CloudVolumeSnapshotController do
       allow(@snapshot).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
       classification = FactoryBot.create(:classification, :name => "department", :description => "D    epartment")
       @tag1 = FactoryBot.create(:classification_tag,
-                                 :name   => "tag1",
-                                 :parent => classification)
+                                :name   => "tag1",
+                                :parent => classification)
       @tag2 = FactoryBot.create(:classification_tag,
-                                 :name   => "tag2",
-                                 :parent => classification)
+                                :name   => "tag2",
+                                :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@snapshot).and_return([@tag1, @tag2])
       session[:tag_db] = "CloudVolumeSnapshot"
       edit = {
@@ -54,7 +54,7 @@ describe CloudVolumeSnapshotController do
       EvmSpecHelper.create_guid_miq_server_zone
       @ems = FactoryBot.create(:ems_openstack)
       @snapshot = FactoryBot.create(:cloud_volume_snapshot_openstack,
-                                     :ext_management_system => @ems)
+                                    :ext_management_system => @ems)
     end
 
     context "#delete" do
@@ -76,7 +76,7 @@ describe CloudVolumeSnapshotController do
 
       it "queues the delete action" do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, hash_including(queue_options))
-        post :button, :params => { :id => @snapshot.id, :pressed => "cloud_volume_snapshot_delete", :format => :js }
+        post :button, :params => {:id => @snapshot.id, :pressed => "cloud_volume_snapshot_delete", :format => :js}
       end
     end
   end

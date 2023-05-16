@@ -6,7 +6,7 @@ describe ApplicationHelper::Button::RoleSuspend do
           :assigned_server_role,
           :server_role => FactoryBot.create(
             :server_role,
-            :name => "terminator",
+            :name => "terminator"
           )
         )
         allow(@record.server_role).to receive(:regional_role?).and_return(true)

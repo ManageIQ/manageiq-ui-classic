@@ -59,7 +59,7 @@ class AuthKeyPairCloudController < ApplicationController
     @in_a_form = true
     drop_breadcrumb(:name => _("Add New Key Pair"), :url => "/auth_key_pair_cloud/new")
   end
-  
+
   private
 
   def textual_group_list

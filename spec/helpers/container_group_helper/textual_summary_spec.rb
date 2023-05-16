@@ -1,5 +1,5 @@
 describe ContainerGroupHelper::TextualSummary do
-  include_examples "textual_group", "Relationships", %i(
+  include_examples "textual_group", "Relationships", %i[
     ems
     container_project
     container_services
@@ -10,9 +10,9 @@ describe ContainerGroupHelper::TextualSummary do
     container_images
     persistent_volumes
     custom_button_events
-  )
+  ]
 
-  include_examples "textual_group", "Properties", %i(
+  include_examples "textual_group", "Properties", %i[
     name
     status
     message
@@ -22,9 +22,9 @@ describe ContainerGroupHelper::TextualSummary do
     restart_policy
     dns_policy
     ip
-  )
+  ]
 
   include_examples "textual_group_smart_management"
 
-  include_examples "textual_group", "Container Statuses Summary", %i(waiting running terminated), "container_statuses_summary"
+  include_examples "textual_group", "Container Statuses Summary", %i[waiting running terminated], "container_statuses_summary"
 end

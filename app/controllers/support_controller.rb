@@ -44,7 +44,7 @@ class SupportController < ApplicationController
   end
 
   def pdf_document_files
-    Dir.glob(Rails.root.join("public/doc/*.pdf"))
+    Rails.root.glob("public/doc/*.pdf")
   end
 
   def pdf_documents

@@ -31,7 +31,7 @@ describe ApplicationHelper::Button::SummaryReload do
           context 'when showtype not in %w(details item)' do
             it { expect(subject).to be_truthy }
           end
-          %w(details item).each do |showtype|
+          %w[details item].each do |showtype|
             context "when showtype == #{showtype}" do
               let(:showtype) { showtype }
               include_examples 'lastaction_examples'

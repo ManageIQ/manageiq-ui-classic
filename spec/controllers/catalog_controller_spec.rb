@@ -70,13 +70,13 @@ describe CatalogController do
         CatalogController::CATALOG_X_BUTTON_ALLOWED_ACTIONS.each_pair do |action_name, actual_method|
           it "calls the appropriate method: '#{actual_method}' for action '#{action_name}'" do
             expect(controller).to receive(actual_method)
-            get :x_button, :params => { :pressed => action_name }
+            get :x_button, :params => {:pressed => action_name}
           end
         end
       end
 
       it 'exception is raised for unknown action' do
-        get :x_button, :params => { :pressed => 'random_dude', :format => :html }
+        get :x_button, :params => {:pressed => 'random_dude', :format => :html}
         expect(response).to render_template('layouts/exception')
       end
     end
@@ -126,11 +126,11 @@ describe CatalogController do
           array_including(
             instance_of(TreeBuilderCatalogs),
             instance_of(TreeBuilderCatalogItems),
-            instance_of(TreeBuilderServiceCatalog),
+            instance_of(TreeBuilderServiceCatalog)
           )
         )
         expect(controller).to receive(:render)
-        controller.send(:replace_right_cell, :replace_trees => %i(stcat sandt svccat))
+        controller.send(:replace_right_cell, :replace_trees => %i[stcat sandt svccat])
       end
     end
 
@@ -202,7 +202,7 @@ describe CatalogController do
         expect(controller.send(:flash_errors?)).to be_truthy
         flash_messages = assigns(:flash_array)
         expect(flash_messages.size).to eq(3)
-        entry_point_names = %w(Provisioning Reconfigure Retirement)
+        entry_point_names = %w[Provisioning Reconfigure Retirement]
         flash_messages.each_with_index do |msg, i|
           expect(msg[:message]).to eq("Please correct invalid #{entry_point_names[i]} Entry Point prior to saving")
           expect(msg[:level]).to eq(:error)
@@ -213,8 +213,8 @@ describe CatalogController do
     describe "#x_button catalogitem_edit" do
       before do
         vm = FactoryBot.create(:vm_vmware,
-                                :ext_management_system => FactoryBot.create(:ems_vmware),
-                                :storage               => FactoryBot.create(:storage))
+                               :ext_management_system => FactoryBot.create(:ems_vmware),
+                               :storage               => FactoryBot.create(:storage))
         @miq_request = FactoryBot.create(:miq_provision_request, :requester => admin_user, :src_vm_id => vm.id)
         service_template_with_root_tenant.update(:prov_type => 'vmware')
         service_template_with_root_tenant.add_resource(@miq_request)
@@ -354,18 +354,18 @@ describe CatalogController do
 
       it "uploads a selected png file " do
         file = fixture_file_upload('files/upload_image.png', 'image/png')
-        post :st_upload_image, :params => { :format => :js, :id => @st.id, :upload => {:image => file}, :active_tree => :sandt_tree, :commit => 'Upload' }
+        post :st_upload_image, :params => {:format => :js, :id => @st.id, :upload => {:image => file}, :active_tree => :sandt_tree, :commit => 'Upload'}
         expect(assigns(:flash_array).first[:message]).to include('Custom Image file "upload_image.png" successfully uploaded')
       end
 
       it "displays an error when the selected file is not a png file or .jpg " do
         file = fixture_file_upload('files/upload_image.txt', 'image/png')
-        post :st_upload_image, :params => { :format => :js, :id => @st.id, :upload => {:image => file}, :commit => 'Upload' }
+        post :st_upload_image, :params => {:format => :js, :id => @st.id, :upload => {:image => file}, :commit => 'Upload'}
         expect(assigns(:flash_array).first[:message]).to include("Custom Image must be a .png or .jpg file")
       end
 
       it "displays a message when an image file is not selected " do
-        post :st_upload_image, :params => { :format => :js, :id => @st.id, :commit => 'Upload' }
+        post :st_upload_image, :params => {:format => :js, :id => @st.id, :commit => 'Upload'}
         expect(assigns(:flash_array).first[:message]).to include("Use the Choose file button to locate a .png or .jpg image file")
       end
     end
@@ -502,7 +502,7 @@ describe CatalogController do
 
       it "Renders list of orchestration templates using correct GTL type" do
         %w[root xx-otcfn xx-othot xx-otazu xx-otazs].each do |id|
-          post :tree_select, :params => { :id => id, :format => :js }
+          post :tree_select, :params => {:id => id, :format => :js}
           expect(response).to have_http_status 200
           expect(response).to render_template('layouts/react/_gtl')
         end
@@ -543,13 +543,13 @@ describe CatalogController do
 
       it "saves resource action" do
         controller.send(:set_resource_action, @st)
-        expect(@st.resource_actions.pluck(:action)).to match_array(%w(Provision Retirement Reconfigure))
+        expect(@st.resource_actions.pluck(:action)).to match_array(%w[Provision Retirement Reconfigure])
       end
 
       it "does not save blank resource action" do
         assigns(:edit)[:new][:reconfigure_fqname] = ''
         controller.send(:set_resource_action, @st)
-        expect(@st.resource_actions.pluck(:action)).to match_array(%w(Provision Retirement))
+        expect(@st.resource_actions.pluck(:action)).to match_array(%w[Provision Retirement])
       end
     end
 
@@ -614,7 +614,7 @@ describe CatalogController do
           :new => {:name             => "",
                    :description      => "",
                    :fields           => [],
-                   :available_fields => [], },
+                   :available_fields => [],},
           :key => "st_catalog_edit__new"
         }
         controller.instance_variable_set(:@edit, edit)
@@ -640,8 +640,8 @@ describe CatalogController do
       before do
         controller.instance_variable_set(:@nodetype, 'st')
         st = FactoryBot.create(:service_template,
-                                :type      => "ServiceTemplateAnsiblePlaybook",
-                                :prov_type => "generic_ansible_playbook")
+                               :type      => "ServiceTemplateAnsiblePlaybook",
+                               :prov_type => "generic_ansible_playbook")
         controller.instance_variable_set(:@record, st)
       end
 
@@ -748,9 +748,9 @@ describe CatalogController do
       let(:dialog) { FactoryBot.create(:dialog) }
       let(:playbook) do
         FactoryBot.create(:embedded_playbook,
-                           :configuration_script_source => repository,
-                           :manager                     => ems,
-                           :inventory_root_group        => inventory_root_group)
+                          :configuration_script_source => repository,
+                          :manager                     => ems,
+                          :inventory_root_group        => inventory_root_group)
       end
 
       before do
@@ -877,7 +877,6 @@ describe CatalogController do
       let(:container_template) { FactoryBot.create(:container_template, :ext_management_system => ems) }
       let(:ns) { FactoryBot.create(:miq_ae_namespace, :name => "ns") }
       let(:cls) { FactoryBot.create(:miq_ae_class, :namespace_id => ns.id, :name => "cls") }
-
 
       let(:service_template_catalog) { FactoryBot.create(:service_template_catalog) }
       let(:dialog) { FactoryBot.create(:dialog) }
@@ -1448,13 +1447,13 @@ describe CatalogController do
 
     let(:report) do
       FactoryBot.create(:miq_report,
-                         :name        => 'Catalog Items',
-                         :db          => 'ServiceTemplate',
-                         :title       => 'Catalog Items',
-                         :cols        => %w[name description type_display],
-                         :col_order   => %w[name description tenant.name type_display],
-                         :headers     => %w[Name Description Tenant Type],
-                         :col_options => {"tenant.name" => {:display_method => :user_super_admin?}})
+                        :name        => 'Catalog Items',
+                        :db          => 'ServiceTemplate',
+                        :title       => 'Catalog Items',
+                        :cols        => %w[name description type_display],
+                        :col_order   => %w[name description tenant.name type_display],
+                        :headers     => %w[Name Description Tenant Type],
+                        :col_options => {"tenant.name" => {:display_method => :user_super_admin?}})
     end
 
     include_examples 'hiding tenant column for non admin user', :name => "Name", :description => "Description", :type_display => "Type"

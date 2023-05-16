@@ -1,8 +1,8 @@
 describe OpsController do
   before do
     EvmSpecHelper.seed_specific_product_features(
-      %w(vm vm_compare vm_delete instance instance_delete image image_delete miq_template
-         miq_template_delete ems_configuration_show_list)
+      %w[vm vm_compare vm_delete instance instance_delete image image_delete miq_template
+         miq_template_delete ems_configuration_show_list]
     )
   end
 
@@ -36,7 +36,7 @@ describe OpsController do
           ['image', include('image_delete')],
           ['instance', include('instance_delete')],
           ['miq_template', include('miq_template_delete')],
-          ['vm', include('vm_delete')],
+          ['vm', include('vm_delete')]
         )
       end
     end

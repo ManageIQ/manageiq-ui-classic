@@ -7,9 +7,9 @@ describe EmsPhysicalInfraHelper::TextualSummary do
     allow(self).to receive(:textual_authentications).and_return([])
   end
 
-  include_examples "textual_group", "Properties", %i(hostname type port guid)
+  include_examples "textual_group", "Properties", %i[hostname type port guid]
 
-  include_examples "textual_group", "Relationships", %i(
+  include_examples "textual_group", "Relationships", %i[
     datastores
     physical_chassis
     physical_racks
@@ -19,9 +19,9 @@ describe EmsPhysicalInfraHelper::TextualSummary do
     physical_switches
     vms
     custom_button_events
-  )
+  ]
 
-  include_examples "textual_group_smart_management", %i(zone)
+  include_examples "textual_group_smart_management", %i[zone]
 
-  include_examples "textual_group", "Status", %i(refresh_status refresh_date)
+  include_examples "textual_group", "Status", %i[refresh_status refresh_date]
 end

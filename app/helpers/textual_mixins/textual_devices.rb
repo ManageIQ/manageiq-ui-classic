@@ -97,6 +97,7 @@ module TextualMixins
     def network_attributes
       networks = []
       return networks if @record.hardware.ports.empty?
+
       @record.hardware.ports.map do |port|
         name = "#{port.controller_type.capitalize} #{port.device_name}"
         location = port.location
@@ -114,12 +115,13 @@ module TextualMixins
     end
 
     def lan_attribute(nic)
-      nic.lan&.switch&.name ? "(" + lan_prefix(nic) + _("Switch: ") + nic.lan.switch.name + ")" : ''
+      nic.lan&.switch&.name ? "(#{lan_prefix(nic)}#{_("Switch: ")}#{nic.lan.switch.name})" : ''
     end
 
     def devices_details
       devices = []
       return devices unless @record.try(:hardware)
+
       devices << processor_description
       devices += cpu_attributes
       devices += disks_attributes

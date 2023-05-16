@@ -27,7 +27,7 @@ describe PhysicalChassisController do
 
       it 'renders GTL with PhysicalChassis model' do
         physical_chassis
-        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(:model_name      => physical_chassis.class.to_s)
+        expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(:model_name => physical_chassis.class.to_s)
         post :show_list
         expect(response.status).to eq(200)
       end

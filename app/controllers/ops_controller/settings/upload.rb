@@ -34,7 +34,7 @@ module OpsController::Settings::Upload
       if field[:logo].original_filename.split(".").last.downcase != type
         add_flash(_("%{image} must be a .%{type} file") % {:image => text, :type => type}, :error)
       else
-        File.open(file, "wb") { |f| f.write(field[:logo].read) }
+        File.binwrite(file, field[:logo].read)
         add_flash(_("%{image} \"%{name}\" uploaded") % {:image => text, :name => field[:logo].original_filename})
       end
     else
@@ -111,7 +111,7 @@ module OpsController::Settings::Upload
   private
 
   def logo_dir
-    dir = Rails.root.join('public', 'upload').expand_path
+    dir = Rails.public_path.join('upload').expand_path
     Dir.mkdir(dir) unless dir.exist?
     dir.to_s
   end

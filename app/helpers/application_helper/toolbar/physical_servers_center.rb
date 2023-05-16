@@ -241,12 +241,12 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
             'pficon pficon-add-circle-o fa-lg',
             t = N_('Provision Physical Server'),
             t,
-            :url       => "provision",
+            :url          => "provision",
             :send_checked => true,
-            :url_parms => "main_div",
+            :url_parms    => "main_div",
             :enabled      => false,
             :onwhen       => "1+",
-            :klass     => ApplicationHelper::Button::PhysicalServerProvision
+            :klass        => ApplicationHelper::Button::PhysicalServerProvision
           )
         ]
       )

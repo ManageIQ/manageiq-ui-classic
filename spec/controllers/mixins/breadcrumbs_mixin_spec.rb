@@ -381,7 +381,7 @@ describe Mixins::BreadcrumbsMixin do
       end
 
       context "floating_ips controller" do
-        let(:tagitems) { [{ :id => "1", :address => "127.0.0.1"}] }
+        let(:tagitems) { [{:id => "1", :address => "127.0.0.1"}] }
         let(:controller_name) { 'floating_ips' }
 
         it "creates breadcrumbs" do

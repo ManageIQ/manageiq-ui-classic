@@ -1,14 +1,14 @@
 describe TreeNode::AvailabilityZone do
   subject { described_class.new(object, nil, nil) }
 
-  %i(
+  %i[
     availability_zone_amazon
     availability_zone_azure
     availability_zone_google
     availability_zone_openstack
     availability_zone_openstack_null
     availability_zone_vmware
-  ).each do |factory|
+  ].each do |factory|
     context(factory.to_s) do
       let(:object) { FactoryBot.create(factory) }
 

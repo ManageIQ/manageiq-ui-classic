@@ -1,9 +1,9 @@
 class TreeBuilderReportWidgets < TreeBuilder
   # Need this for display purpose to map with id
   WIDGET_TYPES = {
-    "r"  => N_('Reports'),
-    "c"  => N_('Charts'),
-    "m"  => N_('Menus')
+    "r" => N_('Reports'),
+    "c" => N_('Charts'),
+    "m" => N_('Menus')
   }.freeze
 
   private

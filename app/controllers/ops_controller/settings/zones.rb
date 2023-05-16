@@ -32,11 +32,7 @@ module OpsController::Settings::Zones
     end
   end
 
-
-
   private
-
-
 
   def zone_build_edit_screen
     @zone = params[:id] ? Zone.find(params[:id]) : Zone.new # Get existing or new record

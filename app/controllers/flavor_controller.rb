@@ -27,7 +27,6 @@ class FlavorController < ApplicationController
       ems.class::Flavor.supports?(:create) if ems.class.constants.include?(:Flavor)
     end
     ems_list.each do |ems|
-      {:name => ems.name, :id => ems.id}
     end
     render :json => {:ems_list => ems_list}
   end

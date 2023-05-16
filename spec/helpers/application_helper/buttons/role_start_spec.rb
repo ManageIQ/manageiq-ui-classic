@@ -9,7 +9,7 @@ describe ApplicationHelper::Button::RoleStart do
     context 'when record is assigned server role and miq server is started' do
       let(:record) do
         FactoryBot.create(:assigned_server_role,
-                           :miq_server => FactoryBot.create(:miq_server))
+                          :miq_server => FactoryBot.create(:miq_server))
       end
       before { allow(record.miq_server).to receive(:started?).and_return(true) }
       it { expect(subject.visible?).to be_truthy }
@@ -38,8 +38,8 @@ describe ApplicationHelper::Button::RoleStart do
     context 'when record is inactive assigned server role' do
       let(:record) do
         FactoryBot.create(:assigned_server_role,
-                           :active     => false,
-                           :miq_server => FactoryBot.create(:miq_server))
+                          :active     => false,
+                          :miq_server => FactoryBot.create(:miq_server))
       end
       before { allow(record.miq_server).to receive(:started?).and_return(false) }
       before { subject.calculate_properties }
@@ -50,10 +50,10 @@ describe ApplicationHelper::Button::RoleStart do
     context 'when record is inactive assigned server role' do
       let(:record) do
         FactoryBot.create(:assigned_server_role,
-                           :active      => false,
-                           :miq_server  => FactoryBot.create(:miq_server),
-                           :server_role => FactoryBot.create(:server_role,
-                                                              :name => "server_role"))
+                          :active      => false,
+                          :miq_server  => FactoryBot.create(:miq_server),
+                          :server_role => FactoryBot.create(:server_role,
+                                                            :name => "server_role"))
       end
       before { allow(record.server_role).to receive(:regional_role?).and_return(true) }
       before { allow(record.miq_server).to receive(:started?).and_return(true) }

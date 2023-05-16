@@ -10,67 +10,67 @@ describe ApplicationHelper::Title do
 
     it "when layout = 'miq_server'" do
       @layout = "miq_server"
-      expect(subject).to eq(title + ": Servers")
+      expect(subject).to eq("#{title}: Servers")
     end
 
     it "when layout = 'usage'" do
       @layout = "usage"
-      expect(subject).to eq(title + ": VM Usage")
+      expect(subject).to eq("#{title}: VM Usage")
     end
 
     it "when layout = 'scan_profile'" do
       @layout = "scan_profile"
-      expect(subject).to eq(title + ": Analysis Profiles")
+      expect(subject).to eq("#{title}: Analysis Profiles")
     end
 
     it "when layout = 'miq_policy_rsop'" do
       @layout = "miq_policy_rsop"
-      expect(subject).to eq(title + ": Policy Simulation")
+      expect(subject).to eq("#{title}: Policy Simulation")
     end
 
     it "when layout = 'all_tasks'" do
       @layout = "all_tasks"
-      expect(subject).to eq(title + ": All Tasks")
+      expect(subject).to eq("#{title}: All Tasks")
     end
 
     it "when layout = 'management_system'" do
       @layout = "management_system"
-      expect(subject).to eq(title + ": Management Systems")
+      expect(subject).to eq("#{title}: Management Systems")
     end
 
     it "when layout = 'ops'" do
       @layout = "ops"
-      expect(subject).to eq(title + ": Configuration")
+      expect(subject).to eq("#{title}: Configuration")
     end
 
     it "when layout = 'pxe'" do
       @layout = "pxe"
-      expect(subject).to eq(title + ": PXE")
+      expect(subject).to eq("#{title}: PXE")
     end
 
     it "when layout = 'vm_or_template'" do
       @layout = "vm_or_template"
-      expect(subject).to eq(title + ": Workloads")
+      expect(subject).to eq("#{title}: Workloads")
     end
 
     it "when layout likes 'miq_ae_*'" do
       @layout = "miq_ae_some_thing"
-      expect(subject).to eq(title + ": Automation")
+      expect(subject).to eq("#{title}: Automation")
     end
 
     it "when layout = 'miq_policy'" do
       @layout = "miq_policy"
-      expect(subject).to eq(title + ": Policies")
+      expect(subject).to eq("#{title}: Policies")
     end
 
     it "when layout = 'miq_capacity_utilization'" do
       @layout = "miq_capacity_utilization"
-      expect(subject).to eq(title + ": Utilization")
+      expect(subject).to eq("#{title}: Utilization")
     end
 
     it "when layout likes 'miq_request*'" do
       @layout = "miq_request_some_thing"
-      expect(subject).to eq(title + ": Requests")
+      expect(subject).to eq("#{title}: Requests")
     end
 
     it "otherwise" do

@@ -1,4 +1,4 @@
-test_specific_controller = ENV['TEST_CONTROLLER']
+test_specific_controller = ENV.fetch('TEST_CONTROLLER', nil)
 warn "Running with routes test for #{test_specific_controller.inspect}" if test_specific_controller.present?
 
 routes = Rails.application.routes.routes.each_with_object({}) do |route, obj|

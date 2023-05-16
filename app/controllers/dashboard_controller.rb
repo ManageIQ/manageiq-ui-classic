@@ -27,17 +27,17 @@ class DashboardController < ApplicationController
   end
 
   def saml_protected_page
-    request.base_url + '/saml_login'
+    "#{request.base_url}/saml_login"
   end
   helper_method :saml_protected_page
 
   def oidc_protected_page
-    request.base_url + '/oidc_login'
+    "#{request.base_url}/oidc_login"
   end
   helper_method(:oidc_protected_page)
 
   def oidc_protected_page_logout
-    request.base_url + '/oidc_login/redirect_uri?logout=' + CGI.escape(request.base_url)
+    "#{request.base_url}/oidc_login/redirect_uri?logout=#{CGI.escape(request.base_url)}"
   end
   helper_method(:oidc_protected_page_logout)
 
@@ -57,7 +57,7 @@ class DashboardController < ApplicationController
   def csp_report
     report = ActiveSupport::JSON.decode(request.body.read)
     $log.warn("security warning, CSP violation report follows: #{report.inspect}")
-    head :ok
+    head 200
   end
 
   # New tab was pressed
@@ -134,7 +134,7 @@ class DashboardController < ApplicationController
 
     @tabs = []
     active_tab_id = (params['uib-tab'] || @sb[:active_db_id]).try(:to_s)
-    active_tab = active_tab_id && records.detect { |r| r.id.to_s == active_tab_id } || records.first
+    active_tab = (active_tab_id && records.detect { |r| r.id.to_s == active_tab_id }) || records.first
     # load first one on intial load, or load tab from params['uib-tab'] changed,
     # or when coming back from another screen load active tab from sandbox
     if active_tab
@@ -174,8 +174,8 @@ class DashboardController < ApplicationController
     ws = MiqWidgetSet.where_unique_on(@sb[:active_db], current_user).first
 
     # if all of user groups dashboards have been deleted and they are logged in, need to reset active_db_id
-    if ws.nil?
-      @sb[:active_db_id] = nil unless MiqWidgetSet.exists?(:id => @sb[:active_db_id])
+    if ws.nil? && !MiqWidgetSet.exists?(:id => @sb[:active_db_id])
+      @sb[:active_db_id] = nil
     end
 
     # Create default dashboard for this user, if not present
@@ -274,7 +274,7 @@ class DashboardController < ApplicationController
       end
       save_user_dashboards
     end
-    head :ok # We have nothing to say  :)
+    head 200 # We have nothing to say  :)
   end
 
   # A widget has been closed
@@ -290,7 +290,7 @@ class DashboardController < ApplicationController
       ws.remove_member(w) if w
       render :json => {:message => _("Widget \"#{w.title}\" removed")}, :status => save_user_dashboards ? 200 : 400
     else
-      head :ok
+      head 200
     end
   end
 
@@ -315,7 +315,7 @@ class DashboardController < ApplicationController
          {:widget_name => w.name}, :error)
       end
     else
-      head :ok
+      head 200
     end
   end
 
@@ -487,7 +487,7 @@ class DashboardController < ApplicationController
   def change_group
     # Get the user and new group and set current_group in the user record
     db_user = current_user
-    db_user.update(:current_group => db_user.miq_groups.find_by!(:id => params[:to_group]))
+    db_user.update(:current_group => db_user.miq_groups.find(params[:to_group]))
 
     # Rebuild the session
     session_reset
@@ -506,7 +506,7 @@ class DashboardController < ApplicationController
   def session_reset
     # save some fields to recover back into session hash after session is cleared
     keys_to_restore = %i[browser user_TZO]
-    data_to_restore = keys_to_restore.each_with_object({}) { |k, v| v[k] = session[k] }
+    data_to_restore = keys_to_restore.index_with { |k| session[k] }
 
     session.clear
     session.update(data_to_restore)

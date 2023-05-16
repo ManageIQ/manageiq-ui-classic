@@ -48,7 +48,7 @@ class MiqPolicyExportController < ApplicationController
                          end
         session[:export_data] = MiqPolicy.export_to_yaml(@sb[:new][:choices_chosen], db)
         javascript_redirect(:action => 'fetch_yaml', :fname => filename, :escape => false)
-      rescue StandardError => bang
+      rescue => bang
         add_flash(_("Error during export: %{error_message}") % {:error_message => bang.message}, :error)
         render :update do |page|
           page << javascript_prologue
@@ -65,7 +65,7 @@ class MiqPolicyExportController < ApplicationController
   def fetch_yaml
     assert_privileges('policy_import_export')
     @lastaction = "fetch_yaml"
-    file_name = "#{params[:fname]}_#{format_timezone(Time.now, Time.zone, "export_filename")}.yaml"
+    file_name = "#{params[:fname]}_#{format_timezone(Time.zone.now, Time.zone, "export_filename")}.yaml"
     disable_client_cache
     send_data(session[:export_data], :filename => file_name)
     session[:export_data] = nil
@@ -81,7 +81,7 @@ class MiqPolicyExportController < ApplicationController
         import_file_upload = miq_policy_import_service.store_for_import(params[:upload][:file])
         @sb[:hide] = true
         redirect_options[:import_file_upload_id] = import_file_upload.id
-      rescue StandardError => err
+      rescue => err
         flash_to_session(_("Error during 'Policy Import': %{messages}") % {:messages => err.message}, :error)
         redirect_options[:action] = 'index'
       end
@@ -113,7 +113,7 @@ class MiqPolicyExportController < ApplicationController
     if params[:commit] == "import"
       begin
         miq_policy_import_service.import_policy(@import_file_upload_id)
-      rescue StandardError => bang
+      rescue => bang
         add_flash(_("Error during upload: %{messages}") % {:messages => bang.message}, :error)
       else
         @sb[:hide] = false
@@ -243,7 +243,7 @@ class MiqPolicyExportController < ApplicationController
 
   def breadcrumbs_options
     {
-      :breadcrumbs  => [
+      :breadcrumbs => [
         {:title => _("Control")},
         menu_breadcrumb,
       ].compact,

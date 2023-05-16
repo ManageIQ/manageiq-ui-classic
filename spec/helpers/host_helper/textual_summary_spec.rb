@@ -3,13 +3,13 @@ describe HostHelper::TextualSummary do
 
   before do
     instance_variable_set(:@record, FactoryBot.create(:host_openstack_infra,
-                                                       :type => ManageIQ::Providers::Openstack::InfraManager::Host))
+                                                      :type => ManageIQ::Providers::Openstack::InfraManager::Host))
     allow(self).to receive(:textual_authentications).and_return([])
-    allow(::Settings).to receive_message_chain(:product, :proto).and_return("")
+    allow(Settings).to receive_message_chain(:product, :proto).and_return("")
     allow(self).to receive(:textual_openstack_nova_scheduler).and_return([])
   end
 
-  include_examples "textual_group", "Properties", %i(
+  include_examples "textual_group", "Properties", %i[
     hostname
     region
     ipaddress
@@ -36,9 +36,9 @@ describe HostHelper::TextualSummary do
     memory
     protected
     guid
-  )
+  ]
 
-  include_examples "textual_group", "Relationships", %i(
+  include_examples "textual_group", "Relationships", %i[
     ems
     cluster
     availability_zone
@@ -53,13 +53,13 @@ describe HostHelper::TextualSummary do
     custom_button_events
     cloud_networks
     cloud_subnets
-  )
+  ]
 
-  include_examples "textual_group", "Security", %i(users groups patches firewall_rules ssh_root)
+  include_examples "textual_group", "Security", %i[users groups patches firewall_rules ssh_root]
 
-  include_examples "textual_group", "Configuration", %i(guest_applications host_services filesystems advanced_settings)
+  include_examples "textual_group", "Configuration", %i[guest_applications host_services filesystems advanced_settings]
 
-  include_examples "textual_group", "Diagnostics", %i(esx_logs)
+  include_examples "textual_group", "Diagnostics", %i[esx_logs]
 
   include_examples "textual_group_smart_management"
 
@@ -71,5 +71,5 @@ describe HostHelper::TextualSummary do
 
   include_examples "textual_group", "Cloud Services", [], "cloud_services"
 
-  include_examples "textual_group", "Openstack Hardware", %i(introspected provision_state), "openstack_hardware_status"
+  include_examples "textual_group", "Openstack Hardware", %i[introspected provision_state], "openstack_hardware_status"
 end

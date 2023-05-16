@@ -17,7 +17,7 @@ class MiqPolicySetController < ApplicationController
 
   def new
     @in_a_form = true
-    drop_breadcrumb(:name => _("Add New %{table}") % {:table => ui_lookup(:table => table_name)},:url  => "/#{controller_name}/new")
+    drop_breadcrumb(:name => _("Add New %{table}") % {:table => ui_lookup(:table => table_name)}, :url => "/#{controller_name}/new")
   end
 
   def edit
@@ -26,8 +26,8 @@ class MiqPolicySetController < ApplicationController
     @_params[:id] ||= find_checked_items[0]
     @profile = params[:id] ? MiqPolicySet.find(params[:id]) : MiqPolicySet.new
     if params[:id]
-      @profile = MiqPolicySet.find(params[:id]) 
-      drop_breadcrumb(:name => _("Edit %{object_type} '%{object_name}'") % {:object_type => ui_lookup(:tables => table_name), :object_name => @profile.description},:url  => "/#{controller_name}/#{@profile.id}/edit")
+      @profile = MiqPolicySet.find(params[:id])
+      drop_breadcrumb(:name => _("Edit %{object_type} '%{object_name}'") % {:object_type => ui_lookup(:tables => table_name), :object_name => @profile.description}, :url => "/#{controller_name}/#{@profile.id}/edit")
     end
   end
 
@@ -57,6 +57,6 @@ class MiqPolicySetController < ApplicationController
     }
   end
 
-  toolbar :miq_policy_set,:miq_policy_sets
+  toolbar :miq_policy_set, :miq_policy_sets
   menu_section :con
 end

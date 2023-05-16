@@ -27,28 +27,29 @@ class ApplicationHelper::Toolbar::CloudObjectStoreContainerCenter < ApplicationH
             N_('Remove Object Storage Container from Inventory'),
             :url_parms    => "main_div",
             :send_checked => true,
-            :confirm      => N_("Warning: The selected Object Storage Container and ALL related Objects will be "\
-                             "permanently removed!"),
-            :klass   => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
-            :options => {:feature => :delete}
+            :confirm      => N_("Warning: The selected Object Storage Container and ALL related Objects will be " \
+                                "permanently removed!"),
+            :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+            :options      => {:feature => :delete}
           ),
         ]
       ),
     ]
   )
   button_group('cloud_object_store_container_policy', [
-    select(
-      :cloud_object_store_container_policy_choice,
-      nil,
-      t = N_('Policy'),
-      t,
-      :items => [
-        button(
-          :cloud_object_store_container_tag,
-          'pficon pficon-edit fa-lg',
-          N_('Edit tags for this Cloud Object Store'),
-          N_('Edit Tags'))
-      ]
-    )
-  ])
+                 select(
+                   :cloud_object_store_container_policy_choice,
+                   nil,
+                   t = N_('Policy'),
+                   t,
+                   :items => [
+                     button(
+                       :cloud_object_store_container_tag,
+                       'pficon pficon-edit fa-lg',
+                       N_('Edit tags for this Cloud Object Store'),
+                       N_('Edit Tags')
+                     )
+                   ]
+                 )
+               ])
 end

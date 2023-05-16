@@ -7,6 +7,6 @@ module ApplicationHelper
   end
 
   def ownership_user_options
-    @ownership_users ||= Rbac.filtered(User).each_with_object({}) { |u, r| r[u.name] = u.id.to_s }
+    @ownership_user_options ||= Rbac.filtered(User).each_with_object({}) { |u, r| r[u.name] = u.id.to_s }
   end
 end

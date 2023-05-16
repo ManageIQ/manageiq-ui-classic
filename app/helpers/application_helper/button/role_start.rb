@@ -2,7 +2,7 @@ class ApplicationHelper::Button::RoleStart < ApplicationHelper::Button::RolePowe
   needs :@record, :@sb
 
   def disabled?
-    @error_message = if @record.class == AssignedServerRole
+    @error_message = if @record.instance_of?(AssignedServerRole)
                        if @record.active
                          _("This Role is already active on this Server")
                        elsif !@record.miq_server.started?

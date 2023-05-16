@@ -3,6 +3,6 @@ class ApplicationHelper::Button::VmRefresh < ApplicationHelper::Button::Basic
 
   def visible?
     @record.ext_management_system ||
-    @record.host.try(:vmm_product).to_s.casecmp("workstation").zero?
+      @record.host.try(:vmm_product).to_s.casecmp("workstation").zero?
   end
 end

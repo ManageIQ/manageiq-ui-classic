@@ -1,5 +1,6 @@
 class CustomButtonDialogFormMixinTestClass
   attr_accessor :edit
+
   include Mixins::CustomButtonDialogFormMixin
 
   def x_active_tree

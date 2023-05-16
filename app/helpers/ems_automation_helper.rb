@@ -56,4 +56,3 @@ module EmsAutomationHelper
     lastaction == 'show_list' ? ems_automation_path : ems_automation_path(ems)
   end
 end
-#

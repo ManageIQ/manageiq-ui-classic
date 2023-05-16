@@ -15,6 +15,21 @@ class MiqActionController < ApplicationController
     @title = _("Actions")
   end
 
+  def show
+    super
+    # Get information for an action
+    @alert_guids = []
+    if @record.options && @record.options[:alert_guids]
+      @alert_guids = MiqAlert.where(:guid => @record.options[:alert_guids])
+    end
+
+    @action_policies = @record.miq_policies.sort_by { |p| p.description.downcase }
+
+    if %w[inherit_parent_tags remove_tags].include?(@record.action_type)
+      @cats = Classification.lookup_by_names(@record.options[:cats]).pluck(:description).sort_by(&:downcase).join(" | ")
+    end
+  end
+
   def new
     miq_action_reset_or_set
   end
@@ -70,17 +85,17 @@ class MiqActionController < ApplicationController
       vars = var.split("_")
       if vars[0] == "attribute" || vars[0] == "value"
         ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
-          f = ("attribute_" + (i + 1).to_s)
-          v = ("value_" + (i + 1).to_s)
+          f = "attribute_#{i + 1}"
+          v = "value_#{i + 1}"
           @edit[:new][:attrs][i][0] = params[f] if params[f.to_sym]
           @edit[:new][:attrs][i][1] = params[v] if params[v.to_sym]
         end
       elsif vars[0] == "cat" # Handle category check boxes
         @edit[:new][:options][:cats] ||= []
         if val == "1"
-          @edit[:new][:options][:cats].push(vars[1..-1].join("_")) # Add the category
+          @edit[:new][:options][:cats].push(vars[1..].join("_")) # Add the category
         else
-          @edit[:new][:options][:cats].delete(vars[1..-1].join("_")) # Remove the category
+          @edit[:new][:options][:cats].delete(vars[1..].join("_")) # Remove the category
           @edit[:new][:options][:cats] = nil if @edit[:new][:options][:cats].blank?
         end
       end
@@ -116,7 +131,7 @@ class MiqActionController < ApplicationController
 
       obj[cls.description] = cls.entries.sort_by(&:description).map do |ent|
         # The third argument here allows better fuzzy search in the dropdown
-        [ent.description, ent.id, 'data-tokens' => cls.description]
+        [ent.description, ent.id, {'data-tokens' => cls.description}]
       end
     end
   end
@@ -135,21 +150,6 @@ class MiqActionController < ApplicationController
     @edit[:new][:options][:use_localhost] = @edit[:new][:inventory_type] == 'localhost'
   end
 
-  def show
-    super
-    # Get information for an action
-    @alert_guids = []
-    if @record.options && @record.options[:alert_guids]
-      @alert_guids = MiqAlert.where(:guid => @record.options[:alert_guids])
-    end
-
-    @action_policies = @record.miq_policies.sort_by { |p| p.description.downcase }
-
-    if %w[inherit_parent_tags remove_tags].include?(@record.action_type)
-      @cats = Classification.lookup_by_names(@record.options[:cats]).pluck(:description).sort_by(&:downcase).join(" | ")
-    end
-  end
-
   private
 
   def miq_action_reset_or_set
@@ -164,10 +164,12 @@ class MiqActionController < ApplicationController
     end
 
     action_build_edit_screen
-    javascript_redirect(:action        => 'edit',
-                        :id            => params[:id],
-                        :flash_msg     => _("All changes have been reset"),
-                        :flash_warning => true) if params[:button] == "reset"
+    if params[:button] == "reset"
+      javascript_redirect(:action        => 'edit',
+                          :id            => params[:id],
+                          :flash_msg     => _("All changes have been reset"),
+                          :flash_warning => true)
+    end
   end
 
   def action_build_snmp_variables
@@ -260,11 +262,11 @@ class MiqActionController < ApplicationController
     action_build_snmp_variables if @action.action_type == "snmp_trap"
 
     # Build arrays for inherit/remove_tags action types
-    @edit[:tag_parent_types] =  [["<#{_('Choose')}>", nil],
-                                 [_("Cluster"), "ems_cluster"],
-                                 [_("Host"), "host"],
-                                 [_("Datastore"), "storage"],
-                                 [_("Resource Pool"), "parent_resource_pool"]].sort_by { |x| x.first.downcase }
+    @edit[:tag_parent_types] = [["<#{_('Choose')}>", nil],
+                                [_("Cluster"), "ems_cluster"],
+                                [_("Host"), "host"],
+                                [_("Datastore"), "storage"],
+                                [_("Resource Pool"), "parent_resource_pool"]].sort_by { |x| x.first.downcase }
     @edit[:cats] = MiqAction.inheritable_cats.sort_by { |c| c.description.downcase }.collect { |c| [c.name, c.description] }
 
     @edit[:ansible_playbooks] = ServiceTemplateAnsiblePlaybook.order(:name).pluck(:name, :id) || {}
@@ -299,7 +301,7 @@ class MiqActionController < ApplicationController
     @edit[:new][:attrs]&.each do |pair|
       @edit[:new][:options][:ae_hash][pair[0]] = pair[1] if pair[0].present? && pair[1].present?
     end
-    @edit[:new][:options].delete("ae_hash".to_sym) if @edit[:new][:options][:ae_hash].empty?
+    @edit[:new][:options].delete(:ae_hash) if @edit[:new][:options][:ae_hash].empty?
     @edit[:new][:object_message] = @edit[:new][:options][:ae_message] unless @edit[:new][:options][:ae_message].nil?
     @edit[:new][:object_request] = @edit[:new][:options][:ae_request] unless @edit[:new][:options][:ae_request].nil?
 
@@ -408,6 +410,6 @@ class MiqActionController < ApplicationController
     }
   end
 
-  toolbar :miq_action,:miq_actions
+  toolbar :miq_action, :miq_actions
   menu_section :con
 end

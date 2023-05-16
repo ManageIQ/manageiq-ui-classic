@@ -79,8 +79,8 @@ class ContainerProjectDashboardService < DashboardService
     @project.container_quota_items.collect do |quota_item|
       enforced = quota_item.quota_enforced
       observed = quota_item.quota_observed
-      enforced = (enforced % 1).zero? ? enforced.to_i : enforced
-      observed = (observed % 1).zero? ? observed.to_i : observed
+      enforced = enforced.to_i if (enforced % 1).zero?
+      observed = observed.to_i if (observed % 1).zero?
 
       units = ""
 

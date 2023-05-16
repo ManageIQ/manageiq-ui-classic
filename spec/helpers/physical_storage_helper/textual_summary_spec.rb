@@ -3,25 +3,25 @@ describe PhysicalStorageHelper::TextualSummary do
 
   let(:ems) do
     FactoryBot.create(:physical_infra,
-                       :name      => 'LXCA',
-                       :hostname  => 'my.physicalinfra.com',
-                       :port      => '443',
-                       :ipaddress => '1.2.3.4')
+                      :name      => 'LXCA',
+                      :hostname  => 'my.physicalinfra.com',
+                      :port      => '443',
+                      :ipaddress => '1.2.3.4')
   end
 
   let(:asset_detail) do
     FactoryBot.create(:asset_detail,
-                       :machine_type     => '6411',
-                       :model            => 'S2200',
-                       :contact          => 'Jonas Arioli',
-                       :location         => 'teste',
-                       :room             => 'Room',
-                       :rack_name        => 'teste',
-                       :lowest_rack_unit => '46',
-                       :product_name     => 'S2200',
-                       :manufacturer     => 'IBM',
-                       :serial_number    => '2647DA',
-                       :description      => 'S2200 used to test dh-storage-irm')
+                      :machine_type     => '6411',
+                      :model            => 'S2200',
+                      :contact          => 'Jonas Arioli',
+                      :location         => 'teste',
+                      :room             => 'Room',
+                      :rack_name        => 'teste',
+                      :lowest_rack_unit => '46',
+                      :product_name     => 'S2200',
+                      :manufacturer     => 'IBM',
+                      :serial_number    => '2647DA',
+                      :description      => 'S2200 used to test dh-storage-irm')
   end
 
   let(:physical_rack) do
@@ -30,17 +30,17 @@ describe PhysicalStorageHelper::TextualSummary do
 
   let(:physical_storage) do
     FactoryBot.create(:physical_storage,
-                       :ems_id               => ems.id,
-                       :uid_ems              => '208000C0FF2647DA',
-                       :name                 => 'S2200-Test',
-                       :health_state         => 'Warning',
-                       :access_state         => 'Online',
-                       :overall_health_state => 'Warning',
-                       :drive_bays           => 24,
-                       :enclosures           => 1,
-                       :canister_slots       => 2,
-                       :asset_detail         => asset_detail,
-                       :physical_rack        => physical_rack)
+                      :ems_id               => ems.id,
+                      :uid_ems              => '208000C0FF2647DA',
+                      :name                 => 'S2200-Test',
+                      :health_state         => 'Warning',
+                      :access_state         => 'Online',
+                      :overall_health_state => 'Warning',
+                      :drive_bays           => 24,
+                      :enclosures           => 1,
+                      :canister_slots       => 2,
+                      :asset_detail         => asset_detail,
+                      :physical_rack        => physical_rack)
   end
 
   before do

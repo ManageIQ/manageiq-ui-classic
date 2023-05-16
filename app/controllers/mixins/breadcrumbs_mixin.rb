@@ -1,7 +1,7 @@
 module Mixins
   module BreadcrumbsMixin
     def title_for_breadcrumbs
-      ActiveSupport::SafeBuffer === @right_cell_text ? @title_for_breadcrumbs : @right_cell_text
+      @right_cell_text.kind_of?(ActiveSupport::SafeBuffer) ? @title_for_breadcrumbs : @right_cell_text
     end
 
     def self.included(controller)
@@ -119,7 +119,7 @@ module Mixins
 
     # append action right_cell_text if actions is not prohibited
     def action_breadcrumb?
-      !PROHIBITED_ACTIONS_TREE.include?(action_name) && !PROHIBITED_PARAMS_BUTTONS.include?(params[:button])
+      PROHIBITED_ACTIONS_TREE.exclude?(action_name) && PROHIBITED_PARAMS_BUTTONS.exclude?(params[:button])
     end
 
     def build_breadcrumbs_no_explorer(record_info, record_title)
@@ -198,7 +198,7 @@ module Mixins
 
     # User is not on show page
     def not_show_page?
-      (action_name == "show" && params["display"] && !%w[dashboard main].include?(params["display"])) || (action_name != "show")
+      (action_name == "show" && params["display"] && %w[dashboard main].exclude?(params["display"])) || (action_name != "show")
     end
 
     # User is on show_list page
@@ -217,7 +217,7 @@ module Mixins
 
     # Controls on tagging screen if the tagged item is floating_ip
     def floating_ip_address?(variable)
-      (variable&.respond_to?(:has_attribute?) && variable&.has_attribute?(:address)) || controller_name == 'floating_ips'
+      (variable.respond_to?(:has_attribute?) && variable&.has_attribute?(:address)) || controller_name == 'floating_ips'
     end
 
     def controller_url

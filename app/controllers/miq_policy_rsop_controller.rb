@@ -183,13 +183,13 @@ class MiqPolicyRsopController < ApplicationController
 
   def set_session_data
     super
-    session[:layout]                  = @layout
+    session[:layout] = @layout
     session[:miq_policy_rsop_current_page] = @current_page
   end
 
   def breadcrumbs_options
     {
-      :breadcrumbs  => [
+      :breadcrumbs => [
         {:title => _("Control")},
         menu_breadcrumb,
       ].compact,

@@ -14,7 +14,7 @@ class ApplicationHelper::Toolbar::CloudVolumeCenter < ApplicationHelper::Toolbar
                        :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
                        :options      => {:feature => :backup_create},
                        :url_parms    => 'main_div',
-                       :send_checked => true,
+                       :send_checked => true
                      ),
                      button(
                        :cloud_volume_backup_restore,
@@ -24,7 +24,7 @@ class ApplicationHelper::Toolbar::CloudVolumeCenter < ApplicationHelper::Toolbar
                        :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
                        :options      => {:feature => :backup_restore},
                        :url_parms    => 'main_div',
-                       :send_checked => true,
+                       :send_checked => true
                      ),
                      button(
                        :cloud_volume_snapshot_create,
@@ -34,7 +34,7 @@ class ApplicationHelper::Toolbar::CloudVolumeCenter < ApplicationHelper::Toolbar
                        :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
                        :options      => {:feature => :snapshot_create},
                        :url_parms    => 'main_div',
-                       :send_checked => true,
+                       :send_checked => true
                      ),
                      button(
                        :cloud_volume_attach,
@@ -44,7 +44,7 @@ class ApplicationHelper::Toolbar::CloudVolumeCenter < ApplicationHelper::Toolbar
                        :klass        => ApplicationHelper::Button::VolumeAttach,
                        :options      => {:feature => :attach_volume},
                        :url_parms    => 'main_div',
-                       :send_checked => true,
+                       :send_checked => true
                      ),
                      button(
                        :cloud_volume_detach,
@@ -53,7 +53,7 @@ class ApplicationHelper::Toolbar::CloudVolumeCenter < ApplicationHelper::Toolbar
                        t,
                        :klass        => ApplicationHelper::Button::VolumeDetach,
                        :url_parms    => 'main_div',
-                       :send_checked => true,
+                       :send_checked => true
                      ),
 
                      button(
@@ -74,8 +74,8 @@ class ApplicationHelper::Toolbar::CloudVolumeCenter < ApplicationHelper::Toolbar
                        t,
                        :url_parms    => 'main_div',
                        :send_checked => true,
-                       :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
-                       :options   => {:feature => :update},
+                       :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+                       :options      => {:feature => :update}
                      ),
                      button(
                        :cloud_volume_delete,
@@ -114,18 +114,19 @@ class ApplicationHelper::Toolbar::CloudVolumeCenter < ApplicationHelper::Toolbar
                  )
                ])
   button_group('cloud_volume_policy', [
-    select(
-      :cloud_volume_policy_choice,
-      nil,
-      t = N_('Policy'),
-      t,
-      :items => [
-        button(
-          :cloud_volume_tag,
-          'pficon pficon-edit fa-lg',
-          N_('Edit tags for this Cloud Volume'),
-          N_('Edit Tags')),
-      ]
-    ),
-  ])
+                 select(
+                   :cloud_volume_policy_choice,
+                   nil,
+                   t = N_('Policy'),
+                   t,
+                   :items => [
+                     button(
+                       :cloud_volume_tag,
+                       'pficon pficon-edit fa-lg',
+                       N_('Edit tags for this Cloud Volume'),
+                       N_('Edit Tags')
+                     ),
+                   ]
+                 ),
+               ])
 end

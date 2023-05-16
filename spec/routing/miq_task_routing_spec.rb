@@ -1,11 +1,11 @@
 describe "routes for MiqTaskController" do
   let(:controller_name) { "miq_task" }
 
-  %w(
+  %w[
     change_tab
     index
     jobs
-  ).each do |task|
+  ].each do |task|
     describe "##{task}" do
       it 'routes with GET' do
         expect(get("/#{controller_name}/#{task}")).to route_to("#{controller_name}##{task}")
@@ -13,10 +13,10 @@ describe "routes for MiqTaskController" do
     end
   end
 
-  %w(
+  %w[
     button
     jobs
-  ).each do |task|
+  ].each do |task|
     describe "##{task}" do
       it 'routes with POST' do
         expect(post("/#{controller_name}/#{task}")).to route_to("#{controller_name}##{task}")

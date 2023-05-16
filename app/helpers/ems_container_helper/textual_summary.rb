@@ -17,11 +17,9 @@ module EmsContainerHelper::TextualSummary
   def textual_group_relationships
     # Order of items should be from parent to child
     items = []
-    items.concat(%i[container_projects])
-    items.concat(%i[container_routes]) if @record.respond_to?(:container_routes)
-    items.concat(%i[container_services container_replicators container_groups containers container_nodes
-                    container_image_registries container_images volumes container_builds container_templates
-                    custom_button_events])
+    items.push(:container_projects)
+    items.push(:container_routes) if @record.respond_to?(:container_routes)
+    items.push(:container_services, :container_replicators, :container_groups, :containers, :container_nodes, :container_image_registries, :container_images, :volumes, :container_builds, :container_templates, :custom_button_events)
     TextualGroup.new(_("Relationships"), items)
   end
 
@@ -129,6 +127,7 @@ module EmsContainerHelper::TextualSummary
   def textual_miq_custom_attributes
     attrs = @record.custom_attributes
     return nil if attrs.blank?
+
     attrs.sort_by(&:name).collect { |a| {:label => a.name.tr("_", " "), :value => a.value} }
   end
 end

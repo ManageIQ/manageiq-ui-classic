@@ -15,8 +15,8 @@ describe ApplicationHelper::Button::MiqRequestApproval do
     let(:username) { user.name }
     let(:state) { "xx" }
 
-    %w(MiqProvisionRequest VmReconfigureRequest VmCloudReconfigureRequest
-       VmMigrateRequest AutomationRequest ServiceTemplateProvisionRequest).each do |cls|
+    %w[MiqProvisionRequest VmReconfigureRequest VmCloudReconfigureRequest
+       VmMigrateRequest AutomationRequest ServiceTemplateProvisionRequest].each do |cls|
       context "id = miq_request_approval" do
         before do
           @record = cls.constantize.new

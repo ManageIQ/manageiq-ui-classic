@@ -247,10 +247,10 @@ describe ResourcePoolController do
       context "#{action} for selected VMs displayed in a nested list" do
         before { controller.params = {:pressed => "vm_#{action}"} }
 
-        it "calls #{action + 'vms'} method" do
+        it "calls #{"#{action}vms"} method" do
           allow(controller).to receive(:show)
           allow(controller).to receive(:performed?).and_return(true)
-          expect(controller).to receive((action + 'vms').to_sym)
+          expect(controller).to receive("#{action}vms".to_sym)
           controller.send(:button)
           expect(controller.send(:flash_errors?)).not_to be_truthy
         end
@@ -340,7 +340,7 @@ describe ResourcePoolController do
 
     let(:url_params) { {} }
 
-    subject { get :show, :params => { :id => @resource_pool.id }.merge(url_params) }
+    subject { get :show, :params => {:id => @resource_pool.id}.merge(url_params) }
 
     context "main" do
       it "renders" do
@@ -350,7 +350,7 @@ describe ResourcePoolController do
     end
 
     context "Direct VMs" do
-      let(:url_params) { { :display => "vms" } }
+      let(:url_params) { {:display => "vms"} }
 
       it "renders" do
         bypass_rescue
@@ -359,7 +359,7 @@ describe ResourcePoolController do
     end
 
     context "All VMs" do
-      let(:url_params) { { :display => "all_vms" } }
+      let(:url_params) { {:display => "all_vms"} }
 
       it "renders" do
         bypass_rescue
@@ -368,7 +368,7 @@ describe ResourcePoolController do
     end
 
     context "Nested Resource Pools" do
-      let(:url_params) { { :display => "resource_pools"} }
+      let(:url_params) { {:display => "resource_pools"} }
 
       it "renders" do
         bypass_rescue

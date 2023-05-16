@@ -55,7 +55,6 @@ module VmCommon
       @refresh_partial = @showtype
     elsif @lastaction == "show" && ["config"].include?(@showtype)
       @refresh_partial = @showtype
-    elsif @lastaction == "show_list"
     else
       @refresh_partial = "layouts/flash_msg"
       @refresh_div = "flash_msg_div"
@@ -83,7 +82,7 @@ module VmCommon
   # to reload currently displayed summary screen in explorer
   def reload
     @_params[:id] = if x_node.split('-')[1] != params[:id] && params[:id].present?
-                      'v-' + params[:id]
+                      "v-#{params[:id]}"
                     else
                       x_node
                     end
@@ -123,10 +122,10 @@ module VmCommon
       end
     end
   end
-  alias_method :image_timeline, :show_timeline
-  alias_method :instance_timeline, :show_timeline
-  alias_method :vm_timeline, :show_timeline
-  alias_method :miq_template_timeline, :show_timeline
+  alias image_timeline show_timeline
+  alias instance_timeline show_timeline
+  alias vm_timeline show_timeline
+  alias miq_template_timeline show_timeline
 
   def x_show
     @vm = @record = identify_record(params[:id], VmOrTemplate)
@@ -145,6 +144,7 @@ module VmCommon
     @sb[:action] = params[:display]
 
     return if perfmenu_click?
+
     @display = params[:display] || "main" unless pagination_or_gtl_request?
     @display = params[:vm_tree] if params[:vm_tree]
 
@@ -252,7 +252,7 @@ module VmCommon
         drop_breadcrumb(:name => @record.name + _(" (Latest Compliance Check)"),
                         :url  => "/#{rec_cls}/show/#{@record.id}?display=#{@display}")
       else
-        drop_breadcrumb(:name => @record.name + _(" (Compliance History - Last %{number} Checks)") % {:number => count},
+        drop_breadcrumb(:name => @record.name + (_(" (Compliance History - Last %{number} Checks)") % {:number => count}),
                         :url  => "/#{rec_cls}/show/#{@record.id}?display=#{@display}")
       end
       @showtype = @display
@@ -397,7 +397,7 @@ module VmCommon
       @refresh_partial = "vm_common/snap"
     end
   end
-  alias_method :vm_snapshot_add, :snap
+  alias vm_snapshot_add snap
 
   def render_missing_field(session, missing_field_name)
     add_flash(_("%{missing_field_name} is required") %
@@ -486,7 +486,7 @@ module VmCommon
 
   # Set right_size selected db records
   def right_size(record = nil)
-    @record ||= record ? record : find_record_with_rbac(Vm, params[:id])
+    @record ||= record || find_record_with_rbac(Vm, params[:id])
     @lastaction = "right_size"
     @rightsize = true
     @in_a_form = true
@@ -524,10 +524,10 @@ module VmCommon
       @edit[:explorer] = true
     end
   end
-  alias_method :image_evm_relationship, :evm_relationship
-  alias_method :instance_evm_relationship, :evm_relationship
-  alias_method :vm_evm_relationship, :evm_relationship
-  alias_method :miq_template_evm_relationship, :evm_relationship
+  alias image_evm_relationship evm_relationship
+  alias instance_evm_relationship evm_relationship
+  alias vm_evm_relationship evm_relationship
+  alias miq_template_evm_relationship evm_relationship
 
   def delete
     @lastaction = "delete"
@@ -580,7 +580,7 @@ module VmCommon
 
   def edit
     @record = find_record_with_rbac(VmOrTemplate, params[:id]) # Set the VM object
-    
+
     # reset @explorer if coming from explorer views
     @edit ||= {}
     @edit[:explorer] = true if params[:action] == "x_button" || session.fetch_path(:edit, :explorer)
@@ -594,10 +594,10 @@ module VmCommon
   end
 
   # FIXME: these match toolbar button names/features
-  alias_method :image_edit, :edit
-  alias_method :instance_edit, :edit
-  alias_method :vm_edit, :edit
-  alias_method :miq_template_edit, :edit
+  alias image_edit edit
+  alias instance_edit edit
+  alias vm_edit edit
+  alias miq_template_edit edit
 
   def set_checked_items
     session[:checked_items] = []
@@ -609,7 +609,7 @@ module VmCommon
       end
     end
     @lastaction = "set_checked_items"
-    head :ok
+    head 200
   end
 
   def scan_history
@@ -653,7 +653,7 @@ module VmCommon
     @sb[:action] = params[:action]
     params[:display] = "scan_histories"
     if !params[:show].nil? || !params[:x_show].nil?
-      id = params[:show] ? params[:show] : params[:x_show]
+      id = params[:show] || params[:x_show]
       @item = ScanHistory.find(id)
       drop_breadcrumb(:name => time_ago_in_words(@item.started_on.in_time_zone(Time.zone)).titleize, :url => "/vm/scan_history/#{@scan_history.vm_or_template_id}?show=#{@item.id}")
       @view = get_db_view(ScanHistory) # Instantiate the MIQ Report view object
@@ -678,11 +678,7 @@ module VmCommon
     elsif (blue_folder = vm.parent_blue_folder) && !blue_folder.hidden
       TreeBuilder.build_node_id(blue_folder)
     elsif vm.ems_id # has no folder parent but is in the tree
-      if vm.parent_datacenter
-        TreeBuilder.build_node_id(vm.parent_datacenter)
-      else
-        TreeBuilder.build_node_id(vm.ext_management_system)
-      end
+      TreeBuilder.build_node_id(vm.parent_datacenter || vm.ext_management_system)
     end
   end
 
@@ -742,7 +738,7 @@ module VmCommon
   def resolve_node_info(id)
     nodetype, id = id.split("-")
 
-    if nodetype == 'v' || nodetype == 't'
+    if ['v', 't'].include?(nodetype)
       @vm = VmOrTemplate.find(id)
       self.x_node = parent_folder_id(@vm)
     else
@@ -999,7 +995,7 @@ module VmCommon
         presenter.show(:custom_left_cell).hide(:default_left_cell)
       end
     elsif @sb[:action] || params[:display]
-      partial_locals = { :controller => 'vm' }
+      partial_locals = {:controller => 'vm'}
       if partial == 'layouts/x_gtl'
         partial_locals[:action_url] = @lastaction
 
@@ -1225,7 +1221,7 @@ module VmCommon
       header = _("Editing %{vm_or_template} \"%{name}\"") % {:name => name, :vm_or_template => model_for_vm(@record).display_name}
     when 'chargeback'
       partial = @refresh_partial
-      header = _('Chargeback preview for "%{vm_name}"') % { :vm_name => name }
+      header = _('Chargeback preview for "%{vm_name}"') % {:vm_name => name}
       action = 'vm_chargeback'
       @in_a_form = true
       @edit = {}
@@ -1300,29 +1296,30 @@ module VmCommon
       action = nil
     else
       # now take care of links on summary screen
-      partial = if @showtype == "details"
+      partial = case @showtype
+                when "details"
                   "layouts/x_gtl"
-                elsif @showtype == "item"
+                when "item"
                   "layouts/item"
-                elsif @showtype == "drift_history"
+                when "drift_history"
                   "layouts/#{@showtype}"
                 else
                   "#{@showtype == "compliance_history" ? "shared/views" : "vm_common"}/#{@showtype}"
                 end
-      if @showtype == "item"
-        header = _("%{action} \"%{item_name}\" for %{vm_or_template} \"%{name}\"") % {
-          :vm_or_template => ui_lookup(:table => table),
-          :name           => name,
-          :item_name      => @item.kind_of?(ScanHistory) ? @item.started_on.to_s : @item.name,
-          :action         => action_type(@sb[:action], 1)
-        }
-      else
-        header = _("\"%{action}\" for %{vm_or_template} \"%{name}\"") % {
-          :vm_or_template => ui_lookup(:table => table),
-          :name           => name,
-          :action         => action_type(@sb[:action], 2)
-        }
-      end
+      header = if @showtype == "item"
+                 _("%{action} \"%{item_name}\" for %{vm_or_template} \"%{name}\"") % {
+                   :vm_or_template => ui_lookup(:table => table),
+                   :name           => name,
+                   :item_name      => @item.kind_of?(ScanHistory) ? @item.started_on.to_s : @item.name,
+                   :action         => action_type(@sb[:action], 1)
+                 }
+               else
+                 _("\"%{action}\" for %{vm_or_template} \"%{name}\"") % {
+                   :vm_or_template => ui_lookup(:table => table),
+                   :name           => name,
+                   :action         => action_type(@sb[:action], 2)
+                 }
+               end
       action = nil
     end
     locals ||= {}
@@ -1336,7 +1333,7 @@ module VmCommon
   end
 
   def breadcrumb_prohibited_for_action?
-    !%w[accordion_select explorer tree_select].include?(action_name)
+    %w[accordion_select explorer tree_select].exclude?(action_name)
   end
 
   def gtl_url

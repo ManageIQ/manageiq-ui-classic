@@ -49,7 +49,7 @@ module Mixins
       def find_single_ems_for_action
         ems = find_record_with_rbac(model, params[:id])
         if ems.nil?
-          add_flash(_("%{record} no longer exists") % { :record => _(table_name.humanize) }, :error)
+          add_flash(_("%{record} no longer exists") % {:record => _(table_name.humanize)}, :error)
           return
         end
 

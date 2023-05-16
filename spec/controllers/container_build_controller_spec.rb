@@ -14,7 +14,7 @@ describe ContainerBuildController do
     EvmSpecHelper.create_guid_miq_server_zone
     ems = FactoryBot.create(:ems_openshift)
     container_build = ContainerBuild.create(:ext_management_system => ems, :name => "Test Build")
-    get :show, :params => { :id => container_build.id }
+    get :show, :params => {:id => container_build.id}
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
     expect(response).to render_template('layouts/_textual_groups_generic')

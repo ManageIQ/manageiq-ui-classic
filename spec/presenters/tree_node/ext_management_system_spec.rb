@@ -16,24 +16,24 @@ describe TreeNode::ExtManagementSystem do
 
   {
     # Infrastructure providers
-    :ems_openstack_infra              => { :tip_prefix => 'Ems Infra' },
-    :ems_redhat                       => { :tip_prefix => 'Ems Infra' },
-    :ems_vmware                       => { :tip_prefix => 'Ems Infra' },
+    :ems_openstack_infra              => {:tip_prefix => 'Ems Infra'},
+    :ems_redhat                       => {:tip_prefix => 'Ems Infra'},
+    :ems_vmware                       => {:tip_prefix => 'Ems Infra'},
     # Cloud providers
-    :ems_amazon                       => { :tip_prefix => 'Ems Cloud' },
-    :ems_azure                        => { :tip_prefix => 'Ems Cloud' },
-    :ems_google                       => { :tip_prefix => 'Ems Cloud' },
-    :ems_openstack                    => { :tip_prefix => 'Ems Cloud' },
-    :ems_vmware_cloud                 => { :tip_prefix => 'Ems Cloud' },
+    :ems_amazon                       => {:tip_prefix => 'Ems Cloud'},
+    :ems_azure                        => {:tip_prefix => 'Ems Cloud'},
+    :ems_google                       => {:tip_prefix => 'Ems Cloud'},
+    :ems_openstack                    => {:tip_prefix => 'Ems Cloud'},
+    :ems_vmware_cloud                 => {:tip_prefix => 'Ems Cloud'},
     # Other remaining providers
-    :automation_manager_ansible_tower => { :key_prefix => 'at-' },
+    :automation_manager_ansible_tower => {:key_prefix => 'at-'},
     :ems_physical_infra               => {},
     :ems_openshift                    => {},
     :ems_azure_network                => {},
     :ems_amazon_network               => {},
     :ems_google_network               => {},
     :ems_nuage_network                => {},
-    :ems_openstack_network            => { :suppress_callback => ManageIQ::Providers::Openstack::NetworkManager },
+    :ems_openstack_network            => {:suppress_callback => ManageIQ::Providers::Openstack::NetworkManager},
     :ems_vmware_cloud_network         => {},
     :ems_cinder                       => {},
     :ems_swift                        => {},
@@ -47,7 +47,7 @@ describe TreeNode::ExtManagementSystem do
     # :ems_storage                       => {}
   }.each do |factory, spec|
     context(factory.to_s) do
-      before(:all) { spec[:suppress_callback].skip_callback(:save, :after, :stop_event_monitor_queue_on_change) if spec[:suppress_callback] }
+      before(:all) { spec[:suppress_callback]&.skip_callback(:save, :after, :stop_event_monitor_queue_on_change) }
 
       let(:object) { FactoryBot.create(factory) }
 

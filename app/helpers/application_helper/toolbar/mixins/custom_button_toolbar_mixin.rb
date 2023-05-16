@@ -53,6 +53,7 @@ module ApplicationHelper::Toolbar::Mixins::CustomButtonToolbarMixin
   # - decide where to look for id of checked records
   def relationship_table_screen?
     return false if @display.nil?
+
     display_class = @display.camelize.singularize
     return false unless custom_button_appliable_class?(display_class)
 
@@ -60,7 +61,7 @@ module ApplicationHelper::Toolbar::Mixins::CustomButtonToolbarMixin
     display_model = custom_button_class_model(display_class)
     # method is accessed twice from a different location - from toolbar builder
     # and custom button mixin - and so controller class changes
-    ctrl = self.class == ApplicationHelper::ToolbarBuilder ? controller : self
+    ctrl = instance_of?(ApplicationHelper::ToolbarBuilder) ? controller : self
     controller_model = ctrl.class.model
 
     display_model != controller_model && show_action

@@ -149,7 +149,7 @@ module OpsController::Settings::Schedules
     schedule = MiqSchedule.find(params[:id])
 
     if schedule_check_compliance?(schedule)
-      action_type = schedule.resource_type.underscore + "_" + schedule.sched_action[:method]
+      action_type = "#{schedule.resource_type.underscore}_#{schedule.sched_action[:method]}"
     elsif schedule_automation_request?(schedule)
       action_type = schedule.sched_action[:method]
       automate_request = fetch_automate_request_vars(schedule)
@@ -329,13 +329,13 @@ module OpsController::Settings::Schedules
     when "ems"
       filtered_item_list = if %w[emscluster host host_check_compliance storage].include?(action_type)
                              find_filtered(ExtManagementSystem).collect { |ems| ems.name if ems.number_of(:hosts).positive? }
-                                                               .delete_if(&:blank?).sort_by(&:downcase)
+                                                               .compact_blank!.sort_by(&:downcase)
                            else
                              find_filtered(ExtManagementSystem).sort_by { |vm| vm.name.downcase }.collect(&:name).uniq
                            end
     when "cluster"
       filtered_item_list = find_filtered(EmsCluster).collect do |cluster|
-        [cluster.name + "__" + cluster.v_parent_datacenter, cluster.v_qualified_desc]
+        ["#{cluster.name}__#{cluster.v_parent_datacenter}", cluster.v_qualified_desc]
       end.sort_by { |cluster| cluster.first.downcase }.uniq
     when "storage"
       filtered_item_list = find_filtered(Storage).sort_by { |ds| ds.name.downcase }.collect(&:name).uniq
@@ -374,7 +374,7 @@ module OpsController::Settings::Schedules
           filter_value = nil
         elsif key == "AND" # Cluster name and datacenter
           filter_type = "cluster"
-          filter_value = schedule.filter.exp[key][0]["="]["value"] + "__" + schedule.filter.exp[key][1]["="]["value"]
+          filter_value = "#{schedule.filter.exp[key][0]["="]["value"]}__#{schedule.filter.exp[key][1]["="]["value"]}"
         else
           case schedule.filter.exp[key]["field"]
           when "Vm.ext_management_system-name",
@@ -435,12 +435,10 @@ module OpsController::Settings::Schedules
         valid = false
       end
     end
-    unless flash_errors?
-      if sched.run_at[:interval][:unit] == "once" &&
+    if !flash_errors? && (sched.run_at[:interval][:unit] == "once" &&
          sched.run_at[:start_time].to_time.utc < Time.now.utc &&
-         sched.enabled == true
-        add_flash(_("Warning: This 'Run Once' timer is in the past and will never run as currently configured"), :warning)
-      end
+         sched.enabled == true)
+      add_flash(_("Warning: This 'Run Once' timer is in the past and will never run as currently configured"), :warning)
     end
     valid
   end
@@ -454,7 +452,7 @@ module OpsController::Settings::Schedules
 
     build_schedule_options_for_select
 
-    one_month_ago = Time.zone.now - 1.month
+    one_month_ago = 1.month.ago
     @one_month_ago = {
       :year  => one_month_ago.year,
       :month => one_month_ago.month - 1, # Javascript counts months 0-11
@@ -514,7 +512,7 @@ module OpsController::Settings::Schedules
 
     klass = params[:target_class].constantize
     object = klass.find(params[:target_id])
-    { MiqAeEngine.create_automation_attribute_key(object).to_s => MiqAeEngine.create_automation_attribute_value(object) }
+    {MiqAeEngine.create_automation_attribute_key(object).to_s => MiqAeEngine.create_automation_attribute_value(object)}
   end
 
   def parse_filter_value(filter_value)
@@ -765,7 +763,7 @@ module OpsController::Settings::Schedules
     type = FileDepot.supported_protocols[params[:uri_prefix]]
     raise _("Invalid or unsupported file depot type.") if type.nil?
 
-    protocols = FileDepot.supported_depots.map { |k, _v| [k, k.constantize] }.to_h
+    protocols = FileDepot.supported_depots.to_h { |k, _v| [k, k.constantize] }
     if protocols[type].try(:requires_credentials?)
       log_password = params[:log_password] || file_depot.try(:authentication_password)
       uri_settings = {:username => params[:log_userid], :password => log_password}

@@ -3,7 +3,7 @@ describe ApplicationHelper::Button::MiqTaskCanceljob do
 
   describe '#visible?' do
     subject { button.visible? }
-    %w(all_tasks my_tasks).each do |layout|
+    %w[all_tasks my_tasks].each do |layout|
       context "when layout == #{layout}" do
         let(:layout) { layout }
         it { is_expected.to be_truthy }

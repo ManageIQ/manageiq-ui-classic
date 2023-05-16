@@ -27,18 +27,18 @@ class EmsInfraController < ApplicationController
     @table_name ||= "ems_infra"
   end
 
+  def index
+    redirect_to(:action => 'show_list')
+  end
+
   def show
-    @breadcrumbs =  [{:name => _('Infrastructure Providers'), :url => '/ems_infra/show_list'}]
+    @breadcrumbs = [{:name => _('Infrastructure Providers'), :url => '/ems_infra/show_list'}]
     super
   end
 
   def show_list
     @showtype = nil
     super
-  end
-
-  def index
-    redirect_to(:action => 'show_list')
   end
 
   def scaling
@@ -152,20 +152,20 @@ class EmsInfraController < ApplicationController
         if nodes_json.nil?
           add_flash(_("JSON file format is incorrect, missing 'nodes'."), :error)
         end
-      rescue StandardError => ex
+      rescue => ex
         add_flash(_("Cannot parse JSON file: %{message}") % {:message => ex}, :error)
       end
 
       if nodes_json
         begin
           @infra.workflow_service
-        rescue StandardError => ex
+        rescue => ex
           add_flash(_("Cannot connect to workflow service: %{message}") % {:message => ex}, :error)
           return
         end
         begin
           state, response = @infra.register_and_configure_nodes(nodes_json)
-        rescue StandardError => ex
+        rescue => ex
           add_flash(_("Error executing register and configure workflows: %{message}") % {:message => ex}, :error)
           return
         end
@@ -252,7 +252,7 @@ class EmsInfraController < ApplicationController
         add_flash(return_message)
         flash_to_session
         redirect_to(ems_infra_path(provider_id))
-      rescue StandardError => ex
+      rescue => ex
         add_flash(_("Unable to initiate scale up: %{message}") % {:message => ex}, :error)
       end
     end
@@ -266,7 +266,7 @@ class EmsInfraController < ApplicationController
         add_flash(return_message)
         flash_to_session
         redirect_to(ems_infra_path(provider_id))
-      rescue StandardError => ex
+      rescue => ex
         add_flash(_("Unable to initiate scale down: %{message}") % {:message => ex}, :error)
       end
     end

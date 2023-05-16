@@ -8,14 +8,14 @@ describe ContainerImageController do
     ApplicationController.handle_exceptions = true
 
     expect(controller).to receive(:scan_images)
-    post :button, :params => { :pressed => 'container_image_scan', :format => :js }
+    post :button, :params => {:pressed => 'container_image_scan', :format => :js}
     expect(controller.send(:flash_errors?)).not_to be_truthy
   end
 
   it "when Check Compliance is pressed with no images" do
     ApplicationController.handle_exceptions = true
 
-    post :button, :params => { :pressed => 'container_image_check_compliance', :format => :js }
+    post :button, :params => {:pressed => 'container_image_check_compliance', :format => :js}
     expect(response.body).to match(/Can.+t access records without an id/)
   end
 
@@ -37,7 +37,7 @@ describe ContainerImageController do
     EvmSpecHelper.create_guid_miq_server_zone
     ems = FactoryBot.create(:ems_kubernetes)
     container_image = ContainerImage.create(:ext_management_system => ems, :name => "Test Image")
-    get :show, :params => { :id => container_image.id }
+    get :show, :params => {:id => container_image.id}
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
     expect(assigns(:breadcrumbs)).to eq([{:name => "Container Images",
@@ -53,7 +53,7 @@ describe ContainerImageController do
       @image = FactoryBot.create(:container_image)
     end
 
-    subject { get :show, :params => { :id => @image.id } }
+    subject { get :show, :params => {:id => @image.id} }
 
     context "render" do
       render_views

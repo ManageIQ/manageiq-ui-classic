@@ -1,7 +1,8 @@
 module TextualMixins::TextualPatches
   def textual_patches
     os = @record.os_image_name.downcase
-    return nil if os == "unknown" || os =~ /linux/
+    return nil if os == "unknown" || os.include?('linux')
+
     num = @record.number_of(:patches)
     h = {:label => _("Patches"), :icon => "fa fa-shield", :value => num}
     if num.positive?

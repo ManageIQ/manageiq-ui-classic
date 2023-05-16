@@ -185,7 +185,7 @@ module ApplicationController::Filter
               chosen_field_col_type = MiqExpression.parse_field_or_tag(params[:chosen_field]).try(:column_type)
               if exp_model != '_display_filter_' &&
                  MiqExpression::Field.parse(exp_field).plural? &&
-                 !%i[date datetime].include?(chosen_field_col_type) &&
+                 %i[date datetime].exclude?(chosen_field_col_type) &&
                  chosen_field_col_type.object_id != :integer.object_id
                 self.exp_key = 'CONTAINS' # CONTAINS is valid only for plural tables
               else
@@ -334,12 +334,10 @@ module ApplicationController::Filter
         if params[:chosen_from_1]
           exp_value[0] = params[:chosen_from_1]
           val1[:through_choices] = Expression.through_choices(params[:chosen_from_1])
-          if (exp_typ == 'field' && exp_key == EXP_FROM) ||
-             (exp_typ == 'find' && exp_skey == EXP_FROM)
-            # If the through value is not in the through choices, set it to the first choice
-            unless val1[:through_choices].include?(exp_value[1])
-              exp_value[1] = val1[:through_choices].first
-            end
+          # If the through value is not in the through choices, set it to the first choice
+          if ((exp_typ == 'field' && exp_key == EXP_FROM) ||
+                       (exp_typ == 'find' && exp_skey == EXP_FROM)) && val1[:through_choices].exclude?(exp_value[1])
+            exp_value[1] = val1[:through_choices].first
           end
         end
         exp_value[1] = params[:chosen_through_1] if params[:chosen_through_1]
@@ -347,11 +345,9 @@ module ApplicationController::Filter
         if params[:chosen_from_2]
           exp_cvalue[0] = params[:chosen_from_2]
           val2[:through_choices] = Expression.through_choices(params[:chosen_from_2])
-          if exp_ckey == EXP_FROM
-            # If the through value is not in the through choices, set it to the first choice
-            unless val2[:through_choices].include?(exp_cvalue[1])
-              exp_cvalue[1] = val2[:through_choices].first
-            end
+          # If the through value is not in the through choices, set it to the first choice
+          if exp_ckey == EXP_FROM && val2[:through_choices].exclude?(exp_cvalue[1])
+            exp_cvalue[1] = val2[:through_choices].first
           end
         end
         exp_cvalue[1] = params[:chosen_through_2] if params[:chosen_through_2]
@@ -423,15 +419,13 @@ module ApplicationController::Filter
       prefill_val_types
 
       self.val1_suffix = self.val2_suffix = nil
-      unless exp_value == :user_input                         # Ignore user input fields
-        if val1 && val1[:type] == :bytes
-          if is_numeric?(exp_value)                           # Value is a number
-            self.val1_suffix = :bytes                         #  Default to :bytes
-            self.exp_value = exp_value.to_s                   #  Get the value
-          else                                                # Value is a string
-            self.val1_suffix = exp_value.split('.').last.to_sym # Get the suffix
-            self.exp_value = exp_value.split('.')[0...-1].join('.') # Remove the suffix
-          end
+      if exp_value != :user_input && (val1 && val1[:type] == :bytes)
+        if is_numeric?(exp_value)                           # Value is a number
+          self.val1_suffix = :bytes                         #  Default to :bytes
+          self.exp_value = exp_value.to_s                   #  Get the value
+        else                                                # Value is a string
+          self.val1_suffix = exp_value.split('.').last.to_sym # Get the suffix
+          self.exp_value = exp_value.split('.')[0...-1].join('.') # Remove the suffix
         end
       end
       if val2 && val2[:type] == :bytes
@@ -507,17 +501,15 @@ module ApplicationController::Filter
       prefill_val_types
 
       # Convert to/from "<date>" and "<date time>" strings in the exp_value array for specific date/times
-      if self[exp_valx][:date_format] == 's'
-        if [:datetime, :date].include?(self[exp_valx][:type])
-          self[exp_value].each_with_index do |v, v_idx|
-            next if v.blank?
+      if self[exp_valx][:date_format] == 's' && [:datetime, :date].include?(self[exp_valx][:type])
+        self[exp_value].each_with_index do |v, v_idx|
+          next if v.blank?
 
-            self[exp_value][v_idx] = if params[chosen_key] == EXP_IS || self[exp_valx][:type] == :date
-                                       v.split(' ').first if v.include?(':')
-                                     else
-                                       v + ' 00:00' unless v.include?(':')
-                                     end
-          end
+          self[exp_value][v_idx] = if params[chosen_key] == EXP_IS || self[exp_valx][:type] == :date
+                                     v.split.first if v.include?(':')
+                                   else
+                                     "#{v} 00:00" unless v.include?(':')
+                                   end
         end
       end
     end
@@ -543,13 +535,13 @@ module ApplicationController::Filter
       value_key       = "val#{param_key_suffix[0]}".to_sym
       exp_value_key   = param_key_suffix.starts_with?('1') ? :exp_value : :exp_cvalue
 
-      date = params[param_date_key] || (params[param_time_key] && self[exp_value_key][exp_value_index].split(' ').first)
+      date = params[param_date_key] || (params[param_time_key] && self[exp_value_key][exp_value_index].split.first)
       time = params[param_time_key] if params[param_time_key]
 
       if time.to_s.blank? && self[value_key][:type] == :datetime && self[exp_key] != EXP_IS
         time = '00:00' # If time is blank, add in midnight if needed
       end
-      time = " #{time}" unless time.to_s.blank? # Prepend a blank, if time is non-blank
+      time = " #{time}" if time.to_s.present? # Prepend a blank, if time is non-blank
 
       self[exp_value_key][exp_value_index] = "#{date}#{time}"
     end

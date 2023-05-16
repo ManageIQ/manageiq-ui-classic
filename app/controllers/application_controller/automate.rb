@@ -36,7 +36,7 @@ module ApplicationController::Automate
   # Copy current URI as an automate button
   def resolve_button_copy
     session[:resolve_object] = copy_hash(@resolve)
-    head :ok
+    head 200
   end
   private :resolve_button_copy
 

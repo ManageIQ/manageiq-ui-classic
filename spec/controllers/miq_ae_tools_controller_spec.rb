@@ -54,7 +54,7 @@ describe MiqAeToolsController do
 
       expect(assigns(:importable_domain_options)).to eq([
                                                           ["<Same as import from>", nil],
-                                                          %w(test_domain test_domain)
+                                                          %w[test_domain test_domain]
                                                         ])
     end
   end
@@ -473,7 +473,7 @@ describe MiqAeToolsController do
         post :upload_import_file, :params => params, :xhr => true
         expect(response).to redirect_to(
           :action                => :review_import,
-          :import_file_upload_id => 123,
+          :import_file_upload_id => 123
         )
         expect(session[:flash_msgs]).to match [a_hash_including(:message => "Import file was uploaded successfully", :level => :success)]
       end

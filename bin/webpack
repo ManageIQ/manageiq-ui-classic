@@ -5,10 +5,10 @@ require "shellwords"
 require "yaml"
 
 ENV["RAILS_ENV"] ||= "development"
-RAILS_ENV = ENV["RAILS_ENV"]
+RAILS_ENV = ENV.fetch("RAILS_ENV", nil)
 
 ENV["NODE_ENV"] ||= RAILS_ENV
-NODE_ENV = ENV["NODE_ENV"]
+NODE_ENV = ENV.fetch("NODE_ENV", nil)
 
 APP_PATH          = File.expand_path("../", __dir__)
 NODE_MODULES_PATH = File.join(APP_PATH, "node_modules")
@@ -31,7 +31,7 @@ has_legacy_openssl = system('node --help | grep -qs "\\--openssl-legacy-provider
 node_options = "--max_old_space_size=4096"
 node_options << " --openssl-legacy-provider" if has_legacy_openssl
 
-newenv  = {
+newenv = {
   "NODE_PATH"    => NODE_MODULES_PATH.shellescape,
   "NODE_OPTIONS" => node_options
 }

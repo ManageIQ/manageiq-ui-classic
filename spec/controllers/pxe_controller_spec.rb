@@ -24,25 +24,25 @@ describe PxeController do
 
   describe 'x_button' do
     let!(:server) { EvmSpecHelper.local_miq_server }
-    let(:pending_actions) { %w(pxe_image_tag windows_image_tag) }
+    let(:pending_actions) { %w[pxe_image_tag windows_image_tag] }
     let(:allowed_actions) { PxeController::PXE_X_BUTTON_ALLOWED_ACTIONS.keys - pending_actions }
 
     before do
       ApplicationController.handle_exceptions = true
-      login_as user_with_feature(%w(pxe_server_accord pxe_server_refresh) + allowed_actions)
+      login_as user_with_feature(%w[pxe_server_accord pxe_server_refresh] + allowed_actions)
     end
     describe 'corresponding methods are called for allowed actions' do
       PxeController::PXE_X_BUTTON_ALLOWED_ACTIONS.each_pair do |action_name, method|
         it "calls the appropriate method: '#{method}' for action '#{action_name}'" do
           pending("Action hasn't been fully implemented with toolbar entries or features yet") if pending_actions.include?(action_name)
           expect(controller).to receive(method)
-          get :x_button, :params => { :pressed => action_name }
+          get :x_button, :params => {:pressed => action_name}
         end
       end
     end
 
     it 'exception is raised for unknown action' do
-      get :x_button, :params => { :pressed => 'random_dude', :format => :html }
+      get :x_button, :params => {:pressed => 'random_dude', :format => :html}
       expect(response).to render_template('layouts/exception')
     end
 
@@ -90,7 +90,7 @@ describe PxeController do
         )
       )
       expect(controller).to receive(:render)
-      controller.send(:replace_right_cell, :replace_trees => %i(pxe_servers pxe_image_types customization_templates iso_datastores))
+      controller.send(:replace_right_cell, :replace_trees => %i[pxe_servers pxe_image_types customization_templates iso_datastores])
     end
   end
 

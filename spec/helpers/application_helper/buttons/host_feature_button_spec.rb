@@ -11,7 +11,7 @@ describe ApplicationHelper::Button::HostFeatureButton do
     subject { button.visible? }
 
     context 'when record.kind_of?(ManageIQ::Providers::Openstack::InfraManager)' do
-      %w(start stop).each do |feature|
+      %w[start stop].each do |feature|
         context "and feature is #{feature}" do
           let(:feature) { feature }
           it { expect(subject).to be_truthy }

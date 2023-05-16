@@ -77,7 +77,7 @@ module ApplicationHelper
 
   def hidden_tag_if(tag, condition, options = {}, &block)
     options[:style] = "display: none" if condition
-    if block_given?
+    if block
       content_tag(tag, options, &block)
     else
       # TODO: Remove this old open-tag-only way in favor of block style
@@ -87,8 +87,8 @@ module ApplicationHelper
 
   def hover_class(item)
     if item.fetch_path(:link) ||
-       item.fetch_path(:value).kind_of?(Array) &&
-       item[:value].any? { |val| val[:link] }
+       (item.fetch_path(:value).kind_of?(Array) &&
+       item[:value].any? { |val| val[:link] })
       ''
     else
       'no-hover'
@@ -174,6 +174,7 @@ module ApplicationHelper
     return @display.classify if @display && @display != "main"
     return params[:db].classify if params[:db]
     return params[:display].classify if params[:display]
+
     controller.class.model.to_s if defined? controller.class.model
   end
 
@@ -209,16 +210,17 @@ module ApplicationHelper
     if item && restful_routed?(item)
       return polymorphic_path(item)
     end
+
     if @vm && %w[Account User Group Patch GuestApplication].include?(db)
-      return url_for_only_path(:controller => "vm_or_template",
-                               :action     => @lastaction,
-                               :id         => @vm,
-                               :show       => @id)
+      url_for_only_path(:controller => "vm_or_template",
+                        :action     => @lastaction,
+                        :id         => @vm,
+                        :show       => @id)
     elsif @host && %w[Patch GuestApplication].include?(db)
-      return url_for_only_path(:controller => "host", :action => @lastaction, :id => @host, :show => @id)
+      url_for_only_path(:controller => "host", :action => @lastaction, :id => @host, :show => @id)
     else
       controller, action = db_to_controller(db, action)
-      return url_for_only_path(:controller => controller, :action => action, :id => @id)
+      url_for_only_path(:controller => controller, :action => action, :id => @id)
     end
   end
 
@@ -254,7 +256,7 @@ module ApplicationHelper
 
       if request[:controller] == 'service' && view.db == 'GenericObject'
         action = 'show'
-        return url_for_only_path(:action => action, :id => params[:id]) + "?display=generic_objects&generic_object_id="
+        return "#{url_for_only_path(:action => action, :id => params[:id])}?display=generic_objects&generic_object_id="
       end
       if @explorer
         # showing a list view of another CI inside vmx
@@ -269,10 +271,10 @@ module ApplicationHelper
               CloudSubnet
               LoadBalancer
               CloudVolume].include?(view.db)
-          return url_for_only_path(:controller => controller, :action => "show") + "/"
+          "#{url_for_only_path(:controller => controller, :action => "show")}/"
         elsif ["Vm"].include?(view.db) && parent && request.parameters[:controller] != "vm"
           # this is to handle link to a vm in vm explorer from service explorer
-          return url_for_only_path(:controller => "vm_or_template", :action => "show") + "/"
+          "#{url_for_only_path(:controller => "vm_or_template", :action => "show")}/"
         elsif %w[MiqWidget
                  ConfigurationScript
                  MiqReportResult].include?(view.db) &&
@@ -281,17 +283,17 @@ module ApplicationHelper
           if params[:tab_id] == "saved_reports" || params[:pressed] == "miq_report_run" || params[:action] == "reload"
             suffix = x_node
           end
-          return "/" + request.parameters[:controller] + "/tree_select?id=" + suffix
+          "/#{request.parameters[:controller]}/tree_select?id=#{suffix}"
         elsif %w[User MiqGroup MiqUserRole Tenant].include?(view.db) &&
               %w[ops].include?(request.parameters[:controller])
           if @tagging
-            return false # when tagging Users, Groups, Roles and Tenants, the table is non-clickable
+            false # when tagging Users, Groups, Roles and Tenants, the table is non-clickable
           else
-            return "/" + request.parameters[:controller] + "/tree_select/?id=" + x_node.split("-")[1]
+            "/#{request.parameters[:controller]}/tree_select/?id=#{x_node.split("-")[1]}"
           end
         elsif view.db == "MiqServer" &&
               %w[ops report].include?(request.parameters[:controller])
-          return "/" + request.parameters[:controller] + "/tree_select/?id=" + TREE_WITH_TAB[active_tab]
+          "/#{request.parameters[:controller]}/tree_select/?id=#{TREE_WITH_TAB[active_tab]}"
         elsif %w[ScanItemSet
                  MiqSchedule
                  PxeServer
@@ -299,9 +301,9 @@ module ApplicationHelper
                  Storage
                  CustomizationTemplate].include?(view.db) &&
               %w[ops pxe report].include?(params[:controller])
-          return "/#{params[:controller]}/tree_select/?id=#{TreeBuilder.get_prefix_for_model(view.db)}"
+          "/#{params[:controller]}/tree_select/?id=#{TreeBuilder.get_prefix_for_model(view.db)}"
         else
-          return url_for_only_path(:action => action) + "/" # In explorer, don't jump to other controllers
+          "#{url_for_only_path(:action => action)}/" # In explorer, don't jump to other controllers
         end
       else
         controller = case controller
@@ -317,14 +319,14 @@ module ApplicationHelper
 
         return url_for_only_path(:controller => 'restful_redirect', :model => 'ExtManagementSystem') if controller == 'ext_management_system'
 
-        return url_for_only_path(:controller => controller, :action => action, :id => nil) + "/"
+        "#{url_for_only_path(:controller => controller, :action => action, :id => nil)}/"
       end
     else
       # need to add a check for @explorer while setting controller incase building a link for details screen to show items
       # i.e users list view screen inside explorer needs to point to vm_or_template controller
-      return url_for_only_path(:controller => parent.kind_of?(VmOrTemplate) && !@explorer ? parent.class.base_model.to_s.underscore : request.parameters["controller"],
-                               :action     => association,
-                               :id         => parent.id) + "?#{@explorer ? "x_show" : "show"}="
+      url_for_only_path(:controller => parent.kind_of?(VmOrTemplate) && !@explorer ? parent.class.base_model.to_s.underscore : request.parameters["controller"],
+                        :action     => association,
+                        :id         => parent.id) + "?#{@explorer ? "x_show" : "show"}="
     end
   end
 
@@ -436,9 +438,7 @@ module ApplicationHelper
   end
 
   # Method to create the center toolbar XML
-  def build_toolbar(tb_name)
-    _toolbar_builder.build_toolbar(tb_name)
-  end
+  delegate :build_toolbar, :to => :_toolbar_builder
 
   def _toolbar_builder
     ToolbarBuilder.new(
@@ -472,7 +472,7 @@ module ApplicationHelper
       :tabform          => @tabform,
       :widget_running   => @widget_running,
       :widgetsets       => @widgetsets,
-      :render_chart     => @render_chart,
+      :render_chart     => @render_chart
     )
   end
 
@@ -483,7 +483,7 @@ module ApplicationHelper
   end
 
   def controller_model_name(controller)
-    ui_lookup(:model => (controller.camelize + "Controller").constantize.model.name)
+    ui_lookup(:model => "#{controller.camelize}Controller".constantize.model.name)
   end
 
   def is_browser?(name)
@@ -554,6 +554,7 @@ module ApplicationHelper
 
   def javascript_for_miq_button_visibility_changed(changed)
     return "" if changed == session[:changed]
+
     session[:changed] = changed
     javascript_for_miq_button_visibility(changed)
   end
@@ -578,7 +579,7 @@ module ApplicationHelper
   def perf_parent?
     @perf_options[:model] == "VmOrTemplate" &&
       @perf_options[:typ] != "realtime" &&
-      VALID_PERF_PARENTS.keys.include?(@perf_options[:parent])
+      VALID_PERF_PARENTS.key?(@perf_options[:parent])
   end
 
   # Determine the type of report (performance/trend/chargeback) based on the model
@@ -722,10 +723,10 @@ module ApplicationHelper
 
     if (@lastaction != "show" || (@lastaction == "show" && @display != "main")) &&
        @record &&
-       (@record.respond_to?('name') && !@record.name.nil?)
-      return true
+       (@record.respond_to?(:name) && !@record.name.nil?)
+      true
     else
-      return false
+      false
     end
   end
 
@@ -814,14 +815,14 @@ module ApplicationHelper
   end
 
   def expression_selected_nil_or_id(search_id)
-    @edit[:expression][:selected].nil? && @edit[:selected].nil? || expression_selected_id_or_name(:id, search_id.to_i)
+    (@edit[:expression][:selected].nil? && @edit[:selected].nil?) || expression_selected_id_or_name(:id, search_id.to_i)
   end
 
   # Returns description of a filter, for default filter also with "(Default)"
   def search_description(search)
     if default_search?(search.name) ||
-       @edit && no_default_search?(search.id) &&
-       settings_default('0', :default_search, @edit&.dig(@expkey, :exp_model).to_s.to_sym).to_s == '0'
+       (@edit && no_default_search?(search.id) &&
+       settings_default('0', :default_search, @edit&.dig(@expkey, :exp_model).to_s.to_sym).to_s == '0')
       _("%{description} (Default)") % {:description => search.description}
     else
       _("%{description}") % {:description => search.description}
@@ -831,8 +832,8 @@ module ApplicationHelper
   # Returns class for a filter from Global filters to highlight it
   def def_searches_active_filter?(search)
     if @edit && @edit[:expression] &&
-       ((default_search?(search.name) || no_default_search?(search.id)) && expression_selected_nil_or_id(search.id) ||
-        (@edit[:expression][:selected] && @edit[:expression][:selected][:id].zero? && search.id.to_i.zero? ||
+       (((default_search?(search.name) || no_default_search?(search.id)) && expression_selected_nil_or_id(search.id)) ||
+        ((@edit[:expression][:selected] && @edit[:expression][:selected][:id].zero? && search.id.to_i.zero?) ||
          expression_selected_id_or_name(:name, search.name)))
       'active'
     else
@@ -843,8 +844,8 @@ module ApplicationHelper
   # Returns class for a filter from My filters to highlight it
   def my_searches_active_filter?(search)
     if @edit && @edit[:expression] &&
-       (default_search?(search.name) && expression_selected_nil_or_id(search.id) ||
-        (@edit[:expression][:selected].nil? && search.id.to_i.zero? ||
+       ((default_search?(search.name) && expression_selected_nil_or_id(search.id)) ||
+        ((@edit[:expression][:selected].nil? && search.id.to_i.zero?) ||
          expression_selected_id_or_name(:name, search.name)))
       'active'
     else
@@ -854,7 +855,7 @@ module ApplicationHelper
 
   # Do we show or hide the clear_search link in the list view title
   def clear_search_status
-    !!(@edit&.fetch_path(:adv_search_applied, :text))
+    !!@edit&.fetch_path(:adv_search_applied, :text)
   end
 
   # Should we allow the user input checkbox be shown for an atom in the expression editor
@@ -864,13 +865,13 @@ module ApplicationHelper
     return true if @edit[:expression_method]
     return false unless @edit[:adv_search_open] # Only allow user input for advanced searches
     return false unless QS_VALID_USER_INPUT_OPERATORS.include?(@edit[@expkey][:exp_key])
-    val = (@edit[@expkey][:exp_typ] == "field" && # Field atoms with certain field types return true
+
+    (@edit[@expkey][:exp_typ] == "field" && # Field atoms with certain field types return true
            QS_VALID_FIELD_TYPES.include?(@edit[@expkey][:val1][:type])) ||
-          (@edit[@expkey][:exp_typ] == "tag" && # Tag atoms with a tag category chosen return true
-           @edit[@expkey][:exp_tag]) ||
-          (@edit[@expkey][:exp_typ] == "count" && # Count atoms with a count col chosen return true
-              @edit[@expkey][:exp_count])
-    val
+      (@edit[@expkey][:exp_typ] == "tag" && # Tag atoms with a tag category chosen return true
+       @edit[@expkey][:exp_tag]) ||
+      (@edit[@expkey][:exp_typ] == "count" && # Count atoms with a count col chosen return true
+          @edit[@expkey][:exp_count])
   end
 
   # Should we allow the field alias checkbox to be shown for an atom in the expression editor
@@ -884,6 +885,7 @@ module ApplicationHelper
 
   def model_for_vm(record)
     raise _("Record is not VmOrTemplate class") unless record.kind_of?(VmOrTemplate)
+
     if record.kind_of?(ManageIQ::Providers::CloudManager::Vm)
       ManageIQ::Providers::CloudManager::Vm
     elsif record.kind_of?(ManageIQ::Providers::InfraManager::Vm)
@@ -950,6 +952,7 @@ module ApplicationHelper
 
   def perfmenu_click?
     return false unless params[:menu_click]
+
     perf_menu_click
     true
   end
@@ -958,10 +961,10 @@ module ApplicationHelper
     # there's no model for ResourceController - defaulting to traditional routing
     begin
       model = self.class.model
-    rescue StandardError => _err
+    rescue => _err
       model = nil
     end
-    if model && args.class == Hash && args[:action] == 'show' && restful_routed?(model)
+    if model && args.instance_of?(Hash) && args[:action] == 'show' && restful_routed?(model)
       args.delete(:action)
       polymorphic_path_redirect(model, args)
     else
@@ -977,7 +980,7 @@ module ApplicationHelper
   end
 
   def polymorphic_path_redirect(model, args)
-    record = args[:record] ? args[:record] : model.find(args[:id] || params[:id])
+    record = args[:record] || model.find(args[:id] || params[:id])
     args.delete(:record)
     args.delete(:id)
     polymorphic_path(record, args)
@@ -1029,7 +1032,7 @@ module ApplicationHelper
   end
 
   def pdf_page_size_style
-    "#{@options[:page_layout]}"
+    (@options[:page_layout]).to_s
   end
 
   DOWNLOAD_VIEW_LAYOUTS = %w[action
@@ -1127,16 +1130,14 @@ module ApplicationHelper
   end
 
   def miq_tab_header(id, active = nil, options = {}, &_block)
-    tag_options = {:class => "#{options[:class]} #{active == id ? 'active' : ''}",
-                   'role' => 'tab',
-                   'aria-selected' => "#{active == id ? 'true' : 'false'}",
-                   'aria-controls' => "#{id}",
-                   :id    => "#{id}_tab"}.merge!(options)
+    tag_options = {:class          => "#{options[:class]} #{active == id ? 'active' : ''}",
+                   'role'          => 'tab',
+                   'aria-selected' => (active == id ? 'true' : 'false').to_s,
+                   'aria-controls' => id.to_s,
+                   :id             => "#{id}_tab"}.merge!(options)
 
     content_tag(:li, tag_options) do
-      content_tag(:a, :href => "##{id}", 'data-toggle' => 'tab') do
-        yield
-      end
+      content_tag(:a, :href => "##{id}", 'data-toggle' => 'tab', &_block)
     end
   end
 
@@ -1265,7 +1266,7 @@ module ApplicationHelper
 
   def translate_header_text(text)
     if text == "Region"
-      Vmdb::Appliance.PRODUCT_NAME + " " + _(text)
+      "#{Vmdb::Appliance.PRODUCT_NAME} #{_(text)}"
     else
       _(text)
     end
@@ -1333,7 +1334,8 @@ module ApplicationHelper
 
   def safe_right_cell_text
     return '' if @right_cell_text.nil?
-    ActiveSupport::SafeBuffer === @right_cell_text ? raw(@right_cell_text) : @right_cell_text
+
+    @right_cell_text.kind_of?(ActiveSupport::SafeBuffer) ? raw(@right_cell_text) : @right_cell_text
   end
 
   def camelize_quadicon(quad)

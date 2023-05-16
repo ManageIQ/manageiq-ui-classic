@@ -31,14 +31,14 @@ describe VmOrTemplateController do
     end
   end
 
-  %w(
+  %w[
     drift_to_csv
     drift_to_pdf
     drift_to_txt
     launch_html5_console
     launch_vmrc_console
     vm_show
-  ).each do |path|
+  ].each do |path|
     describe "##{path}" do
       it "routes with GET" do
         expect(get("/vm_or_template/#{path}")).to route_to("vm_or_template##{path}")
@@ -46,7 +46,7 @@ describe VmOrTemplateController do
     end
   end
 
-  %w(
+  %w[
     accordion_select
     advanced_settings
     button
@@ -98,7 +98,7 @@ describe VmOrTemplateController do
     x_history
     x_search_by_name
     x_show
-  ).each do |path|
+  ].each do |path|
     describe "##{path}" do
       it "routes with POST" do
         expect(post("/vm_or_template/#{path}")).to route_to("vm_or_template##{path}")

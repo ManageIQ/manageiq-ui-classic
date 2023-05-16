@@ -59,7 +59,7 @@ class ConfigurationScriptController < ApplicationController
 
   def set_session_data
     super
-    session[:layout]                 = @layout
+    session[:layout] = @layout
     session[:configuration_script_current_page] = @current_page
   end
 

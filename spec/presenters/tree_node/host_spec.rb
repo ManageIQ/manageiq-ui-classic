@@ -1,13 +1,13 @@
 describe TreeNode::Host do
   subject { described_class.new(object, nil, nil) }
 
-  %i(
+  %i[
     host
     host_redhat
     host_openstack_infra
     host_vmware
     host_vmware_esx
-  ).each do |factory|
+  ].each do |factory|
     context(factory.to_s) do
       let(:object) { FactoryBot.create(factory) }
 

@@ -41,7 +41,7 @@ module NetworkRouterHelper::TextualSummary
   def textual_route_propagation
     return nil if @record.propagating_vgws.nil?
 
-    {:label => _('Route Propagation'), :value => @record.propagating_vgws.to_s }
+    {:label => _('Route Propagation'), :value => @record.propagating_vgws.to_s}
   end
 
   def textual_status

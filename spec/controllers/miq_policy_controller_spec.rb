@@ -94,7 +94,7 @@ describe MiqPolicyController do
     it "Test reset button" do
       controller.params = {:button => "reset", :id => @policy.id}
       allow(controller).to receive(:drop_breadcrumb)
-      expect(controller).to receive(:javascript_redirect).with(:action       => 'edit',
+      expect(controller).to receive(:javascript_redirect).with(:action        => 'edit',
                                                                :id            => @policy.id,
                                                                :flash_msg     => _("All changes have been reset"),
                                                                :flash_warning => true)
@@ -104,7 +104,7 @@ describe MiqPolicyController do
     it "Test cancel button" do
       controller.params = {:button => "cancel", :id => @policy.id}
       allow(controller).to receive(:drop_breadcrumb)
-      edit = {:key => "miq_policy_edit__#{@policy.id}", :new => {:description => @policy.description} }
+      edit = {:key => "miq_policy_edit__#{@policy.id}", :new => {:description => @policy.description}}
       controller.instance_variable_set(:@edit, edit)
       session[:edit] = edit
       expect(controller).to receive(:javascript_redirect).with(:action    => 'show',
@@ -141,7 +141,7 @@ describe MiqPolicyController do
     end
   end
 
-    describe "breadcrumbs" do
+  describe "breadcrumbs" do
     before { EvmSpecHelper.local_miq_server }
 
     it "shows 'Policies' on list screen" do

@@ -10,7 +10,7 @@ module Mixins
             rec_cls = "vm"
             bc_msg = _("Retire VM or Instance")
           elsif request.parameters[:controller] == "service"
-            rec_cls =  "service"
+            rec_cls = "service"
             bc_msg = _("Retire Service")
             @sb[:explorer] = nil
           elsif request.parameters[:controller] == "orchestration_stack" || %w[orchestration_stacks].include?(params[:display])

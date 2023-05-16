@@ -4,7 +4,8 @@ class ApplicationHelper::Toolbar::EmsStorageCenter < ApplicationHelper::Toolbar:
                    :refresh_server_summary,
                    'fa fa-refresh fa-lg',
                    N_('Refresh this page'),
-                   nil),
+                   nil
+                 ),
                  select(
                    :ems_storage_vmdb_choice,
                    nil,
@@ -16,7 +17,8 @@ class ApplicationHelper::Toolbar::EmsStorageCenter < ApplicationHelper::Toolbar:
                        'fa fa-refresh fa-lg',
                        N_('Refresh relationships and power states for all items related to this Storage Manager'),
                        N_('Refresh Relationships and Power States'),
-                       :confirm => N_("Refresh relationships and power states for all items related to this Storage Manager?")),
+                       :confirm => N_("Refresh relationships and power states for all items related to this Storage Manager?")
+                     ),
                      separator,
                      button(
                        :ems_storage_edit,
@@ -30,7 +32,8 @@ class ApplicationHelper::Toolbar::EmsStorageCenter < ApplicationHelper::Toolbar:
                        t = N_('Remove this Storage Manager from Inventory'),
                        t,
                        :url_parms => "&refresh=y",
-                       :confirm   => N_("Warning: This Storage Manager and ALL of its components will be permanently removed!")),
+                       :confirm   => N_("Warning: This Storage Manager and ALL of its components will be permanently removed!")
+                     ),
                    ]
                  ),
                ])
@@ -45,12 +48,14 @@ class ApplicationHelper::Toolbar::EmsStorageCenter < ApplicationHelper::Toolbar:
                        :ems_storage_protect,
                        'pficon pficon-edit fa-lg',
                        N_('Manage Policies for this Storage Manager'),
-                       N_('Manage Policies')),
+                       N_('Manage Policies')
+                     ),
                      button(
                        :ems_storage_tag,
                        'pficon pficon-edit fa-lg',
                        N_('Edit Tags for this Storage Manager'),
-                       N_('Edit Tags')),
+                       N_('Edit Tags')
+                     ),
                    ]
                  ),
                ])
@@ -69,7 +74,8 @@ class ApplicationHelper::Toolbar::EmsStorageCenter < ApplicationHelper::Toolbar:
                        :options   => {:feature => :timeline},
                        :klass     => ApplicationHelper::Button::EmsStorageTimeline,
                        :url       => "/show",
-                       :url_parms => "?display=timeline"),
+                       :url_parms => "?display=timeline"
+                     ),
                    ]
                  ),
                ])

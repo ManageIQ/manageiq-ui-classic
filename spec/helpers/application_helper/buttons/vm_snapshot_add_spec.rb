@@ -18,11 +18,11 @@ describe ApplicationHelper::Button::VmSnapshotAdd do
       let(:record) do
         record = FactoryBot.create(:vm_vmware, :ems_id => ems.id, :host_id => host.id)
         record.snapshots = [FactoryBot.create(:snapshot,
-                                               :create_time       => 1.minute.ago,
-                                               :vm_or_template_id => record.id,
-                                               :name              => 'EvmSnapshot',
-                                               :description       => "Some Description",
-                                               :current           => current)]
+                                              :create_time       => 1.minute.ago,
+                                              :vm_or_template_id => record.id,
+                                              :name              => 'EvmSnapshot',
+                                              :description       => "Some Description",
+                                              :current           => current)]
         record
       end
       context 'and the selected snapshot may be active but the vm is not connected to a host' do

@@ -8,7 +8,6 @@ module CatalogHelper
     data = {:rows => [], :headers => headers}
     prev_group = 0
     resources.sort_by { |rsc| [rsc.group_idx, rsc.resource_name.downcase] }.each_with_index do |r, i|
-      col_span = 10
       if prev_group != r.group_idx && i < resources.length
         prev_group = r.group_idx
       end

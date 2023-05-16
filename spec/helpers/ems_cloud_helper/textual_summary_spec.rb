@@ -33,7 +33,7 @@ describe EmsCloudHelper::TextualSummary do
       allow(@record).to receive(:authentication_for_summary).and_return([])
     end
 
-    include_examples "textual_group", "Relationships", %i(
+    include_examples "textual_group", "Relationships", %i[
       ems_infra
       network_manager
       availability_zones
@@ -50,13 +50,13 @@ describe EmsCloudHelper::TextualSummary do
       cloud_databases
       custom_button_events
       tenant
-    )
+    ]
 
-    include_examples "textual_group", "Properties", %i(description hostname ipaddress type port guid region keystone_v3_domain_id)
+    include_examples "textual_group", "Properties", %i[description hostname ipaddress type port guid region keystone_v3_domain_id]
 
-    include_examples "textual_group", "Status", %i(refresh_status refresh_date)
+    include_examples "textual_group", "Status", %i[refresh_status refresh_date]
 
-    include_examples "textual_group_smart_management", %i(zone)
+    include_examples "textual_group_smart_management", %i[zone]
   end
 
   describe '#textual_description' do

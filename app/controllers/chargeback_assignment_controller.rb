@@ -36,6 +36,7 @@ class ChargebackAssignmentController < ApplicationController
     assert_privileges("chargeback_assignments")
 
     return unless load_edit("cbassign_edit__#{params[:id]}", "index")
+
     get_form_vars
     build_tabs
     render :update do |page|
@@ -52,6 +53,7 @@ class ChargebackAssignmentController < ApplicationController
 
     clear_flash_msg
     return unless load_edit("cbassign_edit__#{params[:id]}", "index")
+
     case params[:button]
     when "reset"
       flash_to_session(_("All changes have been reset"), :warning)
@@ -60,7 +62,7 @@ class ChargebackAssignmentController < ApplicationController
       rate_type = params[:id]
       begin
         ChargebackRate.set_assignments(rate_type, @edit[:set_assignments])
-      rescue StandardError => bang
+      rescue => bang
         render_flash(_("Error during 'Rate assignments': %{error_message}") % {:error_message => bang.message}, :error)
       else
         flash_to_session(_("Rate Assignments saved"))
@@ -136,8 +138,8 @@ class ChargebackAssignmentController < ApplicationController
       :cb_rates  => {},
       :cb_assign => {},
     }
-    @edit[:new]     = HashWithIndifferentAccess.new
-    @edit[:current] = HashWithIndifferentAccess.new
+    @edit[:new]     = ActiveSupport::HashWithIndifferentAccess.new
+    @edit[:current] = ActiveSupport::HashWithIndifferentAccess.new
     @edit[:new][:type] = params[:id] && ChargebackRate::VALID_CB_RATE_TYPES.include?(params[:id]) ? params[:id] : @tabform
     @edit[:key] = "cbassign_edit__#{@edit[:new][:type]}"
     ChargebackRate.all.each do |cbr|
@@ -247,7 +249,7 @@ class ChargebackAssignmentController < ApplicationController
       @edit[:cb_assign][:docker_label_values_saved][label.first.to_s] = label.second
     end
 
-    return if label_id && label_id == 'null' || label_id.nil?
+    return if (label_id && label_id == 'null') || label_id.nil?
 
     label_name = CustomAttribute.find(label_id).name
 

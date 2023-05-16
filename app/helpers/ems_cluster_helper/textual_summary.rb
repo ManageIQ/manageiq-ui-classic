@@ -32,6 +32,7 @@ module EmsClusterHelper::TextualSummary
   def textual_group_configuration
     return nil if @record.ha_enabled.nil? && @record.ha_admit_control.nil? && @record.drs_enabled.nil? &&
                   @record.drs_automation_level.nil? && @record.drs_migration_threshold.nil?
+
     TextualGroup.new(
       _("Configuration"),
       %i[ha_enabled ha_admit_control drs_enabled drs_automation_level drs_migration_threshold]
@@ -40,6 +41,7 @@ module EmsClusterHelper::TextualSummary
 
   def textual_group_openstack_status
     return nil unless @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Cluster)
+
     ret = textual_generate_openstack_status
 
     ret.blank? ? nil : TextualMultilink.new(_("OpenStack Status"), :items => ret)
@@ -188,6 +190,7 @@ module EmsClusterHelper::TextualSummary
 
   def textual_states_size
     return nil unless role_allows?(:feature => "ems_cluster_drift")
+
     num = @record.number_of(:drift_states)
     h = {:label => _("Drift History"), :icon => "ff ff-drift", :value => (num.zero? ? _("None") : num)}
     if num.positive?
@@ -200,30 +203,35 @@ module EmsClusterHelper::TextualSummary
   def textual_ha_enabled
     value = @record.ha_enabled
     return nil if value.nil?
+
     {:label => _("HA Enabled"), :value => value}
   end
 
   def textual_ha_admit_control
     value = @record.ha_admit_control
     return nil if value.nil?
+
     {:label => _("HA Admit Control"), :value => value}
   end
 
   def textual_drs_enabled
     value = @record.drs_enabled
     return nil if value.nil?
+
     {:label => _("DRS Enabled"), :value => value}
   end
 
   def textual_drs_automation_level
     value = @record.drs_automation_level
     return nil if value.nil?
+
     {:label => _("DRS Automation Level"), :value => value}
   end
 
   def textual_drs_migration_threshold
     value = @record.drs_migration_threshold
     return nil if value.nil?
+
     {:label => _("DRS Migration Threshold"), :value => value}
   end
 
@@ -233,11 +241,13 @@ module EmsClusterHelper::TextualSummary
 
   def textual_block_storage_disk_usage
     return nil unless @record.respond_to?(:block_storage?) && @record.block_storage? && !@record.cloud.nil?
+
     {:value => number_to_human_size(@record.cloud_block_storage_disk_usage.bytes, :precision => 2)}
   end
 
   def textual_object_storage_disk_usage
     return nil unless @record.respond_to?(:object_storage?) && @record.object_storage? && !@record.cloud.nil?
+
     {:value => number_to_human_size(@record.cloud_object_storage_disk_usage.bytes, :precision => 2)}
   end
 end

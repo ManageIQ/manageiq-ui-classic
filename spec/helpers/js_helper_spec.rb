@@ -7,11 +7,11 @@ describe JsHelper do
 
   context '#set_element_visible' do
     it 'returns js to hide element' do
-      expect(set_element_visible('foo', false)).to eq("if (miqDomElementExists('foo')) $('\#foo').hide();")
+      expect(set_element_visible('foo', false)).to eq("if (miqDomElementExists('foo')) $('#foo').hide();")
     end
 
     it 'returns js to show element' do
-      expect(set_element_visible('foo', true)).to eq("if (miqDomElementExists('foo')) $('\#foo').show();")
+      expect(set_element_visible('foo', true)).to eq("if (miqDomElementExists('foo')) $('#foo').show();")
     end
   end
 
@@ -23,8 +23,8 @@ describe JsHelper do
 
   context '#javascript_highlight' do
     it 'returns js to to add or remove the active class on the element' do
-      expect(javascript_highlight('foo', true)).to eq("miqHighlight('\#foo', true);")
-      expect(javascript_highlight('foo', false)).to eq("miqHighlight('\#foo', false);")
+      expect(javascript_highlight('foo', true)).to eq("miqHighlight('#foo', true);")
+      expect(javascript_highlight('foo', false)).to eq("miqHighlight('#foo', false);")
     end
   end
 
@@ -68,7 +68,7 @@ describe JsHelper do
     it 'returns js to check the provided input element of type checkbox' do
       expect(javascript_checked(
                'foo'
-      )).to eq("if ($('#foo').prop('type') == 'checkbox') {$('#foo').prop('checked', true);}")
+             )).to eq("if ($('#foo').prop('type') == 'checkbox') {$('#foo').prop('checked', true);}")
     end
   end
 
@@ -76,7 +76,7 @@ describe JsHelper do
     it 'returns js to uncheck the provided input element of type checkbox' do
       expect(javascript_unchecked(
                'foo'
-      )).to eq("if ($('#foo').prop('type') == 'checkbox') {$('#foo').prop('checked', false);}")
+             )).to eq("if ($('#foo').prop('type') == 'checkbox') {$('#foo').prop('checked', false);}")
     end
   end
 
@@ -87,7 +87,7 @@ describe JsHelper do
         ManageIQ.calendar.calDateTo = undefined;
         ManageIQ.calendar.calSkipDays = undefined;
         miqBuildCalendar();
-EOD
+      EOD
 
       expect(js_build_calendar).to eq(expected)
     end
@@ -102,7 +102,7 @@ EOD
         ManageIQ.calendar.calDateTo = new Date('2000-01-01T00:00:00Z');
         ManageIQ.calendar.calSkipDays = [1,2,3];
         miqBuildCalendar();
-EOD
+      EOD
 
       expect(js_build_calendar(opt)).to eq(expected)
     end

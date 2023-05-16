@@ -17,10 +17,10 @@ class DashboardService
   def format_cpu(used, total)
     {
       :dataAvailable => true,
-      :used  => cpu_num(used.values.last).round(display_precision),
-      :total => cpu_num(total.values.last).round(0),
-      :xData => used.keys,
-      :yData => used.values.map { |v| cpu_num(v).round(graph_precision) },
+      :used          => cpu_num(used.values.last).round(display_precision),
+      :total         => cpu_num(total.values.last).round(0),
+      :xData         => used.keys,
+      :yData         => used.values.map { |v| cpu_num(v).round(graph_precision) },
     }
   end
 
@@ -31,10 +31,10 @@ class DashboardService
   def format_memory(used, total)
     {
       :dataAvailable => true,
-      :used  => mem_num(used.values.last).round(display_precision),
-      :total => mem_num(total.values.last).round(0),
-      :xData => used.keys,
-      :yData => used.values.map { |v| mem_num(v).round(graph_precision) },
+      :used          => mem_num(used.values.last).round(display_precision),
+      :total         => mem_num(total.values.last).round(0),
+      :xData         => used.keys,
+      :yData         => used.values.map { |v| mem_num(v).round(graph_precision) },
     }
   end
 

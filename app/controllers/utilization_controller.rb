@@ -122,7 +122,7 @@ class UtilizationController < ApplicationController
 
   def get_session_data
     @title = _("Utilization")
-    @layout ||= "miq_capacity_utilization"
+    @get_session_data ||= "miq_capacity_utilization"
   end
 
   # Get all info for the node about to be displayed
@@ -144,12 +144,14 @@ class UtilizationController < ApplicationController
     tz = @sb[:options][:time_profile_tz] || @sb[:options][:tz] # Use time profile tz or chosen tz, if no profile tz
     s, e = @record.first_and_last_capture
     return if s.nil?
+
     s = s.in_time_zone(tz)
     e = e.in_time_zone(tz)
     # Eliminate partial start or end days
-    s = s.hour.zero? ? s : s + 1.day
-    e = e.hour < 23 ? e - 1.day : e
+    s += 1.day unless s.hour.zero?
+    e -= 1.day if e.hour < 23
     return if s > e # Don't have a full day's data
+
     sdate = create_time_in_tz("#{s.year}-#{s.month}-#{s.day} 00", tz) # Start at midnight of start date
     edate = create_time_in_tz("#{e.year}-#{e.month}-#{e.day} 23", tz) # End at 11pm of start date
 
@@ -161,11 +163,11 @@ class UtilizationController < ApplicationController
       @sb[:options][:record_id] = @record.id
     end
     trenddate = edate - @sb[:options][:days].to_i.days + 1.hour # Get trend starting date
-    sdate = sdate > trenddate ? sdate : trenddate               # Use trend date, unless earlier than first date
+    sdate = [sdate, trenddate].max # Use trend date, unless earlier than first date
     if @sb[:options][:chart_date]                               # Clear chosen chart date if out of trend range
       cdate = create_time_in_tz(@sb[:options][:chart_date], tz) # Get chart date at midnight in time zone
       if (cdate < sdate || cdate > edate) ||                    # Reset if chart date is before start date or after end date
-         (@sb[:options][:time_profile] && !@sb[:options][:time_profile_days].include?(cdate.wday))
+         (@sb[:options][:time_profile] && @sb[:options][:time_profile_days].exclude?(cdate.wday))
         @sb[:options][:chart_date] = nil
       end
     end
@@ -181,6 +183,7 @@ class UtilizationController < ApplicationController
       cdate = @sb[:options][:chart_date].to_date                 # Start at the currently set date
       6.times do                                                        # Go back up to 6 days (try each weekday)
         break if @sb[:options][:time_profile_days].include?(cdate.wday) # If weekday is in the profile, use it
+
         cdate -= 1.day # Drop back 1 day and try again
       end
       @sb[:options][:chart_date] = [cdate.month, cdate.day, cdate.year].join("/") # Set the new date
@@ -197,17 +200,15 @@ class UtilizationController < ApplicationController
   def replace_right_cell(_nodetype)
     # Get the tags for this node for the Classification pulldown
     @sb[:tags] = nil unless params[:miq_date_1] || params[:miq_date_2] # Clear tags unless just changing date
-    unless @nodetype == "h" || @nodetype == "s" || params[:miq_date_1] || params[:miq_date_2] # Get the tags for the pulldown, unless host, storage, or just changing the date
-      if @sb[:options][:chart_date]
-        mm, dd, yy = @sb[:options][:chart_date].split("/")
-        end_date = Time.utc(yy, mm, dd, 23, 59, 59)
-        @sb[:tags] = VimPerformanceAnalysis.child_tags_over_time_period(
-          @record, 'daily',
-          :end_date => end_date, :days => @sb[:options][:days].to_i,
-           :ext_options => {:tz           => @sb[:trend_rpt].tz, # Add ext_options for tz from rpt object
-                            :time_profile => @sb[:trend_rpt].time_profile}
-        )
-      end
+    if !(@nodetype == "h" || @nodetype == "s" || params[:miq_date_1] || params[:miq_date_2]) && (@sb[:options][:chart_date])
+      mm, dd, yy = @sb[:options][:chart_date].split("/")
+      end_date = Time.utc(yy, mm, dd, 23, 59, 59)
+      @sb[:tags] = VimPerformanceAnalysis.child_tags_over_time_period(
+        @record, 'daily',
+        :end_date => end_date, :days => @sb[:options][:days].to_i,
+         :ext_options => {:tz           => @sb[:trend_rpt].tz, # Add ext_options for tz from rpt object
+                          :time_profile => @sb[:trend_rpt].time_profile}
+      )
     end
 
     v_tb = build_toolbar("miq_capacity_view_tb")

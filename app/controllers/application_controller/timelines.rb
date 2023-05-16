@@ -41,7 +41,7 @@ module ApplicationController::Timelines
   private ############################
 
   def tl_get_rpt(timeline)
-    MiqReport.new(YAML.load(File.read("#{ApplicationController::TIMELINES_FOLDER}/miq_reports/#{timeline}.yaml")))
+    MiqReport.new(YAML.load_file("#{ApplicationController::TIMELINES_FOLDER}/miq_reports/#{timeline}.yaml"))
   end
 
   def tl_build_init_options(refresh = nil)
@@ -170,7 +170,7 @@ module ApplicationController::Timelines
         add_flash(_("Error building timeline %{error_message}") % {:error_message => miq_task.message}, :error)
       else
         @timeline = @timeline_filter = true
-        if @report.table.data.length.zero?
+        if @report.table.data.empty?
           add_flash(_("No records found for this timeline"), :warning)
         else
           @report.extras[:browser_name] = browser_info(:name)

@@ -18,7 +18,7 @@ module Mixins
           if @action_type_changed || @snmp_trap_refresh
             page.replace("action_options_div", :partial => "action_options")
           elsif @alert_refresh
-            page.replace("form_div",  :partial => "form")
+            page.replace("form_div", :partial => "form")
           elsif @to_email_refresh
             page.replace("edit_to_email_div",
                          :partial => "layouts/edit_to_email",
@@ -67,7 +67,7 @@ module Mixins
       sortcol_key = "#{what}_sortcol".to_sym
       sortdir_key = "#{what}_sortdir".to_sym
       @sortcol    = (session[sortcol_key] || 0).to_i
-      @sortdir    =  session[sortdir_key] || 'ASC'
+      @sortdir = session[sortdir_key] || 'ASC'
       set_search_text
       @_params[:search_text] = @search_text if @search_text && @_params[:search_text] # Added to pass search text to get_view method
       @view, @pages = get_view.call # Get the records (into a view) and the paginator
@@ -136,9 +136,9 @@ module Mixins
           next unless %w[oid var_type value].include?(vars[0])
 
           10.times do |i|
-            f = ("oid__" + (i + 1).to_s)
-            t = ("var_type__" + (i + 1).to_s)
-            v = ("value__" + (i + 1).to_s)
+            f = "oid__#{i + 1}"
+            t = "var_type__#{i + 1}"
+            v = "value__#{i + 1}"
             @edit[:new][subkey][:variables][i][:oid] = params[f] if params[f.to_s]
             @edit[:new][subkey][:variables][i][:var_type] = params[t] if params[t.to_s]
             if params[t.to_s] == "<None>" || params[t.to_s] == "Null"
@@ -167,7 +167,7 @@ module Mixins
         params[members_chosen].each do |mc|
           idx = nil
           # Find the index of the new members array
-          @edit[:new][members].each_with_index { |mem, i| idx = mem[-1] == mc.to_i ? i : idx }
+          @edit[:new][members].each_with_index { |mem, i| idx = i if mem[-1] == mc.to_i }
           next if idx.nil?
 
           desc = @edit[:new][members][idx][0].slice(4..-1) # Remove (x) prefix from the chosen item
@@ -195,7 +195,7 @@ module Mixins
         # Handle Actions for an Event
         params[choices_chosen].each do |mc|
           # Add selection to chosen members array, default to synch = true
-          @edit[:new][members].push(["(S) " + mems[mc.to_i], true, mc.to_i])
+          @edit[:new][members].push(["(S) #{mems[mc.to_i]}", true, mc.to_i])
           @edit[choices].delete(mems[mc.to_i]) # Remove from the choices hash
         end
       else
@@ -251,7 +251,7 @@ module Mixins
       idx = nil
       mc = params[members_chosen][0]
       # Find item index in new members array
-      @edit[:new][members].each_with_index { |mem, i| idx = mem[-1] == mc.to_i ? i : idx }
+      @edit[:new][members].each_with_index { |mem, i| idx = i if mem[-1] == mc.to_i }
 
       return if idx.nil?
       return if up && idx.zero? # cannot go higher
@@ -278,7 +278,7 @@ module Mixins
       params[members_chosen].each do |mc|
         idx = nil
         # Find the index in the new members array
-        @edit[:new][members].each_with_index { |mem, i| idx = mem[-1] == mc.to_i ? i : idx }
+        @edit[:new][members].each_with_index { |mem, i| idx = i if mem[-1] == mc.to_i }
         next if idx.nil?
 
         letter = sync ? 'S' : 'A'
@@ -312,11 +312,11 @@ module Mixins
 
     def apply_search_filter(search_str, results)
       if search_str.first == "*"
-        results.delete_if { |r| !r.description.downcase.ends_with?(search_str[1..-1].downcase) }
+        results.delete_if { |r| !r.description.downcase.ends_with?(search_str[1..].downcase) }
       elsif search_str.last == "*"
         results.delete_if { |r| !r.description.downcase.starts_with?(search_str[0..-2].downcase) }
       else
-        results.delete_if { |r| !r.description.downcase.include?(search_str.downcase) }
+        results.delete_if { |r| r.description.downcase.exclude?(search_str.downcase) }
       end
     end
 

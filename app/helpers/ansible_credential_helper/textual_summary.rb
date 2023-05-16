@@ -17,7 +17,7 @@ module AnsibleCredentialHelper::TextualSummary
 
       options << field[:name].to_sym
 
-      define_singleton_method "textual_#{field[:name]}" do
+      define_singleton_method("textual_#{field[:name]}") do
         {
           :label => _(field[:label]),
           :title => _(field[:helperText]),

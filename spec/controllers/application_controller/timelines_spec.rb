@@ -64,7 +64,7 @@ describe ApplicationController, "#Timelines" do
       it "selecting two options of the selectpicker in the timeline should append both to events filter list" do
         controller.params = {:id            => @ems.id,
                              :tl_show       => "timeline",
-                             :tl_levels     => %w(critical detail),
+                             :tl_levels     => %w[critical detail],
                              :tl_categories => ["Power Activity"]}
         expect(controller).to receive(:render)
         controller.send(:tl_chooser)

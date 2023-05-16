@@ -7,11 +7,11 @@ describe CloudVolumeTypeController do
       allow(@volume_type).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
       classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
       @tag1 = FactoryBot.create(:classification_tag,
-                                 :name   => "tag1",
-                                 :parent => classification)
+                                :name   => "tag1",
+                                :parent => classification)
       @tag2 = FactoryBot.create(:classification_tag,
-                                 :name   => "tag2",
-                                 :parent => classification)
+                                :name   => "tag2",
+                                :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@volume_type).and_return([@tag1, @tag2])
       session[:tag_db] = "CloudVolumeType"
       edit = {
@@ -87,9 +87,9 @@ describe CloudVolumeTypeController do
 
       it "render view for list of volume types" do
         expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
-          :model_name      => 'CloudVolumeType',
-          :parent_id       => nil,
-          :explorer        => nil
+          :model_name => 'CloudVolumeType',
+          :parent_id  => nil,
+          :explorer   => nil
         )
 
         get :show_list

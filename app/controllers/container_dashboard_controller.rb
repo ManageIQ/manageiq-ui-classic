@@ -54,7 +54,7 @@ class ContainerDashboardController < ApplicationController
   def project_data
     assert_privileges("container_dashboard_view")
 
-    render :json => {:data => collect_project_data(params[:id]) }
+    render :json => {:data => collect_project_data(params[:id])}
   end
 
   def title
@@ -70,10 +70,6 @@ class ContainerDashboardController < ApplicationController
   end
 
   private
-
-  def get_session_data
-    super
-  end
 
   def collect_data(provider_id)
     ContainerDashboardService.new(provider_id, self).all_data

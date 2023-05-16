@@ -13,7 +13,7 @@ describe VmInfraController do
       session[:settings] = {}
       seed_session_trees('vm_infra', :vandt_tree)
 
-      post :tree_select, :params => { :id => 'xx-arch', :format => :js }
+      post :tree_select, :params => {:id => 'xx-arch', :format => :js}
 
       expect(response).to render_template('layouts/react/_gtl')
       expect(response.status).to eq(200)
@@ -23,8 +23,8 @@ describe VmInfraController do
   context "#tree_select" do
     [
       ['Vms & Templates', 'vandt_tree'],
-      %w(VMS vms_filter_tree),
-      %w(Templates templates_filter_tree),
+      %w[VMS vms_filter_tree],
+      %w[Templates templates_filter_tree],
     ].each do |elements, tree|
       it "renders list of #{elements} for #{tree} root node" do
         FactoryBot.create(:vm_vmware)
@@ -33,7 +33,7 @@ describe VmInfraController do
         session[:settings] = {}
         seed_session_trees('vm_infra', tree.to_sym)
 
-        post :tree_select, :params => { :id => 'root', :format => :js }
+        post :tree_select, :params => {:id => 'root', :format => :js}
 
         expect(response).to render_template('layouts/react/_gtl')
         expect(response.status).to eq(200)
@@ -46,7 +46,7 @@ describe VmInfraController do
       session[:settings] = {}
       seed_session_trees('vm_infra', 'vandt_tree')
 
-      post :tree_select, :params => { :id => "v-#{vm.id}", :format => :js }
+      post :tree_select, :params => {:id => "v-#{vm.id}", :format => :js}
 
       expect(response).to render_template(:partial => 'layouts/_textual_groups_generic')
       expect(response.status).to eq(200)
@@ -58,7 +58,7 @@ describe VmInfraController do
       session[:settings] = {}
       seed_session_trees('vm_infra', 'vandt_tree')
 
-      post :tree_select, :params => { :id => "t-#{template.id}", :format => :js }
+      post :tree_select, :params => {:id => "t-#{template.id}", :format => :js}
 
       expect(response).to render_template(:partial => 'layouts/_textual_groups_generic')
       expect(response.status).to eq(200)

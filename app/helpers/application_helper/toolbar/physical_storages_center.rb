@@ -28,7 +28,7 @@ class ApplicationHelper::Toolbar::PhysicalStoragesCenter < ApplicationHelper::To
             :physical_storage_new,
             'pficon pficon-add-circle-o fa-lg',
             t = N_('Attach a new storage system'),
-            t,
+            t
           ),
           button(
             :physical_storage_edit,

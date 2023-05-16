@@ -84,17 +84,17 @@ class ApplicationController < ActionController::Base
   before_action :allow_websocket
   after_action :set_global_session_data, :except => %i[csp_report resize_layout]
 
-  TIMELINES_FOLDER = Rails.root.join("product", "timelines")
+  TIMELINES_FOLDER = Rails.root.join("product/timelines")
 
   ONE_MILLION = 1_000_000 # Setting high number incase we don't want to display paging controls on list views
 
-  PERPAGE_TYPES = %w[list reports].each_with_object({}) { |value, acc| acc[value] = value.to_sym }.freeze
+  PERPAGE_TYPES = %w[list reports].index_with(&:to_sym).freeze
 
   TREND_MODEL = "VimPerformanceTrend".freeze # Performance trend model name requiring special processing
 
   # Default UI settings
   DEFAULT_SETTINGS = {
-    :views    => { # List view setting, by resource type
+    :views   => { # List view setting, by resource type
       :compare      => "expanded",
       :compare_mode => "details",
       :drift        => "expanded",
@@ -102,18 +102,18 @@ class ApplicationController < ActionController::Base
       :summary_mode => "dashboard",
       :vmcompare    => "compressed"
     },
-    :perpage  => { # Items per page, by view setting
+    :perpage => { # Items per page, by view setting
       :list    => 20,
       :reports => 20
     },
-    :display  => {
-      :startpage     => "/dashboard/show",
-      :reporttheme   => "MIQ",
-      :theme         => "red",            # Luminescent Blue
-      :taskbartext   => true,             # Show button text on taskbar
-      :vmcompare     => "Compressed",     # Start VM compare and drift in compressed mode
-      :hostcompare   => "Compressed",     # Start Host compare in compressed mode
-      :timezone      => nil               # This will be set when the user logs in
+    :display => {
+      :startpage   => "/dashboard/show",
+      :reporttheme => "MIQ",
+      :theme       => "red",            # Luminescent Blue
+      :taskbartext => true,             # Show button text on taskbar
+      :vmcompare   => "Compressed",     # Start VM compare and drift in compressed mode
+      :hostcompare => "Compressed",     # Start Host compare in compressed mode
+      :timezone    => nil               # This will be set when the user logs in
     },
   }.freeze
 
@@ -142,7 +142,7 @@ class ApplicationController < ActionController::Base
   # Convert Controller Name to Actual Model
   def self.model
     @model ||= name[0..-11].safe_constantize
-  rescue StandardError
+  rescue
     @model = nil
   end
 
@@ -201,8 +201,8 @@ class ApplicationController < ActionController::Base
           page << "
             sendDataWithRx({
               serverError: {
-                data: '#{j_str message}',
-                url: '#{j_str request.url}',
+                data: '#{j_str(message)}',
+                url: '#{j_str(request.url)}',
               },
               source: 'server',
             });
@@ -223,7 +223,7 @@ class ApplicationController < ActionController::Base
           render(:template => "layouts/exception", :locals => {:message => msg})
         end
       end
-      format.any { head :not_found } # Anything else, just send 404
+      format.any { head 404 } # Anything else, just send 404
     end
   end
   private :render_exception
@@ -294,8 +294,8 @@ class ApplicationController < ActionController::Base
 
     if params[:parent_id]
       parent_id = params[:parent_id]
-      unless parent_id.nil?
-        options[:parent] = identify_record(parent_id, controller_to_model) if parent_id && options[:parent].nil?
+      if !parent_id.nil? && (parent_id && options[:parent].nil?)
+        options[:parent] = identify_record(parent_id, controller_to_model)
       end
     end
 
@@ -330,7 +330,7 @@ class ApplicationController < ActionController::Base
     @policy_sim = @edit[:policy_sim] unless @edit.nil?
     controller, _action = db_to_controller(current_view.db) unless current_view.nil?
     if !@policy_sim.nil? && session[:policies] && !session[:policies].empty?
-      settings[:url] = '/' + controller + '/policies/'
+      settings[:url] = "/#{controller}/policies/"
     end
     settings
   end
@@ -375,9 +375,9 @@ class ApplicationController < ActionController::Base
 
     render :json => {
       :checkboxes_clicked => params.fetch_path(:additional_options, :checkboxes_clicked),
-      :settings => settings,
-      :data     => view_to_hash(@view, true),
-      :messages => @flash_array
+      :settings           => settings,
+      :data               => view_to_hash(@view, true),
+      :messages           => @flash_array
     }
   end
 
@@ -454,7 +454,7 @@ class ApplicationController < ActionController::Base
       return unless load_edit("#{pfx}_edit__#{id}")
 
       settings = {:username => @edit[:new][:log_userid], :password => @edit[:new][:log_password]}
-      settings[:uri] = @edit[:new][:uri_prefix] + "://" + @edit[:new][:uri]
+      settings[:uri] = "#{@edit[:new][:uri_prefix]}://#{@edit[:new][:uri]}"
     else
       settings = {:username => params[:log_userid], :password => params[:log_password]}
       settings[:uri] = "#{params[:uri_prefix]}://#{params[:uri]}"
@@ -469,7 +469,7 @@ class ApplicationController < ActionController::Base
         msg = _('Depot Settings successfuly validated')
         MiqSchedule.new.verify_file_depot(settings)
       end
-    rescue StandardError => bang
+    rescue => bang
       add_flash(_("Error during 'Validate': %{error_message}") % {:error_message => bang.message}, :error)
     else
       add_flash(msg)
@@ -689,7 +689,7 @@ class ApplicationController < ActionController::Base
   end
 
   # Render the view data to a Hash structure for the list view
-  def view_to_hash(view, fetch_data = false)
+  def view_to_hash(view, _fetch_data = false)
     root = {:head => [], :rows => []}
 
     has_checkbox = !@embedded && !@no_checkboxes
@@ -732,8 +732,8 @@ class ApplicationController < ActionController::Base
         :clickable => params.fetch_path(:additional_options, :clickable)
       }
 
-      if defined?(row.data) && defined?(params) && params[:active_tree] != "reports_tree"
-        new_row[:parent_id] = "rep-#{row.data['miq_report_id']}" if row.data['miq_report_id']
+      if defined?(row.data) && defined?(params) && params[:active_tree] != "reports_tree" && row.data['miq_report_id']
+        new_row[:parent_id] = "rep-#{row.data['miq_report_id']}"
       end
       new_row[:parent_id] = "xx-#{CONTENT_TYPE_ID[target[:content_type]]}" if target && target[:content_type]
       new_row[:tree_id] = TreeBuilder.build_node_id(target) if target
@@ -815,7 +815,7 @@ class ApplicationController < ActionController::Base
 
       # Check for a name match BEFORE the first left paren "(" or a url match BEFORE the last slash "/"
       elsif bc[:name].to_s.gsub(/\(.*/, "").rstrip == new_bc[:name].to_s.gsub(/\(.*/, "").rstrip ||
-            bc[:url].to_s.gsub(%r{\/.?$}, "") == new_bc[:url].to_s.gsub(%r{\/.?$}, "")
+            bc[:url].to_s.gsub(%r{/.?$}, "") == new_bc[:url].to_s.gsub(%r{/.?$}, "")
         remove = 1
       end
     end
@@ -827,9 +827,9 @@ class ApplicationController < ActionController::Base
     end
     @breadcrumbs.push(new_bc) if onlyreplace && @breadcrumbs.empty?
     @title = if (@lastaction == "registry_items" || @lastaction == "filesystems" || @lastaction == "files") && new_bc[:name].length > 50
-               new_bc [:name].slice(0..50) + "..." # Set the title to be the new breadcrumb
+               "#{new_bc[:name].slice(0..50)}..." # Set the title to be the new breadcrumb
              else
-               new_bc [:name] # Set the title to be the new breadcrumb
+               new_bc[:name] # Set the title to be the new breadcrumb
              end
 
     # add @search_text to title for gtl screens only
@@ -845,19 +845,19 @@ class ApplicationController < ActionController::Base
     reset_session
 
     # remember for after login, but make sure we don't redirect to logout, or POST actions
-    session[:start_url] = request.url if request.method == "GET" && !request.url.include?('/logout')
+    session[:start_url] = request.url if request.method == "GET" && request.url.exclude?('/logout')
 
     respond_to do |format|
       format.html do
-        redirect_to :controller => 'dashboard', :action => 'login', :timeout => timed_out
+        redirect_to(:controller => 'dashboard', :action => 'login', :timeout => timed_out)
       end
 
       format.json do
-        head :unauthorized
+        head 401
       end
 
       format.js do
-        javascript_redirect :controller => 'dashboard', :action => 'login', :timeout => timed_out
+        javascript_redirect(:controller => 'dashboard', :action => 'login', :timeout => timed_out)
       end
     end
   end
@@ -959,7 +959,7 @@ class ApplicationController < ActionController::Base
     params[:miq_grid_checks] = params[:miq_grid_checks]&.split(",")
     MiqReportResult.for_user(current_user).where(:id => saved_reports).order(MiqReportResult.arel_table[:name].lower).each do |rep|
       rep.public_send(task) if rep.respond_to?(task) # Run the task
-    rescue StandardError
+    rescue
       failure_count += 1 # Push msg and error flag
     else
       if task == "destroy"
@@ -1047,7 +1047,7 @@ class ApplicationController < ActionController::Base
       stxt = if stxt.starts_with?("*") && stxt.ends_with?("*") # Replace beginning/ending * chars with % for SQL
                "%#{stxt[1..-2]}%"
              elsif stxt.starts_with?("*")
-               "%#{stxt[1..-1]}"
+               "%#{stxt[1..]}"
              elsif stxt.ends_with?("*")
                "#{stxt[0..-2]}%"
              else
@@ -1090,7 +1090,8 @@ class ApplicationController < ActionController::Base
   end
 
   def sanitize_filter(filter)
-    return filter  if filter.kind_of?(MiqExpression)
+    return filter if filter.kind_of?(MiqExpression)
+
     # when react list view is being rendered,
     # that sends up filter as hash in params, need to convert that back to an expression
     MiqExpression.new(filter["exp"].permit!.to_h.deep_stringify_keys)
@@ -1126,7 +1127,7 @@ class ApplicationController < ActionController::Base
     end
 
     # Build the advanced search @edit hash
-    if (@explorer && !@in_a_form && !%w[adv_search_clear tree_select].include?(action_name)) ||
+    if (@explorer && !@in_a_form && %w[adv_search_clear tree_select].exclude?(action_name)) ||
        (action_name == "show_list" && !session[:menu_click])
       adv_search_build(db)
     end
@@ -1187,7 +1188,7 @@ class ApplicationController < ActionController::Base
     @items_per_page = get_view_pages_perpage(dbname)
     @items_per_page = ONE_MILLION if db_sym.to_s == 'vm' && controller_name == 'service'
 
-    @current_page = options[:page] || (params[:page].to_i < 1 ? 1 : params[:page].to_i)
+    @current_page = options[:page] || [params[:page].to_i, 1].max
 
     view.conditions = options[:conditions] # Get passed in conditions (i.e. tasks date filters)
 
@@ -1234,7 +1235,7 @@ class ApplicationController < ActionController::Base
   end
 
   def grid_hash_conditions(view)
-    !%w[Job MiqProvision MiqReportResult MiqTask].include?(view.db) &&
+    %w[Job MiqProvision MiqReportResult MiqTask].exclude?(view.db) &&
       !(view.db.ends_with?("Build") && view.db != "ContainerBuild") &&
       !@force_no_grid_xml
   end
@@ -1301,7 +1302,7 @@ class ApplicationController < ActionController::Base
   end
 
   def db_view_yaml_cache
-    Rails.env.development? ? {} : @db_view_yaml ||= {}
+    Rails.env.development? ? {} : @db_view_yaml_cache ||= {}
   end
 
   def render_or_redirect_partial(pfx)
@@ -1351,7 +1352,7 @@ class ApplicationController < ActionController::Base
                    "show_list"
                  end
 
-    ajax_url = !%w[SecurityGroup CloudVolume].include?(view.db)
+    ajax_url = %w[SecurityGroup CloudVolume].exclude?(view.db)
     ajax_url = false if request.parameters[:controller] == "service" && view.db == "Vm"
     ajax_url = false unless @explorer
 
@@ -1488,15 +1489,13 @@ class ApplicationController < ActionController::Base
       return
     end
 
-    if typ == "migrate"
-      # if one of the providers in question cannot support simultaneous migration of his subset of
-      # the selected VMs, we abort
-      if vms.group_by(&:ext_management_system).except(nil).any? do |ems, ems_vms|
-        ems.respond_to?(:supports_migrate_for_all?) && !ems.supports_migrate_for_all?(ems_vms)
-      end
-        add_flash(_("These VMs can not be migrated together."), :error)
-        return
-      end
+    # if one of the providers in question cannot support simultaneous migration of his subset of
+    # the selected VMs, we abort
+    if typ == "migrate" && vms.group_by(&:ext_management_system).except(nil).any? do |ems, ems_vms|
+         ems.respond_to?(:supports_migrate_for_all?) && !ems.supports_migrate_for_all?(ems_vms)
+       end
+      add_flash(_("These VMs can not be migrated together."), :error)
+      return
     end
 
     vms.each do |vm|
@@ -1596,13 +1595,13 @@ class ApplicationController < ActionController::Base
     # Set the current userid in the User class for this thread for models to use
     User.current_user = current_user
     # if session group for user != database group for the user then ensure it is a valid group
-    if current_user.try(:current_group_id_changed?) && !current_user.miq_groups.include?(current_group)
+    if current_user.try(:current_group_id_changed?) && current_user.miq_groups.exclude?(current_group)
       handle_invalid_session(true)
       return
     end
 
     # Get/init sandbox (@sb) per controller in the session object
-    session[:sandboxes] ||= HashWithIndifferentAccess.new
+    session[:sandboxes] ||= ActiveSupport::HashWithIndifferentAccess.new
     @sb = session[:sandboxes][controller_name].blank? ? {} : copy_hash(session[:sandboxes][controller_name])
 
     # Init view sandbox variables
@@ -1663,10 +1662,14 @@ class ApplicationController < ActionController::Base
     session[:panels] = @panels
     session[:breadcrumbs] = @breadcrumbs
     session[:applied_tags] = @applied_tags # Search box applied tags for the current list view
-    session[:miq_compare] = @compare.nil? ? (@keep_compare ? session[:miq_compare] : nil) : Marshal.dump(@compare)
+    session[:miq_compare] = if @compare.nil?
+                              @keep_compare ? session[:miq_compare] : nil
+                            else
+                              Marshal.dump(@compare)
+                            end
     session[:miq_compressed] = @compressed unless @compressed.nil?
     session[:miq_exists_mode] = @exists_mode unless @exists_mode.nil?
-    session[:last_trans_time] = Time.now
+    session[:last_trans_time] = Time.zone.now
 
     # Set timelines hash, if it is in the session for the running controller
     set_tl_session_data
@@ -1729,8 +1732,8 @@ class ApplicationController < ActionController::Base
     session[:edit] = @edit || nil                    # Set or clear session edit hash
 
     session[:view] = @view || nil                    # Set or clear view in session hash
-    unless params[:controller] == "miq_task"                # Proxy needs data for delete all
-      session[:view].table = nil if session[:view]          # Don't need to carry table data around
+    if params[:controller] != "miq_task" && session[:view] # Proxy needs data for delete all
+      session[:view].table = nil # Don't need to carry table data around
     end
 
     # Put performance hash, if it exists, into the sandbox for the running controller
@@ -1746,7 +1749,7 @@ class ApplicationController < ActionController::Base
     @sb[:detail_sortdir] = @detail_sortdir
 
     # Set/clear sandbox (@sb) per controller in the session object
-    session[:sandboxes] ||= HashWithIndifferentAccess.new
+    session[:sandboxes] ||= ActiveSupport::HashWithIndifferentAccess.new
     session[:sandboxes][controller_name] = @sb.blank? ? nil : copy_hash(@sb)
 
     # Clear out pi_xml and pi from sandbox if not in policy controller or no longer need to hang on to policy import data, clearing it out incase user switched screen before importing data
@@ -1811,11 +1814,11 @@ class ApplicationController < ActionController::Base
   end
 
   def get_record_display_name(record)
-    return record.label                      if record.respond_to?("label")
-    return record.name                       if record.respond_to?("name")
-    return record.description                if record.respond_to?("description") && record.description.present?
-    return record.ext_management_system.name if record.respond_to?("ems_id")
-    return record.title                      if record.respond_to?("title")
+    return record.label                      if record.respond_to?(:label)
+    return record.name                       if record.respond_to?(:name)
+    return record.description                if record.respond_to?(:description) && record.description.present?
+    return record.ext_management_system.name if record.respond_to?(:ems_id)
+    return record.title                      if record.respond_to?(:title)
 
     "<Record ID #{record.id}>"
   end
@@ -1953,7 +1956,7 @@ class ApplicationController < ActionController::Base
     if @in_a_form && !@angular_form
       @edit && @edit[:rec_id]
     else
-      @record.try!(:id)
+      @record&.id
     end
   end
 

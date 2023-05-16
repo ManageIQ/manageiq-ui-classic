@@ -4,7 +4,7 @@ describe EmsInfraHelper::TextualSummary do
     allow(self).to receive(:textual_authentications).and_return([])
   end
 
-  include_examples "textual_group", "Relationships", %i(
+  include_examples "textual_group", "Relationships", %i[
     clusters
     hosts
     datastores
@@ -15,9 +15,9 @@ describe EmsInfraHelper::TextualSummary do
     network_manager
     custom_button_events
     tenant
-  )
+  ]
 
-  include_examples "textual_group", "Properties", %i(
+  include_examples "textual_group", "Properties", %i[
     hostname
     ipaddress
     type
@@ -29,11 +29,11 @@ describe EmsInfraHelper::TextualSummary do
     guid
     host_default_vnc_port_range
     region
-  )
+  ]
 
-  include_examples "textual_group", "Status", %i(refresh_status refresh_date orchestration_stacks_status)
+  include_examples "textual_group", "Status", %i[refresh_status refresh_date orchestration_stacks_status]
 
-  include_examples "textual_group_smart_management", %i(zone)
+  include_examples "textual_group_smart_management", %i[zone]
 
   describe '#textual_tenant' do
     let(:ems) { FactoryBot.create(:ems_infra) }

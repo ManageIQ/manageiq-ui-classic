@@ -15,7 +15,7 @@ describe ContainerImageRegistryController do
     ems = FactoryBot.create(:ems_kubernetes)
     container_image_registry =
       ContainerImageRegistry.create(:ext_management_system => ems, :name => "Test Image Registry")
-    get :show, :params => { :id => container_image_registry.id }
+    get :show, :params => {:id => container_image_registry.id}
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
     expect(assigns(:breadcrumbs)).to eq([{:name => "Container Image Registries",
@@ -31,7 +31,7 @@ describe ContainerImageRegistryController do
       @image_registry = FactoryBot.create(:container_image_registry)
     end
 
-    subject { get :show, :params => { :id => @image_registry.id } }
+    subject { get :show, :params => {:id => @image_registry.id} }
 
     context "render" do
       render_views

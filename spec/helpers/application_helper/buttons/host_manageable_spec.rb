@@ -1,5 +1,5 @@
 describe ApplicationHelper::Button::HostManageable do
-  let(:provision_state) { String.new 'not_manageable' }
+  let(:provision_state) { +'not_manageable' }
   let(:record) { FactoryBot.create(:host_openstack_infra) }
   let(:button) { described_class.new(setup_view_context_with_sandbox({}), {}, {'record' => record}, {}) }
 
@@ -10,7 +10,7 @@ describe ApplicationHelper::Button::HostManageable do
 
     context 'when record.class == ManageIQ::Providers::Openstack::InfraManager::Host' do
       context 'and hardware.provision_state == manageable' do
-        let(:provision_state) { String.new 'manageable' }
+        let(:provision_state) { +'manageable' }
         it { expect(subject).to be_falsey }
       end
       context 'and hardware.provision_state != manageable' do

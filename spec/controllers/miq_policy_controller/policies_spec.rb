@@ -19,7 +19,7 @@ describe MiqPolicyController do
         new[:description] = "foo_policy"
         new[:towhat] = "ContainerGroup"
         new[:description] = "Test_description"
-        new[:expression] =  {">" => {"count" => "ContainerGroup.advanced_settings", "value" => "1"}}
+        new[:expression] = {">" => {"count" => "ContainerGroup.advanced_settings", "value" => "1"}}
         controller.instance_variable_set(:@edit, :new     => new,
                                                  :current => new,
                                                  :typ     => "basic",

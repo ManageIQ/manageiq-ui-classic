@@ -21,12 +21,12 @@ describe HostController do
     it "renders show_list and does not include hidden column" do
       allow(controller).to receive(:render)
       report = FactoryBot.create(:miq_report,
-                                  :name        => 'Hosts',
-                                  :title       => 'Hosts',
-                                  :cols        => %w(name ipaddress v_total_vms),
-                                  :col_order   => %w(name ipaddress v_total_vms),
-                                  :headers     => %w(Name IP\ Address VMs),
-                                  :col_options => {"name" => {:hidden => true}})
+                                 :name        => 'Hosts',
+                                 :title       => 'Hosts',
+                                 :cols        => %w[name ipaddress v_total_vms],
+                                 :col_order   => %w[name ipaddress v_total_vms],
+                                 :headers     => %w[Name IP\ Address VMs],
+                                 :col_options => {"name" => {:hidden => true}})
       expect(controller).to receive(:get_db_view).and_return(report)
       controller.send(:report_data)
       view_hash = controller.send(:view_to_hash, assigns(:view))
@@ -37,11 +37,11 @@ describe HostController do
     it "renders show_list and includes all columns" do
       allow(controller).to receive(:render)
       report = FactoryBot.create(:miq_report,
-                                  :name      => 'Hosts',
-                                  :title     => 'Hosts',
-                                  :cols      => %w(name ipaddress v_total_vms),
-                                  :col_order => %w(name ipaddress v_total_vms),
-                                  :headers   => %w(Name IP\ Address VMs))
+                                 :name      => 'Hosts',
+                                 :title     => 'Hosts',
+                                 :cols      => %w[name ipaddress v_total_vms],
+                                 :col_order => %w[name ipaddress v_total_vms],
+                                 :headers   => %w[Name IP\ Address VMs])
       expect(controller).to receive(:get_db_view).and_return(report)
       controller.send(:report_data)
       view_hash = controller.send(:view_to_hash, assigns(:view))
@@ -263,9 +263,9 @@ describe HostController do
     # http://localhost:3000/host/users/10000000000005?db=host
     it "renders a grid of associated Users" do
       expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
-        :model_name      => 'Account',
-        :parent_id       => @host.id.to_s,
-        :parent          => @host
+        :model_name => 'Account',
+        :parent_id  => @host.id.to_s,
+        :parent     => @host
       )
       get :users, :params => {:id => @host.id, :db => 'host'}
       expect(response.status).to eq(200)
@@ -275,9 +275,9 @@ describe HostController do
     it "renders a grid of associated GuestApplications" do
       @guest_application = FactoryBot.create(:guest_application, :name => "foo", :host_id => @host.id)
       expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
-        :model_name      => 'GuestApplication',
-        :parent_id       => @host.id.to_s,
-        :parent          => @host,
+        :model_name => 'GuestApplication',
+        :parent_id  => @host.id.to_s,
+        :parent     => @host
       )
       get :guest_applications, :params => {:id => @host.id, :db => 'host'}
       expect(response.status).to eq(200)
@@ -349,10 +349,10 @@ describe HostController do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as FactoryBot.create(:user, :features => "none")
       @host = FactoryBot.create(:host,
-                                 :hardware => FactoryBot.create(:hardware,
-                                                                 :cpu_sockets          => 2,
-                                                                 :cpu_cores_per_socket => 4,
-                                                                 :cpu_total_cores      => 8))
+                                :hardware => FactoryBot.create(:hardware,
+                                                               :cpu_sockets          => 2,
+                                                               :cpu_cores_per_socket => 4,
+                                                               :cpu_total_cores      => 8))
       session[:settings] = {}
     end
 
@@ -482,7 +482,7 @@ describe HostController do
           :parent_id                      => nil,
           :report_data_additional_options => {
             :lastaction => 'show_list',
-          },
+          }
         )
         get :show_list, :params => {'search[text]' => 'foobar'}
         expect(session.fetch_path(:sandboxes, 'host', :search_text)).to eq('foobar')
@@ -523,7 +523,7 @@ describe HostController do
           :model      => 'Host',
           :parent_id  => nil,
           :explorer   => false,
-          :lastaction => 'show_list',
+          :lastaction => 'show_list'
         )
         results = assert_report_data_response
         expect(results['data']['rows'].length).to eq(1)

@@ -34,6 +34,7 @@ class TreeBuilderAutomateCatalog < TreeBuilderAutomate
   def filter_ae_objects(objects)
     return [] if objects.blank?
     return objects unless @sb[:cached_waypoint_ids]
+
     klass_name = objects.first.class.name
     objects.select { |obj| @sb[:cached_waypoint_ids].include?("#{klass_name}::#{obj.id}") }
   end

@@ -29,10 +29,10 @@ describe TextualMixins::TextualDevices do
     context "with hdd hardware" do
       let(:hw) do
         FactoryBot.create(:hardware,
-                           :disks => [FactoryBot.create(:disk,
-                                                         :device_type     => "disk",
-                                                         :device_name     => "HD01",
-                                                         :controller_type => "scsi")])
+                          :disks => [FactoryBot.create(:disk,
+                                                       :device_type     => "disk",
+                                                       :device_name     => "HD01",
+                                                       :controller_type => "scsi")])
       end
       it { is_expected.not_to be_empty }
     end
@@ -40,11 +40,11 @@ describe TextualMixins::TextualDevices do
     context "with hdd with no size_on_disk collected (AZURE)" do
       let(:hw) do
         FactoryBot.create(:hardware,
-                           :disks => [FactoryBot.create(:disk,
-                                                         :device_type     => "disk",
-                                                         :device_name     => "HD01",
-                                                         :size            => "1072693248",
-                                                         :controller_type => "AZURE")])
+                          :disks => [FactoryBot.create(:disk,
+                                                       :device_type     => "disk",
+                                                       :device_name     => "HD01",
+                                                       :size            => "1072693248",
+                                                       :controller_type => "AZURE")])
       end
       it { expect(subject[0][:name]).to include("Hard Disk") }
       it { expect(subject[0][:description]).to include("Name: HD01, Location: N/A, Size: 1023 MB, Percent Used Provisioned Space: N/A, Filename: N/A, Mode: N/A") }
@@ -53,13 +53,13 @@ describe TextualMixins::TextualDevices do
     context "with hdd with size_on_disk and percent provisioned collected (AZURE)" do
       let(:hw) do
         FactoryBot.create(:hardware,
-                           :disks => [FactoryBot.create(:disk,
-                                                         :device_type     => "disk",
-                                                         :device_name     => "CLIA566D60F38FB9ECC",
-                                                         :location        => "https://jdg.blob.core.windows.net/vhds/clia566d60f38fb9ecc.vhd",
-                                                         :size            => "1072693248",
-                                                         :size_on_disk    => "357564416",
-                                                         :controller_type => "AZURE")])
+                          :disks => [FactoryBot.create(:disk,
+                                                       :device_type     => "disk",
+                                                       :device_name     => "CLIA566D60F38FB9ECC",
+                                                       :location        => "https://jdg.blob.core.windows.net/vhds/clia566d60f38fb9ecc.vhd",
+                                                       :size            => "1072693248",
+                                                       :size_on_disk    => "357564416",
+                                                       :controller_type => "AZURE")])
       end
       it { expect(subject[0][:name]).to include("Hard Disk") }
 
@@ -87,7 +87,7 @@ describe TextualMixins::TextualDevices do
     context "with network hardware" do
       let(:hw) do
         FactoryBot.create(:hardware,
-                           :guest_devices => [FactoryBot.create(:guest_device_nic)])
+                          :guest_devices => [FactoryBot.create(:guest_device_nic)])
       end
       it { is_expected.not_to be_empty }
     end

@@ -45,26 +45,31 @@ module FlavorHelper::TextualSummary
 
   def textual_supports_32_bit
     return nil if @record.supports_32_bit.nil?
+
     {:label => _("32 Bit Architecture"), :value => @record.supports_32_bit?}
   end
 
   def textual_supports_64_bit
     return nil if @record.supports_64_bit.nil?
+
     {:label => _("64 Bit Architecture"), :value => @record.supports_64_bit?}
   end
 
   def textual_supports_hvm
     return nil if @record.supports_hvm.nil?
+
     {:label => _("HVM (Hardware Virtual Machine)"), :value => @record.supports_hvm?}
   end
 
   def textual_supports_paravirtual
     return nil if @record.supports_paravirtual.nil?
+
     {:label => _("Paravirtualization"), :value => @record.supports_paravirtual?}
   end
 
   def textual_block_storage_based_only
     return nil if @record.block_storage_based_only.nil?
+
     {:label => _("Block Storage Based"), :value => @record.block_storage_based_only?}
   end
 

@@ -28,7 +28,7 @@ class UserValidationService
       begin
         User.lookup_by_userid(user[:name]).change_password(user[:password], user[:new_password])
       rescue => bang
-        return ValidateResult.new(:fail, "Error: " + bang.message)
+        return ValidateResult.new(:fail, "Error: #{bang.message}")
       end
     end
 
@@ -56,6 +56,7 @@ class UserValidationService
     unless startpage
       return ValidateResult.new(:fail, _("The user's role is not authorized for any access, please contact the administrator!"))
     end
+
     ValidateResult.new(:pass, nil, startpage)
   end
 
@@ -80,7 +81,7 @@ class UserValidationService
                                        :no_refresh    => true,
                                        :flash_msg     => _("The %{product} Server is still starting, you have been redirected to the diagnostics page for problem determination") % {:product => Vmdb::Appliance.PRODUCT_NAME},
                                        :escape        => false
-      ))
+                                     ))
     else
       ValidateResult.new(:fail, _("The %{product} Server is still starting. If this message persists, please contact your %{product} administrator.") % {:product => Vmdb::Appliance.PRODUCT_NAME})
     end
@@ -99,17 +100,17 @@ class UserValidationService
 
     if user_or_taskid.kind_of?(User)
       user[:name] = user_or_taskid.userid
-      return ValidateResult.new(:pass)
+      ValidateResult.new(:pass)
     else
       initiate_wait_for_task(:task_id => user_or_taskid)
-      return ValidateResult.new(:wait_for_task, nil)
+      ValidateResult.new(:wait_for_task, nil)
     end
   end
 
   def validate_user_collect_task(user, task_id)
     task = MiqTask.find(task_id)
     if task.status.downcase != "ok"
-      validate = ValidateResult.new(:fail, "Error: " + task.message)
+      validate = ValidateResult.new(:fail, "Error: #{task.message}")
       task.destroy
       return validate
     end
@@ -125,10 +126,11 @@ class UserValidationService
     return ValidateResult.new(:fail, _("Error: New password and verify password must be the same")) if
       user[:new_password].present? && user[:new_password] != user[:verify_password]
 
-    return ValidateResult.new(:fail, _("Error: New password can not be blank")) if user[:new_password] && user[:new_password].blank?
+    return ValidateResult.new(:fail, _("Error: New password can not be blank")) if user[:new_password].blank?
 
     return ValidateResult.new(:fail, _("Error: New password is the same as existing password")) if
       user[:new_password].present? && user[:password] == user[:new_password]
+
     nil
   end
 

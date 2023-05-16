@@ -12,6 +12,13 @@ class VolumeMappingController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  def show
+    if params[:id].nil?
+      @breadcrumbs.clear
+    end
+    super
+  end
+
   def new
     assert_privileges("volume_mapping_new")
 
@@ -21,13 +28,6 @@ class VolumeMappingController < ApplicationController
     end
     drop_breadcrumb(:name => _("Define New %{table}") % {:table => ui_lookup(:table => table_name)},
                     :url  => "/#{controller_name}/new")
-  end
-
-  def show
-    if params[:id].nil?
-      @breadcrumbs.clear
-    end
-    super
   end
 
   private

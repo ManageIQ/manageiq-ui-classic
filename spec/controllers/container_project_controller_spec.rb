@@ -14,7 +14,7 @@ describe ContainerProjectController do
     EvmSpecHelper.create_guid_miq_server_zone
     ems = FactoryBot.create(:ems_kubernetes)
     container_project = ContainerProject.create(:ext_management_system => ems, :name => "Test Project")
-    get :show, :params => { :id => container_project.id, :display => 'main' }
+    get :show, :params => {:id => container_project.id, :display => 'main'}
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
     expect(assigns(:breadcrumbs)).to eq([{:name => "Container Projects",
@@ -30,7 +30,7 @@ describe ContainerProjectController do
       @project = FactoryBot.create(:container_project)
     end
 
-    subject { get :show, :params => { :id => @project.id, :display => 'main' } }
+    subject { get :show, :params => {:id => @project.id, :display => 'main'} }
 
     context "render" do
       render_views
@@ -41,12 +41,12 @@ describe ContainerProjectController do
       end
 
       it "correct listnav for timeline page" do
-        get :show, :params => { :id => @project.id, :display => 'timeline' }
+        get :show, :params => {:id => @project.id, :display => 'timeline'}
         is_expected.to have_http_status 200
       end
 
       it "renders dashboard view" do
-        get :show, :params => { :id => @project.id, :display => 'dashboard' }
+        get :show, :params => {:id => @project.id, :display => 'dashboard'}
         expect(response.status).to eq(200)
         expect(response.body).to_not be_empty
         expect(response).to render_template('container_project/_show_dashboard')

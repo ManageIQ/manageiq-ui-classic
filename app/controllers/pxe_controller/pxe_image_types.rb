@@ -38,7 +38,7 @@ module PxeController::PxeImageTypes
   def pxe_image_type_list
     assert_privileges('pxe_image_type_view')
     @lastaction = "pxe_image_type_list"
-    @force_no_grid_xml   = true
+    @force_no_grid_xml = true
     if params[:ppsetting]                                             # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                       # Set the new per page value
       @settings.store_path(:perpage, :list, @items_per_page) # Set the per page setting for this gtl type

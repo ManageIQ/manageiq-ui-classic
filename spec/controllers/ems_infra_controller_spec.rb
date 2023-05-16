@@ -20,20 +20,20 @@ describe EmsInfraController do
 
     it "when VM Right Size Recommendations is pressed" do
       expect(controller).to receive(:vm_right_size)
-      post :button, :params => { :pressed => "vm_right_size", :format => :js }
+      post :button, :params => {:pressed => "vm_right_size", :format => :js}
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
 
     it "when VM Migrate is pressed" do
       expect(controller).to receive(:prov_redirect).with("migrate")
-      post :button, :params => { :pressed => "vm_migrate", :format => :js }
+      post :button, :params => {:pressed => "vm_migrate", :format => :js}
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
 
     it "when VM Migrate is pressed" do
       ems = FactoryBot.create(:ems_vmware)
       vm = FactoryBot.create(:vm_vmware, :ext_management_system => ems)
-      post :button, :params => { :pressed => "vm_migrate", :format => :js, "check_#{vm.id}" => 1, :id => ems.id }
+      post :button, :params => {:pressed => "vm_migrate", :format => :js, "check_#{vm.id}" => 1, :id => ems.id}
       expect(controller.send(:flash_errors?)).not_to be_truthy
       expect(response.body).to include("/miq_request/prov_edit?")
       expect(response.status).to eq(200)
@@ -41,31 +41,31 @@ describe EmsInfraController do
 
     it "when VM Retire is pressed" do
       expect(controller).to receive(:retirevms).once
-      post :button, :params => { :pressed => "vm_retire", :format => :js }
+      post :button, :params => {:pressed => "vm_retire", :format => :js}
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
 
     it "when VM Manage Policies is pressed" do
       expect(controller).to receive(:assign_policies).with(VmOrTemplate)
-      post :button, :params => { :pressed => "vm_protect", :format => :js }
+      post :button, :params => {:pressed => "vm_protect", :format => :js}
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
 
     it "when MiqTemplate Manage Policies is pressed" do
       expect(controller).to receive(:assign_policies).with(VmOrTemplate)
-      post :button, :params => { :pressed => "miq_template_protect", :format => :js }
+      post :button, :params => {:pressed => "miq_template_protect", :format => :js}
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
 
     it "when VM Tag is pressed" do
       expect(controller).to receive(:tag).with(VmOrTemplate)
-      post :button, :params => { :pressed => "vm_tag", :format => :js }
+      post :button, :params => {:pressed => "vm_tag", :format => :js}
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
 
     it "when MiqTemplate Tag is pressed" do
       expect(controller).to receive(:tag).with(VmOrTemplate)
-      post :button, :params => { :pressed => 'miq_template_tag', :format => :js }
+      post :button, :params => {:pressed => 'miq_template_tag', :format => :js}
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
 
@@ -73,7 +73,7 @@ describe EmsInfraController do
       ems_infra = FactoryBot.create(:ext_management_system)
       vm = FactoryBot.create(:vm_vmware, :ext_management_system => ems_infra)
       allow(controller).to receive(:find_records_with_rbac) { [vm] }
-      post :button, :params => { :pressed => "vm_right_size", :id => ems_infra.id, :display => 'vms', "check_#{vm.id}" => '1' }
+      post :button, :params => {:pressed => "vm_right_size", :id => ems_infra.id, :display => 'vms', "check_#{vm.id}" => '1'}
       expect(controller.send(:flash_errors?)).not_to be_truthy
       expect(response.body).to include("/vm/right_size/#{vm.id}")
     end
@@ -155,7 +155,7 @@ describe EmsInfraController do
   describe "#create" do
     before do
       # USE: stub_user :features => %w(ems_infra_new ems_infra_edit)
-      user = FactoryBot.create(:user, :features => %w(ems_infra_new ems_infra_edit))
+      user = FactoryBot.create(:user, :features => %w[ems_infra_new ems_infra_edit])
 
       allow(user).to receive(:server_timezone).and_return("UTC")
       allow_any_instance_of(described_class).to receive(:set_user_time_zone)
@@ -183,7 +183,7 @@ describe EmsInfraController do
     end
 
     it "when values are not changed" do
-      post :scaling, :params => { :id => @ems.id, :scale => "", :orchestration_stack_id => @orchestration_stack.id }
+      post :scaling, :params => {:id => @ems.id, :scale => "", :orchestration_stack_id => @orchestration_stack.id}
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include(
@@ -192,8 +192,8 @@ describe EmsInfraController do
     end
 
     it "when values are changed, but exceed number of hosts available" do
-      post :scaling, :params => { :id => @ems.id, :scale => "", :orchestration_stack_id => @orchestration_stack.id,
-           @orchestration_stack_parameter_compute.name => @ems.hosts.count * 2 }
+      post :scaling, :params => {:id => @ems.id, :scale => "", :orchestration_stack_id => @orchestration_stack.id,
+           @orchestration_stack_parameter_compute.name => @ems.hosts.count * 2}
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include(
@@ -203,8 +203,8 @@ describe EmsInfraController do
 
     it "when values are changed, values do not exceed number of hosts available" do
       expect(@orchestration_stack).to receive(:scale_up_queue)
-      post :scaling, :params => { :id => @ems.id, :scale => "", :orchestration_stack_id => @orchestration_stack.id,
-                                  @orchestration_stack_parameter_compute.name => 2 }
+      post :scaling, :params => {:id => @ems.id, :scale => "", :orchestration_stack_id => @orchestration_stack.id,
+                                  @orchestration_stack_parameter_compute.name => 2}
       expect(controller.send(:flash_errors?)).to be_falsey
       expect(response.body).to include("redirected")
       expect(response.body).to include("ems_infra")
@@ -213,7 +213,7 @@ describe EmsInfraController do
 
     it "when no orchestration stack is available" do
       allow(@ems).to receive(:direct_orchestration_stacks).and_return([])
-      post :scaling, :params => { :id => @ems.id, :scale => "", :orchestration_stack_id => nil }
+      post :scaling, :params => {:id => @ems.id, :scale => "", :orchestration_stack_id => nil}
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include("Orchestration stack could not be found.")
@@ -402,7 +402,7 @@ describe EmsInfraController do
       end
 
       it "listnav correctly for timeline" do
-        get :show, :params => { :id => @ems.id, :display => 'timeline' }
+        get :show, :params => {:id => @ems.id, :display => 'timeline'}
         expect(response.status).to eq(200)
       end
     end
@@ -437,7 +437,7 @@ describe EmsInfraController do
     end
 
     context "render dashboard" do
-      subject { get :show, :params => { :id => @ems.id, :display => 'dashboard' } }
+      subject { get :show, :params => {:id => @ems.id, :display => 'dashboard'} }
       render_views
 
       it 'never render template show' do
@@ -470,7 +470,7 @@ describe EmsInfraController do
     context "when previous breadcrumbs path contained 'Cloud Providers'" do
       it "shows 'Infrastructure Providers -> (Summary)' breadcrumb path" do
         ems = FactoryBot.create(:ems_vmware)
-        get :show, :params => { :id => ems.id }
+        get :show, :params => {:id => ems.id}
         breadcrumbs = controller.instance_variable_get(:@breadcrumbs)
         expect(breadcrumbs).to eq([{:name => "Infrastructure Providers", :url => "/ems_infra/show_list"},
                                    {:name => "#{ems.name} (Dashboard)", :url => "/ems_infra/#{ems.id}"}])
@@ -493,14 +493,14 @@ describe EmsInfraController do
 
     let(:report) do
       FactoryBot.create(:miq_report,
-                         :name        => 'Infrastructure Providers',
-                         :db          => 'EmsInfra',
-                         :title       => 'Infrastructure Providers',
-                         :cols        => %w[name hostname],
-                         :col_order   => %w[name hostname tenant.name],
-                         :headers     => %w[Name Hostname Tenant],
-                         :col_options => {"tenant.name" => {:display_method => :user_super_admin?}},
-                         :include     => {"tenant" => {"columns" => ['name']}})
+                        :name        => 'Infrastructure Providers',
+                        :db          => 'EmsInfra',
+                        :title       => 'Infrastructure Providers',
+                        :cols        => %w[name hostname],
+                        :col_order   => %w[name hostname tenant.name],
+                        :headers     => %w[Name Hostname Tenant],
+                        :col_options => {"tenant.name" => {:display_method => :user_super_admin?}},
+                        :include     => {"tenant" => {"columns" => ['name']}})
     end
 
     include_examples 'hiding tenant column for non admin user', :name => "Name", :hostname => "Hostname"

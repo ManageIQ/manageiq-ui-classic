@@ -14,6 +14,7 @@ class ApplicationHelper::Button::MiqAeNamespaceEdit < ApplicationHelper::Button:
 
   def editable?
     return @record.editable? if @record.instance_of?(MiqAeNamespace)
+
     super
   end
 end

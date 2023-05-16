@@ -126,7 +126,7 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
             :enabled     => true,
             :options     => {:feature => :physical_server_remote_access}
           )
-        ],
+        ]
       ),
     ]
   )

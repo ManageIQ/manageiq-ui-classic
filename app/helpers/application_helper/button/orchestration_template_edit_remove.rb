@@ -3,7 +3,7 @@ class ApplicationHelper::Button::OrchestrationTemplateEditRemove < ApplicationHe
 
   def disabled?
     if @record.in_use?
-      @error_message = if self[:id] =~ /_edit$/
+      @error_message = if /_edit$/.match?(self[:id])
                          _('Orchestration Templates that are in use cannot be edited')
                        else
                          _('Orchestration Templates that are in use cannot be removed')

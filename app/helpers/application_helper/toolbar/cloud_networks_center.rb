@@ -38,7 +38,8 @@ class ApplicationHelper::Toolbar::CloudNetworksCenter < ApplicationHelper::Toolb
             :url_parms    => "main_div",
             :send_checked => true,
             :enabled      => false,
-            :onwhen       => "1+")
+            :onwhen       => "1+"
+          )
         ]
       )
     ]

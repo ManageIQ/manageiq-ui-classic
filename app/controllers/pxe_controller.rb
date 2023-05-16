@@ -41,24 +41,20 @@ class PxeController < ApplicationController
   end
 
   def pxe_server_tags_edit
-    tag("PxeServer")
+    tag.pxe_server
   end
 
   def windows_image_tags_edit
-    tag("WindowsImage")
+    tag.windows_image
   end
 
   def pxe_image_tags_edit
-    tag("PxeImage")
+    tag.pxe_image
   end
 
   def previous_breadcrumb_url
     action = @lastaction == "pxe_server_list" ? "explorer" : @lastaction
     url_for_only_path(:action => action)
-  end
-
-  def tagging_edit_tags_reset
-    super
   end
 
   def accordion_select

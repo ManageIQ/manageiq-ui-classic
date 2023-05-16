@@ -215,11 +215,11 @@ module Mixins
 
           # determine available switches for this host...
           switch_ids = []
-          Rbac.filtered(HostSwitch.where("host_id = ?", host_id)).each do |host_switch|
+          Rbac.filtered(HostSwitch.where(:host_id => host_id)).each do |host_switch|
             switch_ids << host_switch.switch_id
           end
 
-          Rbac.filtered(Lan.where("switch_id IN (?)", switch_ids)).each do |lan|
+          Rbac.filtered(Lan.where(:switch_id => switch_ids)).each do |lan|
             vlan_options << lan.name
           end
           vlan_options.sort
@@ -232,7 +232,7 @@ module Mixins
           datastore_ids = vm.host.storages.pluck(:id)
           # determine available iso files for the datastores
           Rbac.filtered(StorageFile.where("storage_id IN (?) and ext_name = 'iso'", datastore_ids)).each do |sf|
-            iso_options << [sf.name, sf.name + ',' + sf.storage_id.to_s]
+            iso_options << [sf.name, "#{sf.name},#{sf.storage_id}"]
           end
 
           iso_options
@@ -305,7 +305,7 @@ module Mixins
 
           if vm.kind_of?(ManageIQ::Providers::Vmware::CloudManager::Vm)
             vm.network_ports.order(:name).each do |port|
-              network_adapters << { :name => port.name, :network => port.cloud_subnets.try(:first).try(:name) || _('None'), :mac => port.mac_address, :add_remove => '' }
+              network_adapters << {:name => port.name, :network => port.cloud_subnets.try(:first).try(:name) || _('None'), :mac => port.mac_address, :add_remove => ''}
             end
           end
           network_adapters

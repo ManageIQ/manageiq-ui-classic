@@ -15,7 +15,7 @@ describe GenericObjectHelper::TextualSummary do
             :s_time     => "datetime"
           },
           :associations => {"cp" => "ManageIQ::Providers::CloudManager", "vms" => "Vm"},
-          :methods      => %w(some_method)
+          :methods      => %w[some_method]
         }
       )
       @generic_obj_defn_with_no_properties = FactoryBot.create(:generic_object_definition)
@@ -47,11 +47,11 @@ describe GenericObjectHelper::TextualSummary do
       vm2 = FactoryBot.create(:vm_openstack)
       ems = FactoryBot.create(:ems_cloud)
       @record = FactoryBot.create(:generic_object,
-                                   :generic_object_definition_id => @generic_obj_defn.id,
-                                   :cp                           => [ems],
-                                   :vms                          => [vm1, vm2])
+                                  :generic_object_definition_id => @generic_obj_defn.id,
+                                  :cp                           => [ems],
+                                  :vms                          => [vm1, vm2])
 
-      expected = TextualGroup.new("Associations", %i(cp vms))
+      expected = TextualGroup.new("Associations", %i[cp vms])
 
       expect(textual_group_associations).to eq(expected)
     end
@@ -67,7 +67,7 @@ describe GenericObjectHelper::TextualSummary do
     it "displays the GO Methods when Methods exist" do
       @record = FactoryBot.create(:generic_object, :generic_object_definition_id => @generic_obj_defn.id)
 
-      expected = TextualGroup.new("Methods", %i(some_method))
+      expected = TextualGroup.new("Methods", %i[some_method])
 
       expect(textual_group_methods).to eq(expected)
     end

@@ -20,6 +20,13 @@ class HostInitiatorGroupController < ApplicationController
     _('Host Initiator Groups')
   end
 
+  def show
+    if params[:id].nil?
+      @breadcrumbs.clear
+    end
+    super
+  end
+
   def new
     assert_privileges("host_initiator_group_new")
 
@@ -40,13 +47,6 @@ class HostInitiatorGroupController < ApplicationController
       :name => _("Edit Host Initiator group \"%{name}\"") % {:name => @host_initiator_group.name},
       :url  => "/host_initiator_group/edit/#{@host_initiator_group.id}"
     )
-  end
-
-  def show
-    if params[:id].nil?
-      @breadcrumbs.clear
-    end
-    super
   end
 
   private

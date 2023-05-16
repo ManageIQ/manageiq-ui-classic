@@ -1,5 +1,5 @@
 describe FloatingIpController do
-  include_examples :shared_examples_for_floating_ip_controller, %w(openstack azure google amazon)
+  include_examples :shared_examples_for_floating_ip_controller, %w[openstack azure google amazon]
 
   let(:admin_user) { FactoryBot.create(:user, :role => "super_administrator") }
   let(:ems) { FactoryBot.create(:ems_openstack).network_manager }
@@ -16,11 +16,11 @@ describe FloatingIpController do
       allow(@ct).to receive(:tagged_with).with(:cat => admin_user.userid).and_return("my tags")
       classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
       @tag1 = FactoryBot.create(:classification_tag,
-                                 :name   => "tag1",
-                                 :parent => classification)
+                                :name   => "tag1",
+                                :parent => classification)
       @tag2 = FactoryBot.create(:classification_tag,
-                                 :name   => "tag2",
-                                 :parent => classification)
+                                :name   => "tag2",
+                                :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@ct).and_return([@tag1, @tag2])
       session[:tag_db] = "FloatingIp"
       edit = {
@@ -38,20 +38,20 @@ describe FloatingIpController do
     end
 
     it "builds tagging screen" do
-      post :button, :params => { :pressed => "floating_ip_tag", :format => :js, :id => @ct.id }
+      post :button, :params => {:pressed => "floating_ip_tag", :format => :js, :id => @ct.id}
       expect(assigns(:flash_array)).to be_nil
     end
 
     it "cancels tags edit" do
       session[:breadcrumbs] = [{:url => "floating_ip/show/#{@ct.id}"}, 'placeholder']
-      post :tagging_edit, :params => { :button => "cancel", :format => :js, :id => @ct.id }
+      post :tagging_edit, :params => {:button => "cancel", :format => :js, :id => @ct.id}
       expect(assigns(:flash_array).first[:message]).to include("was cancelled by the user")
       expect(assigns(:edit)).to be_nil
     end
 
     it "save tags" do
       session[:breadcrumbs] = [{:url => "floating_ip/show/#{@ct.id}"}, 'placeholder']
-      post :tagging_edit, :params => { :button => "save", :format => :js, :id => @ct.id, :data => get_tags_json([@tag1, @tag2]) }
+      post :tagging_edit, :params => {:button => "save", :format => :js, :id => @ct.id, :data => get_tags_json([@tag1, @tag2])}
       expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
       expect(assigns(:edit)).to be_nil
     end
@@ -86,7 +86,7 @@ describe FloatingIpController do
     end
 
     it "builds create screen" do
-      post :button, :params => { :pressed => "floating_ip_new", :format => :js }
+      post :button, :params => {:pressed => "floating_ip_new", :format => :js}
       expect(assigns(:flash_array)).to be_nil
     end
   end
@@ -108,7 +108,7 @@ describe FloatingIpController do
     end
 
     it "builds edit screen" do
-      post :button, :params => { :pressed => "floating_ip_edit", :format => :js, :id => floating_ip.id }
+      post :button, :params => {:pressed => "floating_ip_edit", :format => :js, :id => floating_ip.id}
       expect(assigns(:flash_array)).to be_nil
     end
   end

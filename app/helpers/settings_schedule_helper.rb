@@ -48,7 +48,7 @@ module SettingsScheduleHelper
     unless schedule.sched_action[:method] == "automation_request"
       if schedule.miq_search
         search = schedule.miq_search
-        filter_data = search.search_type == "user" ? '_("My Filter: ") #{search.description}' : '_("Global Filter: ") #{search.description}'
+        filter_data = search.search_type == "user" ? %{_("My Filter: ") #{search.description}} : %{_("Global Filter: ") #{search.description}}
         rows.push({:cells => [{:value => filter_data}]})
       elsif schedule.filter.kind_of?(MiqExpression)
         operators = ["AND", "OR", "(", ")"]

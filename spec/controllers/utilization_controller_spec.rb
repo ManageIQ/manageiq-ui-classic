@@ -24,8 +24,8 @@ describe UtilizationController do
                                 :title        => ds.name}}
       tree_nodes.each do |_key, node|
         controller.instance_variable_set(:@sb, :trees       => {
-                                           :utilization_tree => {:active_node => node[:active_node]},
-                                         },
+                                                 :utilization_tree => {:active_node => node[:active_node]},
+                                               },
                                                :active_tree => :utilization_tree,
                                                :options     => {})
         expect(controller).not_to receive(:render)

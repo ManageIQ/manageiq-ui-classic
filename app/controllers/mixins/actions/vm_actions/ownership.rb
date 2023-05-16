@@ -59,7 +59,7 @@ module Mixins
             # redirect to build the ownership screen
             javascript_redirect(:controller => controller, :action => 'ownership', :rec_ids => @origin_ownership_items, :escape => false)
           else
-            head :ok
+            head 200
           end
         end
 

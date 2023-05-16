@@ -36,6 +36,7 @@ describe ApplicationController do
   context "tag_edit_build_screen" do
     def add_entry(cat, options)
       raise "entries can only be added to classifications" unless cat.category?
+
       # Inherit from parent classification
       options.merge!(:read_only    => cat.read_only,
                      :syntax       => cat.syntax,
@@ -81,7 +82,7 @@ describe ApplicationController do
       controller.instance_variable_set(:@sb, {})
       controller.instance_variable_set(:@tagging, 'ServiceTemplate')
       controller.instance_variable_set(:@object_ids, [@st.id])
-      session[:assigned_filters] = {:Test => %w("Entry1 Entry2)}
+      session[:assigned_filters] = {:Test => %w["Entry1 Entry2]}
 
       controller.send(:tag_edit_build_screen)
       expect(convert_to_region_id(assigns(:tags)[:tags].first[:id]))
@@ -182,7 +183,7 @@ describe ApplicationController do
 
   describe EmsInfraController do
     before do
-      login_as FactoryBot.create(:user, :features => %w(storage_tag ems_infra_tag))
+      login_as FactoryBot.create(:user, :features => %w[storage_tag ems_infra_tag])
       controller.params = params
     end
 

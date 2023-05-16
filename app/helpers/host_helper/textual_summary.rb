@@ -171,8 +171,7 @@ module HostHelper::TextualSummary
     return nil if @record.custom_1.blank?
 
     label = _("Custom Identifier")
-    h     = {:label => label, :value => @record.custom_1}
-    h
+    {:label => label, :value => @record.custom_1}
   end
 
   def textual_model
@@ -497,6 +496,7 @@ module HostHelper::TextualSummary
 
   def openstack_nova_scheduler_value
     return _("Not available. Did you assigned Cloud Provider and run SSA?") if @record.cloud_services.empty?
+
     "%{enabled_cnt} Enabled / %{disabled_cnt} Disabled " % {
       :enabled_cnt  => @record.cloud_services.where(:scheduling_disabled => false).count,
       :disabled_cnt => @record.cloud_services.where(:scheduling_disabled => true).count

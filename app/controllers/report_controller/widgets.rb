@@ -2,16 +2,16 @@ module ReportController::Widgets
   extend ActiveSupport::Concern
 
   RIGHT_CELL_TEXTS = {
-    "r"  => [N_('Report Widgets'),   N_('Report Widget "%{name}"')],
-    "c"  => [N_('Chart Widgets'),    N_('Chart Widget "%{name}"')],
-    "m"  => [N_('Menu Widgets'),     N_('Menu Widget "%{name}"')]
+    "r" => [N_('Report Widgets'),   N_('Report Widget "%{name}"')],
+    "c" => [N_('Chart Widgets'),    N_('Chart Widget "%{name}"')],
+    "m" => [N_('Menu Widgets'),     N_('Menu Widget "%{name}"')]
   }.freeze
 
   # Need this for mapping with MiqWidget record content_type field
   WIDGET_CONTENT_TYPE = {
-    "r"  => "report",
-    "c"  => "chart",
-    "m"  => "menu"
+    "r" => "report",
+    "c" => "chart",
+    "m" => "menu"
   }.freeze
 
   def widget_refresh
@@ -68,8 +68,9 @@ module ReportController::Widgets
       replace_right_cell
     when "add", "save"
       assert_privileges("widget_#{params[:id] ? "edit" : "new"}")
-      id = params[:id] ? params[:id] : "new"
+      id = params[:id] || "new"
       return unless load_edit("widget_edit__#{id}", "replace_cell__explorer")
+
       widget_get_form_vars # get current record(@widget) of MiqWidget
       widget_set_record_vars(@widget)
       if widget_validate_entries && @widget.save_with_shortcuts(@edit[:new][:shortcuts].to_a)
@@ -129,11 +130,13 @@ module ReportController::Widgets
   def feature_for_widget_action
     @edit && @edit[:widget_id] ? "widget_edit" : "widget_new"
   end
+
   # AJAX driven routine to check for changes in ANY field on the form
   def widget_form_field_changed
     assert_privileges(feature_for_widget_action)
 
     return unless load_edit("widget_edit__#{params[:id]}", "replace_cell__explorer")
+
     widget_get_form_vars
     render :update do |page|
       page << javascript_prologue
@@ -160,7 +163,7 @@ module ReportController::Widgets
       javascript_for_timer_type(params[:timer_typ]).each { |js| page << js }
 
       if params[:time_zone]
-        page << "ManageIQ.calendar.calDateFrom = new Date(#{(Time.zone.now - 1.month).in_time_zone(@edit[:tz]).strftime("%Y, %m, %d")});"
+        page << "ManageIQ.calendar.calDateFrom = new Date(#{1.month.ago.in_time_zone(@edit[:tz]).strftime("%Y, %m, %d")});"
         page << "miqBuildCalendar();"
         page << "$('#miq_date_1').val('#{@edit[:new][:timer].start_date}');"
         page << "$('#start_hour').val('#{@edit[:new][:timer].start_hour.to_i}');"
@@ -193,6 +196,7 @@ module ReportController::Widgets
     assert_privileges(feature_for_widget_action)
 
     return unless load_edit("widget_edit__#{params[:id]}", "replace_cell__explorer")
+
     @widget = @edit[:widget_id] ? MiqWidget.find(@edit[:widget_id]) : MiqWidget.new
     @edit[:new][:shortcuts].delete(params[:shortcut].to_i)
     @edit[:new][:shortcut_keys] = @edit[:new][:shortcuts].keys # Save the keys array so we can compare the hash order
@@ -212,6 +216,7 @@ module ReportController::Widgets
     assert_privileges(feature_for_widget_action)
 
     return unless load_edit("widget_edit__#{params[:id]}", "replace_cell__explorer")
+
     @widget = @edit[:widget_id] ? MiqWidget.find(@edit[:widget_id]) : MiqWidget.new
     @edit[:new][:shortcuts][params[:shortcut].to_i] = MiqShortcut.find(params[:shortcut].to_i).description
     render :update do |page|
@@ -225,7 +230,7 @@ module ReportController::Widgets
   end
 
   def get_all_widgets(nodeid = nil, rep_id = nil)
-    @force_no_grid_xml   = true
+    @force_no_grid_xml = true
     @no_checkboxes = @showlinks = true if x_active_tree != "report"
     #   @embedded = true
     if params[:ppsetting]                                             # User selected new per page value
@@ -272,7 +277,7 @@ module ReportController::Widgets
       @right_cell_text = _(RIGHT_CELL_TEXTS[@sb[:nodes][1]].first)
     else
       @record = @widget = MiqWidget.find(@sb[:nodes].last)
-      params[:text] = @widget.name unless params[:text].present?
+      params[:text] = @widget.name if params[:text].blank?
       @widget_running = true if %w[running queued].include?(@widget.status.downcase)
       @right_cell_text = _(RIGHT_CELL_TEXTS[WIDGET_CONTENT_TYPE.invert[@widget.content_type]].second) % {:name => @widget.title}
       @right_cell_div  = "widget_list"
@@ -282,8 +287,8 @@ module ReportController::Widgets
       if rep && @widget.options && @widget.options[:col_order]
         @widget.options[:col_order].each do |c|
           rep.col_order.each_with_index do |col, idx|
-            if col == c
-              @sb[:col_order].push(rep.headers[idx]) unless @sb[:col_order].include?(rep.headers[idx])
+            if col == c && @sb[:col_order].exclude?(rep.headers[idx])
+              @sb[:col_order].push(rep.headers[idx])
             end
           end
         end
@@ -368,9 +373,11 @@ module ReportController::Widgets
         @menu.each do |m|
           m[1].each do |f|
             f.each do |r|
-              next if r.class == String
+              next if r.instance_of?(String)
+
               r.each do |rep|
                 next if rep != @edit[:rpt].name
+
                 @edit[:new][:filter] = m[0]
                 @edit[:new][:subfilter] = f[0]
               end
@@ -447,6 +454,7 @@ module ReportController::Widgets
           reps.each do |rep|
             rec = MiqReport.find_by(:name => rep.strip)
             next unless rec&.graph # dont need to add rpt with no graph for widget editor, chart options box
+
             temp_arr = ["#{r[0]}/#{s}/#{rep}", rec.id]
             @reps.push(temp_arr) unless @reps.include?(temp_arr)
           end
@@ -476,7 +484,8 @@ module ReportController::Widgets
 
     # report/chart/menu options box
     @edit[:new][:row_count] = @widget.row_count(params[:row_count]) if params[:row_count]
-    if @sb[:wtype] == "r"
+    case @sb[:wtype]
+    when "r"
       if params[:filter_typ] || params[:subfilter_typ] || params[:repfilter_typ]
         # reset columns if report has changed
         @pivot = @edit[:new][:pivot] = ReportController::PivotOptions.new
@@ -490,13 +499,13 @@ module ReportController::Widgets
       end
       @edit[:new][:filter] = "" if @edit[:new][:filter] == "<Choose>"
       @edit[:new][:subfilter] = "" if @edit[:new][:subfilter] == "<Choose>"
-    elsif @sb[:wtype] == "c"
+    when "c"
       if params[:repfilter_typ] && params[:repfilter_typ] != "<Choose>"
         @edit[:rpt] = MiqReport.for_user(current_user).find(params[:repfilter_typ].to_i)
         @edit[:new][:repfilter] = @edit[:rpt].id
       end
       @edit[:new][:repfilter] = "" if params[:repfilter_typ] == "<Choose>"
-    elsif @sb[:wtype] == "m"
+    when "m"
       if params[:add_shortcut]
         s = MiqShortcut.find(params[:add_shortcut].to_i)
         @edit[:avail_shortcuts].delete_if { |as| as.last == s.id }
@@ -551,8 +560,7 @@ module ReportController::Widgets
     widget.enabled     = @edit[:new][:enabled]
     widget.options ||= {}
     widget.options[:row_count] = widget.row_count(@edit[:new][:row_count]) if %w[r rf].include?(@sb[:wtype])
-    if @sb[:wtype] == "rf"
-    else
+    unless @sb[:wtype] == "rf"
       widget.resource = @edit[:rpt]
     end
     widget.options[:col_order] = [] if @edit[:new][:pivot]

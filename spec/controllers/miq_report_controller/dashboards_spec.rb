@@ -2,7 +2,7 @@ describe ReportController do
   context "::Dashboards" do
     let(:miq_widget)     { FactoryBot.create(:miq_widget) }
     let(:miq_widget_set) { FactoryBot.create(:miq_widget_set, :owner => user.current_group, :set_data => {:col1 => [miq_widget.id], :col2 => []}) }
-    let(:user)           { user_with_feature(%w(db_copy db_edit)) }
+    let(:user)           { user_with_feature(%w[db_copy db_edit]) }
 
     before do
       EvmSpecHelper.local_miq_server
@@ -15,7 +15,7 @@ describe ReportController do
           params = {:button => "save", :dashboard_id => miq_widget_set.id.to_s, :group_id => user.current_group.id.to_s, :name => 'New Name', :description => 'New description'}
           post :db_copy, :params => params
 
-          expect(JSON.parse(response.body)).to eq({"name" => miq_widget_set.name})
+          expect(response.parsed_body).to eq({"name" => miq_widget_set.name})
           expect(response.status).to eq(200)
           expect(MiqWidgetSet.last.name).to eq("New Name")
           expect(MiqWidgetSet.last.description).to eq("New description")
@@ -28,7 +28,7 @@ describe ReportController do
           params = {:button => "save", :dashboard_id => miq_widget_set.id.to_s, :group_id => user.current_group.id.to_s}
           post :db_copy, :params => params
 
-          expect(JSON.parse(response.body)["error"]["message"]).to include("Error")
+          expect(response.parsed_body["error"]["message"]).to include("Error")
           expect(response.status).to eq(400)
         end
       end
@@ -66,7 +66,7 @@ describe ReportController do
       it "finds by id" do
         get :dashboard_get, :params => {:id => miq_widget_set.id.to_s}
 
-        expect(JSON.parse(response.body)).to eq(
+        expect(response.parsed_body).to eq(
           "description" => miq_widget_set.description.to_s,
           "name"        => miq_widget_set.name.to_s,
           "owner_id"    => miq_widget_set.owner_id.to_s
@@ -76,13 +76,13 @@ describe ReportController do
       it "finds by name" do
         get :dashboard_get, :params => {:id => miq_widget_set.id.to_s, :name => miq_widget_set.name.to_s}
 
-        expect(JSON.parse(response.body)).to eq("length" => 1)
+        expect(response.parsed_body).to eq("length" => 1)
       end
 
       it "finds by not existing name" do
         get :dashboard_get, :params => {:id => miq_widget_set.id.to_s, :name => "blabla"}
 
-        expect(JSON.parse(response.body)).to eq("length" => 0)
+        expect(response.parsed_body).to eq("length" => 0)
       end
     end
 

@@ -38,11 +38,6 @@ class HostAggregateController < ApplicationController
     )
   end
 
-  def create
-    assert_privileges("host_aggregate_new")
-    @in_a_form = true
-  end
-
   def edit
     assert_privileges("host_aggregate_edit")
     @host_aggregate = find_record_with_rbac(HostAggregate, params[:id])
@@ -51,6 +46,11 @@ class HostAggregateController < ApplicationController
       :name => _("Edit Host Aggregate \"%{name}\"") % {:name => @host_aggregate.name},
       :url  => "/host_aggregate/edit/#{@host_aggregate.id}"
     )
+  end
+
+  def create
+    assert_privileges("host_aggregate_new")
+    @in_a_form = true
   end
 
   def update

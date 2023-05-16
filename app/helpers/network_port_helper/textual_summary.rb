@@ -84,6 +84,7 @@ module NetworkPortHelper::TextualSummary
 
   def textual_host
     return nil unless @record.device_type == "Host"
+
     {
       :icon  => "pficon pficon-container-node",
       :value => @record.device.name,

@@ -11,20 +11,23 @@ class ApplicationHelper::Toolbar::XTemplateCloudCenter < ApplicationHelper::Tool
                        'fa fa-refresh fa-lg',
                        N_('Refresh relationships and power states for all items related to this Image'),
                        N_('Refresh Relationships and Power States'),
-                       :confirm => N_("Refresh relationships and power states for all items related to this Image?")),
+                       :confirm => N_("Refresh relationships and power states for all items related to this Image?")
+                     ),
                      button(
                        :image_scan,
                        'fa fa-search fa-lg',
                        N_('Perform SmartState Analysis on this Image'),
                        N_('Perform SmartState Analysis'),
                        :confirm => N_("Perform SmartState Analysis on this Image?"),
-                       :klass => ApplicationHelper::Button::VmInstanceTemplateScan),
+                       :klass   => ApplicationHelper::Button::VmInstanceTemplateScan
+                     ),
                      separator,
                      button(
                        :image_edit,
                        'pficon pficon-edit fa-lg',
                        t = N_('Edit this Image'),
-                       t),
+                       t
+                     ),
                      button(
                        :image_ownership,
                        'pficon pficon-user fa-lg',
@@ -38,7 +41,8 @@ class ApplicationHelper::Toolbar::XTemplateCloudCenter < ApplicationHelper::Tool
                        N_('Remove this Image from Inventory'),
                        N_('Remove Image from Inventory'),
                        :url_parms => "&refresh=y",
-                       :confirm   => N_("Warning: This Image and ALL of its components will be permanently removed!")),
+                       :confirm   => N_("Warning: This Image and ALL of its components will be permanently removed!")
+                     ),
                    ]
                  ),
                ])
@@ -55,7 +59,8 @@ class ApplicationHelper::Toolbar::XTemplateCloudCenter < ApplicationHelper::Tool
                        t = N_('Provision Instances using this Image'),
                        t,
                        :klass   => ApplicationHelper::Button::MiqTemplateMiqRequestNew,
-                       :options => {:feature => :provisioning})
+                       :options => {:feature => :provisioning}
+                     )
                    ]
                  ),
                ])
@@ -70,24 +75,28 @@ class ApplicationHelper::Toolbar::XTemplateCloudCenter < ApplicationHelper::Tool
                        :image_protect,
                        'pficon pficon-edit fa-lg',
                        N_('Manage Policies for this Image'),
-                       N_('Manage Policies')),
+                       N_('Manage Policies')
+                     ),
                      button(
                        :image_policy_sim,
                        'fa fa-play-circle-o fa-lg',
                        N_('View Policy Simulation for this Image'),
-                       N_('Policy Simulation')),
+                       N_('Policy Simulation')
+                     ),
                      button(
                        :image_tag,
                        'pficon pficon-edit fa-lg',
                        N_('Edit Tags for this Image'),
-                       N_('Edit Tags')),
+                       N_('Edit Tags')
+                     ),
                      button(
                        :image_check_compliance,
                        'fa fa-search fa-lg',
                        N_('Check Compliance of the last known configuration for this Image'),
                        N_('Check Compliance of Last Known Configuration'),
                        :confirm => N_("Initiate Check Compliance of the last known configuration for this Image?"),
-                       :klass   => ApplicationHelper::Button::MiqCheckCompliance),
+                       :klass   => ApplicationHelper::Button::MiqCheckCompliance
+                     ),
                    ]
                  ),
                ])

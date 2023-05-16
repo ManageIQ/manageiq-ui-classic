@@ -53,7 +53,7 @@ module PhysicalSwitchHelper::TextualSummary
   end
 
   def textual_name
-    {:label => _("Name"), :value => @record.name }
+    {:label => _("Name"), :value => @record.name}
   end
 
   def textual_product_name
@@ -77,7 +77,7 @@ module PhysicalSwitchHelper::TextualSummary
   end
 
   def textual_uid_ems
-    {:label => _("UUID"), :value => @record.uid_ems }
+    {:label => _("UUID"), :value => @record.uid_ems}
   end
 
   def textual_description

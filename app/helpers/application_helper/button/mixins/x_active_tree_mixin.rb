@@ -10,6 +10,7 @@ module ApplicationHelper::Button::Mixins::XActiveTreeMixin
   #   - Otherwise it raises an error.
   def method_missing(name, *_args, &_block)
     return active_tree?(name.to_s) if tree_method?(name.to_s)
+
     raise NoMethodError
   end
 

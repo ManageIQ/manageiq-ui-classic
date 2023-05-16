@@ -1,6 +1,6 @@
 # used to serve static angular templates from under app/views/static/
 
-class StaticController < ActionController::Base
+class StaticController < ApplicationController
   # Added to satisfy Brakeman, https://github.com/presidentbeef/brakeman/pull/953
   protect_from_forgery :with => :exception
 

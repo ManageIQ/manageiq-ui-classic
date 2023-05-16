@@ -10,8 +10,10 @@ class ApplicationHelper::Button::EmsContainerLaunchExternalLoggingSupport < Appl
     route_name = ems.external_logging_route_name
     disabled = !visible? || ContainerRoute.find_by(:name   => route_name,
                                                    :ems_id => ems.id).blank?
-    @error_message = _("A route named '%{route_name}' is configured to connect to the " \
-                       "external logging server but it doesn't exist") % {:route_name => route_name} if disabled
+    if disabled
+      @error_message = _("A route named '%{route_name}' is configured to connect to the " \
+                         "external logging server but it doesn't exist") % {:route_name => route_name}
+    end
     disabled
   end
 end

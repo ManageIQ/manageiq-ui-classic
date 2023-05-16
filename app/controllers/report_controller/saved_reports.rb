@@ -67,6 +67,7 @@ module ReportController::SavedReports
       else
         @sb[:rpt_menu].each_with_index do |lvl1, i|
           next unless lvl1[0] == reports_group_title
+
           lvl1[1].each_with_index do |lvl2, k|
             x_node_set("xx-#{i}_xx-#{i}-#{k}_rep-#{rr.miq_report_id}", :reports_tree) if lvl2[0].downcase == "custom"
           end
@@ -134,7 +135,7 @@ module ReportController::SavedReports
 
   # get all saved reports for list view
   def get_all_saved_reports
-    @force_no_grid_xml   = true
+    @force_no_grid_xml = true
     #   @embedded = true
     if params[:ppsetting]                                             # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                       # Set the new per page value

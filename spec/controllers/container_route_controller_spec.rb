@@ -14,7 +14,7 @@ describe ContainerRouteController do
     EvmSpecHelper.create_guid_miq_server_zone
     ems = FactoryBot.create(:ems_kubernetes)
     container_route = ContainerRoute.create(:ext_management_system => ems, :name => "Test Route")
-    get :show, :params => { :id => container_route.id }
+    get :show, :params => {:id => container_route.id}
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
     expect(assigns(:breadcrumbs)).to eq([{:name => "Container Routes",
@@ -30,7 +30,7 @@ describe ContainerRouteController do
       @route = FactoryBot.create(:container_route)
     end
 
-    subject { get :show, :params => { :id => @route.id } }
+    subject { get :show, :params => {:id => @route.id} }
 
     context "render" do
       render_views

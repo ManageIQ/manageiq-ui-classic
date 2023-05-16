@@ -1,6 +1,6 @@
 describe OpsController do
   context "OpsSettings::Schedules" do
-    let(:user) { FactoryBot.create(:user, :features => %w(schedule_enable schedule_disable)) }
+    let(:user) { FactoryBot.create(:user, :features => %w[schedule_enable schedule_disable]) }
     before do
       login_as user
       allow(User).to receive(:server_timezone).and_return("UTC")
@@ -130,7 +130,7 @@ describe OpsController do
   render_views
   context "OpsController::Settings" do
     context "zone addition" do
-      let(:user) { FactoryBot.create(:user, :features => %w(zone_edit zone_new)) }
+      let(:user) { FactoryBot.create(:user, :features => %w[zone_edit zone_new]) }
       before do
         login_as user
         allow(controller).to receive(:data_for_breadcrumbs).and_return({})
@@ -138,7 +138,7 @@ describe OpsController do
     end
 
     context '#forest_accept' do
-      let(:user) { FactoryBot.create(:user, :features => %w(ops_settings)) }
+      let(:user) { FactoryBot.create(:user, :features => %w[ops_settings]) }
       before do
         login_as user
       end
@@ -152,7 +152,7 @@ describe OpsController do
                            :basedn   => 'cn=groups,cn=accounts,dc=miq',
                            :bind_dn  => 'uid=admin,cn=users,cn=accounts,dc=miq,dc=e',
                            :bind_pwd => '******'}
-          @vmdb = ::Settings.to_hash
+          @vmdb = Settings.to_hash
           expect(controller).to receive(:render)
         end
 

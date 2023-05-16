@@ -73,7 +73,7 @@ module ApplicationController::Timelines
     end
 
     def levels_text_and_value
-      @lvl_text_value ||= group_levels.map { |level| [level.to_s.titleize, level] }
+      @levels_text_and_value ||= group_levels.map { |level| [level.to_s.titleize, level] }
     end
 
     private

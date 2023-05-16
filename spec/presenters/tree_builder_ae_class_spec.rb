@@ -12,8 +12,8 @@ describe TreeBuilderAeClass do
 
     it "a tree without filter" do
       tree = TreeBuilderAeClass.new(:automate_tree, @sb)
-      domains = tree.tree_nodes.first[:nodes].collect { |h| h[:text] }
-      expect(domains).to match_array %w(LUIGI MARIO)
+      domains = tree.tree_nodes.first[:nodes].pluck(:text)
+      expect(domains).to match_array %w[LUIGI MARIO]
     end
   end
 
@@ -29,9 +29,9 @@ describe TreeBuilderAeClass do
 
     it "should only return domains in a user's current tenant" do
       tree = TreeBuilderAeClass.new("ae_tree", {})
-      domains = tree.tree_nodes.first[:nodes].collect { |h| h[:text] }
-      expect(domains).to match_array %w(test1)
-      expect(domains).not_to include %w(test2)
+      domains = tree.tree_nodes.first[:nodes].pluck(:text)
+      expect(domains).to match_array %w[test1]
+      expect(domains).not_to include %w[test2]
     end
   end
 
@@ -46,8 +46,8 @@ describe TreeBuilderAeClass do
 
     it "should return domains in correct order" do
       tree = TreeBuilderAeClass.new("ae_tree", {})
-      domains = tree.tree_nodes.first[:nodes].collect { |h| h[:text] }
-      expect(domains).to eq(%w(test2 test1))
+      domains = tree.tree_nodes.first[:nodes].pluck(:text)
+      expect(domains).to eq(%w[test2 test1])
     end
   end
 end

@@ -28,27 +28,29 @@ class ReportController
     def update(params)
       if params[:chosen_pivot1] && params[:chosen_pivot1] != by1
         self.by1 = params[:chosen_pivot1]
-        if params[:chosen_pivot1] == NOTHING_STRING
+        case params[:chosen_pivot1]
+        when NOTHING_STRING
           self.by2 = NOTHING_STRING
           self.by3 = NOTHING_STRING
           self.by4 = NOTHING_STRING
-        elsif params[:chosen_pivot1] == by2
+        when by2
           self.by2 = by3
           self.by3 = by4
           self.by4 = NOTHING_STRING
-        elsif params[:chosen_pivot1] == by3
+        when by3
           self.by3 = by4
           self.by4 = NOTHING_STRING
         end
       elsif params[:chosen_pivot2] && params[:chosen_pivot2] != by2
         self.by2 = params[:chosen_pivot2]
-        if params[:chosen_pivot2] == NOTHING_STRING
+        case params[:chosen_pivot2]
+        when NOTHING_STRING
           self.by3 = NOTHING_STRING
           self.by4 = NOTHING_STRING
-        elsif params[:chosen_pivot2] == by3
+        when by3
           self.by3 = by4
           self.by4 = NOTHING_STRING
-        elsif params[:chosen_pivot2] == by4
+        when by4
           self.by4 = NOTHING_STRING
         end
       elsif params[:chosen_pivot3] && params[:chosen_pivot3] != by3

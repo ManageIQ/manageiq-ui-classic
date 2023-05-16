@@ -22,7 +22,7 @@ class TreeBuilderDefaultFilters < TreeBuilder
     data.sort_by { |s| [NAV_TAB_PATH[s.db.downcase.to_sym], s.description.downcase] }
         .each_with_object({}) do |search, nodes|
       folder_nodes = NAV_TAB_PATH[search[:db].downcase.to_sym]
-      path = nodes.fetch_path(folder_nodes) ? nodes.fetch_path(folder_nodes) : nodes.store_path(folder_nodes, [])
+      path = nodes.fetch_path(folder_nodes) || nodes.store_path(folder_nodes, [])
       path.push(search)
     end
   end

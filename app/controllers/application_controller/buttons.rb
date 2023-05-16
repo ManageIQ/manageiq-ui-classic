@@ -111,8 +111,8 @@ module ApplicationController::Buttons
       end
       copy_params_if_set(@edit[:new], params, %i[instance_name other_name object_message object_request])
       ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
-        f = ("attribute_" + (i + 1).to_s)
-        v = ("value_" + (i + 1).to_s)
+        f = "attribute_#{i + 1}"
+        v = "value_#{i + 1}"
         @edit[:new][:attrs][i][0] = params[f] if params[f.to_sym]
         @edit[:new][:attrs][i][1] = params[v] if params[v.to_sym]
       end
@@ -286,13 +286,13 @@ module ApplicationController::Buttons
       initiate_wait_for_task(
         :task_id      => task_id,
         :action       => :custom_button_done,
-        :extra_params => { :base_cls => cls.base_class.to_s }
+        :extra_params => {:base_cls => cls.base_class.to_s}
       )
 
     else
       begin
         custom_buttons_invoke(button, objs)
-      rescue StandardError => bang
+      rescue => bang
         add_flash(_("Error launching: \"%{task_description}\" %{error_message}") %
           {:task_description => params[:desc], :error_message => bang.message}, :error)
       else
@@ -429,13 +429,11 @@ module ApplicationController::Buttons
     @edit[:new][:description] = @edit[:new][:description].strip == "" ? nil : @edit[:new][:description] unless @edit[:new][:description].nil?
     button_set_record_vars(@custom_button)
     nodes = x_node.split('_')
-    if nodes[0].split('-')[1] != "ub" && nodes.length >= 2
-      # if group is not unassigned group, add uri as a last member  of the group
-      if x_active_tree == :ab_tree || nodes.length > 2
-        # find custombutton set in ab_tree or when adding button under a group
-        group_id = nodes[2].split('-').last
-        @aset = CustomButtonSet.find(group_id)
-      end
+    # if group is not unassigned group, add uri as a last member  of the group
+    if nodes[0].split('-')[1] != "ub" && nodes.length >= 2 && (x_active_tree == :ab_tree || nodes.length > 2)
+      # find custombutton set in ab_tree or when adding button under a group
+      group_id = nodes[2].split('-').last
+      @aset = CustomButtonSet.find(group_id)
     end
 
     if @custom_button.save
@@ -644,7 +642,7 @@ module ApplicationController::Buttons
     if button_order # show assigned buttons in order they were saved
       button_order.each do |bidx|
         @custom_button_set.members.each do |mem|
-          @edit[:new][:fields].push([mem.name, mem.id]) if bidx == mem.id && !@edit[:new][:fields].include?([mem.name, mem.id])
+          @edit[:new][:fields].push([mem.name, mem.id]) if bidx == mem.id && @edit[:new][:fields].exclude?([mem.name, mem.id])
         end
       end
     else
@@ -909,8 +907,8 @@ module ApplicationController::Buttons
       default_attributes = %w[request service_template_name hosts] if button_type == 'ansible_playbook'
 
       @custom_button.uri_attributes.each do |attr|
-        if attr[0] != "object_name" && !default_attributes.include?(attr[0].to_s)
-          @edit[:new][:attrs].push(attr) unless @edit[:new][:attrs].include?(attr)
+        if attr[0] != "object_name" && default_attributes.exclude?(attr[0].to_s) && @edit[:new][:attrs].exclude?(attr)
+          @edit[:new][:attrs].push(attr)
         end
       end
     end
@@ -1008,8 +1006,8 @@ module ApplicationController::Buttons
       @resolve[:new][:attrs] = []
       if @custom_button.uri_attributes
         @custom_button.uri_attributes.each do |attr|
-          if attr[0] != "object_name" && attr[0] != "request"
-            @resolve[:new][:attrs].push(attr) unless @resolve[:new][:attrs].include?(attr)
+          if attr[0] != "object_name" && attr[0] != "request" && @resolve[:new][:attrs].exclude?(attr)
+            @resolve[:new][:attrs].push(attr)
           end
         end
         @resolve[:new][:object_request] = @custom_button.uri_attributes["request"]
@@ -1045,8 +1043,8 @@ module ApplicationController::Buttons
       @resolve[:new][:instance_name] = instance_name || @resolve[:new][:instance_name] || "Request"
       @resolve[:new][:object_message] = @custom_button.try(:uri_message) || @resolve[:new][:object_message] || "create"
       @resolve[:target_class] = nil
-      @resolve[:target_classes] = CustomButton.button_classes.each_with_object({}) do |klass, hash|
-        hash[klass] = target_class_name(klass)
+      @resolve[:target_classes] = CustomButton.button_classes.index_with do |klass|
+        target_class_name(klass)
       end
       @resolve[:new][:attrs] ||= []
       if @resolve[:new][:attrs].empty?

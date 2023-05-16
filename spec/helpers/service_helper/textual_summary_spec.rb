@@ -110,44 +110,44 @@ describe ServiceHelper::TextualSummary do
     allow(self).to receive(:textual_miq_custom_attributes).and_return([])
   end
 
-  include_examples "textual_group", "Properties", %i(name description id guid)
+  include_examples "textual_group", "Properties", %i[name description id guid]
 
-  include_examples "textual_group", "Results", %i(status start_time finish_time elapsed_time owner), "provisioning_results"
+  include_examples "textual_group", "Results", %i[status start_time finish_time elapsed_time owner], "provisioning_results"
 
-  include_examples "textual_group", "Details", %i(playbook repository verbosity hosts), "provisioning_details"
+  include_examples "textual_group", "Details", %i[playbook repository verbosity hosts], "provisioning_details"
 
-  include_examples "textual_group", "Credentials", %i(
+  include_examples "textual_group", "Credentials", %i[
     machine_credential
     vault_credential
     network_credential
     cloud_credential
-  ), "provisioning_credentials"
+  ], "provisioning_credentials"
 
-  include_examples "textual_group", "Results", %i(status start_time finish_time elapsed_time owner), "retirement_results"
+  include_examples "textual_group", "Results", %i[status start_time finish_time elapsed_time owner], "retirement_results"
 
-  include_examples "textual_group", "Details", %i(playbook repository verbosity hosts), "retirement_details"
+  include_examples "textual_group", "Details", %i[playbook repository verbosity hosts], "retirement_details"
 
-  include_examples "textual_group", "Credentials", %i(
+  include_examples "textual_group", "Credentials", %i[
     machine_credential
     vault_credential
     network_credential
     cloud_credential
-  ), "retirement_credentials"
+  ], "retirement_credentials"
 
-  include_examples "textual_group", "Totals for Service VMs", %i(
+  include_examples "textual_group", "Totals for Service VMs", %i[
     aggregate_all_vm_cpus
     aggregate_all_vm_memory
     aggregate_all_vm_disk_count
     aggregate_all_vm_disk_space_allocated
     aggregate_all_vm_disk_space_used
     aggregate_all_vm_memory_on_disk
-  ), "vm_totals"
+  ], "vm_totals"
 
-  include_examples "textual_group", "Lifecycle", %i(lifecycle_state retirement_date retirement_state owner group created)
+  include_examples "textual_group", "Lifecycle", %i[lifecycle_state retirement_date retirement_state owner group created]
 
-  include_examples "textual_group", "Relationships", %i(catalog_item parent_service orchestration_stack job custom_button_events)
+  include_examples "textual_group", "Relationships", %i[catalog_item parent_service orchestration_stack job custom_button_events]
 
   include_examples "textual_group", "Custom Attributes", [], "miq_custom_attributes"
 
-  include_examples "textual_group", "Generic Objects", %i(generic_object_instances), "generic_objects"
+  include_examples "textual_group", "Generic Objects", %i[generic_object_instances], "generic_objects"
 end

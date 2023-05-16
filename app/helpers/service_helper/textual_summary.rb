@@ -13,62 +13,74 @@ module ServiceHelper::TextualSummary
 
   def textual_group_provisioning_results
     return nil unless provisioning_get_job
+
     TextualGroup.new(_("Results"), %i[status start_time finish_time elapsed_time owner])
   end
 
   def textual_group_provisioning_details
     return nil unless provisioning_get_job
+
     TextualGroup.new(_("Details"), %i[playbook repository verbosity hosts])
   end
 
   def textual_group_provisioning_credentials
     return nil unless provisioning_get_job
+
     TextualGroup.new(_("Credentials"), %i[machine_credential vault_credential network_credential cloud_credential])
   end
 
   def textual_group_provisioning_plays
     return nil unless provisioning_get_job
+
     fetch_job_plays
   end
 
   def textual_group_retirement_results
     return nil unless retirement_get_job
+
     TextualGroup.new(_("Results"), %i[status start_time finish_time elapsed_time owner])
   end
 
   def textual_group_retirement_details
     return nil unless retirement_get_job
+
     TextualGroup.new(_("Details"), %i[playbook repository verbosity hosts])
   end
 
   def textual_group_retirement_credentials
     return nil unless retirement_get_job
+
     TextualGroup.new(_("Credentials"), %i[machine_credential vault_credential network_credential cloud_credential])
   end
 
   def textual_group_retirement_plays
     return nil unless retirement_get_job
+
     fetch_job_plays
   end
 
   def textual_group_tower_job_results
     return nil unless fetch_job
+
     TextualGroup.new(_("Results"), %i[status start_time finish_time elapsed_time owner])
   end
 
   def textual_group_tower_job_details
     return nil unless fetch_job
+
     TextualGroup.new(_("Details"), %i[verbosity])
   end
 
   def textual_group_tower_job_credentials
     return nil unless fetch_job
+
     TextualGroup.new(_("Credentials"), %i[machine_credential vault_credential network_credential cloud_credential])
   end
 
   def textual_group_tower_job_plays
     return nil unless fetch_job
     return nil unless @job.respond_to?(:job_plays)
+
     fetch_job_plays
   end
 
@@ -214,6 +226,7 @@ module ServiceHelper::TextualSummary
   def textual_miq_custom_attributes
     attrs = @record.miq_custom_attributes
     return nil if attrs.blank?
+
     attrs.sort_by(&:name).collect { |a| {:label => a.name, :value => a.value} }
   end
 
@@ -235,11 +248,13 @@ module ServiceHelper::TextualSummary
 
   def textual_playbook
     return nil unless @job.playbook
+
     {:label => _("Playbook"), :value => @job.playbook.name}
   end
 
   def textual_repository
     return nil unless @job.playbook
+
     {:label => _("Repository"), :value => @job.playbook.configuration_script_source.name}
   end
 
@@ -254,18 +269,21 @@ module ServiceHelper::TextualSummary
   def textual_machine_credential
     credential = @job.authentications.find_by(:type => 'ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential')
     return nil unless credential
+
     credential(credential, _("Machine"))
   end
 
   def textual_vault_credential
     credential = @job.authentications.find_by(:type => 'ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential')
     return nil unless credential
+
     credential(credential, _("Vault"))
   end
 
   def textual_network_credential
     credential = @job.authentications.find_by(:type => 'ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential')
     return nil unless credential
+
     credential(credential, _("Network"))
   end
 
@@ -278,6 +296,7 @@ module ServiceHelper::TextualSummary
       cloud_credential = authentication unless excluded_types.include?(authentication.type)
     end
     return nil unless cloud_credential
+
     credential(cloud_credential, _("Cloud"))
   end
 

@@ -45,6 +45,21 @@ class SecurityGroupController < ApplicationController
     end
   end
 
+  def new
+    assert_privileges("security_group_new")
+    @security_group = SecurityGroup.new
+    @in_a_form = true
+    drop_breadcrumb(:name => _("Add New Security Group"), :url => "/security_group/new")
+  end
+
+  def edit
+    assert_privileges("security_group_edit")
+    @security_group = find_record_with_rbac(SecurityGroup, params[:id])
+    @in_a_form = true
+    drop_breadcrumb(:name => _("Edit Security Group \"%{name}\"") % {:name => @security_group.name},
+                    :url  => "/security_group/edit/#{@security_group.id}")
+  end
+
   def create
     assert_privileges("security_group_new")
     case params[:button]
@@ -120,21 +135,6 @@ class SecurityGroupController < ApplicationController
     end
   end
 
-  def edit
-    assert_privileges("security_group_edit")
-    @security_group = find_record_with_rbac(SecurityGroup, params[:id])
-    @in_a_form = true
-    drop_breadcrumb(:name => _("Edit Security Group \"%{name}\"") % { :name => @security_group.name},
-                    :url  => "/security_group/edit/#{@security_group.id}")
-  end
-
-  def new
-    assert_privileges("security_group_new")
-    @security_group = SecurityGroup.new
-    @in_a_form = true
-    drop_breadcrumb(:name => _("Add New Security Group"), :url => "/security_group/new")
-  end
-
   def update
     assert_privileges("security_group_edit")
     @security_group = find_record_with_rbac(SecurityGroup, params[:id])
@@ -201,7 +201,7 @@ class SecurityGroupController < ApplicationController
       session[:security_group][:task] = task
       initiate_wait_for_task(:task_id => task[:id], :action => "update_finished")
     else
-      @breadcrumbs.pop if @breadcrumbs
+      @breadcrumbs&.pop
       session[:edit] = nil
       javascript_redirect(:action => "show", :id => security_group_id)
     end
@@ -243,7 +243,8 @@ class SecurityGroupController < ApplicationController
     return true if changed?(params["network_protocol"], sg_rule.network_protocol)
     return true if changed?(params["port"], sg_rule.port)
     return true if changed?(params["source_ip_range"], sg_rule.source_ip_range)
-    return true if changed?(params["source_security_group_id"], sg_rule.source_security_group_id)
+
+    true if changed?(params["source_security_group_id"], sg_rule.source_security_group_id)
   end
 
   def changed?(param, field)
@@ -252,7 +253,8 @@ class SecurityGroupController < ApplicationController
 
   def sg_changed?(params)
     return true if params[:name] && @security_group.name != params[:name]
-    return true if params[:description] && @security_group.description != params[:description]
+
+    true if params[:description] && @security_group.description != params[:description]
   end
 
   def task_started(task_id, message)

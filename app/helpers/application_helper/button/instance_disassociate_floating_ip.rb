@@ -7,7 +7,7 @@ class ApplicationHelper::Button::InstanceDisassociateFloatingIp < ApplicationHel
     if !@record.supports?(:disassociate_floating_ip)
       @error_message = @record.unsupported_reason(:disassociate_floating_ip)
     elsif @record.number_of(:floating_ips).zero?
-      @error_message = _("Instance \"%{name}\" does not have any associated Floating IPs") % { :name => @record.name }
+      @error_message = _("Instance \"%{name}\" does not have any associated Floating IPs") % {:name => @record.name}
     end
     @error_message.present?
   end

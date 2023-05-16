@@ -3,11 +3,11 @@ require "routing/shared_examples"
 describe "routes for MiqTemplateController" do
   let(:controller_name) { "miq_template" }
 
-  %w(
+  %w[
     edit
     show
     ownership
-  ).each do |task|
+  ].each do |task|
     describe "##{task}" do
       it 'routes with GET' do
         expect(get("/#{controller_name}/#{task}")).to route_to("#{controller_name}##{task}")
@@ -15,10 +15,10 @@ describe "routes for MiqTemplateController" do
     end
   end
 
-  %w(
+  %w[
     edit
     show
-  ).each do |task|
+  ].each do |task|
     describe "##{task}" do
       it 'routes with POST' do
         expect(post("/#{controller_name}/#{task}")).to route_to("#{controller_name}##{task}")

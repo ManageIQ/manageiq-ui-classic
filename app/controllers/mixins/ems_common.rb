@@ -296,7 +296,7 @@ module Mixins
         when "orchestration_stack_delete"       then orchestration_stack_delete
         end
 
-        return if params[:pressed].include?("tag") && !%w[host_tag vm_tag miq_template_tag instance_tag image_tag].include?(params[:pressed])
+        return if params[:pressed].include?("tag") && %w[host_tag vm_tag miq_template_tag instance_tag image_tag].exclude?(params[:pressed])
 
         if params[:pressed].include?("orchestration_stack_delete")
           flash_to_session
@@ -480,7 +480,7 @@ module Mixins
                             :id         => find_record_with_rbac(NetworkRouter, checked_or_params))
       elsif params[:pressed].ends_with?("_edit") ||
             ["#{pfx}_miq_request_new", "#{pfx}_clone", "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed]) ||
-            params[:pressed] == 'vm_rename' && @flash_array.nil?
+            (params[:pressed] == 'vm_rename' && @flash_array.nil?)
         render_or_redirect_partial(pfx) unless performed?
       elsif @refresh_div == "main_div" && @lastaction == "show_list"
         replace_gtl_main_div
@@ -549,7 +549,7 @@ module Mixins
              :models  => ui_lookup(:tables => table_name)})
         end
       else # showing 1 ems, scan it
-        if params[:id].nil? || model.find_by_id(params[:id]).nil?
+        if params[:id].nil? || model.find_by(:id => params[:id]).nil?
           add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:table => table_name)}, :error)
         else
           emss.push(params[:id])

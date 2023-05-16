@@ -61,7 +61,7 @@ class ApplicationHelper::Toolbar::NetworkRouterCenter < ApplicationHelper::Toolb
                   }
                 }
               }
-            },
+            }
           )
         ]
       )
@@ -80,7 +80,7 @@ class ApplicationHelper::Toolbar::NetworkRouterCenter < ApplicationHelper::Toolb
             :network_router_tag,
             'pficon pficon-edit fa-lg',
             N_('Edit Tags for this Network Router'),
-            N_('Edit Tags'),
+            N_('Edit Tags')
           )
         ]
       )

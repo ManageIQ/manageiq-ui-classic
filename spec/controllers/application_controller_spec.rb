@@ -18,7 +18,7 @@ describe ApplicationController do
     end
 
     it "uses correct variables for rendering result of report" do
-      controller.instance_variable_set(:@sb, :pages => { :rr_id => report_result_for_report.id })
+      controller.instance_variable_set(:@sb, :pages => {:rr_id => report_result_for_report.id})
       controller.params = {:rr_id => report_result_for_report.id}
 
       expect(controller).to receive(:render).with('shared/show_report', :layout => 'report_only')
@@ -31,7 +31,7 @@ describe ApplicationController do
     end
 
     it "uses correct variables for rendering result of report" do
-      controller.instance_variable_set(:@sb, :pages => { :rr_id => report_result_for_widget.id })
+      controller.instance_variable_set(:@sb, :pages => {:rr_id => report_result_for_widget.id})
       controller.params = {:rr_id => report_result_for_widget.id}
 
       expect(controller).to receive(:render).with('shared/show_report', :layout => 'report_only')
@@ -179,9 +179,9 @@ describe ApplicationController do
 
     it "returns flash message when Provisioning button is pressed from list and selected Image is archived" do
       template = FactoryBot.create(:miq_template,
-                                    :name     => "template 1",
-                                    :vendor   => "vmware",
-                                    :location => "template1.vmtx")
+                                   :name     => "template 1",
+                                   :vendor   => "vmware",
+                                   :location => "template1.vmtx")
       controller.params = {:pressed         => "image_miq_request_new",
                            :miq_grid_checks => template.id.to_s}
       controller.set_response!(response)
@@ -195,10 +195,10 @@ describe ApplicationController do
 
     it "sets provisioning data and skips pre provisioning dialog" do
       template = FactoryBot.create(:template_openstack,
-                                    :name                  => "template 1",
-                                    :vendor                => "vmware",
-                                    :location              => "template1.vmtx",
-                                    :ext_management_system => ems)
+                                   :name                  => "template 1",
+                                   :vendor                => "vmware",
+                                   :location              => "template1.vmtx",
+                                   :ext_management_system => ems)
       controller.params = {:pressed         => "image_miq_request_new",
                            :miq_grid_checks => template.id.to_s}
       controller.instance_variable_set(:@breadcrumbs, [])
@@ -215,7 +215,7 @@ describe ApplicationController do
     context 'setting proper template klass type for various controllers' do
       subject { controller.instance_variable_get(:@template_klass_type) }
 
-      %w(ems_cluster ems_infra host resource_pool storage vm_infra).each do |ctrl|
+      %w[ems_cluster ems_infra host resource_pool storage vm_infra].each do |ctrl|
         context "#{ctrl} controller" do
           before do
             allow(controller).to receive(:assert_privileges)
@@ -231,7 +231,7 @@ describe ApplicationController do
         end
       end
 
-      %w(auth_key_pair_cloud availability_zone cloud_tenant ems_cloud host_aggregate orchestration_stack vm_cloud).each do |ctrl|
+      %w[auth_key_pair_cloud availability_zone cloud_tenant ems_cloud host_aggregate orchestration_stack vm_cloud].each do |ctrl|
         context "#{ctrl} controller" do
           before do
             allow(controller).to receive(:assert_privileges)

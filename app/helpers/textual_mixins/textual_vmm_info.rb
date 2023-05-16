@@ -43,11 +43,11 @@ module TextualMixins::TextualVmmInfo
 
   def vmm_info_details
     vmm_info = []
-    if @record.respond_to?("vmm_vendor_display")
+    if @record.respond_to?(:vmm_vendor_display)
       vmm_info = host_vendor_details
     end
 
-    if @record.respond_to?("vendor_display")
+    if @record.respond_to?(:vendor_display)
       vmm_info = vm_vendor_details
     end
     vmm_info

@@ -24,7 +24,7 @@ describe OpsController do
       end
 
       it "responds with a filtered vm list" do
-        json = JSON.parse(response.body)
+        json = response.parsed_body
         expect(json["filtered_item_list"]).to eq(["vmtest"])
       end
     end
@@ -39,7 +39,7 @@ describe OpsController do
       end
 
       it "responds with a filtered ext management system list" do
-        json = JSON.parse(response.body)
+        json = response.parsed_body
         expect(json["filtered_item_list"]).to eq([ext_management_system.name])
       end
     end
@@ -61,7 +61,7 @@ describe OpsController do
       end
 
       it "responds with a filtered cluster list" do
-        json = JSON.parse(response.body)
+        json = response.parsed_body
         expect(json["filtered_item_list"]).to eq([['clustertest__datacenter', 'clustertest in datacenter']])
       end
     end
@@ -76,7 +76,7 @@ describe OpsController do
       end
 
       it "responds with a filtered host list" do
-        json = JSON.parse(response.body)
+        json = response.parsed_body
         expect(json["filtered_item_list"]).to eq(["hosttest"])
       end
     end
@@ -126,7 +126,7 @@ describe OpsController do
         :starting_object => "SYSTEM/PROCESS",
         :instance_name   => "test",
         :object_request  => "Request",
-        :ui_attrs        => {"0"=>%w(key1 value1)},
+        :ui_attrs        => {"0"=>%w[key1 value1]},
         :target_class    => vm.class.name.to_s,
         :target_id       => vm.id.to_s
       }
@@ -207,10 +207,10 @@ describe OpsController do
       controller.instance_variable_set(:@settings, settings)
       current_user = FactoryBot.create(:user)
       FactoryBot.create(:miq_search,
-                         :name        => "default_Environment / UAT",
-                         :description => "Environment / UAT",
-                         :db          => "MiqTemplate",
-                         :search_type => "default")
+                        :name        => "default_Environment / UAT",
+                        :description => "Environment / UAT",
+                        :db          => "MiqTemplate",
+                        :search_type => "default")
       allow(controller).to receive(:current_user).and_return(current_user)
       filtered_list = controller.send(:build_filtered_item_list, "miq_template", "global")
       expect(filtered_list.first).to include("Environment / UAT")
@@ -220,10 +220,10 @@ describe OpsController do
       controller.instance_variable_set(:@settings, settings)
       current_user = FactoryBot.create(:user)
       FactoryBot.create(:miq_search,
-                         :name        => "default_Environment_Storage / UAT",
-                         :description => "Storage_Environment / UAT",
-                         :db          => "Storage",
-                         :search_type => "default")
+                        :name        => "default_Environment_Storage / UAT",
+                        :description => "Storage_Environment / UAT",
+                        :db          => "Storage",
+                        :search_type => "default")
       allow(controller).to receive(:current_user).and_return(current_user)
       filtered_list = controller.send(:build_filtered_item_list, "storage", "global")
       expect(filtered_list.first).to include("Storage_Environment / UAT")
@@ -272,7 +272,7 @@ describe OpsController do
         controller.send(:schedule_run_now)
         schedules.each do |schedule|
           record = MiqQueue.find_by(:instance_id => schedule.id, :class_name => "MiqSchedule", :state => "ready")
-          expect(record.args.first).to eq("action_" + schedule.sched_action[:method])
+          expect(record.args.first).to eq("action_#{schedule.sched_action[:method]}")
         end
       end
     end

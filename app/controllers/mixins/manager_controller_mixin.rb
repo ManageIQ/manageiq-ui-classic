@@ -9,7 +9,7 @@ module Mixins
 
     def find_or_build_provider
       @provider = provider_class.new if params[:id] == "new"
-      @provider ||= find_record(self.class.model, params[:id]).provider
+      @find_or_build_provider ||= find_record(self.class.model, params[:id]).provider
     end
 
     def add_provider

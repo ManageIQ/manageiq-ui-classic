@@ -22,7 +22,7 @@ describe "shared/views/ems_common/show" do
 
     context "when showtype is 'main'" do
       let(:showtype) { "main" }
-      before { allow(view).to receive(:textual_group_list).and_return([%i(status)]) }
+      before { allow(view).to receive(:textual_group_list).and_return([%i[status]]) }
 
       it "should not show '<Unknown> Credentials'" do
         render

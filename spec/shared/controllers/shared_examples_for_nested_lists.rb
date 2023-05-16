@@ -9,7 +9,7 @@ shared_examples 'relationship table screen with GTL' do |displays, parent_factor
   context "for a parent #{parent_factory}" do
     displays.each do |display|
       it "displays the GTL for #{display}" do
-        get :show, :params => { :display => display, :id => @parent.id, :format => :js }
+        get :show, :params => {:display => display, :id => @parent.id, :format => :js}
         expect(response).to render_template('layouts/react/_gtl')
         expect(response.status).to eq(200)
       end

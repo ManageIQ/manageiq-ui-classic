@@ -2,12 +2,12 @@ describe TreeNode::EmsFolder do
   let(:tree) { nil }
   subject { described_class.new(object, nil, tree) }
 
-  %i(
+  %i[
     ems_folder
     storage_cluster
     inventory_group
     inventory_root_group
-  ).each do |factory|
+  ].each do |factory|
     context(factory.to_s) do
       let(:object) { FactoryBot.create(factory) }
 

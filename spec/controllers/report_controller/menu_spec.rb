@@ -31,7 +31,7 @@ describe ReportController do
 
     it "prepends i_ to id for admins" do
       controller.instance_variable_set(:@edit, :user_typ => true)
-      arr = %w(foo bar)
+      arr = %w[foo bar]
       out = controller.send(:menu_folders, arr)
 
       expect(out).to eq(arr.map do |s|
@@ -41,7 +41,7 @@ describe ReportController do
 
     it "prepends __|i_ when no reports" do
       controller.instance_variable_set(:@edit, :group_reports => [])
-      arr = %w(foo bar)
+      arr = %w[foo bar]
       out = controller.send(:menu_folders, arr)
 
       expect(out).to eq(arr.map do |s|
@@ -52,7 +52,7 @@ describe ReportController do
     it "handles reports for b__" do
       session[:node_selected] = 'b__*'
       controller.instance_variable_set(:@edit, :group_reports => ['A/*'])
-      out = controller.send(:menu_folders, %w(A B))
+      out = controller.send(:menu_folders, %w[A B])
 
       expect(out).to eq([{:id => "i_A", :text => "A"},
                          {:id => "|-|i_B", :text => "B"}])
@@ -61,7 +61,7 @@ describe ReportController do
     it "handles reports for non-b__" do
       session[:node_selected] = '*__*'
       controller.instance_variable_set(:@edit, :group_reports => ['*/A'])
-      out = controller.send(:menu_folders, %w(A B))
+      out = controller.send(:menu_folders, %w[A B])
 
       expect(out).to eq([{:id => "i_A", :text => "A"},
                          {:id => "|-|i_B", :text => "B"}])

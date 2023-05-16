@@ -41,27 +41,26 @@ module GtlHelper
 
   def render_gtl(options)
     react('GtlView',
-      :flashMessages     => options[:flash_messages],
-      :additionalOptions => options[:report_data_additional_options],
-      :modelName         => options[:model_name],
-      :activeTree        => options[:active_tree],
-      :parentId          => options[:display].nil? ? nil : options[:parent_id],
-      :isAscending       => options[:is_ascending],
-      :sortColIdx        => options[:sort_col],
-      :isExplorer        => options[:explorer],
-      :records           => !options[:selected_records].nil? ? options[:selected_records] : [],
-      :hideSelect        => options[:selected_records].kind_of?(Array),
-      :showUrl           => gtl_show_url(options),
-      :pages             => options[:pages],
-      :noFlashDiv        => options[:no_flash_div],
-    )
+          :flashMessages     => options[:flash_messages],
+          :additionalOptions => options[:report_data_additional_options],
+          :modelName         => options[:model_name],
+          :activeTree        => options[:active_tree],
+          :parentId          => options[:display].nil? ? nil : options[:parent_id],
+          :isAscending       => options[:is_ascending],
+          :sortColIdx        => options[:sort_col],
+          :isExplorer        => options[:explorer],
+          :records           => !options[:selected_records].nil? ? options[:selected_records] : [],
+          :hideSelect        => options[:selected_records].kind_of?(Array),
+          :showUrl           => gtl_show_url(options),
+          :pages             => options[:pages],
+          :noFlashDiv        => options[:no_flash_div])
   end
 
   def gtl_show_url(options)
     # FIXME: fetch_path doesn't work on structs in a hash
-    if options[:report_data_additional_options].present?
+    if options[:report_data_additional_options].present? && (options[:report_data_additional_options].clickable == false)
       # only false, nil is true
-      return false if options[:report_data_additional_options].clickable == false
+      return false
     end
 
     # TODO: the "what happens on nil" logic should probably live here, not in ReportDataController.prototype.initObjects

@@ -25,14 +25,14 @@ describe GenericObjectController do
             :s_time     => "datetime"
           },
           :associations => {"cp" => "ManageIQ::Providers::CloudManager", "vms" => "Vm"},
-          :methods      => %w(some_method)
+          :methods      => %w[some_method]
         }
       )
       generic_obj = FactoryBot.create(:generic_object, :generic_object_definition_id => generic_obj_defn.id)
-      get :show, :params => { :display => "cp", :id => generic_obj.id }
+      get :show, :params => {:display => "cp", :id => generic_obj.id}
       expect(response.status).to eq(200)
 
-      get :show, :params => { :display => "vms", :id => generic_obj.id }
+      get :show, :params => {:display => "vms", :id => generic_obj.id}
       expect(response.status).to eq(200)
     end
   end
@@ -57,20 +57,20 @@ describe GenericObjectController do
       allow(@gobj).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
       classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
       @tag1 = FactoryBot.create(:classification_tag,
-                                 :name   => "tag_1",
-                                 :parent => classification)
+                                :name   => "tag_1",
+                                :parent => classification)
       @tag2 = FactoryBot.create(:classification_tag,
-                                 :name   => "tag_2",
-                                 :parent => classification)
+                                :name   => "tag_2",
+                                :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@gobj).and_return([@tag1, @tag2])
       session[:tag_db] = "GenericObject"
       session[:tag_items] = "GenericObject"
       session[:assigned_filters] = []
-      edit = { :key       => "GenericObject_edit_tags__#{@gobj.id}",
-               :tagging   => "GenericObject",
-               :tag_items => [@gobj.id],
-               :current   => {:assignments => []},
-               :new       => {:assignments => [@tag1.id, @tag2.id]}}
+      edit = {:key       => "GenericObject_edit_tags__#{@gobj.id}",
+              :tagging   => "GenericObject",
+              :tag_items => [@gobj.id],
+              :current   => {:assignments => []},
+              :new       => {:assignments => [@tag1.id, @tag2.id]}}
       session[:edit] = edit
       controller.instance_variable_set(:@settings, {})
       allow(controller).to receive(:fetch_path)
@@ -81,20 +81,20 @@ describe GenericObjectController do
     end
 
     it "builds tagging screen" do
-      post :button, :params => { :pressed => "generic_object_tag", :format => :js, :id => @gobj.id }
+      post :button, :params => {:pressed => "generic_object_tag", :format => :js, :id => @gobj.id}
       expect(assigns(:flash_array)).to be_nil
     end
 
     it "cancels tags edit" do
       session[:breadcrumbs] = [{:url => "generic_object/show/#{@gobj.id}"}, 'placeholder']
-      post :tagging_edit, :params => { :button => "cancel", :format => :js, :id => @gobj.id }
+      post :tagging_edit, :params => {:button => "cancel", :format => :js, :id => @gobj.id}
       expect(assigns(:flash_array).first[:message]).to include("was cancelled by the user")
       expect(assigns(:edit)).to be_nil
     end
 
     it "save tags" do
       session[:breadcrumbs] = [{:url => "generic_object/show/#{@gobj.id}"}, 'placeholder']
-      post :tagging_edit, :params => { :button => "save", :format => :js, :id => @gobj.id, :data => get_tags_json([@tag1, @tag2]) }
+      post :tagging_edit, :params => {:button => "save", :format => :js, :id => @gobj.id, :data => get_tags_json([@tag1, @tag2])}
       expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
       expect(assigns(:edit)).to be_nil
     end

@@ -33,13 +33,13 @@ describe "Login process" do
     end
 
     it "allows login with correct password" do
-      post '/dashboard/authenticate', :params => { :user_name => user.userid, :user_password => 'smartvm' }
+      post '/dashboard/authenticate', :params => {:user_name => user.userid, :user_password => 'smartvm'}
       expect(response.status).to eq(200)
       expect(response.body).not_to match(/password you entered is incorrect/)
     end
 
     it "does now allow login with incorrect password" do
-      post '/dashboard/authenticate', :params => { :user_name => user.userid, :user_password => 'fantomas' }
+      post '/dashboard/authenticate', :params => {:user_name => user.userid, :user_password => 'fantomas'}
       expect(response.status).to eq(200)
       expect(response.body).to match(/password you entered is incorrect/)
     end
@@ -47,7 +47,7 @@ describe "Login process" do
 
   context 'w/ a valid session' do
     it "allows access" do
-      post '/dashboard/authenticate', :params => { :user_name => user.userid, :user_password => 'smartvm' }
+      post '/dashboard/authenticate', :params => {:user_name => user.userid, :user_password => 'smartvm'}
       get '/ems_cloud/show_list'
       expect(response.status).to eq(200)
     end

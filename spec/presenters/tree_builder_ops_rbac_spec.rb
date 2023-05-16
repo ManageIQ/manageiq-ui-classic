@@ -7,7 +7,7 @@ describe TreeBuilderOpsRbac do
   describe ".new" do
     def assert_tree_nodes(expected)
       tree_obj = TreeBuilderOpsRbac.new("rbac_tree", {}).tree_nodes
-      tree_nodes = tree_obj.first[:nodes].collect { |h| h[:text] }
+      tree_nodes = tree_obj.first[:nodes].pluck(:text)
       expect(tree_nodes).to match_array expected
     end
 
@@ -39,8 +39,8 @@ describe TreeBuilderOpsRbac do
 
     it "with user with multiple rbac roles" do
       login_as FactoryBot.create(:user,
-                                  :features => %w(rbac_group_view rbac_user_view rbac_role_view rbac_tenant_view))
-      assert_tree_nodes(%w(Groups Users Roles Tenants))
+                                 :features => %w[rbac_group_view rbac_user_view rbac_role_view rbac_tenant_view])
+      assert_tree_nodes(%w[Groups Users Roles Tenants])
     end
   end
 

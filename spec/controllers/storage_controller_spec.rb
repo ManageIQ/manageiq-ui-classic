@@ -199,17 +199,17 @@ describe StorageController do
         datastore.parent = ems
         classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
         @tag1 = FactoryBot.create(:classification_tag,
-                                   :name   => "tag1",
-                                   :parent => classification)
+                                  :name   => "tag1",
+                                  :parent => classification)
         @tag2 = FactoryBot.create(:classification_tag,
-                                   :name   => "tag2",
-                                   :parent => classification)
+                                  :name   => "tag2",
+                                  :parent => classification)
         allow(Classification).to receive(:find_assigned_entries).and_return([@tag1, @tag2])
         post :x_button, :params => {:miq_grid_checks => datastore.id, :pressed => "storage_tag", :format => :js}
         expect(response.status).to eq(200)
 
-        main_content = JSON.parse(response.body)['updatePartials']['main_div']
-        expect(main_content).to include("<h3>\n1 Datastore Being Tagged\n<\/h3>")
+        main_content = response.parsed_body['updatePartials']['main_div']
+        expect(main_content).to include("<h3>\n1 Datastore Being Tagged\n</h3>")
         expect(main_content).to include('"modelName":"Storage"')
         expect(main_content).to include('"isExplorer":true')
       end
@@ -220,11 +220,11 @@ describe StorageController do
         datastore.parent = ems
         classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
         @tag1 = FactoryBot.create(:classification_tag,
-                                   :name   => "tag1",
-                                   :parent => classification)
+                                  :name   => "tag1",
+                                  :parent => classification)
         @tag2 = FactoryBot.create(:classification_tag,
-                                   :name   => "tag2",
-                                   :parent => classification)
+                                  :name   => "tag2",
+                                  :parent => classification)
         allow(Classification).to receive(:find_assigned_entries).and_return([@tag1, @tag2])
 
         expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
@@ -318,7 +318,7 @@ describe StorageController do
           }
         }
         expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(req)
-        get :show, :params => { :id => storage_with_miq_templates.id, :display => 'all_miq_templates' }
+        get :show, :params => {:id => storage_with_miq_templates.id, :display => 'all_miq_templates'}
         expect(response.status).to eq(200)
       end
 
@@ -354,7 +354,7 @@ describe StorageController do
           session[:settings] = {}
           seed_session_trees('storage', tree.to_sym)
 
-          post :tree_select, :params => { :id => 'root', :format => :js }
+          post :tree_select, :params => {:id => 'root', :format => :js}
           expect(response.status).to eq(200)
         end
       end
@@ -405,11 +405,11 @@ describe StorageController do
       allow(@ds).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
       classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
       @tag1 = FactoryBot.create(:classification_tag,
-                                 :name   => "tag1",
-                                 :parent => classification)
+                                :name   => "tag1",
+                                :parent => classification)
       @tag2 = FactoryBot.create(:classification_tag,
-                                 :name   => "tag2",
-                                 :parent => classification)
+                                :name   => "tag2",
+                                :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@ds).and_return([@tag1, @tag2])
       session[:tag_db] = "Storage"
       edit = {

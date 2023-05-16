@@ -3,10 +3,10 @@ require "routing/shared_examples"
 describe MiqAeCustomizationController do
   let(:controller_name) { 'miq_ae_customization' }
 
-  %w(
+  %w[
     explorer
     export_service_dialogs
-  ).each do |path|
+  ].each do |path|
     describe "##{path}" do
       it "routes with GET" do
         expect(get("/#{controller_name}/#{path}")).to route_to("#{controller_name}##{path}")
@@ -14,7 +14,7 @@ describe MiqAeCustomizationController do
     end
   end
 
-  %w(
+  %w[
     ab_group_reorder
     accordion_select
     automate_button_field_changed
@@ -39,7 +39,7 @@ describe MiqAeCustomizationController do
     x_button
     x_history
     x_show
-  ).each do |path|
+  ].each do |path|
     describe "##{path}" do
       it "routes with POST" do
         expect(post("/#{controller_name}/#{path}")).to route_to("#{controller_name}##{path}")

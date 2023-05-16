@@ -1,7 +1,8 @@
 module TextualMixins::TextualInitProcesses
   def textual_init_processes
     os = @record.os_image_name.downcase
-    return nil unless os =~ /linux/
+    return nil unless os.include?('linux')
+
     num = @record.number_of(:linux_initprocesses)
     # TODO: Why is this image different than graphical?
     h = {:label => _("Init Processes"), :icon => "fa fa-cog", :value => num}

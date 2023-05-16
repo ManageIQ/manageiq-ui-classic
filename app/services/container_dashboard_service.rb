@@ -177,6 +177,7 @@ class ContainerDashboardService < DashboardService
 
     metrics.each do |m|
       next if m.resource.nil? # Metrics are purged asynchronously and might be missing their node
+
       provider_name = @ems.present? ? @ems.name : m.resource.ext_management_system.name
 
       node_cpu_usage << {

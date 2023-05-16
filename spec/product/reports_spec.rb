@@ -1,7 +1,7 @@
 describe 'YAML reports' do
-  REPORT_DIRS  = [Rails.root.join("product", "reports"), "#{ApplicationController::TIMELINES_FOLDER}/miq_reports"]
+  REPORT_DIRS  = [Rails.root.join("product/reports"), "#{ApplicationController::TIMELINES_FOLDER}/miq_reports"].freeze
   REPORT_YAMLS = REPORT_DIRS.collect { |dir| Dir.glob(File.join(dir, "**", "*.yaml")) }.flatten
-  CHART_DIRS   = [ApplicationController::Performance::CHARTS_REPORTS_FOLDER]
+  CHART_DIRS   = [ApplicationController::Performance::CHARTS_REPORTS_FOLDER].freeze
   CHART_YAMLS  = CHART_DIRS.collect { |dir| Dir.glob(File.join(dir, "**", "*.yaml")) }.flatten
 
   before do
@@ -18,7 +18,7 @@ describe 'YAML reports' do
 
   shared_examples "all report type examples" do |report_yaml|
     let(:yaml)        { report_yaml }
-    let(:report_data) { YAML.load(File.read(yaml)) }
+    let(:report_data) { YAML.load_file(yaml) }
 
     it 'defines headers that match col_order' do
       col_order = report_data['col_order'].length
@@ -30,7 +30,7 @@ describe 'YAML reports' do
   context "regular reports" do
     shared_examples "regular report examples" do |report_yaml|
       let(:yaml)        { report_yaml }
-      let(:report_data) { YAML.load(File.read(yaml)) }
+      let(:report_data) { YAML.load_file(yaml) }
 
       it 'can be built even though without data' do
         # TODO: ApplicationController::Performance::CHARTS_REPORTS_FOLDER
@@ -44,7 +44,7 @@ describe 'YAML reports' do
       it 'defines correct (existing) col_order columns' do
         cols = report_data['cols'] + collect_columns(report_data['include'])
         dangling = report_data['col_order'].reject do |col|
-          cols.include?(col) || %w(max avg).include?(col.split('__')[-1])
+          cols.include?(col) || %w[max avg].include?(col.split('__')[-1])
         end
         expect(dangling).to eq([])
       end
@@ -77,6 +77,7 @@ describe 'YAML reports' do
 
   def collect_columns(include_hash, parent = nil)
     return [] if include_hash.nil?
+
     include_hash.inject([]) do |cols, (table_name, data)|
       full_path = if parent
                     "#{parent}.#{table_name}"

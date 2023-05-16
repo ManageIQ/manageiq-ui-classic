@@ -22,7 +22,7 @@ class TreeBuilderVandt < TreeBuilder
 
     roots.each_with_object({}) do |ems, nodes|
       nodes.merge!(relationship_tree(ems))
-    end.merge(arch_orph.each_with_object({}) { |item, nodes| nodes[item] = {} })
+    end.merge(arch_orph.index_with { |_item| {} })
   end
 
   def relationship_tree(ems)
@@ -82,7 +82,7 @@ class TreeBuilderVandt < TreeBuilder
     tree.reject! do |object, children|
       prune_folders_via_vms(children, allowed_vm_ids)
       if object.kind_of?(VmOrTemplate)
-        !allowed_vm_ids.include?(object.id)
+        allowed_vm_ids.exclude?(object.id)
       elsif object.kind_of?(EmsFolder)
         children.empty?
       end
@@ -107,7 +107,7 @@ class TreeBuilderVandt < TreeBuilder
   SORT_CLASSES = [ExtManagementSystem, EmsFolder, VmOrTemplate].freeze
 
   def sort_tree(tree)
-    tree.keys.each do |object|
+    tree.each_key do |object|
       tree[object] = sort_tree(tree[object])
     end
 

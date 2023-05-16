@@ -4,10 +4,11 @@ describe "shared/buttons/_ab_form.html.haml" do
     assign(:sb, :active_tab => "ab_options_tab")
     assign(:edit, :new => {:target_class => "CloudNetwork"})
     assign(:resolve, :target_classes => [
-      ["Availability Zone", "AvailabilityZone"],
-      ["Cloud Network", "CloudNetwork"],
-      ["VM Template and Image", "MiqTemplate"],
-      ["VM and Instance", "Vm"]])
+             ["Availability Zone", "AvailabilityZone"],
+             ["Cloud Network", "CloudNetwork"],
+             ["VM Template and Image", "MiqTemplate"],
+             ["VM and Instance", "Vm"]
+           ])
     stub_template "shared/buttons/_ab_options_form.html.haml" => ""
     stub_template "shared/buttons/_ab_advanced_form.html.haml" => ""
   end

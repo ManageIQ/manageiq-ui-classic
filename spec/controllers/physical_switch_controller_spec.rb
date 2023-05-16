@@ -10,7 +10,7 @@ describe PhysicalSwitchController do
       :physical_switch,
       :hardware     => hardware,
       :asset_detail => asset_detail,
-      :ems_id       => ems.id,
+      :ems_id       => ems.id
     )
   end
 
@@ -43,7 +43,7 @@ describe PhysicalSwitchController do
       it 'calls "page_display_options" and returns the MiqRequest data' do
         physical_switch
         report_data_request(
-          :model => physical_switch.class.to_s,
+          :model => physical_switch.class.to_s
         )
         results = assert_report_data_response
         expect(results['data']['rows'].length).to eq(1)

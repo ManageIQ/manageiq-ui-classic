@@ -1,7 +1,7 @@
 describe TreeNode::Container do
   subject { described_class.new(object, nil, nil) }
 
-  %i(container kubernetes_container).each do |factory|
+  %i[container kubernetes_container].each do |factory|
     context(factory.to_s) do
       let(:object) { FactoryBot.create(factory) }
 

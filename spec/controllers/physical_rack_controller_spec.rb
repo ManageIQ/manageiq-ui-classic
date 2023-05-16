@@ -34,7 +34,7 @@ describe PhysicalRackController do
       it 'calls "page_display_options" and returns the MiqRequest data' do
         physical_rack
         report_data_request(
-          :model => physical_rack.class.to_s,
+          :model => physical_rack.class.to_s
         )
         results = assert_report_data_response
         expect(results['data']['rows'].length).to eq(1)

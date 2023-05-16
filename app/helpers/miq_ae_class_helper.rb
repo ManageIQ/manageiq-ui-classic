@@ -9,7 +9,7 @@ module MiqAeClassHelper
   end
 
   def git_enabled?(record)
-    record.class == MiqAeDomain && record.git_enabled?
+    record.instance_of?(MiqAeDomain) && record.git_enabled?
   end
 
   def add_read_only_suffix(node_string, editable, enabled)
@@ -44,11 +44,11 @@ module MiqAeClassHelper
                else
                  rec.send(column)
                end
-    rec_name = rec_name.gsub(/\n/, "\\n")
-    rec_name = rec_name.gsub(/\t/, "\\t")
+    rec_name = rec_name.gsub("\n", "\\n")
+    rec_name = rec_name.gsub("\t", "\\t")
     rec_name = rec_name.tr('"', "'")
     rec_name = ERB::Util.html_escape(rec_name)
-    rec_name.gsub(/\\/, "&#92;")
+    rec_name.gsub("\\", "&#92;")
   end
 
   def class_prefix(cls)

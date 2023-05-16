@@ -24,7 +24,7 @@ class InfraNetworkingController < ApplicationController
     redirect_to(:action => 'explorer')
   end
 
-  alias_method :index, :show_list
+  alias index show_list
 
   def tagging_explorer_controller?
     @explorer

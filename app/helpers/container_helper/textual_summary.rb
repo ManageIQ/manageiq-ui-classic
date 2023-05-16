@@ -134,6 +134,7 @@ module ContainerHelper::TextualSummary
 
   def textual_group_env
     return nil unless role_allows?(:feature => "container_env_vars")
+
     TextualMultilabel.new(
       _("Environment variables"),
       :additional_table_class => "table-fixed",

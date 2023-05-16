@@ -16,7 +16,7 @@ end
 
 shared_examples_for 'a generic feature button after initialization' do
   describe '#initialize' do
-    subject { button.instance_variable_get('@feature') }
+    subject { button.instance_variable_get(:@feature) }
     it { expect(subject).to eq(feature) }
   end
 end

@@ -20,7 +20,7 @@ module ReportController::Reports::Editor
   end
 
   def chargeback_allocated_methods
-    CHAREGEBACK_ALLOCATED_METHODS.map { |k, v| [k, _(v)] }.to_h
+    CHAREGEBACK_ALLOCATED_METHODS.transform_values { |v| _(v) }
   end
 
   def default_chargeback_allocated_method
@@ -60,8 +60,9 @@ module ReportController::Reports::Editor
       @edit = session[:edit] = nil # clean out the saved info
       replace_right_cell
     when "add", "save"
-      id = params[:id] ? params[:id] : "new"
+      id = params[:id] || "new"
       return unless load_edit("report_edit__#{id}", "replace_cell__explorer")
+
       get_form_vars
       @changed = (@edit[:new] != @edit[:current])
       @rpt = @edit[:rpt_id] ? find_record_with_rbac(MiqReport, params[:id]) : MiqReport.new
@@ -151,6 +152,7 @@ module ReportController::Reports::Editor
     assert_privileges(session.fetch_path(:edit, :rpt_id) ? "miq_report_edit" : "miq_report_new")
 
     return unless load_edit("report_edit__#{params[:id]}", "replace_cell__explorer")
+
     get_form_vars
     build_edit_screen
     @unavailable_fields = unavailable_fields_for_model(@edit[:new][:model])
@@ -174,6 +176,7 @@ module ReportController::Reports::Editor
     assert_privileges(session.fetch_path(:edit, :rpt_id) ? "miq_report_edit" : "miq_report_new")
 
     return unless load_edit("report_edit__#{params[:id]}", "replace_cell__explorer")
+
     @expkey = $&.to_sym if params[:button].to_s =~ /^(record|display)_filter$/
     render :update do |page|
       page << javascript_prologue
@@ -246,7 +249,7 @@ module ReportController::Reports::Editor
       @sortby2 = @edit[:new][:sortby2]
       @sort1   = @edit[:new][:field_order].dup
       @sort2   = @sort1.dup.delete_if { |s| s[1] == @sortby1.split("__").first }
-    when "5"  # Charts
+    when "5" # Charts
       options = chart_fields_options
       if options.empty?
         @edit[:new][:chart_column] = nil
@@ -342,12 +345,12 @@ module ReportController::Reports::Editor
     # Check for key prefixes (params starting with certain keys)
     params.each do |key, value|
       # See if any headers were sent in
-      @edit[:new][:headers][key.split("_")[1..-1].join("_")] = value if key.split("_").first == "hdr"
+      @edit[:new][:headers][key.split("_")[1..].join("_")] = value if key.split("_").first == "hdr"
 
       # See if any formats were sent in
       if key.split("_").first == "fmt"
         key2 = key.gsub("___", ".") # Put period sub table separator back into the key
-        @edit[:new][:col_formats][key2.split("_")[1..-1].join("_")] = value.blank? ? nil : value.to_sym
+        @edit[:new][:col_formats][key2.split("_")[1..].join("_")] = value.blank? ? nil : value.to_sym
         @formatting_changed = value.blank?
       end
 
@@ -359,7 +362,7 @@ module ReportController::Reports::Editor
 
       # Check for style fields
       prefix = key.split("_").first
-      gfv_key_style(key, value) if prefix && prefix.starts_with?("style")
+      gfv_key_style(key, value) if prefix&.starts_with?("style")
     end
   end
 
@@ -408,7 +411,7 @@ module ReportController::Reports::Editor
               when :boolean
                 %w[DEFAULT true]
               when :integer, :float
-                ["DEFAULT", "", MiqExpression::FORMAT_SUB_TYPES.fetch_path(field_sub_type, :units) ? MiqExpression::FORMAT_SUB_TYPES.fetch_path(field_sub_type, :units).first : nil]
+                ["DEFAULT", "", MiqExpression::FORMAT_SUB_TYPES.fetch_path(field_sub_type, :units)&.first]
               else
                 ["DEFAULT", ""]
               end
@@ -721,7 +724,7 @@ module ReportController::Reports::Editor
     elsif params[:sort2_suffix] && params[:sort2_suffix].to_s != @edit[:new][:sortby2].split("__")[1].to_s
       # Remove any col options for any existing sort + suffix
       @edit[:new][:col_options].delete(@edit[:new][:sortby2].split("-").last) if @edit[:new][:sortby2].split("__")[1]
-      @edit[:new][:sortby2] = @edit[:new][:sortby2].split("__").first + "__" + params[:sort2_suffix]
+      @edit[:new][:sortby2] = "#{@edit[:new][:sortby2].split("__").first}__#{params[:sort2_suffix]}"
       @edit[:new][:sortby2] = @edit[:new][:sortby2].split("__").first +
                               (params[:sort2_suffix].blank? ? "" : "__#{params[:sort2_suffix]}")
 
@@ -787,13 +790,14 @@ module ReportController::Reports::Editor
       reporting_available_fields_clear_cash
       cashed_reporting_available_fields.each do |af| # Go thru all available columns
         # See if this column was selected to move or Only move if it's not there already
-        next if !params[:available_fields].include?(af[1]) || @edit[:new][:fields].include?(af)
-        @edit[:new][:fields].push(af)                                                             # Add it to the new fields list
-        if af[0].include?(":") && !af[1].include?(CustomAttributeMixin::CUSTOM_ATTRIBUTES_PREFIX) # Not a base column
+        next if params[:available_fields].exclude?(af[1]) || @edit[:new][:fields].include?(af)
+
+        @edit[:new][:fields].push(af) # Add it to the new fields list
+        if af[0].include?(":") && af[1].exclude?(CustomAttributeMixin::CUSTOM_ATTRIBUTES_PREFIX) # Not a base column
           table = af[0].split(" : ")[0].split(".")[-1]                                            # Get the table name
           table = table.singularize unless table == "OS"                                          # Singularize, except "OS"
           temp = af[0].split(" : ")[1]
-          temp_header = table == temp.split(" ")[0] ? af[0].split(" : ")[1] : table + " " + af[0].split(" : ")[1]
+          temp_header = table == temp.split[0] ? af[0].split(" : ")[1] : "#{table} #{af[0].split(" : ")[1]}"
         else
           temp_header = af[0].strip                                # Base column, just use it without leading space
         end
@@ -855,6 +859,7 @@ module ReportController::Reports::Editor
   # See if any of the fields passed in are present in the display filter expression
   def display_filter_contains?(fields)
     return false if @edit[:new][:display_filter].nil? # No display filter defined
+
     exp = @edit[:new][:display_filter].inspect
     @edit[:new][:fields].each do |f| # Go thru all of the selected fields
       if fields.include?(f.last) && exp.include?(f.last) # Is this field being removed?
@@ -874,9 +879,9 @@ module ReportController::Reports::Editor
       end
     end
     if last_idx - first_idx + 1 > params[:selected_fields].length
-      return [false, first_idx, last_idx]
+      [false, first_idx, last_idx]
     else
-      return [true, first_idx, last_idx]
+      [true, first_idx, last_idx]
     end
   end
 
@@ -900,7 +905,7 @@ module ReportController::Reports::Editor
       rpt.dims  = nil
       rpt.graph = nil
     else
-      rpt.dims = if @edit[:new][:graph_type] =~ /^(Pie|Donut)/ # Pie and Donut charts must be set to 1 dimension
+      rpt.dims = if /^(Pie|Donut)/.match?(@edit[:new][:graph_type]) # Pie and Donut charts must be set to 1 dimension
                    1
                  else
                    @edit[:new][:sortby2] == ReportHelper::NOTHING_STRING ? 1 : 2 # Set dims to 1 or 2 based on presence of sortby2
@@ -954,15 +959,16 @@ module ReportController::Reports::Editor
       options[:interval]            = @edit[:new][:cb_interval]
       options[:interval_size]       = @edit[:new][:cb_interval_size]
       options[:end_interval_offset] = @edit[:new][:cb_end_interval_offset]
-      if @edit[:new][:cb_show_typ] == "owner"
+      case @edit[:new][:cb_show_typ]
+      when "owner"
         options[:owner] = @edit[:new][:cb_owner_id]
-      elsif @edit[:new][:cb_show_typ] == "tenant"
+      when "tenant"
         options[:tenant_id] = @edit[:new][:cb_tenant_id]
-      elsif @edit[:new][:cb_show_typ] == "tag"
+      when "tag"
         if @edit[:new][:cb_tag_cat] && @edit[:new][:cb_tag_value]
           options[:tag] = parse_tag_categories(@edit[:new][:cb_tag_cat], @edit[:new][:cb_tag_value])
         end
-      elsif @edit[:new][:cb_show_typ] == "entity"
+      when "entity"
         options[:provider_id] = @edit[:new][:cb_provider_id]
         options[:entity_id] = @edit[:new][:cb_entity_id]
       end
@@ -971,7 +977,9 @@ module ReportController::Reports::Editor
       options[:include_metrics] = @edit[:new][:cb_include_metrics]
       options[:cumulative_rate_calculation] = @edit[:new][:cumulative_rate_calculation]
       options[:groupby] = @edit[:new][:cb_groupby]
-      options[:groupby_tag] = @edit[:new][:cb_groupby] == 'tag' ? (@edit[:new][:cb_groupby_tag].kind_of?(String) ? @edit[:new][:cb_groupby_tag].split(',') : @edit[:new][:cb_groupby_tag]) : nil
+      options[:groupby_tag] = if @edit[:new][:cb_groupby] == 'tag'
+                                @edit[:new][:cb_groupby_tag].kind_of?(String) ? @edit[:new][:cb_groupby_tag].split(',') : @edit[:new][:cb_groupby_tag]
+                              end
       options[:groupby_label] = @edit[:new][:cb_groupby] == 'label' ? @edit[:new][:cb_groupby_label] : nil
 
       rpt.db_options[:options] = options
@@ -1088,8 +1096,8 @@ module ReportController::Reports::Editor
               end
 
     # Has a period, so it's an include
-    if field.include?(".") && !field.include?(CustomAttributeMixin::CUSTOM_ATTRIBUTES_PREFIX)
-      tables = field.split("-")[0].split(".")[1..-1] # Get the list of tables from before the hyphen
+    if field.include?(".") && field.exclude?(CustomAttributeMixin::CUSTOM_ATTRIBUTES_PREFIX)
+      tables = field.split("-")[0].split(".")[1..] # Get the list of tables from before the hyphen
       inc_hash = rpt.include                         # Start at the main hash
       tables.each_with_index do |table, idx|
         inc_hash[table] ||= {}                       # Create hash for the table, if it's not there already
@@ -1098,7 +1106,7 @@ module ReportController::Reports::Editor
           f = field.split("-")[1].split("__").first  # Grab the field name after the hyphen, before the "__"
           inc_hash[table]["columns"].push(f) unless inc_hash[table]["columns"].include?(f) # Add the field to the columns, if not there
 
-          table_field = tables.join('.') + "." + field.split("-")[1]
+          table_field = "#{tables.join('.')}.#{field.split("-")[1]}"
           rpt.col_order.push(table_field)            # Add the table.field to the col_order array
 
           if field == sortby1                        # Is this the first sort field?
@@ -1202,7 +1210,7 @@ module ReportController::Reports::Editor
       @edit[:new][:graph_count]  = @rpt.graph[:count]
       @edit[:new][:chart_mode]   = @rpt.graph[:mode]
       @edit[:new][:chart_column] = @rpt.graph[:column]
-      @edit[:new][:graph_other]  = @rpt.graph[:other] ? @rpt.graph[:other] : false
+      @edit[:new][:graph_other]  = @rpt.graph[:other] || false
     else
       @edit[:new][:graph_type]   = @rpt.graph
       @edit[:new][:graph_count]  = ReportController::Reports::Editor.chart_top_values
@@ -1240,7 +1248,7 @@ module ReportController::Reports::Editor
       @edit[:new][:perf_avgs] = @rpt.db_options[:calc_avgs_by]
       @edit[:new][:perf_end] = @rpt.db_options[:end_offset].to_s
       @edit[:new][:perf_start] = (@rpt.db_options[:start_offset] - @rpt.db_options[:end_offset]).to_s
-      @edit[:new][:tz] = @rpt.tz ? @rpt.tz : session[:user_tz]    # Set the timezone, default to user's
+      @edit[:new][:tz] = @rpt.tz || session[:user_tz]    # Set the timezone, default to user's
       if @rpt.time_profile
         @edit[:new][:time_profile] = @rpt.time_profile_id
         @edit[:new][:time_profile_tz] = @rpt.time_profile.tz
@@ -1253,7 +1261,7 @@ module ReportController::Reports::Editor
       @edit[:new][:perf_limit_val] = @rpt.db_options[:limit_val]
       @edit[:new][:perf_target_pct1], @edit[:new][:perf_target_pct2], @edit[:new][:perf_target_pct3] = @rpt.db_options[:target_pcts]
     elsif Chargeback.db_is_chargeback?(@rpt.db)
-      @edit[:new][:tz] = @rpt.tz ? @rpt.tz : session[:user_tz]    # Set the timezone, default to user's
+      @edit[:new][:tz] = @rpt.tz || session[:user_tz]    # Set the timezone, default to user's
       options = @rpt.db_options[:options]
       if options.key?(:owner) # Get the owner options
         @edit[:new][:cb_show_typ] = "owner"
@@ -1377,14 +1385,14 @@ module ReportController::Reports::Editor
     if @rpt.db && @rpt.db == ApplicationController::TREND_MODEL &&
        MiqExpression.reporting_available_fields(@edit[:new][:model], @edit[:new][:perf_interval]).find do |af|
          af.last ==
-         @edit[:new][:perf_trend_db] + "-" + @edit[:new][:perf_trend_col]
+         "#{@edit[:new][:perf_trend_db]}-#{@edit[:new][:perf_trend_col]}"
        end.first.include?("(%)")
       @edit[:percent_col] = true
     end
   end
 
   def cb_entities_by_provider
-    @edit[:cb_providers] = { :container_project => {}, :container_image => {} }
+    @edit[:cb_providers] = {:container_project => {}, :container_image => {}}
     ManageIQ::Providers::ContainerManager.pluck(:name, :id).each do |provider_name, provider_id|
       @edit[:cb_providers][:container_project][provider_name] = provider_id
       @edit[:cb_providers][:container_image][provider_name] = provider_id
@@ -1400,6 +1408,7 @@ module ReportController::Reports::Editor
   def entries_hash(category_name)
     cat = Classification.lookup_by_name(category_name)
     return {} unless cat
+
     cat.entries.each_with_object({}) { |e, h| h[e.name] = e.description }
   end
 
@@ -1412,20 +1421,20 @@ module ReportController::Reports::Editor
     rpt.col_formats ||= Array.new(rpt.col_order.length) # Create array of nils if col_formats not present (backward compat)
     rpt.col_order.each_with_index do |col, idx|
       if col.starts_with?(CustomAttributeMixin::CUSTOM_ATTRIBUTES_PREFIX)
-        field_key = rpt.db + "-" + col
+        field_key = "#{rpt.db}-#{col}"
         field_value = CustomAttributeMixin.to_human(col)
-      elsif !col.include?(".")  # Main table field
-        field_key = rpt.db + "-" + col
+      elsif col.exclude?(".") # Main table field
+        field_key = "#{rpt.db}-#{col}"
         field_value = friendly_model_name(rpt.db) +
-                      Dictionary.gettext(rpt.db + "." + col.split("__").first, :type => :column, :notfound => :titleize)
-      else                      # Included table field
+                      Dictionary.gettext("#{rpt.db}.#{col.split("__").first}", :type => :column, :notfound => :titleize)
+      else # Included table field
         inc_string = find_includes(col.split("__").first, rpt.include) # Get the full include string
-        field_key = rpt.db + "." + inc_string.to_s + "-" + col.split(".").last
+        field_key = "#{rpt.db}.#{inc_string}-#{col.split(".").last}"
         field_value = if inc_string.to_s.ends_with?(".managed") || inc_string.to_s == "managed"
                         # don't titleize tag name, need it to lookup later to get description by tag name
-                        friendly_model_name(rpt.db + "." + inc_string.to_s) + col.split(".").last
+                        friendly_model_name("#{rpt.db}.#{inc_string}") + col.split(".").last
                       else
-                        friendly_model_name(rpt.db + "." + inc_string.to_s) +
+                        friendly_model_name("#{rpt.db}.#{inc_string}") +
                           Dictionary.gettext(col.split(".").last.split("__").first, :type => :column, :notfound => :titleize)
                       end
       end
@@ -1445,14 +1454,14 @@ module ReportController::Reports::Editor
          rpt.rpt_options[:pivot] &&
          rpt.rpt_options[:pivot][:group_cols] &&
          rpt.rpt_options[:pivot][:group_cols].kind_of?(Array)
-        unless rpt.rpt_options[:pivot][:group_cols].empty?
-          @edit[:new][:pivot].by1 = field_key if col == rpt.rpt_options[:pivot][:group_cols][0]
+        if !rpt.rpt_options[:pivot][:group_cols].empty? && (col == rpt.rpt_options[:pivot][:group_cols][0])
+          @edit[:new][:pivot].by1 = field_key
         end
-        if rpt.rpt_options[:pivot][:group_cols].length > 1
-          @edit[:new][:pivot].by2 = field_key if col == rpt.rpt_options[:pivot][:group_cols][1]
+        if rpt.rpt_options[:pivot][:group_cols].length > 1 && (col == rpt.rpt_options[:pivot][:group_cols][1])
+          @edit[:new][:pivot].by2 = field_key
         end
-        if rpt.rpt_options[:pivot][:group_cols].length > 2
-          @edit[:new][:pivot].by3 = field_key if col == rpt.rpt_options[:pivot][:group_cols][2]
+        if rpt.rpt_options[:pivot][:group_cols].length > 2 && (col == rpt.rpt_options[:pivot][:group_cols][2])
+          @edit[:new][:pivot].by3 = field_key
         end
       end
 
@@ -1486,9 +1495,10 @@ module ReportController::Reports::Editor
     # Remove the non-cost and owner columns from the arrays for Chargeback
     if Chargeback.db_is_chargeback?(rpt.db)
       f_len = fields.length
-      for f_idx in 1..f_len # Go thru fields in reverse
+      (1..f_len).each do |f_idx| # Go thru fields in reverse
         f_key = fields[f_len - f_idx].last
         next if f_key.ends_with?(*Chargeback::ALLOWED_FIELD_SUFFIXES) || f_key.include?('managed') || f_key.include?(CustomAttributeMixin::CUSTOM_ATTRIBUTES_PREFIX)
+
         headers.delete(f_key)
         col_formats.delete(f_key)
         fields.delete_at(f_len - f_idx)
@@ -1510,7 +1520,7 @@ module ReportController::Reports::Editor
          @edit[:pivot_cols].key?(f.last) # this is a pivot calc column
         MiqReport::PIVOTS.each do |c|
           calc_typ = c.first
-          @edit[:new][:field_order].push([f.first + " (#{calc_typ.to_s.titleize})", f.last + "__" + calc_typ.to_s]) if @edit[:pivot_cols][f.last].include?(calc_typ)
+          @edit[:new][:field_order].push([f.first + " (#{calc_typ.to_s.titleize})", "#{f.last}__#{calc_typ}"]) if @edit[:pivot_cols][f.last].include?(calc_typ)
         end
       else
         @edit[:new][:field_order].push(f)
@@ -1531,10 +1541,10 @@ module ReportController::Reports::Editor
     end
 
     if includes[table] && includes[table]["include"]
-      new_col = [tables[1..-1], field].flatten.join('.')
+      new_col = [tables[1..], field].flatten.join('.')
       # recursively search it for the table.col
       inc_table = find_includes(new_col, includes[table]["include"])
-      return table + '.' + inc_table if inc_table
+      return "#{table}.#{inc_table}" if inc_table
     end
 
     # Need to go to the next level
@@ -1545,7 +1555,7 @@ module ReportController::Reports::Editor
       return nil if inc_table.nil?                   # If it comes back nil, we never found it
 
       # Otherwise, return the table name + the included string
-      return key + "." + inc_table
+      return "#{key}.#{inc_table}"
     end
 
     nil
@@ -1554,10 +1564,12 @@ module ReportController::Reports::Editor
   def setnode_for_customreport
     @sb[:rpt_menu].each_with_index do |level1_nodes, i|
       next unless level1_nodes[0] == reports_group_title
+
       level1_nodes[1].each_with_index do |level2_nodes, k|
         # Check for the existence of the Custom folder in the Reports tree and
         # check if at least one report exists underneath it
         next unless level2_nodes[0].downcase == "custom" && level2_nodes[1].count.positive?
+
         level2_nodes[1].each do |report|
           self.x_node = "xx-#{i}_xx-#{i}-#{k}_rep-#{@rpt.id}" if report == @rpt.name
         end
@@ -1622,11 +1634,14 @@ module ReportController::Reports::Editor
         col = f.last.split('.').last.split('-').last
         val = rpt.col_options[col]
         next if !val || !val.key?(:style) # Skip if no options for this col or if no style options
+
         val[:style].each_with_index do |s, s_idx| # Go through all of the configured ifs
           next unless s[:value]
+
           # See if the value is in error
           e = MiqExpression.atom_error(rpt.col_to_expression_col(col.split('__').first), s[:operator], s[:value])
           next unless e
+
           msg = case s_idx + 1
                 when 1
                   add_flash(_("Styling for '%{item}', first value is in error: %{message}") %

@@ -35,6 +35,28 @@ class CloudNetworkController < ApplicationController
     end
   end
 
+  def new
+    assert_privileges("cloud_network_new")
+    assert_privileges("ems_network_show_list")
+    assert_privileges("cloud_tenant_show_list")
+
+    @network = CloudNetwork.new
+    @in_a_form = true
+
+    drop_breadcrumb(:name => _("Add New Cloud Network"), :url => "/cloud_network/new")
+  end
+
+  def edit
+    params[:id] = checked_item_id if params[:id].blank?
+    assert_privileges("cloud_network_edit")
+    @network = find_record_with_rbac(CloudNetwork, params[:id])
+    @in_a_form = true
+    drop_breadcrumb(
+      :name => _("Edit Cloud Network \"%{name}\"") % {:name => @network.name},
+      :url  => "/cloud_network/edit/#{@network.id}"
+    )
+  end
+
   def create
     assert_privileges("cloud_network_new")
     case params[:button]
@@ -70,10 +92,10 @@ class CloudNetworkController < ApplicationController
     network_name = session[:async][:params][:name]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("Cloud Network \"%{name}\" created") % {:name => network_name })
+      add_flash(_("Cloud Network \"%{name}\" created") % {:name => network_name})
     else
-      add_flash(_("Unable to create Cloud Network \"%{name}\": %{details}") % { :name    => network_name,
-                                                                                :details => task.message }, :error)
+      add_flash(_("Unable to create Cloud Network \"%{name}\": %{details}") % {:name    => network_name,
+                                                                               :details => task.message}, :error)
     end
 
     @breadcrumbs&.pop
@@ -111,28 +133,6 @@ class CloudNetworkController < ApplicationController
       end
       flash_to_session
     end
-  end
-
-  def edit
-    params[:id] = checked_item_id if params[:id].blank?
-    assert_privileges("cloud_network_edit")
-    @network = find_record_with_rbac(CloudNetwork, params[:id])
-    @in_a_form = true
-    drop_breadcrumb(
-      :name => _("Edit Cloud Network \"%{name}\"") % {:name => @network.name},
-      :url  => "/cloud_network/edit/#{@network.id}"
-    )
-  end
-
-  def new
-    assert_privileges("cloud_network_new")
-    assert_privileges("ems_network_show_list")
-    assert_privileges("cloud_tenant_show_list")
-
-    @network = CloudNetwork.new
-    @in_a_form = true
-
-    drop_breadcrumb(:name => _("Add New Cloud Network"), :url => "/cloud_network/new")
   end
 
   def update

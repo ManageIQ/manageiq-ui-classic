@@ -45,15 +45,15 @@ class ConditionController < ApplicationController
       return unless load_edit("condition_edit__#{id}")
 
       @condition = @edit[:condition_id] ? Condition.find(@edit[:condition_id]) : Condition.new
-      if @condition.try(:id)
-        flash_msg = _("Edit of %{model} Condition \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => @edit[:new][:towhat]), :name => @condition.description}
-      else
-        flash_msg = _("Add of new %{model} Condition was cancelled by the user") % {:model => ui_lookup(:model => @edit[:new][:towhat])}
-      end
+      flash_msg = if @condition.try(:id)
+                    _("Edit of %{model} Condition \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => @edit[:new][:towhat]), :name => @condition.description}
+                  else
+                    _("Add of new %{model} Condition was cancelled by the user") % {:model => ui_lookup(:model => @edit[:new][:towhat])}
+                  end
       @edit = session[:edit] = nil # clean out the saved info
       session[:changed] = false
       javascript_redirect(:action => @condition.id ? @lastaction : "show_list", :id => params[:id], :flash_msg => flash_msg)
-      return
+      nil
     when "reset", nil # Reset or first time in
       @_params[:id] ||= find_checked_items[0]
       condition_build_edit_screen
@@ -61,12 +61,14 @@ class ConditionController < ApplicationController
         flash_to_session
         redirect_to(:action => 'show_list')
       else
-        add_flash(_("Ruby scripts are no longer supported in expressions, please change or remove them."), :warning) if @edit[:current][:expression] && @edit[:current][:expression].key?('RUBY')
+        add_flash(_("Ruby scripts are no longer supported in expressions, please change or remove them."), :warning) if @edit[:current][:expression]&.key?('RUBY')
         session[:flash_msgs] = @flash_array
-        javascript_redirect(:action        => 'edit',
-                            :id            => params[:id],
-                            :flash_msg     => _("All changes have been reset"),
-                            :flash_warning => true) if params[:button] == "reset"
+        if params[:button] == "reset"
+          javascript_redirect(:action        => 'edit',
+                              :id            => params[:id],
+                              :flash_msg     => _("All changes have been reset"),
+                              :flash_warning => true)
+        end
       end
     else
       # Load @edit/vars for other buttons
@@ -95,11 +97,11 @@ class ConditionController < ApplicationController
         end
         if condition.valid? && !@flash_array && condition.save
           AuditEvent.success(build_saved_audit(condition, @edit))
-          if params[:button] == "save"
-            flash_msg = _("Condition \"%{name}\" was saved") % {:name => @edit[:new][:description]}
-          else
-            flash_msg = _("Condition \"%{name}\" was added") % {:name => @edit[:new][:description]}
-          end
+          flash_msg = if params[:button] == "save"
+                        _("Condition \"%{name}\" was saved") % {:name => @edit[:new][:description]}
+                      else
+                        _("Condition \"%{name}\" was added") % {:name => @edit[:new][:description]}
+                      end
           @edit = session[:edit] = nil # clean out the saved info
           session[:changed] = @changed = false
           javascript_redirect(:action => params[:button] == "add" ? "show_list" : @lastaction, :id => params[:id], :flash_msg => flash_msg)
@@ -193,7 +195,7 @@ class ConditionController < ApplicationController
 
     @embedded = true
     @in_a_form = true
-    @edit[:current][:add] = true if @edit[:condition_id].nil?                       # Force changed to be true if adding a record
+    @edit[:current][:add] = true if @edit[:condition_id].nil? # Force changed to be true if adding a record
     session[:changed] = (@edit[:new] != @edit[:current])
   end
 
@@ -259,6 +261,6 @@ class ConditionController < ApplicationController
     }
   end
 
-  toolbar :condition,:conditions
+  toolbar :condition, :conditions
   menu_section :con
 end

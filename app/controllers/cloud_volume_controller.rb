@@ -20,7 +20,7 @@ class CloudVolumeController < ApplicationController
     'cloud_volume_attach'          => [:attach,   'attach'],
     'cloud_volume_clone'           => [:clone,    'clone'],
     'cloud_volume_detach'          => [:detach,   'detach'],
-    'cloud_volume_edit'            => [:update,           'edit'],
+    'cloud_volume_edit'            => [:update, 'edit'],
     'cloud_volume_new'             => [nil,              'new'],
     'cloud_volume_snapshot_create' => [:snapshot_create, 'snapshot_new'],
     'cloud_volume_backup_create'   => [:backup_create,   'backup_new'],
@@ -102,6 +102,17 @@ class CloudVolumeController < ApplicationController
     )
   end
 
+  def edit
+    params[:id] = checked_item_id if params[:id].blank?
+    assert_privileges("cloud_volume_edit")
+    @volume = find_record_with_rbac(CloudVolume, params[:id])
+    @in_a_form = true
+    drop_breadcrumb(
+      :name => _("Edit Cloud Volume \"%{name}\"") % {:name => @volume.name},
+      :url  => "/cloud_volume/edit/#{@volume.id}"
+    )
+  end
+
   def create
     assert_privileges("cloud_volume_new")
     case params[:button]
@@ -163,17 +174,6 @@ class CloudVolumeController < ApplicationController
     session[:edit] = nil
     flash_to_session
     javascript_redirect(previous_breadcrumb_url)
-  end
-
-  def edit
-    params[:id] = checked_item_id if params[:id].blank?
-    assert_privileges("cloud_volume_edit")
-    @volume = find_record_with_rbac(CloudVolume, params[:id])
-    @in_a_form = true
-    drop_breadcrumb(
-      :name => _("Edit Cloud Volume \"%{name}\"") % {:name => @volume.name},
-      :url  => "/cloud_volume/edit/#{@volume.id}"
-    )
   end
 
   def update

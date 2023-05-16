@@ -35,9 +35,9 @@ module ApplicationController::ReportDownloads
 
     # This branch is used when called from e.g. compare_to_pdf
     result ||= begin
-                 userid = "#{session[:userid]}|#{request.session_options[:id]}|adhoc"
-                 report.build_create_results(:userid => userid)
-               end
+      userid = "#{session[:userid]}|#{request.session_options[:id]}|adhoc"
+      report.build_create_results(:userid => userid)
+    end
 
     render_pdf_internal_rr(report, result)
   end
@@ -208,12 +208,12 @@ module ApplicationController::ReportDownloads
   end
 
   def filename_timestamp(basename, format = 'fname')
-    basename + '_' + format_timezone(Time.zone.now, Time.zone, format)
+    "#{basename}_#{format_timezone(Time.zone.now, Time.zone, format)}"
   end
 
   def set_summary_pdf_data
     @showtype    = @display
-    run_time     = Time.now
+    run_time     = Time.zone.now
     klass        = ui_lookup(:model => @record.class.name)
 
     @options = {

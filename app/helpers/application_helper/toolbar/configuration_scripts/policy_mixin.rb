@@ -15,8 +15,8 @@ module ApplicationHelper::Toolbar::ConfigurationScripts::PolicyMixin
                                                            :url_parms    => "main_div",
                                                            :send_checked => true,
                                                            :enabled      => false,
-                                                           :onwhen       => "1+"),
-                                                       ]),
-                                ])
+                                                           :onwhen       => "1+"
+                                                         ),
+                                                       ]),])
   end
 end

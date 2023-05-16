@@ -79,7 +79,7 @@ module ApplicationController::CiProcessing
 
   def get_error_message_from_fog(exception)
     exception_string = exception.to_s
-    matched_message = exception_string.match(/message\\\": \\\"(.*)\\\", /)
+    matched_message = exception_string.match(/message\\": \\"(.*)\\", /)
     matched_message ? matched_message[1] : exception_string
   end
 
@@ -110,7 +110,7 @@ module ApplicationController::CiProcessing
       else
         begin
           record.send(task.to_sym) if record.respond_to?(task) # Run the task
-        rescue StandardError => bang
+        rescue => bang
           add_flash(
             _("%{model} \"%{name}\": Error during '%{task}': %{error_msg}") %
             {
@@ -153,7 +153,7 @@ module ApplicationController::CiProcessing
 
     begin
       element.destroy
-    rescue StandardError => bang
+    rescue => bang
       add_flash(_("%{model} \"%{name}\": Error during delete: %{error_msg}") %
                {:model => model_name, :name => record_name, :error_msg => bang.message}, :error)
     else
@@ -161,7 +161,7 @@ module ApplicationController::CiProcessing
         AuditEvent.success(audit)
         add_flash(_("%{model} \"%{name}\": Delete successful") % {:model => model_name, :name => record_name})
       else
-        error_msg = element.errors.collect { |error| error.message }.join(';')
+        error_msg = element.errors.collect(&:message).join(';')
         add_flash(_("%{model} \"%{name}\": Error during delete: %{error_msg}") %
                  {:model => model_name, :name => record_name, :error_msg => error_msg}, :error)
       end
@@ -172,7 +172,7 @@ module ApplicationController::CiProcessing
   def identify_record(id, klass = self.class.model)
     begin
       record = find_record_with_rbac(klass, id)
-    rescue StandardError => @bang
+    rescue => @bang
       self.x_node = "root" if @explorer
       flash_to_session(@bang.message, :error, true)
     end
@@ -198,14 +198,14 @@ module ApplicationController::CiProcessing
     else
       @breadcrumbs = []
       bc_name = breadcrumb_name(model)
-      bc_name += " - " + session["#{self.class.session_key_prefix}_type".to_sym].titleize if session["#{self.class.session_key_prefix}_type".to_sym]
+      bc_name += " - #{session["#{self.class.session_key_prefix}_type".to_sym].titleize}" if session["#{self.class.session_key_prefix}_type".to_sym]
       bc_name += " (filtered)" if @filters && (@filters[:tags].present? || @filters[:cats].present?)
       action = %w[service vm_cloud vm_infra vm_or_template storage service_template].include?(self.class.table_name) ? "explorer" : "show_list"
       drop_breadcrumb(:name => bc_name, :url => "/#{controller_name}/#{action}")
     end
     @layout = session["#{self.class.session_key_prefix}_type".to_sym] if session["#{self.class.session_key_prefix}_type".to_sym]
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
-    build_listnav_search_list(@view.db) if !["miq_task"].include?(@layout) && !session[:menu_click]
+    build_listnav_search_list(@view.db) if ["miq_task"].exclude?(@layout) && !session[:menu_click]
   end
 
   def breadcrumb_name(_model)
@@ -265,7 +265,7 @@ module ApplicationController::CiProcessing
     options = {:ids => objs, :task => task, :userid => session[:userid]}
     options[:snap_selected] = session[:snap_selected] if %w[remove_snapshot revert_to_snapshot].include?(task)
     klass.process_tasks(options)
-  rescue StandardError => err
+  rescue => err
     add_flash(_("Error during '%{task}': %{error_message}") % {:task => task, :error_message => err.message}, :error)
   else
     add_flash(
@@ -301,7 +301,7 @@ module ApplicationController::CiProcessing
     controller_class = request.parameters[:controller]
     provider_class = case controller_class
                      when 'ems_automation' then ManageIQ::Providers::AutomationManager
-                     when 'ems_configuration'  then ManageIQ::Providers::ConfigurationManager
+                     when 'ems_configuration' then ManageIQ::Providers::ConfigurationManager
                      end
 
     manager_ids, _services_out_region = filter_ids_in_region(managers, provider_class.to_s)
@@ -312,7 +312,7 @@ module ApplicationController::CiProcessing
     options = {:ids => manager_ids, :task => task, :userid => session[:userid]}
     kls = provider_class.find_by(:id => manager_ids.first).class
     kls.process_tasks(options)
-  rescue StandardError => err
+  rescue => err
     add_flash(_("Error during '%{task}': %{message}") % {:task => task, :message => err.message}, :error)
   else
     add_flash(n_("%{task} initiated for %{count} provider",
@@ -349,8 +349,8 @@ module ApplicationController::CiProcessing
   # Refresh the power states for selected or single VMs
   def refreshvms(privilege = DEFAULT_PRIVILEGE)
     if privilege == DEFAULT_PRIVILEGE
-      ActiveSupport::Deprecation.warn(<<-MSG.strip_heredoc)
-      Please pass the privilege you want to check for when refreshing
+      ActiveSupport::Deprecation.warn(<<~MSG)
+        Please pass the privilege you want to check for when refreshing
       MSG
       privilege = params[:pressed]
     end
@@ -395,8 +395,8 @@ module ApplicationController::CiProcessing
     # Check each record if there is any compliance policy assigned to it
     if records.any? { |record| !record.has_compliance_policies? }
       javascript_flash(
-        :text       => _('No Compliance Policies assigned to one or more of the selected items'),
-        :severity   => :error,
+        :text     => _('No Compliance Policies assigned to one or more of the selected items'),
+        :severity => :error
       )
       return
     end
@@ -545,7 +545,7 @@ module ApplicationController::CiProcessing
         cluster_name = cluster.name
         begin
           cluster.send(task.to_sym) if cluster.respond_to?(task) # Run the task
-        rescue StandardError => err
+        rescue => err
           add_flash(_("Cluster \"%{name}\": Error during '%{task}': %{error_message}") %
             {:name          => cluster_name,
              :task          => task,
@@ -575,7 +575,7 @@ module ApplicationController::CiProcessing
         rp_name = rp.name
         begin
           rp.send(task.to_sym) if rp.respond_to?(task) # Run the task
-        rescue StandardError => err
+        rescue => err
           add_flash(_("Resource Pool \"%{name}\": Error during '%{task}': %{error_message}") %
             {:name          => rp_name,
              :task          => task,
@@ -726,7 +726,7 @@ module ApplicationController::CiProcessing
           elsif storage.respond_to?(task) # Run the task
             storage.send(task.to_sym)
           end
-        rescue StandardError => err
+        rescue => err
           add_flash(_("Datastore \"%{name}\": Error during '%{task}': %{error_message}") %
             {:name          => storage_name,
              :task          => task,
@@ -765,7 +765,7 @@ module ApplicationController::CiProcessing
     assert_privileges("orchestration_stack_delete")
     begin
       delete_elements(OrchestrationStack, :process_orchestration_stacks)
-    rescue StandardError => err
+    rescue => err
       add_flash(_("Error during deletion: %{error_message}") % {:error_message => err.message}, :error)
       if @lastaction == "show_list"
         show_list
@@ -798,7 +798,7 @@ module ApplicationController::CiProcessing
         {:datastore_name => storage.name}, :warning)
     end
     process_storage(storages.ids, 'destroy') unless storages.empty?
-    if !%w[show_list storage_list storage_pod_list].include?(@lastaction) ||
+    if %w[show_list storage_list storage_pod_list].exclude?(@lastaction) ||
        (@lastaction == "show" && @layout != "storage")
       @single_delete = !flash_errors?
     end
@@ -845,7 +845,7 @@ module ApplicationController::CiProcessing
     flavors.each do |flavor|
       flavor.delete_flavor_queue(User.current_user.id)
       add_flash(_("Delete of Flavor \"%{name}\" was successfully initiated.") % {:name => flavor.name})
-    rescue StandardError => error
+    rescue => error
       add_flash(_("Unable to delete Flavor \"%{name}\": %{details}") % {:name    => flavor.name,
                                                                         :details => error.message}, :error)
     end

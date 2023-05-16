@@ -7,7 +7,7 @@ class GtlFormatter
   VIEW_WITH_CUSTOM_ICON = %w[
     Service
     ServiceTemplate
-  ]
+  ].freeze
 
   COLUMN_WITH_ICON = {
     'authentication_status'  => 'authentication_status_image',
@@ -31,28 +31,28 @@ class GtlFormatter
   }.freeze
 
   NORMALIZED_STATE_ICON = {
-    'archived'                  => 'fa fa-archive',
-    'orphaned'                  => 'ff ff-orphaned',
-    'retired'                   => 'fa fa-clock-o',
-    'non_operational'           => 'fa fa-exclamation',
-    'suspended'                 => 'pficon pficon-asleep',
-    'standby'                   => 'pficon pficon-asleep',
-    'paused'                    => 'pficon pficon-asleep',
-    'disconnecting'             => 'pficon pficon-unplugged',
-    'image_locked'              => 'pficon pficon-locked',
-    'migrating'                 => 'pficon pficon-migration',
-    'shelved'                   => 'pficon pficon-pending',
-    'shelved_offloaded'         => 'pficon pficon-pending',
-    'reboot_in_progress'        => 'pficon pficon-on',
-    'wait_for_launch'           => 'pficon pficon-asleep',
-    'on'                        => 'pficon pficon-on',
-    'never'                     => 'pficon pficon-off',
-    'terminated'                => 'pficon pficon-off',
-    'off'                       => 'pficon pficon-off',
-    'template'                  => 'pficon pficon-template',
-    'powering_up'               => 'pficon pficon-on',
-    'powering_down'             => 'pficon pficon-off',
-    'unknown'                   => 'pficon pficon-unknown',
+    'archived'           => 'fa fa-archive',
+    'orphaned'           => 'ff ff-orphaned',
+    'retired'            => 'fa fa-clock-o',
+    'non_operational'    => 'fa fa-exclamation',
+    'suspended'          => 'pficon pficon-asleep',
+    'standby'            => 'pficon pficon-asleep',
+    'paused'             => 'pficon pficon-asleep',
+    'disconnecting'      => 'pficon pficon-unplugged',
+    'image_locked'       => 'pficon pficon-locked',
+    'migrating'          => 'pficon pficon-migration',
+    'shelved'            => 'pficon pficon-pending',
+    'shelved_offloaded'  => 'pficon pficon-pending',
+    'reboot_in_progress' => 'pficon pficon-on',
+    'wait_for_launch'    => 'pficon pficon-asleep',
+    'on'                 => 'pficon pficon-on',
+    'never'              => 'pficon pficon-off',
+    'terminated'         => 'pficon pficon-off',
+    'off'                => 'pficon pficon-off',
+    'template'           => 'pficon pficon-template',
+    'powering_up'        => 'pficon pficon-on',
+    'powering_down'      => 'pficon pficon-off',
+    'unknown'            => 'pficon pficon-unknown',
   }.freeze
 
   COLUMN_WITH_TIME = %w[
@@ -70,24 +70,24 @@ class GtlFormatter
       "MiqTask"                                                        => state,
       "MiqProvision"                                                   => state,
       "MiqRequest"                                                     => state.merge({
-        'approval_state' => :miq_request_format,
-      }),
+                                                                                        'approval_state' => :miq_request_format,
+                                                                                      }),
       "ManageIQ_Providers_CloudManager_Template-all_vms_and_templates" => hardware,
       "ManageIQ_Providers_CloudManager_Vm-vms"                         => hardware,
       "ManageIQ_Providers_CloudManager_Vm-all_vms_and_templates"       => hardware,
       "ManageIQ_Providers_CloudManager_Vm"                             => hardware,
       "ManageIQ_Providers_CloudManager_Template"                       => hardware.merge({
-        "image?" => :cloud_manager_template_format,
-      }),
-      "MiqSchedule" => :timezone, # all fields have same specific format
-      "MiqAlert"    => {
+                                                                                           "image?" => :cloud_manager_template_format,
+                                                                                         }),
+      "MiqSchedule"                                                    => :timezone, # all fields have same specific format
+      "MiqAlert"                                                       => {
         "severity" => :alert_severity_format,
       },
-      "OpenscapRuleResult" => {
+      "OpenscapRuleResult"                                             => {
         "result"   => :result_format,
         "severity" => :severity_format,
       },
-      "ServiceTemplate" => {
+      "ServiceTemplate"                                                => {
         "prov_type" => :service_template_format,
       },
     }
@@ -179,6 +179,7 @@ class GtlFormatter
 
   def self.fonticon_or_fileicon(item)
     return nil unless item
+
     decorated = item.decorate
     [
       decorated.try(:fonticon),
@@ -242,14 +243,14 @@ class GtlFormatter
 
   # Format a column in a report view for display on the screen
   def self.format_col_for_display(view, row, col, tz = Time.zone)
-    view.format(col, row[col], :tz => tz).gsub(/\\/, '\&') # Call format, then escape any backslashes
+    view.format(col, row[col], :tz => tz).gsub("\\", '\&') # Call format, then escape any backslashes
   end
 
   # Format a time column in a report view for display on the screen
   def self.format_time_for_display(row, col, tz = Time.zone)
     if row[col]
-      time_str = self.time_ago_in_words(row[col].in_time_zone(tz)).titleize
-      _("%{time} Ago") % { :time => time_str }
+      time_str = time_ago_in_words(row[col].in_time_zone(tz)).titleize
+      _("%{time} Ago") % {:time => time_str}
     else
       _("Never")
     end

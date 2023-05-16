@@ -117,8 +117,8 @@ describe CloudVolumeController do
         @ems = FactoryBot.create(:ems_openstack)
         @tenant = FactoryBot.create(:cloud_tenant_openstack, :ext_management_system => @ems)
         @availability_zone = FactoryBot.create(:availability_zone,
-                                                :ems_ref               => "nova",
-                                                :ext_management_system => @ems)
+                                               :ems_ref               => "nova",
+                                               :ext_management_system => @ems)
 
         @form_params = {
           :name                 => "volume",
@@ -127,7 +127,7 @@ describe CloudVolumeController do
           :emstype              => "ManageIQ::Providers::Openstack::StorageManager::CinderManager",
           :availability_zone_id => @availability_zone.ems_ref
         }
-        @task_options = [@ems.cinder_manager.id, { :name => "volume", :size => 1, :cloud_tenant => @tenant, :availability_zone => @availability_zone.ems_ref }]
+        @task_options = [@ems.cinder_manager.id, {:name => "volume", :size => 1, :cloud_tenant => @tenant, :availability_zone => @availability_zone.ems_ref}]
       end
 
       it_behaves_like "queue create volume task"
@@ -138,15 +138,15 @@ describe CloudVolumeController do
         @cloud_manager = FactoryBot.create(:ems_amazon)
         @ems = FactoryBot.create(:ems_amazon_ebs, :parent_manager => @cloud_manager)
         @availability_zone = FactoryBot.create(:availability_zone,
-                                                :ems_ref               => "us-east-1e",
-                                                :ext_management_system => @cloud_manager)
+                                               :ems_ref               => "us-east-1e",
+                                               :ext_management_system => @cloud_manager)
 
         # Common form parameters for the Amazon EBS volume.
         @form_params = {
-          :emstype                  => "ManageIQ::Providers::Amazon::StorageManager::Ebs",
-          :storage_manager_id       => @ems.id,
-          :name                     => "volume",
-          :size                     => 1,
+          :emstype              => "ManageIQ::Providers::Amazon::StorageManager::Ebs",
+          :storage_manager_id   => @ems.id,
+          :name                 => "volume",
+          :size                 => 1,
           :availability_zone_id => @availability_zone.ems_ref,
         }
         # Common EC2 client options

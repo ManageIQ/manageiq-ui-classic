@@ -40,24 +40,25 @@ class ApplicationHelper::Toolbar::SecurityGroupsCenter < ApplicationHelper::Tool
     ]
   )
   button_group('security_group_policy', [
-    select(
-      :security_group_policy_choice,
-      nil,
-      t = N_('Policy'),
-      t,
-      :enabled => false,
-      :onwhen  => "1+",
-      :items   => [
-        button(
-          :security_group_tag,
-          'pficon pficon-edit fa-lg',
-          N_('Edit Tags for the selected Security Groups'),
-          N_('Edit Tags'),
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :enabled      => false,
-          :onwhen       => "1+"),
-      ]
-    ),
-  ])
+                 select(
+                   :security_group_policy_choice,
+                   nil,
+                   t = N_('Policy'),
+                   t,
+                   :enabled => false,
+                   :onwhen  => "1+",
+                   :items   => [
+                     button(
+                       :security_group_tag,
+                       'pficon pficon-edit fa-lg',
+                       N_('Edit Tags for the selected Security Groups'),
+                       N_('Edit Tags'),
+                       :url_parms    => "main_div",
+                       :send_checked => true,
+                       :enabled      => false,
+                       :onwhen       => "1+"
+                     ),
+                   ]
+                 ),
+               ])
 end

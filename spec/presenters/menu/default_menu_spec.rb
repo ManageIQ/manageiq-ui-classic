@@ -71,13 +71,13 @@ describe Menu::DefaultMenu do
           "Requests"
         )
 
-        expect(menu.automate_menu_section.items.map(&:rbac_feature)). to match_array([{:feature => "miq_ae_domain_view"},
-                                                                             {:feature => "miq_ae_class_simulation"},
-                                                                             {:feature => "miq_ae_customization_explorer", :any => true},
-                                                                             {:feature => "generic_object_definition"},
-                                                                             {:feature => "miq_ae_class_import_export"},
-                                                                             {:feature => "miq_ae_class_log"},
-                                                                             {:feature => "ae_miq_request_show_list"}])
+        expect(menu.automate_menu_section.items.map(&:rbac_feature)).to match_array([{:feature => "miq_ae_domain_view"},
+                                                                                     {:feature => "miq_ae_class_simulation"},
+                                                                                     {:feature => "miq_ae_customization_explorer", :any => true},
+                                                                                     {:feature => "generic_object_definition"},
+                                                                                     {:feature => "miq_ae_class_import_export"},
+                                                                                     {:feature => "miq_ae_class_log"},
+                                                                                     {:feature => "ae_miq_request_show_list"}])
       end
     end
   end

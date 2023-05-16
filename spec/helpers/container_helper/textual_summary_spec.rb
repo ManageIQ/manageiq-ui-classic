@@ -1,13 +1,13 @@
 describe ContainerHelper::TextualSummary do
-  include_examples "textual_group", "Relationships", %i(
+  include_examples "textual_group", "Relationships", %i[
     ems
     container_project
     container_replicator
     container_group
     container_node
     container_image
-  )
-  include_examples "textual_group", "Properties", %i(
+  ]
+  include_examples "textual_group", "Properties", %i[
     name
     state
     reason
@@ -29,6 +29,6 @@ describe ContainerHelper::TextualSummary do
     se_linux_type
     se_linux_level
     run_as_non_root
-  )
+  ]
   include_examples "textual_group_smart_management"
 end

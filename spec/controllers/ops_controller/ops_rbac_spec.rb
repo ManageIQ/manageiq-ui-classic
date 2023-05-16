@@ -31,7 +31,7 @@ describe OpsController do
     describe "#tree_select" do
       it "renders rbac_details tab when rbac_tree root node is selected" do
         session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
-        post :tree_select, :params => { :id => 'root', :format => :js }
+        post :tree_select, :params => {:id => 'root', :format => :js}
 
         expect(response).to render_template('ops/_rbac_details_tab')
         expect(response.status).to eq(200)
@@ -41,7 +41,7 @@ describe OpsController do
         tenant = FactoryBot.create(:tenant, :parent => Tenant.root_tenant)
 
         session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
-        post :tree_select, :params => { :id => "tn-#{tenant.id}", :format => :js }
+        post :tree_select, :params => {:id => "tn-#{tenant.id}", :format => :js}
 
         expect(response).to render_template('ops/_rbac_details_tab')
         expect(response.status).to eq(200)
@@ -51,7 +51,7 @@ describe OpsController do
         tenant = FactoryBot.create(:tenant, :parent => Tenant.root_tenant)
 
         session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
-        post :tree_select, :params => { :id => "tn-#{tenant.id}", :format => :js }
+        post :tree_select, :params => {:id => "tn-#{tenant.id}", :format => :js}
 
         expect(response).to render_template('ops/_rbac_details_tab')
         expect(response.status).to eq(200)
@@ -65,12 +65,12 @@ describe OpsController do
                           :mem_allocated => {:value => four_terabytes})
 
         session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
-        post :tree_select, :params => { :id => "tn-#{tenant.id}", :format => :js }
+        post :tree_select, :params => {:id => "tn-#{tenant.id}", :format => :js}
 
         expect(response).to render_template('ops/_rbac_details_tab')
         expect(response.status).to eq(200)
 
-        tab_content = JSON.parse(response.body)['replacePartials']['ops_tabs']
+        tab_content = response.parsed_body['replacePartials']['ops_tabs']
         expect(tab_content).to include('Tenant Quota')
         expect(tab_content).to include('Name')
         expect(tab_content).to include('Total Quota')
@@ -195,9 +195,9 @@ describe OpsController do
                                     :parent    => Tenant.root_tenant,
                                     :domain    => "test",
                                     :subdomain => "test")
-        sb_hash = { :trees       => {:rbac_tree => {:active_node => "tn-#{@tenant.id}"}},
-                    :active_tree => :rbac_tree,
-                    :active_tab  => "rbac_details"}
+        sb_hash = {:trees       => {:rbac_tree => {:active_node => "tn-#{@tenant.id}"}},
+                   :active_tree => :rbac_tree,
+                   :active_tab  => "rbac_details"}
         controller.instance_variable_set(:@sb, sb_hash)
         allow(ApplicationHelper).to receive(:role_allows?).and_return(true)
         allow(@tenant).to receive(:tagged_with).with({:cat => user.userid}).and_return("my tags")
@@ -215,11 +215,11 @@ describe OpsController do
         allow(controller).to receive(:get_node_info)
         allow(controller).to receive(:replace_right_cell)
         session[:tag_db] = "Tenant"
-        edit = { :key        => "Tenant_edit_tags__#{@tenant.id}",
-                 :tagging    => "Tenant",
-                 :object_ids => [@tenant.id],
-                 :current    => {:assignments => []},
-                 :new        => {:assignments => [@tag1.id, @tag2.id]}}
+        edit = {:key        => "Tenant_edit_tags__#{@tenant.id}",
+                :tagging    => "Tenant",
+                :object_ids => [@tenant.id],
+                :current    => {:assignments => []},
+                :new        => {:assignments => [@tag1.id, @tag2.id]}}
         session[:edit] = edit
       end
 
@@ -331,7 +331,7 @@ describe OpsController do
         belongsto_filters = {}
         @group.get_belongsto_filters.each do |b|
           bobj = MiqFilter.belongsto2object(b)
-          belongsto_filters[bobj.class.to_s + "_" + bobj.id.to_s] = b if bobj
+          belongsto_filters["#{bobj.class}_#{bobj.id}"] = b if bobj
         end
 
         expect(@group.get_belongsto_filters).to match_array([vm_folder_path] + outdated_belongs_to_filters)
@@ -343,7 +343,7 @@ describe OpsController do
                                                               :role                  => @role.id,
                                                               :filter_expression     => @exp.exp,
                                                               :belongsto             => belongsto_filters,
-                                                              :filters               => {} },
+                                                              :filters               => {}},
                                                  :current => {:deleted_belongsto_filters => outdated_belongs_to_filters})
 
         controller.send(:rbac_group_set_record_vars, @group)
@@ -459,7 +459,7 @@ describe OpsController do
       session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
       allow(controller).to receive(:replace_right_cell)
 
-      post :tree_select, :params => { :id => 'root', :format => :js }
+      post :tree_select, :params => {:id => 'root', :format => :js}
       expect(MiqExpression).to receive(:tag_details)
 
       post :exp_token_pressed, :params => {:id => 'new', :use_filter_expression => "true", :token => 1}
@@ -495,9 +495,9 @@ describe OpsController do
       session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
       allow(controller).to receive(:replace_right_cell)
 
-      post :tree_select, :params => { :id => 'root', :format => :js }
+      post :tree_select, :params => {:id => 'root', :format => :js}
       expect(MiqExpression).to receive(:tag_details).with(nil, {:no_cache => true})
-      post :rbac_group_field_changed, :params => { :id => 'new', :use_filter_expression => "true"}
+      post :rbac_group_field_changed, :params => {:id => 'new', :use_filter_expression => "true"}
     end
 
     it "initializes the group record when switching tabs" do
@@ -558,11 +558,11 @@ describe OpsController do
       MiqGroup.seed
       MiqRegion.seed
       stub_user(:features => :all)
-      @vm_role = FactoryBot.create(:miq_user_role, :features => %w(embedded_automation_manager))
+      @vm_role = FactoryBot.create(:miq_user_role, :features => %w[embedded_automation_manager])
     end
 
     it "the feature list to edit should contain the children roles" do
-      EvmSpecHelper.seed_specific_product_features(%w(everything embedded_automation_manager embedded_configuration_script_source_view))
+      EvmSpecHelper.seed_specific_product_features(%w[everything embedded_automation_manager embedded_configuration_script_source_view])
       sb_hash = {:trees => {:active_tree => :rbac_tree, :typ => 'new'}}
       controller.instance_variable_set(:@sb, sb_hash)
       record = MiqUserRole.new
@@ -587,7 +587,7 @@ describe OpsController do
   describe "::MiqRegion" do
     before do
       EvmSpecHelper.local_miq_server
-      EvmSpecHelper.seed_specific_product_features(%w(ops_rbac))
+      EvmSpecHelper.seed_specific_product_features(%w[ops_rbac])
       root_tenant = Tenant.seed
       MiqUserRole.seed
       MiqGroup.seed
@@ -612,7 +612,7 @@ describe OpsController do
       login_as @u1
       session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
       allow(controller).to receive(:replace_right_cell)
-      post :tree_select, :params => { :id => 'root', :format => :js }
+      post :tree_select, :params => {:id => 'root', :format => :js}
       expect(controller.instance_variable_get(:@groups_count)).to eq(1)
       expect(controller.instance_variable_get(:@tenants_count)).to eq(1)
       expect(controller.instance_variable_get(:@users_count)).to eq(1)
@@ -622,7 +622,7 @@ describe OpsController do
       login_as @u2a
       session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
       allow(controller).to receive(:replace_right_cell)
-      post :tree_select, :params => { :id => 'root', :format => :js }
+      post :tree_select, :params => {:id => 'root', :format => :js}
       expect(controller.instance_variable_get(:@groups_count)).to eq(2)
       expect(controller.instance_variable_get(:@tenants_count)).to eq(1)
       expect(controller.instance_variable_get(:@users_count)).to eq(5)
@@ -662,7 +662,7 @@ describe OpsController do
 
       context 'deleting name and/or password from the form while adding user' do
         let(:params) { {:name => '', :id => 'new', :password => '', :verify => ''} }
-        let(:edit) { {:new => {:name => 'new_user', :password => 'passw', :verify => 'passw'}, :current => edit_curr } }
+        let(:edit) { {:new => {:name => 'new_user', :password => 'passw', :verify => 'passw'}, :current => edit_curr} }
         let(:edit_curr) { {:name => nil, :group => [], :password => nil, :verify => nil} }
 
         it 'sets @edit[:new] and session[:changed] properly' do

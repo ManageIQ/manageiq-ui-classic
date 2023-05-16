@@ -1,10 +1,10 @@
 describe EmsStorageController do
-  include_examples :shared_examples_for_ems_storage_controller, %w(openstack)
+  include_examples :shared_examples_for_ems_storage_controller, %w[openstack]
 
   it_behaves_like "controller with custom buttons"
 
   describe "#check_generic_rbac" do
-    let(:feature)        { MiqProductFeature.find_all_by_identifier(%w(ems_storage_show ems_storage_show_list)) }
+    let(:feature)        { MiqProductFeature.find_all_by_identifier(%w[ems_storage_show ems_storage_show_list]) }
     let(:role)           { FactoryBot.create(:miq_user_role, :miq_product_features => feature) }
     let(:group)          { FactoryBot.create(:miq_group, :miq_user_role => role) }
     let(:user)           { FactoryBot.create(:user, :miq_groups => [group]) }
@@ -12,7 +12,7 @@ describe EmsStorageController do
 
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      EvmSpecHelper.seed_specific_product_features(%w(ems_storage_show ems_storage_show_list))
+      EvmSpecHelper.seed_specific_product_features(%w[ems_storage_show ems_storage_show_list])
       login_as user
     end
 

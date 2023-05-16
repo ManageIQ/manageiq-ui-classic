@@ -69,13 +69,13 @@ class MiqPolicyLogController < ApplicationController
 
   def set_session_data
     super
-    session[:layout]         = @layout
+    session[:layout] = @layout
     session[:miq_policy_log_lastaction] = @lastaction
   end
 
   def breadcrumbs_options
     {
-      :breadcrumbs  => [
+      :breadcrumbs => [
         {:title => _("Control")},
         menu_breadcrumb,
       ].compact,

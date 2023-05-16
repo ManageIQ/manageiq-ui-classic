@@ -4,11 +4,11 @@ module ApplicationHelper
     def javascript_essential_dependencies
       capture do
         concat(javascript_pack_tag('runtime'))
-        concat "\n"
+        concat("\n")
         concat(javascript_pack_tag('shims'))
-        concat "\n"
+        concat("\n")
         concat(javascript_pack_tag('vendor'))
-        concat "\n"
+        concat("\n")
       end
     end
 
@@ -18,10 +18,10 @@ module ApplicationHelper
         concat(javascript_essential_dependencies)
 
         concat(javascript_pack_tag('manageiq-ui-classic/globals.js'))
-        concat "\n"
+        concat("\n")
 
         concat(javascript_pack_tag('manageiq-ui-classic/oldjs.js'))
-        concat "\n"
+        concat("\n")
 
         concat(javascript_common_packs) if common
       end
@@ -35,7 +35,7 @@ module ApplicationHelper
         return if Rails.env.test?
 
         packs.each do |pack|
-          concat "\n"
+          concat("\n")
           concat(javascript_pack_tag(pack))
         end
       end

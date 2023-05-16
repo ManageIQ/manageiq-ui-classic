@@ -24,10 +24,10 @@ class ApplicationHelper::Toolbar::CloudObjectStoreContainersCenter < Application
             N_('Clear Object Storage Containers'),
             :url_parms    => "main_div",
             :send_checked => true,
-            :confirm      => N_("Warning: ALL Objects will be permanently removed from the selected "\
-                             "Object Storage Containers!"),
-            :enabled => false,
-            :onwhen  => "1+"
+            :confirm      => N_("Warning: ALL Objects will be permanently removed from the selected " \
+                                "Object Storage Containers!"),
+            :enabled      => false,
+            :onwhen       => "1+"
           ),
           button(
             :cloud_object_store_container_delete,
@@ -36,34 +36,35 @@ class ApplicationHelper::Toolbar::CloudObjectStoreContainersCenter < Application
             N_('Remove Object Storage Containers from Inventory'),
             :url_parms    => "main_div",
             :send_checked => true,
-            :confirm      => N_("Warning: The selected Object Storage Containers and ALL related Objects will be "\
-                             "permanently removed!"),
-            :enabled => false,
-            :onwhen  => "1+"
+            :confirm      => N_("Warning: The selected Object Storage Containers and ALL related Objects will be " \
+                                "permanently removed!"),
+            :enabled      => false,
+            :onwhen       => "1+"
           ),
         ]
       ),
     ]
   )
   button_group('cloud_object_store_container_policy', [
-    select(
-      :cloud_object_store_container_policy_choice,
-      nil,
-      t = N_('Policy'),
-      t,
-      :enabled => false,
-      :onwhen  => "1+",
-      :items   => [
-        button(
-          :cloud_object_store_container_tag,
-          'pficon pficon-edit fa-lg',
-          N_('Edit tags for the selected items'),
-          N_('Edit Tags'),
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :enabled      => false,
-          :onwhen       => "1+")
-      ]
-    )
-  ])
+                 select(
+                   :cloud_object_store_container_policy_choice,
+                   nil,
+                   t = N_('Policy'),
+                   t,
+                   :enabled => false,
+                   :onwhen  => "1+",
+                   :items   => [
+                     button(
+                       :cloud_object_store_container_tag,
+                       'pficon pficon-edit fa-lg',
+                       N_('Edit tags for the selected items'),
+                       N_('Edit Tags'),
+                       :url_parms    => "main_div",
+                       :send_checked => true,
+                       :enabled      => false,
+                       :onwhen       => "1+"
+                     )
+                   ]
+                 )
+               ])
 end

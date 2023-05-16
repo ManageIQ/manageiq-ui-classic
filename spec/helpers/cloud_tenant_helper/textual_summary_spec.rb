@@ -7,9 +7,9 @@ describe CloudTenantHelper::TextualSummary do
     allow(self).to receive(:textual_authentications).and_return([])
   end
 
-  include_examples "textual_group", "Properties", %i(name description)
+  include_examples "textual_group", "Properties", %i[name description]
 
-  include_examples "textual_group", "Relationships", %i(
+  include_examples "textual_group", "Relationships", %i[
     ems_cloud
     instances images
     cloud_object_store_containers
@@ -24,7 +24,7 @@ describe CloudTenantHelper::TextualSummary do
     floating_ips
     network_ports
     custom_button_events
-  )
+  ]
 
   include_examples "textual_group", "Quotas", []
 end

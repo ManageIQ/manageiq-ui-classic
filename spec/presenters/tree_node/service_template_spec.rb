@@ -1,11 +1,11 @@
 describe TreeNode::ServiceTemplate do
   subject { described_class.new(object, nil, nil) }
   let(:tenant) { FactoryBot.create(:tenant) }
-  %i(
+  %i[
     service_template
     service_template_ansible_tower
     service_template_orchestration
-  ).each do |factory|
+  ].each do |factory|
     context(factory.to_s.camelize) do
       let(:object) { FactoryBot.create(factory, :name => 'foo', :tenant => tenant, :service_type => stype) }
       let(:stype) { 'atomic' }

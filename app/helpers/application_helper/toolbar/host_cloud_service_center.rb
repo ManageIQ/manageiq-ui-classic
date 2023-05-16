@@ -13,7 +13,8 @@ class ApplicationHelper::Toolbar::HostCloudServiceCenter < ApplicationHelper::To
         :confirm      => N_("Toggle Scheduling for this Cloud Service?"),
         :url_parms    => "main_div",
         :send_checked => true,
-        :enabled      => true),
-    ]),
-  ])
+        :enabled      => true
+      ),
+    ]
+  ),])
 end

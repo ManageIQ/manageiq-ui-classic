@@ -10,11 +10,9 @@ class ApplicationController
     :parent_method,
     :association,
     :view_suffix,
-
     :row_button,
     :menu_click,
     :sb_controller,
-
     :embedded,
     :showlinks,
     :policy_sim,

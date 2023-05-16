@@ -21,10 +21,12 @@ class MiqAlertSetController < ApplicationController
 
   def alert_profile_edit_reset
     alert_profile_build_edit_screen
-    javascript_redirect(:action        => 'edit',
-                        :id            => params[:id],
-                        :flash_msg     => _("All changes have been reset"),
-                        :flash_warning => true) if params[:button] == "reset"
+    if params[:button] == "reset"
+      javascript_redirect(:action        => 'edit',
+                          :id            => params[:id],
+                          :flash_msg     => _("All changes have been reset"),
+                          :flash_warning => true)
+    end
   end
 
   def alert_profile_edit_save_add
@@ -44,6 +46,15 @@ class MiqAlertSetController < ApplicationController
     true
   end
 
+  # Get information for an alert profile
+  def show
+    super
+    @alert_profile = @record
+    aa = @alert_profile.get_assigned_tos
+    @alert_profile_tag = Classification.find(aa[:tags].first.first.parent_id) unless aa[:tags].empty?
+    @alert_profile_alerts = @alert_profile.miq_alerts.sort_by { |a| a.description.downcase }
+  end
+
   def new
     alert_profile_edit_reset
   end
@@ -55,6 +66,7 @@ class MiqAlertSetController < ApplicationController
       alert_profile_edit_reset
     when 'move_right', 'move_left', 'move_allleft'
       return unless alert_profile_edit_load_edit
+
       alert_profile_edit_move
       @changed = (@edit[:new] != @edit[:current])
       render :update do |page|
@@ -99,10 +111,12 @@ class MiqAlertSetController < ApplicationController
       end
     when "reset", nil # Reset or first time in
       alert_profile_build_assign_screen
-      javascript_redirect(:action        => 'edit_assignment',
-                          :id            => params[:id],
-                          :flash_msg     => _("All changes have been reset"),
-                          :flash_warning => true) if params[:button] == "reset"
+      if params[:button] == "reset"
+        javascript_redirect(:action        => 'edit_assignment',
+                            :id            => params[:id],
+                            :flash_msg     => _("All changes have been reset"),
+                            :flash_warning => true)
+      end
     end
   end
 
@@ -145,15 +159,6 @@ class MiqAlertSetController < ApplicationController
     end
 
     send_button_changes
-  end
-
-  # Get information for an alert profile
-  def show
-    super
-    @alert_profile = @record
-    aa = @alert_profile.get_assigned_tos
-    @alert_profile_tag = Classification.find(aa[:tags].first.first.parent_id) unless aa[:tags].empty?
-    @alert_profile_alerts = @alert_profile.miq_alerts.sort_by { |a| a.description.downcase }
   end
 
   private
@@ -255,7 +260,7 @@ class MiqAlertSetController < ApplicationController
         @assign[:new][:objects] = aa[:objects].collect(&:id).sort!
       end
     elsif !aa[:tags].empty?                                   # Tags are assigned
-      @assign[:new][:assign_to] = aa[:tags].first.last + "-tags"
+      @assign[:new][:assign_to] = "#{aa[:tags].first.last}-tags"
       @assign[:new][:cat] = aa[:tags].first.first.parent_id
       @assign[:new][:objects] = aa[:tags].collect { |o| o.first.id }
     end
@@ -289,7 +294,7 @@ class MiqAlertSetController < ApplicationController
              else
                _("Adding a new Alert Profile")
              end
-    @layout =  "miq_alert_set"
+    @layout = "miq_alert_set"
     @lastaction = session[:miq_alert_set_lastaction]
     @display = session[:miq_alert_set_display]
     @current_page = session[:miq_alert_set_current_page]

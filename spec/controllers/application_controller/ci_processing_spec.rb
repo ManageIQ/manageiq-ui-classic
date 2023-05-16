@@ -25,18 +25,21 @@ describe ApplicationController do
       it 'processes the operation' do
         controller.instance_variable_set(
           :@_params,
-          :miq_grid_checks => "#{vm1.id}, #{vm3.id}, #{vm2.id}")
+          :miq_grid_checks => "#{vm1.id}, #{vm3.id}, #{vm2.id}"
+        )
         # calling 'vm_button_action' creates a proc calling 'process_objects'
         expect(controller).to receive(:javascript_flash).with({
-          :text => "Smartstate Analysis action does not apply to selected items",
-          :severity => :error,
-          :scroll_top => true })
+                                                                :text       => "Smartstate Analysis action does not apply to selected items",
+                                                                :severity   => :error,
+                                                                :scroll_top => true
+                                                              })
         process_proc = controller.send(:vm_button_action)
         controller.send(
           :generic_button_operation,
           'scan',
           "Smartstate Analysis",
-          process_proc)
+          process_proc
+        )
       end
     end
 
@@ -109,7 +112,8 @@ describe ApplicationController do
           :generic_button_operation,
           'reset',
           "Reset",
-          process_proc)
+          process_proc
+        )
       end
     end
 
@@ -127,7 +131,8 @@ describe ApplicationController do
           :generic_button_operation,
           'retire_now',
           "Retirement",
-          process_proc)
+          process_proc
+        )
       end
     end
   end
@@ -194,10 +199,10 @@ describe ApplicationController do
 
         it "invokes process_tasks on container class" do
           expect(CloudObjectStoreContainer).to receive(:process_tasks).with({
-            :ids    => [container1.id, container2.id],
-            :task   => 'cloud_object_store_container_delete',
-            :userid => anything
-          })
+                                                                              :ids    => [container1.id, container2.id],
+                                                                              :task   => 'cloud_object_store_container_delete',
+                                                                              :userid => anything
+                                                                            })
           controller.send(:process_objects, [container1.id, container2.id], 'cloud_object_store_container_delete',
                           'delete')
         end
@@ -205,10 +210,10 @@ describe ApplicationController do
         it "invokes process_tasks overall (when selected)" do
           controller.params[:miq_grid_checks] = "#{container1.id}, #{container2.id}"
           expect(CloudObjectStoreContainer).to receive(:process_tasks).with({
-            :ids    => [container1.id, container2.id],
-            :task   => 'cloud_object_store_container_delete',
-            :userid => anything
-          })
+                                                                              :ids    => [container1.id, container2.id],
+                                                                              :task   => 'cloud_object_store_container_delete',
+                                                                              :userid => anything
+                                                                            })
           controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete")
         end
 
@@ -256,20 +261,20 @@ describe ApplicationController do
 
         it "invokes process_tasks on container class" do
           expect(CloudObjectStoreContainer).to receive(:process_tasks).with({
-            :ids    => [container1.id],
-            :task   => 'cloud_object_store_container_delete',
-            :userid => anything
-          })
+                                                                              :ids    => [container1.id],
+                                                                              :task   => 'cloud_object_store_container_delete',
+                                                                              :userid => anything
+                                                                            })
           controller.send(:process_objects, [container1.id], 'cloud_object_store_container_delete', 'delete')
         end
 
         it "invokes process_tasks overall" do
           controller.params[:id] = container1.id
           expect(CloudObjectStoreContainer).to receive(:process_tasks).with({
-            :ids    => [container1.id],
-            :task   => 'cloud_object_store_container_delete',
-            :userid => anything
-          })
+                                                                              :ids    => [container1.id],
+                                                                              :task   => 'cloud_object_store_container_delete',
+                                                                              :userid => anything
+                                                                            })
           controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete")
         end
 
@@ -328,20 +333,20 @@ describe ApplicationController do
         it "invokes process_tasks on container class" do
           controller.params[:miq_grid_checks] = "#{object1.id}, #{object2.id}"
           expect(CloudObjectStoreObject).to receive(:process_tasks).with({
-            :ids    => [object1.id, object2.id],
-            :task   => "cloud_object_store_object_delete",
-            :userid => anything
-          })
+                                                                           :ids    => [object1.id, object2.id],
+                                                                           :task   => "cloud_object_store_object_delete",
+                                                                           :userid => anything
+                                                                         })
           controller.send(:process_objects, [object1.id, object2.id], "cloud_object_store_object_delete", "delete")
         end
 
         it "invokes process_tasks overall (when selected)" do
           controller.params[:miq_grid_checks] = "#{object1.id}, #{object2.id}"
           expect(CloudObjectStoreObject).to receive(:process_tasks).with({
-            :ids    => [object1.id, object2.id],
-            :task   => "cloud_object_store_object_delete",
-            :userid => anything
-          })
+                                                                           :ids    => [object1.id, object2.id],
+                                                                           :task   => "cloud_object_store_object_delete",
+                                                                           :userid => anything
+                                                                         })
           controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
         end
 
@@ -413,20 +418,20 @@ describe ApplicationController do
         it "invokes process_tasks on object class" do
           controller.params[:id] = object1.id.to_s
           expect(CloudObjectStoreObject).to receive(:process_tasks).with({
-            :ids    => [object1.id.to_s],
-            :task   => "cloud_object_store_object_delete",
-            :userid => anything
-          })
+                                                                           :ids    => [object1.id.to_s],
+                                                                           :task   => "cloud_object_store_object_delete",
+                                                                           :userid => anything
+                                                                         })
           controller.send(:process_objects, [object1.id.to_s], "cloud_object_store_object_delete", "delete")
         end
 
         it "invokes process_tasks overall" do
           controller.params[:id] = object1.id.to_s
           expect(CloudObjectStoreObject).to receive(:process_tasks).with({
-            :ids    => [object1.id],
-            :task   => "cloud_object_store_object_delete",
-            :userid => anything
-          })
+                                                                           :ids    => [object1.id],
+                                                                           :task   => "cloud_object_store_object_delete",
+                                                                           :userid => anything
+                                                                         })
           controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
         end
 
@@ -485,10 +490,10 @@ describe ApplicationController do
 
         it "invokes process_tasks on container class" do
           expect(CloudObjectStoreContainer).to receive(:process_tasks).with({
-            :ids    => [container1.id, container2.id],
-            :task   => 'cloud_object_store_container_clear',
-            :userid => anything
-          })
+                                                                              :ids    => [container1.id, container2.id],
+                                                                              :task   => 'cloud_object_store_container_clear',
+                                                                              :userid => anything
+                                                                            })
           controller.send(:process_objects, [container1.id, container2.id], 'cloud_object_store_container_clear',
                           'clear')
         end
@@ -496,10 +501,10 @@ describe ApplicationController do
         it "invokes process_tasks overall (when selected)" do
           controller.params[:miq_grid_checks] = "#{container1.id}, #{container2.id}"
           expect(CloudObjectStoreContainer).to receive(:process_tasks).with({
-            :ids    => [container1.id, container2.id],
-            :task   => 'cloud_object_store_container_clear',
-            :userid => anything
-          })
+                                                                              :ids    => [container1.id, container2.id],
+                                                                              :task   => 'cloud_object_store_container_clear',
+                                                                              :userid => anything
+                                                                            })
           controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
         end
 
@@ -553,20 +558,20 @@ describe ApplicationController do
 
         it "invokes process_tasks on container class" do
           expect(CloudObjectStoreContainer).to receive(:process_tasks).with({
-            :ids    => [container1.id],
-            :task   => 'cloud_object_store_container_clear',
-            :userid => anything
-          })
+                                                                              :ids    => [container1.id],
+                                                                              :task   => 'cloud_object_store_container_clear',
+                                                                              :userid => anything
+                                                                            })
           controller.send(:process_objects, [container1.id], 'cloud_object_store_container_clear', 'clear')
         end
 
         it "invokes process_tasks overall" do
           controller.params[:id] = container1.id
           expect(CloudObjectStoreContainer).to receive(:process_tasks).with({
-            :ids    => [container1.id],
-            :task   => 'cloud_object_store_container_clear',
-            :userid => anything
-          })
+                                                                              :ids    => [container1.id],
+                                                                              :task   => 'cloud_object_store_container_clear',
+                                                                              :userid => anything
+                                                                            })
           controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
         end
 
@@ -598,7 +603,7 @@ describe ApplicationController do
   it "Certain actions should not be allowed for a MiqTemplate record" do
     template = FactoryBot.create(:template_vmware)
     controller.params = {:id => template.id}
-    actions = %i(vm_right_size vm_reconfigure)
+    actions = %i[vm_right_size vm_reconfigure]
     actions.each do |action|
       expect(controller).to receive(:render)
       controller.send(action)
@@ -612,7 +617,7 @@ describe ApplicationController do
     login_as FactoryBot.create(:user, :features => feature)
     vm = FactoryBot.create(:vm_vmware, :ext_management_system => FactoryBot.create(:ems_infra))
     controller.params = {:id => vm.id}
-    actions = %i(vm_right_size vm_reconfigure)
+    actions = %i[vm_right_size vm_reconfigure]
     actions.each do |action|
       expect(controller).to receive(:render)
       controller.send(action)
@@ -782,7 +787,7 @@ describe HostController do
     it "renders show_item" do
       controller.instance_variable_set(:@breadcrumbs, [])
       allow(controller).to receive(:get_view)
-      get :guest_applications, :params => { :id => @host.id, :show => @guest_application.id }
+      get :guest_applications, :params => {:id => @host.id, :show => @guest_application.id}
       expect(response.status).to eq(200)
       expect(response).to render_template('host/show')
       expect(assigns(:breadcrumbs)).to eq([{:name => "#{@host.name} (Packages)",
@@ -803,7 +808,7 @@ describe HostController do
     it "renders show_details" do
       controller.instance_variable_set(:@breadcrumbs, [])
       allow(controller).to receive(:get_view)
-      get :guest_applications, :params => { :id => @host.id }
+      get :guest_applications, :params => {:id => @host.id}
       expect(response.status).to eq(200)
       expect(response).to render_template('host/show')
       expect(assigns(:breadcrumbs)).to eq([{:name => "#{@host.name} (Packages)",
@@ -872,8 +877,8 @@ describe HostController do
 
     it "when the vm_or_template supports scan, returns true" do
       vm = FactoryBot.create(:vm_vmware,
-                              :ext_management_system => FactoryBot.create(:ems_openstack_infra),
-                              :storage               => FactoryBot.create(:storage))
+                             :ext_management_system => FactoryBot.create(:ems_openstack_infra),
+                             :storage               => FactoryBot.create(:storage))
       controller.params = {:miq_grid_checks => vm.id.to_s, :display => 'vms'}
       process_proc = controller.send(:vm_button_action)
       expect(process_proc).to receive(:call)
@@ -897,8 +902,8 @@ describe MiqTemplateController do
       allow(controller).to receive(:role_allows?).and_return(true)
       allow(controller).to receive(:drop_breadcrumb)
       template = FactoryBot.create(:template,
-                                    :ext_management_system => FactoryBot.create(:ems_openstack_infra),
-                                    :storage               => FactoryBot.create(:storage))
+                                   :ext_management_system => FactoryBot.create(:ems_openstack_infra),
+                                   :storage               => FactoryBot.create(:storage))
       controller.params = {:miq_grid_checks => template.id.to_s,
                            :pressed         => 'miq_template_set_ownership'}
       expect(controller).to receive(:javascript_redirect).with({
@@ -907,7 +912,7 @@ describe MiqTemplateController do
                                                                  :rec_ids    => [template.id],
                                                                  :escape     => false
                                                                })
-      controller.send('set_ownership')
+      controller.send(:set_ownership)
     end
   end
 end
@@ -942,7 +947,7 @@ describe VmOrTemplateController do
       redirect_details = {
         :redirect => {
           :controller => 'miq_request',
-          :action => 'show_list'
+          :action     => 'show_list'
         }
       }
       controller.send(:generic_button_operation, 'retire_now', "Retirement", process_proc, redirect_details)
@@ -985,7 +990,7 @@ describe OrchestrationStackController do
       orchestration_stack_deleted.destroy
       controller.params = {:miq_grid_checks => id.to_s} # Orchestration Stack id that doesn't exist
       expect(controller).to receive(:show_list)
-      controller.send('orchestration_stack_delete')
+      controller.send(:orchestration_stack_delete)
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first).to eq(:message => "Error during deletion: Can't access selected records",
                                          :level   => :error)
@@ -994,7 +999,7 @@ describe OrchestrationStackController do
     it "should render success flash message if OrchestrationStack deletion was initiated" do
       controller.params = {:miq_grid_checks => orchestration_stack.id.to_s} # Orchestration Stack id that exists
       expect(controller).to receive(:show_list)
-      controller.send('orchestration_stack_delete')
+      controller.send(:orchestration_stack_delete)
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first).to eq(:message => "Delete initiated for 1 Orchestration Stacks from the ManageIQ Database",
                                          :level   => :success)
@@ -1015,7 +1020,8 @@ describe EmsCloudController do
       it 'queues deletion of selected flavors' do
         controller.instance_variable_set(
           :@_params,
-          :miq_grid_checks => "#{flavor.id}")
+          :miq_grid_checks => flavor.id.to_s
+        )
         expect(controller).to receive(:delete_flavors).and_call_original
         expect_any_instance_of(Flavor).to receive(:delete_flavor_queue)
         post :button, :params => {:pressed => 'flavor_delete', :miq_grid_checks => flavor.id}

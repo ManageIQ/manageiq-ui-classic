@@ -13,7 +13,7 @@ describe ApplicationHelper::Button::Basic do
     let(:user_alpha)  { FactoryBot.create(:user, :miq_groups => [group_alpha]) }
 
     before do
-      EvmSpecHelper.seed_specific_product_features(%w(rbac_tenant_manage_quotas))
+      EvmSpecHelper.seed_specific_product_features(%w[rbac_tenant_manage_quotas])
       Tenant.seed
 
       @view_context = setup_view_context_with_sandbox({})

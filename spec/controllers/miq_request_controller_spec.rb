@@ -4,7 +4,7 @@ describe MiqRequestController do
 
     it "when called with a task id" do
       expect(MiqRequestTask).to receive(:post_install_callback).with("12345").once
-      get 'post_install_callback', :params => { :task_id => 12345 }
+      get 'post_install_callback', :params => {:task_id => 12345}
       expect(response.body).to be_blank
     end
 
@@ -81,7 +81,7 @@ describe MiqRequestController do
     context "approval_state" do
       let(:options) { {:applied_states => %w[state_1 state_2]} }
 
-      it { is_expected.to include [:with_approval_state, %w(state_1 state_2)] }
+      it { is_expected.to include [:with_approval_state, %w[state_1 state_2]] }
     end
 
     context "type" do
@@ -127,13 +127,13 @@ describe MiqRequestController do
     end
 
     it "when edit request button is pressed" do
-      post :button, :params => { :pressed => "miq_request_edit", :id => @miq_request.id, :format => :js }
+      post :button, :params => {:pressed => "miq_request_edit", :id => @miq_request.id, :format => :js}
       expect(response.status).to eq(200)
       expect(response.body).to_not be_empty
     end
 
     it "when copy request button is pressed" do
-      post :button, :params => { :pressed => "miq_request_copy", :id => @miq_request.id, :format => :js }
+      post :button, :params => {:pressed => "miq_request_copy", :id => @miq_request.id, :format => :js}
       expect(response.status).to eq(200)
       expect(response.body).to_not be_empty
     end
@@ -149,7 +149,7 @@ describe MiqRequestController do
 
     it 'renders GTL with MiqRequest model' do
       expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
-        :model_name      => 'MiqRequest',
+        :model_name => 'MiqRequest'
       )
       get :show_list
     end
@@ -160,33 +160,33 @@ describe MiqRequestController do
     let(:user2) { create_user_in_other_region(user1.userid) }
     let(:miq_request1) do
       FactoryBot.create(:miq_provision_request, :with_approval,
-                         :source_type    => 'VmOrTemplate',
-                         :source_id      => template.id,
-                         :created_on     => 2.days.ago,
-                         :requester      => user1,
-                         :approval_state => "denied",
-                         :request_type   => "template",
-                         :reason         => "abcdef")
+                        :source_type    => 'VmOrTemplate',
+                        :source_id      => template.id,
+                        :created_on     => 2.days.ago,
+                        :requester      => user1,
+                        :approval_state => "denied",
+                        :request_type   => "template",
+                        :reason         => "abcdef")
     end
     let(:miq_request2) do
       FactoryBot.create(:miq_provision_request, :with_approval,
-                         :source_type    => 'VmOrTemplate',
-                         :source_id      => template.id,
-                         :created_on     => 10.days.ago,
-                         :requester      => FactoryBot.create(:user),
-                         :approval_state => "approved",
-                         :request_type   => "clone_to_vm",
-                         :reason         => "abc")
+                        :source_type    => 'VmOrTemplate',
+                        :source_id      => template.id,
+                        :created_on     => 10.days.ago,
+                        :requester      => FactoryBot.create(:user),
+                        :approval_state => "approved",
+                        :request_type   => "clone_to_vm",
+                        :reason         => "abc")
     end
     let(:miq_request3) do
       FactoryBot.create(:miq_provision_request, :with_approval,
-                         :source_type    => 'VmOrTemplate',
-                         :source_id      => template.id,
-                         :created_on     => 45.days.ago,
-                         :requester      => user2,
-                         :approval_state => "pending_approval",
-                         :request_type   => "clone_to_template",
-                         :reason         => "cdef")
+                        :source_type    => 'VmOrTemplate',
+                        :source_id      => template.id,
+                        :created_on     => 45.days.ago,
+                        :requester      => user2,
+                        :approval_state => "pending_approval",
+                        :request_type   => "clone_to_template",
+                        :reason         => "cdef")
     end
 
     subject do
@@ -231,7 +231,7 @@ describe MiqRequestController do
     end
 
     context 'filters by reason' do
-      %w(*cd cd* *cde*).each do |reason|
+      %w[*cd cd* *cde*].each do |reason|
         context "'#{reason}'" do
           let(:scope) { [[:with_reason_like, reason]] }
 
@@ -278,13 +278,13 @@ describe MiqRequestController do
     let(:service) { FactoryBot.create(:service_orchestration).tap { |service| service.add_resource!(stack) } }
     let(:request) do
       FactoryBot.create(:service_retire_request,
-                         :type      => 'ServiceRetireRequest',
-                         :requester => @user,
-                         :options   => {:src_ids => [service.id]})
+                        :type      => 'ServiceRetireRequest',
+                        :requester => @user,
+                        :options   => {:src_ids => [service.id]})
     end
     # let(:request) { FactoryBot.create(:miq_service_retirement_request, :options => {:src_ids => [service.id]}) }
 
-    let(:payload) { { :model_name => 'Vm', :parent_id => service.id.to_s, additional_key => additional_val } }
+    let(:payload) { {:model_name => 'Vm', :parent_id => service.id.to_s, additional_key => additional_val} }
     let(:additional_val) do
       {
         :model             => 'Vm',
@@ -317,7 +317,7 @@ describe MiqRequestController do
         expect(response.status).to eq(200)
 
         # Verify Angular got correct VMs when sending the payload as set by previous test.
-        expect(JSON.parse(response.body).dig('data', 'rows').map { |row| row['id'] }).to eq([vm1.id.to_s])
+        expect(response.parsed_body.dig('data', 'rows').pluck('id')).to eq([vm1.id.to_s])
       end
     end
   end
@@ -337,7 +337,7 @@ describe MiqRequestController do
                         :options   => {:src_ids => [server1.id]})
     end
 
-    let(:payload) { { :model_name => 'PhysicalServer', additional_key => additional_val } }
+    let(:payload) { {:model_name => 'PhysicalServer', additional_key => additional_val} }
     let(:additional_val) do
       {
         :model       => 'PhysicalServer',
@@ -368,7 +368,7 @@ describe MiqRequestController do
         expect(response.status).to eq(200)
 
         # Verify Angular got correct PhysicalServers when sending the payload as set by previous test.
-        expect(JSON.parse(response.body).dig('data', 'rows').map { |row| row['id'] }).to eq([server1.id.to_s])
+        expect(response.parsed_body.dig('data', 'rows').pluck('id')).to eq([server1.id.to_s])
       end
     end
   end
@@ -383,7 +383,7 @@ describe MiqRequestController do
     end
 
     it "when the edit button is pressed the request is displayed" do
-      get :show, :params => { :id => @miq_request.id }
+      get :show, :params => {:id => @miq_request.id}
       expect(response.status).to eq(200)
       expect(response.body).to_not be_empty
     end
@@ -393,11 +393,11 @@ describe MiqRequestController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      session[:settings] = {:views   => {:miq_request => 'grid'}}
+      session[:settings] = {:views => {:miq_request => 'grid'}}
     end
 
     it "miq_request/show_list sets @layout='miq_request_vm' when redirected via foreman provisioning" do
-      post :show_list, :params => { :typ => "configured_systems" }
+      post :show_list, :params => {:typ => "configured_systems"}
       layout = controller.instance_variable_get(:@layout)
       expect(layout).to eq("miq_request_vm")
     end
@@ -417,7 +417,7 @@ describe MiqRequestController do
           :selectedType   => 'all',
           :timePeriods    => array_including(hash_including(:label => 'Last 24 Hours', :value => 1)),
           :selectedPeriod => 7,
-          :reasonText     => nil,
+          :reasonText     => nil
         )
       )
     end

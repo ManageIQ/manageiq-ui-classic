@@ -6,12 +6,12 @@ describe 'routes for CatalogController' do
   it_behaves_like 'A controller that has download_data routes'
   it_behaves_like 'A controller that has explorer routes'
 
-  %w(
+  %w[
     download_data
     explorer
     ot_edit
     show
-  ).each do |path|
+  ].each do |path|
     describe "##{path}" do
       it "routes with GET" do
         expect(get("/#{controller_name}/#{path}")).to route_to("#{controller_name}##{path}")
@@ -19,7 +19,7 @@ describe 'routes for CatalogController' do
     end
   end
 
-  %w(
+  %w[
     ab_group_reorder
     accordion_select
     ae_tree_select
@@ -56,7 +56,7 @@ describe 'routes for CatalogController' do
     x_button
     x_history
     x_show
-  ).each do |path|
+  ].each do |path|
     describe "##{path}" do
       it "routes with POST" do
         expect(post("/#{controller_name}/#{path}")).to route_to("#{controller_name}##{path}")

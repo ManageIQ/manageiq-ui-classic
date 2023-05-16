@@ -32,7 +32,7 @@ describe ReportController do
         expect(controller).to receive(:replace_right_cell)
 
         expect(MiqGroup).to receive(:find_by).and_return(user.current_group)
-        user.current_group[:settings] = { "report_menus" => 'foo' }
+        user.current_group[:settings] = {"report_menus" => 'foo'}
 
         controller.menu_update
 

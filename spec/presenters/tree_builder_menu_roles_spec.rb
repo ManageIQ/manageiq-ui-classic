@@ -12,7 +12,7 @@ describe TreeBuilderMenuRoles do
   end
 
   let(:sandbox) do
-    { :rpt_menu => rpt_menu }
+    {:rpt_menu => rpt_menu}
   end
 
   let(:instance) { TreeBuilderMenuRoles.new("menu_roles_tree", sandbox, true, :role_choice => "cloud-execs") }

@@ -84,7 +84,7 @@ class EmsClusterController < ApplicationController
       single_delete_redirect
     elsif params[:pressed].ends_with?("_edit") ||
           ["#{pfx}_miq_request_new", "#{pfx}_clone", "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed]) ||
-          params[:pressed] == 'vm_rename' && @flash_array.nil?
+          (params[:pressed] == 'vm_rename' && @flash_array.nil?)
       render_or_redirect_partial(pfx)
     elsif @refresh_div == "main_div" && @lastaction == "show_list"
       replace_gtl_main_div

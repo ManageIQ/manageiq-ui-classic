@@ -24,7 +24,7 @@ describe MiqAeClassController do
       id = "aec-#{cls.id}"
       fq_name = cls.fqname
       controller.send(:set_right_cell_text, id, cls)
-      expect(assigns(:sb)[:namespace_path]).to eq(fq_name.gsub!(%r{\/}, " / "))
+      expect(assigns(:sb)[:namespace_path]).to eq(fq_name.gsub!(%r{/}, " / "))
 
       id = "root"
       fq_name = ""
@@ -64,7 +64,7 @@ describe MiqAeClassController do
       FactoryBot.create(:miq_ae_domain, :name => "test2", :parent => nil, :priority => 2)
       FactoryBot.create(:miq_ae_domain, :name => "test3", :parent => nil, :priority => 3)
       FactoryBot.create(:miq_ae_domain, :name => "test4", :parent => nil, :priority => 4)
-      order = %w(test3 test2 test4 test1)
+      order = %w[test3 test2 test4 test1]
       edit = {
         :new     => {:domain_order => order},
         :key     => "priority__edit",
@@ -240,7 +240,7 @@ describe MiqAeClassController do
              :display_name => "some name",
              :name         => "some_name",
              :fqname       => "fqname",
-             :created_on   => Time.now,
+             :created_on   => Time.zone.now,
              :updated_on   => Time.current,
              :updated_by   => "some_user",
              :domain       => miq_ae_domain)
@@ -253,7 +253,7 @@ describe MiqAeClassController do
              :inputs       => [],
              :name         => "some_name",
              :fqname       => "fqname",
-             :created_on   => Time.now,
+             :created_on   => Time.zone.now,
              :updated_on   => Time.current,
              :updated_by   => "some_user",
              :domain       => miq_ae_domain)
@@ -291,14 +291,14 @@ describe MiqAeClassController do
                                          :active_tree => :ae_tree,
                                          :trees       => {:ae_tree => {:active_node => node}})
         controller.send(:get_node_info, node)
-        expect(assigns(:sb)[:namespace_path]).to eq(ns1.fqname.gsub!(%r{\/}, " / "))
+        expect(assigns(:sb)[:namespace_path]).to eq(ns1.fqname.gsub!(%r{/}, " / "))
       end
     end
 
     describe "#get_instance_node_info" do
       context "when record does not exist" do
         it "sets active node back to root" do
-          id = %w(aei some_id)
+          id = %w[aei some_id]
           controller.instance_variable_set(:@sb,
                                            :active_tree => :ae_tree,
                                            :trees       => {:ae_tree => {:active_node => "aei-some_id"}})
@@ -331,7 +331,7 @@ describe MiqAeClassController do
     describe "#get_class_node_info" do
       context "when record does not exist" do
         it "sets active node back to root" do
-          id = %w(aec some_id)
+          id = %w[aec some_id]
           controller.instance_variable_set(:@sb,
                                            :active_tree => :ae_tree,
                                            :trees       => {:ae_tree => {:active_node => "aec-some_id"}})
@@ -363,7 +363,7 @@ describe MiqAeClassController do
     describe "#get_method_node_info" do
       context "when record does not exist" do
         it "sets active node back to root" do
-          id = %w(aem some_id)
+          id = %w[aem some_id]
           controller.instance_variable_set(:@sb,
                                            :active_tree => :ae_tree,
                                            :trees       => {:ae_tree => {:active_node => "aem-some_id"}})
@@ -522,12 +522,12 @@ describe MiqAeClassController do
         :ae_class_id => @cls.id,
         :new_field   => {},
         :new         => {
-          :name         => "method01",
-          :display_name => nil,
+          :name             => "method01",
+          :display_name     => nil,
           :embedded_methods => [],
-          :fields       => [field, field],
-          :scope        => "instance",
-          :language     => "ruby"
+          :fields           => [field, field],
+          :scope            => "instance",
+          :language         => "ruby"
         }
       }
       controller.params = {:button => "add"}
@@ -542,10 +542,10 @@ describe MiqAeClassController do
       ns = FactoryBot.create(:miq_ae_namespace)
       @cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id)
       @cls.ae_fields << FactoryBot.create(:miq_ae_field,
-                                           :name          => 'fred',
-                                           :class_id      => @cls.id,
-                                           :default_value => "Wilma",
-                                           :priority      => 1)
+                                          :name          => 'fred',
+                                          :class_id      => @cls.id,
+                                          :default_value => "Wilma",
+                                          :priority      => 1)
       @cls.save
       @method = FactoryBot.create(:miq_ae_method, :name => "method01", :scope => "class",
         :language => "ruby", :class_id => @cls.id, :data => "exit MIQ_OK", :location => "inline")
@@ -565,12 +565,12 @@ describe MiqAeClassController do
         :ae_class_id      => @cls.id,
         :new_field        => {},
         :new              => {
-          :name     => @method.name,
-          :language => 'ruby',
-          :scope    => 'instance',
+          :name             => @method.name,
+          :language         => 'ruby',
+          :scope            => 'instance',
           :embedded_methods => [],
-          :location => 'inline',
-          :fields   => [field]
+          :location         => 'inline',
+          :fields           => [field]
         }
       }
       controller.params = {:button => "save", :id => @method.id}
@@ -722,9 +722,9 @@ describe MiqAeClassController do
       stub_user(:features => :all)
       domain = FactoryBot.create(:miq_ae_domain, :tenant => Tenant.seed)
       @namespace = FactoryBot.create(:miq_ae_namespace,
-                                      :name        => "foo_namespace",
-                                      :description => "foo_description",
-                                      :parent      => domain)
+                                     :name        => "foo_namespace",
+                                     :description => "foo_description",
+                                     :parent      => domain)
       session[:edit] = {
         :ae_ns_id => @namespace.id,
         :typ      => "MiqAeNamespace",
@@ -788,17 +788,17 @@ describe MiqAeClassController do
       ns = FactoryBot.create(:miq_ae_namespace)
       cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id)
       field1 = FactoryBot.create(:miq_ae_field,
-                                  "aetype"   => "attribute",
-                                  "datatype" => "string",
-                                  "name"     => "name01",
-                                  "class_id" => cls.id,
-                                  "priority" => 1)
+                                 "aetype"   => "attribute",
+                                 "datatype" => "string",
+                                 "name"     => "name01",
+                                 "class_id" => cls.id,
+                                 "priority" => 1)
       field2 = FactoryBot.create(:miq_ae_field,
-                                  "aetype"   => "attribute",
-                                  "datatype" => "string",
-                                  "name"     => "name02",
-                                  "class_id" => cls.id,
-                                  "priority" => 2)
+                                 "aetype"   => "attribute",
+                                 "datatype" => "string",
+                                 "name"     => "name02",
+                                 "class_id" => cls.id,
+                                 "priority" => 2)
       field3 = {"aetype"   => "attribute",
                 "datatype" => "string",
                 "name"     => "name03"}
@@ -816,17 +816,17 @@ describe MiqAeClassController do
       ns = FactoryBot.create(:miq_ae_namespace, :name => 'foo')
       @cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id)
       FactoryBot.create(:miq_ae_field,
-                         :aetype   => "attribute",
-                         :datatype => "string",
-                         :name     => "name01",
-                         :class_id => @cls.id,
-                         :priority => 1)
+                        :aetype   => "attribute",
+                        :datatype => "string",
+                        :name     => "name01",
+                        :class_id => @cls.id,
+                        :priority => 1)
       FactoryBot.create(:miq_ae_field,
-                         :aetype   => "attribute",
-                         :datatype => "string",
-                         :name     => "name02",
-                         :class_id => @cls.id,
-                         :priority => 2)
+                        :aetype   => "attribute",
+                        :datatype => "string",
+                        :name     => "name02",
+                        :class_id => @cls.id,
+                        :priority => 2)
       stub_user(:features => %w[miq_ae_field_seq])
     end
 
@@ -864,12 +864,12 @@ describe MiqAeClassController do
       expect(controller).to receive(:reload_trees_by_presenter).with(
         instance_of(ExplorerPresenter),
         array_including(
-          instance_of(TreeBuilderAeClass),
+          instance_of(TreeBuilderAeClass)
         )
       )
       expect(controller).to receive(:render)
 
-      controller.send(:replace_right_cell, :replace_trees => %i(ae))
+      controller.send(:replace_right_cell, :replace_trees => %i[ae])
     end
   end
 
@@ -912,12 +912,12 @@ describe MiqAeClassController do
       ns = FactoryBot.create(:miq_ae_namespace)
       cls = FactoryBot.create(:miq_ae_class, :namespace_id => ns.id, :name => "foo_cls")
       method = FactoryBot.create(:miq_ae_method,
-                                  :name     => "method01",
-                                  :scope    => "class",
-                                  :language => "ruby",
-                                  :class_id => cls.id,
-                                  :data     => "exit MIQ_OK",
-                                  :location => "inline")
+                                 :name     => "method01",
+                                 :scope    => "class",
+                                 :language => "ruby",
+                                 :class_id => cls.id,
+                                 :data     => "exit MIQ_OK",
+                                 :location => "inline")
       dom = cls.domain
       controller.instance_variable_set(:@record, cls)
       controller.instance_variable_set(

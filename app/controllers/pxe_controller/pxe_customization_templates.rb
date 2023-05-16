@@ -10,7 +10,7 @@ module PxeController::PxeCustomizationTemplates
   def template_list
     assert_privileges('customization_template_view')
     @lastaction = "template_list"
-    @force_no_grid_xml   = true
+    @force_no_grid_xml = true
     if params[:ppsetting]                                             # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                       # Set the new per page value
       @settings.store_path(:perpage, :list, @items_per_page) # Set the per page setting for this gtl type
@@ -66,7 +66,7 @@ module PxeController::PxeCustomizationTemplates
     copy_params_if_present(@edit[:new], params, %i[name description typ])
     @edit[:new][:img_type] = params[:img_typ] if params[:img_typ]
     @edit[:new][:script] = params[:script_data] if params[:script_data]
-    @edit[:new][:script] = @edit[:new][:script] + "..." if !params[:name] && !params[:description] && !params[:img_typ] && !params[:script_data] && !params[:typ]
+    @edit[:new][:script] = "#{@edit[:new][:script]}..." if !params[:name] && !params[:description] && !params[:img_typ] && !params[:script_data] && !params[:typ]
   end
 
   def template_set_record_vars(ct)

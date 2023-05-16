@@ -33,8 +33,8 @@ module Mixins
 
       else
         # if the controller implements more display modes for #show, invoke those
-        if self.class.respond_to?(:custom_display_modes)
-          custom_display_call(@display) if self.class.custom_display_modes.index(@display)
+        if self.class.respond_to?(:custom_display_modes) && self.class.custom_display_modes.index(@display)
+          custom_display_call(@display)
         end
       end
 

@@ -51,7 +51,7 @@ module TextualSummaryHelper
 
   def expand_generic_group(group_result, record)
     items = expand_textual_group(group_result.items, record)
-    return nil if items.length.zero?
+    return nil if items.empty?
 
     locals = group_result.locals
     {
@@ -141,11 +141,9 @@ module TextualSummaryHelper
   end
 
   def textual_collection_link(collection, as: nil, controller_collection: nil, explorer: false, feature: nil, label: nil, link: nil)
-    if collection.kind_of?(Array)
-      unless as && link
-        raise ArgumentError, ":as and :link are both required when linking to an array",
-              caller.reject { |x| x =~ /^#{__FILE__}:/ }
-      end
+    if collection.kind_of?(Array) && !(as && link)
+      raise(ArgumentError, ":as and :link are both required when linking to an array",
+            caller.grep_v(/^#{__FILE__}:/))
     end
 
     klass = as || ui_base_model(collection.klass)

@@ -12,24 +12,25 @@ class ApplicationHelper::Toolbar::CloudVolumeBackupCenter < ApplicationHelper::T
                        t = N_('Restore backup to Cloud Volume'),
                        t,
                        :url_parms    => 'main_div',
-                       :send_checked => true,
+                       :send_checked => true
                      ),
                    ]
                  )
                ])
   button_group('cloud_volume_backup_policy', [
-    select(
-      :cloud_volume_backup_policy_choice,
-      nil,
-      t = N_('Policy'),
-      t,
-      :items => [
-        button(
-          :cloud_volume_backup_tag,
-          'pficon pficon-edit fa-lg',
-          N_('Edit tags for this Cloud Volume Backup'),
-          N_('Edit Tags')),
-      ]
-    ),
-  ])
+                 select(
+                   :cloud_volume_backup_policy_choice,
+                   nil,
+                   t = N_('Policy'),
+                   t,
+                   :items => [
+                     button(
+                       :cloud_volume_backup_tag,
+                       'pficon pficon-edit fa-lg',
+                       N_('Edit tags for this Cloud Volume Backup'),
+                       N_('Edit Tags')
+                     ),
+                   ]
+                 ),
+               ])
 end

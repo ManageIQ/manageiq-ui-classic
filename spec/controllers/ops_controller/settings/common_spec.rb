@@ -140,8 +140,8 @@ describe OpsController do
     describe "#settings_get_form_vars" do
       before do
         miq_server = FactoryBot.create(:miq_server)
-        current = ::Settings.to_hash
-        current[:authentication] = { :ldap_role => true, :mode => 'ldap' }
+        current = Settings.to_hash
+        current[:authentication] = {:ldap_role => true, :mode => 'ldap'}
         edit = {:current => current,
                 :new     => copy_hash(current),
                 :key     => "settings_authentication_edit__#{miq_server.id}"}
@@ -386,8 +386,8 @@ describe OpsController do
                                            :active_tab         => 'settings_server',
                                            :selected_server_id => @miq_server.id)
           controller.params = {:id => 'server'}
-          @current = ::Settings.to_hash
-          @new = ::Settings.to_hash
+          @current = Settings.to_hash
+          @new = Settings.to_hash
           @new[:server][:name] = ''
           controller.instance_variable_set(:@edit,
                                            :new     => @new,

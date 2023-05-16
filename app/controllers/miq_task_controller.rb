@@ -54,7 +54,7 @@ class MiqTaskController < ApplicationController
   def build_jobs_tab
     @pp_choices = PPCHOICES2 # Get special pp choices for jobs/tasks lists
     @settings[:perpage][:job_task] ||= 50 # Default to 50 per page until changed
-    @tasks_options = HashWithIndifferentAccess.new if @tasks_options.blank?
+    @tasks_options = ActiveSupport::HashWithIndifferentAccess.new if @tasks_options.blank?
     @tasks_options[:zones] = Zone.visible.includes(:miq_servers).collect { |z| z.name if z.miq_servers.present? }.compact
     tasks_set_default_options if @tasks_options[@tabform].blank?
 
@@ -84,7 +84,7 @@ class MiqTaskController < ApplicationController
     end
     tasks_set_default_options
     @view, @pages = get_view(MiqTask, :named_scope => tasks_scopes(@tasks_options[@tabform]), :clickable => false)
-    @user_names = MiqTask.distinct.pluck("userid").delete_if(&:blank?) if @active_tab.to_i == 2
+    @user_names = MiqTask.distinct.pluck("userid").compact_blank! if @active_tab.to_i == 2
   end
 
   # Cancel a single selected job
@@ -256,7 +256,7 @@ class MiqTaskController < ApplicationController
   def build_query_for_status(opts)
     cond = [[]]
     %i[queued ok error warn running].each do |st|
-      cond = add_to_condition(cond, *send("build_query_for_" + st.to_s)) if opts[st]
+      cond = add_to_condition(cond, *send("build_query_for_#{st}")) if opts[st]
     end
 
     cond[0] = "(#{cond[0].join(" OR ")})"
@@ -290,13 +290,13 @@ class MiqTaskController < ApplicationController
   end
 
   def build_query_for_status_none_selected
-    sql = "(miq_tasks.status!=? AND miq_tasks.status!=? AND miq_tasks.status!=? AND "\
+    sql = "(miq_tasks.status!=? AND miq_tasks.status!=? AND miq_tasks.status!=? AND " \
           "miq_tasks.state!=? AND miq_tasks.state!=? AND miq_tasks.state!=?)"
     [sql, %w[Ok Error Warn Finished Queued Waiting_to_start]]
   end
 
   def build_query_for_time_period(opts)
-    t = format_timezone(opts[:time_period].to_i != 0 ? opts[:time_period].days.ago : Time.now, Time.zone, "raw")
+    t = format_timezone(opts[:time_period].to_i != 0 ? opts[:time_period].days.ago : Time.zone.now, Time.zone, "raw")
     ["miq_tasks.updated_on>=? AND miq_tasks.updated_on<=?", [t.beginning_of_day, t.end_of_day]]
   end
 
@@ -323,7 +323,7 @@ class MiqTaskController < ApplicationController
     # Add status scope
     status = (opts.compact.symbolize_keys.keys & %i[ok queued error warn running])
     if status.any?
-      status_scope_mapping = { :ok => :completed_ok, :warn => :completed_warn, :error => :completed_error } # remap reserved names
+      status_scope_mapping = {:ok => :completed_ok, :warn => :completed_warn, :error => :completed_error} # remap reserved names
       status.map! { |s| status_scope_mapping[s] || s }
       scope << [:with_status_in, *status]
     else
@@ -332,7 +332,7 @@ class MiqTaskController < ApplicationController
 
     # Add time scope
     if use_times
-      t = format_timezone(opts[:time_period].to_i != 0 ? opts[:time_period].days.ago : Time.now, Time.zone, "raw")
+      t = format_timezone(opts[:time_period].to_i != 0 ? opts[:time_period].days.ago : Time.zone.now, Time.zone, "raw")
       scope << [:with_updated_on_between, t.beginning_of_day, t.end_of_day]
     end
 
@@ -360,7 +360,7 @@ class MiqTaskController < ApplicationController
     @layout = get_layout
     @tabform = session[:tabform] if session[:tabform]
     @tasks_options = session[:tasks_options] || ""
-    @tabs ||= session[:tabs]
+    @get_session_data ||= session[:tabs]
   end
 
   def set_session_data

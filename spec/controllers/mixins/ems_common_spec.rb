@@ -12,7 +12,7 @@ describe EmsCloudController do
         vm = FactoryBot.create(:vm_vmware,
                                :ext_management_system => ems,
                                :storage               => FactoryBot.create(:storage))
-        post :button, :params => { :pressed => "instance_retire", "check_#{vm.id}" => "1", :format => :js, :id => ems.id, :display => 'instances' }
+        post :button, :params => {:pressed => "instance_retire", "check_#{vm.id}" => "1", :format => :js, :id => ems.id, :display => 'instances'}
         expect(response.status).to eq 200
         expect(response.body).to include('vm/retire')
       end
@@ -21,7 +21,7 @@ describe EmsCloudController do
         allow(controller).to receive(:role_allows?).and_return(true)
         ems = FactoryBot.create(:ems_amazon)
         ost = FactoryBot.create(:orchestration_stack_cloud, :ext_management_system => ems)
-        post :button, :params => { :pressed => "orchestration_stack_retire", "check_#{ost.id}" => "1", :format => :js, :id => ems.id, :display => 'orchestration_stacks' }
+        post :button, :params => {:pressed => "orchestration_stack_retire", "check_#{ost.id}" => "1", :format => :js, :id => ems.id, :display => 'orchestration_stacks'}
         expect(response.status).to eq 200
         expect(response.body).to include('orchestration_stack/retire')
       end
@@ -32,7 +32,7 @@ describe EmsCloudController do
         vm = FactoryBot.create(:vm_vmware,
                                :ext_management_system => ems,
                                :storage               => FactoryBot.create(:storage))
-        post :button, :params => { :pressed => "instance_tag", "check_#{vm.id}" => "1", :format => :js, :id => ems.id, :display => 'instances' }
+        post :button, :params => {:pressed => "instance_tag", "check_#{vm.id}" => "1", :format => :js, :id => ems.id, :display => 'instances'}
         expect(response.status).to eq 200
         expect(response.body).to include('ems_cloud/tagging_edit')
       end
@@ -42,14 +42,14 @@ describe EmsCloudController do
         ems = FactoryBot.create(:ems_amazon)
         vm = FactoryBot.create(:vm_amazon,
                                :ext_management_system => ems)
-        post :button, :params => { :pressed => "image_tag", "check_#{vm.id}" => "1", :format => :js, :id => ems.id, :display => 'images' }
+        post :button, :params => {:pressed => "image_tag", "check_#{vm.id}" => "1", :format => :js, :id => ems.id, :display => 'images'}
         expect(response.status).to eq 200
         expect(response.body).to include('ems_cloud/tagging_edit')
       end
 
       it "when Delete Button is pressed for CloudObjectStoreContainer" do
         expect(controller).to receive(:process_cloud_object_storage_buttons)
-        post :button, :params => { :pressed => "cloud_object_store_container_delete" }
+        post :button, :params => {:pressed => "cloud_object_store_container_delete"}
       end
 
       context 'Shelve offload applied on Instances displayed in a nested list' do
@@ -177,7 +177,7 @@ describe EmsContainerController do
       it "when VM Migrate is pressed for unsupported type" do
         allow(controller).to receive(:role_allows?).and_return(true)
         vm = FactoryBot.create(:vm_ovirt)
-        post :button, :params => { :pressed => "vm_migrate", :format => :js, "check_#{vm.id}" => "1" }
+        post :button, :params => {:pressed => "vm_migrate", :format => :js, "check_#{vm.id}" => "1"}
         expect(controller.send(:flash_errors?)).to be_truthy
         expect(assigns(:flash_array).first[:message]).to include('does not apply')
       end
@@ -188,14 +188,14 @@ describe EmsContainerController do
       it "when VM Migrate is pressed for supported type" do
         allow(controller).to receive(:role_allows?).and_return(true)
         vm = FactoryBot.create(:vm_vmware, :storage => storage, :ext_management_system => ems)
-        post :button, :params => { :pressed => "vm_migrate", :format => :js, "check_#{vm.id}" => "1" }
+        post :button, :params => {:pressed => "vm_migrate", :format => :js, "check_#{vm.id}" => "1"}
         expect(controller.send(:flash_errors?)).not_to be_truthy
       end
 
       it "when VM Migrate is pressed for supported type" do
         allow(controller).to receive(:role_allows?).and_return(true)
         vm = FactoryBot.create(:vm_vmware)
-        post :button, :params => { :pressed => "vm_edit", :format => :js, "check_#{vm.id}" => "1" }
+        post :button, :params => {:pressed => "vm_edit", :format => :js, "check_#{vm.id}" => "1"}
         expect(controller.send(:flash_errors?)).not_to be_truthy
       end
 
@@ -317,7 +317,7 @@ describe EmsNetworkController do
       it "when edit is pressed for unsupported network manager type" do
         allow(controller).to receive(:role_allows?).and_return(true)
         google_net = FactoryBot.create(:ems_google_network)
-        get :edit, :params => { :id => google_net.id}
+        get :edit, :params => {:id => google_net.id}
         expect(response.status).to eq(302)
         expect(session['flash_msgs']).not_to be_empty
         expect(session['flash_msgs'].first[:message]).to include('is not supported')
@@ -326,7 +326,7 @@ describe EmsNetworkController do
       it "when edit is pressed for supported network manager type" do
         allow(controller).to receive(:role_allows?).and_return(true)
         nuage_net = FactoryBot.create(:ems_nuage_network)
-        get :edit, :params => { :id => nuage_net.id}
+        get :edit, :params => {:id => nuage_net.id}
         expect(response.status).to eq(200)
         expect(session['flash_msgs']).to be_nil
       end

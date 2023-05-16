@@ -26,7 +26,7 @@ module Mixins
             # redirect to build the ownership screen
             javascript_redirect(:controller => rec_cls.to_s, :action => 'right_size', :id => record.id, :escape => false)
           else
-            head :ok
+            head 200
           end
         end
 

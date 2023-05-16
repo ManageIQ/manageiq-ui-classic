@@ -15,8 +15,8 @@ describe TextualMixins::TextualOsInfo do
     context "with OS" do
       let(:host) do
         FactoryBot.create(:host,
-                           :operating_system => FactoryBot.create(:operating_system,
-                                                                   :product_name => "rhel-7x64"))
+                          :operating_system => FactoryBot.create(:operating_system,
+                                                                 :product_name => "rhel-7x64"))
       end
 
       it { is_expected.not_to be_empty }

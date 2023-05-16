@@ -27,13 +27,13 @@ module OpsHelper
       else
         _("External Database")
       end
-      @data = {:title => _('Basic Information')}
-      @data[:rows] = [
-        row_data(_('Name'), @database_display_name),
-        row_data(_('Hostname'), @database_details["host"]),
-        row_data(_('Database name'), @database_details["database"]),
-        row_data(_('Username'), @database_details["username"])
-      ]
+    @data = {:title => _('Basic Information')}
+    @data[:rows] = [
+      row_data(_('Name'), @database_display_name),
+      row_data(_('Hostname'), @database_details["host"]),
+      row_data(_('Database name'), @database_details["database"]),
+      row_data(_('Username'), @database_details["username"])
+    ]
   end
 
   def database_tab_summary
@@ -84,14 +84,11 @@ module OpsHelper
 
   def advanced_tab_warning
     if selected?(x_node, "svr")
-      _('Caution: Manual changes to configuration files can disable the Server!') + " " +
-        _('Changes made to any individual settings will overwrite settings inherited from the Zone!')
+      "#{_('Caution: Manual changes to configuration files can disable the Server!')} #{_('Changes made to any individual settings will overwrite settings inherited from the Zone!')}"
     elsif selected?(x_node, "z")
-      _('Caution: Manual changes to configuration files can disable the Zone!') + " " +
-        _('Changes made to any individual settings will overwrite settings inherited from the Region!')
+      "#{_('Caution: Manual changes to configuration files can disable the Zone!')} #{_('Changes made to any individual settings will overwrite settings inherited from the Region!')}"
     else
-      _('Caution: Manual changes to configuration files can disable the Region!') + " " +
-        _('Changes made to any individual settings will overwrite settings inherited from the template!')
+      "#{_('Caution: Manual changes to configuration files can disable the Region!')} #{_('Changes made to any individual settings will overwrite settings inherited from the template!')}"
     end
   end
 

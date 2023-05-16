@@ -79,6 +79,7 @@ module OrchestrationStackHelper::TextualSummary
   def textual_orchestration_template
     template = @record.try(:orchestration_template)
     return nil if template.nil?
+
     h = {:label => _('Orchestration Template'), :icon => "pficon pficon-template", :value => template.name}
     if role_allows?(:feature => "orchestration_templates_view")
       h[:title] = _("Show this Orchestration Template")
@@ -104,6 +105,7 @@ module OrchestrationStackHelper::TextualSummary
   def textual_cloud_networks
     num = @record.number_of(:cloud_networks)
     return nil if num <= 0
+
     {:label => _('Cloud Networks'), :icon => "ff ff-cloud-network", :value => num}
   end
 

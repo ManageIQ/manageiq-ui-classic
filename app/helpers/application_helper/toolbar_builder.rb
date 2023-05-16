@@ -35,7 +35,7 @@ class ApplicationHelper::ToolbarBuilder
 
   # Parses the generic toolbars name and returns his class
   def predefined_toolbar_class(tb_name)
-    class_name = 'ApplicationHelper::Toolbar::' + ActiveSupport::Inflector.camelize(tb_name.sub(/_tb$/, ''))
+    class_name = "ApplicationHelper::Toolbar::#{ActiveSupport::Inflector.camelize(tb_name.sub(/_tb$/, ''))}"
     class_name.constantize
   end
 
@@ -54,7 +54,7 @@ class ApplicationHelper::ToolbarBuilder
   # According to toolbar name in parameter `toolbar_name` either returns class
   # for generic toolbar, or starts building custom toolbar
   def toolbar_class(toolbar_name)
-    if Mixins::CustomButtons::Result === toolbar_name
+    if toolbar_name.kind_of?(Mixins::CustomButtons::Result)
       custom_toolbar_class(toolbar_name)
     else
       predefined_toolbar_class(toolbar_name)
@@ -83,7 +83,7 @@ class ApplicationHelper::ToolbarBuilder
         props = ApplicationHelper::Button::Separator.new(:id => "sep_#{index}_#{bsi_idx}", :hidden => !any_visible)
       else
         bs_children = true
-        props = toolbar_button(bsi, :child_id => bsi[:id], :id => bgi[:id] + "__" + bsi[:id], :type => :button)
+        props = toolbar_button(bsi, :child_id => bsi[:id], :id => "#{bgi[:id]}__#{bsi[:id]}", :type => :button)
         next if props.nil?
       end
       update_common_props(bsi, props) unless bsi.key?(:separator)
@@ -93,6 +93,7 @@ class ApplicationHelper::ToolbarBuilder
     end
     current_item[:items].reverse_each do |item|
       break if !item[:hidden] && item[:type] != :separator
+
       item[:hidden] = true if item[:type] == :separator
     end
     current_item[:hidden] = !any_visible
@@ -113,7 +114,7 @@ class ApplicationHelper::ToolbarBuilder
       :icon         => input[:icon],
       :name         => button[:id],
       :onwhen       => input[:onwhen],
-      :send_checked => input[:send_checked],
+      :send_checked => input[:send_checked]
     )
 
     button[:enabled] = !!input[:enabled] if input.key?(:enabled)
@@ -151,11 +152,9 @@ class ApplicationHelper::ToolbarBuilder
 
   def _add_separator(index)
     # Add a separator, if needed, before this button
-    if !@sep_added && @sep_needed
-      if @groups_added.include?(index) && @groups_added.length > 1
-        @toolbar << ApplicationHelper::Button::Separator.new(:id => "sep_#{index}")
-        @sep_added = true
-      end
+    if !@sep_added && @sep_needed && (@groups_added.include?(index) && @groups_added.length > 1)
+      @toolbar << ApplicationHelper::Button::Separator.new(:id => "sep_#{index}")
+      @sep_added = true
     end
     @sep_needed = true # Button was added, need separators from now on
   end
@@ -314,7 +313,7 @@ class ApplicationHelper::ToolbarBuilder
 
   def service_template_id(record)
     case record
-    when Service then         record.service_template_id
+    when Service then record.service_template_id
     when ServiceTemplate, GenericObjectDefinition then record.id
     when GenericObject then record.generic_object_definition.id
     end
@@ -327,11 +326,13 @@ class ApplicationHelper::ToolbarBuilder
   def record_to_service_buttons(record)
     return [] unless record.kind_of?(Service)
     return [] if record.service_template.nil?
+
     create_related_custom_buttons(record, record.service_template)
   end
 
   def record_to_generic_object_buttons(record)
     return [] unless record.kind_of?(GenericObject)
+
     create_related_custom_buttons(record, record.generic_object_definition)
   end
 
@@ -359,7 +360,7 @@ class ApplicationHelper::ToolbarBuilder
         ordered_buttons = []
         cbs.set_data[:button_order].each do |bidx|
           group[:buttons].each do |b|
-            if bidx == b[:id] && !ordered_buttons.include?(b)
+            if bidx == b[:id] && ordered_buttons.exclude?(b)
               ordered_buttons.push(b)
               break
             end
@@ -374,7 +375,7 @@ class ApplicationHelper::ToolbarBuilder
   # Determine if a button should be selected for buttonTwoState
   def twostate_button_selected(id)
     return true if id.starts_with?("view_") && id.ends_with?("textual") # Summary view buttons
-    return true if @ght_type && id.starts_with?("view_") && id.ends_with?(@ght_type)  # GHT view buttons on report show
+    return true if @ght_type && id.starts_with?("view_") && id.ends_with?(@ght_type) # GHT view buttons on report show
     return true if id.starts_with?("compare_") && id.ends_with?(settings(:views, :compare).to_s)
     return true if id.starts_with?("drift_") && id.ends_with?(settings(:views, :drift).to_s)
     return true if id == "compare_all"
@@ -383,13 +384,14 @@ class ApplicationHelper::ToolbarBuilder
     return true if id.starts_with?("driftmode_") && id.ends_with?(settings(:views, :drift_mode).to_s)
     return true if id == "view_dashboard" && @showtype == "dashboard"
     return true if id == "view_summary" && @showtype == "main"
+
     false
   end
 
   def url_for_button(name, url_tpl, controller_restful)
     url = evaluate_url_parms(url_tpl)
 
-    if %w[view_grid view_tile view_list].include?(name) && controller_restful && url =~ %r{^\/(\d+|\d+r\d+)\?$}
+    if %w[view_grid view_tile view_list].include?(name) && controller_restful && url =~ %r{^/(\d+|\d+r\d+)\?$}
       # handle restful routes - we want just / if the url is just an id
       url = '/'
     end
@@ -408,7 +410,7 @@ class ApplicationHelper::ToolbarBuilder
 
     keep_parms = %w[bc escape menu_click sb_controller]
     query_string = Rack::Utils.parse_query(URI("?#{request.query_string}").query)
-    query_string.delete_if { |k, _v| !keep_parms.include?(k) }
+    query_string.delete_if { |k, _v| keep_parms.exclude?(k) }
 
     url_parm_hash = preprocess_url_param(url_parm)
     query_string.merge!(url_parm_hash)
@@ -441,7 +443,7 @@ class ApplicationHelper::ToolbarBuilder
           build_button(bgi, group_index)
         end
       when ApplicationHelper::Toolbar::Custom
-        @toolbar << { :custom => true, :name => group.name, :props => group.evaluate(@view_context) }
+        @toolbar << {:custom => true, :name => group.name, :props => group.evaluate(@view_context)}
       end
     end
 

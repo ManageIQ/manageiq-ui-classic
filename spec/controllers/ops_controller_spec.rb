@@ -33,11 +33,11 @@ describe OpsController do
       end
 
       context 'with using real user' do
-        let(:feature) { %w(rbac_group_edit) }
+        let(:feature) { %w[rbac_group_edit] }
         let(:user)    { FactoryBot.create(:user, :features => feature) }
 
         before do
-          EvmSpecHelper.seed_specific_product_features(%w(rbac_group_edit))
+          EvmSpecHelper.seed_specific_product_features(%w[rbac_group_edit])
         end
 
         it 'rbac group edit' do
@@ -162,8 +162,8 @@ describe OpsController do
 
     it "should set session[:changed] as false when config is same" do
       edit = {
-        :new     => ::Settings.to_hash,
-        :current => ::Settings.to_hash
+        :new     => Settings.to_hash,
+        :current => Settings.to_hash
       }
       controller.instance_variable_set(:@edit, edit)
       controller.send(:edit_changed?)
@@ -173,7 +173,7 @@ describe OpsController do
     it "should set session[:changed] as true when config is different" do
       edit = {
         :new     => {:workers => 2},
-        :current => ::Settings.to_hash
+        :current => Settings.to_hash
       }
       controller.instance_variable_set(:@edit, edit)
       controller.send(:edit_changed?)
@@ -210,8 +210,8 @@ describe OpsController do
         server = MiqServer.first
 
         zone = FactoryBot.create(:zone,
-                                  :name        => "not the default",
-                                  :description => "Not the Default Zone")
+                                 :name        => "not the default",
+                                 :description => "Not the Default Zone")
 
         current = Settings.to_hash.deep_merge(:server => {:zone => "default"})
         new = Settings.to_hash.deep_merge(:server => {:zone => zone.name})
@@ -266,7 +266,7 @@ describe OpsController do
     it "build trees that are passed in and met other conditions" do
       controller.instance_variable_set(:@sb, {})
       allow(controller).to receive(:x_build_dyna_tree)
-      replace_trees = %i(settings diagnostics rbac vmdb)
+      replace_trees = %i[settings diagnostics rbac vmdb]
       presenter = ExplorerPresenter.new
       expect(controller).to receive(:reload_trees_by_presenter).with(
         instance_of(ExplorerPresenter),
@@ -293,26 +293,26 @@ describe OpsController do
     it "does not render toolbar buttons when edit is clicked" do
       post :x_button, :params => {:id => @miq_server.id, :pressed => 'log_depot_edit', :format => :js}
       expect(response.status).to eq(200)
-      expect(JSON.parse(response.body)['reloadToolbars']).to match([nil, nil])
+      expect(response.parsed_body['reloadToolbars']).to match([nil, nil])
     end
 
     it "renders toolbar buttons when cancel is clicked" do
       allow(controller).to receive(:diagnostics_set_form_vars)
       post :x_button, :params => {:id => @miq_server.id, :pressed => 'log_depot_edit', :button => "cancel", :format => :js}
       expect(response.status).to eq(200)
-      expect(JSON.parse(response.body)['reloadToolbars'].length).to eq(2)
+      expect(response.parsed_body['reloadToolbars'].length).to eq(2)
     end
 
     it "renders toolbar buttons when save is clicked" do
       allow(controller).to receive(:diagnostics_set_form_vars)
       post :x_button, :params => {:id => @miq_server.id, :pressed => 'log_depot_edit', :button => "save", :format => :js}
       expect(response.status).to eq(200)
-      expect(JSON.parse(response.body)['reloadToolbars'].length).to eq(2)
+      expect(response.parsed_body['reloadToolbars'].length).to eq(2)
     end
   end
 
   context "Import Tags and Import forms" do
-    %w(settings_import settings_import_tags).each do |tab|
+    %w[settings_import settings_import_tags].each do |tab|
       render_views
 
       before do
@@ -325,7 +325,7 @@ describe OpsController do
       end
 
       it "change_tab does not update breadcrumbs" do
-        expect(JSON.parse(response.body)["updatePartials"]).not_to include(:breadcrumbs)
+        expect(response.parsed_body["updatePartials"]).not_to include(:breadcrumbs)
       end
 
       it "Apply button remains disabled with flash errors" do
@@ -435,7 +435,7 @@ describe OpsController do
 
   describe '#tree_select' do
     it 'calls #tree_select_model' do
-      login_as user_with_feature(%w(ops_settings))
+      login_as user_with_feature(%w[ops_settings])
       controller.instance_variable_set(:@sb, :active_tree => :settings_tree)
       controller.params[:id] = 'root'
       allow(controller).to receive(:set_active_tab)
@@ -457,7 +457,7 @@ describe OpsController do
     let(:user_alpha)  { FactoryBot.create(:user, :miq_groups => [group_alpha]) }
 
     before do
-      EvmSpecHelper.seed_specific_product_features(%w(rbac_tenant_manage_quotas))
+      EvmSpecHelper.seed_specific_product_features(%w[rbac_tenant_manage_quotas])
       Tenant.seed
       User.current_user = user_alpha
     end

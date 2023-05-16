@@ -11,6 +11,7 @@ module ReportController::Dashboards
       replace_right_cell
     when "save"
       return unless load_edit("db_edit__seq", "replace_cell__explorer")
+
       err = false
       dashboard_order = []
       @edit[:new][:dashboard_order].each do |n|
@@ -62,9 +63,9 @@ module ReportController::Dashboards
       dashboard = find_record_with_rbac(MiqWidgetSet, params[:dashboard_id])
       begin
         MiqWidgetSet.copy_dashboard(dashboard, params[:name], params[:description], params[:group_id])
-        render :json => { :name => dashboard.name }, :status => :ok
+        render :json => {:name => dashboard.name}, :status => 200
       rescue => bang
-        render :json => { :error => { :message => _("Error during 'Validate': %{message}") % {:message => bang.to_s} } }, :status => :bad_request
+        render :json => {:error => {:message => _("Error during 'Validate': %{message}") % {:message => bang.to_s}}}, :status => 400
       end
     else
       checked_id = find_checked_items.first || params[:id]
@@ -143,8 +144,8 @@ module ReportController::Dashboards
         add_flash(_("Dashboard \"%{name}\" was saved") % {:name => get_record_display_name(@dashboard)})
         if params[:button] == "add"
           widgetset = MiqWidgetSet.where_unique_on(@edit[:new][:name]).first
-          settings = g.settings ? g.settings : {}
-          settings[:dashboard_order] = settings[:dashboard_order] ? settings[:dashboard_order] : []
+          settings = g.settings || {}
+          settings[:dashboard_order] = settings[:dashboard_order] || []
           settings[:dashboard_order].push(widgetset.id) unless settings[:dashboard_order].include?(widgetset.id)
           g.save
         end
@@ -187,6 +188,7 @@ module ReportController::Dashboards
     assert_privileges(session.fetch_path(:edit, :db_id) ? "db_edit" : "db_new")
 
     return unless load_edit("db_edit__#{params[:id]}", "replace_cell__explorer")
+
     db_get_form_vars
     render :update do |page|
       page << javascript_prologue
@@ -231,6 +233,7 @@ module ReportController::Dashboards
     assert_privileges("db_delete")
 
     return unless load_edit("db_edit__#{params[:id]}", "replace_cell__explorer")
+
     @dashboard = @edit[:db_id] ? MiqWidgetSet.find(@edit[:db_id]) : MiqWidgetSet.new
     w = params[:widget].to_i
     @edit[:new][:col1].delete(w) if @edit[:new][:col1].include?(w)
@@ -300,7 +303,7 @@ module ReportController::Dashboards
       if g.settings && g.settings[:dashboard_order]
         g.settings[:dashboard_order].each do |ws_id|
           widgetsets.each do |ws|
-            @widgetsets.push(ws) if ws_id == ws.id && !@widgetsets.include?(ws)
+            @widgetsets.push(ws) if ws_id == ws.id && @widgetsets.exclude?(ws)
           end
         end
       else
@@ -373,7 +376,7 @@ module ReportController::Dashboards
   end
 
   def db_fields_validation
-    if @edit[:new][:name] && @edit[:new][:name].index('|')
+    if @edit[:new][:name]&.index('|')
       add_flash(_("Name cannot contain \"|\""), :error)
       return
     end
@@ -390,7 +393,7 @@ module ReportController::Dashboards
     end
     if @edit[:new][:col1].empty? && @edit[:new][:col2].empty?
       add_flash(_("One widget must be selected"), :error)
-      return
+      nil
     end
   end
 
@@ -461,6 +464,7 @@ module ReportController::Dashboards
 
       @available_widgets.each do |w|
         next if col_widgets.include?(w.id) || !w.enabled
+
         image = case w.content_type
                 when "chart"
                   "fa fa-pie-chart"
@@ -477,6 +481,7 @@ module ReportController::Dashboards
 
   def db_move_cols_up
     return unless load_edit("db_edit__seq", "replace_cell__explorer")
+
     if params[:seq_fields].blank? || params[:seq_fields][0] == ""
       add_flash(_("No fields were selected to move up"), :error)
       @refresh_div = "column_lists"
@@ -501,6 +506,7 @@ module ReportController::Dashboards
 
   def db_move_cols_down
     return unless load_edit("db_edit__seq", "replace_cell__explorer")
+
     if params[:seq_fields].blank? || params[:seq_fields][0] == ""
       add_flash(_("No fields were selected to move down"), :error)
       @refresh_div = "column_lists"
@@ -535,9 +541,9 @@ module ReportController::Dashboards
       end
     end
     if last_idx - first_idx + 1 > params[:seq_fields].length
-      return [false, first_idx, last_idx]
+      [false, first_idx, last_idx]
     else
-      return [true, first_idx, last_idx]
+      [true, first_idx, last_idx]
     end
   end
 end

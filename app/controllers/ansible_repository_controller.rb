@@ -67,14 +67,9 @@ class AnsibleRepositoryController < ApplicationController
     end
   end
 
-  def edit
-    assert_privileges('embedded_configuration_script_source_edit')
-    @record = AnsibleRepositoryController.model.find(params[:id])
-    drop_breadcrumb(:name => _("Edit a Repository \"%{name}\"") % {:name => @record.name},
-                    :url  => "/ansible_repository/edit/#{@record.id}")
-    @title = _("Edit Repository \"%{name}\"") % {:name => @record.name}
-    @id = @record.id
-    @in_a_form = true
+  def show
+    assert_privileges('embedded_configuration_script_source_view')
+    super
   end
 
   def new
@@ -82,6 +77,16 @@ class AnsibleRepositoryController < ApplicationController
     drop_breadcrumb(:name => _("Add a new Repository"), :url => "/ansible_repository/new")
     @title = _("Add new Repository")
     @id = 'new'
+    @in_a_form = true
+  end
+
+  def edit
+    assert_privileges('embedded_configuration_script_source_edit')
+    @record = AnsibleRepositoryController.model.find(params[:id])
+    drop_breadcrumb(:name => _("Edit a Repository \"%{name}\"") % {:name => @record.name},
+                    :url  => "/ansible_repository/edit/#{@record.id}")
+    @title = _("Edit Repository \"%{name}\"") % {:name => @record.name}
+    @id = @record.id
     @in_a_form = true
   end
 
@@ -102,7 +107,7 @@ class AnsibleRepositoryController < ApplicationController
     AnsibleRepositoryController.model.where(:id => checked).each do |repo|
       repo.sync_queue
       add_flash(_("Refresh of Repository \"%{name}\" was successfully initiated.") % {:name => repo.name})
-    rescue StandardError => ex
+    rescue => ex
       add_flash(_("Unable to refresh Repository \"%{name}\": %{details}") % {:name    => repo.name,
                                                                              :details => ex},
                 :error)
@@ -123,11 +128,6 @@ class AnsibleRepositoryController < ApplicationController
   end
 
   def download_summary_pdf
-    assert_privileges('embedded_configuration_script_source_view')
-    super
-  end
-
-  def show
     assert_privileges('embedded_configuration_script_source_view')
     super
   end

@@ -47,7 +47,7 @@ module GenericObjectDefinitionHelper::TextualSummary
       empty_record_properties_list(_('Associations'))
     else
       record_properties_list(
-        _('Associations (%{count})') % {:count => @record.property_associations.count },
+        _('Associations (%{count})') % {:count => @record.property_associations.count},
         :property_associations, [_("Name"), _("Class")]
       )
     end

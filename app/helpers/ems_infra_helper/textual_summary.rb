@@ -147,6 +147,7 @@ module EmsInfraHelper::TextualSummary
 
   def textual_host_default_vnc_port_range
     return nil if @record.host_default_vnc_port_start.blank?
+
     value = "#{@record.host_default_vnc_port_start} - #{@record.host_default_vnc_port_end}"
     {:label => _("Host Default VNC Port Range"), :value => value}
   end

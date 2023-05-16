@@ -24,7 +24,7 @@ module NumberHelper
     elsif size.ends_with?(" PB")
       s[-3..-1] = ".petabytes"
     end
-    return s
+    s
   rescue
     nil
   end
@@ -36,7 +36,7 @@ module NumberHelper
     precision ||= 1
 
     NumberHelper.handling_negatives(size) do |s|
-      s = s.abs * 1000**2
+      s = s.abs * (1000**2)
       if s < 1000**3
         "%.#{precision}f MHz" % (s / (1000**2))
       elsif s < 1000**4
@@ -51,6 +51,7 @@ module NumberHelper
 
   def self.handling_negatives(number)
     return nil if number.nil?
+
     number = Float(number)
     is_negative = number.negative?
     ret = yield number.abs

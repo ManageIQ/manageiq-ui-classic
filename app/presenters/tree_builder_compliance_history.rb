@@ -52,6 +52,7 @@ class TreeBuilderComplianceHistory < TreeBuilder
     grandpa = node_by_tree_id(parents.first)
     grandpa.compliance_details.order("miq_policy_desc, condition_desc").each do |node|
       next unless node.miq_policy_id == parent.miq_policy_id
+
       kids.push(get_policy_elm(parent, node))
     end
     count_only_or_objects(count_only, kids)

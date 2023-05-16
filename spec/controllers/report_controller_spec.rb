@@ -556,7 +556,7 @@ describe ReportController do
           edit = assigns(:edit)
           edit[:new][:sortby1] = S1               # Set an initial sort by col
           edit[:new][:sortby2] = S2               # Set no second sort col
-          edit[:new][:group] == "No"              # Setting group default
+          edit[:new][:group] # Setting group default
           edit[:new][:col_options] = {} # Create col_options hash so keys can be set
           edit[:new][:field_order] = [] # Create field_order array
           controller.instance_variable_set(:@edit, edit)
@@ -668,7 +668,7 @@ describe ReportController do
           edit_new = assigns(:edit)[:new]
           edit_new[:field_order] = [['Vm-foobar']]
           controller.send(:gfv_key_group_calculations, 'foobar_0', 'total,avg')
-          expect(edit_new[:col_options]['foobar'][:grouping]).to eq(%i(avg total))
+          expect(edit_new[:col_options]['foobar'][:grouping]).to eq(%i[avg total])
         end
 
         it 'aggregs are stored under pivot_cols as a sorted array of symbols' do
@@ -677,7 +677,7 @@ describe ReportController do
           edit[:new][:fields] = [[name = 'Vm-foobar']]
           edit[:new][:headers] = {name => 'shoot me now!'}
           controller.send(:gfv_key_pivot_calculations, 'foobar_0', 'total,avg')
-          expect(edit[:pivot_cols][name]).to eq(%i(avg total))
+          expect(edit[:pivot_cols][name]).to eq(%i[avg total])
         end
       end
     end
@@ -687,9 +687,9 @@ describe ReportController do
     let(:miq_report) { FactoryBot.create(:miq_report) }
 
     before do
-      @current_user = login_as FactoryBot.create(:user, :features => %w(miq_report_schedule_enable
-                                                                         miq_report_schedule_disable
-                                                                         miq_report_schedule_edit))
+      @current_user = login_as FactoryBot.create(:user, :features => %w[miq_report_schedule_enable
+                                                                        miq_report_schedule_disable
+                                                                        miq_report_schedule_edit])
       allow(User).to receive(:server_timezone).and_return("UTC")
     end
 
@@ -740,9 +740,9 @@ describe ReportController do
       end
 
       it "contains current group id in sched_action field" do
-        controller.params = {:button => "add",
+        controller.params = {:button     => "add",
                              :controller => "report",
-                             :action => "schedule_edit"}
+                             :action     => "schedule_edit"}
         controller.miq_report_schedule_disable
         allow(controller).to receive_messages(:load_edit => true)
         allow(controller).to receive(:replace_right_cell)
@@ -777,13 +777,13 @@ describe ReportController do
       ReportController::REPORT_X_BUTTON_ALLOWED_ACTIONS.each_pair do |action_name, method|
         it "calls the appropriate method: '#{method}' for action '#{action_name}'" do
           expect(controller).to receive(method)
-          get :x_button, :params => { :pressed => action_name }
+          get :x_button, :params => {:pressed => action_name}
         end
       end
     end
 
     it 'exception is raised for unknown action' do
-      get :x_button, :params => { :pressed => 'random_dude', :format => :html }
+      get :x_button, :params => {:pressed => 'random_dude', :format => :html}
       expect(response).to render_template('layouts/exception')
     end
   end
@@ -793,7 +793,7 @@ describe ReportController do
     render_views
 
     before do
-      login_as user_with_feature(%w(miq_report_export))
+      login_as user_with_feature(%w[miq_report_export])
       allow(controller).to receive(:x_active_tree) { :export_tree }
     end
 
@@ -838,7 +838,7 @@ describe ReportController do
     end
 
     context "when there are widget parameters" do
-      let(:widget_list) { %w(1 2 3) }
+      let(:widget_list) { %w[1 2 3] }
       let(:widget_yaml) { "the widget yaml" }
       let(:widgets) { [double("MiqWidget")] }
 
@@ -1209,7 +1209,7 @@ describe ReportController do
           instance_of(TreeBuilderReportDashboards)
         )
       )
-      controller.send(:replace_right_cell, :replace_trees => %i(reports schedules savedreports db widgets))
+      controller.send(:replace_right_cell, :replace_trees => %i[reports schedules savedreports db widgets])
     end
   end
 
@@ -1264,7 +1264,7 @@ describe ReportController do
           }
         )
 
-        post :x_button, :params => { :pressed => 'miq_report_run', :id => rpt.id }
+        post :x_button, :params => {:pressed => 'miq_report_run', :id => rpt.id}
 
         expect(response.status).to eq(200)
       end
@@ -1294,11 +1294,11 @@ describe ReportController do
 
         it "is allowed to see miq report result for User1(with current group Group2)" do
           report_result_id = @rpt.miq_report_results.first.id
-          controller.params = {:id => report_result_id,
+          controller.params = {:id         => report_result_id,
                                :controller => "report",
-                               :action => "explorer"}
+                               :action     => "explorer"}
           controller.instance_variable_set(:@sb, {})
-          controller.instance_variable_set(:@settings, :perpage => { :reports => 20 })
+          controller.instance_variable_set(:@settings, :perpage => {:reports => 20})
           allow(controller).to receive(:get_all_reps)
           controller.send(:show_saved_report, report_result_id)
 

@@ -11,6 +11,6 @@ describe ConfigurationJobHelper::TextualSummary do
     expect(textual_provider[:link]).to eq("/ems_automation/show/#{manager.id}")
   end
 
-  include_examples "textual_group", "Relationships", %i(provider service parameters status)
-  include_examples "textual_group", "Properties", %i(name description type status status_reason)
+  include_examples "textual_group", "Relationships", %i[provider service parameters status]
+  include_examples "textual_group", "Properties", %i[name description type status status_reason]
 end

@@ -34,7 +34,7 @@ describe GuestDeviceController do
     end
 
     context "with invalid id" do
-      subject { get :show, :params => {:id => (@guest_device.id + 1) } }
+      subject { get :show, :params => {:id => (@guest_device.id + 1)} }
 
       it "should redirect to #show_list" do
         is_expected.to have_http_status 302

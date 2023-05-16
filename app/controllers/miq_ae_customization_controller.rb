@@ -185,7 +185,7 @@ class MiqAeCustomizationController < ApplicationController
 
   # Dialog show selected from catalog explorer
   def show
-    assert_privileges('dialog_accord')  # feature like miq_ae_customization_service_dialog_show is missing
+    assert_privileges('dialog_accord') # feature like miq_ae_customization_service_dialog_show is missing
     nodes = params[:id].split("-")
     record = Dialog.find_by(:id =>nodes.last)
     self.x_active_accord = "dialogs"
@@ -275,11 +275,12 @@ class MiqAeCustomizationController < ApplicationController
   end
 
   def get_specific_node_info(node)
-    if x_active_tree == :ab_tree
+    case x_active_tree
+    when :ab_tree
       ab_get_node_info(node)
-    elsif x_active_tree == :dialogs_tree
+    when :dialogs_tree
       dialog_get_node_info(node)
-    elsif x_active_tree == :dialog_import_export_tree
+    when :dialog_import_export_tree
       name_sorted_dialogs = Dialog.all.sort_by { |dialog| dialog.name.downcase }
       @dialog_exports = name_sorted_dialogs.collect { |dialog| [dialog.name, dialog.id] }
       @right_cell_text = _("Service Dialog Import / Export")
@@ -326,12 +327,12 @@ class MiqAeCustomizationController < ApplicationController
   end
 
   def no_items_selected?(field_name)
-    !params[field_name] || params[field_name].length.zero? || params[field_name][0] == ""
+    params[field_name].blank? || params[field_name][0] == ""
   end
 
   def rebuild_toolbars(presenter)
-    unless @in_a_form
-      c_tb = build_toolbar(center_toolbar_filename) if center_toolbar_filename
+    if !@in_a_form && center_toolbar_filename
+      c_tb = build_toolbar(center_toolbar_filename)
     end
 
     presenter.set_visibility(c_tb.present?, :toolbar)
@@ -370,13 +371,14 @@ class MiqAeCustomizationController < ApplicationController
   end
 
   def setup_presenter_based_on_active_tree(nodetype, presenter)
-    if x_active_tree == :ab_tree
+    case x_active_tree
+    when :ab_tree
       setup_presenter_for_ab_tree(nodetype, presenter)
-    elsif x_active_tree == :dialogs_tree
+    when :dialogs_tree
       setup_presenter_for_dialogs_tree(nodetype, presenter)
-    elsif x_active_tree == :old_dialogs_tree
+    when :old_dialogs_tree
       setup_presenter_for_old_dialogs_tree(nodetype, presenter)
-    elsif x_active_tree == :dialog_import_export_tree
+    when :dialog_import_export_tree
       presenter.update(:main_div, render_proc[:partial => "dialog_import_export"])
     end
   end
@@ -445,10 +447,6 @@ class MiqAeCustomizationController < ApplicationController
 
       presenter.reset_one_trans
     end
-  end
-
-  def group_button_add_save(typ)
-    super(typ)
   end
 
   menu_section :automate

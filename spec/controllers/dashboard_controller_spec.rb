@@ -19,7 +19,7 @@ describe DashboardController do
 
     it "validates user" do
       skip_data_checks
-      post :authenticate, :params => { :user_name => user_with_role.userid, :user_password => 'dummy' }
+      post :authenticate, :params => {:user_name => user_with_role.userid, :user_password => 'dummy'}
       expect_successful_login(user_with_role)
     end
 
@@ -31,7 +31,7 @@ describe DashboardController do
 
     it "requires user" do
       skip_data_checks
-      post :authenticate, :params => { :user_name => 'bogus', :password => "bad" }
+      post :authenticate, :params => {:user_name => 'bogus', :password => "bad"}
       expect_failed_login('username or password')
     end
 
@@ -41,7 +41,7 @@ describe DashboardController do
       user_with_role.update(:miq_groups => [group1, group2])
 
       skip_data_checks
-      post :authenticate, :params => { :user_name => user_with_role.userid, :user_password => 'dummy' }
+      post :authenticate, :params => {:user_name => user_with_role.userid, :user_password => 'dummy'}
       expect_successful_login(user_with_role)
 
       user_with_role.update(:current_group => group2)
@@ -53,7 +53,7 @@ describe DashboardController do
 
     it "verifies group" do
       skip_data_checks
-      post :authenticate, :params => { :user_name => user_with_role.userid, :user_password => 'dummy' }
+      post :authenticate, :params => {:user_name => user_with_role.userid, :user_password => 'dummy'}
       expect_successful_login(user_with_role)
 
       # no longer has access to this group
@@ -67,25 +67,25 @@ describe DashboardController do
 
     it "requires group" do
       user = FactoryBot.create(:user, :current_group => nil)
-      post :authenticate, :params => { :user_name => user.userid, :user_password => "dummy" }
+      post :authenticate, :params => {:user_name => user.userid, :user_password => "dummy"}
       expect_failed_login('Group')
     end
 
     it "requires role" do
       user = FactoryBot.create(:user_with_group)
-      post :authenticate, :params => { :user_name => user.userid, :user_password => "dummy" }
+      post :authenticate, :params => {:user_name => user.userid, :user_password => "dummy"}
       expect_failed_login('Role')
     end
 
     it "allow users in with no vms" do
       skip_data_checks
-      post :authenticate, :params => { :user_name => user_with_role.userid, :user_password => "dummy" }
+      post :authenticate, :params => {:user_name => user_with_role.userid, :user_password => "dummy"}
       expect_successful_login(user_with_role)
     end
 
     it "redirects to a proper start page" do
       skip_data_checks('some_url')
-      post :authenticate, :params => { :user_name => user_with_role.userid, :user_password => "dummy" }
+      post :authenticate, :params => {:user_name => user_with_role.userid, :user_password => "dummy"}
       expect_successful_login(user_with_role, 'some_url')
     end
   end
@@ -93,7 +93,7 @@ describe DashboardController do
   context "SAML and OIDC support" do
     before { EvmSpecHelper.create_guid_miq_server_zone }
 
-    %i(saml oidc).each do |protocol|
+    %i[saml oidc].each do |protocol|
       it "#{protocol.upcase} login should redirect to the protected page" do
         page = double("page")
         allow(page).to receive(:<<).with(any_args)
@@ -201,7 +201,7 @@ describe DashboardController do
       before do
         allow(User).to receive(:authenticate).and_return(user)
         allow(controller).to receive(:session).and_return(:start_url => '/dashboard/show')
-        allow(::Settings.product.maindb).to receive(:constantize).and_return(providers)
+        allow(Settings.product.maindb).to receive(:constantize).and_return(providers)
       end
 
       subject { controller.send(:validate_user, user) }
@@ -259,9 +259,9 @@ describe DashboardController do
       allow(MiqServer).to receive(:my_zone).and_return('default')
       allow(controller).to receive(:check_privileges).and_return(true)
       allow(controller).to receive(:assert_privileges).and_return(true)
-      post :widget_add, :params => { :widget => wi.id }
+      post :widget_add, :params => {:widget => wi.id}
       expect(controller.send(:flash_errors?)).not_to be_truthy
-      post :widget_add, :params => { :widget => wi.id }
+      post :widget_add, :params => {:widget => wi.id}
       expect(controller.send(:flash_errors?)).to be_truthy
       expect(assigns(:flash_array).first[:message]).to include("is already part of the edited dashboard")
     end
@@ -344,13 +344,12 @@ describe DashboardController do
 
     let(:user) { FactoryBot.create(:user, :miq_groups => [group]) }
 
-
     let(:wset) do
       FactoryBot.create(
         :miq_widget_set,
-        :name     => "Widgets",
-        :userid   => user.userid,
-        :owner    => group,
+        :name                  => "Widgets",
+        :userid                => user.userid,
+        :owner                 => group,
         :last_group_db_updated => Time.now.utc
       )
     end
@@ -416,13 +415,13 @@ describe DashboardController do
 
       let(:ws1) do
         FactoryBot.create(:miq_widget_set,
-                          :name     => 'A',
-                          :owner    => group)
+                          :name  => 'A',
+                          :owner => group)
       end
       let(:ws2) do
         FactoryBot.create(:miq_widget_set,
-                          :name     => 'B',
-                          :owner    => group)
+                          :name  => 'B',
+                          :owner => group)
       end
 
       before do
@@ -431,7 +430,7 @@ describe DashboardController do
         controller.params = {'uib-tab' => ws2.id.to_s}
         controller.instance_variable_set(:@sb, {})
         controller.instance_variable_set(:@current_user, user)
-        group.update(:settings => { :dashboard_order => [ws1.id.to_s, ws2.id.to_s] })
+        group.update(:settings => {:dashboard_order => [ws1.id.to_s, ws2.id.to_s]})
       end
 
       it 'sets id of selected tab properly' do

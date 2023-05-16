@@ -9,11 +9,11 @@ describe ApplicationHelper do
     let(:child_group)                   { FactoryBot.create(:miq_group, :role => child_role, :tenant => child_tenant) }
     let(:grand_child_group) do
       FactoryBot.create(:miq_group, :role   => grand_child_tenant_role,
-                                     :tenant => grand_child_tenant)
+                                    :tenant => grand_child_tenant)
     end
     let(:great_grand_child_group) do
       FactoryBot.create(:miq_group, :role   => great_grand_child_tenant_role,
-                                     :tenant => great_grand_child_tenant)
+                                    :tenant => great_grand_child_tenant)
     end
     let!(:admin_user)             { FactoryBot.create(:user_admin) }
     let!(:child_user)             { FactoryBot.create(:user, :miq_groups => [child_group]) }

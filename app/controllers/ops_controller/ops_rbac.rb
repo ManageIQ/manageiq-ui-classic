@@ -462,7 +462,6 @@ module OpsController::OpsRbac
   def rbac_group_user_lookup
     assert_privileges(params[:id] == "new" ? "rbac_group_add" : "rbac_group_edit")
 
-
     rbac_group_user_lookup_field_changed
     add_flash(_("User must be entered to perform LDAP Group Look Up"), :error) if @edit[:new][:user].blank?
 
@@ -605,7 +604,7 @@ module OpsController::OpsRbac
                       else
                         [_('EVM Group'), record.description]
                       end
-        add_flash(_("Read Only %{model} \"%{name}\" can not be edited") % {:model => model, :name => name }, :warning)
+        add_flash(_("Read Only %{model} \"%{name}\" can not be edited") % {:model => model, :name => name}, :warning)
         javascript_flash
         return
       end
@@ -662,12 +661,12 @@ module OpsController::OpsRbac
       record = @edit[:user_id] ? User.find_by(:id => @edit[:user_id]) : User.new
       validated = rbac_user_validate?
       rbac_user_set_record_vars(record)
-    when :group then
+    when :group
       record = @edit[:group_id] ? MiqGroup.find_by(:id => @edit[:group_id]) : MiqGroup.new
       validated = rbac_group_validate?
       rbac_group_set_record_description_role(record) # Set new Description, Role and Tenant for a new Group
       rbac_group_set_record_vars(record) if validated
-    when :role  then
+    when :role
       record = @edit[:role_id] ? MiqUserRole.find_by(:id => @edit[:role_id]) : MiqUserRole.new
       validated = rbac_role_validate?
       rbac_role_set_record_vars(record)
@@ -872,7 +871,7 @@ module OpsController::OpsRbac
       @group.get_belongsto_filters.each do |b| # Go thru the belongsto tags
         bobj = MiqFilter.belongsto2object(b) # Convert to an object
         if bobj
-          @belongsto[bobj.class.to_s + "_" + bobj.id.to_s] = b # Store in hash as <class>_<id> string
+          @belongsto["#{bobj.class}_#{bobj.id}"] = b # Store in hash as <class>_<id> string
         else
           @deleted_belongsto_filters ||= []
           @deleted_belongsto_filters.push(MiqFilter.belongsto2path_human(b))
@@ -880,7 +879,7 @@ module OpsController::OpsRbac
       end
       # Build the managed filters hash
       [@group.get_managed_filters].flatten.each do |f|
-        @filters[f.split("/")[-2] + "-" + f.split("/")[-1]] = f
+        @filters["#{f.split("/")[-2]}-#{f.split("/")[-1]}"] = f
       end
     end
 
@@ -892,7 +891,7 @@ module OpsController::OpsRbac
     case @sb[:active_rbac_group_tab]
     when 'rbac_customer_tags'
       cats = Classification.categories.select do |c|
-        c.show || !%w[folder_path_blue folder_path_yellow].include?(c.name) && !(c.read_only? || c.entries.empty?)
+        c.show || (%w[folder_path_blue folder_path_yellow].exclude?(c.name) && !(c.read_only? || c.entries.empty?))
       end
       cats.sort_by! { |t| t.description.try(:downcase) } # Get the categories, sort by description
       tags = cats.map do |cat|
@@ -901,7 +900,7 @@ module OpsController::OpsRbac
           :description => cat.description,
           :singleValue => false,
           :values      => cat.entries.sort_by { |e| e[:description.downcase] }.map do |entry|
-            { :id => entry.id.to_s, :description => entry.description }
+            {:id => entry.id.to_s, :description => entry.description}
           end
         }
       end
@@ -973,7 +972,7 @@ module OpsController::OpsRbac
     # prefill form fields for edit and copy action
     @edit[:new].merge!(:name  => @user.name,
                        :email => @user.email,
-                       :group => @user.miq_groups ? @user.miq_groups.map(&:id).sort : nil)
+                       :group => @user.miq_groups&.map(&:id)&.sort)
     unless copy
       @edit[:new].merge!(:userid   => @user.userid,
                          :password => @user.password,
@@ -1013,7 +1012,7 @@ module OpsController::OpsRbac
     when 'null', nil
       []
     when String
-      @edit[:new][:group].split(',').delete_if(&:blank?).map(&:to_i).sort
+      @edit[:new][:group].split(',').compact_blank!.map(&:to_i).sort
     when Array
       @edit[:new][:group].map(&:to_i).sort
     end
@@ -1135,13 +1134,13 @@ module OpsController::OpsRbac
 
     # Build the managed filters hash
     [@group.get_managed_filters].flatten.each do |f|
-      @edit[:new][:filters][f.split("/")[-2] + "-" + f.split("/")[-1]] = f
+      @edit[:new][:filters]["#{f.split("/")[-2]}-#{f.split("/")[-1]}"] = f
     end
     # Build the belongsto filters hash
     @group.get_belongsto_filters.each do |b| # Go thru the belongsto tags
       bobj = MiqFilter.belongsto2object(b)   # Convert to an object
       if bobj
-        @edit[:new][:belongsto][bobj.class.to_s + "_" + bobj.id.to_s] = b # Store in hash as <class>_<id> string
+        @edit[:new][:belongsto]["#{bobj.class}_#{bobj.id}"] = b # Store in hash as <class>_<id> string
       else
         @deleted_belongsto_filters ||= []
         @deleted_belongsto_filters.push(MiqFilter.belongsto2path_human(b))
@@ -1164,9 +1163,9 @@ module OpsController::OpsRbac
     all_tenants, all_projects = Tenant.tenant_and_project_names
     placeholder_text_tenant = _('Choose a Project/Tenant')
     @edit[:projects_tenants].push(["", [["<#{placeholder_text_tenant}>",
-                                         :selected => "<#{placeholder_text_tenant}>",
-                                         :disabled => "<#{placeholder_text_tenant}>",
-                                         :style    => 'display:none']]])
+                                         {:selected => "<#{placeholder_text_tenant}>",
+                                          :disabled => "<#{placeholder_text_tenant}>",
+                                          :style    => 'display:none'}]]])
     @edit[:projects_tenants].push(["Projects", all_projects]) if all_projects.present?
     @edit[:projects_tenants].push(["Tenants", all_tenants]) if all_tenants.present?
     @edit[:new][:group_tenant] = @group.tenant_id

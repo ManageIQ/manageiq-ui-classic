@@ -2,8 +2,8 @@ module OpsController::Settings::Common
   extend ActiveSupport::Concern
   include OpsHelper
 
-  logo_dir = File.expand_path(File.join(Rails.root, "public/upload"))
-  Dir.mkdir(logo_dir) unless File.exist?(logo_dir)
+  logo_dir = File.expand_path(Rails.public_path.join('upload').to_s)
+  FileUtils.mkdir_p(logo_dir)
   @@logo_file = File.join(logo_dir, "custom_logo.png")
   @@login_logo_file = File.join(logo_dir, "custom_login_logo.png")
   @@login_brand_file = File.join(logo_dir, "custom_brand.png")
@@ -405,12 +405,11 @@ module OpsController::Settings::Common
       save_advanced_settings(resource)
       return
     end
-    if !%w[settings_advanced].include?(@sb[:active_tab]) &&
+    if %w[settings_advanced].exclude?(@sb[:active_tab]) &&
        x_node.split("-").first != "z"
       @update.each_key do |category|
         @update[category] = @edit[:new][category].dup
       end
-
 
       config_valid, config_errors = Vmdb::Settings.validate(@update)
       if config_valid
@@ -477,8 +476,8 @@ module OpsController::Settings::Common
     if @edit[:new][:server][:name].blank?
       add_flash(_("Appliance name must be entered."), :error)
     end
-    if @edit[:new][:server][:custom_support_url].present? && @edit[:new][:server][:custom_support_url_description].blank? ||
-       @edit[:new][:server][:custom_support_url].blank? && @edit[:new][:server][:custom_support_url_description].present?
+    if (@edit[:new][:server][:custom_support_url].present? && @edit[:new][:server][:custom_support_url_description].blank?) ||
+       (@edit[:new][:server][:custom_support_url].blank? && @edit[:new][:server][:custom_support_url_description].present?)
       add_flash(_("Custom Support URL and Description both must be entered."), :error)
     end
   end
@@ -606,7 +605,7 @@ module OpsController::Settings::Common
       auth = new[:authentication]
       @sb[:form_vars][:session_timeout_mins] = params[:session_timeout_mins] if params[:session_timeout_mins]
       @sb[:form_vars][:session_timeout_hours] = params[:session_timeout_hours] if params[:session_timeout_hours]
-      new[:session][:timeout] = @sb[:form_vars][:session_timeout_hours].to_i * 3600 + @sb[:form_vars][:session_timeout_mins].to_i * 60 if params[:session_timeout_hours] || params[:session_timeout_mins]
+      new[:session][:timeout] = (@sb[:form_vars][:session_timeout_hours].to_i * 3600) + (@sb[:form_vars][:session_timeout_mins].to_i * 60) if params[:session_timeout_hours] || params[:session_timeout_mins]
       @sb[:newrole] = (params[:ldap_role].to_s == "1") if params[:ldap_role]
       @sb[:new_amazon_role] = (params[:amazon_role].to_s == "1") if params[:amazon_role]
       @sb[:new_httpd_role] = (params[:httpd_role].to_s == "1") if params[:httpd_role]
@@ -695,11 +694,11 @@ module OpsController::Settings::Common
       @sb[:form_vars][:agent_log_wraptime_hours] = params[:agent_log_wraptime_hours] if params[:agent_log_wraptime_hours]
       agent = new[:agent]
       agent_log = agent[:log]
-      agent[:heartbeat_frequency] = @sb[:form_vars][:agent_heartbeat_frequency_mins].to_i * 60 + @sb[:form_vars][:agent_heartbeat_frequency_secs].to_i if params[:agent_heartbeat_frequency_mins] || params[:agent_heartbeat_frequency_secs]
+      agent[:heartbeat_frequency] = (@sb[:form_vars][:agent_heartbeat_frequency_mins].to_i * 60) + @sb[:form_vars][:agent_heartbeat_frequency_secs].to_i if params[:agent_heartbeat_frequency_mins] || params[:agent_heartbeat_frequency_secs]
       agent[:readonly] = (params[:agent_readonly] == "1") if params[:agent_readonly]
       agent_log[:level] = params[:agent_log_level] if params[:agent_log_level]
       agent_log[:wrap_size] = params[:agent_log_wrapsize] if params[:agent_log_wrapsize]
-      agent_log[:wrap_time] = @sb[:form_vars][:agent_log_wraptime_days].to_i * 3600 * 24 + @sb[:form_vars][:agent_log_wraptime_hours].to_i * 3600 if params[:agent_log_wraptime_days] || params[:agent_log_wraptime_hours]
+      agent_log[:wrap_time] = (@sb[:form_vars][:agent_log_wraptime_days].to_i * 3600 * 24) + (@sb[:form_vars][:agent_log_wraptime_hours].to_i * 3600) if params[:agent_log_wraptime_days] || params[:agent_log_wraptime_hours]
     when "settings_advanced"                          # Advanced tab
       if params[:file_data]                           # If save sent in the file data
         new[:file_data] = params[:file_data]          # Put into @edit[:new] hash
@@ -732,7 +731,7 @@ module OpsController::Settings::Common
       @prev_selected_svr = session[:edit][:new][:selected_server]
     elsif %w[settings_server settings_authentication
              settings_custom_logos settings_advanced].include?(@sb[:active_tab])
-      return unless load_edit("settings_#{params[:id]}_edit__#{@sb[:selected_server_id]}", "replace_cell__explorer")
+      nil unless load_edit("settings_#{params[:id]}_edit__#{@sb[:selected_server_id]}", "replace_cell__explorer")
     end
   end
 

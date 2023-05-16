@@ -1,5 +1,5 @@
 describe CloudSubnetHelper::TextualSummary do
-  include_examples "textual_group", "Properties", %i(
+  include_examples "textual_group", "Properties", %i[
     name
     type
     cidr
@@ -9,8 +9,8 @@ describe CloudSubnetHelper::TextualSummary do
     allocation_pools
     host_routes
     ip_version
-  )
-  include_examples "textual_group", "Relationships", %i(
+  ]
+  include_examples "textual_group", "Relationships", %i[
     parent_ems_cloud
     ems_network
     cloud_tenant
@@ -23,5 +23,5 @@ describe CloudSubnetHelper::TextualSummary do
     network_ports
     security_groups
     custom_button_events
-  )
+  ]
 end

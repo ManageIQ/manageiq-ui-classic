@@ -7,7 +7,7 @@ class ApplicationHelper::Button::PhysicalServerProvision < ApplicationHelper::Bu
     # TODO: EmsPhysicalInfra.supporting(:provisioning).none?
     # TODO: stepping stone needed for above: EmsPhysicalInfra.all.none? { |ems| ems.class.supports?(:provisioning) }
     elsif EmsPhysicalInfra.all.none? { |ems| ems.supports?(:provisioning) }
-        @error_message = _('No Physical Infrastructure Providers that support VM provisioning available')
+      @error_message = _('No Physical Infrastructure Providers that support VM provisioning available')
     end
     @error_message.present?
   end

@@ -134,9 +134,9 @@ module ApplicationController::Tags
     @edit[:new][:assignments] = JSON.parse(params['data']).flat_map { |tag| tag['values'].map { |v| v['id'].to_i } }
     Classification.bulk_reassignment(:model      => @edit[:tagging],
                                      :object_ids => @edit[:object_ids],
-                                     :add_ids    => @edit[:new][:assignments] - @edit[:current][:assignments].map { |c| c.id },
-                                     :delete_ids => @edit[:current][:assignments].map { |c| c.id } - @edit[:new][:assignments])
-  rescue StandardError => bang
+                                     :add_ids    => @edit[:new][:assignments] - @edit[:current][:assignments].map(&:id),
+                                     :delete_ids => @edit[:current][:assignments].map(&:id) - @edit[:new][:assignments])
+  rescue => bang
     add_flash(_("Error during 'Save Tags': %{error_message}") % {:error_message => bang.message}, :error)
   else
     add_flash(_("Tag edits were successfully saved"))
@@ -173,7 +173,7 @@ module ApplicationController::Tags
         :description => cat.description,
         :singleValue => cat.single_value,
         :values      => cat.entries.sort_by { |e| e[:description.downcase] }.map do |entry|
-          { :id => entry.id.to_s, :description => entry.description }
+          {:id => entry.id.to_s, :description => entry.description}
         end
       }
     end
@@ -183,11 +183,11 @@ module ApplicationController::Tags
         :description => tag.parent.description,
         :id          => tag.parent.id.to_s,
         :values      => assignments.select { |assignment| assignment.parent_id == tag.parent_id }.map do |assignment|
-          { :description => assignment.description, :id => assignment.id.to_s }
+          {:description => assignment.description, :id => assignment.id.to_s}
         end
       }
     end
-    @tags = {:tags => @tags, :assignedTags => assigned_tags, :affectedItems => @tagitems.map { |i| i.id.to_s } }
+    @tags = {:tags => @tags, :assignedTags => assigned_tags, :affectedItems => @tagitems.map { |i| i.id.to_s }}
     @button_urls = {
       :save_url   => button_url(controller_path, @sb[:rec_id] || @edit[:object_ids][0], 'save'),
       :cancel_url => button_url(controller_path, @sb[:rec_id] || @edit[:object_ids][0], 'cancel')
@@ -222,7 +222,7 @@ module ApplicationController::Tags
   def locals_for_tagging
     {:action_url   => 'tagging',
      :multi_record => true,
-     :record_id    => @sb[:rec_id] || @edit[:object_ids] && @edit[:object_ids][0]}
+     :record_id    => @sb[:rec_id] || (@edit[:object_ids] && @edit[:object_ids][0])}
   end
 
   def update_tagging_partials(presenter)

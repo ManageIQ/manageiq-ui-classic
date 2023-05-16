@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DiagnosticsCURepairForm Component Should render a new DiagnosticsCURepair form 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <DiagnosticsCURepairForm>
+    Note : Gap Collection is only available for VMware vSphere Infrastructures
+  </DiagnosticsCURepairForm>
+</Provider>
+`;

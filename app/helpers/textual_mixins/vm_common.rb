@@ -38,12 +38,14 @@ module TextualMixins::VmCommon
 
   def textual_mac_address
     return nil if @record.template?
+
     macs = @record.mac_addresses
     {:label => n_("MAC Address", "MAC Addresses", macs.size), :value => macs.join(", ")}
   end
 
   def textual_custom_1
     return nil if @record.custom_1.blank?
+
     {:label => _("Custom Identifier"), :value => @record.custom_1}
   end
 
@@ -53,14 +55,15 @@ module TextualMixins::VmCommon
 
   def os_linux_or_unknown?
     os = os_normalized
-    os == "unknown" || os =~ /linux/
+    os == "unknown" || os.include?('linux')
   end
 
   def textual_guest_applications
     os = os_normalized
     return nil if os == "unknown"
+
     num = @record.number_of(:guest_applications)
-    label = os =~ /linux/ ? n_("Package", "Packages", num) : n_("Application", "Applications", num)
+    label = os.include?('linux') ? n_("Package", "Packages", num) : n_("Application", "Applications", num)
 
     h = {:label => label, :icon => "ff ff-software-package", :value => num}
     if num.positive?
@@ -95,6 +98,7 @@ module TextualMixins::VmCommon
 
   def textual_win32_services
     return nil if os_linux_or_unknown?
+
     num = @record.number_of(:win32_services)
     h = {:label => _("Win32 Services"), :icon => "fa fa-cog", :value => num}
     if num.positive?
@@ -107,6 +111,7 @@ module TextualMixins::VmCommon
 
   def textual_kernel_drivers
     return nil if os_linux_or_unknown?
+
     num = @record.number_of(:kernel_drivers)
     # TODO: Why is this image different than graphical?
     h = {:label => _("Kernel Drivers"), :icon => "fa fa-cog", :value => num}
@@ -120,6 +125,7 @@ module TextualMixins::VmCommon
 
   def textual_filesystem_drivers
     return nil if os_linux_or_unknown?
+
     num = @record.number_of(:filesystem_drivers)
     # TODO: Why is this image different than graphical?
     h = {:label => _("File System Drivers"), :icon => "fa fa-cog", :value => num}
@@ -134,6 +140,7 @@ module TextualMixins::VmCommon
 
   def textual_registry_items
     return nil if os_linux_or_unknown?
+
     num = @record.number_of(:registry_items)
     # TODO: Why is this label different from the link title text?
     h = {:label => _("Registry Entries"), :icon => "pficon pficon-registry", :value => num}
@@ -167,6 +174,7 @@ module TextualMixins::VmCommon
 
   def textual_event_logs
     return nil if @record.kind_of?(ManageIQ::Providers::CloudManager::Template)
+
     num = @record.operating_system.nil? ? 0 : @record.operating_system.number_of(:event_logs)
     h = {:label => _("Event Logs"), :icon => "fa fa-file-text-o", :value => (num.zero? ? _("Not Available") : _("Available"))}
     if num.positive?
@@ -179,11 +187,13 @@ module TextualMixins::VmCommon
 
   def textual_vmsafe_enable
     return nil if @record.vmsafe_enable || @record.kind_of?(ManageIQ::Providers::CloudManager::Template)
+
     {:label => _("Enable"), :value => "false"}
   end
 
   def textual_processes
     return nil if @record.kind_of?(ManageIQ::Providers::CloudManager::Template)
+
     h = {:label => _("Running Processes"), :icon => "fa fa-cog"}
     date = last_date(:processes)
     if date.nil?
@@ -200,38 +210,45 @@ module TextualMixins::VmCommon
 
   def textual_vmsafe_agent_address
     return nil unless @record.vmsafe_enable
+
     {:label => _("Agent Address"), :value => @record.vmsafe_agent_address}
   end
 
   def textual_vmsafe_agent_port
     return nil unless @record.vmsafe_enable
+
     {:label => _("Agent Port"), :value => @record.vmsafe_agent_port}
   end
 
   def textual_vmsafe_fail_open
     return nil unless @record.vmsafe_enable
+
     {:label => _("Fail Open"), :value => @record.vmsafe_fail_open}
   end
 
   def textual_vmsafe_immutable_vm
     return nil unless @record.vmsafe_enable
+
     {:label => _("Immutable VM"), :value => @record.vmsafe_immutable_vm}
   end
 
   def textual_vmsafe_timeout
     return nil unless @record.vmsafe_enable
+
     {:label => _("Timeout (ms)"), :value => @record.vmsafe_timeout_ms}
   end
 
   def textual_miq_custom_attributes
     attrs = @record.miq_custom_attributes
     return nil if attrs.blank?
+
     attrs.sort_by(&:name).collect { |a| {:label => a.name, :value => a.value} }
   end
 
   def textual_ems_custom_attributes
     attrs = @record.ems_custom_attributes
     return nil if attrs.blank?
+
     attrs.sort_by { |a| a.name.to_s }.collect { |a| {:label => a.name, :value => a.value} }
   end
 
@@ -242,12 +259,14 @@ module TextualMixins::VmCommon
 
   def textual_boot_time
     return nil if @record.kind_of?(ManageIQ::Providers::CloudManager::Template)
+
     date = @record.boot_time
     {:label => _("Last Boot Time"), :value => (date.nil? ? _("N/A") : format_timezone(date))}
   end
 
   def textual_state_changed_on
     return nil if @record.kind_of?(ManageIQ::Providers::CloudManager::Template)
+
     date = @record.state_changed_on
     {:label => _("State Changed On"), :value => (date.nil? ? _("N/A") : format_timezone(date))}
   end

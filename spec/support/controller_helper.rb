@@ -45,7 +45,7 @@ module Spec
       end
 
       def assert_nested_list(parent, children, relation, label, child_path: nil)
-        child_path   ||= relation.singularize
+        child_path ||= relation.singularize
         parent_route = controller.restful? ? controller.class.table_name : "#{controller.class.table_name}/show"
         child_route  = "#{child_path}/show"
 
@@ -135,15 +135,17 @@ module Spec
       RSpec::Matchers.define :match_gtl_options do |expected|
         def matches_additional(actual, expected)
           return true unless expected
-          expected.keys.find_all { |key| expected[key] != actual.send(key) }.empty?
+
+          expected.keys.none? { |key| expected[key] != actual.send(key) }
         end
 
         def matches_basic(actual, expected)
-          expected.keys.find_all { |key| expected[key] != actual[key] }.empty?
+          expected.keys.none? { |key| expected[key] != actual[key] }
         end
 
         def matches_selected_records(actual, expected)
           return true unless expected
+
           actual.sort == expected.sort
         end
 

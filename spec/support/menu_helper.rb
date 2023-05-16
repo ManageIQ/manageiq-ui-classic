@@ -8,7 +8,7 @@ module Spec
         before: compute
         section_type: big_iframe
         href: http://www.redhat.com
-EOF
+      EOF
 
       ITEM_DEF = <<~EOF.freeze
         type: item
@@ -20,7 +20,7 @@ EOF
         parent: redhat
         href: http://www.redhat.com/en/services/training/all-courses-exams
         item_type: big_iframe
-EOF
+      EOF
 
       def create_temp_file(content)
         temp_file = Tempfile.new('snafu')

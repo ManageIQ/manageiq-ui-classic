@@ -19,13 +19,13 @@ class TreeBuilderProtect < TreeBuilder
 
   def x_get_tree_roots
     nodes = MiqPolicySet.all.sort_by { |profile| profile.description.downcase }.map do |profile|
-      { :id         => "policy_profile_#{profile.id}",
-        :text       => profile.description,
-        :icon       => profile.active? ? "fa fa-shield" : "fa fa-inactive fa-shield",
-        :tip        => profile.description,
-        :checked    => @data[:new][profile.id] == @data[:pol_items].length,
-        :nodes      => profile.members,
-        :selectable => false}
+      {:id         => "policy_profile_#{profile.id}",
+       :text       => profile.description,
+       :icon       => profile.active? ? "fa fa-shield" : "fa fa-inactive fa-shield",
+       :tip        => profile.description,
+       :checked    => @data[:new][profile.id] == @data[:pol_items].length,
+       :nodes      => profile.members,
+       :selectable => false}
     end
     count_only_or_objects(false, nodes)
   end

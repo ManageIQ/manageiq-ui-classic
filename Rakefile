@@ -8,7 +8,7 @@ ManageIQ::UI::Classic::Engine.load_tasks
 begin
   require 'rspec/core/rake_task'
 
-  APP_RAKEFILE = File.expand_path("../spec/manageiq/Rakefile", __FILE__)
+  APP_RAKEFILE = File.expand_path('spec/manageiq/Rakefile', __dir__)
   load 'rails/tasks/engine.rake'
 rescue LoadError
 end
@@ -22,25 +22,25 @@ if defined?(RSpec) && defined?(RSpec::Core::RakeTask)
   RSpec::Core::RakeTask.new(:spec => ["app:test:initialize", "app:evm:compile_sti_loader"]) do |t|
     spec_dir = File.expand_path("spec", __dir__)
     EvmTestHelper.init_rspec_task(t, ['--require', File.join(spec_dir, 'spec_helper')])
-    t.pattern = FileList[spec_dir + '/**/*_spec.rb'].exclude(spec_dir + '/manageiq/**/*_spec.rb').exclude(spec_dir + '/routes_spec.rb')
+    t.pattern = FileList["#{spec_dir}/**/*_spec.rb"].exclude("#{spec_dir}/manageiq/**/*_spec.rb").exclude("#{spec_dir}/routes_spec.rb")
   end
 end
 
 # Only load the jasmine tasks if we are within this repo, otherwise, the bundle
 # won't contain the jasmine gem (i.e., from manageiq)
-if ENV["BUNDLE_GEMFILE"].nil? || ENV["BUNDLE_GEMFILE"] == File.expand_path("../Gemfile", __FILE__)
+if ENV["BUNDLE_GEMFILE"].nil? || ENV["BUNDLE_GEMFILE"] == File.expand_path('Gemfile', __dir__)
   require 'jasmine'
   load 'jasmine/tasks/jasmine.rake'
   require './config/jasmine_overrides'
 
   # running jasmine outside ci ignores the `random: false` in `jasmine.yml` - needs a message
-  task :jasmine_url do
+  task :jasmine_url => :environment do
     puts
     puts "Please open http://localhost:#{Jasmine.config.port(:server)}/?random=false"
     puts
   end
 
-  Rake::Task['jasmine'].prerequisites.unshift 'jasmine_url'
+  Rake::Task['jasmine'].prerequisites.unshift('jasmine_url')
 end
 
 namespace :spec do
@@ -58,14 +58,14 @@ namespace :spec do
   task :compile => ["app:assets:precompile"]
 
   desc "Run Jest tests"
-  task :jest do
+  task :jest => :environment do
     system('NODE_OPTIONS=--max_old_space_size=4096 yarn test')
     exit $CHILD_STATUS.exitstatus
   end
 
   namespace :jest do
     desc 'Run Jest tests with node debugger'
-    task :debug do
+    task :debug => :environment do
       puts
       puts "open your chrome://inspect/#devices on your chrome based browser (see https://facebook.github.io/jest/docs/en/troubleshooting.html for more details)"
       puts
@@ -74,7 +74,7 @@ namespace :spec do
   end
 
   desc "Run Debride"
-  task :debride do
+  task :debride => :environment do
     system('bash bin/ci/dead_method_check.sh')
     exit 0
   end
@@ -86,7 +86,7 @@ namespace :spec do
   task :cypress => "cypress:run_with_rails"
 
   namespace :cypress do
-    task :run_with_rails do
+    task :run_with_rails => :environment do
       # Set the rate limit to a large number to avoid 429: Too Many Requests errors
       # which can occur as cypress very quickly hits a lots of endpoints.
       puts "\n== Removing rate limit =="
@@ -107,13 +107,13 @@ namespace :spec do
     end
 
     desc "Run cypress specs (with a running Rails server)"
-    task :run do
+    task :run => :environment do
       ENV["CYPRESS_BROWSER"] ||= "chrome"
 
-      puts "\n== Cypress tests started for #{ENV["CYPRESS_BROWSER"]} browser =="
-      system("yarn cypress:run:#{ENV["CYPRESS_BROWSER"]}")
+      puts "\n== Cypress tests started for #{ENV.fetch("CYPRESS_BROWSER", nil)} browser =="
+      system("yarn cypress:run:#{ENV.fetch("CYPRESS_BROWSER", nil)}")
       exit_status = $?.exitstatus
-      puts "== Cypress tests for #{ENV["CYPRESS_BROWSER"]} browser completed =="
+      puts "== Cypress tests for #{ENV.fetch("CYPRESS_BROWSER", nil)} browser completed =="
 
       exit exit_status
     end

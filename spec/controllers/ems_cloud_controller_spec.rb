@@ -35,19 +35,19 @@ describe EmsCloudController do
 
     it "refresh relationships and power states" do
       ems = FactoryBot.create(:ems_amazon)
-      post :button, :params => { :id => ems.id, :pressed => "ems_cloud_refresh" }
+      post :button, :params => {:id => ems.id, :pressed => "ems_cloud_refresh"}
       expect(response.status).to eq(200)
     end
 
     it 'edit selected cloud provider' do
       ems = FactoryBot.create(:ems_amazon)
-      post :button, :params => { :miq_grid_checks => ems.id, :pressed => "ems_cloud_edit" }
+      post :button, :params => {:miq_grid_checks => ems.id, :pressed => "ems_cloud_edit"}
       expect(response.status).to eq(200)
     end
 
     it 'edit cloud provider tags' do
       ems = FactoryBot.create(:ems_amazon)
-      post :button, :params => { :miq_grid_checks => ems.id, :pressed => "ems_cloud_tag" }
+      post :button, :params => {:miq_grid_checks => ems.id, :pressed => "ems_cloud_tag"}
       expect(response.status).to eq(200)
     end
 
@@ -55,7 +55,7 @@ describe EmsCloudController do
       allow(controller).to receive(:protect_build_tree).and_return(nil)
       controller.instance_variable_set(:@protect_tree, OpenStruct.new(:name => "name", :locals_for_render => {}))
       ems = FactoryBot.create(:ems_amazon)
-      post :button, :params => { :miq_grid_checks => ems.id, :pressed => "ems_cloud_protect" }
+      post :button, :params => {:miq_grid_checks => ems.id, :pressed => "ems_cloud_protect"}
       expect(response.status).to eq(200)
 
       get :protect
@@ -65,16 +65,16 @@ describe EmsCloudController do
 
     it 'edit cloud provider tags' do
       ems = FactoryBot.create(:ems_amazon)
-      post :button, :params => { :id => ems.id, :pressed => "ems_cloud_timeline" }
+      post :button, :params => {:id => ems.id, :pressed => "ems_cloud_timeline"}
       expect(response.status).to eq(200)
 
-      get :show, :params => { :display => "timeline", :id => ems.id }
+      get :show, :params => {:display => "timeline", :id => ems.id}
       expect(response.status).to eq(200)
     end
 
     it 'edit cloud providers' do
       ems = FactoryBot.create(:ems_amazon)
-      post :button, :params => { :miq_grid_checks => ems.id, :pressed => "ems_cloud_edit" }
+      post :button, :params => {:miq_grid_checks => ems.id, :pressed => "ems_cloud_edit"}
       expect(response.status).to eq(200)
     end
   end
@@ -89,10 +89,10 @@ describe EmsCloudController do
       @ems = FactoryBot.create(:ems_amazon)
     end
 
-    subject { get :show, :params => { :id => @ems.id } }
+    subject { get :show, :params => {:id => @ems.id} }
 
     context "render listnav partial" do
-      subject { get :show, :params => { :id => @ems.id, :display => 'main' } }
+      subject { get :show, :params => {:id => @ems.id, :display => 'main'} }
       render_views
 
       it "correctly for summary page" do
@@ -106,7 +106,7 @@ describe EmsCloudController do
     end
 
     context "render dashboard" do
-      subject { get :show, :params => { :id => @ems.id, :display => 'dashboard' } }
+      subject { get :show, :params => {:id => @ems.id, :display => 'dashboard'} }
       render_views
 
       it 'never render template show' do
@@ -122,7 +122,7 @@ describe EmsCloudController do
     it 'displays only associated storage_managers' do
       FactoryBot.create(:ems_storage, :type =>  "ManageIQ::Providers::Amazon::StorageManager::Ebs", :parent_ems_id => @ems.id)
       FactoryBot.create(:ems_storage, :type =>  "ManageIQ::Providers::Amazon::StorageManager::Ebs", :parent_ems_id => @ems.id)
-      get :show, :params => { :display => "storage_managers", :id => @ems.id, :format => :js }
+      get :show, :params => {:display => "storage_managers", :id => @ems.id, :format => :js}
       expect(response).to render_template('layouts/react/_gtl')
       expect(response.status).to eq(200)
     end
@@ -232,8 +232,8 @@ describe EmsCloudController do
     end
   end
 
-  nested_lists = %w(availability_zones cloud_tenants cloud_volumes security_groups instances images
-     orchestration_stacks storage_managers)
+  nested_lists = %w[availability_zones cloud_tenants cloud_volumes security_groups instances images
+                    orchestration_stacks storage_managers]
 
   nested_lists.each do |custom_button_class|
     include_examples "relationship table screen with custom buttons", custom_button_class
@@ -251,14 +251,14 @@ describe EmsCloudController do
 
     let(:report) do
       FactoryBot.create(:miq_report,
-                         :name        => 'Cloud Providers',
-                         :db          => 'EmsCloud',
-                         :title       => 'Cloud Providers',
-                         :cols        => %w[name emstype_description],
-                         :col_order   => %w[name emstype_description tenant.name],
-                         :headers     => %w[Name Type Tenant],
-                         :col_options => {"tenant.name" => {:display_method => :user_super_admin?}},
-                         :include     => {"tenant" => {"columns" => ['name']}})
+                        :name        => 'Cloud Providers',
+                        :db          => 'EmsCloud',
+                        :title       => 'Cloud Providers',
+                        :cols        => %w[name emstype_description],
+                        :col_order   => %w[name emstype_description tenant.name],
+                        :headers     => %w[Name Type Tenant],
+                        :col_options => {"tenant.name" => {:display_method => :user_super_admin?}},
+                        :include     => {"tenant" => {"columns" => ['name']}})
     end
 
     include_examples 'hiding tenant column for non admin user', :name => "Name", :emstype_description => "Type"

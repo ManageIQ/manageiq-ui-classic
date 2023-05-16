@@ -55,7 +55,7 @@ class TreeController < ApplicationController
   #   single node if an fqname was specified (domain name at beginning)
   #   multiple nodes if a relative path was specified
   def automate_find_hierarchy(fqname)
-    fqname = fqname[1..-1] if fqname[0] == '/'
+    fqname = fqname[1..] if fqname[0] == '/'
     domain_name, *paths = fqname.downcase.split("/")
     relative_path = paths.join("/")
 

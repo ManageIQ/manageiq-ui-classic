@@ -32,7 +32,7 @@ class WidgetImportService
   def import_widgets(import_file_upload, widgets_to_import)
     number_imported_widgets = 0
     unless widgets_to_import.nil?
-      widgets = YAML.load(import_file_upload.uploaded_content)
+      widgets = YAML.safe_load(import_file_upload.uploaded_content)
 
       widgets = widgets.select do |widget|
         widgets_to_import.include?(widget["MiqWidget"]["title"])
@@ -93,6 +93,7 @@ class WidgetImportService
 
   def build_miq_schedule(schedule_contents)
     return if schedule_contents.blank?
+
     new_widget_id = schedule_contents.delete("widget_id")
 
     new_or_existing_schedule = MiqSchedule.where(

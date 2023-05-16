@@ -9,8 +9,8 @@ describe MiqAeCustomizationController do
 
       it "flash message displays Dialog Label being deleted" do
         dialog = FactoryBot.create(:dialog, :label       => "Test Label",
-                                             :description => "Test Description",
-                                             :buttons     => "submit,reset,cancel")
+                                            :description => "Test Description",
+                                            :buttons     => "submit,reset,cancel")
 
         controller.instance_variable_set(:@sb,
                                          :trees       => {
@@ -35,7 +35,7 @@ describe MiqAeCustomizationController do
     end
 
     context "restricted user access" do
-      let(:permissions) { %w(dialog_new_editor dialog_edit_editor) }
+      let(:permissions) { %w[dialog_new_editor dialog_edit_editor] }
 
       before do
         EvmSpecHelper.seed_specific_product_features(permissions)

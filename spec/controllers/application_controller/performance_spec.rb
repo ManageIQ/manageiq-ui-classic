@@ -1,5 +1,4 @@
 describe ApplicationController do
-
   describe '#skip_days_from_time_profile' do
     subject { ->(l) { described_class.new.send(:skip_days_from_time_profile, l) } }
 
@@ -22,7 +21,7 @@ describe ApplicationController do
     end
 
     describe 'perf_gen_tag_data_before_wait' do
-      %w(Hourly Daily).each do |type|
+      %w[Hourly Daily].each do |type|
         it "calls initiate_wait_for_task for '#{type}'" do
           controller.instance_variable_set(:@perf_record, FactoryBot.create(:host))
           controller.instance_variable_set(
@@ -58,7 +57,7 @@ describe ApplicationController do
           :@perf_options,
           :typ   => 'Hourly',
           :cat   => 'cat',
-          :model => 'Host',
+          :model => 'Host'
         )
         expect(controller).to receive(:prepare_perf_tag_chart).at_least(:once)
         expect(controller).to receive(:gen_perf_chart).at_least(:once)

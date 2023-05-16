@@ -10,18 +10,18 @@ describe DialogLocalService do
     it "returns a hash" do
       expect(service.determine_dialog_locals_for_svc_catalog_provision(
                resource_action, target, finish_submit_endpoint
-      )).to eq(
-        :resource_action_id     => 456,
-        :target_id              => 321,
-        :target_type            => 'service_template',
-        :real_target_type       => "ServiceTemplate",
-        :dialog_id              => 654,
-        :api_submit_endpoint    => "/api/service_catalogs/123/service_templates/321",
-        :api_action             => "order",
-        :finish_submit_endpoint => "finishsubmitendpoint",
-        :cancel_endpoint        => "/catalog/explorer",
-        :open_url               => false
-      )
+             )).to eq(
+               :resource_action_id     => 456,
+               :target_id              => 321,
+               :target_type            => 'service_template',
+               :real_target_type       => "ServiceTemplate",
+               :dialog_id              => 654,
+               :api_submit_endpoint    => "/api/service_catalogs/123/service_templates/321",
+               :api_action             => "order",
+               :finish_submit_endpoint => "finishsubmitendpoint",
+               :cancel_endpoint        => "/catalog/explorer",
+               :open_url               => false
+             )
     end
 
     it "uses the base class for service_template derived classes" do
@@ -57,7 +57,7 @@ describe DialogLocalService do
             :api_action             => "custom-button-name",
             :finish_submit_endpoint => finish_endpoint,
             :cancel_endpoint        => finish_endpoint,
-            :open_url               => false,
+            :open_url               => false
           )
       end
     end

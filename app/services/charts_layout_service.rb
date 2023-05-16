@@ -26,7 +26,7 @@ class ChartsLayoutService
   private
 
   def build_charts
-    YAML.load(File.read(find_chart_path))
+    YAML.load_file(find_chart_path)
   end
 
   def find_chart_path
@@ -36,7 +36,7 @@ class ChartsLayoutService
         @perf_record.respond_to?(:chart_layout_path)
 
       # Fallback to check if there is file for specific class of the @perf_record
-      path = chart_path(@layout, @perf_record.class.name.gsub(/::/, '_'))
+      path = chart_path(@layout, @perf_record.class.name.gsub("::", '_'))
       return path if File.exist?(path)
 
       # Fallback to fname, which is usually base class of the @perf_record
@@ -47,6 +47,6 @@ class ChartsLayoutService
   end
 
   def chart_path(*base)
-    File.join(@charts_folder, *base) + '.yaml'
+    "#{File.join(@charts_folder, *base)}.yaml"
   end
 end

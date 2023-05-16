@@ -11,8 +11,8 @@ describe ApplicationHelper::Button::MiqRequestCopy do
 
     let(:view_context) { setup_view_context_with_sandbox({}) }
     let(:user) { FactoryBot.create(:user) }
-    %w(MiqProvisionRequest VmReconfigureRequest VmCloudReconfigureRequest
-       VmMigrateRequest AutomationRequest ServiceTemplateProvisionRequest).each do |cls|
+    %w[MiqProvisionRequest VmReconfigureRequest VmCloudReconfigureRequest
+       VmMigrateRequest AutomationRequest ServiceTemplateProvisionRequest].each do |cls|
       let(:request) { "MiqProvisionRequest" }
       let(:username) { user.name }
       let(:state) { "pending_approval" }

@@ -5,6 +5,7 @@ class ApplicationHelper::Button::MiqRequestEdit < ApplicationHelper::Button::Miq
     return false unless super
     return false if %w[ServiceReconfigureRequest ServiceTemplateProvisionRequest].include?(@miq_request.try(:type))
     return false if current_user.name != @record.requester_name || %w[approved denied].include?(@record.approval_state)
+
     true
   end
 

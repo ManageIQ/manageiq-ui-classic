@@ -3,7 +3,7 @@ describe TreeNode::VmOrTemplate do
 
   # FIXME: make this dynamic somehow by using VmOrTemplate.descendants
   # Template classes
-  %i(
+  %i[
     miq_template
     template_cloud
     template_infra
@@ -14,7 +14,7 @@ describe TreeNode::VmOrTemplate do
     template_vmware_cloud
     template_redhat
     template_vmware
-  ).each do |factory|
+  ].each do |factory|
     context(factory.to_s) do
       let(:object) { FactoryBot.create(factory, :name => "template", :template => true) }
 
@@ -30,7 +30,7 @@ describe TreeNode::VmOrTemplate do
   end
 
   # Vm classes
-  %i(
+  %i[
     vm
     vm_cloud
     vm_infra
@@ -42,7 +42,7 @@ describe TreeNode::VmOrTemplate do
     vm_vmware_cloud
     vm_redhat
     vm_vmware
-  ).each do |factory|
+  ].each do |factory|
     context(factory.to_s) do
       let(:object) { FactoryBot.create(factory) }
 

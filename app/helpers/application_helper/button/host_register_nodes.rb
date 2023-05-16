@@ -2,6 +2,6 @@ class ApplicationHelper::Button::HostRegisterNodes < ApplicationHelper::Button::
   needs :@record
 
   def visible?
-    @record.class == ManageIQ::Providers::Openstack::InfraManager
+    @record.instance_of?(ManageIQ::Providers::Openstack::InfraManager)
   end
 end

@@ -42,7 +42,7 @@ class ChargebackRateController < ApplicationController
     chargeback_rates_new
     chargeback_rates_copy
     chargeback_rates_edit
-  ]
+  ].freeze
 
   def assert_privileges_for_edit
     feature = case params[:button]
@@ -55,6 +55,10 @@ class ChargebackRateController < ApplicationController
               end
 
     assert_privileges(feature)
+  end
+
+  def new
+    rate_reset_or_set
   end
 
   def edit
@@ -76,10 +80,6 @@ class ChargebackRateController < ApplicationController
     end
   end
 
-  def new
-    rate_reset_or_set
-  end
-
   def copy
     # TODO: this will be unnecessary after `chargeback_rates_copy` gets renamed to `chargeback_rate_copy`
     assert_privileges("chargeback_rates_copy")
@@ -95,6 +95,7 @@ class ChargebackRateController < ApplicationController
     assert_privileges("chargeback_rates_edit")
 
     return unless load_edit("cbrate_edit__#{params[:id]}")
+
     cb_rate_get_form_vars
     render :update do |page|
       page << javascript_prologue
@@ -186,11 +187,11 @@ class ChargebackRateController < ApplicationController
   private ############################
 
   def rate_cancel
-    if params[:id]
-      flash_msg = _("Edit of Chargeback Rate \"%{name}\" was cancelled by the user") % {:name => session[:edit][:new][:description]}
-    else
-      flash_msg = _("Add of new Chargeback Rate was cancelled by the user")
-    end
+    flash_msg = if params[:id]
+                  _("Edit of Chargeback Rate \"%{name}\" was cancelled by the user") % {:name => session[:edit][:new][:description]}
+                else
+                  _("Add of new Chargeback Rate was cancelled by the user")
+                end
     @edit = session[:edit] = nil # clean out the saved info
     session[:changed] = false
     javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg => flash_msg)
@@ -262,10 +263,12 @@ class ChargebackRateController < ApplicationController
     @in_a_form = true
     session[:changed] = params[:pressed] == 'chargeback_rates_copy'
     cb_rate_set_form_vars
-    javascript_redirect(:action        => 'edit',
-                        :id            => params[:id],
-                        :flash_msg     => _("All changes have been reset"),
-                        :flash_warning => true) if params[:button] == "reset"
+    if params[:button] == "reset"
+      javascript_redirect(:action        => 'edit',
+                          :id            => params[:id],
+                          :flash_msg     => _("All changes have been reset"),
+                          :flash_warning => true)
+    end
   end
 
   # Common Schedule button handler routines
@@ -276,8 +279,8 @@ class ChargebackRateController < ApplicationController
   # Set form variables for edit
   def cb_rate_set_form_vars
     @edit = {}
-    @edit[:new] = HashWithIndifferentAccess.new
-    @edit[:current] = HashWithIndifferentAccess.new
+    @edit[:new] = ActiveSupport::HashWithIndifferentAccess.new
+    @edit[:current] = ActiveSupport::HashWithIndifferentAccess.new
     @edit[:new][:tiers] = []
     @edit[:new][:num_tiers] = []
     @edit[:new][:description] = @rate.description
@@ -340,7 +343,7 @@ class ChargebackRateController < ApplicationController
       @edit[:new][:num_tiers][detail_index] = tiers[detail_index].size
       @edit[:new][:details].push(temp)
     end
-    @edit[:new][:per_time_types] = ChargebackRateDetail::PER_TIME_TYPES.map { |x, y| [x, _(y)] }.to_h
+    @edit[:new][:per_time_types] = ChargebackRateDetail::PER_TIME_TYPES.transform_values { |y| _(y) }
   end
 
   # Get variables from edit form
@@ -403,7 +406,7 @@ class ChargebackRateController < ApplicationController
   end
 
   def new_rate_edit?
-    !params[:id].present? || params[:id] == 'new' || params[:pressed] == 'chargeback_rates_new'
+    params[:id].blank? || params[:id] == 'new' || params[:pressed] == 'chargeback_rates_new'
   end
 
   def display_detail_errors(detail, errors)

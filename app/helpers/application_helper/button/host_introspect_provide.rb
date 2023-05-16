@@ -8,7 +8,7 @@ class ApplicationHelper::Button::HostIntrospectProvide < ApplicationHelper::Butt
   private
 
   def proper_record?
-    @record.class == ManageIQ::Providers::Openstack::InfraManager::Host
+    @record.instance_of?(ManageIQ::Providers::Openstack::InfraManager::Host)
   end
 
   def host_manageable?

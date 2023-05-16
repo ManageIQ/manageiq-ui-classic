@@ -11,10 +11,10 @@ module OpsController::Diagnostics
       @record = MiqServer.find(id)
     when "role"
       @record = ServerRole.find(id)
-      @rec_status = @record.assigned_server_roles.find_by(:active => true) ? "active" : "stopped" if @record.class == ServerRole
+      @rec_status = @record.assigned_server_roles.find_by(:active => true) ? "active" : "stopped" if @record.instance_of?(ServerRole)
     when "asr"
       @record = AssignedServerRole.find(id)
-      @rec_status = @record.assigned_server_roles.find_by(:active => true) ? "active" : "stopped" if @record.class == ServerRole
+      @rec_status = @record.assigned_server_roles.find_by(:active => true) ? "active" : "stopped" if @record.instance_of?(ServerRole)
     end
     @sb[:diag_selected_model] = @record.class.to_s
     @sb[:diag_selected_id] = @record.id
@@ -100,7 +100,7 @@ module OpsController::Diagnostics
 
           build_supported_depots_for_select
           log_protocol = params[:log_protocol]
-          protocols = FileDepot.supported_depots.map { |k, _v| [k, k.constantize] }.to_h
+          protocols = FileDepot.supported_depots.to_h { |k, _v| [k, k.constantize] }
           raise _('Invalid or unsupported file depot type.') unless protocols.key?(log_protocol)
 
           depot = @record.log_file_depot.instance_of?(protocols[log_protocol]) ? @record.log_file_depot : @record.build_log_file_depot(:type => log_protocol)
@@ -132,7 +132,7 @@ module OpsController::Diagnostics
 
       begin
         log_protocol = params[:log_protocol]
-        protocols = FileDepot.supported_depots.map { |k, _v| [k, k.constantize] }.to_h
+        protocols = FileDepot.supported_depots.to_h { |k, _v| [k, k.constantize] }
         raise _("Unsupported log depot protocol: %{protocol}") % {:protocol => log_protocol} unless protocols.key?(log_protocol)
 
         protocols[log_protocol].validate_settings(settings)
@@ -239,6 +239,26 @@ module OpsController::Diagnostics
   def cu_repair
     assert_privileges("ops_diagnostics")
 
+    if params[:end_date].to_time < params[:start_date].to_time
+      render :json => {:status => :error, :message => _("End Date cannot be earlier than Start Date")}
+    else
+      # converting string to time, and then converting into user selected timezone
+      from = "#{params[:start_date]} #{params[:start_hour]}:#{params[:start_min]}:00".to_time.in_time_zone(params[:timezone])
+      to = "#{params[:end_date]} #{params[:end_hour]}:#{params[:end_min]}:00".to_time.in_time_zone(params[:timezone])
+      selected_zone = Zone.find(x_node.split('-').last)
+      begin
+        Metric::Capture.perf_capture_gap_queue(from, to, selected_zone)
+      rescue => bang
+        # Push msg and error flag
+        render :json => {:status => :error, :message => _("Error during 'C & U Gap Collection': %{message}") % {:message => bang.message}}
+      else
+        render :json => {:status => :success, :message => _("C & U Gap Collection successfully initiated")}
+      end
+    end
+  end
+
+  def cu_repair_old
+    assert_privileges("ops_diagnostics")
     return unless load_edit("curepair_edit__new", "replace_cell__explorer")
 
     if @edit[:new][:end_date].to_time < @edit[:new][:start_date].to_time
@@ -285,22 +305,20 @@ module OpsController::Diagnostics
     prefix, uri = log_depot[:uri].to_s.split('://')
     klass = @record.log_file_depot.try(:class)
 
-    log_depot_json = {:depot_name   => log_depot[:name],
-                      :uri          => uri,
-                      :uri_prefix   => prefix,
-                      :log_userid   => log_depot.authentication_userid,
-                      :log_protocol => klass.to_s}
-    log_depot_json
+    {:depot_name   => log_depot[:name],
+     :uri          => uri,
+     :uri_prefix   => prefix,
+     :log_userid   => log_depot.authentication_userid,
+     :log_protocol => klass.to_s}
   end
 
   def build_empty_log_depot_json
-    log_depot_json = {:depot_name   => '',
-                      :uri          => '',
-                      :uri_prefix   => '',
-                      :log_userid   => '',
-                      :log_password => '',
-                      :log_protocol => ''}
-    log_depot_json
+    {:depot_name   => '',
+     :uri          => '',
+     :uri_prefix   => '',
+     :log_userid   => '',
+     :log_password => '',
+     :log_protocol => ''}
   end
 
   # to delete orphaned records for user that was delete from db
@@ -519,7 +537,7 @@ module OpsController::Diagnostics
   def process_server_deletion(server)
     server.destroy
   rescue => bang
-    add_flash(_("Server \"%{name}\": Error during 'destroy': ") % {:name => server.name} << bang.message,
+    add_flash((_("Server \"%{name}\": Error during 'destroy': ") % {:name => server.name}) << bang.message,
               :error)
   else
     AuditEvent.success(
@@ -681,27 +699,28 @@ module OpsController::Diagnostics
     elsif active_node && active_node.split('-').first == "svr"
       @selected_server ||= MiqServer.find(@sb[:selected_server_id]) # Reread the server record
       if @sb[:selected_server_id] == my_server.id
-        if @sb[:active_tab] == "diagnostics_evm_log"
+        case @sb[:active_tab]
+        when "diagnostics_evm_log"
           @log = fetch_local_log("evm")
           add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
           @msg_title = _("ManageIQ")
           @refresh_action = "refresh_log"
           @download_action = "fetch_log"
-        elsif @sb[:active_tab] == "diagnostics_audit_log"
+        when "diagnostics_audit_log"
           @log = fetch_local_log("audit")
           add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
           @msg_title = _("Audit")
           @refresh_action = "refresh_audit_log"
           @download_action = "fetch_audit_log"
-        elsif @sb[:active_tab] == "diagnostics_production_log"
+        when "diagnostics_production_log"
           @log = fetch_local_log(Rails.env)
           add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => Vmdb::Appliance.PRODUCT_NAME}, :warning) if @log.blank?
           @msg_title = @sb[:rails_log]
           @refresh_action = "refresh_production_log"
           @download_action = "fetch_production_log"
-        elsif @sb[:active_tab] == "diagnostics_summary"
+        when "diagnostics_summary"
           @selected_server = MiqServer.find(@sb[:selected_server_id])
-        elsif @sb[:active_tab] == "diagnostics_workers"
+        when "diagnostics_workers"
           pm_get_workers
           @record = @selected_server
         else
@@ -749,7 +768,7 @@ module OpsController::Diagnostics
                    end
     if @sb[:diag_selected_id]
       @record = @sb[:diag_selected_model].constantize.find(@sb[:diag_selected_id]) # Set the current record
-      @rec_status = @record.assigned_server_roles.find_by(:active => true) ? "active" : "stopped" if @record.class == ServerRole
+      @rec_status = @record.assigned_server_roles.find_by(:active => true) ? "active" : "stopped" if @record.instance_of?(ServerRole)
     end
   end
 
@@ -758,11 +777,7 @@ module OpsController::Diagnostics
     @in_a_form = false
     node = x_node.downcase.split("-").first
     case node
-    when "root"
-      @sb[:diag_tree_type] ||= "roles"
-      @sb[:diag_selected_id] = nil
-      diagnostics_set_form_vars
-    when "z"
+    when "root", "z"
       @sb[:diag_tree_type] ||= "roles"
       @sb[:diag_selected_id] = nil
       diagnostics_set_form_vars
@@ -775,8 +790,8 @@ module OpsController::Diagnostics
 
   def build_supported_depots_for_select
     not_supported_depots = %w[FileDepotS3 FileDepotSwift]
-    supported_depots = FileDepot.supported_depots.reject { |model, _desc| not_supported_depots.include?(model) }
-    @uri_prefixes = supported_depots.keys.map { |model| [model, model.constantize.uri_prefix] }.to_h
+    supported_depots = FileDepot.supported_depots.except(*not_supported_depots)
+    @uri_prefixes = supported_depots.keys.index_with { |model| model.constantize.uri_prefix }
     @supported_depots_for_select = {'' => _('<No Depot>')}.merge(supported_depots)
   end
 

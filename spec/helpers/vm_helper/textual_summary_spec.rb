@@ -12,7 +12,7 @@ describe VmHelper::TextualSummary do
     allow(self).to receive(:textual_key_value_group).and_return([])
   end
 
-  include_examples "textual_group", "Properties", %i(
+  include_examples "textual_group", "Properties", %i[
     id
     name
     region
@@ -35,9 +35,9 @@ describe VmHelper::TextualSummary do
     guid
     storage_profile
     protected
-  )
+  ]
 
-  include_examples "textual_group", "Lifecycle", %i(
+  include_examples "textual_group", "Lifecycle", %i[
     discovered
     analyzed
     retirement_date
@@ -45,9 +45,9 @@ describe VmHelper::TextualSummary do
     provisioned
     owner
     group
-  )
+  ]
 
-  include_examples "textual_group", "Relationships", %i(
+  include_examples "textual_group", "Relationships", %i[
     ems
     cluster
     host
@@ -61,9 +61,9 @@ describe VmHelper::TextualSummary do
     cloud_network
     cloud_subnet
     custom_button_events
-  )
+  ]
 
-  include_examples "textual_group", "Relationships", %i(
+  include_examples "textual_group", "Relationships", %i[
     ems
     ems_infra
     cluster
@@ -88,27 +88,27 @@ describe VmHelper::TextualSummary do
     network_ports
     cloud_volumes
     custom_button_events
-  ), "vm_cloud_relationships"
+  ], "vm_cloud_relationships"
 
-  include_examples "textual_group", "Relationships", %i(ems parent_vm genealogy drift scan_history cloud_tenant custom_button_events),
+  include_examples "textual_group", "Relationships", %i[ems parent_vm genealogy drift scan_history cloud_tenant custom_button_events],
                    "template_cloud_relationships"
 
-  include_examples "textual_group", "Security", %i(users groups patches)
+  include_examples "textual_group", "Security", %i[users groups patches]
 
-  include_examples "textual_group", "Datastore Allocation Summary", %i(
+  include_examples "textual_group", "Datastore Allocation Summary", %i[
     disks
     disks_aligned
     thin_provisioned
     allocated_disks
     allocated_total
-  ), "datastore_allocation"
+  ], "datastore_allocation"
 
-  include_examples "textual_group", "Datastore Actual Usage Summary", %i(
+  include_examples "textual_group", "Datastore Actual Usage Summary", %i[
     usage_disks
     usage_snapshots
     usage_disk_storage
     usage_overcommitted
-  ), "datastore_usage"
+  ], "datastore_usage"
 
   include_examples "textual_group", "Labels", []
 end

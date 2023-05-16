@@ -87,7 +87,7 @@ describe OpsController do
       MiqRegion.seed
 
       session[:sandboxes] = {"ops" => {:active_tree => :diagnostics_tree}}
-      post :tree_select, :params => { :id => 'root', :format => :js }
+      post :tree_select, :params => {:id => 'root', :format => :js}
 
       expect(response).to render_template('ops/_diagnostics_zones_tab')
       expect(response.status).to eq(200)
@@ -107,8 +107,8 @@ describe OpsController do
       session[:sandboxes] = {"ops" => {:active_tree        => :diagnostics_tree,
                                        :selected_typ       => "miq_server",
                                        :selected_server_id => @miq_server.id}}
-      post :tree_select, :params => { :id => 'root', :format => :js }
-      get :log_collection_form_fields, :params => { :id => @miq_server.id }
+      post :tree_select, :params => {:id => 'root', :format => :js}
+      get :log_collection_form_fields, :params => {:id => @miq_server.id}
       expect(response.status).to eq(200)
     end
   end
@@ -269,7 +269,7 @@ describe OpsController do
           expect(flash_array.size).to eq 1
 
           expect(flash_array.first[:level]).to eq :error
-          expect(flash_array.first[:message]).to match /Server .*: Error during 'destroy': boom/
+          expect(flash_array.first[:message]).to match(/Server .*: Error during 'destroy': boom/)
         end
       end
 

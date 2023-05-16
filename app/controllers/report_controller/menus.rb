@@ -9,7 +9,6 @@ module ReportController::Menus
     @sb[:menu_default] = false
     if @changed || @menu_lastaction == "discard_changes"
       @rpt_menu = copy_array(@edit[:new])
-    elsif @menu_lastaction == "default"
     else
       populate_reports_menu(true)
       tree = build_menu_roles_tree
@@ -64,7 +63,8 @@ module ReportController::Menus
   def menu_field_changed
     assert_privileges("miq_report_menu_editor")
 
-    return unless load_edit("menu_edit__#{session[:role_choice] ? session[:role_choice] : "new"}", "replace_cell__explorer")
+    return unless load_edit("menu_edit__#{session[:role_choice] || "new"}", "replace_cell__explorer")
+
     menu_get_form_vars
     @in_a_form = true
     @edit[:tree_arr]  = []
@@ -107,7 +107,7 @@ module ReportController::Menus
                 temp.push(el) unless temp.include?(el)
                 temp.push([]) unless temp.include?([])
               end
-              @edit[:temp_new].push(temp) if !temp.empty? && !@edit[:temp_new].include?(temp)
+              @edit[:temp_new].push(temp) if !temp.empty? && @edit[:temp_new].exclude?(temp)
             else
               @edit[:temp_new][0] = @edit[:temp_arr][0]
               arr.each do |a|
@@ -119,7 +119,7 @@ module ReportController::Menus
                   temp.push([]) unless temp.include?([])
                 end
                 @edit[:temp_new][1] = [] if @edit[:temp_new][1].nil?
-                @edit[:temp_new][1].push(temp) if !temp.empty? && !@edit[:temp_new][1].include?(temp)
+                @edit[:temp_new][1].push(temp) if !temp.empty? && @edit[:temp_new][1].exclude?(temp)
               end
             end
           end
@@ -146,9 +146,11 @@ module ReportController::Menus
         end
       end
       @edit[:temp_arr].each do |arr|
-        next unless arr.class == Array
+        next unless arr.instance_of?(Array)
+
         arr.each do |a|
           next if a[0] != old_val[1]
+
           @edit[:temp] = a
           idx4 = @edit[:temp_arr][idx2 + 1].index(@edit[:temp]) # index of temp in temp_array
           if a[1].nil?
@@ -198,7 +200,8 @@ module ReportController::Menus
 
     menu_get_form_vars
     # @changed = (@edit[:new] != @edit[:current])
-    if params[:button] == "cancel"
+    case params[:button]
+    when "cancel"
       add_flash(_("Edit of Report Menu for role \"%{role}\" was cancelled by the user") %
                   {:role => session[:role_choice]})
       session[:node_selected]   = ""
@@ -209,14 +212,14 @@ module ReportController::Menus
       @changed                  = session[:changed] = false
       self.x_node = "root"
       replace_right_cell
-    elsif params[:button] == "reset"
+    when "reset"
       @changed                   = session[:changed] = false
       @edit[:new]                = copy_array(@edit[:current])
       @menu_lastaction           = "reset"
       add_flash(_("All changes have been reset"), :warning)
       get_tree_data
       replace_right_cell(:menu_edit_action => "menu_reset")
-    elsif params[:button] == "default"
+    when "default"
       @sb[:rpt_menu]   = default_reports_menu
       @menu_roles_tree = build_menu_roles_tree
       @edit[:new]      = copy_array(@sb[:rpt_menu])
@@ -226,7 +229,7 @@ module ReportController::Menus
       # set menu_default flag to true
       @sb[:menu_default] = true
       replace_right_cell(:menu_edit_action => "menu_default")
-    elsif params[:button] == "save"
+    when "save"
       @menu_lastaction = "save"
       role = session[:role_choice] unless session[:role_choice].nil?
       rec = MiqGroup.find_by(:description => role)
@@ -274,6 +277,7 @@ module ReportController::Menus
     @all_reports = []
     all.each do |r|
       next if r.template_type != "report" && r.template_type.present?
+
       @all_reports.push(r.name)
     end
 
@@ -283,12 +287,16 @@ module ReportController::Menus
     # calculating selected reports for selected folder
     @edit[:new].each do |arr|
       next if arr[0] != @selected[0]
+
       arr.each do |a|
-        next unless a.class == Array
+        next unless a.instance_of?(Array)
+
         a.each do |r|
           next if r[0] != @selected[1]
+
           r.each do |rep|
-            next unless rep.class == Array
+            next unless rep.instance_of?(Array)
+
             rep.each do |report_name|
               report = MiqReport.find_by(:name => report_name.strip)
               r_name = @edit[:user_typ] || report.miq_group_id.to_i == current_group_id ? report_name : "* #{report_name}"
@@ -297,16 +305,15 @@ module ReportController::Menus
           end
         end
       end
-    end
+      next unless arr.instance_of?(Array)
 
-    # Calculating reports that are assigned to any of the folders
-    @edit[:new].each do |arr|
-      next unless arr.class == Array
       arr.each do |a|
-        next unless a.class == Array
+        next unless a.instance_of?(Array)
+
         a.each do |r|
           r.each do |rep|
-            next unless rep.class == Array
+            next unless rep.instance_of?(Array)
+
             rep.each do |report_name|
               @assigned_reports.push(report_name)
             end
@@ -314,6 +321,8 @@ module ReportController::Menus
         end
       end
     end
+
+    # Calculating reports that are assigned to any of the folders
 
     @available_reports = @all_reports.reject { |r| @assigned_reports.include?(r) }
 
@@ -480,9 +489,9 @@ module ReportController::Menus
       end
     end
     if last_idx - first_idx + 1 > params[:selected_reports].length
-      return [false, first_idx, last_idx]
+      [false, first_idx, last_idx]
     else
-      return [true, first_idx, last_idx]
+      [true, first_idx, last_idx]
     end
   end
 
@@ -515,7 +524,7 @@ module ReportController::Menus
     # session[:changed] = @changed = false
     @edit = {}
     @edit[:new] = []
-    @edit[:key] = "menu_edit__#{session[:role_choice] ? session[:role_choice] : "new"}"
+    @edit[:key] = "menu_edit__#{session[:role_choice] || "new"}"
 
     @edit[:temp_arr] = []
     @edit[:form_vars] = {}
@@ -534,11 +543,13 @@ module ReportController::Menus
     @edit[:new].each do |r|
       r.each_slice(2) do |menu, section|
         title = "#{menu}/"
-        next if section.nil? || section.class == String
+        next if section.nil? || section.instance_of?(String)
+
         section.each do |s|
-          next unless s.class == Array
+          next unless s.instance_of?(Array)
+
           s.each do |rec|
-            if rec.class == String
+            if rec.instance_of?(String)
               @sub_title = title + "#{rec}/"
             else
               rec.each do |report_name|
@@ -609,8 +620,10 @@ module ReportController::Menus
     else
       @edit[:new].each do |arr|
         next if arr[0] != @selected[1]
+
         arr.each do |a|
-          next unless a.class == Array
+          next unless a.instance_of?(Array)
+
           a.each do |s|
             @folders.push(s[0])
           end
@@ -642,9 +655,9 @@ module ReportController::Menus
   def get_group_roles
     if super_admin_user?
       roles = MiqGroup.non_tenant_groups
-      title  = _("All EVM Groups")
+      title = _("All EVM Groups")
     else
-      title  = _("My EVM Group")
+      title = _("My EVM Group")
       roles = [current_user.current_group]
     end
     return roles, title

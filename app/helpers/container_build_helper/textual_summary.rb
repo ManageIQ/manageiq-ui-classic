@@ -29,7 +29,7 @@ module ContainerBuildHelper::TextualSummary
         _("Start Timestamp"),
         {:value => _("Completion Timestamp"), :sortable => :desc},
         _("Duration"),
-      ],
+      ]
     )
   end
 

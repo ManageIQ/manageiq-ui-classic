@@ -41,6 +41,12 @@ class AnsibleCredentialController < ApplicationController
     end
   end
 
+  def show
+    assert_privileges('embedded_automation_manager_credentials_view')
+
+    super
+  end
+
   def new
     assert_privileges('embedded_automation_manager_credentials_add')
     drop_breadcrumb(:name => _("Add a new Credential"), :url => "/ansible_credential/new")
@@ -70,12 +76,6 @@ class AnsibleCredentialController < ApplicationController
   end
 
   def download_summary_pdf
-    assert_privileges('embedded_automation_manager_credentials_view')
-
-    super
-  end
-
-  def show
     assert_privileges('embedded_automation_manager_credentials_view')
 
     super

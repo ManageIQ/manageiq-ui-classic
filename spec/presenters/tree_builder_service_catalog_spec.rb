@@ -4,23 +4,23 @@ describe TreeBuilderServiceCatalog do
     @catalog = FactoryBot.create(:service_template_catalog, :name => "My Catalog")
 
     FactoryBot.create(:service_template_ansible_playbook,
-                       :name                     => "Display in Catalog",
-                       :service_template_catalog => @catalog,
-                       :display                  => true)
+                      :name                     => "Display in Catalog",
+                      :service_template_catalog => @catalog,
+                      :display                  => true)
     FactoryBot.create(:service_template,
-                       :name                     => "Do not Display in Catalog",
-                       :service_template_catalog => @catalog,
-                       :display                  => false)
+                      :name                     => "Do not Display in Catalog",
+                      :service_template_catalog => @catalog,
+                      :display                  => false)
     FactoryBot.create(:service_template,
-                       :name                     => "Display in Catalog too",
-                       :service_type             => 'generic_ansible_tower',
-                       :service_template_catalog => @catalog,
-                       :display                  => true)
+                      :name                     => "Display in Catalog too",
+                      :service_type             => 'generic_ansible_tower',
+                      :service_template_catalog => @catalog,
+                      :display                  => true)
     FactoryBot.create(:service_template_ansible_playbook,
-                       :service_type             => 'generic_ansible_playbook',
-                       :name                     => "Display in Catalog Playbook",
-                       :service_template_catalog => @catalog,
-                       :display                  => true)
+                      :service_type             => 'generic_ansible_playbook',
+                      :name                     => "Display in Catalog Playbook",
+                      :service_template_catalog => @catalog,
+                      :display                  => true)
     @tree = TreeBuilderServiceCatalog.new(:svccat_tree, {})
   end
 

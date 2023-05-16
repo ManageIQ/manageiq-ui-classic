@@ -34,7 +34,7 @@ class AutomateImportJsonSerializerService
       namespace_name = File.dirname(namespace)
       {
         :text       => namespace_name.split("/").last,
-        :key        => namespace_name.split("/")[1..-1].join("/"),
+        :key        => namespace_name.split("/")[1..].join("/"),
         :icon       => 'pficon pficon-folder-close',
         :nodes      => children(ae_import, namespace_name),
         :selectable => false
@@ -47,7 +47,7 @@ class AutomateImportJsonSerializerService
       class_name = File.dirname(klass)
       {
         :text       => class_name.split("/").last,
-        :key        => class_name.split("/")[1..-1].join("/"),
+        :key        => class_name.split("/")[1..].join("/"),
         :icon       => 'ff ff-class',
         :selectable => false
       }

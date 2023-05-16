@@ -3,20 +3,20 @@ describe PhysicalChassisHelper::TextualSummary do
 
   let(:ems) do
     FactoryBot.create(:physical_infra,
-                       :name      => 'LXCA',
-                       :hostname  => 'my.physicalinfra.com',
-                       :port      => '443',
-                       :ipaddress => '1.2.3.4')
+                      :name      => 'LXCA',
+                      :hostname  => 'my.physicalinfra.com',
+                      :port      => '443',
+                      :ipaddress => '1.2.3.4')
   end
 
   let(:asset_detail) do
     FactoryBot.create(:asset_detail,
-                       :product_name       => 'Lenovo XYZ Chassis x1000',
-                       :manufacturer       => 'Lenovo',
-                       :serial_number      => 'A1B2C3D4E5F6',
-                       :part_number        => 'XXX18',
-                       :description        => 'Physical Chassis used inside site A',
-                       :location_led_state => 'Off')
+                      :product_name       => 'Lenovo XYZ Chassis x1000',
+                      :manufacturer       => 'Lenovo',
+                      :serial_number      => 'A1B2C3D4E5F6',
+                      :part_number        => 'XXX18',
+                      :description        => 'Physical Chassis used inside site A',
+                      :location_led_state => 'Off')
   end
 
   let(:network) do
@@ -25,8 +25,8 @@ describe PhysicalChassisHelper::TextualSummary do
 
   let(:guest_device) do
     FactoryBot.build(:guest_device,
-                      :device_type => 'management',
-                      :network     => network)
+                     :device_type => 'management',
+                     :network     => network)
   end
 
   let(:hardware) do
@@ -57,20 +57,20 @@ describe PhysicalChassisHelper::TextualSummary do
 
   let(:physical_chassis) do
     FactoryBot.create(:physical_chassis,
-                       :ems_id                       => ems.id,
-                       :uid_ems                      => 'NVH20GH0T4HN268902G6Y2N-G28Y8YWG',
-                       :name                         => 'Chassis ABC',
-                       :health_state                 => 'Valid',
-                       :asset_detail                 => asset_detail,
-                       :computer_system              => computer_system,
-                       :management_module_slot_count => 2,
-                       :switch_slot_count            => 4,
-                       :fan_slot_count               => 8,
-                       :blade_slot_count             => 16,
-                       :powersupply_slot_count       => 1,
-                       :physical_rack                => physical_rack,
-                       :physical_servers             => physical_servers,
-                       :physical_storages            => physical_storages)
+                      :ems_id                       => ems.id,
+                      :uid_ems                      => 'NVH20GH0T4HN268902G6Y2N-G28Y8YWG',
+                      :name                         => 'Chassis ABC',
+                      :health_state                 => 'Valid',
+                      :asset_detail                 => asset_detail,
+                      :computer_system              => computer_system,
+                      :management_module_slot_count => 2,
+                      :switch_slot_count            => 4,
+                      :fan_slot_count               => 8,
+                      :blade_slot_count             => 16,
+                      :powersupply_slot_count       => 1,
+                      :physical_rack                => physical_rack,
+                      :physical_servers             => physical_servers,
+                      :physical_storages            => physical_storages)
   end
 
   before do

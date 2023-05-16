@@ -7,7 +7,7 @@ module Mixins
         def each_host(host_ids, task_name)
           Host.where(:id => host_ids).order(Host.arel_table[:name].lower).each do |host|
             yield host
-          rescue StandardError => err
+          rescue => err
             add_flash(
               _("Host \"%{name}\": Error during '%{task}': %{message}") %
               {
@@ -23,13 +23,13 @@ module Mixins
         def process_hosts_refresh(hosts, task, display_name)
           Host.refresh_ems(hosts)
           add_flash(n_("%{task} initiated for %{count} Host from the %{product} Database",
-                       "%{task} initiated for %{count} Hosts from the %{product} Database", hosts.length) % \
+                       "%{task} initiated for %{count} Hosts from the %{product} Database", hosts.length) %
             {:task    => display_name,
              :product => Vmdb::Appliance.PRODUCT_NAME,
              :count   => hosts.length})
           AuditEvent.success(:userid => session[:userid], :event => "host_#{task}",
-              :message => "'#{task_name(task)}' successfully initiated for #{pluralize(hosts.length, "Host")}",
-              :target_class => "Host")
+                             :message => "'#{task_name(task)}' successfully initiated for #{pluralize(hosts.length, "Host")}",
+                             :target_class => "Host")
         end
 
         def process_hosts_destroy(hosts, display_name)
@@ -229,8 +229,8 @@ module Mixins
             show
             # TODO: tells callers to go back to show_list because this Host may be gone
             # Should be refactored into calling show_list right here
-            if method == 'destroy'
-              @single_delete = true unless flash_errors?
+            if method == 'destroy' && !flash_errors?
+              @single_delete = true
             end
 
             @refresh_partial = @display == "vms" ? "layouts/gtl" : "config"

@@ -1,7 +1,7 @@
 class CloudTenantDashboardService < DashboardService
   include Mixins::CheckedIdMixin
 
-  def initialize(tenant, controller, klass)
+  def initialize(tenant, _controller, _klass)
     @record_id = tenant.id
     @record = tenant
   end

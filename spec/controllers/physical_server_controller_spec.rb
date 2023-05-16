@@ -11,9 +11,9 @@ describe PhysicalServerController do
     asset_detail = FactoryBot.create(:asset_detail)
     computer_system = FactoryBot.create(:computer_system, :hardware => FactoryBot.create(:hardware))
     @physical_server = FactoryBot.create(:physical_server,
-                                          :asset_detail    => asset_detail,
-                                          :computer_system => computer_system,
-                                          :ems_id          => ems.id)
+                                         :asset_detail    => asset_detail,
+                                         :computer_system => computer_system,
+                                         :ems_id          => ems.id)
   end
 
   describe "#provision" do
@@ -48,7 +48,7 @@ describe PhysicalServerController do
     end
 
     context "with invalid id" do
-      subject { get :show, :params => {:id => 2 } }
+      subject { get :show, :params => {:id => 2} }
 
       it "should redirect to #show_list" do
         is_expected.to have_http_status 302
@@ -88,7 +88,7 @@ describe PhysicalServerController do
   end
 
   describe "#button" do
-    subject { post :button, :params => { :id => @physical_server.id, :pressed => "physical_server_timeline", :format => :js } }
+    subject { post :button, :params => {:id => @physical_server.id, :pressed => "physical_server_timeline", :format => :js} }
 
     it "when timelines button is pressed" do
       is_expected.to have_http_status 200

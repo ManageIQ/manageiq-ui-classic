@@ -9,6 +9,6 @@ class ApplicationHelper::Toolbar::Override < ApplicationHelper::Toolbar::Base
   private
 
   def id_prefix
-    self.class.name + "."
+    "#{self.class.name}."
   end
 end

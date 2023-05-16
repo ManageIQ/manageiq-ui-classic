@@ -1,5 +1,6 @@
 class TreeBuilderPxeCustomizationTemplates < TreeBuilder
   has_kids_for PxeImageType, %i[x_get_tree_pxe_image_type_kids]
+
   private
 
   def tree_init_options
@@ -37,7 +38,7 @@ class TreeBuilderPxeCustomizationTemplates < TreeBuilder
   end
 
   # Handle custom tree nodes (object is the Examples folder)
-  def x_get_tree_custom_kids(object, count_only)
+  def x_get_tree_custom_kids(_object, count_only)
     objects = CustomizationTemplate.where(:pxe_image_type_id => nil)
     count_only_or_objects(count_only, objects, "name")
   end

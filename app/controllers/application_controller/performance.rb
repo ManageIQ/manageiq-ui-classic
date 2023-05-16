@@ -1,8 +1,8 @@
 module ApplicationController::Performance
   extend ActiveSupport::Concern
 
-  CHARTS_REPORTS_FOLDER = Rails.root.join("product", "charts", "miq_reports")
-  CHARTS_LAYOUTS_FOLDER = Rails.root.join("product", "charts", "layouts")
+  CHARTS_REPORTS_FOLDER = Rails.root.join("product/charts/miq_reports")
+  CHARTS_LAYOUTS_FOLDER = Rails.root.join("product/charts/layouts")
 
   # Process changes to performance charts
   # Accessible from VM details --> Monitoring/utilization --> Performance
@@ -106,7 +106,7 @@ module ApplicationController::Performance
 
       render :update do |page|
         page << javascript_prologue
-        page << 'ManageIQ.charts.chartData = ' + {"candu" => @chart_data}.to_json + ';'
+        page << ("ManageIQ.charts.chartData = #{{"candu" => @chart_data}.to_json};")
         page.replace("candu_charts_div",
                      :partial => "layouts/perf_charts",
                      :locals  => {:chart_data => @chart_data, :chart_set => "candu"})
@@ -568,7 +568,7 @@ module ApplicationController::Performance
 
   # Load a chart miq_report object from YML
   def perf_get_chart_rpt(chart_rpt)
-    MiqReport.new(YAML.load(File.read("#{CHARTS_REPORTS_FOLDER}/#{chart_rpt}.yaml")))
+    MiqReport.new(YAML.load_file("#{CHARTS_REPORTS_FOLDER}/#{chart_rpt}.yaml"))
   end
 
   # Load a chart layout from YML
@@ -616,11 +616,9 @@ module ApplicationController::Performance
   # Generate performance data for a model's charts
   def perf_gen_data
     perf_breadcrumb
-    unless @perf_options[:typ] == "realtime"
-      if @perf_options[:cat] # If a category was chosen, generate charts by tag
-        perf_gen_tag_data
-        return
-      end
+    if @perf_options[:typ] != "realtime" && (@perf_options[:cat]) # If a category was chosen, generate charts by tag
+      perf_gen_tag_data
+      return
     end
     # First time thru, kick off the report generate task
     params[:task_id] ? perf_gen_data_after_wait : perf_gen_data_before_wait
@@ -634,8 +632,8 @@ module ApplicationController::Performance
 
       # Set from/to datetimes
       if interval_type == "hourly"
-        from_dt = create_time_in_utc(@perf_options[:hourly_date] + " 00", @perf_options[:tz]) # Get tz 12am in UTC
-        to_dt = create_time_in_utc(@perf_options[:hourly_date] + " 23", @perf_options[:tz])   # Get tz 11pm in UTC
+        from_dt = create_time_in_utc("#{@perf_options[:hourly_date]} 00", @perf_options[:tz]) # Get tz 12am in UTC
+        to_dt = create_time_in_utc("#{@perf_options[:hourly_date]} 23", @perf_options[:tz])   # Get tz 11pm in UTC
       elsif interval_type == "daily"
         f = Date.parse(@perf_options[:daily_date]) - (@perf_options[:days].to_i - 1)
         st = @perf_options[:sdate_daily]
@@ -729,7 +727,7 @@ module ApplicationController::Performance
     end
     if chart[:title].include?("by Type") && @perf_options[:vmtype] && @perf_options[:vmtype] != "<All>"
       chart[:columns].delete_if do |col|
-        !col.include?("_" + @perf_options[:vmtype])
+        col.exclude?("_#{@perf_options[:vmtype]}")
       end
     end
   end
@@ -745,8 +743,8 @@ module ApplicationController::Performance
   def perf_gen_tag_data_before_wait
     case @perf_options[:typ]
     when "Hourly"
-      from_dt = create_time_in_utc(@perf_options[:hourly_date] + " 00:00:00", @perf_options[:tz]) # Get tz 12am in UTC
-      to_dt = create_time_in_utc(@perf_options[:hourly_date] + " 23:59:59", @perf_options[:tz])   # Get tz 11:59pm in UTC
+      from_dt = create_time_in_utc("#{@perf_options[:hourly_date]} 00:00:00", @perf_options[:tz]) # Get tz 12am in UTC
+      to_dt = create_time_in_utc("#{@perf_options[:hourly_date]} 23:59:59", @perf_options[:tz])   # Get tz 11:59pm in UTC
       rpt = perf_get_chart_rpt("vim_perf_tag_hourly")
       rpt.performance = {:group_by_category => @perf_options[:cat]}
       rpt.tz = @perf_options[:tz]
@@ -786,11 +784,11 @@ module ApplicationController::Performance
     # Remove opposite menu items
     chart[:menu].delete_if { |m| m.include?(@perf_options[:cat_model] == "Host" ? "VMs for" : "Hosts for") }
     # Substitue category description + ':<series>' into menus
-    chart[:menu].each { |m| m.gsub!(/<cat>/, cat_desc + " <series>") }
+    chart[:menu].each { |m| m.gsub!("<cat>", "#{cat_desc} <series>") }
     # Grab the first (and should be only) chart column
     col = chart[:columns].first
     # Create the new chart columns for each tag
-    chart[:columns] = rpt.extras[:group_by_tags].collect { |t| col + "_" + t }
+    chart[:columns] = rpt.extras[:group_by_tags].collect { |t| "#{col}_#{t}" }
   end
 
   def gen_perf_chart(chart, rpt, idx, zoom_action)
@@ -864,7 +862,7 @@ module ApplicationController::Performance
   def perf_gen_top_data_before_wait
     @perf_options[:ght_type] ||= "hybrid"
     @perf_options[:chart_type] = :performance
-    cont_plus_model = request.parameters["controller"] + "-" + @perf_options[:top_model]
+    cont_plus_model = "#{request.parameters["controller"]}-#{@perf_options[:top_model]}"
     metric_model = @perf_options[:top_model] == "Vm" ? "VmOrTemplate" : @perf_options[:top_model]
     rpts = [] # Store all reports for the async task to work on
     case @perf_options[:top_type]
@@ -948,7 +946,7 @@ module ApplicationController::Performance
 
     @perf_options[:ght_type] ||= "hybrid"
     @perf_options[:chart_type] = :performance
-    cont_plus_model = request.parameters["controller"] + "-" + @perf_options[:top_model]
+    cont_plus_model = "#{request.parameters["controller"]}-#{@perf_options[:top_model]}"
 
     layout_name = case @perf_options[:top_type]
                   when 'topday'  then 'day_top_charts'
@@ -992,8 +990,8 @@ module ApplicationController::Performance
     sdate = s.in_time_zone(@sb[:options][:tz])
     edate = e.in_time_zone(@sb[:options][:tz])
     # Eliminate partial start or end days
-    sdate = sdate.hour.zero? ? sdate : sdate + 1.day
-    edate = edate.hour < 23 ? edate - 1.day : edate
+    sdate += 1.day unless sdate.hour.zero?
+    edate -= 1.day if edate.hour < 23
     return if sdate > edate # Don't have a full day's data
 
     charts = []
@@ -1054,7 +1052,7 @@ module ApplicationController::Performance
       chart_layouts[@sb[:options][:model].to_sym].each_with_index do |chart, _idx|
         tag_class = @sb[:options][:tag].split("/").first if @sb[:options][:tag]
         if chart[:type] == "None" || # No chart is available for this slot
-           (@sb[:options][:tag] && chart[:allowed_child_tag] && !chart[:allowed_child_tag].include?(tag_class)) # Tag not allowed
+           (@sb[:options][:tag] && chart[:allowed_child_tag] && chart[:allowed_child_tag].exclude?(tag_class)) # Tag not allowed
           chart_data.push(nil) # Push a placeholder onto the chart data array
         else
           perf_remove_chart_cols(chart)
@@ -1075,7 +1073,7 @@ module ApplicationController::Performance
     # Generate the report and chart for the selected trend row (single day chart)
     ts_rpt = perf_get_chart_rpt("vim_perf_util_4_ts")
     tz = @sb[:options][:time_profile_tz] || @sb[:options][:tz] # Use tz in time profile or chosen tz, if no profile tz
-    ts_rpt.db_options = {:report => rpt, :row_col => "timestamp", :row_val => create_time_in_tz(@sb[:options][:chart_date] + " 00", tz)}
+    ts_rpt.db_options = {:report => rpt, :row_col => "timestamp", :row_val => create_time_in_tz("#{@sb[:options][:chart_date]} 00", tz)}
     ts_rpt.generate_table(:userid => session[:userid])
     @sb[:ts_rpt] = ts_rpt # Hang on to the timestamp report data
     ts_chart_layouts = perf_get_chart_layout("ts_util_charts")
@@ -1219,22 +1217,21 @@ module ApplicationController::Performance
 
   # Build the chart zoom url
   def perf_zoom_url(action, idx)
-    url = "javascript:miqAsyncAjax('" +
-          url_for_only_path(:action    => action,
-                            :id        => @perf_record.id,
-                            :chart_idx => idx) +
-          "')"
-    url
+    "javascript:miqAsyncAjax('" +
+      url_for_only_path(:action    => action,
+                        :id        => @perf_record.id,
+                        :chart_idx => idx) +
+      "')"
   end
 
   # Generate the html view of the chart report
   def perf_report_to_html(rpt = nil, charts = nil)
     rpt ||= @sb[:chart_reports] # Set default if not passed in
     title = rpt.title
-    rpt.title = @title.gsub(/Capacity & Utilization/, "#{@perf_options[:typ]} C & U") + " - #{title}"
-    return if @perf_options[:index].nil?             # Don't show html for graph setting or if multiple charts are showing
+    rpt.title = @title.gsub("Capacity & Utilization", "#{@perf_options[:typ]} C & U") + " - #{title}"
+    return if @perf_options[:index].nil? # Don't show html for graph setting or if multiple charts are showing
 
-    report = rpt.class == Array ? rpt.first : rpt    # Get the first or only report
+    report = rpt.instance_of?(Array) ? rpt.first : rpt # Get the first or only report
     report = perf_remove_report_cols(report, charts) # Remove cols that are not in the current chart
     report.headers.map! { |header| _(header) }       # Translate report headers
     report.to_html                                   # Create html from the chart report
@@ -1278,7 +1275,7 @@ module ApplicationController::Performance
 
         tip = case s # Override the formatting for certain column groups on single day percent utilization chart
               when "cpu"
-                ts_rpt.format(col + '_tip', r[col + '_tip'],
+                ts_rpt.format("#{col}_tip", r["#{col}_tip"],
                               :format => {
                                 :function => {
                                   :name      => "mhz_to_human_size",
@@ -1286,7 +1283,7 @@ module ApplicationController::Performance
                                 }
                               })
               when "memory"
-                ts_rpt.format(col + '_tip', r[col + '_tip'].to_f * 1024 * 1024,
+                ts_rpt.format("#{col}_tip", r["#{col}_tip"].to_f * 1024 * 1024,
                               :format => {
                                 :function => {
                                   :name      => "bytes_to_human_size",
@@ -1294,7 +1291,7 @@ module ApplicationController::Performance
                                 }
                               })
               when "disk"
-                ts_rpt.format(col + '_tip', r[col + '_tip'],
+                ts_rpt.format("#{col}_tip", r["#{col}_tip"],
                               :format => {
                                 :function => {
                                   :name      => "bytes_to_human_size",
@@ -1302,7 +1299,7 @@ module ApplicationController::Performance
                                 }
                               })
               else
-                ts_rpt.format(col + '_tip', r[col + '_tip'])
+                ts_rpt.format("#{col}_tip", r["#{col}_tip"])
               end
         val = ts_rpt.format(col, r[col], :format => {:function => {:name => "number_with_delimiter", :suffix => "%"}, :precision => "0"})
         ss.push([_(ts_rpt.headers[col_idx]), "#{tip} (#{val})"])
@@ -1321,8 +1318,8 @@ module ApplicationController::Performance
         c[:columns].each do |trendcol|
           next unless trendcol.starts_with?("trend_")
 
-          ss.push([Dictionary.gettext(trendcol, :type => :column, :notfound => :titleize) + ": " + t.split(":").last,
-                   @sb[:trend_rpt].extras[:trend][trendcol + "|" + t.split(":").first]])
+          ss.push(["#{Dictionary.gettext(trendcol, :type => :column, :notfound => :titleize)}: #{t.split(":").last}",
+                   @sb[:trend_rpt].extras[:trend]["#{trendcol}|#{t.split(":").first}"]])
         end
       end
     end
@@ -1336,8 +1333,8 @@ module ApplicationController::Performance
     keepcols += chart[:columns]
     keepcols += chart[:chart2][:columns] if chart[:chart2]
     # First remove columns from the col_order and header arrays
-    report.cols.delete_if { |c| !keepcols.include?(c) } # Remove columns
-    cols = report.col_order.length                      # Remove col_order and header elements
+    report.cols.delete_if { |c| keepcols.exclude?(c) } # Remove columns
+    cols = report.col_order.length # Remove col_order and header elements
     (1..cols).each do |c|
       idx = cols - c # Go thru arrays in reverse
       unless keepcols.include?(report.col_order[idx])
@@ -1380,7 +1377,7 @@ module ApplicationController::Performance
       trendcol = perf_get_chart_trendcol(chart)
       if trendcol.present?
         options[:trendtip] = chart[:trends].collect do |t|
-          t.split(":").last + ": " + rpt.extras[:trend][trendcol + "|" + t.split(":").first]
+          "#{t.split(":").last}: #{rpt.extras[:trend]["#{trendcol}|#{t.split(":").first}"]}"
         end.join("\r")
       end
     end

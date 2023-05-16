@@ -67,7 +67,7 @@ module PxeController::PxeServers
   def pxe_server_list
     assert_privileges('pxe_server_view')
     @lastaction = "pxe_server_list"
-    @force_no_grid_xml   = true
+    @force_no_grid_xml = true
     if params[:ppsetting]                                             # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                       # Set the new per page value
       @settings.store_path(:perpage, :list, @items_per_page) # Set the per page setting for this gtl type
@@ -94,6 +94,7 @@ module PxeController::PxeServers
       replace_right_cell(:nodetype => x_node)
     when "save"
       return unless load_edit("pxe_img_edit__#{params[:id]}", "replace_cell__explorer")
+
       update_img = find_record_with_rbac(PxeImage, params[:id])
       pxe_img_set_record_vars(update_img)
       if update_img.valid? && !flash_errors? && update_img.save!
@@ -110,7 +111,7 @@ module PxeController::PxeServers
         @in_a_form = true
         @changed = true
         javascript_flash
-        return
+        nil
       end
     when "reset", nil
       @img = PxeImage.find(params[:id])
@@ -134,6 +135,7 @@ module PxeController::PxeServers
       replace_right_cell(:nodetype => x_node)
     when "save"
       return unless load_edit("pxe_wimg_edit__#{params[:id]}", "replace_cell__explorer")
+
       update_wimg = find_record_with_rbac(WindowsImage, params[:id])
       pxe_wimg_set_record_vars(update_wimg)
       if update_wimg.valid? && !flash_errors? && update_wimg.save!
@@ -149,7 +151,7 @@ module PxeController::PxeServers
         @in_a_form = true
         @changed = true
         javascript_flash
-        return
+        nil
       end
     when "reset", nil
       @wimg = WindowsImage.find(params[:id])
@@ -167,6 +169,7 @@ module PxeController::PxeServers
   def pxe_wimg_form_field_changed
     assert_privileges("pxe_wimg_edit")
     return unless load_edit("pxe_wimg_edit__#{params[:id]}", "replace_cell__explorer")
+
     pxe_wimg_get_form_vars
     render :update do |page|
       page << javascript_prologue
@@ -179,7 +182,7 @@ module PxeController::PxeServers
     begin
       assert_privileges(feature_by_action)
       PxeServer.verify_depot_settings(params[:pxe])
-    rescue StandardError => bang
+    rescue => bang
       render :json => {:status => 'error', :message => _("Error during 'Validate': %{error_message}") % {:error_message => bang.message}}
     end
 

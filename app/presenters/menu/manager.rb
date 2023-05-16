@@ -7,7 +7,7 @@ module Menu
       extend Forwardable
 
       delegate %i[menu item_in_section? item items reload section section_id_string_to_symbol
-                  section_for_item_id each map detect select] => :instance
+                  section_for_item_id each map detect select]                                                                                               => :instance
     end
 
     def reload
@@ -15,8 +15,8 @@ module Menu
       initialize
     end
 
-    def each
-      @menu.each { |section| yield section }
+    def each(&block)
+      @menu.each(&block)
     end
 
     def menu(placement = :_all)
@@ -73,7 +73,7 @@ module Menu
 
     private
 
-    class InvalidMenuDefinition < Exception
+    class InvalidMenuDefinition < StandardError
     end
 
     def initialize

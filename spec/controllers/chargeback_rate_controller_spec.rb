@@ -343,12 +343,12 @@ describe ChargebackRateController do
       origin_chargeback_rate_hash[:rates] = []
       rate.chargeback_rate_details.each do |rate_detail|
         rate_detail_hash = rate_detail.slice(*ChargebackRateDetail::FORM_ATTRIBUTES)
-        rate_detail_hash = Hash[rate_detail_hash.map { |(k, v)| [k.to_sym, v] }]
+        rate_detail_hash = rate_detail_hash.to_h { |(k, v)| [k.to_sym, v] }
         rate_detail_hash[:group] = rate_detail.chargeable_field.group
         rate_detail_hash[:tiers] = []
         rate_detail.chargeback_tiers.each do |tier|
           tier_hash = tier.slice(*ChargebackTier::FORM_ATTRIBUTES)
-          tier_hash = Hash[tier_hash.map { |(k, v)| [k.to_sym, v] }]
+          tier_hash = tier_hash.to_h { |(k, v)| [k.to_sym, v] }
           rate_detail_hash[:tiers].push(tier_hash)
         end
 

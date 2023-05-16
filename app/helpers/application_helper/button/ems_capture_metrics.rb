@@ -12,15 +12,15 @@ class ApplicationHelper::Button::EmsCaptureMetrics < ApplicationHelper::Button::
   end
 
   def check_credentials
-    @error_message ||= _("Credentials must be valid to capture metrics") unless @record.authentication_status.downcase == "valid"
+    @check_credentials ||= _("Credentials must be valid to capture metrics") unless @record.authentication_status.downcase == "valid"
   end
 
   def check_refresh
-    @error_message ||= _("Please refresh provider before metrics capture") unless @record.last_refresh_error.nil?
+    @check_refresh ||= _("Please refresh provider before metrics capture") unless @record.last_refresh_error.nil?
   end
 
   def check_endpoint
-    @error_message ||= _("Metrics endpoint is not set") unless @record.supports?(:metrics)
+    @check_endpoint ||= _("Metrics endpoint is not set") unless @record.supports?(:metrics)
   end
 
   def check_role

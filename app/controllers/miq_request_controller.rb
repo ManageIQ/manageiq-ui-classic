@@ -179,7 +179,7 @@ class MiqRequestController < ApplicationController
     )
 
     if req.kind_of?(ServiceTemplateProvisionRequest)
-      @dialog_replace_data = req.options[:dialog].map { |key, val| {:name => key.split('dialog_').last, :value => val } }.to_json
+      @dialog_replace_data = req.options[:dialog].map { |key, val| {:name => key.split('dialog_').last, :value => val} }.to_json
       @new_dialog = true
       template = find_record_with_rbac(ServiceTemplate, req.source_id)
       resource_action = template.resource_actions.find { |r| r.action.downcase == 'provision' && r.dialog_id }
@@ -214,15 +214,13 @@ class MiqRequestController < ApplicationController
             add_flash(field[:error], :error)
           end
         end
-      end
-      # setting active tab to first visible tab
-      @edit[:wf].get_dialog_order.each do |d|
         next unless @edit[:wf].get_dialog(d)[:display] == :show
 
         @edit[:new][:current_tab_key] = d
         @tabactive = d # Use JS to update the display
         break
       end
+      # setting active tab to first visible tab
       render :update do |page|
         page << javascript_prologue
         if @error_div
@@ -269,7 +267,7 @@ class MiqRequestController < ApplicationController
     begin
       method = WORKFLOW_METHOD_WHITELIST[params[:field]]
       @edit[:wf].send(method, @edit[:new]) unless method.nil?
-    rescue StandardError => bang
+    rescue => bang
       add_flash(_("Error retrieving LDAP info: %{error_message}") % {:error_message => bang.message}, :error)
       javascript_flash
     else
@@ -285,7 +283,7 @@ class MiqRequestController < ApplicationController
 
   def post_install_callback
     MiqRequestTask.post_install_callback(params["task_id"]) if params["task_id"]
-    head :ok
+    head 200
   end
 
   # Caution: The params[:typ] argument needs to match value from ?typ=VALUE
@@ -435,7 +433,7 @@ class MiqRequestController < ApplicationController
 
   def label_value_hash_with_all(array)
     array.each_with_object([{:label => _('All'), :value => 'all'}]) do |(value, label), a|
-      a << {:label => label, :value => value }
+      a << {:label => label, :value => value}
     end
   end
 
@@ -513,7 +511,7 @@ class MiqRequestController < ApplicationController
                :userid       => session[:userid]}
       begin
         miq_request.destroy
-      rescue StandardError => bang
+      rescue => bang
         add_flash(_("Request \"%{name}\": Error during 'destroy': %{message}") %
                       {:name    => request_name,
                        :message => bang.message},

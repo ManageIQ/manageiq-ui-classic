@@ -15,8 +15,8 @@ module OpsController::Settings::AnalysisProfiles
 
     ap_build_list
 
-    if @show_list
-      update_gtl_div('aps_list') if pagination_or_gtl_request?
+    if @show_list && pagination_or_gtl_request?
+      update_gtl_div('aps_list')
     end
   end
 
@@ -64,7 +64,8 @@ module OpsController::Settings::AnalysisProfiles
     return unless load_edit("ap_edit__#{params[:id]}", "replace_cell__explorer")
 
     ap_get_form_vars
-    if params[:edit_entry] == "edit_file"
+    case params[:edit_entry]
+    when "edit_file"
       session[:edit_filename] = params[:file_name]
       render :update do |page|
         page << javascript_prologue
@@ -74,7 +75,7 @@ module OpsController::Settings::AnalysisProfiles
         page << javascript_focus("entry_#{j_str(params[:field])}")
         page << "$('#entry_#{j_str(params[:field])}').select();"
       end
-    elsif params[:edit_entry] == "edit_registry"
+    when "edit_registry"
       session[:reg_data] = {}
       session[:reg_data][:key] = params[:reg_key] if params[:reg_key]
       session[:reg_data][:value] = params[:reg_value] if params[:reg_value]
@@ -86,7 +87,7 @@ module OpsController::Settings::AnalysisProfiles
         page << javascript_focus("entry_#{j_str(params[:field])}")
         page << "$('#entry_#{j_str(params[:field])}').select();"
       end
-    elsif params[:edit_entry] == "edit_nteventlog"
+    when "edit_nteventlog"
       session[:nteventlog_data] = {}
       session[:nteventlog_entries].sort_by { |r| r[:name] }.each_with_index do |nteventlog, i|
         next unless i == params[:entry_id].to_i
@@ -216,7 +217,7 @@ module OpsController::Settings::AnalysisProfiles
         id = params[:button] == "add" ? "new" : params[:id]
         return unless load_edit("ap_edit__#{id}", "replace_cell__explorer")
 
-        @scan = ScanItemSet.find_by_id(@edit[:scan_id])
+        @scan = ScanItemSet.find_by(:id => @edit[:scan_id])
         ap_get_form_vars
 
         category, nteventlog, registry = %w[category nteventlog registry].map do |x|
@@ -295,7 +296,7 @@ module OpsController::Settings::AnalysisProfiles
           session[:set_copy] = "copy"
           scanitemset = obj
           @scan = ScanItemSet.new
-          @scan.name = "Copy of " + scanitemset.name
+          @scan.name = "Copy of #{scanitemset.name}"
           @scan.description = scanitemset.description
           @scan.mode = scanitemset.mode
           ap_set_form_vars
@@ -314,9 +315,10 @@ module OpsController::Settings::AnalysisProfiles
         else
           ap_set_form_vars unless params[:tab]
         end
-        if params[:tab] # only if tab was changed
-          return unless load_edit("ap_edit__#{params[:id]}", "replace_cell__explorer")
+        if params[:tab] && !load_edit("ap_edit__#{params[:id]}", "replace_cell__explorer") # only if tab was changed
+          return
         end
+
         ap_build_edit_screen
         @sb[:ap_active_tab] = @edit[:new][:scan_mode] == "Host" ? "file" : "category"
         if params[:button] == "reset"
@@ -525,7 +527,7 @@ module OpsController::Settings::AnalysisProfiles
           temp = {}
         end
       end
-      @edit[:new][item_type][:definition]["content"].push(temp) if !temp.empty? && !@edit[:new][item_type][:definition]["content"].include?(temp)
+      @edit[:new][item_type][:definition]["content"].push(temp) if !temp.empty? && @edit[:new][item_type][:definition]["content"].exclude?(temp)
       temp = {}
     end
   end

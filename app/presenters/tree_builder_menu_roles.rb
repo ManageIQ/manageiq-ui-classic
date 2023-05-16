@@ -94,7 +94,7 @@ class TreeBuilderMenuRoles < TreeBuilder
   # create/modify new array that doesn't have custom reports folder, dont need custom folder in menu_editor
   # add any new empty folders that were added
   def menus
-    rpt_menu.map { |item| item if conforming_item?(item) }.compact
+    rpt_menu.select { |item| conforming_item?(item) }
   end
 
   # Checks array pairs for empty children

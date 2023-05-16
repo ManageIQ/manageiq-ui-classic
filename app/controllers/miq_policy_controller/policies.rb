@@ -2,11 +2,11 @@ module MiqPolicyController::Policies
   extend ActiveSupport::Concern
 
   def policy_edit_cancel
-    if params[:id]
-      flash_msg = _("Edit of Policy \"%{name}\" was cancelled by the user") % {:name => session[:edit][:new][:description]}
-    else
-      flash_msg = _("Add of new Policy was cancelled by the user")
-    end
+    flash_msg = if params[:id]
+                  _("Edit of Policy \"%{name}\" was cancelled by the user") % {:name => session[:edit][:new][:description]}
+                else
+                  _("Add of new Policy was cancelled by the user")
+                end
     @edit = session[:edit] = nil # clean out the saved info
     session[:changed] = false
     javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg => flash_msg)
@@ -24,10 +24,12 @@ module MiqPolicyController::Policies
     end
 
     policy_build_edit_screen(session[:edit].try(:key?, :typ) ? session[:edit][:typ] : params[:typ])
-    javascript_redirect(:action        => 'edit',
-                        :id            => params[:id],
-                        :flash_msg     => _("All changes have been reset"),
-                        :flash_warning => true) if params[:button] == "reset"
+    if params[:button] == "reset"
+      javascript_redirect(:action        => 'edit',
+                          :id            => params[:id],
+                          :flash_msg     => _("All changes have been reset"),
+                          :flash_warning => true)
+    end
   end
 
   def policy_edit_save
@@ -58,11 +60,11 @@ module MiqPolicyController::Policies
     end
 
     AuditEvent.success(build_saved_audit(policy, @edit))
-    if params[:button] == "save"
-      flash_msg = _("Policy \"%{name}\" was saved") % {:name => @edit[:new][:description]}
-    else
-      flash_msg = _("Policy \"%{name}\" was added") % {:name => @edit[:new][:description]}
-    end
+    flash_msg = if params[:button] == "save"
+                  _("Policy \"%{name}\" was saved") % {:name => @edit[:new][:description]}
+                else
+                  _("Policy \"%{name}\" was added") % {:name => @edit[:new][:description]}
+                end
     @edit = session[:edit] = nil # clean out the saved info
     session[:changed] = @changed = false
     javascript_redirect(:action => @lastaction, :id => params[:id], :flash_msg => flash_msg)
@@ -83,6 +85,7 @@ module MiqPolicyController::Policies
     # Load @edit/vars for other buttons
     id = params[:id] || "new"
     return unless load_edit("miq_policy_edit__#{id}")
+
     @edit[:policy_id] ? MiqPolicy.find_by(:id => @edit[:policy_id]) : MiqPolicy.new
   end
 
@@ -175,10 +178,12 @@ module MiqPolicyController::Policies
       end
 
       policy_build_edit_screen("events")
-      javascript_redirect(:action        => 'miq_policy_edit_events',
-                          :id            => params[:id],
-                          :flash_msg     => _("All changes have been reset"),
-                          :flash_warning => true) if params[:button] == "reset"
+      if params[:button] == "reset"
+        javascript_redirect(:action        => 'miq_policy_edit_events',
+                            :id            => params[:id],
+                            :flash_msg     => _("All changes have been reset"),
+                            :flash_warning => true)
+      end
     when "save"
       # Reload @edit/vars for other buttons
       @policy = policy_edit_load_policy
@@ -210,10 +215,12 @@ module MiqPolicyController::Policies
       end
 
       policy_build_edit_screen("conditions")
-      javascript_redirect(:action        => 'miq_policy_edit_conditions',
-                          :id            => params[:id],
-                          :flash_msg     => _("All changes have been reset"),
-                          :flash_warning => true) if params[:button] == "reset"
+      if params[:button] == "reset"
+        javascript_redirect(:action        => 'miq_policy_edit_conditions',
+                            :id            => params[:id],
+                            :flash_msg     => _("All changes have been reset"),
+                            :flash_warning => true)
+      end
     when "save"
       @policy = policy_edit_load_policy
       mems = @edit[:new][:conditions].invert # Get the ids from the member list box
@@ -287,5 +294,4 @@ module MiqPolicyController::Policies
   def excluded_event?(event)
     event.name.end_with?("compliance_check", "perf_complete")
   end
-
 end

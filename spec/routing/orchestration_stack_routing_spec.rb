@@ -7,7 +7,7 @@ describe OrchestrationStackController do
   it_behaves_like "A controller that has download_data routes"
   it_behaves_like "A controller that has tagging routes"
 
-  %w(
+  %w[
     cloud_networks
     download_data
     index
@@ -18,7 +18,7 @@ describe OrchestrationStackController do
     show_list
     tagging_edit
     protect
-  ).each do |task|
+  ].each do |task|
     describe "##{task}" do
       it 'routes with GET' do
         expect(get("/#{controller_name}/#{task}")).to route_to("#{controller_name}##{task}")
@@ -26,7 +26,7 @@ describe OrchestrationStackController do
     end
   end
 
-  %w(
+  %w[
     button
     cloud_networks
     outputs
@@ -40,7 +40,7 @@ describe OrchestrationStackController do
     show_list
     tagging_edit
     protect
-  ).each do |task|
+  ].each do |task|
     describe "##{task}" do
       it 'routes with POST' do
         expect(post("/#{controller_name}/#{task}")).to route_to("#{controller_name}##{task}")

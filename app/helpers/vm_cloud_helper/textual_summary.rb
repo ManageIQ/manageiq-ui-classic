@@ -45,6 +45,7 @@ module VmCloudHelper::TextualSummary
 
   def textual_ipaddress
     return nil if @record.template?
+
     ips = @record.ipaddresses
     {:label => n_("IP Address", "IP Addresses", ips.size), :value => ips.join(", ")}
   end
@@ -66,11 +67,13 @@ module VmCloudHelper::TextualSummary
   def textual_architecture
     bitness = @record.hardware&.bitness
     return nil if bitness.blank?
+
     {:label => _("Architecture"), :value => "#{bitness} bit"}
   end
 
   def textual_key_pairs
     return nil if @record.kind_of?(ManageIQ::Providers::CloudManager::Template)
+
     h = {:label => _("Key Pairs")}
     key_pairs = @record.key_pairs
     h[:value] = key_pairs.blank? ? _("N/A") : key_pairs.collect(&:name).join(", ")
@@ -80,17 +83,20 @@ module VmCloudHelper::TextualSummary
   def textual_virtualization_type
     v_type = @record.hardware&.virtualization_type
     return nil if v_type.blank?
+
     {:label => _("Virtualization Type"), :value => v_type.to_s}
   end
 
   def textual_root_device_type
     rd_type = @record.hardware&.root_device_type
     return nil if rd_type.blank?
+
     {:label => _("Root Device Type"), :value => rd_type.to_s}
   end
 
   def textual_ems_ref
     return nil if @record.ems_ref.blank?
+
     {:label => _("ID within Provider"), :value => @record.ems_ref}
   end
 end

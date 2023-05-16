@@ -19,7 +19,7 @@ describe EmsContainerController do
     end
 
     context "render" do
-      subject { get :show, :params => { :id => @container.id } }
+      subject { get :show, :params => {:id => @container.id} }
       render_views
       it do
         is_expected.to have_http_status 200
@@ -27,14 +27,13 @@ describe EmsContainerController do
       end
 
       it "renders timeline" do
-        get :show, :params => { :id => @container.id, :display => 'timeline' }
+        get :show, :params => {:id => @container.id, :display => 'timeline'}
         expect(response.status).to eq(200)
       end
-
     end
 
     context "render dashboard" do
-      subject { get :show, :params => { :id => @container.id, :display => 'dashboard' } }
+      subject { get :show, :params => {:id => @container.id, :display => 'dashboard'} }
       render_views
 
       it 'never render template show' do
@@ -49,8 +48,8 @@ describe EmsContainerController do
   end
 
   include_examples '#download_summary_pdf', :ems_kubernetes
-  %w(container_projects container_nodes container_images container_volumes
-     container_templates).each do |custom_button_class|
+  %w[container_projects container_nodes container_images container_volumes
+     container_templates].each do |custom_button_class|
     include_examples "relationship table screen with custom buttons", custom_button_class
   end
 end

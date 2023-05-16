@@ -45,7 +45,7 @@ module PxeController::IsoDatastores
   def iso_datastore_list
     assert_privileges('iso_datastore_view')
     @lastaction = "iso_datastore_list"
-    @force_no_grid_xml   = true
+    @force_no_grid_xml = true
     if params[:ppsetting]                                             # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                       # Set the new per page value
       @settings.store_path(:perpage, :list, @items_per_page)          # Set the per page setting for this gtl type
@@ -59,8 +59,8 @@ module PxeController::IsoDatastores
     session[:iso_sortcol] = @sortcol
     session[:iso_sortdir] = @sortdir
 
-    if @show_list
-      update_gtl_div('iso_datastore_list') if params[:action] != "button" && pagination_or_gtl_request?
+    if @show_list && (params[:action] != "button" && pagination_or_gtl_request?)
+      update_gtl_div('iso_datastore_list')
     end
   end
 

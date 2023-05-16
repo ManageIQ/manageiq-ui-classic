@@ -37,6 +37,21 @@ class FloatingIpController < ApplicationController
     end
   end
 
+  def new
+    assert_privileges("floating_ip_new")
+    @floating_ip = FloatingIp.new
+    @in_a_form = true
+    drop_breadcrumb(:name => _("Add New Floating IP"), :url => "/floating_ip/new")
+  end
+
+  def edit
+    assert_privileges("floating_ip_edit")
+    @floating_ip = find_record_with_rbac(FloatingIp, params[:id])
+    @in_a_form = true
+    drop_breadcrumb(:name => _("Associate Floating IP \"%{address}\"") % {:address => @floating_ip.address},
+                    :url  => "/floating_ip/edit/#{@floating_ip.id}")
+  end
+
   def create
     assert_privileges("floating_ip_new")
     case params[:button]
@@ -71,7 +86,7 @@ class FloatingIpController < ApplicationController
     floating_ip_address = session[:async][:params][:address]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
-      add_flash(_("Floating IP \"%{address}\" created") % { :address => floating_ip_address })
+      add_flash(_("Floating IP \"%{address}\" created") % {:address => floating_ip_address})
     else
       add_flash(_("Unable to create Floating IP \"%{address}\": %{details}") % {:address => floating_ip_address,
                                                                                 :details => task.message}, :error)
@@ -101,21 +116,6 @@ class FloatingIpController < ApplicationController
         javascript_redirect(:action => 'show_list')
       end
     end
-  end
-
-  def edit
-    assert_privileges("floating_ip_edit")
-    @floating_ip = find_record_with_rbac(FloatingIp, params[:id])
-    @in_a_form = true
-    drop_breadcrumb(:name => _("Associate Floating IP \"%{address}\"") % { :address => @floating_ip.address },
-                    :url  => "/floating_ip/edit/#{@floating_ip.id}")
-  end
-
-  def new
-    assert_privileges("floating_ip_new")
-    @floating_ip = FloatingIp.new
-    @in_a_form = true
-    drop_breadcrumb(:name => _("Add New Floating IP"), :url => "/floating_ip/new")
   end
 
   def download_data

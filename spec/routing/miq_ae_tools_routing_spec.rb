@@ -9,14 +9,14 @@ describe MiqAeToolsController do
     end
   end
 
-  %w(
+  %w[
     automate_json
     export_datastore
     fetch_log
     import_export
     log
     review_import
-  ).each do |action|
+  ].each do |action|
     describe "##{action}" do
       it "routes with GET" do
         expect(get("/miq_ae_tools/#{action}")).to route_to("miq_ae_tools##{action}")
@@ -24,7 +24,7 @@ describe MiqAeToolsController do
     end
   end
 
-  %w(
+  %w[
     button
     cancel_import
     form_field_changed
@@ -34,7 +34,7 @@ describe MiqAeToolsController do
     upload
     upload_import_file
     wait_for_task
-  ).each do |action|
+  ].each do |action|
     describe "##{action}" do
       it "routes with POST" do
         expect(post("/miq_ae_tools/#{action}")).to route_to("miq_ae_tools##{action}")

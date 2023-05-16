@@ -232,7 +232,7 @@ describe ApplicationController do
       expect(assigns(:edit)[:new][:disabled_open_url]).to eq(false)
 
       controller.instance_variable_set(:@sb,
-                                       :trees       => { :ab_tree => {:active_node => "xx-ab_Vm_cbg-10r96_cb-10r7"}},
+                                       :trees       => {:ab_tree => {:active_node => "xx-ab_Vm_cbg-10r96_cb-10r7"}},
                                        :active_tree => :ab_tree)
       controller.send(:button_set_form_vars)
       expect(assigns(:edit)[:new][:target_class]).to eq("Vm")
@@ -244,10 +244,10 @@ describe ApplicationController do
       allow(MiqAeClass).to receive_messages(:find_distinct_instances_across_domains => [double(:name => "foo")])
       service_template = FactoryBot.create(:service_template_ansible_playbook)
       custom_button = FactoryBot.create(:custom_button,
-                                         :applies_to_class => "Vm",
-                                         :options          => {:display     => false,
-                                                               :button_icon => "fa fa-info",
-                                                               :button_type => "ansible_playbook"})
+                                        :applies_to_class => "Vm",
+                                        :options          => {:display     => false,
+                                                              :button_icon => "fa fa-info",
+                                                              :button_type => "ansible_playbook"})
       custom_button.uri_path, custom_button.uri_attributes, custom_button.uri_message = CustomButton.parse_uri("/test/")
       custom_button.uri_attributes[:service_template_name] = service_template.name
       custom_button.uri_attributes[:inventory_type] = "localhost"
@@ -316,7 +316,7 @@ describe ApplicationController do
     let(:role) { FactoryBot.create(:miq_user_role, :features => %w[everything]) }
     let(:old_role) { FactoryBot.create(:miq_user_role, :features => %w[everything]) }
     let(:custom_button) { FactoryBot.create(:custom_button, :applies_to_class => "Vm", :options => {:display => false, :button_icon => "5"}) }
-    let(:edit) {
+    let(:edit) do
       {:uri => '/test/',
        :new => {:name           => 'testCB',
                 :description    => 'testCB',
@@ -325,9 +325,8 @@ describe ApplicationController do
                 :open_url       => true,
                 :visibility_typ => 'role',
                 :roles          => [role.id.to_s],
-                :display_for    => :list}
-      }
-    }
+                :display_for    => :list}}
+    end
 
     before do
       custom_button.uri_path, custom_button.uri_attributes, custom_button.uri_message = CustomButton.parse_uri("/test/")
@@ -401,7 +400,6 @@ describe ApplicationController do
         session[:edit] = edit
       end
       it "to false for Vm and Template" do
-
         controller.params = {"id" => button_for_vm.id, "dialog_id" => ""}
         controller.instance_variable_set(:@sb, {:action => 'ab_button_new'})
         controller.instance_variable_set(:@resolve, :target_class => "Vm")

@@ -282,26 +282,26 @@ describe ApplicationHelper, "::ToolbarBuilder" do
 
     context "internationalization" do
       it "does translation of text title and confirm strings" do
-        %i(text title confirm).each do |key|
+        %i[text title confirm].each do |key|
           @input[key] = 'Configuration' # common button string, translated into Japanese
         end
         FastGettext.locale = 'ja'
         toolbar_builder.apply_common_props(@button, @input)
-        %i(text title confirm).each do |key|
+        %i[text title confirm].each do |key|
           expect(@button[key]).not_to match('Configuration')
         end
         FastGettext.locale = 'en'
       end
 
       it "does delayed translation of text title and confirm strings" do
-        %i(text title confirm).each do |key|
+        %i[text title confirm].each do |key|
           @input[key] = proc do
             _("Add New %{table}") % {:table => 'Table'}
           end
         end
         FastGettext.locale = 'ja'
         toolbar_builder.apply_common_props(@button, @input)
-        %i(text title confirm).each do |key|
+        %i[text title confirm].each do |key|
           expect(@button[key]).not_to match('Add New Table')
         end
         FastGettext.locale = 'en'
@@ -515,7 +515,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           :title   => "Add a new Generic Object Definition",
           :text    => "Add a new Generic Object Definition",
           :onwhen  => nil,
-          :enabled => true,
+          :enabled => true
         )
         expect(items[1]).to include(
           :id    => "generic_object_definition_configuration__generic_object_definition_edit",
@@ -531,7 +531,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           :title   => "Remove selected Generic Object Definitions from Inventory",
           :text    => "Remove selected Generic Object Definitions from Inventory",
           :onwhen  => "1+",
-          :enabled => false,
+          :enabled => false
         )
       end
     end

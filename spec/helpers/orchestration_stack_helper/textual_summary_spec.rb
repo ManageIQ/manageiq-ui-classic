@@ -2,7 +2,7 @@ describe OrchestrationStackHelper::TextualSummary do
   before { @record = FactoryBot.build(:orchestration_stack) }
 
   it "#textual_group_lifecycle includes retirement_date" do
-    expect(textual_group_lifecycle.items).to eq(%i(retirement_date))
+    expect(textual_group_lifecycle.items).to eq(%i[retirement_date])
   end
 
   describe "#textual_retirement_date value" do
@@ -16,11 +16,11 @@ describe OrchestrationStackHelper::TextualSummary do
     end
   end
 
-  include_examples "textual_group", "Properties", %i(name description type status status_reason)
+  include_examples "textual_group", "Properties", %i[name description type status status_reason]
 
-  include_examples "textual_group", "Lifecycle", %i(retirement_date)
+  include_examples "textual_group", "Lifecycle", %i[retirement_date]
 
-  include_examples "textual_group", "Relationships", %i(
+  include_examples "textual_group", "Relationships", %i[
     ems_cloud
     service
     parent_orchestration_stack
@@ -32,5 +32,5 @@ describe OrchestrationStackHelper::TextualSummary do
     parameters
     outputs
     resources
-  )
+  ]
 end

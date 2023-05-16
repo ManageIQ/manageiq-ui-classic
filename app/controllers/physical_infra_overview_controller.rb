@@ -8,16 +8,16 @@ class PhysicalInfraOverviewController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  def index
+    redirect_to(:action => 'show')
+  end
+
   def show
     assert_privileges('physical_infra_overview_view')
     @lastaction = 'show_dashboard'
     if params[:id].nil?
       @breadcrumbs.clear
     end
-  end
-
-  def index
-    redirect_to(:action => 'show')
   end
 
   def title

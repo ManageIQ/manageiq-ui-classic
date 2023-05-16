@@ -25,7 +25,7 @@ class MiqPolicyController < ApplicationController
   end
 
   def new
-    drop_breadcrumb(:name => _("Add New %{table}") % {:table => ui_lookup(:table => table_name)},:url  => "/#{controller_name}/new")
+    drop_breadcrumb(:name => _("Add New %{table}") % {:table => ui_lookup(:table => table_name)}, :url => "/#{controller_name}/new")
     miq_policy_edit
   end
 
@@ -34,7 +34,7 @@ class MiqPolicyController < ApplicationController
     miq_policy_edit
     if params[:id]
       @policy = MiqPolicy.find(params[:id])
-      drop_breadcrumb(:name => _("Edit %{object_type} '%{object_name}'") % {:object_type => ui_lookup(:tables => table_name), :object_name => @policy.description},:url  => "/#{controller_name}/#{@policy.id}/edit")
+      drop_breadcrumb(:name => _("Edit %{object_type} '%{object_name}'") % {:object_type => ui_lookup(:tables => table_name), :object_name => @policy.description}, :url => "/#{controller_name}/#{@policy.id}/edit")
     end
   end
 

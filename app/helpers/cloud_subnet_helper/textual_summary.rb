@@ -48,15 +48,13 @@ module CloudSubnetHelper::TextualSummary
   end
 
   def textual_allocation_pools
-    @record.allocation_pools.map { |x| "<#{x['start']}, #{x['end']}>" }.join(", ") if @record.allocation_pools
+    @record.allocation_pools&.map { |x| "<#{x['start']}, #{x['end']}>" }&.join(", ")
   end
 
   def textual_host_routes
-    if @record.host_routes
-      @record.host_routes.map do |x|
-        "destination: #{x['destination']}, nexthop: #{x['nexthop']}"
-      end.join(" | ")
-    end
+    @record.host_routes&.map do |x|
+      "destination: #{x['destination']}, nexthop: #{x['nexthop']}"
+    end&.join(" | ")
   end
 
   def textual_ip_version

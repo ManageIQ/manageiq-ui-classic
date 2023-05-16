@@ -2,14 +2,14 @@ require "routing/shared_examples"
 
 describe EmsContainerController do
   let(:controller_name) { "ems_container" }
-  %w(
+  %w[
     button
     listnav_search_selected
     save_default_search
     show
     show_list
     protect
-  ).each do |task|
+  ].each do |task|
     describe "##{task}" do
       it 'routes with POST' do
         expect(post("/#{controller_name}/#{task}")).to route_to("#{controller_name}##{task}")

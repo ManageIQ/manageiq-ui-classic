@@ -30,7 +30,7 @@ shared_examples_for 'vm_console_visible?' do |console_type, records|
   end
 end
 
-shared_examples_for 'vm_console_not_visible?' do |console_type|
+shared_examples_for 'vm_console_not_visible?' do |_console_type|
   subject { button.visible? }
 
   context "ems_id is not present" do

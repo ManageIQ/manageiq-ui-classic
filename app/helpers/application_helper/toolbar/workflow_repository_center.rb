@@ -25,7 +25,7 @@ class ApplicationHelper::Toolbar::WorkflowRepositoryCenter < ApplicationHelper::
                        :klass   => ApplicationHelper::Button::EmbeddedWorkflow,
                        :url     => "repository_refresh",
                        :confirm => N_("Refresh this Repository?"),
-                       :enabled => true,
+                       :enabled => true
                      ),
                      separator,
                      button(

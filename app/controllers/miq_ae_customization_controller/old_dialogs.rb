@@ -8,7 +8,7 @@ module MiqAeCustomizationController::OldDialogs
     @edit[:new][:description] = CGI.unescape(params[:description]) if params[:description]
     @edit[:new][:dialog_type] = CGI.unescape(params[:dialog_type]) if params[:dialog_type]
     @edit[:new][:content] = params[:content_data] if params[:content_data]
-    @edit[:new][:content] = @edit[:new][:content] + "..." if !params[:name] && !params[:description] && !params[:dialog_type] && !params[:content_data]
+    @edit[:new][:content] = "#{@edit[:new][:content]}..." if !params[:name] && !params[:description] && !params[:dialog_type] && !params[:content_data]
   end
 
   # Set form variables for edit
@@ -38,7 +38,7 @@ module MiqAeCustomizationController::OldDialogs
     dialog.name = @edit[:new][:name]
     dialog.description = @edit[:new][:description]
     dialog.dialog_type = @edit[:new][:dialog_type]
-    dialog.content = YAML.load(@edit[:new][:content])
+    dialog.content = YAML.safe_load(@edit[:new][:content])
   end
 
   # Common Schedule button handler routines
@@ -122,6 +122,7 @@ module MiqAeCustomizationController::OldDialogs
   def old_dialogs_form_field_changed
     assert_privileges(params[:id] == 'new' ? 'old_dialogs_new' : 'old_dialogs_edit')
     return unless load_edit("dialog_edit__#{params[:id]}", "replace_cell__explorer")
+
     old_dialogs_get_form_vars
     render :update do |page|
       page << javascript_prologue
@@ -138,7 +139,7 @@ module MiqAeCustomizationController::OldDialogs
   def old_dialogs_list
     assert_privileges('old_dialogs_accord') # feature like miq_ae_customization_old_dialogs_list is missing
     @lastaction = "old_dialogs_list"
-    @force_no_grid_xml   = true
+    @force_no_grid_xml = true
     @dialog = nil
     if params[:ppsetting]                                             # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                       # Set the new per page value
@@ -184,7 +185,7 @@ module MiqAeCustomizationController::OldDialogs
     if params[:typ] == "copy"
       dialog = MiqDialog.find(params[:id])
       @dialog = MiqDialog.new
-      @dialog.name = "Copy of " + dialog.name
+      @dialog.name = "Copy of #{dialog.name}"
       @dialog.description = dialog.description
       @dialog.dialog_type = dialog.dialog_type
       @dialog.content = dialog.content
@@ -206,8 +207,9 @@ module MiqAeCustomizationController::OldDialogs
 
   def old_dialogs_update
     assert_privileges(params[:id].present? ? 'old_dialogs_edit' : 'old_dialogs_new')
-    id = params[:id] ? params[:id] : "new"
+    id = params[:id] || "new"
     return unless load_edit("dialog_edit__#{id}", "replace_cell__explorer")
+
     old_dialogs_update_create
   end
 
@@ -249,7 +251,7 @@ module MiqAeCustomizationController::OldDialogs
       old_dialogs_set_record_vars(dialog)
       begin
         dialog.save!
-      rescue StandardError
+      rescue
         dialog.errors.each do |error|
           add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
         end

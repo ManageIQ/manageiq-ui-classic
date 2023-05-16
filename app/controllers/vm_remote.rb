@@ -31,10 +31,10 @@ module VmRemote
   end
 
   def launch_html5_console
-    override_content_security_policy_directives(:connect_src => ["'self'", websocket_origin], :img_src => %w[data: blob: 'self'])
+    override_content_security_policy_directives(:connect_src => ["'self'", websocket_origin], :img_src => %w[data: blob: self])
     %i[secret url proto].each { |p| params.require(p) }
 
-    proto = j(params[:proto]).sub(/\-.*$/, '') # -suffix should be omitted from the protocol name
+    proto = j(params[:proto]).sub(/-.*$/, '') # -suffix should be omitted from the protocol name
     if %w[vnc spice webmks].include?(proto)
       @console = {
         :url       => j(params[:url]),

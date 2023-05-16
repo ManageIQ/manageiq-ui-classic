@@ -80,7 +80,7 @@ module JsHelper
       ManageIQ.calendar.calDateTo = #{js_format_date(options[:date_to])};
       ManageIQ.calendar.calSkipDays = #{skip_days};
       miqBuildCalendar();
-EOD
+    EOD
   end
 
   # JSONP request access prevention

@@ -1,5 +1,5 @@
 describe CloudVolumeHelper::TextualSummary do
-  include_examples "textual_group", "Relationships", %i(
+  include_examples "textual_group", "Relationships", %i[
     parent_ems_cloud
     ems
     storage_resource
@@ -12,6 +12,6 @@ describe CloudVolumeHelper::TextualSummary do
     attachments
     custom_button_events
     host_initiators
-  )
-  include_examples "textual_group", "Properties", %i(name size bootable description status health_state)
+  ]
+  include_examples "textual_group", "Properties", %i[name size bootable description status health_state]
 end

@@ -18,7 +18,7 @@ module SettingsTagsTabsHelper
       {
         :id        => category[:id].to_s,
         :clickable => true,
-        :cells => [
+        :cells     => [
           {:text => category[:name]},
           {:text => category[:descripton]},
           {:text => category[:show]},

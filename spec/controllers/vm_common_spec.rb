@@ -4,8 +4,8 @@ describe VmOrTemplateController do
       stub_user(:features => :all)
       @vm = FactoryBot.create(:vm_vmware)
       @snapshot = FactoryBot.create(:snapshot, :vm_or_template_id => @vm.id,
-                                                :name              => 'EvmSnapshot',
-                                                :description       => "Some Description")
+                                               :name              => 'EvmSnapshot',
+                                               :description       => "Some Description")
       @vm.snapshots = [@snapshot]
       tree_hash = {
         :trees         => {
@@ -21,13 +21,13 @@ describe VmOrTemplateController do
     end
 
     it "snapshot node exists in tree" do
-      post :snap_pressed, :params => { :id => @snapshot.id }
+      post :snap_pressed, :params => {:id => @snapshot.id}
       expect(assigns(:flash_array)).to be_blank
     end
 
     it "when snapshot is selected center toolbars are replaced" do
       allow(controller).to receive(:javascript_reload_toolbars).and_return(nil)
-      post :snap_pressed, :params => { :id => @snapshot.id }
+      post :snap_pressed, :params => {:id => @snapshot.id}
       expect(assigns(:flash_array)).to be_blank
     end
 
@@ -35,12 +35,12 @@ describe VmOrTemplateController do
       sb = session[:sandboxes]["vm_or_template"]
       sb[sb[:active_accord]] = "v-#{@vm.id}"
       sb[:trees][:vandt_tree][:active_node] = "f-1"
-      post :snap_pressed, :params => { :id => @snapshot.id }
+      post :snap_pressed, :params => {:id => @snapshot.id}
       expect(assigns(:record).id).to eq(@vm.id)
     end
 
     it "deleted node pressed in snapshot tree" do
-      post :snap_pressed, :params => { :id => "some_id" }
+      post :snap_pressed, :params => {:id => "some_id"}
       expect(assigns(:flash_array).first[:message]).to eq("Last selected Snapshot no longer exists")
       expect(assigns(:flash_array).first[:level]).to eq(:error)
     end
@@ -56,7 +56,7 @@ describe VmOrTemplateController do
     end
 
     it 'sets params[:id] to hidden vm if its summary is displayed' do
-      allow(controller).to receive(:x_node).and_return('f-' + @folder.id.to_s)
+      allow(controller).to receive(:x_node).and_return("f-#{@folder.id}")
       controller.params = {:id => @vm.id.to_s}
       controller.reload
       expect(controller.params[:id]).to eq("v-#{@vm.id}")
@@ -133,9 +133,9 @@ describe VmOrTemplateController do
 
       it 'to snap_selected.id if a Snapshot exists' do
         @snapshot = FactoryBot.create(:snapshot,
-                                       :vm_or_template_id => @vm.id,
-                                       :name              => 'EvmSnapshot',
-                                       :description       => 'Some Description')
+                                      :vm_or_template_id => @vm.id,
+                                      :name              => 'EvmSnapshot',
+                                      :description       => 'Some Description')
         @vm.snapshots = [@snapshot]
         post :show, :params => {:id => @vm.id, :display => 'snapshot_info'}
         expect(session[:snap_selected]).to eq(@snapshot.id)
@@ -190,9 +190,9 @@ describe VmOrTemplateController do
       presenter = ExplorerPresenter.new(:active_tree => :vandt_tree)
       expect(controller).to receive(:render_to_string).with({:partial => "layouts/breadcrumbs"}).exactly(1).times
       expect(controller).to receive(:render_to_string).with({:partial => "miq_request/prov_edit",
-                                                            :locals  => {:controller => "vm"}}).exactly(1).times
+                                                             :locals  => {:controller => "vm"}}).exactly(1).times
       expect(controller).to receive(:render_to_string).with({:partial => "layouts/x_adv_searchbox",
-                                                            :locals  => {:nameonly => true}}).exactly(1).times
+                                                             :locals  => {:nameonly => true}}).exactly(1).times
       expect(controller).not_to receive(:render_to_string).with({:partial => "layouts/adv_search"})
       expect(controller).to receive(:render_to_string).with({
                                                               :partial => "layouts/x_edit_buttons",
@@ -279,24 +279,24 @@ describe VmOrTemplateController do
 
     it 'returns id of Availability Zone folder for Cloud VM that has one' do
       vm_cloud_with_az = FactoryBot.create(:vm_cloud,
-                                            :ext_management_system => FactoryBot.create(:ems_google),
-                                            :storage               => FactoryBot.create(:storage),
-                                            :availability_zone     => FactoryBot.create(:availability_zone_google))
+                                           :ext_management_system => FactoryBot.create(:ems_google),
+                                           :storage               => FactoryBot.create(:storage),
+                                           :availability_zone     => FactoryBot.create(:availability_zone_google))
       expect(controller.parent_folder_id(vm_cloud_with_az)).to eq(TreeBuilder.build_node_id(vm_cloud_with_az.availability_zone))
     end
 
     it 'returns id of Provider folder for Cloud VM without Availability Zone' do
       vm_cloud_without_az = FactoryBot.create(:vm_cloud,
-                                               :ext_management_system => FactoryBot.create(:ems_google),
-                                               :storage               => FactoryBot.create(:storage),
-                                               :availability_zone     => nil)
+                                              :ext_management_system => FactoryBot.create(:ems_google),
+                                              :storage               => FactoryBot.create(:storage),
+                                              :availability_zone     => nil)
       expect(controller.parent_folder_id(vm_cloud_without_az)).to eq(TreeBuilder.build_node_id(vm_cloud_without_az.ext_management_system))
     end
 
     it 'returns id of Provider folder for Cloud Template' do
       template_cloud = FactoryBot.create(:template_cloud,
-                                          :ext_management_system => FactoryBot.create(:ems_google),
-                                          :storage               => FactoryBot.create(:storage))
+                                         :ext_management_system => FactoryBot.create(:ems_google),
+                                         :storage               => FactoryBot.create(:storage))
       expect(controller.parent_folder_id(template_cloud)).to eq(TreeBuilder.build_node_id(template_cloud.ext_management_system))
     end
 

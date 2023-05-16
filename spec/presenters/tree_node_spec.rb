@@ -1,6 +1,6 @@
 describe TreeNode do
   # Force load all the TreeNode:: subclasses
-  Dir[ManageIQ::UI::Classic::Engine.root.join('app', 'presenters', 'tree_node', '*.rb')].each { |f| require f }
+  Dir[ManageIQ::UI::Classic::Engine.root.join('app', 'presenters', 'tree_node', '*.rb')].sort.each { |f| require f }
 
   # FIXME: rewrite this to FactoryBot
   let(:object) do

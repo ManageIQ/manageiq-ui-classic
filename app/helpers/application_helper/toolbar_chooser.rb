@@ -34,8 +34,8 @@ class ApplicationHelper::ToolbarChooser
     elsif %w[container_project].include?(@layout)
       'container_project_view_tb'
     elsif %w[all_tasks condition timeline diagnostics miq_action miq_alert miq_alert_set miq_event_definition miq_policy miq_policy_set my_tasks miq_server usage services].exclude?(@layout) &&
-      !@layout.starts_with?("miq_request") && @display == "main" &&
-      @showtype == "main" && !@in_a_form
+          !@layout.starts_with?("miq_request") && @display == "main" &&
+          @showtype == "main" && !@in_a_form
       'summary_view_tb'
     end
   end
@@ -160,31 +160,34 @@ class ApplicationHelper::ToolbarChooser
     elsif @in_a_form # to show buttons on dialog add/edit screens
       return "dialog_center_tb"
     end
+
     nil
   end
 
   def center_toolbar_filename_services
-    if x_active_tree == :sandt_tree
+    case x_active_tree
+    when :sandt_tree
       if TreeBuilder.get_model_for_prefix(@nodetype) == "ServiceTemplate"
         "servicetemplate_center_tb"
       elsif @sb[:buttons_node]
         nodes = x_node.split('_')
         if nodes.length == 3 && nodes[2].split('-').first == "cbg"
-          return "catalogitem_buttons_center_tb"
+          "catalogitem_buttons_center_tb"
         else
-          return "catalogitem_button_center_tb"
+          "catalogitem_button_center_tb"
         end
       else
         "servicetemplates_center_tb"
       end
-    elsif x_active_tree == :stcat_tree
+    when :stcat_tree
       if TreeBuilder.get_model_for_prefix(@nodetype) == "ServiceTemplateCatalog"
         "servicetemplatecatalog_center_tb"
       else
         "servicetemplatecatalogs_center_tb"
       end
-    elsif x_active_tree == :ot_tree
+    when :ot_tree
       return nil if x_node == "xx-otovf" || @record.kind_of?(ManageIQ::Providers::Vmware::InfraManager::OrchestrationTemplate)
+
       if %w[root xx-otcfn xx-othot xx-otazu xx-otazs xx-otvnf xx-otvap xx-ovf].include?(x_node)
         "orchestration_templates_center_tb"
       else
@@ -199,11 +202,13 @@ class ApplicationHelper::ToolbarChooser
 
   def center_toolbar_filename_chargeback_report
     return "chargeback_center_tb" if @report
+
     nil
   end
 
   def center_toolbar_filename_ops
-    if x_active_tree == :settings_tree
+    case x_active_tree
+    when :settings_tree
       if x_node.split('-').last == "msc"
         return "miq_schedules_center_tb"
       elsif x_node.split('-').first == "msc"
@@ -217,7 +222,7 @@ class ApplicationHelper::ToolbarChooser
       elsif x_node_split.first == "z" && @sb[:active_tab] != "settings_smartproxy_affinity"
         return "zone_center_tb"
       end
-    elsif x_active_tree == :diagnostics_tree
+    when :diagnostics_tree
       if x_node == "root"
         return "diagnostics_region_center_tb"
       elsif x_node.split('-').first == "svr"
@@ -225,7 +230,7 @@ class ApplicationHelper::ToolbarChooser
       elsif x_node.split('-').first == "z"
         return "diagnostics_zone_center_tb"
       end
-    elsif x_active_tree == :rbac_tree
+    when :rbac_tree
       node = x_node.split('-')
       if node.last == "g"
         return "miq_groups_center_tb"
@@ -249,7 +254,8 @@ class ApplicationHelper::ToolbarChooser
   end
 
   def center_toolbar_filename_report
-    if x_active_tree == :db_tree
+    case x_active_tree
+    when :db_tree
       node = x_node
       if %w[root xx-g].include?(node)
         return nil
@@ -258,13 +264,13 @@ class ApplicationHelper::ToolbarChooser
       else
         return "miq_widget_set_center_tb"
       end
-    elsif x_active_tree == :savedreports_tree
+    when :savedreports_tree
       if x_node == "root" || parse_nodetype_and_id(x_node).first != "rr"
         return "saved_reports_center_tb"
       else
         return "saved_report_center_tb"
       end
-    elsif x_active_tree == :reports_tree
+    when :reports_tree
       nodes = x_node.split('-')
       if nodes.length == 5
         # on report show
@@ -276,9 +282,9 @@ class ApplicationHelper::ToolbarChooser
         # on folder node
         return "miq_reports_center_tb"
       end
-    elsif x_active_tree == :schedules_tree
+    when :schedules_tree
       return x_node == "root" ? "miq_report_schedules_center_tb" : "miq_report_schedule_center_tb"
-    elsif x_active_tree == :widgets_tree
+    when :widgets_tree
       node = x_node
       return node == "root" || node.split('-').length == 2 ? "miq_widgets_center_tb" : "miq_widget_center_tb"
     end
@@ -286,7 +292,8 @@ class ApplicationHelper::ToolbarChooser
   end
 
   def center_toolbar_filename_pxe
-    if x_active_tree == :pxe_servers_tree
+    case x_active_tree
+    when :pxe_servers_tree
       if x_node == "root"
         return "pxe_servers_center_tb"
       elsif x_node.split('-').first == "pi"
@@ -296,19 +303,19 @@ class ApplicationHelper::ToolbarChooser
       else
         return "pxe_server_center_tb"
       end
-    elsif x_active_tree == :customization_templates_tree
+    when :customization_templates_tree
       if x_node_split.first == 'ct'
         return "customization_template_center_tb"
       else
         return "customization_templates_center_tb"
       end
-    elsif x_active_tree == :pxe_image_types_tree
+    when :pxe_image_types_tree
       if x_node == "root"
         return "pxe_image_types_center_tb"
       else
         return "pxe_image_type_center_tb"
       end
-    elsif x_active_tree == :iso_datastores_tree
+    when :iso_datastores_tree
       if x_node == "root"
         return "iso_datastores_center_tb"
       elsif x_node_split.first == "isi"
@@ -369,6 +376,7 @@ class ApplicationHelper::ToolbarChooser
         return "#{@display}_center"
       elsif @layout == 'ems_container'
         return nil if @display == 'custom_button_events'
+
         return "#{@display}_center"
       end
     elsif @display == 'generic_objects'
@@ -503,19 +511,19 @@ class ApplicationHelper::ToolbarChooser
   end
 
   NO_DOWNLOAD_VIEW_BUTTONS = %w[chargeback_assignment
-                           chargeback_rate
-                           chargeback_report
-                           generic_object
-                           generic_object_definition
-                           miq_ae_class
-                           miq_ae_customization
-                           miq_ae_tools
-                           miq_capacity_utilization
-                           ops
-                           pxe
-                           report].to_set.freeze
+                                chargeback_rate
+                                chargeback_report
+                                generic_object
+                                generic_object_definition
+                                miq_ae_class
+                                miq_ae_customization
+                                miq_ae_tools
+                                miq_capacity_utilization
+                                ops
+                                pxe
+                                report].to_set.freeze
 
   def x_download_view_tb_render?
-    @record.nil? && @explorer && !NO_DOWNLOAD_VIEW_BUTTONS.include?(@layout)
+    @record.nil? && @explorer && NO_DOWNLOAD_VIEW_BUTTONS.exclude?(@layout)
   end
 end

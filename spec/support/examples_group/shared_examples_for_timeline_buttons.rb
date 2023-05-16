@@ -4,7 +4,7 @@ shared_examples_for 'a timeline button' do |options|
       allow(record).to receive(:has_events?).and_return(has_events)
     end
 
-    %i(ems_events policy_events).each do |event_type|
+    %i[ems_events policy_events].each do |event_type|
       context "record has #{event_type}" do
         let(:has_events) { true }
         it_behaves_like 'an enabled button'

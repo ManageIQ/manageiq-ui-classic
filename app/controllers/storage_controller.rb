@@ -38,10 +38,11 @@ class StorageController < ApplicationController
     redirect_to(:action => 'explorer')
   end
 
-  alias_method :index, :show_list
+  alias index show_list
 
   def init_show
     return unless super
+
     if !@explorer && @display == "main"
       tree_node_id = TreeBuilder.build_node_id(@record)
       session[:exp_parms] = {:display => @display, :refresh => params[:refresh], :id => tree_node_id}
@@ -135,7 +136,7 @@ class StorageController < ApplicationController
       single_delete_redirect
     elsif params[:pressed].ends_with?("_edit") ||
           ["#{pfx}_miq_request_new", "#{pfx}_clone", "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed]) ||
-          params[:pressed] == 'vm_rename' && @flash_array.nil?
+          (params[:pressed] == 'vm_rename' && @flash_array.nil?)
       render_or_redirect_partial(pfx)
     elsif !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
       replace_gtl_main_div
@@ -229,7 +230,7 @@ class StorageController < ApplicationController
            %w[reload tree_select].include?(params[:action])
           self.x_node = params[:id]
           quick_search_show
-          return
+          nil
         end
       end
     end
@@ -265,6 +266,7 @@ class StorageController < ApplicationController
     end
 
     return unless @display == 'main'
+
     @showtype = "main"
   end
 
@@ -363,6 +365,7 @@ class StorageController < ApplicationController
       return
     end
     return if @in_a_form
+
     record_showing = leaf_record
 
     trees = build_replaced_trees(replace_trees, %i[storage storage_pod])
@@ -389,6 +392,7 @@ class StorageController < ApplicationController
 
   def search_text_type(node)
     return "storage" if storage_record?(node)
+
     node
   end
 
@@ -426,6 +430,7 @@ class StorageController < ApplicationController
 
   def render_tagging_form
     return if %w[cancel save].include?(params[:button])
+
     @in_a_form = true
     @right_cell_text = _("Edit Tags for Datastore")
     clear_flash_msg
@@ -462,6 +467,7 @@ class StorageController < ApplicationController
     if !@record.nil? && @record[:type] == 'StorageCluster'
       return false
     end
+
     !(@in_a_form || (x_active_tree == :storage_tree && @record) || (x_active_tree == :storage_pod_tree && (x_node == 'root' || @record)))
   end
 
@@ -520,7 +526,7 @@ class StorageController < ApplicationController
 
   def breadcrumbs_options
     {
-      :breadcrumbs    => [
+      :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Infrastructure")},
         {:title => _("Datastores"), :url => File.join(controller_url, 'explorer')},

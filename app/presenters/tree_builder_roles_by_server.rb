@@ -27,6 +27,7 @@ class TreeBuilderRolesByServer < TreeBuilderDiagnostics
     parent.assigned_server_roles.sort_by { |asr| asr.server_role.description }.each_with_object([]) do |asr, objects|
       next if parent.kind_of?(MiqRegion) && !asr.server_role.regional_role? # Only regional roles under Region
       next if asr.server_role.name == "database_owner"
+
       objects.push(asr)
     end
   end

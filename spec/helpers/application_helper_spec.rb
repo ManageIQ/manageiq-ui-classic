@@ -3,7 +3,7 @@ describe ApplicationHelper do
 
   describe "#build_toolbar" do
     it 'should substitute dynamic function values' do
-      req        = ActionDispatch::Request.new Rack::MockRequest.env_for '/?controller=foo'
+      ActionDispatch::Request.new Rack::MockRequest.env_for '/?controller=foo'
       menu_info  = helper.build_toolbar 'storages_center_tb'
       title_text = "Datastores"
 
@@ -17,7 +17,7 @@ describe ApplicationHelper do
     end
 
     it 'should substitute dynamic ivar values' do
-      req = ActionDispatch::Request.new Rack::MockRequest.env_for '/?controller=foo'
+      ActionDispatch::Request.new Rack::MockRequest.env_for '/?controller=foo'
       controller.instance_variable_set(:@sb,
                                        :active_tree => :cb_reports_tree,
                                        :nodeid      => 'Storage',
@@ -28,6 +28,7 @@ describe ApplicationHelper do
 
       menu_info[0][:items].collect do |value|
         next unless value['title']
+
         expect(value['title']).to match(title_text)
         expect(value['title']).to match("Foo") # from :mode
       end
@@ -100,7 +101,7 @@ describe ApplicationHelper do
   end
 
   describe "#rbac_common_feature_for_buttons" do
-    %w(rbac_project_add rbac_tenant_add).each do |pressed|
+    %w[rbac_project_add rbac_tenant_add].each do |pressed|
       it "returns the correct common button" do
         expect(rbac_common_feature_for_buttons(pressed)).to eql("rbac_tenant_add")
       end
@@ -401,7 +402,10 @@ describe ApplicationHelper do
 
     ["User", "Group", "Patch", "GuestApplication"].each do |db|
       context "when with #{db}" do
-        before { @db = db; @lastaction = "some_action" }
+        before do
+          @db = db
+          @lastaction = "some_action"
+        end
 
         it "and @explorer" do
           @explorer = true
@@ -528,13 +532,13 @@ describe ApplicationHelper do
     it "when browser's name is in the list" do
       allow_any_instance_of(ActionController::TestSession)
         .to receive(:fetch_path).with(:browser, :name).and_return('safari')
-      expect(helper.is_browser?(%w(firefox opera safari))).to be_truthy
+      expect(helper.is_browser?(%w[firefox opera safari])).to be_truthy
     end
 
     it "when browser's name is NOT in the list" do
       allow_any_instance_of(ActionController::TestSession)
         .to receive(:fetch_path).with(:browser, :name).and_return('explorer')
-      expect(helper.is_browser?(%w(firefox opera safari))).to be_falsey
+      expect(helper.is_browser?(%w[firefox opera safari])).to be_falsey
     end
   end
 
@@ -542,13 +546,13 @@ describe ApplicationHelper do
     it "when browser's OS is in the list" do
       allow_any_instance_of(ActionController::TestSession)
         .to receive(:fetch_path).with(:browser, :os).and_return('windows')
-      expect(helper.is_browser_os?(%w(windows linux))).to be_truthy
+      expect(helper.is_browser_os?(%w[windows linux])).to be_truthy
     end
 
     it "when browser's OS is NOT in the list" do
       allow_any_instance_of(ActionController::TestSession)
         .to receive(:fetch_path).with(:browser, :os).and_return('macos')
-      expect(helper.is_browser_os?(%w(windows linux))).to be_falsey
+      expect(helper.is_browser_os?(%w[windows linux])).to be_falsey
     end
   end
 
@@ -571,42 +575,42 @@ describe ApplicationHelper do
 
     context "when timer_type == 'Monthly'" do
       let(:timer_type) { 'Monthly' }
-      it { is_expected.to include("$('\#weekly_span').hide();") }
-      it { is_expected.to include("$('\#daily_span').hide();") }
-      it { is_expected.to include("$('\#hourly_span').hide();") }
-      it { is_expected.to include("$('\#monthly_span').show();") }
+      it { is_expected.to include("$('#weekly_span').hide();") }
+      it { is_expected.to include("$('#daily_span').hide();") }
+      it { is_expected.to include("$('#hourly_span').hide();") }
+      it { is_expected.to include("$('#monthly_span').show();") }
     end
 
     context "when timer_type == 'Weekly'" do
       let(:timer_type) { 'Weekly' }
-      it { is_expected.to include("$('\#daily_span').hide();") }
-      it { is_expected.to include("$('\#hourly_span').hide();") }
-      it { is_expected.to include("$('\#monthly_span').hide();") }
-      it { is_expected.to include("$('\#weekly_span').show();") }
+      it { is_expected.to include("$('#daily_span').hide();") }
+      it { is_expected.to include("$('#hourly_span').hide();") }
+      it { is_expected.to include("$('#monthly_span').hide();") }
+      it { is_expected.to include("$('#weekly_span').show();") }
     end
 
     context "when timer_type == 'Daily'" do
       let(:timer_type) { 'Daily' }
-      it { is_expected.to include("$('\#hourly_span').hide();") }
-      it { is_expected.to include("$('\#monthly_span').hide();") }
-      it { is_expected.to include("$('\#weekly_span').hide();") }
-      it { is_expected.to include("$('\#daily_span').show();") }
+      it { is_expected.to include("$('#hourly_span').hide();") }
+      it { is_expected.to include("$('#monthly_span').hide();") }
+      it { is_expected.to include("$('#weekly_span').hide();") }
+      it { is_expected.to include("$('#daily_span').show();") }
     end
 
     context "when timer_type == 'Hourly'" do
       let(:timer_type) { 'Hourly' }
-      it { is_expected.to include("$('\#daily_span').hide();") }
-      it { is_expected.to include("$('\#monthly_span').hide();") }
-      it { is_expected.to include("$('\#weekly_span').hide();") }
-      it { is_expected.to include("$('\#hourly_span').show();") }
+      it { is_expected.to include("$('#daily_span').hide();") }
+      it { is_expected.to include("$('#monthly_span').hide();") }
+      it { is_expected.to include("$('#weekly_span').hide();") }
+      it { is_expected.to include("$('#hourly_span').show();") }
     end
 
     context "when timer_type == 'something_else'" do
       let(:timer_type) { 'something_else' }
-      it { is_expected.to include("$('\#daily_span').hide();") }
-      it { is_expected.to include("$('\#hourly_span').hide();") }
-      it { is_expected.to include("$('\#monthly_span').hide();") }
-      it { is_expected.to include("$('\#weekly_span').hide();") }
+      it { is_expected.to include("$('#daily_span').hide();") }
+      it { is_expected.to include("$('#hourly_span').hide();") }
+      it { is_expected.to include("$('#monthly_span').hide();") }
+      it { is_expected.to include("$('#weekly_span').hide();") }
     end
   end
 
@@ -859,9 +863,9 @@ describe ApplicationHelper do
     end
 
     it "#x_tree_history" do
-      @sb = {:history     => {:svcs_tree => %w(service1 service2 service3)},
+      @sb = {:history     => {:svcs_tree => %w[service1 service2 service3]},
              :active_tree => :svcs_tree}
-      expect(helper.x_tree_history).to eq(%w(service1 service2 service3))
+      expect(helper.x_tree_history).to eq(%w[service1 service2 service3])
     end
   end
 
@@ -1056,7 +1060,7 @@ describe ApplicationHelper do
       subject { li_link(args) }
 
       it 'renders url correctly' do
-        expect(subject).to have_xpath("//a", :text => %r{\/availability_zone\/show_list\/\d+\?display=something})
+        expect(subject).to have_xpath("//a", :text => %r{/availability_zone/show_list/\d+\?display=something})
       end
 
       it 'renders title correctly' do
@@ -1077,7 +1081,7 @@ describe ApplicationHelper do
       subject { li_link(args) }
 
       it 'renders url correctly' do
-        expect(subject).to have_xpath("//a", :text => %r{\/availability_zone\/show_list\/\d+\?display=something})
+        expect(subject).to have_xpath("//a", :text => %r{/availability_zone/show_list/\d+\?display=something})
       end
 
       it 'renders title correctly' do
@@ -1087,10 +1091,10 @@ describe ApplicationHelper do
   end
 
   describe '#view_to_association' do
-    [%w(AdvancedSetting advanced_settings), %w(OrchestrationStackOutput outputs),
-     %w(OrchestrationStackParameter parameters), %w(OrchestrationStackResource resources), %w(Filesystem filesystems),
-     %w(FirewallRule firewall_rules), %w(GuestApplication guest_applications), %w(Patch patches),
-     %w(RegistryItem registry_items), %w(ScanHistory scan_histories)].each do |spec|
+    [%w[AdvancedSetting advanced_settings], %w[OrchestrationStackOutput outputs],
+     %w[OrchestrationStackParameter parameters], %w[OrchestrationStackResource resources], %w[Filesystem filesystems],
+     %w[FirewallRule firewall_rules], %w[GuestApplication guest_applications], %w[Patch patches],
+     %w[RegistryItem registry_items], %w[ScanHistory scan_histories]].each do |spec|
       it "finds the table name for #{spec[0]}" do
         view = double
         allow(view).to receive_messages(:db => spec[0], :scoped_association => nil)
@@ -1146,7 +1150,7 @@ describe ApplicationHelper do
     end
 
     it "the params[:db] fallback" do
-      instance.params = {:db => "vm_or_template", :display => "something" }
+      instance.params = {:db => "vm_or_template", :display => "something"}
 
       expect(instance.model_to_report_data).to eq("VmOrTemplate")
     end

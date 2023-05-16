@@ -18,11 +18,11 @@ module PhysicalRackHelper::TextualSummary
   end
 
   def textual_name
-    {:label => _("Rack name"), :value => @record.name }
+    {:label => _("Rack name"), :value => @record.name}
   end
 
   def textual_ems_ref
-    {:label => _("UUID"), :value => @record.ems_ref }
+    {:label => _("UUID"), :value => @record.ems_ref}
   end
 
   def textual_physical_chassis

@@ -18,7 +18,7 @@ describe ReportController do
       end
 
       it 'renders list' do
-        post :tree_select, :params => { :id => 'root', :format => :js, :accord => 'savedreports' }
+        post :tree_select, :params => {:id => 'root', :format => :js, :accord => 'savedreports'}
         expect(response).to render_template('report/_savedreports_list')
       end
 
@@ -32,20 +32,20 @@ describe ReportController do
         task.reload
 
         report_result = FactoryBot.build(:miq_report_result,
-                                           :miq_group_id => user.current_group.id,
-                                           :miq_task_id  => task.id,
-                                           :miq_report   => report)
+                                         :miq_group_id => user.current_group.id,
+                                         :miq_task_id  => task.id,
+                                         :miq_report   => report)
         report_result.report = report.to_hash.merge(:extras=> {:total_html_rows => 100})
         report_result.save
 
         binary_blob = FactoryBot.create(:binary_blob,
-                                         :resource_type => "MiqReportResult",
-                                         :resource_id   => report_result.id)
+                                        :resource_type => "MiqReportResult",
+                                        :resource_id   => report_result.id)
         FactoryBot.create(:binary_blob_part,
-                           :data           => "--- Quota \xE2\x80\x93 Max CPUs\n...\n",
-                           :binary_blob_id => binary_blob.id)
+                          :data           => "--- Quota \xE2\x80\x93 Max CPUs\n...\n",
+                          :binary_blob_id => binary_blob.id)
 
-        post :tree_select, :params => { :id => "rr-#{report_result.id}", :ppsetting => 20, :format => :js, :accord => 'savedreports' }
+        post :tree_select, :params => {:id => "rr-#{report_result.id}", :ppsetting => 20, :format => :js, :accord => 'savedreports'}
         expect(response).to render_template('shared/_report_chart_and_html')
       end
     end
@@ -57,7 +57,7 @@ describe ReportController do
 
       it 'renders list of Reports in Reports - Custom tree' do
         FactoryBot.create(:miq_report)
-        post :tree_select, :params => { :id => 'reports_xx-0', :format => :js }
+        post :tree_select, :params => {:id => 'reports_xx-0', :format => :js}
         expect(response).to render_template('report/_report_list')
       end
     end
@@ -68,13 +68,13 @@ describe ReportController do
       end
 
       it 'renders list of Schedules in Schedules tree' do
-        post :tree_select, :params => { :id => 'root', :format => :js, :accord => 'schedules' }
+        post :tree_select, :params => {:id => 'root', :format => :js, :accord => 'schedules'}
         expect(response).to render_template('report/_schedule_list')
       end
 
       it 'renders show of Schedule in Schedules tree' do
         schedule = FactoryBot.create(:miq_schedule)
-        post :tree_select, :params => { :id => "msc-#{schedule.id}", :format => :js, :accord => 'schedules' }
+        post :tree_select, :params => {:id => "msc-#{schedule.id}", :format => :js, :accord => 'schedules'}
         expect(response).to render_template('report/_show_schedule')
       end
     end
@@ -91,7 +91,7 @@ describe ReportController do
         MiqReport.seed
         MiqWidget.seed
         MiqWidgetSet.seed
-        post :tree_select, :params => { :id => 'root', :format => :js, :accord => 'db' }
+        post :tree_select, :params => {:id => 'root', :format => :js, :accord => 'db'}
         expect(response).to render_template('report/_db_list')
       end
 
@@ -116,7 +116,7 @@ describe ReportController do
 
         MiqWidgetSet.seed
         widget_set = FactoryBot.create(:miq_widget_set, :set_data => {:col1 => [miq_widget.id]}, :owner_id => user.current_group.id, :group_id => user.current_group.id)
-        post :tree_select, :params => { :id => "xx-g_g-#{user.current_group.id}_ws-#{widget_set.id}", :format => :js, :accord => 'db' }
+        post :tree_select, :params => {:id => "xx-g_g-#{user.current_group.id}_ws-#{widget_set.id}", :format => :js, :accord => 'db'}
         expect(response).to render_template('report/_db_show')
       end
     end
@@ -127,7 +127,7 @@ describe ReportController do
       end
 
       it 'renders list of Dashboard Widgets in Widgets tree' do
-        post :tree_select, :params => { :id => 'root', :format => :js, :accord => 'widgets' }
+        post :tree_select, :params => {:id => 'root', :format => :js, :accord => 'widgets'}
         expect(response).to render_template('report/_widget_list')
       end
 
@@ -135,7 +135,7 @@ describe ReportController do
         ApplicationController.handle_exceptions = true
 
         widget = FactoryBot.create(:miq_widget)
-        post :tree_select, :params => { :id => "xx-r_-#{widget.id}", :format => :js, :accord => 'widgets' }
+        post :tree_select, :params => {:id => "xx-r_-#{widget.id}", :format => :js, :accord => 'widgets'}
         expect(response).to render_template('report/_widget_show')
       end
 
@@ -166,7 +166,7 @@ describe ReportController do
         expect(response).to render_template('report/_widget_show')
         expect(response.status).to eq(200)
 
-        main_content = JSON.parse(response.body)['updatePartials']['main_div']
+        main_content = response.parsed_body['updatePartials']['main_div']
         expect(main_content).to include(row_count_html(default_row_count_value))
       end
 
@@ -176,7 +176,7 @@ describe ReportController do
         expect(response).to render_template('report/_widget_show')
         expect(response.status).to eq(200)
 
-        main_content = JSON.parse(response.body)['updatePartials']['main_div']
+        main_content = response.parsed_body['updatePartials']['main_div']
         expect(main_content).to include(row_count_html(other_row_count_value))
       end
     end
@@ -187,13 +187,13 @@ describe ReportController do
       end
 
       it 'renders list of Roles in Roles tree' do
-        post :tree_select, :params => { :id => 'root', :format => :js, :accord => 'roles' }
+        post :tree_select, :params => {:id => 'root', :format => :js, :accord => 'roles'}
         expect(response).to render_template('report/_role_list')
       end
 
       it 'renders form to edit Role in Roles tree' do
         FactoryBot.create(:miq_report, :name => "VM 1", :rpt_group => "Configuration Management - Folder Foo", :rpt_type => "Default")
-        post :tree_select, :params => { :id => "g-#{user.current_group.id}", :format => :js, :accord => 'roles' }
+        post :tree_select, :params => {:id => "g-#{user.current_group.id}", :format => :js, :accord => 'roles'}
         expect(response).to render_template('report/_menu_form1')
       end
     end
