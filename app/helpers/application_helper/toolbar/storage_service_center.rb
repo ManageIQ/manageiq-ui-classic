@@ -11,10 +11,10 @@ class ApplicationHelper::Toolbar::StorageServiceCenter < ApplicationHelper::Tool
           button(
             :storage_service_refresh,
             'fa fa-refresh fa-lg',
-            N_('Refresh the provider of this storage service'),
-            N_('Refresh the provider'),
+            N_('Refresh this Storage Service'),
+            N_('Refresh this Storage Service'),
             :image        => "refresh",
-            :confirm      => N_("Refresh the provider of this storage service?"),
+            :confirm      => N_("Refresh this Storage Service?"),
             :options      => {:feature => :refresh},
             :api          => {
               :action => 'refresh',
@@ -35,7 +35,7 @@ class ApplicationHelper::Toolbar::StorageServiceCenter < ApplicationHelper::Tool
           api_button(
             :storage_service_delete,
             nil,
-            t = N_('Delete the Storage Service'),
+            t = N_('Delete this Storage Service'),
             t,
             :icon         => "pficon pficon-delete fa-lg",
             :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,

@@ -11,10 +11,10 @@ class ApplicationHelper::Toolbar::StorageServicesCenter < ApplicationHelper::Too
           button(
             :storage_service_refresh,
             'fa fa-refresh fa-lg',
-            N_('Refresh the provider of the selected storage service(s)'),
-            N_('Refresh the provider'),
+            N_('Refresh selected Storage Services'),
+            N_('Refresh selected Storage Services'),
             :image        => "refresh",
-            :confirm      => N_("Refresh the provider of the selected storage service(s)?"),
+            :confirm      => N_("Refresh the selected Storage Services?"),
             :send_checked => true,
             :enabled      => false,
             :onwhen       => '1+',
@@ -57,7 +57,7 @@ class ApplicationHelper::Toolbar::StorageServicesCenter < ApplicationHelper::Too
               :action => 'delete',
               :entity => 'storage_services'
             },
-            :confirm      => N_("Are you sure you want to delete this Storage Service?"),
+            :confirm      => N_("Are you sure you want to delete the selected Storage Services?"),
             :send_checked => true,
             :enabled      => false,
             :onwhen       => '1+'

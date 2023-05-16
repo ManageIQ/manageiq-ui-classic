@@ -11,10 +11,10 @@ class ApplicationHelper::Toolbar::PhysicalStoragesCenter < ApplicationHelper::To
           button(
             :physical_storage_refresh,
             'fa fa-refresh fa-lg',
-            N_('Refresh the provider of the selected physical storage(s)'),
-            N_('Refresh the provider'),
+            N_('Refresh selected Physical Storages'),
+            N_('Refresh selected Physical Storages'),
             :image        => "refresh",
-            :confirm      => N_("Refresh the provider of the selected physical storage(s)?"),
+            :confirm      => N_("Refresh the selected Physical Storages?"),
             :send_checked => true,
             :enabled      => false,
             :onwhen       => '1+',
@@ -43,7 +43,7 @@ class ApplicationHelper::Toolbar::PhysicalStoragesCenter < ApplicationHelper::To
           api_button(
             :physical_storage_delete,
             nil,
-            t = N_('Delete the Physical Storage'),
+            t = N_('Delete selected Physical Storage'),
             t,
             :icon         => "pficon pficon-delete fa-lg",
             :klass        => ApplicationHelper::Button::PolymorphicConditionalButton,
@@ -53,7 +53,7 @@ class ApplicationHelper::Toolbar::PhysicalStoragesCenter < ApplicationHelper::To
               :action => 'delete',
               :entity => 'physical_storages'
             },
-            :confirm      => N_("Are you sure you want to delete this physical storage?\nNote that all of the attached services (e.g. volumes) will be unmapped."),
+            :confirm      => N_("Are you sure you want to delete the selected Physical Storages?\nNote that all of the attached services (e.g. volumes) will be unmapped."),
             :send_checked => true,
             :enabled      => false,
             :onwhen       => '1+'

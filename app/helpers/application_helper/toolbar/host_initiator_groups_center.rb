@@ -11,10 +11,10 @@ class ApplicationHelper::Toolbar::HostInitiatorGroupsCenter < ApplicationHelper:
           button(
             :host_initiator_group_refresh,
             'fa fa-refresh fa-lg',
-            N_('Refresh the provider of the selected host initiator group(s)'),
-            N_('Refresh the provider'),
+            N_('Refresh selected Host Initiator Groups'),
+            N_('Refresh selected Host Initiator Groups'),
             :image        => "refresh",
-            :confirm      => N_("Refresh the provider of the selected host initiator group(s)?"),
+            :confirm      => N_("Refresh the selected Host Initiator Groups?"),
             :options      => {:feature      => :refresh,
                               :parent_class => "HostInitiatorGroup"},
             :api          => {
@@ -35,7 +35,7 @@ class ApplicationHelper::Toolbar::HostInitiatorGroupsCenter < ApplicationHelper:
           api_button(
             :host_initiator_group_delete,
             nil,
-            t = N_('Delete the Host Initiator Group'),
+            t = N_('Delete selected Host Initiator Groups'),
             t,
             :icon         => "pficon pficon-delete fa-lg",
             :klass        => ApplicationHelper::Button::PolymorphicConditionalButton,
@@ -45,7 +45,7 @@ class ApplicationHelper::Toolbar::HostInitiatorGroupsCenter < ApplicationHelper:
               :action => 'delete',
               :entity => 'host_initiator_groups'
             },
-            :confirm      => N_("Are you sure you want to delete this Host Initiator Group?"),
+            :confirm      => N_("Are you sure you want to delete the selected Host Initiator Groups?"),
             :send_checked => true,
             :enabled      => false,
             :onwhen       => '1+'

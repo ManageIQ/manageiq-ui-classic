@@ -11,10 +11,10 @@ class ApplicationHelper::Toolbar::HostInitiatorsCenter < ApplicationHelper::Tool
           button(
             :host_initiator_refresh,
             'fa fa-refresh fa-lg',
-            N_('Refresh the provider of the selected host initiator(s)'),
-            N_('Refresh the provider'),
+            N_('Refresh selected Host Initiators'),
+            N_('Refresh selected Host Initiators'),
             :image        => "refresh",
-            :confirm      => N_("Refresh the provider of the selected host initiator(s)?"),
+            :confirm      => N_("Refresh the selected Host Initiators?"),
             :options      => {:feature => :refresh},
             :api          => {
               :action => 'refresh',
@@ -24,10 +24,17 @@ class ApplicationHelper::Toolbar::HostInitiatorsCenter < ApplicationHelper::Tool
             :enabled      => false,
             :onwhen       => '1+'
           ),
+          button(
+            :host_initiator_new,
+            'pficon pficon-add-circle-o fa-lg',
+            t = N_('Define a new Host Initiator'),
+            t,
+            :klass => ApplicationHelper::Button::HostInitiatorNew
+          ),
           api_button(
             :host_initiator_delete,
             nil,
-            t = N_('Delete the Host Initiator'),
+            t = N_('Delete selected Host Initiators'),
             t,
             :icon         => "pficon pficon-delete fa-lg",
             :klass        => ApplicationHelper::Button::PolymorphicConditionalButton,
@@ -37,7 +44,7 @@ class ApplicationHelper::Toolbar::HostInitiatorsCenter < ApplicationHelper::Tool
               :action => 'delete',
               :entity => 'host_initiators'
             },
-            :confirm      => N_("Are you sure you want to delete this host initiators?"),
+            :confirm      => N_("Are you sure you want to delete the selected Host Initiators?"),
             :send_checked => true,
             :enabled      => false,
             :onwhen       => '1+'

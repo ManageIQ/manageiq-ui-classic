@@ -99,10 +99,10 @@ class ApplicationHelper::Toolbar::CloudVolumeCenter < ApplicationHelper::Toolbar
                      button(
                        :cloud_volume_refresh,
                        'fa fa-refresh fa-lg',
-                       N_('Refresh the provider of this cloud volume'),
-                       N_('Refresh the provider'),
+                       N_('Refresh this Cloud Volume'),
+                       N_('Refresh this Cloud Volume'),
                        :image        => "refresh",
-                       :confirm      => N_("Refresh the provider of this cloud volume?"),
+                       :confirm      => N_("Refresh this Cloud Volume?"),
                        :options      => {:feature => :refresh},
                        :api          => {
                          :action => 'refresh',

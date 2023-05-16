@@ -11,10 +11,10 @@ class ApplicationHelper::Toolbar::VolumeMappingCenter < ApplicationHelper::Toolb
           button(
             :volume_mapping_refresh,
             'fa fa-refresh fa-lg',
-            N_('Refresh the provider of this volume mapping'),
-            N_('Refresh the provider'),
+            N_('Refresh this Volume Mapping'),
+            N_('Refresh this Volume Mapping'),
             :image        => "refresh",
-            :confirm      => N_("Refresh the provider of this volume mapping?"),
+            :confirm      => N_("Refresh this Volume Mapping?"),
             :options      => {:feature => :refresh},
             :api          => {
               :action => 'refresh',
@@ -25,7 +25,7 @@ class ApplicationHelper::Toolbar::VolumeMappingCenter < ApplicationHelper::Toolb
           api_button(
             :volume_mapping_delete,
             nil,
-            t = N_('Delete volume mapping'),
+            t = N_('Delete this volume mapping'),
             t,
             :icon         => "pficon pficon-delete fa-lg",
             :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
@@ -34,7 +34,7 @@ class ApplicationHelper::Toolbar::VolumeMappingCenter < ApplicationHelper::Toolb
               :action => 'delete',
               :entity => 'volume_mappings'
             },
-            :confirm      => N_("Warning: The selected volume mappings will be permanently deleted!"),
+            :confirm      => N_("Are you sure you want to delete this Volume Mapping?"),
             :send_checked => true
           ),
         ]

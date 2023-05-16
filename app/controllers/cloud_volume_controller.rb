@@ -10,6 +10,7 @@ class CloudVolumeController < ApplicationController
   include Mixins::GenericShowMixin
   include Mixins::GenericButtonMixin
   include Mixins::BreadcrumbsMixin
+  include Mixins::EmsCommon::Refresh
 
   def self.display_methods
     %w[cloud_volume_snapshots cloud_volume_backups instances custom_button_events host_initiators]
@@ -31,21 +32,7 @@ class CloudVolumeController < ApplicationController
     return false unless BUTTON_TO_ACTION_MAPPING.include?(pressed)
 
     if pressed == "cloud_volume_refresh"
-      if @_params["miq_grid_checks"]
-        emss = Set.new
-        records = @_params["miq_grid_checks"].split(',')
-        records.each do |record|
-          emss.add(find_record_with_rbac(CloudVolume, record)&.ext_management_system)
-        end
-        emss.each { |ems| EmsRefresh.refresh(ems) }
-        flash_msg = _("Refresh provider successfully initiated for the selected cloud volume(s)")
-      else
-        @record = find_record_with_rbac(CloudVolume, checked_item_id)
-        EmsRefresh.refresh(@record.ext_management_system)
-        flash_msg = _("Refresh provider successfully initiated for cloud volume - #{@record.name}")
-      end
-      add_flash(flash_msg)
-      render_flash
+      queue_refresh(controller_to_model)
     else
       validate_action, ui_action = BUTTON_TO_ACTION_MAPPING[pressed]
       if validate_action

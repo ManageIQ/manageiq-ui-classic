@@ -11,10 +11,10 @@ class ApplicationHelper::Toolbar::HostInitiatorCenter < ApplicationHelper::Toolb
           button(
             :host_initiator_refresh,
             'fa fa-refresh fa-lg',
-            N_('Refresh the provider of this host initiator'),
-            N_('Refresh the provider'),
+            N_('Refresh this Host Initiator'),
+            N_('Refresh this Host Initiator'),
             :image        => "refresh",
-            :confirm      => N_("Refresh the provider of this host initiator?"),
+            :confirm      => N_("Refresh this Host Initiator?"),
             :options      => {:feature => :refresh},
             :api          => {
               :action => 'refresh',
@@ -25,7 +25,7 @@ class ApplicationHelper::Toolbar::HostInitiatorCenter < ApplicationHelper::Toolb
           api_button(
             :host_initiator_delete,
             nil,
-            t = N_('Delete the Host Initiator'),
+            t = N_('Delete this Host Initiator'),
             t,
             :icon         => "pficon pficon-delete fa-lg",
             :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
@@ -34,7 +34,7 @@ class ApplicationHelper::Toolbar::HostInitiatorCenter < ApplicationHelper::Toolb
               :action => 'delete',
               :entity => 'host_initiators'
             },
-            :confirm      => N_("Are you sure you want to delete this host initiator?"),
+            :confirm      => N_("Are you sure you want to delete this Host Initiator?"),
             :send_checked => true
           ),
         ]

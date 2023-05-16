@@ -11,10 +11,10 @@ class ApplicationHelper::Toolbar::HostInitiatorGroupCenter < ApplicationHelper::
           button(
             :host_initiator_group_refresh,
             'fa fa-refresh fa-lg',
-            N_('Refresh the provider of this host initiator group'),
-            N_('Refresh the provider'),
+            N_('Refresh this Host Initiator Group'),
+            N_('Refresh this Host Initiator Group'),
             :image        => "refresh",
-            :confirm      => N_("Refresh the provider of this host initiator group?"),
+            :confirm      => N_("Refresh this Host Initiator Group?"),
             :options      => {:feature => :refresh},
             :api          => {
               :action => 'refresh',
@@ -25,7 +25,7 @@ class ApplicationHelper::Toolbar::HostInitiatorGroupCenter < ApplicationHelper::
           api_button(
             :host_initiator_group_delete,
             nil,
-            t = N_('Delete the Host Initiator Group'),
+            t = N_('Delete this Host Initiator Group'),
             t,
             :icon         => "pficon pficon-delete fa-lg",
             :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,

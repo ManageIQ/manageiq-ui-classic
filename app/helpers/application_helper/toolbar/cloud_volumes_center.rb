@@ -121,10 +121,10 @@ class ApplicationHelper::Toolbar::CloudVolumesCenter < ApplicationHelper::Toolba
                      button(
                        :cloud_volume_refresh,
                        'fa fa-refresh fa-lg',
-                       N_('Refresh the provider of the selected cloud volume(s)'),
-                       N_('Refresh the provider'),
+                       N_('Refresh selected cloud Volumes'),
+                       N_('Refresh selected cloud Volumes'),
                        :image        => "refresh",
-                       :confirm      => N_("Refresh the provider of the selected cloud volume(s)?"),
+                       :confirm      => N_("Refresh the selected cloud Volumes?"),
                        :send_checked => true,
                        :enabled      => false,
                        :onwhen       => '1+',

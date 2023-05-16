@@ -5,6 +5,7 @@ class HostInitiatorGroupController < ApplicationController
   include Mixins::BreadcrumbsMixin
   include Mixins::GenericFormMixin
   include Mixins::GenericButtonMixin
+  include Mixins::EmsCommon::Refresh
 
   before_action :check_privileges
   before_action :get_session_data
@@ -83,21 +84,7 @@ class HostInitiatorGroupController < ApplicationController
     when 'host_initiator_group_edit'
       javascript_redirect(:action => 'edit', :id => checked_item_id)
     when 'host_initiator_group_refresh'
-      if @_params["miq_grid_checks"]
-        emss = Set.new
-        records = @_params["miq_grid_checks"].split(',')
-        records.each do |record|
-          emss.add(find_record_with_rbac(HostInitiatorGroup, record)&.ext_management_system)
-        end
-        emss.each { |ems| EmsRefresh.refresh(ems) }
-        flash_msg = _("Refresh provider successfully initiated for the selected host initiator group(s)")
-      else
-        @record = find_record_with_rbac(HostInitiatorGroup, checked_item_id)
-        EmsRefresh.refresh(@record.ext_management_system)
-        flash_msg = _("Refresh provider successfully initiated for host initiator group - #{@record.name}")
-      end
-      add_flash(flash_msg)
-      render_flash
+      queue_refresh(controller_to_model)
     else
       return false
     end
