@@ -99,7 +99,7 @@ describe('Structured list component', () => {
   it('should render a table_list_view table', () => {
     const onClick = jest.fn();
     const wrapper = shallow(<MiqStructuredList
-      headers={tableListViewData.headers}
+      headers={tableListViewData.headers.map((item) => item.label)}
       rows={tableListViewData.items}
       title={tableListViewData.title}
       mode="table_list_view"
