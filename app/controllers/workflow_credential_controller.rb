@@ -18,12 +18,12 @@ class WorkflowCredentialController < ApplicationController
 
   def show_list
     @title = _("Workflow Credentials")
-    assert_privileges('embedded_workflow_credential_view')
+    assert_privileges('embedded_automation_manager_credentials_view')
     # super
   end
 
   def show
-    assert_privileges('embedded_workflow_credential_view')
+    assert_privileges('embedded_automation_manager_credentials_view')
   end
 
   def breadcrumbs_options

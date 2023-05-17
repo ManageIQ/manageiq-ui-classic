@@ -23,7 +23,7 @@ class WorkflowController < ApplicationController
   end
 
   def show
-    assert_privileges('embedded_workflow_view')
+    assert_privileges('embedded_configuration_script_payload_view')
   end
 
   def breadcrumbs_options
