@@ -32,7 +32,7 @@ module WorkflowHelper::TextualSummary
     if role_allows?(:feature => "embedded_configuration_script_source_view") && @record.configuration_script_source.try(:name)
       h.update(:value => @record.configuration_script_source.name,
                :icon  => "pficon pficon-repository",
-               :link  => url_for_only_path(:controller => 'ansible_repository', :action => 'show', :id => @record.configuration_script_source),
+               :link  => url_for_only_path(:controller => 'workflow_repository', :action => 'show', :id => @record.configuration_script_source),
                :title => _("Show Repository"))
     end
     h
