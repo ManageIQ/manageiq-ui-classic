@@ -221,7 +221,7 @@ const provisionTabSchema = (
         label: __('Enter a comma separated list of IP or DNS names'),
         maxLength: 255,
         isRequired: true,
-        validate: [{ type: validatorTypes.REQUIRED }],
+        validate: [{ type: 'customValidatorForHostNames' }],
         validateOnMount: true,
         condition: {
           when: 'config_info.provision.specify_host_type',

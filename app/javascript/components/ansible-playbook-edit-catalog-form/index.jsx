@@ -179,6 +179,20 @@ const AnsiblePlayBookEditCatalogForm = ({ initialData }) => {
       }
       return false;
     },
+
+    customValidatorForHostNames: () => (value) => {
+      if(!value) {
+        return __('Required');
+      }
+      const regex = /^([a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*|\d{1,3}(?:\.\d{1,3}){3})(?:,\s*([a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*|\d{1,3}(?:\.\d{1,3}){3}))*$/;
+      const isValid = regex.test(value);
+      if (!isValid) {
+        return __('Enter a comma separated list of IP or DNS names');
+      } else {
+        return false;
+      }
+    },
+
   };
 
   return !data.isLoading && (
