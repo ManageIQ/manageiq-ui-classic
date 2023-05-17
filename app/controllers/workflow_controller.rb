@@ -30,7 +30,7 @@ class WorkflowController < ApplicationController
     {
       :breadcrumbs => [
         {:title => _("Automation")},
-        {:title => _("Embedded Workflow")},
+        {:title => _("Embedded Workflows")},
         {:url   => controller_url, :title => _("Workflows")},
       ],
     }
