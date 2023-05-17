@@ -3190,13 +3190,6 @@ Rails.application.routes.draw do
       ),
     },
 
-    :workflow_credential => {
-      :get => %w(
-        show_list
-        show
-      ),
-    },
-
     :workflow_repository => {
       :get => %w(
         show_list
