@@ -195,7 +195,7 @@ const AnsiblePlayBookEditCatalogForm = ({ initialData }) => {
         verbosityTypes: getVerbosityTypes(),
         initialData,
       })}
-      canReset={!!initialData.catalogFormId}
+      canReset={initialData.catalogFormId !== 'new'}
     />
   );
 };
