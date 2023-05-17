@@ -71,7 +71,7 @@ describe AnsibleCredentialController do
       end
 
       it 'calls tag method' do
-        expect(controller).to receive(:tag).with(ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource)
+        expect(controller).to receive(:tag).with(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource)
         controller.send(:button)
       end
     end

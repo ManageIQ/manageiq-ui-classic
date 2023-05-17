@@ -17,20 +17,27 @@ class WorkflowRepositoryController < ApplicationController
   end
 
   def show_list
-    @title = _("Workflow Reporitories")
     assert_privileges('embedded_configuration_script_source_view')
-    # super
+    super
   end
 
   def show
     assert_privileges('embedded_configuration_script_source_view')
+    super
   end
+
+  private
+
+  def textual_group_list
+    [%i[properties relationships options smart_management]]
+  end
+  helper_method :textual_group_list
 
   def breadcrumbs_options
     {
       :breadcrumbs => [
         {:title => _("Automation")},
-        {:title => _("Embedded Workflow")},
+        {:title => _("Embedded Workflows")},
         {:title => _("Repositories"), :url => controller_url},
       ],
     }
