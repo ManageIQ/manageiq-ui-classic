@@ -403,6 +403,8 @@ module ApplicationHelper
       controller = "ansible_playbook"
     when "ManageIQ::Providers::EmbeddedAutomationManager::Authentication"
       controller = "ansible_credential"
+    when "ManageIQ::Providers::Workflows::AutomationManager::Workflow"
+      controller = "workflow"
     when "MiqWorker"
       controller = request.parameters[:controller]
     when "ManageIQ::Providers::ExternalAutomationManager", "OrchestrationStackOutput", "OrchestrationStackParameter", "OrchestrationStackResource",

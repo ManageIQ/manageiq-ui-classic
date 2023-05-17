@@ -16,15 +16,22 @@ class WorkflowController < ApplicationController
     ManageIQ::Providers::Workflows::AutomationManager::Workflow
   end
 
+  def show
+    assert_privileges('embedded_configuration_script_payload_view')
+    super
+  end
+
   def show_list
     assert_privileges('embedded_configuration_script_payload_view')
     super
-    @title = _("Workflows")
   end
 
-  def show
-    assert_privileges('embedded_configuration_script_payload_view')
+  private
+
+  def textual_group_list
+    [%i[properties relationships smart_management]]
   end
+  helper_method :textual_group_list
 
   def breadcrumbs_options
     {
