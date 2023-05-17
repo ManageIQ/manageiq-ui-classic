@@ -21,7 +21,7 @@ class AnsibleCredentialController < ApplicationController
   end
 
   def display_repositories
-    nested_list(ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource)
+    nested_list(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource)
   end
 
   def show_searchbar?
@@ -37,7 +37,7 @@ class AnsibleCredentialController < ApplicationController
     when 'ansible_credential_tag'
       tag(self.class.model)
     when "ansible_repository_tag" # repositories from nested list
-      tag(ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource)
+      tag(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource)
     end
   end
 

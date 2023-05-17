@@ -358,7 +358,7 @@ module ApplicationHelper
       action = "show"
     when "ConditionSet"
       controller = "condition"
-    when "ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource"
+    when "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource"
       controller = "ansible_repository"
     when "ScanItemSet"
       controller = "ops"
@@ -403,6 +403,10 @@ module ApplicationHelper
       controller = "ansible_playbook"
     when "ManageIQ::Providers::EmbeddedAutomationManager::Authentication"
       controller = "ansible_credential"
+    when "ManageIQ::Providers::Workflows::AutomationManager::Workflow"
+      controller = "workflow"
+    when "ManageIQ::Providers::Workflows::AutomationManager::ConfigurationScriptSource"
+      controller = "workflow_repository"
     when "MiqWorker"
       controller = request.parameters[:controller]
     when "ManageIQ::Providers::ExternalAutomationManager", "OrchestrationStackOutput", "OrchestrationStackParameter", "OrchestrationStackResource",

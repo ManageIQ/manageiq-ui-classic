@@ -97,6 +97,8 @@ module ApplicationHelper
         _("Credentials")
       when "manageiq/providers/embedded_automation_manager/configuration_script_source"
         _("Repositories")
+      when "manageiq/providers/workflows/automation_manager/workflow"
+        _("Workflows")
 
       else
         fallback_title(layout)
