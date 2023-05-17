@@ -12,6 +12,10 @@ class WorkflowRepositoryController < ApplicationController
 
   menu_section :embedded_workflow_repository
 
+  def self.display_methods
+    %w[workflows]
+  end
+
   def self.model
     ManageIQ::Providers::Workflows::AutomationManager::ConfigurationScriptSource
   end
