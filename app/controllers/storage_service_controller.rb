@@ -5,6 +5,7 @@ class StorageServiceController < ApplicationController
   include Mixins::BreadcrumbsMixin
   include Mixins::GenericFormMixin
   include Mixins::GenericButtonMixin
+  include Mixins::EmsCommon::Refresh
 
   before_action :check_privileges
   before_action :get_session_data
@@ -78,6 +79,8 @@ class StorageServiceController < ApplicationController
       javascript_redirect(:action => 'new')
     when "storage_service_edit"
       javascript_redirect(:action => "edit", :id => checked_item_id)
+    when 'storage_service_refresh'
+      queue_refresh(controller_to_model)
     else
       return false
     end

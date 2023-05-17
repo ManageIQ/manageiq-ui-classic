@@ -11,13 +11,18 @@ class ApplicationHelper::Toolbar::StorageServicesCenter < ApplicationHelper::Too
           button(
             :storage_service_refresh,
             'fa fa-refresh fa-lg',
-            N_('Refresh relationships and power states for all items related to these Storage Services'),
-            N_('Refresh Relationships and Power States'),
-            :image   => "refresh",
-            :data    => {'function'      => 'sendDataWithRx',
-                         'function-data' => {:type => "refresh", :controller => "storageServiceToolbarController"}},
-            :confirm => N_("Refresh relationships and power states for all items related to these Storage Services?"),
-            :options => {:feature => :refresh}
+            N_('Refresh selected Storage Services'),
+            N_('Refresh selected Storage Services'),
+            :image        => "refresh",
+            :confirm      => N_("Refresh the selected Storage Services?"),
+            :send_checked => true,
+            :enabled      => false,
+            :onwhen       => '1+',
+            :options      => {:feature => :refresh},
+            :api          => {
+              :action => 'refresh',
+              :entity => 'storage_services'
+            }
           ),
           button(
             :storage_service_new,
@@ -52,7 +57,7 @@ class ApplicationHelper::Toolbar::StorageServicesCenter < ApplicationHelper::Too
               :action => 'delete',
               :entity => 'storage_services'
             },
-            :confirm      => N_("Are you sure you want to delete this Storage Service?"),
+            :confirm      => N_("Are you sure you want to delete the selected Storage Services?"),
             :send_checked => true,
             :enabled      => false,
             :onwhen       => '1+'

@@ -11,25 +11,30 @@ class ApplicationHelper::Toolbar::HostInitiatorsCenter < ApplicationHelper::Tool
           button(
             :host_initiator_refresh,
             'fa fa-refresh fa-lg',
-            N_('Refresh relationships and power states for all items related to these Host Initiators'),
-            N_('Refresh Relationships and Power States'),
-            :image   => "refresh",
-            :data    => {'function'      => 'sendDataWithRx',
-                         'function-data' => {:type => "refresh", :controller => "hostInitiatorToolbarController"}},
-            :confirm => N_("Refresh relationships and power states for all items related to these Host Initiators?"),
-            :options => {:feature => :refresh}
+            N_('Refresh selected Host Initiators'),
+            N_('Refresh selected Host Initiators'),
+            :image        => "refresh",
+            :confirm      => N_("Refresh the selected Host Initiators?"),
+            :options      => {:feature => :refresh},
+            :api          => {
+              :action => 'refresh',
+              :entity => 'host_initiators'
+            },
+            :send_checked => true,
+            :enabled      => false,
+            :onwhen       => '1+'
           ),
           button(
             :host_initiator_new,
             'pficon pficon-add-circle-o fa-lg',
-            t = N_('Define a new host initiator'),
+            t = N_('Define a new Host Initiator'),
             t,
             :klass => ApplicationHelper::Button::HostInitiatorNew
           ),
           api_button(
             :host_initiator_delete,
             nil,
-            t = N_('Delete the Host Initiator'),
+            t = N_('Delete selected Host Initiators'),
             t,
             :icon         => "pficon pficon-delete fa-lg",
             :klass        => ApplicationHelper::Button::PolymorphicConditionalButton,
@@ -39,7 +44,7 @@ class ApplicationHelper::Toolbar::HostInitiatorsCenter < ApplicationHelper::Tool
               :action => 'delete',
               :entity => 'host_initiators'
             },
-            :confirm      => N_("Are you sure you want to delete this host initiators?"),
+            :confirm      => N_("Are you sure you want to delete the selected Host Initiators?"),
             :send_checked => true,
             :enabled      => false,
             :onwhen       => '1+'

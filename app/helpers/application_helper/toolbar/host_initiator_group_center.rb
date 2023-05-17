@@ -11,18 +11,21 @@ class ApplicationHelper::Toolbar::HostInitiatorGroupCenter < ApplicationHelper::
           button(
             :host_initiator_group_refresh,
             'fa fa-refresh fa-lg',
-            N_('Refresh relationships and power states for all items related to this Host Initiator Group'),
-            N_('Refresh Relationships and Power States'),
-            :image   => "refresh",
-            :data    => {'function'      => 'sendDataWithRx',
-                         'function-data' => {:type => "refresh", :controller => "hostInitiatorGroupToolbarController"}},
-            :confirm => N_("Refresh relationships and power states for all items related to this Host Initiator Cluster?"),
-            :options => {:feature => :refresh}
+            N_('Refresh this Host Initiator Group'),
+            N_('Refresh this Host Initiator Group'),
+            :image        => "refresh",
+            :confirm      => N_("Refresh this Host Initiator Group?"),
+            :options      => {:feature => :refresh},
+            :api          => {
+              :action => 'refresh',
+              :entity => 'host_initiator_groups'
+            },
+            :send_checked => true
           ),
           api_button(
             :host_initiator_group_delete,
             nil,
-            t = N_('Delete the Host Initiator Group'),
+            t = N_('Delete this Host Initiator Group'),
             t,
             :icon         => "pficon pficon-delete fa-lg",
             :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,

@@ -118,6 +118,22 @@ class ApplicationHelper::Toolbar::CloudVolumesCenter < ApplicationHelper::Toolba
                                                           :try_safe_delete => true,
                                                           :component_name  => 'RemoveGenericItemModal'}}
                      ),
+                     button(
+                       :cloud_volume_refresh,
+                       'fa fa-refresh fa-lg',
+                       N_('Refresh selected cloud Volumes'),
+                       N_('Refresh selected cloud Volumes'),
+                       :image        => "refresh",
+                       :confirm      => N_("Refresh the selected cloud Volumes?"),
+                       :send_checked => true,
+                       :enabled      => false,
+                       :onwhen       => '1+',
+                       :options      => {:feature => :refresh},
+                       :api          => {
+                         :action => 'refresh',
+                         :entity => 'cloud_volumes'
+                       }
+                     ),
                    ]
                  )
                ])

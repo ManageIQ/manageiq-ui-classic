@@ -64,6 +64,7 @@ module Mixins
         end
       end
 
+      # TODO: safely move this to Mixins::EMsCommon::Refresh
       def refresh_or_capture_emss(task, action_name)
         emss = find_emss_for_action(action_name)
         return if emss.compact.empty?
