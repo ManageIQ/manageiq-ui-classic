@@ -13,7 +13,7 @@ class WorkflowCredentialController < ApplicationController
   menu_section :embedded_workflow_credential
 
   def self.model
-    ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook
+    ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Credential
   end
 
   def show_list
