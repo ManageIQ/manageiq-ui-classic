@@ -2057,6 +2057,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tshepomgaga/aws-sfn-graph@npm:0.0.6":
+  version: 0.0.6
+  resolution: "@tshepomgaga/aws-sfn-graph@npm:0.0.6"
+  checksum: 1e8263472c2ec0579d459c04fcd9aa1e5cbc37c07dfaa594b1f1c295603db6d97741e5629b2a60da8e7ce04a1899b4cf0afe1e625ff43a27d877d1495e6df258
+  languageName: node
+  linkType: hard
+
 "@types/babel__core@npm:^7.1.0, @types/babel__core@npm:^7.1.7":
   version: 7.20.0
   resolution: "@types/babel__core@npm:7.20.0"
@@ -11388,6 +11395,7 @@ fsevents@^1.2.7:
     "@manageiq/ui-components": 1.4.4
     "@novnc/novnc": ~1.2.0
     "@pf3/select": ~1.12.6
+    "@tshepomgaga/aws-sfn-graph": 0.0.6
     actioncable: ^5.2.4-2
     angular: ~1.6.6
     angular-animate: ~1.6.6
