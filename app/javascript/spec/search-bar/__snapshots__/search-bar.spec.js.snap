@@ -26,8 +26,10 @@ exports[`Search Bar component should render the search bar component 1`] = `
     />
     <Button
       className="search_button"
+      disabled={false}
       hasIconOnly={true}
       iconDescription="Search"
+      onClick={[Function]}
       renderIcon={
         Object {
           "$$typeof": Symbol(react.forward_ref),
@@ -35,12 +37,12 @@ exports[`Search Bar component should render the search bar component 1`] = `
         }
       }
       tooltipPosition="bottom"
-      type="submit"
     />
   </Form>
   <Button
     data-target="#advsearchModal"
     data-toggle="modal"
+    disabled={false}
     hasIconOnly={true}
     iconDescription="Advanced Search"
     id="adv_search"
@@ -85,8 +87,10 @@ exports[`Search Bar component should render the search bar component with advanc
     />
     <Button
       className="search_button"
+      disabled={false}
       hasIconOnly={true}
       iconDescription="Search"
+      onClick={[Function]}
       renderIcon={
         Object {
           "$$typeof": Symbol(react.forward_ref),
@@ -94,12 +98,12 @@ exports[`Search Bar component should render the search bar component with advanc
         }
       }
       tooltipPosition="bottom"
-      type="submit"
     />
   </Form>
   <Button
     data-target="#advsearchModal"
     data-toggle="modal"
+    disabled={false}
     hasIconOnly={true}
     iconDescription="Advanced Search"
     id="adv_search"
@@ -143,6 +147,7 @@ exports[`Search Bar component should render the search bar component with search
       value="nameSearch"
     />
     <Button
+      disabled={false}
       hasIconOnly={true}
       iconDescription="Clear"
       kind="secondary"
@@ -158,8 +163,10 @@ exports[`Search Bar component should render the search bar component with search
     />
     <Button
       className="search_button"
+      disabled={false}
       hasIconOnly={true}
       iconDescription="Search"
+      onClick={[Function]}
       renderIcon={
         Object {
           "$$typeof": Symbol(react.forward_ref),
@@ -167,12 +174,12 @@ exports[`Search Bar component should render the search bar component with search
         }
       }
       tooltipPosition="bottom"
-      type="submit"
     />
   </Form>
   <Button
     data-target="#advsearchModal"
     data-toggle="modal"
+    disabled={false}
     hasIconOnly={true}
     iconDescription="Advanced Search"
     id="adv_search"

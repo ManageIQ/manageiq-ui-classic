@@ -1,40 +1,58 @@
 /* eslint-disable no-undef */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button, TextInput, Form,
 } from 'carbon-components-react';
-import { ChevronDown32, Search32, Close32 } from '@carbon/icons-react';
+import {
+  ChevronDown32, Search32, ProgressBarRound32, Close32,
+} from '@carbon/icons-react';
 
 const SearchBar = ({ searchText, advancedSearch, action }) => {
   const formToken = () => {
     const csrfToken = document.querySelector('meta[name=csrf-token]');
     return csrfToken ? csrfToken.getAttribute('content') : '';
   };
-  const [data, setData] = useState(searchText || '');
+  const [data, setData] = useState({
+    formText: searchText || '',
+    loading: false,
+  });
 
-  /** Function to submit the form after clearing the search text. */
-  const formSubmit = () => {
-    const form = document.getElementById('search-bar-form');
-    if (form) {
-      form.submit();
+  useEffect(() => {
+    if (data.loading) {
+      const form = document.getElementById('search-bar-form');
+      if (form) {
+        form.submit();
+      }
     }
-  };
+  }, [data.loading]);
 
   /** Function to filter the results through form submit. */
   const onSearch = () => {
     http.post(action, null, { headers: {}, skipJsonParsing: true });
   };
 
-  /** Function to clear the search input and submit the form. */
+  /** Function to clear the search input and submit the form from useEffect. */
   const onClear = () => {
-    setData('');
-    setTimeout(() => formSubmit(), 100);
+    setData({
+      formText: '',
+      loading: true,
+    });
   };
 
+  /** Function to submit the form using the lens button. */
+  const formSubmit = () => {
+    setData({
+      ...data,
+      loading: true,
+    });
+  };
+
+  /** Function to render the Clear button. */
   const renderClear = () => (
     <Button
       kind="secondary"
+      disabled={data.loading}
       renderIcon={Close32}
       iconDescription={__('Clear')}
       hasIconOnly
@@ -44,17 +62,20 @@ const SearchBar = ({ searchText, advancedSearch, action }) => {
     />
   );
 
+  /** Function to render the Lens button. */
   const renderLens = () => (
     <Button
-      renderIcon={Search32}
+      renderIcon={data.loading ? ProgressBarRound32 : Search32}
+      disabled={data.loading}
       iconDescription={__('Search')}
       hasIconOnly
       tooltipPosition="bottom"
       className="search_button"
-      type="submit"
+      onClick={formSubmit}
     />
   );
 
+  /** Function to render the Settings button. */
   const renderSettings = () => (
     <Button
       renderIcon={ChevronDown32}
@@ -62,6 +83,7 @@ const SearchBar = ({ searchText, advancedSearch, action }) => {
       hasIconOnly
       data-toggle="modal"
       data-target="#advsearchModal"
+      disabled={data.loading}
       title={_('Advanced Search')}
       id="adv_search"
       tooltipPosition="bottom"
@@ -81,11 +103,14 @@ const SearchBar = ({ searchText, advancedSearch, action }) => {
           hideLabel
           placeholder={__('Search')}
           name="search[text]"
-          value={data}
+          value={data.formText}
           title={__('Search by Name within results')}
-          onChange={(event) => setData(event.target.value)}
+          onChange={(event) => setData({
+            ...data,
+            formText: event.target.value,
+          })}
         />
-        { data && renderClear() }
+        { data.formText && renderClear() }
         { renderLens() }
       </Form>
       { advancedSearch && renderSettings() }
