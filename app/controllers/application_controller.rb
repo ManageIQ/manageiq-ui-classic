@@ -764,7 +764,7 @@ class ApplicationController < ActionController::Base
     if @targets_hash
       @targets_hash[id] # Get the record from the view
     else
-      klass = view.db.constantize
+      klass = view.db_class
       klass.find(id)    # Read the record from the db
     end
   end
