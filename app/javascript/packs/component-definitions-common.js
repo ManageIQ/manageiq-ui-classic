@@ -161,6 +161,7 @@ import StorageServiceForm from '../components/storage-service-form';
 import VolumeMappingForm from '../components/volume-mapping-form';
 import ZoneForm from '../components/zone-form';
 import AnsiblePlayBookEditCatalogForm from '../components/ansible-playbook-edit-catalog-form';
+import SettingsUsersForm from '../components/settings-users-form';
 
 /**
 * Add component definitions to this file.
@@ -331,3 +332,4 @@ ManageIQ.component.addReact('VolumeMappingForm', VolumeMappingForm);
 ManageIQ.component.addReact('VmCommonRenameForm', VmCommonRenameForm);
 ManageIQ.component.addReact('ZoneForm', ZoneForm);
 ManageIQ.component.addReact('AnsiblePlayBookEditCatalogForm', AnsiblePlayBookEditCatalogForm);
+ManageIQ.component.addReact('SettingsUsersForm', SettingsUsersForm);
