@@ -706,7 +706,8 @@ class ApplicationController < ActionController::Base
       col = view.col_order[i]
       next if view.column_is_hidden?(col, self)
 
-      align = %i[fixnum integer Fixnum float].include?(column_type(view.db, view.col_order[i])) ? 'right' : 'left'
+      field = MiqExpression::Field.new(view.db_class, [], view.col_order[i])
+      align = field.numeric? ? 'right' : 'left'
 
       root[:head] << {:text    => h,
                       :sort    => 'str',
@@ -763,7 +764,7 @@ class ApplicationController < ActionController::Base
     if @targets_hash
       @targets_hash[id] # Get the record from the view
     else
-      klass = view.db.constantize
+      klass = view.db_class
       klass.find(id)    # Read the record from the db
     end
   end
