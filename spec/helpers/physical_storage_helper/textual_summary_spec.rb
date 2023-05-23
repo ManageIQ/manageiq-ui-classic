@@ -58,9 +58,9 @@ describe PhysicalStorageHelper::TextualSummary do
       expect(subject.title).to eq('Properties')
     end
 
-    it 'shows 8 fields' do
+    it 'shows 9 fields' do
       expect(subject.items).to be_kind_of(Array)
-      expect(subject.items.size).to eq(8)
+      expect(subject.items.size).to eq(9)
     end
 
     it 'shows main properties' do
@@ -72,7 +72,8 @@ describe PhysicalStorageHelper::TextualSummary do
         :enclosures,
         :drive_bays,
         :uid_ems,
-        :description
+        :description,
+        :capabilities
       )
     end
   end
