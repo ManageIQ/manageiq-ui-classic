@@ -1,4 +1,3 @@
-require('./alerts_center_service.js');
 require('./bootstrap_tree_subscription_service.js');
 require('./catalog/catalog_item_data.js');
 require('./dashboard_service.js');

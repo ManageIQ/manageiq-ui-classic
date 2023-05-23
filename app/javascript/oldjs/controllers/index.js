@@ -1,6 +1,3 @@
-require('./alerts/alerts_list_controller.js');
-require('./alerts/alerts_overview_controller.js');
-require('./alerts/edit_alert_dialog_controller.js');
 require('./buttons/button_group_controller.js');
 require('./catalog/catalog_item_form_controller.js');
 require('./container_dashboard/card/card-module.js');
