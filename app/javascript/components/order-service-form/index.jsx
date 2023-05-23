@@ -24,8 +24,9 @@ const OrderServiceForm = ({
     checkBoxes: [],
     dates: [],
   });
+  const [dynamicFieldValues, setDynamicFieldValues] = useState({});
+  const [dynamicFieldValuesTotal, setDynamicFieldValueTotal] = useState({});
   const [showDateError, setShowDateError] = useState([]);
-  // const [dynamicFieldValues, setDynamicFieldValues] = useState({});
 
   // console.log(dialogId);
   // console.log(resourceActionId);
@@ -40,14 +41,21 @@ const OrderServiceForm = ({
   useEffect(() => {
     API.get(`/api/service_dialogs/${dialogId}?resource_action_id=${resourceActionId}&target_id=${targetId}&target_type=${targetType}`)
       .then((data) => {
-        buildFields(data, setState);
+        buildFields(data, setState, dynamicFieldValues, setDynamicFieldValues);
         console.log(data);
       });
-  }, []);
+  }, [dynamicFieldValues]);
+
+  // useEffect(() => {
+  //   console.log(dynamicFieldValues);
+  //   setDynamicFieldValueTotal({ ...dynamicFieldValuesTotal, ...dynamicFieldValues });
+  // }, [dynamicFieldValues]);
 
   const onSubmit = (values) => {
     let submitData = { action: 'order', ...values };
     console.log(values);
+    console.log(dynamicFieldValues);
+    console.log(dynamicFieldValuesTotal);
     return null;
 
     submitData = prepareSubmitData(values, setShowDateError);
@@ -110,6 +118,7 @@ const FormTemplate = ({ formFields }) => {
     handleSubmit, onCancel, getState,
   } = useFormApi();
   const { valid } = getState();
+  console.log(formFields);
   return (
     <form id="order-service-form" onSubmit={handleSubmit}>
       {formFields}

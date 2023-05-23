@@ -77,7 +77,6 @@ import OpsTenantForm from '../components/ops-tenant-form/ops-tenant-form';
 import OrcherstrationTemplateForm from '../components/orchestration-template/orcherstration-template-form';
 import OrderServiceForm from '../components/order-service-form';
 import ProvGrid from '../components/prov-grid';
-import OrderServiceForm from '../components/order-service-form';
 import PxeImageForm from '../components/pxe-image-type-form';
 import PxeCustomizationTemplateForm from '../components/pxe-customization-template-form';
 import PxeIsoDatastoreForm from '../components/pxe-iso-datastore-form';

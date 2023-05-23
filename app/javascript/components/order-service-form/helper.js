@@ -125,7 +125,7 @@ const buildCheckBox = (field, validate) => ({
   validate,
 });
 
-const buildDropDownList = (field, validate) => {
+const buildDropDownList = (field, validate, dynamicFieldValues, setDynamicFieldValues) => {
   let options = [];
   let placeholder = __('<Choose>');
   let start;
@@ -138,10 +138,12 @@ const buildDropDownList = (field, validate) => {
     }
     options.push({ value: value[0] !== null ? String(value[0]) : null, label: value[1] });
   });
-
   if (field.dynamic) {
-    dynamicFields.push({ field: field.name, id: field.id, values: options });
-    console.log(dynamicFields);
+    // setDynamicFieldValues({ ...dynamicFieldValues, [field.name]: field.default_value });
+    // dynamicFields.push({ field: field.name, id: field.id, values: options });
+    // console.log(dynamicFields);
+    console.log(field);
+    console.log(dynamicFieldValues[`${field.name}`]);
     return {
       component: 'dynamic-select',
       id: field.id,
@@ -149,9 +151,12 @@ const buildDropDownList = (field, validate) => {
       label: field.label,
       description: field.description,
       options,
+      initialValue: dynamicFieldValues[field.name],
       hideField: !field.visible,
-      reequired: field.required,
+      required: field.required,
       disabled: field.read_only,
+      dynamicFieldValues,
+      setDynamicFieldValues,
     };
   }
 
@@ -304,7 +309,7 @@ const buildRadioButtons = (field, validate) => {
   };
 };
 
-export const buildFields = (data, setState) => {
+export const buildFields = (data, setState, dynamicFieldValues, setDynamicFieldValues) => {
   const dialogTabs = [];
   let dialogSubForms = [];
   let dialogFields = [];
@@ -344,7 +349,7 @@ export const buildFields = (data, setState) => {
           checkBoxes.push(field.name);
         }
         if (field.type === 'DialogFieldDropDownList') {
-          component = buildDropDownList(field, validate);
+          component = buildDropDownList(field, validate, dynamicFieldValues, setDynamicFieldValues);
         }
         if (field.type === 'DialogFieldTagControl') {
           component = buildTagControl(field, validate);

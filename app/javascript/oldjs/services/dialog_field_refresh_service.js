@@ -28,6 +28,7 @@ ManageIQ.angular.app.service('dialogFieldRefreshService', ['API', 'DialogData', 
         if ($.active < 1) {
           self.areFieldsBeingRefreshed = false;
         }
+        console.log(response);
 
         return response.result[dialogField];
       });

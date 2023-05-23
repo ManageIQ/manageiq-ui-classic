@@ -372,3 +372,20 @@
     padding-bottom: 2rem;
   }
 }
+
+#dynamic-field {
+  width: 80%;
+  display: inline-flex;
+
+  .bx--form-item {
+    padding-bottom: 2rem;
+  }
+
+  .bx--list-box__wrapper {
+    padding-bottom: 2rem;
+  }
+
+  .custom-button-wrapper {
+    padding-left: 2rem;
+  }
+}
