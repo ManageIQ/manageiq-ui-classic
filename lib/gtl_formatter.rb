@@ -27,7 +27,8 @@ class GtlFormatter
   ].freeze
 
   COLUMN_WITH_IMAGE = {
-    'ext_management_system.name' => 'fonticon_or_fileicon'
+    'ext_management_system.name' => 'fonticon_or_fileicon',
+    'resource.name'              => 'fonticon_or_fileicon',
   }.freeze
 
   NORMALIZED_STATE_ICON = {
@@ -177,9 +178,22 @@ class GtlFormatter
     "svg/os-#{item.os_image_name}.svg"
   end
 
+  def self.item_provider(item)
+    type = item.class.to_s.split('::').last
+    case type
+    when 'AuthKeyPair'
+      item.resource.decorate
+    when 'ResourcePool', 'Container'
+      item.ext_management_system.decorate
+    else
+      item.decorate
+    end
+  end
+
   def self.fonticon_or_fileicon(item)
     return nil unless item
-    decorated = item.decorate
+
+    decorated = item_provider(item)
     [
       decorated.try(:fonticon),
       decorated.try(:secondary_icon),

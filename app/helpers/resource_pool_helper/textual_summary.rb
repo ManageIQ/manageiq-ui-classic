@@ -16,7 +16,7 @@ module ResourcePoolHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i[parent_datacenter parent_cluster parent_host direct_vms allvms_size resource_pools]
+      %i[provider parent_datacenter parent_cluster parent_host direct_vms allvms_size resource_pools]
     )
   end
 
@@ -127,6 +127,11 @@ module ResourcePoolHelper::TextualSummary
       h[:link]  = url_for_only_path(:controller => "resource_pool", :action => 'show', :id => @record, :display => 'resource_pools')
     end
     h
+  end
+
+  def textual_provider
+    resource = @record.ext_management_system
+    {:label => _('Provider'), :value => resource.name, :image => resource.try(:decorate).try(:fileicon)}
   end
 
   def textual_memory_reserve

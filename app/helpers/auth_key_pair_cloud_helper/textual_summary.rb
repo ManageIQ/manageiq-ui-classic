@@ -5,11 +5,16 @@ module AuthKeyPairCloudHelper::TextualSummary
   # Groups
   #
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i[vms])
+    TextualGroup.new(_("Relationships"), %i[provider vms])
   end
 
   def textual_group_properties
     TextualGroup.new(_("Properties"), %i[name fingerprint])
+  end
+
+  def textual_provider
+    resource = @record.resource
+    {:label => _('Provider'), :value => resource.name, :image => resource.try(:decorate).try(:fileicon)}
   end
 
   #
