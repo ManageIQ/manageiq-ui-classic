@@ -13,6 +13,7 @@
       - options = TermOfServiceHelper::ASSIGN_TOS[@edit[:new][:type] == "Compute" ? "chargeback_compute".to_sym : "chargeback_storage".to_sym].map do |k, v|
         - [_(v), k]
       = select_tag("cbshow_typ", options_for_select([[nothing, "nil"]] + options, @edit[:new][:cbshow_typ]),
+      "aria-label" => _("Select term of service type"),
                   "data-miq_sparkle_on" => true, "data-miq_sparkle_off" => true, :class    => "selectpicker")
     :javascript
       miqInitSelectPicker();
@@ -29,6 +30,7 @@
       .col-md-8
         - options = Array(@edit[:cb_assign][:cats].invert).sort_by { |a| a.first.downcase }
         = select_tag("cbtag_cat", options_for_select([["<#{_('Choose a Category')}>", ""]] + options, @edit[:new][:cbtag_cat].to_s),
+        "aria-label" => _("Select tag category"),
                     "data-miq_sparkle_on" => true, "data-miq_sparkle_off" => true, :class    => "selectpicker")
       :javascript
         miqInitSelectPicker();
@@ -41,6 +43,7 @@
         - default_options = Array(@edit[:cb_assign][:docker_label_default_keys].invert).sort_by { |a| a.first.downcase }
         - options = Array(@edit[:cb_assign][:docker_label_keys].invert).sort_by { |a| a.first.downcase }
         = select_tag("cblabel_key", options_for_select(default_options  + options, @edit[:new][:cblabel_key].to_s),
+        "aria-label" => _("Select options for image labels"),
                     "data-miq_sparkle_on" => true, "data-miq_sparkle_off" => true, :class    => "selectpicker")
       :javascript
         miqInitSelectPicker();
@@ -66,6 +69,7 @@
                 - options = @edit[:cb_rates].invert.sort
                 = select_tag("#{@edit[:new][:cbshow_typ]}__#{id}",
                             options_for_select([[nothing, "nil"]] + options, @edit[:new]["#{@edit[:new][:cbshow_typ]}__#{id}".to_sym].to_s),
+                            "aria-label" => _("Select rate"),
                             "data-miq_sparkle_on" => true, "data-miq_sparkle_off" => true, :class => "selectpicker")
               :javascript
                 miqInitSelectPicker();
@@ -78,6 +82,7 @@
                   - options = @edit[:cb_rates].invert.sort
                   = select_tag("#{@edit[:new][:cbshow_typ]}__#{tenant[:id]}",
                               options_for_select([[nothing, "nil"]] + options, @edit[:new]["#{@edit[:new][:cbshow_typ]}__#{tenant[:id]}".to_sym].to_s),
+                              "aria-label" => _("Select rate for selections"),
                               "data-miq_sparkle_on" => true, "data-miq_sparkle_off" => true, :class => "selectpicker")
                 :javascript
                   miqInitSelectPicker();
@@ -119,6 +124,7 @@
                 - options = @edit[:cb_rates].invert.sort
                 = select_tag("#{@edit[:new][:cbshow_typ]}__#{id}",
                             options_for_select([[nothing, "nil"]] + options, @edit[:new]["#{@edit[:new][:cbshow_typ]}__#{id}".to_sym].to_s),
+                            "aria-label" => _("select rate for saved items"),
                             "data-miq_sparkle_on" => true, "data-miq_sparkle_off" => true, :class => "selectpicker")
               :javascript
                 miqInitSelectPicker();
@@ -158,6 +164,7 @@
                 - options = @edit[:cb_rates].invert.sort
                 = select_tag("#{@edit[:new][:cbshow_typ]}__#{id}",
                             options_for_select([[nothing, "nil"]] + options, @edit[:new]["#{@edit[:new][:cbshow_typ]}__#{id}".to_sym].to_s),
+                            "aria-label" => _("select Rate1"),
                             "data-miq_sparkle_on" => true, "data-miq_sparkle_off" => true, :class => "selectpicker")
               :javascript
                 miqInitSelectPicker();
@@ -179,6 +186,7 @@
                 - options = @edit[:cb_rates].invert.sort
                 = select_tag("#{@edit[:new][:cbshow_typ]}__#{id}",
                             options_for_select([[nothing, "nil"]] + options, @edit[:new]["#{@edit[:new][:cbshow_typ]}__#{id}".to_sym].to_s),
+                            "aria-label" => _("select Rate2"),
                             "data-miq_sparkle_on" => true, "data-miq_sparkle_off" => true, :class => "selectpicker")
               :javascript
                 miqInitSelectPicker();
