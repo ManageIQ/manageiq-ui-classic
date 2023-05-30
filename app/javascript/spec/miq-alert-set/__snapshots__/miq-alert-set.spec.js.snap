@@ -15,6 +15,7 @@ exports[`MiqAlertSetStructuredList should render alert set alerts structured lis
     >
       <FeatureToggle(StructuredListCell)
         className="label_header object_item"
+        title="View this Alert"
       >
         <div
           className="content"
@@ -47,6 +48,7 @@ exports[`MiqAlertSetStructuredList should render alert set assigned structured l
       />
       <FeatureToggle(StructuredListCell)
         className="content_value object_item"
+        title=""
       >
         <div
           className="content"
@@ -71,6 +73,7 @@ exports[`MiqAlertSetStructuredList should render alert set assigned structured l
       </FeatureToggle(StructuredListCell)>
       <FeatureToggle(StructuredListCell)
         className="content_value object_item"
+        title=""
       >
         <div
           className="content"
@@ -149,6 +152,7 @@ exports[`MiqAlertSetStructuredList should render alert set info structured list 
       />
       <FeatureToggle(StructuredListCell)
         className="content_value object_item"
+        title=""
       >
         <div
           className="content"
@@ -173,6 +177,7 @@ exports[`MiqAlertSetStructuredList should render alert set info structured list 
       />
       <FeatureToggle(StructuredListCell)
         className="content_value object_item"
+        title=""
       >
         <div
           className="content"
@@ -204,6 +209,7 @@ exports[`MiqAlertSetStructuredList should render alert set notes structured list
     >
       <FeatureToggle(StructuredListCell)
         className="label_header object_item"
+        title=""
       >
         <MiqStructuredListInputs
           action={[Function]}

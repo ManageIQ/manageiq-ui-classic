@@ -306,7 +306,7 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           N_('Management Console'),
           :keepSpinner => true,
           :url         => "management_console",
-          :klass       => ApplicationHelper::Button::GenericFeatureButton,
+          :klass       => ApplicationHelper::Button::VmManagementConsole,
           :options     => {:feature => :native_console}
         ),
       ]

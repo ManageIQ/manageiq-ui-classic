@@ -14,8 +14,8 @@ module StorageServiceHelper::TextualSummary
   end
 
   def textual_group_capabilities
-    capabilities = @record.capabilities.map do |c|
-      [c["name"], c["value"]]
+    capabilities = @record.capabilities.map do |key, value|
+      [key, value]
     end
 
     TextualMultilabel.new(

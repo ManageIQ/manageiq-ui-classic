@@ -35,7 +35,7 @@ describe('Ansible Credential Form Component', () => {
   };
 
   beforeEach(() => {
-    fetchMock.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAutomationManager', { 
+    fetchMock.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager', { 
         "resources": [
             {
               "href": "http://localhost:3000/api/providers/1"

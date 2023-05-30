@@ -5,6 +5,7 @@ class HostInitiatorController < ApplicationController
   include Mixins::BreadcrumbsMixin
   include Mixins::GenericFormMixin
   include Mixins::GenericButtonMixin
+  include Mixins::EmsCommon::Refresh
 
   before_action :check_privileges
   before_action :get_session_data
@@ -65,6 +66,8 @@ class HostInitiatorController < ApplicationController
     case pressed
     when 'host_initiator_new'
       javascript_redirect(:action => 'new')
+    when 'host_initiator_refresh'
+      queue_refresh(controller_to_model)
     else
       return false
     end

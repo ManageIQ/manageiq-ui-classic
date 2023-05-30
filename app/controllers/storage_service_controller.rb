@@ -5,11 +5,16 @@ class StorageServiceController < ApplicationController
   include Mixins::BreadcrumbsMixin
   include Mixins::GenericFormMixin
   include Mixins::GenericButtonMixin
+  include Mixins::EmsCommon::Refresh
 
   before_action :check_privileges
   before_action :get_session_data
   after_action :cleanup_action
   after_action :set_session_data
+
+  def breadcrumb_name(_model)
+    _("Storage Services")
+  end
 
   def new
     assert_privileges("storage_service_new")
@@ -20,6 +25,17 @@ class StorageServiceController < ApplicationController
     end
     drop_breadcrumb(:name => _("Create New %{table}") % {:table => ui_lookup(:table => table_name)},
                     :url  => "/#{controller_name}/new")
+  end
+
+  def edit
+    params[:id] = checked_item_id if params[:id].blank?
+    assert_privileges("storage_service_edit")
+    @service = find_record_with_rbac(StorageService, params[:id])
+    @in_a_form = true
+    drop_breadcrumb(
+      :name => _("Edit Storage Service \"%{name}\"") % {:name => @service.name},
+      :url  => "/storage_service/edit/#{@service.id}"
+    )
   end
 
   def show
@@ -61,6 +77,10 @@ class StorageServiceController < ApplicationController
     case pressed
     when 'storage_service_new'
       javascript_redirect(:action => 'new')
+    when "storage_service_edit"
+      javascript_redirect(:action => "edit", :id => checked_item_id)
+    when 'storage_service_refresh'
+      queue_refresh(controller_to_model)
     else
       return false
     end

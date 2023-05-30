@@ -96,7 +96,11 @@ export const MainMenu = ({
   };
 
   const onSelect = (item) => {
-    setSection(item);
+    if (activeSection && item.id === activeSection.id) {
+      hideSecondary();
+    } else {
+      setSection(item);
+    }
     // The first menu item in the second level can be focused only after second level is actually displayed
     if (item) {
       setTimeout(() => {

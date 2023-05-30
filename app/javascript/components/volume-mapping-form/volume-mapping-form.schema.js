@@ -9,6 +9,7 @@ export const portTypes = [
 
 const loadProviders = () =>
   API.get(
+    // eslint-disable-next-line max-len
     '/api/providers?expand=resources&attributes=id,name,supports_block_storage&filter[]=supports_block_storage=true&filter[]=supports_add_volume_mapping=true',
   ).then(({ resources }) =>
     resources.map(({ id, name }) => ({ value: id, label: name })));
@@ -25,22 +26,54 @@ const loadCloudVolumes = (storage_id) => API.get(`/api/cloud_volumes/?expand=res
     value: id,
   })));
 
-const loadHostInitiators = (storage_id) =>
-  API.get(`/api/host_initiators/?expand=resources&attributes=id,name&filter[]=physical_storage.id=${storage_id}`)
-    .then(({ resources }) => resources.map(({ name, id }) => ({
-      label: name,
-      value: id,
-    })));
+const loadHostInitiators = (storage_id, volume_id) =>
+  API.get(`/api/host_initiators/?expand=resources&attributes=id,name,cloud_volumes&filter[]=physical_storage.id=${storage_id}`)
+    .then(({ resources }) => {
+      const hostsUnmappedToVolume = resources.filter((host) => {
+        const volumeIds = host.cloud_volumes.map(({ id }) => id);
+        return !volumeIds.includes(volume_id);
+      });
 
-const loadHostInitiatorGroups = (storage_id) =>
-  API.get(`/api/host_initiators/?expand=resources&attributes=host_cluster_name,host_initiator_group_id&filter[]=host_initiator_group_id!=null&filter[]=physical_storage.id=${storage_id}`)
-    .then(({ resources }) => [...new Map(resources.map((item) => [item.host_initiator_group_id, ({
-      label: item.host_cluster_name,
-      value: item.host_initiator_group_id,
-    })])).values()]);
+      const options = hostsUnmappedToVolume.map(({ name, id }) => ({
+        label: name,
+        value: id,
+      }));
 
-const createSchema = (state, setState, ems, initialValues, storageId, setStorageId, volumeId, setVolumeId,
-  hostInitiatorId, setHostInitiatorId, hostInitiatorGroupId, setHostInitiatorGroupId) => {
+      if (options.length === 0) {
+        options.unshift({ label: sprintf(__('No Host Initiator found')), value: '-1' });
+      } else {
+        options.unshift({ label: `<${__('Choose')}>`, value: '-1' });
+      }
+
+      return options;
+    });
+
+const loadHostInitiatorGroups = (storage_id, volume_id) =>
+  // eslint-disable-next-line max-len
+  API.get(`/api/host_initiator_groups/?expand=resources&attributes=id,name,host_initiators,cloud_volumes&filter[]=physical_storage.id=${storage_id}`)
+    .then(({ resources }) => {
+      const nonEmptyGroups = resources.filter((group) => group.host_initiators.length > 0);
+
+      const groupsUnmappedToVolume = nonEmptyGroups.filter((group) => {
+        const volumeIds = group.cloud_volumes.map(({ id }) => id);
+        return !volumeIds.includes(volume_id);
+      });
+
+      const options = groupsUnmappedToVolume.map(({ name, id }) => ({
+        label: name,
+        value: id,
+      }));
+
+      if (options.length === 0) {
+        options.unshift({ label: sprintf(__('No Host Initiator Group found')), value: '-1' });
+      } else {
+        options.unshift({ label: `<${__('Choose')}>`, value: '-1' });
+      }
+
+      return options;
+    });
+
+const createSchema = (state, setState, ems, initialValues, storageId, setStorageId, volumeId, setVolumeId) => {
   let emsId = state.ems_id;
   if (initialValues && initialValues.ems_id) {
     emsId = initialValues.ems_id;
@@ -91,28 +124,38 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
         key: `cloud_volume_id-${storageId}`,
         condition: {
           and: [
-            {when: 'physical_storage_id', isNotEmpty: true,},
-            {when: 'ems_id', isNotEmpty: true,},
-          ]
+            { when: 'physical_storage_id', isNotEmpty: true },
+            { when: 'ems_id', isNotEmpty: true },
+          ],
         },
       },
       {
-        component: componentTypes.SELECT,
+        component: 'enhanced-select',
         name: 'host_initiator_id',
         id: 'host_initiator_id',
         label: __('Host Initiator:'),
         isRequired: true,
-        includeEmpty: true,
-        validate: [{ type: validatorTypes.REQUIRED }],
-        loadOptions: () => (storageId ? loadHostInitiators(storageId) : Promise.resolve([])),
-        onChange: (host_initiator_id) => setHostInitiatorId(host_initiator_id),
-        key: `host_initiator_id-${storageId}`,
+        validate: [
+          { type: validatorTypes.REQUIRED },
+          { type: validatorTypes.PATTERN, pattern: '^(?!-)', message: __('Required') },
+        ],
+        onInputChange: () => null,
+        resolveProps: (_props, _field, { getState }) => {
+          const stateValues = getState().values;
+          const volume = stateValues.cloud_volume_id;
+
+          return {
+            key: JSON.stringify(volume),
+            loadOptions: async() => loadHostInitiators(storageId, volume),
+          };
+        },
         condition: {
           and: [
-            {when: 'physical_storage_id', isNotEmpty: true,},
-            {when: 'ems_id', isNotEmpty: true,},
-            {when: 'mapping_object', is: "host"}
-          ]
+            { when: 'ems_id', isNotEmpty: true },
+            { when: 'physical_storage_id', isNotEmpty: true },
+            { when: 'cloud_volume_id', isNotEmpty: true },
+            { when: 'mapping_object', is: 'host' },
+          ],
         },
       },
       {
@@ -121,43 +164,53 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
         id: 'host_initiator_group_id',
         label: __('Host Initiator Group:'),
         isRequired: true,
-        helperText: __("Note! Volume can't be mapped to an empty host-initiator-group (host-cluster). Empty host-initiator-groups are not listed."),
-        includeEmpty: true,
-        validate: [{ type: validatorTypes.REQUIRED }],
-        loadOptions: () => (storageId ? loadHostInitiatorGroups(storageId) : Promise.resolve([])),
-        onChange: (host_initiator_group_id) => setHostInitiatorGroupId(host_initiator_group_id),
-        key: `host_initiator_group_id-${storageId}`,
+        helperText: __('This list does not include host initiator groups which have no host initiators or which are '
+          + 'already mapped to the selected volume.'),
+        validate: [
+          { type: validatorTypes.REQUIRED },
+          { type: validatorTypes.PATTERN, pattern: '^(?!-)', message: __('Required') },
+        ],
+        onInputChange: () => null,
+        resolveProps: (_props, _field, { getState }) => {
+          const stateValues = getState().values;
+          const volume = stateValues.cloud_volume_id;
+
+          return {
+            key: JSON.stringify(volume),
+            loadOptions: async() => loadHostInitiatorGroups(storageId, volume),
+          };
+        },
         condition: {
           and: [
-            {when: 'physical_storage_id', isNotEmpty: true,},
-            {when: 'ems_id', isNotEmpty: true,},
-            {when: 'mapping_object', is: "host_group"}
-          ]
+            { when: 'ems_id', isNotEmpty: true },
+            { when: 'physical_storage_id', isNotEmpty: true },
+            { when: 'cloud_volume_id', isNotEmpty: true },
+            { when: 'mapping_object', is: 'host_group' },
+          ],
         },
       },
       {
-      "component": "radio",
-      "label": "Map directly to Host Initiator, or to a Group?",
-      "name": "mapping_object",
-      "initialValue": "host",
-      condition: {
-        and: [
-          {when: 'physical_storage_id', isNotEmpty: true,},
-          {when: 'ems_id', isNotEmpty: true,},
-        ]
-      },
-      "options": [
-        {
-          "label": "Host Initiator",
-          "value": "host"
+        component: 'radio',
+        label: 'Map directly to Host Initiator, or to a Group?',
+        name: 'mapping_object',
+        initialValue: 'host',
+        condition: {
+          and: [
+            { when: 'physical_storage_id', isNotEmpty: true },
+            { when: 'ems_id', isNotEmpty: true },
+          ],
         },
-        {
-          "label": "Host Initiator Group",
-          "value": "host_group"
-        }
-      ]
-    }
-
+        options: [
+          {
+            label: 'Host Initiator',
+            value: 'host',
+          },
+          {
+            label: 'Host Initiator Group',
+            value: 'host_group',
+          },
+        ],
+      },
 
     ],
   });

@@ -1,12 +1,6 @@
 # rubocop:disable Lint/EmptyWhen
 require 'open-uri'
 
-# Need to make sure models are autoloaded
-MiqCompare
-MiqFilter
-MiqExpression
-MiqSearch
-
 class ApplicationController < ActionController::Base
   include Vmdb::Logging
 
@@ -125,6 +119,13 @@ class ApplicationController < ActionController::Base
 
   AE_MAX_RESOLUTION_FIELDS = 5 # Maximum fields to show for automation engine resolution screens
 
+  # **************************************************************************************************
+  # NOTE, this is the default error handler.                                                         *
+  # Any unrescued exception will unwind the stack until it reaches the default error handler here.   *
+  # See the error_handler method to see how we try to generically rescue exceptions.                 *
+  # **************************************************************************************************
+  rescue_from StandardError, :with => :error_handler
+
   def local_request?
     Rails.env.development? || Rails.env.test?
   end
@@ -160,9 +161,6 @@ class ApplicationController < ActionController::Base
   def self.session_key_prefix
     table_name
   end
-
-  # This will rescue any un-handled exceptions
-  rescue_from StandardError, :with => :error_handler
 
   def self.handle_exceptions?
     Thread.current[:application_controller_handles_exceptions] != false
@@ -708,7 +706,8 @@ class ApplicationController < ActionController::Base
       col = view.col_order[i]
       next if view.column_is_hidden?(col, self)
 
-      align = %i[fixnum integer Fixnum float].include?(column_type(view.db, view.col_order[i])) ? 'right' : 'left'
+      field = MiqExpression::Field.new(view.db_class, [], view.col_order[i])
+      align = field.numeric? ? 'right' : 'left'
 
       root[:head] << {:text    => h,
                       :sort    => 'str',
@@ -765,7 +764,7 @@ class ApplicationController < ActionController::Base
     if @targets_hash
       @targets_hash[id] # Get the record from the view
     else
-      klass = view.db.constantize
+      klass = view.db_class
       klass.find(id)    # Read the record from the db
     end
   end

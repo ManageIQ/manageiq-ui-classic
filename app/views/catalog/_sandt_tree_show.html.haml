@@ -1,10 +1,10 @@
 = render :partial => "layouts/flash_msg"
 - record, sb, tenants_tree, options, no_wf_msg = @record, @sb, @tenants_tree, @options, @no_wf_msg
 - tab_labels, condition = catalog_tab_configuration(record)
-
-= react('MiqCustomTab', {:containerId => 'catalog-tabs',
-                         :tabLabels => tab_labels,
-                         :type => 'CATALOG_SUMMARY'})
+.miq_custom_tab_wrapper
+  = react('MiqCustomTab', {:containerId => 'catalog-tabs',
+                          :tabLabels => tab_labels,
+                          :type => 'CATALOG_SUMMARY'})
 
 #catalog-tabs.miq_custom_tabs_container
   = catalog_tab_content(:basic) do

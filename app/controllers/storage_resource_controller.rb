@@ -12,6 +12,10 @@ class StorageResourceController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  def breadcrumb_name(_model)
+    _("Storage Resources")
+  end
+
   def show
     if params[:id].nil?
       @breadcrumbs.clear

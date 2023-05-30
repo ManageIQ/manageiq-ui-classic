@@ -47,10 +47,6 @@ module ApplicationHelper
         _("Hosts")
       when "miq_server"
         _("Servers")
-      when "monitor_alerts_list"
-        _("Monitor Alerts")
-      when "monitor_alerts_overview"
-        _("Monitor Alerts Overview")
       when "services"
         _("Services")
       when "usage"
@@ -97,6 +93,8 @@ module ApplicationHelper
         _("Credentials")
       when "manageiq/providers/embedded_automation_manager/configuration_script_source"
         _("Repositories")
+      when "manageiq/providers/workflows/automation_manager/workflow"
+        _("Workflows")
 
       else
         fallback_title(layout)

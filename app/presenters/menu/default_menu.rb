@@ -15,9 +15,6 @@ module Menu
 
           control_menu_section,
 
-          # TODO: Remove all monitor related code
-          # monitor_menu_section,
-
           settings_menu_section,
           logout_item,
         ]
@@ -188,6 +185,7 @@ module Menu
           automation_manager_menu_section,
           configuration_menu_section,
           ansible_menu_section,
+          workflow_menu_section,
           automate_menu_section,
         ])
       end
@@ -209,6 +207,15 @@ module Menu
         ])
       end
 
+      def workflow_menu_section
+        if Settings.prototype.ems_workflows.enabled
+          Menu::Section.new(:embedded_workflow_automation_manager, N_("Embedded Workflows"), nil, [
+            Menu::Item.new('embedded_workflow',            N_('Workflows'),    'embedded_workflow',            {:feature => 'embedded_configuration_script_payload_view', :any => true}, '/workflow/show_list'),
+            Menu::Item.new('embedded_workflow_repository', N_('Repositories'), 'embedded_workflow_repository', {:feature => 'embedded_configuration_script_source_view',  :any => true}, '/workflow_repository/show_list')
+          ])
+        end
+      end
+
       def automate_menu_section
         Menu::Section.new(:automate, N_("Embedded Automate"), nil, [
           Menu::Item.new('miq_ae_class',         N_('Explorer'),        'miq_ae_class_explorer',         {:feature => 'miq_ae_domain_view'},            '/miq_ae_class/explorer'),
@@ -218,19 +225,6 @@ module Menu
           Menu::Item.new('miq_ae_export',        N_('Import / Export'), 'miq_ae_class_import_export',    {:feature => 'miq_ae_class_import_export'},    '/miq_ae_tools/import_export'),
           Menu::Item.new('miq_ae_logs',          N_('Log'),             'miq_ae_class_log',              {:feature => 'miq_ae_class_log'},              '/miq_ae_tools/log'),
           Menu::Item.new('miq_request_ae',       N_('Requests'),        'ae_miq_request',                {:feature => 'ae_miq_request_show_list'},      '/miq_request/show_list?typ=ae')
-        ])
-      end
-
-      def alerts_menu_section
-        Menu::Section.new(:monitor_alerts, N_("Alerts"), nil, [
-                            Menu::Item.new('monitor_alerts_overview', N_('Overview'), 'monitor_alerts_overview', {:feature => 'monitor_alerts_overview', :any => true}, '/alerts_overview/show'),
-                            Menu::Item.new('monitor_alerts_list', N_('All Alerts'), 'monitor_alerts_list', {:feature => 'monitor_alerts_list', :any => true}, '/alerts_list/show'),
-                          ])
-      end
-
-      def monitor_menu_section
-        Menu::Section.new(:monitor, N_("Monitor"), 'carbon--Activity', [
-          alerts_menu_section,
         ])
       end
 

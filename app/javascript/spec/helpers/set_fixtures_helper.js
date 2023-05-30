@@ -1,4 +1,4 @@
-global.window = global;
+global.window ??= global;
 window.setFixtures = function(html) {
   $('html').html(html);
 };

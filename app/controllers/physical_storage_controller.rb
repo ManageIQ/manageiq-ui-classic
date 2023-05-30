@@ -5,6 +5,7 @@ class PhysicalStorageController < ApplicationController
   include Mixins::MoreShowActions
   include Mixins::BreadcrumbsMixin
   include Mixins::GenericButtonMixin
+  include Mixins::EmsCommon::Refresh
 
   before_action :check_privileges
   before_action :session_data
@@ -108,10 +109,7 @@ class PhysicalStorageController < ApplicationController
       show_timeline
       javascript_redirect(:action => 'show', :id => @record.id, :display => 'timeline')
     when "physical_storage_refresh"
-      @record = find_record_with_rbac(PhysicalStorage, checked_item_id)
-      EmsRefresh.refresh(@record.ext_management_system)
-      add_flash(_("Refresh storage manager successfully initiated for physical storage- #{@record.name}"))
-      render_flash
+      queue_refresh(controller_to_model)
     else
       return false
     end

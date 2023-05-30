@@ -1,4 +1,5 @@
 import { componentTypes, validatorTypes } from '@@ddf';
+import validateName from '../../helpers/storage_manager/validate-names';
 
 export const portTypes = [
   { label: __('ISCSI'), value: 'ISCSI' },
@@ -21,8 +22,9 @@ const loadStorages = (id) => API.get(`/api/providers/${id}?attributes=type,physi
   })));
 
 const loadGroups = (id) => API.get(`/api/physical_storages/${id}?attributes=host_initiator_groups`)
+  // eslint-disable-next-line camelcase
   .then(({ host_initiator_groups }) => {
-    let groupOptions = host_initiator_groups.map(({ id, name }) => ({ label: name, value: id }));
+    const groupOptions = host_initiator_groups.map(({ id, name }) => ({ label: name, value: id }));
     groupOptions.unshift({ label: `<${__('None')}>`, value: '' });
     return groupOptions;
   });
@@ -34,6 +36,16 @@ const loadWwpns = (id) => API.get(`/api/physical_storages/${id}?attributes=wwpn_
       value: candidate,
       label: candidate,
     })));
+
+const validateAddress = async(addressType, address) => {
+  const addresses = [];
+  await API.get('/api/host_initiators?expand=resources&attributes=san_addresses')
+    .then(({ resources }) => resources.map((resource) => resource.san_addresses))
+    .then((addressesArrays) => addressesArrays.map((addressesArray) => addressesArray.map((address) => address[addressType])))
+    .then((results) => (results.forEach((result) => addresses.push(...result))));
+
+  return addresses.includes(address) ? sprintf(__('Address %s is already in use'), address) : undefined;
+};
 
 const createSchema = (state, setState, ems, initialValues, storageId, setStorageId) => {
   let emsId = state.ems_id;
@@ -62,7 +74,17 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
         id: 'name',
         label: __('Name:'),
         isRequired: true,
-        validate: [{ type: validatorTypes.REQUIRED }],
+        validate: [
+          {
+            type: validatorTypes.REQUIRED,
+          },
+          {
+            type: 'max-length',
+            threshold: 15,
+            message: __('The name should have up to 15 characters.'),
+          },
+          async(value) => validateName('host_initiators', value, false),
+        ],
       },
       {
         component: componentTypes.SELECT,
@@ -118,24 +140,25 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
             isRequired: true,
             validate: [
               {
-                type: validatorTypes.REQUIRED
+                type: validatorTypes.REQUIRED,
               },
               {
-                type: "pattern",
+                type: 'pattern',
                 pattern: "iqn\\.(\\d{4}-\\d{2})\\.([^:]+)(:)([^,:\\s']+)",
-                message: __('The IQN should have the format: iqn.yyyy-mm.naming-authority:unique name')
+                message: __('The IQN should have the format: iqn.yyyy-mm.naming-authority:unique name'),
               },
               {
-                type: "pattern",
-                pattern: "^[a-z0-9:.-]*$",
-                message: __('The IQN should contain only lower-case letters (a to z), digits (0 to 9), hyphens (-), ' +
-                  'periods (.) or colons (:)')
+                type: 'pattern',
+                pattern: '^[a-z0-9:.-]*$',
+                message: __('The IQN should contain only lower-case letters (a to z), digits (0 to 9), hyphens (-), '
+                  + 'periods (.) or colons (:)'),
               },
               {
-                type: "max-length",
+                type: 'max-length',
                 threshold: 223,
-                message: __('The IQN should have up to 223 characters.')
-              }
+                message: __('The IQN should have up to 223 characters.'),
+              },
+              async(value) => validateAddress('iqn', value),
             ],
           },
         ],
@@ -235,18 +258,19 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
             isRequired: true,
             validate: [
               {
-                type: validatorTypes.REQUIRED
+                type: validatorTypes.REQUIRED,
               },
               {
-                type: "exact-length",
+                type: 'exact-length',
                 threshold: 16,
-                message: __('The length of the WWPN should be exactly 16 characters.')
+                message: __('The length of the WWPN should be exactly 16 characters.'),
               },
               {
-                type: "pattern",
-                pattern: "^[0-9A-Fa-f]+$",
-                message: __('The WWPN should be a hexadecimal expression (0-9, A-F)')
-              }
+                type: 'pattern',
+                pattern: '^[0-9A-Fa-f]+$',
+                message: __('The WWPN should be a hexadecimal expression (0-9, A-F)'),
+              },
+              async(value) => validateAddress('wwpn', value),
             ],
           },
         ],
@@ -259,8 +283,7 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
         id: 'host_initiator_group',
         name: 'host_initiator_group',
         label: __('Host Initiator Group:'),
-        isRequired: false,
-        // includeEmpty: true,
+        isRequired: true,
         validate: [{ type: validatorTypes.REQUIRED }],
         loadOptions: () => (storageId ? loadGroups(storageId) : Promise.resolve([])),
         isSearchable: true,

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Loading } from 'carbon-components-react';
-
 import MiqFormRenderer from '@@ddf';
 import createSchema from './volume-mapping-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
+import mapper from '../../forms/mappers/componentMapper';
+import enhancedSelect from '../../helpers/enhanced-select';
 
 const VolumeMappingForm = ({ redirect, storageManagerId }) => {
   const [state, setState] = useState({});
@@ -12,7 +13,7 @@ const VolumeMappingForm = ({ redirect, storageManagerId }) => {
   const { isLoading, initialValues } = state;
   const [volumeId, setVolumeId] = useState(undefined);
   const [hostInitiatorId, setHostInitiatorId] = useState(undefined);
-  const [hostInitiatorGroupId, setHostInitiatorGroupId] =  useState(undefined);
+  const [hostInitiatorGroupId, setHostInitiatorGroupId] = useState(undefined);
 
   const loadSchema = (appendState = {}) => () => {
     setState((state) => ({
@@ -42,9 +43,16 @@ const VolumeMappingForm = ({ redirect, storageManagerId }) => {
 
   if (isLoading) return <Loading className="export-spinner" withOverlay={false} small />;
 
+  const componentMapper = {
+    ...mapper,
+    'enhanced-select': enhancedSelect,
+  };
+
   return !isLoading && (
     <MiqFormRenderer
-      schema={createSchema(state, setState, !!storageManagerId, initialValues, storageId, setStorageId, volumeId, setVolumeId, hostInitiatorId, setHostInitiatorId, hostInitiatorGroupId, setHostInitiatorGroupId)}
+      schema={createSchema(state, setState, !!storageManagerId, initialValues, storageId, setStorageId, volumeId,
+        setVolumeId, hostInitiatorId, setHostInitiatorId, hostInitiatorGroupId, setHostInitiatorGroupId)}
+      componentMapper={componentMapper}
       initialValues={initialValues}
       onSubmit={onSubmit}
       onCancel={onCancel}

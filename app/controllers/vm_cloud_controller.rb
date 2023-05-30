@@ -1,7 +1,7 @@
 class VmCloudController < ApplicationController
   include VmCommon # common methods for vm controllers
   include VmRemote # methods for VM remote access
-  include VmShowMixin
+  include Mixins::VmShowMixin
   include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges

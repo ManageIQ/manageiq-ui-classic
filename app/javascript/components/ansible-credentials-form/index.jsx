@@ -25,7 +25,7 @@ const AnsibleCredentialsForm = ({ recordId }) => {
 
   useEffect(() => {
     // eslint-disable-next-line camelcase
-    API.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAutomationManager').then(({ resources: [manager_resource] }) => {
+    API.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager').then(({ resources: [manager_resource] }) => {
       if (!recordId) {
         setState((state) => ({
           ...state,

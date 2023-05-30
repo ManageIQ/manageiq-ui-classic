@@ -92,6 +92,12 @@ export const sortableRows = (dtRows) => dtRows.map((row) => {
   return row;
 });
 
+/** Function to check if rows contains a checkbox
+ * hasCheckbox is received from the response data and a checkbox is rendered when this is true.
+*/
+export const rowHasCheckbox = (rows, hasCheckbox) =>
+  hasCheckbox || (!!rows.find((item) => item.cells.find((item) => item.is_checkbox && item.is_checkbox === true)));
+
 /** Function to generate the header items and its keys from 'columns'.
  * First item from header is removed if the data table has a checkbox mentioned in 'hasCheckbox'. */
 export const headerData = (columns, hasCheckbox) => {

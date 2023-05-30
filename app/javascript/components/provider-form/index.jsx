@@ -12,6 +12,7 @@ import ProtocolSelector from './protocol-selector';
 import ProviderCredentials from './provider-credentials';
 import ValidateProviderCredentials from './validate-provider-credentials';
 import DetectButton from './detect-button';
+import validateName from '../../helpers/storage_manager/validate-names';
 
 const findSkipSubmits = (schema, items) => {
   const found = schema.skipSubmit && items.includes(schema.name) ? [schema.name] : [];
@@ -26,9 +27,12 @@ const commonFields = [
     name: 'name',
     label: __('Name'),
     isRequired: true,
-    validate: [{
-      type: validatorTypes.REQUIRED,
-    }],
+    validate: [
+      {
+        type: validatorTypes.REQUIRED,
+      },
+      async(value) => validateName('providers', value, false),
+    ],
   },
   {
     component: componentTypes.SELECT,

@@ -5,6 +5,7 @@ class VolumeMappingController < ApplicationController
   include Mixins::BreadcrumbsMixin
   include Mixins::GenericFormMixin
   include Mixins::GenericButtonMixin
+  include Mixins::EmsCommon::Refresh
 
   before_action :check_privileges
   before_action :get_session_data
@@ -61,6 +62,8 @@ class VolumeMappingController < ApplicationController
     case pressed
     when 'volume_mapping_new'
       javascript_redirect(:action => 'new')
+    when 'volume_mapping_refresh'
+      queue_refresh(controller_to_model)
     else
       return false
     end

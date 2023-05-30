@@ -32,8 +32,6 @@ module ApplicationHelper::PageLayouts
       miq_policy_export
       miq_policy_logs
       miq_policy_set
-      monitor_alerts_overview
-      monitor_alerts_list
       my_tasks
       ops
       physical_infra_overview
@@ -100,8 +98,7 @@ module ApplicationHelper::PageLayouts
     return false if %w[login authenticate auth_error].include?(controller.action_name)
 
     layout = case @layout
-             when 'container_dashboard', 'dashboard', 'ems_infra_dashboard', 'exception', 'physical_infra_overview',
-                  'monitor_alerts_list', 'monitor_alerts_overview'
+             when 'container_dashboard', 'dashboard', 'ems_infra_dashboard', 'exception', 'physical_infra_overview'
                false
              when 'report'
                !%w[new create edit copy update explorer].include?(controller.action_name)

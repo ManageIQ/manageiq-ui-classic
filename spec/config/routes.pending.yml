@@ -1,14 +1,4 @@
 ---
-AlertsListController:
-- class_icons
-- index
-- report_data
-AlertsMostRecentController:
-- index
-- report_data
-AlertsOverviewController:
-- index
-- report_data
 AnsibleCredentialController:
 - index
 - report_data
@@ -1459,4 +1449,13 @@ VmOrTemplateController:
 - x_search_by_name
 - x_show
 VolumeMappingController:
+- index
+WorkflowController:
+- report_data
+- index
+WorkflowCredentialController:
+- report_data
+- index
+WorkflowRepositoryController:
+- report_data
 - index

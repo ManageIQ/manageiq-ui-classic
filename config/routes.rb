@@ -1757,7 +1757,6 @@ Rails.application.routes.draw do
         tagging_edit
         tl_chooser
         tree_autoload
-        update
         users
         wait_for_task
       ) +
@@ -2317,8 +2316,10 @@ Rails.application.routes.draw do
       :get  => %w[
         download_data
         download_summary_pdf
+        index
         show
         show_list
+        edit
         new
       ],
       :post => %w[
@@ -2354,6 +2355,7 @@ Rails.application.routes.draw do
       :get  => %w[
         download_data
         download_summary_pdf
+        edit
         index
         show
         show_list
@@ -3178,6 +3180,21 @@ Rails.application.routes.draw do
                policy_post +
                pre_prov_post +
                snap_post
+    },
+
+
+    :workflow => {
+      :get => %w(
+        show_list
+        show
+      ),
+    },
+
+    :workflow_repository => {
+      :get => %w(
+        show_list
+        show
+      ),
     },
 
     :firmware_registry => {

@@ -3,8 +3,8 @@ import configureStore from 'redux-mock-store';
 import fetchMock from 'fetch-mock';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import RemoveCatalogItemModal from '../../components/remove-catalog-item-modal';
-import { removeCatalogItems } from '../../components/remove-catalog-item-modal';
+import RemoveCatalogItemModal, { removeCatalogItems } from '../../components/remove-catalog-item-modal';
+
 import '../helpers/addFlash';
 import '../helpers/miqFlashLater';
 import '../helpers/miqSparkle';
@@ -15,18 +15,22 @@ describe('RemoveCatalogItemModal', () => {
   const item2 = 456;
   const url1 = `/api/service_templates/${item1}?attributes=services`;
   const url2 = `/api/service_templates/${item2}?attributes=services`;
-  const apiResponse1 = {id: item1, name: 'name123', service_type: 'atomic', services: []};
-  const apiResponse2 = {id: item2, name: 'name456', service_type: 'atomic', services: []};
+  const apiResponse1 = {
+    id: item1, name: 'name123', service_type: 'atomic', services: [],
+  };
+  const apiResponse2 = {
+    id: item2, name: 'name456', service_type: 'atomic', services: [],
+  };
   const store = configureStore()({});
   const dispatchMock = jest.spyOn(store, 'dispatch');
 
   beforeEach(() => {
-    global.window = Object.create(window);
-    Object.defineProperty(window, "location", {
-        value: {
-           href: 'http://example.com'
-        },
-        writable: true
+    global.window ??= Object.create(window);
+    Object.defineProperty(window, 'location', {
+      value: {
+        href: 'http://example.com',
+      },
+      writable: true,
     });
   });
 
@@ -41,7 +45,7 @@ describe('RemoveCatalogItemModal', () => {
 
     setImmediate(() => {
       component.update();
-      expect(component.childAt(0).state()).toEqual({data: [apiResponse1], loaded: true});
+      expect(component.childAt(0).state()).toEqual({ data: [apiResponse1], loaded: true });
       done();
     });
   });
@@ -54,7 +58,7 @@ describe('RemoveCatalogItemModal', () => {
 
     setImmediate(() => {
       component.update();
-      expect(component.childAt(0).state()).toEqual({data: [apiResponse1, apiResponse2], loaded: true});
+      expect(component.childAt(0).state()).toEqual({ data: [apiResponse1, apiResponse2], loaded: true });
       done();
     });
   });
@@ -92,23 +96,23 @@ describe('RemoveCatalogItemModal', () => {
     });
   });
 
-  it ('correctly initializes buttons', (done) => {
+  it('correctly initializes buttons', (done) => {
     fetchMock.getOnce(url1, apiResponse1);
     const component = mount(<RemoveCatalogItemModal store={store} recordId={item1} />);
-    
+
     setImmediate(() => {
       component.update();
-      expect(dispatchMock).toHaveBeenCalledWith({type: 'FormButtons.init', payload: {"addClicked": expect.anything(), "newRecord": true, "pristine": true}});
-      expect(dispatchMock).toHaveBeenCalledWith({type: 'FormButtons.customLabel', payload: 'Delete'});
-      expect(dispatchMock).toHaveBeenCalledWith({type: 'FormButtons.saveable', payload: true});
+      expect(dispatchMock).toHaveBeenCalledWith({ type: 'FormButtons.init', payload: { addClicked: expect.anything(), newRecord: true, pristine: true } });
+      expect(dispatchMock).toHaveBeenCalledWith({ type: 'FormButtons.customLabel', payload: 'Delete' });
+      expect(dispatchMock).toHaveBeenCalledWith({ type: 'FormButtons.saveable', payload: true });
       done();
     });
   });
 
-  it ('removeCatalogItems() works correctly', (done) => {
+  it('removeCatalogItems() works correctly', (done) => {
     const postUrl = `/api/service_templates/${item1}`;
     fetchMock.getOnce(url1, apiResponse1);
-    fetchMock.postOnce(postUrl, {action: 'delete'});
+    fetchMock.postOnce(postUrl, { action: 'delete' });
     const component = mount(<RemoveCatalogItemModal store={store} recordId={item1} />);
 
     setImmediate(() => {

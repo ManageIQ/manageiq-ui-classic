@@ -4,7 +4,7 @@ class EmsContainerController < ApplicationController
   include Mixins::EmsCommon # common methods for EmsInfra/Cloud/Container controllers
   include Mixins::GenericSessionMixin
   include Mixins::DashboardViewMixin
-  include ContainersExternalLoggingSupportMixin
+  include Mixins::ContainersExternalLoggingSupportMixin
   include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges

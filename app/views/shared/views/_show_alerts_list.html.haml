@@ -1,8 +1,0 @@
-.row.miq-alerts-center
-  .container-fluid{"ng-controller" => "alertsListController as vm"}
-    .row.init-hidden{"ng-class" => "{'initialized': vm.loadingDone}"}
-      %div{"pf-toolbar" => "", "config" => "vm.toolbarConfig"}
-    = render :partial => "shared/views/alerts_list"
-
-:javascript
-  miq_bootstrap('.miq-alerts-center');

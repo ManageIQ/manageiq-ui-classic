@@ -1,6 +1,6 @@
 class ContainerNodeController < ApplicationController
-  include ContainersCommonMixin
-  include ContainersExternalLoggingSupportMixin
+  include Mixins::ContainersCommonMixin
+  include Mixins::ContainersExternalLoggingSupportMixin
   include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges

@@ -31,6 +31,10 @@ exports[`TableListView renders just fine... 1`] = `
         "name": "vim_performance_states",
         "rows": "676",
         "title": "vim_performance_states",
+        "value": Array [
+          "676",
+          "150",
+        ],
       },
       Object {
         "explorer": true,
@@ -38,6 +42,10 @@ exports[`TableListView renders just fine... 1`] = `
         "name": "miq_report_result_details",
         "rows": "280",
         "title": "miq_report_result_details",
+        "value": Array [
+          "280",
+          "848",
+        ],
       },
     ]
   }
@@ -45,8 +53,8 @@ exports[`TableListView renders just fine... 1`] = `
   <MiqStructuredList
     headers={
       Array [
-        "Name",
-        "Rows",
+        undefined,
+        undefined,
       ]
     }
     mode="table_list_view"
@@ -54,12 +62,12 @@ exports[`TableListView renders just fine... 1`] = `
     rows={
       Array [
         Array [
-          "vim_performance_states",
-          "676",
+          undefined,
+          undefined,
         ],
         Array [
-          "miq_report_result_details",
-          "280",
+          undefined,
+          undefined,
         ],
       ]
     }
@@ -161,8 +169,8 @@ exports[`TableListView renders just fine... 1`] = `
                     <MiqStructuredListHeader
                       headers={
                         Array [
-                          "Name",
-                          "Rows",
+                          undefined,
+                          undefined,
                         ]
                       }
                     >
@@ -199,9 +207,7 @@ exports[`TableListView renders just fine... 1`] = `
                                       <div
                                         className="list_header bx--structured-list-th"
                                         role="columnheader"
-                                      >
-                                        Name
-                                      </div>
+                                      />
                                     </StructuredListCell>
                                   </FeatureToggle(StructuredListCell)>
                                   <FeatureToggle(StructuredListCell)
@@ -217,9 +223,7 @@ exports[`TableListView renders just fine... 1`] = `
                                       <div
                                         className="list_header bx--structured-list-th"
                                         role="columnheader"
-                                      >
-                                        Rows
-                                      </div>
+                                      />
                                     </StructuredListCell>
                                   </FeatureToggle(StructuredListCell)>
                                 </div>
@@ -280,10 +284,8 @@ exports[`TableListView renders just fine... 1`] = `
                                       title=""
                                     >
                                       <div
-                                        className="expand wrap_text"
-                                      >
-                                        vim_performance_states
-                                      </div>
+                                        className="wrap_text"
+                                      />
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
@@ -307,10 +309,8 @@ exports[`TableListView renders just fine... 1`] = `
                                       title=""
                                     >
                                       <div
-                                        className="expand wrap_text"
-                                      >
-                                        676
-                                      </div>
+                                        className="wrap_text"
+                                      />
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
@@ -359,10 +359,8 @@ exports[`TableListView renders just fine... 1`] = `
                                       title=""
                                     >
                                       <div
-                                        className="expand wrap_text"
-                                      >
-                                        miq_report_result_details
-                                      </div>
+                                        className="wrap_text"
+                                      />
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>
@@ -386,10 +384,8 @@ exports[`TableListView renders just fine... 1`] = `
                                       title=""
                                     >
                                       <div
-                                        className="expand wrap_text"
-                                      >
-                                        280
-                                      </div>
+                                        className="wrap_text"
+                                      />
                                     </div>
                                   </StructuredListCell>
                                 </FeatureToggle(StructuredListCell)>

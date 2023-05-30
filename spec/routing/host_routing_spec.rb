@@ -10,7 +10,6 @@ describe "routes for HostController" do
   it_behaves_like "A controller that has show list routes"
   it_behaves_like "A controller that has tagging routes"
   it_behaves_like "A controller that has timeline routes"
-  it_behaves_like "A controller that has CRUD routes"
 
   describe "#advanced_settings" do
     it "routes with GET" do
@@ -225,6 +224,24 @@ describe "routes for HostController" do
 
     it "routes with POST" do
       expect(post("/host/users")).to route_to("host#users")
+    end
+  end
+
+  describe "#index" do
+    it "routes with GET" do
+      expect(get("/#{controller_name}")).to route_to("#{controller_name}#index")
+    end
+  end
+
+  describe "#edit" do
+    it "routes with GET" do
+      expect(get("/#{controller_name}/edit/123")).to route_to("#{controller_name}#edit", :id => "123")
+    end
+  end
+
+  describe "#show" do
+    it "routes with GET" do
+      expect(get("/#{controller_name}/show/123")).to route_to("#{controller_name}#show", :id => "123")
     end
   end
 end

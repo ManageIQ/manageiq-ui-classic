@@ -109,8 +109,24 @@ const MiqStructuredList = ({
   /** Function to render textarea / checkbox / react components */
   const renderInputContent = ({ value }) => <MiqStructuredListInputs value={value} action={(data) => onClick(data)} />;
 
+  /** Function to include content for mode that contains miq summary
+   * if only link is passed as props we render Link with href tag
+   * if link as well as onclcik is passed as props we render Link with onclick function and without href
+  */
+  const renderLinkWithHrefOrOnclickForMiqSummary = (row, content) => {
+    if (row.link && row.onclick) {
+      return <Link to={row.link} onClick={() => eval(row.onclick)} className="cell_link">{content}</Link>;
+    } if (row.link) {
+      return <Link href={row.link} to={row.link} className="cell_link">{content}</Link>;
+    }
+    return content;
+  };
+
   const renderMultiContents = (row) => {
     const content = renderContent(row);
+    if (clickEvents) {
+      return renderLinkWithHrefOrOnclickForMiqSummary(row, content);
+    }
     return row.link
       ? <Link href={row.link} to={row.link} onClick={(e) => onClick(row, e)} className="cell_link">{content}</Link>
       : content;
@@ -122,7 +138,10 @@ const MiqStructuredList = ({
   /** Usage eg: Automation / Embeded Automate / Generic Objects / item
    * Properties has no links & Relationships have links */
   const renderObjectItem = (row) => (
-    <StructuredListCell className={classNames(row.label ? 'content_value' : 'label_header', 'object_item')}>
+    <StructuredListCell
+      className={classNames(row.label ? 'content_value' : 'label_header', 'object_item')}
+      title={row && row.title !== undefined ? row.title : ''}
+    >
       {renderRowItem(row)}
     </StructuredListCell>
   );

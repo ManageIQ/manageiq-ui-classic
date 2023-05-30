@@ -1,5 +1,5 @@
 class ContainerBuildController < ApplicationController
-  include ContainersCommonMixin
+  include Mixins::ContainersCommonMixin
   include Mixins::BreadcrumbsMixin
 
   before_action :check_privileges

@@ -21,7 +21,7 @@ class AnsibleRepositoryController < ApplicationController
   end
 
   def self.model
-    ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource
+    ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource
   end
 
   def show_searchbar?

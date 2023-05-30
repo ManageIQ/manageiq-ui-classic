@@ -5,6 +5,7 @@ class HostInitiatorGroupController < ApplicationController
   include Mixins::BreadcrumbsMixin
   include Mixins::GenericFormMixin
   include Mixins::GenericButtonMixin
+  include Mixins::EmsCommon::Refresh
 
   before_action :check_privileges
   before_action :get_session_data
@@ -28,6 +29,17 @@ class HostInitiatorGroupController < ApplicationController
     end
     drop_breadcrumb(:name => _("Add New %{table}") % {:table => ui_lookup(:table => table_name)},
                     :url  => "/#{controller_name}/new")
+  end
+
+  def edit
+    params[:id] = checked_item_id if params[:id].blank?
+    assert_privileges("host_initiator_group_edit")
+    @host_initiator_group = find_record_with_rbac(HostInitiatorGroup, params[:id])
+    @in_a_form = true
+    drop_breadcrumb(
+      :name => _("Edit Host Initiator group \"%{name}\"") % {:name => @host_initiator_group.name},
+      :url  => "/host_initiator_group/edit/#{@host_initiator_group.id}"
+    )
   end
 
   def show
@@ -69,6 +81,10 @@ class HostInitiatorGroupController < ApplicationController
     case pressed
     when 'host_initiator_group_new'
       javascript_redirect(:action => 'new')
+    when 'host_initiator_group_edit'
+      javascript_redirect(:action => 'edit', :id => checked_item_id)
+    when 'host_initiator_group_refresh'
+      queue_refresh(controller_to_model)
     else
       return false
     end

@@ -18,6 +18,7 @@ exports[`MiqEventDefinitionStructuredList should render event definition info st
       />
       <FeatureToggle(StructuredListCell)
         className="content_value object_item"
+        title=""
       >
         <div
           className="content"
@@ -42,6 +43,7 @@ exports[`MiqEventDefinitionStructuredList should render event definition info st
       />
       <FeatureToggle(StructuredListCell)
         className="content_value object_item"
+        title=""
       >
         <div
           className="content"
@@ -73,6 +75,7 @@ exports[`MiqEventDefinitionStructuredList should render event definition policy 
     >
       <FeatureToggle(StructuredListCell)
         className="label_header object_item"
+        title="View this Model Alert"
       >
         <div
           className="content"

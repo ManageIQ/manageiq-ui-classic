@@ -4,8 +4,16 @@ module OpsHelper
   include VmwareConsoleHelper
   include SettingsAnalysisProfileHelper
   include SettingsTagsTabsHelper
-  include ZonesHelper
+  include SettingsZoneListHelper
   include SettingsTabHelper
+  include SettingsLabelTagMappingHelper
+  include SettingsScheduleHelper
+  include SettingsServerDescHelper
+  include SettingsUsersHelper
+  include SettingsZoneHelper
+  include SettingsRbacTagHelper
+  include GroupRbacDetailsHelper
+  include RoleRbacDetailsHelper
 
   def row_data(label, value)
     {:cells => {:label => label, :value => value}}

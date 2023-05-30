@@ -5,14 +5,14 @@ export const tableListViewData = {
     {
       title: 'vim_performance_states',
       name: 'vim_performance_states',
-      rows: '676',
+      value: ['676', '150'],
       explorer: true,
       link: 'miqTreeActivateNode(\'vmdb_tree\', \'tb-10000000000181\');',
     },
     {
       title: 'miq_report_result_details',
       name: 'miq_report_result_details',
-      rows: '280',
+      value: ['280', '848'],
       explorer: true,
       link: 'miqTreeActivateNode(\'vmdb_tree\', \'tb-10000000000197\');',
     },
