@@ -324,4 +324,26 @@ module MiqAeClassHelper
                             :nameReadOnly  => domain && !ae_ns.editable_property?(:name),
                             :descReadOnly  => domain && !ae_ns.editable_property?(:description)})
   end
+
+  def first_user_summary(ae_method, sb_data)
+    rows = [
+      row_data(_('Type'), ae_method.location),
+      row_data(_('Fully Qualified Name'), sb_data[:namespace_path]),
+      row_data(_('Name'), ae_method.name),
+      row_data(_('Display Name'), ae_method.display_name),
+      row_data(_('Created On'), format_timezone(ae_method.created_on, Time.zone, "gtl")),
+    ]
+
+    miq_structured_list({
+                          :title => _('Main Info'),
+                          :mode  => "first_user_summary",
+                          :rows  => rows
+                        })
+  end
+
+  private
+
+  def row_data(label, value)
+    {:cells => {:label => label, :value => value}}
+  end
 end
