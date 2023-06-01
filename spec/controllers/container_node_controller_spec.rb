@@ -28,7 +28,7 @@ describe ContainerNodeController do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as FactoryBot.create(:user)
-      @node = FactoryBot.create(:container_node)
+      @node = FactoryBot.create(:container_node, :ext_management_system => FactoryBot.create(:ems_kubernetes))
     end
 
     context "render listnav partial" do
