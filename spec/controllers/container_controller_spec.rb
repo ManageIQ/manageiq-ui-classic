@@ -39,7 +39,7 @@ describe ContainerController do
       container_group = ContainerGroup.create(:ext_management_system => ems,
                                               :container_project     => container_project,
                                               :name                  => "Test Group")
-      @container = FactoryBot.create(:container, :container_group => container_group, :name => "Test Container")
+      @container = FactoryBot.create(:container, :container_group => container_group, :ext_management_system => ems, :name => "Test Container")
     end
 
     context "render listnav partial" do
