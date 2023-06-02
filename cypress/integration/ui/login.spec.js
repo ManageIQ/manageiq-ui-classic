@@ -1,17 +1,17 @@
-/// <reference types="Cypress" />
+/* eslint-disable no-undef */
 
 describe('Login', () => {
   beforeEach(() => {
     cy.visit('/');
   });
   // do not use cy.login() here
-  it("login page", () => {
+  it('login page', () => {
     cy.get('#user_name')
-      .type("admin");
+      .type('admin');
     cy.get('#user_password')
-      .type("smartvm");
+      .type('smartvm');
     cy.get('#login').click();
 
-    cy.get(".navbar-brand-name");
+    cy.get('.navbar-brand-name');
   });
 });

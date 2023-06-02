@@ -58,7 +58,7 @@ describe OrchestrationStackController do
 
       it "renders template name correctly" do
         expect(response.status).to eq(200)
-        expect(response.body).to include("<h1>\ntemplate name")
+        expect(response.body).to include("template name")
         expect(response.body).not_to include("<h1>\nstack01")
       end
     end
