@@ -1,6 +1,7 @@
+/* eslint-disable no-undef */
 // cy.login() - log in
 // FIXME: use cy.request and inject cookie and localStorage.miqToken
-Cypress.Commands.add("login", (user = 'admin', password = 'smartvm') => {
+Cypress.Commands.add('login', (user = 'admin', password = 'smartvm') => {
   cy.visit('/');
 
   cy.get('#user_name').type(user);

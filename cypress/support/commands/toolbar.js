@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // cy.toolbarItem('Configuration', 'Edit this VM') - return a toolbar button state
 Cypress.Commands.add('toolbarItem', (...items) => {
   expect(items.length).to.be.within(1, 2);
@@ -36,7 +37,7 @@ Cypress.Commands.add('toolbar', (...items) => {
     // by-id: #id on button instead of .contains
 
   ret = ret.then((el) => {
-    assert.equal(!!el.prop('disabled'), false, "Parent toolbar button disabled");
+    assert.equal(!!el.prop('disabled'), false, 'Parent toolbar button disabled');
     return el;
   });
 
@@ -48,10 +49,10 @@ Cypress.Commands.add('toolbar', (...items) => {
       .find('a > span')
       .contains(items[1])
       .parents('a > span');
-      // by-id: #id on the same span
+    // by-id: #id on the same span
 
     ret = ret.then((el) => {
-      assert.equal(el.parents('li').hasClass('disabled'), false, "Child toolbar button disabled");
+      assert.equal(el.parents('li').hasClass('disabled'), false, 'Child toolbar button disabled');
       return el;
     });
   }

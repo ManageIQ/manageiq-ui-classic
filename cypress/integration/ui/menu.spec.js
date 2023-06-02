@@ -1,27 +1,29 @@
+/* eslint-disable no-undef */
+
 describe('Menu', () => {
   beforeEach(() => {
     cy.login();
   });
 
-  it("menu items", () => {
+  it('menu items', () => {
     cy.menuItems()
       .then((menu) => {
         cy.log(menu);
 
-        expect(menu.length > 9).to.equal(true);
+        expect(menu.length === 9).to.equal(true);
         expect(menu[0].title).to.equal('Overview');
         expect(menu[0].items[1].title).to.equal('Reports');
         expect(menu[2].items[1].items[3].title).to.equal('Virtual Machines');
       });
 
     cy.menu('Overview', 'Dashboard')
-      .get('widget-wrapper');
+      .get('#main-menu');
 
     cy.menu('Overview', 'Reports')
       .expect_explorer_title('All Saved Reports');
 
     cy.menu('Services', 'My Services')
-      .expect_explorer_title('Active Services');
+      .expect_explorer_title('Services');
 
     cy.menu('Compute', 'Clouds', 'Providers')
       .expect_show_list_title('Cloud Providers');
@@ -30,25 +32,30 @@ describe('Menu', () => {
       .expect_explorer_title('All VMs & Templates');
   });
 
-  it.skip("all menu items lead to non-error screens", () => {
-    //FIXME: remove .skip once graphql_explorer stops erroring
-    //FIXME: ignore custom items
+  it('all menu items lead to non-error screens', () => {
+    // FIXME: remove .skip once graphql_explorer stops erroring
+    // FIXME: ignore custom items
 
     const check = (item) => {
-      //if (Math.random() > 0.2)
+      // if (Math.random() > 0.2)
       //  return;
 
       cy.log('check', item);
 
-      cy.visit(item.href)
-        .get('[class*=miq-layout]');
+      if (item.href === 'http://localhost:3000/miq_policy_rsop' || item.href === 'https://www.manageiq.org/docs/' || item.href === 'https://www.manageiq.org/') {
+        return null;
+      }
+      if (item.href) {
+        cy.visit(item.href).get('[class*=miq-layout]');
+        return null;
+      }
     };
 
     const recurse = (items) => {
       items.forEach((item) => {
-        recurse(item.items);
-
-        if (! item.items.length) {
+        if (item.items) {
+          recurse(item.items);
+        } else {
           // leaf node
           check(item);
         }

@@ -1,9 +1,10 @@
+/* eslint-disable no-undef */
 describe('Toolbar', () => {
   beforeEach(() => {
     cy.login();
   });
 
-  it("click toolbar buttons", () => {
+  it('click toolbar buttons', () => {
     // click a button group button
     //
     // FIXME: Fix .menu so extra call to Overview -> Dashboard is not needed
@@ -19,7 +20,7 @@ describe('Toolbar', () => {
       .toolbar('Refresh');
   });
 
-  it("inspect toolbar buttons", () => {
+  it('inspect toolbar buttons', () => {
     cy.menu('Services', 'Catalogs')
       .accordion('Catalog Items')
       // FIXME: tree helper
