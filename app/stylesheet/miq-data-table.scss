@@ -315,3 +315,41 @@ table.miq_preview {
     min-width: 50px !important;
   }
 }
+.catalogs_form {
+
+  input[type="text"] {
+    width: 220px;
+  }
+
+  .no-padding{
+    padding: 0;
+  }
+
+  .long_text {
+    width: 100% !important;
+  }
+
+  .entry_point_selector {
+    padding: 3px;
+
+    .entry_point_text, .entry_point_button {
+      border-right: 0;
+    }
+
+    span.input-group-addon{
+      visibility: hidden;
+    }
+  }
+  .workflow_modal_wrapper {
+    min-height: 26px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .workflows-entry-point-modal-body {
+    .miq-data-table {
+      margin-top: 0px;
+    }
+  }
+}
+

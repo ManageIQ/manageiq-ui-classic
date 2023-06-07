@@ -149,12 +149,15 @@ describe CatalogController do
         recon_fqname     = 'ns2/cls2/inst2'
         edit = {
           :new          => {
-            :name               => "New Name",
-            :description        => "New Description",
-            :reconfigure_fqname => recon_fqname,
-            :retire_fqname      => retire_fqname,
-            :fqname             => provision_fqname,
-            :tenant_ids         => []
+            :name                         => "New Name",
+            :description                  => "New Description",
+            :reconfigure_fqname           => recon_fqname,
+            :retire_fqname                => retire_fqname,
+            :fqname                       => provision_fqname,
+            :tenant_ids                   => [],
+            :provision_entry_point_type   => "embedded_automate",
+            :reconfigure_entry_point_type => "embedded_automate",
+            :retire_entry_point_type      => "embedded_automate",
           },
           :key          => "prov_edit__new",
           :rec_id       => st.id,
@@ -179,11 +182,15 @@ describe CatalogController do
         recon_fqname     = 'ns2/cls2/inst2'
         edit = {
           :new          => {
-            :name               => 'New Name',
-            :description        => 'New Description',
-            :reconfigure_fqname => recon_fqname,
-            :retire_fqname      => retire_fqname,
-            :fqname             => provision_fqname
+            :name                         => 'New Name',
+            :description                  => 'New Description',
+            :reconfigure_fqname           => recon_fqname,
+            :retire_fqname                => retire_fqname,
+            :fqname                       => provision_fqname,
+            :provision_entry_point_type   => "embedded_automate",
+            :reconfigure_entry_point_type => "embedded_automate",
+            :retire_entry_point_type      => "embedded_automate",
+
           },
           :key          => 'prov_edit__new',
           :rec_id       => st.id,
@@ -520,12 +527,15 @@ describe CatalogController do
         recon_fqname     = 'ns2/cls2/inst2'
         edit = {
           :new => {
-            :name               => "New Name",
-            :description        => "New Description",
-            :dialog_id          => dialog.id,
-            :reconfigure_fqname => recon_fqname,
-            :retire_fqname      => retire_fqname,
-            :fqname             => provision_fqname
+            :name                         => "New Name",
+            :description                  => "New Description",
+            :dialog_id                    => dialog.id,
+            :reconfigure_fqname           => recon_fqname,
+            :retire_fqname                => retire_fqname,
+            :fqname                       => provision_fqname,
+            :provision_entry_point_type   => "embedded_automate",
+            :reconfigure_entry_point_type => "embedded_automate",
+            :retire_entry_point_type      => "embedded_automate",
           },
         }
         controller.instance_variable_set(:@edit, edit)

@@ -954,6 +954,19 @@ window.miqShowAE_Tree = function(typ) {
   return true;
 };
 
+/** Function to open the Workflows dialog box.
+ * Params are set from automation_mixin.rb
+ * fields = :fqname || :retire_fqname || :reconfigure_fqname
+ * key    = 'provision_configuration_script_id' || 'retire_configuration_script_id' || 'configure_configuration_script_id'
+ * type   = 'provision' || 'retire' || 'configure'
+ */
+window.miqShowEmbededdedWorkflowsModal = function(field, key, type) {
+  const url = `/${ManageIQ.controller}/embededded_workflows_modal`;
+  const selected = document.getElementById(key).value;
+  miqJqueryRequest(miqPassFields(url, { field, selected, type }));
+  return true;
+};
+
 // Toggle the user options div in the page header (:onclick from layouts/user_options)
 window.miqChangeGroup = function(id) {
   miqSparkleOn();

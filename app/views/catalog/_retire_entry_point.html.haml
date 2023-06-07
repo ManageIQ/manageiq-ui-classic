@@ -1,0 +1,28 @@
+- edit, edit_new, type, configuration_script_id = entry_point_data(@edit, :retire_fqname)
+- show_selector = workflows_enabled ? true : type.present?
+- if show_selector
+  - url = form_field_change_url(edit)
+  - modal = entry_point_modal_events(type, :retire_fqname)
+  
+  .col-md-10.entry_point_selector{:title => edit_new[:retire_fqname]}
+    .input-group
+      = hidden_field_tag(configuration_script_id, edit_new[configuration_script_id] || nil)
+      = text_field_tag("retire_fqname",
+                        edit_new[:retire_fqname],
+                        :class             => "form-control long_text entry_point_text",
+                        :placeholder       => type&.gsub('_',' ').camelize,
+                        "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+      %span.input-group-btn
+        #retire_fqname_div
+          %button.btn.btn-default.entry_point_button{:onclick => modal[:open],
+                                                     :title   => _('Click to select Retirement Entry Point')}
+            %i.ff.ff-load-balancer
+          %button.btn.btn-default{:id                => "retire_fqname_remove",
+                                  :onclick           => modal[:close],
+                                  :title             => _('Remove this Reconfigure Entry Point'),
+                                  "data-confirm" => _("Are you sure you want to remove this Retirement Entry Point?"),
+                                  :disabled          => edit_new[:retire_fqname].nil?}
+            %i.pficon.pficon-close
+      %span.input-group-addon
+  .col-md-2.entry_point_selector
+    .workflow_modal_wrapper#retire-workflows
