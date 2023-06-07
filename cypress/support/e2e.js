@@ -49,16 +49,16 @@ import './commands/toolbar.js'
 // Assertions
 import './assertions/expect_title.js'
 
-// This is needed to prevent Cypress tests from failing due to the error:
-// Uncaught TypeError: Cannot read properties of undefined (reading 'received')
-//     at push../node_modules/actioncable/lib/assets/compiled/action_cable.js.ActionCable.Subscriptions.Subscriptions.notify (vendor-5d5d9b46ecb6acf021a4.js:280600:45)
-//     at Connection.message (vendor-5d5d9b46ecb6acf021a4.js:280454:43)
-// This error occurs on the dashboard usually the first time ManageIQ loads and is causing the Cypress tests to fail so we need this function to prevent that behaviour
+// This is needed to prevent Cypress tests from failing due to uncaught errors:
+// Undefined errors are occuring on every initial page load of Manage IQ
+// Network and aborted errors are exlusive to firefox when cypress navigates to a new page before the api calls for the last page are fullly loaded
 Cypress.on('uncaught:exception', (err, runnable) => {
-    // returning false here prevents Cypress from
-    // failing the test
     console.log(err.message);
-    if (err.message.includes(`Cannot read properties of undefined (reading 'received')`)) {
+    if (err.message.includes(`Cannot read properties of undefined (reading 'received')`) || // Error handler for Chrome 
+        err.message.includes('subscription is undefined') || // Error handler for Firefox
+        err.message.includes('NetworkError when attempting to fetch resource.') || // Error handler for Firefox
+        err.message.includes('The operation was aborted.')) // Error handler for Firefox
+        {
         return false;
     }
 });
