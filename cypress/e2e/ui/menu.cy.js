@@ -25,7 +25,8 @@ describe('Menu', () => {
       });
 
       it('Utilization', () => {
-        cy.menu('Overview', 'Utilization').expect_explorer_title('Enterprise');
+        cy.menu('Overview', 'Utilization').expect_explorer_title('Enterprise'); // Need to have simulate_queue_worker running to prevent this page from being stuck on loading (leads tot error in Firefox tests)
+        cy.visit('/'); // This line is needed for the Firefox cypress tests to prevent this page from being stuck and throwing errors
       });
 
       describe('Chargeback > ', () => {
