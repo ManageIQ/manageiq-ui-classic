@@ -169,7 +169,7 @@ exports[`Structured list component should render a multilink_list table 1`] = `
   >
     <FeatureToggle(StructuredListWrapper)
       ariaLabel="Structured list"
-      className="miq-structured-list bordered-list multilink_table"
+      className="miq-structured-list multilink_table"
     >
       <FeatureToggle(StructuredListBody)>
         <FeatureToggle(StructuredListRow)
@@ -1712,10 +1712,14 @@ exports[`Structured list component should render a simple_table 1`] = `
     open={true}
     title="Firewall Rules"
   >
-    <NotificationMessage
-      message="No entries found for firewall rules"
-      type="info"
-    />
+    <div
+      className="miq-structured-list-notification"
+    >
+      <NotificationMessage
+        message="No entries found for firewall rules"
+        type="info"
+      />
+    </div>
   </AccordionItem>
 </Accordion>
 `;
@@ -1731,7 +1735,7 @@ exports[`Structured list component should render a simple_table with generic dat
   >
     <FeatureToggle(StructuredListWrapper)
       ariaLabel="Structured list"
-      className="miq-structured-list bordered-list simple_table"
+      className="miq-structured-list simple_table"
     >
       <FeatureToggle(StructuredListBody)>
         <FeatureToggle(StructuredListRow)
@@ -1805,7 +1809,7 @@ exports[`Structured list component should render a simple_table with sortable an
   >
     <FeatureToggle(StructuredListWrapper)
       ariaLabel="Structured list"
-      className="miq-structured-list bordered-list simple_table"
+      className="miq-structured-list simple_table"
     >
       <MiqStructuredListHeader
         headers={
@@ -1967,10 +1971,14 @@ exports[`Structured list component should render a table_list_view table 1`] = `
     open={true}
     title="Tables with the Most Rows"
   >
-    <NotificationMessage
-      message="No entries found for tables with the most rows"
-      type="info"
-    />
+    <div
+      className="miq-structured-list-notification"
+    >
+      <NotificationMessage
+        message="No entries found for tables with the most rows"
+        type="info"
+      />
+    </div>
   </AccordionItem>
 </Accordion>
 `;
@@ -2478,7 +2486,7 @@ exports[`Structured list component should render miq_ae_class_list_view with esc
   >
     <FeatureToggle(StructuredListWrapper)
       ariaLabel="Structured list"
-      className="miq-structured-list bordered-list table_list_view"
+      className="miq-structured-list table_list_view"
     >
       <FeatureToggle(StructuredListBody)>
         <FeatureToggle(StructuredListRow)

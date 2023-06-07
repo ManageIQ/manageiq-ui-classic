@@ -144,18 +144,18 @@ exports[`TableListView renders just fine... 1`] = `
             >
               <FeatureToggle(StructuredListWrapper)
                 ariaLabel="Structured list"
-                className="miq-structured-list bordered-list table_list_view"
+                className="miq-structured-list table_list_view"
               >
                 <StructuredListWrapper
                   ariaLabel="Structured list"
-                  className="miq-structured-list bordered-list table_list_view"
+                  className="miq-structured-list table_list_view"
                   isCondensed={false}
                   isFlush={false}
                   selection={false}
                 >
                   <div
                     aria-label="Structured list"
-                    className="bx--structured-list miq-structured-list bordered-list table_list_view"
+                    className="bx--structured-list miq-structured-list table_list_view"
                     role="table"
                   >
                     <MiqStructuredListHeader
