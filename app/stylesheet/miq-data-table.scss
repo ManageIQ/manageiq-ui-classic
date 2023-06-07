@@ -283,3 +283,73 @@ table.miq_preview {
     width: 135px;
   }
 }
+
+.reconfigure-add-button {
+  margin-bottom: 10px;
+}
+
+.disk-table {
+  .bx--form-item{
+    margin-bottom: 0px !important;
+  }
+}
+
+.header-button {
+  width: 100px !important;
+}
+
+.reconfigure-form {
+  .disk-table-list {
+    .bx--table-header-label {
+      white-space: normal !important;
+    }
+  }
+  .bx--btn--ghost:hover, .bx--btn--ghost:active{
+    background-color: transparent !important;
+  }
+  .bx--btn--ghost:focus {
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+  .bx--btn--ghost span {
+    min-width: 50px !important;
+  }
+}
+.catalogs_form {
+
+  input[type="text"] {
+    width: 220px;
+  }
+
+  .no-padding{
+    padding: 0;
+  }
+
+  .long_text {
+    width: 100% !important;
+  }
+
+  .entry_point_selector {
+    padding: 3px;
+
+    .entry_point_text, .entry_point_button {
+      border-right: 0;
+    }
+
+    span.input-group-addon{
+      visibility: hidden;
+    }
+  }
+  .workflow_modal_wrapper {
+    min-height: 26px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .workflows-entry-point-modal-body {
+    .miq-data-table {
+      margin-top: 0px;
+    }
+  }
+}
+
