@@ -20,76 +20,6 @@ const findSkipSubmits = (schema, items) => {
   return [...found, ...children];
 };
 
-const commonFields = [
-  {
-    component: componentTypes.TEXT_FIELD,
-    id: 'name',
-    name: 'name',
-    label: __('Name'),
-    isRequired: true,
-    validate: [
-      {
-        type: validatorTypes.REQUIRED,
-      },
-      async(value) => validateName('providers', value, false),
-    ],
-  },
-  {
-    component: componentTypes.SELECT,
-    id: 'zone_id',
-    name: 'zone_id',
-    label: __('Zone'),
-    includeEmpty: true,
-    loadOptions: () =>
-      API.get('/api/zones?expand=resources&attributes=id,name,visible&filter[]=visible!=false&sort_by=name')
-        .then(({ resources }) => resources.map(({ id: value, name: label }) => ({ value, label }))),
-    isRequired: true,
-    validate: [{
-      type: validatorTypes.REQUIRED,
-    }],
-  },
-];
-
-const loadProviderFields = (type) => API.options(`/api/providers?type=${type}`).then(
-  ({ data: { provider_form_schema } }) => ([ // eslint-disable-line camelcase
-    ...commonFields,
-    {
-      component: componentTypes.SUB_FORM,
-      id: type,
-      name: type,
-      ...provider_form_schema, // eslint-disable-line camelcase
-    },
-  ]),
-);
-
-const typeSelectField = (edit, filter, setState, providers) => ({
-  component: componentTypes.SELECT,
-  id: 'type',
-  name: 'type',
-  label: __('Type'),
-  kind: filter,
-  isDisabled: edit,
-  isRequired: true,
-  options: providers,
-  onChange: (value) => {
-    if (value !== '-1') {
-      loadProviderFields(value).then((fields) => setState(({ fields: [firstField] }) => ({
-        fields: [firstField, ...fields],
-      })));
-    } else {
-      setState(({ fields: [firstField] }) => ({
-        fields: [firstField,
-          {
-            id: 'networkWarning',
-            component: componentTypes.PLAIN_TEXT,
-            name: 'networkWarning',
-            label: __('Please select a type.'),
-          }],
-      }));
-    }
-  },
-});
-
 const ProviderForm = ({
   providerId, kind, title, redirect,
 }) => {
@@ -97,6 +27,76 @@ const ProviderForm = ({
   const [{ fields, initialValues }, setState] = useState({});
 
   const submitLabel = edit ? __('Save') : __('Add');
+
+  const commonFields = [
+    {
+      component: componentTypes.TEXT_FIELD,
+      id: 'name',
+      name: 'name',
+      label: __('Name'),
+      isRequired: true,
+      validate: [
+        {
+          type: validatorTypes.REQUIRED,
+        },
+        async(value) => validateName('providers', value, edit),
+      ],
+    },
+    {
+      component: componentTypes.SELECT,
+      id: 'zone_id',
+      name: 'zone_id',
+      label: __('Zone'),
+      includeEmpty: true,
+      loadOptions: () =>
+        API.get('/api/zones?expand=resources&attributes=id,name,visible&filter[]=visible!=false&sort_by=name')
+          .then(({ resources }) => resources.map(({ id: value, name: label }) => ({ value, label }))),
+      isRequired: true,
+      validate: [{
+        type: validatorTypes.REQUIRED,
+      }],
+    },
+  ];
+
+  const loadProviderFields = (type) => API.options(`/api/providers?type=${type}`).then(
+    ({ data: { provider_form_schema } }) => ([ // eslint-disable-line camelcase
+      ...commonFields,
+      {
+        component: componentTypes.SUB_FORM,
+        id: type,
+        name: type,
+        ...provider_form_schema, // eslint-disable-line camelcase
+      },
+    ]),
+  );
+
+  const typeSelectField = (edit, filter, setState, providers) => ({
+    component: componentTypes.SELECT,
+    id: 'type',
+    name: 'type',
+    label: __('Type'),
+    kind: filter,
+    isDisabled: edit,
+    isRequired: true,
+    options: providers,
+    onChange: (value) => {
+      if (value !== '-1') {
+        loadProviderFields(value).then((fields) => setState(({ fields: [firstField] }) => ({
+          fields: [firstField, ...fields],
+        })));
+      } else {
+        setState(({ fields: [firstField] }) => ({
+          fields: [firstField,
+            {
+              id: 'networkWarning',
+              component: componentTypes.PLAIN_TEXT,
+              name: 'networkWarning',
+              label: __('Please select a type.'),
+            }],
+        }));
+      }
+    },
+  });
 
   useEffect(() => {
     API.options('/api/providers').then(({ data: { supported_providers } }) => { // eslint-disable-line camelcase
