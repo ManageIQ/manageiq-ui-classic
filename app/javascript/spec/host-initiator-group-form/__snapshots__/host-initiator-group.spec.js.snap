@@ -1359,7 +1359,6 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                                 onBlur={[Function]}
                                                 onChange={[Function]}
                                                 onFocus={[Function]}
-                                                onInputChange={[Function]}
                                                 options={Array []}
                                                 placeholder="<Choose>"
                                                 pluckSingleValue={true}
