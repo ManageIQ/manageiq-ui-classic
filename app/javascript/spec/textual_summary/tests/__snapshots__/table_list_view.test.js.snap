@@ -10,14 +10,8 @@ exports[`TableListView renders just fine... 1`] = `
   }
   headers={
     Array [
-      Object {
-        "key": "name",
-        "label": "Name",
-      },
-      Object {
-        "key": "rows",
-        "label": "Rows",
-      },
+      "Name",
+      "Rows",
     ]
   }
   onClick={[Function]}
@@ -29,7 +23,6 @@ exports[`TableListView renders just fine... 1`] = `
         "explorer": true,
         "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');",
         "name": "vim_performance_states",
-        "rows": "676",
         "title": "vim_performance_states",
         "value": Array [
           "676",
@@ -40,7 +33,6 @@ exports[`TableListView renders just fine... 1`] = `
         "explorer": true,
         "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');",
         "name": "miq_report_result_details",
-        "rows": "280",
         "title": "miq_report_result_details",
         "value": Array [
           "280",
