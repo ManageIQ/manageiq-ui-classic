@@ -42,6 +42,10 @@ describe('Menu', () => {
           cy.menu('Overview', 'Chargeback', 'Assignments').expect_show_list_title('Chargeback Assignments');
         });
       });
+
+      it('Optimization', () => {
+        cy.menu('Overview', 'Optimization').expect_show_list_title('Optimization');
+      });
     });
 
     describe('Services >', () => {
@@ -141,7 +145,7 @@ describe('Menu', () => {
 
       describe('Physical Infrastructure > ', () => {
         it('Overview', () => {
-          // cy.menu('Compute', 'Physical Infrastrucure', 'Overview').expect_show_list_title('');
+          cy.menu('Compute', 'Physical Infrastructure', 'Overview').get('.card-pf-aggregate-status-title');
         });
 
         it('Providers', () => {
@@ -432,7 +436,7 @@ describe('Menu', () => {
       });
 
       it('Simulation', () => {
-        // cy.menu('Control', 'Simulation').expect_show_list_title('');
+        cy.menu('Control', 'Simulation').get('#left_div').contains('Event Selection');
       });
 
       it('Import / Export ', () => {
@@ -451,6 +455,7 @@ describe('Menu', () => {
 
       it('Application Settings', () => {
         cy.menu('Settings', 'Application Settings').get('#control_settings_accord > .panel-title');
+        cy.get('#explorer').contains('Settings Server');
       });
 
       it('Tasks', () => {
