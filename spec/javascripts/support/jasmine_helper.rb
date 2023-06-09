@@ -63,7 +63,7 @@ Jasmine.configure do |config|
   end
 
   # use google-chrome-beta if available, otherwise use the default
-  if system('which google-chrome-beta &>/dev/null')
+  if system('which google-chrome-beta >/dev/null 2>&1')
     config.chrome_binary = 'google-chrome-beta'
   end
 
