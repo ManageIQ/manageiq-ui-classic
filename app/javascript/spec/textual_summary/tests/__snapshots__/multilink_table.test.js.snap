@@ -620,18 +620,18 @@ exports[`MultilinkTable renders just fine 1`] = `
             >
               <FeatureToggle(StructuredListWrapper)
                 ariaLabel="Structured list"
-                className="miq-structured-list bordered-list multilink_table"
+                className="miq-structured-list multilink_table"
               >
                 <StructuredListWrapper
                   ariaLabel="Structured list"
-                  className="miq-structured-list bordered-list multilink_table"
+                  className="miq-structured-list multilink_table"
                   isCondensed={false}
                   isFlush={false}
                   selection={false}
                 >
                   <div
                     aria-label="Structured list"
-                    className="bx--structured-list miq-structured-list bordered-list multilink_table"
+                    className="bx--structured-list miq-structured-list multilink_table"
                     role="table"
                   >
                     <FeatureToggle(StructuredListBody)>
