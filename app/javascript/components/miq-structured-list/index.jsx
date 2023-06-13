@@ -25,10 +25,6 @@ const MiqStructuredList = ({
 }) => {
   const clickEvents = hasClickEvents(mode);
 
-  const borderedList = ['simple_table', 'multilink_table', 'table_list_view'];
-
-  const hasBorder = borderedList.includes(mode);
-
   /** Function to render an icon in the cell. */
   const renderIcon = (row) => (
     <div className={classNames('cell icon', row.background ? 'backgrounded-icon' : '')} title={row.title}>
@@ -243,29 +239,28 @@ const MiqStructuredList = ({
   const renderNotification = () => {
     const noticeMessage = message || sprintf(__('No entries found for %s'), title.toLowerCase());
     return (
-      <NotificationMessage type="info" message={noticeMessage} />
+      <div className="miq-structured-list-notification">
+        <NotificationMessage type="info" message={noticeMessage} />
+      </div>
     );
   };
 
   /** Function to render the structured list. */
-  const renderList = (mode, headers, list) => {
-    const border = hasBorder ? 'bordered-list' : '';
-    return (
-      <StructuredListWrapper
-        ariaLabel="Structured list"
-        className={classNames('miq-structured-list', border, mode)}
-      >
+  const renderList = (mode, headers, list) => (
+    <StructuredListWrapper
+      ariaLabel="Structured list"
+      className={classNames('miq-structured-list', mode)}
+    >
+      {
+        headers && headers.length > 0 && <MiqStructuredListHeader headers={headers} />
+      }
+      <StructuredListBody>
         {
-          headers && headers.length > 0 && <MiqStructuredListHeader headers={headers} />
+          list && list.length > 0 && list.map((row, index) => renderRow(row, index))
         }
-        <StructuredListBody>
-          {
-            list && list.length > 0 && list.map((row, index) => renderRow(row, index))
-          }
-        </StructuredListBody>
-      </StructuredListWrapper>
-    );
-  };
+      </StructuredListBody>
+    </StructuredListWrapper>
+  );
 
   const simpleList = () => (list && list.length > 0
     ? renderList(mode, headers, list)
