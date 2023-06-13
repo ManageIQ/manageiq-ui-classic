@@ -120,7 +120,7 @@ export const getLineConvertedData = (data) => {
       const obj = {};
       if (i !== 0 && rowsData[items[0]]) {
         obj.group = rowsData[items[0]];
-        obj.key = parseInt(dataGroups[i - 1], 10);
+        obj.key = new Date(dataGroups[i - 1]);
         obj.value = item;
         arr.push(obj);
       }
