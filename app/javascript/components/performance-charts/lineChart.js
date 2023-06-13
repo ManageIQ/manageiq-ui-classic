@@ -11,7 +11,7 @@ const LineChartGraph = ({
     axes: {
       bottom: {
         mapsTo: 'key',
-        scaleType: 'linear',
+        scaleType: 'time',
       },
       left: {
         mapsTo: 'value',
