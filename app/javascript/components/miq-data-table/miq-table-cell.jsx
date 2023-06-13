@@ -12,8 +12,18 @@ import {
 const MiqTableCell = ({
   cell, onCellClick, row, truncate,
 }) => {
-  const truncateText = <span title={cell.value} className="bx--front-line">{cell.value}</span>;
-  const truncateClass = ((cell.value).length > 40) && truncate ? 'truncate_cell' : '';
+  const longText = truncate && ((cell.value).length > 40);
+  const veryLongText = truncate && ((cell.value).length > 300);
+
+  const truncateClass = longText ? 'truncate_cell' : '';
+  const wrapClass = longText ? 'white_space_normal' : '';
+  const longerTextClass = veryLongText ? 'truncate_longer_text' : '';
+
+  const truncateText = (
+    <span title={cell.value} className={classNames('bx--front-line', wrapClass, longerTextClass)}>
+      {cell.value}
+    </span>
+  );
   const cellClass = classNames('cell', truncateClass, cell.data.style_class);
   const cellText = () => (
     <div className={cellClass}>
@@ -60,16 +70,21 @@ const MiqTableCell = ({
   };
 
   /** Fuction to render icon(s) in cell. */
-  const renderIcon = (icon, style, showText) => (
-    <div className={cellClass}>
-      {
-        typeof (icon) === 'string'
-          ? <i className={classNames('fa-lg', 'icon', icon)} style={style} />
-          : icon.map((i, index) => <i className={classNames('fa-lg', 'icon', i)} key={index.toString()} />)
-      }
-      {showText && truncateText}
-    </div>
-  );
+  const renderIcon = (icon, style, showText) => {
+    const hasBackground = Object.keys(style).includes('background');
+    const styledIconClass = hasBackground ? 'styled_icon' : '';
+    const longerTextClass = hasBackground && veryLongText ? 'styled_icon_margin' : '';
+    return (
+      <div className={cellClass}>
+        {
+          typeof (icon) === 'string'
+            ? <i className={classNames('fa-lg', 'icon', icon, styledIconClass, longerTextClass)} style={style} />
+            : icon.map((i, index) => <i className={classNames('fa-lg', 'icon', i)} key={index.toString()} />)
+        }
+        {showText && truncateText}
+      </div>
+    );
+  };
 
   /** Fuction to render an icon in cell based on the 'type' in 'item'. */
   const cellIcon = (item, showText) => {
@@ -101,9 +116,9 @@ const MiqTableCell = ({
   const cellButton = (item) => (
     <div className={cellClass}>
       <Button
-        onClick={(e) => cellButtonEvent(item,e)}
+        onClick={(e) => cellButtonEvent(item, e)}
         disabled={item.disabled}
-        onKeyPress={(e) => cellButtonEvent(item,e)}
+        onKeyPress={(e) => cellButtonEvent(item, e)}
         tabIndex={0}
         title={item.title ? item.title : truncateText}
         kind={item.kind ? item.kind : 'primary'}
@@ -115,7 +130,6 @@ const MiqTableCell = ({
   );
 
   /** Function to render a Text Box inside cell. */
-  /* eslint-disable no-eval */
   const cellTextInput = (item, id) => (
     <div className={cellClass}>
       <TextInput
@@ -136,7 +150,6 @@ const MiqTableCell = ({
   );
 
   /** Function to render a Toggle inside cell. */
-  /* eslint-disable no-eval */
   const cellToggle = (item, id) => (
     <div className={cellClass}>
       <Toggle
@@ -153,12 +166,9 @@ const MiqTableCell = ({
   );
 
   /** Function to render a Link inside cell. */
-  /* eslint-disable no-eval */
-  const cellLink = (item, id) => (
+  const cellLink = (item, _id) => (
     <div className={cellClass}>
-      <Link
-        href={item.href}
-      >
+      <Link href={item.href}>
         {item.label}
       </Link>
     </div>
