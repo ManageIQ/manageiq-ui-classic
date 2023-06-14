@@ -27,17 +27,16 @@ class InfraNetworkingController < ApplicationController
     @lastaction = "showlist"
     @center_toolbar = 'infra_networkings'
     process_show_list(:dbname => :switch, :gtl_dbname => :switch, :named_scope => :shareable)
-    render :layout => "application"
   end
 
-  alias_method :index, :show_list
+  # alias_method :index, :show_list
 
   def tagging_explorer_controller?
     @explorer
   end
 
   def show_searchbar?
-    @record.nil? ? true : false
+    @record.nil?
   end
 
   def display_back_button?
@@ -123,24 +122,24 @@ class InfraNetworkingController < ApplicationController
     @center_toolbar = 'infra_networking'
   end
 
-  def explorer
-    @explorer = true
-    @lastaction = "explorer"
+  # def explorer
+  #   @explorer = true
+  #   @lastaction = "explorer"
 
-    build_accordions_and_trees
-    @in_a_form = false
+  #   build_accordions_and_trees
+  #   @in_a_form = false
 
-    render :layout => "application"
-  end
+  #   render :layout => "application"
+  # end
 
-  def index
-    @lastaction = "index"
+  # def index
+  #   @lastaction = "index"
 
-    build_accordions_and_trees
-    @in_a_form = false
+  #   build_accordions_and_trees
+  #   @in_a_form = false
 
-    render :layout => "application"
-  end
+  #   render :layout => "application"
+  # end
 
   def tagging
     assert_privileges("infra_networking_tag")
@@ -174,6 +173,28 @@ class InfraNetworkingController < ApplicationController
   def download_summary_pdf
     assert_privileges('infra_networking_view')
     super
+  end
+
+  def hosts
+    db = params[:db] || controller_name
+    db = 'switch' if db == 'infra_networking'
+    # binding.pry
+    return unless init_show_variables(db)
+
+    @lastaction = "hosts"
+    id = params[:show] || params[:x_show]
+    if id.present?
+      # binding.pry
+      @item = @record.hosts.find(id)
+      item_breadcrumbs(_("Hosts"), 'hosts')
+      @view = get_db_view(Host)
+      show_item
+    else
+      # binding.pry
+      drop_breadcrumb(:name => _("%{name} (Hosts)") % {:name => @record.name},
+                      :url  => "/#{controller_name}/hosts/#{@record.id}")
+      show_details(Host, :association => "hosts")
+    end
   end
 
   private
@@ -479,10 +500,9 @@ class InfraNetworkingController < ApplicationController
                              :conditions  => conditions,
                              :clickable   => clickable,
                              :dbname      => "#{@db}item") # Get the records into a view & paginator
-
-    if @explorer # In explorer?
-      @refresh_partial = @showtype.to_s
-      replace_right_cell
+    # binding.pry
+    if association == 'hosts' # In explorer?
+      render "hosts"
     elsif request.xml_http_request?
       render :update do |page|
         page << javascript_prologue

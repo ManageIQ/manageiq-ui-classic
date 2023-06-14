@@ -97,7 +97,7 @@ module Menu
           Menu::Item.new('resource_pool',     N_('Resource Pools'),    'resource_pool',              {:feature => 'resource_pool_show_list'},         '/resource_pool/show_list'),
           Menu::Item.new('storage',           N_('Datastores'),        'storage',                    {:feature => 'storage_show_list'},               '/storage/explorer'),
           Menu::Item.new('pxe',               N_('PXE'),               'pxe',                        {:feature => 'pxe', :any => true},               '/pxe/explorer'),
-          Menu::Item.new('switch',            N_('Networking'),        'infra_networking',           {:feature => 'infra_networking', :any => true},  '/infra_networking/explorer'),
+          Menu::Item.new('switch',            N_('Networking'),        'infra_networking',           {:feature => 'infra_networking', :any => true},  '/infra_networking/show_list'),
         ])
       end
 
