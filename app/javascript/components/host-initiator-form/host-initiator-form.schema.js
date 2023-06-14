@@ -24,8 +24,11 @@ const loadStorages = (id) => API.get(`/api/providers/${id}?attributes=type,physi
 const loadGroups = (id) => API.get(`/api/physical_storages/${id}?attributes=host_initiator_groups`)
   // eslint-disable-next-line camelcase
   .then(({ host_initiator_groups }) => {
-    const groupOptions = host_initiator_groups.map(({ id, name }) => ({ label: name, value: id }));
-    groupOptions.unshift({ label: `<${__('None')}>`, value: '' });
+    const groupOptions = host_initiator_groups.map(({ name }) => ({ label: name, value: name }));
+    groupOptions.unshift(
+      { label: `<${__('Choose')}>`, value: '-1' },
+      { label: `<${__('None')}>`, value: 'none' }
+    );
     return groupOptions;
   });
 
@@ -284,9 +287,11 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
         name: 'host_initiator_group',
         label: __('Host Initiator Group:'),
         isRequired: true,
-        validate: [{ type: validatorTypes.REQUIRED }],
+        validate: [
+          { type: validatorTypes.REQUIRED },
+          { type: validatorTypes.PATTERN, pattern: '^(?!-)', message: __('Required') },
+        ],
         loadOptions: () => (storageId ? loadGroups(storageId) : Promise.resolve([])),
-        isSearchable: true,
         condition: { and: [{ when: 'physical_storage_id', isNotEmpty: true }, { when: 'port_type', isNotEmpty: true }] },
       },
     ],
