@@ -6,7 +6,6 @@ const secondary = 'div[role="presentation"] > .bx--side-nav__items';
 // cy.menu('Compute', 'Infrastructure', 'VMs') - navigate the main menu
 Cypress.Commands.add('menu', (...items) => {
   expect(items.length).to.be.within(1, 3);
-
   let ret = cy.get(`${primary} > ul > li`)
     .contains('a > span', items[0])
     .click();
@@ -18,16 +17,26 @@ Cypress.Commands.add('menu', (...items) => {
   }
 
   if (items.length === 3) {
-    ret = cy.get(`${secondary} > li`)
-      .contains('.bx--side-nav__submenu', items[1])
-      .click()
-      .parent()
-      .contains('a > span', items[2])
-      .click();
+    cy.get('div[role="presentation"] > .bx--side-nav__items').then((a) => {
+      const subMenuIndices = [...Array(a.children().length).keys()];
+      subMenuIndices.forEach((index) => { // Loop through second layer menu items
+        if (a.children()[index].children[0].innerText === items[1]) { // Check if current second layer menu item is the one we want
+          if (a.children()[index].className.includes('item--active')) { // Check if third layer menu is already open
+            cy.get(a.children()[index]).contains('a > span', items[2]).click();
+          } else { // If third layer menu is not already open then we need to open it
+            ret = cy.get(`${secondary} > li`)
+              .contains('.bx--side-nav__submenu', items[1])
+              .click()
+              .parent()
+              .contains('a > span', items[2])
+              .click();
+          }
+        }
+      });
+    });
   }
 
   return ret;
-  // TODO support by id: cy.get('li[id=menu_item_provider_foreman]').click({ force: true });
 });
 
 // cy.menuItems() - returns an array of top level menu items with {title, href, items (array of children)}
