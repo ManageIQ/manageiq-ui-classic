@@ -19,7 +19,7 @@
             = javascript_tag(javascript_focus('name'))
         .form-group
           %label.col-md-4.control-label
-            = _('Access Restriction for Catalog Items, Orchestration Stacks, Key Pairs, Services, VMs, and Templates')
+            = _('Access Restriction for Orchestration Stacks, Key Pairs, Services, VMs, and Templates')
           .col-md-8
             - restrictions = MiqUserRole::RESTRICTIONS.map { |k, v| [_(v), k] }.sort_by { |name, _value| name.downcase }
             = select_tag('vm_restriction',
@@ -29,6 +29,18 @@
           :javascript
             miqInitSelectPicker();
             miqSelectPickerEvent('vm_restriction', "#{url}")
+        .form-group
+          %label.col-md-4.control-label
+            = _('Access Restriction for Catalog Items')
+          .col-md-8
+            - restrictions = MiqUserRole::RESTRICTIONS.map { |k, v| [_(v), k] }.sort_by { |name, _value| name.downcase }
+            = select_tag('service_template_restriction',
+                          options_for_select([[_("None"), "none"]] + restrictions,
+                          @edit[:new][:service_template_restriction].to_sym),
+                          :class => "selectpicker")
+          :javascript
+            miqInitSelectPicker();
+            miqSelectPickerEvent('service_template_restriction', "#{url}")
     .col-md-12.col-lg-6
       %hr
         = _("Product Features (Editing)")
