@@ -57,11 +57,12 @@
 
     .cell {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: flex-start;
 
       &.truncate_cell {
-        max-width: 250px;
+        max-width: 700px;
+        min-width: 150px;
       }
 
       .array_list {
@@ -75,9 +76,10 @@
       }
 
       .image {
-        width: 30px;
-        height: 30px;
-        margin-right: 5px;
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+        margin-top: 4px;
       }
 
       .icon {
@@ -85,8 +87,21 @@
         height: 30px;
         display: flex;
         align-items: center;
-        justify-content: center;
-        margin-right: 5px;
+        justify-content: flex-start;
+        margin-top: 0;
+
+        &.styled_icon {
+          min-width: 20px;
+          height: 20px;
+          justify-content: center;
+          margin-right: 5px;
+          margin-top: 5px;
+          font-size: 14px;
+        }
+
+        &.styled_icon_margin {
+          margin-top: 9px;
+        }
       }
 
       .icon.fa-ruby {
@@ -113,16 +128,39 @@
       }
     }
 
+    td {
+      vertical-align: top;
+    }
+
     td.no_text {
       width: 50px;
+    }
+
+    td .bx--checkbox--inline {
+      margin-top: 4px;
     }
 
     td .bx--front-line {
       width: 100%;
       display: inline-block;
-      text-overflow: ellipsis;
-      white-space: nowrap;
       overflow: hidden;
+      white-space: nowrap;
+      margin-top: 5px;
+
+      &.white_space_normal {
+        white-space: normal !important;
+        text-align: justify;
+      }
+
+      &.truncate_longer_text {
+        max-height: 300px;
+        display: -webkit-box;
+        max-width: 200px;
+        -webkit-line-clamp: 15;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 8px;
+      }
     }
   }
 }
@@ -186,6 +224,8 @@
     }
 
     thead tr th {  
+      vertical-align: middle;
+
       .bx--table-header-label {
         min-width: fit-content;
       }
