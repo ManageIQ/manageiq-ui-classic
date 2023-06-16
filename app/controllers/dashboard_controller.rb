@@ -622,11 +622,19 @@ class DashboardController < ApplicationController
   end
 
   def breadcrumbs_options
-    {
-      :breadcrumbs => [
-        {:title => _("Overview")},
-        {:title => (action_name == "show" ? _("Dashboard") : _("Timelines"))},
-      ],
-    }
+    if action_name == "auth_error"
+      {
+        :breadcrumbs => [
+          {:title => _("Authorization Error")}
+        ]
+      }
+    else
+      {
+        :breadcrumbs => [
+          {:title => _("Overview")},
+          {:title => (action_name == "show" ? _("Dashboard") : _("Timelines"))},
+        ]
+      }
+    end
   end
 end
