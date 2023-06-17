@@ -42,6 +42,7 @@
   thead tr th {
     &.bx--table-column-checkbox {
       min-width: 45px;
+      vertical-align: middle;
     }
 
     .bx--table-header-label {
@@ -59,6 +60,11 @@
       display: flex;
       align-items: flex-start;
       justify-content: flex-start;
+
+      &.vertical_align_top {
+        vertical-align: top;
+        align-items: flex-start;
+      }
 
       &.truncate_cell {
         max-width: 700px;
@@ -79,23 +85,25 @@
         width: 20px;
         height: 20px;
         margin-right: 8px;
-        margin-top: 4px;
+        margin-top: 2px;
       }
 
       .icon {
         min-width: 30px;
+        max-height: 30px;
         height: 30px;
+        max-height: 30px;
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        margin-top: 0;
+        margin-top: -2px;
 
         &.styled_icon {
           min-width: 20px;
           height: 20px;
           justify-content: center;
           margin-right: 5px;
-          margin-top: 5px;
+          margin-top: 2px;
           font-size: 14px;
         }
 
@@ -130,14 +138,11 @@
 
     td {
       vertical-align: top;
+      padding-top: 10px;
     }
 
     td.no_text {
       width: 50px;
-    }
-
-    td .bx--checkbox--inline {
-      margin-top: 4px;
     }
 
     td .bx--front-line {
@@ -145,11 +150,12 @@
       display: inline-block;
       overflow: hidden;
       white-space: nowrap;
-      margin-top: 5px;
+      margin-top: 3px;
 
       &.white_space_normal {
         white-space: normal !important;
         text-align: justify;
+        margin-bottom: 10px;
       }
 
       &.truncate_longer_text {
