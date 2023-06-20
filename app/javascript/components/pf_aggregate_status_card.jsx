@@ -31,7 +31,7 @@ const PfAggregateStatusCard = ({
       </h2>
       <div className="card-pf-body">
         <div className="card-pf-aggregate-status-notifications">
-          { (data.notifications && data.notifications[0].dataAvailable === false) ? (
+          { (data.notifications && data.notifications[0] && data.notifications[0].dataAvailable === false) ? (
             <div className="empty-chart-contents">
               <span className="pficon pficon-info" />
               {' '}
@@ -56,7 +56,7 @@ const PfAggregateStatusCard = ({
               </span>
             ))) }
 
-          { (data.notifications && data.notifications[0].iconClass) && (
+          { (data.notifications && data.notifications[0] && data.notifications[0].iconClass) && (
             <>
               <span className={data.notifications[0].iconClass} />
 
