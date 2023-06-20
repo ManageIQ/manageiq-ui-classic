@@ -211,7 +211,8 @@ module Menu
         if Settings.prototype.ems_workflows.enabled
           Menu::Section.new(:embedded_workflow_automation_manager, N_("Embedded Workflows"), nil, [
             Menu::Item.new('embedded_workflow',            N_('Workflows'),    'embedded_workflow',            {:feature => 'embedded_configuration_script_payload_view', :any => true}, '/workflow/show_list'),
-            Menu::Item.new('embedded_workflow_repository', N_('Repositories'), 'embedded_workflow_repository', {:feature => 'embedded_configuration_script_source_view',  :any => true}, '/workflow_repository/show_list')
+            Menu::Item.new('embedded_workflow_repository', N_('Repositories'), 'embedded_workflow_repository', {:feature => 'embedded_configuration_script_source_view',  :any => true}, '/workflow_repository/show_list'),
+            Menu::Item.new('embedded_workflow_credentials', N_('Credentials'), 'embedded_workflow_credentials', {:feature => 'embedded_configuration_script_source_view', :any => true}, '/workflow_credential/show_list')
           ])
         end
       end
