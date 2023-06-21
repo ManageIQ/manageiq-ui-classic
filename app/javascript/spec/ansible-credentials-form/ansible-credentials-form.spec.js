@@ -12,7 +12,7 @@ describe('Ansible Credential Form Component', () => {
     data: {
       credential_types: {
         embedded_ansible_credential_types: {
-          foo: {
+          'ManageIQ::Providers::EmbeddedAnsible::AutomationManager::foo': {
             attributes: [
               {
                 component: 'text-field',
@@ -35,12 +35,12 @@ describe('Ansible Credential Form Component', () => {
   };
 
   beforeEach(() => {
-    fetchMock.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager', { 
-        "resources": [
-            {
-              "href": "http://localhost:3000/api/providers/1"
-            }
-        ],
+    fetchMock.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager', {
+      resources: [
+        {
+          href: 'http://localhost:3000/api/providers/1',
+        },
+      ],
     });
   });
 
@@ -64,7 +64,7 @@ describe('Ansible Credential Form Component', () => {
 
   it('should render editing a credential', async(done) => {
     fetchMock.once('/api/authentications', api);
-    fetchMock.get('/api/authentications/1', { userid: 'test', type: 'foo' });
+    fetchMock.get('/api/authentications/1', { userid: 'test', type: 'ManageIQ::Providers::EmbeddedAnsible::AutomationManager::foo' });
     let wrapper;
 
     await act(async() => {

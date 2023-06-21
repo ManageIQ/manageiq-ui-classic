@@ -48,7 +48,8 @@ const createSchema = (fields, promise, edit, loadSchema) => ({
               credential_types: { embedded_ansible_credential_types },
             },
           }) =>
-            Object.keys(embedded_ansible_credential_types).map((key) => ({
+            Object.keys(embedded_ansible_credential_types).filter((key) =>
+              key.includes('ManageIQ::Providers::EmbeddedAnsible::AutomationManager')).map((key) => ({
               value: key,
               label: __(embedded_ansible_credential_types[key].label),
             })),
