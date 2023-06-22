@@ -1084,6 +1084,7 @@ module ApplicationHelper
                              manageiq/providers/embedded_ansible/automation_manager/playbook
                              manageiq/providers/embedded_automation_manager/authentication
                              manageiq/providers/embedded_automation_manager/configuration_script_source
+                             manageiq/providers/workflows/automation_manager/workflow
                              miq_schedule
                              miq_template
                              network_port

@@ -3182,12 +3182,20 @@ Rails.application.routes.draw do
                snap_post
     },
 
-
     :workflow => {
-      :get => %w(
-        show_list
+      :get => %w[
+        download_data
+        download_summary_pdf
         show
-      ),
+        show_list
+        tagging_edit
+      ],
+      :post => %w[
+        search_clear
+        button
+        show_list
+        tagging_edit
+      ]
     },
 
     :workflow_repository => {
