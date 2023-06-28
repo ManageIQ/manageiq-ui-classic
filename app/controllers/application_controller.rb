@@ -1889,7 +1889,7 @@ class ApplicationController < ActionController::Base
       "vm"
     when "generic_object_definition" # tagging for nested list on the generic object class
       "generic_object"
-    when "ansible_playbook"
+    when "ansible_playbook", "workflow"
       "embedded_configuration_script_payload"
     else
       controller_name
