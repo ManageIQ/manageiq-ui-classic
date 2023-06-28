@@ -31,4 +31,18 @@ ManageIQ.angular.app.service('DialogEditorHttp', ['$http', 'API', function($http
                         '?expand=resources' +
                         '&attributes=id,name,description,single_value,children');
   };
+
+  /** Function to load all available workflows when 'Embedded Workflow' is selected for dynamic field. */
+  this.loadAvailableWorkflows = () => {
+    const url = '/api/configuration_script_payloads/?expand=resources';
+    return API.get(url);
+  };
+
+  /** Function to load a workflow with the provided 'id' */
+  this.loadWorkflow = (id) => {
+    const url = `/api/configuration_script_payloads/${id}`;
+    return API.get(url)
+      .then((response) => ({ data: response, status: true }))
+      .catch((error) => ({ data: error, status: false }));
+  };
 }]);

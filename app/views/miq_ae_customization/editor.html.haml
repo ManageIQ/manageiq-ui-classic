@@ -29,7 +29,10 @@
                   'on-click' => "vm.dismissChanges()"}
 
 :javascript
-  ManageIQ.angular.app.value('dialogIdAction', '#{ dialog_id_action.to_json }');
+  ManageIQ.angular.app.value('dialogIdAction', '#{dialog_id_action.to_json}');
+  ManageIQ.angular.app.value('automationKeys', '#{editor_automation_types}');
+  ManageIQ.angular.app.value('emsWorkflowsEnabled', '#{Settings.prototype.ems_workflows.enabled}');
+
   miq_bootstrap('#dialog-editor');
   // Fixes wrong coordinates of draggable element after scrolling in #main-content.
   // To be selected as scrollParent it cannot have position: static(default setting of #main-content) so it's overridden here

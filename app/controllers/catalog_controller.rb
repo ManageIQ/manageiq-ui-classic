@@ -2,6 +2,7 @@ class CatalogController < ApplicationController
   include AutomateTreeHelper
   include Mixins::ServiceDialogCreationMixin
   include Mixins::BreadcrumbsMixin
+  include Mixins::AutomationMixin
 
   before_action :check_privileges
   before_action :get_session_data
