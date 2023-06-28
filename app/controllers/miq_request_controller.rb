@@ -321,7 +321,7 @@ class MiqRequestController < ApplicationController
       show
       render :update do |page|
         page << javascript_prologue
-        page.replace("request_div", :partial => "miq_request/request")
+        page.replace("main_div", :template => "miq_request/show")
         page << javascript_reload_toolbars
       end
     elsif @display == "miq_provisions"
