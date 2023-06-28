@@ -1453,6 +1453,7 @@ VolumeMappingController:
 WorkflowController:
 - report_data
 - index
+- search_clear
 WorkflowCredentialController:
 - report_data
 - index
