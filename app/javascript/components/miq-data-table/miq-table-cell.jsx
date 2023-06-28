@@ -17,6 +17,7 @@ const MiqTableCell = ({
 
   const truncateClass = longText ? 'truncate_cell' : '';
   const wrapClass = longText ? 'white_space_normal' : '';
+  const alignClass = longText ? 'vertical_align_top' : '';
   const longerTextClass = veryLongText ? 'truncate_longer_text' : '';
 
   const truncateText = (
@@ -24,7 +25,7 @@ const MiqTableCell = ({
       {cell.value}
     </span>
   );
-  const cellClass = classNames('cell', truncateClass, cell.data.style_class);
+  const cellClass = classNames('cell', truncateClass, alignClass, cell.data.style_class);
   const cellText = () => (
     <div className={cellClass}>
       {truncateText}
@@ -207,7 +208,7 @@ const MiqTableCell = ({
     <TableCell
       key={cell.id}
       onClick={(event) => cellClick && onCellClick(row, CellAction.itemClick, event)}
-      className={classNames(showText ? '' : 'no_text')}
+      className={classNames(showText ? '' : 'no_text', wrapClass ? 'vertical_align_top' : '')}
     >
       {component}
     </TableCell>
