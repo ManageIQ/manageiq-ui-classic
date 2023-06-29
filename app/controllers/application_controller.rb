@@ -1891,6 +1891,8 @@ class ApplicationController < ActionController::Base
       "generic_object"
     when "ansible_playbook", "workflow"
       "embedded_configuration_script_payload"
+    when "workflow_repository"
+      "ansible_repository"
     else
       controller_name
     end
