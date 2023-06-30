@@ -36,7 +36,7 @@ const GetCompliantResources = ({ ...props }) => {
       })
       .then((result) => (result.task_results.compliant_resources.length
         ? resolve(getResourceNames(result.task_results.compliant_resources))
-        : reject(noCompliantMsg)))
+        : resolve(noCompliantMsg)))
       .catch(({ message }) => reject([__('compliance check failed:'), message].join(' ')));
   });
 
