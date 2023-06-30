@@ -1,3 +1,7 @@
 .dynamic-radio-label {
   padding: 0 3px;
 }
+
+.bootstrap-select.btn-group.bs-container .dropdown-menu {
+  z-index: 8001;
+}
