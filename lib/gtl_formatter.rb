@@ -177,9 +177,19 @@ class GtlFormatter
     "svg/os-#{item.os_image_name}.svg"
   end
 
+  def self.item_provider(item)
+    type = item.class.to_s.split('::').last
+    case type
+    when 'ResourcePool', 'Container'
+      item.ext_management_system.decorate
+    else
+      item.decorate
+    end
+  end
+
   def self.fonticon_or_fileicon(item)
     return nil unless item
-    decorated = item.decorate
+    decorated = item_provider(item)
     [
       decorated.try(:fonticon),
       decorated.try(:secondary_icon),
