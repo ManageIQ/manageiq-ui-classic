@@ -61,7 +61,7 @@ const createSchema = (allTasks, zones, users, timePeriods, taskStates) => ({
           id: 'taskStatus',
           name: 'taskStatus',
           label: __('Task Status'),
-          initialValue: ['queued', 'running', 'completed_ok', 'completed_error', 'completed_warn'],
+          initialValue: [],
           isRequired: true,
           validate: [{
             type: validatorTypes.REQUIRED,

@@ -14,7 +14,7 @@ const SettingsTasksForm = ({
 
   const loadDefaultTable = () => {
     const values = {
-      zone: 'all', timePeriod: '0', taskStatus: 'Queued,Running,Ok,Error,Warn', taskState: 'all', user: 'all',
+      zone: 'all', timePeriod: '0', taskStatus: [], taskState: 'all', user: 'all',
     };
     if (allTasks) {
       loadTable(values, tz, users);

@@ -103,13 +103,7 @@ exports[`VM common form component should render all tasks form 1`] = `
               Object {
                 "component": "checkbox",
                 "id": "taskStatus",
-                "initialValue": Array [
-                  "queued",
-                  "running",
-                  "completed_ok",
-                  "completed_error",
-                  "completed_warn",
-                ],
+                "initialValue": Array [],
                 "isRequired": true,
                 "label": "Task Status",
                 "name": "taskStatus",
@@ -264,13 +258,7 @@ exports[`VM common form component should render my tasks form 1`] = `
               Object {
                 "component": "checkbox",
                 "id": "taskStatus",
-                "initialValue": Array [
-                  "queued",
-                  "running",
-                  "completed_ok",
-                  "completed_error",
-                  "completed_warn",
-                ],
+                "initialValue": Array [],
                 "isRequired": true,
                 "label": "Task Status",
                 "name": "taskStatus",
