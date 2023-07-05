@@ -25,7 +25,7 @@ class ApplicationHelper::Toolbar::AnsibleRepositoryCenter < ApplicationHelper::T
           :url     => "repository_refresh",
           :confirm => N_("Refresh this Repository?"),
           :enabled => true,
-          :onwhen  => "1"),
+        ),
         separator,
         button(
           :embedded_configuration_script_source_edit,
