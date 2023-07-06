@@ -45,14 +45,12 @@ const loadTable = (values, tz, users) => {
     );
   }
   if (typeof taskStatus !== 'string') {
-    if (taskStatus.length !== 5) {
-      filters.push(
-        [
-          'with_status_in',
-          ...taskStatus,
-        ],
-      );
-    }
+    filters.push(
+      [
+        'with_status_in',
+        ...taskStatus,
+      ],
+    );
   }
   if (taskState !== 'all') {
     filters.push(
