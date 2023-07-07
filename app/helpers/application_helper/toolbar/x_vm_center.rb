@@ -1,4 +1,13 @@
 class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
+  button_group('vm_reload', [
+    button(
+      :vms_reload,
+      'fa fa-refresh fa-lg',
+      N_('Refresh this page'),
+      nil,
+      :url   => "reload",
+      :klass => ApplicationHelper::Button::Reload)
+  ])
   button_group('vm_vmdb', [
     select(
       :vm_vmdb_choice,
