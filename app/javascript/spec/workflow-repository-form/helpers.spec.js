@@ -13,9 +13,9 @@ const TESTCASES = [ // Example Cases
 ];
 
 describe('Helpers', () => {
-  for (const test of TESTCASES) {
-    it('customUrlValidator '+ test[0] , () => {
+  TESTCASES.forEach((test) => {
+    it(`customUrlValidator ${test[0]}`, () => {
       expect(customUrlValidator(test[0])).toEqual(test[1]);
     });
-  }
+  });
 });

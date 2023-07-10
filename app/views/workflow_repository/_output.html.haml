@@ -1,0 +1,5 @@
+- if @record.last_update_error.nil?
+  = _('No output for the last refresh.')
+- else
+  %pre
+    = @record.last_update_error

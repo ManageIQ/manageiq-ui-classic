@@ -1,9 +1,9 @@
 import { componentTypes, validatorTypes } from '@@ddf';
-import { customUrlValidator } from '../workflow-repository-form/helpers';
+import { customUrlValidator } from './helpers';
 
 const getCredentials = () => API.get(
   // eslint-disable-next-line max-len
-  '/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ScmCredential&expand=resources&sort_by=name&sort_order=ascending'
+  '/api/authentications?collection_class=ManageIQ::Providers::Workflows::AutomationManager::ScmCredential&expand=resources&sort_by=name&sort_order=ascending'
 ).then(({ resources }) => resources.map(({
   id, name,
 }) => ({
@@ -39,10 +39,11 @@ function createSchema(repositoryId) {
       id: 'scm_url',
       name: 'scm_url',
       isRequired: true,
-      validate: [ 
-        (value) => (customUrlValidator(value) ?
-        undefined :
-        'URL must include a protocol (http://, https:// or file://) with path or be a valid SSH path (user@server:path or ssh://user@address:port/path)' )
+      validate: [
+        (value) => (customUrlValidator(value)
+          ? undefined
+          // eslint-disable-next-line max-len
+          : 'URL must include a protocol (http://, https:// or file://) with path or be a valid SSH path (user@server:path or ssh://user@address:port/path)'),
       ],
     },
     {
