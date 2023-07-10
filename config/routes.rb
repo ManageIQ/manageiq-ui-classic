@@ -3199,10 +3199,23 @@ Rails.application.routes.draw do
     },
 
     :workflow_repository => {
-      :get => %w(
-        show_list
+      :get => %w[
+        download_data
+        download_summary_pdf
+        edit
+        new
         show
-      ),
+        show_list
+        tagging_edit
+      ],
+      :post => %w[
+        button
+        edit
+        new
+        repository_refresh
+        show_list
+        tagging_edit
+      ]
     },
 
     :firmware_registry => {

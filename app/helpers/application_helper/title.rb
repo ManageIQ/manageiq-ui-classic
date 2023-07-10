@@ -91,7 +91,9 @@ module ApplicationHelper
         _("Playbooks")
       when "manageiq/providers/embedded_automation_manager/authentication"
         _("Credentials")
-      when "manageiq/providers/embedded_automation_manager/configuration_script_source"
+      when "manageiq/providers/embedded_ansible/automation_manager/configuration_script_source"
+        _("Repositories")
+      when "manageiq/providers/workflows/automation_manager/configuration_script_source"
         _("Repositories")
       when "manageiq/providers/workflows/automation_manager/workflow"
         _("Workflows")
