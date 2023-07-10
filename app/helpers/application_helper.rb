@@ -401,12 +401,14 @@ module ApplicationHelper
       controller = "catalog"
     when "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook"
       controller = "ansible_playbook"
-    when "ManageIQ::Providers::EmbeddedAutomationManager::Authentication"
+    when "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Credential"
       controller = "ansible_credential"
     when "ManageIQ::Providers::Workflows::AutomationManager::Workflow"
       controller = "workflow"
     when "ManageIQ::Providers::Workflows::AutomationManager::ConfigurationScriptSource"
       controller = "workflow_repository"
+    when "ManageIQ::Providers::Workflows::AutomationManager::Credential"
+      controller = "workflow_credential"
     when "MiqWorker"
       controller = request.parameters[:controller]
     when "ManageIQ::Providers::ExternalAutomationManager", "OrchestrationStackOutput", "OrchestrationStackParameter", "OrchestrationStackResource",
@@ -1082,9 +1084,10 @@ module ApplicationHelper
                              host_aggregate
                              load_balancer
                              manageiq/providers/embedded_ansible/automation_manager/playbook
-                             manageiq/providers/embedded_automation_manager/authentication
+                             manageiq/providers/embedded_ansible/automation_manager/credential
                              manageiq/providers/embedded_automation_manager/configuration_script_source
                              manageiq/providers/workflows/automation_manager/workflow
+                             manageiq/providers/workflows/automation_manager/credential
                              miq_schedule
                              miq_template
                              network_port
