@@ -1893,6 +1893,11 @@ class ApplicationController < ActionController::Base
       "embedded_configuration_script_payload"
     when "workflow_repository"
       "ansible_repository"
+    # TODO: Update manageiq/db/fixtures/miq_product_features.yml by replacing ansible_credential_tag with embedded_automation_manager_credential_tag
+    # when "workflow_credential", "ansible_credential"
+    #  "embedded_automation_manager_credential"
+    when "workflow_credential"
+      "ansible_credential"
     else
       controller_name
     end

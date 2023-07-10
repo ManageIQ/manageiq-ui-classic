@@ -3218,6 +3218,24 @@ Rails.application.routes.draw do
       ]
     },
 
+    :workflow_credential => {
+      :get => %w[
+        download_data
+        download_summary_pdf
+        edit
+        new
+        show
+        show_list
+        tagging_edit
+      ],
+      :post => %w[
+        search_clear
+        button
+        show_list
+        tagging_edit
+      ]
+    },
+
     :firmware_registry => {
       :get => %w[
         download_data

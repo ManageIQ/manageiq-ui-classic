@@ -1457,6 +1457,7 @@ WorkflowController:
 WorkflowCredentialController:
 - report_data
 - index
+- search_clear
 WorkflowRepositoryController:
 - report_data
 - index
