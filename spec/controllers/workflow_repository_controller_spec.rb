@@ -1,8 +1,9 @@
 describe WorkflowRepositoryController do
   context 'with existing :embedded_workflow_configuration_script_source' do
     render_views
-
+    let(:workflows_enabled) { true }
     before do
+      stub_settings_merge(:prototype => {:ems_workflows => {:enabled => workflows_enabled}})
       EvmSpecHelper.assign_embedded_ansible_role
       login_as FactoryBot.create(:user_admin)
       # creating repository takes time, so we do it only once
