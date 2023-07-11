@@ -4,17 +4,18 @@ import PropTypes from 'prop-types';
 import { FormSpy } from '@data-driven-forms/react-form-renderer';
 import createSchema from './settings-tasks-form.schema';
 import loadTable from './load-table-helper';
+import GtlView from '../gtl-view';
 
 const SettingsTasksForm = ({
   allTasks, zones, users, timePeriods, taskStates, tz,
 }) => {
-  const [{ isLoading, initialValues }] = useState({
-    fields: [],
-  });
+  const [initialValues] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   const loadDefaultTable = () => {
     const values = {
-      zone: 'all', timePeriod: '0', taskStatus: 'Queued,Running,Ok,Error,Warn', taskState: 'all', user: 'all',
+      // eslint-disable-next-line max-len
+      zone: 'all', timePeriod: '0', taskStatus: ['queued', 'running', 'completed_ok', 'completed_error', 'completed_warn'], taskState: 'all', user: 'all',
     };
     if (allTasks) {
       loadTable(values, tz, users);
@@ -26,7 +27,8 @@ const SettingsTasksForm = ({
 
   useEffect(() => {
     loadDefaultTable();
-  });
+    setIsLoading(false);
+  }, []);
 
   const onSubmit = (values) => {
     loadTable(values, tz, users);
@@ -45,6 +47,7 @@ const SettingsTasksForm = ({
           loadDefaultTable();
         }}
       />
+      <GtlView />
     </div>
   );
 };
