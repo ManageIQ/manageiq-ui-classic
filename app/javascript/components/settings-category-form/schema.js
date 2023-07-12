@@ -43,6 +43,8 @@ const createSchema = (newRecord) => ({
           name: 'show',
           label: __('Show in console'),
           maxLength: 50,
+          onText: __('Yes'),
+          offText: __('No'),
         },
         {
           component: componentTypes.SWITCH,
@@ -52,6 +54,8 @@ const createSchema = (newRecord) => ({
           maxLength: 50,
           isDisabled: !newRecord,
           className: 'settings_category_single_value',
+          onText: __('Yes'),
+          offText: __('No'),
         },
         {
           component: componentTypes.SWITCH,
@@ -59,6 +63,8 @@ const createSchema = (newRecord) => ({
           name: 'perf_by_tag',
           label: __('Capture C & U Data by Tag'),
           maxLength: 50,
+          onText: __('Yes'),
+          offText: __('No'),
         },
         {
           component: 'plain-text',
