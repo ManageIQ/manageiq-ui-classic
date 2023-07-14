@@ -1266,6 +1266,8 @@ module OpsController::OpsRbac
     @edit[:new][:name] = @record.name
     vmr = @record.settings.fetch_path(:restrictions, :vms) if @record.settings
     @edit[:new][:vm_restriction] = vmr || :none
+    str = @record.settings.fetch_path(:restrictions, :service_templates) if @record.settings
+    @edit[:new][:service_template_restriction] = str || :none
     @edit[:new][:features] = rbac_expand_features(@record.miq_product_features.map(&:identifier)).sort
 
     @edit[:current] = copy_hash(@edit[:new])
@@ -1331,6 +1333,7 @@ module OpsController::OpsRbac
   def rbac_role_get_form_vars
     @edit[:new][:name] = params[:name] if params[:name]
     @edit[:new][:vm_restriction] = params[:vm_restriction].to_sym if params[:vm_restriction]
+    @edit[:new][:service_template_restriction] = params[:service_template_restriction].to_sym if params[:service_template_restriction]
 
     # Add/removed features based on the node that was checked
     if params[:check]
@@ -1374,12 +1377,18 @@ module OpsController::OpsRbac
   def rbac_role_set_record_vars(role)
     role.name = @edit[:new][:name]
     role.settings ||= {}
+    role.settings[:restrictions] ||= {}
     if @edit[:new][:vm_restriction] == :none
-      role.settings.delete(:restrictions)
+      role.settings[:restrictions].delete(:vms)
     else
-      role.settings[:restrictions] = {:vms => @edit[:new][:vm_restriction]}
+      role.settings[:restrictions][:vms] = @edit[:new][:vm_restriction]
     end
-    role.settings = nil if role.settings.empty?
+    if @edit[:new][:service_template_restriction] == :none
+      role.settings[:restrictions].delete(:service_templates)
+    else
+      role.settings[:restrictions][:service_templates] = @edit[:new][:service_template_restriction]
+    end
+    role.settings = nil if role.settings[:restrictions].blank?
   end
 
   def populate_role_features(role)
