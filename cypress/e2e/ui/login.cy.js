@@ -18,13 +18,13 @@ describe('Login / Logout', () => {
 
   it('Logout button', () => {
     cy.login();
-    cy.intercept('GET', '/api/auth?requester_type=ws').as('get');
+    cy.intercept('GET', '/dashboard/logout').as('get');
     cy.get('#menu_item_logout').click();
 
     cy.get('@get').then((getCall) => {
       expect(getCall.state).to.equal('Complete');
       expect(getCall.response).to.include({
-        statusCode: 401,
+        statusCode: 302,
       });
     });
 
