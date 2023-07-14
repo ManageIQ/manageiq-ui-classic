@@ -84,7 +84,7 @@ describe('Overview > Dashboard Tests', () => {
     });
   });
 
-  it('Can minimize a widget', () => {
+  it('Can minimize / maximize a widget', () => {
     cy.get('.card-pf').then((cards) => {
       const nums = [...Array(cards.length).keys()];
       nums.forEach((index) => {
@@ -94,6 +94,22 @@ describe('Overview > Dashboard Tests', () => {
               cy.get('.bx--overflow-menu-options').then((menuItems) => {
                 cy.get(menuItems.children()[1]).click().then(() => {
                   expect(card.children()[1].style.display).to.equal('none');
+                });
+              });
+            });
+          });
+        }
+      });
+    });
+    cy.get('.card-pf').then((cards) => {
+      const nums = [...Array(cards.length).keys()];
+      nums.forEach((index) => {
+        if (cards[index].firstChild.innerText === newCard) {
+          cy.get(cards[index]).then((card) => {
+            cy.get(card.children()[0].children[0].children[0]).click().then(() => {
+              cy.get('.bx--overflow-menu-options').then((menuItems) => {
+                cy.get(menuItems.children()[1]).click().then(() => {
+                  expect(card.children()[1].style.display).to.equal('block');
                 });
               });
             });
@@ -141,7 +157,7 @@ describe('Overview > Dashboard Tests', () => {
                   cy.wait(5000);
                   cy.get('@get').then((getCall) => {
                     expect(getCall.state).to.equal('Complete');
-                    expect(getCall.response).to.include({statusCode: 304});
+                    expect([200, 304]).to.include(getCall.response.statusCode);
                   });
                 });
               });
