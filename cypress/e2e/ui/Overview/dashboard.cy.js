@@ -41,16 +41,12 @@ describe('Overview > Dashboard Tests', () => {
       });
     });
 
-    cy.wait(5000);
-    cy.get('.card-pf').then((cards) => {
-      expect(cards.length).to.equal(defaultCards.length + 2);
-    });
+    cy.get('.card-pf').its('length').should('eq', defaultCards.length + 2);
 
     cy.intercept('POST', '/dashboard/reset_widgets').as('post');
     cy.get('.miq-toolbar-group > .btn').click();
-    cy.wait(5000);
 
-    cy.get('@post').then((getCall) => {
+    cy.wait('@post').then((getCall) => {
       expect(getCall.state).to.equal('Complete');
       expect(getCall.response).to.include({
         statusCode: 200,
@@ -71,7 +67,7 @@ describe('Overview > Dashboard Tests', () => {
       cy.get('.scrollable-options').then((list) => {
         newCard = list.children()[0].innerText.trim();
         cy.get(list.children()[0]).click().then(() => {
-          cy.wait(5000);
+          cy.get('.card-pf').its('length').should('eq', defaultCards.length + 1);
           cy.get('.card-pf').then((cards) => {
             const nums = [...Array(cards.length).keys()];
             nums.forEach((index) => {
@@ -154,8 +150,7 @@ describe('Overview > Dashboard Tests', () => {
             cy.get(card.children()[0].children[0].children[0]).click().then(() => {
               cy.get('.bx--overflow-menu-options').then((menuItems) => {
                 cy.get(menuItems.children()[3]).click().then(() => {
-                  cy.wait(5000);
-                  cy.get('@get').then((getCall) => {
+                  cy.wait('@get').then((getCall) => {
                     expect(getCall.state).to.equal('Complete');
                     expect([200, 304]).to.include(getCall.response.statusCode);
                   });
@@ -177,7 +172,7 @@ describe('Overview > Dashboard Tests', () => {
             cy.get(card.children()[0].children[0].children[0]).click().then(() => {
               cy.get('.bx--overflow-menu-options').then((menuItems) => {
                 cy.get(menuItems.children()[0]).click().then(() => {
-                  cy.wait(10000);
+                  cy.get('.card-pf').its('length').should('eq', defaultCards.length);
                   cy.get('.card-pf').then((cards) => {
                     const nums = [...Array(cards.length).keys()];
                     nums.forEach((index) => {
