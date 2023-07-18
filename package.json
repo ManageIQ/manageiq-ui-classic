@@ -13,6 +13,7 @@
   "scripts": {
     "cypress:open": "cypress open",
     "cypress:run:chrome": "cypress run --headless --browser chrome",
+    "cypress:run:edge": "cypress run --headless --browser edge",
     "cypress:run:firefox": "cypress run --headless --browser firefox",
     "test": "jest",
     "test:watch": "jest --watchAll",
