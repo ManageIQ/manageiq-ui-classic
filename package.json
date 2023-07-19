@@ -126,7 +126,7 @@
     "core-js": "~3.6.4",
     "core-js-compat": "~3.2.1",
     "css-loader": "~3.4.2",
-    "cypress": "^12.13.0",
+    "cypress": "12.17.1",
     "duplicate-package-checker-webpack-plugin": "~3.0.0",
     "enhanced-resolve": "~4.0.0",
     "enzyme": "^3.9.0",
