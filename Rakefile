@@ -63,6 +63,16 @@ namespace :spec do
     exit $CHILD_STATUS.exitstatus
   end
 
+  namespace :jest do
+    desc 'Run Jest tests with node debugger'
+    task :debug do
+      puts
+      puts "open your chrome://inspect/#devices on your chrome based browser (see https://facebook.github.io/jest/docs/en/troubleshooting.html for more details)"
+      puts
+      system('node --inspect-brk node_modules/.bin/jest --runInBand')
+    end
+  end
+
   desc "Run Debride"
   task :debride do
     system('bash bin/ci/dead_method_check.sh')
@@ -72,13 +82,40 @@ namespace :spec do
   desc "Run security specs from core"
   task :security => ["app:test:security"]
 
-  namespace :jest do
-    desc 'Run Jest tests with node debugger'
-    task :debug do
-      puts
-      puts "open your chrome://inspect/#devices on your chrome based browser (see https://facebook.github.io/jest/docs/en/troubleshooting.html for more details)"
-      puts
-      system('node --inspect-brk node_modules/.bin/jest --runInBand')
+  desc "Run cypress specs (starts a Rails server)"
+  task :cypress => "cypress:run_with_rails"
+
+  namespace :cypress do
+    task :run_with_rails do
+      # Set the rate limit to a large number to avoid 429: Too Many Requests errors
+      # which can occur as cypress very quickly hits a lots of endpoints.
+      puts "\n== Removing rate limit =="
+      exit $?.exitstatus unless system("bundle exec rails runner 'MiqServer.my_server.add_settings_for_resource(:server => {:rate_limiting => {:request => {:limit => 99999}}})'")
+
+      puts "\n== Starting Rails server =="
+      rails_pid = Bundler.with_original_env do
+        spawn("bin/rails s", [:out, :err] => "/dev/null")
+      end
+      puts "== Rails server started with PID #{rails_pid} =="
+
+      Rake::Task["spec:cypress:run"].invoke
+    ensure
+      if rails_pid
+        puts "\n== Killing Rails server with PID #{rails_pid} =="
+        Process.kill("INT", rails_pid)
+      end
+    end
+
+    desc "Run cypress specs (with a running Rails server)"
+    task :run do
+      ENV["CYPRESS_BROWSER"] ||= "chrome"
+
+      puts "\n== Cypress tests started for #{ENV["CYPRESS_BROWSER"]} browser =="
+      system("yarn cypress:run:#{ENV["CYPRESS_BROWSER"]}")
+      exit_status = $?.exitstatus
+      puts "== Cypress tests for #{ENV["CYPRESS_BROWSER"]} browser completed =="
+
+      exit exit_status
     end
   end
 end
