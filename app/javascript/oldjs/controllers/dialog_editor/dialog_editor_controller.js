@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqService', 'DialogEditor', 'DialogEditorHttp', 'DialogValidation', 'dialogIdAction', function($window, miqService, DialogEditor, DialogEditorHttp, DialogValidation, dialogIdAction) {
+ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqService', 'DialogEditor', 'DialogEditorHttp', 'DialogValidation', 'dialogIdAction', 'automationKeys', 'emsWorkflowsEnabled', function($window, miqService, DialogEditor, DialogEditorHttp, DialogValidation, dialogIdAction, automationKeys, emsWorkflowsEnabled) {
   var vm = this;
 
   vm.saveButtonDisabled = false;
@@ -9,7 +9,12 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
   vm.treeOptions = {
     load: DialogEditorHttp.treeSelectorLoadData,
     lazyLoad: DialogEditorHttp.treeSelectorLazyLoadData,
+    loadAvailableWorkflows: DialogEditorHttp.loadAvailableWorkflows,
+    loadWorkflow: DialogEditorHttp.loadWorkflow,
+    emsWorkflowsEnabled,
   };
+
+  vm.dropDownEntryPoints = requestAutomationKeys();
 
   function requestDialogId() {
     return JSON.parse(dialogIdAction).id;
@@ -17,6 +22,11 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
 
   function requestDialogAction() {
     return JSON.parse(dialogIdAction).action;
+  }
+
+  /** Function to get the automation_keys from editor.html.haml which gets the values from AutomationMixin */
+  function requestAutomationKeys() {
+    return JSON.parse(automationKeys);
   }
 
   if (requestDialogAction() === 'new') {
@@ -53,6 +63,23 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
       }
     }
 
+    /** Function to set the automation_type as 'embedded_automate' / 'embedded_workflow'.
+     * Also deletes few attributes from resource_action based on the selected automation_type.
+    */
+    function setAutomationFields(field) {
+      const { automate, workflow } = vm.dropDownEntryPoints;
+      const automationFields = field.resource_action.configuration_script_id
+        ? { automationType: workflow.key, resetFields: automate.fields }
+        : { automationType: automate.key, resetFields: workflow.fields };
+
+      field.automation_type = automationFields.automationType;
+      automationFields.resetFields.forEach((item) => {
+        if (field.resource_action.hasOwnProperty(item)) {
+          delete field.resource_action[item];
+        }
+      });
+    }
+
     function translateResponderNamesToIds(dialog) {
       var dynamicFields = [];
       var allFields = [];
@@ -60,6 +87,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
       _.forEach(dialog.dialog_tabs, function(tab) {
         _.forEach(tab.dialog_groups, function(group) {
           _.forEach(group.dialog_fields, function(field) {
+            setAutomationFields(field);
             if (field.dynamic === true) {
               dynamicFields.push(field);
             }
@@ -149,7 +177,8 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
           dialog_tabs: [],
         },
       };
-      dialogData.content.dialog_tabs = _.cloneDeepWith(DialogEditor.getDialogTabs(), customizer);
+      const dialogTabs = _.cloneDeepWith(DialogEditor.getDialogTabs(), customizer);
+      dialogData.content.dialog_tabs = reconfigureDialogTabs(dialogTabs);
     } else {
       action = 'create';
       dialogId = '';
@@ -159,10 +188,29 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
         buttons: 'submit,cancel',
         dialog_tabs: [],
       };
-      dialogData.dialog_tabs = _.cloneDeepWith(DialogEditor.getDialogTabs(), customizer);
+      const dialogTabs = _.cloneDeepWith(DialogEditor.getDialogTabs(), customizer);
+      dialogData.dialog_tabs = reconfigureDialogTabs(dialogTabs);
     }
 
     DialogEditorHttp.saveDialog(dialogId, action, dialogData).then(saveSuccess, saveFailure);
+  }
+
+  /** Fnuction to remove the automation_type and workflow_name attributes from field's resource_action
+   * as they are not required to be processed in backend. */
+  function reconfigureDialogTabs(dialogTabs) {
+    dialogTabs.forEach((tab) => {
+      tab.dialog_groups.forEach((group) => {
+        group.dialog_fields.forEach((field) => {
+          if (field.hasOwnProperty('automation_type')) {
+            delete field.automation_type;
+          }
+          if (field.resource_action.hasOwnProperty('workflow_name')) {
+            delete field.resource_action.workflow_name;
+          }
+        });
+      });
+    });
+    return dialogTabs;
   }
 
   function dismissChanges() {
