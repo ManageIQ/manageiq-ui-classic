@@ -8,7 +8,7 @@ system(gem_root.join("bin/before_install").to_s)
 require gem_root.join("spec/manageiq/lib/manageiq/environment")
 ManageIQ::Environment.manageiq_plugin_setup(gem_root)
 
-if %w[spec:compile spec:javascript spec:jest].include?(ENV["TEST_SUITE"])
+if %w[spec:compile spec:cypress spec:javascript spec:jest].include?(ENV["TEST_SUITE"])
   puts "\n== Updating UI assets =="
   exit $?.exitstatus unless system("bundle exec rake update:ui")
 end
