@@ -1,4 +1,10 @@
 module MiqAeCustomizationHelper
+  include Mixins::AutomationMixin
+
+  def editor_automation_types
+    AUTOMATION_TYPES.to_json
+  end
+
   def dialog_id_action
     url = request.parameters
     if url[:id].present?
