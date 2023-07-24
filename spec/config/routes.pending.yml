@@ -268,6 +268,16 @@ ConfigurationProfileController:
 - index
 - quick_search
 - reload
+- adv_search_button
+- adv_search_clear
+- adv_search_load_choice
+- adv_search_name_typed
+- adv_search_toggle
+- search_clear
+- exp_button
+- exp_changed
+- exp_token_pressed
+- save_default_search
 ConfigurationScriptController:
 - index
 - reload

@@ -2614,7 +2614,10 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         launch_configuration_profile_console
-      ]
+      ] +
+        adv_search_post +
+        exp_post +
+        save_post
     },
 
     :configured_system  => {
