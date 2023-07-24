@@ -1,0 +1,28 @@
+- edit, edit_new, type, configuration_script_id = entry_point_data(@edit, :fqname)
+- show_selector = workflows_enabled ? true : type.present?
+- if show_selector
+  - url = form_field_change_url(edit)
+  - modal = entry_point_modal_events(type, :fqname)
+  
+  .col-md-10.entry_point_selector{:title => edit_new[:fqname]}
+    .input-group
+      = hidden_field_tag(configuration_script_id, edit_new[configuration_script_id] || nil)
+      = text_field_tag("fqname",
+                        edit_new[:fqname],
+                        :class             => "form-control long_text entry_point_text",
+                        :placeholder       => type&.gsub('_',' ').camelize,
+                        "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+      %span.input-group-btn
+        #fqname_div
+          %button.btn.btn-default.entry_point_button{:onclick => modal[:open],
+                                                     :title   => _('Click to select Provisioning Entry Point')}
+            %i.ff.ff-load-balancer
+          %button.btn.btn-default{:id            => "fqname_remove",
+                                  :onclick       => modal[:close],
+                                  :title         => _('Remove this Provisioning Entry Point'),
+                                  "data-confirm" => _("Are you sure you want to remove this Provisioning Entry Point?"),
+                                  :disabled      => edit_new[:fqname].nil?}
+            %i.pficon.pficon-close
+      %span.input-group-addon
+  .col-md-2.entry_point_selector
+    .workflow_modal_wrapper#provision-workflows

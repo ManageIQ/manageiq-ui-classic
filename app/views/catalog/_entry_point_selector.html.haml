@@ -1,0 +1,12 @@
+- entry_point_type = @edit[:new][type] || default_entry_point_type
+
+- if workflows_enabled
+  .col-md-3{:title => @edit[:new][type]}
+    %p.form-control-static
+      - options = options_for_select(automation_type_options, entry_point_type)
+      = select_tag(type, options, "data-miq_sparkle_on" => true, :class => "selectpicker")
+      :javascript
+        miqInitSelectPicker();
+        miqSelectPickerEvent('#{type}', '#{url}')
+- else
+  = hidden_field_tag(type, entry_point_type)

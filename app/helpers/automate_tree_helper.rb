@@ -51,8 +51,21 @@ module AutomateTreeHelper
     @automate_tree = klass.new(tree_name, @sb)
   end
 
+  # The current_entry_point (eg: ) is saved to previous (eg: :fqname_previous)
+  # edit_key => :fqname || :reconfigure_fqname || :retire_fqname
+  # previous => :fqname_previous || :reconfigure_fqname_previous || :retire_fqname_previous
+  # entry_point_type   => :provision_entry_point_type || :reconfigure_entry_point_type || :retire_entry_point_type
+  def previous_entry_point_type(edit_key)
+    field = entry_point_fields(edit_key)
+    previous = @edit[:new][field[:previous]]
+    entry_point_type = @edit[:new][field[:type]]
+    @edit[:new][previous[entry_point_type]] = current_entry_point
+  end
+
   def at_tree_select_toggle(type, edit_key)
-    build_automate_tree(type)
+    automation_type = params[:automation_type] || default_entry_point_type
+    current_entry_point = @edit[:new][edit_key] # before updating @edit varibale.
+    build_automate_tree(type) if automation_type == embedded_automate_key
     render :update do |page|
       page << javascript_prologue
       tree_close = proc do
@@ -84,6 +97,13 @@ module AutomateTreeHelper
           page << javascript_disable_field(inc_domain_chk)
           @edit[:include_domain_prefix] = nil
           @edit[:domain_prefix_check] = nil
+
+          if edit_key
+            field = entry_point_fields(edit_key)
+            previous = @edit[:new][field[:previous]]
+            entry_point_type = @edit[:new][field[:type]]
+            @edit[:new][previous[entry_point_type]] = current_entry_point
+          end
         end
         page.replace("form_div", :partial => "copy_objects_form") if params[:controller] == "miq_ae_class"
         tree_close.call
@@ -140,15 +160,22 @@ module AutomateTreeHelper
     id = parse_nodetype_and_id(params[:id]).last
     if params[:id].start_with?("aei-")
       record = MiqAeInstance.find_by(:id => id)
+      @edit[:automate_tree_selected_path] = record.fqname
     elsif params[:id].start_with?("aen-") && controller_name == "miq_ae_class"
       record = MiqAeNamespace.find_by(:id => id)
       record = nil if record.domain?
+      @edit[:automate_tree_selected_path] = record.fqname_sans_domain
+    elsif params[:id].start_with?("cfp-")
+      record = ConfigurationScriptPayload.find_by(:id => params[:id].gsub('cfp-', ''))
+      @edit[:automate_tree_selected_path] = record.name
+      prefix_key = entry_point_fields(params[:field].to_sym)[:configuration_script_id]
+      @edit[:new][prefix_key] = record.id
+      @edit[:new]["#{params[:field]}_workflow"] = record.name
     end
     @edit[:new][edit_key] = @edit[edit_key] if @edit[:new][edit_key].nil?
     @edit[:current][:selected] = @edit[:new][:selected].nil? ? "" : @edit[:new][:selected]
     @edit[:new][:selected] = params[:id]
     if record
-      @edit[:automate_tree_selected_path] = controller_name == "miq_ae_class" ? record.fqname_sans_domain : record.fqname
       # save selected id in edit until save button is pressed
       @edit[:active_id] = params[:id]
       @changed = @edit[:new][edit_key] != @edit[:automate_tree_selected_path]
