@@ -1,12 +1,13 @@
 import cx from 'classnames';
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'carbon-components-react';
 import { TOGGLE_DRAWER_VISIBILITY } from '../../miq-redux/actions/notifications-actions';
 import MiqIcon from '../../menu/icon';
 import NotificationDrawer from '../notification-drawer/notification-drawer';
 
-export const NotificationsToggle = () => {
+export const NotificationsToggle = ({ jsRequest }) => {
   const dispatch = useDispatch();
   const { isDrawerVisible, unreadCount } = useSelector(({ notificationReducer }) => notificationReducer);
 
@@ -39,7 +40,15 @@ export const NotificationsToggle = () => {
         {' '}
         <MiqIcon icon={unreadCount ? 'carbon--NotificationNew' : 'carbon--Notification'} />
       </Button>
-      <NotificationDrawer />
+      <NotificationDrawer jsRequest={jsRequest} />
     </div>
   );
+};
+
+NotificationsToggle.propTypes = {
+  jsRequest: PropTypes.bool,
+};
+
+NotificationsToggle.defaultProps = {
+  jsRequest: false,
 };

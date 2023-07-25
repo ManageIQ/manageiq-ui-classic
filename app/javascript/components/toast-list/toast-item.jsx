@@ -33,6 +33,7 @@ const ToastItem = ({ toastNotification }) => {
       caption={EMPTY}
       subtitle={toastNotification.message}
       onClick={() => dispatch(markNotificationRead(toastNotification))}
+      timeout={6000}
     >
       {toastNotification.data.link && (
         <div className="pull-right toast-pf-action">

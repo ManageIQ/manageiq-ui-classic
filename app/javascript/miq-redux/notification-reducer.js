@@ -20,25 +20,39 @@ const notificationInitialState = {
   maxNotifications,
 };
 
+/** Function to filter out the toastNotification that are already displayed. */
+const filterToastNotification = ({ payload }, toastNotifications) => {
+  const exists = toastNotifications.find((item) => item.id === payload.id);
+  return exists ? toastNotifications : [payload, ...toastNotifications];
+};
+
+/** Function to filter out the notification that are already displayed. */
+const filterNotifications = ({ payload }, notifications) => {
+  const exists = notifications.find((item) => item.id === payload.id);
+  return exists ? notifications : [payload, ...notifications].slice(0, 100);
+};
+
 export const notificationReducer = (state = notificationInitialState, action) => {
   switch (action.type) {
     case INIT_NOTIFICATIONS:
       return {
         ...state,
         notifications: action.payload.notifications,
-        unreadCount: action.payload.notifications.filter(notification => notification.unread).length,
+        unreadCount: action.payload.notifications.filter((notification) => notification.unread).length,
         totalNotificationsCount: action.payload.count,
       };
 
     case ADD_NOTIFICATION:
-      const notifications = [action.payload, ...state.notifications].slice(0, 100);
+    {
+      const notifications = filterNotifications(action, state.notifications);
       return {
         ...state,
         notifications,
-        unreadCount: notifications.filter(notification => notification.unread).length,
+        unreadCount: notifications.filter((notification) => notification.unread).length,
         totalNotificationsCount: state.totalNotificationsCount + 1,
-        toastNotifications: [action.payload, ...state.toastNotifications],
+        toastNotifications: filterToastNotification(action, state.toastNotifications),
       };
+    }
 
     case TOGGLE_DRAWER_VISIBILITY:
       return { ...state, isDrawerVisible: !state.isDrawerVisible };
