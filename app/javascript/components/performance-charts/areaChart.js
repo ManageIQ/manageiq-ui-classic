@@ -8,7 +8,7 @@ const AreaChartGraph = ({ data, format, size }) => {
     axes: {
       bottom: {
         mapsTo: 'key',
-        scaleType: 'linear',
+        scaleType: 'time',
       },
       left: {
         mapsTo: 'value',
