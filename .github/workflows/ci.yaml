@@ -56,7 +56,7 @@ jobs:
     - name: Set up Node
       if: "${{ matrix.test-suite == 'spec:compile' || matrix.test-suite == 'spec:javascript'
         || matrix.test-suite == 'spec:jest' }}"
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
         node-version: "${{ matrix.node-version }}"
         cache: yarn
@@ -69,4 +69,4 @@ jobs:
       if: "${{ github.ref == 'refs/heads/master' && matrix.ruby-version == '2.7' &&
         matrix.test-suite == 'spec' }}"
       continue-on-error: true
-      uses: paambaati/codeclimate-action@v3.0.0
+      uses: paambaati/codeclimate-action@v5
