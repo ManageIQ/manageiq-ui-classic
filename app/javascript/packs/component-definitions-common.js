@@ -146,6 +146,7 @@ import WorkersForm from '../components/workers-form/workers-form';
 import WorkflowCredentialsForm from '../components/workflow-credentials-form';
 import WorkflowPayload from '../components/workflows/workflow_payload';
 import WorkflowRepositoryForm from '../components/workflow-repository-form';
+import WorkflowEntryPoints from '../components/workflows/workflow-entry-points';
 import PhysicalStorageForm from '../components/physical-storage-form';
 import SearchBar from '../components/search-bar';
 import SettingsCompanyCategories from '../components/settings-company-categories';
@@ -157,7 +158,7 @@ import HostInitiatorGroupForm from '../components/host-initiator-group-form';
 import StorageServiceForm from '../components/storage-service-form';
 import VolumeMappingForm from '../components/volume-mapping-form';
 import ZoneForm from '../components/zone-form';
-import AnsiblePlayBookEditCatalogForm from '../components/ansible-playbook-edit-catalog-form'
+import AnsiblePlayBookEditCatalogForm from '../components/ansible-playbook-edit-catalog-form';
 
 /**
 * Add component definitions to this file.
@@ -314,6 +315,7 @@ ManageIQ.component.addReact('WorkersForm', WorkersForm);
 ManageIQ.component.addReact('WorkflowCredentialsForm', WorkflowCredentialsForm);
 ManageIQ.component.addReact('WorkflowPayload', WorkflowPayload);
 ManageIQ.component.addReact('WorkflowRepositoryForm', WorkflowRepositoryForm);
+ManageIQ.component.addReact('WorkflowEntryPoints', WorkflowEntryPoints);
 ManageIQ.component.addReact('ProvGrid', ProvGrid);
 ManageIQ.component.addReact('PhysicalStorageForm', PhysicalStorageForm);
 ManageIQ.component.addReact('VisualSettingsForm', VisualSettingsForm);

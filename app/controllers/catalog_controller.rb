@@ -301,6 +301,10 @@ class CatalogController < ApplicationController
         if params[:display]
           page << "miq_tabs_show_hide('#details_tab', '#{(params[:display] == "1")}')"
         end
+        page.replace_html("provision_entry_point", :partial => "provision_entry_point") if params[:provision_entry_point_type]
+        page.replace_html("reconfigure_entry_point", :partial => "reconfigure_entry_point") if params[:reconfigure_entry_point_type]
+        page.replace_html("retire_entry_point", :partial => "retire_entry_point") if params[:retire_entry_point_type]
+
         %w[fqname reconfigure_fqname retire_fqname].each do |name|
           if params[name.to_sym] && @edit[:new][name.to_sym].present?
             page << "$('##{name}_remove').attr('disabled', false);"
@@ -653,6 +657,26 @@ class CatalogController < ApplicationController
     session[:edit] = @edit
   end
 
+  # Method to open the workflows dialog box
+  # params[:field]    => :fqname || :retire_fqname || :reconfigure_fqname
+  # params[:selected] => Holds the value of the *_configuration_script_id
+  def embededded_workflows_modal
+    @edit = session[:edit]
+    type = ENTRY_POINT_TYPES[params[:field].to_sym][:type]
+    render :update do |page|
+      page << javascript_prologue
+      page.replace_html("#{type}-workflows", :partial => "embedded_workflows_modal",
+                                             :locals  => {
+                                               :field    => params[:field],
+                                               :selected => params[:selected],
+                                               :type     => type,
+                                             })
+      page << javascript_show(params[:field])
+      page << javascript_show("#{params[:field]}_modal")
+      page << "$('##{params[:type]}_modal').addClass('modal fade in');"
+    end
+  end
+
   def ae_tree_select_discard
     assert_new_or_edit_by_service_type
 
@@ -846,6 +870,18 @@ class CatalogController < ApplicationController
 
   private
 
+  # Method to return the entry point name and its automation type
+  # Used for summary and edit pages.
+  def resource_action_entry_point(resource_action)
+    cs_id = resource_action.configuration_script_id
+    if cs_id
+      workflow = ConfigurationScriptPayload.find_by(:id => cs_id)
+      {:name => workflow&.name, :type => embedded_workflow_key, :configuration_script_id => cs_id}
+    else
+      {:name => resource_action.fqname, :type => embedded_automate_key, :configuration_script_id => nil}
+    end
+  end
+
   def build_tenants_tree
     tenants = @record ? @record.additional_tenants : Tenant.where(:id => @edit[:new][:tenant_ids])
     catalog_bundle = @edit.present? && @edit[:key] && @edit[:key].starts_with?('st_edit') # Get the info if adding/editing Catalog Item or Bundle; not important if only displaying
@@ -989,15 +1025,18 @@ class CatalogController < ApplicationController
 
     # Check the validity of the entry points
     %i[fqname reconfigure_fqname retire_fqname].each do |fqname|
-      next if @edit[:new][fqname].blank? || !MiqAeClass.find_homonymic_instances_across_domains(current_user, @edit[:new][fqname]).empty?
+      type = entry_point_fields(fqname)[:type]
+      if embedded_automate(@edit[:new][type])
+        next if @edit[:new][fqname].blank? || !MiqAeClass.find_homonymic_instances_across_domains(current_user, @edit[:new][fqname]).empty?
 
-      case fqname
-      when :fqname
-        add_flash(_('Please correct invalid Provisioning Entry Point prior to saving'), :error)
-      when :reconfigure_fqname
-        add_flash(_('Please correct invalid Reconfigure Entry Point prior to saving'), :error)
-      when :retire_fqname
-        add_flash(_('Please correct invalid Retirement Entry Point prior to saving'), :error)
+        case fqname
+        when :fqname
+          add_flash(_('Please correct invalid Provisioning Entry Point prior to saving'), :error)
+        when :reconfigure_fqname
+          add_flash(_('Please correct invalid Reconfigure Entry Point prior to saving'), :error)
+        when :retire_fqname
+          add_flash(_('Please correct invalid Retirement Entry Point prior to saving'), :error)
+        end
       end
     end
 
@@ -1143,24 +1182,37 @@ class CatalogController < ApplicationController
     trees_to_replace
   end
 
+  # Method to prepare the data needed for resource_actions
+  # prefix[:name] = 'Provision' || 'Reconfigure' || 'Retirement'
+  # prefix[:type] = :provision || :reconfigure || :retire
+  # key           = :fqname || :reconfigure_fqname || :retire_fqname
+  def entry_point_keys
+    ENTRY_POINT_TYPES.map do |key, prefix|
+      {
+        :name               => prefix[:name],
+        :automate_edit_key  => key,
+        :type_key           => "#{prefix[:type]}_entry_point_type".to_sym,
+        :workflows_edit_key => "#{prefix[:type]}_configuration_script_id".to_sym
+      }
+    end
+  end
+
   def set_resource_action(st)
     d = @edit[:new][:dialog_id].nil? ? nil : Dialog.where(:id => @edit[:new][:dialog_id]).first
-    actions = [
-      {:name => 'Provision', :edit_key => :fqname},
-      {:name => 'Reconfigure', :edit_key => :reconfigure_fqname},
-      {:name => 'Retirement', :edit_key => :retire_fqname}
-    ]
-    actions.each do |action|
-      ra = st.resource_actions.find_by(:action => action[:name])
-      if ra.nil? && @edit[:new][action[:edit_key]].present?
-        attrs = {:action        => action[:name],
-                 :ae_attributes => {:service_action => action[:name]}}
-        ra = st.resource_actions.build(attrs)
-      end
-      if @edit[:new][action[:edit_key]].blank?
+
+    entry_point_keys.each do |action|
+      ra = st.resource_actions
+             .create_with(
+               :configuration_script_id => @edit[:new][action[:workflows_edit_key]],
+               :ae_attributes           => {:service_action => action[:name]}
+             )
+             .find_or_initialize_by(:action => action[:name])
+      if @edit[:new][action[:automate_edit_key]].blank? && @edit[action[:workflows_edit_key]].blank?
         st.resource_actions.where(:action => action[:name]).first.try(:destroy)
       else
-        ra.update(:dialog => d, :fqname => @edit[:new][action[:edit_key]])
+        fqname                  = @edit[:new][action[:automate_edit_key]]  if @edit[:new][action[:type_key]] == embedded_automate_key
+        configuration_script_id = @edit[:new][action[:workflows_edit_key]] if @edit[:new][action[:type_key]] == embedded_workflow_key
+        ra.update!(:dialog => d, :fqname => fqname, :configuration_script_id => configuration_script_id)
       end
     end
   end
@@ -1244,16 +1296,32 @@ class CatalogController < ApplicationController
     @edit[:new][:code_currency] = @record.currency ? code_currency_label(@record.currency.id) : _("Price / Month")
     @edit[:new][:price] = @record.price
 
-    # initialize fqnames
-    @edit[:new][:fqname] = @edit[:new][:reconfigure_fqname] = @edit[:new][:retire_fqname] = nil # default_entry_point sets nil for non present entry points
+    # initialize entry_point fields and its type to nil
+    ENTRY_POINT_TYPES.each do |key, _prefix|
+      fields = entry_point_fields(key)
+      @edit[:new][key] = @edit[:new][fields[:type]] = @edit[:new][fields[:configuration_script_id]] = nil
+      @edit[:new][fields[:previous]] = {:embedded_automate => nil, :embedded_workflow => nil}
+      @edit[:new][fields[:type]] = default_entry_point_type
+    end
+
     @record.resource_actions.each do |ra|
       @edit[:new][:dialog_id] = ra.dialog_id.to_i
-      if ra.action.downcase == "provision"
-        @edit[:new][:fqname] = ra.fqname
+
+      # To display the automation_type and its entry point values in edit page.
+      entry_point = resource_action_entry_point(ra)
+
+      if ra.action.downcase == 'provision'
+        @edit[:new][:fqname] = entry_point[:name]
+        @edit[:new][:provision_entry_point_type] = entry_point[:type]
+        @edit[:new][:provision_configuration_script_id] = entry_point[:configuration_script_id]
       elsif ra.action.downcase == 'reconfigure'
-        @edit[:new][:reconfigure_fqname] = ra.fqname
-      elsif ra.action.downcase == "retirement"
-        @edit[:new][:retire_fqname] = ra.fqname
+        @edit[:new][:reconfigure_fqname] = entry_point[:name]
+        @edit[:new][:reconfigure_entry_point_type] = entry_point[:type]
+        @edit[:new][:reconfigure_configuration_script_id] = entry_point[:configuration_script_id]
+      elsif ra.action.downcase == 'retirement'
+        @edit[:new][:retire_fqname] = entry_point[:name]
+        @edit[:new][:retire_entry_point_type] = entry_point[:type]
+        @edit[:new][:retire_configuration_script_id] = entry_point[:configuration_script_id]
       end
     end
     load_available_dialogs
@@ -1367,12 +1435,40 @@ class CatalogController < ApplicationController
     end
   end
 
+  # Returns true if the edit_new's field is 'embedded_automate'.
+  def automate_field(edit_new, field)
+    type = entry_point_fields(field)[:type]
+    embedded_automate(edit_new[type])
+  end
+
+  # Method to set the entry_point's type, value and previous value.
+  # type     = provision_entry_point_type || reconfigure_entry_point_type || retire_entry_point_type
+  # previous = fqname_previous || reconfigure_fqname_previous || retire_fqname_previous
   def default_entry_point(prov_type, service_type)
-    edit_new = @edit[:new]
     klass = class_service_template(prov_type)
-    edit_new[:fqname] = klass.default_provisioning_entry_point(service_type)
-    edit_new[:retire_fqname] = klass.default_retirement_entry_point
-    edit_new[:reconfigure_fqname] = klass.default_reconfiguration_entry_point
+    ENTRY_POINT_TYPES.each do |key, _prefix|
+      fields            = entry_point_fields(key)
+      type              = fields[:type]
+      previous          = fields[:previous]
+
+      # sets the type to embedded_automate || embedded_workflow
+      @edit[:new][type] = params[type] || default_entry_point_type
+
+      # sets the value of entry_point
+      is_automate       = embedded_automate(@edit[:new][type])
+      entry_point       = nil
+      if is_automate
+        entry_point = klass.default_provisioning_entry_point(service_type) if key == :fqname
+        entry_point = klass.default_retirement_entry_point if key == :retire_fqname
+        entry_point = klass.default_reconfiguration_entry_point if key == :reconfigure_fqname
+      end
+      @edit[:new][key] = is_automate ? entry_point : nil
+
+      # sets the value of previously selected entry_point_value
+      @edit[:new][previous] = {:embedded_automate => nil, :embedded_workflow => nil}
+      previous_type = is_automate ? embedded_automate_key : embedded_workflow_key
+      @edit[:new][previous][previous_type.to_sym] = @edit[:new][key]
+    end
   end
 
   def get_form_vars
@@ -1398,10 +1494,35 @@ class CatalogController < ApplicationController
       @edit[:new][:server_profile_template_id] = params[:server_profile_template_id]
     end
 
+    field_changed = params[:form_field_changed] ? true : false
+
+    ENTRY_POINT_TYPES.each do |key, prefix|
+      type_key = "#{prefix[:type]}_entry_point_type".to_sym
+      automation_type_changed = false
+      if params[type_key]
+        automation_type_changed = (params[type_key] != @edit[:new][type_key])
+        # Assigns the new entry_point type when the select box is changed.
+        @edit[:new][type_key] = params[type_key]
+      end
+
+      workflows_edit_key = "#{prefix[:type]}_configuration_script_id".to_sym
+      @edit[:new][workflows_edit_key] = params[workflows_edit_key] if params[workflows_edit_key]
+
+      restore_previous_entry_point(key, type_key) if field_changed && automation_type_changed
+    end
+
     get_form_vars_orchestration if @edit[:new][:st_prov_type] == 'generic_orchestration'
     fetch_form_vars_ansible_or_ct if %w[generic_ansible_tower generic_awx generic_container_template].include?(@edit[:new][:st_prov_type])
     fetch_form_vars_ovf_template if @edit[:new][:st_prov_type] == 'generic_ovf_template'
     fetch_form_vars_server_profile_templates if @edit[:new][:st_prov_type] == 'cisco_intersight'
+  end
+
+  # Method to display previously selected entry_point when automation_type is changed.
+  def restore_previous_entry_point(key, type_key)
+    current_entry_point = @edit[:new][key]
+    previous_type = embedded_automate(params[type_key]) ? embedded_workflow_key : embedded_automate_key
+    @edit[:new][key] = @edit[:new]["#{key}_previous".to_sym][params[type_key].to_sym]
+    @edit[:new]["#{key}_previous".to_sym][previous_type.to_sym] = current_entry_point
   end
 
   def code_currency_label(currency)
@@ -1713,7 +1834,7 @@ class CatalogController < ApplicationController
   end
 
   def get_show_list_options(typ)
-    options = {:model => typ.constantize}
+    options = {:model => typ&.constantize}
     if x_active_tree == :sandt_tree
       options[:named_scope] = :public_service_templates
     elsif x_active_tree == :ot_tree
@@ -1785,14 +1906,24 @@ class CatalogController < ApplicationController
       @sb[:retire_fqname]      = nil
       @record.resource_actions.each do |ra|
         d = Dialog.where(:id => ra.dialog_id).first
+
+        # To display the automation_type and its entry point values in summary page.
+        entry_point = resource_action_entry_point(ra)
+
         @sb[:dialog_label] = d.label if d
         case ra.action.downcase
         when 'provision'
-          @sb[:fqname] = ra.fqname
+          @sb[:fqname] = entry_point[:name]
+          @sb[:provision_entry_point_type] = entry_point[:type]
+          @sb[:provision_configuration_script_id] = entry_point[:configuration_script_id]
         when 'reconfigure'
-          @sb[:reconfigure_fqname] = ra.fqname
+          @sb[:reconfigure_fqname] = entry_point[:name]
+          @sb[:reconfigure_entry_point_type] = entry_point[:type]
+          @sb[:reconfigure_configuration_script_id] = entry_point[:configuration_script_id]
         when 'retirement'
-          @sb[:retire_fqname] = ra.fqname
+          @sb[:retire_fqname] = entry_point[:name]
+          @sb[:retire_entry_point_type] = entry_point[:type]
+          @sb[:retire_configuration_script_id] = entry_point[:configuration_script_id]
         end
       end
       # saving values of ServiceTemplate catalog id and resource that are needed in view to build the link

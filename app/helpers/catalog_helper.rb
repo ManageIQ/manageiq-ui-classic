@@ -1,6 +1,7 @@
 module CatalogHelper
   include_concern 'TextualSummary'
   include RequestInfoHelper
+  include Mixins::AutomationMixin
 
   def miq_catalog_resource(resources)
     headers = ["", _("Name"), _("Description"), _("Action Order"), _("Provision Order"), _("Action Start"), _("Action Stop"), _("Delay (mins) Start"), _("Delay (mins) Stop")]
@@ -297,5 +298,11 @@ module CatalogHelper
 
   def tab_label(item)
     {:name => item, :text => catalog_tabs_types[item]}
+  end
+
+  # Method which return true if workflows are behing prototype flag.
+  # Hides the Embedded Workflow option.
+  def workflows_enabled
+    Settings.prototype.ems_workflows.enabled
   end
 end
