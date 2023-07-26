@@ -41,6 +41,21 @@ const memoryTypeField = (memory) => ({
   },
 });
 
+const memoryFormFields = (memory) => ({
+  component: componentTypes.SUB_FORM,
+  id: 'memory-sub-form',
+  name: 'memory-sub-form',
+  className: 'reconfigure-sub-form',
+  condition: {
+    when: 'cb_memory',
+    is: true,
+  },
+  fields: [
+    memoryValueField(),
+    memoryTypeField(memory),
+  ],
+});
+
 const processorField = (roles) => ({
   component: 'switch',
   name: 'processor',
@@ -58,10 +73,6 @@ const socketField = (data, setData, options) => ({
   options: restructureOptions(options),
   hideField: options.length === 0,
   onChange: (value) => socketChange(value, data, setData, 'socket'),
-  condition: {
-    when: 'processor',
-    is: true,
-  },
   validate: [{ type: 'cpuCheck', field: 'socket' }],
 });
 
@@ -74,10 +85,6 @@ const coresPerSocketField = (data, setData, options) => ({
   onChange: (value) => socketChange(value, data, setData, 'cores'),
   validate: [{ type: 'cpuCheck', field: 'cores' }],
   hideField: options.length === 0,
-  condition: {
-    when: 'processor',
-    is: true,
-  },
 });
 
 const totalProcessorsField = (value) => ({
@@ -88,10 +95,22 @@ const totalProcessorsField = (value) => ({
   isReadOnly: true,
   type: 'number',
   initialValue: value,
+});
+
+const processorFormFields = (data, setData, options) => ({
+  component: componentTypes.SUB_FORM,
+  id: 'processor-sub-form',
+  name: 'processor-sub-form',
+  className: 'reconfigure-sub-form',
   condition: {
     when: 'processor',
     is: true,
   },
+  fields: [
+    socketField(data, setData, options.socket_options),
+    coresPerSocketField(data, setData, options.cores_options),
+    totalProcessorsField(data.socket * data.cores),
+  ],
 });
 
 const diskTable = (data, roles, setData, onCellClick, buttonClick) => ({
@@ -114,7 +133,7 @@ const networkTable = (data, roles, setData, onCellClick, buttonClick) => ({
   rows: data.dataTable.networkAdapters ? setNetworkData(data.dataTable.networkAdapters, roles, data, setData) : [],
   onCellClick,
   formType: TYPES.NETWORK,
-  addButtonLabel: __('Add Network'),
+  addButtonLabel: __('Add Network Adapter'),
   buttonClick,
 });
 
@@ -141,11 +160,8 @@ const renderDatatables = (recordId, data, roles, setData, onCellClick, buttonCli
 
 export const reconfigureFormFields = (recordId, roles, memory, data, setData, options, onCellClick, buttonClick) => ([
   memoryField(roles),
-  memoryValueField(),
-  memoryTypeField(memory),
+  memoryFormFields(memory),
   processorField(roles),
-  socketField(data, setData, options.socket_options, memory.max_cpu),
-  coresPerSocketField(data, setData, options.cores_options, memory.max_cpu),
-  totalProcessorsField(data.socket * data.cores),
+  processorFormFields(data, setData, options, memory.max_cpu),
   renderDatatables(recordId, data, roles, setData, onCellClick, buttonClick),
 ]);
