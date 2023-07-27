@@ -5,33 +5,18 @@ exports[`MiqPolicySetStructuredList should render policy set info structured lis
   ariaLabel="Structured list"
   className="miq-structured-list miq_policy_set_info"
 >
-  <FeatureToggle(StructuredListBody)>
-    <FeatureToggle(StructuredListRow)
-      className=""
-      key="0"
-      onClick={[Function]}
-      tabIndex={0}
-      title=""
-    >
-      <FeatureToggle(StructuredListCell)
-        className="label_header"
-      />
-      <FeatureToggle(StructuredListCell)
-        className="content_value object_item"
-        title=""
-      >
-        <div
-          className="content"
-        >
-          <div
-            className="expand wrap_text"
-          >
-            bar
-          </div>
-        </div>
-      </FeatureToggle(StructuredListCell)>
-    </FeatureToggle(StructuredListRow)>
-  </FeatureToggle(StructuredListBody)>
+  <MiqStructuredListBody
+    clickEvents={false}
+    mode="miq_policy_set_info"
+    rows={
+      Array [
+        Object {
+          "label": "Description",
+          "value": "bar",
+        },
+      ]
+    }
+  />
 </FeatureToggle(StructuredListWrapper)>
 `;
 
@@ -40,32 +25,22 @@ exports[`MiqPolicySetStructuredList should render policy set notes structured li
   ariaLabel="Structured list"
   className="miq-structured-list miq_policy_set_notes"
 >
-  <FeatureToggle(StructuredListBody)>
-    <FeatureToggle(StructuredListRow)
-      className=""
-      key="0"
-      onClick={[Function]}
-      tabIndex={0}
-      title=""
-    >
-      <FeatureToggle(StructuredListCell)
-        className="label_header object_item"
-        title=""
-      >
-        <MiqStructuredListInputs
-          action={[Function]}
-          value={
-            Object {
-              "input": "text_area",
-              "readonly": true,
-              "rows": 4,
-              "text": "text area description",
-            }
-          }
-        />
-      </FeatureToggle(StructuredListCell)>
-    </FeatureToggle(StructuredListRow)>
-  </FeatureToggle(StructuredListBody)>
+  <MiqStructuredListBody
+    clickEvents={false}
+    mode="miq_policy_set_notes"
+    rows={
+      Array [
+        Object {
+          "value": Object {
+            "input": "text_area",
+            "readonly": true,
+            "rows": 4,
+            "text": "text area description",
+          },
+        },
+      ]
+    }
+  />
 </FeatureToggle(StructuredListWrapper)>
 `;
 
@@ -74,107 +49,73 @@ exports[`MiqPolicySetStructuredList should render policy set structured list 1`]
   ariaLabel="Structured list"
   className="miq-structured-list miq_policy_set"
 >
-  <FeatureToggle(StructuredListBody)>
-    <FeatureToggle(StructuredListRow)
-      className="clickable"
-      key="0"
-      onClick={[Function]}
-      tabIndex={0}
-      title="View this Container Image Policy"
-    >
-      <FeatureToggle(StructuredListCell)
-        className="label_header object_item"
-        title="View this Container Image Policy"
-      >
-        <div
-          className="content"
-        >
-          <div
-            className="wrap_text"
-          />
-        </div>
-      </FeatureToggle(StructuredListCell)>
-    </FeatureToggle(StructuredListRow)>
-    <FeatureToggle(StructuredListRow)
-      className="clickable"
-      key="1"
-      onClick={[Function]}
-      tabIndex={1}
-      title="View this Container Image Policy"
-    >
-      <FeatureToggle(StructuredListCell)
-        className="label_header object_item"
-        title="View this Container Image Policy"
-      >
-        <div
-          className="content"
-        >
-          <div
-            className="wrap_text"
-          />
-        </div>
-      </FeatureToggle(StructuredListCell)>
-    </FeatureToggle(StructuredListRow)>
-    <FeatureToggle(StructuredListRow)
-      className="clickable"
-      key="2"
-      onClick={[Function]}
-      tabIndex={2}
-      title="View this Container Image Policy"
-    >
-      <FeatureToggle(StructuredListCell)
-        className="label_header object_item"
-        title="View this Container Image Policy"
-      >
-        <div
-          className="content"
-        >
-          <div
-            className="wrap_text"
-          />
-        </div>
-      </FeatureToggle(StructuredListCell)>
-    </FeatureToggle(StructuredListRow)>
-    <FeatureToggle(StructuredListRow)
-      className="clickable"
-      key="3"
-      onClick={[Function]}
-      tabIndex={3}
-      title="View this Container Node Policy"
-    >
-      <FeatureToggle(StructuredListCell)
-        className="label_header object_item"
-        title="View this Container Node Policy"
-      >
-        <div
-          className="content"
-        >
-          <div
-            className="wrap_text"
-          />
-        </div>
-      </FeatureToggle(StructuredListCell)>
-    </FeatureToggle(StructuredListRow)>
-    <FeatureToggle(StructuredListRow)
-      className="clickable"
-      key="4"
-      onClick={[Function]}
-      tabIndex={4}
-      title="View this VM and Instance Policy"
-    >
-      <FeatureToggle(StructuredListCell)
-        className="label_header object_item"
-        title="View this VM and Instance Policy"
-      >
-        <div
-          className="content"
-        >
-          <div
-            className="wrap_text"
-          />
-        </div>
-      </FeatureToggle(StructuredListCell)>
-    </FeatureToggle(StructuredListRow)>
-  </FeatureToggle(StructuredListBody)>
+  <MiqStructuredListBody
+    clickEvents={false}
+    mode="miq_policy_set"
+    rows={
+      Array [
+        Object {
+          "cells": Array [
+            Object {
+              "bold": true,
+              "icon": "pficon pficon-image",
+              "value": "Container Image Compliance",
+            },
+            "OpenSCAP",
+          ],
+          "onclick": "DoNav('/miq_policy/show/1');",
+          "title": "View this Container Image Policy",
+        },
+        Object {
+          "cells": Array [
+            Object {
+              "bold": true,
+              "icon": "pficon pficon-image",
+              "value": "Container Image Control",
+            },
+            "My scan",
+          ],
+          "onclick": "DoNav('/miq_policy/show/17');",
+          "title": "View this Container Image Policy",
+        },
+        Object {
+          "cells": Array [
+            Object {
+              "bold": true,
+              "icon": "pficon pficon-image",
+              "value": "Container Image Control",
+            },
+            "Schedule compliance",
+          ],
+          "onclick": "DoNav('/miq_policy/show/3');",
+          "title": "View this Container Image Policy",
+        },
+        Object {
+          "cells": Array [
+            Object {
+              "bold": true,
+              "icon": "pficon pficon-container-node",
+              "value": "Container Node Control",
+            },
+            "loic Node",
+          ],
+          "onclick": "DoNav('/miq_policy/show/18');",
+          "title": "View this Container Node Policy",
+        },
+        Object {
+          "cells": Array [
+            Object {
+              "bold": true,
+              "icon": "pficon pficon-virtual-machine",
+              "value": "VM and Instance Control",
+            },
+            "OpenStack Application",
+          ],
+          "onclick": "DoNav('/miq_policy/show/16');",
+          "title": "View this VM and Instance Policy",
+        },
+      ]
+    }
+  />
 </FeatureToggle(StructuredListWrapper)>
 `;

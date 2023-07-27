@@ -132,154 +132,306 @@ exports[`GenericGroup renders just fine 1`] = `
                     className="bx--structured-list miq-structured-list generic_group"
                     role="table"
                   >
-                    <FeatureToggle(StructuredListBody)>
-                      <StructuredListBody
-                        onKeyDown={[Function]}
-                      >
-                        <div
-                          className="bx--structured-list-tbody"
+                    <MiqStructuredListBody
+                      clickEvents={false}
+                      mode="generic_group"
+                      onClick={[Function]}
+                      rows={
+                        Array [
+                          Object {
+                            "hoverClass": "bar",
+                            "label": "foo",
+                            "value": "bar",
+                          },
+                          Object {
+                            "hoverClass": "bar",
+                            "label": "mrkef?",
+                            "value": "v zime!",
+                          },
+                        ]
+                      }
+                    >
+                      <FeatureToggle(StructuredListBody)>
+                        <StructuredListBody
                           onKeyDown={[Function]}
-                          role="rowgroup"
                         >
-                          <FeatureToggle(StructuredListRow)
-                            className=""
-                            key="0"
-                            onClick={[Function]}
-                            tabIndex={0}
-                            title=""
+                          <div
+                            className="bx--structured-list-tbody"
+                            onKeyDown={[Function]}
+                            role="rowgroup"
                           >
-                            <StructuredListRow
+                            <FeatureToggle(StructuredListRow)
                               className=""
-                              head={false}
-                              label={false}
+                              key="0"
                               onClick={[Function]}
-                              onKeyDown={[Function]}
                               tabIndex={0}
                               title=""
                             >
-                              <div
-                                className="bx--structured-list-row"
+                              <StructuredListRow
+                                className=""
+                                head={false}
+                                label={false}
                                 onClick={[Function]}
-                                role="row"
+                                onKeyDown={[Function]}
+                                tabIndex={0}
                                 title=""
                               >
-                                <FeatureToggle(StructuredListCell)
-                                  className="label_header"
-                                >
-                                  <StructuredListCell
-                                    className="label_header"
-                                    head={false}
-                                    noWrap={false}
-                                  >
-                                    <div
-                                      className="label_header bx--structured-list-td"
-                                      role="cell"
-                                    >
-                                      foo
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value object_item"
+                                <div
+                                  className="bx--structured-list-row"
+                                  onClick={[Function]}
+                                  role="row"
                                   title=""
                                 >
-                                  <StructuredListCell
-                                    className="content_value object_item"
-                                    head={false}
-                                    noWrap={false}
-                                    title=""
+                                  <MiqStructuredListBodyLabel
+                                    label="foo"
                                   >
-                                    <div
-                                      className="content_value object_item bx--structured-list-td"
-                                      role="cell"
-                                      title=""
+                                    <FeatureToggle(StructuredListCell)
+                                      className="label_header"
                                     >
-                                      <div
-                                        className="content"
+                                      <StructuredListCell
+                                        className="label_header"
+                                        head={false}
+                                        noWrap={false}
                                       >
                                         <div
-                                          className="expand wrap_text"
+                                          className="label_header bx--structured-list-td"
+                                          role="cell"
                                         >
-                                          bar
+                                          foo
                                         </div>
-                                      </div>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
-                              </div>
-                            </StructuredListRow>
-                          </FeatureToggle(StructuredListRow)>
-                          <FeatureToggle(StructuredListRow)
-                            className=""
-                            key="1"
-                            onClick={[Function]}
-                            tabIndex={1}
-                            title=""
-                          >
-                            <StructuredListRow
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                  </MiqStructuredListBodyLabel>
+                                  <MiqStructuredListBodyValue
+                                    clickEvents={false}
+                                    onClick={[Function]}
+                                    row={
+                                      Object {
+                                        "hoverClass": "bar",
+                                        "label": "foo",
+                                        "value": "bar",
+                                      }
+                                    }
+                                  >
+                                    <MiqStructuredListObject
+                                      clickEvents={false}
+                                      onClick={[Function]}
+                                      row={
+                                        Object {
+                                          "hoverClass": "bar",
+                                          "label": "foo",
+                                          "value": "bar",
+                                        }
+                                      }
+                                    >
+                                      <FeatureToggle(StructuredListCell)
+                                        className="content_value object_item"
+                                        title=""
+                                      >
+                                        <StructuredListCell
+                                          className="content_value object_item"
+                                          head={false}
+                                          noWrap={false}
+                                          title=""
+                                        >
+                                          <div
+                                            className="content_value object_item bx--structured-list-td"
+                                            role="cell"
+                                            title=""
+                                          >
+                                            <MiqStructuredListConditionalTag
+                                              clickEvents={false}
+                                              onClick={[Function]}
+                                              row={
+                                                Object {
+                                                  "hoverClass": "bar",
+                                                  "label": "foo",
+                                                  "value": "bar",
+                                                }
+                                              }
+                                            >
+                                              <MiqStructuredListLink
+                                                clickEvents={false}
+                                                onClick={[Function]}
+                                                row={
+                                                  Object {
+                                                    "hoverClass": "bar",
+                                                    "label": "foo",
+                                                    "value": "bar",
+                                                  }
+                                                }
+                                              >
+                                                <MiqStructuredListContent
+                                                  row={
+                                                    Object {
+                                                      "hoverClass": "bar",
+                                                      "label": "foo",
+                                                      "value": "bar",
+                                                    }
+                                                  }
+                                                >
+                                                  <div
+                                                    className="content"
+                                                  >
+                                                    <MiqStructuredListText
+                                                      value="bar"
+                                                    >
+                                                      <div
+                                                        className="expand wrap_text"
+                                                      >
+                                                        bar
+                                                      </div>
+                                                    </MiqStructuredListText>
+                                                  </div>
+                                                </MiqStructuredListContent>
+                                              </MiqStructuredListLink>
+                                            </MiqStructuredListConditionalTag>
+                                          </div>
+                                        </StructuredListCell>
+                                      </FeatureToggle(StructuredListCell)>
+                                    </MiqStructuredListObject>
+                                  </MiqStructuredListBodyValue>
+                                </div>
+                              </StructuredListRow>
+                            </FeatureToggle(StructuredListRow)>
+                            <FeatureToggle(StructuredListRow)
                               className=""
-                              head={false}
-                              label={false}
+                              key="1"
                               onClick={[Function]}
-                              onKeyDown={[Function]}
                               tabIndex={1}
                               title=""
                             >
-                              <div
-                                className="bx--structured-list-row"
+                              <StructuredListRow
+                                className=""
+                                head={false}
+                                label={false}
                                 onClick={[Function]}
-                                role="row"
+                                onKeyDown={[Function]}
+                                tabIndex={1}
                                 title=""
                               >
-                                <FeatureToggle(StructuredListCell)
-                                  className="label_header"
-                                >
-                                  <StructuredListCell
-                                    className="label_header"
-                                    head={false}
-                                    noWrap={false}
-                                  >
-                                    <div
-                                      className="label_header bx--structured-list-td"
-                                      role="cell"
-                                    >
-                                      mrkef?
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value object_item"
+                                <div
+                                  className="bx--structured-list-row"
+                                  onClick={[Function]}
+                                  role="row"
                                   title=""
                                 >
-                                  <StructuredListCell
-                                    className="content_value object_item"
-                                    head={false}
-                                    noWrap={false}
-                                    title=""
+                                  <MiqStructuredListBodyLabel
+                                    label="mrkef?"
                                   >
-                                    <div
-                                      className="content_value object_item bx--structured-list-td"
-                                      role="cell"
-                                      title=""
+                                    <FeatureToggle(StructuredListCell)
+                                      className="label_header"
                                     >
-                                      <div
-                                        className="content"
+                                      <StructuredListCell
+                                        className="label_header"
+                                        head={false}
+                                        noWrap={false}
                                       >
                                         <div
-                                          className="expand wrap_text"
+                                          className="label_header bx--structured-list-td"
+                                          role="cell"
                                         >
-                                          v zime!
+                                          mrkef?
                                         </div>
-                                      </div>
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
-                              </div>
-                            </StructuredListRow>
-                          </FeatureToggle(StructuredListRow)>
-                        </div>
-                      </StructuredListBody>
-                    </FeatureToggle(StructuredListBody)>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                  </MiqStructuredListBodyLabel>
+                                  <MiqStructuredListBodyValue
+                                    clickEvents={false}
+                                    onClick={[Function]}
+                                    row={
+                                      Object {
+                                        "hoverClass": "bar",
+                                        "label": "mrkef?",
+                                        "value": "v zime!",
+                                      }
+                                    }
+                                  >
+                                    <MiqStructuredListObject
+                                      clickEvents={false}
+                                      onClick={[Function]}
+                                      row={
+                                        Object {
+                                          "hoverClass": "bar",
+                                          "label": "mrkef?",
+                                          "value": "v zime!",
+                                        }
+                                      }
+                                    >
+                                      <FeatureToggle(StructuredListCell)
+                                        className="content_value object_item"
+                                        title=""
+                                      >
+                                        <StructuredListCell
+                                          className="content_value object_item"
+                                          head={false}
+                                          noWrap={false}
+                                          title=""
+                                        >
+                                          <div
+                                            className="content_value object_item bx--structured-list-td"
+                                            role="cell"
+                                            title=""
+                                          >
+                                            <MiqStructuredListConditionalTag
+                                              clickEvents={false}
+                                              onClick={[Function]}
+                                              row={
+                                                Object {
+                                                  "hoverClass": "bar",
+                                                  "label": "mrkef?",
+                                                  "value": "v zime!",
+                                                }
+                                              }
+                                            >
+                                              <MiqStructuredListLink
+                                                clickEvents={false}
+                                                onClick={[Function]}
+                                                row={
+                                                  Object {
+                                                    "hoverClass": "bar",
+                                                    "label": "mrkef?",
+                                                    "value": "v zime!",
+                                                  }
+                                                }
+                                              >
+                                                <MiqStructuredListContent
+                                                  row={
+                                                    Object {
+                                                      "hoverClass": "bar",
+                                                      "label": "mrkef?",
+                                                      "value": "v zime!",
+                                                    }
+                                                  }
+                                                >
+                                                  <div
+                                                    className="content"
+                                                  >
+                                                    <MiqStructuredListText
+                                                      value="v zime!"
+                                                    >
+                                                      <div
+                                                        className="expand wrap_text"
+                                                      >
+                                                        v zime!
+                                                      </div>
+                                                    </MiqStructuredListText>
+                                                  </div>
+                                                </MiqStructuredListContent>
+                                              </MiqStructuredListLink>
+                                            </MiqStructuredListConditionalTag>
+                                          </div>
+                                        </StructuredListCell>
+                                      </FeatureToggle(StructuredListCell)>
+                                    </MiqStructuredListObject>
+                                  </MiqStructuredListBodyValue>
+                                </div>
+                              </StructuredListRow>
+                            </FeatureToggle(StructuredListRow)>
+                          </div>
+                        </StructuredListBody>
+                      </FeatureToggle(StructuredListBody)>
+                    </MiqStructuredListBody>
                   </div>
                 </StructuredListWrapper>
               </FeatureToggle(StructuredListWrapper)>

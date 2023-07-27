@@ -5,58 +5,22 @@ exports[`MiqEventDefinitionStructuredList should render event definition info st
   ariaLabel="Structured list"
   className="miq-structured-list miq_event_definition_info"
 >
-  <FeatureToggle(StructuredListBody)>
-    <FeatureToggle(StructuredListRow)
-      className=""
-      key="0"
-      onClick={[Function]}
-      tabIndex={0}
-      title=""
-    >
-      <FeatureToggle(StructuredListCell)
-        className="label_header"
-      />
-      <FeatureToggle(StructuredListCell)
-        className="content_value object_item"
-        title=""
-      >
-        <div
-          className="content"
-        >
-          <div
-            className="expand wrap_text"
-          >
-            bar
-          </div>
-        </div>
-      </FeatureToggle(StructuredListCell)>
-    </FeatureToggle(StructuredListRow)>
-    <FeatureToggle(StructuredListRow)
-      className=""
-      key="1"
-      onClick={[Function]}
-      tabIndex={1}
-      title=""
-    >
-      <FeatureToggle(StructuredListCell)
-        className="label_header"
-      />
-      <FeatureToggle(StructuredListCell)
-        className="content_value object_item"
-        title=""
-      >
-        <div
-          className="content"
-        >
-          <div
-            className="expand wrap_text"
-          >
-            policy description
-          </div>
-        </div>
-      </FeatureToggle(StructuredListCell)>
-    </FeatureToggle(StructuredListRow)>
-  </FeatureToggle(StructuredListBody)>
+  <MiqStructuredListBody
+    clickEvents={false}
+    mode="miq_event_definition_info"
+    rows={
+      Array [
+        Object {
+          "label": "Event Group",
+          "value": "bar",
+        },
+        Object {
+          "label": "Attached to Policy",
+          "value": "policy description",
+        },
+      ]
+    }
+  />
 </FeatureToggle(StructuredListWrapper)>
 `;
 
@@ -65,27 +29,24 @@ exports[`MiqEventDefinitionStructuredList should render event definition policy 
   ariaLabel="Structured list"
   className="miq-structured-list miq_event_definition_policy"
 >
-  <FeatureToggle(StructuredListBody)>
-    <FeatureToggle(StructuredListRow)
-      className="clickable"
-      key="0"
-      onClick={[Function]}
-      tabIndex={0}
-      title="View this Model Alert"
-    >
-      <FeatureToggle(StructuredListCell)
-        className="label_header object_item"
-        title="View this Model Alert"
-      >
-        <div
-          className="content"
-        >
-          <div
-            className="wrap_text"
-          />
-        </div>
-      </FeatureToggle(StructuredListCell)>
-    </FeatureToggle(StructuredListRow)>
-  </FeatureToggle(StructuredListBody)>
+  <MiqStructuredListBody
+    clickEvents={false}
+    mode="miq_event_definition_policy"
+    onClick={[MockFunction]}
+    rows={
+      Array [
+        Object {
+          "cells": Array [
+            Object {
+              "icon": "pficon pficon-warning-triangle-o",
+              "value": "Policy description",
+            },
+          ],
+          "onclick": "DoNav('/miq_policy/show/1');",
+          "title": "View this Model Alert",
+        },
+      ]
+    }
+  />
 </FeatureToggle(StructuredListWrapper)>
 `;

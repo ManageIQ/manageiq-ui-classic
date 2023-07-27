@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox, TextArea, Dropdown } from 'carbon-components-react';
-import { DynamicReactComponents, InputTypes } from './helpers';
+import { DynamicReactComponents, InputTypes } from '../../helpers';
 
+/** Component to render textarea / checkbox / react components */
 const MiqStructuredListInputs = ({ value, action }) => {
   const renderTextArea = (value) => (<TextArea value={value.text} labelText="" />);
 
