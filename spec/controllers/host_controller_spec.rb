@@ -52,6 +52,8 @@ describe HostController do
     it 'edit renders GTL grid with selected Host records' do
       session[:host_items] = [h1.id, h2.id]
       session[:settings] = {:views   => {:host => 'grid'}}
+      stub_supports(h1, :update)
+      stub_supports(h2, :update)
 
       expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
         :model_name       => 'Host',
@@ -493,6 +495,8 @@ describe HostController do
     before do
       allow(controller).to receive(:assert_privileges)
       allow(controller).to receive(:session).and_return(:host_items => [h1.id, h2.id])
+      stub_supports(h1, :update)
+      stub_supports(h2, :update)
       controller.instance_variable_set(:@breadcrumbs, [])
     end
 
