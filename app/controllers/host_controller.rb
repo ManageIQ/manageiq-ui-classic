@@ -136,6 +136,13 @@ class HostController < ApplicationController
     assert_privileges("host_edit")
     if session[:host_items].nil?
       @host = find_record_with_rbac(Host, params[:id])
+
+      unless @host.supports?(:update) # if host doesn't support editing
+        add_flash(_("This Host does not support editing"), :error)
+        flash_to_session
+        redirect_to(:action => @lastaction, :id => params[:id])
+      end
+
       @in_a_form = true
       session[:changed] = false
       drop_breadcrumb(:name => _("Edit Host '%{name}'") % {:name => @host.name}, :url => "/host/edit/#{@host.id}")
@@ -154,6 +161,12 @@ class HostController < ApplicationController
       hostitems = Host.find(session[:host_items]).sort_by(&:name)
       @selected_hosts = {}
       hostitems.each do |h|
+        unless h.supports?(:update) # if host doesn't support editing
+          add_flash(_("One of the Hosts does not support editing"), :error)
+          flash_to_session
+          redirect_to(:action => @lastaction, :id => params[:id])
+        end
+
         @selected_hosts[h.id] = h.name
       end
       build_targets_hash(hostitems)
