@@ -47,7 +47,8 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           'pficon pficon-edit fa-lg',
           t = N_('Edit this item'),
           t,
-          :url => "/edit"),
+          :klass => ApplicationHelper::Button::HostEdit,
+          :url   => "/edit"),
         button(
           :host_toggle_maintenance,
           'pficon pficon-edit fa-lg',
