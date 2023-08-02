@@ -7,11 +7,6 @@ namespace :update do
           next
         end
         puts "== #{engine.name} =="
-        require 'json'
-        package_json = JSON.load_file("./package.json")
-        package_json["resolutions"] ||= {}
-        package_json["resolutions"]["es-abstract"] = "~1.21.3"
-        File.write("./package.json", JSON.pretty_generate(package_json))
         system("which yarn >/dev/null") || abort("\n== You have to install yarn ==")
         system("yarn set version 1.22.18") || abort("\n== yarn failed to set version to 1.22.18 in #{engine.path} ==") if RUBY_PLATFORM.include?("s390x")
         system("yarn") || abort("\n== yarn failed in #{engine.path} ==") # Add --immutable once s390x is off of yarn 1.
