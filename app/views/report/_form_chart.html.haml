@@ -47,7 +47,7 @@
           = _('Top values to show')
         .col-md-8
           = select_tag('chosen_count',
-            options_for_select(3..ReportController::Reports::Editor::GRAPH_MAX_COUNT, @edit[:new][:graph_count].to_i),
+            options_for_select(3..ReportController::Reports::Editor.chart_top_values, @edit[:new][:graph_count].to_i),
             :multiple              => false,
             :class                 => "selectpicker")
           :javascript

@@ -418,7 +418,7 @@ describe ReportController do
           edit_new = assigns(:edit)[:new]
           expect(edit_new[:graph_type]).to eq(chosen_graph)
           expect(edit_new[:graph_other]).to be_truthy
-          expect(edit_new[:graph_count]).to eq(ReportController::Reports::Editor::GRAPH_MAX_COUNT)
+          expect(edit_new[:graph_count]).to eq(ReportController::Reports::Editor.chart_top_values)
           expect(assigns(:refresh_div)).to eq("chart_div")
           expect(assigns(:refresh_partial)).to eq("form_chart")
         end
@@ -427,19 +427,19 @@ describe ReportController do
           chosen_graph = "<No chart>"
           controller.params = {:chosen_graph => chosen_graph}
           edit = assigns(:edit)
-          edit[:current] = {:graph_count => ReportController::Reports::Editor::GRAPH_MAX_COUNT, :graph_other => true}
+          edit[:current] = {:graph_count => ReportController::Reports::Editor.chart_top_values, :graph_other => true}
           controller.instance_variable_set(:@edit, edit)
           controller.send(:gfv_charts)
           edit_new = assigns(:edit)[:new]
           expect(edit_new[:graph_type]).to be_nil
           expect(edit_new[:graph_other]).to be_truthy
-          expect(edit_new[:graph_count]).to eq(ReportController::Reports::Editor::GRAPH_MAX_COUNT)
+          expect(edit_new[:graph_count]).to eq(ReportController::Reports::Editor.chart_top_values)
           expect(assigns(:refresh_div)).to eq("chart_div")
           expect(assigns(:refresh_partial)).to eq("form_chart")
         end
 
         it "sets top values to show" do
-          top_val = "3"
+          top_val = 3
           controller.params = {:chosen_count => top_val}
           controller.send(:gfv_charts)
           expect(assigns(:edit)[:new][:graph_count]).to eq(top_val)
