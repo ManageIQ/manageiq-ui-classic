@@ -5,11 +5,15 @@ module AuthKeyPairCloudHelper::TextualSummary
   # Groups
   #
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i[vms])
+    TextualGroup.new(_("Relationships"), %i[provider vms])
   end
 
   def textual_group_properties
     TextualGroup.new(_("Properties"), %i[name fingerprint])
+  end
+
+  def textual_provider
+    textual_link(@record.ext_management_system)
   end
 
   #
