@@ -5,7 +5,7 @@ describe Menu::Manager do
     Singleton.__init__(Menu::Manager)
   end
 
-  context "initialize" do
+  describe "#initialize" do
     it "loads default menu items" do
       section = Menu::Manager.section(:vi)
       expect(section).to be_truthy
@@ -18,7 +18,7 @@ describe Menu::Manager do
     end
   end
 
-  context "menu" do
+  describe ".menu" do
     it "knows about custom section with items" do
       temp_file  = section_file
       temp_file2 = item_file
@@ -35,6 +35,26 @@ describe Menu::Manager do
         temp_file.unlink
         temp_file2.unlink
       end
+    end
+  end
+
+  describe ".reload" do
+    before do
+      stub_settings_merge(:product => {:consumption => nil})
+    end
+
+    it "reloads the menu" do
+      expect(described_class.item(:cons)).to be_nil
+
+      Settings.product.consumption = true
+      described_class.reload
+
+      expect(described_class.item(:cons)).to be_a(Menu::Section)
+
+      Settings.product.consumption = nil
+      described_class.reload
+
+      expect(described_class.item(:cons)).to be_nil
     end
   end
 end

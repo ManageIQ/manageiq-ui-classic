@@ -6,8 +6,13 @@ module Menu
     class << self
       extend Forwardable
 
-      delegate %i[menu item_in_section? item items section section_id_string_to_symbol
+      delegate %i[menu item_in_section? item items reload section section_id_string_to_symbol
                   section_for_item_id each map detect select] => :instance
+    end
+
+    def reload
+      @menu = @id_to_section = @valid_sections = nil
+      initialize
     end
 
     def each
