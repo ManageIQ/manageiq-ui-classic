@@ -12,8 +12,11 @@ module OpsHelper::RoleRbacDetailsHelper
     rows = [
       row_data(_('ID'), role.id),
       row_data(_('Name'), role.name),
-      row_data(_("Access Restriction for Orchestration Stacks, Key Pairs, Services, VMs, and Templates"), role.settings.kind_of?(Hash) && role.settings.fetch_path(:restrictions, :vms) ? _(MiqUserRole::RESTRICTIONS[role.settings.fetch_path(:restrictions, :vms)]) : _("None")),
       row_data(_("Access Restriction for Catalog Items"), role.settings.kind_of?(Hash) && role.settings.fetch_path(:restrictions, :service_templates) ? _(MiqUserRole::RESTRICTIONS[role.settings.fetch_path(:restrictions, :service_templates)]) : _("None")),
+      row_data(_("Access Restriction for Key Pairs"), role.settings.kind_of?(Hash) && role.settings.fetch_path(:restrictions, :auth_key_pairs) ? _(MiqUserRole::RESTRICTIONS[role.settings.fetch_path(:restrictions, :auth_key_pairs)]) : _("None")),
+      row_data(_("Access Restriction for Orchestration Stacks"), role.settings.kind_of?(Hash) && role.settings.fetch_path(:restrictions, :orchestration_stacks) ? _(MiqUserRole::RESTRICTIONS[role.settings.fetch_path(:restrictions, :orchestration_stacks)]) : _("None")),
+      row_data(_("Access Restriction for Services"), role.settings.kind_of?(Hash) && role.settings.fetch_path(:restrictions, :services) ? _(MiqUserRole::RESTRICTIONS[role.settings.fetch_path(:restrictions, :services)]) : _("None")),
+      row_data(_("Access Restriction for VMs and Templates"), role.settings.kind_of?(Hash) && role.settings.fetch_path(:restrictions, :vms) ? _(MiqUserRole::RESTRICTIONS[role.settings.fetch_path(:restrictions, :vms)]) : _("None")),
       row_data(_("Product Features (Read Only)"), {:input => 'component', :component => 'TREE_VIEW_REDUX', :props => rbac_menu_tree.locals_for_render, :name => rbac_menu_tree.name})
     ]
     miq_structured_list({
