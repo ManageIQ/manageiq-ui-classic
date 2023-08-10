@@ -9,12 +9,15 @@ module ReportController::Reports::Editor
   DEFAULT_PDF_PAGE_SIZE = "US-Letter".freeze
 
   MAX_REPORT_COLUMNS = 100 # Default maximum number of columns in a report
-  GRAPH_MAX_COUNT = 10
 
   CHAREGEBACK_ALLOCATED_METHODS = {
     :max => N_('Maximum'),
     :avg => N_('Average')
   }.freeze
+
+  def self.chart_top_values
+    ::Settings.reporting.chart_top_values
+  end
 
   def chargeback_allocated_methods
     CHAREGEBACK_ALLOCATED_METHODS.map { |k, v| [k, _(v)] }.to_h
@@ -632,7 +635,7 @@ module ReportController::Reports::Editor
       else
         @edit[:new][:graph_other]  = true if @edit[:new][:graph_type].nil? # Reset other setting if choosing first chart
         @edit[:new][:graph_type]   = params[:chosen_graph] # Save graph type
-        @edit[:new][:graph_count] ||= GRAPH_MAX_COUNT # Reset graph count, if not set
+        @edit[:new][:graph_count] ||= ReportController::Reports::Editor.chart_top_values # Reset graph count, if not set
         @edit[:new][:chart_mode] ||= 'counts'
         @edit[:new][:chart_column] ||= ''
       end
@@ -653,7 +656,7 @@ module ReportController::Reports::Editor
     end
 
     if params[:chosen_count] && params[:chosen_count] != @edit[:new][:graph_count]
-      @edit[:new][:graph_count] = params[:chosen_count]
+      @edit[:new][:graph_count] = params[:chosen_count].to_i
       @refresh_div              = "chart_sample_div"
       @refresh_partial          = "form_chart_sample"
     end
@@ -1202,7 +1205,7 @@ module ReportController::Reports::Editor
       @edit[:new][:graph_other]  = @rpt.graph[:other] ? @rpt.graph[:other] : false
     else
       @edit[:new][:graph_type]   = @rpt.graph
-      @edit[:new][:graph_count]  = GRAPH_MAX_COUNT
+      @edit[:new][:graph_count]  = ReportController::Reports::Editor.chart_top_values
       @edit[:new][:chart_mode]   = 'counts'
       @edit[:new][:chart_column] = ''
       @edit[:new][:graph_other]  = true
