@@ -95,10 +95,14 @@
       .sub_row_item {
         width: 100%;
         display: flex;
-        padding: 5px 0 5px 0;
+        margin-bottom: 5px;
+
+        .cell {
+          align-items: flex-start;
+        }
 
         .sub_label {
-          width: 50%;
+          width: 45%;
           font-weight: 600;
           display: inline-block;
           text-overflow: ellipsis;
@@ -109,6 +113,7 @@
         .sub_value {
           display: flex;
           flex-grow: 1;
+          width: 45%;
         }
       }
     }
