@@ -166,10 +166,10 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
       type="warning"
     >
       <div
-        className="alert alert-warning"
+        className="miq-notification-message-container alert alert-warning"
       >
         <span
-          className="pficon pficon-warning"
+          className="pficon pficon-warning-triangle-o"
         />
         <strong>
           Caution: Mappings with Resource Entity 'All-Entities' could cause overwriting existing tags on resources with mapped provider labels.
