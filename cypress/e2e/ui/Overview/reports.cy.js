@@ -337,9 +337,11 @@ describe('Overview > Reports Tests', () => {
     cy.get('#form_filter_div > .form-horizontal > :nth-child(1) > .col-md-8 > .btn-group > .btn').click({ force: true });
     cy.get('#form_filter_div > .form-horizontal > :nth-child(1) > .col-md-8 > .btn-group > .open > .dropdown-menu > [data-original-index="1"] > a').then((option) => {
       cy.get(option).click({ force: true }).then(() => {
+        cy.wait(5000);
         cy.get('#form_filter_div > .form-horizontal > :nth-child(2) > .col-md-8 > .btn-group > .btn').click({ force: true });
         cy.get('#form_filter_div > .form-horizontal > :nth-child(2) > .col-md-8 > .btn-group > .open > .dropdown-menu > [data-original-index="1"] > a').then((option) => {
           cy.get(option).click({ force: true }).then(() => {
+            cy.wait(5000);
             cy.get(':nth-child(3) > .col-md-8 > .btn-group > .btn').click({ force: true });
             cy.get(':nth-child(3) > .col-md-8 > .btn-group > .open > .dropdown-menu > [data-original-index="1"] > a').then((option) => {
               cy.get(option).click({ force: true });
