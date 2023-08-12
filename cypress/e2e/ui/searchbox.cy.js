@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 describe('Search box', () => {
   beforeEach(() => {
-    cy.viewport(1280, 800);
     cy.login();
   });
 
