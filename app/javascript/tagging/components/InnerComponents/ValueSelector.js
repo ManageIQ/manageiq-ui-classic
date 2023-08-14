@@ -98,6 +98,7 @@ class ValueSelector extends React.Component {
         <MultiSelect
           className="tag-select"
           id="tag-select"
+          open
           label={label}
           initialSelectedItems={selectedOptions}
           // eslint-disable-next-line react/destructuring-assignment
