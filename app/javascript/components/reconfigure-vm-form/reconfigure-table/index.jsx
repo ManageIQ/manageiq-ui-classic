@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'carbon-components-react';
+import classNames from 'classnames';
 import MiqDataTable from '../../miq-data-table';
 
 const ReconfigureTable = ({
@@ -18,10 +19,11 @@ const ReconfigureTable = ({
     </Button>
   );
   return (
-    <div className={`${formType}-table`}>
-      <hr />
-      <h3>{label}</h3>
-      {renderAddButton()}
+    <div className={classNames(`${formType}-table`, 'reconfigure-form-table')}>
+      <div className="form-section-title">
+        <h3>{label}</h3>
+        {renderAddButton()}
+      </div>
       <MiqDataTable
         headers={headers}
         rows={rows}
