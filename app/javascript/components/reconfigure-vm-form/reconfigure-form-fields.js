@@ -31,7 +31,7 @@ const memoryTypeField = (memory) => ({
   component: componentTypes.SELECT,
   id: 'memoryType',
   name: 'mem_type',
-  label: __('Memory Type'),
+  label: __('Unit'),
   initialValue: 'GB',
   options: restructureOptions([__('GB'), __('MB')]),
   helperText: __(`Between ${memory.min}MB and ${memory.max / 1024}GB`),

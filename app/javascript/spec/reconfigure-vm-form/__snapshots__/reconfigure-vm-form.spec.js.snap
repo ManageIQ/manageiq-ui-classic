@@ -180,7 +180,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                         "helperText": "Between 1024MB and 0.009765625GB",
                         "id": "memoryType",
                         "initialValue": "GB",
-                        "label": "Memory Type",
+                        "label": "Unit",
                         "name": "mem_type",
                         "options": Array [
                           Object {
@@ -596,7 +596,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                           "helperText": "Between 1024MB and 0.009765625GB",
                           "id": "memoryType",
                           "initialValue": "GB",
-                          "label": "Memory Type",
+                          "label": "Unit",
                           "name": "mem_type",
                           "options": Array [
                             Object {
@@ -1005,7 +1005,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                             "helperText": "Between 1024MB and 0.009765625GB",
                             "id": "memoryType",
                             "initialValue": "GB",
-                            "label": "Memory Type",
+                            "label": "Unit",
                             "name": "mem_type",
                             "options": Array [
                               Object {
@@ -1413,7 +1413,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                 "helperText": "Between 1024MB and 0.009765625GB",
                                 "id": "memoryType",
                                 "initialValue": "GB",
-                                "label": "Memory Type",
+                                "label": "Unit",
                                 "name": "mem_type",
                                 "options": Array [
                                   Object {
@@ -1768,7 +1768,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                 "helperText": "Between 1024MB and 0.009765625GB",
                                 "id": "memoryType",
                                 "initialValue": "GB",
-                                "label": "Memory Type",
+                                "label": "Unit",
                                 "name": "mem_type",
                                 "options": Array [
                                   Object {
@@ -2127,7 +2127,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                   "helperText": "Between 1024MB and 0.009765625GB",
                                   "id": "memoryType",
                                   "initialValue": "GB",
-                                  "label": "Memory Type",
+                                  "label": "Unit",
                                   "name": "mem_type",
                                   "options": Array [
                                     Object {
@@ -2483,7 +2483,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                   "helperText": "Between 1024MB and 0.009765625GB",
                                   "id": "memoryType",
                                   "initialValue": "GB",
-                                  "label": "Memory Type",
+                                  "label": "Unit",
                                   "name": "mem_type",
                                   "options": Array [
                                     Object {
@@ -2842,7 +2842,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                 "helperText": "Between 1024MB and 0.009765625GB",
                                 "id": "memoryType",
                                 "initialValue": "GB",
-                                "label": "Memory Type",
+                                "label": "Unit",
                                 "name": "mem_type",
                                 "options": Array [
                                   Object {
@@ -3191,7 +3191,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                     "helperText": "Between 1024MB and 0.009765625GB",
                                     "id": "memoryType",
                                     "initialValue": "GB",
-                                    "label": "Memory Type",
+                                    "label": "Unit",
                                     "name": "mem_type",
                                     "options": Array [
                                       Object {
@@ -3544,7 +3544,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                       "helperText": "Between 1024MB and 0.009765625GB",
                                       "id": "memoryType",
                                       "initialValue": "GB",
-                                      "label": "Memory Type",
+                                      "label": "Unit",
                                       "name": "mem_type",
                                       "options": Array [
                                         Object {
@@ -4000,7 +4000,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                     "helperText": "Between 1024MB and 0.009765625GB",
                                     "id": "memoryType",
                                     "initialValue": "GB",
-                                    "label": "Memory Type",
+                                    "label": "Unit",
                                     "name": "mem_type",
                                     "options": Array [
                                       Object {
@@ -4056,7 +4056,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                         "helperText": "Between 1024MB and 0.009765625GB",
                                         "id": "memoryType",
                                         "initialValue": "GB",
-                                        "label": "Memory Type",
+                                        "label": "Unit",
                                         "name": "mem_type",
                                         "options": Array [
                                           Object {
@@ -4112,7 +4112,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                           "helperText": "Between 1024MB and 0.009765625GB",
                                           "id": "memoryType",
                                           "initialValue": "GB",
-                                          "label": "Memory Type",
+                                          "label": "Unit",
                                           "name": "mem_type",
                                           "options": Array [
                                             Object {
@@ -4181,7 +4181,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                               "helperText": "Between 1024MB and 0.009765625GB",
                                               "id": "memoryType",
                                               "initialValue": "GB",
-                                              "label": "Memory Type",
+                                              "label": "Unit",
                                               "name": "mem_type",
                                               "options": Array [
                                                 Object {
@@ -4243,7 +4243,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                                 "helperText": "Between 1024MB and 0.009765625GB",
                                                 "id": "memoryType",
                                                 "initialValue": "GB",
-                                                "label": "Memory Type",
+                                                "label": "Unit",
                                                 "name": "mem_type",
                                                 "options": Array [
                                                   Object {
@@ -4304,7 +4304,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                                   "helperText": "Between 1024MB and 0.009765625GB",
                                                   "id": "memoryType",
                                                   "initialValue": "GB",
-                                                  "label": "Memory Type",
+                                                  "label": "Unit",
                                                   "name": "mem_type",
                                                   "options": Array [
                                                     Object {
@@ -18985,7 +18985,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                         "helperText": "Between 1024MB and 0.009765625GB",
                         "id": "memoryType",
                         "initialValue": "GB",
-                        "label": "Memory Type",
+                        "label": "Unit",
                         "name": "mem_type",
                         "options": Array [
                           Object {
@@ -19218,7 +19218,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                           "helperText": "Between 1024MB and 0.009765625GB",
                           "id": "memoryType",
                           "initialValue": "GB",
-                          "label": "Memory Type",
+                          "label": "Unit",
                           "name": "mem_type",
                           "options": Array [
                             Object {
@@ -19444,7 +19444,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                             "helperText": "Between 1024MB and 0.009765625GB",
                             "id": "memoryType",
                             "initialValue": "GB",
-                            "label": "Memory Type",
+                            "label": "Unit",
                             "name": "mem_type",
                             "options": Array [
                               Object {
@@ -21923,7 +21923,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                         "helperText": "Between 1024MB and 0.009765625GB",
                         "id": "memoryType",
                         "initialValue": "GB",
-                        "label": "Memory Type",
+                        "label": "Unit",
                         "name": "mem_type",
                         "options": Array [
                           Object {
@@ -22340,7 +22340,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                           "helperText": "Between 1024MB and 0.009765625GB",
                           "id": "memoryType",
                           "initialValue": "GB",
-                          "label": "Memory Type",
+                          "label": "Unit",
                           "name": "mem_type",
                           "options": Array [
                             Object {
@@ -22750,7 +22750,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                             "helperText": "Between 1024MB and 0.009765625GB",
                             "id": "memoryType",
                             "initialValue": "GB",
-                            "label": "Memory Type",
+                            "label": "Unit",
                             "name": "mem_type",
                             "options": Array [
                               Object {
@@ -23159,7 +23159,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                 "helperText": "Between 1024MB and 0.009765625GB",
                                 "id": "memoryType",
                                 "initialValue": "GB",
-                                "label": "Memory Type",
+                                "label": "Unit",
                                 "name": "mem_type",
                                 "options": Array [
                                   Object {
@@ -23515,7 +23515,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                 "helperText": "Between 1024MB and 0.009765625GB",
                                 "id": "memoryType",
                                 "initialValue": "GB",
-                                "label": "Memory Type",
+                                "label": "Unit",
                                 "name": "mem_type",
                                 "options": Array [
                                   Object {
@@ -23875,7 +23875,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                   "helperText": "Between 1024MB and 0.009765625GB",
                                   "id": "memoryType",
                                   "initialValue": "GB",
-                                  "label": "Memory Type",
+                                  "label": "Unit",
                                   "name": "mem_type",
                                   "options": Array [
                                     Object {
@@ -24232,7 +24232,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                   "helperText": "Between 1024MB and 0.009765625GB",
                                   "id": "memoryType",
                                   "initialValue": "GB",
-                                  "label": "Memory Type",
+                                  "label": "Unit",
                                   "name": "mem_type",
                                   "options": Array [
                                     Object {
@@ -24592,7 +24592,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                 "helperText": "Between 1024MB and 0.009765625GB",
                                 "id": "memoryType",
                                 "initialValue": "GB",
-                                "label": "Memory Type",
+                                "label": "Unit",
                                 "name": "mem_type",
                                 "options": Array [
                                   Object {
@@ -24942,7 +24942,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                     "helperText": "Between 1024MB and 0.009765625GB",
                                     "id": "memoryType",
                                     "initialValue": "GB",
-                                    "label": "Memory Type",
+                                    "label": "Unit",
                                     "name": "mem_type",
                                     "options": Array [
                                       Object {
@@ -25296,7 +25296,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                       "helperText": "Between 1024MB and 0.009765625GB",
                                       "id": "memoryType",
                                       "initialValue": "GB",
-                                      "label": "Memory Type",
+                                      "label": "Unit",
                                       "name": "mem_type",
                                       "options": Array [
                                         Object {
@@ -25753,7 +25753,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                     "helperText": "Between 1024MB and 0.009765625GB",
                                     "id": "memoryType",
                                     "initialValue": "GB",
-                                    "label": "Memory Type",
+                                    "label": "Unit",
                                     "name": "mem_type",
                                     "options": Array [
                                       Object {
@@ -25809,7 +25809,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                         "helperText": "Between 1024MB and 0.009765625GB",
                                         "id": "memoryType",
                                         "initialValue": "GB",
-                                        "label": "Memory Type",
+                                        "label": "Unit",
                                         "name": "mem_type",
                                         "options": Array [
                                           Object {
@@ -25865,7 +25865,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                           "helperText": "Between 1024MB and 0.009765625GB",
                                           "id": "memoryType",
                                           "initialValue": "GB",
-                                          "label": "Memory Type",
+                                          "label": "Unit",
                                           "name": "mem_type",
                                           "options": Array [
                                             Object {
@@ -25934,7 +25934,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                               "helperText": "Between 1024MB and 0.009765625GB",
                                               "id": "memoryType",
                                               "initialValue": "GB",
-                                              "label": "Memory Type",
+                                              "label": "Unit",
                                               "name": "mem_type",
                                               "options": Array [
                                                 Object {
@@ -25996,7 +25996,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                                 "helperText": "Between 1024MB and 0.009765625GB",
                                                 "id": "memoryType",
                                                 "initialValue": "GB",
-                                                "label": "Memory Type",
+                                                "label": "Unit",
                                                 "name": "mem_type",
                                                 "options": Array [
                                                   Object {
@@ -26057,7 +26057,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                                   "helperText": "Between 1024MB and 0.009765625GB",
                                                   "id": "memoryType",
                                                   "initialValue": "GB",
-                                                  "label": "Memory Type",
+                                                  "label": "Unit",
                                                   "name": "mem_type",
                                                   "options": Array [
                                                     Object {
@@ -31832,7 +31832,7 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                         "helperText": "Between 1024MB and 0.009765625GB",
                         "id": "memoryType",
                         "initialValue": "GB",
-                        "label": "Memory Type",
+                        "label": "Unit",
                         "name": "mem_type",
                         "options": Array [
                           Object {
@@ -32065,7 +32065,7 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                           "helperText": "Between 1024MB and 0.009765625GB",
                           "id": "memoryType",
                           "initialValue": "GB",
-                          "label": "Memory Type",
+                          "label": "Unit",
                           "name": "mem_type",
                           "options": Array [
                             Object {
@@ -32291,7 +32291,7 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                             "helperText": "Between 1024MB and 0.009765625GB",
                             "id": "memoryType",
                             "initialValue": "GB",
-                            "label": "Memory Type",
+                            "label": "Unit",
                             "name": "mem_type",
                             "options": Array [
                               Object {
@@ -32660,7 +32660,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                         "helperText": "Between 1024MB and 0.009765625GB",
                         "id": "memoryType",
                         "initialValue": "GB",
-                        "label": "Memory Type",
+                        "label": "Unit",
                         "name": "mem_type",
                         "options": Array [
                           Object {
@@ -33075,7 +33075,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                           "helperText": "Between 1024MB and 0.009765625GB",
                           "id": "memoryType",
                           "initialValue": "GB",
-                          "label": "Memory Type",
+                          "label": "Unit",
                           "name": "mem_type",
                           "options": Array [
                             Object {
@@ -33483,7 +33483,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                             "helperText": "Between 1024MB and 0.009765625GB",
                             "id": "memoryType",
                             "initialValue": "GB",
-                            "label": "Memory Type",
+                            "label": "Unit",
                             "name": "mem_type",
                             "options": Array [
                               Object {
@@ -33890,7 +33890,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                 "helperText": "Between 1024MB and 0.009765625GB",
                                 "id": "memoryType",
                                 "initialValue": "GB",
-                                "label": "Memory Type",
+                                "label": "Unit",
                                 "name": "mem_type",
                                 "options": Array [
                                   Object {
@@ -34244,7 +34244,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                 "helperText": "Between 1024MB and 0.009765625GB",
                                 "id": "memoryType",
                                 "initialValue": "GB",
-                                "label": "Memory Type",
+                                "label": "Unit",
                                 "name": "mem_type",
                                 "options": Array [
                                   Object {
@@ -34602,7 +34602,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                   "helperText": "Between 1024MB and 0.009765625GB",
                                   "id": "memoryType",
                                   "initialValue": "GB",
-                                  "label": "Memory Type",
+                                  "label": "Unit",
                                   "name": "mem_type",
                                   "options": Array [
                                     Object {
@@ -34957,7 +34957,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                   "helperText": "Between 1024MB and 0.009765625GB",
                                   "id": "memoryType",
                                   "initialValue": "GB",
-                                  "label": "Memory Type",
+                                  "label": "Unit",
                                   "name": "mem_type",
                                   "options": Array [
                                     Object {
@@ -35315,7 +35315,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                 "helperText": "Between 1024MB and 0.009765625GB",
                                 "id": "memoryType",
                                 "initialValue": "GB",
-                                "label": "Memory Type",
+                                "label": "Unit",
                                 "name": "mem_type",
                                 "options": Array [
                                   Object {
@@ -35663,7 +35663,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                     "helperText": "Between 1024MB and 0.009765625GB",
                                     "id": "memoryType",
                                     "initialValue": "GB",
-                                    "label": "Memory Type",
+                                    "label": "Unit",
                                     "name": "mem_type",
                                     "options": Array [
                                       Object {
@@ -36015,7 +36015,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                       "helperText": "Between 1024MB and 0.009765625GB",
                                       "id": "memoryType",
                                       "initialValue": "GB",
-                                      "label": "Memory Type",
+                                      "label": "Unit",
                                       "name": "mem_type",
                                       "options": Array [
                                         Object {
@@ -36470,7 +36470,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                     "helperText": "Between 1024MB and 0.009765625GB",
                                     "id": "memoryType",
                                     "initialValue": "GB",
-                                    "label": "Memory Type",
+                                    "label": "Unit",
                                     "name": "mem_type",
                                     "options": Array [
                                       Object {
@@ -36526,7 +36526,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                         "helperText": "Between 1024MB and 0.009765625GB",
                                         "id": "memoryType",
                                         "initialValue": "GB",
-                                        "label": "Memory Type",
+                                        "label": "Unit",
                                         "name": "mem_type",
                                         "options": Array [
                                           Object {
@@ -36582,7 +36582,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                           "helperText": "Between 1024MB and 0.009765625GB",
                                           "id": "memoryType",
                                           "initialValue": "GB",
-                                          "label": "Memory Type",
+                                          "label": "Unit",
                                           "name": "mem_type",
                                           "options": Array [
                                             Object {
@@ -36651,7 +36651,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                               "helperText": "Between 1024MB and 0.009765625GB",
                                               "id": "memoryType",
                                               "initialValue": "GB",
-                                              "label": "Memory Type",
+                                              "label": "Unit",
                                               "name": "mem_type",
                                               "options": Array [
                                                 Object {
@@ -36713,7 +36713,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                                 "helperText": "Between 1024MB and 0.009765625GB",
                                                 "id": "memoryType",
                                                 "initialValue": "GB",
-                                                "label": "Memory Type",
+                                                "label": "Unit",
                                                 "name": "mem_type",
                                                 "options": Array [
                                                   Object {
@@ -36774,7 +36774,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                                   "helperText": "Between 1024MB and 0.009765625GB",
                                                   "id": "memoryType",
                                                   "initialValue": "GB",
-                                                  "label": "Memory Type",
+                                                  "label": "Unit",
                                                   "name": "mem_type",
                                                   "options": Array [
                                                     Object {
