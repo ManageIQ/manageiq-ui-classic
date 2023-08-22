@@ -30,267 +30,99 @@ describe('Rates', () => {
       cy.get('thead > tr > :nth-child(6)').contains('Rate Variable');
       cy.get('thead > tr > :nth-child(7)').contains('Units');
 
-      cy.get(':nth-child(1) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('CPU');
-      });
-      cy.get(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Allocated CPU Count');
-      });
-      cy.get(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('vCPUs Allocated over Time Period');
-      });
-      cy.get(':nth-child(1) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(1) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(1) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('1.0');
-      });
-      cy.get(':nth-child(1) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour / Cpu');
-      });
+      cy.expect_text(':nth-child(1) > :nth-child(1) > .cell > .bx--front-line', 'CPU');
+      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(1)', 'Allocated CPU Count');
+      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(2)', 'vCPUs Allocated over Time Period');
+      cy.expect_text(':nth-child(1) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(1) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(1) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
+      cy.expect_text(':nth-child(1) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / Cpu');
 
-      cy.get(':nth-child(2) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('CPU');
-      });
-      cy.get(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Used CPU');
-      });
-      cy.get(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('CPU Used');
-      });
-      cy.get(':nth-child(2) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(2) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(2) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(2) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.02');
-      });
-      cy.get(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour / MHz');
-      });
+      cy.expect_text(':nth-child(2) > :nth-child(1) > .cell > .bx--front-line', 'CPU');
+      cy.expect_text(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used CPU');
+      cy.expect_text(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'CPU Used');
+      cy.expect_text(':nth-child(2) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(2) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(2) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(2) > :nth-child(6) > .cell > .array_list > .list_row', '0.02');
+      cy.expect_text(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / MHz');
 
-      cy.get(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('CPU Cores');
-      });
-      cy.get(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Allocated CPU Cores');
-      });
-      cy.get(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('CPU Cores Allocated Metric');
-      });
-      cy.get(':nth-child(3) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(3) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(3) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('1.0');
-      });
-      cy.get(':nth-child(3) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour / Cpu core');
-      });
+      cy.expect_text(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line', 'CPU Cores');
+      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Allocated CPU Cores');
+      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'CPU Cores Allocated Metric');
+      cy.expect_text(':nth-child(3) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(3) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(3) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
+      cy.expect_text(':nth-child(3) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / Cpu core');
 
-      cy.get(':nth-child(4) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('CPU Cores');
-      });
-      cy.get(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Used CPU Cores');
-      });
-      cy.get(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('CPU Cores Used Metric');
-      });
-      cy.get(':nth-child(4) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(4) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('1.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.02');
-      });
-      cy.get(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour / Cpu core');
-      });
+      cy.expect_text(':nth-child(4) > :nth-child(1) > .cell > .bx--front-line', 'CPU Cores');
+      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used CPU Cores');
+      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'CPU Cores Used Metric');
+      cy.expect_text(':nth-child(4) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(4) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(4) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
+      cy.expect_text(':nth-child(4) > :nth-child(6) > .cell > .array_list > .list_row', '0.02');
+      cy.expect_text(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / Cpu core');
 
-      cy.get(':nth-child(5) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Disk I/O');
-      });
-      cy.get(':nth-child(5) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Used Disk I/O');
-      });
-      cy.get(':nth-child(5) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Disk I/O Used');
-      });
-      cy.get(':nth-child(5) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(5) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(5) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(5) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.005');
-      });
-      cy.get(':nth-child(5) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour / KBps');
-      });
+      cy.expect_text(':nth-child(5) > :nth-child(1) > .cell > .bx--front-line', 'Disk I/O');
+      cy.expect_text(':nth-child(5) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Disk I/O');
+      cy.expect_text(':nth-child(5) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Disk I/O Used');
+      cy.expect_text(':nth-child(5) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(5) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(5) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(5) > :nth-child(6) > .cell > .array_list > .list_row', '0.005');
+      cy.expect_text(':nth-child(5) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / KBps');
 
-      cy.get(':nth-child(6) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed');
-      });
-      cy.get(':nth-child(6) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Compute Cost 1');
-      });
-      cy.get(':nth-child(6) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Compute Metric 1');
-      });
-      cy.get(':nth-child(6) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(6) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(6) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(6) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(6) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour');
-      });
+      cy.expect_text(':nth-child(6) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
+      cy.expect_text(':nth-child(6) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Fixed Compute Cost 1');
+      cy.expect_text(':nth-child(6) > :nth-child(2) > .cell > .array_list > :nth-child(2', 'Fixed Compute Metric 1');
+      cy.expect_text(':nth-child(6) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(6) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(6) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(6) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(6) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour');
 
-      cy.get(':nth-child(7) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed');
-      });
-      cy.get(':nth-child(7) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Compute Cost 2');
-      });
-      cy.get(':nth-child(7) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Compute Metric 2');
-      });
-      cy.get(':nth-child(7) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(7) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(7) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(7) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(7) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour');
-      });
+      cy.expect_text(':nth-child(7) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
+      cy.expect_text(':nth-child(7) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Fixed Compute Cost 2');
+      cy.expect_text(':nth-child(7) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Fixed Compute Metric 2');
+      cy.expect_text(':nth-child(7) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(7) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(7) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(7) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(7) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour');
 
-      cy.get(':nth-child(8) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Memory');
-      });
-      cy.get(':nth-child(8) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Allocated Memory');
-      });
-      cy.get(':nth-child(8) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Memory Allocated over Time Period');
-      });
-      cy.get(':nth-child(8) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(8) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(8) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(8) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(8) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour / MB');
-      });
+      cy.expect_text(':nth-child(8) > :nth-child(1) > .cell > .bx--front-line', 'Memory');
+      cy.expect_text(':nth-child(8) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Allocated Memory');
+      cy.expect_text(':nth-child(8) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Memory Allocated over Time Period');
+      cy.expect_text(':nth-child(8) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(8) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(8) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(8) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(8) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / MB');
 
-      cy.get(':nth-child(9) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Memory');
-      });
-      cy.get(':nth-child(9) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Used Memory');
-      });
-      cy.get(':nth-child(9) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Memory Used');
-      });
-      cy.get(':nth-child(9) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(9) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(9) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(9) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.02');
-      });
-      cy.get(':nth-child(9) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour / MB');
-      });
+      cy.expect_text(':nth-child(9) > :nth-child(1) > .cell > .bx--front-line', 'Memory');
+      cy.expect_text(':nth-child(9) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Memory');
+      cy.expect_text(':nth-child(9) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Memory Used');
+      cy.expect_text(':nth-child(9) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(9) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(9) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(9) > :nth-child(6) > .cell > .array_list > .list_row', '0.02');
+      cy.expect_text(':nth-child(9) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / MB');
 
-      cy.get(':nth-child(10) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Network I/O');
-      });
-      cy.get(':nth-child(10) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Used Network I/O');
-      });
-      cy.get(':nth-child(10) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Network I/O Used');
-      });
-      cy.get(':nth-child(10) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(3) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('100.0');
-      });
-      cy.get(':nth-child(10) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('100.0');
-      });
-      cy.get(':nth-child(4) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(10) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.5');
-      });
-      cy.get(':nth-child(5) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('0.5');
-      });
-      cy.get(':nth-child(10) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(6) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('0.005');
-      });
-      cy.get(':nth-child(10) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour / KBps');
-      });
+      cy.expect_text(':nth-child(10) > :nth-child(1) > .cell > .bx--front-line', 'Network I/O');
+      cy.expect_text(':nth-child(10) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Network I/O');
+      cy.expect_text(':nth-child(10) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Network I/O Used');
+      cy.expect_text(':nth-child(10) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(3) > .cell > .array_list > :nth-child(2)', '100.0');
+      cy.expect_text(':nth-child(10) > :nth-child(4) > .cell > .array_list > .list_row', '100.0');
+      cy.expect_text(':nth-child(4) > .cell > .array_list > :nth-child(2)', 'Infinity');
+      cy.expect_text(':nth-child(10) > :nth-child(5) > .cell > .array_list > .list_row', '0.5');
+      cy.expect_text(':nth-child(5) > .cell > .array_list > :nth-child(2)', '0.5');
+      cy.expect_text(':nth-child(10) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(6) > .cell > .array_list > :nth-child(2)', '0.005');
+      cy.expect_text(':nth-child(10) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / KBps');
     });
   });
 
@@ -314,105 +146,41 @@ describe('Rates', () => {
       cy.get('thead > tr > :nth-child(6)').contains('Rate Variable');
       cy.get('thead > tr > :nth-child(7)').contains('Units');
 
-      cy.get(':nth-child(1) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed');
-      });
-      cy.get(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Storage Cost 1');
-      });
-      cy.get(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Storage 1 Metric');
-      });
-      cy.get(':nth-child(1) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(1) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(1) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(1) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour');
-      });
+      cy.expect_text(':nth-child(1) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
+      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(1)', 'Fixed Storage Cost 1');
+      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(2)', 'Fixed Storage 1 Metric');
+      cy.expect_text(':nth-child(1) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(1) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(1) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(1) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour');
 
-      cy.get(':nth-child(2) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed');
-      });
-      cy.get(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Storage Cost 2');
-      });
-      cy.get(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Storage 2 Metric');
-      });
-      cy.get(':nth-child(2) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(2) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(2) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(2) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour');
-      });
+      cy.expect_text(':nth-child(2) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
+      cy.expect_text(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Fixed Storage Cost 2');
+      cy.expect_text(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Fixed Storage 2 Metric');
+      cy.expect_text(':nth-child(2) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(2) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(2) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(2) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour');
 
-      cy.get(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Storage');
-      });
-      cy.get(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Allocated Disk Storage');
-      });
-      cy.get(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Storage Allocated');
-      });
-      cy.get(':nth-child(3) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(3) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(3) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('1.0');
-      });
-      cy.get(':nth-child(3) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour / GB');
-      });
+      cy.expect_text(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line', 'Storage');
+      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Allocated Disk Storage');
+      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Storage Allocated');
+      cy.expect_text(':nth-child(3) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(3) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(3) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
+      cy.expect_text(':nth-child(3) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / GB');
 
-      cy.get(':nth-child(4) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Storage');
-      });
-      cy.get(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Used Disk Storage');
-      });
-      cy.get(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Storage Used');
-      });
-      cy.get(':nth-child(4) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(4) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('2.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour / GB');
-      });
+      cy.expect_text(':nth-child(4) > :nth-child(1) > .cell > .bx--front-line', 'Storage');
+      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Disk Storage');
+      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Storage Used');
+      cy.expect_text(':nth-child(4) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(4) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(4) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(4) > :nth-child(6) > .cell > .array_list > .list_row', '2.0');
+      cy.expect_text(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / GB');
     });
   });
 
@@ -436,267 +204,99 @@ describe('Rates', () => {
       cy.get('thead > tr > :nth-child(6)').contains('Rate Variable');
       cy.get('thead > tr > :nth-child(7)').contains('Units');
 
-      cy.get(':nth-child(1) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('CPU');
-      });
-      cy.get(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Allocated CPU Count');
-      });
-      cy.get(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('vCPUs Allocated over Time Period');
-      });
-      cy.get(':nth-child(1) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(1) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(1) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('1.0');
-      });
-      cy.get(':nth-child(1) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour / Cpu');
-      });
+      cy.expect_text(':nth-child(1) > :nth-child(1) > .cell > .bx--front-line', 'CPU');
+      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(1)', 'Allocated CPU Count');
+      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(2)', 'vCPUs Allocated over Time Period');
+      cy.expect_text(':nth-child(1) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(1) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(1) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
+      cy.expect_text(':nth-child(1) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / Cpu');
 
-      cy.get(':nth-child(2) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('CPU');
-      });
-      cy.get(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Used CPU');
-      });
-      cy.get(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('CPU Used');
-      });
-      cy.get(':nth-child(2) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(2) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(2) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(2) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.02');
-      });
-      cy.get(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour / MHz');
-      });
+      cy.expect_text(':nth-child(2) > :nth-child(1) > .cell > .bx--front-line', 'CPU');
+      cy.expect_text(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used CPU');
+      cy.expect_text(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'CPU Used');
+      cy.expect_text(':nth-child(2) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(2) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(2) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(2) > :nth-child(6) > .cell > .array_list > .list_row', '0.02');
+      cy.expect_text(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / MHz');
 
-      cy.get(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('CPU Cores');
-      });
-      cy.get(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Allocated CPU Cores');
-      });
-      cy.get(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('CPU Cores Allocated Metric');
-      });
-      cy.get(':nth-child(3) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(3) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(3) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('1.0');
-      });
-      cy.get(':nth-child(3) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour / Cpu core');
-      });
+      cy.expect_text(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line', 'CPU Cores');
+      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Allocated CPU Cores');
+      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'CPU Cores Allocated Metric');
+      cy.expect_text(':nth-child(3) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(3) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(3) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
+      cy.expect_text(':nth-child(3) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / Cpu core');
 
-      cy.get(':nth-child(4) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('CPU Cores');
-      });
-      cy.get(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Used CPU Cores');
-      });
-      cy.get(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('CPU Cores Used Metric');
-      });
-      cy.get(':nth-child(4) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(4) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('1.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.02');
-      });
-      cy.get(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour / Cpu core');
-      });
+      cy.expect_text(':nth-child(4) > :nth-child(1) > .cell > .bx--front-line', 'CPU Cores');
+      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used CPU Cores');
+      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'CPU Cores Used Metric');
+      cy.expect_text(':nth-child(4) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(4) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(4) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
+      cy.expect_text(':nth-child(4) > :nth-child(6) > .cell > .array_list > .list_row', '0.02');
+      cy.expect_text(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / Cpu core');
 
-      cy.get(':nth-child(5) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Disk I/O');
-      });
-      cy.get(':nth-child(5) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Used Disk I/O');
-      });
-      cy.get(':nth-child(5) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Disk I/O Used');
-      });
-      cy.get(':nth-child(5) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(5) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(5) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(5) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.005');
-      });
-      cy.get(':nth-child(5) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour / KBps');
-      });
+      cy.expect_text(':nth-child(5) > :nth-child(1) > .cell > .bx--front-line', 'Disk I/O');
+      cy.expect_text(':nth-child(5) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Disk I/O');
+      cy.expect_text(':nth-child(5) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Disk I/O Used');
+      cy.expect_text(':nth-child(5) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(5) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(5) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / KBps');
+      cy.expect_text(':nth-child(5) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(5) > :nth-child(6) > .cell > .array_list > .list_row', '0.005');
 
-      cy.get(':nth-child(6) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed');
-      });
-      cy.get(':nth-child(6) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Compute Cost 1');
-      });
-      cy.get(':nth-child(6) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Compute Metric 1');
-      });
-      cy.get(':nth-child(6) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(6) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(6) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(6) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(6) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour');
-      });
+      cy.expect_text(':nth-child(6) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
+      cy.expect_text(':nth-child(6) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Fixed Compute Cost 1');
+      cy.expect_text(':nth-child(6) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Fixed Compute Metric 1');
+      cy.expect_text(':nth-child(6) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(6) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(6) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(6) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(6) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour');
 
-      cy.get(':nth-child(7) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed');
-      });
-      cy.get(':nth-child(7) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Compute Cost 2');
-      });
-      cy.get(':nth-child(7) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Compute Metric 2');
-      });
-      cy.get(':nth-child(7) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(7) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(7) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(7) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(7) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour');
-      });
+      cy.expect_text(':nth-child(7) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
+      cy.expect_text(':nth-child(7) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Fixed Compute Cost 2');
+      cy.expect_text(':nth-child(7) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Fixed Compute Metric 2');
+      cy.expect_text(':nth-child(7) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(7) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(7) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(7) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(7) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour');
 
-      cy.get(':nth-child(8) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Memory');
-      });
-      cy.get(':nth-child(8) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Allocated Memory');
-      });
-      cy.get(':nth-child(8) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Memory Allocated over Time Period');
-      });
-      cy.get(':nth-child(8) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(8) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(8) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(8) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(8) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour / MB');
-      });
+      cy.expect_text(':nth-child(8) > :nth-child(1) > .cell > .bx--front-line', 'Memory');
+      cy.expect_text(':nth-child(8) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Allocated Memory');
+      cy.expect_text(':nth-child(8) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Memory Allocated over Time Period');
+      cy.expect_text(':nth-child(8) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(8) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(8) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(8) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(8) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / MB');
 
-      cy.get(':nth-child(9) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Memory');
-      });
-      cy.get(':nth-child(9) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Used Memory');
-      });
-      cy.get(':nth-child(9) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Memory Used');
-      });
-      cy.get(':nth-child(9) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(9) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(9) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(9) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.02');
-      });
-      cy.get(':nth-child(9) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour / MB');
-      });
+      cy.expect_text(':nth-child(9) > :nth-child(1) > .cell > .bx--front-line', 'Memory');
+      cy.expect_text(':nth-child(9) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Memory');
+      cy.expect_text(':nth-child(9) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Memory Used');
+      cy.expect_text(':nth-child(9) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(9) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(9) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(9) > :nth-child(6) > .cell > .array_list > .list_row', '0.02');
+      cy.expect_text(':nth-child(9) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / MB');
 
-      cy.get(':nth-child(10) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Network I/O');
-      });
-      cy.get(':nth-child(10) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Used Network I/O');
-      });
-      cy.get(':nth-child(10) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Network I/O Used');
-      });
-      cy.get(':nth-child(10) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(3) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('100.0');
-      });
-      cy.get(':nth-child(10) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('100.0');
-      });
-      cy.get(':nth-child(4) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(10) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.5');
-      });
-      cy.get(':nth-child(5) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('0.5');
-      });
-      cy.get(':nth-child(10) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(6) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('0.005');
-      });
-      cy.get(':nth-child(10) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour / KBps');
-      });
+      cy.expect_text(':nth-child(10) > :nth-child(1) > .cell > .bx--front-line', 'Network I/O');
+      cy.expect_text(':nth-child(10) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Network I/O');
+      cy.expect_text(':nth-child(10) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Network I/O Used');
+      cy.expect_text(':nth-child(10) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(3) > .cell > .array_list > :nth-child(2)', '100.0');
+      cy.expect_text(':nth-child(10) > :nth-child(4) > .cell > .array_list > .list_row', '100.0');
+      cy.expect_text(':nth-child(4) > .cell > .array_list > :nth-child(2)', 'Infinity');
+      cy.expect_text(':nth-child(10) > :nth-child(5) > .cell > .array_list > .list_row', '0.5');
+      cy.expect_text(':nth-child(5) > .cell > .array_list > :nth-child(2)', '0.5');
+      cy.expect_text(':nth-child(10) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(6) > .cell > .array_list > :nth-child(2)', '0.005');
+      cy.expect_text(':nth-child(10) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / KBps');
     });
   });
 
@@ -712,7 +312,7 @@ describe('Rates', () => {
       cy.get(':nth-child(1) > .bx--overflow-menu-options__btn > div').click();
       cy.get('[width="100%"] > tbody > tr > td > .btn-default').click();
       cy.get('.miq-toolbar-group');
-      cy.url().should('eq', 'http://localhost:3000/chargeback_rate/show_list?flash_msg=Add+of+new+Chargeback+Rate+was+cancelled+by+the+user#/');
+      cy.url().should('include', 'chargeback_rate/show_list');
       cy.get('.alert').contains('Add of new Chargeback Rate was cancelled by the user');
       cy.get('.clickable-row').then((rows) => {
         const nums = [...Array(rows.length).keys()];
@@ -779,267 +379,111 @@ describe('Rates', () => {
       cy.get('thead > tr > :nth-child(6)').contains('Rate Variable');
       cy.get('thead > tr > :nth-child(7)').contains('Units');
 
-      cy.get(':nth-child(1) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('CPU');
-      });
-      cy.get(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Allocated CPU Count');
-      });
-      cy.get(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('vCPUs Allocated over Time Period');
-      });
-      cy.get(':nth-child(1) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(1) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(1) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('1.0');
-      });
-      cy.get(':nth-child(1) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
+      cy.expect_text(':nth-child(1) > :nth-child(1) > .cell > .bx--front-line', 'CPU');
+      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(1)', 'Allocated CPU Count');
+      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(2)', 'vCPUs Allocated over Time Period');
+      cy.expect_text(':nth-child(1) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(1) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
+      cy.expect_text(':nth-child(1) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(1) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
       cy.get(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / Cpu');
 
-      cy.get(':nth-child(2) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('CPU');
-      });
-      cy.get(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Used CPU');
-      });
-      cy.get(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('CPU Used');
-      });
-      cy.get(':nth-child(2) > :nth-child(3) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(2) > :nth-child(3) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('50.0');
-      });
-      cy.get(':nth-child(2) > :nth-child(4) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('50.0');
-      });
-      cy.get(':nth-child(2) > :nth-child(4) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(2) > :nth-child(5) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('75.0');
-      });
-      cy.get(':nth-child(2) > :nth-child(5) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(2) > :nth-child(6) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('5.0');
-      });
-      cy.get(':nth-child(2) > :nth-child(6) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('10.0');
-      });
+      cy.expect_text(':nth-child(2) > :nth-child(1) > .cell > .bx--front-line', 'CPU');
+      cy.expect_text(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used CPU');
+      cy.expect_text(':nth-child(2) > :nth-child(4) > .cell > .array_list > :nth-child(1)', '50.0');
+      cy.expect_text(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'CPU Used');
+      cy.expect_text(':nth-child(2) > :nth-child(3) > .cell > .array_list > :nth-child(1)', '0.0');
+      cy.expect_text(':nth-child(2) > :nth-child(3) > .cell > .array_list > :nth-child(2)', '50.0');
+      cy.expect_text(':nth-child(2) > :nth-child(4) > .cell > .array_list > :nth-child(2)', 'Infinity');
+      cy.expect_text(':nth-child(2) > :nth-child(5) > .cell > .array_list > :nth-child(1)', '75.0');
+      cy.expect_text(':nth-child(2) > :nth-child(5) > .cell > .array_list > :nth-child(2)', '0.0');
+      cy.expect_text(':nth-child(2) > :nth-child(6) > .cell > .array_list > :nth-child(1)', '5.0');
+      cy.expect_text(':nth-child(2) > :nth-child(6) > .cell > .array_list > :nth-child(2)', '10.0');
       cy.get(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line').contains('Week / KHz');
 
-      cy.get(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('CPU Cores');
-      });
-      cy.get(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Allocated CPU Cores');
-      });
-      cy.get(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('CPU Cores Allocated Metric');
-      });
-      cy.get(':nth-child(3) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(3) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(3) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('1.0');
-      });
-      cy.get(':nth-child(3) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
+      cy.expect_text(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line', 'CPU Cores');
+      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Allocated CPU Cores');
+      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'CPU Cores Allocated Metric');
+      cy.expect_text(':nth-child(3) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(3) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(3) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
+      cy.expect_text(':nth-child(3) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
       cy.get(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / Cpu core');
 
-      cy.get(':nth-child(4) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('CPU Cores');
-      });
-      cy.get(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Used CPU Cores');
-      });
-      cy.get(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('CPU Cores Used Metric');
-      });
-      cy.get(':nth-child(4) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(4) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('1.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.02');
-      });
+      cy.expect_text(':nth-child(4) > :nth-child(1) > .cell > .bx--front-line', 'CPU Cores');
+      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used CPU Cores');
+      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'CPU Cores Used Metric');
+      cy.expect_text(':nth-child(4) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(4) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(4) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
+      cy.expect_text(':nth-child(4) > :nth-child(6) > .cell > .array_list > .list_row', '0.02');
       cy.get(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / Cpu core');
 
-      cy.get(':nth-child(5) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Disk I/O');
-      });
-      cy.get(':nth-child(5) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Used Disk I/O');
-      });
-      cy.get(':nth-child(5) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Disk I/O Used');
-      });
-      cy.get(':nth-child(5) > :nth-child(3) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(5) > :nth-child(3) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('10000.0');
-      });
-      cy.get(':nth-child(5) > :nth-child(4) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('10000.0');
-      });
-      cy.get(':nth-child(5) > :nth-child(4) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(5) > :nth-child(5) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('1.0');
-      });
-      cy.get(':nth-child(5) > :nth-child(5) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('2.0');
-      });
-      cy.get(':nth-child(5) > :nth-child(6) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('1.0');
-      });
-      cy.get(':nth-child(5) > :nth-child(6) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('2.0');
-      });
+      cy.expect_text(':nth-child(5) > :nth-child(1) > .cell > .bx--front-line', 'Disk I/O');
+      cy.expect_text(':nth-child(5) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Disk I/O');
+      cy.expect_text(':nth-child(5) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Disk I/O Used');
+      cy.expect_text(':nth-child(5) > :nth-child(3) > .cell > .array_list > :nth-child(1)', '0.0');
+      cy.expect_text(':nth-child(5) > :nth-child(3) > .cell > .array_list > :nth-child(2)', '10000.0');
+      cy.expect_text(':nth-child(5) > :nth-child(4) > .cell > .array_list > :nth-child(1)', '10000.0');
+      cy.expect_text(':nth-child(5) > :nth-child(4) > .cell > .array_list > :nth-child(2)', 'Infinity');
+      cy.expect_text(':nth-child(5) > :nth-child(5) > .cell > .array_list > :nth-child(1)', '1.0');
+      cy.expect_text(':nth-child(5) > :nth-child(5) > .cell > .array_list > :nth-child(2)', '2.0');
+      cy.expect_text(':nth-child(5) > :nth-child(6) > .cell > .array_list > :nth-child(1)', '1.0');
+      cy.expect_text(':nth-child(5) > :nth-child(6) > .cell > .array_list > :nth-child(2)', '2.0');
       cy.get(':nth-child(5) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(5) > :nth-child(7) > .cell > .bx--front-line').contains('Day / MBps');
 
-      cy.get(':nth-child(6) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed');
-      });
-      cy.get(':nth-child(6) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Compute Cost 1');
-      });
-      cy.get(':nth-child(6) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Compute Metric 1');
-      });
-      cy.get(':nth-child(6) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(6) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(6) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(6) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('-');
-      });
+      cy.expect_text(':nth-child(6) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
+      cy.expect_text(':nth-child(6) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Fixed Compute Cost 1');
+      cy.expect_text(':nth-child(6) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Fixed Compute Metric 1');
+      cy.expect_text(':nth-child(6) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(6) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(6) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(6) > :nth-child(6) > .cell > .array_list > .list_row', '-');
       cy.get(':nth-child(6) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(6) > :nth-child(7) > .cell > .bx--front-line').contains('Hour');
 
-      cy.get(':nth-child(7) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed');
-      });
-      cy.get(':nth-child(7) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Compute Cost 2');
-      });
-      cy.get(':nth-child(7) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Compute Metric 2');
-      });
-      cy.get(':nth-child(7) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(7) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(7) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(6) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('-');
-      });
+      cy.expect_text(':nth-child(7) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
+      cy.expect_text(':nth-child(7) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Fixed Compute Cost 2');
+      cy.expect_text(':nth-child(7) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Fixed Compute Metric 2');
+      cy.expect_text(':nth-child(7) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(7) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(7) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(7) > :nth-child(6) > .cell > .array_list > .list_row', '-');
       cy.get(':nth-child(7) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(7) > :nth-child(7) > .cell > .bx--front-line').contains('Hour');
 
-      cy.get(':nth-child(8) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Memory');
-      });
-      cy.get(':nth-child(8) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Allocated Memory');
-      });
-      cy.get(':nth-child(8) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Memory Allocated over Time Period');
-      });
-      cy.get(':nth-child(8) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(8) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(8) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(8) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
+      cy.expect_text(':nth-child(8) > :nth-child(1) > .cell > .bx--front-line', 'Memory');
+      cy.expect_text(':nth-child(8) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Allocated Memory');
+      cy.expect_text(':nth-child(8) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Memory Allocated over Time Period');
+      cy.expect_text(':nth-child(8) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(8) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(8) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(8) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
       cy.get(':nth-child(8) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(8) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / MB');
 
-      cy.get(':nth-child(9) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Memory');
-      });
-      cy.get(':nth-child(9) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Used Memory');
-      });
-      cy.get(':nth-child(9) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Memory Used');
-      });
-      cy.get(':nth-child(9) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(9) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(9) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(9) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.02');
-      });
+      cy.expect_text(':nth-child(9) > :nth-child(1) > .cell > .bx--front-line', 'Memory');
+      cy.expect_text(':nth-child(9) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Memory');
+      cy.expect_text(':nth-child(9) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Memory Used');
+      cy.expect_text(':nth-child(9) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(9) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(9) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(9) > :nth-child(6) > .cell > .array_list > .list_row', '0.02');
       cy.get(':nth-child(9) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(9) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / MB');
 
-      cy.get(':nth-child(10) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Network I/O');
-      });
-      cy.get(':nth-child(10) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Used Network I/O');
-      });
-      cy.get(':nth-child(10) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Network I/O Used');
-      });
-      cy.get(':nth-child(10) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(10) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(10) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.5');
-      });
-      cy.get(':nth-child(10) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
+      cy.expect_text(':nth-child(10) > :nth-child(1) > .cell > .bx--front-line', 'Network I/O');
+      cy.expect_text(':nth-child(10) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Network I/O');
+      cy.expect_text(':nth-child(10) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Network I/O Used');
+      cy.expect_text(':nth-child(10) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(10) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(10) > :nth-child(5) > .cell > .array_list > .list_row', '0.5');
+      cy.expect_text(':nth-child(10) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
       cy.get(':nth-child(10) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(10) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / KBps');
     }).then(() => {
@@ -1079,270 +523,112 @@ describe('Rates', () => {
       cy.get('thead > tr > :nth-child(6)').contains('Rate Variable');
       cy.get('thead > tr > :nth-child(7)').contains('Units');
 
-      cy.get(':nth-child(1) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('CPU');
-      });
-      cy.get(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Allocated CPU Count');
-      });
-      cy.get(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('vCPUs Allocated over Time Period');
-      });
-      cy.get(':nth-child(1) > :nth-child(3) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(1) > :nth-child(3) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('100.0');
-      });
-      cy.get(':nth-child(1) > :nth-child(4) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('100.0');
-      });
-      cy.get(':nth-child(1) > :nth-child(4) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(1) > :nth-child(5) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('2.0');
-      });
-      cy.get(':nth-child(1) > :nth-child(5) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('10.0');
-      });
-      cy.get(':nth-child(1) > :nth-child(6) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('10.0');
-      });
-      cy.get(':nth-child(1) > :nth-child(6) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('100.0');
-      });
-      cy.get(':nth-child(1) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('10.0');
-      });
+      cy.expect_text(':nth-child(1) > :nth-child(1) > .cell > .bx--front-line', 'CPU');
+      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(1)', 'Allocated CPU Count');
+      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(2)', 'vCPUs Allocated over Time Period');
+      cy.expect_text(':nth-child(1) > :nth-child(3) > .cell > .array_list > :nth-child(1)', '0.0');
+      cy.expect_text(':nth-child(1) > :nth-child(3) > .cell > .array_list > :nth-child(2)', '100.0');
+      cy.expect_text(':nth-child(1) > :nth-child(4) > .cell > .array_list > :nth-child(1)', '100.0');
+      cy.expect_text(':nth-child(1) > :nth-child(4) > .cell > .array_list > :nth-child(2)', 'Infinity');
+      cy.expect_text(':nth-child(1) > :nth-child(5) > .cell > .array_list > :nth-child(1)', '2.0');
+      cy.expect_text(':nth-child(1) > :nth-child(5) > .cell > .array_list > :nth-child(2)', '10.0');
+      cy.expect_text(':nth-child(1) > :nth-child(6) > .cell > .array_list > :nth-child(1)', '10.0');
+      cy.expect_text(':nth-child(1) > :nth-child(6) > .cell > .array_list > :nth-child(2)', '100.0');
+      cy.expect_text(':nth-child(1) > :nth-child(6) > .cell > .array_list > .list_row', '10.0');
       cy.get(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line').contains('Day / Cpu');
 
-      cy.get(':nth-child(2) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('CPU');
-      });
-      cy.get(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Used CPU');
-      });
-      cy.get(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('CPU Used');
-      });
-      cy.get(':nth-child(2) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(2) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(2) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('75.0');
-      });
-      cy.get(':nth-child(2) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('5.0');
-      });
+      cy.expect_text(':nth-child(2) > :nth-child(1) > .cell > .bx--front-line', 'CPU');
+      cy.expect_text(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used CPU');
+      cy.expect_text(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'CPU Used');
+      cy.expect_text(':nth-child(2) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(2) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(2) > :nth-child(5) > .cell > .array_list > .list_row', '75.0');
+      cy.expect_text(':nth-child(2) > :nth-child(6) > .cell > .array_list > .list_row', '5.0');
       cy.get(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line').contains('Week / KHz');
 
-      cy.get(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('CPU Cores');
-      });
-      cy.get(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Allocated CPU Cores');
-      });
-      cy.get(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('CPU Cores Allocated Metric');
-      });
-      cy.get(':nth-child(3) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(3) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(3) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('1.0');
-      });
-      cy.get(':nth-child(3) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
+      cy.expect_text(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line', 'CPU Cores');
+      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Allocated CPU Cores');
+      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'CPU Cores Allocated Metric');
+      cy.expect_text(':nth-child(3) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(3) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(3) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
+      cy.expect_text(':nth-child(3) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
       cy.get(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / Cpu core');
 
-      cy.get(':nth-child(4) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('CPU Cores');
-      });
-      cy.get(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Used CPU Cores');
-      });
-      cy.get(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('CPU Cores Used Metric');
-      });
-      cy.get(':nth-child(4) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(4) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('1.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.02');
-      });
+      cy.expect_text(':nth-child(4) > :nth-child(1) > .cell > .bx--front-line', 'CPU Cores');
+      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used CPU Cores');
+      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'CPU Cores Used Metric');
+      cy.expect_text(':nth-child(4) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(4) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(4) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
+      cy.expect_text(':nth-child(4) > :nth-child(6) > .cell > .array_list > .list_row', '0.02');
       cy.get(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / Cpu core');
 
-      cy.get(':nth-child(5) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Disk I/O');
-      });
-      cy.get(':nth-child(5) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Used Disk I/O');
-      });
-      cy.get(':nth-child(5) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Disk I/O Used');
-      });
-      cy.get(':nth-child(5) > :nth-child(3) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(5) > :nth-child(3) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('10000.0');
-      });
-      cy.get(':nth-child(5) > :nth-child(4) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('10000.0');
-      });
-      cy.get(':nth-child(5) > :nth-child(4) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(5) > :nth-child(5) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('1.0');
-      });
-      cy.get(':nth-child(5) > :nth-child(5) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('2.0');
-      });
-      cy.get(':nth-child(5) > :nth-child(6) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('1.0');
-      });
-      cy.get(':nth-child(5) > :nth-child(6) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('2.0');
-      });
+      cy.expect_text(':nth-child(5) > :nth-child(1) > .cell > .bx--front-line', 'Disk I/O');
+      cy.expect_text(':nth-child(5) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Disk I/O');
+      cy.expect_text(':nth-child(5) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Disk I/O Used');
+      cy.expect_text(':nth-child(5) > :nth-child(3) > .cell > .array_list > :nth-child(1)', '0.0');
+      cy.expect_text(':nth-child(5) > :nth-child(3) > .cell > .array_list > :nth-child(2)', '10000.0');
+      cy.expect_text(':nth-child(5) > :nth-child(4) > .cell > .array_list > :nth-child(1)', '10000.0');
+      cy.expect_text(':nth-child(5) > :nth-child(4) > .cell > .array_list > :nth-child(2)', 'Infinity');
+      cy.expect_text(':nth-child(5) > :nth-child(5) > .cell > .array_list > :nth-child(1)', '1.0');
+      cy.expect_text(':nth-child(5) > :nth-child(5) > .cell > .array_list > :nth-child(2)', '2.0');
+      cy.expect_text(':nth-child(5) > :nth-child(6) > .cell > .array_list > :nth-child(1)', '1.0');
+      cy.expect_text(':nth-child(5) > :nth-child(6) > .cell > .array_list > :nth-child(2)', '2.0');
       cy.get(':nth-child(5) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(5) > :nth-child(7) > .cell > .bx--front-line').contains('Day / Bps');
 
-      cy.get(':nth-child(6) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed');
-      });
-      cy.get(':nth-child(6) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Compute Cost 1');
-      });
-      cy.get(':nth-child(6) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Compute Metric 1');
-      });
-      cy.get(':nth-child(6) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(6) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(6) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(6) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('-');
-      });
+      cy.expect_text(':nth-child(6) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
+      cy.expect_text(':nth-child(6) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Fixed Compute Cost 1');
+      cy.expect_text(':nth-child(6) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(6) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Fixed Compute Metric 1');
+      cy.expect_text(':nth-child(6) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(6) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(6) > :nth-child(6) > .cell > .array_list > .list_row', '-');
       cy.get(':nth-child(6) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(6) > :nth-child(7) > .cell > .bx--front-line').contains('Hour');
 
-      cy.get(':nth-child(7) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed');
-      });
-      cy.get(':nth-child(7) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Compute Cost 2');
-      });
-      cy.get(':nth-child(7) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Compute Metric 2');
-      });
-      cy.get(':nth-child(7) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(7) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(7) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(6) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('-');
-      });
+      cy.expect_text(':nth-child(7) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
+      cy.expect_text(':nth-child(7) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Fixed Compute Cost 2');
+      cy.expect_text(':nth-child(7) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Fixed Compute Metric 2');
+      cy.expect_text(':nth-child(7) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(7) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(7) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(7) > :nth-child(6) > .cell > .array_list > .list_row', '-');
       cy.get(':nth-child(7) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(7) > :nth-child(7) > .cell > .bx--front-line').contains('Hour');
 
-      cy.get(':nth-child(8) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Memory');
-      });
-      cy.get(':nth-child(8) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Allocated Memory');
-      });
-      cy.get(':nth-child(8) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Memory Allocated over Time Period');
-      });
-      cy.get(':nth-child(8) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(8) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(8) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(8) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
+      cy.expect_text(':nth-child(8) > :nth-child(1) > .cell > .bx--front-line', 'Memory');
+      cy.expect_text(':nth-child(8) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Allocated Memory');
+      cy.expect_text(':nth-child(8) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Memory Allocated over Time Period');
+      cy.expect_text(':nth-child(8) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(8) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(8) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(8) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
       cy.get(':nth-child(8) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(8) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / MB');
 
-      cy.get(':nth-child(9) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Memory');
-      });
-      cy.get(':nth-child(9) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Used Memory');
-      });
-      cy.get(':nth-child(9) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Memory Used');
-      });
-      cy.get(':nth-child(9) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(9) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(9) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(9) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.02');
-      });
+      cy.expect_text(':nth-child(9) > :nth-child(1) > .cell > .bx--front-line', 'Memory');
+      cy.expect_text(':nth-child(9) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Memory');
+      cy.expect_text(':nth-child(9) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Memory Used');
+      cy.expect_text(':nth-child(9) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(9) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(9) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(9) > :nth-child(6) > .cell > .array_list > .list_row', '0.02');
       cy.get(':nth-child(9) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(9) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / MB');
 
-      cy.get(':nth-child(10) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Network I/O');
-      });
-      cy.get(':nth-child(10) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Used Network I/O');
-      });
-      cy.get(':nth-child(10) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Network I/O Used');
-      });
-      cy.get(':nth-child(10) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(10) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(10) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.5');
-      });
-      cy.get(':nth-child(10) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
+      cy.expect_text(':nth-child(10) > :nth-child(1) > .cell > .bx--front-line', 'Network I/O');
+      cy.expect_text(':nth-child(10) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Network I/O');
+      cy.expect_text(':nth-child(10) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Network I/O Used');
+      cy.expect_text(':nth-child(10) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(10) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(10) > :nth-child(5) > .cell > .array_list > .list_row', '0.5');
+      cy.expect_text(':nth-child(10) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
       cy.get(':nth-child(10) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(10) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / KBps');
     }).then(() => {
@@ -1402,108 +688,46 @@ describe('Rates', () => {
       cy.get('thead > tr > :nth-child(6)').contains('Rate Variable');
       cy.get('thead > tr > :nth-child(7)').contains('Units');
 
-      cy.get(':nth-child(1) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed');
-      });
-      cy.get(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Storage Cost 1');
-      });
-      cy.get(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Storage 1 Metric');
-      });
-      cy.get(':nth-child(1) > :nth-child(3) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(1) > :nth-child(4) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('50.0');
-      });
-      cy.get(':nth-child(1) > :nth-child(5) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('100.0');
-      });
-      cy.get(':nth-child(3) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('50.0');
-      });
-      cy.get(':nth-child(4) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(5) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('75.0');
-      });
+      cy.expect_text(':nth-child(1) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
+      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(1)', 'Fixed Storage Cost 1');
+      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(2)', 'Fixed Storage 1 Metric');
+      cy.expect_text(':nth-child(1) > :nth-child(4) > .cell > .array_list > :nth-child(1)', '50.0');
+      cy.expect_text(':nth-child(1) > :nth-child(3) > .cell > .array_list > :nth-child(1)', '0.0');
+      cy.expect_text(':nth-child(1) > :nth-child(5) > .cell > .array_list > :nth-child(1)', '100.0');
+      cy.expect_text(':nth-child(3) > .cell > .array_list > :nth-child(2)', '50.0');
+      cy.expect_text(':nth-child(4) > .cell > .array_list > :nth-child(2)', 'Infinity');
+      cy.expect_text(':nth-child(5) > .cell > .array_list > :nth-child(2)', '75.0');
       cy.get(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line').contains('Week');
 
-      cy.get(':nth-child(2) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed');
-      });
-      cy.get(':nth-child(2) > .vertical_align_top > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Storage Cost 2');
-      });
-      cy.get(':nth-child(2) > .vertical_align_top > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Storage 2 Metric');
-      });
-      cy.get(':nth-child(2) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(2) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(2) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
+      cy.expect_text(':nth-child(2) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
+      cy.expect_text(':nth-child(2) > .vertical_align_top > .cell > .array_list > :nth-child(1)', 'Fixed Storage Cost 2');
+      cy.expect_text(':nth-child(2) > .vertical_align_top > .cell > .array_list > :nth-child(2)', 'Fixed Storage 2 Metric');
+      cy.expect_text(':nth-child(2) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(2) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(2) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
       cy.get(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line').contains('Hour');
 
-      cy.get(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Storage');
-      });
-      cy.get(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Allocated Disk Storage');
-      });
-      cy.get(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Storage Allocated');
-      });
-      cy.get(':nth-child(3) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(3) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(3) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('1.0');
-      });
-      cy.get(':nth-child(3) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
+      cy.expect_text(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line', 'Storage');
+      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Allocated Disk Storage');
+      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Storage Allocated');
+      cy.expect_text(':nth-child(3) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(3) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(3) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
+      cy.expect_text(':nth-child(3) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
       cy.get(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line').contains('Year / MB');
 
-      cy.get(':nth-child(4) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Storage');
-      });
-      cy.get(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Used Disk Storage');
-      });
-      cy.get(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Storage Used');
-      });
-      cy.get(':nth-child(4) > :nth-child(3) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(4) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('10000.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(5) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(6) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('2.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(3) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('10000.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(4) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
+      cy.expect_text(':nth-child(4) > :nth-child(1) > .cell > .bx--front-line', 'Storage');
+      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Disk Storage');
+      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Storage Used');
+      cy.expect_text(':nth-child(4) > :nth-child(3) > .cell > .array_list > :nth-child(1)', '0.0');
+      cy.expect_text(':nth-child(4) > :nth-child(4) > .cell > .array_list > :nth-child(1)', '10000.0');
+      cy.expect_text(':nth-child(4) > :nth-child(5) > .cell > .array_list > :nth-child(1)', '0.0');
+      cy.expect_text(':nth-child(4) > :nth-child(6) > .cell > .array_list > :nth-child(1)', '2.0');
+      cy.expect_text(':nth-child(4) > :nth-child(3) > .cell > .array_list > :nth-child(2)', '10000.0');
+      cy.expect_text(':nth-child(4) > :nth-child(4) > .cell > .array_list > :nth-child(2)', 'Infinity');
       cy.get(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / GB');
     }).then(() => {
@@ -1539,111 +763,47 @@ describe('Rates', () => {
       cy.get('thead > tr > :nth-child(6)').contains('Rate Variable');
       cy.get('thead > tr > :nth-child(7)').contains('Units');
 
-      cy.get(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Storage Cost 1');
-      });
-      cy.get(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Storage 1 Metric');
-      });
-      cy.get(':nth-child(1) > :nth-child(3) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(1) > :nth-child(4) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(1) > :nth-child(5) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('100.0');
-      });
+      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(1)', 'Fixed Storage Cost 1');
+      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(2)', 'Fixed Storage 1 Metric');
+      cy.expect_text(':nth-child(1) > :nth-child(3) > .cell > .array_list > :nth-child(1)', '0.0');
+      cy.expect_text(':nth-child(1) > :nth-child(4) > .cell > .array_list > :nth-child(1)', 'Infinity');
+      cy.expect_text(':nth-child(1) > :nth-child(5) > .cell > .array_list > :nth-child(1)', '100.0');
       cy.get(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line').contains('Day');
 
-      cy.get(':nth-child(2) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed');
-      });
-      cy.get(':nth-child(2) > .vertical_align_top > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Storage Cost 2');
-      });
-      cy.get(':nth-child(2) > .vertical_align_top > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Storage 2 Metric');
-      });
-      cy.get(':nth-child(2) > :nth-child(3) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(2) > :nth-child(4) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('100.0');
-      });
-      cy.get(':nth-child(2) > :nth-child(5) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('1.0');
-      });
-      cy.get(':nth-child(2) > :nth-child(3) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('100.0');
-      });
-      cy.get(':nth-child(2) > :nth-child(4) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(2) > :nth-child(5) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
+      cy.expect_text(':nth-child(2) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
+      cy.expect_text(':nth-child(2) > .vertical_align_top > .cell > .array_list > :nth-child(1)', 'Fixed Storage Cost 2');
+      cy.expect_text(':nth-child(2) > .vertical_align_top > .cell > .array_list > :nth-child(2)', 'Fixed Storage 2 Metric');
+      cy.expect_text(':nth-child(2) > :nth-child(3) > .cell > .array_list > :nth-child(1)', '0.0');
+      cy.expect_text(':nth-child(2) > :nth-child(5) > .cell > .array_list > :nth-child(1)', '1.0');
+      cy.expect_text(':nth-child(2) > :nth-child(4) > .cell > .array_list > :nth-child(1)', '100.0');
+      cy.expect_text(':nth-child(2) > :nth-child(3) > .cell > .array_list > :nth-child(2)', '100.0');
+      cy.expect_text(':nth-child(2) > :nth-child(4) > .cell > .array_list > :nth-child(2)', 'Infinity');
+      cy.expect_text(':nth-child(2) > :nth-child(5) > .cell > .array_list > :nth-child(2)', '0.0');
       cy.get(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line').contains('Hour');
 
-      cy.get(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Storage');
-      });
-      cy.get(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Allocated Disk Storage');
-      });
-      cy.get(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Storage Allocated');
-      });
-      cy.get(':nth-child(3) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(3) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(3) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('1.0');
-      });
-      cy.get(':nth-child(3) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('100.0');
-      });
+      cy.expect_text(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line', 'Storage');
+      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Allocated Disk Storage');
+      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Storage Allocated');
+      cy.expect_text(':nth-child(3) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(3) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(3) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
+      cy.expect_text(':nth-child(3) > :nth-child(6) > .cell > .array_list > .list_row', '100.0');
       cy.get(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line').contains('Month / KB');
 
-      cy.get(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Storage');
-      });
-      cy.get(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Used Disk Storage');
-      });
-      cy.get(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Storage Used');
-      });
-      cy.get(':nth-child(4) > :nth-child(3) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(4) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('10000.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(5) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(6) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('2.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(3) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('10000.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(4) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(4) > :nth-child(5) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(6) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
+      cy.expect_text(':nth-child(4) > :nth-child(1) > .cell > .bx--front-line', 'Storage');
+      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Disk Storage');
+      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Storage Used');
+      cy.expect_text(':nth-child(4) > :nth-child(3) > .cell > .array_list > :nth-child(1)', '0.0');
+      cy.expect_text(':nth-child(4) > :nth-child(4) > .cell > .array_list > :nth-child(1)', '10000.0');
+      cy.expect_text(':nth-child(4) > :nth-child(5) > .cell > .array_list > :nth-child(1)', '0.0');
+      cy.expect_text(':nth-child(4) > :nth-child(6) > .cell > .array_list > :nth-child(1)', '2.0');
+      cy.expect_text(':nth-child(4) > :nth-child(3) > .cell > .array_list > :nth-child(2)', '10000.0');
+      cy.expect_text(':nth-child(4) > :nth-child(4) > .cell > .array_list > :nth-child(2)', 'Infinity');
+      cy.expect_text(':nth-child(4) > :nth-child(5) > .cell > .array_list > :nth-child(2)', '0.0');
+      cy.expect_text(':nth-child(4) > :nth-child(6) > .cell > .array_list > :nth-child(2)', '0.0');
       cy.get(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / GB');
     }).then(() => {
@@ -1681,104 +841,41 @@ describe('Rates', () => {
       cy.get('thead > tr > :nth-child(6)').contains('Rate Variable');
       cy.get('thead > tr > :nth-child(7)').contains('Units');
 
-      cy.get(':nth-child(1) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed');
-      });
-      cy.get(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Storage Cost 1');
-      });
-      cy.get(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Storage 1 Metric');
-      });
-      cy.get(':nth-child(1) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(1) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(1) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(1) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('-');
-      });
-      cy.get(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour');
-      });
-      cy.get(':nth-child(2) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed');
-      });
-      cy.get(':nth-child(2) > .vertical_align_top > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Storage Cost 2');
-      });
-      cy.get(':nth-child(2) > .vertical_align_top > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Fixed Storage 2 Metric');
-      });
-      cy.get(':nth-child(2) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(2) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(2) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(2) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('-');
-      });
-      cy.get(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour');
-      });
+      cy.expect_text(':nth-child(1) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
+      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(1)', 'Fixed Storage Cost 1');
+      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(2)', 'Fixed Storage 1 Metric');
+      cy.expect_text(':nth-child(1) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(1) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(1) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(1) > :nth-child(6) > .cell > .array_list > .list_row', '-');
+      cy.expect_text(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour');
 
-      cy.get(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Storage');
-      });
-      cy.get(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Allocated Disk Storage');
-      });
-      cy.get(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Storage Allocated');
-      });
-      cy.get(':nth-child(3) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(3) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(3) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('1.0');
-      });
-      cy.get(':nth-child(3) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour / GB');
-      });
+      cy.expect_text(':nth-child(2) > .vertical_align_top > .cell > .array_list > :nth-child(1)', 'Fixed Storage Cost 2');
+      cy.expect_text(':nth-child(2) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
+      cy.expect_text(':nth-child(2) > .vertical_align_top > .cell > .array_list > :nth-child(2)', 'Fixed Storage 2 Metric');
+      cy.expect_text(':nth-child(2) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(2) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(2) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(2) > :nth-child(6) > .cell > .array_list > .list_row', '-');
+      cy.expect_text(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour');
 
-      cy.get(':nth-child(4) > :nth-child(1) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('Storage');
-      });
-      cy.get(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(1)').then((value) => {
-        expect(value[0].innerText).to.eq('Used Disk Storage');
-      });
-      cy.get(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(2)').then((value) => {
-        expect(value[0].innerText).to.eq('Storage Used');
-      });
-      cy.get(':nth-child(4) > :nth-child(3) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(4) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('Infinity');
-      });
-      cy.get(':nth-child(4) > :nth-child(5) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('0.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(6) > .cell > .array_list > .list_row').then((value) => {
-        expect(value[0].innerText).to.eq('2.0');
-      });
-      cy.get(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line').then((value) => {
-        expect(value[0].innerText).to.eq('$ [United States Dollar] / Hour / GB');
-      });
+      cy.expect_text(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line', 'Storage');
+      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Allocated Disk Storage');
+      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Storage Allocated');
+      cy.expect_text(':nth-child(3) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(3) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(3) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
+      cy.expect_text(':nth-child(3) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / GB');
+
+      cy.expect_text(':nth-child(4) > :nth-child(1) > .cell > .bx--front-line', 'Storage');
+      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Disk Storage');
+      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Storage Used');
+      cy.expect_text(':nth-child(4) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(4) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
+      cy.expect_text(':nth-child(4) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
+      cy.expect_text(':nth-child(4) > :nth-child(6) > .cell > .array_list > .list_row', '2.0');
+      cy.expect_text(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / GB');
 
       cy.get('#chargeback_rate_vmdb_choice').click();
       cy.get(':nth-child(3) > .bx--overflow-menu-options__btn').click();
