@@ -1,7 +1,7 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 import FormSpy from '@data-driven-forms/react-form-renderer/form-spy';
 
-const formSchema = (newRecord) => ({
+const formSchema = (newRecord, groups) => ({
   fields: [
     {
       component: componentTypes.SUB_FORM,
@@ -36,6 +36,13 @@ const formSchema = (newRecord) => ({
           id: 'password',
           name: 'password',
           label: __('Password'),
+          // placeholder: '●●●●●●●●',
+          // placeholder:{
+          //   value: "●●●●●●●●",
+          //     visible : {
+          //       newRecord: false
+          //     }
+          // },
           maxLength: 50,
           validate: [{ type: validatorTypes.REQUIRED }],
           isRequired: true,
@@ -86,6 +93,7 @@ const formSchema = (newRecord) => ({
           placeholder: __('Choose one or more Groups'),
           newRecord,
           isMulti: true,
+          options: groups,
         },
         {
           component: 'plain-text',

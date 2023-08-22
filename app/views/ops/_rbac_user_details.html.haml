@@ -1,6 +1,7 @@
 - if @edit
   = react('SettingsUsersForm', {:recordId => params[:id] || "new"})
-  -# - react('SettingsUsersForm', {:recordId => params[:id] || "new"})
+  = params[:id]
+  = @edit[:user_id]
   - change_stored_password ||= _("Change")
   - cancel_password_change ||= _("Cancel")
   - stored_password_placeholder = "●●●●●●●●"
