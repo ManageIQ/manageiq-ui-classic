@@ -1,0 +1,133 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NotificationMessage component blank message should not render message 1`] = `
+<NotificationMessage
+  message=""
+  type="error"
+/>
+`;
+
+exports[`NotificationMessage component invalid type should not render message 1`] = `
+<NotificationMessage
+  message={"No message will be displayed"}
+  type="unknown"
+>
+  <div
+    className="miq-notification-message-container alert alert-info"
+  >
+    <span
+      className="pficon fa fa-regular fa-question-circle"
+    />
+    <strong>
+      <Component />
+    </strong>
+  </div>
+</NotificationMessage>
+`;
+
+exports[`NotificationMessage component should render error message 1`] = `
+<NotificationMessage
+  message={"Error message goes here"}
+  type="error"
+>
+  <div
+    className="miq-notification-message-container alert alert-danger"
+  >
+    <span
+      className="pficon pficon-error-circle-o"
+    />
+    <strong>
+      <Component />
+    </strong>
+  </div>
+</NotificationMessage>
+`;
+
+exports[`NotificationMessage component should render information message 1`] = `
+<NotificationMessage
+  message={"Information message goes here"}
+  type="info"
+>
+  <div
+    className="miq-notification-message-container alert alert-info"
+  >
+    <span
+      className="pficon pficon-info"
+    />
+    <strong>
+      <Component />
+    </strong>
+  </div>
+</NotificationMessage>
+`;
+
+exports[`NotificationMessage component should render success message 1`] = `
+<NotificationMessage
+  message={"Success message goes here"}
+  type="success"
+>
+  <div
+    className="miq-notification-message-container alert alert-success"
+  >
+    <span
+      className="pficon pficon-ok"
+    />
+    <strong>
+      <Component />
+    </strong>
+  </div>
+</NotificationMessage>
+`;
+
+exports[`NotificationMessage component should render warning message 1`] = `
+<NotificationMessage
+  message={"Warning message goes here"}
+  type="warning"
+>
+  <div
+    className="miq-notification-message-container alert alert-warning"
+  >
+    <span
+      className="pficon pficon-warning-triangle-o"
+    />
+    <strong>
+      <Component />
+    </strong>
+  </div>
+</NotificationMessage>
+`;
+
+exports[`NotificationMessage component unknown error type message should be rendered with blank type 1`] = `
+<NotificationMessage
+  message={"Message goes here"}
+  type=""
+>
+  <div
+    className="miq-notification-message-container alert alert-info"
+  >
+    <span
+      className="pficon fa fa-regular fa-question-circle"
+    />
+    <strong>
+      <Component />
+    </strong>
+  </div>
+</NotificationMessage>
+`;
+
+exports[`NotificationMessage component unknown error type message should be rendered with no type 1`] = `
+<NotificationMessage
+  message={"Message goes here"}
+>
+  <div
+    className="miq-notification-message-container alert alert-info"
+  >
+    <span
+      className="pficon fa fa-regular fa-question-circle"
+    />
+    <strong>
+      <Component />
+    </strong>
+  </div>
+</NotificationMessage>
+`;

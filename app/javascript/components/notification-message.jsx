@@ -1,23 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { NotificationTypes } from '../helpers/notification-types';
 
-export const NotificationTypes = {
-  info: 'info',
-  danger: 'danger',
-  success: 'success',
-  warning: 'warning',
-};
-
-const NotificationMessage = ({
-  type, message,
-}) => {
-  const valid = Object.values(NotificationTypes).includes(type);
-
-  if (valid && message) {
+/** Component to render a notification message. */
+const NotificationMessage = ({ type, message }) => {
+  const validType = type && Object.keys(NotificationTypes).includes(type);
+  const notification = validType ? NotificationTypes[type] : NotificationTypes.unknown;
+  if (message) {
     return (
-      <div className={classNames('alert', `alert-${type}`)}>
-        <span className={classNames('pficon', `pficon-${type}`)} />
+      <div className={classNames('miq-notification-message-container', 'alert', notification.alert)}>
+        <span className={classNames('pficon', notification.icon)} />
         <strong>{message}</strong>
       </div>
     );
@@ -28,6 +21,11 @@ const NotificationMessage = ({
 export default NotificationMessage;
 
 NotificationMessage.propTypes = {
-  type: PropTypes.string.isRequired,
-  message: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  message: PropTypes.string,
+};
+
+NotificationMessage.defaultProps = {
+  type: undefined,
+  message: undefined,
 };
