@@ -23,9 +23,21 @@ class WorkflowController < ApplicationController
   end
 
   def button
-    if params[:pressed] == "embedded_configuration_script_payload_tag"
+    case params[:pressed]
+    when 'embedded_configuration_script_payload_map_credentials'
+      javascript_redirect(:action => 'map_credentials', :id => params[:miq_grid_checks])
+    when 'embedded_configuration_script_payload_tag'
       tag(self.class.model)
     end
+  end
+
+  def map_credentials
+    assert_privileges('embedded_configuration_script_payload_map_credentials')
+    workflow = find_record_with_rbac(self.class.model, params[:id])
+    drop_breadcrumb(:name => _("Map Credentials to \"%{name}\"") % {:name => workflow.name},
+                    :url  => "/workflow/map_credentials/#{params[:id]}")
+    @in_a_form = true
+    @id = workflow.id
   end
 
   def toolbar

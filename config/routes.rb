@@ -3188,6 +3188,7 @@ Rails.application.routes.draw do
 
     :workflow => {
       :get => %w[
+        map_credentials
         download_data
         download_summary_pdf
         show
