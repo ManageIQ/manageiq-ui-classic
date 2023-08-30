@@ -177,12 +177,18 @@
   },
   "packageManager": "yarn@3.5.0",
   "resolutions": {
+    "array.prototype.find": "2.2.1",
     "decode-uri-component": "^0.2.2",
     "es-abstract": "~1.21.3",
     "express": "^4.18.2",
+    "function.prototype.name": "1.1.5",
     "minimatch": "~3.1.2",
     "moment-timezone": "~0.5.40",
     "nwsapi": "^2.2.1",
+    "object.entries": "1.1.6",
+    "object.fromentries": "2.0.6",
+    "object.values": "1.1.6",
+    "string.prototype.matchall": "4.0.8",
     "terser": "~4.8.1"
   }
 }
