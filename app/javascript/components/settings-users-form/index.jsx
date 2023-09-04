@@ -3,35 +3,37 @@ import MiqFormRenderer from '@@ddf';
 import PropTypes from 'prop-types';
 import createSchema from './schema';
 import { resources } from '../../spec/schedule-form/data';
-
-
-// Later in your component's JSX:
-{/* <button disabled={isDisabled}>Submit</button> */}
-
+import handleFailure from '../../helpers/handle-failure';
 
 const SettingsUsersForm = ({ recordId }) => {
   const newRecord = recordId === 'new';
+
   const [data, setData] = useState({
     isLoading: !!recordId,
     groups: [],
     initialValues: undefined,
+    userid: '',
   });
+  // const groups = values.groupIds.map(groupId => ({id :groupId}));
+  const validatorMapper = {
+    'same-password': () => (value, allValues) => value !== allValues.password ? 'Password do not match' : undefined
+  }
 
   const redirectUrl = (newRecord, button) => `/ops/settings_users_helper/${newRecord}?button=${button}`;
 
-  const CATEGORY_ACTIONS = {
-    ADD: 'add',
+  const USER_ACTIONS = {
+    CREATE: 'create',
     SAVE: 'save',
     CANCEL: 'cancel',
     RESET: 'reset',
   };
-  console.log(newRecord,"newRecord")
 
-  /** Data used for drop down list in Available Groups */
+  /** Generate dropdown options from resources */
   const groupOptions = (resources) => resources.map((item) => ({label: item.description, value: item.id}))
 
+  /** Fetch data from the API on component mount */
   useEffect(() => {
-    if (recordId) {
+    if (recordId && !newRecord) {
       Promise.all([
         API.get(`/api/groups?expand=resources`),
         API.get(`/api/users/${recordId}?expand=resources/`)])
@@ -43,78 +45,72 @@ const SettingsUsersForm = ({ recordId }) => {
             isLoading: false,
             groups: groupOptions(groups.resources),
             initialValues: users,
+            userid: users.userid || '',
           });
         });
     } else {
       API.get(`/api/groups?expand=resources`).then(({resources}) => {
-        setState({
+        setData({
           ...data,
           groups: groupOptions(resources),
           isLoading: false
         });
       })
     }
-
-    // API.get(`/api/groups?expand=resources/${user_id}`)
-    //     .then((initialValues) => {
-    //       setState({ initialValues, isLoading: false });
-    //     })
-    //     .catch((error) => {
-    //       console.error('API call failed:', error);
-    //     });
-    // if (newRecord) {
-    //   setState({ isLoading: false });
-    // } else {
-    //   API.get(`/api/users/${recordId}?expand=resources/`)
-    //     .then((initialValues) => {
-    //       setState({ initialValues, isLoading: false });
-    //     })
-    //     .catch((error) => {
-    //       console.error('API call failed:', error);
-    //     });
-    // }
   }, [recordId]);
-  console.log(recordId,"recordid")
-  const onSubmit = (values) => {
-    const params = newRecord
-      ? { data: values, button: CATEGORY_ACTIONS.ADD, url: `/api/groups/` }
-      : { data: { resource: values, action: CATEGORY_ACTIONS.EDIT }, button: CATEGORY_ACTIONS.SAVE, url: `/api/groups` };
 
-    API.post(params.url, params.data, { skipErrors: [400, 500] })
+  console.log(data,"initial values")
+
+  /** Function to handle form submission */
+  const onSubmit = (values, newRecord, recordId) => {
+    const userPayload = {
+      userid: values.userid,
+      password: values.password,
+      name: values.name,
+      email:values.email,
+      group: { id:20},
+    };
+
+    console.log(values,"values")
+    const url = newRecord ? '/api/users' : `/api/users/${recordId}`;
+      API.post(url, userPayload, {
+        skipErrors: [400, 500]
+      })
       .then((response) => {
-        const recordId = (newRecord && response && response.results && response.results[0])
-          ? response.results[0].id
-          : recordId;
-        window.miqJqueryRequest(redirectUrl(recordId, params.button));
+        const createdRecordId = newRecord ? response.id : recordId;
+        window.miqJqueryRequest(redirectUrl(createdRecordId));
       })
       .catch(handleFailure);
+
   };
+
   const onCancel = () => {
-    // If it's a new record, redirect to the previous page
+    /** If it's a new record, redirect to the previous page */
     if (newRecord) {
-      window.miqJqueryRequest(redirectUrl(recordId, CATEGORY_ACTIONS.CANCEL));
+      window.miqJqueryRequest(redirectUrl(recordId, USER_ACTIONS.CANCEL));
     } else {
-      // For an existing user, reset the form values to the initial state
+      /** For an existing user, reset the form values to the initial state */
       setState({ initialValues, isLoading: false });
     }
   };
 
   return !data.isLoading && (
     <MiqFormRenderer
-      schema={createSchema(newRecord, data.groups)}
+      schema={createSchema(newRecord, data.groups, data.userid)}
       initialValues={data.initialValues}
       onSubmit={onSubmit}
       onCancel={() => onCancel()}
       canReset={!newRecord}
       buttonsLabels={{
-        submitLabel: newRecord ? __('Add') : __('Cancel'),
+        submitLabel: newRecord ? __('Add') : __('Save')
       }}
+      validatorMapper={validatorMapper}
     />
   );
 };
 
 SettingsUsersForm.propTypes = {
-  recordId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  recordId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 };
 
 export default SettingsUsersForm;

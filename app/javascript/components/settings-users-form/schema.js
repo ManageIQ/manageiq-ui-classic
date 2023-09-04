@@ -1,7 +1,7 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 import FormSpy from '@data-driven-forms/react-form-renderer/form-spy';
 
-const formSchema = (newRecord, groups) => ({
+const formSchema = (newRecord, groups, userid ) => ({
   fields: [
     {
       component: componentTypes.SUB_FORM,
@@ -15,10 +15,9 @@ const formSchema = (newRecord, groups) => ({
           name: 'name',
           label: __('Full Name'),
           maxLength: 50,
-          validate: [{ type: validatorTypes.REQUIRED }],
-          isRequired: true,
-          // isDisabled: !newRecord,
-          className: '',
+          // validate: [{ type: validatorTypes.REQUIRED }],
+          isRequired: newRecord,
+          isDisabled: userid === 'admin',
         },
         {
           component: componentTypes.TEXT_FIELD,
@@ -26,33 +25,25 @@ const formSchema = (newRecord, groups) => ({
           name: 'userid',
           label: __('Username'),
           maxLength: 50,
-          validate: [{ type: validatorTypes.REQUIRED }],
-          isRequired: true,
-          // isDisabled: !newRecord,
-          className: '',
+          isRequired: newRecord,
+          isDisabled: userid === 'admin',
         },
         {
           component: componentTypes.TEXT_FIELD,
           id: 'password',
           name: 'password',
+          // type: 'password',
           label: __('Password'),
-          // placeholder: '●●●●●●●●',
-          // placeholder:{
-          //   value: "●●●●●●●●",
-          //     visible : {
-          //       newRecord: false
-          //     }
-          // },
+          placeholder: newRecord ? ' ' : '●●●●●●●●',
           maxLength: 50,
-          validate: [{ type: validatorTypes.REQUIRED }],
-          isRequired: true,
-          // isDisabled: !newRecord,
+          isDisabled: !newRecord,
+          isRequired: newRecord,
         },
         // {
         //   component: componentTypes.SWITCH,
-        //   id: 'show',
-        //   name: 'show',
-        //   label: __('Change password'),
+        //   id: 'change',
+        //   name: 'custom-button',
+        //   label: 'Change Password',
         //   isDisabled: newRecord,
         // },
         {
@@ -62,9 +53,14 @@ const formSchema = (newRecord, groups) => ({
           type: 'password',
           maxLength: 50,
           validate: [
-            { type: validatorTypes.REQUIRED },
+            { type: 'same-password', errorText: 'Passwords do not match' } // Add an error message
           ],
           label: __('Confirm Password'),
+          isRequired: newRecord,
+          condition: {
+            when: 'password',
+            isNotEmpty: true
+          }
         },
         {
           component: componentTypes.TEXT_FIELD,
@@ -74,16 +70,13 @@ const formSchema = (newRecord, groups) => ({
           maxLength: 253,
           autoComplete: 'off',
           validate: [
-            { type: validatorTypes.REQUIRED },
             {
               type: 'pattern',
               pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$',
-              message: 'Not valid email',
+              message: 'Invalid email format',
             },
           ],
-          isRequired: true,
-          // isDisabled: !newRecord,
-          className: '',
+          isRequired: newRecord,
         },
         {
           component: componentTypes.SELECT,
@@ -91,14 +84,9 @@ const formSchema = (newRecord, groups) => ({
           name: 'available_groups',
           label: __('Available Groups'),
           placeholder: __('Choose one or more Groups'),
-          newRecord,
-          isMulti: true,
+          isRequired: newRecord,
+          // isMulti: true,
           options: groups,
-        },
-        {
-          component: 'plain-text',
-          name: 'plain-text-component',
-          label: __('Selected Groups'),
         },
       ],
     },
