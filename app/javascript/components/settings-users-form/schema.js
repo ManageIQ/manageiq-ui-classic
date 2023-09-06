@@ -1,7 +1,7 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 import FormSpy from '@data-driven-forms/react-form-renderer/form-spy';
 
-const formSchema = (newRecord, groups, userid ) => ({
+const formSchema = (newRecord, groups, userid, isConfirmPasswordEnabled ) => ({
   fields: [
     {
       component: componentTypes.SUB_FORM,
@@ -36,16 +36,15 @@ const formSchema = (newRecord, groups, userid ) => ({
           label: __('Password'),
           placeholder: newRecord ? ' ' : '●●●●●●●●',
           maxLength: 50,
-          isDisabled: !newRecord,
           isRequired: newRecord,
+          isDisabled: !newRecord && isConfirmPasswordEnabled, // Disable when not a new record or isConfirmPasswordEnabled is false
         },
-        // {
-        //   component: componentTypes.SWITCH,
-        //   id: 'change',
-        //   name: 'custom-button',
-        //   label: 'Change Password',
-        //   isDisabled: newRecord,
-        // },
+        {
+          component: 'changePassword',
+          id: 'changePassword',
+          name: 'changePassword',
+          label: __('Change Password'),
+        },
         {
           component: componentTypes.TEXT_FIELD,
           id: 'verify',

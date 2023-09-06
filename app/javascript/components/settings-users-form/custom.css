@@ -1,0 +1,16 @@
+/* Style for the "Change" button */
+.change-button {
+  color: #fff; /* Change the text color as needed */
+  border: none;
+  cursor: pointer;
+  font-size: 14px; /* Adjust font size as needed */
+  border-radius: 4px; /* Adjust border radius as needed */
+  width: 80px;
+}
+/* Style for the "Change" button positioned on the password field */
+.change-button-container {
+  position: absolute;
+  top: 30%;
+  right: 20px; /* Adjust the distance from the right edge as needed */
+  transform: translateY(-48%);
+}

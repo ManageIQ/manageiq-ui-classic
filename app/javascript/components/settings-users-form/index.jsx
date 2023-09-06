@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import createSchema from './schema';
 import { resources } from '../../spec/schedule-form/data';
 import handleFailure from '../../helpers/handle-failure';
+import componentMapper from '../../forms/mappers/componentMapper';
+import { ChangePasswordButton } from './helper';
 
 const SettingsUsersForm = ({ recordId }) => {
   const newRecord = recordId === 'new';
@@ -14,7 +16,20 @@ const SettingsUsersForm = ({ recordId }) => {
     initialValues: undefined,
     userid: '',
   });
-  // const groups = values.groupIds.map(groupId => ({id :groupId}));
+
+
+  const enableConfirmPassword = (enable) => {
+    setIsConfirmPasswordEnabled(enable);
+  };
+
+  /**  State variable to control the Confirm Password field */
+  const [isConfirmPasswordEnabled, setIsConfirmPasswordEnabled] = useState(!newRecord);
+
+  const mapper = {
+    ...componentMapper,
+    'changePassword': ChangePasswordButton,
+  };
+
   const validatorMapper = {
     'same-password': () => (value, allValues) => value !== allValues.password ? 'Password do not match' : undefined
   }
@@ -68,7 +83,8 @@ const SettingsUsersForm = ({ recordId }) => {
       password: values.password,
       name: values.name,
       email:values.email,
-      group: { id:20},
+      // group: { id:20},
+      group: values.current_group_id,
     };
 
     console.log(values,"values")
@@ -90,14 +106,16 @@ const SettingsUsersForm = ({ recordId }) => {
       window.miqJqueryRequest(redirectUrl(recordId, USER_ACTIONS.CANCEL));
     } else {
       /** For an existing user, reset the form values to the initial state */
-      setState({ initialValues, isLoading: false });
+      setData({ initialValues, isLoading: false });
     }
   };
 
   return !data.isLoading && (
     <MiqFormRenderer
-      schema={createSchema(newRecord, data.groups, data.userid)}
+      schema={createSchema(newRecord, data.groups, data.userid, isConfirmPasswordEnabled)}
       initialValues={data.initialValues}
+      // componentMapper={mapper}
+      componentMapper={{ ...mapper, 'changePassword': (props) => <ChangePasswordButton {...props} newRecord={newRecord} enableConfirmPassword={enableConfirmPassword} /> }}
       onSubmit={onSubmit}
       onCancel={() => onCancel()}
       canReset={!newRecord}
