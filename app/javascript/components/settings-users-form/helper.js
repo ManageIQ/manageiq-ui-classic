@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Button } from 'carbon-components-react';
-import './custom.css';
 
 /** button component used as a mapper to change the password */
 export const ChangePasswordButton = (props) => {
