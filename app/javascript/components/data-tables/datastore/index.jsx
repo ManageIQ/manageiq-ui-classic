@@ -5,6 +5,7 @@ import {
   tableData, addSelected, removeSelected,
 } from './helper';
 import MiqDataTable from '../../miq-data-table';
+import NoRecordsFound from '../../no-records-found';
 import { CellAction } from '../../miq-data-table/helper';
 
 const Datastore = ({
@@ -93,14 +94,22 @@ const Datastore = ({
   };
 
   return (
-    <MiqDataTable
-      rows={miqRows.rowItems}
-      headers={miqHeaders}
-      onCellClick={(selectedRow, cellType, event) => onCellClick(selectedRow, cellType, event)}
-      rowCheckBox={hasCheckbox}
-      mode={`datastore-list ${type}`}
-      gridChecks={selectionIds}
-    />
+    <>
+      {
+        (miqRows.rowItems.length === 0)
+          ? <NoRecordsFound />
+          : (
+            <MiqDataTable
+              rows={miqRows.rowItems}
+              headers={miqHeaders}
+              onCellClick={(selectedRow, cellType, event) => onCellClick(selectedRow, cellType, event)}
+              rowCheckBox={hasCheckbox}
+              mode={`datastore-list ${type}`}
+              gridChecks={selectionIds}
+            />
+          )
+      }
+    </>
   );
 };
 
