@@ -7,7 +7,7 @@
       - else
         = render :partial => "method_form", :locals  => {:prefix => ""}
   - else
-    = first_user_summary(@ae_method, @sb)
+    = method_details(@ae_method, @sb)
     - if @ae_method.location == 'inline'
       = render :partial => "embedded_methods"
     = render :partial => "domain_overrides", :locals => {:node_prefix => "aem", :model => "Method"}

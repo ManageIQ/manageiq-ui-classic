@@ -325,7 +325,7 @@ module MiqAeClassHelper
                             :descReadOnly  => domain && !ae_ns.editable_property?(:description)})
   end
 
-  def first_user_summary(ae_method, sb_data)
+  def method_details(ae_method, sb_data)
     rows = [
       row_data(_('Type'), ae_method.location),
       row_data(_('Fully Qualified Name'), sb_data[:namespace_path]),
@@ -336,7 +336,7 @@ module MiqAeClassHelper
 
     miq_structured_list({
                           :title => _('Main Info'),
-                          :mode  => "first_user_summary",
+                          :mode  => "method_details",
                           :rows  => rows
                         })
   end
