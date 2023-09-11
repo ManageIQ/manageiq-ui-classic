@@ -112,8 +112,7 @@
 
         .sub_value {
           display: flex;
-          flex-grow: 1;
-          width: 45%;
+          width: 50%;
         }
       }
     }
@@ -170,6 +169,38 @@
   .react-tree-view {
     ul li {
       margin: 10px;
+    }
+  }
+
+  &.tag_group {
+    .bx--structured-list-row {
+      display: flex;
+      flex-direction: column;
+
+      .label_header {
+        width: 100%;
+        min-width: 100%;
+        padding: 1rem;
+      }
+
+      .content_value {
+        padding-left: 1rem;
+
+        .multi_row_cell {
+          .sub_row_item {
+            .icon {
+              width: 5%;
+            }
+            .sub_label {
+              width: 38%;
+              margin-right: 2%;
+            }
+            .sub_value {
+              padding-left: 5px;
+            }
+          }
+        }
+      }
     }
   }
 }
