@@ -787,7 +787,6 @@ module VmCommon
   end
 
   def list_child_vms(model, node_id, title, show_list)
-    @edit = session[:edit]
     options = {
       :model       => model,
       :named_scope => scopes_for_role,
