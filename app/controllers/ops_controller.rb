@@ -202,7 +202,7 @@ class OpsController < ApplicationController
       edit_changed?
     end
     # do not show buttons, when settings_workers - it uses react form buttons
-    if @sb[:active_tab] == "settings_workers"
+    if ["settings_workers", "diagnostics_cu_repair"].include?(@sb[:active_tab])
       @x_edit_buttons_locals = nil
     end
     render :layout => "application"
@@ -803,7 +803,7 @@ class OpsController < ApplicationController
     else
       presenter.hide(:paging_div).hide(:form_buttons_div)
     end
-    if @sb[:active_tab] == "settings_workers"
+    if ["settings_workers", "diagnostics_cu_repair"].include?(@sb[:active_tab])
       presenter.hide(:form_buttons_div)
     end
   end

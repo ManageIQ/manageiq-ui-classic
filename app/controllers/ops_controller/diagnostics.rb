@@ -239,37 +239,21 @@ module OpsController::Diagnostics
   def cu_repair
     assert_privileges("ops_diagnostics")
 
-    return unless load_edit("curepair_edit__new", "replace_cell__explorer")
-
-    if @edit[:new][:end_date].to_time < @edit[:new][:start_date].to_time
-      add_flash(_("End Date cannot be earlier than Start Date"), :error)
+    if params[:end_date].to_time < params[:start_date].to_time
+      render :json => {:status => :error, :message => _("End Date cannot be earlier than Start Date")}
     else
       # converting string to time, and then converting into user selected timezone
-      from = "#{@edit[:new][:start_date]} #{@edit[:new][:start_hour]}:#{@edit[:new][:start_min]}:00".to_time.in_time_zone(@edit[:new][:timezone])
-      to = "#{@edit[:new][:end_date]} #{@edit[:new][:end_hour]}:#{@edit[:new][:end_min]}:00".to_time.in_time_zone(@edit[:new][:timezone])
+      from = "#{params[:start_date]} #{params[:start_hour]}:#{params[:start_min]}:00".to_time.in_time_zone(params[:timezone])
+      to = "#{params[:end_date]} #{params[:end_hour]}:#{params[:end_min]}:00".to_time.in_time_zone(params[:timezone])
       selected_zone = Zone.find(x_node.split('-').last)
       begin
         Metric::Capture.perf_capture_gap_queue(from, to, selected_zone)
       rescue => bang
         # Push msg and error flag
-        add_flash(_("Error during 'C & U Gap Collection': %{message}") % {:message => bang.message}, :error)
+        render :json => {:status => :error, :message => _("Error during 'C & U Gap Collection': %{message}") % {:message => bang.message}}
       else
-        @edit[:new][:start_date] = @edit[:new][:end_date] = ""
-        add_flash(_("C & U Gap Collection successfully initiated"))
+        render :json => {:status => :success, :message => _("C & U Gap Collection successfully initiated")}
       end
-    end
-
-    render :update do |page|
-      page << javascript_prologue
-      page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-      page << "miqScrollTop();" if @flash_array.present?
-      page.replace_html("diagnostics_cu_repair", :partial => "diagnostics_cu_repair_tab")
-      page << "ManageIQ.calendar.calDateFrom = null;"
-      page << "ManageIQ.calendar.calDateTo = new Date();"
-      page << "miqBuildCalendar();"
-      page << "miqSparkle(false);"
-      # disable button
-      page << javascript_for_miq_button_visibility(false)
     end
   end
 
