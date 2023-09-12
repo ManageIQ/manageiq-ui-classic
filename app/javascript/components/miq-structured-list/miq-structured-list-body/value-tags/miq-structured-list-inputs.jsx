@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox, TextArea, Dropdown } from 'carbon-components-react';
+import { Controlled as CodeMirror } from 'react-codemirror2';
 import { DynamicReactComponents, InputTypes } from '../../helpers';
 
 /** Component to render textarea / checkbox / react components */
@@ -34,6 +35,21 @@ const MiqStructuredListInputs = ({ value, action }) => {
     />
   );
 
+  /** Function to render the code mirror component. */
+  const renderCodeMirrorComponent = ({ props: { mode, payload } }) => (
+    <CodeMirror
+      className="miq-codemirror miq-structured-list-code-mirror"
+      options={{
+        mode,
+        lineNumbers: true,
+        matchBrackets: true,
+        theme: 'eclipse',
+        readOnly: 'nocursor',
+        viewportMargin: Infinity,
+      }}
+      value={payload}
+    />
+  );
   switch (value.input) {
     case InputTypes.TEXTAREA:
       return renderTextArea(value);
@@ -43,6 +59,8 @@ const MiqStructuredListInputs = ({ value, action }) => {
       return renderDynamicComponent(value);
     case InputTypes.DROPDOWN:
       return renderDropDownComponent(value);
+    case InputTypes.CODEMIRROR:
+      return renderCodeMirrorComponent(value);
     default:
       return null;
   }

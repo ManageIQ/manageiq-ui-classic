@@ -6,20 +6,24 @@ import MiqStructuredListConditionalTag from '../value-tags/miq-structured-list-c
 
 /** Usage eg: Automation / Embeded Automate / Generic Objects / item
   * Properties has no links & Relationships have links */
-const MiqStructuredListObject = ({ row, clickEvents, onClick }) => (
-  <StructuredListCell
-    className={classNames(row.label ? 'content_value' : 'label_header', 'object_item')}
-    title={row && row.title !== undefined ? row.title : ''}
-  >
-    <MiqStructuredListConditionalTag row={row} onClick={onClick} clickEvents={clickEvents} />
-  </StructuredListCell>
-);
+const MiqStructuredListObject = ({ row, clickEvents, onClick }) => {
+  const isContent = row.label || (row.value && row.value.input);
+  return ((
+    <StructuredListCell
+      className={classNames(isContent ? 'content_value' : 'label_header', 'object_item')}
+      title={row && row.title !== undefined ? row.title : ''}
+    >
+      <MiqStructuredListConditionalTag row={row} onClick={onClick} clickEvents={clickEvents} />
+    </StructuredListCell>
+  ));
+};
 
 export default MiqStructuredListObject;
 
 MiqStructuredListObject.propTypes = {
   row: PropTypes.shape({
     label: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.any]),
     title: PropTypes.string,
   }),
   clickEvents: PropTypes.bool.isRequired,
