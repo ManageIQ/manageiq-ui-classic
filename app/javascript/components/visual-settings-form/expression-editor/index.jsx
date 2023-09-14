@@ -11,39 +11,51 @@ import {
 } from './expression-editor-helper.jsx';
 
 const EditExpression = () => {
-  // Define the initial state for the component
   const initialState = {
     selectedItem: items[0],
     conditionalDropdownValue: null,
     additionalDropdown1Value: null,
     additionalDropdown2Value: null,
     additionalDropdown3Value: null,
-  };
+  };//initial state
 
-  // Initialize the state using useState hook
   const [state, setState] = useState(initialState);
   const [labelText, setLabelText] = useState(newElement); // State to store the label text
-  const labelRef = useRef(null); // Reference to the label element
+  const [buttonsEnabled, setButtonsEnabled] = useState(false); // State to control whether the buttons are enabled
+  const initialLabelText = useRef(newElement); //a variable to store the initial label text
+  const [selectedButtonText, setSelectedButtonText] = useState(''); // State to store the selected button text
+  const [showNewElement, setShowNewElement] = useState(false); // State to control the visibility of the new element
 
-  // Event handler for the main dropdown selection
+
+  // Handler for the main dropdown selection
   const handleSelect = (event) => {
     setState({
       ...state,
       selectedItem: event.selectedItem,
-      conditionalDropdownValue: null, // Reset conditional dropdown value
-      additionalDropdown1Value: null, // Reset additional dropdown 1 value
-      additionalDropdown2Value: null, // Reset additional dropdown 2 value
-    });
+      conditionalDropdownValue: null,
+      additionalDropdown1Value: null,
+      additionalDropdown2Value: null,
+    });// Reset all dropdown values
   };
 
-  // Event handler for the conditional dropdown selection
+  // Handler for the conditional dropdown selection
   const handleConditionalDropdownChange = (event) => {
     setState({
       ...state,
       conditionalDropdownValue: event.target.value,
-      additionalDropdown1Value: null, // Reset additional dropdown 1 value
-      additionalDropdown2Value: null, // Reset additional dropdown 2 value
+      additionalDropdown1Value: null,
+      additionalDropdown2Value: null,
     });
+  };
+
+  // Event handler for the label click
+  const handleLabelClick = () => {
+    setButtonsEnabled(!buttonsEnabled);
+  };
+
+  // Event handler for the "Cancel" button click
+  const handleCancelClick = () => {
+    setLabelText(initialLabelText.current);
   };
 
   // Function to get the label of the selected item from the ConditionalItems array
@@ -54,12 +66,12 @@ const EditExpression = () => {
 
   const getAdditionalDropdown1Label = () => {
     const selectedItem = DateItems.find(item => item.id === state.additionalDropdown1Value);
-    return selectedItem ? selectedItem.label : ''; // Return the label or an empty string if not found
+    return selectedItem ? selectedItem.label : '';
   };
 
   const getAdditionalDropdown2Label = () => {
     const selectedItem = DateParameters.find(item => item.id === state.additionalDropdown2Value);
-    return selectedItem ? selectedItem.label : ''; // Return the label or an empty string if not found
+    return selectedItem ? selectedItem.label : '';
   };
 
   // Function to generate the combined string based on selected values
@@ -68,31 +80,39 @@ const EditExpression = () => {
     const AdditionalDropdownLabel1 = getAdditionalDropdown1Label();
     const AdditionalDropdownLabel2 = getAdditionalDropdown2Label();
     const selectedValues = [
-      conditionalDropdownLabel, // Use the label instead of the value
-      AdditionalDropdownLabel1, // Use the label instead of the value
-      AdditionalDropdownLabel2, // Use the label instead of the value
+      conditionalDropdownLabel,
+      AdditionalDropdownLabel1,
+      AdditionalDropdownLabel2,
     ].filter(Boolean); // Filter out null or undefined values
 
     if (selectedValues.length === 0) {
       return labelText; // Return previous value if no values selected
     }
-
-    return selectedValues.join(' '); // Combine selected values with a comma separator
+    return selectedValues.join(' '); // Join selected values
   };
 
-  // Event handler for the "Commit" button click
+  // Handler for commit button
   const handleCommitClick = () => {
     const combinedString = generateCombinedString();
     setLabelText(combinedString);
   };
 
-  // Determine whether to display the conditional dropdown based on the selected item
+  // Handler for expression buttons
+  const handleButtonSelection = (buttonText) => {
+    setSelectedButtonText(buttonText);
+    setShowNewElement(true);
+  };
+
+  // Handler for additon label text
+  const handleNewElementClick = () => {
+    alert(`Selected: ${newElement}`);
+  };
+
+
+  // COnditional dropdown visibility
   const shouldDisplayConditionalDropdown = state.selectedItem.id === 'field';
-  const shouldDisplayAdditionalDropdowns =
-    state.conditionalDropdownValue === '1'; // Check if it's "EVM Audit Event: Date created"
-  const shouldDisplayAdditionalfields = !['1', 'choose'].includes(
-    state.conditionalDropdownValue
-  ); // Check if it's not "EVM Audit Event: Date created"
+  const shouldDisplayAdditionalDropdowns = state.conditionalDropdownValue === '1'; // Check if it's "EVM Audit Event: Date created"
+  const shouldDisplayAdditionalfields = !['1', 'choose'].includes(state.conditionalDropdownValue); // Check if it's not "EVM Audit Event: Date created"
 
   return (
     <>
@@ -100,19 +120,27 @@ const EditExpression = () => {
         <h2 className='heading'>Edit Expression</h2>
         <Button disabled>Undo</Button>&nbsp;
         <Button disabled>Redo</Button>&nbsp;
-        <Button kind="secondary" disabled>Cancel</Button>
+        <Button kind="secondary" disabled={!buttonsEnabled} onClick={handleCancelClick}>Cancel</Button>
         <br />
         <br />
-
-        {/* Display the label text */}
-        <label className='edit-expression-textarea'>{labelText}</label>
+        {/* selected condition label */}
+        <label className='edit-expression-textarea' onClick={handleLabelClick} >{labelText}</label>
+        {/* Additional label for newly added elements */}
+        {showNewElement && (
+          <>
+            <label className='edit-expression-textarea' onClick={handleNewElementClick}>
+              {selectedButtonText} <span className='new-element-label'>{newElement}</span>
+            </label>
+            <br />
+          </>
+      )}
         <br />
 
         <label> Add a Condition: </label>
         <br />
-        <Button disabled >and</Button>&nbsp;
-        <Button disabled >or</Button>&nbsp;
-        <Button disabled >not</Button>
+        <Button disabled={!buttonsEnabled}  onClick={() => handleButtonSelection('and')}>and</Button>&nbsp;
+        <Button disabled={!buttonsEnabled} onClick={() => handleButtonSelection('or')}>or</Button>&nbsp;
+        <Button disabled={!buttonsEnabled} onClick={() => handleButtonSelection('not')}>not</Button>
         <br />
         <br />
       </div>
@@ -188,8 +216,6 @@ const EditExpression = () => {
           </>
         )}
         <br />
-
-        {/* "Commit" and "Discard" buttons */}
         <Button id="commit" onClick={handleCommitClick}>Commit</Button>&nbsp;
         <Button kind="secondary">Discard</Button>
       </div>

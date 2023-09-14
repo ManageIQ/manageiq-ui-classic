@@ -80,7 +80,7 @@ export const DateParameters = [
   { id: '4yearago', label: 'Four Year Ago' },
 ];
 
-const InputParameters = [
+export const InputParameters = [
   { id: 'equal', label: '=' },
   { id: 'startswith', label: 'STARTS WITH' },
   { id: 'endswith', label: 'ENDS WITH' },
