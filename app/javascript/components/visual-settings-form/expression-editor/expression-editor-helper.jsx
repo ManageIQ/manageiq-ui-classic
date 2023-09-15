@@ -19,6 +19,7 @@ export const ConditionalItems = [
 ];
 
 export const DateItems = [
+  { id: 'choose', label: '<choose>' },
   { id: 'is', label: 'IS' },
   { id: 'before', label: 'BEFORE' },
   { id: 'after', label: 'AFTER' },
@@ -28,6 +29,7 @@ export const DateItems = [
 ];
 
 export const DateParameters = [
+  { id: 'choose', label: '<choose>' },
   { id: 'thishour', label: 'This Hour' },
   { id: 'lasthour', label: 'Last Hour' },
   { id: '2hoursago', label: '2 Hours Ago' },
@@ -81,6 +83,7 @@ export const DateParameters = [
 ];
 
 export const InputParameters = [
+  { id: 'choose', label: '<choose>' },
   { id: 'equal', label: '=' },
   { id: 'startswith', label: 'STARTS WITH' },
   { id: 'endswith', label: 'ENDS WITH' },

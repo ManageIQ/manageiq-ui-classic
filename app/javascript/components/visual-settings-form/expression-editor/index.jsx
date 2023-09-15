@@ -11,6 +11,14 @@ import {
 } from './expression-editor-helper.jsx';
 
 const EditExpression = () => {
+//for selected values
+  const [selectedValues, setSelectedValues] = useState({
+    conditionalDropdownValues: [],
+    additionalDropdown1Values: [],
+    additionalDropdown2Values: [],
+  });
+
+
   const initialState = {
     selectedItem: items[0],
     conditionalDropdownValue: null,
@@ -40,12 +48,54 @@ const EditExpression = () => {
 
   // Handler for the conditional dropdown selection
   const handleConditionalDropdownChange = (event) => {
+    const { value } = event.target;
+    setSelectedValues((prevState) => ({
+      ...prevState,
+      conditionalDropdownValues: [...prevState.conditionalDropdownValues, value],
+    }));
     setState({
       ...state,
-      conditionalDropdownValue: event.target.value,
-      additionalDropdown1Value: null,
-      additionalDropdown2Value: null,
+      conditionalDropdownValue: value,
+      additionalDropdown1Value: null, // Reset additional dropdown 1 value
+      additionalDropdown2Value: null, // Reset additional dropdown 2 value
     });
+  };
+
+  // Handler for additionalDropdown1 selection
+  const handleAdditionalDropdown1Change = (event) => {
+    const { value } = event.target;
+    setSelectedValues((prevState) => ({
+      ...prevState,
+      additionalDropdown1Values: [...prevState.additionalDropdown1Values, value],
+    }));
+    setState({
+      ...state,
+      additionalDropdown1Value: value,
+    });
+  };
+
+  // Handler for additionalDropdown2 selection
+  const handleAdditionalDropdown2Change = (event) => {
+    const { value } = event.target;
+    setSelectedValues((prevState) => ({
+      ...prevState,
+      additionalDropdown2Values: [...prevState.additionalDropdown2Values, value],
+    }));
+    setState({
+      ...state,
+      additionalDropdown2Value: value,
+    });
+  };
+
+  // Function to generate the combined string based on selected values
+  const generateCombinedString = () => {
+    const conditionalDropdownString = selectedValues.conditionalDropdownValues.join(', ');
+    const additionalDropdown1String = selectedValues.additionalDropdown1Values.join(', ');
+    const additionalDropdown2String = selectedValues.additionalDropdown2Values.join(', ');
+
+    const selectedValuesString = `${conditionalDropdownString}, ${additionalDropdown1String}, ${additionalDropdown2String}`;
+
+    return selectedValuesString;
   };
 
   // Event handler for the label click
@@ -75,7 +125,7 @@ const EditExpression = () => {
   };
 
   // Function to generate the combined string based on selected values
-  const generateCombinedString = () => {
+  const generateCombinedStrings = () => {
     const conditionalDropdownLabel = getConditionalDropdownLabel();
     const AdditionalDropdownLabel1 = getAdditionalDropdown1Label();
     const AdditionalDropdownLabel2 = getAdditionalDropdown2Label();
@@ -93,8 +143,11 @@ const EditExpression = () => {
 
   // Handler for commit button
   const handleCommitClick = () => {
-    const combinedString = generateCombinedString();
+    const combinedString = generateCombinedStrings();
     setLabelText(combinedString);
+
+    // Log the combined string
+    console.log(combinedString);
   };
 
   // Handler for expression buttons
