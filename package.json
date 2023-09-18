@@ -174,7 +174,7 @@
     "node": ">= 18.0.0",
     "npm": ">= 8.6.0"
   },
-  "packageManager": "yarn@3.5.0",
+  "packageManager": "yarn@4.0.0-rc.51",
   "resolutions": {
     "array-includes": "3.1.6",
     "array.prototype.filter": "1.0.2",
