@@ -8,8 +8,7 @@ namespace :update do
         end
         puts "== #{engine.name} =="
         system("which yarn >/dev/null") || abort("\n== You have to install yarn ==")
-        system("yarn set version 1.22.18") || abort("\n== yarn failed to set version to 1.22.18 in #{engine.path} ==") if RUBY_PLATFORM.include?("s390x")
-        system("yarn") || abort("\n== yarn failed in #{engine.path} ==") # Add --immutable once s390x is off of yarn 1.
+        system("yarn") || abort("\n== yarn failed in #{engine.path} ==") # Add --immutable once s390x doesn't change the checksums.
       end
     end
   end
