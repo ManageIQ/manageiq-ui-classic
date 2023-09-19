@@ -8,6 +8,7 @@
     -# Load the required JS based on the console type
     = javascript_essential_dependencies
     = javascript_pack_tag("manageiq-ui-classic/remote_consoles_#{@console[:type]}.js")
+    = javascript_pack_tag("manageiq-ui-classic/application-common.js")
   %body
     #remote-console{'data-url' => @console[:url], 'data-secret' => @console[:secret], 'data-is-vcloud' => @console[:is_vcloud], 'data-vmx' => @console[:vmx]}
     %footer.remote-console
