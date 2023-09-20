@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import MiqFormRenderer from '@@ddf';
 import createSchema from './visual-settings-form.schema';
-import EditExpression from './expression-editor';
+import ExpressionEditor from './expression-editor-new';
 
 const VisualSettingsForm = ({ recordId }) => {
   const [{ initialValues, timezoneOptions, isLoading }, setState] = useState({ isLoading: true });
@@ -36,7 +36,7 @@ const VisualSettingsForm = ({ recordId }) => {
 
   return !isLoading && (
     <div>
-        <EditExpression />
+      <ExpressionEditor />
       <MiqFormRenderer
         schema={createSchema(timezoneOptions)}
         initialValues={initialValues}

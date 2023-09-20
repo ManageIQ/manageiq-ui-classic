@@ -1,0 +1,97 @@
+export const ExprCondition = [
+  { id: 'expr', label: 'Expression' },
+];
+
+export const FieldItems = [
+  { id: 'field', label: 'field' },
+];
+
+export const EventItems = [
+  { id: '1', label: 'EVM Audit Event:Date Created' },
+  { id: '2', label: 'EVM Audit Event:Event' },
+  { id: '3', label: 'EVM Audit Event:Href Slug' },
+  { id: '4', label: 'EVM Audit Event:Id' },
+  { id: '5', label: 'EVM Audit Event:Message' },
+  { id: '6', label: 'EVM Audit Event:Region Description' },
+  { id: '7', label: 'EVM Audit Event:Region Number' },
+  { id: '8', label: 'EVM Audit Event:Severity' },
+  { id: '9', label: 'EVM Audit Event:Source' },
+];
+
+export const ConstraintTexts = [
+  { id: 'is', label: 'IS' },
+  { id: 'before', label: 'BEFORE' },
+  { id: 'after', label: 'AFTER' },
+  { id: 'from', label: 'FROM' },
+  { id: 'isempty', label: 'IS EMPTY' },
+  { id: 'isnotempty', label: 'IS NOT EMPTY' },
+];
+
+export const DateParameters = [
+  { id: 'choose', label: '<choose>' },
+  { id: 'thishour', label: 'This Hour' },
+  { id: 'lasthour', label: 'Last Hour' },
+  { id: '2hoursago', label: '2 Hours Ago' },
+  { id: '3hoursago', label: '3 Hours Ago' },
+  { id: '4hoursago', label: '4 Hours Ago' },
+  { id: '5hoursago', label: '5 Hours Ago' },
+  { id: '6hoursago', label: '6 Hours Ago' },
+  { id: '7hoursago', label: '7 Hours Ago' },
+  { id: '8hoursago', label: '8 Hours Ago' },
+  { id: '9hoursago', label: '9 Hours Ago' },
+  { id: '10hoursago', label: '10 Hours Ago' },
+  { id: '11hoursago', label: '11 Hours Ago' },
+  { id: '12hoursago', label: '12 Hours Ago' },
+  { id: '13hoursago', label: '13 Hours Ago' },
+  { id: '14hoursago', label: '14 Hours Ago' },
+  { id: '15hoursago', label: '15 Hours Ago' },
+  { id: '16hoursago', label: '16 Hours Ago' },
+  { id: '17hoursago', label: '17 Hours Ago' },
+  { id: '18hoursago', label: '18 Hours Ago' },
+  { id: '19hoursago', label: '19 Hours Ago' },
+  { id: '20hoursago', label: '20 Hours Ago' },
+  { id: '21hoursago', label: '21 Hours Ago' },
+  { id: '22hoursago', label: '22 Hours Ago' },
+  { id: '23hoursago', label: '23 Hours Ago' },
+  { id: 'today', label: 'Today' },
+  { id: 'yesterday', label: 'Yesterday' },
+  { id: '2dayssgo', label: '2 Days Ago' },
+  { id: '3dayssgo', label: '3 Days Ago' },
+  { id: '5dayssgo', label: '4 Days Ago' },
+  { id: '6dayssgo', label: '5 Days Ago' },
+  { id: '7dayssgo', label: '6 Days Ago' },
+  { id: '14dayssgo', label: '7 Days Ago' },
+  { id: 'thisweek', label: 'This Week' },
+  { id: 'lastweek', label: 'Last Week' },
+  { id: '2weeksago', label: 'Two Weeks  Ago' },
+  { id: '3weeksago', label: 'Three Weeks  Ago' },
+  { id: '4weeksago', label: 'Four Weeks  Ago' },
+  { id: 'thismonth', label: 'This Month' },
+  { id: 'lastmonth', label: 'Last Month' },
+  { id: '2monthsago', label: '2 Months Ago' },
+  { id: '3monthsago', label: '3 Months Ago' },
+  { id: '4monthsago', label: '4 Months Ago' },
+  { id: '6monthsago', label: '6 Months Ago' },
+  { id: 'thisquarter', label: 'This Quarter' },
+  { id: 'lastquarter', label: 'Last Quarter' },
+  { id: 'thisyear', label: 'This Year' },
+  { id: 'lastyear', label: 'Last Year' },
+  { id: '2yearago', label: 'Two Year Ago' },
+  { id: '3yearago', label: 'Three Year Ago' },
+  { id: '4yearago', label: 'Four Year Ago' },
+];
+
+export const InputParameters = [
+  { id: 'choose', label: '<choose>' },
+  { id: 'equal', label: '=' },
+  { id: 'startswith', label: 'STARTS WITH' },
+  { id: 'endswith', label: 'ENDS WITH' },
+  { id: 'include', label: 'INCLUDE' },
+  { id: 'isnull', label: 'IS NULL' },
+  { id: 'isnotnull', label: 'IS NOT NULL' },
+  { id: 'isempty', label: 'IS EMPTY' },
+  { id: 'isnotempty', label: 'IS NOT EMPTY' },
+  { id: 'regexmatches', label: 'REGULAR EXPRESSION MATCHES' },
+  { id: 'regexdoesnotmatches', label: 'REGULAR EXPRESSION DOES NOT MATCH' },
+]
+
