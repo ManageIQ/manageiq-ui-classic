@@ -51,7 +51,7 @@ const GroupSwitcher = ({ miqGroups, currentGroup, expanded: isExpanded }) => {
       onChange={groupChange}
     />
   );
-  
+
   const multiGroup = (
     <Dropdown
       hideLabel
