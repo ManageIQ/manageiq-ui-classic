@@ -170,6 +170,18 @@
   }
 }
 
+.credential-mapper-data-table {
+  tbody tr td {
+    .bx--front-line {
+      margin-top: 0%;
+    }
+
+    vertical-align: middle;
+    padding-top: 0%;
+    padding-bottom: 0%;
+  }
+}
+
 #iso_datastore_details_div {
   tbody tr {
     .cell {

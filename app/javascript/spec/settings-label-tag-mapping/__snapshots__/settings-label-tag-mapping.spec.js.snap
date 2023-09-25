@@ -1026,6 +1026,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
+                                size=""
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
@@ -1539,6 +1540,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
+                                size=""
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
@@ -2052,6 +2054,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
+                                size=""
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
@@ -2565,6 +2568,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
+                                size=""
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
@@ -3621,6 +3625,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
+                                size=""
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
@@ -4134,6 +4139,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
+                                size=""
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
@@ -4647,6 +4653,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
+                                size=""
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
@@ -5160,6 +5167,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
+                                size=""
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
