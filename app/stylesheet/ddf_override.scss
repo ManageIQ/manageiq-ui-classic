@@ -375,6 +375,15 @@
   padding-right: 30px;
 }
 
+#workflow_credentials_section {
+  display: flex;
+  gap: 2%;
+
+  .bx--form-item {
+    flex-basis: 0;
+  }
+}
+
 .bx--tabs--scrollable .bx--tabs--scrollable__nav-link {
   min-width: 10rem;
   width: fit-content;
