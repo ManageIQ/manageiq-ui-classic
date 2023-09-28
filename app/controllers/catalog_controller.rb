@@ -396,7 +396,7 @@ class CatalogController < ApplicationController
     @sb[:action] = nil
     @explorer = true
     if x_active_tree == :stcat_tree
-      assert_privileges("catalog_items_view")
+      assert_privileges("st_catalog_view")
 
       if params[:rec_id]
         # link to Catalog Item clicked on catalog summary screen
@@ -406,12 +406,17 @@ class CatalogController < ApplicationController
       else
         @record = ServiceTemplateCatalog.find(params[:id])
       end
+    elsif x_active_tree == :sandt_tree
+      assert_privileges("catalog_items_view")
+
+      identify_catalog(params[:id])
+      @record ||= ServiceTemplateCatalog.find(params[:id])
     elsif x_active_tree == :ot_tree
       assert_privileges("orchestration_templates_view")
 
       @record ||= OrchestrationTemplate.find(params[:id])
     else
-      assert_privileges("st_catalog_view")
+      assert_privileges("svc_catalog_provision", "svc_catalog_archive", "svc_catalog_unarchive")
 
       identify_catalog(params[:id])
       @record ||= ServiceTemplateCatalog.find(params[:id])
