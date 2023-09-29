@@ -39,6 +39,7 @@ const AnsibleCredentialsForm = ({ recordId }) => {
       return API.get(`/api/authentications/${recordId}`).then((initialValues) => promise.then(loadSchema(initialValues.type, {
         initialValues: {
           ...initialValues,
+          ...initialValues.options,
         },
         isLoading: false,
       })));
