@@ -32,7 +32,7 @@
                       %hr
 
   - record_ids = request_task_configuration_script_ids(@miq_request)
-  - if record_ids.size > 0
+  - if record_ids.any?
     %h3
       = _("Workflow States")
-    = react('RequestWorkflowStatus', {:ids => record_ids, :recordId => @miq_request.miq_request_tasks.first.options[:configuration_script_id]})
+    = react('RequestWorkflowStatus', {:ids => record_ids})

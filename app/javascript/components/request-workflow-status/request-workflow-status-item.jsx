@@ -40,7 +40,8 @@ const RequestWorkflowStatusItem = ({ recordId }) => {
                 isLoading: false,
                 parentName: response2.name,
                 validType: true,
-                message: responseData && responseData.status === workflowStateTypes.error.text ? __('Error message goes here') : undefined,
+                message: responseData && responseData.status === workflowStateTypes.error.text
+                  ? __('An error has occurred with this workflow') : undefined,
               });
             } else {
               setData({
@@ -64,7 +65,7 @@ const RequestWorkflowStatusItem = ({ recordId }) => {
       });
   };
 
-  /** Logic to reload the component every (RELOAD) 5 seconds. */
+  /** Logic to reload the component every so often (RELOAD). */
   useEffect(() => {
     const omitStatus = [workflowStateTypes.success.text, workflowStateTypes.error.text];
     if (reloadCount.current <= reloadLimit && data.responseData && data.responseData.status && !omitStatus.includes(data.responseData.status)) {

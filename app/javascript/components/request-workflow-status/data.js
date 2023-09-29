@@ -58,7 +58,7 @@ export const workflowStatusData = (response) => {
   }
   const rows = response.context ? rowData(response.context) : [];
   const headers = headerData();
-  const name = response.name || response.description || `ConfigurationScript#${response.id}`;
+  const name = response.name || response.description;
   return {
     headers, rows, status: response.status, name, parentId: response.parent_id, id: response.id, type: response.type,
   };
