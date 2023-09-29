@@ -10,7 +10,7 @@
       = text_field_tag("retire_fqname",
                         edit_new[:retire_fqname],
                         :class             => "form-control long_text entry_point_text",
-                        :placeholder       => type&.gsub('_',' ').camelize,
+                        :placeholder       => type&.gsub('_',' ')&.camelize,
                         "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
       %span.input-group-btn
         #retire_fqname_div
