@@ -1,0 +1,34 @@
+.workflow-states-list-container {
+  margin-bottom: 20px;
+
+  .workflow-states-container {
+    padding: 10px;
+    border: 1px solid lightgray;
+    border-bottom: 0;
+
+    &:last-child {
+      border-bottom: 1px solid lightgray;
+    }
+  
+    .workflow-status-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    
+      .workflow-status-label {
+        font-weight:bold;
+        font-size: 14px;
+        margin-right: 5px;
+      }
+    
+      .workflow-status-tag {
+        margin-right: 5px;
+      }
+    }
+    
+    .workflow-notification-container {
+      margin-top: 10px;
+    }
+  }  
+}
+
