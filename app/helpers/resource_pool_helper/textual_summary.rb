@@ -25,7 +25,7 @@ module ResourcePoolHelper::TextualSummary
       _("Configuration"),
       %i[
         memory_reserve memory_reserve_expand memory_limit memory_shares memory_shares_level cpu_reserve
-        cpu_reserve_expand cpu_limit cpu_shares cpu_shares_level
+        cpu_reserve_expand cpu_limit cpu_shares cpu_shares_level cpu_cores_available cpu_cores_reserve cpu_cores_limit
       ]
     )
   end
@@ -187,5 +187,23 @@ module ResourcePoolHelper::TextualSummary
     value = @record.cpu_shares_level
     return nil if value.nil?
     {:label => _("CPU Shares Level"), :value => value}
+  end
+
+  def textual_cpu_cores_available
+    value = @record.cpu_cores_available
+    return nil if value.nil?
+    {:label => _("CPU Cores Available"), :value => value}
+  end
+
+  def textual_cpu_cores_reserve
+    value = @record.cpu_cores_reserve
+    return nil if value.nil?
+    {:label => _("CPU Cores Reserve"), :value => value}
+  end
+
+  def textual_cpu_cores_limit
+    value = @record.cpu_cores_limit
+    return nil if value.nil?
+    {:label => _("CPU Cores Limit"), :value => (value == -1 ? _("Unlimited") : value)}
   end
 end
