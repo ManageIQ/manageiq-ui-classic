@@ -14,7 +14,6 @@ class ChargebackAssignmentController < ApplicationController
   def index
     assert_privileges("chargeback_assignments")
 
-    @title = _("Chargeback Assignments")
     @tabform = ChargebackRate::VALID_CB_RATE_TYPES.include?(params[:tab]) ? params[:tab] : "Compute"
     session[:changed] = @changed = false
     build_tabs
@@ -78,6 +77,7 @@ class ChargebackAssignmentController < ApplicationController
 
   def build_tabs
     @breadcrumbs = []
+    @title = _("Chargeback Assignments")
     @active_tab = @tabform
     @tabs = [["Compute", _("Compute")], ["Storage", _("Storage")]]
   end
