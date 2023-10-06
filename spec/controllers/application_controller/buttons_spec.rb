@@ -94,7 +94,7 @@ describe ApplicationController do
 
         controller.send(:custom_buttons)
         expect(assigns(:right_cell_text)).to include(service.name)
-        expect(controller.instance_variable_get(:@explorer)).to be_truthy
+        expect(controller.instance_variable_get(:@explorer)).to be_falsy
       end
     end
 
