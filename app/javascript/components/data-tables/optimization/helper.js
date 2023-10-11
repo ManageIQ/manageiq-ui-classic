@@ -5,12 +5,12 @@ const convertHeader = (headerItems) => headerItems.map((item) => ({ key: item[0]
 
 /** Attributes needed for a button. */
 const buttonData = (item) => ({
-  alt: 'Queue Report',
+  alt: __('Queue Report'),
   disabled: false,
   is_button: true,
   onclick: `miqQueueReport(${item.id});`,
-  text: 'Queue Report',
-  title: 'Queue Report',
+  text: __('Queue Report'),
+  title: __('Queue Report'),
 });
 
 /** Function to generate the values of the attribute cell for an item in rows.  */
