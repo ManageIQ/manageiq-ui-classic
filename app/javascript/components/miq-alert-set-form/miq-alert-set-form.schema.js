@@ -27,7 +27,7 @@ function createSchema(fieldss, recordId, emsId, mode, loadSchema, alertState, al
           name: 'description',
           label: __('Description'),
           isRequired: true,
-          maxLength: 50,
+          maxLength: 255,
         },
         {
           component: componentTypes.SELECT,
