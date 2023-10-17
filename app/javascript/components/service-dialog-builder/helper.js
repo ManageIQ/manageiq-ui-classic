@@ -10,7 +10,7 @@ import {
   buildTimeControl,
   buildRadioButtons,
   buildRefreshButton,
-} from './fields.schema';
+} from './dialog-fields-builder';
 
 const dates = [];
 const showPastDates = [];
@@ -61,30 +61,30 @@ const formatTimeControl = (field) => {
   return newDate;
 };
 
-const buildComponent = (field, validate) => {
+const buildComponent = (field, validate, apiAction) => {
   switch (field.type) {
     case DIALOG_FIELDS.textBox:
-      return buildTextBox(field, validate);
+      return buildTextBox(field, validate, apiAction);
     case DIALOG_FIELDS.textArea:
-      return buildTextAreaBox(field, validate);
+      return buildTextAreaBox(field, validate, apiAction);
     case DIALOG_FIELDS.checkBox:
-      return buildCheckBox(field, validate);
+      return buildCheckBox(field, validate, apiAction);
     case DIALOG_FIELDS.dropDown:
-      return buildDropDownList(field, validate);
+      return buildDropDownList(field, validate, apiAction);
     case DIALOG_FIELDS.tag:
-      return buildTagControl(field, validate);
+      return buildTagControl(field, validate, apiAction);
     case DIALOG_FIELDS.date:
     {
       formatDateControl(field);
-      return buildDateControl(field, validate);
+      return buildDateControl(field, validate, apiAction);
     }
     case DIALOG_FIELDS.dateTime:
     {
       const dateTime = formatTimeControl(field);
-      return buildTimeControl(field, validate, dateTime);
+      return buildTimeControl(field, validate, dateTime, apiAction);
     }
     case DIALOG_FIELDS.radio:
-      return buildRadioButtons(field, validate);
+      return buildRadioButtons(field, validate, apiAction);
     default:
       return {};
   }
@@ -127,7 +127,10 @@ const buildValidator = (field) => {
 /** Function to build the form fields. */
 export const buildFields = (response, data, setData, initialData) => {
   const dialogTabs = [];
-  response.content[0].dialog_tabs.forEach((tab, tabIndex) => {
+  const responseContent = response.content ? response.content[0].dialog_tabs : response.reconfigure_dialog[0].dialog_tabs;
+  const { apiAction } = initialData;
+
+  responseContent.forEach((tab, tabIndex) => {
     const dialogSections = [];
     tab.dialog_groups.forEach((group, groupIndex) => {
       const dialogFields = [];
@@ -135,7 +138,7 @@ export const buildFields = (response, data, setData, initialData) => {
         const validate = buildValidator(field);
         const fieldPosition = { tabIndex, groupIndex };
         const fieldData = [
-          buildComponent(field, validate),
+          buildComponent(field, validate, apiAction),
           buildRefreshButton(response, field, initialData, data, setData, fieldPosition),
         ];
         dialogFields.push(fieldData);
@@ -274,8 +277,8 @@ const handleCheckboxSubmit = (submitData) => {
 };
 
 /** Function to handle the form data on form submit. */
-export const prepareSubmitData = (values, setShowDateError) => {
-  let submitData = { action: 'order', ...values };
+export const prepareSubmitData = (submitAction, values, setShowDateError) => {
+  let submitData = { action: submitAction, ...values };
   stopSubmit = false;
   invalidDateFields = [];
 

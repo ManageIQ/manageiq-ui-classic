@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import MiqFormRenderer, { useFormApi } from '@@ddf';
 import { Button, Loading } from 'carbon-components-react';
 import { FormSpy } from '@data-driven-forms/react-form-renderer';
-import createSchema from './order-service-form.schema';
+import createSchema from '../service-dialog-builder/service-dialog-builder.schema';
 import { API } from '../../http_api';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
-import { buildFields, prepareSubmitData } from './helper';
-import OrderServiceRefreshButton from './order-service-refresh-button';
+import { buildFields, prepareSubmitData } from '../service-dialog-builder/helper';
+import ServiceDialogRefreshButton from '../service-dialog-builder/service-dialog-refresh-button';
 import mapper from '../../forms/mappers/componentMapper';
 import NotificationMessage from '../notification-message';
 
@@ -45,9 +45,7 @@ const OrderServiceForm = ({ initialData }) => {
   }, []);
 
   const onSubmit = (values) => {
-    let submitData = { action: 'order', ...values };
-
-    submitData = prepareSubmitData(values, setShowDateError);
+    let submitData = prepareSubmitData('order', values, setShowDateError);
 
     if (submitData !== false) {
       if (apiSubmitEndpoint.includes('/generic_objects/')) {
@@ -83,7 +81,7 @@ const OrderServiceForm = ({ initialData }) => {
 
   const componentMapper = {
     ...mapper,
-    'refresh-button': OrderServiceRefreshButton,
+    'refresh-button': ServiceDialogRefreshButton,
   };
 
   return (

@@ -9,7 +9,7 @@ const generateDynamicFields = (field) => {
 };
 
 /** Function to build a text box. */
-export const buildTextBox = (field, validate) => {
+export const buildTextBox = (field, validate, apiAction) => {
   let component = {};
   generateDynamicFields(field);
 
@@ -21,7 +21,7 @@ export const buildTextBox = (field, validate) => {
       label: field.label,
       hideField: !field.visible,
       isRequired: field.required,
-      isDisabled: field.read_only,
+      isDisabled: field.read_only || (!field.reconfigurable && apiAction !== 'order'),
       initialValue: field.default_value,
       description: field.description,
       validate,
@@ -34,7 +34,7 @@ export const buildTextBox = (field, validate) => {
       label: field.label,
       hideField: !field.visible,
       isRequired: field.required,
-      isDisabled: field.read_only,
+      isDisabled: field.read_only || (!field.reconfigurable && apiAction !== 'order'),
       initialValue: field.default_value,
       description: field.description,
       validate,
@@ -92,35 +92,35 @@ export const buildTextBox = (field, validate) => {
 };
 
 /** Function to build a text area */
-export const buildTextAreaBox = (field, validate) => ({
+export const buildTextAreaBox = (field, validate, apiAction) => ({
   component: componentTypes.TEXTAREA,
   id: field.id,
   name: field.name,
   label: field.label,
   hideField: !field.visible,
   isRequired: field.required,
-  isDisabled: field.read_only,
+  isDisabled: field.read_only || (!field.reconfigurable && apiAction !== 'order'),
   initialValue: field.default_value,
   description: field.description,
   validate,
 });
 
 /** Function to build a check box. */
-export const buildCheckBox = (field, validate) => ({
+export const buildCheckBox = (field, validate, apiAction) => ({
   component: componentTypes.CHECKBOX,
   id: field.id,
   name: field.name,
   label: field.label,
   hideField: !field.visible,
   isRequired: field.required,
-  isDisabled: field.read_only,
+  isDisabled: field.read_only || (!field.reconfigurable && apiAction !== 'order'),
   initialValue: field.default_value,
   description: field.description,
   validate,
 });
 
 /** Function to build a drop down select box. */
-export const buildDropDownList = (field, validate) => {
+export const buildDropDownList = (field, validate, apiAction) => {
   let options = [];
   let placeholder = __('<Choose>');
   let start;
@@ -165,7 +165,7 @@ export const buildDropDownList = (field, validate) => {
     labelText: field.label,
     hideField: !field.visible,
     isRequired: field.required,
-    isDisabled: field.read_only,
+    isDisabled: field.read_only || (!field.reconfigurable && apiAction !== 'order'),
     initialValue: field.default_value,
     description: field.description,
     validate,
@@ -181,7 +181,7 @@ export const buildDropDownList = (field, validate) => {
 };
 
 /** Function to build a tag control field. */
-export const buildTagControl = (field, validate) => {
+export const buildTagControl = (field, validate, apiAction) => {
   const options = [];
   field.values.forEach((value) => {
     if (!value.id) {
@@ -196,7 +196,7 @@ export const buildTagControl = (field, validate) => {
     label: field.label,
     hideField: !field.visible,
     isRequired: field.required,
-    isDisabled: field.read_only,
+    isDisabled: field.read_only || (!field.reconfigurable && apiAction !== 'order'),
     initialValue: field.default_value,
     description: field.description,
     validate,
@@ -205,13 +205,13 @@ export const buildTagControl = (field, validate) => {
 };
 
 /** Function to build a date control field */
-export const buildDateControl = (field, validate) => ({
+export const buildDateControl = (field, validate, apiAction) => ({
   component: componentTypes.DATE_PICKER,
   id: field.id,
   name: field.name,
   label: field.label,
   isRequired: field.required,
-  isDisabled: field.read_only,
+  isDisabled: field.read_only || (!field.reconfigurable && apiAction !== 'order'),
   initialValue: field.default_value,
   description: field.description,
   validate,
@@ -219,13 +219,13 @@ export const buildDateControl = (field, validate) => ({
 });
 
 /** Function to build a time control field */
-export const buildTimeControl = (field, validate, dateTime) => ([{
+export const buildTimeControl = (field, validate, dateTime, apiAction) => ([{
   component: componentTypes.DATE_PICKER,
   id: field.id,
   name: field.name,
   label: field.label,
   isRequired: field.required,
-  isDisabled: field.read_only,
+  isDisabled: field.read_only || (!field.reconfigurable && apiAction !== 'order'),
   initialValue: dateTime.toISOString(),
   description: field.description,
   validate,
@@ -236,7 +236,7 @@ export const buildTimeControl = (field, validate, dateTime) => ([{
   id: `${field.id}-time`,
   name: `${field.name}-time`,
   isRequired: field.required,
-  isDisabled: field.read_only,
+  isDisabled: field.read_only || (!field.reconfigurable && apiAction !== 'order'),
   initialValue: dateTime,
   validate,
   twelveHoursFormat: true,
@@ -244,7 +244,7 @@ export const buildTimeControl = (field, validate, dateTime) => ([{
 }]);
 
 /** Function to build radio buttons fields */
-export const buildRadioButtons = (field, validate) => {
+export const buildRadioButtons = (field, validate, apiAction) => {
   const options = [];
   field.values.forEach((value) => {
     options.push({ value: value[0], label: value[1] });
@@ -255,7 +255,7 @@ export const buildRadioButtons = (field, validate) => {
     name: field.name,
     label: field.label,
     isRequired: field.required,
-    isDisabled: field.read_only,
+    isDisabled: field.read_only || (!field.reconfigurable && apiAction !== 'order'),
     initialValue: field.default_value,
     description: field.description,
     validate,
@@ -271,7 +271,8 @@ const fieldSpinner = (fieldName, show) => {
 
 /** Function to update the response and build the fileds again after field refresh. */
 const updateResponseFields = (response, fieldPosition, fieldName, result) => {
-  response.content[0].dialog_tabs.map((tab, tabIndex) => {
+  const responseContent = response.content ? response.content[0].dialog_tabs : response.reconfigure_dialog[0].dialog_tabs;
+  responseContent.map((tab, tabIndex) => {
     if (tabIndex === fieldPosition.tabIndex) {
       tab.dialog_groups.map((group, groupIndex) => {
         if (groupIndex === fieldPosition.groupIndex) {
@@ -280,9 +281,10 @@ const updateResponseFields = (response, fieldPosition, fieldName, result) => {
           field.data_type = data.data_type;
           field.options = data.options;
           field.read_only = data.read_only;
+          field.reconfigurable = data.reconfigurable;
           field.required = data.required;
           field.visible = data.visible;
-          field.values = [['001', 'one'], ['002', 'two']]; // data.values;
+          field.values = data.values;
           field.default_value = data.default_value;
           field.validator_rule = data.validator_rule;
           field.validator_type = data.validator_type;
@@ -300,7 +302,10 @@ const updateResponseFields = (response, fieldPosition, fieldName, result) => {
 */
 const refreshFields = (response, params, fieldName, initialData, resource, data, setData, fieldPosition) => {
   fieldSpinner(fieldName, true);
-  API.post(`/api/service_dialogs/${response.id}`, params).then(({ result }) => {
+
+  const dialogId = response.reconfigure_dialog ? response.reconfigure_dialog[0].id : response.id;
+
+  API.post(`/api/service_dialogs/${dialogId}`, params).then(({ result }) => {
     const responders = result[fieldName].dialog_field_responders;
     const newResponse = updateResponseFields(response, fieldPosition, fieldName, result);
     buildFields(newResponse, data, setData, initialData);
@@ -322,7 +327,7 @@ const onRefreshField = (response, field, initialData, data, setData, fieldPositi
     fields: [field.name],
     resource_action_id: initialData.resourceActionId,
     target_id: initialData.targetId,
-    target_type: initialData.targetType,
+    target_type: initialData.targetType ? initialData.targetType : 'service',
     real_target_type: initialData.realTargetType,
   };
   const params = {

@@ -2,7 +2,6 @@ ManageIQ.angular.app.service('dialogFieldRefreshService', ['API', 'DialogData', 
   var self = this;
 
   self.refreshField = function(dialogData, dialogField, url, idList) {
-    console.log('222')
     self.areFieldsBeingRefreshed = true;
 
     var data = {
@@ -16,6 +15,8 @@ ManageIQ.angular.app.service('dialogFieldRefreshService', ['API', 'DialogData', 
         real_target_type: idList.realTargetType,
       },
     };
+
+    console.log(data);
 
     return API.post(url + idList.dialogId, angular.toJson(data))
       .then(function(response) {

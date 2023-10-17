@@ -1,10 +1,10 @@
 ManageIQ.angular.app.controller('dialogUserReconfigureController', ['API', 'dialogFieldRefreshService', 'miqService', 'dialogUserSubmitErrorHandlerService', 'resourceActionId', 'targetId', 'DialogData', function(API, dialogFieldRefreshService, miqService, dialogUserSubmitErrorHandlerService, resourceActionId, targetId, DialogData) {
-  var vm = this;
+  const vm = this;
 
   vm.$onInit = function() {
-    var apiCall = new Promise(function(resolve) {
-      var url = '/api/services/' + targetId +
-        '?attributes=reconfigure_dialog';
+    const apiCall = new Promise((resolve) => {
+      const url = `/api/services/${targetId
+      }?attributes=reconfigure_dialog`;
 
       resolve(API.get(url).then(init));
     });
@@ -28,13 +28,12 @@ ManageIQ.angular.app.controller('dialogUserReconfigureController', ['API', 'dial
   vm.isValid = false;
 
   function refreshField(field) {
-    var idList = {
+    const idList = {
       dialogId: vm.dialogId,
-      resourceActionId: resourceActionId,
-      targetId: targetId,
+      resourceActionId,
+      targetId,
       targetType: 'service',
     };
-  console.log('vm.dialogData=',vm.dialogData)
     return dialogFieldRefreshService.refreshField(vm.dialogData, [field.name], vm.refreshUrl, idList);
   }
 
@@ -46,17 +45,15 @@ ManageIQ.angular.app.controller('dialogUserReconfigureController', ['API', 'dial
   function submitButtonClicked() {
     miqService.sparkleOn();
 
-    var apiData = {
+    const apiData = {
       action: 'reconfigure',
       resource: _.omit(DialogData.outputConversion(vm.dialogData), 'action'),
     };
-    var apiSubmitEndpoint = '/api/services/' + targetId;
+    const apiSubmitEndpoint = `/api/services/${targetId}`;
 
-    return API.post(apiSubmitEndpoint, apiData, {skipErrors: [400]}).then(function() {
+    return API.post(apiSubmitEndpoint, apiData, { skipErrors: [400] }).then(() => {
       miqService.redirectBack(__('Order Request was Submitted'), 'info', '/service');
-    }).catch(function(err) {
-      return Promise.reject(dialogUserSubmitErrorHandlerService.handleError(err));
-    });
+    }).catch((err) => Promise.reject(dialogUserSubmitErrorHandlerService.handleError(err)));
   }
 
   function cancelClicked(_event) {

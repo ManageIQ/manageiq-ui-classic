@@ -3,7 +3,7 @@ import { Button, Loading } from 'carbon-components-react';
 import { Renew16 } from '@carbon/icons-react';
 import PropTypes from 'prop-types';
 
-const OrderServiceRefreshButton = ({ onRefresh, showRefreshButton, fieldName }) => (
+const ServiceDialogRefreshButton = ({ onRefresh, showRefreshButton, fieldName }) => (
   <>
     {showRefreshButton && (
       <Button
@@ -21,10 +21,10 @@ const OrderServiceRefreshButton = ({ onRefresh, showRefreshButton, fieldName }) 
     </div>
   </>
 );
-OrderServiceRefreshButton.propTypes = {
+ServiceDialogRefreshButton.propTypes = {
   onRefresh: PropTypes.func.isRequired,
   showRefreshButton: PropTypes.bool.isRequired,
   fieldName: PropTypes.string.isRequired,
 };
 
-export default OrderServiceRefreshButton;
+export default ServiceDialogRefreshButton;

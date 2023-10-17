@@ -2777,6 +2777,7 @@ Rails.application.routes.draw do
       :get  => %w(
         dialog_load
         download_data
+        service_reconfigure
         reconfigure_form_fields
         retire
         button
