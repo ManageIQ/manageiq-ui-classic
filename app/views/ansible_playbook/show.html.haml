@@ -1,2 +1,3 @@
 #main_div
   = render :partial => 'layouts/textual_groups_generic'
+  = react('AnsiblePlaybookWorkflow', { :payload => @record.payload , :payloadType => @record.payload_type })

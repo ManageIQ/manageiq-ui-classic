@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AnsiblePlaybookWorkflow component should render the AnsiblePlaybookWorkflow with payload 1`] = `
+<div
+  className="row"
+>
+  <div
+    className="col-md-12 col-lg-6"
+  >
+    <Tabs
+      className="miq_custom_tabs"
+      scrollDebounceWait={150}
+      scrollIntoView={true}
+      selected={0}
+      selectionMode="automatic"
+      type="default"
+    >
+      <Tab
+        key="tab_text"
+        label="Text"
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        selected={false}
+      >
+        <Controlled
+          className="miq-codemirror ansible-playbook-workflow-payload"
+          options={
+            Object {
+              "autoCloseBrackets": true,
+              "gutters": Array [
+                "CodeMirror-lint-markers",
+              ],
+              "lineNumbers": true,
+              "lineWrapping": true,
+              "lint": true,
+              "mode": "yaml",
+              "styleActiveLine": true,
+              "theme": "eclipse",
+            }
+          }
+          value={
+            Object {
+              "address": Object {
+                "city": "Anytown",
+                "street": "123 Main St",
+                "zip": 12345,
+              },
+              "age": 30,
+              "email": "johndoe@example.com",
+              "hobbies": Array [
+                "Reading",
+                "Hiking",
+                "Cooking",
+              ],
+              "name": "John Doe",
+            }
+          }
+        />
+      </Tab>
+    </Tabs>
+  </div>
+</div>
+`;
+
+exports[`AnsiblePlaybookWorkflow component should render the AnsiblePlaybookWorkflow without payload and display a notification 1`] = `
+<AnsiblePlaybookWorkflow
+  payloadType="yaml"
+>
+  <div
+    className="row"
+  >
+    <div
+      className="col-md-12 col-lg-6"
+    >
+      <NotificationMessage
+        message="Payload is not avaible."
+        type="info"
+      >
+        <div
+          className="miq-notification-message-container alert alert-info"
+        >
+          <span
+            className="pficon pficon-info"
+          />
+          <strong>
+            Payload is not avaible.
+          </strong>
+        </div>
+      </NotificationMessage>
+    </div>
+  </div>
+</AnsiblePlaybookWorkflow>
+`;
