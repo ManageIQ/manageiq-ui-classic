@@ -149,7 +149,7 @@ module RequestInfoHelper
     edit = data[:edit]
     headers, count = prov_grid_header(edit, data[:type])
     rows = [prov_row_item(data[:none_index], none_cells(count))]
-    if data[:template]
+    if data[:templates]
       rows += data[:templates].map do |template|
         prov_row_item(template.id.to_s, prov_template_cells(template))
       end
