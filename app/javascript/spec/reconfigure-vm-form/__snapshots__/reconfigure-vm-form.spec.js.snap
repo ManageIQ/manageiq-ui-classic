@@ -8005,7 +8005,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                                                     kind="ghost"
                                                                     onClick={[Function]}
                                                                     onKeyPress={[Function]}
-                                                                    size=""
+                                                                    size="default"
                                                                     tabIndex={0}
                                                                     title="Resize"
                                                                   >
@@ -8246,7 +8246,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                                                     kind="ghost"
                                                                     onClick={[Function]}
                                                                     onKeyPress={[Function]}
-                                                                    size=""
+                                                                    size="default"
                                                                     tabIndex={0}
                                                                     title="Delete"
                                                                   >
@@ -9464,7 +9464,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                                                     kind="ghost"
                                                                     onClick={[Function]}
                                                                     onKeyPress={[Function]}
-                                                                    size=""
+                                                                    size="default"
                                                                     tabIndex={0}
                                                                     title="Cancel Disconnect"
                                                                   >
@@ -9613,7 +9613,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                                                     kind="ghost"
                                                                     onClick={[Function]}
                                                                     onKeyPress={[Function]}
-                                                                    size=""
+                                                                    size="default"
                                                                     tabIndex={0}
                                                                     title="Connect"
                                                                   >
@@ -29762,7 +29762,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                                                     kind="ghost"
                                                                     onClick={[Function]}
                                                                     onKeyPress={[Function]}
-                                                                    size=""
+                                                                    size="default"
                                                                     tabIndex={0}
                                                                     title="Resize"
                                                                   >
@@ -30003,7 +30003,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                                                     kind="ghost"
                                                                     onClick={[Function]}
                                                                     onKeyPress={[Function]}
-                                                                    size=""
+                                                                    size="default"
                                                                     tabIndex={0}
                                                                     title="Delete"
                                                                   >
@@ -31081,7 +31081,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                                                     kind="ghost"
                                                                     onClick={[Function]}
                                                                     onKeyPress={[Function]}
-                                                                    size=""
+                                                                    size="default"
                                                                     tabIndex={0}
                                                                     title="Edit"
                                                                   >
@@ -31242,7 +31242,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                                                     kind="ghost"
                                                                     onClick={[Function]}
                                                                     onKeyPress={[Function]}
-                                                                    size=""
+                                                                    size="default"
                                                                     tabIndex={0}
                                                                     title="Delete"
                                                                   >
@@ -40468,7 +40468,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                                                     kind="ghost"
                                                                     onClick={[Function]}
                                                                     onKeyPress={[Function]}
-                                                                    size=""
+                                                                    size="default"
                                                                     tabIndex={0}
                                                                     title="Resize"
                                                                   >
@@ -40706,7 +40706,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                                                     kind="ghost"
                                                                     onClick={[Function]}
                                                                     onKeyPress={[Function]}
-                                                                    size=""
+                                                                    size="default"
                                                                     tabIndex={0}
                                                                     title="Cancel Delete"
                                                                   >
@@ -41926,7 +41926,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                                                     kind="ghost"
                                                                     onClick={[Function]}
                                                                     onKeyPress={[Function]}
-                                                                    size=""
+                                                                    size="default"
                                                                     tabIndex={0}
                                                                     title="Disconnect"
                                                                   >
@@ -42075,7 +42075,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                                                     kind="ghost"
                                                                     onClick={[Function]}
                                                                     onKeyPress={[Function]}
-                                                                    size=""
+                                                                    size="default"
                                                                     tabIndex={0}
                                                                     title="Connect"
                                                                   >
