@@ -1871,7 +1871,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size=""
+                                size="default"
                                 tabIndex={0}
                                 title="Category cannot be deleted"
                               >
@@ -3030,7 +3030,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size=""
+                                size="default"
                                 tabIndex={0}
                                 title="Click to delete this category"
                               >
@@ -4189,7 +4189,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size=""
+                                size="default"
                                 tabIndex={0}
                                 title="Click to delete this category"
                               >
@@ -5348,7 +5348,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size=""
+                                size="default"
                                 tabIndex={0}
                                 title="Click to delete this category"
                               >
