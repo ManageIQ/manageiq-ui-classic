@@ -149,7 +149,7 @@ module RequestInfoHelper
     edit = data[:edit]
     headers, count = prov_grid_header(edit, data[:type])
     rows = [prov_row_item(data[:none_index], none_cells(count))]
-    if data[:template]
+    if data[:templates]
       rows += data[:templates].map do |template|
         prov_row_item(template.id.to_s, prov_template_cells(template))
       end
@@ -163,8 +163,8 @@ module RequestInfoHelper
     rows = []
     unless data[:spec_required]
       rows += [prov_row_item(data[:none_index], none_cells(count))]
-      if data[:vc]
-        rows += data[:vc].map do |vc|
+      if data[:vcs]
+        rows += data[:vcs].map do |vc|
           prov_row_item(vc.id.to_s, prov_vc_cells(vc))
         end
       end
@@ -314,10 +314,11 @@ module RequestInfoHelper
   end
 
   def prov_vc_cells(data)
-    cells = []
-    edit[:vcs].each do |col|
-      cells += prov_cell_data(data.send(col))
-    end
+    [
+      prov_cell_data(data.name),
+      prov_cell_data(data.description),
+      prov_cell_data(data.last_update_time),
+    ]
   end
 
   def prov_window_image_cells(data)

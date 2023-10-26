@@ -166,10 +166,10 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
       type="warning"
     >
       <div
-        className="alert alert-warning"
+        className="miq-notification-message-container alert alert-warning"
       >
         <span
-          className="pficon pficon-warning"
+          className="pficon pficon-warning-triangle-o"
         />
         <strong>
           Caution: Mappings with Resource Entity 'All-Entities' could cause overwriting existing tags on resources with mapped provider labels.
@@ -1026,7 +1026,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size=""
+                                size="default"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
@@ -1540,7 +1540,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size=""
+                                size="default"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
@@ -2054,7 +2054,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size=""
+                                size="default"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
@@ -2568,7 +2568,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size=""
+                                size="default"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
@@ -3625,7 +3625,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size=""
+                                size="default"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
@@ -4139,7 +4139,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size=""
+                                size="default"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
@@ -4653,7 +4653,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size=""
+                                size="default"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
@@ -5167,7 +5167,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size=""
+                                size="default"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >

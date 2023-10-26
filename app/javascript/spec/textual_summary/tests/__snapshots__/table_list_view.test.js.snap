@@ -225,168 +225,238 @@ exports[`TableListView renders just fine... 1`] = `
                         </StructuredListHead>
                       </FeatureToggle(StructuredListHead)>
                     </MiqStructuredListHeader>
-                    <FeatureToggle(StructuredListBody)>
-                      <StructuredListBody
-                        onKeyDown={[Function]}
-                      >
-                        <div
-                          className="bx--structured-list-tbody"
+                    <MiqStructuredListBody
+                      clickEvents={false}
+                      mode="table_list_view"
+                      onClick={[Function]}
+                      rows={
+                        Array [
+                          Array [
+                            undefined,
+                            undefined,
+                          ],
+                          Array [
+                            undefined,
+                            undefined,
+                          ],
+                        ]
+                      }
+                    >
+                      <FeatureToggle(StructuredListBody)>
+                        <StructuredListBody
                           onKeyDown={[Function]}
-                          role="rowgroup"
                         >
-                          <FeatureToggle(StructuredListRow)
-                            className=""
-                            key="0"
-                            onClick={[Function]}
-                            tabIndex={0}
-                            title=""
+                          <div
+                            className="bx--structured-list-tbody"
+                            onKeyDown={[Function]}
+                            role="rowgroup"
                           >
-                            <StructuredListRow
+                            <FeatureToggle(StructuredListRow)
                               className=""
-                              head={false}
-                              label={false}
+                              key="0"
                               onClick={[Function]}
-                              onKeyDown={[Function]}
                               tabIndex={0}
                               title=""
                             >
-                              <div
-                                className="bx--structured-list-row"
+                              <StructuredListRow
+                                className=""
+                                head={false}
+                                label={false}
                                 onClick={[Function]}
-                                role="row"
+                                onKeyDown={[Function]}
+                                tabIndex={0}
                                 title=""
                               >
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value array_item"
-                                  key="0"
+                                <div
+                                  className="bx--structured-list-row"
                                   onClick={[Function]}
+                                  role="row"
                                   title=""
                                 >
-                                  <StructuredListCell
-                                    className="content_value array_item"
-                                    head={false}
-                                    noWrap={false}
+                                  <MiqStructuredListBodyValue
+                                    clickEvents={false}
                                     onClick={[Function]}
-                                    title=""
+                                    row={
+                                      Array [
+                                        undefined,
+                                        undefined,
+                                      ]
+                                    }
                                   >
-                                    <div
-                                      className="content_value array_item bx--structured-list-td"
+                                    <MiqStructuredListArray
+                                      clickEvents={false}
                                       onClick={[Function]}
-                                      role="cell"
-                                      title=""
+                                      row={
+                                        Array [
+                                          undefined,
+                                          undefined,
+                                        ]
+                                      }
                                     >
-                                      <div
-                                        className="wrap_text"
-                                      />
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value array_item"
-                                  key="1"
-                                  onClick={[Function]}
-                                  title=""
-                                >
-                                  <StructuredListCell
-                                    className="content_value array_item"
-                                    head={false}
-                                    noWrap={false}
-                                    onClick={[Function]}
-                                    title=""
-                                  >
-                                    <div
-                                      className="content_value array_item bx--structured-list-td"
-                                      onClick={[Function]}
-                                      role="cell"
-                                      title=""
-                                    >
-                                      <div
-                                        className="wrap_text"
-                                      />
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
-                              </div>
-                            </StructuredListRow>
-                          </FeatureToggle(StructuredListRow)>
-                          <FeatureToggle(StructuredListRow)
-                            className=""
-                            key="1"
-                            onClick={[Function]}
-                            tabIndex={1}
-                            title=""
-                          >
-                            <StructuredListRow
+                                      <FeatureToggle(StructuredListCell)
+                                        className="content_value array_item"
+                                        key="0"
+                                        onClick={[Function]}
+                                        title=""
+                                      >
+                                        <StructuredListCell
+                                          className="content_value array_item"
+                                          head={false}
+                                          noWrap={false}
+                                          onClick={[Function]}
+                                          title=""
+                                        >
+                                          <div
+                                            className="content_value array_item bx--structured-list-td"
+                                            onClick={[Function]}
+                                            role="cell"
+                                            title=""
+                                          >
+                                            <MiqStructuredListText>
+                                              <div
+                                                className="wrap_text"
+                                              />
+                                            </MiqStructuredListText>
+                                          </div>
+                                        </StructuredListCell>
+                                      </FeatureToggle(StructuredListCell)>
+                                      <FeatureToggle(StructuredListCell)
+                                        className="content_value array_item"
+                                        key="1"
+                                        onClick={[Function]}
+                                        title=""
+                                      >
+                                        <StructuredListCell
+                                          className="content_value array_item"
+                                          head={false}
+                                          noWrap={false}
+                                          onClick={[Function]}
+                                          title=""
+                                        >
+                                          <div
+                                            className="content_value array_item bx--structured-list-td"
+                                            onClick={[Function]}
+                                            role="cell"
+                                            title=""
+                                          >
+                                            <MiqStructuredListText>
+                                              <div
+                                                className="wrap_text"
+                                              />
+                                            </MiqStructuredListText>
+                                          </div>
+                                        </StructuredListCell>
+                                      </FeatureToggle(StructuredListCell)>
+                                    </MiqStructuredListArray>
+                                  </MiqStructuredListBodyValue>
+                                </div>
+                              </StructuredListRow>
+                            </FeatureToggle(StructuredListRow)>
+                            <FeatureToggle(StructuredListRow)
                               className=""
-                              head={false}
-                              label={false}
+                              key="1"
                               onClick={[Function]}
-                              onKeyDown={[Function]}
                               tabIndex={1}
                               title=""
                             >
-                              <div
-                                className="bx--structured-list-row"
+                              <StructuredListRow
+                                className=""
+                                head={false}
+                                label={false}
                                 onClick={[Function]}
-                                role="row"
+                                onKeyDown={[Function]}
+                                tabIndex={1}
                                 title=""
                               >
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value array_item"
-                                  key="0"
+                                <div
+                                  className="bx--structured-list-row"
                                   onClick={[Function]}
+                                  role="row"
                                   title=""
                                 >
-                                  <StructuredListCell
-                                    className="content_value array_item"
-                                    head={false}
-                                    noWrap={false}
+                                  <MiqStructuredListBodyValue
+                                    clickEvents={false}
                                     onClick={[Function]}
-                                    title=""
+                                    row={
+                                      Array [
+                                        undefined,
+                                        undefined,
+                                      ]
+                                    }
                                   >
-                                    <div
-                                      className="content_value array_item bx--structured-list-td"
+                                    <MiqStructuredListArray
+                                      clickEvents={false}
                                       onClick={[Function]}
-                                      role="cell"
-                                      title=""
+                                      row={
+                                        Array [
+                                          undefined,
+                                          undefined,
+                                        ]
+                                      }
                                     >
-                                      <div
-                                        className="wrap_text"
-                                      />
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
-                                <FeatureToggle(StructuredListCell)
-                                  className="content_value array_item"
-                                  key="1"
-                                  onClick={[Function]}
-                                  title=""
-                                >
-                                  <StructuredListCell
-                                    className="content_value array_item"
-                                    head={false}
-                                    noWrap={false}
-                                    onClick={[Function]}
-                                    title=""
-                                  >
-                                    <div
-                                      className="content_value array_item bx--structured-list-td"
-                                      onClick={[Function]}
-                                      role="cell"
-                                      title=""
-                                    >
-                                      <div
-                                        className="wrap_text"
-                                      />
-                                    </div>
-                                  </StructuredListCell>
-                                </FeatureToggle(StructuredListCell)>
-                              </div>
-                            </StructuredListRow>
-                          </FeatureToggle(StructuredListRow)>
-                        </div>
-                      </StructuredListBody>
-                    </FeatureToggle(StructuredListBody)>
+                                      <FeatureToggle(StructuredListCell)
+                                        className="content_value array_item"
+                                        key="0"
+                                        onClick={[Function]}
+                                        title=""
+                                      >
+                                        <StructuredListCell
+                                          className="content_value array_item"
+                                          head={false}
+                                          noWrap={false}
+                                          onClick={[Function]}
+                                          title=""
+                                        >
+                                          <div
+                                            className="content_value array_item bx--structured-list-td"
+                                            onClick={[Function]}
+                                            role="cell"
+                                            title=""
+                                          >
+                                            <MiqStructuredListText>
+                                              <div
+                                                className="wrap_text"
+                                              />
+                                            </MiqStructuredListText>
+                                          </div>
+                                        </StructuredListCell>
+                                      </FeatureToggle(StructuredListCell)>
+                                      <FeatureToggle(StructuredListCell)
+                                        className="content_value array_item"
+                                        key="1"
+                                        onClick={[Function]}
+                                        title=""
+                                      >
+                                        <StructuredListCell
+                                          className="content_value array_item"
+                                          head={false}
+                                          noWrap={false}
+                                          onClick={[Function]}
+                                          title=""
+                                        >
+                                          <div
+                                            className="content_value array_item bx--structured-list-td"
+                                            onClick={[Function]}
+                                            role="cell"
+                                            title=""
+                                          >
+                                            <MiqStructuredListText>
+                                              <div
+                                                className="wrap_text"
+                                              />
+                                            </MiqStructuredListText>
+                                          </div>
+                                        </StructuredListCell>
+                                      </FeatureToggle(StructuredListCell)>
+                                    </MiqStructuredListArray>
+                                  </MiqStructuredListBodyValue>
+                                </div>
+                              </StructuredListRow>
+                            </FeatureToggle(StructuredListRow)>
+                          </div>
+                        </StructuredListBody>
+                      </FeatureToggle(StructuredListBody)>
+                    </MiqStructuredListBody>
                   </div>
                 </StructuredListWrapper>
               </FeatureToggle(StructuredListWrapper)>

@@ -7,19 +7,7 @@
       - else
         = render :partial => "method_form", :locals  => {:prefix => ""}
   - else
-    %h3
-      = _('Main Info')
-    .form-horizontal
-      .form-group
-        = format_form_group(_('Type'), location_fancy_name(@ae_method.location))
-      .form-group
-        = format_form_group(_('Fully Qualified Name'), @sb[:namespace_path])
-      .form-group
-        = format_form_group(_('Name'), @ae_method.name)
-      .form-group
-        = format_form_group(_('Display Name'), @ae_method.display_name)
-      .form-group
-        = format_form_group(_('Created On'), format_timezone(@ae_method.created_on, Time.zone, "gtl"))
+    = method_details(@ae_method, @sb)
     - if @ae_method.location == 'inline'
       = render :partial => "embedded_methods"
     = render :partial => "domain_overrides", :locals => {:node_prefix => "aem", :model => "Method"}

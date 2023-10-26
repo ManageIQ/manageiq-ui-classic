@@ -21,7 +21,7 @@ exports[`Alert Profile Form Component should render correctly 1`] = `
               "id": "description",
               "isRequired": true,
               "label": "Description",
-              "maxLength": 50,
+              "maxLength": 255,
               "name": "description",
             },
             Object {

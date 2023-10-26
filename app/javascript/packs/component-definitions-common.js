@@ -8,6 +8,7 @@ import ActionForm from '../components/action-form';
 import AddRemoveSecurityGroupForm from '../components/vm-cloud-add-remove-security-group-form';
 import AggregateStatusCard from '../components/aggregate_status_card';
 import AnsibleCredentialsForm from '../components/ansible-credentials-form';
+import AnsiblePlaybookWorkflow from '../components/ansible-playbook-workflow';
 import AnsibleRepositoryForm from '../components/ansible-repository-form';
 import AuthKeypairCloudForm from '../components/auth-key-pair-cloud';
 import { BreadcrumbsBar } from '../components/breadcrumbs';
@@ -67,7 +68,7 @@ import MiqTableToolbar from '../components/miq-data-table/miq-table-toolbar';
 import MiqPagination from '../components/miq-pagination';
 import MiqStructuredList from '../components/miq-structured-list';
 import MiqStructuredListHeader from '../components/miq-structured-list/miq-structured-list-header';
-import MiqStructuredListInputs from '../components/miq-structured-list/miq-structured-list-inputs';
+import MiqStructuredListInputs from '../components/miq-structured-list/miq-structured-list-body/value-tags/miq-structured-list-inputs';
 import MiqCustomTab from '../components/miq-custom-tab';
 import { MainMenu, Navbar } from '../menu';
 import NetworkFloatingIPsForm from '../components/network-floatingIPs-form';
@@ -163,6 +164,7 @@ import StorageServiceForm from '../components/storage-service-form';
 import VolumeMappingForm from '../components/volume-mapping-form';
 import ZoneForm from '../components/zone-form';
 import AnsiblePlayBookEditCatalogForm from '../components/ansible-playbook-edit-catalog-form';
+import DiagnosticsCURepairForm from '../components/c-and-u-collections-form';
 
 /**
 * Add component definitions to this file.
@@ -173,6 +175,7 @@ import AnsiblePlayBookEditCatalogForm from '../components/ansible-playbook-edit-
 ManageIQ.component.addReact('ActionForm', ActionForm);
 ManageIQ.component.addReact('AddRemoveSecurityGroupForm', AddRemoveSecurityGroupForm);
 ManageIQ.component.addReact('AggregateStatusCard', AggregateStatusCard);
+ManageIQ.component.addReact('AnsiblePlaybookWorkflow', AnsiblePlaybookWorkflow);
 ManageIQ.component.addReact('AnsibleCredentialsForm', AnsibleCredentialsForm);
 ManageIQ.component.addReact('AnsibleRepositoryForm', AnsibleRepositoryForm);
 ManageIQ.component.addReact('AuthKeypairCloudForm', AuthKeypairCloudForm);
@@ -335,3 +338,4 @@ ManageIQ.component.addReact('VolumeMappingForm', VolumeMappingForm);
 ManageIQ.component.addReact('VmCommonRenameForm', VmCommonRenameForm);
 ManageIQ.component.addReact('ZoneForm', ZoneForm);
 ManageIQ.component.addReact('AnsiblePlayBookEditCatalogForm', AnsiblePlayBookEditCatalogForm);
+ManageIQ.component.addReact('DiagnosticsCURepairForm', DiagnosticsCURepairForm);
