@@ -68,7 +68,7 @@ import MiqTableToolbar from '../components/miq-data-table/miq-table-toolbar';
 import MiqPagination from '../components/miq-pagination';
 import MiqStructuredList from '../components/miq-structured-list';
 import MiqStructuredListHeader from '../components/miq-structured-list/miq-structured-list-header';
-import MiqStructuredListInputs from '../components/miq-structured-list/miq-structured-list-inputs';
+import MiqStructuredListInputs from '../components/miq-structured-list/miq-structured-list-body/value-tags/miq-structured-list-inputs';
 import MiqCustomTab from '../components/miq-custom-tab';
 import { MainMenu, Navbar } from '../menu';
 import NetworkFloatingIPsForm from '../components/network-floatingIPs-form';

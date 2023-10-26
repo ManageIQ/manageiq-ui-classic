@@ -47,7 +47,7 @@ export default function TableListView(props) {
 
 TableListView.propTypes = {
   title: PropTypes.string.isRequired,
-  headers: PropTypes.arrayOf(PropTypes.shape({ key: PropTypes.string, label: PropTypes.string })).isRequired,
+  headers: PropTypes.arrayOf(PropTypes.any).isRequired,
   values: PropTypes.arrayOf(PropTypes.object).isRequired,
   onClick: PropTypes.func.isRequired,
 };
