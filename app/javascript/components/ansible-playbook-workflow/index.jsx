@@ -7,7 +7,7 @@ import NotificationMessage from '../notification-message';
 /** The AnsiblePlaybookWorkflow is used to render the payload received from the  Ansible Playbook's show page */
 const AnsiblePlaybookWorkflow = ({ payload, payloadType }) => {
   /** Function to render a notification message. */
-  const renderMessage = () => <NotificationMessage type="info" message={__('Payload is not avaible.')} />;
+  const renderMessage = () => <NotificationMessage type="info" message={__('Payload is not available.')} />;
 
   /** Function to render the payload using  CodeMirror. */
   const renderCodeMirror = () => (
