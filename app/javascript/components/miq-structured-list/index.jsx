@@ -7,6 +7,7 @@ import MiqStructuredListHeader from './miq-structured-list-header';
 import MiqStructuredListBody from './miq-structured-list-body/miq-structured-list-body';
 
 import { hasClickEvents } from './helpers';
+import MiqStructuredListModeContext from './miq-structuted-list-mode-context';
 
 /** Component to render the items in summary pages */
 const MiqStructuredList = ({
@@ -37,7 +38,9 @@ const MiqStructuredList = ({
   const accordionList = () => (
     <Accordion align="start" className={classNames('miq-structured-list-accordion', mode)}>
       <AccordionItem title={title} open>
-        {simpleList()}
+        <MiqStructuredListModeContext.Provider value={mode.split(' ')[1]}>
+          {simpleList()}
+        </MiqStructuredListModeContext.Provider>
       </AccordionItem>
     </Accordion>
   );

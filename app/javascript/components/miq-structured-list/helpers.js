@@ -16,6 +16,10 @@ export const DynamicReactComponents = {
   MIQ_DATA_TABLE: MiqDataTable,
 };
 
+export const DOMPurifyModes = [
+  'miq_catalog_basic_information', // Service / Catalogs / Catalog items / Basic information.
+];
+
 const dataType = (data) => (data ? data.constructor.name.toString() : undefined);
 
 export const isObject = (item) => dataType(item) === 'Object';

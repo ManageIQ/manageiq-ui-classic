@@ -9,42 +9,44 @@ exports[`Structured list component should render a miq_policy_set show page with
     open={true}
     title="Policies"
   >
-    <FeatureToggle(StructuredListWrapper)
-      ariaLabel="Structured list"
-      className="miq-structured-list miq_policy_set"
-    >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="miq_policy_set"
-        onClick={[MockFunction]}
-        rows={
-          Array [
-            Object {
-              "label": "Description",
-              "value": "& Application SLA &",
-            },
-            Object {
-              "icon": "pficon pficon-image",
-              "onclick": "DoNav('/miq_policy/show/1');",
-              "title": "View this Policy",
-              "value": "description one &&",
-            },
-            Object {
-              "icon": "pficon pficon-container-node",
-              "onclick": "DoNav('/miq_policy/show/2');",
-              "title": "View this Policy",
-              "value": "description two &&",
-            },
-            Object {
-              "icon": "pficon pficon-virtual-machine",
-              "onclick": "DoNav('/miq_policy/show/3');",
-              "title": "View this Policy",
-              "value": "description three &&",
-            },
-          ]
-        }
-      />
-    </FeatureToggle(StructuredListWrapper)>
+    <ContextProvider>
+      <FeatureToggle(StructuredListWrapper)
+        ariaLabel="Structured list"
+        className="miq-structured-list miq_policy_set"
+      >
+        <MiqStructuredListBody
+          clickEvents={false}
+          mode="miq_policy_set"
+          onClick={[MockFunction]}
+          rows={
+            Array [
+              Object {
+                "label": "Description",
+                "value": "& Application SLA &",
+              },
+              Object {
+                "icon": "pficon pficon-image",
+                "onclick": "DoNav('/miq_policy/show/1');",
+                "title": "View this Policy",
+                "value": "description one &&",
+              },
+              Object {
+                "icon": "pficon pficon-container-node",
+                "onclick": "DoNav('/miq_policy/show/2');",
+                "title": "View this Policy",
+                "value": "description two &&",
+              },
+              Object {
+                "icon": "pficon pficon-virtual-machine",
+                "onclick": "DoNav('/miq_policy/show/3');",
+                "title": "View this Policy",
+                "value": "description three &&",
+              },
+            ]
+          }
+        />
+      </FeatureToggle(StructuredListWrapper)>
+    </ContextProvider>
   </AccordionItem>
 </Accordion>
 `;
@@ -58,281 +60,283 @@ exports[`Structured list component should render a multilink_list table 1`] = `
     open={true}
     title="Some OpenStack Stuff"
   >
-    <FeatureToggle(StructuredListWrapper)
-      ariaLabel="Structured list"
-      className="miq-structured-list multilink_table"
-    >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="multilink_table"
-        onClick={[MockFunction]}
-        rows={
-          Array [
-            Object {
-              "sub_items": Array [
-                Object {
-                  "icon": "pficon pficon-ok",
-                  "link": "/host/host_services/18?db=host&host_service_group=1&status=running",
-                  "title": "Show list of running Aodh",
-                  "value": "Running (3)",
-                },
-                Object {
-                  "icon": null,
-                  "link": null,
-                  "title": "Show list of failed Aodh",
-                  "value": "Failed (0)",
-                },
-                Object {
-                  "icon": "pficon pficon-service",
-                  "link": "/host/host_services/18?db=host&host_service_group=1&status=all",
-                  "title": "Show list of all Aodh",
-                  "value": "All (3)",
-                },
-                Object {
-                  "icon": "fa fa-file-o",
-                  "link": null,
-                  "title": "Show list of configuration files of Aodh",
-                  "value": "Configuration (0)",
-                },
-              ],
-              "value": "Aodh",
-            },
-            Object {
-              "sub_items": Array [
-                Object {
-                  "icon": "pficon pficon-ok",
-                  "link": "/host/host_services/18?db=host&host_service_group=2&status=running",
-                  "title": "Show list of running Ceilometer",
-                  "value": "Running (3)",
-                },
-                Object {
-                  "icon": null,
-                  "link": null,
-                  "title": "Show list of failed Ceilometer",
-                  "value": "Failed (0)",
-                },
-                Object {
-                  "icon": "pficon pficon-service",
-                  "link": "/host/host_services/18?db=host&host_service_group=2&status=all",
-                  "title": "Show list of all Ceilometer",
-                  "value": "All (3)",
-                },
-                Object {
-                  "icon": "fa fa-file-o",
-                  "link": null,
-                  "title": "Show list of configuration files of Ceilometer",
-                  "value": "Configuration (0)",
-                },
-              ],
-              "value": "Ceilometer",
-            },
-            Object {
-              "sub_items": Array [
-                Object {
-                  "icon": "pficon pficon-ok",
-                  "link": "/host/host_services/18?db=host&host_service_group=3&status=running",
-                  "title": "Show list of running Cinder",
-                  "value": "Running (3)",
-                },
-                Object {
-                  "icon": null,
-                  "link": null,
-                  "title": "Show list of failed Cinder",
-                  "value": "Failed (0)",
-                },
-                Object {
-                  "icon": "pficon pficon-service",
-                  "link": "/host/host_services/18?db=host&host_service_group=3&status=all",
-                  "title": "Show list of all Cinder",
-                  "value": "All (3)",
-                },
-                Object {
-                  "icon": "fa fa-file-o",
-                  "link": null,
-                  "title": "Show list of configuration files of Cinder",
-                  "value": "Configuration (0)",
-                },
-              ],
-              "value": "Cinder",
-            },
-            Object {
-              "sub_items": Array [
-                Object {
-                  "icon": "pficon pficon-ok",
-                  "link": "/host/host_services/18?db=host&host_service_group=4&status=running",
-                  "title": "Show list of running Glance",
-                  "value": "Running (2)",
-                },
-                Object {
-                  "icon": null,
-                  "link": null,
-                  "title": "Show list of failed Glance",
-                  "value": "Failed (0)",
-                },
-                Object {
-                  "icon": "pficon pficon-service",
-                  "link": "/host/host_services/18?db=host&host_service_group=4&status=all",
-                  "title": "Show list of all Glance",
-                  "value": "All (2)",
-                },
-                Object {
-                  "icon": "fa fa-file-o",
-                  "link": null,
-                  "title": "Show list of configuration files of Glance",
-                  "value": "Configuration (0)",
-                },
-              ],
-              "value": "Glance",
-            },
-            Object {
-              "sub_items": Array [
-                Object {
-                  "icon": "pficon pficon-ok",
-                  "link": "/host/host_services/18?db=host&host_service_group=5&status=running",
-                  "title": "Show list of running Gnocchi",
-                  "value": "Running (2)",
-                },
-                Object {
-                  "icon": null,
-                  "link": null,
-                  "title": "Show list of failed Gnocchi",
-                  "value": "Failed (0)",
-                },
-                Object {
-                  "icon": "pficon pficon-service",
-                  "link": "/host/host_services/18?db=host&host_service_group=5&status=all",
-                  "title": "Show list of all Gnocchi",
-                  "value": "All (2)",
-                },
-                Object {
-                  "icon": "fa fa-file-o",
-                  "link": null,
-                  "title": "Show list of configuration files of Gnocchi",
-                  "value": "Configuration (0)",
-                },
-              ],
-              "value": "Gnocchi",
-            },
-            Object {
-              "sub_items": Array [
-                Object {
-                  "icon": "pficon pficon-ok",
-                  "link": "/host/host_services/18?db=host&host_service_group=6&status=running",
-                  "title": "Show list of running Heat",
-                  "value": "Running (4)",
-                },
-                Object {
-                  "icon": null,
-                  "link": null,
-                  "title": "Show list of failed Heat",
-                  "value": "Failed (0)",
-                },
-                Object {
-                  "icon": "pficon pficon-service",
-                  "link": "/host/host_services/18?db=host&host_service_group=6&status=all",
-                  "title": "Show list of all Heat",
-                  "value": "All (4)",
-                },
-                Object {
-                  "icon": "fa fa-file-o",
-                  "link": null,
-                  "title": "Show list of configuration files of Heat",
-                  "value": "Configuration (0)",
-                },
-              ],
-              "value": "Heat",
-            },
-            Object {
-              "sub_items": Array [
-                Object {
-                  "icon": null,
-                  "link": null,
-                  "title": "Show list of running Keystone",
-                  "value": "Running (0)",
-                },
-                Object {
-                  "icon": null,
-                  "link": null,
-                  "title": "Show list of failed Keystone",
-                  "value": "Failed (0)",
-                },
-                Object {
-                  "icon": "pficon pficon-service",
-                  "link": "/host/host_services/18?db=host&host_service_group=7&status=all",
-                  "title": "Show list of all Keystone",
-                  "value": "All (1)",
-                },
-                Object {
-                  "icon": "fa fa-file-o",
-                  "link": null,
-                  "title": "Show list of configuration files of Keystone",
-                  "value": "Configuration (0)",
-                },
-              ],
-              "value": "Keystone",
-            },
-            Object {
-              "sub_items": Array [
-                Object {
-                  "icon": "pficon pficon-ok",
-                  "link": "/host/host_services/18?db=host&host_service_group=8&status=running",
-                  "title": "Show list of running Nova",
-                  "value": "Running (5)",
-                },
-                Object {
-                  "icon": null,
-                  "link": null,
-                  "title": "Show list of failed Nova",
-                  "value": "Failed (0)",
-                },
-                Object {
-                  "icon": "pficon pficon-service",
-                  "link": "/host/host_services/18?db=host&host_service_group=8&status=all",
-                  "title": "Show list of all Nova",
-                  "value": "All (10)",
-                },
-                Object {
-                  "icon": "fa fa-file-o",
-                  "link": null,
-                  "title": "Show list of configuration files of Nova",
-                  "value": "Configuration (0)",
-                },
-              ],
-              "value": "Nova",
-            },
-            Object {
-              "sub_items": Array [
-                Object {
-                  "icon": "pficon pficon-ok",
-                  "link": "/host/host_services/18?db=host&host_service_group=9&status=running",
-                  "title": "Show list of running Swift",
-                  "value": "Running (14)",
-                },
-                Object {
-                  "icon": null,
-                  "link": null,
-                  "title": "Show list of failed Swift",
-                  "value": "Failed (0)",
-                },
-                Object {
-                  "icon": "pficon pficon-service",
-                  "link": "/host/host_services/18?db=host&host_service_group=9&status=all",
-                  "title": "Show list of all Swift",
-                  "value": "All (14)",
-                },
-                Object {
-                  "icon": "fa fa-file-o",
-                  "link": null,
-                  "title": "Show list of configuration files of Swift",
-                  "value": "Configuration (0)",
-                },
-              ],
-              "value": "Swift",
-            },
-          ]
-        }
-      />
-    </FeatureToggle(StructuredListWrapper)>
+    <ContextProvider>
+      <FeatureToggle(StructuredListWrapper)
+        ariaLabel="Structured list"
+        className="miq-structured-list multilink_table"
+      >
+        <MiqStructuredListBody
+          clickEvents={false}
+          mode="multilink_table"
+          onClick={[MockFunction]}
+          rows={
+            Array [
+              Object {
+                "sub_items": Array [
+                  Object {
+                    "icon": "pficon pficon-ok",
+                    "link": "/host/host_services/18?db=host&host_service_group=1&status=running",
+                    "title": "Show list of running Aodh",
+                    "value": "Running (3)",
+                  },
+                  Object {
+                    "icon": null,
+                    "link": null,
+                    "title": "Show list of failed Aodh",
+                    "value": "Failed (0)",
+                  },
+                  Object {
+                    "icon": "pficon pficon-service",
+                    "link": "/host/host_services/18?db=host&host_service_group=1&status=all",
+                    "title": "Show list of all Aodh",
+                    "value": "All (3)",
+                  },
+                  Object {
+                    "icon": "fa fa-file-o",
+                    "link": null,
+                    "title": "Show list of configuration files of Aodh",
+                    "value": "Configuration (0)",
+                  },
+                ],
+                "value": "Aodh",
+              },
+              Object {
+                "sub_items": Array [
+                  Object {
+                    "icon": "pficon pficon-ok",
+                    "link": "/host/host_services/18?db=host&host_service_group=2&status=running",
+                    "title": "Show list of running Ceilometer",
+                    "value": "Running (3)",
+                  },
+                  Object {
+                    "icon": null,
+                    "link": null,
+                    "title": "Show list of failed Ceilometer",
+                    "value": "Failed (0)",
+                  },
+                  Object {
+                    "icon": "pficon pficon-service",
+                    "link": "/host/host_services/18?db=host&host_service_group=2&status=all",
+                    "title": "Show list of all Ceilometer",
+                    "value": "All (3)",
+                  },
+                  Object {
+                    "icon": "fa fa-file-o",
+                    "link": null,
+                    "title": "Show list of configuration files of Ceilometer",
+                    "value": "Configuration (0)",
+                  },
+                ],
+                "value": "Ceilometer",
+              },
+              Object {
+                "sub_items": Array [
+                  Object {
+                    "icon": "pficon pficon-ok",
+                    "link": "/host/host_services/18?db=host&host_service_group=3&status=running",
+                    "title": "Show list of running Cinder",
+                    "value": "Running (3)",
+                  },
+                  Object {
+                    "icon": null,
+                    "link": null,
+                    "title": "Show list of failed Cinder",
+                    "value": "Failed (0)",
+                  },
+                  Object {
+                    "icon": "pficon pficon-service",
+                    "link": "/host/host_services/18?db=host&host_service_group=3&status=all",
+                    "title": "Show list of all Cinder",
+                    "value": "All (3)",
+                  },
+                  Object {
+                    "icon": "fa fa-file-o",
+                    "link": null,
+                    "title": "Show list of configuration files of Cinder",
+                    "value": "Configuration (0)",
+                  },
+                ],
+                "value": "Cinder",
+              },
+              Object {
+                "sub_items": Array [
+                  Object {
+                    "icon": "pficon pficon-ok",
+                    "link": "/host/host_services/18?db=host&host_service_group=4&status=running",
+                    "title": "Show list of running Glance",
+                    "value": "Running (2)",
+                  },
+                  Object {
+                    "icon": null,
+                    "link": null,
+                    "title": "Show list of failed Glance",
+                    "value": "Failed (0)",
+                  },
+                  Object {
+                    "icon": "pficon pficon-service",
+                    "link": "/host/host_services/18?db=host&host_service_group=4&status=all",
+                    "title": "Show list of all Glance",
+                    "value": "All (2)",
+                  },
+                  Object {
+                    "icon": "fa fa-file-o",
+                    "link": null,
+                    "title": "Show list of configuration files of Glance",
+                    "value": "Configuration (0)",
+                  },
+                ],
+                "value": "Glance",
+              },
+              Object {
+                "sub_items": Array [
+                  Object {
+                    "icon": "pficon pficon-ok",
+                    "link": "/host/host_services/18?db=host&host_service_group=5&status=running",
+                    "title": "Show list of running Gnocchi",
+                    "value": "Running (2)",
+                  },
+                  Object {
+                    "icon": null,
+                    "link": null,
+                    "title": "Show list of failed Gnocchi",
+                    "value": "Failed (0)",
+                  },
+                  Object {
+                    "icon": "pficon pficon-service",
+                    "link": "/host/host_services/18?db=host&host_service_group=5&status=all",
+                    "title": "Show list of all Gnocchi",
+                    "value": "All (2)",
+                  },
+                  Object {
+                    "icon": "fa fa-file-o",
+                    "link": null,
+                    "title": "Show list of configuration files of Gnocchi",
+                    "value": "Configuration (0)",
+                  },
+                ],
+                "value": "Gnocchi",
+              },
+              Object {
+                "sub_items": Array [
+                  Object {
+                    "icon": "pficon pficon-ok",
+                    "link": "/host/host_services/18?db=host&host_service_group=6&status=running",
+                    "title": "Show list of running Heat",
+                    "value": "Running (4)",
+                  },
+                  Object {
+                    "icon": null,
+                    "link": null,
+                    "title": "Show list of failed Heat",
+                    "value": "Failed (0)",
+                  },
+                  Object {
+                    "icon": "pficon pficon-service",
+                    "link": "/host/host_services/18?db=host&host_service_group=6&status=all",
+                    "title": "Show list of all Heat",
+                    "value": "All (4)",
+                  },
+                  Object {
+                    "icon": "fa fa-file-o",
+                    "link": null,
+                    "title": "Show list of configuration files of Heat",
+                    "value": "Configuration (0)",
+                  },
+                ],
+                "value": "Heat",
+              },
+              Object {
+                "sub_items": Array [
+                  Object {
+                    "icon": null,
+                    "link": null,
+                    "title": "Show list of running Keystone",
+                    "value": "Running (0)",
+                  },
+                  Object {
+                    "icon": null,
+                    "link": null,
+                    "title": "Show list of failed Keystone",
+                    "value": "Failed (0)",
+                  },
+                  Object {
+                    "icon": "pficon pficon-service",
+                    "link": "/host/host_services/18?db=host&host_service_group=7&status=all",
+                    "title": "Show list of all Keystone",
+                    "value": "All (1)",
+                  },
+                  Object {
+                    "icon": "fa fa-file-o",
+                    "link": null,
+                    "title": "Show list of configuration files of Keystone",
+                    "value": "Configuration (0)",
+                  },
+                ],
+                "value": "Keystone",
+              },
+              Object {
+                "sub_items": Array [
+                  Object {
+                    "icon": "pficon pficon-ok",
+                    "link": "/host/host_services/18?db=host&host_service_group=8&status=running",
+                    "title": "Show list of running Nova",
+                    "value": "Running (5)",
+                  },
+                  Object {
+                    "icon": null,
+                    "link": null,
+                    "title": "Show list of failed Nova",
+                    "value": "Failed (0)",
+                  },
+                  Object {
+                    "icon": "pficon pficon-service",
+                    "link": "/host/host_services/18?db=host&host_service_group=8&status=all",
+                    "title": "Show list of all Nova",
+                    "value": "All (10)",
+                  },
+                  Object {
+                    "icon": "fa fa-file-o",
+                    "link": null,
+                    "title": "Show list of configuration files of Nova",
+                    "value": "Configuration (0)",
+                  },
+                ],
+                "value": "Nova",
+              },
+              Object {
+                "sub_items": Array [
+                  Object {
+                    "icon": "pficon pficon-ok",
+                    "link": "/host/host_services/18?db=host&host_service_group=9&status=running",
+                    "title": "Show list of running Swift",
+                    "value": "Running (14)",
+                  },
+                  Object {
+                    "icon": null,
+                    "link": null,
+                    "title": "Show list of failed Swift",
+                    "value": "Failed (0)",
+                  },
+                  Object {
+                    "icon": "pficon pficon-service",
+                    "link": "/host/host_services/18?db=host&host_service_group=9&status=all",
+                    "title": "Show list of all Swift",
+                    "value": "All (14)",
+                  },
+                  Object {
+                    "icon": "fa fa-file-o",
+                    "link": null,
+                    "title": "Show list of configuration files of Swift",
+                    "value": "Configuration (0)",
+                  },
+                ],
+                "value": "Swift",
+              },
+            ]
+          }
+        />
+      </FeatureToggle(StructuredListWrapper)>
+    </ContextProvider>
   </AccordionItem>
 </Accordion>
 `;
@@ -346,64 +350,66 @@ exports[`Structured list component should render a operation_range table 1`] = `
     open={true}
     title="Operation Ranges"
   >
-    <FeatureToggle(StructuredListWrapper)
-      ariaLabel="Structured list"
-      className="miq-structured-list operation_ranges"
-    >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="operation_ranges"
-        onClick={[MockFunction]}
-        rows={
-          Array [
-            Object {
-              "hoverClass": "no-hover",
-              "label": "CPU",
-              "value": Array [
-                Object {
-                  "label": "Max",
-                  "value": "Not Available",
-                },
-                Object {
-                  "label": "High",
-                  "value": "0 MHz",
-                },
-                Object {
-                  "label": "Average",
-                  "value": "0 MHz",
-                },
-                Object {
-                  "label": "Low",
-                  "value": "0 MHz",
-                },
-              ],
-            },
-            Object {
-              "hoverClass": "no-hover",
-              "label": "CPU Usage",
-              "value": Array [
-                Object {
-                  "label": "Max",
-                  "value": "Not Available",
-                },
-                Object {
-                  "label": "High",
-                  "value": "0.00%",
-                },
-                Object {
-                  "label": "Average",
-                  "value": "0.00%",
-                },
-                Object {
-                  "label": "Low",
-                  "value": "0.00%",
-                },
-              ],
-            },
-          ]
-        }
-      />
-    </FeatureToggle(StructuredListWrapper)>
+    <ContextProvider>
+      <FeatureToggle(StructuredListWrapper)
+        ariaLabel="Structured list"
+        className="miq-structured-list operation_ranges"
+      >
+        <MiqStructuredListBody
+          clickEvents={false}
+          mode="operation_ranges"
+          onClick={[MockFunction]}
+          rows={
+            Array [
+              Object {
+                "hoverClass": "no-hover",
+                "label": "CPU",
+                "value": Array [
+                  Object {
+                    "label": "Max",
+                    "value": "Not Available",
+                  },
+                  Object {
+                    "label": "High",
+                    "value": "0 MHz",
+                  },
+                  Object {
+                    "label": "Average",
+                    "value": "0 MHz",
+                  },
+                  Object {
+                    "label": "Low",
+                    "value": "0 MHz",
+                  },
+                ],
+              },
+              Object {
+                "hoverClass": "no-hover",
+                "label": "CPU Usage",
+                "value": Array [
+                  Object {
+                    "label": "Max",
+                    "value": "Not Available",
+                  },
+                  Object {
+                    "label": "High",
+                    "value": "0.00%",
+                  },
+                  Object {
+                    "label": "Average",
+                    "value": "0.00%",
+                  },
+                  Object {
+                    "label": "Low",
+                    "value": "0.00%",
+                  },
+                ],
+              },
+            ]
+          }
+        />
+      </FeatureToggle(StructuredListWrapper)>
+    </ContextProvider>
   </AccordionItem>
 </Accordion>
 `;
@@ -417,28 +423,30 @@ exports[`Structured list component should render a report_information page witho
     open={true}
     title="report_information"
   >
-    <FeatureToggle(StructuredListWrapper)
-      ariaLabel="Structured list"
-      className="miq-structured-list miq_report_schedules"
-    >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="miq_report_schedules"
-        onClick={[MockFunction]}
-        rows={
-          Array [
-            Object {
-              "label": "Last Run Time",
-              "value": "& 2022-12-07 02:00:00 UTC &",
-            },
-            Object {
-              "label": "Next Run Time",
-              "value": "& 2022-12-07 02:00:00 UTC &&",
-            },
-          ]
-        }
-      />
-    </FeatureToggle(StructuredListWrapper)>
+    <ContextProvider>
+      <FeatureToggle(StructuredListWrapper)
+        ariaLabel="Structured list"
+        className="miq-structured-list miq_report_schedules"
+      >
+        <MiqStructuredListBody
+          clickEvents={false}
+          mode="miq_report_schedules"
+          onClick={[MockFunction]}
+          rows={
+            Array [
+              Object {
+                "label": "Last Run Time",
+                "value": "& 2022-12-07 02:00:00 UTC &",
+              },
+              Object {
+                "label": "Next Run Time",
+                "value": "& 2022-12-07 02:00:00 UTC &&",
+              },
+            ]
+          }
+        />
+      </FeatureToggle(StructuredListWrapper)>
+    </ContextProvider>
   </AccordionItem>
 </Accordion>
 `;
@@ -452,9 +460,11 @@ exports[`Structured list component should render a simple_table 1`] = `
     open={true}
     title="Firewall Rules"
   >
-    <MiqStructuredListMessage
-      title="Firewall Rules"
-    />
+    <ContextProvider>
+      <MiqStructuredListMessage
+        title="Firewall Rules"
+      />
+    </ContextProvider>
   </AccordionItem>
 </Accordion>
 `;
@@ -468,30 +478,32 @@ exports[`Structured list component should render a simple_table with generic dat
     open={true}
     title="Foo Bar"
   >
-    <FeatureToggle(StructuredListWrapper)
-      ariaLabel="Structured list"
-      className="miq-structured-list simple_table"
-    >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="simple_table"
-        onClick={[MockFunction]}
-        rows={
-          Array [
-            Object {
-              "hoverClass": "bar",
-              "label": "foo",
-              "value": "bar",
-            },
-            Object {
-              "hoverClass": "bar",
-              "label": "mrkef?",
-              "value": "v zime!",
-            },
-          ]
-        }
-      />
-    </FeatureToggle(StructuredListWrapper)>
+    <ContextProvider>
+      <FeatureToggle(StructuredListWrapper)
+        ariaLabel="Structured list"
+        className="miq-structured-list simple_table"
+      >
+        <MiqStructuredListBody
+          clickEvents={false}
+          mode="simple_table"
+          onClick={[MockFunction]}
+          rows={
+            Array [
+              Object {
+                "hoverClass": "bar",
+                "label": "foo",
+                "value": "bar",
+              },
+              Object {
+                "hoverClass": "bar",
+                "label": "mrkef?",
+                "value": "v zime!",
+              },
+            ]
+          }
+        />
+      </FeatureToggle(StructuredListWrapper)>
+    </ContextProvider>
   </AccordionItem>
 </Accordion>
 `;
@@ -505,55 +517,57 @@ exports[`Structured list component should render a simple_table with sortable an
     open={true}
     title="Build Instances"
   >
-    <FeatureToggle(StructuredListWrapper)
-      ariaLabel="Structured list"
-      className="miq-structured-list simple_table"
-    >
-      <MiqStructuredListHeader
-        headers={
-          Array [
-            "Name",
-            "Phase",
-            "Message",
-            "Reason",
-            "Pod",
-            "Output Image",
-            "Start Timestamp",
-            Object {
-              "sortable": "desc",
-              "value": "Completion Timestamp",
-            },
-            "Duration",
-          ]
-        }
-      />
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="simple_table"
-        onClick={[MockFunction]}
-        rows={
-          Array [
+    <ContextProvider>
+      <FeatureToggle(StructuredListWrapper)
+        ariaLabel="Structured list"
+        className="miq-structured-list simple_table"
+      >
+        <MiqStructuredListHeader
+          headers={
             Array [
-              "cart-1",
-              "Complete",
+              "Name",
+              "Phase",
+              "Message",
+              "Reason",
+              "Pod",
+              "Output Image",
+              "Start Timestamp",
               Object {
-                "expandable": true,
-                "value": null,
+                "sortable": "desc",
+                "value": "Completion Timestamp",
               },
-              null,
-              "No Pod",
-              Object {
-                "expandable": true,
-                "value": "docker-registry.default.svc:5000/coolstore/cart:latest",
-              },
-              "2018-01-13T23:53:59Z",
-              "2018-01-13T23:57:57Z",
-              "3m58s",
-            ],
-          ]
-        }
-      />
-    </FeatureToggle(StructuredListWrapper)>
+              "Duration",
+            ]
+          }
+        />
+        <MiqStructuredListBody
+          clickEvents={false}
+          mode="simple_table"
+          onClick={[MockFunction]}
+          rows={
+            Array [
+              Array [
+                "cart-1",
+                "Complete",
+                Object {
+                  "expandable": true,
+                  "value": null,
+                },
+                null,
+                "No Pod",
+                Object {
+                  "expandable": true,
+                  "value": "docker-registry.default.svc:5000/coolstore/cart:latest",
+                },
+                "2018-01-13T23:53:59Z",
+                "2018-01-13T23:57:57Z",
+                "3m58s",
+              ],
+            ]
+          }
+        />
+      </FeatureToggle(StructuredListWrapper)>
+    </ContextProvider>
   </AccordionItem>
 </Accordion>
 `;
@@ -567,9 +581,11 @@ exports[`Structured list component should render a table_list_view table 1`] = `
     open={true}
     title="Tables with the Most Rows"
   >
-    <MiqStructuredListMessage
-      title="Tables with the Most Rows"
-    />
+    <ContextProvider>
+      <MiqStructuredListMessage
+        title="Tables with the Most Rows"
+      />
+    </ContextProvider>
   </AccordionItem>
 </Accordion>
 `;
@@ -583,76 +599,78 @@ exports[`Structured list component should render a tag_group table 1`] = `
     open={true}
     title="Smart Management"
   >
-    <FeatureToggle(StructuredListWrapper)
-      ariaLabel="Structured list"
-      className="miq-structured-list tag_group"
-    >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="tag_group"
-        onClick={[MockFunction]}
-        rows={
-          Array [
-            Object {
-              "hoverClass": "no-hover",
-              "icon": "pficon pficon-zone",
-              "label": "Managed by Zone",
-              "value": "default",
-            },
-            Object {
-              "hoverClass": "no-hover",
-              "label": "My Company X Tags",
-              "value": Array [
-                Object {
-                  "icon": "fa fa-tag",
-                  "label": "Dan Test",
-                  "value": Array [
-                    "Test 1",
-                  ],
-                },
-                Object {
-                  "icon": "fa fa-tag",
-                  "label": "Demo bla",
-                  "value": Array [
-                    "Policy",
-                    "2",
-                  ],
-                },
-              ],
-            },
-            Object {
-              "label": "Other Tags",
-              "title": "All Other Tags",
-              "value": Array [
-                Object {
-                  "icon": "fa fa-tag",
-                  "label": "Test",
-                  "value": Array [
-                    "Test 1",
-                  ],
-                },
-                Object {
-                  "icon": "fa fa-tag",
-                  "label": "Demo 2",
-                  "value": Array [
-                    "Policy",
-                    "2",
-                    "3",
-                  ],
-                },
-                Object {
-                  "link": "You clicked on Demo 3",
-                  "title": "Click to display the item",
-                  "value": Array [
-                    "Demo 3",
-                  ],
-                },
-              ],
-            },
-          ]
-        }
-      />
-    </FeatureToggle(StructuredListWrapper)>
+    <ContextProvider>
+      <FeatureToggle(StructuredListWrapper)
+        ariaLabel="Structured list"
+        className="miq-structured-list tag_group"
+      >
+        <MiqStructuredListBody
+          clickEvents={false}
+          mode="tag_group"
+          onClick={[MockFunction]}
+          rows={
+            Array [
+              Object {
+                "hoverClass": "no-hover",
+                "icon": "pficon pficon-zone",
+                "label": "Managed by Zone",
+                "value": "default",
+              },
+              Object {
+                "hoverClass": "no-hover",
+                "label": "My Company X Tags",
+                "value": Array [
+                  Object {
+                    "icon": "fa fa-tag",
+                    "label": "Dan Test",
+                    "value": Array [
+                      "Test 1",
+                    ],
+                  },
+                  Object {
+                    "icon": "fa fa-tag",
+                    "label": "Demo bla",
+                    "value": Array [
+                      "Policy",
+                      "2",
+                    ],
+                  },
+                ],
+              },
+              Object {
+                "label": "Other Tags",
+                "title": "All Other Tags",
+                "value": Array [
+                  Object {
+                    "icon": "fa fa-tag",
+                    "label": "Test",
+                    "value": Array [
+                      "Test 1",
+                    ],
+                  },
+                  Object {
+                    "icon": "fa fa-tag",
+                    "label": "Demo 2",
+                    "value": Array [
+                      "Policy",
+                      "2",
+                      "3",
+                    ],
+                  },
+                  Object {
+                    "link": "You clicked on Demo 3",
+                    "title": "Click to display the item",
+                    "value": Array [
+                      "Demo 3",
+                    ],
+                  },
+                ],
+              },
+            ]
+          }
+        />
+      </FeatureToggle(StructuredListWrapper)>
+    </ContextProvider>
   </AccordionItem>
 </Accordion>
 `;
@@ -666,32 +684,34 @@ exports[`Structured list component should render catalog_data with escaped strin
     open={true}
     title="Basic Information"
   >
-    <FeatureToggle(StructuredListWrapper)
-      ariaLabel="Structured list"
-      className="miq-structured-list catalog_list_view"
-    >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="catalog_list_view"
-        onClick={[MockFunction]}
-        rows={
-          Array [
-            Object {
-              "label": "Name / Description",
-              "value": "GCE Catalog item / Test &",
-            },
-            Object {
-              "label": "Catalog",
-              "value": "My Own && Catalog",
-            },
-            Object {
-              "label": "Zone",
-              "value": "Google",
-            },
-          ]
-        }
-      />
-    </FeatureToggle(StructuredListWrapper)>
+    <ContextProvider>
+      <FeatureToggle(StructuredListWrapper)
+        ariaLabel="Structured list"
+        className="miq-structured-list catalog_list_view"
+      >
+        <MiqStructuredListBody
+          clickEvents={false}
+          mode="catalog_list_view"
+          onClick={[MockFunction]}
+          rows={
+            Array [
+              Object {
+                "label": "Name / Description",
+                "value": "GCE Catalog item / Test &",
+              },
+              Object {
+                "label": "Catalog",
+                "value": "My Own && Catalog",
+              },
+              Object {
+                "label": "Zone",
+                "value": "Google",
+              },
+            ]
+          }
+        />
+      </FeatureToggle(StructuredListWrapper)>
+    </ContextProvider>
   </AccordionItem>
 </Accordion>
 `;
@@ -739,32 +759,34 @@ exports[`Structured list component should render miq_ae_class_list_view with esc
     open={true}
     title="Properties"
   >
-    <FeatureToggle(StructuredListWrapper)
-      ariaLabel="Structured list"
-      className="miq-structured-list table_list_view"
-    >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="table_list_view"
-        onClick={[MockFunction]}
-        rows={
-          Array [
-            Object {
-              "label": "Fully Qualified Name",
-              "value": "ManageIQ / Automation Management / Test &",
-            },
-            Object {
-              "label": "Name",
-              "value": "Thor Odinson",
-            },
-            Object {
-              "label": "Instances",
-              "value": "1 &",
-            },
-          ]
-        }
-      />
-    </FeatureToggle(StructuredListWrapper)>
+    <ContextProvider>
+      <FeatureToggle(StructuredListWrapper)
+        ariaLabel="Structured list"
+        className="miq-structured-list table_list_view"
+      >
+        <MiqStructuredListBody
+          clickEvents={false}
+          mode="table_list_view"
+          onClick={[MockFunction]}
+          rows={
+            Array [
+              Object {
+                "label": "Fully Qualified Name",
+                "value": "ManageIQ / Automation Management / Test &",
+              },
+              Object {
+                "label": "Name",
+                "value": "Thor Odinson",
+              },
+              Object {
+                "label": "Instances",
+                "value": "1 &",
+              },
+            ]
+          }
+        />
+      </FeatureToggle(StructuredListWrapper)>
+    </ContextProvider>
   </AccordionItem>
 </Accordion>
 `;
@@ -778,26 +800,28 @@ exports[`Structured list component should render miq_alert_show page without dou
     open={true}
     title="Belongs to Alert profiles"
   >
-    <FeatureToggle(StructuredListWrapper)
-      ariaLabel="Structured list"
-      className="miq-structured-list miq_alert_id"
-    >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="miq_alert_id"
-        onClick={[MockFunction]}
-        rows={
-          Array [
-            Object {
-              "icon": "pficon pficon-warning-triangle-o",
-              "onclick": "DoNav('/miq_alert_set/show/1');",
-              "title": "View this Alert Profile",
-              "value": "view this &&",
-            },
-          ]
-        }
-      />
-    </FeatureToggle(StructuredListWrapper)>
+    <ContextProvider>
+      <FeatureToggle(StructuredListWrapper)
+        ariaLabel="Structured list"
+        className="miq-structured-list miq_alert_id"
+      >
+        <MiqStructuredListBody
+          clickEvents={false}
+          mode="miq_alert_id"
+          onClick={[MockFunction]}
+          rows={
+            Array [
+              Object {
+                "icon": "pficon pficon-warning-triangle-o",
+                "onclick": "DoNav('/miq_alert_set/show/1');",
+                "title": "View this Alert Profile",
+                "value": "view this &&",
+              },
+            ]
+          }
+        />
+      </FeatureToggle(StructuredListWrapper)>
+    </ContextProvider>
   </AccordionItem>
 </Accordion>
 `;
@@ -811,42 +835,44 @@ exports[`Structured list component should render miq_reports_data without double
     open={true}
     title="Policies"
   >
-    <FeatureToggle(StructuredListWrapper)
-      ariaLabel="Structured list"
-      className="miq-structured-list miq_policy_set"
-    >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="miq_policy_set"
-        onClick={[MockFunction]}
-        rows={
-          Array [
-            Object {
-              "label": "Description",
-              "value": "& Application SLA &",
-            },
-            Object {
-              "icon": "pficon pficon-image",
-              "onclick": "DoNav('/miq_policy/show/1');",
-              "title": "View this Policy",
-              "value": "description one &&",
-            },
-            Object {
-              "icon": "pficon pficon-container-node",
-              "onclick": "DoNav('/miq_policy/show/2');",
-              "title": "View this Policy",
-              "value": "description two &&",
-            },
-            Object {
-              "icon": "pficon pficon-virtual-machine",
-              "onclick": "DoNav('/miq_policy/show/3');",
-              "title": "View this Policy",
-              "value": "description three &&",
-            },
-          ]
-        }
-      />
-    </FeatureToggle(StructuredListWrapper)>
+    <ContextProvider>
+      <FeatureToggle(StructuredListWrapper)
+        ariaLabel="Structured list"
+        className="miq-structured-list miq_policy_set"
+      >
+        <MiqStructuredListBody
+          clickEvents={false}
+          mode="miq_policy_set"
+          onClick={[MockFunction]}
+          rows={
+            Array [
+              Object {
+                "label": "Description",
+                "value": "& Application SLA &",
+              },
+              Object {
+                "icon": "pficon pficon-image",
+                "onclick": "DoNav('/miq_policy/show/1');",
+                "title": "View this Policy",
+                "value": "description one &&",
+              },
+              Object {
+                "icon": "pficon pficon-container-node",
+                "onclick": "DoNav('/miq_policy/show/2');",
+                "title": "View this Policy",
+                "value": "description two &&",
+              },
+              Object {
+                "icon": "pficon pficon-virtual-machine",
+                "onclick": "DoNav('/miq_policy/show/3');",
+                "title": "View this Policy",
+                "value": "description three &&",
+              },
+            ]
+          }
+        />
+      </FeatureToggle(StructuredListWrapper)>
+    </ContextProvider>
   </AccordionItem>
 </Accordion>
 `;
@@ -860,40 +886,42 @@ exports[`Structured list component should render report_schedule page without do
     open={true}
     title="Schedule Info"
   >
-    <FeatureToggle(StructuredListWrapper)
-      ariaLabel="Structured list"
-      className="miq-structured-list miq_report_schedule_info"
-    >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="miq_report_schedule_info"
-        onClick={[MockFunction]}
-        rows={
-          Array [
-            Object {
-              "label": "Description",
-              "value": "My_Host Network Information &&",
-            },
-            Object {
-              "label": "Active",
-              "value": "True &&",
-            },
-            Object {
-              "label": "E-Mail after Running",
-              "value": "True &&",
-            },
-            Object {
-              "label": "From E-mail",
-              "value": "(Default: test@test.com) &&",
-            },
-            Object {
-              "label": "Run At",
-              "value": "&& Run once on Thu Nov 15 01:10:00 UTC 2018 &&",
-            },
-          ]
-        }
-      />
-    </FeatureToggle(StructuredListWrapper)>
+    <ContextProvider>
+      <FeatureToggle(StructuredListWrapper)
+        ariaLabel="Structured list"
+        className="miq-structured-list miq_report_schedule_info"
+      >
+        <MiqStructuredListBody
+          clickEvents={false}
+          mode="miq_report_schedule_info"
+          onClick={[MockFunction]}
+          rows={
+            Array [
+              Object {
+                "label": "Description",
+                "value": "My_Host Network Information &&",
+              },
+              Object {
+                "label": "Active",
+                "value": "True &&",
+              },
+              Object {
+                "label": "E-Mail after Running",
+                "value": "True &&",
+              },
+              Object {
+                "label": "From E-mail",
+                "value": "(Default: test@test.com) &&",
+              },
+              Object {
+                "label": "Run At",
+                "value": "&& Run once on Thu Nov 15 01:10:00 UTC 2018 &&",
+              },
+            ]
+          }
+        />
+      </FeatureToggle(StructuredListWrapper)>
+    </ContextProvider>
   </AccordionItem>
 </Accordion>
 `;
