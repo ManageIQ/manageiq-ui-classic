@@ -73,14 +73,15 @@ const createSchema = (credentials, credentialReferences, payloadCredentials, wor
     fields: [
       {
         component: 'credential-mapper',
-        name: 'test',
-        label: __('test'),
+        name: 'credential-mapping-table',
+        id: 'credential-mapping-table',
         rows: createRows(credentials, payloadCredentials, workflowAuthentications),
         onCellClick: deleteMapping,
       },
       {
         component: componentTypes.SELECT,
         name: 'credential_references',
+        id: 'credential_references',
         label: __('Credential Reference'),
         placeholder: __('<Choose>'),
         includeEmpty: true,
@@ -134,6 +135,7 @@ const createSchema = (credentials, credentialReferences, payloadCredentials, wor
           {
             component: componentTypes.SELECT,
             name: 'workflow_credentials',
+            id: 'workflow_credentials',
             label: __('Workflow Credential'),
             placeholder: __('<Choose>'),
             includeEmpty: true,
@@ -146,6 +148,7 @@ const createSchema = (credentials, credentialReferences, payloadCredentials, wor
           {
             component: componentTypes.SELECT,
             name: 'credential_field',
+            id: 'credential_field',
             label: __('Credential Field'),
             placeholder: __('<Choose>'),
             includeEmpty: true,
