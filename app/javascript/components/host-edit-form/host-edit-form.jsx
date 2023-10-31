@@ -77,13 +77,12 @@ const HostEditForm = ({ ids }) => {
       action: 'edit',
       resources,
     };
-    const selectedHostId = ids.length === 1 ? ids[0] : values.host_validate_against;
-    const request = API.post(`/api/hosts/${selectedHostId}`, payload);
+    const request = API.post(`/api/hosts/`, payload);
 
     request.then(() => {
       const message = ids.length === 1 ? sprintf(__('Modification of Host %s has been successfully queued.'), values.name)
         : __('Modification of multiple Hosts has been successfully queued.');
-      miqRedirectBack(message, 'success', `/host/show/${selectedHostId}`);
+      miqRedirectBack(message, 'success', ids.length === 1 ? `/host/show/${ids[0]}` : `/host/show_list`);
     }).catch(miqSparkleOff);
   };
 
