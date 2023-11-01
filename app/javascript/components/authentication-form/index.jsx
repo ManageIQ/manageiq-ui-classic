@@ -5,7 +5,6 @@ import createSchema from './authentication.schema';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { API } from '../../http_api';
 import mapper from '../../forms/mappers/componentMapper';
-import EditingContext from '../provider-form/editing-context';
 import ValidateProviderCredentials from '../provider-form/validate-provider-credentials';
 
 const AuthenticationForm = ({ server: { id, name }, product, zone }) => {
@@ -94,10 +93,6 @@ const AuthenticationForm = ({ server: { id, name }, product, zone }) => {
     }
   };
 
-  useEffect(() => {
-    console.log(editMode);
-  }, [editMode]);
-
   const componentMapper = {
     ...mapper,
     'validate-provider-credentials': ValidateProviderCredentials,
@@ -109,7 +104,7 @@ const AuthenticationForm = ({ server: { id, name }, product, zone }) => {
       componentMapper={componentMapper}
       initialValues={initialValues}
       className="authentication-form"
-      schema={createSchema(editMode, setState)}
+      schema={createSchema(!!initialValues.amazon_key, editMode, setState)}
       onSubmit={onSubmit}
       buttonsLabels={{
         submitLabel: __('Save'),
