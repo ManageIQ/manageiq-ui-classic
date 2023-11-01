@@ -37,7 +37,7 @@ export const notificationReducer = (state = notificationInitialState, action) =>
         notifications,
         unreadCount: notifications.filter(notification => notification.unread).length,
         totalNotificationsCount: state.totalNotificationsCount + 1,
-        toastNotifications: [action.payload, ...state.toastNotifications].slice(0, 3),
+        toastNotifications: [action.payload, ...state.toastNotifications],
       };
 
     case TOGGLE_DRAWER_VISIBILITY:
