@@ -93,6 +93,10 @@ const AuthenticationForm = ({ server: { id, name }, product, zone }) => {
     }
   };
 
+  useEffect(() => {
+    console.log(editMode);
+  }, [editMode]);
+
   const componentMapper = {
     ...mapper,
     'validate-provider-credentials': ValidateProviderCredentials,
