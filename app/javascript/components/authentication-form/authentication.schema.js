@@ -1,7 +1,9 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 import { getTimeOptions, secretKeyPlaceholder } from './helper';
 
-const createSchema = () => {
+const createSchema = (editMode, setState) => {
+  const amazonEdit = true;
+  console.log(editMode);
   const fields = [
     {
       component: componentTypes.SUB_FORM,
@@ -47,24 +49,68 @@ const createSchema = () => {
       },
       fields: [
         {
-          component: componentTypes.TEXT_FIELD,
-          id: 'amazon_key',
-          name: 'amazon_key',
-          validate: [{ type: validatorTypes.REQUIRED }],
+          component: 'validate-provider-credentials',
+          id: 'authentications.default.valid',
+          name: 'authentications.default.valid',
+          skipSubmit: true,
           isRequired: true,
-          label: __('Access Key'),
-          maxLength: 50,
-        },
-        {
-          component: componentTypes.TEXT_FIELD,
-          id: 'amazon_zsecret_key',
-          name: 'amazon_secret_key',
-          validate: [{ type: validatorTypes.REQUIRED }],
-          isRequired: true,
-          label: __('Secret Key'),
-          maxLength: 50,
-          type: 'password',
-          placeholder: secretKeyPlaceholder(),
+          validationDependencies: [],
+          fields: [
+            {
+              component: componentTypes.TEXT_FIELD,
+              id: 'amazon_key',
+              name: 'amazon_key',
+              validate: [{ type: validatorTypes.REQUIRED }],
+              isRequired: true,
+              label: __('Access Key'),
+              maxLength: 50,
+            },
+            ...(amazonEdit ? [
+              ...(editMode ? [
+                {
+                  component: 'edit-password-field',
+                  id: 'amazon_secret',
+                  name: 'amazon_secret',
+                  editMode: true,
+                  disabled: false,
+                  setEditMode: () => {
+                    setState((state) => ({
+                      ...state,
+                      editMode: false,
+                    }));
+                  },
+                  label: __('Secret Key'),
+                  maxLength: 50,
+                  type: 'password',
+                  placeholder: secretKeyPlaceholder(),
+                  buttonLabel: editMode ? __('Cancel') : __('Change'),
+                }]
+                : [{
+                  component: 'edit-password-field',
+                  id: 'amazon_secret',
+                  name: 'amazon_secret',
+                  editMode: false,
+                  disabled: true,
+                  setEditMode: () => {
+                    setState((state) => ({
+                      ...state,
+                      editMode: true,
+                    }));
+                  },
+                  label: __('Secret Key'),
+                  maxLength: 50,
+                  type: 'password',
+                  placeholder: secretKeyPlaceholder(),
+                  buttonLabel: editMode ? __('Cancel') : __('Change'),
+                }])] : [{
+              component: 'password-field',
+              id: 'amazon_secret',
+              name: 'amazon_secret',
+              maxLength: 50,
+              type: 'password',
+              placeholder: amazonEdit ? secretKeyPlaceholder() : '',
+            }]),
+          ],
         },
       ],
     },

@@ -2,7 +2,8 @@
   - url = url_for_only_path(:action => 'settings_form_field_changed', :id => @sb[:active_tab].split('_').last)
   %h2
     = _("Authentication")
-  = react('AuthenticationForm', { :server => @selected_server })
+  = react('AuthenticationForm', { :server => @selected_server, :product => Vmdb::Appliance.PRODUCT_NAME, :zone => @selected_server.my_zone })
+
   .form-horizontal
     .form-group
       %label.col-md-2.control-label
