@@ -5,6 +5,7 @@ import createSchema from './authentication.schema';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { API } from '../../http_api';
 import mapper from '../../forms/mappers/componentMapper';
+import EditingContext from '../provider-form/editing-context';
 import ValidateProviderCredentials from '../provider-form/validate-provider-credentials';
 
 const AuthenticationForm = ({ server: { id, name }, product, zone }) => {
