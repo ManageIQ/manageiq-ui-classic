@@ -198,6 +198,7 @@ const ProviderForm = ({
     'detect-button': DetectButton,
   };
 
+  console.log(initialValues);
   return (
     <div>
       { fields && (

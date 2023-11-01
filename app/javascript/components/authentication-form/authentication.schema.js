@@ -48,14 +48,6 @@ const createSchema = (editMode, setState) => {
         is: 'amazon',
       },
       fields: [
-        // {
-        //   component: 'validate-provider-credentials',
-        //   id: 'authentications.default.valid',
-        //   name: 'authentications.default.valid',
-        //   skipSubmit: true,
-        //   isRequired: true,
-        //   validationDependencies: [],
-        //   fields: [
         {
           component: componentTypes.TEXT_FIELD,
           id: 'amazon_key',
@@ -66,70 +58,16 @@ const createSchema = (editMode, setState) => {
           maxLength: 50,
         },
         {
-          component: 'edit-password-field',
+          component: 'password-field',
           id: 'amazon_secret',
           name: 'amazon_secret',
-          editMode,
-          disabled: !editMode,
-          setEditMode: () => {
-            setState((state) => ({
-              ...state,
-              editMode: !editMode,
-            }));
-          },
           label: __('Secret Key'),
           maxLength: 50,
-          placeholder: '●●●●●●●●',
-          buttonLabel: editMode ? __('Cancel') : __('Change'),
+          edit: true,
+          validate: [{ type: validatorTypes.REQUIRED }],
+          isRequired: true,
         },
-        // ...(amazonEdit ? [
-        //   ...(editMode ? [
-        //     {
-        //       component: 'edit-password-field',
-        //       id: 'amazon_secret',
-        //       name: 'amazon_secret',
-        //       editMode: true,
-        //       disabled: false,
-        //       setEditMode: () => {
-        //         setState((state) => ({
-        //           ...state,
-        //           editMode: false,
-        //         }));
-        //       },
-        //       label: __('Secret Key'),
-        //       maxLength: 50,
-        //       type: 'password',
-        //       placeholder: secretKeyPlaceholder(),
-        //       buttonLabel: editMode ? __('Cancel') : __('Change'),
-        //     }]
-        //     : [{
-        //       component: 'edit-password-field',
-        //       id: 'amazon_secret',
-        //       name: 'amazon_secret',
-        //       editMode: false,
-        //       disabled: true,
-        //       setEditMode: () => {
-        //         setState((state) => ({
-        //           ...state,
-        //           editMode: true,
-        //         }));
-        //       },
-        //       label: __('Secret Key'),
-        //       maxLength: 50,
-        //       type: 'password',
-        //       placeholder: secretKeyPlaceholder(),
-        //       buttonLabel: editMode ? __('Cancel') : __('Change'),
-        //     }])] : [{
-        //   component: 'password-field',
-        //   id: 'amazon_secret',
-        //   name: 'amazon_secret',
-        //   maxLength: 50,
-        //   type: 'password',
-        //   placeholder: amazonEdit ? secretKeyPlaceholder() : '',
-        // }]),
       ],
-      // },
-    //   ],
     },
     {
       component: componentTypes.SUB_FORM,
