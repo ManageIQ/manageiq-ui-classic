@@ -17,7 +17,7 @@ const PasswordField = ({
 }) => {
   const formOptions = useFormApi();
   const [editMode, setEditMode] = useState(!edit);
-
+  console.log(edit);
   const secretField = {
     type: 'password',
     autoComplete: 'new-password',

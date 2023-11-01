@@ -149,6 +149,24 @@ module OpsController::Settings::Common
     end
   end
 
+  def settings_update_amazon_verify
+    assert_privileges("ops_settings")
+
+    if params[:authentication][:amazon_secret].nil?
+      server_config = MiqServer.find(@sb[:selected_server_id]).settings
+      params[:authentication][:amazon_secret] = server_config[:authentication][:amazon_secret]
+    end
+    valid, errors = Authenticator::Amazon.validate_connection(params)
+    if valid
+      add_flash(_("Amazon Settings validation was successful"))
+    else
+      errors.each do |error|
+        add_flash("#{error[0]}: #{error[1]}", :error)
+      end
+    end
+    javascript_flash
+  end
+
   def smartproxy_affinity_field_changed
     assert_privileges("zone_admin")
 
@@ -324,26 +342,28 @@ module OpsController::Settings::Common
     javascript_flash
   end
 
-  def settings_update_amazon_verify
-    settings_get_form_vars
-    return unless @edit
+  # def settings_update_amazon_verify
+  #   require 'byebug'
+  #   byebug
 
-    server_config = MiqServer.find(@sb[:selected_server_id]).settings
-    server_config.each_key do |category|
-      server_config[category] = @edit[:new][category].dup
-    end
+  #   settings_get_form_vars
+  #   return unless @edit
 
-    valid, errors = Authenticator::Amazon.validate_connection(server_config)
-    valid = true
-    if valid
-      add_flash(_("Amazon Settings validation was successful"))
-    else
-      errors.each do |error|
-        add_flash("#{error.attribute.to_s.titleize}: #{error.message}", :error)
-      end
-    end
-    javascript_flash
-  end
+  #   server_config = MiqServer.find(@sb[:selected_server_id]).settings
+  #   server_config.each_key do |category|
+  #     server_config[category] = @edit[:new][category].dup
+  #   end
+
+  #   valid, errors = Authenticator::Amazon.validate_connection(server_config)
+  #   if valid
+  #     add_flash(_("Amazon Settings validation was successful"))
+  #   else
+  #     errors.each do |error|
+  #       add_flash("#{error[0]}: #{error[1]}", :error)
+  #     end
+  #   end
+  #   javascript_flash
+  # end
 
   def settings_update_email_verify
     settings_get_form_vars
