@@ -13,6 +13,7 @@ const AuthenticationForm = ({ server: { id, name }, product, zone }) => {
 //   const [amazonEdit, setAmazonEdit] = useState(true);
 //   const [edit, setEdit] = useState(true);
   const [{ isLoading, initialValues, editMode }, setState] = useState({ isLoading: true, editMode: false });
+  const [key, setKey] = useState('');
 
   useEffect(() => {
     miqSparkleOn();
@@ -41,6 +42,7 @@ const AuthenticationForm = ({ server: { id, name }, product, zone }) => {
         initialValues: data,
         editMode: false,
       });
+      setKey(data.amazon_key);
       miqSparkleOff();
     }).catch(
       ({ error: { message } = { message: __('Could not fetch the data') } }) => {
@@ -104,7 +106,7 @@ const AuthenticationForm = ({ server: { id, name }, product, zone }) => {
       componentMapper={componentMapper}
       initialValues={initialValues}
       className="authentication-form"
-      schema={createSchema(!!initialValues.amazon_key, editMode, setState)}
+      schema={createSchema(!!initialValues.amazon_key, editMode, setState, key, setKey)}
       onSubmit={onSubmit}
       buttonsLabels={{
         submitLabel: __('Save'),

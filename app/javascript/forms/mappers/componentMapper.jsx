@@ -1,5 +1,6 @@
 import { componentMapper } from '@data-driven-forms/carbon-component-mapper';
 import { componentTypes } from '@@ddf';
+import AWSAccountValidation from '../../components/aws-account-validation';
 import AsyncCredentials from '../../components/async-credentials/async-credentials';
 import EditPasswordField from '../../components/async-credentials/edit-password-field';
 import FileUploadComponent from '../../components/file-upload';
@@ -16,6 +17,7 @@ import EmbeddedWorkflowEntryPoint from '../../components/embedded-workflow-entry
 
 const mapper = {
   ...componentMapper,
+  'aws-account-validation': AWSAccountValidation,
   'code-editor': CodeEditor,
   'embedded-automate-entry-point': EmbeddedAutomateEntryPoint,
   'embedded-workflow-entry-point': EmbeddedWorkflowEntryPoint,

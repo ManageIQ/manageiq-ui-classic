@@ -1,7 +1,8 @@
 import { componentTypes, validatorTypes } from '@@ddf';
 import { getTimeOptions, secretKeyPlaceholder } from './helper';
 
-const createSchema = (amazonEdit, editMode, setState) => {
+const createSchema = (amazonEdit, editMode, setState, key, setKey) => {
+  console.log(key);
   const fields = [
     {
       component: componentTypes.SUB_FORM,
@@ -62,6 +63,7 @@ const createSchema = (amazonEdit, editMode, setState) => {
           label: __('Secret Key'),
           maxLength: 50,
           edit: amazonEdit,
+          onChange: (test) => { console.log(test); },
           validate: [{ type: validatorTypes.REQUIRED }],
           isRequired: true,
         },
