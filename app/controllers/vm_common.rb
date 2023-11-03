@@ -578,25 +578,36 @@ module VmCommon
     end
   end
 
-  def edit
+  def edit_data(edit_description)
     @record = find_record_with_rbac(VmOrTemplate, params[:id]) # Set the VM object
-    
+
     # reset @explorer if coming from explorer views
     @edit ||= {}
     @edit[:explorer] = true if params[:action] == "x_button" || session.fetch_path(:edit, :explorer)
     @explorer = true if @edit[:explorer]
     @in_a_form = true
-    @title = _("Editing %{vm_or_template} \"%{name}\"") % {:name => @record.name, :vm_or_template => model_for_vm(@record).display_name}
+    title = edit_description ? _("Editing  Description of %{vm_or_template} \"%{name}\"") : _("Editing%{vm_or_template} \"%{name}\"")
+    @title = title % {:name => @record.name, :vm_or_template => model_for_vm(@record).display_name}
     @right_cell_text = @title
     drop_breadcrumb(:name => @title, :url => "/vm/edit") unless @explorer
     @lastaction = "show_list"
     @refresh_partial = "vm_common/form"
+    @edit_description = edit_description
+  end
+
+  def edit
+    edit_data(false)
+  end
+
+  def edit_description
+    edit_data(true)
   end
 
   # FIXME: these match toolbar button names/features
   alias_method :image_edit, :edit
   alias_method :instance_edit, :edit
   alias_method :vm_edit, :edit
+  alias_method :vm_edit_description, :edit_description
   alias_method :miq_template_edit, :edit
 
   def set_checked_items
@@ -1222,6 +1233,9 @@ module VmCommon
     when "edit"
       partial = "vm_common/form"
       header = _("Editing %{vm_or_template} \"%{name}\"") % {:name => name, :vm_or_template => model_for_vm(@record).display_name}
+    when "edit_description"
+      partial = "vm_common/form"
+      header = _("Editing Description of %{vm_or_template} \"%{name}\"") % {:name => name, :vm_or_template => model_for_vm(@record).display_name}
     when 'chargeback'
       partial = @refresh_partial
       header = _('Chargeback preview for "%{vm_name}"') % { :vm_name => name }

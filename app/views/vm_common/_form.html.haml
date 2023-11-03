@@ -1,7 +1,8 @@
 #main_div
   = render :partial => "layouts/flash_msg"
-  = react('VmEditForm', {:recordId    => @record.id&.to_s,
-                         :emsId       => @record.ems_id&.to_s,
-                         :showTitle   => !@edit[:explorer],
-                         :isTemplate  => @record.kind_of?(::MiqTemplate),
-                         :displayName => model_for_vm(@record).display_name})
+  = react('VmEditForm', {:recordId        => @record.id&.to_s,
+                         :emsId           => @record.ems_id&.to_s,
+                         :showTitle       => !@edit[:explorer],
+                         :isTemplate      => @record.kind_of?(::MiqTemplate),
+                         :displayName     => model_for_vm(@record).display_name,
+                         :editDescription => @edit_description || false})
