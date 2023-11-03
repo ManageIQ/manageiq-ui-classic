@@ -44,21 +44,25 @@ module ResourcePoolHelper::TextualSummary
 
   def textual_aggregate_cpu_speed
     # TODO: Why aren't we using mhz_to_human_size here?
+    return nil if @record.aggregate_cpu_speed == 0
     {:label => _("Total Host CPU Resources"),
      :value => "#{number_with_delimiter(@record.aggregate_cpu_speed)} MHz"}
   end
 
   def textual_aggregate_cpu_memory
+    return nil if @record.aggregate_memory == 0
     {:label => _("Total Host Memory"),
      :value => number_to_human_size(@record.aggregate_memory.megabytes, :precision => 0)}
   end
 
   def textual_aggregate_physical_cpus
+    return nil if @record.aggregate_physical_cpus == 0
     {:label => _("Total Host CPUs"),
      :value => number_with_delimiter(@record.aggregate_physical_cpus)}
   end
 
   def textual_aggregate_cpu_total_cores
+    return nil if @record.aggregate_cpu_total_cores == 0
     {:label => _("Total Host CPU Cores"),
      :value => number_with_delimiter(@record.aggregate_cpu_total_cores)}
   end
@@ -72,11 +76,13 @@ module ResourcePoolHelper::TextualSummary
   end
 
   def textual_parent_datacenter
+    return nil if @record.v_parent_datacenter.nil?
     {:label => _("Parent Datacenter"), :icon => "fa fa-building-o", :value => @record.v_parent_datacenter || _("None")}
   end
 
   def textual_parent_cluster
     cluster = @record.parent_cluster
+    return nil if cluster.nil?
     h = {:label => _("Parent Cluster"),
          :icon  => "pficon pficon-cluster",
          :value => (cluster.nil? ? _("None") : cluster.name)}
@@ -89,6 +95,7 @@ module ResourcePoolHelper::TextualSummary
 
   def textual_parent_host
     host = @record.parent_host
+    return nil if host.nil?
     h = {:label => _("Parent Host"),
          :icon  => "pficon pficon-container-node",
          :value => (host.nil? ? _("None") : host.name)}

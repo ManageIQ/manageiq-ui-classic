@@ -60,12 +60,8 @@ class ResourcePoolController < ApplicationController
     {
       :breadcrumbs => [
         {:title => _("Compute")},
-        {:title => _("Infrastructure")},
         {:title => _("Resource Pools"), :url => controller_url},
       ],
     }
   end
-
-  menu_section :inf
-  feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
 end
