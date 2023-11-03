@@ -89,10 +89,15 @@ const MiqDataTable = ({
   /** Function to render the header cells. */
   const renderHeaders = (getHeaderProps) => (headers.map((header) => {
     const { sortHeader, sortDirection } = headerSortingData(header);
+    let isSortable = true;
+    if (header.header.split('_')[0] === DefaultKey) {
+      isSortable = false;
+    }
     return (
       <TableHeader
         {...getHeaderProps({ header, isSortHeader: { sortable } })}
         onClick={() => sortable && onSort(header)}
+        isSortable={isSortable}
         isSortHeader={sortHeader}
         sortDirection={sortDirection}
         className={classNames('miq-data-table-header', (header.contentButton ? 'header-button' : ''))}
