@@ -254,7 +254,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                           <TableHeader
                             className="miq-data-table-header"
                             isSortHeader={false}
-                            isSortable={false}
+                            isSortable={true}
                             key="Enforced"
                             onClick={[Function]}
                             scope="col"
@@ -262,20 +262,100 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                             translateWithId={[Function]}
                           >
                             <th
+                              aria-sort="none"
                               className="miq-data-table-header"
                               scope="col"
                             >
                               <div
-                                className="bx--table-header-label"
+                                id="table-sort-1"
+                                style={
+                                  Object {
+                                    "display": "none",
+                                  }
+                                }
                               >
-                                Enforced
+                                Click to sort rows by Enforced header in ascending order
                               </div>
+                              <button
+                                aria-describedby="table-sort-1"
+                                className="miq-data-table-header bx--table-sort"
+                                onClick={[Function]}
+                                type="button"
+                              >
+                                <span
+                                  className="bx--table-sort__flex"
+                                >
+                                  <div
+                                    className="bx--table-header-label"
+                                  >
+                                    Enforced
+                                  </div>
+                                  <ForwardRef(ArrowUp20)
+                                    className="bx--table-sort__icon"
+                                  >
+                                    <Icon
+                                      className="bx--table-sort__icon"
+                                      fill="currentColor"
+                                      height={20}
+                                      preserveAspectRatio="xMidYMid meet"
+                                      viewBox="0 0 32 32"
+                                      width={20}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <svg
+                                        aria-hidden={true}
+                                        className="bx--table-sort__icon"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height={20}
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 32 32"
+                                        width={20}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M16 4L6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
+                                        />
+                                      </svg>
+                                    </Icon>
+                                  </ForwardRef(ArrowUp20)>
+                                  <ForwardRef(ArrowsVertical20)
+                                    className="bx--table-sort__icon-unsorted"
+                                  >
+                                    <Icon
+                                      className="bx--table-sort__icon-unsorted"
+                                      fill="currentColor"
+                                      height={20}
+                                      preserveAspectRatio="xMidYMid meet"
+                                      viewBox="0 0 32 32"
+                                      width={20}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <svg
+                                        aria-hidden={true}
+                                        className="bx--table-sort__icon-unsorted"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height={20}
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 32 32"
+                                        width={20}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M27.6 20.6L24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22zM9 4L3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
+                                        />
+                                      </svg>
+                                    </Icon>
+                                  </ForwardRef(ArrowsVertical20)>
+                                </span>
+                              </button>
                             </th>
                           </TableHeader>
                           <TableHeader
                             className="miq-data-table-header"
                             isSortHeader={false}
-                            isSortable={false}
+                            isSortable={true}
                             key="Description"
                             onClick={[Function]}
                             scope="col"
@@ -283,20 +363,100 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                             translateWithId={[Function]}
                           >
                             <th
+                              aria-sort="none"
                               className="miq-data-table-header"
                               scope="col"
                             >
                               <div
-                                className="bx--table-header-label"
+                                id="table-sort-2"
+                                style={
+                                  Object {
+                                    "display": "none",
+                                  }
+                                }
                               >
-                                Description
+                                Click to sort rows by Description header in ascending order
                               </div>
+                              <button
+                                aria-describedby="table-sort-2"
+                                className="miq-data-table-header bx--table-sort"
+                                onClick={[Function]}
+                                type="button"
+                              >
+                                <span
+                                  className="bx--table-sort__flex"
+                                >
+                                  <div
+                                    className="bx--table-header-label"
+                                  >
+                                    Description
+                                  </div>
+                                  <ForwardRef(ArrowUp20)
+                                    className="bx--table-sort__icon"
+                                  >
+                                    <Icon
+                                      className="bx--table-sort__icon"
+                                      fill="currentColor"
+                                      height={20}
+                                      preserveAspectRatio="xMidYMid meet"
+                                      viewBox="0 0 32 32"
+                                      width={20}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <svg
+                                        aria-hidden={true}
+                                        className="bx--table-sort__icon"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height={20}
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 32 32"
+                                        width={20}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M16 4L6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
+                                        />
+                                      </svg>
+                                    </Icon>
+                                  </ForwardRef(ArrowUp20)>
+                                  <ForwardRef(ArrowsVertical20)
+                                    className="bx--table-sort__icon-unsorted"
+                                  >
+                                    <Icon
+                                      className="bx--table-sort__icon-unsorted"
+                                      fill="currentColor"
+                                      height={20}
+                                      preserveAspectRatio="xMidYMid meet"
+                                      viewBox="0 0 32 32"
+                                      width={20}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <svg
+                                        aria-hidden={true}
+                                        className="bx--table-sort__icon-unsorted"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height={20}
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 32 32"
+                                        width={20}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M27.6 20.6L24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22zM9 4L3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
+                                        />
+                                      </svg>
+                                    </Icon>
+                                  </ForwardRef(ArrowsVertical20)>
+                                </span>
+                              </button>
                             </th>
                           </TableHeader>
                           <TableHeader
                             className="miq-data-table-header"
                             isSortHeader={false}
-                            isSortable={false}
+                            isSortable={true}
                             key="Value"
                             onClick={[Function]}
                             scope="col"
@@ -304,20 +464,100 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                             translateWithId={[Function]}
                           >
                             <th
+                              aria-sort="none"
                               className="miq-data-table-header"
                               scope="col"
                             >
                               <div
-                                className="bx--table-header-label"
+                                id="table-sort-3"
+                                style={
+                                  Object {
+                                    "display": "none",
+                                  }
+                                }
                               >
-                                Value
+                                Click to sort rows by Value header in ascending order
                               </div>
+                              <button
+                                aria-describedby="table-sort-3"
+                                className="miq-data-table-header bx--table-sort"
+                                onClick={[Function]}
+                                type="button"
+                              >
+                                <span
+                                  className="bx--table-sort__flex"
+                                >
+                                  <div
+                                    className="bx--table-header-label"
+                                  >
+                                    Value
+                                  </div>
+                                  <ForwardRef(ArrowUp20)
+                                    className="bx--table-sort__icon"
+                                  >
+                                    <Icon
+                                      className="bx--table-sort__icon"
+                                      fill="currentColor"
+                                      height={20}
+                                      preserveAspectRatio="xMidYMid meet"
+                                      viewBox="0 0 32 32"
+                                      width={20}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <svg
+                                        aria-hidden={true}
+                                        className="bx--table-sort__icon"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height={20}
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 32 32"
+                                        width={20}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M16 4L6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
+                                        />
+                                      </svg>
+                                    </Icon>
+                                  </ForwardRef(ArrowUp20)>
+                                  <ForwardRef(ArrowsVertical20)
+                                    className="bx--table-sort__icon-unsorted"
+                                  >
+                                    <Icon
+                                      className="bx--table-sort__icon-unsorted"
+                                      fill="currentColor"
+                                      height={20}
+                                      preserveAspectRatio="xMidYMid meet"
+                                      viewBox="0 0 32 32"
+                                      width={20}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <svg
+                                        aria-hidden={true}
+                                        className="bx--table-sort__icon-unsorted"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height={20}
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 32 32"
+                                        width={20}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M27.6 20.6L24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22zM9 4L3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
+                                        />
+                                      </svg>
+                                    </Icon>
+                                  </ForwardRef(ArrowsVertical20)>
+                                </span>
+                              </button>
                             </th>
                           </TableHeader>
                           <TableHeader
                             className="miq-data-table-header"
                             isSortHeader={false}
-                            isSortable={false}
+                            isSortable={true}
                             key="Units"
                             onClick={[Function]}
                             scope="col"
@@ -325,14 +565,94 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                             translateWithId={[Function]}
                           >
                             <th
+                              aria-sort="none"
                               className="miq-data-table-header"
                               scope="col"
                             >
                               <div
-                                className="bx--table-header-label"
+                                id="table-sort-4"
+                                style={
+                                  Object {
+                                    "display": "none",
+                                  }
+                                }
                               >
-                                Units
+                                Click to sort rows by Units header in ascending order
                               </div>
+                              <button
+                                aria-describedby="table-sort-4"
+                                className="miq-data-table-header bx--table-sort"
+                                onClick={[Function]}
+                                type="button"
+                              >
+                                <span
+                                  className="bx--table-sort__flex"
+                                >
+                                  <div
+                                    className="bx--table-header-label"
+                                  >
+                                    Units
+                                  </div>
+                                  <ForwardRef(ArrowUp20)
+                                    className="bx--table-sort__icon"
+                                  >
+                                    <Icon
+                                      className="bx--table-sort__icon"
+                                      fill="currentColor"
+                                      height={20}
+                                      preserveAspectRatio="xMidYMid meet"
+                                      viewBox="0 0 32 32"
+                                      width={20}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <svg
+                                        aria-hidden={true}
+                                        className="bx--table-sort__icon"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height={20}
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 32 32"
+                                        width={20}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M16 4L6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
+                                        />
+                                      </svg>
+                                    </Icon>
+                                  </ForwardRef(ArrowUp20)>
+                                  <ForwardRef(ArrowsVertical20)
+                                    className="bx--table-sort__icon-unsorted"
+                                  >
+                                    <Icon
+                                      className="bx--table-sort__icon-unsorted"
+                                      fill="currentColor"
+                                      height={20}
+                                      preserveAspectRatio="xMidYMid meet"
+                                      viewBox="0 0 32 32"
+                                      width={20}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <svg
+                                        aria-hidden={true}
+                                        className="bx--table-sort__icon-unsorted"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height={20}
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 32 32"
+                                        width={20}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M27.6 20.6L24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22zM9 4L3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
+                                        />
+                                      </svg>
+                                    </Icon>
+                                  </ForwardRef(ArrowsVertical20)>
+                                </span>
+                              </button>
                             </th>
                           </TableHeader>
                         </tr>
@@ -2066,7 +2386,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                           <TableHeader
                             className="miq-data-table-header"
                             isSortHeader={false}
-                            isSortable={false}
+                            isSortable={true}
                             key="Enforced"
                             onClick={[Function]}
                             scope="col"
@@ -2074,20 +2394,100 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                             translateWithId={[Function]}
                           >
                             <th
+                              aria-sort="none"
                               className="miq-data-table-header"
                               scope="col"
                             >
                               <div
-                                className="bx--table-header-label"
+                                id="table-sort-8"
+                                style={
+                                  Object {
+                                    "display": "none",
+                                  }
+                                }
                               >
-                                Enforced
+                                Click to sort rows by Enforced header in ascending order
                               </div>
+                              <button
+                                aria-describedby="table-sort-8"
+                                className="miq-data-table-header bx--table-sort"
+                                onClick={[Function]}
+                                type="button"
+                              >
+                                <span
+                                  className="bx--table-sort__flex"
+                                >
+                                  <div
+                                    className="bx--table-header-label"
+                                  >
+                                    Enforced
+                                  </div>
+                                  <ForwardRef(ArrowUp20)
+                                    className="bx--table-sort__icon"
+                                  >
+                                    <Icon
+                                      className="bx--table-sort__icon"
+                                      fill="currentColor"
+                                      height={20}
+                                      preserveAspectRatio="xMidYMid meet"
+                                      viewBox="0 0 32 32"
+                                      width={20}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <svg
+                                        aria-hidden={true}
+                                        className="bx--table-sort__icon"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height={20}
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 32 32"
+                                        width={20}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M16 4L6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
+                                        />
+                                      </svg>
+                                    </Icon>
+                                  </ForwardRef(ArrowUp20)>
+                                  <ForwardRef(ArrowsVertical20)
+                                    className="bx--table-sort__icon-unsorted"
+                                  >
+                                    <Icon
+                                      className="bx--table-sort__icon-unsorted"
+                                      fill="currentColor"
+                                      height={20}
+                                      preserveAspectRatio="xMidYMid meet"
+                                      viewBox="0 0 32 32"
+                                      width={20}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <svg
+                                        aria-hidden={true}
+                                        className="bx--table-sort__icon-unsorted"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height={20}
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 32 32"
+                                        width={20}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M27.6 20.6L24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22zM9 4L3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
+                                        />
+                                      </svg>
+                                    </Icon>
+                                  </ForwardRef(ArrowsVertical20)>
+                                </span>
+                              </button>
                             </th>
                           </TableHeader>
                           <TableHeader
                             className="miq-data-table-header"
                             isSortHeader={false}
-                            isSortable={false}
+                            isSortable={true}
                             key="Description"
                             onClick={[Function]}
                             scope="col"
@@ -2095,20 +2495,100 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                             translateWithId={[Function]}
                           >
                             <th
+                              aria-sort="none"
                               className="miq-data-table-header"
                               scope="col"
                             >
                               <div
-                                className="bx--table-header-label"
+                                id="table-sort-9"
+                                style={
+                                  Object {
+                                    "display": "none",
+                                  }
+                                }
                               >
-                                Description
+                                Click to sort rows by Description header in ascending order
                               </div>
+                              <button
+                                aria-describedby="table-sort-9"
+                                className="miq-data-table-header bx--table-sort"
+                                onClick={[Function]}
+                                type="button"
+                              >
+                                <span
+                                  className="bx--table-sort__flex"
+                                >
+                                  <div
+                                    className="bx--table-header-label"
+                                  >
+                                    Description
+                                  </div>
+                                  <ForwardRef(ArrowUp20)
+                                    className="bx--table-sort__icon"
+                                  >
+                                    <Icon
+                                      className="bx--table-sort__icon"
+                                      fill="currentColor"
+                                      height={20}
+                                      preserveAspectRatio="xMidYMid meet"
+                                      viewBox="0 0 32 32"
+                                      width={20}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <svg
+                                        aria-hidden={true}
+                                        className="bx--table-sort__icon"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height={20}
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 32 32"
+                                        width={20}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M16 4L6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
+                                        />
+                                      </svg>
+                                    </Icon>
+                                  </ForwardRef(ArrowUp20)>
+                                  <ForwardRef(ArrowsVertical20)
+                                    className="bx--table-sort__icon-unsorted"
+                                  >
+                                    <Icon
+                                      className="bx--table-sort__icon-unsorted"
+                                      fill="currentColor"
+                                      height={20}
+                                      preserveAspectRatio="xMidYMid meet"
+                                      viewBox="0 0 32 32"
+                                      width={20}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <svg
+                                        aria-hidden={true}
+                                        className="bx--table-sort__icon-unsorted"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height={20}
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 32 32"
+                                        width={20}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M27.6 20.6L24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22zM9 4L3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
+                                        />
+                                      </svg>
+                                    </Icon>
+                                  </ForwardRef(ArrowsVertical20)>
+                                </span>
+                              </button>
                             </th>
                           </TableHeader>
                           <TableHeader
                             className="miq-data-table-header"
                             isSortHeader={false}
-                            isSortable={false}
+                            isSortable={true}
                             key="Value"
                             onClick={[Function]}
                             scope="col"
@@ -2116,20 +2596,100 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                             translateWithId={[Function]}
                           >
                             <th
+                              aria-sort="none"
                               className="miq-data-table-header"
                               scope="col"
                             >
                               <div
-                                className="bx--table-header-label"
+                                id="table-sort-10"
+                                style={
+                                  Object {
+                                    "display": "none",
+                                  }
+                                }
                               >
-                                Value
+                                Click to sort rows by Value header in ascending order
                               </div>
+                              <button
+                                aria-describedby="table-sort-10"
+                                className="miq-data-table-header bx--table-sort"
+                                onClick={[Function]}
+                                type="button"
+                              >
+                                <span
+                                  className="bx--table-sort__flex"
+                                >
+                                  <div
+                                    className="bx--table-header-label"
+                                  >
+                                    Value
+                                  </div>
+                                  <ForwardRef(ArrowUp20)
+                                    className="bx--table-sort__icon"
+                                  >
+                                    <Icon
+                                      className="bx--table-sort__icon"
+                                      fill="currentColor"
+                                      height={20}
+                                      preserveAspectRatio="xMidYMid meet"
+                                      viewBox="0 0 32 32"
+                                      width={20}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <svg
+                                        aria-hidden={true}
+                                        className="bx--table-sort__icon"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height={20}
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 32 32"
+                                        width={20}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M16 4L6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
+                                        />
+                                      </svg>
+                                    </Icon>
+                                  </ForwardRef(ArrowUp20)>
+                                  <ForwardRef(ArrowsVertical20)
+                                    className="bx--table-sort__icon-unsorted"
+                                  >
+                                    <Icon
+                                      className="bx--table-sort__icon-unsorted"
+                                      fill="currentColor"
+                                      height={20}
+                                      preserveAspectRatio="xMidYMid meet"
+                                      viewBox="0 0 32 32"
+                                      width={20}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <svg
+                                        aria-hidden={true}
+                                        className="bx--table-sort__icon-unsorted"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height={20}
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 32 32"
+                                        width={20}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M27.6 20.6L24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22zM9 4L3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
+                                        />
+                                      </svg>
+                                    </Icon>
+                                  </ForwardRef(ArrowsVertical20)>
+                                </span>
+                              </button>
                             </th>
                           </TableHeader>
                           <TableHeader
                             className="miq-data-table-header"
                             isSortHeader={false}
-                            isSortable={false}
+                            isSortable={true}
                             key="Units"
                             onClick={[Function]}
                             scope="col"
@@ -2137,14 +2697,94 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
                             translateWithId={[Function]}
                           >
                             <th
+                              aria-sort="none"
                               className="miq-data-table-header"
                               scope="col"
                             >
                               <div
-                                className="bx--table-header-label"
+                                id="table-sort-11"
+                                style={
+                                  Object {
+                                    "display": "none",
+                                  }
+                                }
                               >
-                                Units
+                                Click to sort rows by Units header in ascending order
                               </div>
+                              <button
+                                aria-describedby="table-sort-11"
+                                className="miq-data-table-header bx--table-sort"
+                                onClick={[Function]}
+                                type="button"
+                              >
+                                <span
+                                  className="bx--table-sort__flex"
+                                >
+                                  <div
+                                    className="bx--table-header-label"
+                                  >
+                                    Units
+                                  </div>
+                                  <ForwardRef(ArrowUp20)
+                                    className="bx--table-sort__icon"
+                                  >
+                                    <Icon
+                                      className="bx--table-sort__icon"
+                                      fill="currentColor"
+                                      height={20}
+                                      preserveAspectRatio="xMidYMid meet"
+                                      viewBox="0 0 32 32"
+                                      width={20}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <svg
+                                        aria-hidden={true}
+                                        className="bx--table-sort__icon"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height={20}
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 32 32"
+                                        width={20}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M16 4L6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
+                                        />
+                                      </svg>
+                                    </Icon>
+                                  </ForwardRef(ArrowUp20)>
+                                  <ForwardRef(ArrowsVertical20)
+                                    className="bx--table-sort__icon-unsorted"
+                                  >
+                                    <Icon
+                                      className="bx--table-sort__icon-unsorted"
+                                      fill="currentColor"
+                                      height={20}
+                                      preserveAspectRatio="xMidYMid meet"
+                                      viewBox="0 0 32 32"
+                                      width={20}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <svg
+                                        aria-hidden={true}
+                                        className="bx--table-sort__icon-unsorted"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height={20}
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 32 32"
+                                        width={20}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M27.6 20.6L24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22zM9 4L3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
+                                        />
+                                      </svg>
+                                    </Icon>
+                                  </ForwardRef(ArrowsVertical20)>
+                                </span>
+                              </button>
                             </th>
                           </TableHeader>
                         </tr>
