@@ -1127,11 +1127,12 @@ module ApplicationHelper
   end
 
   def miq_tab_header(id, active = nil, options = {}, &_block)
-    tag_options = {:class => "#{options[:class]} #{active == id ? 'active' : ''}",
-                   'role' => 'tab',
+    tag_options = {:class          => "#{options[:class]} #{active == id ? 'active' : ''}",
+                   'role'          => 'tab',
+                   'tabindex'      => 0,
                    'aria-selected' => "#{active == id ? 'true' : 'false'}",
                    'aria-controls' => "#{id}",
-                   :id    => "#{id}_tab"}.merge!(options)
+                   :id             => "#{id}_tab"}.merge!(options)
 
     content_tag(:li, tag_options) do
       content_tag(:a, :href => "##{id}", 'data-toggle' => 'tab') do

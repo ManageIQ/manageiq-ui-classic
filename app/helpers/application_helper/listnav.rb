@@ -223,7 +223,7 @@ module ApplicationHelper
       id = valid_html_id(id)
       control_id = "control_#{id}"
       content_tag(:div, :class => "panel panel-default") do
-        out = content_tag(:div, :class => "panel-heading", 'role' => 'tab', :id => control_id) do
+        out = content_tag(:div, :class => "panel-heading", 'role' => 'tab', 'tabindex' => 0, :id => control_id) do
           content_tag(:h4, :class => "panel-title") do
             link_to(title, "##{id}",
                     'aria-controls' => id,

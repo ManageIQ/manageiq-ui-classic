@@ -1,5 +1,5 @@
 - if @accords
-  #accordion.panel-group{'ng-controller' => 'treeViewController as vm'}
+  #accordion.panel-group{'role' => 'tablist', 'ng-controller' => 'treeViewController as vm'}
     -# Set the first accordion as selected if there is no active_accord in the sandbox
     - selected = @accords.find(-> { @accords.first }) { |accord| accord[:name].to_sym == @sb[:active_accord] }
     - @accords.each do |accord|
