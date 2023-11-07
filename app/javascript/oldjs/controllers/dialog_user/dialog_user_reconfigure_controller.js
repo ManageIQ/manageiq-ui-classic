@@ -34,7 +34,7 @@ ManageIQ.angular.app.controller('dialogUserReconfigureController', ['API', 'dial
       targetId: targetId,
       targetType: 'service',
     };
-
+  console.log('vm.dialogData=',vm.dialogData)
     return dialogFieldRefreshService.refreshField(vm.dialogData, [field.name], vm.refreshUrl, idList);
   }
 

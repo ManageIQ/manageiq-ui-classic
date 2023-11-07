@@ -97,6 +97,7 @@ const RetirementForm = ({
           retirementTime = moment().startOf('D')._d;
           setShowTimeField(false);
         }
+        console.log(retires_on);
         setState({
           isLoading: false,
           initialValues: retires_on ? {

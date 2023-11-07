@@ -14,6 +14,7 @@ module ApplicationHelper
   include Title
   include ReactjsHelper
   include Webpack
+  include OrderServiceHelper
 
   VALID_PERF_PARENTS = {
     "EmsCluster" => :ems_cluster,
