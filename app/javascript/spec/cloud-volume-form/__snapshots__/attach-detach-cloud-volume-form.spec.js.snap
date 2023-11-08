@@ -724,6 +724,7 @@ exports[`Attach / Detach form component should render Attach Cloud Volume to the
                             >
                               <Select
                                 SelectComponent={[Function]}
+                                compareValues={[Function]}
                                 id="dropdown_id"
                                 invalid={false}
                                 invalidText=""
@@ -1988,6 +1989,7 @@ exports[`Attach / Detach form component should render Attach Selected Cloud Volu
                             >
                               <Select
                                 SelectComponent={[Function]}
+                                compareValues={[Function]}
                                 id="dropdown_id"
                                 invalid={false}
                                 invalidText=""
@@ -3142,6 +3144,7 @@ exports[`Attach / Detach form component should render Detach Cloud Volume from t
                             >
                               <Select
                                 SelectComponent={[Function]}
+                                compareValues={[Function]}
                                 id="dropdown_id"
                                 invalid={false}
                                 invalidText=""
@@ -4186,6 +4189,7 @@ exports[`Attach / Detach form component should render Detach Selected Cloud Volu
                             >
                               <Select
                                 SelectComponent={[Function]}
+                                compareValues={[Function]}
                                 id="dropdown_id"
                                 invalid={false}
                                 invalidText=""
@@ -5281,6 +5285,7 @@ exports[`Attach / Detach form component should submit Detach API call 1`] = `
                             >
                               <Select
                                 SelectComponent={[Function]}
+                                compareValues={[Function]}
                                 id="dropdown_id"
                                 invalid={false}
                                 invalidText=""

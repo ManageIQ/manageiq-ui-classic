@@ -3757,6 +3757,7 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="backup_id"
                                               invalid={false}
                                               invalidText=""
@@ -4875,6 +4876,7 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="backup_id"
                                               invalid={false}
                                               invalidText=""

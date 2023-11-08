@@ -696,6 +696,7 @@ exports[`Cloud Database form component should render "Edit" form 1`] = `
                                         >
                                           <Select
                                             SelectComponent={[Function]}
+                                            compareValues={[Function]}
                                             disabled={true}
                                             id="ems_id"
                                             invalid={false}

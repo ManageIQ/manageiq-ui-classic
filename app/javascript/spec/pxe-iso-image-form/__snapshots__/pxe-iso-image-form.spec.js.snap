@@ -594,6 +594,7 @@ exports[`Pxe Edit Iso Image Form Component should render editing a iso image 1`]
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="pxe_image_type_id"
                                               invalid={false}
                                               invalidText=""
