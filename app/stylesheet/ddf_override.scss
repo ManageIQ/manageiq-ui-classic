@@ -295,7 +295,8 @@
 }
 
 .loadingSpinner {
-  margin-left: 15rem;
+  display: flex;
+  justify-content: center;
 }
 
 #provider-modal {
@@ -389,6 +390,7 @@
   width: fit-content;
 }
 
+
 .miq-fieldset {
   border: 0;
   margin: 0;
@@ -415,5 +417,38 @@
     flex-direction: row;
     margin-top: -23px;
     flex-grow: 1;
+  }
+}
+
+#order-service-form {
+
+  .order-form-row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+
+    div:first-child {
+      flex-grow: 1;
+    }
+
+    .refresh-button {
+      margin-top: 20px;
+      margin-right: 0;
+    }
+
+  }
+  .bx--btn--primary {
+    margin-right: 10px;
+  }
+
+  .refreshSpinner {
+   margin-top: 35px;
+   display: none;
+  }
+
+  .bx--list-box__wrapper {
+    margin-bottom: 0;
   }
 }

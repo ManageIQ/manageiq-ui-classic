@@ -1,6 +1,7 @@
 module MiqRequestHelper
   include RequestInfoHelper
   include RequestDetailsHelper
+  include RequestDialogOptionsHelper
 
   def row_data(label, value)
     {:cells => {:label => label, :value => value}}

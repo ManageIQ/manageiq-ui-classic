@@ -33,6 +33,8 @@ class ServiceController < ApplicationController
       service_retire
     when 'service_retire_now'
       service_retire_now
+    when 'service_reconfigure'
+      javascript_redirect(:action => 'service_reconfigure', :id => params[:id])
     end
   end
 
@@ -56,20 +58,25 @@ class ServiceController < ApplicationController
 
   def edit
     assert_privileges("service_edit")
+
+    $log.warn("testing edit")
+
     checked = find_checked_items
     checked[0] = params[:id] if checked.blank? && params[:id]
     @service = find_record_with_rbac(Service, checked[0])
     @in_a_form = true
-    drop_breadcrumb(:name => _("Edit Service\"%{name}\"") % {:name => @service.name}, :url => "/service/edit/#{@service.id}")
+    drop_breadcrumb(:name => _("Edit Service \"%{name}\"") % {:name => @service.name}, :url => "/service/edit/#{@service.id}")
   end
 
   def service_reconfigure
-    service = Service.find_by(:id => params[:id])
-    service_template = service.service_template
-    resource_action = service_template.resource_actions.find_by(:action => 'Reconfigure') if service_template
+    assert_privileges('service_reconfigure')
 
-    @right_cell_text = _("Reconfigure Service \"%{name}\"") % {:name => service.name}
-    dialog_locals = {:resource_action_id => resource_action.id, :target_id => service.id}
+    @service = find_record_with_rbac(Service, params[:id])
+    service_template = @service.service_template
+    resource_action = service_template.resource_actions.find_by(:action => 'Reconfigure') if service_template
+    @dialog_locals = {:resource_action_id => resource_action.id, :target_id => @service.id}
+    @in_a_form = true
+    drop_breadcrumb(:name => _("Reconfigure Service \"%{name}\"") % {:name => @service.name}, :url => "/service/service_reconfigure/#{@service.id}")
   end
 
   def service_form_fields
@@ -211,8 +218,8 @@ class ServiceController < ApplicationController
       action = "retire"
     when "reconfigure_dialog"
       partial = "shared/dialogs/reconfigure_dialog"
-      header = @right_cell_text
-      action = nil
+      header = _("Reconfigure Service \"%{name}\"") % {:name => @service.name}
+      action = "reconfigure_dialog"
     when "service_edit"
       partial = "service_form"
       header = _("Editing Service \"%{name}\"") % {:name => @service.name}

@@ -1,14 +1,14 @@
 ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefreshService', 'miqService', 'dialogUserSubmitErrorHandlerService', 'dialogId', 'apiSubmitEndpoint', 'apiAction', 'finishSubmitEndpoint', 'cancelEndpoint', 'resourceActionId', 'targetId', 'targetType', 'realTargetType', 'openUrl', '$http', '$window', 'dialogReplaceData', 'DialogData', function(API, dialogFieldRefreshService, miqService, dialogUserSubmitErrorHandlerService, dialogId, apiSubmitEndpoint, apiAction, finishSubmitEndpoint, cancelEndpoint, resourceActionId, targetId, targetType, realTargetType, openUrl, $http, $window, dialogReplaceData, DialogData) {
-  var vm = this;
+  const vm = this;
 
   vm.$onInit = function() {
-    var apiCall = new Promise(function(resolve) {
-      var url = '/api/service_dialogs/' + dialogId +
-        '?resource_action_id=' + resourceActionId +
-        '&target_id=' + targetId +
-        '&target_type=' + targetType;
+    const apiCall = new Promise((resolve) => {
+      const url = `/api/service_dialogs/${dialogId
+      }?resource_action_id=${resourceActionId
+      }&target_id=${targetId
+      }&target_type=${targetType}`;
 
-      resolve(API.get(url, {expand: 'resources', attributes: 'content'}).then(init));
+      resolve(API.get(url, { expand: 'resources', attributes: 'content' }).then(init));
     });
 
     Promise.resolve(apiCall).then(miqService.refreshSelectpicker);
@@ -18,15 +18,15 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
     vm.dialog = dialog.content[0];
     vm.dialogLoaded = true;
 
-    _.forEach(vm.dialog.dialog_tabs, function(tab) {
-      _.forEach(tab.dialog_groups, function(group) {
-        _.forEach(group.dialog_fields, function(field) {
-          const replaceField = dialogReplaceData ? JSON.parse(dialogReplaceData).find(function (replace) { return replace.name === field.name }) : false;
+    _.forEach(vm.dialog.dialog_tabs, (tab) => {
+      _.forEach(tab.dialog_groups, (group) => {
+        _.forEach(group.dialog_fields, (field) => {
+          const replaceField = dialogReplaceData ? JSON.parse(dialogReplaceData).find((replace) => replace.name === field.name) : false;
           if (replaceField) {
             field.default_value = replaceField.value;
           }
           if (field.type === 'DialogFieldDropDownList') {
-            _.forEach(field.values, function(value) {
+            _.forEach(field.values, (value) => {
               if (value[0] === null) {
                 value[1] = __(value[1]);
               }
@@ -49,12 +49,16 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
   vm.isValid = false;
 
   function refreshField(field) {
-    var idList = {
-      dialogId: dialogId,
-      resourceActionId: resourceActionId,
-      targetId: targetId,
-      targetType: targetType,
-      realTargetType: realTargetType,
+    console.log('111=', field);
+    // API.post(field.href).then((data) => {
+    //   console.log(data);
+    // });
+    const idList = {
+      dialogId,
+      resourceActionId,
+      targetId,
+      targetType,
+      realTargetType,
     };
 
     return dialogFieldRefreshService.refreshField(vm.dialogData, [field.name], vm.refreshUrl, idList);
@@ -67,24 +71,24 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
 
   function submitButtonClicked() {
     vm.dialogData.action = apiAction;
-    miqService.sparkleOn();
+    // miqService.sparkleOn();
 
-    var apiData = DialogData.outputConversion(vm.dialogData);
+    let apiData = DialogData.outputConversion(vm.dialogData);
     if (apiSubmitEndpoint.match(/generic_objects/)) {
-      apiData = {action: apiAction, parameters: _.omit(apiData, 'action')};
+      apiData = { action: apiAction, parameters: _.omit(apiData, 'action') };
     } else if (apiAction === 'reconfigure') {
-      apiData = {action: apiAction, resource: _.omit(apiData, 'action')};
+      apiData = { action: apiAction, resource: _.omit(apiData, 'action') };
     }
 
-    return API.post(apiSubmitEndpoint, apiData, {skipErrors: [400]})
-      .then(function(response) {
-
+    return API.post(apiSubmitEndpoint, apiData, { skipErrors: [400] })
+      .then((response) => {
         if (vm.openUrl === 'true') {
           return API.wait_for_task(response.task_id)
-            .then(function() {
-              return $http.post('open_url_after_dialog', {targetId: vm.targetId, realTargetType: realTargetType});
+            .then(() => {
+              console.log(API.wait_for_task(response.task_id));
+              return $http.post('open_url_after_dialog', { targetId: vm.targetId, realTargetType });
             })
-            .then(function(response) {
+            .then((response) => {
               if (response.data.open_url) {
                 $window.open(response.data.open_url);
                 miqService.redirectBack(__('Order Request was Submitted'), 'success', finishSubmitEndpoint);
@@ -93,13 +97,11 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
                 miqService.sparkleOff();
               }
             })
-            .catch(function() {
-              return Promise.reject({data: {error: {message: '-'.concat(__('Automate failed to obtain URL.')) }}});
-            });
+            .catch(() => Promise.reject({ data: { error: { message: '-'.concat(__('Automate failed to obtain URL.')) } } }));
         }
         miqService.redirectBack(__('Order Request was Submitted'), 'success', finishSubmitEndpoint);
       })
-      .catch(function(err) {
+      .catch((err) => {
         dialogUserSubmitErrorHandlerService.handleError(err);
       });
   }
