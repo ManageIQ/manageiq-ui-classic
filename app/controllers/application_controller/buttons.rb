@@ -203,7 +203,7 @@ module ApplicationController::Buttons
     @sb[:action] if features_in_action.include?(@sb[:action])
   end
 
-  BASE_MODEL_EXPLORER_CLASSES = [MiqGroup, MiqTemplate, Service, Tenant, User, Vm].freeze
+  BASE_MODEL_EXPLORER_CLASSES = [MiqGroup, MiqTemplate, Tenant, User, Vm].freeze
 
   def custom_button_done
     external_url = ExternalUrl.find_by(

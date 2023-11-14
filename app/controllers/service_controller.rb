@@ -33,7 +33,21 @@ class ServiceController < ApplicationController
       service_retire
     when 'service_retire_now'
       service_retire_now
+    when "custom_button"
+      @display == 'generic_objects' ? generic_object_custom_buttons : custom_buttons
+    else
+      add_flash(_("Invalid button action!"), :error)
+      render_flash
     end
+  end
+
+  def generic_object_custom_buttons
+    display_options = {}
+    ids = @lastaction == 'generic_object' ? @sb[:rec_id] : 'LIST'
+    display_options[:display] = @display
+    display_options[:record_id] = parse_nodetype_and_id(x_node).last
+    display_options[:display_id] = params[:id] if @lastaction == 'generic_object'
+    custom_buttons(ids, display_options)
   end
 
   def title
