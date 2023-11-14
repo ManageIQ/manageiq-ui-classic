@@ -6020,6 +6020,7 @@ exports[`Show Edit Host Form Component should render form for multiple hosts 1`]
                                 >
                                   <Select
                                     SelectComponent={[Function]}
+                                    compareValues={[Function]}
                                     id="host_validate_against"
                                     invalid={false}
                                     invalidText=""

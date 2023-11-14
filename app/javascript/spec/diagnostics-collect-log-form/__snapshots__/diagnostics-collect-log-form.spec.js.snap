@@ -949,6 +949,7 @@ exports[`Diagnostics Collect Log form component should render edit DiagnosticsCo
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="log_protocol"
                                               invalid={false}
                                               invalidText=""
@@ -2497,6 +2498,7 @@ exports[`Diagnostics Collect Log form component should render edit DiagnosticsCo
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="log_protocol"
                                               invalid={false}
                                               invalidText=""
@@ -4065,6 +4067,7 @@ exports[`Diagnostics Collect Log form component should render new DiagnosticsCol
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="log_protocol"
                                               invalid={false}
                                               invalidText=""

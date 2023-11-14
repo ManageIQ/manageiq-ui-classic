@@ -2452,6 +2452,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="settings.concurrent_vm_scans"
                                               invalid={false}
                                               invalidText=""

@@ -4565,6 +4565,7 @@ exports[`VM common form component should render adding form variant add new time
                                   >
                                     <Select
                                       SelectComponent={[Function]}
+                                      compareValues={[Function]}
                                       id="profile_type"
                                       invalid={false}
                                       invalidText=""
@@ -12671,6 +12672,7 @@ exports[`VM common form component should render adding form variant add new time
                                   >
                                     <Select
                                       SelectComponent={[Function]}
+                                      compareValues={[Function]}
                                       id="profile.tz"
                                       invalid={false}
                                       invalidText=""

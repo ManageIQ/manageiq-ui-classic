@@ -1534,6 +1534,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="pxe_image_type_id"
                                               invalid={false}
                                               invalidText=""
@@ -1882,6 +1883,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="type"
                                               invalid={false}
                                               invalidText=""
@@ -4195,6 +4197,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="pxe_image_type_id"
                                               invalid={false}
                                               invalidText=""
@@ -4543,6 +4546,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="type"
                                               invalid={false}
                                               invalidText=""
@@ -6867,6 +6871,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="pxe_image_type_id"
                                               invalid={false}
                                               invalidText=""
@@ -7215,6 +7220,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="type"
                                               invalid={false}
                                               invalidText=""

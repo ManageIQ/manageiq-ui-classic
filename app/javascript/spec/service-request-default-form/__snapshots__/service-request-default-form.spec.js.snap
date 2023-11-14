@@ -1476,6 +1476,7 @@ exports[`Show Service Request Page should render 1`] = `
                             >
                               <Select
                                 SelectComponent={[Function]}
+                                compareValues={[Function]}
                                 id="selectedUser"
                                 invalid={false}
                                 invalidText=""
@@ -2624,6 +2625,7 @@ exports[`Show Service Request Page should render 1`] = `
                             >
                               <Select
                                 SelectComponent={[Function]}
+                                compareValues={[Function]}
                                 id="types"
                                 invalid={false}
                                 invalidText=""
@@ -3267,6 +3269,7 @@ exports[`Show Service Request Page should render 1`] = `
                             >
                               <Select
                                 SelectComponent={[Function]}
+                                compareValues={[Function]}
                                 id="selectedPeriod"
                                 invalid={false}
                                 invalidText=""
