@@ -20,7 +20,7 @@ class ConfigurationController < ApplicationController
   end
 
   def index
-    assert_privileges('my_settings')
+    assert_privileges('my_settings_view')
     @breadcrumbs = []
     active_tab = nil
     if role_allows?(:feature => "my_settings_visuals")
