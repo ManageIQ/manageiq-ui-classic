@@ -628,16 +628,13 @@ Rails.application.routes.draw do
         timeprofile_copy
         timeprofile_edit
         timeprofile_new
-        time_profile_form_fields
       ],
       :post => %w[
         button
         filters_field_changed
-        theme_changed
         timeprofile_delete
         tree_autoload
         update
-        view_selected
       ]
     },
 

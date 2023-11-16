@@ -109,7 +109,6 @@ class ApplicationController < ActionController::Base
     :display  => {
       :startpage     => "/dashboard/show",
       :reporttheme   => "MIQ",
-      :theme         => "red",            # Luminescent Blue
       :taskbartext   => true,             # Show button text on taskbar
       :vmcompare     => "Compressed",     # Start VM compare and drift in compressed mode
       :hostcompare   => "Compressed",     # Start Host compare in compressed mode
