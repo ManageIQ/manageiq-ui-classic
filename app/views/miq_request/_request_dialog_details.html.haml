@@ -39,3 +39,4 @@
       - classification_ids = value.split("\u001F").map { |tag| tag.split('::').second }
       - classifications = Classification.where(:id => classification_ids).pluck(:description)
       = h(classifications.join(', '))
+      
