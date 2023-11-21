@@ -1,3 +1,3 @@
-- if @initial_reports_table_data.length() > 0
+- if @initial_reports_table_data.present?
   %h3= _('Reports Currently Using This Time Profile')
   = react('TimeProfileReportsTable', {:initialData => @initial_reports_table_data})
