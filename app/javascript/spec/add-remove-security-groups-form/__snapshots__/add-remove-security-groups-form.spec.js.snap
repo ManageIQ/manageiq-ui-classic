@@ -6,6 +6,7 @@ exports[`Add/remove security groups form component should add security group 1`]
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -73,6 +74,7 @@ exports[`Add/remove security groups form component should remove security group 
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -140,6 +142,7 @@ exports[`Add/remove security groups form component should render add security gr
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -207,6 +210,7 @@ exports[`Add/remove security groups form component should render remove security
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],

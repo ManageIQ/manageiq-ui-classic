@@ -6,6 +6,7 @@ exports[`Live Migrate form component should render live migrate form when hosts 
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -1861,6 +1862,7 @@ exports[`Live Migrate form component should render live migrate form with host o
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -4138,6 +4140,7 @@ exports[`Live Migrate form component should render live migrate form with multip
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],

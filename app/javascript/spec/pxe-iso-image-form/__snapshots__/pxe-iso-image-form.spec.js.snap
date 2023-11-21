@@ -6,6 +6,7 @@ exports[`Pxe Edit Iso Image Form Component should render editing a iso image 1`]
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],

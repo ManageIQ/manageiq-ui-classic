@@ -6,6 +6,7 @@ exports[`VM common form component should render adding form variant add new time
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -14589,6 +14590,7 @@ exports[`VM common form component should render copying form variant new name on
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -14657,6 +14659,7 @@ exports[`VM common form component should render copying form variant with new va
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -14725,6 +14728,7 @@ exports[`VM common form component should render editing form variant all new val
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -14793,6 +14797,7 @@ exports[`VM common form component should render editing form variant some new va
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],

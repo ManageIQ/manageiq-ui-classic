@@ -34,6 +34,7 @@ exports[`Host aggregate form component should render add host form variant (remv
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -974,6 +975,7 @@ exports[`Host aggregate form component should render editing form variant 1`] = 
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],

@@ -346,6 +346,7 @@ exports[`Custom Button form component should edit a generic object custom button
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -805,6 +806,7 @@ exports[`Custom Button form component should render the editing form for generic
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],

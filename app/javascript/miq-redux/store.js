@@ -5,6 +5,7 @@ import { history } from '../miq-component/react-history.js';
 
 import { notificationReducer } from './notification-reducer';
 import formButtonsReducer from '../forms/form-buttons-reducer';
+import miqCustomTabReducer from './miq-custom-tab-reducer';
 
 const initialState = {};
 
@@ -23,6 +24,7 @@ const initializeStore = () => {
   store.asyncReducers = {
     FormButtons: formButtonsReducer,
     notificationReducer,
+    miqCustomTabReducer,
   };
 
   /**

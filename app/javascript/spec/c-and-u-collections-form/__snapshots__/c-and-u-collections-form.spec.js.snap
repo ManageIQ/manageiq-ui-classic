@@ -6,6 +6,7 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -29,6 +30,7 @@ exports[`DiagnosticsCURepairForm Component Should render a new DiagnosticsCURepa
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],

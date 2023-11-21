@@ -136,6 +136,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],

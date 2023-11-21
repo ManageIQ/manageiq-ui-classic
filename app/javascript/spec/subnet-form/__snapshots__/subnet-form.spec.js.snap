@@ -42,6 +42,7 @@ exports[`Subnet form component renders the editing form variant 1`] = `
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],

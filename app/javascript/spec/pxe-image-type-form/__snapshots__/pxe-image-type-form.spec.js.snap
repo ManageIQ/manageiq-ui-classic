@@ -6,6 +6,7 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -1502,6 +1503,7 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],

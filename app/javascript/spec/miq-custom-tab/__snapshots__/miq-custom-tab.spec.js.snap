@@ -1,131 +1,965 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MiqCustomTab component should render tabs for catalog edit page 1`] = `
-<Tabs
-  className="miq_custom_tabs"
-  id="catalog_edit_static"
-  scrollDebounceWait={150}
-  scrollIntoView={true}
-  selected={0}
-  selectionMode="automatic"
-  type="default"
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
 >
-  <Tab
-    key="tabbasic"
-    label={"Basic Information"}
-    onClick={[Function]}
-    onKeyDown={[Function]}
-    selected={false}
-  />
-  <Tab
-    key="tabdetail"
-    label={"Details"}
-    onClick={[Function]}
-    onKeyDown={[Function]}
-    selected={false}
-  />
-  <Tab
-    key="tabresource"
-    label={"Selected Resources"}
-    onClick={[Function]}
-    onKeyDown={[Function]}
-    selected={false}
-  />
-</Tabs>
+  <Component>
+    <MiqCustomTab
+      containerId="catalog-edit-tabs"
+      tabLabels={
+        Array [
+          Object {
+            "name": "basic",
+            "text": "Basic Information",
+          },
+          Object {
+            "name": "detail",
+            "text": "Details",
+          },
+          Object {
+            "name": "resource",
+            "text": "Selected Resources",
+          },
+        ]
+      }
+      type="CATALOG_EDIT"
+    >
+      <Tabs
+        className="miq_custom_tabs"
+        id="catalog_edit_static"
+        scrollDebounceWait={150}
+        scrollIntoView={true}
+        selected={0}
+        selectionMode="automatic"
+        type="default"
+      >
+        <div
+          className="miq_custom_tabs bx--tabs--scrollable"
+          id="catalog_edit_static"
+          selected={0}
+        >
+          <button
+            aria-hidden="true"
+            aria-label="Scroll left"
+            className="bx--tab--overflow-nav-button--hidden"
+            onClick={[Function]}
+            onMouseDown={[Function]}
+            onMouseUp={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <ForwardRef(ChevronLeft16)>
+              <Icon
+                fill="currentColor"
+                height={16}
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width={16}
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <svg
+                  aria-hidden={true}
+                  fill="currentColor"
+                  focusable="false"
+                  height={16}
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 16 16"
+                  width={16}
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M5 8L10 3 10.7 3.7 6.4 8 10.7 12.3 10 13z"
+                  />
+                </svg>
+              </Icon>
+            </ForwardRef(ChevronLeft16)>
+          </button>
+          <ul
+            className="bx--tabs--scrollable__nav"
+            onScroll={[Function]}
+            role="tablist"
+            tabIndex={-1}
+          >
+            <Tab
+              handleTabClick={[Function]}
+              handleTabKeyDown={[Function]}
+              index={0}
+              key=".$tabbasic"
+              label="Basic Information"
+              onClick={[Function]}
+              onKeyDown={[Function]}
+              selected={true}
+              tabIndex={0}
+            >
+              <li
+                className="bx--tabs--scrollable__nav-item bx--tabs__nav-item--selected bx--tabs--scrollable__nav-item--selected"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                role="presentation"
+              >
+                <button
+                  aria-selected={true}
+                  className="bx--tabs--scrollable__nav-link"
+                  href="#"
+                  role="tab"
+                  tabIndex={0}
+                  type="button"
+                >
+                  Basic Information
+                </button>
+              </li>
+            </Tab>
+            <Tab
+              handleTabClick={[Function]}
+              handleTabKeyDown={[Function]}
+              index={1}
+              key=".$tabdetail"
+              label="Details"
+              onClick={[Function]}
+              onKeyDown={[Function]}
+              selected={false}
+              tabIndex={-1}
+            >
+              <li
+                className="bx--tabs--scrollable__nav-item"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                role="presentation"
+              >
+                <button
+                  aria-selected={false}
+                  className="bx--tabs--scrollable__nav-link"
+                  href="#"
+                  role="tab"
+                  tabIndex={-1}
+                  type="button"
+                >
+                  Details
+                </button>
+              </li>
+            </Tab>
+            <Tab
+              handleTabClick={[Function]}
+              handleTabKeyDown={[Function]}
+              index={2}
+              key=".$tabresource"
+              label="Selected Resources"
+              onClick={[Function]}
+              onKeyDown={[Function]}
+              selected={false}
+              tabIndex={-1}
+            >
+              <li
+                className="bx--tabs--scrollable__nav-item"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                role="presentation"
+              >
+                <button
+                  aria-selected={false}
+                  className="bx--tabs--scrollable__nav-link"
+                  href="#"
+                  role="tab"
+                  tabIndex={-1}
+                  type="button"
+                >
+                  Selected Resources
+                </button>
+              </li>
+            </Tab>
+          </ul>
+          <button
+            aria-hidden="true"
+            aria-label="Scroll right"
+            className="bx--tab--overflow-nav-button--hidden"
+            onClick={[Function]}
+            onMouseDown={[Function]}
+            onMouseUp={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <ForwardRef(ChevronRight16)>
+              <Icon
+                fill="currentColor"
+                height={16}
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width={16}
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <svg
+                  aria-hidden={true}
+                  fill="currentColor"
+                  focusable="false"
+                  height={16}
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 16 16"
+                  width={16}
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+                  />
+                </svg>
+              </Icon>
+            </ForwardRef(ChevronRight16)>
+          </button>
+        </div>
+        <TabContent
+          hidden={false}
+          key=".$.$tabbasic"
+          selected={true}
+        >
+          <div
+            className="bx--tab-content"
+            hidden={false}
+            role="tabpanel"
+            selected={true}
+            tabIndex={0}
+          />
+        </TabContent>
+        <TabContent
+          hidden={true}
+          key=".$.$tabdetail"
+          selected={false}
+        >
+          <div
+            className="bx--tab-content"
+            hidden={true}
+            role="tabpanel"
+            selected={false}
+            tabIndex={0}
+          />
+        </TabContent>
+        <TabContent
+          hidden={true}
+          key=".$.$tabresource"
+          selected={false}
+        >
+          <div
+            className="bx--tab-content"
+            hidden={true}
+            role="tabpanel"
+            selected={false}
+            tabIndex={0}
+          />
+        </TabContent>
+      </Tabs>
+    </MiqCustomTab>
+  </Component>
+</Provider>
 `;
 
 exports[`MiqCustomTab component should render tabs for catalog summary page 1`] = `
-<Tabs
-  className="miq_custom_tabs"
-  id="catalog_summary_static"
-  scrollDebounceWait={150}
-  scrollIntoView={true}
-  selected={0}
-  selectionMode="automatic"
-  type="default"
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
 >
-  <Tab
-    key="tabbasic"
-    label={"Basic Information"}
-    onClick={[Function]}
-    onKeyDown={[Function]}
-    selected={false}
-  />
-  <Tab
-    key="tabdetail"
-    label={"Details"}
-    onClick={[Function]}
-    onKeyDown={[Function]}
-    selected={false}
-  />
-  <Tab
-    key="tabresource"
-    label={"Selected Resources"}
-    onClick={[Function]}
-    onKeyDown={[Function]}
-    selected={false}
-  />
-</Tabs>
+  <Component>
+    <MiqCustomTab
+      containerId="catalog-tabs"
+      tabLabels={
+        Array [
+          Object {
+            "name": "basic",
+            "text": "Basic Information",
+          },
+          Object {
+            "name": "detail",
+            "text": "Details",
+          },
+          Object {
+            "name": "resource",
+            "text": "Selected Resources",
+          },
+        ]
+      }
+      type="CATALOG_SUMMARY"
+    >
+      <Tabs
+        className="miq_custom_tabs"
+        id="catalog_summary_static"
+        scrollDebounceWait={150}
+        scrollIntoView={true}
+        selected={0}
+        selectionMode="automatic"
+        type="default"
+      >
+        <div
+          className="miq_custom_tabs bx--tabs--scrollable"
+          id="catalog_summary_static"
+          selected={0}
+        >
+          <button
+            aria-hidden="true"
+            aria-label="Scroll left"
+            className="bx--tab--overflow-nav-button--hidden"
+            onClick={[Function]}
+            onMouseDown={[Function]}
+            onMouseUp={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <ForwardRef(ChevronLeft16)>
+              <Icon
+                fill="currentColor"
+                height={16}
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width={16}
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <svg
+                  aria-hidden={true}
+                  fill="currentColor"
+                  focusable="false"
+                  height={16}
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 16 16"
+                  width={16}
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M5 8L10 3 10.7 3.7 6.4 8 10.7 12.3 10 13z"
+                  />
+                </svg>
+              </Icon>
+            </ForwardRef(ChevronLeft16)>
+          </button>
+          <ul
+            className="bx--tabs--scrollable__nav"
+            onScroll={[Function]}
+            role="tablist"
+            tabIndex={-1}
+          >
+            <Tab
+              handleTabClick={[Function]}
+              handleTabKeyDown={[Function]}
+              index={0}
+              key=".$tabbasic"
+              label="Basic Information"
+              onClick={[Function]}
+              onKeyDown={[Function]}
+              selected={true}
+              tabIndex={0}
+            >
+              <li
+                className="bx--tabs--scrollable__nav-item bx--tabs__nav-item--selected bx--tabs--scrollable__nav-item--selected"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                role="presentation"
+              >
+                <button
+                  aria-selected={true}
+                  className="bx--tabs--scrollable__nav-link"
+                  href="#"
+                  role="tab"
+                  tabIndex={0}
+                  type="button"
+                >
+                  Basic Information
+                </button>
+              </li>
+            </Tab>
+            <Tab
+              handleTabClick={[Function]}
+              handleTabKeyDown={[Function]}
+              index={1}
+              key=".$tabdetail"
+              label="Details"
+              onClick={[Function]}
+              onKeyDown={[Function]}
+              selected={false}
+              tabIndex={-1}
+            >
+              <li
+                className="bx--tabs--scrollable__nav-item"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                role="presentation"
+              >
+                <button
+                  aria-selected={false}
+                  className="bx--tabs--scrollable__nav-link"
+                  href="#"
+                  role="tab"
+                  tabIndex={-1}
+                  type="button"
+                >
+                  Details
+                </button>
+              </li>
+            </Tab>
+            <Tab
+              handleTabClick={[Function]}
+              handleTabKeyDown={[Function]}
+              index={2}
+              key=".$tabresource"
+              label="Selected Resources"
+              onClick={[Function]}
+              onKeyDown={[Function]}
+              selected={false}
+              tabIndex={-1}
+            >
+              <li
+                className="bx--tabs--scrollable__nav-item"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                role="presentation"
+              >
+                <button
+                  aria-selected={false}
+                  className="bx--tabs--scrollable__nav-link"
+                  href="#"
+                  role="tab"
+                  tabIndex={-1}
+                  type="button"
+                >
+                  Selected Resources
+                </button>
+              </li>
+            </Tab>
+          </ul>
+          <button
+            aria-hidden="true"
+            aria-label="Scroll right"
+            className="bx--tab--overflow-nav-button--hidden"
+            onClick={[Function]}
+            onMouseDown={[Function]}
+            onMouseUp={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <ForwardRef(ChevronRight16)>
+              <Icon
+                fill="currentColor"
+                height={16}
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width={16}
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <svg
+                  aria-hidden={true}
+                  fill="currentColor"
+                  focusable="false"
+                  height={16}
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 16 16"
+                  width={16}
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+                  />
+                </svg>
+              </Icon>
+            </ForwardRef(ChevronRight16)>
+          </button>
+        </div>
+        <TabContent
+          hidden={false}
+          key=".$.$tabbasic"
+          selected={true}
+        >
+          <div
+            className="bx--tab-content"
+            hidden={false}
+            role="tabpanel"
+            selected={true}
+            tabIndex={0}
+          />
+        </TabContent>
+        <TabContent
+          hidden={true}
+          key=".$.$tabdetail"
+          selected={false}
+        >
+          <div
+            className="bx--tab-content"
+            hidden={true}
+            role="tabpanel"
+            selected={false}
+            tabIndex={0}
+          />
+        </TabContent>
+        <TabContent
+          hidden={true}
+          key=".$.$tabresource"
+          selected={false}
+        >
+          <div
+            className="bx--tab-content"
+            hidden={true}
+            role="tabpanel"
+            selected={false}
+            tabIndex={0}
+          />
+        </TabContent>
+      </Tabs>
+    </MiqCustomTab>
+  </Component>
+</Provider>
 `;
 
 exports[`MiqCustomTab component should render tabs for request info page under catalog summary page 1`] = `
-<Tabs
-  className="miq_custom_tabs"
-  id="catalog_request_info_dynamic"
-  scrollDebounceWait={150}
-  scrollIntoView={true}
-  selected={0}
-  selectionMode="automatic"
-  type="default"
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
 >
-  <Tab
-    key="tabrequester"
-    label={"Requester"}
-    onClick={[Function]}
-    onKeyDown={[Function]}
-    selected={false}
-  />
-  <Tab
-    key="tabpurpose"
-    label={"Purpose"}
-    onClick={[Function]}
-    onKeyDown={[Function]}
-    selected={false}
-  />
-  <Tab
-    key="tabservice"
-    label={"Catalog"}
-    onClick={[Function]}
-    onKeyDown={[Function]}
-    selected={false}
-  />
-  <Tab
-    key="tabenvironment"
-    label={"Environment"}
-    onClick={[Function]}
-    onKeyDown={[Function]}
-    selected={false}
-  />
-  <Tab
-    key="tabhardware"
-    label={"Properties"}
-    onClick={[Function]}
-    onKeyDown={[Function]}
-    selected={false}
-  />
-  <Tab
-    key="tabcustomize"
-    label={"Customize"}
-    onClick={[Function]}
-    onKeyDown={[Function]}
-    selected={false}
-  />
-  <Tab
-    key="tabschedule"
-    label={"Schedule"}
-    onClick={[Function]}
-    onKeyDown={[Function]}
-    selected={false}
-  />
-</Tabs>
+  <Component>
+    <MiqCustomTab
+      containerId="request-info-tabs"
+      tabLabels={
+        Array [
+          Object {
+            "name": "requester",
+            "text": "Requester",
+          },
+          Object {
+            "name": "purpose",
+            "text": "Purpose",
+          },
+          Object {
+            "name": "service",
+            "text": "Catalog",
+          },
+          Object {
+            "name": "environment",
+            "text": "Environment",
+          },
+          Object {
+            "name": "hardware",
+            "text": "Properties",
+          },
+          Object {
+            "name": "customize",
+            "text": "Customize",
+          },
+          Object {
+            "name": "schedule",
+            "text": "Schedule",
+          },
+        ]
+      }
+      type="CATALOG_REQUEST_INFO"
+    >
+      <Tabs
+        className="miq_custom_tabs"
+        id="catalog_request_info_dynamic"
+        scrollDebounceWait={150}
+        scrollIntoView={true}
+        selected={0}
+        selectionMode="automatic"
+        type="default"
+      >
+        <div
+          className="miq_custom_tabs bx--tabs--scrollable"
+          id="catalog_request_info_dynamic"
+          selected={0}
+        >
+          <button
+            aria-hidden="true"
+            aria-label="Scroll left"
+            className="bx--tab--overflow-nav-button--hidden"
+            onClick={[Function]}
+            onMouseDown={[Function]}
+            onMouseUp={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <ForwardRef(ChevronLeft16)>
+              <Icon
+                fill="currentColor"
+                height={16}
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width={16}
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <svg
+                  aria-hidden={true}
+                  fill="currentColor"
+                  focusable="false"
+                  height={16}
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 16 16"
+                  width={16}
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M5 8L10 3 10.7 3.7 6.4 8 10.7 12.3 10 13z"
+                  />
+                </svg>
+              </Icon>
+            </ForwardRef(ChevronLeft16)>
+          </button>
+          <ul
+            className="bx--tabs--scrollable__nav"
+            onScroll={[Function]}
+            role="tablist"
+            tabIndex={-1}
+          >
+            <Tab
+              handleTabClick={[Function]}
+              handleTabKeyDown={[Function]}
+              index={0}
+              key=".$tabrequester"
+              label="Requester"
+              onClick={[Function]}
+              onKeyDown={[Function]}
+              selected={true}
+              tabIndex={0}
+            >
+              <li
+                className="bx--tabs--scrollable__nav-item bx--tabs__nav-item--selected bx--tabs--scrollable__nav-item--selected"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                role="presentation"
+              >
+                <button
+                  aria-selected={true}
+                  className="bx--tabs--scrollable__nav-link"
+                  href="#"
+                  role="tab"
+                  tabIndex={0}
+                  type="button"
+                >
+                  Requester
+                </button>
+              </li>
+            </Tab>
+            <Tab
+              handleTabClick={[Function]}
+              handleTabKeyDown={[Function]}
+              index={1}
+              key=".$tabpurpose"
+              label="Purpose"
+              onClick={[Function]}
+              onKeyDown={[Function]}
+              selected={false}
+              tabIndex={-1}
+            >
+              <li
+                className="bx--tabs--scrollable__nav-item"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                role="presentation"
+              >
+                <button
+                  aria-selected={false}
+                  className="bx--tabs--scrollable__nav-link"
+                  href="#"
+                  role="tab"
+                  tabIndex={-1}
+                  type="button"
+                >
+                  Purpose
+                </button>
+              </li>
+            </Tab>
+            <Tab
+              handleTabClick={[Function]}
+              handleTabKeyDown={[Function]}
+              index={2}
+              key=".$tabservice"
+              label="Catalog"
+              onClick={[Function]}
+              onKeyDown={[Function]}
+              selected={false}
+              tabIndex={-1}
+            >
+              <li
+                className="bx--tabs--scrollable__nav-item"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                role="presentation"
+              >
+                <button
+                  aria-selected={false}
+                  className="bx--tabs--scrollable__nav-link"
+                  href="#"
+                  role="tab"
+                  tabIndex={-1}
+                  type="button"
+                >
+                  Catalog
+                </button>
+              </li>
+            </Tab>
+            <Tab
+              handleTabClick={[Function]}
+              handleTabKeyDown={[Function]}
+              index={3}
+              key=".$tabenvironment"
+              label="Environment"
+              onClick={[Function]}
+              onKeyDown={[Function]}
+              selected={false}
+              tabIndex={-1}
+            >
+              <li
+                className="bx--tabs--scrollable__nav-item"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                role="presentation"
+              >
+                <button
+                  aria-selected={false}
+                  className="bx--tabs--scrollable__nav-link"
+                  href="#"
+                  role="tab"
+                  tabIndex={-1}
+                  type="button"
+                >
+                  Environment
+                </button>
+              </li>
+            </Tab>
+            <Tab
+              handleTabClick={[Function]}
+              handleTabKeyDown={[Function]}
+              index={4}
+              key=".$tabhardware"
+              label="Properties"
+              onClick={[Function]}
+              onKeyDown={[Function]}
+              selected={false}
+              tabIndex={-1}
+            >
+              <li
+                className="bx--tabs--scrollable__nav-item"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                role="presentation"
+              >
+                <button
+                  aria-selected={false}
+                  className="bx--tabs--scrollable__nav-link"
+                  href="#"
+                  role="tab"
+                  tabIndex={-1}
+                  type="button"
+                >
+                  Properties
+                </button>
+              </li>
+            </Tab>
+            <Tab
+              handleTabClick={[Function]}
+              handleTabKeyDown={[Function]}
+              index={5}
+              key=".$tabcustomize"
+              label="Customize"
+              onClick={[Function]}
+              onKeyDown={[Function]}
+              selected={false}
+              tabIndex={-1}
+            >
+              <li
+                className="bx--tabs--scrollable__nav-item"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                role="presentation"
+              >
+                <button
+                  aria-selected={false}
+                  className="bx--tabs--scrollable__nav-link"
+                  href="#"
+                  role="tab"
+                  tabIndex={-1}
+                  type="button"
+                >
+                  Customize
+                </button>
+              </li>
+            </Tab>
+            <Tab
+              handleTabClick={[Function]}
+              handleTabKeyDown={[Function]}
+              index={6}
+              key=".$tabschedule"
+              label="Schedule"
+              onClick={[Function]}
+              onKeyDown={[Function]}
+              selected={false}
+              tabIndex={-1}
+            >
+              <li
+                className="bx--tabs--scrollable__nav-item"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                role="presentation"
+              >
+                <button
+                  aria-selected={false}
+                  className="bx--tabs--scrollable__nav-link"
+                  href="#"
+                  role="tab"
+                  tabIndex={-1}
+                  type="button"
+                >
+                  Schedule
+                </button>
+              </li>
+            </Tab>
+          </ul>
+          <button
+            aria-hidden="true"
+            aria-label="Scroll right"
+            className="bx--tab--overflow-nav-button--hidden"
+            onClick={[Function]}
+            onMouseDown={[Function]}
+            onMouseUp={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <ForwardRef(ChevronRight16)>
+              <Icon
+                fill="currentColor"
+                height={16}
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width={16}
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <svg
+                  aria-hidden={true}
+                  fill="currentColor"
+                  focusable="false"
+                  height={16}
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 16 16"
+                  width={16}
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+                  />
+                </svg>
+              </Icon>
+            </ForwardRef(ChevronRight16)>
+          </button>
+        </div>
+        <TabContent
+          hidden={false}
+          key=".$.$tabrequester"
+          selected={true}
+        >
+          <div
+            className="bx--tab-content"
+            hidden={false}
+            role="tabpanel"
+            selected={true}
+            tabIndex={0}
+          />
+        </TabContent>
+        <TabContent
+          hidden={true}
+          key=".$.$tabpurpose"
+          selected={false}
+        >
+          <div
+            className="bx--tab-content"
+            hidden={true}
+            role="tabpanel"
+            selected={false}
+            tabIndex={0}
+          />
+        </TabContent>
+        <TabContent
+          hidden={true}
+          key=".$.$tabservice"
+          selected={false}
+        >
+          <div
+            className="bx--tab-content"
+            hidden={true}
+            role="tabpanel"
+            selected={false}
+            tabIndex={0}
+          />
+        </TabContent>
+        <TabContent
+          hidden={true}
+          key=".$.$tabenvironment"
+          selected={false}
+        >
+          <div
+            className="bx--tab-content"
+            hidden={true}
+            role="tabpanel"
+            selected={false}
+            tabIndex={0}
+          />
+        </TabContent>
+        <TabContent
+          hidden={true}
+          key=".$.$tabhardware"
+          selected={false}
+        >
+          <div
+            className="bx--tab-content"
+            hidden={true}
+            role="tabpanel"
+            selected={false}
+            tabIndex={0}
+          />
+        </TabContent>
+        <TabContent
+          hidden={true}
+          key=".$.$tabcustomize"
+          selected={false}
+        >
+          <div
+            className="bx--tab-content"
+            hidden={true}
+            role="tabpanel"
+            selected={false}
+            tabIndex={0}
+          />
+        </TabContent>
+        <TabContent
+          hidden={true}
+          key=".$.$tabschedule"
+          selected={false}
+        >
+          <div
+            className="bx--tab-content"
+            hidden={true}
+            role="tabpanel"
+            selected={false}
+            tabIndex={0}
+          />
+        </TabContent>
+      </Tabs>
+    </MiqCustomTab>
+  </Component>
+</Provider>
 `;

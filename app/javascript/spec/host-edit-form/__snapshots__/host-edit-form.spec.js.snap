@@ -6,6 +6,7 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -5490,6 +5491,7 @@ exports[`Show Edit Host Form Component should render form for multiple hosts 1`]
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],

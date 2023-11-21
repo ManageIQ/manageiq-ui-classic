@@ -6,6 +6,7 @@ exports[`evacuate form component should render evacuate form when hosts empty 1`
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -1917,6 +1918,7 @@ exports[`evacuate form component should render evacuate form with host options 1
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -4250,6 +4252,7 @@ exports[`evacuate form component should render evacuate form with multiple insta
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],

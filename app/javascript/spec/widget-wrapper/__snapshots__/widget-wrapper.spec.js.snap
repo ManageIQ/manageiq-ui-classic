@@ -6,6 +6,7 @@ exports[`Widget wrapper component should render a widget wrapper with a chart 1`
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -195,6 +196,7 @@ exports[`Widget wrapper component should render a widget wrapper with a menu 1`]
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -384,6 +386,7 @@ exports[`Widget wrapper component should render a widget wrapper with a report 1
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],

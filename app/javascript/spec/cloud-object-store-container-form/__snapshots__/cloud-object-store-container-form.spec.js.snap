@@ -6,6 +6,7 @@ exports[`Cloud Object Store Container form component should add Amazon cloud obj
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -926,6 +927,7 @@ exports[`Cloud Object Store Container form component should add Openstack cloud 
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -1846,6 +1848,7 @@ exports[`Cloud Object Store Container form component should render add cloud obj
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],

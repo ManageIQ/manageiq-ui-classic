@@ -6,6 +6,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -2138,6 +2139,7 @@ exports[`Tenant Quota Form Component should render the manage quotas form for a 
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
