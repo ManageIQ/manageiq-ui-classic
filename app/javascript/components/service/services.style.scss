@@ -1,0 +1,146 @@
+.service-container {
+  margin-bottom: 10px;
+
+  .tab-label {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  &.orderServiceForm {
+    .bx--label--disabled {
+      color: #83838d;
+    }
+  }
+
+  &.serviceRequest, &.serviceDialog {
+    .bx--label--disabled {
+      color: #525252;
+    }
+    .bx--text-input:disabled,
+    .bx--checkbox:disabled,
+    .bx--date-picker__input:disabled,
+    .bx--list-box__field:disabled,
+    .bx--text-area:disabled,
+    .bx--radio-button-group {
+      border-bottom: 1px solid #c6c2c2;
+      -webkit-text-fill-color: #161616;
+    }
+    .bx--radio-button-group {
+      border: 0;
+    }
+  }
+  
+  .tabs {
+    display: flex;
+    flex-direction: column;
+  
+    .section {
+      display: flex;
+      flex-direction: column;
+      min-height: 160px;
+      border: 1px solid #e0e0e0;
+      margin-bottom: 20px;
+  
+      .section-label {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        height: 48px;
+        background: #e0e0e0;
+        width: 100%;
+        font-size: 14px;
+        color: #000;
+        padding-left: 10px;
+      }
+  
+      .section-fields {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+  
+        .section-field-row {
+          display: flex;
+          flex-direction: row;
+          flex-grow: 1;
+          gap: 10px;
+          padding: 10px;
+          border-left: 5px solid #FFF;
+
+          &.field-refresh-in-progress {
+            background: #f8f8bb;
+            border-left: 5px solid #ffdc00;
+          }
+
+          .field-item {
+            display: flex;
+            flex-grow: 1;
+            margin-bottom: 5px;
+
+            .bx--label {
+              margin-bottom: 5px;
+            }
+
+            .bx--list-box__wrapper {
+              margin-bottom: 0;
+              width: 100%;
+            }
+
+            .bx--form__helper-text {
+              color: #da1e28;
+            }
+
+            .field-label {
+              display: flex;
+              flex-direction: row;
+              gap: 5px;
+              align-items: center;
+              height:25px;
+
+              .field-required {
+                color: #da1e28;
+              }
+            }
+
+            .field-label-refreshing {
+              margin: 0;
+              margin-top: -5px;
+            }
+
+            .field-checkbox {
+              display: flex;
+              flex-direction: column;
+            }
+
+            .time-picker-container {
+              display: flex;
+              gap: 10px;
+
+              .time-picker {
+                width: 100px;
+                margin-top: -2px;
+              }
+            }
+          }
+          .refresh-field-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 50px;
+            max-width: 50px;
+            margin-top: 21px;
+            max-height: 50px;
+            min-height: 50px;
+          }
+        }
+      }
+    }
+  }
+
+  .service-action-buttons {
+    display: flex;
+    gap: 10px;
+  }
+}
+
+
