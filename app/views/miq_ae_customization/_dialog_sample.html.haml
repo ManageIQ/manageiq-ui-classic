@@ -1,4 +1,5 @@
 -# if dialogs is selected
+= react('ServiceDialog', {:recordId => @record.id, :from => 'customization'})
 .row
   .col-md-12.col-lg-12
     #dialog_tabs
@@ -88,9 +89,9 @@
                             - else
                               - val.each_with_index do |rb, i|
                                 %input{:type     => "radio",
-                                       :disabled => true,
-                                       :checked  => (field.default_value == rb[0]),
-                                       :value    => rb[0]}
+                                      :disabled => true,
+                                      :checked  => (field.default_value == rb[0]),
+                                      :value    => rb[0]}
                                 &nbsp;
                                 = rb[1]
                                 &nbsp;
