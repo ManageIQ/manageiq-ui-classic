@@ -10,6 +10,10 @@
         = _("Dialog Options")
       .row
         .col-md-12.col-lg-12
+          = request_options =  @miq_request.options
+          = react('ServiceDialog', {:recordId      => request_options[:workflow_settings][:dialog_id],
+                                    :initialValues => dialog_field_values(request_options[:dialog]),
+                                    :from          => 'request'})
           #dialog_tabs
             %ul.nav.nav-tabs{'role' => 'tablist'}
               - wf.dialog.dialog_tabs.each_with_index do |tab, tab_index|
