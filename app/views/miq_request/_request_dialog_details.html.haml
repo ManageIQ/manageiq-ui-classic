@@ -34,7 +34,7 @@
         = h(field.value.blank? ? _("<None>") : h(field.value))
 
     - when 'DialogFieldTagControl'
-      - value = wf.value(field.name) || ''
+      = value = wf.value(field.name) || ''
       - classifications = Classification.where(:id => value).pluck(:description)
       - if classifications.empty?
         = h('')
