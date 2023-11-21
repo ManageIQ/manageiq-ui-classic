@@ -8411,7 +8411,6 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="action_type"
                                               invalid={false}
                                               invalidText=""

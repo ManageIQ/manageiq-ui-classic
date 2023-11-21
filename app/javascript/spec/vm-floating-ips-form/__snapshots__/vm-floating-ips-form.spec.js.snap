@@ -493,7 +493,6 @@ exports[`Associate / Disassociate form component should render associate form va
                                 >
                                   <Select
                                     SelectComponent={[Function]}
-                                    compareValues={[Function]}
                                     id="floating_ip"
                                     invalid={false}
                                     invalidText=""
@@ -1526,7 +1525,6 @@ exports[`Associate / Disassociate form component should render disassociate form
                                 >
                                   <Select
                                     SelectComponent={[Function]}
-                                    compareValues={[Function]}
                                     id="floating_ip"
                                     invalid={false}
                                     invalidText=""
@@ -2586,7 +2584,6 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                                 >
                                   <Select
                                     SelectComponent={[Function]}
-                                    compareValues={[Function]}
                                     id="floating_ip"
                                     invalid={false}
                                     invalidText=""
@@ -3496,7 +3493,6 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                                 >
                                   <Select
                                     SelectComponent={[Function]}
-                                    compareValues={[Function]}
                                     id="floating_ip"
                                     invalid={false}
                                     invalidText=""

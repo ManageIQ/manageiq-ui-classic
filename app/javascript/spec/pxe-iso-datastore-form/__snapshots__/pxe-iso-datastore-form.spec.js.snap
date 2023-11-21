@@ -826,7 +826,6 @@ exports[`Pxe Iso Datastore Form Component should render adding a new iso datasto
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="ems_id"
                                               invalid={false}
                                               invalidText=""

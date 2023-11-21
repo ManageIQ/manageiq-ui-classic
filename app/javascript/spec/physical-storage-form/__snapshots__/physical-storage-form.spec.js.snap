@@ -3318,7 +3318,6 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 disabled={true}
                                                 id="ems_id"
                                                 invalid={false}

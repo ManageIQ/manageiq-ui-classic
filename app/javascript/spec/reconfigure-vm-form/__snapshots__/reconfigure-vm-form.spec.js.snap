@@ -12481,7 +12481,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show c
                                     >
                                       <Select
                                         SelectComponent={[Function]}
-                                        compareValues={[Function]}
                                         id="host_file"
                                         invalid={false}
                                         invalidText=""
@@ -15001,7 +15000,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                       <Select
                                         SelectComponent={[Function]}
                                         autoFocus={true}
-                                        compareValues={[Function]}
                                         disabled={false}
                                         id="type"
                                         invalid={false}
@@ -15441,7 +15439,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                     >
                                       <Select
                                         SelectComponent={[Function]}
-                                        compareValues={[Function]}
                                         id="unit"
                                         invalid={false}
                                         invalidText=""
@@ -15759,7 +15756,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                     >
                                       <Select
                                         SelectComponent={[Function]}
-                                        compareValues={[Function]}
                                         disabled={false}
                                         id="mode"
                                         invalid={false}
@@ -16102,7 +16098,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                     >
                                       <Select
                                         SelectComponent={[Function]}
-                                        compareValues={[Function]}
                                         disabled={false}
                                         id="controller"
                                         invalid={false}
@@ -18811,7 +18806,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                       <Select
                                         SelectComponent={[Function]}
                                         autoFocus={true}
-                                        compareValues={[Function]}
                                         disabled={true}
                                         id="type"
                                         invalid={false}
@@ -19252,7 +19246,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                     >
                                       <Select
                                         SelectComponent={[Function]}
-                                        compareValues={[Function]}
                                         id="unit"
                                         invalid={false}
                                         invalidText=""
@@ -19570,7 +19563,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                     >
                                       <Select
                                         SelectComponent={[Function]}
-                                        compareValues={[Function]}
                                         disabled={true}
                                         id="mode"
                                         invalid={false}
@@ -19914,7 +19906,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                     >
                                       <Select
                                         SelectComponent={[Function]}
-                                        compareValues={[Function]}
                                         disabled={true}
                                         id="controller"
                                         invalid={false}
@@ -22670,7 +22661,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
                                     >
                                       <Select
                                         SelectComponent={[Function]}
-                                        compareValues={[Function]}
                                         id="vlan"
                                         invalid={false}
                                         invalidText=""
@@ -23016,7 +23006,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
                                       >
                                         <Select
                                           SelectComponent={[Function]}
-                                          compareValues={[Function]}
                                           id="network"
                                           invalid={false}
                                           invalidText=""

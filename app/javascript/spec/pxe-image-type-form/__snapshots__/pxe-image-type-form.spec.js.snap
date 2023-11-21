@@ -972,7 +972,6 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="provision_type"
                                               invalid={false}
                                               invalidText=""
@@ -2492,7 +2491,6 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="provision_type"
                                               invalid={false}
                                               invalidText=""

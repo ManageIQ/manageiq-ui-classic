@@ -7629,7 +7629,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="action"
                                               invalid={false}
                                               invalidText=""
@@ -8045,7 +8044,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="filter_type"
                                               invalid={false}
                                               invalidText=""
@@ -8375,7 +8373,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="filter_value"
                                                 invalid={false}
                                                 invalidText=""
@@ -8690,7 +8687,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="zone"
                                                 invalid={false}
                                                 invalidText=""
@@ -9152,7 +9148,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="system"
                                                 invalid={false}
                                                 invalidText=""
@@ -9709,7 +9704,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="object_type"
                                                 invalid={false}
                                                 invalidText=""
@@ -10111,7 +10105,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="object_item"
                                                 invalid={false}
                                                 invalidText=""
@@ -11630,7 +11623,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="run"
                                               invalid={false}
                                               invalidText=""
@@ -12067,7 +12059,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="timer_value"
                                               invalid={false}
                                               invalidText=""
@@ -12552,7 +12543,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="time_zone"
                                               invalid={false}
                                               invalidText=""
@@ -23454,7 +23444,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="action"
                                               invalid={false}
                                               invalidText=""
@@ -23783,7 +23772,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="filter_type"
                                                 invalid={false}
                                                 invalidText=""
@@ -23977,7 +23965,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="filter_value"
                                                 invalid={false}
                                                 invalidText=""
@@ -24289,7 +24276,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="zone"
                                               invalid={false}
                                               invalidText=""
@@ -24878,7 +24864,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="system"
                                               invalid={false}
                                               invalidText=""
@@ -25730,7 +25715,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="object_type"
                                               invalid={false}
                                               invalidText=""
@@ -26326,7 +26310,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="object_item"
                                               invalid={false}
                                               invalidText=""
@@ -29762,7 +29745,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="run"
                                               invalid={false}
                                               invalidText=""
@@ -30199,7 +30181,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="timer_value"
                                               invalid={false}
                                               invalidText=""
@@ -30684,7 +30665,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="time_zone"
                                               invalid={false}
                                               invalidText=""
@@ -40115,7 +40095,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="action"
                                               invalid={false}
                                               invalidText=""
@@ -40531,7 +40510,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="filter_type"
                                               invalid={false}
                                               invalidText=""
@@ -40861,7 +40839,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="filter_value"
                                                 invalid={false}
                                                 invalidText=""
@@ -41073,7 +41050,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="zone"
                                                 invalid={false}
                                                 invalidText=""
@@ -41379,7 +41355,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="system"
                                                 invalid={false}
                                                 invalidText=""
@@ -41936,7 +41911,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="object_type"
                                                 invalid={false}
                                                 invalidText=""
@@ -42338,7 +42312,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="object_item"
                                                 invalid={false}
                                                 invalidText=""
@@ -43857,7 +43830,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="run"
                                               invalid={false}
                                               invalidText=""
@@ -44191,7 +44163,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="timer_value"
                                                 invalid={false}
                                                 invalidText=""
@@ -44514,7 +44485,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="time_zone"
                                               invalid={false}
                                               invalidText=""

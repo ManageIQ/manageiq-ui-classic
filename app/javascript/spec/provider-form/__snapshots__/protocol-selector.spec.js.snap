@@ -64,7 +64,6 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
     >
       <Select
         SelectComponent={[Function]}
-        compareValues={[Function]}
         invalid={false}
         invalidText=""
         isClearable={false}
