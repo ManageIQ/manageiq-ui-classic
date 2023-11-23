@@ -20,6 +20,6 @@
                     'on-click' => "vm.cancelClicked($event)"}
 
   :javascript
-    ManageIQ.angular.app.value('resourceActionId', '#{resource_action_id}');
-    ManageIQ.angular.app.value('targetId', '#{target_id}');
+    ManageIQ.angular.app.value('resourceActionId', '#{@dialog_locals[:resource_action_id]}');
+    ManageIQ.angular.app.value('targetId', '#{@dialog_locals[:target_id]}');
     miq_bootstrap('.wrapper');
