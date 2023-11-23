@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import MiqFormRenderer from '@@ddf';
 import createSchema from './visual-settings-form.schema';
 
-const VisualSettingsForm = ({ recordId }) => {
+const VisualSettingsForm = ({ recordId, changeSettings }) => {
   const [{ initialValues, timezoneOptions, isLoading }, setState] = useState({ isLoading: true });
 
   useEffect(() => {
@@ -24,13 +24,17 @@ const VisualSettingsForm = ({ recordId }) => {
   }, [recordId]);
 
   const onSubmit = (settings) => {
-    settings.perpage.list = parseInt(settings.perpage.list, 10);
-    settings.perpage.reports = parseInt(settings.perpage.reports, 10);
-    miqSparkleOn();
-    API.patch(`/api/users/${recordId}`, { settings }).then(() => {
-      window.location.reload();
-      add_flash(__('User Interface settings saved'), 'success');
-    }).catch(miqSparkleOff);
+    if (changeSettings) {
+      settings.perpage.list = parseInt(settings.perpage.list, 10);
+      settings.perpage.reports = parseInt(settings.perpage.reports, 10);
+      miqSparkleOn();
+      API.patch(`/api/users/${recordId}`, { settings }).then(() => {
+        window.location.reload();
+        add_flash(__('User Interface settings saved'), 'success');
+      }).catch(miqSparkleOff);
+    } else {
+      add_flash(__('The user is not authorized for this task or item.'), 'error');
+    }
   };
 
   return !isLoading && (
@@ -45,6 +49,7 @@ const VisualSettingsForm = ({ recordId }) => {
 
 VisualSettingsForm.propTypes = {
   recordId: PropTypes.string.isRequired,
+  changeSettings: PropTypes.bool.isRequired,
 };
 
 export default VisualSettingsForm;

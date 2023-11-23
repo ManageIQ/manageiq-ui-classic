@@ -3,7 +3,7 @@
   - when 'ui_1'
     %div{:id => @tabs[0][1], 'role' => 'tabpanel', 'aria-labelledby' =>"#{@tabs[0][1]}_tab"}
       = render :partial => "layouts/flash_msg"
-      = react 'VisualSettingsForm', :recordId => current_user.id.to_s
+      = react 'VisualSettingsForm', {:recordId => current_user.id.to_s, :changeSettings => @change_settings}
   - when 'ui_3'
     = render :partial => 'ui_3'
   - when 'ui_4'
