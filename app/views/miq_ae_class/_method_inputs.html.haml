@@ -11,20 +11,23 @@
     - if @ae_method.location == 'inline'
       = render :partial => "embedded_methods"
     = render :partial => "domain_overrides", :locals => {:node_prefix => "aem", :model => "Method"}
-    %h3= (@ae_method.location == 'builtin') ? _('Builtin name') : _('Data')
     - if @ae_method.location == "inline"
-      = text_area("method1",
-        "data",
-        :value    => @ae_method.data,
-        :size     => "90x20",
-        :disabled => true,
-        :style    => "display:none;")
-      -# Create a MyCodeMirror editor for the text area
-      = render :partial => "/layouts/my_code_mirror",
-        :locals  => {:text_area_id => "method1_data",
-          :mode                    => "ruby",
-          :line_numbers            => true,
-          :read_only               => true}
+      - if @in_a_form
+        %h3= @ae_method.location == 'builtin' ? _('Builtin name') : _('Data')
+        = text_area("method1",
+          "data",
+          :value    => @ae_method.data,
+          :size     => "90x20",
+          :disabled => true,
+          :style    => "display:none;")
+        -# Create a MyCodeMirror editor for the text area
+        = render :partial => "/layouts/my_code_mirror",
+          :locals  => {:text_area_id => "method1_data",
+            :mode                    => "ruby",
+            :line_numbers            => true,
+            :read_only               => true}
+      - else
+        = method_built_in_data(@ae_method)
     - elsif @ae_method.location == 'expression'
       = @expression
     - elsif playbook_style_location?(@ae_method.location)

@@ -341,6 +341,17 @@ module MiqAeClassHelper
                         })
   end
 
+  def method_built_in_data(ae_method)
+    rows = [
+      row_data('', {:input => 'code_mirror', :props => {:mode => 'ruby', :payload => ae_method.data}})
+    ]
+    miq_structured_list({
+                          :title => _('Data'),
+                          :mode  => "method_built_in_data",
+                          :rows  => rows
+                        })
+  end
+
   private
 
   def row_data(label, value)

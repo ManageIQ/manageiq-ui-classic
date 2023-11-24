@@ -696,6 +696,51 @@ exports[`Structured list component should render catalog_data with escaped strin
 </Accordion>
 `;
 
+exports[`Structured list component should render code mirror component 1`] = `
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion miq_summary code_mirror"
+>
+  <AccordionItem
+    open={true}
+    title="Automation Method Data"
+  >
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list miq_summary code_mirror"
+    >
+      <MiqStructuredListBody
+        clickEvents={true}
+        mode="miq_summary code_mirror"
+        onClick={[MockFunction]}
+        rows={
+          Array [
+            Object {
+              "label": "Label",
+              "value": "Value",
+            },
+            Object {
+              "label": "",
+              "title": "code mirror",
+              "value": Object {
+                "input": "code_mirror",
+                "props": Object {
+                  "mode": "ruby",
+                  "payload": "
+  def notify(level, message, subject)
+    $evm.create_notification(:audience => 'user', :level => level, :message => message)
+  end",
+                },
+              },
+            },
+          ]
+        }
+      />
+    </FeatureToggle(StructuredListWrapper)>
+  </AccordionItem>
+</Accordion>
+`;
+
 exports[`Structured list component should render miq policy data without double escaping strings 1`] = `
 <FeatureToggle(StructuredListWrapper)
   ariaLabel="Structured list"

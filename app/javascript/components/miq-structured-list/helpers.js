@@ -8,6 +8,7 @@ export const InputTypes = {
   CHECKBOX: 'checkbox',
   COMPONENT: 'component',
   DROPDOWN: 'dropdown',
+  CODEMIRROR: 'code_mirror',
 };
 
 export const DynamicReactComponents = {
