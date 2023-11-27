@@ -21,9 +21,15 @@ class ConfigurationController < ApplicationController
 
   def index
     assert_privileges('my_settings_view')
-    @change_settings = role_allows?(:feature => 'my_settings_visuals', :any => true)
     @breadcrumbs = []
-    active_tab = 1
+    active_tab = nil
+    if role_allows?(:feature => "my_settings_visuals")
+      active_tab = 1 if active_tab.nil?
+    elsif role_allows?(:feature => "my_settings_default_filters")
+      active_tab = 3 if active_tab.nil?
+    elsif role_allows?(:feature => "my_settings_time_profiles")
+      active_tab = 4 if active_tab.nil?
+    end
     @tabform = params[:load_edit_err] ? @tabform : "ui_#{active_tab}"
     edit
     render :action => "show"
@@ -65,7 +71,6 @@ class ConfigurationController < ApplicationController
   # New tab was pressed
   def change_tab
     assert_privileges('my_settings_view')
-    @change_settings = role_allows?(:feature => 'my_settings_visuals')
     @tabform = "ui_" + params['uib-tab'] if params['uib-tab'] != "5"
     edit
     render :action => "show"
@@ -122,7 +127,7 @@ class ConfigurationController < ApplicationController
   end
 
   def update
-    assert_privileges('my_settings_admin')
+    assert_privileges('my_settings_default_filters')
     if params["save"]
       get_form_vars if @tabform != "ui_3"
       case @tabform
@@ -146,7 +151,6 @@ class ConfigurationController < ApplicationController
 
   # Show the users list
   def show_timeprofiles
-    assert_privileges('my_settings_view')
     build_tabs if params[:action] == "change_tab" || %w[cancel add save].include?(params[:button])
     @timeprofiles = if report_admin_user?
                       TimeProfile.in_my_region.ordered_by_desc
@@ -375,11 +379,11 @@ class ConfigurationController < ApplicationController
     end
 
     @active_tab = @tabform.split("_").last
-
+    @labels = [_("Visual"), _("Default Filters"), _("Time Profiles")]
     @tabs = []
-    @tabs.push(["1", _("Visual")])
-    @tabs.push(["3", _("Default Filters")])
-    @tabs.push(["4", _("Time Profiles")])
+    @tabs.push(["1", _("Visual")])          if role_allows?(:feature => "my_settings_visuals")
+    @tabs.push(["3", _("Default Filters")]) if role_allows?(:feature => "my_settings_default_filters")
+    @tabs.push(["4", _("Time Profiles")])   if role_allows?(:feature => "my_settings_time_profiles")
   end
 
   def merge_in_user_settings(settings)
