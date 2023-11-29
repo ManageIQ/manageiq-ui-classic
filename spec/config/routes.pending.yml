@@ -257,6 +257,7 @@ ConfigurationController:
 - report_data
 - show
 - tree_autoload
+- view_selected
 ConfigurationJobController:
 - download_data
 - download_summary_pdf
