@@ -360,6 +360,11 @@ class ConfigurationController < ApplicationController
         :key     => 'config_edit__ui4',
       }
       show_timeprofiles
+    else
+      @edit = {
+        :current => {},
+        :key     => '',
+      }
     end
     @edit[:new] = copy_hash(@edit[:current])
     session[:edit] = @edit
