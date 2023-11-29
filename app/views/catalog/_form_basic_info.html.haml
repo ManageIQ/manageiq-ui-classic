@@ -7,7 +7,7 @@
   .form-horizontal
     .form-group
       %label.col-md-2.control-label
-        = _('Name / Description')
+        = _('Name')
       .col-md-10.no-padding
         .col-md-3
           = text_field_tag("name",
@@ -15,14 +15,18 @@
                            :maxlength         => 40,
                            :class             => "form-control",
                            "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-        .col-md-9
-          .col-md-10.no-padding
-            = text_field_tag("description",
+            
+    = javascript_tag(javascript_focus('name'))
+    .form-group
+      %label.col-md-2.control-label
+        = _('Description')
+      .col-md-9.no-padding
+        .col-md-12
+          = text_field_tag("description",
                             @edit[:new][:description],
                             :maxlength         => 60,
                             :class             => "form-control long_text",
                             "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-    = javascript_tag(javascript_focus('name'))
     .form-group
       %label.col-md-2.control-label
         = _('Display in Catalog')
