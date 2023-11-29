@@ -70,7 +70,7 @@ class ConfigurationController < ApplicationController
 
   # New tab was pressed
   def change_tab
-    assert_privileges('my_settings_admin')
+    assert_privileges('my_settings_view')
     @tabform = "ui_" + params['uib-tab'] if params['uib-tab'] != "5"
     edit
     render :action => "show"
@@ -127,7 +127,7 @@ class ConfigurationController < ApplicationController
   end
 
   def update
-    assert_privileges('my_settings_admin')
+    assert_privileges('my_settings_default_filters')
     if params["save"]
       get_form_vars if @tabform != "ui_3"
       case @tabform
@@ -213,7 +213,7 @@ class ConfigurationController < ApplicationController
   end
 
   def timeprofile_new
-    assert_privileges("timeprofile_new")
+    assert_privileges("my_settings_time_profiles")
     @all_timezones = ActiveSupport::TimeZone.all.collect { |tz| ["(GMT#{tz.formatted_offset}) #{tz.name}", tz.name] }.freeze
     @timeprofile = TimeProfile.new
     @timeprofile_action = "timeprofile_new"
@@ -225,7 +225,7 @@ class ConfigurationController < ApplicationController
   end
 
   def timeprofile_edit
-    assert_privileges("tp_edit")
+    assert_privileges("my_settings_time_profiles")
     @all_timezones = ActiveSupport::TimeZone.all.collect { |tz| ["(GMT#{tz.formatted_offset}) #{tz.name}", tz.name] }.freeze
     @timeprofile = TimeProfile.find(params[:id])
     @timeprofile_action = "timeprofile_edit"
@@ -249,7 +249,7 @@ class ConfigurationController < ApplicationController
 
   # Delete all selected or single displayed VM(s)
   def timeprofile_delete
-    assert_privileges("tp_delete")
+    assert_privileges("my_settings_time_profiles")
     timeprofiles = []
     unless params[:id] # showing a list, scan all selected timeprofiles
       timeprofiles = find_checked_items
@@ -278,7 +278,7 @@ class ConfigurationController < ApplicationController
   end
 
   def timeprofile_copy
-    assert_privileges("tp_copy")
+    assert_privileges("my_settings_time_profiles")
     session[:set_copy] = "copy"
     @all_timezones = ActiveSupport::TimeZone.all.collect { |tz| ["(GMT#{tz.formatted_offset}) #{tz.name}", tz.name] }.freeze
     @in_a_form = true
@@ -379,7 +379,7 @@ class ConfigurationController < ApplicationController
     end
 
     @active_tab = @tabform.split("_").last
-
+    @labels = [_("Visual"), _("Default Filters"), _("Time Profiles")]
     @tabs = []
     @tabs.push(["1", _("Visual")])          if role_allows?(:feature => "my_settings_visuals")
     @tabs.push(["3", _("Default Filters")]) if role_allows?(:feature => "my_settings_default_filters")

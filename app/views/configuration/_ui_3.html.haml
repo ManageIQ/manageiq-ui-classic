@@ -1,5 +1,5 @@
 = render :partial => "layouts/flash_msg"
-%div{:id => @tabs[1][1].split(" ")[0], 'role' => 'tabpanel', 'aria-labelledby' =>"#{@tabs[1][1].split(" ")[0]}_tab"}
+%div{:id => @labels[1], 'role' => 'tabpanel', 'aria-labelledby' =>"#{@labels[1]}_tab"}
   = form_tag({:action => 'update'},
              :id     => "config_form",
              :method => :post) do
