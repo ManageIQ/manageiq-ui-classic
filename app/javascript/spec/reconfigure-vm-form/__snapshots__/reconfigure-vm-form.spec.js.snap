@@ -6,6 +6,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -11344,6 +11345,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show c
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -12817,6 +12819,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -16631,6 +16634,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -20444,6 +20448,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -21252,6 +21257,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -23364,6 +23370,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -34897,6 +34904,7 @@ exports[`Reconfigure VM form component should render reconfigure form without da
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -35705,6 +35713,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],

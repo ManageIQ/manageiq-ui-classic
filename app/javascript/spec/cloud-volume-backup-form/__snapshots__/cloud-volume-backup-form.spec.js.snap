@@ -6,6 +6,7 @@ exports[`Cloud Volume backup form component should render the restore cloud volu
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -31,6 +32,7 @@ exports[`Cloud Volume backup form component when restoring cloud volume from bac
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],

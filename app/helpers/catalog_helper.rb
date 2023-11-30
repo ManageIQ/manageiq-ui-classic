@@ -45,7 +45,7 @@ module CatalogHelper
       {:cells => image},
       row_data(_('Name'), record.name),
       row_data(_('Description'), record.description),
-      row_data(_('Long Description'), record.long_description),
+      row_data(_('Long Description'), {:input => 'markdown', :props => {:content => record.long_description}}),
       row_data(_('Dialog'), sb_data[:dialog_label]),
     ]
     if record.currency && record.price
@@ -174,8 +174,8 @@ module CatalogHelper
   end
 
   def catalog_details(record)
-    data = {:title => _('Details'), :mode => "miq_catalog_details"}
-    data[:rows] = [row_data(_('Long Description'), record.long_description)]
+    data = {:title => _('Long Description'), :mode => "miq_catalog_details"}
+    data[:rows] = [row_data('', {:input => 'markdown', :props => {:content => record.long_description}})]
     miq_structured_list(data)
   end
 

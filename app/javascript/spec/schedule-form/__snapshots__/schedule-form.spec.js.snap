@@ -6,6 +6,7 @@ exports[`Schedule form component should render edit form when filter_type is not
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -14735,6 +14736,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -33200,6 +33202,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],

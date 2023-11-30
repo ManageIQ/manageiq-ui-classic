@@ -6,6 +6,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],

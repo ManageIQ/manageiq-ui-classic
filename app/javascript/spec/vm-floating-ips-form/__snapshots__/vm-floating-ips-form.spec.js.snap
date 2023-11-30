@@ -6,6 +6,7 @@ exports[`Associate / Disassociate form component should render associate form va
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -1039,6 +1040,7 @@ exports[`Associate / Disassociate form component should render disassociate form
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -2099,6 +2101,7 @@ exports[`Associate / Disassociate form component should submit Associate API cal
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -3009,6 +3012,7 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],

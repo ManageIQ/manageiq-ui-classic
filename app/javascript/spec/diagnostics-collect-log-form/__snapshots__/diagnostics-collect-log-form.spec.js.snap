@@ -6,6 +6,7 @@ exports[`Diagnostics Collect Log form component should render edit DiagnosticsCo
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -1555,6 +1556,7 @@ exports[`Diagnostics Collect Log form component should render edit DiagnosticsCo
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -3104,6 +3106,7 @@ exports[`Diagnostics Collect Log form component should render new DiagnosticsCol
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],

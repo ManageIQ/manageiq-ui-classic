@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Checkbox, TextArea, Dropdown } from 'carbon-components-react';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import { DynamicReactComponents, InputTypes } from '../../helpers';
+import MiqMarkdown from '../../../MiqMarkdown';
 
 /** Component to render textarea / checkbox / react components */
 const MiqStructuredListInputs = ({ value, action }) => {
@@ -50,6 +51,9 @@ const MiqStructuredListInputs = ({ value, action }) => {
       value={payload}
     />
   );
+
+  const renderMarkdownComponent = ({ props: { content } }) => <MiqMarkdown content={content} />;
+
   switch (value.input) {
     case InputTypes.TEXTAREA:
       return renderTextArea(value);
@@ -61,6 +65,8 @@ const MiqStructuredListInputs = ({ value, action }) => {
       return renderDropDownComponent(value);
     case InputTypes.CODEMIRROR:
       return renderCodeMirrorComponent(value);
+    case InputTypes.MARKDOWN:
+      return renderMarkdownComponent(value);
     default:
       return null;
   }

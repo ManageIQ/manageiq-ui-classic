@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Tabs, Tab } from 'carbon-components-react';
+import { useDispatch } from 'react-redux';
+import { miqCustomTabActions } from '../../miq-redux/actions/miq-custom-tab-actions';
 
 const MiqCustomTab = ({ containerId, tabLabels, type }) => {
+  const dispatch = useDispatch();
   const [data, setData] = useState({ loading: false });
   const tabConfigurations = (name) => [
     { type: 'CATALOG_SUMMARY' },
-    { type: 'CATALOG_EDIT' },
+    { type: 'CATALOG_EDIT', js: () => name === 'detail' && dispatch(miqCustomTabActions.incrementClickCount()) },
     { type: 'CATALOG_REQUEST_INFO', url: `/miq_request/prov_field_changed?tab_id=${name}&edit_mode=true` },
     { type: 'UTILIZATION' },
   ];
@@ -37,13 +40,14 @@ const MiqCustomTab = ({ containerId, tabLabels, type }) => {
   };
 
   /** Function to load the tab contents which are already available within the page. */
-  const staticContents = (name) => {
+  const staticContents = (name, config) => {
     const tabs = containerTabs();
     tabs.forEach((child) => {
       if (child.parentElement.id === containerId) {
         child.classList.remove('active');
         if (child.id === `${name}`) {
           child.classList.add('active');
+          if (config.js) config.js();
         }
       }
     });
@@ -53,10 +57,10 @@ const MiqCustomTab = ({ containerId, tabLabels, type }) => {
   /** Function to load tab contents after a url is executed.
    *  After the url is executed, the selected tab contents are displayes using the staticContents function.
   */
-  const dynamicContents = (name, url) => {
+  const dynamicContents = (name, config) => {
     clearTabContents();
-    window.miqJqueryRequest(url).then(() => {
-      staticContents(name);
+    window.miqJqueryRequest(config.url).then(() => {
+      staticContents(name, config);
       setData({ loading: false });
     });
   };
@@ -66,14 +70,14 @@ const MiqCustomTab = ({ containerId, tabLabels, type }) => {
     if (!data.loading) {
       miqSparkleOn();
       const config = configuration(name);
-      return config && config.url ? dynamicContents(name, config.url) : staticContents(name);
+      return config && config.url ? dynamicContents(name, config) : staticContents(name, config);
     }
     return data;
   };
 
   /** Function to render the tabs from the tabLabels props */
   const renderTabs = () => tabLabels.map(({ name, text }) => (
-    <Tab key={`tab${name}`} label={text} onClick={() => onTabSelect(name)} />
+    <Tab key={`tab${name}`} label={`${text}`} onClick={() => onTabSelect(name)} />
   ));
 
   return (

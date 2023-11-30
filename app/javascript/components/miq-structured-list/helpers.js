@@ -9,6 +9,7 @@ export const InputTypes = {
   COMPONENT: 'component',
   DROPDOWN: 'dropdown',
   CODEMIRROR: 'code_mirror',
+  MARKDOWN: 'markdown',
 };
 
 export const DynamicReactComponents = {
