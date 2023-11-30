@@ -149,19 +149,19 @@ const driveTable = (data, roles, setData, onCellClick) => ({
   hideField: data.dataTable.drives.length === 0,
 });
 
-const renderDatatables = (recordId, data, roles, setData, onCellClick, buttonClick) => {
-  if (recordId.length === 1) {
-    return [diskTable(data, roles, setData, onCellClick, buttonClick),
-      networkTable(data, roles, setData, onCellClick, buttonClick),
-      driveTable(data, roles, setData, onCellClick)];
-  }
-  return '';
-};
+const renderDatatables = (recordId, data, roles, setData, onCellClick, buttonClick) => [diskTable(data, roles, setData, onCellClick, buttonClick),
+  networkTable(data, roles, setData, onCellClick, buttonClick),
+  driveTable(data, roles, setData, onCellClick)];
 
-export const reconfigureFormFields = (recordId, roles, memory, data, setData, options, onCellClick, buttonClick) => ([
-  memoryField(roles),
-  memoryFormFields(memory),
-  processorField(roles),
-  processorFormFields(data, setData, options, memory.max_cpu),
-  renderDatatables(recordId, data, roles, setData, onCellClick, buttonClick),
-]);
+export const reconfigureFormFields = (recordId, roles, memory, data, setData, options, onCellClick, buttonClick) => {
+  const formFields = [
+    memoryField(roles),
+    memoryFormFields(memory),
+    processorField(roles),
+    processorFormFields(data, setData, options, memory.max_cpu),
+  ];
+  if (recordId.length === 1) {
+    formFields.push(renderDatatables(recordId, data, roles, setData, onCellClick, buttonClick));
+  }
+  return formFields;
+};
