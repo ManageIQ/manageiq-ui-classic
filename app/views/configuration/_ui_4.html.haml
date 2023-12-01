@@ -1,5 +1,5 @@
 = render :partial => "layouts/flash_msg"
-%div{:id => @labels[2], 'role' => 'tabpanel', 'aria-labelledby' => "#{@labels[2]}_tab"}
+%div{:id => @labels[2], 'role' => 'tabpanel', 'aria-labelledby' => '3'}
   %div{:style => "padding-top:10px"}
     - if @timeprofiles.empty?
       = render :partial => 'layouts/info_msg', :locals => {:message => _("No Records Found.")}

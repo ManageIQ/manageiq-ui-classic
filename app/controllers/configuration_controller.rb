@@ -31,6 +31,7 @@ class ConfigurationController < ApplicationController
       active_tab = 4 if active_tab.nil?
     end
     @tabform = params[:load_edit_err] ? @tabform : "ui_#{active_tab}"
+    tab_vars(active_tab)
     edit
     render :action => "show"
   end
@@ -71,6 +72,7 @@ class ConfigurationController < ApplicationController
   # New tab was pressed
   def change_tab
     assert_privileges('my_settings_view')
+    tab_vars(params['uib-tab'])
     @tabform = "ui_" + params['uib-tab'] if params['uib-tab'] != "5"
     edit
     render :action => "show"
@@ -98,6 +100,7 @@ class ConfigurationController < ApplicationController
 
   def update
     assert_privileges('my_settings_default_filters')
+    tab_vars(@tabform.split('_').last)
     if params["save"]
       case @tabform
       when "ui_3" # User Filters tab
@@ -379,6 +382,12 @@ class ConfigurationController < ApplicationController
     session[:vm_filters]        = @filters
     session[:vm_catinfo]        = @catinfo
     session[:zone_options]      = @zone_options
+  end
+
+  def tab_vars(current_tab)
+    @path = '/configuration/change_tab/'
+    @current_tab = current_tab.to_s
+    @check_for_changes = true
   end
 
   def merge_settings(user_settings, global_settings)
