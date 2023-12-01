@@ -1,4 +1,4 @@
-%div{:id => "#{chart_set}_charts_div", :onmousedown => "if (typeof miqMenu != 'undefined') miqMenu.hideContextMenu();"}
+%div{:id => "#{chart_set}_charts_div", :role => '', :onmousedown => "if (typeof miqMenu != 'undefined') miqMenu.hideContextMenu();"}
   - if @charts || @perf_options[:chart_type] != :performance
     - perf_options ||= @perf_options
     - single_chart_view = !!perf_options[:index] || chart_data.count == 1

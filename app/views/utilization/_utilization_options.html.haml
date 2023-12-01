@@ -1,36 +1,38 @@
 - cap_type ||= "details"
 - url = url_for_only_path(:action => 'chart_chooser', :id => @record.id)
-%div{:id => "capacity_#{cap_type}_options_div", :onclick => "if (typeof miqMenu != 'undefined') miqMenu.hideContextMenu();"}
+%div{:id => "capacity_#{cap_type}_options_div", :role => '', :onclick => "if (typeof miqMenu != 'undefined') miqMenu.hideContextMenu();"}
   %h3
     = _('Options')
   .form-horizontal
     .form-group
-      %label.control-label.col-md-2
+      %label.control-label.col-md-2{:id => "#{cap_type}_trends_label"}
         = _('Trends for past')
       .col-md-10
         = select_tag("#{cap_type}_days",
           options_for_select(ViewHelper::WEEK_CHOICES.map {|k, v| [_(v), k]}.sort, @sb[:options][:days].to_i),
-          "class"               => "selectpicker")
+          "class"               => "selectpicker",
+          "aria-labelledby"     => "#{cap_type}_trends_label")
         :javascript
           miqInitSelectPicker();
           miqSelectPickerEvent("#{cap_type}_days", "#{url}", {beforeSend: true});
 
   .form-horizontal
     .form-group
-      %label.control-label.col-md-2
+      %label.control-label.col-md-2{:id => "#{cap_type}_classification_label"}
         = _('Classification')
       .col-md-10
         - options = [["<#{_('None')}>", "<None>"]] + (@sb[:tags] ? @sb[:tags].invert.sort : [])
         = select_tag("#{cap_type}_tag",
           options_for_select(options, @sb[:options][:tag]),
-          "class"               => "selectpicker")
+          "class"               => "selectpicker",
+          "aria-labelledby"     => "#{cap_type}_classification_label")
         :javascript
           miqInitSelectPicker();
           miqSelectPickerEvent("#{cap_type}_tag", "#{url}", {beforeSend: true});
 
   .form-horizontal
     .form-group
-      %label.control-label.col-md-2
+      %label.control-label.col-md-2{:id => "#{cap_type}_time_profile_label"}
         = _('Time Profile')
       .col-md-10
         - if session[:time_profiles].blank?
@@ -42,18 +44,20 @@
           = select_tag("#{cap_type}_time_profile",
             options_for_select(Array(session[:time_profiles].invert).sort_by(&:first),
             @sb[:options][:time_profile]),
-            "class"               => "selectpicker")
+            "class"               => "selectpicker",
+            "aria-labelledby"     => "#{cap_type}_time_profile_label")
           :javascript
             miqInitSelectPicker();
             miqSelectPickerEvent("#{cap_type}_time_profile", "#{url}", {beforeSend: true});
     - if %w(summ report).include?(cap_type)
       - date_id = cap_type == "summ" ? "1" : "2"
       .form-group
-        %label.control-label.col-md-2
+        %label.control-label.col-md-2{:id => "#{cap_type}_day_label"}
           = _('Selected Day')
         .col-md-10
           = datepicker_input_tag("miq_date_#{date_id}",
             @sb[:options][:chart_date],
             :readonly               => "true",
             "data-miq_sparkle_on"   => true,
-            "data-miq_observe_date" => {:url => url}.to_json)
+            "data-miq_observe_date" => {:url => url}.to_json,
+            "aria-labelledby"       => "#{cap_type}_day_label")
