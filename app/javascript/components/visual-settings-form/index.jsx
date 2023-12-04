@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
+import { Loading } from 'carbon-components-react';
 import MiqFormRenderer from '@@ddf';
 import createSchema from './visual-settings-form.schema';
 
@@ -33,7 +33,14 @@ const VisualSettingsForm = ({ recordId }) => {
     }).catch(miqSparkleOff);
   };
 
-  return !isLoading && (
+  if (isLoading) {
+    return (
+      <div className="loadSettings">
+        <Loading active small withOverlay={false} className="loading" />
+      </div>
+    );
+  }
+  return (
     <MiqFormRenderer
       schema={createSchema(timezoneOptions)}
       initialValues={initialValues}
