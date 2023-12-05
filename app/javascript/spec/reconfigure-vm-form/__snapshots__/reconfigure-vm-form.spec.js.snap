@@ -13008,7 +13008,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                   Object {
                     "component": "select",
                     "id": "unit",
-                    "initialValue": "",
+                    "initialValue": "GB",
                     "label": "Unit",
                     "name": "unit",
                     "options": Array [
@@ -13089,7 +13089,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                   Object {
                     "component": "switch",
                     "hideField": false,
-                    "initialValue": "",
+                    "initialValue": false,
                     "isReadOnly": false,
                     "label": "Bootable",
                     "name": "bootable",
@@ -13232,7 +13232,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                     Object {
                       "component": "select",
                       "id": "unit",
-                      "initialValue": "",
+                      "initialValue": "GB",
                       "label": "Unit",
                       "name": "unit",
                       "options": Array [
@@ -13313,7 +13313,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                     Object {
                       "component": "switch",
                       "hideField": false,
-                      "initialValue": "",
+                      "initialValue": false,
                       "isReadOnly": false,
                       "label": "Bootable",
                       "name": "bootable",
@@ -13449,7 +13449,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                       Object {
                         "component": "select",
                         "id": "unit",
-                        "initialValue": "",
+                        "initialValue": "GB",
                         "label": "Unit",
                         "name": "unit",
                         "options": Array [
@@ -13530,7 +13530,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                       Object {
                         "component": "switch",
                         "hideField": false,
-                        "initialValue": "",
+                        "initialValue": false,
                         "isReadOnly": false,
                         "label": "Bootable",
                         "name": "bootable",
@@ -13665,7 +13665,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                           Object {
                             "component": "select",
                             "id": "unit",
-                            "initialValue": "",
+                            "initialValue": "GB",
                             "label": "Unit",
                             "name": "unit",
                             "options": Array [
@@ -13746,7 +13746,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                           Object {
                             "component": "switch",
                             "hideField": false,
-                            "initialValue": "",
+                            "initialValue": false,
                             "isReadOnly": false,
                             "label": "Bootable",
                             "name": "bootable",
@@ -13828,7 +13828,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                           Object {
                             "component": "select",
                             "id": "unit",
-                            "initialValue": "",
+                            "initialValue": "GB",
                             "label": "Unit",
                             "name": "unit",
                             "options": Array [
@@ -13909,7 +13909,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                           Object {
                             "component": "switch",
                             "hideField": false,
-                            "initialValue": "",
+                            "initialValue": false,
                             "isReadOnly": false,
                             "label": "Bootable",
                             "name": "bootable",
@@ -13995,7 +13995,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                             Object {
                               "component": "select",
                               "id": "unit",
-                              "initialValue": "",
+                              "initialValue": "GB",
                               "label": "Unit",
                               "name": "unit",
                               "options": Array [
@@ -14076,7 +14076,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                             Object {
                               "component": "switch",
                               "hideField": false,
-                              "initialValue": "",
+                              "initialValue": false,
                               "isReadOnly": false,
                               "label": "Bootable",
                               "name": "bootable",
@@ -14159,7 +14159,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                             Object {
                               "component": "select",
                               "id": "unit",
-                              "initialValue": "",
+                              "initialValue": "GB",
                               "label": "Unit",
                               "name": "unit",
                               "options": Array [
@@ -14240,7 +14240,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                             Object {
                               "component": "switch",
                               "hideField": false,
-                              "initialValue": "",
+                              "initialValue": false,
                               "isReadOnly": false,
                               "label": "Bootable",
                               "name": "bootable",
@@ -14326,7 +14326,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                           Object {
                             "component": "select",
                             "id": "unit",
-                            "initialValue": "",
+                            "initialValue": "GB",
                             "label": "Unit",
                             "name": "unit",
                             "options": Array [
@@ -14407,7 +14407,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                           Object {
                             "component": "switch",
                             "hideField": false,
-                            "initialValue": "",
+                            "initialValue": false,
                             "isReadOnly": false,
                             "label": "Bootable",
                             "name": "bootable",
@@ -14483,7 +14483,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                               Object {
                                 "component": "select",
                                 "id": "unit",
-                                "initialValue": "",
+                                "initialValue": "GB",
                                 "label": "Unit",
                                 "name": "unit",
                                 "options": Array [
@@ -14564,7 +14564,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                               Object {
                                 "component": "switch",
                                 "hideField": false,
-                                "initialValue": "",
+                                "initialValue": false,
                                 "isReadOnly": false,
                                 "label": "Bootable",
                                 "name": "bootable",
@@ -14644,7 +14644,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                 Object {
                                   "component": "select",
                                   "id": "unit",
-                                  "initialValue": "",
+                                  "initialValue": "GB",
                                   "label": "Unit",
                                   "name": "unit",
                                   "options": Array [
@@ -14725,7 +14725,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                 Object {
                                   "component": "switch",
                                   "hideField": false,
-                                  "initialValue": "",
+                                  "initialValue": false,
                                   "isReadOnly": false,
                                   "label": "Bootable",
                                   "name": "bootable",
@@ -15360,7 +15360,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                             <SingleField
                               component="select"
                               id="unit"
-                              initialValue=""
+                              initialValue="GB"
                               key="unit"
                               label="Unit"
                               name="unit"
@@ -15382,7 +15382,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                   Object {
                                     "component": "select",
                                     "id": "unit",
-                                    "initialValue": "",
+                                    "initialValue": "GB",
                                     "label": "Unit",
                                     "name": "unit",
                                     "options": Array [
@@ -15404,7 +15404,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                   <SelectWithOnChange
                                     component="select"
                                     id="unit"
-                                    initialValue=""
+                                    initialValue="GB"
                                     label="Unit"
                                     name="unit"
                                     options={
@@ -15424,7 +15424,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                     <Select
                                       component="select"
                                       id="unit"
-                                      initialValue=""
+                                      initialValue="GB"
                                       label="Unit"
                                       loadingMessage="Loading..."
                                       name="unit"
@@ -15472,7 +15472,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                         placeholder="<Choose>"
                                         pluckSingleValue={true}
                                         simpleValue={false}
-                                        value=""
+                                        value="GB"
                                       >
                                         <ClearedSelect
                                           className=""
@@ -15503,7 +15503,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                             ]
                                           }
                                           placeholder="<Choose>"
-                                          value=""
+                                          value="GB"
                                         >
                                           <Select
                                             className=""
@@ -15519,7 +15519,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                             onBlur={[Function]}
                                             onChange={[Function]}
                                             onFocus={[Function]}
-                                            value=""
+                                            value="GB"
                                           >
                                             <div
                                               className="bx--form-item"
@@ -15544,7 +15544,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                                     onBlur={[Function]}
                                                     onChange={[Function]}
                                                     onFocus={[Function]}
-                                                    value=""
+                                                    value="GB"
                                                   >
                                                     <SelectItem
                                                       disabled={false}
@@ -16437,7 +16437,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                             <SingleField
                               component="switch"
                               hideField={false}
-                              initialValue=""
+                              initialValue={false}
                               isReadOnly={false}
                               key="bootable"
                               label="Bootable"
@@ -16449,7 +16449,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                 field={
                                   Object {
                                     "component": "switch",
-                                    "initialValue": "",
+                                    "initialValue": false,
                                     "isReadOnly": false,
                                     "label": "Bootable",
                                     "name": "bootable",
@@ -16463,7 +16463,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                 >
                                   <Switch
                                     component="switch"
-                                    initialValue=""
+                                    initialValue={false}
                                     isReadOnly={false}
                                     label="Bootable"
                                     name="bootable"

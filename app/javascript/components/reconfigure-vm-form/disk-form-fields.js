@@ -35,7 +35,7 @@ const unitField = (data) => ({
   id: 'unit',
   name: 'unit',
   label: __('Unit'),
-  initialValue: data.form.action === TYPES.RESIZE ? getCellData(data.editingRow, 'unit') : '',
+  initialValue: data.form.action === TYPES.RESIZE ? getCellData(data.editingRow, 'unit') : __('GB'),
   options: restructureOptions([__('GB'), __('MB')]),
 });
 
@@ -103,7 +103,7 @@ const bootableField = (data, roles) => ({
   offText: __('No'),
   isReadOnly: data.form.action !== 'add',
   hideField: !roles.isRedhat,
-  initialValue: data.form.action === TYPES.RESIZE ? getSwitchData(data.editingRow, 'bootable') : '',
+  initialValue: data.form.action === TYPES.RESIZE ? getSwitchData(data.editingRow, 'bootable') : false,
 });
 
 export const diskFormFields = (data, roles, options, memory) => ([

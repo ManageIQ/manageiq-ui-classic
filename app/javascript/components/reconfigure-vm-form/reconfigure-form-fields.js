@@ -146,7 +146,7 @@ const driveTable = (data, roles, setData, onCellClick) => ({
   onCellClick,
   addButton: false,
   formType: TYPES.DRIVE,
-  hideField: data.dataTable.drives.length === 0,
+  hideField: !data.dataTable.drives || data.dataTable.drives.length === 0,
 });
 
 const renderDatatables = (recordId, data, roles, setData, onCellClick, buttonClick) => {
