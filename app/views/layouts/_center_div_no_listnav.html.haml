@@ -2,8 +2,8 @@
   %header
     #breadcrumbs
       = render :partial => "layouts/breadcrumbs"
-  %main.row.max-height
-    .col-md-12.max-height
+  %main.row.max-height.responsive-layout-main
+    .col-md-12.max-height.full-content
       - if !@in_a_form && taskbar_in_header?
         .row.toolbar-pf#toolbar
           .col-sm-12
