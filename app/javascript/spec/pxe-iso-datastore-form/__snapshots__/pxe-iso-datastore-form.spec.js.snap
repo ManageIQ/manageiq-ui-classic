@@ -6,6 +6,7 @@ exports[`Pxe Iso Datastore Form Component should render adding a new iso datasto
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -826,6 +827,7 @@ exports[`Pxe Iso Datastore Form Component should render adding a new iso datasto
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="ems_id"
                                               invalid={false}
                                               invalidText=""

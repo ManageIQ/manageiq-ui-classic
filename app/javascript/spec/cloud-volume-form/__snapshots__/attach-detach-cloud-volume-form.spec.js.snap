@@ -6,6 +6,7 @@ exports[`Attach / Detach form component should render Attach Cloud Volume to the
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -724,6 +725,7 @@ exports[`Attach / Detach form component should render Attach Cloud Volume to the
                             >
                               <Select
                                 SelectComponent={[Function]}
+                                compareValues={[Function]}
                                 id="dropdown_id"
                                 invalid={false}
                                 invalidText=""
@@ -1270,6 +1272,7 @@ exports[`Attach / Detach form component should render Attach Selected Cloud Volu
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -1988,6 +1991,7 @@ exports[`Attach / Detach form component should render Attach Selected Cloud Volu
                             >
                               <Select
                                 SelectComponent={[Function]}
+                                compareValues={[Function]}
                                 id="dropdown_id"
                                 invalid={false}
                                 invalidText=""
@@ -2534,6 +2538,7 @@ exports[`Attach / Detach form component should render Detach Cloud Volume from t
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -3142,6 +3147,7 @@ exports[`Attach / Detach form component should render Detach Cloud Volume from t
                             >
                               <Select
                                 SelectComponent={[Function]}
+                                compareValues={[Function]}
                                 id="dropdown_id"
                                 invalid={false}
                                 invalidText=""
@@ -3578,6 +3584,7 @@ exports[`Attach / Detach form component should render Detach Selected Cloud Volu
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -4186,6 +4193,7 @@ exports[`Attach / Detach form component should render Detach Selected Cloud Volu
                             >
                               <Select
                                 SelectComponent={[Function]}
+                                compareValues={[Function]}
                                 id="dropdown_id"
                                 invalid={false}
                                 invalidText=""
@@ -4624,6 +4632,7 @@ exports[`Attach / Detach form component should submit Attach API call 1`] = `
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -4673,6 +4682,7 @@ exports[`Attach / Detach form component should submit Detach API call 1`] = `
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -5281,6 +5291,7 @@ exports[`Attach / Detach form component should submit Detach API call 1`] = `
                             >
                               <Select
                                 SelectComponent={[Function]}
+                                compareValues={[Function]}
                                 id="dropdown_id"
                                 invalid={false}
                                 invalidText=""

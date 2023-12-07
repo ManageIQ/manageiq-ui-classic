@@ -72,6 +72,7 @@ exports[`Datastore form component Datastore domain form component should render 
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -1656,6 +1657,7 @@ exports[`Datastore form component Datastore namespace form component should rend
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],

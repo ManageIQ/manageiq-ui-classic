@@ -6,6 +6,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -857,6 +858,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                   >
                                     <Select
                                       SelectComponent={[Function]}
+                                      compareValues={[Function]}
                                       disabled={false}
                                       id="ems_id"
                                       invalid={false}
@@ -1342,6 +1344,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
+                                                compareValues={[Function]}
                                                 id="physical_storage_id"
                                                 invalid={false}
                                                 invalidText=""

@@ -6,6 +6,7 @@ exports[`Cloud Volume Backup Create form component should render the cloud volum
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -1545,6 +1546,7 @@ exports[`Cloud Volume Backup Create form component when adding a new backup of c
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -3084,6 +3086,7 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -3757,6 +3760,7 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="backup_id"
                                               invalid={false}
                                               invalidText=""
@@ -4202,6 +4206,7 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -4875,6 +4880,7 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="backup_id"
                                               invalid={false}
                                               invalidText=""
@@ -5320,6 +5326,7 @@ exports[`Cloud Volume Snapshot Create form component should render the cloud vol
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -6170,6 +6177,7 @@ exports[`Cloud Volume Snapshot Create form component when adding a new snapshot 
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],

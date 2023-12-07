@@ -628,16 +628,14 @@ Rails.application.routes.draw do
         timeprofile_copy
         timeprofile_edit
         timeprofile_new
-        time_profile_form_fields
       ],
       :post => %w[
         button
+        change_tab
         filters_field_changed
-        theme_changed
         timeprofile_delete
         tree_autoload
         update
-        view_selected
       ]
     },
 
@@ -2776,6 +2774,7 @@ Rails.application.routes.draw do
       :get  => %w[
         dialog_load
         download_data
+        service_reconfigure
         reconfigure_form_fields
         retire
         button

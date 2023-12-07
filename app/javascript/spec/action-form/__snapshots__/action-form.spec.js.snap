@@ -6,6 +6,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -8411,6 +8412,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="action_type"
                                               invalid={false}
                                               invalidText=""

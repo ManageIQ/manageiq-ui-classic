@@ -267,6 +267,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -3318,6 +3319,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
+                                                compareValues={[Function]}
                                                 disabled={true}
                                                 id="ems_id"
                                                 invalid={false}

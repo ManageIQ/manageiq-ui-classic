@@ -32,7 +32,7 @@ class MiqTaskController < ApplicationController
   ].freeze
 
   def index
-    assert_privileges('tasks_view')
+    assert_privileges('miq_task_all_ui', 'miq_task_my_ui', :any => false)
     @tabform = nil
     # TODO: remove :feature => "job_my_smartproxy" and  :feature => "job_all_smartproxy" from miq_user_roles.yml
     # above features assigned to the same roles as corresponding :feature => "miq_task_my_ui"
@@ -45,7 +45,7 @@ class MiqTaskController < ApplicationController
 
   # New tab was pressed
   def change_tab
-    assert_privileges('tasks_view')
+    assert_privileges('miq_task_all_ui', 'miq_task_my_ui', :any => false)
     @tabform = "tasks_#{params[:'uib-tab']}"
     jobs
     render :action => "jobs"
@@ -70,7 +70,7 @@ class MiqTaskController < ApplicationController
 
   # Show job list for the current user
   def jobs
-    assert_privileges('tasks_view')
+    assert_privileges('miq_task_all_ui', 'miq_task_my_ui', :any => false)
     jobs_info
   end
 

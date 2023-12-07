@@ -2,6 +2,7 @@ import React from 'react';
 import toJson from 'enzyme-to-json';
 import { shallow } from 'enzyme';
 import MiqStructuredList from '../../components/miq-structured-list';
+import { codeMirrorData } from '../textual_summary/data/code_mirror_data';
 import { genericGroupData } from '../textual_summary/data/generic_group';
 import { multilinkTableData } from '../textual_summary/data/multilink_table';
 import { operationRangesData } from '../textual_summary/data/operation_ranges';
@@ -196,6 +197,17 @@ describe('Structured list component', () => {
       rows={reportScheduleListData.items}
       title={reportScheduleListData.title}
       mode={reportScheduleListData.mode}
+      onClick={onClick}
+    />);
+    expect(toJson(wrapper)).toMatchSnapshot();
+  });
+
+  it('should render code mirror component', () => {
+    const onClick = jest.fn();
+    const wrapper = shallow(<MiqStructuredList
+      rows={codeMirrorData.items}
+      title={codeMirrorData.title}
+      mode={codeMirrorData.mode}
       onClick={onClick}
     />);
     expect(toJson(wrapper)).toMatchSnapshot();

@@ -231,7 +231,7 @@ module Menu
 
       def settings_menu_section
         Menu::Section.new(:set, N_("Settings"), 'carbon--Settings', [
-          Menu::Item.new('configuration', N_('My Settings'), 'my_settings', {:feature => 'my_settings', :any => true}, '/configuration/index'),
+          Menu::Item.new('configuration', N_('My Settings'), 'my_settings', {:feature => 'my_settings_view', :any => true}, '/configuration/index'),
           Menu::Item.new('ops_explorer', N_('Application Settings'), 'ops_explorer', {:feature => 'ops_explorer', :any => true}, '/ops/explorer'),
           Menu::Item.new('my_tasks', N_('Tasks'), 'tasks', {:feature => 'tasks', :any => true}, '/miq_task/index?jobs_tab=tasks'),
           help_documentation,

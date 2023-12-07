@@ -88,6 +88,7 @@
     "react-bootstrap": "~0.33.0",
     "react-codemirror2": "^6.0.0",
     "react-dom": "~16.9.0",
+    "react-markdown": "6.0.0",
     "react-redux": "^7.1.1",
     "react-router": "~5.1.2",
     "react-router-dom": "~5.1.2",
@@ -106,7 +107,7 @@
     "xml_display": "~0.1.1"
   },
   "devDependencies": {
-    "@babel/core": "~7.9.0",
+    "@babel/core": "~7.23.2",
     "@babel/plugin-proposal-class-properties": "~7.8.3",
     "@babel/plugin-proposal-export-default-from": "~7.8.3",
     "@babel/plugin-proposal-export-namespace-from": "~7.8.3",
@@ -174,7 +175,7 @@
     "node": ">= 18.0.0",
     "npm": ">= 8.6.0"
   },
-  "packageManager": "yarn@4.0.0-rc.51",
+  "packageManager": "yarn@4.0.2",
   "resolutions": {
     "array-includes": "3.1.6",
     "array.prototype.filter": "1.0.2",

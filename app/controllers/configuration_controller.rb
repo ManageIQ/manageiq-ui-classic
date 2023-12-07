@@ -31,6 +31,7 @@ class ConfigurationController < ApplicationController
       active_tab = 4 if active_tab.nil?
     end
     @tabform = params[:load_edit_err] ? @tabform : "ui_#{active_tab}"
+    tab_vars(active_tab)
     edit
     render :action => "show"
   end
@@ -70,7 +71,8 @@ class ConfigurationController < ApplicationController
 
   # New tab was pressed
   def change_tab
-    assert_privileges('my_settings_admin')
+    assert_privileges('my_settings_view')
+    tab_vars(params['uib-tab'])
     @tabform = "ui_" + params['uib-tab'] if params['uib-tab'] != "5"
     edit
     render :action => "show"
@@ -96,40 +98,10 @@ class ConfigurationController < ApplicationController
     end
   end
 
-  # AJAX driven routine for gtl view selection
-  def view_selected
-    assert_privileges('my_settings_default_views')
-    # ui1 form
-    return unless load_edit("config_edit__ui1", "configuration")
-
-    @edit[:new][:views][VIEW_RESOURCES[params[:resource]]] = params[:view] # Capture the new view setting
-    session[:changed] = (@edit[:new] != @edit[:current])
-    @changed = session[:changed]
-    render :update do |page|
-      page << javascript_prologue
-      page << javascript_for_miq_button_visibility(@changed)
-      page.replace('tab_div', :partial => "ui_1")
-    end
-  end
-
-  # AJAX driven routine for theme selection
-  def theme_changed
-    assert_privileges('my_settings_visuals')
-    # ui1 theme changed
-    @edit = session[:edit]
-    @edit[:new][:display][:theme] = params[:theme] # Capture the new setting
-    session[:changed] = (@edit[:new] != @edit[:current])
-    @changed = session[:changed]
-    render :update do |page|
-      page << javascript_prologue
-      page.replace('tab_div', :partial => 'ui_1')
-    end
-  end
-
   def update
-    assert_privileges('my_settings_admin')
+    assert_privileges('my_settings_default_filters')
+    tab_vars(@tabform.split('_').last)
     if params["save"]
-      get_form_vars if @tabform != "ui_3"
       case @tabform
       when "ui_3" # User Filters tab
         @edit = session[:edit]
@@ -213,7 +185,7 @@ class ConfigurationController < ApplicationController
   end
 
   def timeprofile_new
-    assert_privileges("timeprofile_new")
+    assert_privileges("my_settings_time_profiles")
     @all_timezones = ActiveSupport::TimeZone.all.collect { |tz| ["(GMT#{tz.formatted_offset}) #{tz.name}", tz.name] }.freeze
     @timeprofile = TimeProfile.new
     @timeprofile_action = "timeprofile_new"
@@ -225,7 +197,7 @@ class ConfigurationController < ApplicationController
   end
 
   def timeprofile_edit
-    assert_privileges("tp_edit")
+    assert_privileges("my_settings_time_profiles")
     @all_timezones = ActiveSupport::TimeZone.all.collect { |tz| ["(GMT#{tz.formatted_offset}) #{tz.name}", tz.name] }.freeze
     @timeprofile = TimeProfile.find(params[:id])
     @timeprofile_action = "timeprofile_edit"
@@ -249,7 +221,7 @@ class ConfigurationController < ApplicationController
 
   # Delete all selected or single displayed VM(s)
   def timeprofile_delete
-    assert_privileges("tp_delete")
+    assert_privileges("my_settings_time_profiles")
     timeprofiles = []
     unless params[:id] # showing a list, scan all selected timeprofiles
       timeprofiles = find_checked_items
@@ -274,11 +246,11 @@ class ConfigurationController < ApplicationController
       end
       process_timeprofiles(timeprofiles, "destroy") unless timeprofiles.empty?
     end
-    set_form_vars
+    show_timeprofiles
   end
 
   def timeprofile_copy
-    assert_privileges("tp_copy")
+    assert_privileges("my_settings_time_profiles")
     session[:set_copy] = "copy"
     @all_timezones = ActiveSupport::TimeZone.all.collect { |tz| ["(GMT#{tz.formatted_offset}) #{tz.name}", tz.name] }.freeze
     @in_a_form = true
@@ -293,26 +265,6 @@ class ConfigurationController < ApplicationController
 
   def show
     show_timeprofiles if params[:typ] == "timeprofiles"
-  end
-
-  def time_profile_form_fields
-    assert_privileges("tp_edit")
-    @timeprofile = TimeProfile.new if params[:id] == 'new'
-    @timeprofile = TimeProfile.find(params[:id]) if params[:id] != 'new'
-
-    render :json => {
-      :description             => @timeprofile.description,
-      :admin_user              => report_admin_user?,
-      :restricted_time_profile => @timeprofile.profile_type == "global" && !report_admin_user?,
-      :profile_type            => @timeprofile.profile_type || "user",
-      :profile_tz              => @timeprofile.tz.nil? ? "" : @timeprofile.tz,
-      :rollup_daily            => !@timeprofile.rollup_daily_metrics.nil?,
-      :all_days                => Array(@timeprofile.days).size == 7,
-      :days                    => Array(@timeprofile.days).uniq.sort,
-      :all_hours               => Array(@timeprofile.hours).size == 24,
-      :hours                   => Array(@timeprofile.hours).uniq.sort,
-      :miq_reports_count       => @timeprofile.miq_reports.count
-    }
   end
 
   def self.session_key_prefix
@@ -379,41 +331,20 @@ class ConfigurationController < ApplicationController
     end
 
     @active_tab = @tabform.split("_").last
-
+    @labels = [_("Visual"), _("Default Filters"), _("Time Profiles")]
     @tabs = []
     @tabs.push(["1", _("Visual")])          if role_allows?(:feature => "my_settings_visuals")
     @tabs.push(["3", _("Default Filters")]) if role_allows?(:feature => "my_settings_default_filters")
     @tabs.push(["4", _("Time Profiles")])   if role_allows?(:feature => "my_settings_time_profiles")
   end
 
-  def merge_in_user_settings(settings)
-    if (user_settings = current_user.try(:settings))
-      settings.each do |key, value|
-        value.merge!(user_settings[key]) unless user_settings[key].nil?
-      end
-    end
-    settings
-  end
-
-  # * start with DEFAULT_SETTINGS
-  # * merge in current session changes
-  # * merge in any settings from the DB if they exist
-  def init_settings
-    merge_in_user_settings(copy_hash(DEFAULT_SETTINGS))
-  end
-
   def set_form_vars
     case @tabform
     when 'ui_1'
       @edit = {
-        :current => init_settings,
+        :current => {},
         :key     => 'config_edit__ui1',
       }
-
-      current_tz = @edit.fetch_path(:current, :display, :timezone)
-      if current_tz.blank?
-        @edit.store_path(:current, :display, :timezone, ::Settings.server.timezone)
-      end
     when 'ui_3'
       filters = MiqSearch.where(:search_type => "default")
       current = filters.map do |filter|
@@ -431,52 +362,15 @@ class ConfigurationController < ApplicationController
         :current => {},
         :key     => 'config_edit__ui4',
       }
-      @edit[:timeprofile_id] = @timeprofile.try(:id)
-      if %w[timeprofile_new timeprofile_copy timeprofile_edit timeprofile_update].include?(params[:action])
-        @edit[:current] = {
-          :description  => @timeprofile.description,
-          :profile_type => @timeprofile.profile_type || "user",
-          :profile_key  => @timeprofile.profile_key,
-          :profile      => {
-            :days  => Array(@timeprofile.days).uniq.sort,
-            :hours => Array(@timeprofile.hours).uniq.sort,
-            :tz    => @timeprofile.tz,
-          },
-          :rollup_daily => @timeprofile.rollup_daily_metrics,
-        }
-        @edit[:all_days]  = @edit.fetch_path(:current, :profile, :days).length == 7
-        @edit[:all_hours] = @edit.fetch_path(:current, :profile, :hours).length == 24
-      end
       show_timeprofiles
+    else
+      @edit = {
+        :current => {},
+        :key     => '',
+      }
     end
     @edit[:new] = copy_hash(@edit[:current])
     session[:edit] = @edit
-  end
-
-  def get_form_vars
-    @edit = session[:edit]
-    case @tabform
-    when "ui_1" # Visual Settings tab
-      @edit[:new][:perpage][:grid] = params[:perpage_grid].to_i if params[:perpage_grid]
-      @edit[:new][:perpage][:tile] = params[:perpage_tile].to_i if params[:perpage_tile]
-      @edit[:new][:perpage][:list] = params[:perpage_list].to_i if params[:perpage_list]
-      @edit[:new][:perpage][:reports] = params[:perpage_reports].to_i if params[:perpage_reports]
-      @edit[:new][:display][:theme] = params[:display_theme] unless params[:display_theme].nil?
-      @edit[:new][:display][:bg_color] = params[:bg_color] unless params[:bg_color].nil?
-      @edit[:new][:display][:reporttheme] = params[:display_reporttheme] unless params[:display_reporttheme].nil?
-      @edit[:new][:display][:dashboards] = params[:display_dashboards] unless params[:display_dashboards].nil?
-      @edit[:new][:display][:timezone] = params[:display_timezone] unless params[:display_timezone].nil?
-      @edit[:new][:display][:startpage] = params[:start_page] unless params[:start_page].nil?
-      @edit[:new][:display][:locale] = params[:display_locale] if params[:display_locale]
-      @edit[:new][:display][:compare] = params[:display][:compare] if !params[:display].nil? && !params[:display][:compare].nil?
-      @edit[:new][:display][:drift] = params[:display][:drift] if !params[:display].nil? && !params[:display][:drift].nil?
-    when "ui_3" # Visual Settings tab
-      @edit[:new][:display][:compare] = params[:display][:compare] if !params[:display].nil? && !params[:display][:compare].nil?
-      @edit[:new][:display][:drift] = params[:display][:drift] if !params[:display].nil? && !params[:display][:drift].nil?
-    when "ui_4" # Visual Settings tab
-      @edit[:new][:display][:compare] = params[:display][:compare] if !params[:display].nil? && !params[:display][:compare].nil?
-      @edit[:new][:display][:drift] = params[:display][:drift] if !params[:display].nil? && !params[:display][:drift].nil?
-    end
   end
 
   def get_session_data
@@ -493,6 +387,12 @@ class ConfigurationController < ApplicationController
     session[:vm_filters]        = @filters
     session[:vm_catinfo]        = @catinfo
     session[:zone_options]      = @zone_options
+  end
+
+  def tab_vars(current_tab)
+    @path = '/configuration/change_tab/'
+    @current_tab = current_tab.to_s
+    @check_for_changes = true
   end
 
   def merge_settings(user_settings, global_settings)

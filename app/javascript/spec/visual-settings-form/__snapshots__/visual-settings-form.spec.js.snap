@@ -1,3 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`visual settings form matches the snapshot 1`] = `""`;
+exports[`visual settings form matches the snapshot 1`] = `
+<div
+  className="loadSettings"
+>
+  <Loading
+    active={true}
+    className="loading"
+    description="Active loading indicator"
+    small={true}
+    withOverlay={false}
+  />
+</div>
+`;

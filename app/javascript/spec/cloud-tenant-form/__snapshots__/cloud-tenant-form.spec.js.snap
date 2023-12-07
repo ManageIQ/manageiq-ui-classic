@@ -68,6 +68,7 @@ exports[`Cloud tenant form component should render editing form variant 1`] = `
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],

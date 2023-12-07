@@ -6,6 +6,7 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -2491,6 +2492,7 @@ exports[`SettingsCategoryForm Component should render edit SettingsCategoryForm 
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],

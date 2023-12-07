@@ -6,6 +6,7 @@ exports[`Generic Object Form Component should render adding a new generic object
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -4602,6 +4603,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -7989,6 +7991,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                               >
                                                                 <Select
                                                                   SelectComponent={[Function]}
+                                                                  compareValues={[Function]}
                                                                   invalid={false}
                                                                   invalidText=""
                                                                   isClearable={false}
@@ -9041,6 +9044,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                 <Select
                                                                   SelectComponent={[Function]}
                                                                   className="class"
+                                                                  compareValues={[Function]}
                                                                   id="class"
                                                                   invalid={false}
                                                                   invalidText=""
@@ -9708,6 +9712,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                 <Select
                                                                   SelectComponent={[Function]}
                                                                   className="class"
+                                                                  compareValues={[Function]}
                                                                   id="class"
                                                                   invalid={false}
                                                                   invalidText=""
@@ -12239,6 +12244,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
     Object {
       "asyncReducers": Object {
         "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
         "notificationReducer": [Function],
       },
       "dispatch": [Function],
@@ -15614,6 +15620,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                               >
                                                                 <Select
                                                                   SelectComponent={[Function]}
+                                                                  compareValues={[Function]}
                                                                   invalid={false}
                                                                   invalidText=""
                                                                   isClearable={false}
@@ -16666,6 +16673,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                 <Select
                                                                   SelectComponent={[Function]}
                                                                   className="class"
+                                                                  compareValues={[Function]}
                                                                   id="class"
                                                                   invalid={false}
                                                                   invalidText=""
@@ -17333,6 +17341,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                 <Select
                                                                   SelectComponent={[Function]}
                                                                   className="class"
+                                                                  compareValues={[Function]}
                                                                   id="class"
                                                                   invalid={false}
                                                                   invalidText=""

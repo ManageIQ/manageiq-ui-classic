@@ -37,3 +37,29 @@
     }
   }
 }
+
+.markdown-wrapper {
+  display: flex;
+  gap: 10px;
+  flex-grow: 1;
+  padding: 10px;
+  min-height: 550px;
+  box-sizing: border-box;
+
+  .markdown-section {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid lightgray;
+    width: 50%;
+
+    .markdown-section-title {
+      padding: 10px;
+      background: lightgray;
+      font-size: 16px;
+    }
+  }
+
+  #preview .markdown-section-content {
+      padding: 10px;
+  }
+}
