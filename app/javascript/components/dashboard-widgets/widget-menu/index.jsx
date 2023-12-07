@@ -25,7 +25,7 @@ const WidgetMenu = ({ widgetModel }) => {
     );
   } else {
     widget = (
-      <h1 id="empty-widget">
+      <h1 className="empty-widget">
         {__('No shortcuts are authorized for this user, contact your Administrator')}
       </h1>
     );

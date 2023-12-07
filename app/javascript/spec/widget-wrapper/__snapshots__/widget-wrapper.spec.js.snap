@@ -36,6 +36,7 @@ exports[`Widget wrapper component should render a widget wrapper with a chart 1`
           className="card-pf-heading-kebab"
         >
           <OverflowMenu
+            aria-labelledby="widget-title-1"
             ariaLabel="open and close list of options"
             className="widget-overflow-menu"
             direction="bottom"
@@ -66,6 +67,7 @@ exports[`Widget wrapper component should render a widget wrapper with a chart 1`
                 aria-expanded={false}
                 aria-haspopup={true}
                 aria-label="open and close list of options"
+                aria-labelledby="widget-title-1"
                 className="widget-overflow-menu bx--overflow-menu bx--overflow-menu--md"
                 id="1-menu"
                 onClick={[Function]}
@@ -125,7 +127,6 @@ exports[`Widget wrapper component should render a widget wrapper with a chart 1`
             </ClickListener>
           </OverflowMenu>
           <div
-            aria-label="widget-title-1"
             className="card-pf-title sortable-handle ui-sortable-handle"
           >
             <span
@@ -226,6 +227,7 @@ exports[`Widget wrapper component should render a widget wrapper with a menu 1`]
           className="card-pf-heading-kebab"
         >
           <OverflowMenu
+            aria-labelledby="widget-title-83"
             ariaLabel="open and close list of options"
             className="widget-overflow-menu"
             direction="bottom"
@@ -256,6 +258,7 @@ exports[`Widget wrapper component should render a widget wrapper with a menu 1`]
                 aria-expanded={false}
                 aria-haspopup={true}
                 aria-label="open and close list of options"
+                aria-labelledby="widget-title-83"
                 className="widget-overflow-menu bx--overflow-menu bx--overflow-menu--md"
                 id="83-menu"
                 onClick={[Function]}
@@ -315,7 +318,6 @@ exports[`Widget wrapper component should render a widget wrapper with a menu 1`]
             </ClickListener>
           </OverflowMenu>
           <div
-            aria-label="widget-title-83"
             className="card-pf-title sortable-handle ui-sortable-handle"
           >
             <span
@@ -416,6 +418,7 @@ exports[`Widget wrapper component should render a widget wrapper with a report 1
           className="card-pf-heading-kebab"
         >
           <OverflowMenu
+            aria-labelledby="widget-title-19"
             ariaLabel="open and close list of options"
             className="widget-overflow-menu"
             direction="bottom"
@@ -446,6 +449,7 @@ exports[`Widget wrapper component should render a widget wrapper with a report 1
                 aria-expanded={false}
                 aria-haspopup={true}
                 aria-label="open and close list of options"
+                aria-labelledby="widget-title-19"
                 className="widget-overflow-menu bx--overflow-menu bx--overflow-menu--md"
                 id="19-menu"
                 onClick={[Function]}
@@ -505,7 +509,6 @@ exports[`Widget wrapper component should render a widget wrapper with a report 1
             </ClickListener>
           </OverflowMenu>
           <div
-            aria-label="widget-title-19"
             className="card-pf-title sortable-handle ui-sortable-handle"
           >
             <span
