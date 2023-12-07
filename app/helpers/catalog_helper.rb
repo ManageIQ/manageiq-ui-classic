@@ -101,7 +101,8 @@ module CatalogHelper
     prov_data = [prov_types[:template], prov_types[:ovf]].include?(record.prov_type) && catalog_provision?(record, :playbook) ? provisioning : nil
     data = {:title => _('Basic Information'), :mode => "miq_catalog_basic_information"}
     rows = []
-    rows.push(row_data(_('Name / Description'), "#{record.name} / #{record.description}"))
+    rows.push(row_data(_('Name'), record.name))
+    rows.push(row_data(_('Description'), record.description))
     rows.push(row_data(_('Display in Catalog'), {:input => "checkbox", :name => "display", :checked => record.display, :disabled => true, :label => ''}))
     rows.push(row_data(_('Catalog'), record.service_template_catalog ? record.service_template_catalog.name : _('Unassigned')))
     rows.push(row_data(_('Zone'), record.zone ? record.zone.name : '')) unless record.composite?
