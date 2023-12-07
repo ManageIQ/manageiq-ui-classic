@@ -1,0 +1,49 @@
+@media (max-width: 65.98rem) {
+  .bx--side-nav__overlay-active {
+    visibility: hidden;
+  }
+}
+
+@media only screen 
+and (min-width : 768px) 
+and (max-width : 990px) {
+
+  .bx--side-nav__overlay-active {
+    visibility: hidden;
+  }
+
+  .responsive-layout-main {
+    .sidebar-pf.sidebar-pf-left {
+      left: 0;
+    }
+
+    .full-content {
+      left: 0;
+    }
+  }
+  
+}
+
+@media only screen 
+and (max-width : 990px) {
+  .miq-structured-list-accordion {
+    overflow: hidden;
+
+    .miq-structured-list {
+      overflow: hidden;
+    
+      .bx--structured-list-row {
+        display: flex;
+        flex-direction: column;
+    
+        .label_header {
+          padding-left: 5px !important;
+        }
+    
+        .content_value {
+          padding-left: 5px;
+        }
+      }
+    }
+  }
+}

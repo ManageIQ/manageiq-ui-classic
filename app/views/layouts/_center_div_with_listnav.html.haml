@@ -9,9 +9,9 @@
           - if @layout == "dashboard"
             = render :partial => "/layouts/tabs"
           = miq_toolbar toolbar_from_hash
-  %main.div{:class => "row max-height content-focus-order #{left_div_classname}"}
+  %main.div{:class => "responsive-layout-main row max-height content-focus-order #{left_div_classname}"}
     - if !controller.respond_to?(:display_tree)
-      .col-sm-12.col-md-12.col-sm-push-12.col-md-push-3.max-height
+      .col-sm-12.col-md-12.col-sm-push-12.col-md-push-3.max-height.full-content
         #main-content.row.miq-layout-center_div_with_listnav
           .col-md-12
             .row
@@ -31,7 +31,7 @@
               .col-md-12
                 = yield
     - else
-      .col-sm-4.col-md-3.col-sm-pull-8.col-md-pull-9.sidebar-pf.sidebar-pf-left.max-height
+      .col-sm-4.col-md-3.col-sm-pull-8.col-md-pull-9.sidebar-pf.sidebar-pf-left.max-height.left-sidebar
         -# listnav_div
         = render :partial => "layouts/listnav"
       .col-sm-8.col-md-9.col-sm-push-4.col-md-push-3.max-height
