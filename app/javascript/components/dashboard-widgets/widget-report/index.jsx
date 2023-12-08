@@ -9,7 +9,7 @@ const WidgetReport = ({ widgetModel }) => {
     widget = (<div className="widget-report" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(widgetModel) }} />);
   } else {
     widget = (
-      <h1 id="empty-widget">
+      <h1 className="empty-widget">
         {__('No report data found.')}
         {__(' If this widget is new or has just been added to your dashboard, the data is being generated and should be available soon.')}
       </h1>
