@@ -10,7 +10,7 @@ const WidgetChart = ({
     widget = DashboardWidget(data, id, title);
   } else {
     widget = (
-      <h1 id="empty-widget">
+      <h1 className="empty-widget">
         {__('No chart data found.')}
         {__(' If this widget is new or has just been added to your dashboard, the data is being generated and should be available soon.')}
       </h1>

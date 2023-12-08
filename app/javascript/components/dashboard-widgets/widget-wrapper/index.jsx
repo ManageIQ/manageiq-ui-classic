@@ -9,7 +9,6 @@ const WidgetWrapper = ({
   widgetId, widgetType, widgetButtons, widgetLastRun, widgetNextRun, widgetTitle,
 }) => {
   const [{ widgetModel, isLoading, error }, setState] = useState({ isLoading: true, error: false });
-
   const widgetUrl = () => {
     const widgetTypeUrl = {
       menu: '/dashboard/widget_menu_data/',
@@ -86,12 +85,13 @@ const WidgetWrapper = ({
           <OverflowMenu
             className="widget-overflow-menu"
             id={`${widgetId}-menu`}
+            aria-labelledby={`widget-title-${widgetId}`}
             flipped
             onOpen={() => overflowMenuDirection(widgetId, widgetButtons)}
           >
             {getOverflowButtons(widgetButtons, widgetId, widgetType, widgetTitle, setState, widgetModel, widgetLastRun, widgetNextRun)}
           </OverflowMenu>
-          <div className="card-pf-title sortable-handle ui-sortable-handle" aria-label={`widget-title-${widgetId}`}>
+          <div className="card-pf-title sortable-handle ui-sortable-handle">
             <span id={`widget-title-${widgetId}`}>{widgetTitle}</span>
           </div>
         </div>
