@@ -37,6 +37,7 @@ describe TreeBuilderNetwork do
     end
 
     it 'returns Vm as Lan child' do
+      EvmSpecHelper.local_miq_server
       parent = @network_tree.send(:x_get_tree_roots).first.lans.first
       kid = @network_tree.send(:x_get_tree_lan_kids, parent, false)
       expect(kid.first).to be_a_kind_of(Vm)
