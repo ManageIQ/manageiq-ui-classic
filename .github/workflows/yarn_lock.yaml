@@ -1,0 +1,44 @@
+name: Update yarn.lock
+
+on:
+  workflow_dispatch:
+  schedule:
+  - cron: '0 0 * * 0'
+
+jobs:
+  update-yarn-lock:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up system
+      run: bin/before_install
+    - name: Set up Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: "18"
+        cache: yarn
+        registry-url: https://npm.manageiq.org/
+    - name: Update yarn.lock
+      env:
+        YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
+      run: |
+        rm -f yarn.lock
+        yarn install
+        git diff
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v5
+      with:
+        add-paths: |
+          yarn.lock
+        commit-message: Update yarn.lock with latest dependencies
+        branch: update_yarn_lock
+        author: ManageIQ Bot <bot@manageiq.org>
+        committer: ManageIQ Bot <bot@manageiq.org>
+        delete-branch: true
+        labels: dependencies
+        assignees: jeffibm
+        team-reviewers: ManageIQ/committers-ui
+        push-to-fork: miq-bot/manageiq-ui-classic
+        title: Update yarn.lock with latest dependencies
+        body: Update yarn.lock with latest dependencies
+        token: ${{ secrets.PR_TOKEN }}
