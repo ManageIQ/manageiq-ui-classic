@@ -12,6 +12,8 @@ const ValidateProviderCredentials = ({ ...props }) => {
   const asyncValidate = (fields, fieldNames) => new Promise((resolve, reject) => {
     const url = providerId ? `/api/providers/${providerId}` : '/api/providers';
     const resource = pick(fields, fieldNames);
+
+    console.log(resource);
     const updatedResource = trimFieldValue(resource);
 
     API.post(url, { action: 'verify_credentials', resource: updatedResource }).then(({ results: [result] = [], ...single }) => {

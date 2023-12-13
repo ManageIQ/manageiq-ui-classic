@@ -1,4 +1,6 @@
 - if @sb[:active_tab] == "settings_replication"
+  #tab_div
+    = react('SettingsReplicationForm', :pglogicalReplicationFormId => 'new')
   - @angular_form = true
 
   %form.form-horizontal#form_div{"name"          => "angularForm",

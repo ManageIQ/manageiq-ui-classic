@@ -128,6 +128,7 @@ import SettingsCompanyCategories from '../components/settings-company-categories
 import SettingsCompanyTags from '../components/settings-company-tags';
 import SettingsCompanyTagsEntryForm from '../components/settings-company-tags-entry-form';
 import SettingsLabelTagMapping from '../components/settings-label-tag-mapping';
+import SettingsReplicationForm from '../components/settings-replication-form';
 import SettingsTasksForm from '../components/settings-tasks-form';
 import SettingsTimeProfileForm from '../components/settings-time-profile-form';
 import SettingsZone from '../components/settings-zone';
@@ -300,6 +301,7 @@ ManageIQ.component.addReact('SettingsCompanyCategories', SettingsCompanyCategori
 ManageIQ.component.addReact('SettingsCompanyTags', SettingsCompanyTags);
 ManageIQ.component.addReact('SettingsCompanyTagsEntryForm', SettingsCompanyTagsEntryForm);
 ManageIQ.component.addReact('SettingsLabelTagMapping', SettingsLabelTagMapping);
+ManageIQ.component.addReact('SettingsReplicationForm', SettingsReplicationForm);
 ManageIQ.component.addReact('SettingsTasksForm', SettingsTasksForm);
 ManageIQ.component.addReact('SettingsTimeProfileForm', SettingsTimeProfileForm);
 ManageIQ.component.addReact('SettingsZone', SettingsZone);
