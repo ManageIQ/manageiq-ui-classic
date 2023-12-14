@@ -151,7 +151,8 @@ module OpsController::Settings::Common
 
   def settings_update_amazon_verify
     assert_privileges("ops_settings")
-
+    require 'byebug'
+    byebug
     if params[:authentication][:amazon_secret].nil?
       server_config = MiqServer.find(@sb[:selected_server_id]).settings
       params[:authentication][:amazon_secret] = server_config[:authentication][:amazon_secret]
