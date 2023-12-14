@@ -16,8 +16,11 @@ $css--default-type: false;
 @import '~@carbon/themes/scss/themes';
 $carbon--theme: $carbon--theme--white;
 @include carbon--theme();
-@import '~@carbon/charts/styles.css';
 
+//we need this import statement for charts PNG and JPG download
+@import 'https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Condensed%7CIBM+Plex+Sans:400,600&display=swap';
+
+@import '~@carbon/charts/styles.css';
 @import '~carbon-components/scss/globals/scss/styles.scss';
 
 // ignored by patternfly, but sets the right base for carbon rem units
