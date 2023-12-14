@@ -33,7 +33,6 @@ exports[`VM Edit form component should edit template with a parent and children 
     >
       <div
         aria-atomic="true"
-        aria-labelledby="loading-id-4"
         aria-live="assertive"
         className="export-spinner bx--loading bx--loading--small"
       >
@@ -102,7 +101,6 @@ exports[`VM Edit form component should edit template with no parent and children
     >
       <div
         aria-atomic="true"
-        aria-labelledby="loading-id-5"
         aria-live="assertive"
         className="export-spinner bx--loading bx--loading--small"
       >
@@ -171,7 +169,6 @@ exports[`VM Edit form component should edit vm with a parent and children 1`] = 
     >
       <div
         aria-atomic="true"
-        aria-labelledby="loading-id-2"
         aria-live="assertive"
         className="export-spinner bx--loading bx--loading--small"
       >
@@ -240,7 +237,6 @@ exports[`VM Edit form component should edit vm with no parent or children 1`] = 
     >
       <div
         aria-atomic="true"
-        aria-labelledby="loading-id-3"
         aria-live="assertive"
         className="export-spinner bx--loading bx--loading--small"
       >
@@ -309,7 +305,6 @@ exports[`VM Edit form component should render vm edit form 1`] = `
     >
       <div
         aria-atomic="true"
-        aria-labelledby="loading-id-1"
         aria-live="assertive"
         className="export-spinner bx--loading bx--loading--small"
       >

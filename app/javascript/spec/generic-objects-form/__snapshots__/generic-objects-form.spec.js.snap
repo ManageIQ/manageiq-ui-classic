@@ -9244,8 +9244,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                                     aria-label="Clear selected item"
                                                                                     className="bx--list-box__selection"
                                                                                     onClick={[Function]}
-                                                                                    onKeyDown={[Function]}
-                                                                                    tabIndex={0}
+                                                                                    tabIndex={-1}
                                                                                     title="Clear selected item"
                                                                                     type="button"
                                                                                   >
@@ -9912,8 +9911,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                                     aria-label="Clear selected item"
                                                                                     className="bx--list-box__selection"
                                                                                     onClick={[Function]}
-                                                                                    onKeyDown={[Function]}
-                                                                                    tabIndex={0}
+                                                                                    tabIndex={-1}
                                                                                     title="Clear selected item"
                                                                                     type="button"
                                                                                   >
@@ -16873,8 +16871,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                                     aria-label="Clear selected item"
                                                                                     className="bx--list-box__selection"
                                                                                     onClick={[Function]}
-                                                                                    onKeyDown={[Function]}
-                                                                                    tabIndex={0}
+                                                                                    tabIndex={-1}
                                                                                     title="Clear selected item"
                                                                                     type="button"
                                                                                   >
@@ -17541,8 +17538,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                                     aria-label="Clear selected item"
                                                                                     className="bx--list-box__selection"
                                                                                     onClick={[Function]}
-                                                                                    onKeyDown={[Function]}
-                                                                                    tabIndex={0}
+                                                                                    tabIndex={-1}
                                                                                     title="Clear selected item"
                                                                                     type="button"
                                                                                   >

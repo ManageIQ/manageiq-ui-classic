@@ -14617,7 +14617,6 @@ exports[`VM common form component should render copying form variant new name on
     >
       <div
         aria-atomic="true"
-        aria-labelledby="loading-id-3"
         aria-live="assertive"
         className="export-spinner bx--loading bx--loading--small"
       >
@@ -14686,7 +14685,6 @@ exports[`VM common form component should render copying form variant with new va
     >
       <div
         aria-atomic="true"
-        aria-labelledby="loading-id-4"
         aria-live="assertive"
         className="export-spinner bx--loading bx--loading--small"
       >
@@ -14755,7 +14753,6 @@ exports[`VM common form component should render editing form variant all new val
     >
       <div
         aria-atomic="true"
-        aria-labelledby="loading-id-1"
         aria-live="assertive"
         className="export-spinner bx--loading bx--loading--small"
       >
@@ -14824,7 +14821,6 @@ exports[`VM common form component should render editing form variant some new va
     >
       <div
         aria-atomic="true"
-        aria-labelledby="loading-id-2"
         aria-live="assertive"
         className="export-spinner bx--loading bx--loading--small"
       >

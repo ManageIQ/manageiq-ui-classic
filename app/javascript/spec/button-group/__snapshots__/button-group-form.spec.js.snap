@@ -55,7 +55,6 @@ exports[`Button Group form component should render the editing form 1`] = `
     >
       <div
         aria-atomic="true"
-        aria-labelledby="loading-id-1"
         aria-live="assertive"
         className="export-spinner bx--loading bx--loading--small"
       >
@@ -127,7 +126,6 @@ exports[`Button Group form component should render the editing form for generic 
     >
       <div
         aria-atomic="true"
-        aria-labelledby="loading-id-2"
         aria-live="assertive"
         className="export-spinner bx--loading bx--loading--small"
       >

@@ -321,7 +321,6 @@ exports[`TreeSelector component should render correctly 1`] = `
               </button>
             </div>
             <div
-              aria-labelledby="bx--modal-header__heading--modal-1"
               className="bx--modal-content"
               id="bx--modal-body--modal-1"
             >
