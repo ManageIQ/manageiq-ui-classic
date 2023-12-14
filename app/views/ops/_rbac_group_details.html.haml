@@ -96,7 +96,17 @@
                                :class             => "form-control",
                                "data-miq_observe" => {:interval => '.5',
                                                       :url      => url}.to_json)
-
+          - unless mode == "httpd"
+            .form-group#user_name_form_group
+              %label.col-md-2.control-label
+                = _("Username")
+              .col-md-8
+                = text_field_tag("user_id",
+                                  @edit[:new][:user_id],
+                                  :maxlength         => 255,
+                                  :class             => "form-control",
+                                  "data-miq_observe" => {:interval => '.5',
+                                                        :url      => url}.to_json)
             .form-group#user_password_form_group
               %label.col-md-2.control-label
                 = _("Password")
