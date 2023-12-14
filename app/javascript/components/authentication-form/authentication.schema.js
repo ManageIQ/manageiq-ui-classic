@@ -63,7 +63,7 @@ const createSchema = (amazonEdit, editMode, setState, key, setKey) => {
           label: __('Secret Key'),
           maxLength: 50,
           edit: amazonEdit,
-          onChange: (test) => { console.log(test); },
+          // onChange: (test) => { console.log(test); },
           validate: [{ type: validatorTypes.REQUIRED }],
           isRequired: true,
         },
