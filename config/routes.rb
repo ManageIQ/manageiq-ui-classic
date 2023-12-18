@@ -2232,6 +2232,7 @@ Rails.application.routes.draw do
       :get  => %w[
         change_tab
         index
+        show
         jobs
       ],
       :post => %w[
