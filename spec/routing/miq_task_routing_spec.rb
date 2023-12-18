@@ -4,6 +4,7 @@ describe "routes for MiqTaskController" do
   %w(
     change_tab
     index
+    show
     jobs
   ).each do |task|
     describe "##{task}" do

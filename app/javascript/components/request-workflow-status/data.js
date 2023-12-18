@@ -2,6 +2,7 @@
 export const workflowStateTypes = {
   success: { text: 'success', tagType: 'green' },
   error: { text: 'error', tagType: 'red' },
+  failure: { text: 'failure', tagType: 'red' },
   failed: { text: 'failed', tagType: 'gray' },
   pending: { text: 'pending', tagType: 'gray' },
 };

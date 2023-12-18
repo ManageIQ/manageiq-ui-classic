@@ -47,7 +47,7 @@ const SettingsTasksForm = ({
           loadDefaultTable();
         }}
       />
-      <GtlView />
+      <GtlView showUrl="/miq_task/show" />
     </div>
   );
 };
@@ -66,7 +66,7 @@ const FormTemplate = ({
         {({ values }) => (
           <div className="custom-button-wrapper">
             <button
-              disabled={values.taskStatus === [] || !valid || (pristine && !dirtySinceLastSubmit)}
+              disabled={values.taskStatus.length === 0 || !valid || (pristine && !dirtySinceLastSubmit)}
               className="bx--btn bx--btn--primary btnRight"
               id="submit"
               type="submit"
