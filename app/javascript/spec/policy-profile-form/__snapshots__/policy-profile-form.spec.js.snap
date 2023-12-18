@@ -40,7 +40,6 @@ exports[`PolicyProfileForm form component should render editing form variant 1`]
     >
       <div
         aria-atomic="true"
-        aria-labelledby="loading-id-2"
         aria-live="assertive"
         className="export-spinner bx--loading bx--loading--small"
       >
@@ -104,7 +103,6 @@ exports[`PolicyProfileForm form component should render new form variant 1`] = `
     >
       <div
         aria-atomic="true"
-        aria-labelledby="loading-id-1"
         aria-live="assertive"
         className="export-spinner bx--loading bx--loading--small"
       >

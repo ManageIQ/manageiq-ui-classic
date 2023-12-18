@@ -37,12 +37,12 @@ exports[`Widget wrapper component should render a widget wrapper with a chart 1`
         >
           <OverflowMenu
             aria-labelledby="widget-title-1"
-            ariaLabel="open and close list of options"
+            ariaLabel="Open and close list of options"
             className="widget-overflow-menu"
             direction="bottom"
             flipped={true}
             focusTrap={true}
-            iconDescription="open and close list of options"
+            iconDescription="Open and close list of options"
             id="1-menu"
             light={false}
             menuOffset={[Function]}
@@ -64,9 +64,10 @@ exports[`Widget wrapper component should render a widget wrapper with a chart 1`
               onClickOutside={[Function]}
             >
               <button
+                aria-controls={null}
                 aria-expanded={false}
                 aria-haspopup={true}
-                aria-label="open and close list of options"
+                aria-label="Open and close list of options"
                 aria-labelledby="widget-title-1"
                 className="widget-overflow-menu bx--overflow-menu bx--overflow-menu--md"
                 id="1-menu"
@@ -77,11 +78,11 @@ exports[`Widget wrapper component should render a widget wrapper with a chart 1`
                 type="button"
               >
                 <ForwardRef(OverflowMenuVertical16)
-                  aria-label="open and close list of options"
+                  aria-label="Open and close list of options"
                   className="bx--overflow-menu__icon"
                 >
                   <Icon
-                    aria-label="open and close list of options"
+                    aria-label="Open and close list of options"
                     className="bx--overflow-menu__icon"
                     fill="currentColor"
                     height={16}
@@ -91,7 +92,7 @@ exports[`Widget wrapper component should render a widget wrapper with a chart 1`
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <svg
-                      aria-label="open and close list of options"
+                      aria-label="Open and close list of options"
                       className="bx--overflow-menu__icon"
                       fill="currentColor"
                       focusable="false"
@@ -118,7 +119,7 @@ exports[`Widget wrapper component should render a widget wrapper with a chart 1`
                         r="2"
                       />
                       <title>
-                        open and close list of options
+                        Open and close list of options
                       </title>
                     </svg>
                   </Icon>
@@ -152,7 +153,6 @@ exports[`Widget wrapper component should render a widget wrapper with a chart 1`
           >
             <div
               aria-atomic="true"
-              aria-labelledby="loading-id-3"
               aria-live="assertive"
               className="export-spinner bx--loading bx--loading--small"
             >
@@ -228,12 +228,12 @@ exports[`Widget wrapper component should render a widget wrapper with a menu 1`]
         >
           <OverflowMenu
             aria-labelledby="widget-title-83"
-            ariaLabel="open and close list of options"
+            ariaLabel="Open and close list of options"
             className="widget-overflow-menu"
             direction="bottom"
             flipped={true}
             focusTrap={true}
-            iconDescription="open and close list of options"
+            iconDescription="Open and close list of options"
             id="83-menu"
             light={false}
             menuOffset={[Function]}
@@ -255,9 +255,10 @@ exports[`Widget wrapper component should render a widget wrapper with a menu 1`]
               onClickOutside={[Function]}
             >
               <button
+                aria-controls={null}
                 aria-expanded={false}
                 aria-haspopup={true}
-                aria-label="open and close list of options"
+                aria-label="Open and close list of options"
                 aria-labelledby="widget-title-83"
                 className="widget-overflow-menu bx--overflow-menu bx--overflow-menu--md"
                 id="83-menu"
@@ -268,11 +269,11 @@ exports[`Widget wrapper component should render a widget wrapper with a menu 1`]
                 type="button"
               >
                 <ForwardRef(OverflowMenuVertical16)
-                  aria-label="open and close list of options"
+                  aria-label="Open and close list of options"
                   className="bx--overflow-menu__icon"
                 >
                   <Icon
-                    aria-label="open and close list of options"
+                    aria-label="Open and close list of options"
                     className="bx--overflow-menu__icon"
                     fill="currentColor"
                     height={16}
@@ -282,7 +283,7 @@ exports[`Widget wrapper component should render a widget wrapper with a menu 1`]
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <svg
-                      aria-label="open and close list of options"
+                      aria-label="Open and close list of options"
                       className="bx--overflow-menu__icon"
                       fill="currentColor"
                       focusable="false"
@@ -309,7 +310,7 @@ exports[`Widget wrapper component should render a widget wrapper with a menu 1`]
                         r="2"
                       />
                       <title>
-                        open and close list of options
+                        Open and close list of options
                       </title>
                     </svg>
                   </Icon>
@@ -343,7 +344,6 @@ exports[`Widget wrapper component should render a widget wrapper with a menu 1`]
           >
             <div
               aria-atomic="true"
-              aria-labelledby="loading-id-2"
               aria-live="assertive"
               className="export-spinner bx--loading bx--loading--small"
             >
@@ -419,12 +419,12 @@ exports[`Widget wrapper component should render a widget wrapper with a report 1
         >
           <OverflowMenu
             aria-labelledby="widget-title-19"
-            ariaLabel="open and close list of options"
+            ariaLabel="Open and close list of options"
             className="widget-overflow-menu"
             direction="bottom"
             flipped={true}
             focusTrap={true}
-            iconDescription="open and close list of options"
+            iconDescription="Open and close list of options"
             id="19-menu"
             light={false}
             menuOffset={[Function]}
@@ -446,9 +446,10 @@ exports[`Widget wrapper component should render a widget wrapper with a report 1
               onClickOutside={[Function]}
             >
               <button
+                aria-controls={null}
                 aria-expanded={false}
                 aria-haspopup={true}
-                aria-label="open and close list of options"
+                aria-label="Open and close list of options"
                 aria-labelledby="widget-title-19"
                 className="widget-overflow-menu bx--overflow-menu bx--overflow-menu--md"
                 id="19-menu"
@@ -459,11 +460,11 @@ exports[`Widget wrapper component should render a widget wrapper with a report 1
                 type="button"
               >
                 <ForwardRef(OverflowMenuVertical16)
-                  aria-label="open and close list of options"
+                  aria-label="Open and close list of options"
                   className="bx--overflow-menu__icon"
                 >
                   <Icon
-                    aria-label="open and close list of options"
+                    aria-label="Open and close list of options"
                     className="bx--overflow-menu__icon"
                     fill="currentColor"
                     height={16}
@@ -473,7 +474,7 @@ exports[`Widget wrapper component should render a widget wrapper with a report 1
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <svg
-                      aria-label="open and close list of options"
+                      aria-label="Open and close list of options"
                       className="bx--overflow-menu__icon"
                       fill="currentColor"
                       focusable="false"
@@ -500,7 +501,7 @@ exports[`Widget wrapper component should render a widget wrapper with a report 1
                         r="2"
                       />
                       <title>
-                        open and close list of options
+                        Open and close list of options
                       </title>
                     </svg>
                   </Icon>
@@ -534,7 +535,6 @@ exports[`Widget wrapper component should render a widget wrapper with a report 1
           >
             <div
               aria-atomic="true"
-              aria-labelledby="loading-id-1"
               aria-live="assertive"
               className="export-spinner bx--loading bx--loading--small"
             >
