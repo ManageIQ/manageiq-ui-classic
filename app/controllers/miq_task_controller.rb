@@ -43,6 +43,16 @@ class MiqTaskController < ApplicationController
     render :action => "jobs"
   end
 
+  def show
+    assert_privileges('miq_task_all_ui', 'miq_task_my_ui', :any => false)
+    @tabs = nil
+    @in_a_form = true
+    @miq_task = identify_record(params[:id], MiqTask)
+    @miq_server = identify_record(@miq_task.miq_server_id, MiqServer)
+    drop_breadcrumb(:name => @miq_task.name)
+    render :action => "show"
+  end
+
   # New tab was pressed
   def change_tab
     assert_privileges('miq_task_all_ui', 'miq_task_my_ui', :any => false)
@@ -83,7 +93,7 @@ class MiqTaskController < ApplicationController
     when "tasks_2", "alltasks_2" then @layout = "all_tasks"
     end
     tasks_set_default_options
-    @view, @pages = get_view(MiqTask, :named_scope => tasks_scopes(@tasks_options[@tabform]), :clickable => false)
+    @view, @pages = get_view(MiqTask, :named_scope => tasks_scopes(@tasks_options[@tabform]))
     @user_names = MiqTask.distinct.pluck("userid").delete_if(&:blank?) if @active_tab.to_i == 2
   end
 

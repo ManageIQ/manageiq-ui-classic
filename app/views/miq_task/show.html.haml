@@ -1,0 +1,7 @@
+#task_div
+  = task_details_summary(@miq_task, @miq_server)
+  - record_ids = request_task_configuration_script_ids(@miq_task)
+  - if record_ids.any?
+    %h3
+      = _("Workflow States")
+    = react('RequestWorkflowStatus', {:ids => record_ids})

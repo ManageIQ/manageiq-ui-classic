@@ -1,4 +1,17 @@
 module MiqTaskHelper
+  include TaskDetailsHelper
+
+  def row_data(label, value)
+    {:cells => {:label => label, :value => value}}
+  end
+
+  def request_task_configuration_script_ids(miq_task)
+    workflow_instance_id = miq_task.context_data&.dig(:workflow_instance_id)
+    return if workflow_instance_id.nil?
+
+    [workflow_instance_id]
+  end
+
   TASK_TIME_PERIODS = {
     0 => N_("Today"),
     1 => N_("1 Day Ago"),
