@@ -23553,6 +23553,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                                                 data-invalid={null}
                                                                               >
                                                                                 <select
+                                                                                  aria-describedby="select-helper-text-7"
                                                                                   className="bx--select-input"
                                                                                   id="mem_type"
                                                                                   name="mem_type"
@@ -23630,6 +23631,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                                               </div>
                                                                               <div
                                                                                 className="bx--form__helper-text"
+                                                                                id="select-helper-text-7"
                                                                               >
                                                                                 Between 1024MB and 0.009765625GB
                                                                               </div>
@@ -25288,7 +25290,6 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                                   className="bx--number__input-wrapper"
                                                                 >
                                                                   <input
-                                                                    aria-describedby={null}
                                                                     aria-invalid={false}
                                                                     aria-label={null}
                                                                     data-invalid={false}
@@ -42277,6 +42278,7 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                                                 data-invalid={null}
                                                                               >
                                                                                 <select
+                                                                                  aria-describedby="select-helper-text-1"
                                                                                   className="bx--select-input"
                                                                                   id="mem_type"
                                                                                   name="mem_type"
@@ -42354,6 +42356,7 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                                               </div>
                                                                               <div
                                                                                 className="bx--form__helper-text"
+                                                                                id="select-helper-text-1"
                                                                               >
                                                                                 Between 1024MB and 0.009765625GB
                                                                               </div>
@@ -44012,7 +44015,6 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                                   className="bx--number__input-wrapper"
                                                                 >
                                                                   <input
-                                                                    aria-describedby={null}
                                                                     aria-invalid={false}
                                                                     aria-label={null}
                                                                     data-invalid={false}
