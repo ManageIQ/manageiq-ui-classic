@@ -4,7 +4,8 @@ module Mixins
     ENTRY_POINT_TYPES = {
       :fqname             => {:type => :provision,   :name => 'Provision'},
       :reconfigure_fqname => {:type => :reconfigure, :name => 'Reconfigure'},
-      :retire_fqname      => {:type => :retire,      :name => 'Retirement'}
+      :retire_fqname      => {:type => :retire,      :name => 'Retirement'},
+      :namespace          => {:type => :namespace,   :name => 'Namespace'}
     }.freeze
 
     # Returns an object to be resued for passing down to rails form and angular form.

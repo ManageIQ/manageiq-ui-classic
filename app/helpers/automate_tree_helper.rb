@@ -1,4 +1,6 @@
 module AutomateTreeHelper
+  include Mixins::AutomationMixin
+
   def submit_embedded_method(fqname)
     if @edit[:new][:embedded_methods].include?(fqname)
       add_flash(_("This embedded method is already selected"), :warning)
@@ -64,7 +66,12 @@ module AutomateTreeHelper
 
   def at_tree_select_toggle(type, edit_key)
     automation_type = params[:automation_type] || default_entry_point_type
-    current_entry_point = @edit[:new][edit_key] # before updating @edit varibale.
+
+    if edit_key
+      current_entry_point = @edit[:new][edit_key] # before updating @edit varibale.
+      current_entry_point_fields = entry_point_fields(edit_key)
+    end
+
     build_automate_tree(type) if automation_type == embedded_automate_key
     render :update do |page|
       page << javascript_prologue
@@ -98,8 +105,8 @@ module AutomateTreeHelper
           @edit[:include_domain_prefix] = nil
           @edit[:domain_prefix_check] = nil
 
-          if edit_key
-            field = entry_point_fields(edit_key)
+          if edit_key && current_entry_point && current_entry_point_fields
+            field = current_entry_point_fields
             previous = @edit[:new][field[:previous]]
             entry_point_type = @edit[:new][field[:type]]
             @edit[:new][previous[entry_point_type]] = current_entry_point
