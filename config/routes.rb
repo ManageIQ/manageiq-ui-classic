@@ -631,7 +631,6 @@ Rails.application.routes.draw do
       ],
       :post => %w[
         button
-        change_tab
         filters_field_changed
         timeprofile_delete
         tree_autoload
