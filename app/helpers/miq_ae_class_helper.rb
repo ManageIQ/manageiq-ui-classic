@@ -352,6 +352,21 @@ module MiqAeClassHelper
                         })
   end
 
+  def embedded_method_list(embedded_methods)
+    if embedded_methods.present?
+      data = {
+        :title   => _("Embedded Methods"),
+        :mode    => "embedded_method_list",
+        :rows    => [],
+        :headers => [_('Path')],
+      }
+      data[:rows] += embedded_methods.try(:map) do |method|
+        {:cells => [_(method.to_s)]}
+      end
+      miq_structured_list(data)
+    end
+  end
+
   private
 
   def row_data(label, value)

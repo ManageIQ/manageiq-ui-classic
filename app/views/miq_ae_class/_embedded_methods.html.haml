@@ -1,18 +1,6 @@
 #embedded_methods_div
   - if !@in_a_form && @ae_method
-    - if !@record[:embedded_methods].nil? && !@record[:embedded_methods].empty?
-      %hr
-      %h3
-        = _('Embedded Methods')
-      %table.table.table-striped.table-hover.table-condensed.table-bordered
-        %thead
-          %th= _('Path')
-        %tbody
-          - @record[:embedded_methods].try(:each) do |method|
-            %tr
-              %td
-                %text_field_tag
-                  = _(method.to_s)
+    = embedded_method_list(@record[:embedded_methods])
   - else
     %hr
     %h3
