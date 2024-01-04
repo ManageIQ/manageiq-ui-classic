@@ -11,7 +11,10 @@ import MiqStructuredListConditionalTag from '../value-tags/miq-structured-list-c
 /** Usage eg: Network / Security Groups / summary / Firewall rules */
 const MiqStructuredListArray = ({ row, onClick, clickEvents }) => {
   /** Function to render a list item inside a cell */
-  /** Usage eg: Control / Policies / Events */
+  /** Usage eg:
+   * 1. Control / Policies / Events
+   * 2. Automation / Automate / Explorer / Datastore / Method / Embedded Methods
+  */
   const listCellValue = (value) => (
     <div
       className={classNames('list_cell', value.onclick ? 'clickable' : '')}
