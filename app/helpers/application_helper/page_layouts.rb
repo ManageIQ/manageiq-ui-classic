@@ -220,7 +220,8 @@ module ApplicationHelper::PageLayouts
       physical_server
       physical_storage
       placement_group
-      resource_pool
+      resource_pool_cloud
+      resource_pool_infra
       retired
       security_group
       security_policy

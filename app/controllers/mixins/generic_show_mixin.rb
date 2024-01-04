@@ -151,8 +151,8 @@ module Mixins
       nested_list(CustomButtonEvent, :breadcrumb_title => _('Custom Button Events'), :clickable => false, :parent_method => 'custom_button_events')
     end
 
-    def display_resource_pools
-      nested_list(ResourcePool)
+    def display_resource_pools_cloud
+      nested_list(ManageIQ::Providers::CloudManager::ResourcePool, :breadcrumb_title => _('Resource Pools'))
     end
 
     def display_instances

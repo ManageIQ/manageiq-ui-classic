@@ -8,13 +8,13 @@
       %table.table.table-bordered.table-striped
         - if rp_config.blank?
           %tr
-            %td{:width => "495"}
+            %td{ :width => "495" }
               %strong= _('Not Available')
         - else
           - rp_config.each_slice(2) do |items|
             %tr
               - items.each do |item|
-                %td{:width => "495"}
+                %td{ :width => "495" }
                   %strong
                     = h(item[:field])
                   = h(item[:description])

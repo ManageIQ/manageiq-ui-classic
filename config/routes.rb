@@ -2739,7 +2739,35 @@ Rails.application.routes.draw do
                exp_post
     },
 
-    :resource_pool            => {
+    :resource_pool_cloud      => {
+      :get  => %w[
+        download_data
+        download_summary_pdf
+        index
+        protect
+        show
+        show_list
+        tagging_edit
+      ] +
+        compare_get,
+      :post => %w[
+        button
+        listnav_search_selected
+        protect
+        sections_field_changed
+        show
+        show_list
+        tagging_edit
+        tree_autoload
+        quick_search
+      ] +
+               adv_search_post +
+               compare_post +
+               exp_post +
+               save_post
+    },
+
+    :resource_pool_infra      => {
       :get  => %w[
         download_data
         download_summary_pdf
