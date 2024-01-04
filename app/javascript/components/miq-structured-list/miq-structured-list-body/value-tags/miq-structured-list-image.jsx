@@ -12,7 +12,7 @@ export default MiqStructuredListImage;
 
 MiqStructuredListImage.propTypes = {
   row: PropTypes.shape({
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
     image: PropTypes.string.isRequired,
   }).isRequired,
 };
