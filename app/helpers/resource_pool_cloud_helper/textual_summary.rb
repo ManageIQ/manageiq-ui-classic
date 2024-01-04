@@ -1,4 +1,4 @@
-module ResourcePoolHelper::TextualSummary
+module ResourcePoolCloudHelper::TextualSummary
   #
   # Groups
   #
@@ -111,7 +111,7 @@ module ResourcePoolHelper::TextualSummary
     h = {:label => _("Direct VMs"), :icon => "pficon pficon-virtual-machine", :value => num}
     if num.positive? && role_allows?(:feature => "vm_show_list")
       h[:title] = _("Show VMs in this Resource Pool, but not in Resource Pools below")
-      h[:link]  = url_for_only_path(:controller => 'resource_pool', :action => 'show', :id => @record, :display => 'vms')
+      h[:link]  = url_for_only_path(:controller => 'resource_pool_cloud', :action => 'show', :id => @record, :display => 'vms')
     end
     h
   end
@@ -121,7 +121,7 @@ module ResourcePoolHelper::TextualSummary
     h = {:label => _("All VMs"), :icon => "pficon pficon-virtual-machine", :value => num}
     if num.positive? && role_allows?(:feature => "vm_show_list")
       h[:title] = _("Show all VMs in this Resource Pool")
-      h[:link]  = url_for_only_path(:controller => 'resource_pool', :action => 'show', :id => @record, :display => 'all_vms')
+      h[:link]  = url_for_only_path(:controller => 'resource_pool_cloud', :action => 'show', :id => @record, :display => 'all_vms')
     end
     h
   end
@@ -129,12 +129,13 @@ module ResourcePoolHelper::TextualSummary
   def textual_resource_pools
     num = @record.number_of(:resource_pools)
     h = {:label => _("Resource Pools"), :icon => "pficon pficon-resource-pool", :value => num}
-    if num.positive? && role_allows?(:feature => "resource_pool_show_list")
-      h[:title] = _("Show all Resource Pools")
-      h[:link]  = url_for_only_path(:controller => "resource_pool", :action => 'show', :id => @record, :display => 'resource_pools')
+    if num.positive? && role_allows?(:feature => "resource_pool_cloud_show_list")
+      h[:title] = _("Show all Resource Pools in this Cloud")
+      h[:link]  = url_for_only_path(:controller => "resource_pool_cloud", :action => 'show', :id => @record, :display => 'resource_pools')
     end
     h
   end
+  
 
   def textual_memory_reserve
     value = @record.memory_reserve
