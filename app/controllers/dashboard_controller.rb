@@ -63,6 +63,7 @@ class DashboardController < ApplicationController
   # New tab was pressed
   def change_tab
     assert_privileges("dashboard_view")
+    tab_vars(params['uib-tab'])
     show
     render :action => "show"
   end
@@ -142,6 +143,7 @@ class DashboardController < ApplicationController
       @sb[:active_db]    = active_tab.name
       @sb[:active_db_id] = active_tab.id
     end
+    tab_vars(active_tab_id)
 
     records.each do |db|
       @tabs.push([db.id.to_s, db.description])
@@ -594,6 +596,11 @@ class DashboardController < ApplicationController
 
   def get_session_data
     @layout = "login"
+  end
+
+  def tab_vars(current_tab)
+    @path = '/dashboard/change_tab/'
+    @current_tab = current_tab.to_s
   end
 
   def identity_provider_login(identity_type)
