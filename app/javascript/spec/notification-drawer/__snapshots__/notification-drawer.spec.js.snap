@@ -13,7 +13,9 @@ exports[`Notification drawer tests should render correctly 1`] = `
     }
   }
 >
-  <NotificationDrawer>
+  <NotificationDrawer
+    jsRequest={false}
+  >
     <div
       id="miq-notifications-drawer-container"
     >
