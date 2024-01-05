@@ -38,7 +38,7 @@ class ServiceController < ApplicationController
     when "custom_button"
       @display == 'generic_objects' ? generic_object_custom_buttons : custom_buttons
     else
-      add_flash(_("Invalid button action!"), :error)
+      add_flash(_("Invalid button action"), :error)
       render_flash
     end
   end
