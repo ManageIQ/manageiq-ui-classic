@@ -26,6 +26,50 @@
 }
 
 #dual-list-sub-form-catalog {
+  fieldset {
+    .bx--grid .bx--row--condensed {
+      .buttonWrapper-0-2-7 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .bx--col-lg-5 {
+        border: 1px solid lightgray;
+        margin-top: 8px;
+    
+        h6 {
+          margin: 0;
+          padding: 10px 20px;
+        }
+    
+        .toolbar-0-2-8 {
+          button {
+            cursor: pointer;
+            width: 50px;
+            display: flex;
+            justify-content: center;
+  
+            svg {
+              margin-top: -20px;
+            }
+          }
+        }
+    
+        .bx--structured-list {
+          .bx--structured-list-row {
+            .bx--col-sm-1 {
+              display: flex;
+              justify-content: flex-end;
+              padding: 0;
+              color: $active-primary;
+            }
+          }
+        }
+      }
+    }
+  }
+  
   #move-right, #move-all-right, #move-all-left, #move-left {
     svg {
       position: unset;
