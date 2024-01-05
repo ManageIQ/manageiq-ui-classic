@@ -12,7 +12,7 @@ const CategoryModifier = ({
   isDisabled,
 }) => (
   <FormGroup legendText={categoryLabel}>
-    <Column xs={12} md={8} lg={8}>
+    <Column className="tag-modifier-form-row category-modifier">
       <TagSelector
         tagCategories={tagCategories}
         onTagCategoryChange={onTagCategoryChange}

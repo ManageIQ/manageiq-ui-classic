@@ -4,49 +4,49 @@ exports[`Tag view match snapshot 1`] = `
 <div
   id="assignments_div"
 >
-  <Row>
+  <Row
+    className="tag-modifier-header"
+  >
     <Column
       lg={12}
     >
-      <h2>
+      <h4>
         Assigned tags
-      </h2>
+      </h4>
     </Column>
   </Row>
-  <Row>
-    <Column
-      lg={12}
+  <Row
+    className="tag-modifier-form assigned-tags"
+  >
+    <ul
+      className="list-inline"
     >
-      <ul
-        className="list-inline"
+      <li
+        key="1"
       >
-        <li
+        <TagCategory
+          categoryTruncate={[Function]}
           key="1"
-        >
-          <TagCategory
-            categoryTruncate={[Function]}
-            key="1"
-            onTagDeleteClick={[MockFunction]}
-            showCloseButton={true}
-            tagCategory={
+          onTagDeleteClick={[MockFunction]}
+          showCloseButton={true}
+          tagCategory={
+            Object {
+              "description": "Name",
+              "id": 1,
+            }
+          }
+          valueTruncate={[Function]}
+          values={
+            Array [
               Object {
-                "description": "Name",
-                "id": 1,
-              }
-            }
-            valueTruncate={[Function]}
-            values={
-              Array [
-                Object {
-                  "description": "Pepa",
-                  "id": 11,
-                },
-              ]
-            }
-          />
-        </li>
-      </ul>
-    </Column>
+                "description": "Pepa",
+                "id": 11,
+              },
+            ]
+          }
+        />
+      </li>
+    </ul>
   </Row>
 </div>
 `;

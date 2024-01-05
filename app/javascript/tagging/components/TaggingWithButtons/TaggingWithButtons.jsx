@@ -25,7 +25,7 @@ class TaggingWithButtons extends React.Component {
       options, saveButton, resetButton, cancelButton,
     } = this.props;
     return (
-      <Grid>
+      <Grid className="tagging-container">
         <Tagging
           selectedTagCategory={selectedTagCategory}
           tags={tags}
@@ -36,7 +36,7 @@ class TaggingWithButtons extends React.Component {
           onSingleTagValueChange={onSingleTagValueChange}
           options={options}
         />
-        <Row className="pull-right">
+        <Row className="tagging-row-wrapper tagging-toolbar pull-right">
           <div role="toolbar" className="btn-toolbar">
             <ButtonSet>
               <Button

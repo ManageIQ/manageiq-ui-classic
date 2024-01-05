@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Row, Column } from 'carbon-components-react';
+import { Row, Column } from 'carbon-components-react';
 import TagModifier from '../InnerComponents/TagModifier';
 import TagView from '../InnerComponents/TagView';
 import CategoryModifier from '../InnerComponents/CategoryModifier';
@@ -66,35 +66,33 @@ class Tagging extends React.Component {
     } = this.props;
     const isDisabled = options && options.isDisabled;
     return (
-      <Grid>
-        <Row>
-          <Column xs={12} md={8} lg={6}>
-            <TagModifier hideHeader={options && options.hideHeaders}>
-              <CategoryModifier
-                selectedTagCategory={selectedTagCategory}
-                onTagCategoryChange={onTagCategoryChange}
-                tagCategories={this.tagCategories}
-                isDisabled={isDisabled}
-              />
-              <ValueModifier
-                onTagValueChange={this.onTagValueChange}
-                selectedTagValues={this.getSelectedCategoryValues().values}
-                multiValue={this.isMulti(selectedTagCategory)}
-                values={this.getCategoryValues()}
-                isDisabled={isDisabled}
-              />
-            </TagModifier>
-          </Column>
-          <Column xs={12} md={4} lg={6}>
-            <TagView
-              hideHeader={options && options.hideHeaders}
-              assignedTags={assignedTags}
-              onTagDeleteClick={isDisabled ? () => {} : this.onTagDeleteClick}
-              showCloseButton={!isDisabled}
+      <Row className="tagging-row-wrapper tagging-form">
+        <Column className="tagging-block-outer">
+          <TagModifier hideHeader={options && options.hideHeaders}>
+            <CategoryModifier
+              selectedTagCategory={selectedTagCategory}
+              onTagCategoryChange={onTagCategoryChange}
+              tagCategories={this.tagCategories}
+              isDisabled={isDisabled}
             />
-          </Column>
-        </Row>
-      </Grid>
+            <ValueModifier
+              onTagValueChange={this.onTagValueChange}
+              selectedTagValues={this.getSelectedCategoryValues().values}
+              multiValue={this.isMulti(selectedTagCategory)}
+              values={this.getCategoryValues()}
+              isDisabled={isDisabled}
+            />
+          </TagModifier>
+        </Column>
+        <Column className="tagging-block-outer">
+          <TagView
+            hideHeader={options && options.hideHeaders}
+            assignedTags={assignedTags}
+            onTagDeleteClick={isDisabled ? () => {} : this.onTagDeleteClick}
+            showCloseButton={!isDisabled}
+          />
+        </Column>
+      </Row>
     );
   }
 }
