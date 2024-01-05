@@ -33,7 +33,7 @@ const CustomURLTabs = ({
 
   useEffect(() => {
     const currentTabIndex = tabs.findIndex((tab) => tab[0] === currentTab);
-    if (currentTabIndex) {
+    if (currentTabIndex >= 0) {
       setState((state) => ({
         ...state,
         selectedTab: currentTabIndex,
