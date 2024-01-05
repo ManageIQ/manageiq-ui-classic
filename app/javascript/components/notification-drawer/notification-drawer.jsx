@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { ChevronLeft16, Close16 } from '@carbon/icons-react';
@@ -13,7 +14,7 @@ import {
 
 import initNotifications from '../../notifications/init';
 
-const NotificationDrawer = () => {
+const NotificationDrawer = ({ jsRequest }) => {
   const dispatch = useDispatch();
   const drawerTitle = __('Notifications');
   const [isDrawerExpanded, setDrawerExpanded] = useState(false);
@@ -21,7 +22,9 @@ const NotificationDrawer = () => {
     isDrawerVisible, unreadCount, notifications, totalNotificationsCount, maxNotifications,
   } = useSelector(({ notificationReducer }) => notificationReducer);
   useEffect(() => {
-    initNotifications();
+    if (!jsRequest) {
+      initNotifications();
+    }
   }, []);
   return (
     isDrawerVisible ? (
@@ -192,3 +195,11 @@ const NotificationDrawer = () => {
 };
 
 export default NotificationDrawer;
+
+NotificationDrawer.propTypes = {
+  jsRequest: PropTypes.bool,
+};
+
+NotificationDrawer.defaultProps = {
+  jsRequest: false,
+};

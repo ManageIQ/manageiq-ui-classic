@@ -35,6 +35,7 @@ exports[`Breadcrumbs component is correctly rendered 1`] = `
           },
         ]
       }
+      jsRequest={false}
       title="Title"
     >
       <Breadcrumbs
@@ -58,6 +59,7 @@ exports[`Breadcrumbs component is correctly rendered 1`] = `
             },
           ]
         }
+        jsRequest={false}
         title="Title"
       >
         <Breadcrumb
@@ -136,7 +138,9 @@ exports[`Breadcrumbs component is correctly rendered 1`] = `
           </nav>
         </Breadcrumb>
       </Breadcrumbs>
-      <NotificationsToggle>
+      <NotificationsToggle
+        jsRequest={false}
+      >
         <div
           className="notification-module"
         >
@@ -212,7 +216,9 @@ exports[`Breadcrumbs component is correctly rendered 1`] = `
               </MiqIcon>
             </button>
           </Button>
-          <NotificationDrawer />
+          <NotificationDrawer
+            jsRequest={false}
+          />
         </div>
       </NotificationsToggle>
     </BreadcrumbsBar>
