@@ -4,7 +4,6 @@ import { pick } from 'lodash';
 
 import AsyncCredentials from '../async-credentials/async-credentials';
 import EditingContext from './editing-context';
-import { trimFieldValue } from './helper';
 
 const ValidateProviderCredentials = ({ ...props }) => {
   const { providerId } = useContext(EditingContext);
@@ -12,9 +11,8 @@ const ValidateProviderCredentials = ({ ...props }) => {
   const asyncValidate = (fields, fieldNames) => new Promise((resolve, reject) => {
     const url = providerId ? `/api/providers/${providerId}` : '/api/providers';
     const resource = pick(fields, fieldNames);
-    const updatedResource = trimFieldValue(resource);
 
-    API.post(url, { action: 'verify_credentials', resource: updatedResource }).then(({ results: [result] = [], ...single }) => {
+    API.post(url, { action: 'verify_credentials', resource }).then(({ results: [result] = [], ...single }) => {
       // eslint-disable-next-line camelcase
       const { task_id, success } = result || single;
       // The request here can either create a background task or fail

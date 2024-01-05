@@ -13,7 +13,6 @@ import ProviderCredentials from './provider-credentials';
 import ValidateProviderCredentials from './validate-provider-credentials';
 import DetectButton from './detect-button';
 import validateName from '../../helpers/storage_manager/validate-names';
-import { trimFieldValue } from './helper';
 
 const findSkipSubmits = (schema, items) => {
   const found = schema.skipSubmit && items.includes(schema.name) ? [schema.name] : [];
@@ -176,7 +175,7 @@ const ProviderForm = ({
       // Construct the full form data with all the necessary items
       const data = {
         ...rest,
-        endpoints: trimFieldValue(endpoints),
+        endpoints,
         authentications,
         ...(edit ? undefined : { type }),
         ddf: true,
