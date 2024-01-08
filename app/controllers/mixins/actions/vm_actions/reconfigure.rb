@@ -19,7 +19,8 @@ module Mixins
 
           if @reconfigitems.size == 1
             vm = @reconfigitems.first
-            @vlan_options = vm.try(:available_vlans) || get_vlan_options(vm.host_id)
+            # NOTE: available_vlans is ovirt specific vlan lookup
+            @vlan_options = vm.try(:available_vlans) || get_vlan_options(vm.host)
 
             @avail_adapter_names = vm.try(:available_adapter_names) || []
             @iso_options = get_iso_options(vm)
@@ -210,19 +211,10 @@ module Mixins
           return humansize.to_s, fmt
         end
 
-        def get_vlan_options(host_id)
-          vlan_options = []
-
-          # determine available switches for this host...
-          switch_ids = []
-          Rbac.filtered(HostSwitch.where("host_id = ?", host_id)).each do |host_switch|
-            switch_ids << host_switch.switch_id
-          end
-
-          Rbac.filtered(Lan.where("switch_id IN (?)", switch_ids)).each do |lan|
-            vlan_options << lan.name
-          end
-          vlan_options.sort
+        # determine available switches for this host...
+        def get_vlan_options(host)
+          switch_ids = Rbac.filtered(host.switches).pluck(:id)
+          Rbac.filtered(Lan.where(:switch_id => switch_ids).order(:name)).pluck(:name)
         end
 
         def get_iso_options(vm)
