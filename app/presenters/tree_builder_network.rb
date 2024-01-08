@@ -27,18 +27,15 @@ class TreeBuilderNetwork < TreeBuilder
   end
 
   def x_get_tree_roots
-    @root.switches.empty? ? [] : count_only_or_objects(false, @root.switches)
+    Rbac.filtered(@root.switches)
   end
 
   def x_get_tree_switch_kids(parent, count_only)
-    objects = []
-    objects.concat(parent.guest_devices) unless parent.guest_devices.empty?
-    objects.concat(parent.lans) unless parent.lans.empty?
-    count_only_or_objects(count_only, objects)
+    count_only_or_objects_filtered(count_only, parent.guest_devices) + count_only_or_objects_filtered(count_only, parent.lans)
   end
 
   def x_get_tree_lan_kids(parent, count_only)
-    if parent.respond_to?("vms_and_templates")
+    if parent.respond_to?(:vms_and_templates)
       count_only_or_objects_filtered(count_only, parent.vms_and_templates, "name")
     else
       count_only ? 0 : []

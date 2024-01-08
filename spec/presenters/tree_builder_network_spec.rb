@@ -1,6 +1,7 @@
 describe TreeBuilderNetwork do
   context 'TreeBuilderNetwork' do
     before do
+      EvmSpecHelper.local_miq_server
       role = MiqUserRole.find_by(:name => "EvmRole-operator")
       @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Network Group")
       login_as FactoryBot.create(:user, :userid => 'network_wilma', :miq_groups => [@group])
