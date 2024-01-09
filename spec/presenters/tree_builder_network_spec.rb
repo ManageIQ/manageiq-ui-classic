@@ -1,6 +1,7 @@
 describe TreeBuilderNetwork do
   context 'TreeBuilderNetwork' do
     before do
+      EvmSpecHelper.local_miq_server
       role = MiqUserRole.find_by(:name => "EvmRole-operator")
       @group = FactoryBot.create(:miq_group, :miq_user_role => role, :description => "Network Group")
       login_as FactoryBot.create(:user, :userid => 'network_wilma', :miq_groups => [@group])
@@ -37,6 +38,7 @@ describe TreeBuilderNetwork do
     end
 
     it 'returns Vm as Lan child' do
+      EvmSpecHelper.local_miq_server
       parent = @network_tree.send(:x_get_tree_roots).first.lans.first
       kid = @network_tree.send(:x_get_tree_lan_kids, parent, false)
       expect(kid.first).to be_a_kind_of(Vm)
