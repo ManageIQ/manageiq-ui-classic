@@ -112,7 +112,7 @@
             = button_tag(t, :class => "btn btn-primary disabled")
 - else
   = request_details_summary(@miq_request, @user)
-- if @miq_request.request_logs.any?
+- if role_allows?(:feature => 'miq_request_show_logs') && @miq_request.request_logs.any?
   %h3
     = _("Request Logs")
     = react('RequestsTable', {:initialData => @miq_request.request_logs})
