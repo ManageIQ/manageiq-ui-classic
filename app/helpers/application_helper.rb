@@ -256,6 +256,10 @@ module ApplicationHelper
         action = 'show'
         return url_for_only_path(:action => action, :id => params[:id]) + "?display=generic_objects&generic_object_id="
       end
+      if request[:controller] == 'service_catalogs' && view.db == 'GenericObject'
+        action = 'show'
+        return url_for_only_path(:controller => 'service_catalogs', :action => action, :id => params[:id]) + "?display=generic_objects&generic_object_id="
+      end
       if @explorer
         # showing a list view of another CI inside vmx
         if %w[SecurityGroup

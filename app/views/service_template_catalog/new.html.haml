@@ -1,0 +1,3 @@
+= render :partial => "layouts/flash_msg"
+.col-md-12
+  = react('CatalogForm', { :catalogId => @edit[:rec_id].to_s || nil })
