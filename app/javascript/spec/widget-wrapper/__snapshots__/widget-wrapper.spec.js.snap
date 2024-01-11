@@ -186,6 +186,163 @@ exports[`Widget wrapper component should render a widget wrapper with a chart 1`
           </Loading>
         </div>
       </div>
+      <WidgetRemoveModal
+        href=""
+        setState={[Function]}
+        showConfirm={false}
+        widgetTitle="Guest OS Information"
+      >
+        <Modal
+          hasScrollingContent={false}
+          modalHeading=""
+          modalLabel=""
+          onKeyDown={[Function]}
+          onRequestClose={[Function]}
+          onRequestSubmit={[Function]}
+          onSecondarySubmit={[Function]}
+          open={false}
+          passiveModal={false}
+          preventCloseOnClickOutside={false}
+          primaryButtonDisabled={false}
+          primaryButtonText="OK"
+          secondaryButtonText="Cancel"
+          selectorPrimaryFocus="[data-modal-primary-focus]"
+        >
+          <div
+            className="bx--modal bx--modal-tall"
+            onBlur={[Function]}
+            onKeyDown={[Function]}
+            onMouseDown={[Function]}
+            role="presentation"
+          >
+            <span
+              className="bx--visually-hidden"
+              role="link"
+              tabIndex="0"
+            >
+              Focus sentinel
+            </span>
+            <div
+              aria-label=""
+              aria-modal="true"
+              className="bx--modal-container"
+              role="dialog"
+              tabIndex="-1"
+            >
+              <div
+                className="bx--modal-header"
+              >
+                <h3
+                  className="bx--modal-header__heading"
+                  id="bx--modal-header__heading--modal-3"
+                />
+                <button
+                  aria-label="close"
+                  className="bx--modal-close"
+                  onClick={[Function]}
+                  type="button"
+                >
+                  <ForwardRef(Close20)
+                    aria-hidden="true"
+                    className="bx--modal-close__icon"
+                    tabIndex="-1"
+                  >
+                    <Icon
+                      aria-hidden="true"
+                      className="bx--modal-close__icon"
+                      fill="currentColor"
+                      height={20}
+                      preserveAspectRatio="xMidYMid meet"
+                      tabIndex="-1"
+                      viewBox="0 0 32 32"
+                      width={20}
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="bx--modal-close__icon"
+                        fill="currentColor"
+                        focusable="false"
+                        height={20}
+                        preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 32 32"
+                        width={20}
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"
+                        />
+                      </svg>
+                    </Icon>
+                  </ForwardRef(Close20)>
+                </button>
+              </div>
+              <div
+                className="bx--modal-content"
+                id="bx--modal-body--modal-3"
+              >
+                Are you sure you want to remove Guest OS Information from the Dashboard?
+              </div>
+              <ButtonSet
+                className="bx--modal-footer"
+              >
+                <div
+                  className="bx--modal-footer bx--btn-set"
+                >
+                  <Button
+                    kind="secondary"
+                    onClick={[Function]}
+                  >
+                    <button
+                      aria-describedby={null}
+                      aria-pressed={null}
+                      className="bx--btn bx--btn--secondary"
+                      disabled={false}
+                      onBlur={[Function]}
+                      onClick={[Function]}
+                      onFocus={[Function]}
+                      onMouseEnter={[Function]}
+                      onMouseLeave={[Function]}
+                      tabIndex={0}
+                      type="button"
+                    >
+                      Cancel
+                    </button>
+                  </Button>
+                  <Button
+                    disabled={false}
+                    kind="primary"
+                    onClick={[Function]}
+                  >
+                    <button
+                      aria-describedby={null}
+                      aria-pressed={null}
+                      className="bx--btn bx--btn--primary"
+                      disabled={false}
+                      onBlur={[Function]}
+                      onClick={[Function]}
+                      onFocus={[Function]}
+                      onMouseEnter={[Function]}
+                      onMouseLeave={[Function]}
+                      tabIndex={0}
+                      type="button"
+                    >
+                      OK
+                    </button>
+                  </Button>
+                </div>
+              </ButtonSet>
+            </div>
+            <span
+              className="bx--visually-hidden"
+              role="link"
+              tabIndex="0"
+            >
+              Focus sentinel
+            </span>
+          </div>
+        </Modal>
+      </WidgetRemoveModal>
     </div>
   </WidgetWrapper>
 </Provider>
@@ -377,6 +534,163 @@ exports[`Widget wrapper component should render a widget wrapper with a menu 1`]
           </Loading>
         </div>
       </div>
+      <WidgetRemoveModal
+        href=""
+        setState={[Function]}
+        showConfirm={false}
+        widgetTitle="Links"
+      >
+        <Modal
+          hasScrollingContent={false}
+          modalHeading=""
+          modalLabel=""
+          onKeyDown={[Function]}
+          onRequestClose={[Function]}
+          onRequestSubmit={[Function]}
+          onSecondarySubmit={[Function]}
+          open={false}
+          passiveModal={false}
+          preventCloseOnClickOutside={false}
+          primaryButtonDisabled={false}
+          primaryButtonText="OK"
+          secondaryButtonText="Cancel"
+          selectorPrimaryFocus="[data-modal-primary-focus]"
+        >
+          <div
+            className="bx--modal bx--modal-tall"
+            onBlur={[Function]}
+            onKeyDown={[Function]}
+            onMouseDown={[Function]}
+            role="presentation"
+          >
+            <span
+              className="bx--visually-hidden"
+              role="link"
+              tabIndex="0"
+            >
+              Focus sentinel
+            </span>
+            <div
+              aria-label=""
+              aria-modal="true"
+              className="bx--modal-container"
+              role="dialog"
+              tabIndex="-1"
+            >
+              <div
+                className="bx--modal-header"
+              >
+                <h3
+                  className="bx--modal-header__heading"
+                  id="bx--modal-header__heading--modal-2"
+                />
+                <button
+                  aria-label="close"
+                  className="bx--modal-close"
+                  onClick={[Function]}
+                  type="button"
+                >
+                  <ForwardRef(Close20)
+                    aria-hidden="true"
+                    className="bx--modal-close__icon"
+                    tabIndex="-1"
+                  >
+                    <Icon
+                      aria-hidden="true"
+                      className="bx--modal-close__icon"
+                      fill="currentColor"
+                      height={20}
+                      preserveAspectRatio="xMidYMid meet"
+                      tabIndex="-1"
+                      viewBox="0 0 32 32"
+                      width={20}
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="bx--modal-close__icon"
+                        fill="currentColor"
+                        focusable="false"
+                        height={20}
+                        preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 32 32"
+                        width={20}
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"
+                        />
+                      </svg>
+                    </Icon>
+                  </ForwardRef(Close20)>
+                </button>
+              </div>
+              <div
+                className="bx--modal-content"
+                id="bx--modal-body--modal-2"
+              >
+                Are you sure you want to remove Links from the Dashboard?
+              </div>
+              <ButtonSet
+                className="bx--modal-footer"
+              >
+                <div
+                  className="bx--modal-footer bx--btn-set"
+                >
+                  <Button
+                    kind="secondary"
+                    onClick={[Function]}
+                  >
+                    <button
+                      aria-describedby={null}
+                      aria-pressed={null}
+                      className="bx--btn bx--btn--secondary"
+                      disabled={false}
+                      onBlur={[Function]}
+                      onClick={[Function]}
+                      onFocus={[Function]}
+                      onMouseEnter={[Function]}
+                      onMouseLeave={[Function]}
+                      tabIndex={0}
+                      type="button"
+                    >
+                      Cancel
+                    </button>
+                  </Button>
+                  <Button
+                    disabled={false}
+                    kind="primary"
+                    onClick={[Function]}
+                  >
+                    <button
+                      aria-describedby={null}
+                      aria-pressed={null}
+                      className="bx--btn bx--btn--primary"
+                      disabled={false}
+                      onBlur={[Function]}
+                      onClick={[Function]}
+                      onFocus={[Function]}
+                      onMouseEnter={[Function]}
+                      onMouseLeave={[Function]}
+                      tabIndex={0}
+                      type="button"
+                    >
+                      OK
+                    </button>
+                  </Button>
+                </div>
+              </ButtonSet>
+            </div>
+            <span
+              className="bx--visually-hidden"
+              role="link"
+              tabIndex="0"
+            >
+              Focus sentinel
+            </span>
+          </div>
+        </Modal>
+      </WidgetRemoveModal>
     </div>
   </WidgetWrapper>
 </Provider>
@@ -568,6 +882,163 @@ exports[`Widget wrapper component should render a widget wrapper with a report 1
           </Loading>
         </div>
       </div>
+      <WidgetRemoveModal
+        href=""
+        setState={[Function]}
+        showConfirm={false}
+        widgetTitle="EVM: Recently Discovered Hosts"
+      >
+        <Modal
+          hasScrollingContent={false}
+          modalHeading=""
+          modalLabel=""
+          onKeyDown={[Function]}
+          onRequestClose={[Function]}
+          onRequestSubmit={[Function]}
+          onSecondarySubmit={[Function]}
+          open={false}
+          passiveModal={false}
+          preventCloseOnClickOutside={false}
+          primaryButtonDisabled={false}
+          primaryButtonText="OK"
+          secondaryButtonText="Cancel"
+          selectorPrimaryFocus="[data-modal-primary-focus]"
+        >
+          <div
+            className="bx--modal bx--modal-tall"
+            onBlur={[Function]}
+            onKeyDown={[Function]}
+            onMouseDown={[Function]}
+            role="presentation"
+          >
+            <span
+              className="bx--visually-hidden"
+              role="link"
+              tabIndex="0"
+            >
+              Focus sentinel
+            </span>
+            <div
+              aria-label=""
+              aria-modal="true"
+              className="bx--modal-container"
+              role="dialog"
+              tabIndex="-1"
+            >
+              <div
+                className="bx--modal-header"
+              >
+                <h3
+                  className="bx--modal-header__heading"
+                  id="bx--modal-header__heading--modal-1"
+                />
+                <button
+                  aria-label="close"
+                  className="bx--modal-close"
+                  onClick={[Function]}
+                  type="button"
+                >
+                  <ForwardRef(Close20)
+                    aria-hidden="true"
+                    className="bx--modal-close__icon"
+                    tabIndex="-1"
+                  >
+                    <Icon
+                      aria-hidden="true"
+                      className="bx--modal-close__icon"
+                      fill="currentColor"
+                      height={20}
+                      preserveAspectRatio="xMidYMid meet"
+                      tabIndex="-1"
+                      viewBox="0 0 32 32"
+                      width={20}
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="bx--modal-close__icon"
+                        fill="currentColor"
+                        focusable="false"
+                        height={20}
+                        preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 32 32"
+                        width={20}
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"
+                        />
+                      </svg>
+                    </Icon>
+                  </ForwardRef(Close20)>
+                </button>
+              </div>
+              <div
+                className="bx--modal-content"
+                id="bx--modal-body--modal-1"
+              >
+                Are you sure you want to remove EVM: Recently Discovered Hosts from the Dashboard?
+              </div>
+              <ButtonSet
+                className="bx--modal-footer"
+              >
+                <div
+                  className="bx--modal-footer bx--btn-set"
+                >
+                  <Button
+                    kind="secondary"
+                    onClick={[Function]}
+                  >
+                    <button
+                      aria-describedby={null}
+                      aria-pressed={null}
+                      className="bx--btn bx--btn--secondary"
+                      disabled={false}
+                      onBlur={[Function]}
+                      onClick={[Function]}
+                      onFocus={[Function]}
+                      onMouseEnter={[Function]}
+                      onMouseLeave={[Function]}
+                      tabIndex={0}
+                      type="button"
+                    >
+                      Cancel
+                    </button>
+                  </Button>
+                  <Button
+                    disabled={false}
+                    kind="primary"
+                    onClick={[Function]}
+                  >
+                    <button
+                      aria-describedby={null}
+                      aria-pressed={null}
+                      className="bx--btn bx--btn--primary"
+                      disabled={false}
+                      onBlur={[Function]}
+                      onClick={[Function]}
+                      onFocus={[Function]}
+                      onMouseEnter={[Function]}
+                      onMouseLeave={[Function]}
+                      tabIndex={0}
+                      type="button"
+                    >
+                      OK
+                    </button>
+                  </Button>
+                </div>
+              </ButtonSet>
+            </div>
+            <span
+              className="bx--visually-hidden"
+              role="link"
+              tabIndex="0"
+            >
+              Focus sentinel
+            </span>
+          </div>
+        </Modal>
+      </WidgetRemoveModal>
     </div>
   </WidgetWrapper>
 </Provider>

@@ -3,7 +3,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { OverflowMenuItem, Loading } from 'carbon-components-react';
 import classNames from 'classnames';
-import miqRedirectBack from '../../../helpers/miq-redirect-back';
 import WidgetChart from '../widget-chart';
 import WidgetError from '../widget-error';
 import WidgetFooter from '../widget-footer';
@@ -168,13 +167,11 @@ const menuItemOnClick = (menuItems, widgetId, dataMethod, href, buttonTitle, wid
   }
   // Handles remove button
   if (dataMethod === 'post') {
-    if (window.confirm(sprintf(__(`Are you sure you want to remove %s from the Dashboard?`), widgetTitle))) {
-      http.post(href, {}, { skipErrors: true })
-        .then((result) => {
-          miqRedirectBack(result.message, 'success', '/dashboard/');
-        })
-        .catch((result) => miqRedirectBack(result.message, 'warning', '/dashboard/'));
-    }
+    setState((state) => ({
+      ...state,
+      showConfirm: true,
+      href,
+    }));
   } else {
     // Handles print or export to PDF button
     if (buttonTitle === __('Print the full report (all rows) or export it as a PDF file')) {
