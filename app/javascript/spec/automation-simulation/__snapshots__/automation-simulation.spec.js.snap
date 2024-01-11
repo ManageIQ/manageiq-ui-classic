@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AutomationSimulation Component renders tabs and tab contents correctly 1`] = `
+<Tabs
+  className="automation_simulation_tab"
+  scrollDebounceWait={150}
+  scrollIntoView={true}
+  selected={0}
+  selectionMode="automatic"
+  type="default"
+/>
+`;

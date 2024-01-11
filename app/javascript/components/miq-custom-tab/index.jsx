@@ -8,6 +8,7 @@ const MiqCustomTab = ({ containerId, tabLabels, type }) => {
   const dispatch = useDispatch();
   const [data, setData] = useState({ loading: false });
   const tabConfigurations = (name) => [
+    { type: 'AE-RESOLVE-OPTIONS' },
     { type: 'CATALOG_SUMMARY' },
     { type: 'CATALOG_EDIT', js: () => name === 'detail' && dispatch(miqCustomTabActions.incrementClickCount()) },
     { type: 'CATALOG_REQUEST_INFO', url: `/miq_request/prov_field_changed?tab_id=${name}&edit_mode=true` },
