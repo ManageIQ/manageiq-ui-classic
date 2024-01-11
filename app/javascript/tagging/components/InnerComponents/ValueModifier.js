@@ -13,7 +13,7 @@ const ValueModifier = ({
   isDisabled,
 }) => (
   <FormGroup legendText={valueLabel}>
-    <Column xs={12} md={8} lg={8}>
+    <Column className="tag-modifier-form-row value-modifier">
       <ValueSelector
         values={values}
         onTagValueChange={onTagValueChange}

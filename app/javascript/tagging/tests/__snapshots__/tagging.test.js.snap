@@ -1,321 +1,309 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Tagging component without redux mapping match snapshot 1`] = `
-<Grid>
-  <Row>
-    <Column
-      lg={6}
-      md={8}
-      xs={12}
+<Row
+  className="tagging-row-wrapper tagging-form"
+>
+  <Column
+    className="tagging-block-outer"
+  >
+    <TagModifier
+      header="Add/Modify tag"
+      hideHeader={false}
     >
-      <TagModifier
-        header="Add/Modify tag"
-        hideHeader={false}
-      >
-        <CategoryModifier
-          categoryLabel="Category"
-          isDisabled={false}
-          onTagCategoryChange={[MockFunction]}
-          selectedTagCategory={
-            Object {
-              "description": "animal",
-              "id": 1,
-            }
+      <CategoryModifier
+        categoryLabel="Category"
+        isDisabled={false}
+        onTagCategoryChange={[MockFunction]}
+        selectedTagCategory={
+          Object {
+            "description": "animal",
+            "id": 1,
           }
-          tagCategories={
-            Array [
-              Object {
-                "description": "Name",
-                "id": 1,
-                "singleValue": undefined,
-              },
-              Object {
-                "description": "Number",
-                "id": 2,
-                "singleValue": undefined,
-              },
-              Object {
-                "description": "Animal",
-                "id": 3,
-                "singleValue": undefined,
-              },
-              Object {
-                "description": "Food",
-                "id": 4,
-                "singleValue": false,
-              },
-              Object {
-                "description": "Something",
-                "id": 5,
-                "singleValue": true,
-              },
-            ]
-          }
-        />
-        <ValueModifier
-          isDisabled={false}
-          multiValue={true}
-          onTagValueChange={[Function]}
-          selectedTagValues={
-            Array [
-              Object {
-                "description": "Pepa",
-                "id": 11,
-              },
-            ]
-          }
-          valueLabel="Value"
-          values={
-            Array [
-              Object {
-                "description": "Pepa",
-                "id": 11,
-              },
-              Object {
-                "description": "Franta",
-                "id": 12,
-              },
-            ]
-          }
-        />
-      </TagModifier>
-    </Column>
-    <Column
-      lg={6}
-      md={4}
-      xs={12}
-    >
-      <TagView
-        assignedTags={
+        }
+        tagCategories={
           Array [
             Object {
               "description": "Name",
               "id": 1,
-              "values": Array [
-                Object {
-                  "description": "Pepa",
-                  "id": 11,
-                },
-              ],
+              "singleValue": undefined,
             },
-          ]
-        }
-        header="Assigned tags"
-        hideHeader={false}
-        onTagDeleteClick={[Function]}
-        showCloseButton={true}
-      />
-    </Column>
-  </Row>
-</Grid>
-`;
-
-exports[`Tagging component without redux mapping should call methods - singleValue is false 1`] = `
-<Grid>
-  <Row>
-    <Column
-      lg={6}
-      md={8}
-      xs={12}
-    >
-      <TagModifier
-        header="Add/Modify tag"
-        hideHeader={false}
-      >
-        <CategoryModifier
-          categoryLabel="Category"
-          isDisabled={false}
-          onTagCategoryChange={[MockFunction]}
-          selectedTagCategory={
+            Object {
+              "description": "Number",
+              "id": 2,
+              "singleValue": undefined,
+            },
+            Object {
+              "description": "Animal",
+              "id": 3,
+              "singleValue": undefined,
+            },
             Object {
               "description": "Food",
               "id": 4,
-            }
-          }
-          tagCategories={
-            Array [
-              Object {
-                "description": "Name",
-                "id": 1,
-                "singleValue": undefined,
-              },
-              Object {
-                "description": "Number",
-                "id": 2,
-                "singleValue": undefined,
-              },
-              Object {
-                "description": "Animal",
-                "id": 3,
-                "singleValue": undefined,
-              },
-              Object {
-                "description": "Food",
-                "id": 4,
-                "singleValue": false,
-              },
-              Object {
-                "description": "Something",
-                "id": 5,
-                "singleValue": true,
-              },
-            ]
-          }
-        />
-        <ValueModifier
-          isDisabled={false}
-          multiValue={true}
-          onTagValueChange={[Function]}
-          selectedTagValues={Array []}
-          valueLabel="Value"
-          values={
-            Array [
-              Object {
-                "description": "Steak",
-                "id": 41,
-              },
-              Object {
-                "description": "Duck",
-                "id": 42,
-              },
-              Object {
-                "description": "Salad",
-                "id": 43,
-              },
-            ]
-          }
-        />
-      </TagModifier>
-    </Column>
-    <Column
-      lg={6}
-      md={4}
-      xs={12}
-    >
-      <TagView
-        assignedTags={
-          Array [
-            Object {
-              "description": "Name",
-              "id": 1,
-              "values": Array [
-                Object {
-                  "description": "Pepa",
-                  "id": 11,
-                },
-              ],
+              "singleValue": false,
             },
-          ]
-        }
-        header="Assigned tags"
-        hideHeader={false}
-        onTagDeleteClick={[Function]}
-        showCloseButton={true}
-      />
-    </Column>
-  </Row>
-</Grid>
-`;
-
-exports[`Tagging component without redux mapping should call methods - singleValue is true 1`] = `
-<Grid>
-  <Row>
-    <Column
-      lg={6}
-      md={8}
-      xs={12}
-    >
-      <TagModifier
-        header="Add/Modify tag"
-        hideHeader={false}
-      >
-        <CategoryModifier
-          categoryLabel="Category"
-          isDisabled={false}
-          onTagCategoryChange={[MockFunction]}
-          selectedTagCategory={
             Object {
               "description": "Something",
               "id": 5,
-            }
-          }
-          tagCategories={
-            Array [
+              "singleValue": true,
+            },
+          ]
+        }
+      />
+      <ValueModifier
+        isDisabled={false}
+        multiValue={true}
+        onTagValueChange={[Function]}
+        selectedTagValues={
+          Array [
+            Object {
+              "description": "Pepa",
+              "id": 11,
+            },
+          ]
+        }
+        valueLabel="Value"
+        values={
+          Array [
+            Object {
+              "description": "Pepa",
+              "id": 11,
+            },
+            Object {
+              "description": "Franta",
+              "id": 12,
+            },
+          ]
+        }
+      />
+    </TagModifier>
+  </Column>
+  <Column
+    className="tagging-block-outer"
+  >
+    <TagView
+      assignedTags={
+        Array [
+          Object {
+            "description": "Name",
+            "id": 1,
+            "values": Array [
               Object {
-                "description": "Name",
-                "id": 1,
-                "singleValue": undefined,
+                "description": "Pepa",
+                "id": 11,
               },
-              Object {
-                "description": "Number",
-                "id": 2,
-                "singleValue": undefined,
-              },
-              Object {
-                "description": "Animal",
-                "id": 3,
-                "singleValue": undefined,
-              },
-              Object {
-                "description": "Food",
-                "id": 4,
-                "singleValue": false,
-              },
-              Object {
-                "description": "Something",
-                "id": 5,
-                "singleValue": true,
-              },
-            ]
-          }
-        />
-        <ValueModifier
-          isDisabled={false}
-          multiValue={false}
-          onTagValueChange={[Function]}
-          selectedTagValues={Array []}
-          valueLabel="Value"
-          values={
-            Array [
-              Object {
-                "description": "Knedlik",
-                "id": 51,
-              },
-              Object {
-                "description": "Daenerys Stormborn of the House Targaryen, First of Her Name,...and Mother of Dragons",
-                "id": 52,
-              },
-            ]
-          }
-        />
-      </TagModifier>
-    </Column>
-    <Column
-      lg={6}
-      md={4}
-      xs={12}
+            ],
+          },
+        ]
+      }
+      header="Assigned tags"
+      hideHeader={false}
+      onTagDeleteClick={[Function]}
+      showCloseButton={true}
+    />
+  </Column>
+</Row>
+`;
+
+exports[`Tagging component without redux mapping should call methods - singleValue is false 1`] = `
+<Row
+  className="tagging-row-wrapper tagging-form"
+>
+  <Column
+    className="tagging-block-outer"
+  >
+    <TagModifier
+      header="Add/Modify tag"
+      hideHeader={false}
     >
-      <TagView
-        assignedTags={
+      <CategoryModifier
+        categoryLabel="Category"
+        isDisabled={false}
+        onTagCategoryChange={[MockFunction]}
+        selectedTagCategory={
+          Object {
+            "description": "Food",
+            "id": 4,
+          }
+        }
+        tagCategories={
           Array [
             Object {
               "description": "Name",
               "id": 1,
-              "values": Array [
-                Object {
-                  "description": "Pepa",
-                  "id": 11,
-                },
-              ],
+              "singleValue": undefined,
+            },
+            Object {
+              "description": "Number",
+              "id": 2,
+              "singleValue": undefined,
+            },
+            Object {
+              "description": "Animal",
+              "id": 3,
+              "singleValue": undefined,
+            },
+            Object {
+              "description": "Food",
+              "id": 4,
+              "singleValue": false,
+            },
+            Object {
+              "description": "Something",
+              "id": 5,
+              "singleValue": true,
             },
           ]
         }
-        header="Assigned tags"
-        hideHeader={false}
-        onTagDeleteClick={[Function]}
-        showCloseButton={true}
       />
-    </Column>
-  </Row>
-</Grid>
+      <ValueModifier
+        isDisabled={false}
+        multiValue={true}
+        onTagValueChange={[Function]}
+        selectedTagValues={Array []}
+        valueLabel="Value"
+        values={
+          Array [
+            Object {
+              "description": "Steak",
+              "id": 41,
+            },
+            Object {
+              "description": "Duck",
+              "id": 42,
+            },
+            Object {
+              "description": "Salad",
+              "id": 43,
+            },
+          ]
+        }
+      />
+    </TagModifier>
+  </Column>
+  <Column
+    className="tagging-block-outer"
+  >
+    <TagView
+      assignedTags={
+        Array [
+          Object {
+            "description": "Name",
+            "id": 1,
+            "values": Array [
+              Object {
+                "description": "Pepa",
+                "id": 11,
+              },
+            ],
+          },
+        ]
+      }
+      header="Assigned tags"
+      hideHeader={false}
+      onTagDeleteClick={[Function]}
+      showCloseButton={true}
+    />
+  </Column>
+</Row>
+`;
+
+exports[`Tagging component without redux mapping should call methods - singleValue is true 1`] = `
+<Row
+  className="tagging-row-wrapper tagging-form"
+>
+  <Column
+    className="tagging-block-outer"
+  >
+    <TagModifier
+      header="Add/Modify tag"
+      hideHeader={false}
+    >
+      <CategoryModifier
+        categoryLabel="Category"
+        isDisabled={false}
+        onTagCategoryChange={[MockFunction]}
+        selectedTagCategory={
+          Object {
+            "description": "Something",
+            "id": 5,
+          }
+        }
+        tagCategories={
+          Array [
+            Object {
+              "description": "Name",
+              "id": 1,
+              "singleValue": undefined,
+            },
+            Object {
+              "description": "Number",
+              "id": 2,
+              "singleValue": undefined,
+            },
+            Object {
+              "description": "Animal",
+              "id": 3,
+              "singleValue": undefined,
+            },
+            Object {
+              "description": "Food",
+              "id": 4,
+              "singleValue": false,
+            },
+            Object {
+              "description": "Something",
+              "id": 5,
+              "singleValue": true,
+            },
+          ]
+        }
+      />
+      <ValueModifier
+        isDisabled={false}
+        multiValue={false}
+        onTagValueChange={[Function]}
+        selectedTagValues={Array []}
+        valueLabel="Value"
+        values={
+          Array [
+            Object {
+              "description": "Knedlik",
+              "id": 51,
+            },
+            Object {
+              "description": "Daenerys Stormborn of the House Targaryen, First of Her Name,...and Mother of Dragons",
+              "id": 52,
+            },
+          ]
+        }
+      />
+    </TagModifier>
+  </Column>
+  <Column
+    className="tagging-block-outer"
+  >
+    <TagView
+      assignedTags={
+        Array [
+          Object {
+            "description": "Name",
+            "id": 1,
+            "values": Array [
+              Object {
+                "description": "Pepa",
+                "id": 11,
+              },
+            ],
+          },
+        ]
+      }
+      header="Assigned tags"
+      hideHeader={false}
+      onTagDeleteClick={[Function]}
+      showCloseButton={true}
+    />
+  </Column>
+</Row>
 `;

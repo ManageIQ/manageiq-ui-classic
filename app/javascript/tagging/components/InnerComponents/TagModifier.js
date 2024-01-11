@@ -6,13 +6,13 @@ const TagModifier = ({ header, hideHeader, children }) => (
   <>
     { !hideHeader
       && (
-        <Row>
+        <Row className="tag-modifier-header">
           <Column lg={12}>
-            <h2>{header}</h2>
+            <h4>{header}</h4>
           </Column>
         </Row>
       ) }
-    <Form horizontal="true">{children}</Form>
+    <Form horizontal="true" className="tag-modifier-form">{children}</Form>
   </>
 );
 

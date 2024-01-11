@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Row, Column } from 'carbon-components-react';
 import TagCategory from './TagCategory';
 import TaggingPropTypes from '../TaggingPropTypes';
+import NotificationMessage from '../../../components/notification-message';
 
 class TagView extends React.Component {
   generateTagCategories = (tag) => (
@@ -23,22 +24,20 @@ class TagView extends React.Component {
     const assignedTags = [...this.props.assignedTags];
     const view = (assignedTags.length > 0
       ? <ul className="list-inline">{ assignedTags.sort((a, b) => (a.description < b.description ? -1 : 1)).map(this.generateTagCategories) }</ul>
-      : <p>{__('No Assigned Tags')}</p>
+      : <NotificationMessage type="info" message={__('No Assigned Tags')} />
     );
     return (
       <div id="assignments_div">
         { !hideHeader
           && (
-            <Row>
+            <Row className="tag-modifier-header">
               <Column lg={12}>
-                <h2>{header}</h2>
+                <h4>{header}</h4>
               </Column>
             </Row>
           )}
-        <Row>
-          <Column lg={12}>
-            { view }
-          </Column>
+        <Row className="tag-modifier-form assigned-tags">
+          { view }
         </Row>
       </div>
     );
