@@ -3,7 +3,6 @@ require('./catalog/catalog_item_form_controller.js');
 require('./container_dashboard/card/card-module.js');
 require('./container_dashboard/util.js');
 require('./container_dashboard/util/dashboard-utils-factory.js');
-require('./credentials/credentials_controller.js');
 require('./dialog_editor/dialog_editor_controller.js');
 require('./dialog_user/dialog_user_controller.js');
 require('./dialog_user/dialog_user_reconfigure_controller.js');
