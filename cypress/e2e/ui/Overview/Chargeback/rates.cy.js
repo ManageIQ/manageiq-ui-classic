@@ -11,14 +11,7 @@ describe('Rates', () => {
   });
 
   it('Loads the default compute chargeback rate', () => {
-    cy.get('.clickable-row').then((rows) => {
-      const nums = [...Array(rows.length).keys()];
-      nums.forEach((index) => {
-        if (rows[index].children[1].innerText === 'Default' && rows[index].children[2].innerText === 'Compute') {
-          cy.get(rows[index]).click();
-        }
-      });
-    }).then(() => {
+    cy.gtlClickRow([{title: 'Default', number: 1}, {title: 'Compute', number: 2}]).then(() => {
       cy.get(':nth-child(1) > .col-md-8 > .form-control-static').contains('Default');
       cy.get(':nth-child(2) > .col-md-8 > .form-control-static').contains('Compute');
 
@@ -127,14 +120,7 @@ describe('Rates', () => {
   });
 
   it('Loads the default storage chargeback rate', () => {
-    cy.get('.clickable-row').then((rows) => {
-      const nums = [...Array(rows.length).keys()];
-      nums.forEach((index) => {
-        if (rows[index].children[1].innerText === 'Default' && rows[index].children[2].innerText === 'Storage') {
-          cy.get(rows[index]).click();
-        }
-      });
-    }).then(() => {
+    cy.gtlClickRow([{title: 'Default', number: 1}, {title: 'Storage', number: 2}]).then(() => {
       cy.get(':nth-child(1) > .col-md-8 > .form-control-static').contains('Default');
       cy.get(':nth-child(2) > .col-md-8 > .form-control-static').contains('Storage');
 
@@ -185,14 +171,7 @@ describe('Rates', () => {
   });
 
   it('Loads the default container image chargeback rate', () => {
-    cy.get('.clickable-row').then((rows) => {
-      const nums = [...Array(rows.length).keys()];
-      nums.forEach((index) => {
-        if (rows[index].children[1].innerText === 'Default Container Image Rate') {
-          cy.get(rows[index]).click();
-        }
-      });
-    }).then(() => {
+    cy.gtlClickRow([{title: 'Default Container Image Rate', number: 1}]).then(() => {
       cy.get(':nth-child(1) > .col-md-8 > .form-control-static').contains('Default Container Image Rate');
       cy.get(':nth-child(2) > .col-md-8 > .form-control-static').contains('Compute');
 
@@ -301,24 +280,17 @@ describe('Rates', () => {
   });
 
   it('Cancel button works on the form', () => {
-    const rates = [];
-    cy.get('.clickable-row').then((rows) => {
-      const nums = [...Array(rows.length).keys()];
-      nums.forEach((index) => {
-        rates.push(rows[index].children[1].innerText);
-      });
-    }).then(() => {
+    cy.gtlGetRows([1]).then((originalRates) => {
       cy.get('#chargeback_rates_vmdb_choice').click();
       cy.get(':nth-child(1) > .bx--overflow-menu-options__btn > div').click();
       cy.get('[width="100%"] > tbody > tr > td > .btn-default').click();
       cy.get('.miq-toolbar-group');
       cy.url().should('include', 'chargeback_rate/show_list');
       cy.get('.alert').contains('Add of new Chargeback Rate was cancelled by the user');
-      cy.get('.clickable-row').then((rows) => {
-        const nums = [...Array(rows.length).keys()];
-        nums.forEach((index) => {
-          expect(rates).to.include(rows[index].children[1].innerText);
-          rates.shift();
+      cy.gtlGetRows([1]).then((newRates) => {
+        newRates.forEach((newRate) => {
+          expect(originalRates).to.deep.include(newRate);
+          originalRates.shift();
         });
       });
     });
@@ -360,14 +332,7 @@ describe('Rates', () => {
 
     cy.get('.btn-primary').click();
     cy.get('#gtl_div').contains('Cypress test compute chargeback rates');
-    cy.get('.clickable-row').then((rows) => {
-      const nums = [...Array(rows.length).keys()];
-      nums.forEach((index) => {
-        if (rows[index].children[1].innerText === 'Cypress test compute chargeback rates') {
-          cy.get(rows[index]).click();
-        }
-      });
-    }).then(() => {
+    cy.gtlClickRow([{title: 'Cypress test compute chargeback rates', number: 1}]).then(() => {
       cy.get(':nth-child(1) > .col-md-8 > .form-control-static').contains('Cypress test compute chargeback rates');
       cy.get(':nth-child(2) > .col-md-8 > .form-control-static').contains('Compute');
 
@@ -634,11 +599,10 @@ describe('Rates', () => {
     }).then(() => {
       cy.get('#chargeback_rate_vmdb_choice').click();
       cy.get(':nth-child(3) > .bx--overflow-menu-options__btn').click();
-      cy.get('.clickable-row').then((rows) => {
-        const nums = [...Array(rows.length).keys()];
-        nums.forEach((index) => {
-          expect(rows[index].children[1].innerText).to.not.eq('Cypress test compute chargeback rates edit');
-          expect(rows[index].children[1].innerText).to.not.eq('Cypress test compute chargeback rates');
+      cy.gtlGetRows([1]).then((rows) => {
+        rows.forEach((row) => {
+          expect(row).to.not.eq('Cypress test compute chargeback rates edit');
+          expect(row).to.not.eq('Cypress test compute chargeback rates');
         });
       });
     });
@@ -669,14 +633,7 @@ describe('Rates', () => {
     cy.get('#rate_detail_row_3_0 > .action-cell > .btn').click();
     cy.get('.btn-primary').click();
     cy.get('#gtl_div').contains('Cypress test storage chargeback rates');
-    cy.get('.clickable-row').then((rows) => {
-      const nums = [...Array(rows.length).keys()];
-      nums.forEach((index) => {
-        if (rows[index].children[1].innerText === 'Cypress test storage chargeback rates') {
-          cy.get(rows[index]).click();
-        }
-      });
-    }).then(() => {
+    cy.gtlClickRow([{title: 'Cypress test storage chargeback rates', number: 1}]).then(() => {
       cy.get(':nth-child(1) > .col-md-8 > .form-control-static').contains('Cypress test storage chargeback rates');
       cy.get(':nth-child(2) > .col-md-8 > .form-control-static').contains('Storage');
 
@@ -809,24 +766,17 @@ describe('Rates', () => {
     }).then(() => {
       cy.get('#chargeback_rate_vmdb_choice').click();
       cy.get(':nth-child(3) > .bx--overflow-menu-options__btn').click();
-      cy.get('.clickable-row').then((rows) => {
-        const nums = [...Array(rows.length).keys()];
-        nums.forEach((index) => {
-          expect(rows[index].children[1].innerText).to.not.eq('Cypress test storage chargeback rates edit');
-          expect(rows[index].children[1].innerText).to.not.eq('Cypress test storage chargeback rates');
+      cy.gtlGetRows([1]).then((rows) => {
+        rows.forEach((row) => {
+          expect(row).to.not.eq('Cypress test storage chargeback rates edit');
+          expect(row).to.not.eq('Cypress test storage chargeback rates');
         });
       });
     });
   });
 
   it('Copy a chargeback rate', () => {
-    cy.get('.clickable-row').then((rows) => {
-      const nums = [...Array(rows.length).keys()];
-      nums.forEach((index) => {
-        if (rows[index].children[1].innerText === 'Default' && rows[index].children[2].innerText === 'Storage') {
-          cy.get(rows[index]).click();
-        }
-      });
+    cy.gtlClickRow([{title: 'Default', number: 1}, {title: 'Storage', number: 2}]).then(() => {
       cy.get('#chargeback_rate_vmdb_choice').click();
       cy.get(':nth-child(2) > .bx--overflow-menu-options__btn').click();
       cy.get('.btn-primary').click();
@@ -879,10 +829,9 @@ describe('Rates', () => {
 
       cy.get('#chargeback_rate_vmdb_choice').click();
       cy.get(':nth-child(3) > .bx--overflow-menu-options__btn').click();
-      cy.get('.clickable-row').then((rows) => {
-        const nums = [...Array(rows.length).keys()];
-        nums.forEach((index) => {
-          expect(rows[index].children[1].innerText).to.not.eq('copy of default');
+      cy.gtlGetRows([1]).then((rows) => {
+        rows.forEach((row) => {
+          expect(row).to.not.eq('copy of default');
         });
       });
     });
