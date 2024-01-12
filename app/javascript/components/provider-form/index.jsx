@@ -174,13 +174,13 @@ const ProviderForm = ({
       }
 
       // Construct the full form data with all the necessary items
-      const data = {
+      const data = trimFieldValue({
         ...rest,
-        endpoints: trimFieldValue(endpoints),
+        endpoints,
         authentications,
         ...(edit ? undefined : { type }),
         ddf: true,
-      };
+      });
 
       const request = providerId ? API.patch(`/api/providers/${providerId}`, data) : API.post('/api/providers', data);
       request.then(() => miqRedirectBack(message, 'success', redirect)).catch(miqSparkleOff);
