@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.executables   = s.files.grep(%r{^exe/}) { |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_dependency "rails", ">= 6.0.4", "< 7.0"
+  s.add_dependency "rails", ">= 6.0.4", "<7.1"
 
   s.add_dependency "execjs", "2.8.1" # Note: 2.8.1 requires uglifier 4.2.0 to defer uglifier asset compilation until asset compilation time: https://github.com/rails/execjs/issues/105
   s.add_dependency "high_voltage", "~> 3.0.0"
