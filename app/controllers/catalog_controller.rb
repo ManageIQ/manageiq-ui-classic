@@ -350,8 +350,6 @@ class CatalogController < ApplicationController
       return
     end
 
-    build_accordions_and_trees
-
     if params[:id] && !params[:button] # If a tree node id came in, show in one of the trees
       @nodetype, id = parse_nodetype_and_id(params[:id])
       self.x_active_tree   = 'sandt_tree'
@@ -363,6 +361,8 @@ class CatalogController < ApplicationController
     else
       @in_a_form = false
     end
+
+    build_accordions_and_trees
 
     if params[:commit] == "Upload" && session.fetch_path(:edit, :new, :sysprep_enabled, 1) == "Sysprep Answer File"
       upload_sysprep_file
