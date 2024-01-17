@@ -3,28 +3,6 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import MiqStructuredList from '../miq-structured-list';
 
-const simpleRow = (row, i, colOrder) => (
-  <tr key={i} className="no-hover">
-    {colOrder.map((col, j) => <td key={j}>{row[col]}</td>)}
-  </tr>
-);
-
-const clickableRow = (row, i, colOrder, rowLabel, onClick) => (
-  <tr key={i}>
-    {colOrder.map((col, j) => (
-      <td key={j} title={rowLabel}>
-        <a href={row.link} onClick={(e) => onClick(row, e)}>
-          {`${row[col]}`}
-        </a>
-      </td>
-    ))}
-  </tr>
-);
-
-const renderRow = (row, i, colOrder, rowLabel, onClick) => (
-  row.link ? clickableRow(row, i, colOrder, rowLabel, onClick) : simpleRow(row, i, colOrder)
-);
-
 export default function TableListView(props) {
   const { headers, values, title } = props;
 
