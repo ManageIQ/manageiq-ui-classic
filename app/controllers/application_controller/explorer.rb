@@ -71,11 +71,11 @@ module ApplicationController::Explorer
   def x_button
     model, action = pressed2model_action(params[:pressed])
     allowed_models = %w[common image instance vm miq_template provider automation storage infra_networking]
-    raise ActionController::RoutingError, 'invalid button action' unless
+    raise ActionController::RoutingError, 'Invalid button action' unless
       allowed_models.include?(model)
 
     unless X_BUTTON_ALLOWED_ACTIONS.key?(action)
-      raise ActionController::RoutingError, _('invalid button action')
+      raise ActionController::RoutingError, _('Invalid button action')
     end
 
     @explorer = true
@@ -186,7 +186,7 @@ module ApplicationController::Explorer
     @sb[:action] = action = params[:pressed]
 
     unless whitelist.key?(action)
-      raise ActionController::RoutingError, _('invalid button action')
+      raise ActionController::RoutingError, _('Invalid button action')
     end
 
     send_action = whitelist[action]
