@@ -108,18 +108,6 @@ class ReportController < ApplicationController
     case params[:tab].split("_")[0]
     when "edit"
       redirect_to(:action => "miq_report_edit", :tab => params[:tab])
-    when "schedules"
-      assert_privileges("miq_report_schedules")
-
-      redirect_to(:action => params[:tab])
-    when "saved_reports"
-      assert_privileges("miq_report_saved_reports")
-
-      redirect_to(:action => params[:tab])
-    when "menueditor"
-      assert_privileges("miq_report_menu_editor")
-
-      redirect_to(:action => "menu_edit")
     else
       assert_privileges("miq_report")
 
