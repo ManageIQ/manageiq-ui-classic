@@ -45,22 +45,36 @@ exports[`TableListView renders just fine... 1`] = `
   <MiqStructuredList
     headers={
       Array [
-        undefined,
-        undefined,
+        "Name",
+        "Rows",
       ]
     }
     mode="table_list_view"
     onClick={[Function]}
     rows={
       Array [
-        Array [
-          undefined,
-          undefined,
-        ],
-        Array [
-          undefined,
-          undefined,
-        ],
+        Object {
+          "explorer": true,
+          "label": "vim_performance_states",
+          "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');",
+          "name": "vim_performance_states",
+          "title": "vim_performance_states",
+          "value": Array [
+            "676",
+            "150",
+          ],
+        },
+        Object {
+          "explorer": true,
+          "label": "miq_report_result_details",
+          "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');",
+          "name": "miq_report_result_details",
+          "title": "miq_report_result_details",
+          "value": Array [
+            "280",
+            "848",
+          ],
+        },
       ]
     }
     title="Tables with the Most Rows"
@@ -161,8 +175,8 @@ exports[`TableListView renders just fine... 1`] = `
                     <MiqStructuredListHeader
                       headers={
                         Array [
-                          undefined,
-                          undefined,
+                          "Name",
+                          "Rows",
                         ]
                       }
                     >
@@ -199,7 +213,9 @@ exports[`TableListView renders just fine... 1`] = `
                                       <div
                                         className="list_header bx--structured-list-th"
                                         role="columnheader"
-                                      />
+                                      >
+                                        Name
+                                      </div>
                                     </StructuredListCell>
                                   </FeatureToggle(StructuredListCell)>
                                   <FeatureToggle(StructuredListCell)
@@ -215,7 +231,9 @@ exports[`TableListView renders just fine... 1`] = `
                                       <div
                                         className="list_header bx--structured-list-th"
                                         role="columnheader"
-                                      />
+                                      >
+                                        Rows
+                                      </div>
                                     </StructuredListCell>
                                   </FeatureToggle(StructuredListCell)>
                                 </div>
@@ -231,14 +249,28 @@ exports[`TableListView renders just fine... 1`] = `
                       onClick={[Function]}
                       rows={
                         Array [
-                          Array [
-                            undefined,
-                            undefined,
-                          ],
-                          Array [
-                            undefined,
-                            undefined,
-                          ],
+                          Object {
+                            "explorer": true,
+                            "label": "vim_performance_states",
+                            "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');",
+                            "name": "vim_performance_states",
+                            "title": "vim_performance_states",
+                            "value": Array [
+                              "676",
+                              "150",
+                            ],
+                          },
+                          Object {
+                            "explorer": true,
+                            "label": "miq_report_result_details",
+                            "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');",
+                            "name": "miq_report_result_details",
+                            "title": "miq_report_result_details",
+                            "value": Array [
+                              "280",
+                              "848",
+                            ],
+                          },
                         ]
                       }
                     >
@@ -273,81 +305,193 @@ exports[`TableListView renders just fine... 1`] = `
                                   role="row"
                                   title=""
                                 >
+                                  <MiqStructuredListBodyLabel
+                                    label="vim_performance_states"
+                                  >
+                                    <FeatureToggle(StructuredListCell)
+                                      className="label_header"
+                                    >
+                                      <StructuredListCell
+                                        className="label_header"
+                                        head={false}
+                                        noWrap={false}
+                                      >
+                                        <div
+                                          className="label_header bx--structured-list-td"
+                                          role="cell"
+                                        >
+                                          vim_performance_states
+                                        </div>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                  </MiqStructuredListBodyLabel>
                                   <MiqStructuredListBodyValue
                                     clickEvents={false}
                                     onClick={[Function]}
                                     row={
-                                      Array [
-                                        undefined,
-                                        undefined,
-                                      ]
+                                      Object {
+                                        "explorer": true,
+                                        "label": "vim_performance_states",
+                                        "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');",
+                                        "name": "vim_performance_states",
+                                        "title": "vim_performance_states",
+                                        "value": Array [
+                                          "676",
+                                          "150",
+                                        ],
+                                      }
                                     }
                                   >
-                                    <MiqStructuredListArray
+                                    <MiqStructuredListObject
                                       clickEvents={false}
                                       onClick={[Function]}
                                       row={
-                                        Array [
-                                          undefined,
-                                          undefined,
-                                        ]
+                                        Object {
+                                          "explorer": true,
+                                          "label": "vim_performance_states",
+                                          "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');",
+                                          "name": "vim_performance_states",
+                                          "title": "vim_performance_states",
+                                          "value": Array [
+                                            "676",
+                                            "150",
+                                          ],
+                                        }
                                       }
                                     >
                                       <FeatureToggle(StructuredListCell)
-                                        className="content_value array_item"
-                                        key="0"
-                                        onClick={[Function]}
-                                        title=""
+                                        className="content_value object_item"
+                                        title="vim_performance_states"
                                       >
                                         <StructuredListCell
-                                          className="content_value array_item"
+                                          className="content_value object_item"
                                           head={false}
                                           noWrap={false}
-                                          onClick={[Function]}
-                                          title=""
+                                          title="vim_performance_states"
                                         >
                                           <div
-                                            className="content_value array_item bx--structured-list-td"
-                                            onClick={[Function]}
+                                            className="content_value object_item bx--structured-list-td"
                                             role="cell"
-                                            title=""
+                                            title="vim_performance_states"
                                           >
-                                            <MiqStructuredListText>
-                                              <div
-                                                className="wrap_text"
-                                              />
-                                            </MiqStructuredListText>
+                                            <MiqStructuredListConditionalTag
+                                              clickEvents={false}
+                                              onClick={[Function]}
+                                              row={
+                                                Object {
+                                                  "explorer": true,
+                                                  "label": "vim_performance_states",
+                                                  "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');",
+                                                  "name": "vim_performance_states",
+                                                  "title": "vim_performance_states",
+                                                  "value": Array [
+                                                    "676",
+                                                    "150",
+                                                  ],
+                                                }
+                                              }
+                                            >
+                                              <MiqStructuredListLink
+                                                clickEvents={false}
+                                                onClick={[Function]}
+                                                row={
+                                                  Object {
+                                                    "explorer": true,
+                                                    "label": "vim_performance_states",
+                                                    "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');",
+                                                    "name": "vim_performance_states",
+                                                    "title": "vim_performance_states",
+                                                    "value": Array [
+                                                      "676",
+                                                      "150",
+                                                    ],
+                                                  }
+                                                }
+                                              >
+                                                <Link
+                                                  className="cell_link"
+                                                  href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
+                                                  onClick={[Function]}
+                                                  to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
+                                                >
+                                                  <a
+                                                    className="bx--link cell_link"
+                                                    href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
+                                                    onClick={[Function]}
+                                                    rel={null}
+                                                    to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');"
+                                                  >
+                                                    <MiqStructuredListContent
+                                                      row={
+                                                        Object {
+                                                          "explorer": true,
+                                                          "label": "vim_performance_states",
+                                                          "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000181');",
+                                                          "name": "vim_performance_states",
+                                                          "title": "vim_performance_states",
+                                                          "value": Array [
+                                                            "676",
+                                                            "150",
+                                                          ],
+                                                        }
+                                                      }
+                                                    >
+                                                      <div
+                                                        className="content"
+                                                      >
+                                                        <MiqStructuredListMultiRow
+                                                          value={
+                                                            Array [
+                                                              "676",
+                                                              "150",
+                                                            ]
+                                                          }
+                                                        >
+                                                          <div
+                                                            className="multi_row_cell"
+                                                          >
+                                                            <div
+                                                              className="sub_row_item"
+                                                              key="0"
+                                                              title=""
+                                                            >
+                                                              <div
+                                                                className="sub_value"
+                                                              >
+                                                                <MiqStructuredListText>
+                                                                  <div
+                                                                    className="wrap_text"
+                                                                  />
+                                                                </MiqStructuredListText>
+                                                              </div>
+                                                            </div>
+                                                            <div
+                                                              className="sub_row_item"
+                                                              key="1"
+                                                              title=""
+                                                            >
+                                                              <div
+                                                                className="sub_value"
+                                                              >
+                                                                <MiqStructuredListText>
+                                                                  <div
+                                                                    className="wrap_text"
+                                                                  />
+                                                                </MiqStructuredListText>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </MiqStructuredListMultiRow>
+                                                      </div>
+                                                    </MiqStructuredListContent>
+                                                  </a>
+                                                </Link>
+                                              </MiqStructuredListLink>
+                                            </MiqStructuredListConditionalTag>
                                           </div>
                                         </StructuredListCell>
                                       </FeatureToggle(StructuredListCell)>
-                                      <FeatureToggle(StructuredListCell)
-                                        className="content_value array_item"
-                                        key="1"
-                                        onClick={[Function]}
-                                        title=""
-                                      >
-                                        <StructuredListCell
-                                          className="content_value array_item"
-                                          head={false}
-                                          noWrap={false}
-                                          onClick={[Function]}
-                                          title=""
-                                        >
-                                          <div
-                                            className="content_value array_item bx--structured-list-td"
-                                            onClick={[Function]}
-                                            role="cell"
-                                            title=""
-                                          >
-                                            <MiqStructuredListText>
-                                              <div
-                                                className="wrap_text"
-                                              />
-                                            </MiqStructuredListText>
-                                          </div>
-                                        </StructuredListCell>
-                                      </FeatureToggle(StructuredListCell)>
-                                    </MiqStructuredListArray>
+                                    </MiqStructuredListObject>
                                   </MiqStructuredListBodyValue>
                                 </div>
                               </StructuredListRow>
@@ -374,81 +518,193 @@ exports[`TableListView renders just fine... 1`] = `
                                   role="row"
                                   title=""
                                 >
+                                  <MiqStructuredListBodyLabel
+                                    label="miq_report_result_details"
+                                  >
+                                    <FeatureToggle(StructuredListCell)
+                                      className="label_header"
+                                    >
+                                      <StructuredListCell
+                                        className="label_header"
+                                        head={false}
+                                        noWrap={false}
+                                      >
+                                        <div
+                                          className="label_header bx--structured-list-td"
+                                          role="cell"
+                                        >
+                                          miq_report_result_details
+                                        </div>
+                                      </StructuredListCell>
+                                    </FeatureToggle(StructuredListCell)>
+                                  </MiqStructuredListBodyLabel>
                                   <MiqStructuredListBodyValue
                                     clickEvents={false}
                                     onClick={[Function]}
                                     row={
-                                      Array [
-                                        undefined,
-                                        undefined,
-                                      ]
+                                      Object {
+                                        "explorer": true,
+                                        "label": "miq_report_result_details",
+                                        "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');",
+                                        "name": "miq_report_result_details",
+                                        "title": "miq_report_result_details",
+                                        "value": Array [
+                                          "280",
+                                          "848",
+                                        ],
+                                      }
                                     }
                                   >
-                                    <MiqStructuredListArray
+                                    <MiqStructuredListObject
                                       clickEvents={false}
                                       onClick={[Function]}
                                       row={
-                                        Array [
-                                          undefined,
-                                          undefined,
-                                        ]
+                                        Object {
+                                          "explorer": true,
+                                          "label": "miq_report_result_details",
+                                          "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');",
+                                          "name": "miq_report_result_details",
+                                          "title": "miq_report_result_details",
+                                          "value": Array [
+                                            "280",
+                                            "848",
+                                          ],
+                                        }
                                       }
                                     >
                                       <FeatureToggle(StructuredListCell)
-                                        className="content_value array_item"
-                                        key="0"
-                                        onClick={[Function]}
-                                        title=""
+                                        className="content_value object_item"
+                                        title="miq_report_result_details"
                                       >
                                         <StructuredListCell
-                                          className="content_value array_item"
+                                          className="content_value object_item"
                                           head={false}
                                           noWrap={false}
-                                          onClick={[Function]}
-                                          title=""
+                                          title="miq_report_result_details"
                                         >
                                           <div
-                                            className="content_value array_item bx--structured-list-td"
-                                            onClick={[Function]}
+                                            className="content_value object_item bx--structured-list-td"
                                             role="cell"
-                                            title=""
+                                            title="miq_report_result_details"
                                           >
-                                            <MiqStructuredListText>
-                                              <div
-                                                className="wrap_text"
-                                              />
-                                            </MiqStructuredListText>
+                                            <MiqStructuredListConditionalTag
+                                              clickEvents={false}
+                                              onClick={[Function]}
+                                              row={
+                                                Object {
+                                                  "explorer": true,
+                                                  "label": "miq_report_result_details",
+                                                  "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');",
+                                                  "name": "miq_report_result_details",
+                                                  "title": "miq_report_result_details",
+                                                  "value": Array [
+                                                    "280",
+                                                    "848",
+                                                  ],
+                                                }
+                                              }
+                                            >
+                                              <MiqStructuredListLink
+                                                clickEvents={false}
+                                                onClick={[Function]}
+                                                row={
+                                                  Object {
+                                                    "explorer": true,
+                                                    "label": "miq_report_result_details",
+                                                    "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');",
+                                                    "name": "miq_report_result_details",
+                                                    "title": "miq_report_result_details",
+                                                    "value": Array [
+                                                      "280",
+                                                      "848",
+                                                    ],
+                                                  }
+                                                }
+                                              >
+                                                <Link
+                                                  className="cell_link"
+                                                  href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
+                                                  onClick={[Function]}
+                                                  to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
+                                                >
+                                                  <a
+                                                    className="bx--link cell_link"
+                                                    href="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
+                                                    onClick={[Function]}
+                                                    rel={null}
+                                                    to="miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');"
+                                                  >
+                                                    <MiqStructuredListContent
+                                                      row={
+                                                        Object {
+                                                          "explorer": true,
+                                                          "label": "miq_report_result_details",
+                                                          "link": "miqTreeActivateNode('vmdb_tree', 'tb-10000000000197');",
+                                                          "name": "miq_report_result_details",
+                                                          "title": "miq_report_result_details",
+                                                          "value": Array [
+                                                            "280",
+                                                            "848",
+                                                          ],
+                                                        }
+                                                      }
+                                                    >
+                                                      <div
+                                                        className="content"
+                                                      >
+                                                        <MiqStructuredListMultiRow
+                                                          value={
+                                                            Array [
+                                                              "280",
+                                                              "848",
+                                                            ]
+                                                          }
+                                                        >
+                                                          <div
+                                                            className="multi_row_cell"
+                                                          >
+                                                            <div
+                                                              className="sub_row_item"
+                                                              key="0"
+                                                              title=""
+                                                            >
+                                                              <div
+                                                                className="sub_value"
+                                                              >
+                                                                <MiqStructuredListText>
+                                                                  <div
+                                                                    className="wrap_text"
+                                                                  />
+                                                                </MiqStructuredListText>
+                                                              </div>
+                                                            </div>
+                                                            <div
+                                                              className="sub_row_item"
+                                                              key="1"
+                                                              title=""
+                                                            >
+                                                              <div
+                                                                className="sub_value"
+                                                              >
+                                                                <MiqStructuredListText>
+                                                                  <div
+                                                                    className="wrap_text"
+                                                                  />
+                                                                </MiqStructuredListText>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </MiqStructuredListMultiRow>
+                                                      </div>
+                                                    </MiqStructuredListContent>
+                                                  </a>
+                                                </Link>
+                                              </MiqStructuredListLink>
+                                            </MiqStructuredListConditionalTag>
                                           </div>
                                         </StructuredListCell>
                                       </FeatureToggle(StructuredListCell)>
-                                      <FeatureToggle(StructuredListCell)
-                                        className="content_value array_item"
-                                        key="1"
-                                        onClick={[Function]}
-                                        title=""
-                                      >
-                                        <StructuredListCell
-                                          className="content_value array_item"
-                                          head={false}
-                                          noWrap={false}
-                                          onClick={[Function]}
-                                          title=""
-                                        >
-                                          <div
-                                            className="content_value array_item bx--structured-list-td"
-                                            onClick={[Function]}
-                                            role="cell"
-                                            title=""
-                                          >
-                                            <MiqStructuredListText>
-                                              <div
-                                                className="wrap_text"
-                                              />
-                                            </MiqStructuredListText>
-                                          </div>
-                                        </StructuredListCell>
-                                      </FeatureToggle(StructuredListCell)>
-                                    </MiqStructuredListArray>
+                                    </MiqStructuredListObject>
                                   </MiqStructuredListBodyValue>
                                 </div>
                               </StructuredListRow>
