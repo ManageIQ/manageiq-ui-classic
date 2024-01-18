@@ -4,11 +4,14 @@ import PropTypes from 'prop-types';
 import { OverflowMenu } from 'carbon-components-react';
 import debouncePromise from '../../../helpers/promise-debounce';
 import { getOverflowButtons, getWidget } from './helper';
+import WidgetRemoveModal from '../widget-remove-modal';
 
 const WidgetWrapper = ({
   widgetId, widgetType, widgetButtons, widgetLastRun, widgetNextRun, widgetTitle,
 }) => {
-  const [{ widgetModel, isLoading, error }, setState] = useState({ isLoading: true, error: false });
+  const [{
+    widgetModel, href, isLoading, showConfirm, error,
+  }, setState] = useState({ isLoading: true, showConfirm: false, error: false });
   const widgetUrl = () => {
     const widgetTypeUrl = {
       menu: '/dashboard/widget_menu_data/',
@@ -97,6 +100,7 @@ const WidgetWrapper = ({
         </div>
       </div>
       {getWidget(widgetId, isLoading, widgetModel, widgetType, widgetLastRun, widgetNextRun, error)}
+      <WidgetRemoveModal showConfirm={showConfirm} setState={setState} widgetTitle={widgetTitle} href={href} />
     </div>
   );
 };
