@@ -1,7 +1,6 @@
 require('./ansible_credentials/adjust_on_reset.js');
 require('./autofocus.js');
 require('./checkchange.js');
-require('./clear_field_set_focus.js');
 require('./configuration/all_time_check.js');
 require('./configuration/min_time_check.js');
 require('./configuration/some_time_check.js');
