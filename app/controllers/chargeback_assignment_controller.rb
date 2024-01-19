@@ -85,7 +85,7 @@ class ChargebackAssignmentController < ApplicationController
   end
 
   def tab_vars(current_tab)
-    @path = '/chargeback_assignment/change_tab/'
+    # @path = '/chargeback_assignment/change_tab/'
     @current_tab = current_tab.to_s
     @check_for_changes = true
   end

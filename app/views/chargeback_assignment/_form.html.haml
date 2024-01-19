@@ -1,6 +1,8 @@
 - nothing = "<#{_('Nothing')}>"
 - url = url_for_only_path(:action => 'form_field_changed', :id => @edit[:new][:type])
 = render :partial => "layouts/flash_msg"
+- options = TermOfServiceHelper::ASSIGN_TOS[@edit[:new][:type] == "Compute" ? "chargeback_compute".to_sym : "chargeback_storage".to_sym]
+= react('ChargebackAssignmentsForm', {:options => options, :selectedOption => @edit[:new][:cbshow_typ]})
 %h1
   = @title
 %h3
