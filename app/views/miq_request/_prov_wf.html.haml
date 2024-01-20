@@ -1,12 +1,14 @@
 -# wf					The workflow object currently in use
 -# dialog			The name (symbol) of the selected dialog
 - if (@options && @options[:wf]) || (@edit && @edit[:wf])
+  - options = @options || @edit[:new]
+  - wf = options[:wf] || @edit[:wf]
+  - tabname = (@tabactive || options[:current_tab_key]).to_s
+  - prov_tab_labels, prov_tab_keys, prov_tab_conditions = provision_tab_configuration(wf)
+  = react('CatalogItemRequestInfo', {:recordId => params[:id].scan(/\d+/).last.to_i, :tabLabels => prov_tab_labels, :tabConditions => prov_tab_conditions})
   #prov_wf_div.miq_custom_tab_wrapper
-    - options = @options || @edit[:new]
-    - wf = options[:wf] || @edit[:wf]
-    - tabname = (@tabactive || options[:current_tab_key]).to_s
-    - prov_tab_labels, prov_tab_keys = provision_tab_configuration(wf)
-
+    %br
+    %br
     .miq_custom_tab_wrapper
       = react('MiqCustomTab', {:containerId => 'request-info-tabs',
                              :tabLabels => prov_tab_labels,

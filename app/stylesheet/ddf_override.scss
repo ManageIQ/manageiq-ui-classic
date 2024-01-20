@@ -340,6 +340,11 @@
 
 .loadingSpinner {
   margin-left: 15rem;
+
+  &.center {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 #provider-modal {

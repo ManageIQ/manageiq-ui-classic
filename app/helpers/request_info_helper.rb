@@ -1,4 +1,8 @@
 module RequestInfoHelper
+  include RequestInfoTabsHelper::RequestInfoServiceHelper
+  include RequestInfoTabsHelper::RequestInfoEnvironmentHelper
+  include RequestInfoTabsHelper::RequestInfoHardwareHelper
+
   private
 
   PROV_FIELD_TYPES = [:vm, :host, :ds, :template, :vc, :pxe_img, :iso_img, :window_image].freeze
@@ -9,7 +13,65 @@ module RequestInfoHelper
     prov_tab_labels = workflow.provisioning_tab_list.map do |dialog|
       {:name => dialog[:name], :text => dialog[:description]}
     end
-    return prov_tab_labels, workflow.get_dialog_order
+    prov_tab_conditions = prov_tab_keys(workflow)
+    return prov_tab_labels, workflow.get_dialog_order, prov_tab_conditions
+  end
+
+  def prov_tab_keys(workflow)
+    tab_keys = []
+    workflow.get_dialog_order.map do |name|
+      tab_keys.push({name.to_sym => service_keys(workflow)}) if name.to_sym == :service
+      tab_keys.push({name.to_sym => environment_keys(workflow)}) if name.to_sym == :environment
+      tab_keys.push({name.to_sym => hardware_keys(workflow)}) if name.to_sym == :hardware
+    end
+    return tab_keys
+  end
+
+  def is_credential_key(key)
+    [:allocated_disk_storage, :cpu_limit, :cpu_reserve, :entitled_processors, :dns_servers, :dns_suffixes, :gateway,
+      :hostname, :ip_addr, :linux_host_name, :linux_domain_name,
+      :mac_address, :owner_address, :owner_city, :owner_company,
+      :owner_country, :owner_department, :owner_email,
+      :owner_first_name, :owner_last_name, :owner_load_ldap,
+      :owner_office, :owner_manager, :owner_manager_mail,
+      :owner_manager_phone, :owner_phone, :owner_phone_mobile,
+      :owner_state, :owner_title, :owner_zip, :request_notes,
+      :subnet_mask, :memory_limit, :memory_reserve,
+      :root_username, :root_password, :ssh_public_key, :sysprep_password, :sysprep_domain_admin,
+      :sysprep_domain_password, :sysprep_workgroup_name,
+      :sysprep_full_name, :sysprep_organization,
+      :sysprep_product_id, :sysprep_computer_name,
+      :sysprep_per_server_max_connections, :vm_description,
+      :vm_name, :wins_servers, :sysprep_domain,
+      :sysprep_admin_password, :sysprep_product_key, :sysprep_locale_ui,
+      :sysprep_locale_input, :sysprep_locale_system, :sysprep_locale_user,
+      :sysprep_machine_object_ou].include?(key)
+  end
+
+  def is_field_checkbox(key)
+    [:linked_clone, :migratable, :placement_auto, :stateless, :sysprep_auto_logon, :sysprep_change_sid, :seal_template,
+      :sysprep_delete_accounts, :sysprep_spec_override, :vm_auto_start, :vm_dynamic_memory, :is_preemptible, :public_network,
+      :cpu_hot_add, :cpu_hot_remove, :memory_hot_add].include?(key)
+  end
+
+  def is_field_radio(key)
+    [:addr_mode, :disk_format, :sysprep_identification, :schedule_type, :cloud_network_selection_method, :disk_sparsity].include?(field)
+  end
+
+  def prov_tab_fields(keys, workflow, tabKey)
+    rows = []
+    if keys.any?
+      keys.each do |key|
+        field_hash = workflow.get_field(key, tabKey)
+        if !field_hash.blank? && field_hash[:display] && field_hash[:display].to_s != "hide"
+          field_id = tabKey.to_s + "__" + key.to_s
+          value = {:key => key, :label => field_hash[:description]}
+          value[:input] = {:input => "checkbox", :name => "display", :checked => false, :disabled => true, :label => ''} if is_field_checkbox(key)
+          rows.push(value)
+        end
+      end
+    end
+    return rows
   end
 
   def display_prov_grid(field)
