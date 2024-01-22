@@ -43,10 +43,10 @@
 import './commands/gtl.js'
 import './commands/login.js'
 import './commands/menu.js'
-import './commands/search.js'
 import './commands/toolbar.js'
 
 // Assertions
+import './assertions/expect_search_box.js'
 import './assertions/expect_title.js'
 import './assertions/expect_text.js'
 

@@ -13,23 +13,21 @@ describe('Search box', () => {
 
   it('Is present on list view page', () => {
     cy.menu('Compute', 'Clouds', 'Providers');
-    cy.get('#search_text').first().click();
-    cy.search_box();
+    cy.expect_search_box();
   });
 
   it('Is present on explorer page', () => {
     cy.menu('Services', 'Workloads');
-    cy.get('div[class=panel-heading]').first().click();
-    cy.search_box();
+    cy.expect_search_box();
   });
 
   it('Is not present on non-list page', () => {
     cy.menu('Overview', 'Dashboard');
-    cy.no_search_box();
+    cy.expect_no_search_box();
   });
 
   it('Is not present on list view page', () => {
     cy.menu('Control', 'Alerts');
-    cy.no_search_box();
+    cy.expect_no_search_box();
   });
 });
