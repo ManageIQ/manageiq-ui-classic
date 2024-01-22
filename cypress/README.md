@@ -55,6 +55,8 @@ TODO allow using {id:...} instead of string label for menu items, gtl items, tre
 
 * `cy.expect_explorer_title('Active Services')` - check the title on an explorer screen
 * `cy.expect_show_list_title('Cloud Providers')` - check the title on a show\_list screen
+* `cy.expect_search_box()` - check if searchbox is present on screen
+* `cy.expect_no_search_box()` - check if no searchbox is present on the screen
 * TODO `cy.expect_layout('miq-layout-center_div_with_listnav')` - check current layout
 
 #### GTL
