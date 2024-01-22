@@ -39,6 +39,7 @@ class MiqTaskController < ApplicationController
     # and :feature => "miq_task_all_ui"
     @tabform ||= "tasks_1" if role_allows?(:feature => "miq_task_my_ui")
     @tabform ||= "tasks_2" if role_allows?(:feature => "miq_task_all_ui")
+    tab_vars(@tabform.split("_")[1])
     jobs
     render :action => "jobs"
   end
@@ -57,8 +58,14 @@ class MiqTaskController < ApplicationController
   def change_tab
     assert_privileges('miq_task_all_ui', 'miq_task_my_ui', :any => false)
     @tabform = "tasks_#{params[:'uib-tab']}"
+    tab_vars(params[:'uib-tab'])
     jobs
     render :action => "jobs"
+  end
+
+  def tab_vars(current_tab)
+    @path = '/miq_task/change_tab/'
+    @current_tab = current_tab.to_s
   end
 
   def build_jobs_tab
