@@ -27,6 +27,11 @@ Actual tests can be found in `cypress/integration/ui/`.
 
 ManageIQ implements the following cypress extensions:
 
+##### explorer
+
+* `cy.accordion(title)` - open an accordion panel. title: String for the accordion title for the accordion panel to open.
+* `cy.accordionItem(name)` - click on a record in the accordion panel. name: String for the record to click in the accordion panel.
+
 ##### login
 
 `cy.login()` - logs in as admin
