@@ -32,7 +32,7 @@ module EmsNetworkHelper::TextualSummary
   # Items
   #
   def textual_provider_region
-    @record.provider_region.present? ? {:label => _("Region"), :value => @record.description} : nil
+    @record.provider_region.present? ? {:label => _("Region"), :value => @record.provider_region} : nil
   end
 
   def textual_hostname
