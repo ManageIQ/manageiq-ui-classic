@@ -71,3 +71,9 @@ TODO allow using {id:...} instead of string label for menu items, gtl items, tre
 
 * `cy.search_box()` - check that searchbox is present 
 * `cy.no_search_box()` - check that searchbox is not present
+
+##### Toolbar
+
+* `cy.toolbarItems(toolbarButton)` - returns an array of objects {text: String, disabled: Boolean} for the toolbar dropdown buttons for when a toolbar button is clicked. `toolbarButton` is the string for the text of the toolbar button that you want to click on.
+* `cy.toolbar(toolbarButton, dropdownButton)` - click on the toolbar button specified by the user. Can also then click on a specified dropdown button as well. `toolbarButton` is the string for the text of the toolbar button that you want to click on. `dropdownButton` is the string for the text of the toolbar dropdown button that you want to click on. 
+  

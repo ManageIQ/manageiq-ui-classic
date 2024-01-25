@@ -30,19 +30,17 @@ describe('Overview > Dashboard Tests', () => {
   it('Can add and remove a widget', () => {
     const newCards = [];
     let newCard = '';
-    cy.get('#dropdown-custom-2').click().then(() => {
-      cy.get('.scrollable-options').then((list) => {
-        newCard = list.children()[0].innerText.trim();
-        cy.get(list.children()[0]).click().then(() => {
-          cy.get('.card-pf').its('length').should('eq', defaultCards.length + 1);
-          cy.get('.card-pf').then((cards) => {
-            const nums = [...Array(cards.length).keys()];
-            nums.forEach((index) => {
-              newCards[index] = cards[index].firstChild.innerText;
-            });
-            expect(newCards).to.include(newCard);
-          });
+
+    cy.toolbarItems('Add widget').then((list) => {
+      newCard = list[0].text;
+      list[0].button.click();
+      cy.get('.card-pf').its('length').should('eq', defaultCards.length + 1);
+      cy.get('.card-pf').then((cards) => {
+        const nums = [...Array(cards.length).keys()];
+        nums.forEach((index) => {
+          newCards[index] = cards[index].firstChild.innerText;
         });
+        expect(newCards).to.include(newCard);
       });
     });
 
@@ -54,11 +52,13 @@ describe('Overview > Dashboard Tests', () => {
             cy.get(card.children()[0].children[0].children[0]).click().then(() => {
               cy.get('.bx--overflow-menu-options').then((menuItems) => {
                 cy.get(menuItems.children()[0]).click().then(() => {
-                  cy.get('.card-pf').its('length').should('eq', defaultCards.length);
-                  cy.get('.card-pf').then((cards) => {
-                    const nums = [...Array(cards.length).keys()];
-                    nums.forEach((index) => {
-                      cy.get(cards[index]).contains(defaultCards[index]);
+                  cy.get('.is-visible > .bx--modal-container > .bx--modal-footer > .bx--btn--primary').click().then(() => {
+                    cy.get('.card-pf').its('length').should('eq', defaultCards.length);
+                    cy.get('.card-pf').then((cards) => {
+                      const nums = [...Array(cards.length).keys()];
+                      nums.forEach((index) => {
+                        cy.get(cards[index]).contains(defaultCards[index]);
+                      });
                     });
                   });
                 });
