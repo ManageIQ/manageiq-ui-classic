@@ -281,8 +281,7 @@ describe('Rates', () => {
 
   it('Cancel button works on the form', () => {
     cy.gtlGetRows([1]).then((originalRates) => {
-      cy.get('#chargeback_rates_vmdb_choice').click();
-      cy.get(':nth-child(1) > .bx--overflow-menu-options__btn > div').click();
+      cy.toolbar('Configuration', 'Add a new Chargeback Rate');
       cy.get('[width="100%"] > tbody > tr > td > .btn-default').click();
       cy.get('.miq-toolbar-group');
       cy.url().should('include', 'chargeback_rate/show_list');
@@ -298,8 +297,7 @@ describe('Rates', () => {
 
   it('Can add, edit and delete a compute chargeback rate', () => {
     let currency = '';
-    cy.get('#chargeback_rates_vmdb_choice').click();
-    cy.get(':nth-child(1) > .bx--overflow-menu-options__btn').click();
+    cy.toolbar('Configuration', 'Add a new Chargeback Rate');
     cy.get('#description').type('Cypress test compute chargeback rates');
     cy.get(':nth-child(2) > .col-md-8 > .btn-group > .btn').click();
     cy.get(':nth-child(5) > .form-group > .col-md-8 > .btn-group > .btn').click();
@@ -452,8 +450,7 @@ describe('Rates', () => {
       cy.get(':nth-child(10) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(10) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / KBps');
     }).then(() => {
-      cy.get('#chargeback_rate_vmdb_choice').click();
-      cy.get(':nth-child(1) > .bx--overflow-menu-options__btn').click();
+      cy.toolbar('Configuration', 'Edit this Chargeback Rate');
       cy.get('#description').type('{moveToEnd} edit');
       cy.get('.btn-group > .btn').click();
       cy.get('[data-original-index="144"]').then((option) => {
@@ -597,8 +594,7 @@ describe('Rates', () => {
       cy.get(':nth-child(10) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(10) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / KBps');
     }).then(() => {
-      cy.get('#chargeback_rate_vmdb_choice').click();
-      cy.get(':nth-child(3) > .bx--overflow-menu-options__btn').click();
+      cy.toolbar('Configuration', 'Remove from the VMDB');
       cy.gtlGetRows([1]).then((rows) => {
         rows.forEach((row) => {
           expect(row).to.not.eq('Cypress test compute chargeback rates edit');
@@ -611,8 +607,7 @@ describe('Rates', () => {
   it('Can add, edit and delete a storage chargeback rate', () => {
     let currency = '';
     cy.intercept('POST', '/chargeback_rate/form_field_changed/new?rate_type=Storage').as('fieldChange');
-    cy.get('#chargeback_rates_vmdb_choice').click();
-    cy.get(':nth-child(1) > .bx--overflow-menu-options__btn').click();
+    cy.toolbar('Configuration', 'Add a new Chargeback Rate');
     cy.get('#description').type('Cypress test storage chargeback rates');
     cy.get(':nth-child(2) > .col-md-8 > .btn-group > .btn').click();
     cy.get(':nth-child(2) > .col-md-8 > .btn-group > .open > .dropdown-menu > [data-original-index="1"]').click();
@@ -688,8 +683,7 @@ describe('Rates', () => {
       cy.get(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / GB');
     }).then(() => {
-      cy.get('#chargeback_rate_vmdb_choice').click();
-      cy.get(':nth-child(1) > .bx--overflow-menu-options__btn').click();
+      cy.toolbar('Configuration', 'Edit this Chargeback Rate');
       cy.get('#description').type('{moveToEnd} edit');
       cy.get('.btn-group > .btn').click();
       cy.get('[data-original-index="144"]').then((option) => {
@@ -764,8 +758,7 @@ describe('Rates', () => {
       cy.get(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
       cy.get(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / GB');
     }).then(() => {
-      cy.get('#chargeback_rate_vmdb_choice').click();
-      cy.get(':nth-child(3) > .bx--overflow-menu-options__btn').click();
+      cy.toolbar('Configuration', 'Remove from the VMDB');
       cy.gtlGetRows([1]).then((rows) => {
         rows.forEach((row) => {
           expect(row).to.not.eq('Cypress test storage chargeback rates edit');
@@ -777,8 +770,7 @@ describe('Rates', () => {
 
   it('Copy a chargeback rate', () => {
     cy.gtlClickRow([{title: 'Default', number: 1}, {title: 'Storage', number: 2}]).then(() => {
-      cy.get('#chargeback_rate_vmdb_choice').click();
-      cy.get(':nth-child(2) > .bx--overflow-menu-options__btn').click();
+      cy.toolbar('Configuration', 'Copy this Chargeback Rate');
       cy.get('.btn-primary').click();
       cy.get(':nth-child(1) > .col-md-8 > .form-control-static').contains('copy of Default');
       cy.get(':nth-child(2) > .col-md-8 > .form-control-static').contains('Storage');
@@ -827,8 +819,7 @@ describe('Rates', () => {
       cy.expect_text(':nth-child(4) > :nth-child(6) > .cell > .array_list > .list_row', '2.0');
       cy.expect_text(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / GB');
 
-      cy.get('#chargeback_rate_vmdb_choice').click();
-      cy.get(':nth-child(3) > .bx--overflow-menu-options__btn').click();
+      cy.toolbar('Configuration', 'Remove from the VMDB');
       cy.gtlGetRows([1]).then((rows) => {
         rows.forEach((row) => {
           expect(row).to.not.eq('copy of default');
