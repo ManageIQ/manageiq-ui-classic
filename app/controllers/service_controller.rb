@@ -18,6 +18,7 @@ class ServiceController < ApplicationController
 
   def show
     super
+    @options = {}
     @view, @pages = get_view(Vm, :parent => @record, :parent_method => :all_vms, :all_pages => true)
   end
 
