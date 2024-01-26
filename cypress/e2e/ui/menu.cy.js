@@ -459,7 +459,7 @@ describe('Menu', () => {
       });
 
       it('Tasks', () => {
-        cy.menu('Settings', 'Tasks').get('#main-content a').contains('My Tasks');
+        cy.menu('Settings', 'Tasks').get('.bx--tabs--scrollable__nav > li').contains('My Tasks');
       });
 
       it('Documentation', () => {
