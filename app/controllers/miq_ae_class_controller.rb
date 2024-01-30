@@ -1815,6 +1815,25 @@ class MiqAeClassController < ApplicationController
     render :json => find_record_with_rbac(MiqAeNamespace, params[:id]).attributes.slice('name', 'description', 'enabled')
   end
 
+  def ae_domains
+    domains = MiqAeDomain.where("ancestry is null and enabled = ?", true).order("name").select("id, name")
+    render :json => {:domains => domains}
+  end
+
+  def ae_methods
+    methods = MiqAeMethod
+              .name_path_search(params[:search])
+              .domain_search(params[:domain_id])
+              .selected_methods(params[:ids])
+              .select("id, relative_path, name")
+              .order('name')
+    # methods = MiqAeMethod.all.order('name').select("id, relative_path, name")
+    # methods = methods.where('name ILIKE ? or relative_path ILIKE ?', "%#{params[:search]}%", "%#{params[:search]}%") if params[:search]
+    # methods = methods.where('domain_id = ?', params[:domain_id]) if params[:domain_id]
+    # methods = methods.where(id: params[:ids].split(',').map(&:to_i)) if params[:ids]
+    render :json => {:methods => methods}
+  end
+
   private
 
   def feature_by_action
