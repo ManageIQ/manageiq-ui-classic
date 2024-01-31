@@ -1,8 +1,8 @@
 class MiqAeCustomizationController < ApplicationController
   require "English"
-  include_concern 'CustomButtons'
-  include_concern 'OldDialogs'
-  include_concern 'Dialogs'
+  include CustomButtons
+  include OldDialogs
+  include Dialogs
 
   helper ApplicationHelper::ImportExportHelper
   include Mixins::GenericSessionMixin

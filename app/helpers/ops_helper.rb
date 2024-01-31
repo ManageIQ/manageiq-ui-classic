@@ -1,6 +1,6 @@
 module OpsHelper
-  include_concern 'TextualSummary'
-  include_concern 'MyServer'
+  include TextualSummary
+  include MyServer
   include VmwareConsoleHelper
   include SettingsAnalysisProfileHelper
   include SettingsTagsTabsHelper

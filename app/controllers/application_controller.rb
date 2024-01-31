@@ -53,28 +53,28 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  include_concern 'AdvancedSearch'
-  include_concern 'Automate'
-  include_concern 'Buttons'
-  include_concern 'CiProcessing'
-  include_concern 'Compare'
-  include_concern 'CurrentUser'
-  include_concern 'DialogRunner'
-  include_concern 'Explorer'
-  include_concern 'Filter'
-  include_concern 'MiqRequestMethods'
-  include_concern 'Performance'
-  include_concern 'PolicySupport'
-  include_concern 'ReportDownloads'
-  include_concern 'SessionSize'
-  include_concern 'SysprepAnswerFile'
-  include_concern 'UserScriptFile'
-  include_concern 'Tags'
-  include_concern 'Tenancy'
-  include_concern 'Timelines'
-  include_concern 'Timezone'
-  include_concern 'TreeSupport'
-  include_concern 'WaitForTask'
+  include AdvancedSearch
+  include Automate
+  include Buttons
+  include CiProcessing
+  include Compare
+  include CurrentUser
+  include DialogRunner
+  include Explorer
+  include Filter
+  include MiqRequestMethods
+  include Performance
+  include PolicySupport
+  include ReportDownloads
+  include SessionSize
+  include SysprepAnswerFile
+  include UserScriptFile
+  include Tags
+  include Tenancy
+  include Timelines
+  include Timezone
+  include TreeSupport
+  include WaitForTask
 
   before_action :reset_toolbar
   before_action :set_session_tenant

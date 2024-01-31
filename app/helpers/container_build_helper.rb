@@ -1,4 +1,4 @@
 module ContainerBuildHelper
-  include_concern 'ContainerSummaryHelper'
-  include_concern 'TextualSummary'
+  include ContainerSummaryHelper
+  include TextualSummary
 end

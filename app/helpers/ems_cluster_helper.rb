@@ -1,3 +1,3 @@
 module EmsClusterHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
 end

@@ -1,3 +1,3 @@
 module CloudVolumeHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
 end

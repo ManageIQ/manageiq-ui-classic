@@ -1,4 +1,4 @@
 module VmCloudHelper
   include VmHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
 end

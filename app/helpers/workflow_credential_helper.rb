@@ -1,3 +1,3 @@
 module WorkflowCredentialHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
 end

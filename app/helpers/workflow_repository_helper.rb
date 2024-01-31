@@ -1,3 +1,3 @@
 module WorkflowRepositoryHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
 end

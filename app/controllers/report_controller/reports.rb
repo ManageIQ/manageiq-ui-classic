@@ -1,8 +1,7 @@
 module ReportController::Reports
   include DataTableHelper
   extend ActiveSupport::Concern
-
-  include_concern 'Editor'
+  include Editor
 
   def miq_report_run
     assert_privileges("miq_report_run")

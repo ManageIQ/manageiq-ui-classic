@@ -1,6 +1,6 @@
 module HostHelper
-  include_concern 'TextualSummary'
-  include_concern 'ComplianceSummaryHelper'
+  include TextualSummary
+  include ComplianceSummaryHelper
 
   def host_info
     devices = devices_details

@@ -1,3 +1,3 @@
 module PlacementGroupHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
 end

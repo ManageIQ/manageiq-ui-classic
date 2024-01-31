@@ -1,9 +1,9 @@
 class PxeController < ApplicationController
   # Methods for accordions
-  include_concern 'PxeServers'
-  include_concern 'PxeImageTypes'
-  include_concern 'PxeCustomizationTemplates'
-  include_concern 'IsoDatastores'
+  include PxeServers
+  include PxeImageTypes
+  include PxeCustomizationTemplates
+  include IsoDatastores
 
   before_action :check_privileges
   before_action :get_session_data

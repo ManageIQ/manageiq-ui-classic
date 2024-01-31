@@ -1,3 +1,3 @@
 module GuestDeviceHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
 end

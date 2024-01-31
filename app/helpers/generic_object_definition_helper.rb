@@ -1,5 +1,5 @@
 module GenericObjectDefinitionHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
 
   def generic_object_definition_button_summary(button)
     style = button.options.key?(:button_color) ? button.options[:button_color].to_s : nil

@@ -1,3 +1,3 @@
 module PhysicalNetworkPortHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
 end
