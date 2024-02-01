@@ -87,7 +87,7 @@ export const pieData = [{
 
 // convert report data to carbon chart data format.
 export const getConvertedData = (data) => {
-  if (data && data.data.columns && data.data && data.miq && data.miq.category_table && data.miq.name_table) {
+  if (data && data.data.columns && data.data && data.miq && data.miq.category_table) {
     const columnsData = data.data.columns;
     const dataGroups = data.miq.category_table;
     const rowsData = data.miq.name_table;
@@ -98,7 +98,11 @@ export const getConvertedData = (data) => {
           const obj = {};
           if (i !== 0 && rowsData[items[0]]) {
             obj.group = rowsData[items[0]];
-            obj.key = dataGroups[i - 1];
+            if (dataGroups && typeof dataGroups[i - 1] === 'number') {
+              obj.key = dataGroups[i - 1].toString();
+            } else if (dataGroups) {
+              obj.key = dataGroups[i - 1];
+            }
             obj.value = item;
             arr.push(obj);
           }
