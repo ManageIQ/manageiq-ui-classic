@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import MiqDataTable from '../../miq-data-table';
 import { tableData, onSelectEvent } from './helper';
 
-const CatalogResouce = ({ initialData }) => {
+const CatalogResource = ({ initialData }) => {
   const { headers, rows, merged } = tableData(initialData);
 
   if (merged) {
@@ -22,8 +22,8 @@ const CatalogResouce = ({ initialData }) => {
   );
 };
 
-export default CatalogResouce;
+export default CatalogResource;
 
-CatalogResouce.propTypes = {
+CatalogResource.propTypes = {
   initialData: PropTypes.shape({}).isRequired,
 };
