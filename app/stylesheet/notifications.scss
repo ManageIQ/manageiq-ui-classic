@@ -61,13 +61,14 @@
   -webkit-box-shadow: 0 6px 12px rgb(3 3 3 / 18%);
   box-shadow: 0 6px 12px rgb(3 3 3 / 18%);
   position: absolute;
-  right: 0;
+  right: 10px;
   width: 450px;
   z-index: 1000;
   display: flex;
   flex-direction: column;
-  overflow-y: hidden;
-  top: 38px;
+  overflow: hidden;
+  border-radius: 10px;
+  top: 5px;
   height: calc(100% - 44px);
 
   .panel-header {
@@ -76,28 +77,35 @@
     position: absolute;
     width: 100%;
     background-image: linear-gradient(to bottom, #fafafa 0%, #ededed 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    .closeIcon {
-      right: 0;
-    }
-
-    .collapsed {
-      left: 0;
-      padding-left: 5px;
-    }
-
-    .expanded {
-      left: 0;
-      padding-left: 5px;
-    }
-
-    .heading-icon {
-      color: #252525;
+    button {
       cursor: pointer;
-      line-height: inherit;
-      position: absolute;
       background: none;
+      color: #252525;
+      
+      &:focus, &.bx--btn--primary:focus, svg {
+        outline: 0 !important;
+        border-color: #fafafa;
+        box-shadow: none;
+
+      }
+
+      &:hover {
+        background: lightgray;
+      }
     }
+
+    .notification-title {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+    }
+    
   }
 
   .bx--accordion--start .bx--accordion__heading {
@@ -124,31 +132,41 @@
         background-color: inherit;
       }
 
-      .bx--inline-notification__text-wrapper {
-        flex-wrap: unset;
+      .bx--inline-notification__details {
+        display: flex;
+        flex-grow: 1;
 
-        .notification-time {
-          left: 55px;
-          position: absolute;
-          bottom: 3px;
-        }
-
-        .bx--inline-notification__title {
-          margin-bottom: 20px;
-        }
-
-        .subtitle-div {
-          height: 100%;
-
-          .subtitle-div-notification-menu {
-            height: 80%;
+        .bx--inline-notification__text-wrapper {
+          flex-wrap: unset;
+          flex-grow: 1;
+  
+          .notification-time {
+            left: 55px;
+            position: absolute;
+            bottom: 3px;
           }
-
-          .subtitle-div-notification-time {
-            height: 20%;
+  
+          .bx--inline-notification__title {
+            margin-bottom: 20px;
+            display: flex;
+            flex-grow: 1;
+          }
+  
+          .subtitle-div {
+            height: 100%;
+  
+            .subtitle-div-notification-menu {
+              height: 80%;
+            }
+  
+            .subtitle-div-notification-time {
+              height: 20%;
+            }
           }
         }
       }
+
+      
     }
 
     .read {
@@ -165,17 +183,13 @@
 
 .notification-module {
   display: inline;
-  margin: 5px 0;
-}
-
-.notification-title {
-  margin-left: 100px;
+  margin: 10px 0 0 0;
 }
 
 .notification-content {
   display: flex;
   flex-direction: column;
-  overflow-y: hidden;
+  overflow: hidden;
   bottom: 0;
   margin-bottom: 0;
   position: absolute;

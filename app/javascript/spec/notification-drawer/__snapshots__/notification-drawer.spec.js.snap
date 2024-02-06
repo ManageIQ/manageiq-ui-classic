@@ -95,6 +95,11 @@ exports[`Notification drawer tests should render correctly 1`] = `
               </ForwardRef(ChevronLeft16)>
             </button>
           </Button>
+          <h3
+            className="notification-title"
+          >
+            Notifications
+          </h3>
           <Button
             className="heading-icon closeIcon"
             description="Close"
@@ -167,11 +172,6 @@ exports[`Notification drawer tests should render correctly 1`] = `
               </ForwardRef(Close16)>
             </button>
           </Button>
-          <h3
-            className="notification-title"
-          >
-            Notifications
-          </h3>
         </div>
         <div
           className="notification-content"
@@ -281,7 +281,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                           className="notification-content-messages"
                         >
                           <FeatureToggle(InlineNotification)
-                            className="unread"
+                            className="notification-item-wrapper unread"
                             hideCloseButton={true}
                             key="10000000003625"
                             kind="error"
@@ -373,7 +373,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                             title="Plan has completed with errors"
                           >
                             <InlineNotification
-                              className="unread"
+                              className="notification-item-wrapper unread"
                               hideCloseButton={true}
                               iconDescription="closes notification"
                               kind="error"
@@ -467,7 +467,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                               title="Plan has completed with errors"
                             >
                               <div
-                                className="unread bx--inline-notification bx--inline-notification--low-contrast bx--inline-notification--error bx--inline-notification--hide-close-button"
+                                className="notification-item-wrapper unread bx--inline-notification bx--inline-notification--low-contrast bx--inline-notification--error bx--inline-notification--hide-close-button"
                                 kind="error"
                                 role="alert"
                               >
@@ -736,7 +736,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                             </InlineNotification>
                           </FeatureToggle(InlineNotification)>
                           <FeatureToggle(InlineNotification)
-                            className="unread"
+                            className="notification-item-wrapper unread"
                             hideCloseButton={true}
                             key="10000000003624"
                             kind="success"
@@ -828,7 +828,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                             title="Plan has completed successfully"
                           >
                             <InlineNotification
-                              className="unread"
+                              className="notification-item-wrapper unread"
                               hideCloseButton={true}
                               iconDescription="closes notification"
                               kind="success"
@@ -922,7 +922,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                               title="Plan has completed successfully"
                             >
                               <div
-                                className="unread bx--inline-notification bx--inline-notification--low-contrast bx--inline-notification--success bx--inline-notification--hide-close-button"
+                                className="notification-item-wrapper unread bx--inline-notification bx--inline-notification--low-contrast bx--inline-notification--success bx--inline-notification--hide-close-button"
                                 kind="success"
                                 role="alert"
                               >
