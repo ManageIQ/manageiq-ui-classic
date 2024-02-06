@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import { ChevronLeft16, Close16 } from '@carbon/icons-react';
+import { ChevronLeft16, ChevronRight16, Close16 } from '@carbon/icons-react';
+import classNames from 'classnames';
 import {
   Button, Accordion, AccordionItem, InlineNotification, OverflowMenu, OverflowMenuItem,
 } from 'carbon-components-react';
@@ -33,12 +34,13 @@ const NotificationDrawer = ({ jsRequest }) => {
           <div className="panel-header">
             <Button
               hasIconOnly
-              renderIcon={ChevronLeft16}
+              renderIcon={!isDrawerExpanded ? ChevronLeft16 : ChevronRight16}
               className={!isDrawerExpanded ? 'collapsed heading-icon' : 'expanded  heading-icon'}
               iconDescription={!isDrawerExpanded ? 'collapsed' : 'expanded'}
               onClick={() => setDrawerExpanded(!isDrawerExpanded)}
               onKeyPress={() => setDrawerExpanded(!isDrawerExpanded)}
             />
+            <h3 className="notification-title">{drawerTitle}</h3>
             <Button
               hasIconOnly
               renderIcon={Close16}
@@ -48,7 +50,6 @@ const NotificationDrawer = ({ jsRequest }) => {
               onClick={() => dispatch(toggleDrawerVisibility())}
               onKeyPress={() => dispatch(toggleDrawerVisibility())}
             />
-            <h3 className="notification-title">{drawerTitle}</h3>
           </div>
           <div className="notification-content">
             <div>
@@ -69,7 +70,7 @@ const NotificationDrawer = ({ jsRequest }) => {
                           kind={getNotficationStatusIconName(notification)}
                           role="alert"
                           key={notification.id}
-                          className={!notification.unread ? 'read' : 'unread'}
+                          className={classNames('notification-item-wrapper', !notification.unread ? 'read' : 'unread')}
                           title={notification.message}
                           statusIconDescription={getNotficationStatusIconName(notification)}
                           lowContrast
