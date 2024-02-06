@@ -9891,7 +9891,8 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                                   aria-label="Clear selected item"
                                                                   className="bx--list-box__selection"
                                                                   onClick={[Function]}
-                                                                  tabIndex={-1}
+                                                                  onKeyDown={[Function]}
+                                                                  tabIndex={0}
                                                                   title="Clear selected item"
                                                                   type="button"
                                                                 >
@@ -10292,7 +10293,8 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                                   aria-label="Clear selected item"
                                                                   className="bx--list-box__selection"
                                                                   onClick={[Function]}
-                                                                  tabIndex={-1}
+                                                                  onKeyDown={[Function]}
+                                                                  tabIndex={0}
                                                                   title="Clear selected item"
                                                                   type="button"
                                                                 >
@@ -12792,7 +12794,8 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                                 aria-label="Clear selected item"
                                                                 className="bx--list-box__selection"
                                                                 onClick={[Function]}
-                                                                tabIndex={-1}
+                                                                onKeyDown={[Function]}
+                                                                tabIndex={0}
                                                                 title="Clear selected item"
                                                                 type="button"
                                                               >
@@ -25989,7 +25992,8 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                                 aria-label="Clear selected item"
                                                                 className="bx--list-box__selection"
                                                                 onClick={[Function]}
-                                                                tabIndex={-1}
+                                                                onKeyDown={[Function]}
+                                                                tabIndex={0}
                                                                 title="Clear selected item"
                                                                 type="button"
                                                               >
@@ -26589,7 +26593,8 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                                 aria-label="Clear selected item"
                                                                 className="bx--list-box__selection"
                                                                 onClick={[Function]}
-                                                                tabIndex={-1}
+                                                                onKeyDown={[Function]}
+                                                                tabIndex={0}
                                                                 title="Clear selected item"
                                                                 type="button"
                                                               >
@@ -30922,7 +30927,8 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                                 aria-label="Clear selected item"
                                                                 className="bx--list-box__selection"
                                                                 onClick={[Function]}
-                                                                tabIndex={-1}
+                                                                onKeyDown={[Function]}
+                                                                tabIndex={0}
                                                                 title="Clear selected item"
                                                                 type="button"
                                                               >
@@ -42114,7 +42120,8 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                                   aria-label="Clear selected item"
                                                                   className="bx--list-box__selection"
                                                                   onClick={[Function]}
-                                                                  tabIndex={-1}
+                                                                  onKeyDown={[Function]}
+                                                                  tabIndex={0}
                                                                   title="Clear selected item"
                                                                   type="button"
                                                                 >
@@ -42515,7 +42522,8 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                                   aria-label="Clear selected item"
                                                                   className="bx--list-box__selection"
                                                                   onClick={[Function]}
-                                                                  tabIndex={-1}
+                                                                  onKeyDown={[Function]}
+                                                                  tabIndex={0}
                                                                   title="Clear selected item"
                                                                   type="button"
                                                                 >
@@ -44750,7 +44758,8 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                                 aria-label="Clear selected item"
                                                                 className="bx--list-box__selection"
                                                                 onClick={[Function]}
-                                                                tabIndex={-1}
+                                                                onKeyDown={[Function]}
+                                                                tabIndex={0}
                                                                 title="Clear selected item"
                                                                 type="button"
                                                               >

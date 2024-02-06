@@ -424,6 +424,7 @@ exports[`Custom Button form component should edit a generic object custom button
     >
       <div
         aria-atomic="true"
+        aria-labelledby="loading-id-4"
         aria-live="assertive"
         className="export-spinner bx--loading bx--loading--small"
       >
@@ -883,6 +884,7 @@ exports[`Custom Button form component should render the editing form for generic
     >
       <div
         aria-atomic="true"
+        aria-labelledby="loading-id-1"
         aria-live="assertive"
         className="export-spinner bx--loading bx--loading--small"
       >

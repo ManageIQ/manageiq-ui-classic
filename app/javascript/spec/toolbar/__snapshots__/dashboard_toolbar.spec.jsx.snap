@@ -30,7 +30,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
         flipped={false}
         floatingmenu="true"
         focusTrap={true}
-        iconDescription="Open and close list of options"
+        iconDescription="open and close list of options"
         id="dropdown-custom-2"
         light={false}
         menuOffset={[Function]}
@@ -49,7 +49,6 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
           onClickOutside={[Function]}
         >
           <button
-            aria-controls={null}
             aria-expanded={false}
             aria-haspopup={true}
             aria-label="Add widget"
@@ -65,7 +64,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
             type="button"
           >
             <renderIcon
-              aria-label="Open and close list of options"
+              aria-label="open and close list of options"
               className="bx--overflow-menu__icon"
             >
               <div

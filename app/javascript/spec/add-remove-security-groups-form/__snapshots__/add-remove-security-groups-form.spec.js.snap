@@ -32,6 +32,7 @@ exports[`Add/remove security groups form component should add security group 1`]
     >
       <div
         aria-atomic="true"
+        aria-labelledby="loading-id-3"
         aria-live="assertive"
         className="export-spinner bx--loading bx--loading--small"
       >
@@ -99,6 +100,7 @@ exports[`Add/remove security groups form component should remove security group 
     >
       <div
         aria-atomic="true"
+        aria-labelledby="loading-id-4"
         aria-live="assertive"
         className="export-spinner bx--loading bx--loading--small"
       >
@@ -166,6 +168,7 @@ exports[`Add/remove security groups form component should render add security gr
     >
       <div
         aria-atomic="true"
+        aria-labelledby="loading-id-1"
         aria-live="assertive"
         className="export-spinner bx--loading bx--loading--small"
       >
@@ -233,6 +236,7 @@ exports[`Add/remove security groups form component should render remove security
     >
       <div
         aria-atomic="true"
+        aria-labelledby="loading-id-2"
         aria-live="assertive"
         className="export-spinner bx--loading bx--loading--small"
       >

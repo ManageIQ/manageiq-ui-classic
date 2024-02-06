@@ -66,6 +66,7 @@ exports[`Subnet form component renders the editing form variant 1`] = `
     >
       <div
         aria-atomic="true"
+        aria-labelledby="loading-id-1"
         aria-live="assertive"
         className="export-spinner bx--loading bx--loading--small"
       >

@@ -301,7 +301,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                     flipped={true}
                                     floatingmenu="true"
                                     focusTrap={true}
-                                    iconDescription="Open and close list of options"
+                                    iconDescription="open and close list of options"
                                     id="10000000003625"
                                     light={false}
                                     menuOffset={[Function]}
@@ -395,7 +395,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                       flipped={true}
                                       floatingmenu="true"
                                       focusTrap={true}
-                                      iconDescription="Open and close list of options"
+                                      iconDescription="open and close list of options"
                                       id="10000000003625"
                                       light={false}
                                       menuOffset={[Function]}
@@ -532,7 +532,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                             flipped={true}
                                             floatingmenu="true"
                                             focusTrap={true}
-                                            iconDescription="Open and close list of options"
+                                            iconDescription="open and close list of options"
                                             id="10000000003625"
                                             light={false}
                                             menuOffset={[Function]}
@@ -626,7 +626,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                               flipped={true}
                                               floatingmenu="true"
                                               focusTrap={true}
-                                              iconDescription="Open and close list of options"
+                                              iconDescription="open and close list of options"
                                               id="10000000003625"
                                               light={false}
                                               menuOffset={[Function]}
@@ -649,7 +649,6 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                                 onClickOutside={[Function]}
                                               >
                                                 <button
-                                                  aria-controls={null}
                                                   aria-expanded={false}
                                                   aria-haspopup={true}
                                                   aria-label="open and close options"
@@ -664,11 +663,11 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                                   type="button"
                                                 >
                                                   <ForwardRef(OverflowMenuVertical16)
-                                                    aria-label="Open and close list of options"
+                                                    aria-label="open and close list of options"
                                                     className="bx--overflow-menu__icon"
                                                   >
                                                     <Icon
-                                                      aria-label="Open and close list of options"
+                                                      aria-label="open and close list of options"
                                                       className="bx--overflow-menu__icon"
                                                       fill="currentColor"
                                                       height={16}
@@ -678,7 +677,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                                       xmlns="http://www.w3.org/2000/svg"
                                                     >
                                                       <svg
-                                                        aria-label="Open and close list of options"
+                                                        aria-label="open and close list of options"
                                                         className="bx--overflow-menu__icon"
                                                         fill="currentColor"
                                                         focusable="false"
@@ -705,7 +704,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                                           r="2"
                                                         />
                                                         <title>
-                                                          Open and close list of options
+                                                          open and close list of options
                                                         </title>
                                                       </svg>
                                                     </Icon>
@@ -756,7 +755,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                     flipped={true}
                                     floatingmenu="true"
                                     focusTrap={true}
-                                    iconDescription="Open and close list of options"
+                                    iconDescription="open and close list of options"
                                     id="10000000003624"
                                     light={false}
                                     menuOffset={[Function]}
@@ -850,7 +849,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                       flipped={true}
                                       floatingmenu="true"
                                       focusTrap={true}
-                                      iconDescription="Open and close list of options"
+                                      iconDescription="open and close list of options"
                                       id="10000000003624"
                                       light={false}
                                       menuOffset={[Function]}
@@ -988,7 +987,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                             flipped={true}
                                             floatingmenu="true"
                                             focusTrap={true}
-                                            iconDescription="Open and close list of options"
+                                            iconDescription="open and close list of options"
                                             id="10000000003624"
                                             light={false}
                                             menuOffset={[Function]}
@@ -1082,7 +1081,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                               flipped={true}
                                               floatingmenu="true"
                                               focusTrap={true}
-                                              iconDescription="Open and close list of options"
+                                              iconDescription="open and close list of options"
                                               id="10000000003624"
                                               light={false}
                                               menuOffset={[Function]}
@@ -1105,7 +1104,6 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                                 onClickOutside={[Function]}
                                               >
                                                 <button
-                                                  aria-controls={null}
                                                   aria-expanded={false}
                                                   aria-haspopup={true}
                                                   aria-label="open and close options"
@@ -1120,11 +1118,11 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                                   type="button"
                                                 >
                                                   <ForwardRef(OverflowMenuVertical16)
-                                                    aria-label="Open and close list of options"
+                                                    aria-label="open and close list of options"
                                                     className="bx--overflow-menu__icon"
                                                   >
                                                     <Icon
-                                                      aria-label="Open and close list of options"
+                                                      aria-label="open and close list of options"
                                                       className="bx--overflow-menu__icon"
                                                       fill="currentColor"
                                                       height={16}
@@ -1134,7 +1132,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                                       xmlns="http://www.w3.org/2000/svg"
                                                     >
                                                       <svg
-                                                        aria-label="Open and close list of options"
+                                                        aria-label="open and close list of options"
                                                         className="bx--overflow-menu__icon"
                                                         fill="currentColor"
                                                         focusable="false"
@@ -1161,7 +1159,7 @@ exports[`Notification drawer tests should render correctly 1`] = `
                                                           r="2"
                                                         />
                                                         <title>
-                                                          Open and close list of options
+                                                          open and close list of options
                                                         </title>
                                                       </svg>
                                                     </Icon>
