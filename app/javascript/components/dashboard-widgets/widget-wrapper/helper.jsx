@@ -178,7 +178,7 @@ const menuItemOnClick = (menuItems, widgetId, dataMethod, href, buttonTitle, wid
   } else {
     // Handles print or export to PDF button
     if (buttonTitle === __('Print the full report (all rows) or export it as a PDF file')) {
-      window.open(href, '_blank');
+      window.open(href, '_blank', 'noopener,noreferrer');
       return;
     }
     // Handles full screen button
@@ -189,7 +189,7 @@ const menuItemOnClick = (menuItems, widgetId, dataMethod, href, buttonTitle, wid
       confirmText = __('This will show the entire report (all rows) in your browser. Do you want to proceed?');
     }
     if (window.confirm(confirmText)) {
-      window.open(href, '_blank');
+      window.open(href, '_blank', 'noopener,noreferrer');
     }
   }
 };
