@@ -18,8 +18,10 @@
             = label
           %td
             - case sym
-            - when :draft, :orderable?
-              = @record.orchestration_template.send(sym) ? _("True") : _("False")
+            - when :draft
+              = @record.orchestration_template.draft ? _("True") : _("False")
+            - when :orderable?
+              = @record.orchestration_template.supports?(:order) ? _("True") : _("False")
             - when :read_only
               = @record.orchestration_template.in_use? ? _("True") : _("False")
             - else
