@@ -1,8 +1,8 @@
 class OpsController < ApplicationController
   # Methods for accordions
-  include_concern 'Diagnostics'
-  include_concern 'OpsRbac'
-  include_concern 'Settings'
+  include Diagnostics
+  include OpsRbac
+  include Settings
   include OpsHelper::MyServer
   include Mixins::CustomButtonDialogFormMixin
   include Mixins::BreadcrumbsMixin

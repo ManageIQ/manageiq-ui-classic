@@ -1,3 +1,3 @@
 module SecurityPolicyHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
 end

@@ -1,3 +1,3 @@
 module PxeHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
 end

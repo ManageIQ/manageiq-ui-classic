@@ -1,3 +1,3 @@
 module FirmwareRegistryHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
 end

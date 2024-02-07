@@ -1,3 +1,3 @@
 module ServiceHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
 end

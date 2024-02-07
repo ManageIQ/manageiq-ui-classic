@@ -1,5 +1,5 @@
 module ReportHelper
-  include_concern 'Editor'
+  include Editor
   include ReportInformationHelper
   include ReportDashboardWidgetHelper
   include ReportScheduleHelper

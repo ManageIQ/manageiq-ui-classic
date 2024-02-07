@@ -1,3 +1,3 @@
 module AuthKeyPairCloudHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
 end

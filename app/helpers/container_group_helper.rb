@@ -1,5 +1,5 @@
 module ContainerGroupHelper
-  include_concern 'ComplianceSummaryHelper'
-  include_concern 'ContainerSummaryHelper'
-  include_concern 'TextualSummary'
+  include ComplianceSummaryHelper
+  include ContainerSummaryHelper
+  include TextualSummary
 end

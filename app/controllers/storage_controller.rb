@@ -1,6 +1,6 @@
 class StorageController < ApplicationController
-  include_concern 'StorageD'
-  include_concern 'StoragePod'
+  include StorageD
+  include StoragePod
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
   include Mixins::MoreShowActions

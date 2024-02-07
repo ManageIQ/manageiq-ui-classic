@@ -1,3 +1,3 @@
 module FlavorHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
 end

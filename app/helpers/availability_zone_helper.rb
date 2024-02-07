@@ -1,5 +1,5 @@
 module AvailabilityZoneHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
 
   def accessible_select_event_types
     [[_('Management Events'), 'timeline']]

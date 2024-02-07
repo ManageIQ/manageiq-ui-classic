@@ -4,12 +4,12 @@ class ReportController < ApplicationController
   DEFAULT_SORT_COLUMN_NUMBER = 2
   DEFAULT_SORT_ORDER = "DESC".freeze
 
-  include_concern 'Dashboards'
-  include_concern 'Menus'
-  include_concern 'Reports'
-  include_concern 'SavedReports'
-  include_concern 'Schedules'
-  include_concern 'Widgets'
+  include Dashboards
+  include Menus
+  include Reports
+  include SavedReports
+  include Schedules
+  include Widgets
 
   helper ApplicationHelper::ImportExportHelper
   include ReportHelper

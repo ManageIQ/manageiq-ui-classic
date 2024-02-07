@@ -1,4 +1,4 @@
 module StorageResourceHelper
-  include_concern 'TextualSummary'
-  include_concern 'ComplianceSummaryHelper'
+  include TextualSummary
+  include ComplianceSummaryHelper
 end

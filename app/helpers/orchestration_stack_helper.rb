@@ -1,3 +1,3 @@
 module OrchestrationStackHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
 end

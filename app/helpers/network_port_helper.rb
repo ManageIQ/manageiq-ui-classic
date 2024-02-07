@@ -1,3 +1,3 @@
 module NetworkPortHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
 end

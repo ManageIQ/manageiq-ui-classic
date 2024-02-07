@@ -1,5 +1,5 @@
 module CatalogHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
   include RequestInfoHelper
   include Mixins::AutomationMixin
   include OrchestrationTemplateHelper

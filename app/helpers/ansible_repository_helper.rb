@@ -1,3 +1,3 @@
 module AnsibleRepositoryHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
 end

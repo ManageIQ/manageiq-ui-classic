@@ -1,5 +1,5 @@
 module ResourcePoolHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
 
   def calculate_rp_config(db_record)
     rp_config = []

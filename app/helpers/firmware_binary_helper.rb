@@ -1,3 +1,3 @@
 module FirmwareBinaryHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
 end

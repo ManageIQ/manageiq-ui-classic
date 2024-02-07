@@ -1,6 +1,6 @@
 class MiqPolicyController < ApplicationController
-  include_concern 'Events'
-  include_concern 'Policies'
+  include Events
+  include Policies
 
   before_action :check_privileges
   before_action :get_session_data

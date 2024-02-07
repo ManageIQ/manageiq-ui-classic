@@ -1,3 +1,3 @@
 module NetworkServiceHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
 end

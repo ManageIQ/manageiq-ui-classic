@@ -1,17 +1,16 @@
 # Setting Accordion methods included in OpsController.rb
 module OpsController::Settings
   extend ActiveSupport::Concern
-
-  include_concern 'AnalysisProfiles'
-  include_concern 'CapAndU'
-  include_concern 'Common'
-  include_concern 'Schedules'
-  include_concern 'AutomateSchedules'
-  include_concern 'Tags'
-  include_concern 'LabelTagMapping'
-  include_concern 'Upload'
-  include_concern 'Zones'
-  include_concern 'HelpMenu'
+  include AnalysisProfiles
+  include CapAndU
+  include Common
+  include Schedules
+  include AutomateSchedules
+  include Tags
+  include LabelTagMapping
+  include Upload
+  include Zones
+  include HelpMenu
 
   # Apply the good records from an uploaded import file
   def apply_imports

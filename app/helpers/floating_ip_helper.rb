@@ -1,3 +1,3 @@
 module FloatingIpHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
 end
