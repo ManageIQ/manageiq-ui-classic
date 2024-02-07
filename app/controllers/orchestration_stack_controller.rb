@@ -174,7 +174,7 @@ class OrchestrationStackController < ApplicationController
   def make_ot_orderable
     stack = find_record_with_rbac(OrchestrationStack, params[:id])
     template = stack.orchestration_template
-    if template.orderable?
+    if template.supports?(:order)
       add_flash(_("Orchestration template \"%{name}\" is already orderable") % {:name => template.name}, :error)
       render_flash
     else
@@ -198,7 +198,7 @@ class OrchestrationStackController < ApplicationController
 
   def orchestration_template_copy
     @record = find_record_with_rbac(OrchestrationStack, params[:id])
-    if @record.orchestration_template.orderable?
+    if @record.orchestration_template.supports(:order)
       add_flash(_("Orchestration template \"%{name}\" is already orderable") %
         {:name => @record.orchestration_template.name}, :error)
       render_flash
