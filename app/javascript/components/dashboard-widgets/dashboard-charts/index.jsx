@@ -10,6 +10,19 @@ import EmptyChart from './emptyChart';
 // eslint-disable-next-line no-unused-vars
 const DashboardWidget = ({ data, id, title }) => {
   const convertedData = getConvertedData(data);
+  let showLegend = true;
+  const nameTable = data.miq.name_table;
+  if (convertedData.length > 0 && data.miq) {
+    if (!nameTable) {
+      showLegend = false;
+    } else {
+      const keys = Object.keys(nameTable);
+      if (keys.length === 1 && nameTable[keys[0]] === 'Unknown') {
+        showLegend = false;
+      }
+    }
+  }
+
   if (convertedData.length > 0) {
     if (data.miqChart === 'Area') {
       return (<AreaChartGraph data={convertedData} title={title} />);
@@ -33,7 +46,7 @@ const DashboardWidget = ({ data, id, title }) => {
       return (<StackBarChartGraph data={convertedData} title={title} />);
     }
     if ((data.miqChart === 'StackedColumn' || data.miqChart === 'Column') && !data.data.groups) {
-      return (<GroupBarChart data={convertedData} title={title} />);
+      return (<GroupBarChart data={convertedData} title={title} showLegend={showLegend} />);
     }
     return (<StackBarChartGraph data={convertedData} title={title} />);
   }
