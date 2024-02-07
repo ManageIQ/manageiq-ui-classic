@@ -119,7 +119,7 @@ describe OrchestrationStackController do
       it "won't allow making stack's orchestration template orderable when already orderable" do
         record = FactoryBot.create(:orchestration_stack_cloud_with_template)
         post :button, :params => {:id => record.id, :pressed => "make_ot_orderable"}
-        expect(record.orchestration_template.orderable?).to be_truthy
+        expect(record.orchestration_template.supports?(:order)).to be_truthy
         expect(response.status).to eq(200)
         expect(response).to render_template(:partial => "layouts/_flash_msg")
         expect(assigns(:flash_array).first[:message]).to include('is already orderable')
@@ -128,7 +128,7 @@ describe OrchestrationStackController do
       it "makes stack's orchestration template orderable" do
         record = FactoryBot.create(:orchestration_stack_cloud, :orchestration_template => non_orderable_template)
         post :button, :params => {:id => record.id, :pressed => "make_ot_orderable"}
-        expect(record.orchestration_template.orderable?).to be_falsey
+        expect(record.orchestration_template.supports?(:order)).to be_falsey
         expect(response.status).to eq(200)
         expect(response).to render_template(:partial => "layouts/_flash_msg")
         expect(assigns(:flash_array).first[:message]).to include('is now orderable')
@@ -139,7 +139,7 @@ describe OrchestrationStackController do
       it "won't allow copying stack's orchestration template orderable when already orderable" do
         record = FactoryBot.create(:orchestration_stack_cloud_with_template)
         post :button, :params => {:id => record.id, :pressed => "orchestration_template_copy"}
-        expect(record.orchestration_template.orderable?).to be_truthy
+        expect(record.orchestration_template.supports?(:order)).to be_truthy
         expect(response.status).to eq(200)
         expect(response).to render_template(:partial => "layouts/_flash_msg")
         expect(assigns(:flash_array).first[:message]).to include('is already orderable')
@@ -148,7 +148,7 @@ describe OrchestrationStackController do
       it "renders orchestration template copying form" do
         record = FactoryBot.create(:orchestration_stack_cloud, :orchestration_template => non_orderable_template)
         post :button, :params => {:id => record.id, :pressed => "orchestration_template_copy"}
-        expect(record.orchestration_template.orderable?).to be_falsey
+        expect(record.orchestration_template.supports?(:order)).to be_falsey
         expect(response.status).to eq(200)
         expect(response).to render_template(:partial => "orchestration_stack/_copy_orchestration_template")
       end
