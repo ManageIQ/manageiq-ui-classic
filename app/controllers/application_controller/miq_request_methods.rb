@@ -38,6 +38,12 @@ module ApplicationController::MiqRequestMethods
 
       all_dialogs = @edit[:wf].get_all_dialogs rescue []
 
+      if @edit[:new] && @edit[:new][:addr_mode] && @edit[:new][:addr_mode][0] == "dhcp"
+        all_dialogs[:customize][:fields][:hostname][:read_only] = true
+        all_dialogs[:customize][:fields][:subnet_mask][:read_only] = true
+        all_dialogs[:customize][:fields][:gateway][:read_only] = true
+      end
+
       render :update do |page|
         page << javascript_prologue
         # Going thru all dialogs to see if model has set any of the dialog display to hide/ignore
