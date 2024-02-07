@@ -64,13 +64,15 @@ class WidgetPresenter
                    :confirm  => confirm,
                    :href     => "/dashboard/report_only?rr_id=#{@widget.contents_for_user(current_user).miq_report_result_id}&type=#{@widget.content_type == "chart" ? 'hybrid' : 'tabular'}",
                    :fonticon => 'fa fa-arrows-alt fa-fw',
-                   :target   => "_blank")
+                   :target   => "_blank",
+                   :rel      => "noopener noreferrer")
       buttons.push(:id       => "w_#{@widget.id}_pdf",
                    :title    => _("Print the full report (all rows) or export it as a PDF file"),
                    :name     => _("Print or export to PDF"),
                    :href     => '/dashboard/widget_to_pdf?rr_id=' + @widget.contents_for_user(current_user).miq_report_result_id.to_s,
+                   :fonticon => 'pficon pficon-print fa-fw',
                    :target   => '_blank',
-                   :fonticon => 'pficon pficon-print fa-fw')
+                   :rel      => "noopener noreferrer")
     end
 
     if @widget.content_type == 'chart'
