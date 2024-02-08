@@ -38,7 +38,7 @@ const MiqDataTable = ({
   const isAllSelected = rows.every((row) => gridChecks.includes(row.id));
 
   /** Function to print the header label.
-   * The DefultKey is used to identify the headers which needs to be blank. */
+   * The DefaultKey is used to identify the headers which needs to be blank. */
   const headerLabel = (header) => (header.split('_')[0] === DefaultKey ? '' : header);
 
   /** Function to render the select all checkbox in header. */
