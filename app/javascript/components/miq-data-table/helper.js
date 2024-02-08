@@ -1,4 +1,4 @@
-/** Element types that appeares in a cell. */
+/** Element types that appears in a cell. */
 export const CellElements = {
   button: 'is_button',
   checkbox: 'is_checkbox',
@@ -51,7 +51,7 @@ export const decimalCount = (value) => {
   return 0;
 };
 
-/* Function to determin if only the icon needs to be printed, else, print its text along with the icon. */
+/* Function to determine if only the icon needs to be printed, else, print its text along with the icon. */
 export const hasIcon = (keys, data) => {
   if (keys.includes('type') && data.type === 'i') {
     return { showIcon: true, showText: false };

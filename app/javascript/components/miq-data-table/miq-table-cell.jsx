@@ -70,7 +70,7 @@ const MiqTableCell = ({
     );
   };
 
-  /** Fuction to render icon(s) in cell. */
+  /** Function to render icon(s) in cell. */
   const renderIcon = (icon, style, showText) => {
     const hasBackground = Object.keys(style).includes('background');
     const styledIconClass = hasBackground ? 'styled_icon' : '';
@@ -87,7 +87,7 @@ const MiqTableCell = ({
     );
   };
 
-  /** Fuction to render an icon in cell based on the 'type' in 'item'. */
+  /** Function to render an icon in cell based on the 'type' in 'item'. */
   const cellIcon = (item, showText) => {
     if (showText) {
       const color = item.props ? item.props.style : {};
@@ -113,7 +113,7 @@ const MiqTableCell = ({
   };
 
   /** Function to render a Button inside cell. */
-  /** Button was used only for 'Services / Catalogs' & the miqOrderService() was directely called on its click event. */
+  /** Button was used only for 'Services / Catalogs' & the miqOrderService() was directly called on its click event. */
   const cellButton = (item) => (
     <div className={cellClass}>
       <Button
@@ -177,7 +177,7 @@ const MiqTableCell = ({
   );
 
   /** Determines which component has to be rendered inside a cell.
-   * Also to determine if a click event necesseary for a cell or its component . */
+   * Also to determine if a click event necessary for a cell or its component . */
   const cellComponent = () => {
     const { data, id } = cell;
     const keys = Object.keys(data);
