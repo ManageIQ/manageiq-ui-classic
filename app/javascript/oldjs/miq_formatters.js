@@ -114,7 +114,10 @@
 
   function remove_right_side_zeros(str_val, separator) {
     var v = str_val.split(separator);
-    return v[0].replace(/(?:\.0+|(\.\d+?)0+)$/, '$1') + separator + v[1];
+    if (v[0].includes('.')) {
+      v[0] = v[0].replace(/0+$/, '').replace(/\.$/, '')
+    }
+    return v.join(separator);
   }
 
   var format = {
