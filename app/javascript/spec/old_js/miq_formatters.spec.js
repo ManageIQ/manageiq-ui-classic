@@ -125,28 +125,50 @@ describe('ManageIQ.charts.formatters', () => {
   });
 
   describe('.bytes_to_human_size', () => {
-    it('Suffixed Bytes (B, KB, MB, GB)', () => {
-      var options = {
-        description: 'Suffixed Bytes (B, KB, MB, GB)',
-        name: 'bytes_to_human_size',
-        precision: 2,
-      };
-      var fn = ManageIQ.charts.formatters[options.name];
+    describe('Suffixed Bytes (B, KB, MB, GB)', () => {
+      it('with an integer result to 0 digits of precision', () => {
+        var options = {
+          description: 'Suffixed Bytes (B, KB, MB, GB)',
+          name: 'bytes_to_human_size',
+          precision: 0,
+        };
+        var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(123, options)).toEqual('123 B');
-    });
-  });
+        expect(fn(123, options)).toEqual('123 B');
+      });
 
-  describe('.bytes_to_human_size', () => {
-    it('Suffixed Bytes (B, KB, MB, GB)', () => {
-      var options = {
-        description: 'Suffixed Bytes (B, KB, MB, GB)',
-        name: 'bytes_to_human_size',
-        precision: 2,
-      };
-      var fn = ManageIQ.charts.formatters[options.name];
+      it('with an integer result to 2 digits of precision', () => {
+        var options = {
+          description: 'Suffixed Bytes (B, KB, MB, GB)',
+          name: 'bytes_to_human_size',
+          precision: 2,
+        };
+        var fn = ManageIQ.charts.formatters[options.name];
 
-      expect(fn(1234, options)).toEqual('1.21 KiB');
+        expect(fn(123, options)).toEqual('123 B');
+      });
+
+      it('with a decimal result to 2 digits of precision', () => {
+        var options = {
+          description: 'Suffixed Bytes (B, KB, MB, GB)',
+          name: 'bytes_to_human_size',
+          precision: 2,
+        };
+        var fn = ManageIQ.charts.formatters[options.name];
+
+        expect(fn(1234, options)).toEqual('1.21 KiB');
+      });
+
+      it('with a decimal result with more than the expected precision', () => {
+        var options = {
+          description: 'Suffixed Bytes (B, KB, MB, GB)',
+          name: 'bytes_to_human_size',
+          precision: 100,
+        };
+        var fn = ManageIQ.charts.formatters[options.name];
+
+        expect(fn(1234, options)).toEqual('1.205078125 KiB');
+      });
     });
   });
 
