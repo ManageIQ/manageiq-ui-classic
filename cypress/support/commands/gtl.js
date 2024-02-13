@@ -38,11 +38,9 @@ Cypress.Commands.add('gtlClickRow', (columns) => {
   cy.gtlGetTable().get('tr.clickable-row').then((rows) => {
     const numRows = [...Array(rows.length).keys()];
     numRows.forEach((index) => {
-      let click = false;
+      let click = true;
       columns.forEach((column) => {
-        if (rows[index].children[column.number].innerText === column.title) {
-          click = true;
-        } else {
+        if (rows[index].children[column.number].innerText !== column.title) {
           click = false;
         }
       });

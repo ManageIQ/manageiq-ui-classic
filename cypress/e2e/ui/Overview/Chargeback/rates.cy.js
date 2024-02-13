@@ -15,107 +15,19 @@ describe('Rates', () => {
       cy.get(':nth-child(1) > .col-md-8 > .form-control-static').contains('Default');
       cy.get(':nth-child(2) > .col-md-8 > .form-control-static').contains('Compute');
 
-      cy.get('thead > tr > :nth-child(1)').contains('Group');
-      cy.get('thead > tr > :nth-child(2)').contains('Description (Column Name in Report)');
-      cy.get('thead > tr > :nth-child(3)').contains('Range Start');
-      cy.get('thead > tr > :nth-child(4)').contains('Range Finish');
-      cy.get('thead > tr > :nth-child(5)').contains('Rate Fixed');
-      cy.get('thead > tr > :nth-child(6)').contains('Rate Variable');
-      cy.get('thead > tr > :nth-child(7)').contains('Units');
-
-      cy.expect_text(':nth-child(1) > :nth-child(1) > .cell > .bx--front-line', 'CPU');
-      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(1)', 'Allocated CPU Count');
-      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(2)', 'vCPUs Allocated over Time Period');
-      cy.expect_text(':nth-child(1) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(1) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(1) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
-      cy.expect_text(':nth-child(1) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / Cpu');
-
-      cy.expect_text(':nth-child(2) > :nth-child(1) > .cell > .bx--front-line', 'CPU');
-      cy.expect_text(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used CPU');
-      cy.expect_text(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'CPU Used');
-      cy.expect_text(':nth-child(2) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(2) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(2) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(2) > :nth-child(6) > .cell > .array_list > .list_row', '0.02');
-      cy.expect_text(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / MHz');
-
-      cy.expect_text(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line', 'CPU Cores');
-      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Allocated CPU Cores');
-      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'CPU Cores Allocated Metric');
-      cy.expect_text(':nth-child(3) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(3) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(3) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
-      cy.expect_text(':nth-child(3) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / Cpu core');
-
-      cy.expect_text(':nth-child(4) > :nth-child(1) > .cell > .bx--front-line', 'CPU Cores');
-      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used CPU Cores');
-      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'CPU Cores Used Metric');
-      cy.expect_text(':nth-child(4) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(4) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(4) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
-      cy.expect_text(':nth-child(4) > :nth-child(6) > .cell > .array_list > .list_row', '0.02');
-      cy.expect_text(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / Cpu core');
-
-      cy.expect_text(':nth-child(5) > :nth-child(1) > .cell > .bx--front-line', 'Disk I/O');
-      cy.expect_text(':nth-child(5) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Disk I/O');
-      cy.expect_text(':nth-child(5) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Disk I/O Used');
-      cy.expect_text(':nth-child(5) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(5) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(5) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(5) > :nth-child(6) > .cell > .array_list > .list_row', '0.005');
-      cy.expect_text(':nth-child(5) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / KBps');
-
-      cy.expect_text(':nth-child(6) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
-      cy.expect_text(':nth-child(6) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Fixed Compute Cost 1');
-      cy.expect_text(':nth-child(6) > :nth-child(2) > .cell > .array_list > :nth-child(2', 'Fixed Compute Metric 1');
-      cy.expect_text(':nth-child(6) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(6) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(6) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(6) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(6) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour');
-
-      cy.expect_text(':nth-child(7) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
-      cy.expect_text(':nth-child(7) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Fixed Compute Cost 2');
-      cy.expect_text(':nth-child(7) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Fixed Compute Metric 2');
-      cy.expect_text(':nth-child(7) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(7) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(7) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(7) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(7) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour');
-
-      cy.expect_text(':nth-child(8) > :nth-child(1) > .cell > .bx--front-line', 'Memory');
-      cy.expect_text(':nth-child(8) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Allocated Memory');
-      cy.expect_text(':nth-child(8) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Memory Allocated over Time Period');
-      cy.expect_text(':nth-child(8) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(8) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(8) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(8) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(8) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / MB');
-
-      cy.expect_text(':nth-child(9) > :nth-child(1) > .cell > .bx--front-line', 'Memory');
-      cy.expect_text(':nth-child(9) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Memory');
-      cy.expect_text(':nth-child(9) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Memory Used');
-      cy.expect_text(':nth-child(9) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(9) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(9) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(9) > :nth-child(6) > .cell > .array_list > .list_row', '0.02');
-      cy.expect_text(':nth-child(9) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / MB');
-
-      cy.expect_text(':nth-child(10) > :nth-child(1) > .cell > .bx--front-line', 'Network I/O');
-      cy.expect_text(':nth-child(10) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Network I/O');
-      cy.expect_text(':nth-child(10) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Network I/O Used');
-      cy.expect_text(':nth-child(10) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(3) > .cell > .array_list > :nth-child(2)', '100.0');
-      cy.expect_text(':nth-child(10) > :nth-child(4) > .cell > .array_list > .list_row', '100.0');
-      cy.expect_text(':nth-child(4) > .cell > .array_list > :nth-child(2)', 'Infinity');
-      cy.expect_text(':nth-child(10) > :nth-child(5) > .cell > .array_list > .list_row', '0.5');
-      cy.expect_text(':nth-child(5) > .cell > .array_list > :nth-child(2)', '0.5');
-      cy.expect_text(':nth-child(10) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(6) > .cell > .array_list > :nth-child(2)', '0.005');
-      cy.expect_text(':nth-child(10) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / KBps');
+      const headers = ['Group', 'Description (Column Name in Report)', 'Range Start', 'Range Finish', 'Rate Fixed', 'Rate Variable', 'Units'];
+      const rows = [];
+      rows[0] = ['CPU', ['Allocated CPU Count', 'vCPUs Allocated over Time Period'], ['0.0'], ['Infinity'], ['1.0'], ['0.0'], '$ [United States Dollar] / Hour / Cpu'];
+      rows[1] = ['CPU', ['Used CPU', 'CPU Used'], ['0.0'], ['Infinity'], ['0.0'], ['0.02'], '$ [United States Dollar] / Hour / MHz'];
+      rows[2] = ['CPU Cores', ['Allocated CPU Cores', 'CPU Cores Allocated Metric'], ['0.0'], ['Infinity'], ['1.0'], ['0.0'], '$ [United States Dollar] / Hour / Cpu core'];
+      rows[3] = ['CPU Cores', ['Used CPU Cores', 'CPU Cores Used Metric'], ['0.0'], ['Infinity'], ['1.0'], ['0.02'], '$ [United States Dollar] / Hour / Cpu core'];
+      rows[4] = ['Disk I/O', ['Used Disk I/O', 'Disk I/O Used'], ['0.0'], ['Infinity'], ['0.0'], ['0.005'], '$ [United States Dollar] / Hour / KBps'];
+      rows[5] = ['Fixed', ['Fixed Compute Cost 1', 'Fixed Compute Metric 1'], ['0.0'], ['Infinity'], ['0.0'], ['0.0'], '$ [United States Dollar] / Hour'];
+      rows[6] = ['Fixed', ['Fixed Compute Cost 2', 'Fixed Compute Metric 2'], ['0.0'], ['Infinity'], ['0.0'], ['0.0'], '$ [United States Dollar] / Hour'];
+      rows[7] = ['Memory', ['Allocated Memory', 'Memory Allocated over Time Period'], ['0.0'], ['Infinity'], ['0.0'], ['0.0'], '$ [United States Dollar] / Hour / MB'];
+      rows[8] = ['Memory', ['Used Memory', 'Memory Used'], ['0.0'], ['Infinity'], ['0.0'], ['0.02'], '$ [United States Dollar] / Hour / MB'];
+      rows[9] = ['Network I/O', ['Used Network I/O', 'Network I/O Used'], ['0.0', '100.0'], ['100.0', 'Infinity'], ['0.5', '0.5'], ['0.0', '0.005'], '$ [United States Dollar] / Hour / KBps'];
+      cy.expect_rates_table(headers, rows);
     });
   });
 
@@ -124,49 +36,13 @@ describe('Rates', () => {
       cy.get(':nth-child(1) > .col-md-8 > .form-control-static').contains('Default');
       cy.get(':nth-child(2) > .col-md-8 > .form-control-static').contains('Storage');
 
-      cy.get('thead > tr > :nth-child(1)').contains('Group');
-      cy.get('thead > tr > :nth-child(2)').contains('Description (Column Name in Report)');
-      cy.get('thead > tr > :nth-child(3)').contains('Range Start');
-      cy.get('thead > tr > :nth-child(4)').contains('Range Finish');
-      cy.get('thead > tr > :nth-child(5)').contains('Rate Fixed');
-      cy.get('thead > tr > :nth-child(6)').contains('Rate Variable');
-      cy.get('thead > tr > :nth-child(7)').contains('Units');
-
-      cy.expect_text(':nth-child(1) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
-      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(1)', 'Fixed Storage Cost 1');
-      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(2)', 'Fixed Storage 1 Metric');
-      cy.expect_text(':nth-child(1) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(1) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(1) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(1) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour');
-
-      cy.expect_text(':nth-child(2) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
-      cy.expect_text(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Fixed Storage Cost 2');
-      cy.expect_text(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Fixed Storage 2 Metric');
-      cy.expect_text(':nth-child(2) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(2) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(2) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(2) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour');
-
-      cy.expect_text(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line', 'Storage');
-      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Allocated Disk Storage');
-      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Storage Allocated');
-      cy.expect_text(':nth-child(3) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(3) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(3) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
-      cy.expect_text(':nth-child(3) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / GB');
-
-      cy.expect_text(':nth-child(4) > :nth-child(1) > .cell > .bx--front-line', 'Storage');
-      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Disk Storage');
-      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Storage Used');
-      cy.expect_text(':nth-child(4) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(4) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(4) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(4) > :nth-child(6) > .cell > .array_list > .list_row', '2.0');
-      cy.expect_text(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / GB');
+      const headers = ['Group', 'Description (Column Name in Report)', 'Range Start', 'Range Finish', 'Rate Fixed', 'Rate Variable', 'Units'];
+      const rows = [];
+      rows[0] = ['Fixed', ['Fixed Storage Cost 1', 'Fixed Storage 1 Metric'], ['0.0'], ['Infinity'], ['0.0'], ['0.0'], '$ [United States Dollar] / Hour'];
+      rows[1] = ['Fixed', ['Fixed Storage Cost 2', 'Fixed Storage 2 Metric'], ['0.0'], ['Infinity'], ['0.0'], ['0.0'], '$ [United States Dollar] / Hour'];
+      rows[2] = ['Storage', ['Allocated Disk Storage', 'Storage Allocated'], ['0.0'], ['Infinity'], ['1.0'], ['0.0'], '$ [United States Dollar] / Hour / GB'];
+      rows[3] = ['Storage', ['Used Disk Storage', 'Storage Used'], ['0.0'], ['Infinity'], ['0.0'], ['2.0'], '$ [United States Dollar] / Hour / GB'];
+      cy.expect_rates_table(headers, rows);
     });
   });
 
@@ -175,107 +51,19 @@ describe('Rates', () => {
       cy.get(':nth-child(1) > .col-md-8 > .form-control-static').contains('Default Container Image Rate');
       cy.get(':nth-child(2) > .col-md-8 > .form-control-static').contains('Compute');
 
-      cy.get('thead > tr > :nth-child(1)').contains('Group');
-      cy.get('thead > tr > :nth-child(2)').contains('Description (Column Name in Report)');
-      cy.get('thead > tr > :nth-child(3)').contains('Range Start');
-      cy.get('thead > tr > :nth-child(4)').contains('Range Finish');
-      cy.get('thead > tr > :nth-child(5)').contains('Rate Fixed');
-      cy.get('thead > tr > :nth-child(6)').contains('Rate Variable');
-      cy.get('thead > tr > :nth-child(7)').contains('Units');
-
-      cy.expect_text(':nth-child(1) > :nth-child(1) > .cell > .bx--front-line', 'CPU');
-      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(1)', 'Allocated CPU Count');
-      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(2)', 'vCPUs Allocated over Time Period');
-      cy.expect_text(':nth-child(1) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(1) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(1) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
-      cy.expect_text(':nth-child(1) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / Cpu');
-
-      cy.expect_text(':nth-child(2) > :nth-child(1) > .cell > .bx--front-line', 'CPU');
-      cy.expect_text(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used CPU');
-      cy.expect_text(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'CPU Used');
-      cy.expect_text(':nth-child(2) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(2) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(2) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(2) > :nth-child(6) > .cell > .array_list > .list_row', '0.02');
-      cy.expect_text(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / MHz');
-
-      cy.expect_text(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line', 'CPU Cores');
-      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Allocated CPU Cores');
-      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'CPU Cores Allocated Metric');
-      cy.expect_text(':nth-child(3) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(3) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(3) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
-      cy.expect_text(':nth-child(3) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / Cpu core');
-
-      cy.expect_text(':nth-child(4) > :nth-child(1) > .cell > .bx--front-line', 'CPU Cores');
-      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used CPU Cores');
-      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'CPU Cores Used Metric');
-      cy.expect_text(':nth-child(4) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(4) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(4) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
-      cy.expect_text(':nth-child(4) > :nth-child(6) > .cell > .array_list > .list_row', '0.02');
-      cy.expect_text(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / Cpu core');
-
-      cy.expect_text(':nth-child(5) > :nth-child(1) > .cell > .bx--front-line', 'Disk I/O');
-      cy.expect_text(':nth-child(5) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Disk I/O');
-      cy.expect_text(':nth-child(5) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Disk I/O Used');
-      cy.expect_text(':nth-child(5) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(5) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(5) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / KBps');
-      cy.expect_text(':nth-child(5) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(5) > :nth-child(6) > .cell > .array_list > .list_row', '0.005');
-
-      cy.expect_text(':nth-child(6) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
-      cy.expect_text(':nth-child(6) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Fixed Compute Cost 1');
-      cy.expect_text(':nth-child(6) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Fixed Compute Metric 1');
-      cy.expect_text(':nth-child(6) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(6) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(6) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(6) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(6) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour');
-
-      cy.expect_text(':nth-child(7) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
-      cy.expect_text(':nth-child(7) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Fixed Compute Cost 2');
-      cy.expect_text(':nth-child(7) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Fixed Compute Metric 2');
-      cy.expect_text(':nth-child(7) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(7) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(7) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(7) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(7) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour');
-
-      cy.expect_text(':nth-child(8) > :nth-child(1) > .cell > .bx--front-line', 'Memory');
-      cy.expect_text(':nth-child(8) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Allocated Memory');
-      cy.expect_text(':nth-child(8) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Memory Allocated over Time Period');
-      cy.expect_text(':nth-child(8) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(8) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(8) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(8) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(8) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / MB');
-
-      cy.expect_text(':nth-child(9) > :nth-child(1) > .cell > .bx--front-line', 'Memory');
-      cy.expect_text(':nth-child(9) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Memory');
-      cy.expect_text(':nth-child(9) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Memory Used');
-      cy.expect_text(':nth-child(9) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(9) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(9) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(9) > :nth-child(6) > .cell > .array_list > .list_row', '0.02');
-      cy.expect_text(':nth-child(9) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / MB');
-
-      cy.expect_text(':nth-child(10) > :nth-child(1) > .cell > .bx--front-line', 'Network I/O');
-      cy.expect_text(':nth-child(10) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Network I/O');
-      cy.expect_text(':nth-child(10) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Network I/O Used');
-      cy.expect_text(':nth-child(10) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(3) > .cell > .array_list > :nth-child(2)', '100.0');
-      cy.expect_text(':nth-child(10) > :nth-child(4) > .cell > .array_list > .list_row', '100.0');
-      cy.expect_text(':nth-child(4) > .cell > .array_list > :nth-child(2)', 'Infinity');
-      cy.expect_text(':nth-child(10) > :nth-child(5) > .cell > .array_list > .list_row', '0.5');
-      cy.expect_text(':nth-child(5) > .cell > .array_list > :nth-child(2)', '0.5');
-      cy.expect_text(':nth-child(10) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(6) > .cell > .array_list > :nth-child(2)', '0.005');
-      cy.expect_text(':nth-child(10) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / KBps');
+      const headers = ['Group', 'Description (Column Name in Report)', 'Range Start', 'Range Finish', 'Rate Fixed', 'Rate Variable', 'Units'];
+      const rows = [];
+      rows[0] = ['CPU', ['Allocated CPU Count', 'vCPUs Allocated over Time Period'], ['0.0'], ['Infinity'], ['1.0'], ['0.0'], '$ [United States Dollar] / Hour / Cpu'];
+      rows[1] = ['CPU', ['Used CPU', 'CPU Used'], ['0.0'], ['Infinity'], ['0.0'], ['0.02'], '$ [United States Dollar] / Hour / MHz'];
+      rows[2] = ['CPU Cores', ['Allocated CPU Cores', 'CPU Cores Allocated Metric'], ['0.0'], ['Infinity'], ['1.0'], ['0.0'], '$ [United States Dollar] / Hour / Cpu core'];
+      rows[3] = ['CPU Cores', ['Used CPU Cores', 'CPU Cores Used Metric'], ['0.0'], ['Infinity'], ['1.0'], ['0.02'], '$ [United States Dollar] / Hour / Cpu core'];
+      rows[4] = ['Disk I/O', ['Used Disk I/O', 'Disk I/O Used'], ['0.0'], ['Infinity'], ['0.0'], ['0.005'], '$ [United States Dollar] / Hour / KBps'];
+      rows[5] = ['Fixed', ['Fixed Compute Cost 1', 'Fixed Compute Metric 1'], ['0.0'], ['Infinity'], ['0.0'], ['0.0'], '$ [United States Dollar] / Hour'];
+      rows[6] = ['Fixed', ['Fixed Compute Cost 2', 'Fixed Compute Metric 2'], ['0.0'], ['Infinity'], ['0.0'], ['0.0'], '$ [United States Dollar] / Hour'];
+      rows[7] = ['Memory', ['Allocated Memory', 'Memory Allocated over Time Period'], ['0.0'], ['Infinity'], ['0.0'], ['0.0'], '$ [United States Dollar] / Hour / MB'];
+      rows[8] = ['Memory', ['Used Memory', 'Memory Used'], ['0.0'], ['Infinity'], ['0.0'], ['0.02'], '$ [United States Dollar] / Hour / MB'];
+      rows[9] = ['Network I/O', ['Used Network I/O', 'Network I/O Used'], ['0.0', '100.0'], ['100.0', 'Infinity'], ['0.5', '0.5'], ['0.0', '0.005'], '$ [United States Dollar] / Hour / KBps'];
+      cy.expect_rates_table(headers, rows);
     });
   });
 
@@ -334,121 +122,19 @@ describe('Rates', () => {
       cy.get(':nth-child(1) > .col-md-8 > .form-control-static').contains('Cypress test compute chargeback rates');
       cy.get(':nth-child(2) > .col-md-8 > .form-control-static').contains('Compute');
 
-      cy.get('thead > tr > :nth-child(1)').contains('Group');
-      cy.get('thead > tr > :nth-child(2)').contains('Description (Column Name in Report)');
-      cy.get('thead > tr > :nth-child(3)').contains('Range Start');
-      cy.get('thead > tr > :nth-child(4)').contains('Range Finish');
-      cy.get('thead > tr > :nth-child(5)').contains('Rate Fixed');
-      cy.get('thead > tr > :nth-child(6)').contains('Rate Variable');
-      cy.get('thead > tr > :nth-child(7)').contains('Units');
-
-      cy.expect_text(':nth-child(1) > :nth-child(1) > .cell > .bx--front-line', 'CPU');
-      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(1)', 'Allocated CPU Count');
-      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(2)', 'vCPUs Allocated over Time Period');
-      cy.expect_text(':nth-child(1) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(1) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
-      cy.expect_text(':nth-child(1) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(1) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
-      cy.get(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / Cpu');
-
-      cy.expect_text(':nth-child(2) > :nth-child(1) > .cell > .bx--front-line', 'CPU');
-      cy.expect_text(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used CPU');
-      cy.expect_text(':nth-child(2) > :nth-child(4) > .cell > .array_list > :nth-child(1)', '50.0');
-      cy.expect_text(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'CPU Used');
-      cy.expect_text(':nth-child(2) > :nth-child(3) > .cell > .array_list > :nth-child(1)', '0.0');
-      cy.expect_text(':nth-child(2) > :nth-child(3) > .cell > .array_list > :nth-child(2)', '50.0');
-      cy.expect_text(':nth-child(2) > :nth-child(4) > .cell > .array_list > :nth-child(2)', 'Infinity');
-      cy.expect_text(':nth-child(2) > :nth-child(5) > .cell > .array_list > :nth-child(1)', '75.0');
-      cy.expect_text(':nth-child(2) > :nth-child(5) > .cell > .array_list > :nth-child(2)', '0.0');
-      cy.expect_text(':nth-child(2) > :nth-child(6) > .cell > .array_list > :nth-child(1)', '5.0');
-      cy.expect_text(':nth-child(2) > :nth-child(6) > .cell > .array_list > :nth-child(2)', '10.0');
-      cy.get(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line').contains('Week / KHz');
-
-      cy.expect_text(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line', 'CPU Cores');
-      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Allocated CPU Cores');
-      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'CPU Cores Allocated Metric');
-      cy.expect_text(':nth-child(3) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(3) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(3) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
-      cy.expect_text(':nth-child(3) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
-      cy.get(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / Cpu core');
-
-      cy.expect_text(':nth-child(4) > :nth-child(1) > .cell > .bx--front-line', 'CPU Cores');
-      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used CPU Cores');
-      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'CPU Cores Used Metric');
-      cy.expect_text(':nth-child(4) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(4) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(4) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
-      cy.expect_text(':nth-child(4) > :nth-child(6) > .cell > .array_list > .list_row', '0.02');
-      cy.get(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / Cpu core');
-
-      cy.expect_text(':nth-child(5) > :nth-child(1) > .cell > .bx--front-line', 'Disk I/O');
-      cy.expect_text(':nth-child(5) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Disk I/O');
-      cy.expect_text(':nth-child(5) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Disk I/O Used');
-      cy.expect_text(':nth-child(5) > :nth-child(3) > .cell > .array_list > :nth-child(1)', '0.0');
-      cy.expect_text(':nth-child(5) > :nth-child(3) > .cell > .array_list > :nth-child(2)', '10000.0');
-      cy.expect_text(':nth-child(5) > :nth-child(4) > .cell > .array_list > :nth-child(1)', '10000.0');
-      cy.expect_text(':nth-child(5) > :nth-child(4) > .cell > .array_list > :nth-child(2)', 'Infinity');
-      cy.expect_text(':nth-child(5) > :nth-child(5) > .cell > .array_list > :nth-child(1)', '1.0');
-      cy.expect_text(':nth-child(5) > :nth-child(5) > .cell > .array_list > :nth-child(2)', '2.0');
-      cy.expect_text(':nth-child(5) > :nth-child(6) > .cell > .array_list > :nth-child(1)', '1.0');
-      cy.expect_text(':nth-child(5) > :nth-child(6) > .cell > .array_list > :nth-child(2)', '2.0');
-      cy.get(':nth-child(5) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(5) > :nth-child(7) > .cell > .bx--front-line').contains('Day / MBps');
-
-      cy.expect_text(':nth-child(6) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
-      cy.expect_text(':nth-child(6) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Fixed Compute Cost 1');
-      cy.expect_text(':nth-child(6) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Fixed Compute Metric 1');
-      cy.expect_text(':nth-child(6) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(6) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(6) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(6) > :nth-child(6) > .cell > .array_list > .list_row', '-');
-      cy.get(':nth-child(6) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(6) > :nth-child(7) > .cell > .bx--front-line').contains('Hour');
-
-      cy.expect_text(':nth-child(7) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
-      cy.expect_text(':nth-child(7) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Fixed Compute Cost 2');
-      cy.expect_text(':nth-child(7) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Fixed Compute Metric 2');
-      cy.expect_text(':nth-child(7) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(7) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(7) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(7) > :nth-child(6) > .cell > .array_list > .list_row', '-');
-      cy.get(':nth-child(7) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(7) > :nth-child(7) > .cell > .bx--front-line').contains('Hour');
-
-      cy.expect_text(':nth-child(8) > :nth-child(1) > .cell > .bx--front-line', 'Memory');
-      cy.expect_text(':nth-child(8) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Allocated Memory');
-      cy.expect_text(':nth-child(8) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Memory Allocated over Time Period');
-      cy.expect_text(':nth-child(8) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(8) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(8) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(8) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.get(':nth-child(8) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(8) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / MB');
-
-      cy.expect_text(':nth-child(9) > :nth-child(1) > .cell > .bx--front-line', 'Memory');
-      cy.expect_text(':nth-child(9) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Memory');
-      cy.expect_text(':nth-child(9) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Memory Used');
-      cy.expect_text(':nth-child(9) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(9) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(9) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(9) > :nth-child(6) > .cell > .array_list > .list_row', '0.02');
-      cy.get(':nth-child(9) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(9) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / MB');
-
-      cy.expect_text(':nth-child(10) > :nth-child(1) > .cell > .bx--front-line', 'Network I/O');
-      cy.expect_text(':nth-child(10) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Network I/O');
-      cy.expect_text(':nth-child(10) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Network I/O Used');
-      cy.expect_text(':nth-child(10) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(10) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(10) > :nth-child(5) > .cell > .array_list > .list_row', '0.5');
-      cy.expect_text(':nth-child(10) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
-      cy.get(':nth-child(10) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(10) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / KBps');
+      const headers = ['Group', 'Description (Column Name in Report)', 'Range Start', 'Range Finish', 'Rate Fixed', 'Rate Variable', 'Units'];
+      const rows = [];
+      rows[0] = ['CPU', ['Allocated CPU Count', 'vCPUs Allocated over Time Period'], ['0.0'], ['Infinity'], ['1.0'], ['0.0'], `${currency} / Hour / Cpu`];
+      rows[1] = ['CPU', ['Used CPU', 'CPU Used'], ['0.0', '50.0'], ['50.0', 'Infinity'], ['75.0', '0.0'], ['5.0', '10.0'], `${currency} / Week / KHz`];
+      rows[2] = ['CPU Cores', ['Allocated CPU Cores', 'CPU Cores Allocated Metric'], ['0.0'], ['Infinity'], ['1.0'], ['0.0'], `${currency} / Hour / Cpu core`];
+      rows[3] = ['CPU Cores', ['Used CPU Cores', 'CPU Cores Used Metric'], ['0.0'], ['Infinity'], ['1.0'], ['0.02'], `${currency} / Hour / Cpu core`];
+      rows[4] = ['Disk I/O', ['Used Disk I/O', 'Disk I/O Used'], ['0.0', '10000.0'], ['10000.0', 'Infinity'], ['1.0', '2.0'], ['1.0', '2.0'], `${currency} / Day / MBps`];
+      rows[5] = ['Fixed', ['Fixed Compute Cost 1', 'Fixed Compute Metric 1'], ['0.0'], ['Infinity'], ['0.0'], ['-'], `${currency} / Hour`];
+      rows[6] = ['Fixed', ['Fixed Compute Cost 2', 'Fixed Compute Metric 2'], ['0.0'], ['Infinity'], ['0.0'], ['-'], `${currency} / Hour`];
+      rows[7] = ['Memory', ['Allocated Memory', 'Memory Allocated over Time Period'], ['0.0'], ['Infinity'], ['0.0'], ['0.0'], `${currency} / Hour / MB`];
+      rows[8] = ['Memory', ['Used Memory', 'Memory Used'], ['0.0'], ['Infinity'], ['0.0'], ['0.02'], `${currency} / Hour / MB`];
+      rows[9] = ['Network I/O', ['Used Network I/O', 'Network I/O Used'], ['0.0'], ['Infinity'], ['0.5'], ['0.0'], `${currency} / Hour / KBps`];
+      cy.expect_rates_table(headers, rows);
     }).then(() => {
       cy.toolbar('Configuration', 'Edit this Chargeback Rate');
       cy.get('#description').type('{moveToEnd} edit');
@@ -477,122 +163,19 @@ describe('Rates', () => {
       cy.get(':nth-child(1) > .col-md-8 > .form-control-static').contains('Cypress test compute chargeback rates edit');
       cy.get(':nth-child(2) > .col-md-8 > .form-control-static').contains('Compute');
 
-      cy.get('thead > tr > :nth-child(1)').contains('Group');
-      cy.get('thead > tr > :nth-child(2)').contains('Description (Column Name in Report)');
-      cy.get('thead > tr > :nth-child(3)').contains('Range Start');
-      cy.get('thead > tr > :nth-child(4)').contains('Range Finish');
-      cy.get('thead > tr > :nth-child(5)').contains('Rate Fixed');
-      cy.get('thead > tr > :nth-child(6)').contains('Rate Variable');
-      cy.get('thead > tr > :nth-child(7)').contains('Units');
-
-      cy.expect_text(':nth-child(1) > :nth-child(1) > .cell > .bx--front-line', 'CPU');
-      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(1)', 'Allocated CPU Count');
-      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(2)', 'vCPUs Allocated over Time Period');
-      cy.expect_text(':nth-child(1) > :nth-child(3) > .cell > .array_list > :nth-child(1)', '0.0');
-      cy.expect_text(':nth-child(1) > :nth-child(3) > .cell > .array_list > :nth-child(2)', '100.0');
-      cy.expect_text(':nth-child(1) > :nth-child(4) > .cell > .array_list > :nth-child(1)', '100.0');
-      cy.expect_text(':nth-child(1) > :nth-child(4) > .cell > .array_list > :nth-child(2)', 'Infinity');
-      cy.expect_text(':nth-child(1) > :nth-child(5) > .cell > .array_list > :nth-child(1)', '2.0');
-      cy.expect_text(':nth-child(1) > :nth-child(5) > .cell > .array_list > :nth-child(2)', '10.0');
-      cy.expect_text(':nth-child(1) > :nth-child(6) > .cell > .array_list > :nth-child(1)', '10.0');
-      cy.expect_text(':nth-child(1) > :nth-child(6) > .cell > .array_list > :nth-child(2)', '100.0');
-      cy.expect_text(':nth-child(1) > :nth-child(6) > .cell > .array_list > .list_row', '10.0');
-      cy.get(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line').contains('Day / Cpu');
-
-      cy.expect_text(':nth-child(2) > :nth-child(1) > .cell > .bx--front-line', 'CPU');
-      cy.expect_text(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used CPU');
-      cy.expect_text(':nth-child(2) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'CPU Used');
-      cy.expect_text(':nth-child(2) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(2) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(2) > :nth-child(5) > .cell > .array_list > .list_row', '75.0');
-      cy.expect_text(':nth-child(2) > :nth-child(6) > .cell > .array_list > .list_row', '5.0');
-      cy.get(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line').contains('Week / KHz');
-
-      cy.expect_text(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line', 'CPU Cores');
-      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Allocated CPU Cores');
-      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'CPU Cores Allocated Metric');
-      cy.expect_text(':nth-child(3) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(3) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(3) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
-      cy.expect_text(':nth-child(3) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
-      cy.get(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / Cpu core');
-
-      cy.expect_text(':nth-child(4) > :nth-child(1) > .cell > .bx--front-line', 'CPU Cores');
-      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used CPU Cores');
-      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'CPU Cores Used Metric');
-      cy.expect_text(':nth-child(4) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(4) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(4) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
-      cy.expect_text(':nth-child(4) > :nth-child(6) > .cell > .array_list > .list_row', '0.02');
-      cy.get(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / Cpu core');
-
-      cy.expect_text(':nth-child(5) > :nth-child(1) > .cell > .bx--front-line', 'Disk I/O');
-      cy.expect_text(':nth-child(5) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Disk I/O');
-      cy.expect_text(':nth-child(5) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Disk I/O Used');
-      cy.expect_text(':nth-child(5) > :nth-child(3) > .cell > .array_list > :nth-child(1)', '0.0');
-      cy.expect_text(':nth-child(5) > :nth-child(3) > .cell > .array_list > :nth-child(2)', '10000.0');
-      cy.expect_text(':nth-child(5) > :nth-child(4) > .cell > .array_list > :nth-child(1)', '10000.0');
-      cy.expect_text(':nth-child(5) > :nth-child(4) > .cell > .array_list > :nth-child(2)', 'Infinity');
-      cy.expect_text(':nth-child(5) > :nth-child(5) > .cell > .array_list > :nth-child(1)', '1.0');
-      cy.expect_text(':nth-child(5) > :nth-child(5) > .cell > .array_list > :nth-child(2)', '2.0');
-      cy.expect_text(':nth-child(5) > :nth-child(6) > .cell > .array_list > :nth-child(1)', '1.0');
-      cy.expect_text(':nth-child(5) > :nth-child(6) > .cell > .array_list > :nth-child(2)', '2.0');
-      cy.get(':nth-child(5) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(5) > :nth-child(7) > .cell > .bx--front-line').contains('Day / Bps');
-
-      cy.expect_text(':nth-child(6) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
-      cy.expect_text(':nth-child(6) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Fixed Compute Cost 1');
-      cy.expect_text(':nth-child(6) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(6) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Fixed Compute Metric 1');
-      cy.expect_text(':nth-child(6) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(6) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(6) > :nth-child(6) > .cell > .array_list > .list_row', '-');
-      cy.get(':nth-child(6) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(6) > :nth-child(7) > .cell > .bx--front-line').contains('Hour');
-
-      cy.expect_text(':nth-child(7) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
-      cy.expect_text(':nth-child(7) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Fixed Compute Cost 2');
-      cy.expect_text(':nth-child(7) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Fixed Compute Metric 2');
-      cy.expect_text(':nth-child(7) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(7) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(7) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(7) > :nth-child(6) > .cell > .array_list > .list_row', '-');
-      cy.get(':nth-child(7) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(7) > :nth-child(7) > .cell > .bx--front-line').contains('Hour');
-
-      cy.expect_text(':nth-child(8) > :nth-child(1) > .cell > .bx--front-line', 'Memory');
-      cy.expect_text(':nth-child(8) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Allocated Memory');
-      cy.expect_text(':nth-child(8) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Memory Allocated over Time Period');
-      cy.expect_text(':nth-child(8) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(8) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(8) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(8) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
-      cy.get(':nth-child(8) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(8) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / MB');
-
-      cy.expect_text(':nth-child(9) > :nth-child(1) > .cell > .bx--front-line', 'Memory');
-      cy.expect_text(':nth-child(9) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Memory');
-      cy.expect_text(':nth-child(9) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Memory Used');
-      cy.expect_text(':nth-child(9) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(9) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(9) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(9) > :nth-child(6) > .cell > .array_list > .list_row', '0.02');
-      cy.get(':nth-child(9) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(9) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / MB');
-
-      cy.expect_text(':nth-child(10) > :nth-child(1) > .cell > .bx--front-line', 'Network I/O');
-      cy.expect_text(':nth-child(10) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Network I/O');
-      cy.expect_text(':nth-child(10) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Network I/O Used');
-      cy.expect_text(':nth-child(10) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(10) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(10) > :nth-child(5) > .cell > .array_list > .list_row', '0.5');
-      cy.expect_text(':nth-child(10) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
-      cy.get(':nth-child(10) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(10) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / KBps');
+      const headers = ['Group', 'Description (Column Name in Report)', 'Range Start', 'Range Finish', 'Rate Fixed', 'Rate Variable', 'Units'];
+      const rows = [];
+      rows[0] = ['CPU', ['Allocated CPU Count', 'vCPUs Allocated over Time Period'], ['0.0', '100.0'], ['100.0', 'Infinity'], ['2.0', '10.0'], ['10.0', '100.0'], `${currency} / Day / Cpu`];
+      rows[1] = ['CPU', ['Used CPU', 'CPU Used'], ['0.0'], ['Infinity'], ['75.0'], ['5.0'], `${currency} / Week / KHz`];
+      rows[2] = ['CPU Cores', ['Allocated CPU Cores', 'CPU Cores Allocated Metric'], ['0.0'], ['Infinity'], ['1.0'], ['0.0'], `${currency} / Hour / Cpu core`];
+      rows[3] = ['CPU Cores', ['Used CPU Cores', 'CPU Cores Used Metric'], ['0.0'], ['Infinity'], ['1.0'], ['0.02'], `${currency} / Hour / Cpu core`];
+      rows[4] = ['Disk I/O', ['Used Disk I/O', 'Disk I/O Used'], ['0.0', '10000.0'], ['10000.0', 'Infinity'], ['1.0', '2.0'], ['1.0', '2.0'], `${currency} / Day / Bps`];
+      rows[5] = ['Fixed', ['Fixed Compute Cost 1', 'Fixed Compute Metric 1'], ['0.0'], ['Infinity'], ['0.0'], ['-'], `${currency} / Hour`];
+      rows[6] = ['Fixed', ['Fixed Compute Cost 2', 'Fixed Compute Metric 2'], ['0.0'], ['Infinity'], ['0.0'], ['-'], `${currency} / Hour`];
+      rows[7] = ['Memory', ['Allocated Memory', 'Memory Allocated over Time Period'], ['0.0'], ['Infinity'], ['0.0'], ['0.0'], `${currency} / Hour / MB`];
+      rows[8] = ['Memory', ['Used Memory', 'Memory Used'], ['0.0'], ['Infinity'], ['0.0'], ['0.02'], `${currency} / Hour / MB`];
+      rows[9] = ['Network I/O', ['Used Network I/O', 'Network I/O Used'], ['0.0'], ['Infinity'], ['0.5'], ['0.0'], `${currency} / Hour / KBps`];
+      cy.expect_rates_table(headers, rows);
     }).then(() => {
       cy.toolbar('Configuration', 'Remove from the VMDB');
       cy.gtlGetRows([1]).then((rows) => {
@@ -632,56 +215,13 @@ describe('Rates', () => {
       cy.get(':nth-child(1) > .col-md-8 > .form-control-static').contains('Cypress test storage chargeback rates');
       cy.get(':nth-child(2) > .col-md-8 > .form-control-static').contains('Storage');
 
-      cy.get('thead > tr > :nth-child(1)').contains('Group');
-      cy.get('thead > tr > :nth-child(2)').contains('Description (Column Name in Report)');
-      cy.get('thead > tr > :nth-child(3)').contains('Range Start');
-      cy.get('thead > tr > :nth-child(4)').contains('Range Finish');
-      cy.get('thead > tr > :nth-child(5)').contains('Rate Fixed');
-      cy.get('thead > tr > :nth-child(6)').contains('Rate Variable');
-      cy.get('thead > tr > :nth-child(7)').contains('Units');
-
-      cy.expect_text(':nth-child(1) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
-      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(1)', 'Fixed Storage Cost 1');
-      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(2)', 'Fixed Storage 1 Metric');
-      cy.expect_text(':nth-child(1) > :nth-child(4) > .cell > .array_list > :nth-child(1)', '50.0');
-      cy.expect_text(':nth-child(1) > :nth-child(3) > .cell > .array_list > :nth-child(1)', '0.0');
-      cy.expect_text(':nth-child(1) > :nth-child(5) > .cell > .array_list > :nth-child(1)', '100.0');
-      cy.expect_text(':nth-child(3) > .cell > .array_list > :nth-child(2)', '50.0');
-      cy.expect_text(':nth-child(4) > .cell > .array_list > :nth-child(2)', 'Infinity');
-      cy.expect_text(':nth-child(5) > .cell > .array_list > :nth-child(2)', '75.0');
-      cy.get(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line').contains('Week');
-
-      cy.expect_text(':nth-child(2) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
-      cy.expect_text(':nth-child(2) > .vertical_align_top > .cell > .array_list > :nth-child(1)', 'Fixed Storage Cost 2');
-      cy.expect_text(':nth-child(2) > .vertical_align_top > .cell > .array_list > :nth-child(2)', 'Fixed Storage 2 Metric');
-      cy.expect_text(':nth-child(2) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(2) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(2) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.get(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line').contains('Hour');
-
-      cy.expect_text(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line', 'Storage');
-      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Allocated Disk Storage');
-      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Storage Allocated');
-      cy.expect_text(':nth-child(3) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(3) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(3) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
-      cy.expect_text(':nth-child(3) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
-      cy.get(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line').contains('Year / MB');
-
-      cy.expect_text(':nth-child(4) > :nth-child(1) > .cell > .bx--front-line', 'Storage');
-      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Disk Storage');
-      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Storage Used');
-      cy.expect_text(':nth-child(4) > :nth-child(3) > .cell > .array_list > :nth-child(1)', '0.0');
-      cy.expect_text(':nth-child(4) > :nth-child(4) > .cell > .array_list > :nth-child(1)', '10000.0');
-      cy.expect_text(':nth-child(4) > :nth-child(5) > .cell > .array_list > :nth-child(1)', '0.0');
-      cy.expect_text(':nth-child(4) > :nth-child(6) > .cell > .array_list > :nth-child(1)', '2.0');
-      cy.expect_text(':nth-child(4) > :nth-child(3) > .cell > .array_list > :nth-child(2)', '10000.0');
-      cy.expect_text(':nth-child(4) > :nth-child(4) > .cell > .array_list > :nth-child(2)', 'Infinity');
-      cy.get(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / GB');
+      const headers = ['Group', 'Description (Column Name in Report)', 'Range Start', 'Range Finish', 'Rate Fixed', 'Rate Variable', 'Units'];
+      const rows = [];
+      rows[0] = ['Fixed', ['Fixed Storage Cost 1', 'Fixed Storage 1 Metric'], ['0.0', '50.0'], ['50.0', 'Infinity'], ['100.0', '75.0'], ['-', '-'], `${currency} / Week`];
+      rows[1] = ['Fixed', ['Fixed Storage Cost 2', 'Fixed Storage 2 Metric'], ['0.0'], ['Infinity'], ['0.0'], ['-'], `${currency} / Hour`];
+      rows[2] = ['Storage', ['Allocated Disk Storage', 'Storage Allocated'], ['0.0'], ['Infinity'], ['1.0'], ['0.0'], `${currency} / Year / MB`];
+      rows[3] = ['Storage', ['Used Disk Storage', 'Storage Used'], ['0.0', '10000.0'], ['10000.0', 'Infinity'], ['0.0', '0.0'], ['2.0', '0.0'], `${currency} / Hour / GB`];
+      cy.expect_rates_table(headers, rows);
     }).then(() => {
       cy.toolbar('Configuration', 'Edit this Chargeback Rate');
       cy.get('#description').type('{moveToEnd} edit');
@@ -706,57 +246,13 @@ describe('Rates', () => {
       cy.get(':nth-child(1) > .col-md-8 > .form-control-static').contains('Cypress test storage chargeback rates edit');
       cy.get(':nth-child(2) > .col-md-8 > .form-control-static').contains('Storage');
 
-      cy.get('thead > tr > :nth-child(1)').contains('Group');
-      cy.get('thead > tr > :nth-child(2)').contains('Description (Column Name in Report)');
-      cy.get('thead > tr > :nth-child(3)').contains('Range Start');
-      cy.get('thead > tr > :nth-child(4)').contains('Range Finish');
-      cy.get('thead > tr > :nth-child(5)').contains('Rate Fixed');
-      cy.get('thead > tr > :nth-child(6)').contains('Rate Variable');
-      cy.get('thead > tr > :nth-child(7)').contains('Units');
-
-      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(1)', 'Fixed Storage Cost 1');
-      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(2)', 'Fixed Storage 1 Metric');
-      cy.expect_text(':nth-child(1) > :nth-child(3) > .cell > .array_list > :nth-child(1)', '0.0');
-      cy.expect_text(':nth-child(1) > :nth-child(4) > .cell > .array_list > :nth-child(1)', 'Infinity');
-      cy.expect_text(':nth-child(1) > :nth-child(5) > .cell > .array_list > :nth-child(1)', '100.0');
-      cy.get(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line').contains('Day');
-
-      cy.expect_text(':nth-child(2) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
-      cy.expect_text(':nth-child(2) > .vertical_align_top > .cell > .array_list > :nth-child(1)', 'Fixed Storage Cost 2');
-      cy.expect_text(':nth-child(2) > .vertical_align_top > .cell > .array_list > :nth-child(2)', 'Fixed Storage 2 Metric');
-      cy.expect_text(':nth-child(2) > :nth-child(3) > .cell > .array_list > :nth-child(1)', '0.0');
-      cy.expect_text(':nth-child(2) > :nth-child(5) > .cell > .array_list > :nth-child(1)', '1.0');
-      cy.expect_text(':nth-child(2) > :nth-child(4) > .cell > .array_list > :nth-child(1)', '100.0');
-      cy.expect_text(':nth-child(2) > :nth-child(3) > .cell > .array_list > :nth-child(2)', '100.0');
-      cy.expect_text(':nth-child(2) > :nth-child(4) > .cell > .array_list > :nth-child(2)', 'Infinity');
-      cy.expect_text(':nth-child(2) > :nth-child(5) > .cell > .array_list > :nth-child(2)', '0.0');
-      cy.get(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line').contains('Hour');
-
-      cy.expect_text(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line', 'Storage');
-      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Allocated Disk Storage');
-      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Storage Allocated');
-      cy.expect_text(':nth-child(3) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(3) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(3) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
-      cy.expect_text(':nth-child(3) > :nth-child(6) > .cell > .array_list > .list_row', '100.0');
-      cy.get(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line').contains('Month / KB');
-
-      cy.expect_text(':nth-child(4) > :nth-child(1) > .cell > .bx--front-line', 'Storage');
-      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Disk Storage');
-      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Storage Used');
-      cy.expect_text(':nth-child(4) > :nth-child(3) > .cell > .array_list > :nth-child(1)', '0.0');
-      cy.expect_text(':nth-child(4) > :nth-child(4) > .cell > .array_list > :nth-child(1)', '10000.0');
-      cy.expect_text(':nth-child(4) > :nth-child(5) > .cell > .array_list > :nth-child(1)', '0.0');
-      cy.expect_text(':nth-child(4) > :nth-child(6) > .cell > .array_list > :nth-child(1)', '2.0');
-      cy.expect_text(':nth-child(4) > :nth-child(3) > .cell > .array_list > :nth-child(2)', '10000.0');
-      cy.expect_text(':nth-child(4) > :nth-child(4) > .cell > .array_list > :nth-child(2)', 'Infinity');
-      cy.expect_text(':nth-child(4) > :nth-child(5) > .cell > .array_list > :nth-child(2)', '0.0');
-      cy.expect_text(':nth-child(4) > :nth-child(6) > .cell > .array_list > :nth-child(2)', '0.0');
-      cy.get(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line').contains(currency);
-      cy.get(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line').contains('Hour / GB');
+      const headers = ['Group', 'Description (Column Name in Report)', 'Range Start', 'Range Finish', 'Rate Fixed', 'Rate Variable', 'Units'];
+      const rows = [];
+      rows[0] = ['Fixed', ['Fixed Storage Cost 1', 'Fixed Storage 1 Metric'], ['0.0'], ['Infinity'], ['100.0'], ['-'], `${currency} / Day`];
+      rows[1] = ['Fixed', ['Fixed Storage Cost 2', 'Fixed Storage 2 Metric'], ['0.0', '100.0'], ['100.0', 'Infinity'], ['1.0', '0.0'], ['-', '-'], `${currency} / Hour`];
+      rows[2] = ['Storage', ['Allocated Disk Storage', 'Storage Allocated'], ['0.0'], ['Infinity'], ['1.0'], ['100.0'], `${currency} / Month / KB`];
+      rows[3] = ['Storage', ['Used Disk Storage', 'Storage Used'], ['0.0', '10000.0'], ['10000.0', 'Infinity'], ['0.0', '0.0'], ['2.0', '0.0'], `${currency} / Hour / GB`];
+      cy.expect_rates_table(headers, rows);
     }).then(() => {
       cy.toolbar('Configuration', 'Remove from the VMDB');
       cy.gtlGetRows([1]).then((rows) => {
@@ -775,49 +271,13 @@ describe('Rates', () => {
       cy.get(':nth-child(1) > .col-md-8 > .form-control-static').contains('copy of Default');
       cy.get(':nth-child(2) > .col-md-8 > .form-control-static').contains('Storage');
 
-      cy.get('thead > tr > :nth-child(1)').contains('Group');
-      cy.get('thead > tr > :nth-child(2)').contains('Description (Column Name in Report)');
-      cy.get('thead > tr > :nth-child(3)').contains('Range Start');
-      cy.get('thead > tr > :nth-child(4)').contains('Range Finish');
-      cy.get('thead > tr > :nth-child(5)').contains('Rate Fixed');
-      cy.get('thead > tr > :nth-child(6)').contains('Rate Variable');
-      cy.get('thead > tr > :nth-child(7)').contains('Units');
-
-      cy.expect_text(':nth-child(1) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
-      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(1)', 'Fixed Storage Cost 1');
-      cy.expect_text(':nth-child(1) > .vertical_align_top > .cell > .array_list > :nth-child(2)', 'Fixed Storage 1 Metric');
-      cy.expect_text(':nth-child(1) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(1) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(1) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(1) > :nth-child(6) > .cell > .array_list > .list_row', '-');
-      cy.expect_text(':nth-child(1) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour');
-
-      cy.expect_text(':nth-child(2) > .vertical_align_top > .cell > .array_list > :nth-child(1)', 'Fixed Storage Cost 2');
-      cy.expect_text(':nth-child(2) > :nth-child(1) > .cell > .bx--front-line', 'Fixed');
-      cy.expect_text(':nth-child(2) > .vertical_align_top > .cell > .array_list > :nth-child(2)', 'Fixed Storage 2 Metric');
-      cy.expect_text(':nth-child(2) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(2) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(2) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(2) > :nth-child(6) > .cell > .array_list > .list_row', '-');
-      cy.expect_text(':nth-child(2) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour');
-
-      cy.expect_text(':nth-child(3) > :nth-child(1) > .cell > .bx--front-line', 'Storage');
-      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Allocated Disk Storage');
-      cy.expect_text(':nth-child(3) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Storage Allocated');
-      cy.expect_text(':nth-child(3) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(3) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(3) > :nth-child(5) > .cell > .array_list > .list_row', '1.0');
-      cy.expect_text(':nth-child(3) > :nth-child(6) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(3) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / GB');
-
-      cy.expect_text(':nth-child(4) > :nth-child(1) > .cell > .bx--front-line', 'Storage');
-      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(1)', 'Used Disk Storage');
-      cy.expect_text(':nth-child(4) > :nth-child(2) > .cell > .array_list > :nth-child(2)', 'Storage Used');
-      cy.expect_text(':nth-child(4) > :nth-child(3) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(4) > :nth-child(4) > .cell > .array_list > .list_row', 'Infinity');
-      cy.expect_text(':nth-child(4) > :nth-child(5) > .cell > .array_list > .list_row', '0.0');
-      cy.expect_text(':nth-child(4) > :nth-child(6) > .cell > .array_list > .list_row', '2.0');
-      cy.expect_text(':nth-child(4) > :nth-child(7) > .cell > .bx--front-line', '$ [United States Dollar] / Hour / GB');
+      const headers = ['Group', 'Description (Column Name in Report)', 'Range Start', 'Range Finish', 'Rate Fixed', 'Rate Variable', 'Units'];
+      const rows = [];
+      rows[0] = ['Fixed', ['Fixed Storage Cost 1', 'Fixed Storage 1 Metric'], ['0.0'], ['Infinity'], ['0.0'], ['-'], '$ [United States Dollar] / Hour'];
+      rows[1] = ['Fixed', ['Fixed Storage Cost 2', 'Fixed Storage 2 Metric'], ['0.0'], ['Infinity'], ['0.0'], ['-'], '$ [United States Dollar] / Hour'];
+      rows[2] = ['Storage', ['Allocated Disk Storage', 'Storage Allocated'], ['0.0'], ['Infinity'], ['1.0'], ['0.0'], '$ [United States Dollar] / Hour / GB'];
+      rows[3] = ['Storage', ['Used Disk Storage', 'Storage Used'], ['0.0'], ['Infinity'], ['0.0'], ['2.0'],  '$ [United States Dollar] / Hour / GB'];
+      cy.expect_rates_table(headers, rows);
 
       cy.toolbar('Configuration', 'Remove from the VMDB');
       cy.gtlGetRows([1]).then((rows) => {
