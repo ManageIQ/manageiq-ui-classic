@@ -402,10 +402,15 @@ export const getQuotasChart = (isLoading, dashboardData) => {
 export const getPodsTable = (isLoading, dashboardData) => {
   if (isLoading !== true) {
     if (dashboardData.data.pods.length > 0) {
-      const rows = [];
-      dashboardData.data.pods.forEach((row) => {
-        rows.push({ ...row, id: `${Math.random()}` });
-      });
+      const rows = dashboardData.data.pods.map((row) => ({
+        ...row,
+        id: `${row.id}`,
+        name: {
+          is_link: true,
+          href: `/container_group/show/${row.id}/`,
+          text: row.name,
+        },
+      }));
       const headers = [
         { key: 'name', header: __('Name') },
         { key: 'phase', header: __('Status') },

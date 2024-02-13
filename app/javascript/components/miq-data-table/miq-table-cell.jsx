@@ -171,7 +171,7 @@ const MiqTableCell = ({
   const cellLink = (item, _id) => (
     <div className={cellClass}>
       <Link href={item.href}>
-        {item.label}
+        {truncateText}
       </Link>
     </div>
   );
