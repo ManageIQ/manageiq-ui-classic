@@ -38,21 +38,21 @@ export const conditionPoliciesData = {
         { icon: 'pficon pficon-warning-triangle-o', value: 'Alert description' },
       ],
       title: 'View this model policy',
-      onclick: "DoNav('/miq_policy/show/1');",
+      onclick: { url: '/miq_policy/show/1' },
     },
     {
       cells: [
         { icon: 'pficon pficon-warning-triangle-o', value: 'Alert description' },
       ],
       title: 'View this model policy',
-      onclick: "DoNav('/miq_policy/show/2');",
+      onclick: { url: '/miq_policy/show/2' },
     },
     {
       cells: [
         { icon: 'pficon pficon-warning-triangle-o', value: 'Alert description' },
       ],
       title: 'View this model policy',
-      onclick: "DoNav('/miq_policy/show/3');",
+      onclick: { url: '/miq_policy/show/3' },
     },
   ],
 };

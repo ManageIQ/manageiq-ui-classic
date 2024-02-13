@@ -1,4 +1,3 @@
-/* eslint-disable no-eval */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { isObject, isArray, isSubItem } from '../helpers';

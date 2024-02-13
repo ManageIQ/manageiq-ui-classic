@@ -1,5 +1,4 @@
 #main_div
   = render :partial => "utilization_tabs"
-
 :javascript
-  ManageIQ.afterOnload = "miqAsyncAjax('#{url_for_only_path(:action => @ajax_action)}');"
+  ManageIQ.afterOnload = {action: () => miqAsyncAjax("#{url_for_only_path(:action => @ajax_action)}")}

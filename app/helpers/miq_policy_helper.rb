@@ -50,7 +50,7 @@ module MiqPolicyHelper
         rows.push({
                     :cells   => cells,
                     :title   => "View this Condition",
-                    :onclick => "DoNav('/condition/show/#{c.id}');",
+                    :onclick => {:url => "/condition/show/#{c.id}"},
                   })
       end
     end
@@ -71,7 +71,7 @@ module MiqPolicyHelper
           :icon    => e.decorate.try(:fonticon),
           :value   => e.description,
           :title   => _("View this Event"),
-          :onclick => "DoNav('/miq_event_definition/show/#{e.id}');"
+          :onclick => {:url => "/miq_event_definition/show/#{e.id}"},
         }]
         values = []
         ta = record.actions_for_event(e, :success)
@@ -80,7 +80,7 @@ module MiqPolicyHelper
                         :icon    => "pficon pficon-ok",
                         :value   => a.description,
                         :title   => _("View this Action"),
-                        :onclick => "DoNav('/miq_action/show/#{a.id}');"
+                        :onclick => {:url => "/miq_action/show/#{a.id}"},
                       }})
         end
         fa = record.actions_for_event(e, :failure)
@@ -89,7 +89,7 @@ module MiqPolicyHelper
                         :icon    => "pficon pficon-close",
                         :value   => a.description,
                         :title   => _("View this Action"),
-                        :onclick => "DoNav('/miq_action/show/#{a.id}');"
+                        :onclick => {:url => "/miq_action/show/#{a.id}"},
                       }})
         end
         obj['cells'].push(values)
@@ -122,7 +122,7 @@ module MiqPolicyHelper
         rows.push({
                     :cells   => [{:icon => policy.decorate.fonticon, :value => policy.description}],
                     :title   => _("View this Policy Profile"),
-                    :onclick => "DoNav('/miq_policy_set/show/#{policy.id}');",
+                    :onclick => {:url => "/miq_policy_set/show/#{policy.id}"},
                   })
       end
     end

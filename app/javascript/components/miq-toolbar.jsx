@@ -89,7 +89,6 @@ const onClick = (button) => {
     }
   } else if (button.data && button.data.function) {
     // Client-side buttons use 'function' and 'function-data'.
-    // eval - returns a function returning the right function.
     /* eslint no-new-func: "off" */
     const fn = new Function(`return ${button.data.function}`);
     fn().call(button, button.data['function-data']);

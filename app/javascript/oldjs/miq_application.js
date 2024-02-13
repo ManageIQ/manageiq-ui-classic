@@ -33,8 +33,12 @@ window.miqOnLoad = function() {
   }
 
   // Run MIQ after onload code if present
-  if (typeof ManageIQ.afterOnload === 'string') {
-    eval(ManageIQ.afterOnload);
+  if (ManageIQ.afterOnload) {
+    const data = ManageIQ.afterOnload;
+
+    if (typeof data === 'object' && data.action) {
+      data.action.call();
+    }
   }
 
   // Focus on search box, if it's there and allows focus

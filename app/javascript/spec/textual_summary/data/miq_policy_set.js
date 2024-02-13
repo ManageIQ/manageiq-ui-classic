@@ -11,7 +11,7 @@ export const miqPolicyConditionsData = {
         ],
       ],
       title: ('View this Condition'),
-      onclick: "DoNav('/condition/show/1');",
+      onclick: { url: '/condition/show/1' },
     },
     {
       cells: [
@@ -21,7 +21,7 @@ export const miqPolicyConditionsData = {
         ],
       ],
       title: ('View this Condition'),
-      onclick: "DoNav('/condition/show/2');",
+      onclick: { url: '/condition/show/2' },
     },
   ],
 };
@@ -32,19 +32,19 @@ export const miqPolicyEventsData = {
   rows: [
     {
       cells: [
-        { icon: 'pficon pficon-image', value: 'description', onclick: "DoNav('/miq_event_definition/show/#{1}');" },
+        { icon: 'pficon pficon-image', value: 'description', onclick: { url: '/miq_event_definition/show/1' } },
         [
-          { value: { icon: 'pficon pficon-ok', value: 'value 1', onclick: "DoNav('/miq_action/show/1')" } },
-          { value: { icon: 'pficon pficon-ok', value: 'value 2', onclick: "DoNav('/miq_action/show/2')" } },
+          { value: { icon: 'pficon pficon-ok', value: 'value 1', onclick: { url: '/miq_action/show/1' } } },
+          { value: { icon: 'pficon pficon-ok', value: 'value 2', onclick: { url: '/miq_action/show/2' } } },
         ],
       ],
     },
     {
       cells: [
-        { icon: 'pficon pficon-image', value: 'description', onclick: "DoNav('/miq_event_definition/show/#{2}');" },
+        { icon: 'pficon pficon-image', value: 'description', onclick: { url: '/miq_event_definition/show/2' } },
         [
-          { value: { icon: 'pficon pficon-ok', value: 'value 3', onclick: "DoNav('/miq_action/show/3')" } },
-          { value: { icon: 'pficon pficon-ok', value: 'value 4', onclick: "DoNav('/miq_action/show/4')" } },
+          { value: { icon: 'pficon pficon-ok', value: 'value 3', onclick: { url: '/miq_action/show/3' } } },
+          { value: { icon: 'pficon pficon-ok', value: 'value 4', onclick: { url: '/miq_action/show/4' } } },
         ],
       ],
     },
@@ -58,6 +58,6 @@ export const miqProfileData = [
       { icon: 'pficon pficon-image', value: 'Container Image Compliance' }, 'OpenSCAP',
     ],
     title: 'View this Container Image Policy',
-    onclick: "DoNav('/miq_policy/show/1');",
+    onclick: { url: '/miq_policy/show/1' },
   },
 ];

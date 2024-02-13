@@ -1,17 +1,21 @@
-/* eslint-disable no-eval */
-import React from 'react';
+/* eslint-disable no-unused-expressions */
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button, TableCell, TextInput, Toggle, Link,
 } from 'carbon-components-react';
 import classNames from 'classnames';
+import MiqConfirmActionModal, { modalCallbackTypes } from '../miq-confirm-action-modal';
 import {
   CellAction, hasIcon, hasImage, hasButton, hasTextInput, hasToggle, hasLink, isObject, isArray, isNumber, decimalCount,
 } from './helper';
+import { customOnClickHandler } from '../../helpers/custom-click-handler';
 
 const MiqTableCell = ({
   cell, onCellClick, row, truncate,
 }) => {
+  const [confirm, setConfirm] = useState(false);
+
   const longText = truncate && ((cell.value).length > 40);
   const veryLongText = truncate && ((cell.value).length > 300);
 
@@ -100,35 +104,55 @@ const MiqTableCell = ({
 
   /** Function to execute a button click event
    * 'callbackAction' is added to row so that, the event can be executed within the parent component. eg: SettingsCompanyTags
-   * the onClick property executes a javascript function. Eg: "miqOrderService(#{record.id}); in catalogs_helper.rb"
-   * ToDo: 'onClick' can be removed and make use of the 'callbackAction', so that we can avoid the 'eval' feature.
   */
   const cellButtonEvent = (item, event) => {
     if (item.callback) {
       onCellClick({ ...row, callbackAction: item.callback }, CellAction.buttonCallback, event);
-    } else {
-      // eslint-disable-next-line no-unused-expressions
-      (item.onclick ? eval(item.onclick) : undefined);
+    } else if (item.onclick) {
+      (item.onclick.confirm)
+        ? setConfirm(true)
+        : customOnClickHandler(item.onclick);
     }
   };
 
+  /** Function to handle the confirmation-modal-box button-click events. */
+  const confirmModalAction = (actionType, item) => {
+    if (actionType === modalCallbackTypes.OK) {
+      customOnClickHandler(item.onclick);
+    }
+    setConfirm(false);
+  };
+
+  /** Function to render a confirmation-modal-box. */
+  const renderConfirmModal = (item) => {
+    const modalData = {
+      open: confirm,
+      confirm: item.onclick.confirm,
+      callback: (actionType) => confirmModalAction(actionType, item),
+    };
+    return <MiqConfirmActionModal modalData={modalData} />;
+  };
+
   /** Function to render a Button inside cell. */
-  /** Button was used only for 'Services / Catalogs' & the miqOrderService() was directly called on its click event. */
+  /** Eg: Button was used for 'Services / Catalogs' */
   const cellButton = (item) => (
-    <div className={cellClass}>
-      <Button
-        onClick={(e) => cellButtonEvent(item, e)}
-        disabled={item.disabled}
-        onKeyPress={(e) => cellButtonEvent(item, e)}
-        tabIndex={0}
-        size={item.size ? item.size : 'default'}
-        title={item.title ? item.title : truncateText}
-        kind={item.kind ? item.kind : 'primary'}
-        className={classNames('miq-data-table-button', item.buttonClassName)}
-      >
-        {truncateText}
-      </Button>
-    </div>
+    <>
+      <div className={cellClass}>
+        <Button
+          onClick={(e) => cellButtonEvent(item, e)}
+          disabled={item.disabled}
+          onKeyPress={(e) => cellButtonEvent(item, e)}
+          tabIndex={0}
+          size={item.size ? item.size : 'default'}
+          title={item.title ? item.title : truncateText}
+          kind={item.kind ? item.kind : 'primary'}
+          className={classNames('miq-data-table-button', item.buttonClassName)}
+        >
+          {truncateText}
+        </Button>
+      </div>
+      {confirm && renderConfirmModal(item)}
+    </>
   );
 
   /** Function to render a Text Box inside cell. */

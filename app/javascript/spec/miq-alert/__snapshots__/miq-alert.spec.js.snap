@@ -158,7 +158,9 @@ exports[`MiqAlertStructuredList should render alert profile structured list 1`] 
               "value": "Alert description",
             },
           ],
-          "onclick": "DoNav('/miq_alert_set/show/1');",
+          "onclick": Object {
+            "url": "/miq_alert_set/show/1",
+          },
           "title": "View this Alert Profile",
         },
         Object {
@@ -168,7 +170,9 @@ exports[`MiqAlertStructuredList should render alert profile structured list 1`] 
               "value": "Alert description",
             },
           ],
-          "onclick": "DoNav('/miq_alert_set/show/2');",
+          "onclick": Object {
+            "url": "/miq_alert_set/show/2",
+          },
           "title": "View this Alert Profile",
         },
         Object {
@@ -178,7 +182,9 @@ exports[`MiqAlertStructuredList should render alert profile structured list 1`] 
               "value": "Alert description",
             },
           ],
-          "onclick": "DoNav('/miq_alert_set/show/3');",
+          "onclick": Object {
+            "url": "/miq_alert_set/show/3",
+          },
           "title": "View this Alert Profile",
         },
       ]
@@ -205,7 +211,9 @@ exports[`MiqAlertStructuredList should render alert referenced structured list 1
               "value": "Alert description",
             },
           ],
-          "onclick": "DoNav('/miq_action/show/1');",
+          "onclick": Object {
+            "url": "/miq_action/show/1",
+          },
           "title": "View this Action",
         },
         Object {
@@ -215,7 +223,9 @@ exports[`MiqAlertStructuredList should render alert referenced structured list 1
               "value": "Alert description",
             },
           ],
-          "onclick": "DoNav('/miq_action/show/2');",
+          "onclick": Object {
+            "url": "/miq_action/show/2",
+          },
           "title": "View this Action",
         },
         Object {
@@ -225,7 +235,9 @@ exports[`MiqAlertStructuredList should render alert referenced structured list 1
               "value": "Alert description",
             },
           ],
-          "onclick": "DoNav('/miq_action/show/3');",
+          "onclick": Object {
+            "url": "/miq_action/show/3",
+          },
           "title": "View this Action",
         },
       ]

@@ -1,8 +1,8 @@
-/* eslint-disable no-eval */
 import { TreeViewRedux } from '../tree-view';
 import CatalogResource from '../data-tables/catalog-resource';
 import MiqDataTable from '../miq-data-table';
 import XmlHolder from '../XmlHolder';
+import { customOnClickHandler } from '../../helpers/custom-click-handler';
 
 export const InputTypes = {
   TEXTAREA: 'text_area',
@@ -37,7 +37,7 @@ export const rowClickEvent = (rows, index) => {
   const item = rows[index];
   if (item && item.onclick) {
     miqSparkleOn();
-    eval(item.onclick);
+    customOnClickHandler(item.onclick);
     miqSparkleOff();
   }
 };

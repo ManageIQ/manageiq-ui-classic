@@ -18,7 +18,7 @@ module SettingsTagsTabsHelper
       {
         :id        => category[:id].to_s,
         :clickable => true,
-        :cells => [
+        :cells     => [
           {:text => category[:name]},
           {:text => category[:descripton]},
           {:text => category[:show]},
@@ -56,12 +56,11 @@ module SettingsTagsTabsHelper
     }
   end
 
-  # This method can be removed when we change the logic in miq-table-cell.jsx's cellButton function
   def delete_category_link(category)
-    remote_function(:url     => {
-                      :action => 'category_delete',
-                      :id     => category[:id]
-                    },
-                    :confirm => _("Are you sure you want to delete category '%{category_name}'?") % {:category_name => category[:name]})
+    {
+      :remote  => true,
+      :url     => "/ops/category_delete/#{category[:id]}",
+      :confirm => _("Are you sure you want to delete category '%{category_name}'?") % {:category_name => category[:name]}
+    }
   end
 end

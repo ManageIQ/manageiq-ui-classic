@@ -42,7 +42,9 @@ exports[`MiqEventDefinitionStructuredList should render event definition policy 
               "value": "Policy description",
             },
           ],
-          "onclick": "DoNav('/miq_policy/show/1');",
+          "onclick": Object {
+            "url": "/miq_policy/show/1",
+          },
           "title": "View this Model Alert",
         },
       ]

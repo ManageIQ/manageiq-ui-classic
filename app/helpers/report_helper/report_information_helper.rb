@@ -44,7 +44,7 @@ module ReportHelper::ReportInformationHelper
       rows = []
       schedules.each do |s|
         tz = s.run_at && s.run_at[:tz] ? s.run_at[:tz] : session[:user_tz]
-        schedule_url = role_allows?(:feature => 'miq_report_schedules') ? report_action_url("msc-#{s.id}", "schedules") : ""
+        schedule_onclick = role_allows?(:feature => 'miq_report_schedules') ? report_action_onclick("msc-#{s.id}", "schedules") : {}
         cells = [
           {:value => s.name, :icon => "fa fa-clock-o"},
           {:value => s.description},
@@ -58,7 +58,7 @@ module ReportHelper::ReportInformationHelper
         rows.push({
                     :cells   => cells,
                     :title   => _("View this Schedule"),
-                    :onclick => schedule_url,
+                    :onclick => schedule_onclick,
                   })
       end
 
@@ -76,7 +76,7 @@ module ReportHelper::ReportInformationHelper
 
       rows = []
       widget_nodes.each do |w|
-        widget_action = role_allows?(:feature => 'miq_report_widget_editor') ? report_action_url("xx-#{ReportController::Widgets::WIDGET_CONTENT_TYPE.invert[w.content_type]}_-#{w.id}", "widgets") : ""
+        widget_onclick = role_allows?(:feature => 'miq_report_widget_editor') ? report_action_onclick("xx-#{ReportController::Widgets::WIDGET_CONTENT_TYPE.invert[w.content_type]}_-#{w.id}", "widgets") : {}
         rows.push({
                     :cells   => [
                       {:value => w.title, :icon => "fa fa-file-text-o"},
@@ -84,7 +84,7 @@ module ReportHelper::ReportInformationHelper
                       {:value => _(w.enabled)},
                     ],
                     :title   => _("Click to view selected widget"),
-                    :onclick => widget_action,
+                    :onclick => widget_onclick,
                   })
       end
 

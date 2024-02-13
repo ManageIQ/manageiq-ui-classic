@@ -22,6 +22,16 @@ module OpsHelper::RoleRbacDetailsHelper
                         })
   end
 
+  def select_tree_node(tree_id)
+    {
+      :remote => true,
+      :action => {
+        :name   => "miqOnClickSelectRbacTreeNode",
+        :treeId => tree_id,
+      }
+    }
+  end
+
   def rbac_groups_using_role_info(role)
     rows = role.miq_groups.sort_by { |a| a.description.downcase }.map do |group|
       cells = {
@@ -30,7 +40,7 @@ module OpsHelper::RoleRbacDetailsHelper
         :style => "display_flex cursor_pointer"
       }
       if role_allows?(:feature => "rbac_group_show")
-        cells[:onclick] = "miqOnClickSelectRbacTreeNode('g-#{group.id}');"
+        cells[:onclick] = select_tree_node("g-#{group.id}")
         cells[:title] = _("View this Group")
         cells[:link]  = "#"
       end

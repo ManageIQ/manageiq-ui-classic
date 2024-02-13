@@ -1,4 +1,3 @@
-/* eslint-disable no-eval */
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -7,6 +6,7 @@ import { isObject, isArray } from '../../helpers';
 import MiqStructuredListText from '../value-tags/miq-structured-list-text';
 import MiqStructuredListContent from '../miq-structured-list-content';
 import MiqStructuredListConditionalTag from '../value-tags/miq-structured-list-conditional-tag';
+import { customOnClickHandler } from '../../../../helpers/custom-click-handler';
 
 /** Usage eg: Network / Security Groups / summary / Firewall rules */
 const MiqStructuredListArray = ({ row, onClick, clickEvents }) => {
@@ -18,10 +18,10 @@ const MiqStructuredListArray = ({ row, onClick, clickEvents }) => {
   const listCellValue = (value) => (
     <div
       className={classNames('list_cell', value.onclick ? 'clickable' : '')}
-      onClick={() => value.onclick && eval(value.onclick)}
+      onClick={() => value.onclick && customOnClickHandler(value.onclick)}
       role="button"
       tabIndex={0}
-      onKeyDown={() => value.onclick && eval(value.onclick)}
+      onKeyDown={() => value.onclick && customOnClickHandler(value.onclick)}
       title={value.title ? value.title : ''}
     >
       <MiqStructuredListContent row={value} />
@@ -48,7 +48,7 @@ const MiqStructuredListArray = ({ row, onClick, clickEvents }) => {
   return row.map((row, index) => (
     <StructuredListCell
       key={index.toString()}
-      onClick={() => row.onclick && eval(row.onclick)}
+      onClick={() => row.onclick && customOnClickHandler(row.onclick)}
       className={classNames('content_value array_item', row && row.onclick && 'clickable')}
       title={row && row.title !== undefined ? row.title : ''}
     >
