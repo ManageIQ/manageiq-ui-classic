@@ -57,6 +57,7 @@ TODO allow using {id:...} instead of string label for menu items, gtl items, tre
 * `cy.expect_show_list_title('Cloud Providers')` - check the title on a show\_list screen
 * `cy.expect_search_box()` - check if searchbox is present on screen
 * `cy.expect_no_search_box()` - check if no searchbox is present on the screen
+* `cy.expect_rates_table(headers, rows)` - check the values in a chargeback rate table. `headers`: Array of strings representing the headers of the table. `rows`: Array of type `[String, [...String], [...String], [...String], [...String], String]` where each index of the array represents a column in the table. The arrays within the `rows` array can be any length and represent the values in each given column, e.g. an array of `[0.0, 100.0]` in the index for the `Range Start` column would verify that the column contains two range starts with values `0.0` and `100.0`.
 * TODO `cy.expect_layout('miq-layout-center_div_with_listnav')` - check current layout
 
 #### GTL

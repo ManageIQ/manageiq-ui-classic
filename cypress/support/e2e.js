@@ -47,6 +47,7 @@ import './commands/menu.js'
 import './commands/toolbar.js'
 
 // Assertions
+import './assertions/expect_rates_table.js';
 import './assertions/expect_search_box.js'
 import './assertions/expect_title.js'
 import './assertions/expect_text.js'
