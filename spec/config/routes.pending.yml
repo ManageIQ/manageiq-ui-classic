@@ -80,7 +80,7 @@ CatalogController:
 - dynamic_date_refresh
 - dynamic_radio_button_refresh
 - dynamic_text_box_refresh
-- embededded_workflows_modal
+- embedded_workflows_modal
 - explorer
 - index
 - open_url_after_dialog

@@ -89,7 +89,7 @@ module Mixins
       on_open = "miqShowAE_Tree('#{type}'); miqButtons('hide', 'automate');" # default
       if embedded_workflow(automation_type)
         configuration_script_id_key = entry_point_fields(field)[:configuration_script_id]
-        on_open = "miqShowEmbededdedWorkflowsModal('#{field}', '#{configuration_script_id_key}', '#{type}'); miqButtons('hide', 'automate');"
+        on_open = "miqShowEmbeddedWorkflowsModal('#{field}', '#{configuration_script_id_key}', '#{type}'); miqButtons('hide', 'automate');"
       end
 
       {
