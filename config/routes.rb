@@ -314,7 +314,7 @@ Rails.application.routes.draw do
         atomic_st_edit
         automate_button_field_changed
         playbook_options_field_changed
-        embededded_workflows_modal
+        embedded_workflows_modal
         explorer
         group_create
         group_reorder_field_changed

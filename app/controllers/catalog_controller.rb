@@ -665,7 +665,7 @@ class CatalogController < ApplicationController
   # Method to open the workflows dialog box
   # params[:field]    => :fqname || :retire_fqname || :reconfigure_fqname
   # params[:selected] => Holds the value of the *_configuration_script_id
-  def embededded_workflows_modal
+  def embedded_workflows_modal
     @edit = session[:edit]
     type = ENTRY_POINT_TYPES[params[:field].to_sym][:type]
     render :update do |page|
