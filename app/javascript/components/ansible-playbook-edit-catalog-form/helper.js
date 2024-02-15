@@ -5,13 +5,13 @@ import { TrashCan32 } from '@carbon/icons-react';
 import PropTypes from 'prop-types';
 import { TreeViewRedux } from '../tree-view';
 
-/** Helper function to convert object into array used for extra vars restrcutring */
+/** Helper function to convert object into array used for extra vars restructuring */
 const convertObject = (inputObj) => {
   const outputArray = Object.entries(inputObj).map(([key, value]) => ({ key, value: value.default }));
   return outputArray;
 };
 
-/** Helper function used for restructing extra vars */
+/** Helper function used for restructuring extra vars */
 const refactorExtraVars = (catalogData) => {
   if (Object.prototype.hasOwnProperty.call(catalogData.config_info.provision, 'extra_vars')) {
     catalogData.config_info.provision.extra_vars = convertObject(catalogData.config_info.provision.extra_vars);
@@ -22,7 +22,7 @@ const refactorExtraVars = (catalogData) => {
   return catalogData;
 };
 
-/** Helper function to convert array into object used for extra vars restrcutring */
+/** Helper function to convert array into object used for extra vars restructuring */
 const convertArrayToObject = (arr) => arr.reduce((acc, curr) => {
   acc[curr.key] = { default: curr.value };
   return acc;
@@ -78,7 +78,7 @@ export const formCloudTypes = (data) => {
   return getSortedHash(cloudTypes);
 };
 
-/** Helper function to append tenat infront of catalog name */
+/** Helper function to append tenant in front of catalog name */
 const formOptsCatalogTenants = (catalogs) => catalogs.map((catalog) => ({
   name: catalog[0],
   id: catalog[1].toString(),
@@ -110,7 +110,7 @@ export const CopyFromProvisonButton = (props) => {
   );
 };
 
-/** conditional checkbox mapper component to render esclation privelage field */
+/** conditional checkbox mapper component to render escalation privilege field */
 export const conditionalCheckbox = (props) => {
   const {
     input, label, id, display,
@@ -214,7 +214,7 @@ export const KeyValueListComponent = (props) => {
 export const prepareRequestObject = (values, formId) => {
   const requestObject = { ...values };
 
-  // if price property is not there add price property if its present convert the valye into string
+  // if price property is not there add price property if its present convert the value into string
   if (!Object.prototype.hasOwnProperty.call(requestObject, 'price')) {
     requestObject.price = '';
   } else {
@@ -244,7 +244,7 @@ export const prepareRequestObject = (values, formId) => {
   delete requestObject.config_info.provision.specify_host_type;
   delete requestObject.config_info.retirement.specify_host_type;
 
-  // restructing the extra_vars to convert it from array to object with key value pairs
+  // restructuring the extra_vars to convert it from array to object with key value pairs
   if (requestObject.config_info.provision.extra_vars) {
     requestObject.config_info.provision.extra_vars = convertArrayToObject(requestObject.config_info.provision.extra_vars);
   }
@@ -273,7 +273,7 @@ export const prepareRequestObject = (values, formId) => {
   return requestObject;
 };
 
-/** Helper function to prepare the restruture data to show fields in DDF form */
+/** Helper function to prepare the restructure data to show fields in DDF form */
 export const restructureCatalogData = function(catalogData, provisionCloudType, retirementCloudType) {
   let restructuredCatalogData = { ...catalogData };
 
@@ -307,7 +307,7 @@ export const restructureCatalogData = function(catalogData, provisionCloudType, 
   restructuredCatalogData.config_info.provision.cloud_type = provisionCloudType;
   restructuredCatalogData.config_info.retirement.cloud_type = retirementCloudType;
 
-  // refactor the extra vars field for provision and retirment
+  // refactor the extra vars field for provision and retirement
   restructuredCatalogData = refactorExtraVars(restructuredCatalogData);
 
   // add config_info.retirement.remove_resources_with_no_repistory_id if repiostry_id is empty
