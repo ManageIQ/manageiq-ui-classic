@@ -3,7 +3,7 @@
 const primary = '#main-menu nav.primary';
 const secondary = 'div[role="presentation"] > .bx--side-nav__items';
 
-// cy.menu('Compute', 'Infrastructure', 'VMs') - navigate the main menu
+// items: Strings with at least 2 to a maximum of 3. These are the strings for the side bar menu names to click.
 Cypress.Commands.add('menu', (...items) => {
   expect(items.length).to.be.within(1, 3);
   let ret = cy.get(`${primary} > ul > li`)
@@ -39,7 +39,6 @@ Cypress.Commands.add('menu', (...items) => {
   return ret;
 });
 
-// cy.menuItems() - returns an array of top level menu items with {title, href, items (array of children)}
 Cypress.Commands.add('menuItems', () => {
   const menuItems = [];
   cy.get(`${primary} > ul > li`).each(($li) => {
