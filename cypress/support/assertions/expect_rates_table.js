@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
 
+// headers: Array of strings of length 7 for the chargeback rates table headers to check.
+// rows: Array of form: [String, [...String], [...String], [...String], [...String], [...String], String]. This is the row data you want to check.
 Cypress.Commands.add('expect_rates_table', (headers, rows) => {
   // Verify header titles
   cy.get('thead > tr > :nth-child(1)').contains(headers[0]);

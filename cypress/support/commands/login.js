@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
-// cy.login() - log in
-// FIXME: use cy.request and inject cookie and localStorage.miqToken
+
+// user: String of username to log in with, default is admin.
+// password: String of password to log in with, default is smartvm.
 Cypress.Commands.add('login', (user = 'admin', password = 'smartvm') => {
   cy.visit('/');
 
