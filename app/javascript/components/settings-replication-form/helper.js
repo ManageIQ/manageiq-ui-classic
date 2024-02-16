@@ -1,43 +1,34 @@
-import React from 'react';
-import { useFieldApi, useFormApi } from '@@ddf';
-import { Button } from 'carbon-components-react';
-import MiqDataTable from '../miq-data-table';
+// Creates the rows for the 'subscriptions-table' component
+export const createRows = (subscriptions) => {
+  const rows = [];
 
-export const SubscriptionsTableComponent = (props) => {
-  const {
-    rows, onCellClick, addButtonLabel, onButtonClick,
-  } = useFieldApi(props);
-  const formOptions = useFormApi();
+  subscriptions.forEach((value, index) => {
+    rows.push({
+      id: index.toString(),
+      dbname: { text: value.dbname },
+      host: { text: value.host },
+      user: { text: value.user },
+      password: { text: value.password },
+      port: { text: value.port },
+      backlog: { text: value.backlog ? value.backlog : '' },
+      status: { text: value.status ? value.status : '' },
+      provider_region: { text: value.provider_region || value.provider_region === 0 ? value.provider_region : '' },
+      edit: {
+        is_button: true,
+        text: __('Update'),
+        kind: 'tertiary',
+        size: 'md',
+        callback: 'editSubscription',
+      },
+      delete: {
+        is_button: true,
+        text: __('Delete'),
+        kind: 'danger',
+        size: 'md',
+        callback: 'deleteSubscription',
+      },
+    });
+  });
 
-  return (
-    <div className="subscriptions-table">
-      <Button
-        kind="primary"
-        className="subscription-add bx--btn bx--btn--primary pull-right"
-        type="button"
-        variant="contained"
-        onClick={() => onButtonClick(formOptions)}
-      >
-        {addButtonLabel}
-      </Button>
-
-      <MiqDataTable
-        headers={[
-          { key: 'dbname', header: __('Database') },
-          { key: 'host', header: __('Host') },
-          { key: 'user', header: __('Username') },
-          { key: 'password', header: __('Password') },
-          { key: 'port', header: __('Port') },
-          { key: 'backlog', header: __('Backlog') },
-          { key: 'status', header: __('Status') },
-          { key: 'provider_region', header: __('Region') },
-          { key: 'edit', header: __('Edit') },
-          { key: 'delete', header: __('Delete') },
-        ]}
-        rows={rows}
-        size="md"
-        onCellClick={(selectedRow, cellType) => onCellClick(selectedRow, cellType, formOptions)}
-      />
-    </div>
-  );
+  return rows;
 };

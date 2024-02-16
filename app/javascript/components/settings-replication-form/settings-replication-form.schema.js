@@ -1,42 +1,8 @@
 /* eslint-disable camelcase */
 import { componentTypes, validatorTypes } from '@@ddf';
+import { createRows } from './helper';
 
 const createSchema = (initialValues, subscriptions, form, replicationHelperText, setState) => {
-  // Creates the rows for the 'subscriptions-table' component
-  const createRows = () => {
-    const rows = [];
-
-    subscriptions.forEach((value, index) => {
-      rows.push({
-        id: index.toString(),
-        dbname: { text: value.dbname },
-        host: { text: value.host },
-        user: { text: value.user },
-        password: { text: value.password },
-        port: { text: value.port },
-        backlog: { text: value.backlog ? value.backlog : '' },
-        status: { text: value.status ? value.status : '' },
-        provider_region: { text: value.provider_region || value.provider_region === 0 ? value.provider_region : '' },
-        edit: {
-          is_button: true,
-          text: __('Update'),
-          kind: 'tertiary',
-          size: 'md',
-          callback: 'editSubscription',
-        },
-        delete: {
-          is_button: true,
-          text: __('Delete'),
-          kind: 'danger',
-          size: 'md',
-          callback: 'deleteSubscription',
-        },
-      });
-    });
-
-    return rows;
-  };
-
   const deleteSubscription = (selectedRow, cellType, formOptions) => {
     subscriptions.splice(selectedRow.id, 1);
 
@@ -44,6 +10,11 @@ const createSchema = (initialValues, subscriptions, form, replicationHelperText,
       ...state,
       subscriptions,
     }));
+
+    console.log(formOptions.getFieldState('subscriptions-table'));
+    console.log(formOptions.getRegisteredFields());
+    console.log(formOptions.getState());
+    console.log(formOptions.schema);
   };
 
   const editSubscription = (selectedRow) => {
@@ -56,6 +27,7 @@ const createSchema = (initialValues, subscriptions, form, replicationHelperText,
         user: selectedRow.cells[2].value,
         password: selectedRow.cells[3].value,
         port: selectedRow.cells[4].value,
+        subId: selectedRow.id,
       },
       form: {
         type: 'subscription',
@@ -118,7 +90,7 @@ const createSchema = (initialValues, subscriptions, form, replicationHelperText,
           component: 'subscriptions-table',
           name: 'subscriptions-table',
           id: 'subscriptions-table',
-          rows: createRows(),
+          rows: createRows(subscriptions),
           onCellClick: (selectedRow, cellType, formOptions) => {
             switch (selectedRow.callbackAction) {
               case 'editSubscription':
@@ -133,11 +105,10 @@ const createSchema = (initialValues, subscriptions, form, replicationHelperText,
           },
           addButtonLabel: __('Add Subscription'),
           onButtonClick: (formOptions) => {
-            formOptions.change('dbname', '');
-            formOptions.change('host', '');
-            formOptions.change('user', '');
-            formOptions.change('password', '');
-            formOptions.change('port', '');
+            console.log(formOptions.getRegisteredFields());
+            console.log(formOptions.getState());
+            console.log(formOptions.schema);
+
             setState((state) => ({
               ...state,
               initialValues: {
@@ -150,6 +121,10 @@ const createSchema = (initialValues, subscriptions, form, replicationHelperText,
                 action: 'add',
               },
             }));
+
+            console.log(formOptions.getRegisteredFields());
+            console.log(formOptions.getState());
+            console.log(formOptions.schema);
           },
         }],
       },

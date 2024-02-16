@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import MiqFormRenderer from '@@ddf';
+// import { Button } from 'carbon-components-react';
+// import MiqDataTable from '../miq-data-table';
 import createSchema from './settings-replication-form.schema';
-import { SubscriptionsTableComponent } from './helper';
+import { SubscriptionsTableComponent } from './subscriptions-table';
 import ValidateSubscription from './validate-subscription';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import mapper from '../../forms/mappers/componentMapper';
@@ -51,29 +53,58 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
 
   const onSubmit = (values) => {
     if (form.type === 'subscription') {
-      const newSubscriptions = [];
+      if (form.action === 'add') {
+        const newSubscriptions = [];
 
-      newSubscriptions.push({
-        dbname: values.dbname,
-        host: values.host,
-        user: values.user,
-        password: values.password,
-        port: values.port,
-      });
+        newSubscriptions.push({
+          dbname: values.dbname,
+          host: values.host,
+          user: values.user,
+          password: values.password,
+          port: values.port,
+        });
 
-      setState((state) => ({
-        ...state,
-        initialValues: {
-          replication_type: state.initialValues.replication_type,
-          subscriptions: state.initialValues.subscriptions,
-        },
-        subscriptions: subscriptions.concat(newSubscriptions),
-        form: {
-          type: 'replication',
-          className: 'replication_form',
-          action: 'edit',
-        },
-      }));
+        setState((state) => ({
+          ...state,
+          initialValues: {
+            replication_type: state.initialValues.replication_type,
+            subscriptions: state.initialValues.subscriptions,
+          },
+          subscriptions: subscriptions.concat(newSubscriptions),
+          form: {
+            type: 'replication',
+            className: 'replication_form',
+            action: 'edit',
+          },
+        }));
+      } else if (form.action === 'edit') {
+        let modifiedSubscriptions = [];
+        modifiedSubscriptions = modifiedSubscriptions.concat(subscriptions);
+
+        const editedSub = {
+          dbname: values.dbname,
+          host: values.host,
+          password: values.password,
+          port: values.port,
+          user: values.user,
+        };
+
+        modifiedSubscriptions[initialValues.subId] = editedSub;
+
+        setState((state) => ({
+          ...state,
+          initialValues: {
+            replication_type: state.initialValues.replication_type,
+            subscriptions: state.initialValues.subscriptions,
+          },
+          subscriptions: modifiedSubscriptions,
+          form: {
+            type: 'replication',
+            className: 'replication_form',
+            action: 'edit',
+          },
+        }));
+      }
     } else {
       // Redirect to Settings -> Tasks
 
@@ -85,6 +116,17 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
       }); */
     }
   };
+
+  /* const onReset = () => {
+    setEnforced(() => ({ ...initialValues.enforced }));
+    setValues(() => ({ ...initialValues.values }));
+    setDisabled(true);
+    setChanged(true);
+    setInvalid(() => ({ ...initialValues.invalid }));
+    // eslint-disable-next-line no-return-assign
+    Array.from(document.querySelectorAll('.quota-table-input')).forEach((input, index) => input.value = initialValues.values[index]);
+    add_flash(__('All changes have been reset'), 'warn');
+  }; */
 
   const onCancel = () => {
     if (form.type === 'subscription') {
@@ -111,8 +153,63 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
       onCancel={onCancel}
       canReset
       buttonsLabels={{ submitLabel }}
+      clearOnUnmount={form.type !== 'replication'}
     />
   );
+
+  /* if (form.type === 'subscription') {
+
+  } else {
+    return !isLoading && (
+      <div className="settings-replication-form">
+        <div className="subscriptions-section">
+          <div className="subscriptions-button" style={{ display: 'flex', flexDirection: 'row-reverse' }}>
+            <Button
+              kind="primary"
+              className="subscription-add bx--btn bx--btn--primary pull-right"
+              type="button"
+              variant="contained"
+              onClick={() => onButtonClick(formOptions)}
+            >
+              {addButtonLabel}
+            </Button>
+          </div>
+
+          <div className="subscriptions-table" style={{ display: 'grid', overflow: 'auto' }}>
+            <MiqDataTable
+              headers={[
+                { key: 'dbname', header: __('Database') },
+                { key: 'host', header: __('Host') },
+                { key: 'user', header: __('Username') },
+                { key: 'password', header: __('Password') },
+                { key: 'port', header: __('Port') },
+                { key: 'backlog', header: __('Backlog') },
+                { key: 'status', header: __('Status') },
+                { key: 'provider_region', header: __('Region') },
+                { key: 'edit', header: __('Edit') },
+                { key: 'delete', header: __('Delete') },
+              ]}
+              rows={rows}
+              size="md"
+              sortable={false}
+              onCellClick={(selectedRow, cellType) => onCellClick(selectedRow, cellType, formOptions)}
+            />
+          </div>
+        </div>
+        <div className="bx--btn-set">
+          <Button kind="primary" tabIndex={0} disabled={disabled} type="submit" onClick={onSubmit}>
+            {submitLabel}
+          </Button>
+          <Button kind="secondary" style={{ marginLeft: '10px' }} tabIndex={0} disabled={changed} type="reset" onClick={onReset}>
+            {__('Reset')}
+          </Button>
+          <Button kind="secondary" style={{ marginLeft: '10px' }} tabIndex={0} type="button" onClick={onCancel}>
+            {__('Cancel')}
+          </Button>
+        </div>
+      </div>
+    );
+  } */
 };
 
 SettingsReplicationForm.propTypes = {
