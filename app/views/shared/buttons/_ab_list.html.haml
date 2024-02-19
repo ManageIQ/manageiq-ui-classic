@@ -4,7 +4,6 @@
   = react 'ObjectTypesList', :list => @custom_button_entities.sort
 - elsif @sb[:button_groups]
   - if @sb[:button_groups].blank?
-    %hr
     = render :partial => 'layouts/info_msg', :locals => {:message => _("No Items found.")}
   - else
     = render :partial => "layouts/flash_msg"
@@ -19,36 +18,10 @@
   = render :partial => "layouts/flash_msg"
   - if @record && @record.kind_of?(CustomButtonSet)
     -# don't need basic info box for Unassigned button group
-    %h3
-      = _('Basic Information')
-    .form-horizontal
-      .form-group
-        %label.control-label.col-md-2
-          = _('Name')
-        .col-md-8
-          = @record.name.split('|').first
-          - display = @record.set_data.present? && [true, "1"].include?(@record.set_data[:display])
-          &nbsp;
-          .checkbox-inline
-            %label{:style => "font-weight: normal"}
-              = check_box_tag(display, true, display, :disabled => true)
-              = _('Display on Button')
-
-      .form-group
-        %label.control-label.col-md-2
-          = _('Description')
-        .col-md-8
-          = @record.description
-      .form-group
-        %label.control-label.col-md-2
-          = _('Image')
-        .col-md-8
-          %span{:class => @record.set_data[:button_icon], :style => @record.set_data.key?(:button_color) ? "color: #{@record.set_data[:button_color]};" : nil}
+    = shared_button_list_summary(@record)
   - if @sb[:buttons].blank?
-    %hr
     = render :partial => 'layouts/info_msg', :locals => {:message => _("No Buttons found.")}
   - else
-    %hr
     = react 'ButtonList', :list => @sb[:buttons],
                           :treeId => x_node,
                           :treeBox => x_active_tree == :sandt_tree ? 'sandt_tree' : 'ab_tree',
