@@ -38,8 +38,9 @@ module ApplicationController::MiqRequestMethods
 
       all_dialogs = @edit[:wf].get_all_dialogs rescue []
 
-      if @edit[:new] && @edit[:new][:addr_mode] && @edit[:new][:addr_mode][0] == "dhcp"
-        all_dialogs[:customize][:fields][:hostname][:read_only] = true
+      if @edit[:new] && @edit[:new][:addr_mode] && @edit[:new][:addr_mode][0] == "dhcp" && all_dialogs[:customize]
+        all_dialogs[:customize][:fields][:hostname]&.[]=(:read_only, true)
+        all_dialogs[:customize][:fields][:linux_host_name]&.[]=(:read_only, true)
         all_dialogs[:customize][:fields][:subnet_mask][:read_only] = true
         all_dialogs[:customize][:fields][:gateway][:read_only] = true
       end
