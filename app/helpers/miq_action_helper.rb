@@ -123,7 +123,10 @@ module MiqActionHelper
       rows.push({:cells => {:label => _("Categories"), :value => cats}})
     end
 
-    miq_structured_list(data) if !data[:title].empty?
+    if !data[:title].empty?
+      data[:rows] = rows
+      miq_structured_list(data)
+    end
   end
 
   def miq_summary_action_policies(action_policies)
