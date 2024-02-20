@@ -27,7 +27,8 @@ const ActionForm = ({
           : __('Add of action "%s" has been successfully queued.'),
         data.name,
       );
-      miqRedirectBack(message, 'success', '/miq_action/show_list');
+      const url = recordId ? `/miq_action/show/${recordId}` : '/miq_action/show_list';
+      miqRedirectBack(message, 'success', url);
     }).catch(miqSparkleOff);
   };
 
@@ -38,7 +39,8 @@ const ActionForm = ({
         : __('Creation of new Action was canceled by the user.'),
       initialValues && initialValues.name,
     );
-    miqRedirectBack(message, 'warning', '/miq_action/show_list');
+    const url = recordId ? `/miq_action/show/${recordId}` : '/miq_action/show_list';
+    miqRedirectBack(message, 'warning', url);
   };
 
   useEffect(() => {
