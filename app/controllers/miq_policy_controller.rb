@@ -19,6 +19,10 @@ class MiqPolicyController < ApplicationController
     @title = _("Policies")
   end
 
+  def show_searchbar?
+    true
+  end
+
   def index
     flash_to_session
     redirect_to(:action => 'show_list')

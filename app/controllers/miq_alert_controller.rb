@@ -15,6 +15,10 @@ class MiqAlertController < ApplicationController
     @title = _("Alerts")
   end
 
+  def show_searchbar?
+    true
+  end
+
   SEVERITIES = {"info" => N_('Info'), "warning" => N_('Warning'), "error" => N_('Error')}.freeze
 
   def alert_edit_cancel

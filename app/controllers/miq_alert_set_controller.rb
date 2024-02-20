@@ -15,6 +15,10 @@ class MiqAlertSetController < ApplicationController
     @title = _("Policies")
   end
 
+  def show_searchbar?
+    true
+  end
+
   def alert_profile_load
     @alert_profile = @edit[:alert_profile_id] ? MiqAlertSet.find_by(:id => @edit[:alert_profile_id]) : MiqAlertSet.new
   end
