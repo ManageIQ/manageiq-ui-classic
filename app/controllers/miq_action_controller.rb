@@ -19,6 +19,10 @@ class MiqActionController < ApplicationController
     miq_action_reset_or_set
   end
 
+  def show_searchbar?
+    true
+  end
+
   def edit
     @_params[:pressed] ||= 'miq_action_edit'
     case params[:button]
