@@ -37,6 +37,7 @@ const AuthenticationForm = ({ server: { id, name }, product, zone }) => {
       //   if (authentication.amazon_key) {
       //     setAmazonEdit(true);
       //   }
+      console.log(data);
       setState({
         isLoading: false,
         initialValues: data,
