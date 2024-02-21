@@ -1,5 +1,6 @@
 module MiqAeCustomizationHelper
   include Mixins::AutomationMixin
+  include SharedHelper::AbShowHelper
   include SharedHelper::AbListHelper
 
   def editor_automation_types
