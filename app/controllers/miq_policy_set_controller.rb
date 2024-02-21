@@ -15,6 +15,10 @@ class MiqPolicySetController < ApplicationController
     @title = _("Policy Profiles")
   end
 
+  def show_searchbar?
+    true
+  end
+
   def new
     @in_a_form = true
     drop_breadcrumb(:name => _("Add New %{table}") % {:table => ui_lookup(:table => table_name)},:url  => "/#{controller_name}/new")

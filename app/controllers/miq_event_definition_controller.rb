@@ -14,6 +14,10 @@ class MiqEventDefinitionController < ApplicationController
     @title = _("Events")
   end
 
+  def show_searchbar?
+    true
+  end
+
   def show_list
     @no_checkboxes = true # Don't show checkboxes, read_only
     process_show_list(:filter => MiqPolicy.all_policy_events_filter)

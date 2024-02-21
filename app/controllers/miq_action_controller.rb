@@ -15,6 +15,10 @@ class MiqActionController < ApplicationController
     @title = _("Actions")
   end
 
+  def show_searchbar?
+    true
+  end
+
   def new
     miq_action_reset_or_set
   end

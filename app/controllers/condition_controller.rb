@@ -15,6 +15,10 @@ class ConditionController < ApplicationController
     @title = _("Conditions")
   end
 
+  def show_searchbar?
+    true
+  end
+
   # Item clicked
   def show
     assert_privileges("condition_show")
