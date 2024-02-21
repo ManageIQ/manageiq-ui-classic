@@ -15,35 +15,35 @@ export const miqPolicySetData = {
         { icon: 'pficon pficon-image', bold: true, value: 'Container Image Compliance' }, 'OpenSCAP',
       ],
       title: 'View this Container Image Policy',
-      onclick: "DoNav('/miq_policy/show/1');",
+      onclick: { url: '/miq_policy/show/1' },
     },
     {
       cells: [
         { icon: 'pficon pficon-image', bold: true, value: 'Container Image Control' }, 'My scan',
       ],
       title: 'View this Container Image Policy',
-      onclick: "DoNav('/miq_policy/show/17');",
+      onclick: { url: '/miq_policy/show/2' },
     },
     {
       cells: [
         { icon: 'pficon pficon-image', bold: true, value: 'Container Image Control' }, 'Schedule compliance',
       ],
       title: 'View this Container Image Policy',
-      onclick: "DoNav('/miq_policy/show/3');",
+      onclick: { url: '/miq_policy/show/3' },
     },
     {
       cells: [
         { icon: 'pficon pficon-container-node', bold: true, value: 'Container Node Control' }, 'loic Node',
       ],
       title: 'View this Container Node Policy',
-      onclick: "DoNav('/miq_policy/show/18');",
+      onclick: { url: '/miq_policy/show/4' },
     },
     {
       cells: [
         { icon: 'pficon pficon-virtual-machine', bold: true, value: 'VM and Instance Control' }, 'OpenStack Application',
       ],
       title: 'View this VM and Instance Policy',
-      onclick: "DoNav('/miq_policy/show/16');",
+      onclick: { url: '/miq_policy/show/5' },
     },
   ],
 };

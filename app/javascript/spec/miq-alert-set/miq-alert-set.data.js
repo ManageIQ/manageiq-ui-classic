@@ -45,7 +45,7 @@ export const alertSetAlerts = {
         { icon: 'pficon pficon-warning-triangle-o', value: 'Alert description' },
       ],
       title: 'View this Alert',
-      onclick: "DoNav('/miq_alert/show/1');",
+      onclick: { url: '/miq_alert/show/1' },
     },
   ],
 };

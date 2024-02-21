@@ -99,21 +99,21 @@ export const alertProfileData = {
         { icon: 'pficon pficon-warning-triangle-o', value: 'Alert description' },
       ],
       title: 'View this Alert Profile',
-      onclick: "DoNav('/miq_alert_set/show/1');",
+      onclick: { url: '/miq_alert_set/show/1' },
     },
     {
       cells: [
         { icon: 'pficon pficon-warning-triangle-o', value: 'Alert description' },
       ],
       title: 'View this Alert Profile',
-      onclick: "DoNav('/miq_alert_set/show/2');",
+      onclick: { url: '/miq_alert_set/show/2' },
     },
     {
       cells: [
         { icon: 'pficon pficon-warning-triangle-o', value: 'Alert description' },
       ],
       title: 'View this Alert Profile',
-      onclick: "DoNav('/miq_alert_set/show/3');",
+      onclick: { url: '/miq_alert_set/show/3' },
     },
   ],
 };
@@ -128,21 +128,21 @@ export const alertReferencedData = {
         { icon: 'pficon pficon-warning-triangle-o', value: 'Alert description' },
       ],
       title: 'View this Action',
-      onclick: "DoNav('/miq_action/show/1');",
+      onclick: { url: '/miq_action/show/1' },
     },
     {
       cells: [
         { icon: 'pficon pficon-warning-triangle-o', value: 'Alert description' },
       ],
       title: 'View this Action',
-      onclick: "DoNav('/miq_action/show/2');",
+      onclick: { url: '/miq_action/show/2' },
     },
     {
       cells: [
         { icon: 'pficon pficon-warning-triangle-o', value: 'Alert description' },
       ],
       title: 'View this Action',
-      onclick: "DoNav('/miq_action/show/3');",
+      onclick: { url: '/miq_action/show/3' },
     },
   ],
 };

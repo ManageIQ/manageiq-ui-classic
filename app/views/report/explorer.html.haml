@@ -19,7 +19,7 @@
     });
   });
   };
-  ManageIQ.afterOnload = "miqReportAfterOnload();"
+  ManageIQ.afterOnload = {action: () => miqReportAfterOnload()}
 
 -# Create from/to date JS vars to limit calendar starting from
 :javascript

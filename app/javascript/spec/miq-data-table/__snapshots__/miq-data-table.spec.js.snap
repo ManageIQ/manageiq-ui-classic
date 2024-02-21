@@ -1270,11 +1270,14 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "alt": "Order this Service",
             "disabled": false,
             "is_button": true,
-            "onclick": "miqOrderService(\\"141\\");",
+            "onclick": Object {
+              "remote": true,
+              "url": "/catalog/x_button/0?pressed=svc_catalog_provision",
+            },
             "text": "Order",
             "title": "Order this Service",
           },
-          "id": "141",
+          "id": "0",
         },
         Object {
           "Catalog": Object {
@@ -1313,11 +1316,14 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "alt": "Order this Service",
             "disabled": false,
             "is_button": true,
-            "onclick": "miqOrderService(\\"141\\");",
+            "onclick": Object {
+              "remote": true,
+              "url": "/catalog/x_button/1?pressed=svc_catalog_provision",
+            },
             "text": "Order",
             "title": "Order this Service",
           },
-          "id": "143",
+          "id": "1",
         },
         Object {
           "Catalog": Object {
@@ -1356,11 +1362,14 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "alt": "Order this Service",
             "disabled": false,
             "is_button": true,
-            "onclick": "miqOrderService(\\"141\\");",
+            "onclick": Object {
+              "remote": true,
+              "url": "/catalog/x_button/2?pressed=svc_catalog_provision",
+            },
             "text": "Order",
             "title": "Order this Service",
           },
-          "id": "139",
+          "id": "2",
         },
         Object {
           "Catalog": Object {
@@ -1399,11 +1408,14 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "alt": "Order this Service",
             "disabled": false,
             "is_button": true,
-            "onclick": "miqOrderService(\\"141\\");",
+            "onclick": Object {
+              "remote": true,
+              "url": "/catalog/x_button/3?pressed=svc_catalog_provision",
+            },
             "text": "Order",
             "title": "Order this Service",
           },
-          "id": "138",
+          "id": "3",
         },
         Object {
           "Catalog": Object {
@@ -1442,11 +1454,14 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "alt": "Order this Service",
             "disabled": false,
             "is_button": true,
-            "onclick": "miqOrderService(\\"141\\");",
+            "onclick": Object {
+              "remote": true,
+              "url": "/catalog/x_button/4?pressed=svc_catalog_provision",
+            },
             "text": "Order",
             "title": "Order this Service",
           },
-          "id": "140",
+          "id": "4",
         },
         Object {
           "Catalog": Object {
@@ -1485,11 +1500,14 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "alt": "Order this Service",
             "disabled": false,
             "is_button": true,
-            "onclick": "miqOrderService(\\"141\\");",
+            "onclick": Object {
+              "remote": true,
+              "url": "/catalog/x_button/5?pressed=svc_catalog_provision",
+            },
             "text": "Order",
             "title": "Order this Service",
           },
-          "id": "54",
+          "id": "5",
         },
         Object {
           "Catalog": Object {
@@ -1528,11 +1546,14 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "alt": "Order this Service",
             "disabled": false,
             "is_button": true,
-            "onclick": "miqOrderService(\\"141\\");",
+            "onclick": Object {
+              "remote": true,
+              "url": "/catalog/x_button/6?pressed=svc_catalog_provision",
+            },
             "text": "Order",
             "title": "Order this Service",
           },
-          "id": "83",
+          "id": "6",
         },
         Object {
           "Catalog": Object {
@@ -1571,140 +1592,106 @@ exports[`Data table component should render a static-gtl-view data table with ic
             "alt": "Order this Service",
             "disabled": false,
             "is_button": true,
-            "onclick": "miqOrderService(\\"141\\");",
-            "text": "Order",
-            "title": "Order this Service",
-          },
-          "id": "31",
-        },
-        Object {
-          "Catalog": Object {
-            "text": "AWS",
-          },
-          "Created On": Object {
-            "text": "09/30/20 19:31:00 UTC",
-          },
-          "Description": Object {
-            "text": "11 test",
-          },
-          "Display in Catalog": Object {
-            "text": "True",
-          },
-          "Item Type": Object {
-            "text": "VMware Content Library OVF Template",
-          },
-          "Name": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "text": "1111111",
-          },
-          "Type": Object {
-            "text": "Item",
-          },
-          "Valid": Object {
-            "text": "True",
-          },
-          "clickable": null,
-          "defaultKey_0": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "title": "View this item",
-          },
-          "defaultKey_9": Object {
-            "alt": "Order this Service",
-            "disabled": false,
-            "is_button": true,
-            "onclick": "miqOrderService(\\"141\\");",
-            "text": "Order",
-            "title": "Order this Service",
-          },
-          "id": "46",
-        },
-        Object {
-          "Catalog": Object {
-            "text": "AWS",
-          },
-          "Created On": Object {
-            "text": "09/30/20 19:31:00 UTC",
-          },
-          "Description": Object {
-            "text": "11 test",
-          },
-          "Display in Catalog": Object {
-            "text": "True",
-          },
-          "Item Type": Object {
-            "text": "VMware Content Library OVF Template",
-          },
-          "Name": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "text": "1111111",
-          },
-          "Type": Object {
-            "text": "Item",
-          },
-          "Valid": Object {
-            "text": "True",
-          },
-          "clickable": null,
-          "defaultKey_0": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "title": "View this item",
-          },
-          "defaultKey_9": Object {
-            "alt": "Order this Service",
-            "disabled": false,
-            "is_button": true,
-            "onclick": "miqOrderService(\\"141\\");",
-            "text": "Order",
-            "title": "Order this Service",
-          },
-          "id": "68",
-        },
-        Object {
-          "Catalog": Object {
-            "text": "AWS",
-          },
-          "Created On": Object {
-            "text": "09/30/20 19:31:00 UTC",
-          },
-          "Description": Object {
-            "text": "11 test",
-          },
-          "Display in Catalog": Object {
-            "text": "True",
-          },
-          "Item Type": Object {
-            "text": "VMware Content Library OVF Template",
-          },
-          "Name": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "text": "1111111",
-          },
-          "Type": Object {
-            "text": "Item",
-          },
-          "Valid": Object {
-            "text": "True",
-          },
-          "clickable": null,
-          "defaultKey_0": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "title": "View this item",
-          },
-          "defaultKey_9": Object {
-            "alt": "Order this Service",
-            "disabled": false,
-            "is_button": true,
-            "onclick": "miqOrderService(\\"141\\");",
+            "onclick": Object {
+              "remote": true,
+              "url": "/catalog/x_button/7?pressed=svc_catalog_provision",
+            },
             "text": "Order",
             "title": "Order this Service",
           },
           "id": "7",
+        },
+        Object {
+          "Catalog": Object {
+            "text": "AWS",
+          },
+          "Created On": Object {
+            "text": "09/30/20 19:31:00 UTC",
+          },
+          "Description": Object {
+            "text": "11 test",
+          },
+          "Display in Catalog": Object {
+            "text": "True",
+          },
+          "Item Type": Object {
+            "text": "VMware Content Library OVF Template",
+          },
+          "Name": Object {
+            "icon": "fa fa-cube",
+            "image": "",
+            "text": "1111111",
+          },
+          "Type": Object {
+            "text": "Item",
+          },
+          "Valid": Object {
+            "text": "True",
+          },
+          "clickable": null,
+          "defaultKey_0": Object {
+            "icon": "fa fa-cube",
+            "image": "",
+            "title": "View this item",
+          },
+          "defaultKey_9": Object {
+            "alt": "Order this Service",
+            "disabled": false,
+            "is_button": true,
+            "onclick": Object {
+              "remote": true,
+              "url": "/catalog/x_button/8?pressed=svc_catalog_provision",
+            },
+            "text": "Order",
+            "title": "Order this Service",
+          },
+          "id": "8",
+        },
+        Object {
+          "Catalog": Object {
+            "text": "AWS",
+          },
+          "Created On": Object {
+            "text": "09/30/20 19:31:00 UTC",
+          },
+          "Description": Object {
+            "text": "11 test",
+          },
+          "Display in Catalog": Object {
+            "text": "True",
+          },
+          "Item Type": Object {
+            "text": "VMware Content Library OVF Template",
+          },
+          "Name": Object {
+            "icon": "fa fa-cube",
+            "image": "",
+            "text": "1111111",
+          },
+          "Type": Object {
+            "text": "Item",
+          },
+          "Valid": Object {
+            "text": "True",
+          },
+          "clickable": null,
+          "defaultKey_0": Object {
+            "icon": "fa fa-cube",
+            "image": "",
+            "title": "View this item",
+          },
+          "defaultKey_9": Object {
+            "alt": "Order this Service",
+            "disabled": false,
+            "is_button": true,
+            "onclick": Object {
+              "remote": true,
+              "url": "/catalog/x_button/9?pressed=svc_catalog_provision",
+            },
+            "text": "Order",
+            "title": "Order this Service",
+          },
+          "id": "9",
         },
       ]
     }

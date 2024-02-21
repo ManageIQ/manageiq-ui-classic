@@ -18,7 +18,7 @@ module MiqEventDefinitionHelper
         rows.push({
                     :cells   => [{:icon => ed.decorate.fonticon, :value => ed.description}],
                     :title   => _("View this %{model} Policy") % {:model => ui_lookup(:model => ed.towhat)},
-                    :onclick => "DoNav('/miq_policy/show/#{ed.id}');",
+                    :onclick => {:url => "/miq_policy/show/#{ed.id}"},
                   })
       end
       data[:rows] = rows

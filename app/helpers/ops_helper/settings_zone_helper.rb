@@ -42,6 +42,17 @@ module OpsHelper::SettingsZoneHelper
     my_server.id == server.id ? "#{name}#{_('(current)')}" : name.to_s
   end
 
+  def settings_zone_cell_onclick(node_key)
+    {
+      :remote => true,
+      :action => {
+        :name     => "miqTreeActivateNode",
+        :nodeTree => "settings_tree",
+        :nodeKey  => node_key
+      }
+    }
+  end
+
   def settings_zone_servers(servers)
     data = {
       :title => _('Servers'),
@@ -57,7 +68,7 @@ module OpsHelper::SettingsZoneHelper
             :icon  => server.decorate.fonticon,
             :value => settings_zone_server_name(server)
           ],
-          :onclick => "miqTreeActivateNode('settings_tree', 'svr-#{server.id}');",
+          :onclick => settings_zone_cell_onclick("svr-#{server.id}"),
           :title   => _("View this MiqServer")
         }
       end

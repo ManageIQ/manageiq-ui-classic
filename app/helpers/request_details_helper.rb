@@ -26,7 +26,7 @@ module RequestDetailsHelper
 
     if miq_request.approval_state.downcase == "approved" && miq_request.resource_type == "MiqProvisionRequest" && !miq_request.resource.miq_provisions.empty?
       row = row_data_with_link(_("Provisioned VMs"), miq_request.resource.miq_provisions.length, miq_request.resource.miq_provisions.length)
-      row[:cells][:onclick] = "DoNav('#{'/miq_request/show/' << miq_request.id.to_s << '?display=miq_provisions'}');"
+      row[:cells][:onclick] = {:url => "/miq_request/show/#{miq_request.id}?display=miq_provisions"}
       row[:cells][:title] = _("Click to view details")
       rows.push(row)
     end

@@ -282,7 +282,7 @@ export const catalogData = () => {
     { is_narrow: true, header_text: '' },
   ];
 
-  const cells = [
+  const cells = (id) => [
     { title: 'View this item', image: '', icon: 'fa fa-cube' },
     { text: '1111111' },
     { text: '11 test' },
@@ -296,47 +296,17 @@ export const catalogData = () => {
       alt: 'Order this Service',
       disabled: false,
       is_button: true,
-      onclick: 'miqOrderService("141");',
+      onclick: { remote: true, url: `/catalog/x_button/${id}?pressed=svc_catalog_provision` },
       text: 'Order',
       title: 'Order this Service',
     },
   ];
 
-  const rows = [
+  const rows = Array(10).fill().map((_, index) => (
     {
-      id: '141', long_id: '141', cells, clickable: null, tree_id: 'st-141',
-    },
-    {
-      id: '143', long_id: '143', cells, clickable: null, tree_id: 'st-143',
-    },
-    {
-      id: '139', long_id: '139', cells, clickable: null, tree_id: 'st-139',
-    },
-    {
-      id: '138', long_id: '138', cells, clickable: null, tree_id: 'st-138',
-    },
-    {
-      id: '140', long_id: '140', cells, clickable: null, tree_id: 'st-140',
-    },
-    {
-      id: '54', long_id: '54', cells, clickable: null, tree_id: 'st-54',
-    },
-    {
-      id: '83', long_id: '83', cells, clickable: null, tree_id: 'st-83',
-    },
-    {
-      id: '31', long_id: '31', cells, clickable: null, tree_id: 'st-31',
-    },
-    {
-      id: '46', long_id: '46', cells, clickable: null, tree_id: 'st-46',
-    },
-    {
-      id: '68', long_id: '68', cells, clickable: null, tree_id: 'st-68',
-    },
-    {
-      id: '7', long_id: '7', cells, clickable: null, tree_id: 'st-7',
-    },
-  ];
+      id: index.toString(), long_id: index, cells: cells(index), clickable: null, tree_id: `st-${index}`,
+    }
+  ));
   const hasCheckbox = false;
   const { headerKeys, headerItems } = headerData(columns, hasCheckbox);
   const miqRows = rowData(headerKeys, rows, hasCheckbox);

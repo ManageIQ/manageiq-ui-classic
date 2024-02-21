@@ -17,6 +17,16 @@ module SettingsUsersHelper
     safe_join(summary)
   end
 
+  def settings_user_onclick(tree_id)
+    {
+      :remote => true,
+      :action => {
+        :name   => "miqOnClickSelectRbacTreeNode",
+        :treeId => tree_id,
+      }
+    }
+  end
+
   def settings_users_basic_info(record)
     rows = [
       row_data(_('ID'), record.id),
@@ -28,7 +38,7 @@ module SettingsUsersHelper
       row = row_data_for_group_and_role(_('Current Group'), record.current_group.description, "ff ff-group")
       if role_allows?(:feature => "rbac_group_show")
         row[:cells][:link] = record.current_group.description
-        row[:cells][:onclick] = "miqOnClickSelectRbacTreeNode('g-#{record.current_group.id}')"
+        row[:cells][:onclick] = settings_user_onclick("g-#{record.current_group.id}")
         row[:cells][:title] = _("View this Group")
       else
         row[:cells][:link] = "#"
@@ -42,7 +52,7 @@ module SettingsUsersHelper
       row = row_data_for_group_and_role(_('Role'), record.miq_user_role_name, "ff ff-user-role")
       if role_allows?(:feature => "rbac_user_show")
         row[:cells][:link] = record.miq_user_role_name
-        row[:cells][:onclick] = "miqOnClickSelectRbacTreeNode('ur-#{record.current_group.miq_user_role.id}')"
+        row[:cells][:onclick] = settings_user_onclick("ur-#{record.current_group.miq_user_role.id}")
         row[:cells][:title] = _("View this Role")
       else
         row[:cells][:link] = "#"
@@ -65,7 +75,7 @@ module SettingsUsersHelper
     if role_allows?(:feature => "rbac_group_show")
       groups.each do |group|
         row = row_data_for_groups_info("ff ff-group", group.description, group.description, "display_flex cursor_pointer")
-        row[:cells][:onclick] = "miqOnClickSelectRbacTreeNode('g-#{group.id}')"
+        row[:cells][:onclick] = settings_user_onclick("g-#{group.id}")
         row[:cells][:title] = _("View this Group")
         rows.push(row)
       end

@@ -41,7 +41,9 @@ exports[`MiqActionStructuredList should render action policies structured list 1
               "value": "Alert description",
             },
           ],
-          "onclick": "DoNav('/miq_policy/show/1');",
+          "onclick": Object {
+            "url": "/miq_policy/show/1",
+          },
           "title": "View this Alert",
         },
       ]
@@ -128,7 +130,9 @@ exports[`MiqActionStructuredList should render action type 3 structured list 1`]
               "value": "Alert description",
             },
           ],
-          "onclick": "/miq_policy/x_show/al-#{alert.id}?accord=alert",
+          "onclick": Object {
+            "url": "/miq_alert/show/1",
+          },
           "title": "View this Alert",
         },
       ]

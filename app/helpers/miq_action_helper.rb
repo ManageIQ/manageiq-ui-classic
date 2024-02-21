@@ -109,7 +109,7 @@ module MiqActionHelper
           rows.push({
                       :cells   => [{:icon => "pficon pficon-warning-triangle-o", :value => alert.description}],
                       :title   => _("View This Alert"),
-                      :onclick => remote_function(:url => "/miq_policy/x_show/al-#{alert.id}?accord=alert"),
+                      :onclick => {:url => "/miq_alert/show/#{alert.id}"},
                     })
         end
       end
@@ -137,7 +137,7 @@ module MiqActionHelper
         rows.push({
                     :cells   => [{:icon => ap.decorate.fonticon, :value => ap.description}],
                     :title   => _("View this %{model} Policy"),
-                    :onclick => "DoNav('/miq_policy/show/#{ap.id}');",
+                    :onclick => {:url => "/miq_policy/show/#{ap.id}"},
                   })
       end
       data[:rows] = rows

@@ -124,6 +124,17 @@ module OpsHelper
     _("The server zone cannot be changed when running in containers") if server_zones.length > 1 && !MiqServer.zone_is_modifiable?
   end
 
+  def ops_cell_onclick(node_key)
+    {
+      :remote => true,
+      :action => {
+        :name     => "miqTreeActivateNode",
+        :nodeTree => "rbac_tree",
+        :nodeKey  => node_key
+      }
+    }
+  end
+
   def miq_summary_rbac_details(users, groups, roles, tenants)
     data = {:title => _("Access control"), :mode => "miq_access_control"}
     rows = []
@@ -131,28 +142,28 @@ module OpsHelper
       rows.push({
                   :cells   => [{:icon => "pficon pficon-user", :value => _("Users (%{users_count})") % {:users_count => users.to_s}}],
                   :title   => _("View Users"),
-                  :onclick => "miqTreeActivateNode('rbac_tree', 'xx-u');"
+                  :onclick => ops_cell_onclick("xx-u"),
                 })
     end
     if role_allows?(:feature => "rbac_group_view", :any => true)
       rows.push({
                   :cells   => [{:icon => "ff ff-group", :value => _("Groups (%{groups_count})") % {:groups_count => groups.to_s}}],
                   :title   => _("View Groups"),
-                  :onclick => "miqTreeActivateNode('rbac_tree', 'xx-g');"
+                  :onclick => ops_cell_onclick("xx-g"),
                 })
     end
     if role_allows?(:feature => "rbac_role_view", :any => true)
       rows.push({
                   :cells   => [{:icon => "ff ff-user-role", :value => _("Roles (%{roles_count})") % {:roles_count => roles.to_s}}],
                   :title   => _("View Roles"),
-                  :onclick => "miqTreeActivateNode('rbac_tree', 'xx-ur');"
+                  :onclick => ops_cell_onclick("xx-ur"),
                 })
     end
     if role_allows?(:feature => "rbac_tenant_view", :any => true)
       rows.push({
                   :cells   => [{:icon => "pficon pficon-tenant", :value => _("Tenants (%{tenants_count})") % {:tenants_count => tenants.to_s}}],
                   :title   => _("View Tenants"),
-                  :onclick => "miqTreeActivateNode('rbac_tree', 'xx-tn');"
+                  :onclick => ops_cell_onclick("xx-tn"),
                 })
     end
     data[:rows] = rows

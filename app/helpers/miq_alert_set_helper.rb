@@ -61,7 +61,7 @@ module MiqAlertSetHelper
         rows.push({
                     :cells   => [{:icon => 'pficon pficon-warning-triangle-o', :value => a.description}],
                     :title   => _("View this Alert"),
-                    :onclick => "DoNav('/miq_alert/show/#{a.id}');",
+                    :onclick => {:url => "/miq_alert/show/#{a.id}"},
                   })
       end
     end

@@ -37,9 +37,11 @@ module OpsHelper::SettingsTabHelper
   end
 
   def delete_tag_link(entry)
-    confirm_message = _("Deleting the '%{entry_name}' entry will also unassign it from all items, are you sure?") % {:entry_name => entry.name}
-    remote_function(:url     => {:action => 'ce_delete', :id => entry.id},
-                    :confirm => confirm_message)
+    {
+      :remote  => true,
+      :url     => "/ops/ce_delete/#{entry.id}",
+      :confirm => _("Deleting the '%{entry_name}' entry will also unassign it from all items, are you sure?") % {:entry_name => entry.name}
+    }
   end
 
   def delete_tag_buton_data(entry)

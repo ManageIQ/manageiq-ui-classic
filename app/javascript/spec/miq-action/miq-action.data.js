@@ -43,7 +43,7 @@ export const actionTypeData3 = {
         { icon: 'pficon pficon-warning-triangle-o', value: 'Alert description' },
       ],
       title: 'View this Alert',
-      onclick: '/miq_policy/x_show/al-#{alert.id}?accord=alert',
+      onclick: { url: '/miq_alert/show/1' },
     },
   ],
 };
@@ -58,7 +58,7 @@ export const actionPoliciesData = {
         { icon: 'pficon pficon-warning-triangle-o', value: 'Alert description' },
       ],
       title: 'View this Alert',
-      onclick: "DoNav('/miq_policy/show/1');",
+      onclick: { url: `/miq_policy/show/1` },
     },
   ],
 };

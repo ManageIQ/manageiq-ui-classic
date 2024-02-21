@@ -8,7 +8,7 @@ describe "catalog/_svccat_tree_show.html.haml" do
 
   it 'enables Order button' do
     render :partial => 'catalog/svccat_tree_show'
-    expect(response).to include("miqOrderService(#{service.id});")
+    expect(response.body).to include("\"action\":{\"remote\":true,\"url\":\"/catalog/x_button/#{service.id}?pressed=svc_catalog_provision\"}")
   end
 
   context 'invalid Catalog items or Bundles' do

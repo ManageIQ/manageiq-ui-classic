@@ -55,7 +55,7 @@ module ConditionHelper
           {
             :cells   => [{:icon => cp.decorate.fonticon, :value => cp.description}],
             :title   => _("View this %{model} Policy") % {:model => ui_lookup(:model => cp.towhat)},
-            :onclick => "DoNav('/miq_policy/show/#{cp.id}');"
+            :onclick => {:url => "/miq_policy/show/#{cp.id}"},
           }
         )
       end

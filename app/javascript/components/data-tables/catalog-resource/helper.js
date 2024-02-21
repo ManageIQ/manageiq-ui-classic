@@ -1,5 +1,5 @@
-/* eslint-disable no-eval */
 import { headerData, rowData } from '../../miq-data-table/helper';
+import { customOnClickHandler } from '../../../helpers/custom-click-handler';
 
 /** Function to return the header data. */
 const columnData = (header) => header.map((item) => ({ header_text: item, text: item }));
@@ -16,6 +16,6 @@ export const tableData = (initialData) => {
 export const onSelectEvent = (selectedRow, { rows }) => {
   const item = rows.find((row) => row.id === selectedRow.id);
   if (item && item.onclick) {
-    eval(item.onclick);
+    customOnClickHandler(item.onclick);
   }
 };

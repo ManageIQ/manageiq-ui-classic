@@ -63,7 +63,9 @@ exports[`MiqPolicySetStructuredList should render policy set structured list 1`]
             },
             "OpenSCAP",
           ],
-          "onclick": "DoNav('/miq_policy/show/1');",
+          "onclick": Object {
+            "url": "/miq_policy/show/1",
+          },
           "title": "View this Container Image Policy",
         },
         Object {
@@ -75,7 +77,9 @@ exports[`MiqPolicySetStructuredList should render policy set structured list 1`]
             },
             "My scan",
           ],
-          "onclick": "DoNav('/miq_policy/show/17');",
+          "onclick": Object {
+            "url": "/miq_policy/show/2",
+          },
           "title": "View this Container Image Policy",
         },
         Object {
@@ -87,7 +91,9 @@ exports[`MiqPolicySetStructuredList should render policy set structured list 1`]
             },
             "Schedule compliance",
           ],
-          "onclick": "DoNav('/miq_policy/show/3');",
+          "onclick": Object {
+            "url": "/miq_policy/show/3",
+          },
           "title": "View this Container Image Policy",
         },
         Object {
@@ -99,7 +105,9 @@ exports[`MiqPolicySetStructuredList should render policy set structured list 1`]
             },
             "loic Node",
           ],
-          "onclick": "DoNav('/miq_policy/show/18');",
+          "onclick": Object {
+            "url": "/miq_policy/show/4",
+          },
           "title": "View this Container Node Policy",
         },
         Object {
@@ -111,7 +119,9 @@ exports[`MiqPolicySetStructuredList should render policy set structured list 1`]
             },
             "OpenStack Application",
           ],
-          "onclick": "DoNav('/miq_policy/show/16');",
+          "onclick": Object {
+            "url": "/miq_policy/show/5",
+          },
           "title": "View this VM and Instance Policy",
         },
       ]

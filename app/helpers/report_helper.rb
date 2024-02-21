@@ -155,8 +155,8 @@ module ReportHelper
     Dictionary.gettext(text, :type => type, :notfound => :titleize)
   end
 
-  def report_action_url(type, accord)
-    "miqJqueryRequest('/report/x_show/#{type}?accord=#{accord}');"
+  def report_action_onclick(type, accord)
+    {:remote => true, :url => "/report/x_show/#{type}?accord=#{accord}"}
   end
 
   private

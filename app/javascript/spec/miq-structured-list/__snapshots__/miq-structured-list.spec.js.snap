@@ -25,19 +25,25 @@ exports[`Structured list component should render a miq_policy_set show page with
             },
             Object {
               "icon": "pficon pficon-image",
-              "onclick": "DoNav('/miq_policy/show/1');",
+              "onclick": Object {
+                "url": "/miq_policy/show/1",
+              },
               "title": "View this Policy",
               "value": "description one &&",
             },
             Object {
               "icon": "pficon pficon-container-node",
-              "onclick": "DoNav('/miq_policy/show/2');",
+              "onclick": Object {
+                "url": "/miq_policy/show/2",
+              },
               "title": "View this Policy",
               "value": "description two &&",
             },
             Object {
               "icon": "pficon pficon-virtual-machine",
-              "onclick": "DoNav('/miq_policy/show/3');",
+              "onclick": Object {
+                "url": "/miq_policy/show/3",
+              },
               "title": "View this Policy",
               "value": "description three &&",
             },
@@ -765,7 +771,9 @@ exports[`Structured list component should render miq policy data without double 
         },
         Object {
           "icon": "pficon pficon-close",
-          "onclick": "DoNav('/miq_action/show/1');",
+          "onclick": Object {
+            "url": "/miq_action/show/1",
+          },
           "title": "View this Action",
           "value": "Test &&",
         },
@@ -835,7 +843,9 @@ exports[`Structured list component should render miq_alert_show page without dou
           Array [
             Object {
               "icon": "pficon pficon-warning-triangle-o",
-              "onclick": "DoNav('/miq_alert_set/show/1');",
+              "onclick": Object {
+                "url": "/miq_alert_set/show/1",
+              },
               "title": "View this Alert Profile",
               "value": "view this &&",
             },
@@ -872,19 +882,25 @@ exports[`Structured list component should render miq_reports_data without double
             },
             Object {
               "icon": "pficon pficon-image",
-              "onclick": "DoNav('/miq_policy/show/1');",
+              "onclick": Object {
+                "url": "/miq_policy/show/1",
+              },
               "title": "View this Policy",
               "value": "description one &&",
             },
             Object {
               "icon": "pficon pficon-container-node",
-              "onclick": "DoNav('/miq_policy/show/2');",
+              "onclick": Object {
+                "url": "/miq_policy/show/2",
+              },
               "title": "View this Policy",
               "value": "description two &&",
             },
             Object {
               "icon": "pficon pficon-virtual-machine",
-              "onclick": "DoNav('/miq_policy/show/3');",
+              "onclick": Object {
+                "url": "/miq_policy/show/3",
+              },
               "title": "View this Policy",
               "value": "description three &&",
             },

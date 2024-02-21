@@ -31,11 +31,11 @@ module OpsHelper::SettingsLabelTagMappingHelper
   end
 
   def delete_mapping_link(mapping)
-    remote_function(:url     => {
-                      :action => 'label_tag_mapping_delete',
-                      :id     => mapping[:id]
-                    },
-                    :confirm => _("Are you sure you want to delete category '%{category_name}'?") % {:category_name => mapping[:name]})
+    {
+      :remote  => true,
+      :url     => "/ops/label_tag_mapping_delete/#{mapping[:id]}",
+      :confirm => _("Are you sure you want to delete mapping '%{label_name}'?") % {:label_name => mapping[:label_name]},
+    }
   end
 
   def settings_label_tab_mapping_rows(mappings)

@@ -201,7 +201,7 @@ module MiqAlertHelper
         rows.push({
                     :cells   => [{:icon => 'pficon pficon-warning-triangle-o', :value => ap.description}],
                     :title   => _("View this Alert Profile"),
-                    :onclick => "DoNav('/miq_alert_set/show/#{ap.id}');",
+                    :onclick => {:url => "/miq_alert_set/show/#{ap.id}"},
                   })
       end
       data[:rows] = rows
@@ -220,7 +220,7 @@ module MiqAlertHelper
           rows.push({
                       :cells   => [{:icon => oa.decorate.fonticon, :value => oa.description}],
                       :title   => _("View this Action"),
-                      :onclick => "DoNav('/miq_action/show/#{oa.id}');",
+                      :onclick => {:url => "/miq_action/show/#{oa.id}"},
                     })
         end
         data[:rows] = rows

@@ -16,7 +16,7 @@ export const miqAePolicyListData = {
       icon: 'pficon pficon-close',
       value: 'Test &&',
       title: 'View this Action',
-      onclick: "DoNav('/miq_action/show/1');",
+      onclick: { url: '/miq_action/show/1' },
     },
   ],
   title: 'Basic Information',

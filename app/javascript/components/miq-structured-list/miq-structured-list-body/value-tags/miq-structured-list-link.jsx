@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'carbon-components-react';
 import MiqStructuredListContent from '../miq-structured-list-content';
+import { customOnClickHandler } from '../../../../helpers/custom-click-handler';
 
 /** Component to render a link in the cell.  */
 const MiqStructuredListLink = ({ row, clickEvents, onClick }) => {
@@ -9,13 +10,12 @@ const MiqStructuredListLink = ({ row, clickEvents, onClick }) => {
 
   /** Function to include content for mode that contains miq summary
     * if only link is passed as props we render Link with href tag
-    * if link as well as onclcik is passed as props we render Link with onclick function and without href
+    * if link as well as onclick is passed as props we render Link with onclick function and without href
   */
   const renderLinkWithHrefOrOnclick = (row) => {
     if (row.link && row.onclick) {
       return (
-        /* eslint-disable no-eval */
-        <Link to={row.link} onClick={() => eval(row.onclick)} className="cell_link">{content}</Link>
+        <Link to={row.link} onClick={() => customOnClickHandler(row.onclick)} className="cell_link">{content}</Link>
       );
     } if (row.link) {
       return (

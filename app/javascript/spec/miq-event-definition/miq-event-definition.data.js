@@ -17,7 +17,7 @@ export const eventDefinitionPolicyData = {
         { icon: 'pficon pficon-warning-triangle-o', value: 'Policy description' },
       ],
       title: 'View this Model Alert',
-      onclick: "DoNav('/miq_policy/show/1');",
+      onclick: { url: '/miq_policy/show/1' },
     },
   ],
 };

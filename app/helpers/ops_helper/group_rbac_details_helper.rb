@@ -17,6 +17,27 @@ module OpsHelper::GroupRbacDetailsHelper
     safe_join(summary)
   end
 
+  def select_tree_node_onclick(tree_id)
+    {
+      :remote => true,
+      :action => {
+        :name   => "miqOnClickSelectRbacTreeNode",
+        :treeId => tree_id,
+      }
+    }
+  end
+
+  def activate_node_onclick(node_key)
+    {
+      :remote => true,
+      :action => {
+        :name     => "miqTreeActivateNode",
+        :nodeTree => "rbac_tree",
+        :nodeKey  => node_key
+      }
+    }
+  end
+
   def group_information_summary(group)
     rows = [
       row_data(_('ID'), group.id),
@@ -28,7 +49,7 @@ module OpsHelper::GroupRbacDetailsHelper
       row = row_data_for_role(_('Role'), group.miq_user_role.name, "ff ff-user-role")
       if role_allows?(:feature => "rbac_group_show")
         row[:cells][:link] = group.miq_user_role.name
-        row[:cells][:onclick] = "miqOnClickSelectRbacTreeNode('ur-#{group.miq_user_role.id}')"
+        row[:cells][:onclick] = select_tree_node_onclick("ur-#{group.miq_user_role.id}")
         row[:cells][:title] = _("View this Role")
       else
         row[:cells][:link] = "#"
@@ -42,7 +63,7 @@ module OpsHelper::GroupRbacDetailsHelper
       row = row_data_for_role(_('Project/Tenant'), group.tenant.name, "pficon pficon-#{group.tenant.divisible ? "tenant" : "project"}")
       if role_allows?(:feature => "rbac_tenant_view")
         row[:cells][:link] = group.tenant.name
-        row[:cells][:onclick] = "miqTreeActivateNode('rbac_tree', 'tn-#{group.tenant.id}');"
+        row[:cells][:onclick] = activate_node_onclick("tn-#{group.tenant.id}")
         row[:cells][:title] = group.tenant.divisible ? _("View this Tenant") : _("View this Project")
       end
       rows.push(row)
@@ -63,7 +84,7 @@ module OpsHelper::GroupRbacDetailsHelper
       if role_allows?(:feature => "rbac_group_show")
         row = row_data_for_users("pficon pficon-user", u.name, "display_flex cursor_pointer")
         row[:cells][:link] = u.name
-        row[:cells][:onclick] = "miqOnClickSelectRbacTreeNode('u-#{u.id}')"
+        row[:cells][:onclick] = select_tree_node_onclick("u-#{u.id}")
         row[:cells][:title] = _("View this User")
       else
         row[:cells][:link] = u.name, "#"

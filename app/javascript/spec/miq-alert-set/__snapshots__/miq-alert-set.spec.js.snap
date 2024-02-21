@@ -17,7 +17,9 @@ exports[`MiqAlertSetStructuredList should render alert set alerts structured lis
               "value": "Alert description",
             },
           ],
-          "onclick": "DoNav('/miq_alert/show/1');",
+          "onclick": Object {
+            "url": "/miq_alert/show/1",
+          },
           "title": "View this Alert",
         },
       ]

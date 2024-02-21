@@ -9,7 +9,6 @@ module CatalogHelper
     data = {:rows => [], :headers => headers}
     prev_group = 0
     resources.sort_by { |rsc| [rsc.group_idx, rsc.resource_name.downcase] }.each_with_index do |r, i|
-      col_span = 10
       if prev_group != r.group_idx && i < resources.length
         prev_group = r.group_idx
       end
@@ -28,9 +27,10 @@ module CatalogHelper
       row = {
         :id        => i.to_s,
         :title     => _("Click to this Catalog Item"),
-        :onclick   => remote_function(:loading  => "miqSparkle(true);",
-                                      :complete => "miqSparkle(false);",
-                                      :url      => "/catalog/x_show/#{r.resource_id}"),
+        :onclick   => {
+          :remote => true,
+          :url    => "/catalog/x_show/#{r.resource_id}"
+        },
         :cells     => cells,
         :clickable => true
       }
@@ -53,7 +53,7 @@ module CatalogHelper
       data[:rows].push(row_data(_('Price / Month (in %{currency})') % {:currency => record.currency.code}, record.price.to_s))
     end
     disable = !record.template_valid?
-    action = disable ? '' : "miqOrderService(#{record.id});"
+    action = disable ? {} : {:remote => true, :url => "/catalog/x_button/#{record.id}?pressed=svc_catalog_provision"}
     data[:rows].push({:cells => {:button => {:name => _("Order"), :action => action, :disabled => disable}}})
     miq_structured_list(data)
   end
@@ -231,7 +231,7 @@ module CatalogHelper
         rows.push({
                     :cells   => [{:value => provisioning[:dialog]}],
                     :title   => provisioning[:dialog],
-                    :onclick => "DoNav('/miq_ae_customization/show/dg-#{provisioning[:dialog_id]}');",
+                    :onclick => {:url => "/miq_ae_customization/show/dg-#{provisioning[:dialog_id]}"},
                   })
       else
         rows.push(row_data('', provisioning[:dialog]))

@@ -17,7 +17,7 @@ module MiqPolicySetHelper
         rows.push({
                     :cells   => cells,
                     :title   => _("View this %{model} Policy") % {:model => ui_lookup(:model => p.towhat)},
-                    :onclick => "DoNav('/miq_policy/show/#{p.id}');"
+                    :onclick => {:url => "/miq_policy/show/#{p.id}"},
                   })
       end
       data[:rows] = rows
