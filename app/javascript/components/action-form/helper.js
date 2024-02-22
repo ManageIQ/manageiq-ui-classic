@@ -102,7 +102,7 @@ const constructAeHash = (aeHashPairs) => {
   const options = [];
   const aeHashAttribute = Object.keys(aeHashPairs);
   aeHashAttribute.forEach((pt) => {
-    const tempObj = { attribute: pt, value: Object.values(aeHashPairs)[0] };
+    const tempObj = { attribute: pt, value: aeHashPairs[pt] };
     options.push(tempObj);
   });
   return options;
