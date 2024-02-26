@@ -4,12 +4,22 @@ import { Button } from 'carbon-components-react';
 import { customOnClickHandler } from '../../../../helpers/custom-click-handler';
 
 /** Component to render a button in the cell.  */
-const MiqStructuredListButton = ({ row: { button: { name, action, disabled } } }) => (
+const MiqStructuredListButton = ({
+  row: {
+    button: {
+      name, action, href, target, rel, size, disabled,
+    },
+  },
+}) => (
   <div className="cell button_wrapper">
     <Button
       kind="primary"
       title={name}
-      onClick={() => !disabled && customOnClickHandler(action)}
+      href={href || null}
+      target={target || ''}
+      rel={rel || ''}
+      size={size || 'default'}
+      onClick={() => (action ? (!disabled && customOnClickHandler(action)) : '')}
       disabled={disabled}
     >
       {name}
@@ -24,8 +34,12 @@ MiqStructuredListButton.propTypes = {
     button: PropTypes.shape({
       action: PropTypes.shape({
         recordId: PropTypes.number,
-      }).isRequired,
+      }),
       name: PropTypes.string.isRequired,
+      href: PropTypes.string,
+      target: PropTypes.string,
+      rel: PropTypes.string,
+      size: PropTypes.string,
       disabled: PropTypes.bool.isRequired,
     }),
   }).isRequired,

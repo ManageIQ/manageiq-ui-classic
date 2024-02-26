@@ -23,10 +23,18 @@ module TextualMixins::TextualRegion
     url = @record.miq_region.remote_ui_url
     h = {:label => _('Remote Region'), :value => _('Connect to VM in its Region')}
     if url
-      h[:link] = url_for(:host => url, :action => 'show', :id => @record)
-      h[:title] = _('Connect to VM in its Region')
-      h[:external] = true
-      h[:button] = true
+      h = {
+        :label  => _('Remote Region'),
+        :button => {
+          :name     => _('Connect to VM in its Region'),
+          :action   => nil,
+          :href     => url_for(:host => url, :action => 'show', :id => @record),
+          :target   => "_blank",
+          :rel      => "noopener noreferrer",
+          :size     => "small",
+          :disabled => false,
+        }
+      }
     end
     h
   end
