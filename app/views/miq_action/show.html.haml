@@ -1,9 +1,5 @@
 #action-details-div
 
   = render :partial => "layouts/flash_msg"
-  
-  = miq_summary_action_info(@record)
 
-  = miq_summary_action_type(@record, @alert_guids, @cats)
-
-  = miq_summary_action_policies(@action_policies)
+  = control_action_summary(@record, @alert_guids, @cats, @action_policies)

@@ -65,6 +65,9 @@
   }
 
   .content_value {
+    &.array_item:first-child {
+      width: 250px;
+    }
     .content {
       display: flex;
       flex-direction: row;
