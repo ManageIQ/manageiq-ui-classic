@@ -8886,14 +8886,14 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                                                     kind="ghost"
                                                                     onClick={[Function]}
                                                                     onKeyPress={[Function]}
-                                                                    size="default"
+                                                                    size="sm"
                                                                     tabIndex={0}
                                                                     title="Resize"
                                                                   >
                                                                     <button
                                                                       aria-describedby={null}
                                                                       aria-pressed={null}
-                                                                      className="miq-data-table-button bx--btn bx--btn--ghost"
+                                                                      className="miq-data-table-button bx--btn bx--btn--sm bx--btn--ghost"
                                                                       disabled={false}
                                                                       onBlur={[Function]}
                                                                       onClick={[Function]}
@@ -9127,14 +9127,14 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                                                     kind="ghost"
                                                                     onClick={[Function]}
                                                                     onKeyPress={[Function]}
-                                                                    size="default"
+                                                                    size="sm"
                                                                     tabIndex={0}
                                                                     title="Delete"
                                                                   >
                                                                     <button
                                                                       aria-describedby={null}
                                                                       aria-pressed={null}
-                                                                      className="miq-data-table-button bx--btn bx--btn--ghost"
+                                                                      className="miq-data-table-button bx--btn bx--btn--sm bx--btn--ghost"
                                                                       disabled={false}
                                                                       onBlur={[Function]}
                                                                       onClick={[Function]}
@@ -11065,14 +11065,14 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                                                     kind="ghost"
                                                                     onClick={[Function]}
                                                                     onKeyPress={[Function]}
-                                                                    size="default"
+                                                                    size="sm"
                                                                     tabIndex={0}
                                                                     title="Cancel Disconnect"
                                                                   >
                                                                     <button
                                                                       aria-describedby={null}
                                                                       aria-pressed={null}
-                                                                      className="miq-data-table-button bx--btn bx--btn--ghost"
+                                                                      className="miq-data-table-button bx--btn bx--btn--sm bx--btn--ghost"
                                                                       disabled={false}
                                                                       onBlur={[Function]}
                                                                       onClick={[Function]}
@@ -11214,14 +11214,14 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                                                     kind="ghost"
                                                                     onClick={[Function]}
                                                                     onKeyPress={[Function]}
-                                                                    size="default"
+                                                                    size="sm"
                                                                     tabIndex={0}
                                                                     title="Connect"
                                                                   >
                                                                     <button
                                                                       aria-describedby={null}
                                                                       aria-pressed={null}
-                                                                      className="miq-data-table-button bx--btn bx--btn--ghost"
+                                                                      className="miq-data-table-button bx--btn bx--btn--sm bx--btn--ghost"
                                                                       disabled={false}
                                                                       onBlur={[Function]}
                                                                       onClick={[Function]}
@@ -36529,14 +36529,14 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                                                     kind="ghost"
                                                                     onClick={[Function]}
                                                                     onKeyPress={[Function]}
-                                                                    size="default"
+                                                                    size="sm"
                                                                     tabIndex={0}
                                                                     title="Resize"
                                                                   >
                                                                     <button
                                                                       aria-describedby={null}
                                                                       aria-pressed={null}
-                                                                      className="miq-data-table-button bx--btn bx--btn--ghost"
+                                                                      className="miq-data-table-button bx--btn bx--btn--sm bx--btn--ghost"
                                                                       disabled={false}
                                                                       onBlur={[Function]}
                                                                       onClick={[Function]}
@@ -36770,14 +36770,14 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                                                     kind="ghost"
                                                                     onClick={[Function]}
                                                                     onKeyPress={[Function]}
-                                                                    size="default"
+                                                                    size="sm"
                                                                     tabIndex={0}
                                                                     title="Delete"
                                                                   >
                                                                     <button
                                                                       aria-describedby={null}
                                                                       aria-pressed={null}
-                                                                      className="miq-data-table-button bx--btn bx--btn--ghost"
+                                                                      className="miq-data-table-button bx--btn bx--btn--sm bx--btn--ghost"
                                                                       disabled={false}
                                                                       onBlur={[Function]}
                                                                       onClick={[Function]}
@@ -38248,14 +38248,14 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                                                     kind="ghost"
                                                                     onClick={[Function]}
                                                                     onKeyPress={[Function]}
-                                                                    size="default"
+                                                                    size="sm"
                                                                     tabIndex={0}
                                                                     title="Edit"
                                                                   >
                                                                     <button
                                                                       aria-describedby={null}
                                                                       aria-pressed={null}
-                                                                      className="miq-data-table-button bx--btn bx--btn--ghost"
+                                                                      className="miq-data-table-button bx--btn bx--btn--sm bx--btn--ghost"
                                                                       disabled={false}
                                                                       onBlur={[Function]}
                                                                       onClick={[Function]}
@@ -38409,14 +38409,14 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                                                     kind="ghost"
                                                                     onClick={[Function]}
                                                                     onKeyPress={[Function]}
-                                                                    size="default"
+                                                                    size="sm"
                                                                     tabIndex={0}
                                                                     title="Delete"
                                                                   >
                                                                     <button
                                                                       aria-describedby={null}
                                                                       aria-pressed={null}
-                                                                      className="miq-data-table-button bx--btn bx--btn--ghost"
+                                                                      className="miq-data-table-button bx--btn bx--btn--sm bx--btn--ghost"
                                                                       disabled={false}
                                                                       onBlur={[Function]}
                                                                       onClick={[Function]}
@@ -53106,14 +53106,14 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                                                     kind="ghost"
                                                                     onClick={[Function]}
                                                                     onKeyPress={[Function]}
-                                                                    size="default"
+                                                                    size="sm"
                                                                     tabIndex={0}
                                                                     title="Resize"
                                                                   >
                                                                     <button
                                                                       aria-describedby={null}
                                                                       aria-pressed={null}
-                                                                      className="miq-data-table-button bx--btn bx--btn--ghost bx--btn--disabled"
+                                                                      className="miq-data-table-button bx--btn bx--btn--sm bx--btn--ghost bx--btn--disabled"
                                                                       disabled={true}
                                                                       onBlur={[Function]}
                                                                       onClick={[Function]}
@@ -53344,14 +53344,14 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                                                     kind="ghost"
                                                                     onClick={[Function]}
                                                                     onKeyPress={[Function]}
-                                                                    size="default"
+                                                                    size="sm"
                                                                     tabIndex={0}
                                                                     title="Cancel Delete"
                                                                   >
                                                                     <button
                                                                       aria-describedby={null}
                                                                       aria-pressed={null}
-                                                                      className="miq-data-table-button bx--btn bx--btn--ghost"
+                                                                      className="miq-data-table-button bx--btn bx--btn--sm bx--btn--ghost"
                                                                       disabled={false}
                                                                       onBlur={[Function]}
                                                                       onClick={[Function]}
@@ -55284,14 +55284,14 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                                                     kind="ghost"
                                                                     onClick={[Function]}
                                                                     onKeyPress={[Function]}
-                                                                    size="default"
+                                                                    size="sm"
                                                                     tabIndex={0}
                                                                     title="Disconnect"
                                                                   >
                                                                     <button
                                                                       aria-describedby={null}
                                                                       aria-pressed={null}
-                                                                      className="miq-data-table-button bx--btn bx--btn--ghost"
+                                                                      className="miq-data-table-button bx--btn bx--btn--sm bx--btn--ghost"
                                                                       disabled={false}
                                                                       onBlur={[Function]}
                                                                       onClick={[Function]}
@@ -55433,14 +55433,14 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                                                     kind="ghost"
                                                                     onClick={[Function]}
                                                                     onKeyPress={[Function]}
-                                                                    size="default"
+                                                                    size="sm"
                                                                     tabIndex={0}
                                                                     title="Connect"
                                                                   >
                                                                     <button
                                                                       aria-describedby={null}
                                                                       aria-pressed={null}
-                                                                      className="miq-data-table-button bx--btn bx--btn--ghost bx--btn--disabled"
+                                                                      className="miq-data-table-button bx--btn bx--btn--sm bx--btn--ghost bx--btn--disabled"
                                                                       disabled={true}
                                                                       onBlur={[Function]}
                                                                       onClick={[Function]}
