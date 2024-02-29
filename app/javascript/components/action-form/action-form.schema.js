@@ -171,6 +171,7 @@ function createSchema(recordId, promise, inheritTags, evaluateAlert, tags, ansib
       id: 'subform-7',
       name: 'subform-7',
       title: __('Attribute/Value Pairs'),
+      className: 'attribute_value_pair_wrapper',
       condition: {
         when: 'action_type',
         is: 'custom_automation',
@@ -190,6 +191,7 @@ function createSchema(recordId, promise, inheritTags, evaluateAlert, tags, ansib
           fields: [
             {
               component: componentTypes.TEXT_FIELD,
+              className: 'attribute_value_field_wrapper',
               name: 'attribute',
               id: 'attribute',
               label: 'attribute',
@@ -198,6 +200,7 @@ function createSchema(recordId, promise, inheritTags, evaluateAlert, tags, ansib
             },
             {
               component: componentTypes.TEXT_FIELD,
+              className: 'attribute_value_field_wrapper',
               name: 'value',
               id: 'value',
               label: 'value',

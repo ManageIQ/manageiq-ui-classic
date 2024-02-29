@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { StructuredListCell } from 'carbon-components-react';
 import MiqStructuredListConditionalTag from '../value-tags/miq-structured-list-conditional-tag';
 
-/** Usage eg: Automation / Embeded Automate / Generic Objects / item
+/** Usage eg: Automation / Embedded Automate / Generic Objects / item
   * Properties has no links & Relationships have links */
 const MiqStructuredListObject = ({ row, clickEvents, onClick }) => {
   const isContent = row.label || (row.value && row.value.input);

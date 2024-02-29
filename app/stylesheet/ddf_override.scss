@@ -466,3 +466,28 @@
   margin-top: 3rem;
   margin-left: 15rem;
 }
+
+
+.attribute_value_pair_wrapper fieldset {
+  .bx--form-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+
+    label {
+      margin-bottom: 0;
+    }
+  }
+
+  div > div {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+
+    .attribute_value_field_wrapper {
+      flex-grow: 1;
+    }
+  }
+}
