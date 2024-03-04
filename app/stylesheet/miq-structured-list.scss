@@ -58,6 +58,10 @@
     &.button_wrapper {
       margin: 20px 0;
 
+      a {
+        width: max-content;
+      }
+
       button {
         padding: 10px 30px;
       }
