@@ -151,6 +151,16 @@ exports[`Show Service Request Page should render 1`] = `
       <Connect(MiqFormRenderer)
         FormTemplate={[Function]}
         canReset={true}
+        initialValues={
+          Object {
+            "approvalStates": Array [
+              "pending_approval",
+              "approved",
+              "denied",
+            ],
+            "selectedPeriod": 7,
+          }
+        }
         onReset={[Function]}
         onSubmit={[Function]}
         schema={
@@ -178,15 +188,10 @@ exports[`Show Service Request Page should render 1`] = `
                 "fields": Array [
                   Object {
                     "component": "checkbox",
-                    "id": "approvalStateCheckboxes",
-                    "initialValue": Array [
-                      "pending_approval",
-                      "approved",
-                      "denied",
-                    ],
+                    "id": "approvalStates",
                     "isRequired": true,
                     "label": "Approval State:",
-                    "name": "approvalStateCheckboxes",
+                    "name": "approvalStates",
                     "options": Array [
                       Object {
                         "label": "Pending Approval",
@@ -278,7 +283,6 @@ exports[`Show Service Request Page should render 1`] = `
               Object {
                 "component": "select",
                 "id": "selectedPeriod",
-                "initialValue": 7,
                 "isRequired": true,
                 "label": "Request Date:",
                 "name": "selectedPeriod",
@@ -349,6 +353,16 @@ exports[`Show Service Request Page should render 1`] = `
             ]
           }
           dispatch={[Function]}
+          initialValues={
+            Object {
+              "approvalStates": Array [
+                "pending_approval",
+                "approved",
+                "denied",
+              ],
+              "selectedPeriod": 7,
+            }
+          }
           onReset={[Function]}
           onSubmit={[Function]}
           schema={
@@ -376,15 +390,10 @@ exports[`Show Service Request Page should render 1`] = `
                   "fields": Array [
                     Object {
                       "component": "checkbox",
-                      "id": "approvalStateCheckboxes",
-                      "initialValue": Array [
-                        "pending_approval",
-                        "approved",
-                        "denied",
-                      ],
+                      "id": "approvalStates",
                       "isRequired": true,
                       "label": "Approval State:",
-                      "name": "approvalStateCheckboxes",
+                      "name": "approvalStates",
                       "options": Array [
                         Object {
                           "label": "Pending Approval",
@@ -476,7 +485,6 @@ exports[`Show Service Request Page should render 1`] = `
                 Object {
                   "component": "select",
                   "id": "selectedPeriod",
-                  "initialValue": 7,
                   "isRequired": true,
                   "label": "Request Date:",
                   "name": "selectedPeriod",
@@ -541,7 +549,16 @@ exports[`Show Service Request Page should render 1`] = `
               }
             }
             dispatch={[Function]}
-            initialValues={Object {}}
+            initialValues={
+              Object {
+                "approvalStates": Array [
+                  "pending_approval",
+                  "approved",
+                  "denied",
+                ],
+                "selectedPeriod": 7,
+              }
+            }
             onReset={[Function]}
             onSubmit={[Function]}
             schema={
@@ -569,15 +586,10 @@ exports[`Show Service Request Page should render 1`] = `
                     "fields": Array [
                       Object {
                         "component": "checkbox",
-                        "id": "approvalStateCheckboxes",
-                        "initialValue": Array [
-                          "pending_approval",
-                          "approved",
-                          "denied",
-                        ],
+                        "id": "approvalStates",
                         "isRequired": true,
                         "label": "Approval State:",
-                        "name": "approvalStateCheckboxes",
+                        "name": "approvalStates",
                         "options": Array [
                           Object {
                             "label": "Pending Approval",
@@ -669,7 +681,6 @@ exports[`Show Service Request Page should render 1`] = `
                   Object {
                     "component": "select",
                     "id": "selectedPeriod",
-                    "initialValue": 7,
                     "isRequired": true,
                     "label": "Request Date:",
                     "name": "selectedPeriod",
@@ -711,7 +722,16 @@ exports[`Show Service Request Page should render 1`] = `
                 ]
               }
               dispatch={[Function]}
-              initialValues={Object {}}
+              initialValues={
+                Object {
+                  "approvalStates": Array [
+                    "pending_approval",
+                    "approved",
+                    "denied",
+                  ],
+                  "selectedPeriod": 7,
+                }
+              }
               mutators={
                 Object {
                   "concat": [Function],
@@ -765,15 +785,10 @@ exports[`Show Service Request Page should render 1`] = `
                         Array [
                           Object {
                             "component": "checkbox",
-                            "id": "approvalStateCheckboxes",
-                            "initialValue": Array [
-                              "pending_approval",
-                              "approved",
-                              "denied",
-                            ],
+                            "id": "approvalStates",
                             "isRequired": true,
                             "label": "Approval State:",
-                            "name": "approvalStateCheckboxes",
+                            "name": "approvalStates",
                             "options": Array [
                               Object {
                                 "label": "Pending Approval",
@@ -868,7 +883,6 @@ exports[`Show Service Request Page should render 1`] = `
                     <SingleField
                       component="select"
                       id="selectedPeriod"
-                      initialValue={7}
                       isRequired={true}
                       label="Request Date:"
                       name="selectedPeriod"
@@ -927,15 +941,10 @@ exports[`Show Service Request Page should render 1`] = `
                         "fields": Array [
                           Object {
                             "component": "checkbox",
-                            "id": "approvalStateCheckboxes",
-                            "initialValue": Array [
-                              "pending_approval",
-                              "approved",
-                              "denied",
-                            ],
+                            "id": "approvalStates",
                             "isRequired": true,
                             "label": "Approval State:",
-                            "name": "approvalStateCheckboxes",
+                            "name": "approvalStates",
                             "options": Array [
                               Object {
                                 "label": "Pending Approval",
@@ -1027,7 +1036,6 @@ exports[`Show Service Request Page should render 1`] = `
                       Object {
                         "component": "select",
                         "id": "selectedPeriod",
-                        "initialValue": 7,
                         "isRequired": true,
                         "label": "Request Date:",
                         "name": "selectedPeriod",
@@ -1090,15 +1098,10 @@ exports[`Show Service Request Page should render 1`] = `
                           Array [
                             Object {
                               "component": "checkbox",
-                              "id": "approvalStateCheckboxes",
-                              "initialValue": Array [
-                                "pending_approval",
-                                "approved",
-                                "denied",
-                              ],
+                              "id": "approvalStates",
                               "isRequired": true,
                               "label": "Approval State:",
-                              "name": "approvalStateCheckboxes",
+                              "name": "approvalStates",
                               "options": Array [
                                 Object {
                                   "label": "Pending Approval",
@@ -1193,7 +1196,6 @@ exports[`Show Service Request Page should render 1`] = `
                       <SingleField
                         component="select"
                         id="selectedPeriod"
-                        initialValue={7}
                         isRequired={true}
                         label="Request Date:"
                         name="selectedPeriod"
@@ -1252,15 +1254,10 @@ exports[`Show Service Request Page should render 1`] = `
                           "fields": Array [
                             Object {
                               "component": "checkbox",
-                              "id": "approvalStateCheckboxes",
-                              "initialValue": Array [
-                                "pending_approval",
-                                "approved",
-                                "denied",
-                              ],
+                              "id": "approvalStates",
                               "isRequired": true,
                               "label": "Approval State:",
-                              "name": "approvalStateCheckboxes",
+                              "name": "approvalStates",
                               "options": Array [
                                 Object {
                                   "label": "Pending Approval",
@@ -1352,7 +1349,6 @@ exports[`Show Service Request Page should render 1`] = `
                         Object {
                           "component": "select",
                           "id": "selectedPeriod",
-                          "initialValue": 7,
                           "isRequired": true,
                           "label": "Request Date:",
                           "name": "selectedPeriod",
@@ -1682,15 +1678,10 @@ exports[`Show Service Request Page should render 1`] = `
                         Array [
                           Object {
                             "component": "checkbox",
-                            "id": "approvalStateCheckboxes",
-                            "initialValue": Array [
-                              "pending_approval",
-                              "approved",
-                              "denied",
-                            ],
+                            "id": "approvalStates",
                             "isRequired": true,
                             "label": "Approval State:",
-                            "name": "approvalStateCheckboxes",
+                            "name": "approvalStates",
                             "options": Array [
                               Object {
                                 "label": "Pending Approval",
@@ -1719,15 +1710,10 @@ exports[`Show Service Request Page should render 1`] = `
                             "fields": Array [
                               Object {
                                 "component": "checkbox",
-                                "id": "approvalStateCheckboxes",
-                                "initialValue": Array [
-                                  "pending_approval",
-                                  "approved",
-                                  "denied",
-                                ],
+                                "id": "approvalStates",
                                 "isRequired": true,
                                 "label": "Approval State:",
-                                "name": "approvalStateCheckboxes",
+                                "name": "approvalStates",
                                 "options": Array [
                                   Object {
                                     "label": "Pending Approval",
@@ -1760,15 +1746,10 @@ exports[`Show Service Request Page should render 1`] = `
                               Array [
                                 Object {
                                   "component": "checkbox",
-                                  "id": "approvalStateCheckboxes",
-                                  "initialValue": Array [
-                                    "pending_approval",
-                                    "approved",
-                                    "denied",
-                                  ],
+                                  "id": "approvalStates",
                                   "isRequired": true,
                                   "label": "Approval State:",
-                                  "name": "approvalStateCheckboxes",
+                                  "name": "approvalStates",
                                   "options": Array [
                                     Object {
                                       "label": "Pending Approval",
@@ -1796,18 +1777,11 @@ exports[`Show Service Request Page should render 1`] = `
                             >
                               <SingleField
                                 component="checkbox"
-                                id="approvalStateCheckboxes"
-                                initialValue={
-                                  Array [
-                                    "pending_approval",
-                                    "approved",
-                                    "denied",
-                                  ]
-                                }
+                                id="approvalStates"
                                 isRequired={true}
-                                key="approvalStateCheckboxes"
+                                key="approvalStates"
                                 label="Approval State:"
-                                name="approvalStateCheckboxes"
+                                name="approvalStates"
                                 options={
                                   Array [
                                     Object {
@@ -1829,15 +1803,10 @@ exports[`Show Service Request Page should render 1`] = `
                                   field={
                                     Object {
                                       "component": "checkbox",
-                                      "id": "approvalStateCheckboxes",
-                                      "initialValue": Array [
-                                        "pending_approval",
-                                        "approved",
-                                        "denied",
-                                      ],
+                                      "id": "approvalStates",
                                       "isRequired": true,
                                       "label": "Approval State:",
-                                      "name": "approvalStateCheckboxes",
+                                      "name": "approvalStates",
                                       "options": Array [
                                         Object {
                                           "label": "Pending Approval",
@@ -1860,17 +1829,10 @@ exports[`Show Service Request Page should render 1`] = `
                                   >
                                     <Checkbox
                                       component="checkbox"
-                                      id="approvalStateCheckboxes"
-                                      initialValue={
-                                        Array [
-                                          "pending_approval",
-                                          "approved",
-                                          "denied",
-                                        ]
-                                      }
+                                      id="approvalStates"
                                       isRequired={true}
                                       label="Approval State:"
-                                      name="approvalStateCheckboxes"
+                                      name="approvalStates"
                                       options={
                                         Array [
                                           Object {
@@ -1892,17 +1854,10 @@ exports[`Show Service Request Page should render 1`] = `
                                         Checkbox={[Function]}
                                         Wrapper={[Function]}
                                         component="checkbox"
-                                        id="approvalStateCheckboxes"
-                                        initialValue={
-                                          Array [
-                                            "pending_approval",
-                                            "approved",
-                                            "denied",
-                                          ]
-                                        }
+                                        id="approvalStates"
                                         isRequired={true}
                                         label="Approval State:"
-                                        name="approvalStateCheckboxes"
+                                        name="approvalStates"
                                         options={
                                           Array [
                                             Object {
@@ -1950,10 +1905,10 @@ exports[`Show Service Request Page should render 1`] = `
                                               "visited": false,
                                             }
                                           }
-                                          name="approvalStateCheckboxes"
+                                          name="approvalStates"
                                           rest={
                                             Object {
-                                              "id": "approvalStateCheckboxes",
+                                              "id": "approvalStates",
                                             }
                                           }
                                           showError={false}
@@ -1988,10 +1943,10 @@ exports[`Show Service Request Page should render 1`] = `
                                               <SingleCheckbox
                                                 Checkbox={[Function]}
                                                 aria-label="Pending Approval"
-                                                id="approvalStateCheckboxes-pending_approval"
-                                                key="approvalStateCheckboxes-pending_approval"
+                                                id="approvalStates-pending_approval"
+                                                key="approvalStates-pending_approval"
                                                 label="Pending Approval"
-                                                name="approvalStateCheckboxes"
+                                                name="approvalStates"
                                                 option={
                                                   Object {
                                                     "label": "Pending Approval",
@@ -2003,7 +1958,7 @@ exports[`Show Service Request Page should render 1`] = `
                                                 <SingleCheckboxInCommon
                                                   aria-label="Pending Approval"
                                                   checked={true}
-                                                  id="approvalStateCheckboxes-pending_approval"
+                                                  id="approvalStates-pending_approval"
                                                   label="Pending Approval"
                                                   meta={
                                                     Object {
@@ -2032,7 +1987,7 @@ exports[`Show Service Request Page should render 1`] = `
                                                       "visited": false,
                                                     }
                                                   }
-                                                  name="approvalStateCheckboxes"
+                                                  name="approvalStates"
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
@@ -2048,11 +2003,11 @@ exports[`Show Service Request Page should render 1`] = `
                                                   <Checkbox
                                                     aria-label="Pending Approval"
                                                     checked={true}
-                                                    id="approvalStateCheckboxes-pending_approval"
+                                                    id="approvalStates-pending_approval"
                                                     indeterminate={false}
                                                     label="Pending Approval"
                                                     labelText="Pending Approval"
-                                                    name="approvalStateCheckboxes"
+                                                    name="approvalStates"
                                                     onBlur={[Function]}
                                                     onChange={[Function]}
                                                     onFocus={[Function]}
@@ -2066,9 +2021,9 @@ exports[`Show Service Request Page should render 1`] = `
                                                         aria-label="Pending Approval"
                                                         checked={true}
                                                         className="bx--checkbox"
-                                                        id="approvalStateCheckboxes-pending_approval"
+                                                        id="approvalStates-pending_approval"
                                                         label="Pending Approval"
-                                                        name="approvalStateCheckboxes"
+                                                        name="approvalStates"
                                                         onBlur={[Function]}
                                                         onChange={[Function]}
                                                         onFocus={[Function]}
@@ -2077,7 +2032,7 @@ exports[`Show Service Request Page should render 1`] = `
                                                       />
                                                       <label
                                                         className="bx--checkbox-label"
-                                                        htmlFor="approvalStateCheckboxes-pending_approval"
+                                                        htmlFor="approvalStates-pending_approval"
                                                         title={null}
                                                       >
                                                         <Text
@@ -2098,10 +2053,10 @@ exports[`Show Service Request Page should render 1`] = `
                                               <SingleCheckbox
                                                 Checkbox={[Function]}
                                                 aria-label="Approved"
-                                                id="approvalStateCheckboxes-approved"
-                                                key="approvalStateCheckboxes-approved"
+                                                id="approvalStates-approved"
+                                                key="approvalStates-approved"
                                                 label="Approved"
-                                                name="approvalStateCheckboxes"
+                                                name="approvalStates"
                                                 option={
                                                   Object {
                                                     "label": "Approved",
@@ -2113,7 +2068,7 @@ exports[`Show Service Request Page should render 1`] = `
                                                 <SingleCheckboxInCommon
                                                   aria-label="Approved"
                                                   checked={true}
-                                                  id="approvalStateCheckboxes-approved"
+                                                  id="approvalStates-approved"
                                                   label="Approved"
                                                   meta={
                                                     Object {
@@ -2142,7 +2097,7 @@ exports[`Show Service Request Page should render 1`] = `
                                                       "visited": false,
                                                     }
                                                   }
-                                                  name="approvalStateCheckboxes"
+                                                  name="approvalStates"
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
@@ -2158,11 +2113,11 @@ exports[`Show Service Request Page should render 1`] = `
                                                   <Checkbox
                                                     aria-label="Approved"
                                                     checked={true}
-                                                    id="approvalStateCheckboxes-approved"
+                                                    id="approvalStates-approved"
                                                     indeterminate={false}
                                                     label="Approved"
                                                     labelText="Approved"
-                                                    name="approvalStateCheckboxes"
+                                                    name="approvalStates"
                                                     onBlur={[Function]}
                                                     onChange={[Function]}
                                                     onFocus={[Function]}
@@ -2176,9 +2131,9 @@ exports[`Show Service Request Page should render 1`] = `
                                                         aria-label="Approved"
                                                         checked={true}
                                                         className="bx--checkbox"
-                                                        id="approvalStateCheckboxes-approved"
+                                                        id="approvalStates-approved"
                                                         label="Approved"
-                                                        name="approvalStateCheckboxes"
+                                                        name="approvalStates"
                                                         onBlur={[Function]}
                                                         onChange={[Function]}
                                                         onFocus={[Function]}
@@ -2187,7 +2142,7 @@ exports[`Show Service Request Page should render 1`] = `
                                                       />
                                                       <label
                                                         className="bx--checkbox-label"
-                                                        htmlFor="approvalStateCheckboxes-approved"
+                                                        htmlFor="approvalStates-approved"
                                                         title={null}
                                                       >
                                                         <Text
@@ -2208,10 +2163,10 @@ exports[`Show Service Request Page should render 1`] = `
                                               <SingleCheckbox
                                                 Checkbox={[Function]}
                                                 aria-label="Denied"
-                                                id="approvalStateCheckboxes-denied"
-                                                key="approvalStateCheckboxes-denied"
+                                                id="approvalStates-denied"
+                                                key="approvalStates-denied"
                                                 label="Denied"
-                                                name="approvalStateCheckboxes"
+                                                name="approvalStates"
                                                 option={
                                                   Object {
                                                     "label": "Denied",
@@ -2223,7 +2178,7 @@ exports[`Show Service Request Page should render 1`] = `
                                                 <SingleCheckboxInCommon
                                                   aria-label="Denied"
                                                   checked={true}
-                                                  id="approvalStateCheckboxes-denied"
+                                                  id="approvalStates-denied"
                                                   label="Denied"
                                                   meta={
                                                     Object {
@@ -2252,7 +2207,7 @@ exports[`Show Service Request Page should render 1`] = `
                                                       "visited": false,
                                                     }
                                                   }
-                                                  name="approvalStateCheckboxes"
+                                                  name="approvalStates"
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
@@ -2268,11 +2223,11 @@ exports[`Show Service Request Page should render 1`] = `
                                                   <Checkbox
                                                     aria-label="Denied"
                                                     checked={true}
-                                                    id="approvalStateCheckboxes-denied"
+                                                    id="approvalStates-denied"
                                                     indeterminate={false}
                                                     label="Denied"
                                                     labelText="Denied"
-                                                    name="approvalStateCheckboxes"
+                                                    name="approvalStates"
                                                     onBlur={[Function]}
                                                     onChange={[Function]}
                                                     onFocus={[Function]}
@@ -2286,9 +2241,9 @@ exports[`Show Service Request Page should render 1`] = `
                                                         aria-label="Denied"
                                                         checked={true}
                                                         className="bx--checkbox"
-                                                        id="approvalStateCheckboxes-denied"
+                                                        id="approvalStates-denied"
                                                         label="Denied"
-                                                        name="approvalStateCheckboxes"
+                                                        name="approvalStates"
                                                         onBlur={[Function]}
                                                         onChange={[Function]}
                                                         onFocus={[Function]}
@@ -2297,7 +2252,7 @@ exports[`Show Service Request Page should render 1`] = `
                                                       />
                                                       <label
                                                         className="bx--checkbox-label"
-                                                        htmlFor="approvalStateCheckboxes-denied"
+                                                        htmlFor="approvalStates-denied"
                                                         title={null}
                                                       >
                                                         <Text
@@ -3166,7 +3121,6 @@ exports[`Show Service Request Page should render 1`] = `
                     <SingleField
                       component="select"
                       id="selectedPeriod"
-                      initialValue={7}
                       isRequired={true}
                       key="selectedPeriod"
                       label="Request Date:"
@@ -3193,7 +3147,6 @@ exports[`Show Service Request Page should render 1`] = `
                           Object {
                             "component": "select",
                             "id": "selectedPeriod",
-                            "initialValue": 7,
                             "isRequired": true,
                             "label": "Request Date:",
                             "name": "selectedPeriod",
@@ -3220,7 +3173,6 @@ exports[`Show Service Request Page should render 1`] = `
                           <SelectWithOnChange
                             component="select"
                             id="selectedPeriod"
-                            initialValue={7}
                             isRequired={true}
                             label="Request Date:"
                             name="selectedPeriod"
@@ -3245,7 +3197,6 @@ exports[`Show Service Request Page should render 1`] = `
                             <Select
                               component="select"
                               id="selectedPeriod"
-                              initialValue={7}
                               isRequired={true}
                               label="Request Date:"
                               loadingMessage="Loading..."
