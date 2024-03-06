@@ -2165,6 +2165,9 @@ Rails.application.routes.draw do
         show
         show_list
       ],
+      :post => %w[
+        show_list
+      ]
     },
 
     :condition => {
