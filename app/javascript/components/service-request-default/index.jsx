@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import MiqFormRenderer, { useFormApi } from '@@ddf';
 import PropTypes from 'prop-types';
 import { FormSpy } from '@data-driven-forms/react-form-renderer';
@@ -7,34 +7,22 @@ import createSchema from './service-request-default.schema';
 // NOTE: parameters to be used as filters
 let daysAgo;
 
-const getApprovalStateCheckboxesDefault = (miqRequestInitialOptions) => {
-  const defaultStates = [];
-  if (miqRequestInitialOptions.states) {
-    miqRequestInitialOptions.states.forEach((state) => {
-      defaultStates.push(state.value);
-    });
-  }
-  return defaultStates;
-};
-
 // NOTE: processing the user selected filter values
 const onSubmitData = (values, miqRequestInitialOptions) => {
   // Request Date (created_recently)
   if (values.selectedPeriod) { // user selected
     daysAgo = values.selectedPeriod;
-  } else { // default
-    if (miqRequestInitialOptions.timePeriods[1] && miqRequestInitialOptions.timePeriods[1].value) {
-      daysAgo = miqRequestInitialOptions.timePeriods[1].value;
-    }
+  } else if (miqRequestInitialOptions.timePeriods[1] && miqRequestInitialOptions.timePeriods[1].value) {
+    daysAgo = miqRequestInitialOptions.timePeriods[1].value;
   }
 
-  const submitThis = [
+  const filters = [
     [
       'created_recently',
       parseInt(daysAgo, 10),
     ], [
       'with_approval_state',
-      values.approvalStateCheckboxes ? values.approvalStateCheckboxes : getApprovalStateCheckboxesDefault(miqRequestInitialOptions),
+      values.approvalStates,
     ], [
       'with_type',
       miqRequestInitialOptions.requestType,
@@ -42,42 +30,92 @@ const onSubmitData = (values, miqRequestInitialOptions) => {
   ];
 
   if (values.types && values.types !== 'all') {
-    submitThis.push([
+    filters.push([
       'with_request_type',
       [values.types],
     ]);
   }
 
   if (values.reasonText) {
-    submitThis.push([
+    filters.push([
       'with_reason_like',
       values.reasonText,
     ]);
   }
 
   if (values.selectedUser && (values.selectedUser !== 'all')) {
-    submitThis.push([
+    filters.push([
       'with_requester',
       values.selectedUser,
     ]);
   }
 
-  sendDataWithRx({ type: 'setScope', namedScope: submitThis });
+  sendDataWithRx({ type: 'setScope', namedScope: filters });
 };
 
 const ServiceRequestDefault = ({ miqRequestInitialOptions }) => {
+  const [{ initialValues }, setState] = useState({});
+
+  useEffect(() => {
+    const tempInitialValues = {};
+    if (miqRequestInitialOptions.savedFilters) {
+      if (miqRequestInitialOptions.savedFilters.selectedUser) {
+        tempInitialValues.selectedUser = miqRequestInitialOptions.savedFilters.selectedUser;
+      }
+
+      if (miqRequestInitialOptions.savedFilters.approvalStates) {
+        tempInitialValues.approvalStates = miqRequestInitialOptions.savedFilters.approvalStates;
+      } else {
+        tempInitialValues.approvalStates = ['pending_approval', 'approved', 'denied'];
+      }
+
+      if (miqRequestInitialOptions.savedFilters.types) {
+        tempInitialValues.types = miqRequestInitialOptions.savedFilters.types;
+      }
+
+      if (miqRequestInitialOptions.savedFilters.selectedPeriod) {
+        tempInitialValues.selectedPeriod = miqRequestInitialOptions.savedFilters.selectedPeriod;
+      }
+
+      if (miqRequestInitialOptions.savedFilters.reasonText) {
+        tempInitialValues.reasonText = miqRequestInitialOptions.savedFilters.reasonText;
+      }
+    } else {
+      tempInitialValues.selectedPeriod = 7;
+      tempInitialValues.approvalStates = ['pending_approval', 'approved', 'denied'];
+    }
+    setState(() => ({
+      initialValues: tempInitialValues,
+    }));
+  }, []);
+
   const onSubmit = (values) => {
     // NOTE: We only get what is *explicitly* clicked (so nothing for default values)
     onSubmitData(values, miqRequestInitialOptions);
   };
 
   const onReset = () => {
-    onSubmitData({}, miqRequestInitialOptions);
+    setState(() => ({
+      initialValues: {
+        selectedUser: undefined,
+        approvalStates: ['pending_approval', 'approved', 'denied'],
+        types: 'all',
+        selectedPeriod: 7,
+        reasonText: undefined,
+      },
+    }));
+
+    const filters = [
+      ['created_recently', 7],
+      ['with_approval_state', ['pending_approval', 'approved', 'denied']],
+    ];
+    sendDataWithRx({ type: 'setScope', namedScope: filters });
   };
 
   return (
     <div className="service-request-form">
       <MiqFormRenderer
+        initialValues={initialValues}
         FormTemplate={(props) => <FormTemplate {...props} />}
         schema={createSchema(miqRequestInitialOptions)}
         canReset
@@ -88,7 +126,7 @@ const ServiceRequestDefault = ({ miqRequestInitialOptions }) => {
   );
 };
 
-const verifyCheckboxes = (values) => values.approvalStateCheckboxes.length === 0;
+const verifyCheckboxes = (values) => (values.approvalStates === undefined ? true : values.approvalStates.length === 0);
 
 const FormTemplate = ({ formFields }) => {
   const {
