@@ -34,6 +34,33 @@ class MiqRequestController < ApplicationController
     end
   end
 
+  def report_data
+    super
+    if params[:model_name] == "MiqRequest"
+      @request_filters = {}
+      params[:additional_options][:named_scope].each do |option|
+        case option[0]
+        when "created_recently"
+          @request_filters[:selectedPeriod] = option[1]
+        when "with_approval_state"
+          @request_filters[:approvalStates] = option[1]
+        when "with_request_type"
+          @request_filters[:types] =
+            if option[1][0].kind_of?(String)
+              option[1]
+            else
+              option[1][0]
+            end
+        when "with_reason_like"
+          @request_filters[:reasonText] = option[1]
+        when "with_requester"
+          @request_filters[:selectedUser] = option[1]
+        end
+      end
+      session[:request_filters] = @request_filters
+    end
+  end
+
   def request_edit
     assert_privileges(rbac_feature_id("miq_request_edit"))
     provision_request = MiqRequest.find(params[:id])
@@ -79,7 +106,19 @@ class MiqRequestController < ApplicationController
     @sortdir = session[:request_sortdir].nil? ? "ASC" : session[:request_sortdir]
     @no_checkboxes = true # Don't show checkboxes, read_only
     kls = @layout == "miq_request_ae" ? AutomationRequest : MiqRequest
-    @view, @pages = get_view(kls, :named_scope => prov_scope(user_options(params)))
+    scope =
+      if session[:request_filters].nil?
+        user_options(params)
+      else
+        {
+          :reason_text    => session[:request_filters][:reasonText],
+          :applied_states => session[:request_filters][:approvalStates],
+          :type_choice    => session[:request_filters][:types],
+          :user_choice    => session[:request_filters][:selectedUser],
+          :time_period    => session[:request_filters][:selectedPeriod],
+        }
+      end
+    @view, @pages = get_view(kls, :named_scope => prov_scope(scope))
 
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
     session[:request_sortcol] = @sortcol
@@ -403,7 +442,7 @@ class MiqRequestController < ApplicationController
   def user_options(params)
     opts = {
       :reason_text    => params["reasonText"],
-      :applied_states => params["approvalStateCheckboxes"],
+      :applied_states => params["approvalStates"],
       :type_choice    => params["types"],
       :user_choice    => params["selectedUser"],
       :time_period    => params["selectedPeriod"],
@@ -451,6 +490,7 @@ class MiqRequestController < ApplicationController
       :selectedPeriod => 7,
       :reasonText     => nil,
       :requestType    => MiqRequest::MODEL_REQUEST_TYPES[model_request_type_from_layout].keys,
+      :savedFilters   => session[:request_filters],
     }
   end
   helper_method :miq_request_initial_options
@@ -542,6 +582,7 @@ class MiqRequestController < ApplicationController
     super
     @title       = _("Requests")
     @request_tab = session[:request_tab] if session[:request_tab]
+    @request_filters = session[:request_filters]
     @layout      = layout_from_tab_name(@request_tab)
     @options     = session[:prov_options] if session[:prov_options].present?
   end
@@ -550,6 +591,7 @@ class MiqRequestController < ApplicationController
     super
     session[:edit]         = @edit unless @edit.nil?
     session[:request_tab]  = @request_tab unless @request_tab.nil?
+    session[:request_filters] = @request_filters
     session[:prov_options] = @options if @options
   end
 

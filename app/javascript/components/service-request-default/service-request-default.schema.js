@@ -18,26 +18,15 @@ const findUser = (searchHere) => {
   }];
 };
 
-const buildStatesComponents = (options) => {
-  const initialValuesFields = [];
+const getApprovalStates = (miqRequestInitialOptions) => {
   const optionsFields = [];
-  options.states.forEach((states) => {
-    initialValuesFields.push(states.value);
+  miqRequestInitialOptions.states.forEach((state) => {
     optionsFields.push({
-      value: states.value,
-      label: states.label,
+      value: state.value,
+      label: state.label,
     });
   });
-  const checkboxesComponent = [{
-    component: componentTypes.CHECKBOX,
-    id: 'approvalStateCheckboxes',
-    name: 'approvalStateCheckboxes',
-    label: __('Approval State:'),
-    isRequired: true,
-    initialValue: initialValuesFields,
-    options: optionsFields,
-  }];
-  return checkboxesComponent;
+  return optionsFields;
 };
 
 const createSchema = (miqRequestInitialOptions) => ({
@@ -54,7 +43,16 @@ const createSchema = (miqRequestInitialOptions) => ({
       component: componentTypes.SUB_FORM,
       id: 'approval_state',
       name: 'approval_state',
-      fields: buildStatesComponents(miqRequestInitialOptions),
+      fields: [
+        {
+          component: componentTypes.CHECKBOX,
+          id: 'approvalStates',
+          name: 'approvalStates',
+          label: __('Approval State:'),
+          isRequired: true,
+          options: getApprovalStates(miqRequestInitialOptions),
+        },
+      ],
     },
     {
       component: componentTypes.SELECT,
@@ -70,7 +68,6 @@ const createSchema = (miqRequestInitialOptions) => ({
       name: 'selectedPeriod',
       label: __('Request Date:'),
       isRequired: true,
-      initialValue: miqRequestInitialOptions.selectedPeriod,
       options: miqRequestInitialOptions.timePeriods,
     },
     {
