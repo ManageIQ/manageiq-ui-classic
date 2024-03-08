@@ -1346,14 +1346,14 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size="default"
+                                size="sm"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
                                 <button
                                   aria-describedby="danger-description-15"
                                   aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--danger"
+                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
                                   disabled={false}
                                   onBlur={[Function]}
                                   onClick={[Function]}
@@ -1860,14 +1860,14 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size="default"
+                                size="sm"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
                                 <button
                                   aria-describedby="danger-description-16"
                                   aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--danger"
+                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
                                   disabled={false}
                                   onBlur={[Function]}
                                   onClick={[Function]}
@@ -2374,14 +2374,14 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size="default"
+                                size="sm"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
                                 <button
                                   aria-describedby="danger-description-17"
                                   aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--danger"
+                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
                                   disabled={false}
                                   onBlur={[Function]}
                                   onClick={[Function]}
@@ -2888,14 +2888,14 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size="default"
+                                size="sm"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
                                 <button
                                   aria-describedby="danger-description-18"
                                   aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--danger"
+                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
                                   disabled={false}
                                   onBlur={[Function]}
                                   onClick={[Function]}
@@ -4265,14 +4265,14 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size="default"
+                                size="sm"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
                                 <button
                                   aria-describedby="danger-description-6"
                                   aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--danger"
+                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
                                   disabled={false}
                                   onBlur={[Function]}
                                   onClick={[Function]}
@@ -4779,14 +4779,14 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size="default"
+                                size="sm"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
                                 <button
                                   aria-describedby="danger-description-7"
                                   aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--danger"
+                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
                                   disabled={false}
                                   onBlur={[Function]}
                                   onClick={[Function]}
@@ -5293,14 +5293,14 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size="default"
+                                size="sm"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
                                 <button
                                   aria-describedby="danger-description-8"
                                   aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--danger"
+                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
                                   disabled={false}
                                   onBlur={[Function]}
                                   onClick={[Function]}
@@ -5807,14 +5807,14 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size="default"
+                                size="sm"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
                                 <button
                                   aria-describedby="danger-description-9"
                                   aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--danger"
+                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
                                   disabled={false}
                                   onBlur={[Function]}
                                   onClick={[Function]}

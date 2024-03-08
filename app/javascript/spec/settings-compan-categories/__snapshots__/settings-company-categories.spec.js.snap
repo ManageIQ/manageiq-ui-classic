@@ -2431,14 +2431,14 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size="default"
+                                size="sm"
                                 tabIndex={0}
                                 title="Category cannot be deleted"
                               >
                                 <button
                                   aria-describedby="danger-description-9"
                                   aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--danger"
+                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
                                   disabled={false}
                                   onBlur={[Function]}
                                   onClick={[Function]}
@@ -3590,14 +3590,14 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size="default"
+                                size="sm"
                                 tabIndex={0}
                                 title="Click to delete this category"
                               >
                                 <button
                                   aria-describedby="danger-description-10"
                                   aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--danger bx--btn--disabled"
+                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger bx--btn--disabled"
                                   disabled={true}
                                   onBlur={[Function]}
                                   onClick={[Function]}
@@ -4749,14 +4749,14 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size="default"
+                                size="sm"
                                 tabIndex={0}
                                 title="Click to delete this category"
                               >
                                 <button
                                   aria-describedby="danger-description-11"
                                   aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--danger bx--btn--disabled"
+                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger bx--btn--disabled"
                                   disabled={true}
                                   onBlur={[Function]}
                                   onClick={[Function]}
@@ -5908,14 +5908,14 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size="default"
+                                size="sm"
                                 tabIndex={0}
                                 title="Click to delete this category"
                               >
                                 <button
                                   aria-describedby="danger-description-12"
                                   aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--danger bx--btn--disabled"
+                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger bx--btn--disabled"
                                   disabled={true}
                                   onBlur={[Function]}
                                   onClick={[Function]}
