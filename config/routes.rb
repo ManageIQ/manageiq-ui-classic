@@ -2167,7 +2167,15 @@ Rails.application.routes.draw do
       ],
       :post => %w[
         show_list
+<<<<<<< HEAD
       ]
+=======
+<<<<<<< HEAD
+      ]      
+=======
+      ]
+>>>>>>> 6e857535109a78c40892d6cf2bb228b1e1c6428c
+>>>>>>> f5a686828 (Committing changes before pulling latest updates)
     },
 
     :condition => {
