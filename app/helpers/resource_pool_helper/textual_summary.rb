@@ -3,6 +3,10 @@ module ResourcePoolHelper::TextualSummary
   # Groups
   #
 
+  def textual_ext_management_system
+    textual_link(@record.ext_management_system)
+  end
+
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
@@ -16,7 +20,7 @@ module ResourcePoolHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i[parent_datacenter parent_cluster parent_host direct_vms allvms_size resource_pools]
+      %i[ext_management_system parent_datacenter parent_cluster parent_host direct_vms allvms_size resource_pools]
     )
   end
 

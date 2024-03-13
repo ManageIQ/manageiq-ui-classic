@@ -39,12 +39,14 @@ include_for_find:
 col_order:
 - name
 - id
+- ext_management_system.name
 - total_vms
 
 # Column titles, in order
 headers:
 - Name
 - ID
+- Provider
 - Total VMs
 
 # Condition(s) string for the SQL query

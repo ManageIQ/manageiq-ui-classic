@@ -30,6 +30,9 @@ include:
   container_image:
     columns:
     - name
+  ext_management_system:
+    columns:
+    - name
 
 # Included tables and columns for query performance
 include_for_find:
@@ -37,6 +40,7 @@ include_for_find:
 # Order of columns (from all tables)
 col_order:
 - name
+- ext_management_system.name
 - container_group.name
 - container_image.name
 - state
@@ -44,6 +48,7 @@ col_order:
 # Column titles, in order
 headers:
 - Name
+- Provider
 - Pod Name
 - Image
 - State

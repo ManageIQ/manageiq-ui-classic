@@ -91,7 +91,9 @@ class GtlFormatter
         "prov_type" => :service_template_format,
       },
     }
+    # all tables get a first column for icons.
     cols.push(format_icon_column(view, row, controller, options[:clickable])) if VIEW_WITH_CUSTOM_ICON.include?(view.db)
+    # row is a ruport object, so we use listicon_item to look up the original record for the row.
     record = controller.listicon_item(view, row['id'])
     view.col_order.each_with_index do |col, col_idx|
       next if view.column_is_hidden?(col, controller)
@@ -104,7 +106,12 @@ class GtlFormatter
         celltext, span = send(special_cases[view.extras[:filename]][view.col_order[col_idx]], row[col])
       elsif COLUMN_WITH_IMAGE.key?(col)
         # Generate html for the list icon
-        icon, icon2, image = send(COLUMN_WITH_IMAGE[col], record)
+        # NOTE: COLUMN_WITH_IMAGE basically whitelists these associations
+        associations = col.split('.')[0..-2] # drop the last value - the column name
+        # follow associations so we can pass the approperiate record to be decorated / displayed
+        col_record = associations.inject(record) { |r, association_name| r.send(association_name) }
+        # NOTE: currently this only calls fonticon_or_fileicon
+        icon, icon2, image = send(COLUMN_WITH_IMAGE[col], col_record)
         text = format_col_for_display(view, row, col)
         item = {:title => text,
                 :image => ActionController::Base.helpers.image_path(image.to_s),
@@ -162,6 +169,8 @@ class GtlFormatter
     quad_icon[:background]
   end
 
+  # NOTE: this is for the icon column
+  #       so unlike the others, there is no text here
   def self.format_icon_column(view, row, controller, clickable)
     item = controller.listicon_item(view, row['id'])
     icon, icon2, image = fonticon_or_fileicon(item)
