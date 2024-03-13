@@ -9,7 +9,7 @@ const selectedTags = (state, tag) => {
   return [state.tagging.appState.assignedTags.map((t) => t.values.map((val) => val.id)).flat(), selectedVal].flat();
 };
 
-const params = (type = 'default', state, tag = {}) => ({
+const params = (type = 'default', state, tag = { tagCategory: undefined, tagValue: { id: undefined } }) => ({
   provision: {
     id: 'new',
     ids_checked: selectedTags(state, tag),
@@ -18,7 +18,7 @@ const params = (type = 'default', state, tag = {}) => ({
   default: {
     id: state.tagging.appState.affectedItems[0] || 'new',
     cat: tag.tagCategory.id,
-    val: tag.tagValue.id || tag.tagValue[0].id,
+    val: tag.tagValue.id || tag.tagValue[0],
     check: 1,
     tree_typ: 'tags',
   },
