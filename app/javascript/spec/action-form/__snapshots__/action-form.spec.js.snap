@@ -748,9 +748,14 @@ exports[`Action Form Component should render adding a new action 1`] = `
                     Object {
                       "component": "select",
                       "id": "options.tags",
+                      "isRequired": true,
                       "label": "Tag to Apply",
                       "name": "options.tags",
                       "options": Array [
+                        Object {
+                          "label": "<Choose>",
+                          "value": "",
+                        },
                         Object {
                           "label": "AUTO APPROVE - MAX CPU",
                           "options": Array [
@@ -775,6 +780,11 @@ exports[`Action Form Component should render adding a new action 1`] = `
                               "value": "prov_max_cpu/5",
                             },
                           ],
+                        },
+                      ],
+                      "validate": Array [
+                        Object {
+                          "type": "required",
                         },
                       ],
                     },
@@ -1450,9 +1460,14 @@ exports[`Action Form Component should render adding a new action 1`] = `
                       Object {
                         "component": "select",
                         "id": "options.tags",
+                        "isRequired": true,
                         "label": "Tag to Apply",
                         "name": "options.tags",
                         "options": Array [
+                          Object {
+                            "label": "<Choose>",
+                            "value": "",
+                          },
                           Object {
                             "label": "AUTO APPROVE - MAX CPU",
                             "options": Array [
@@ -1477,6 +1492,11 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                 "value": "prov_max_cpu/5",
                               },
                             ],
+                          },
+                        ],
+                        "validate": Array [
+                          Object {
+                            "type": "required",
                           },
                         ],
                       },
@@ -2145,9 +2165,14 @@ exports[`Action Form Component should render adding a new action 1`] = `
                         Object {
                           "component": "select",
                           "id": "options.tags",
+                          "isRequired": true,
                           "label": "Tag to Apply",
                           "name": "options.tags",
                           "options": Array [
+                            Object {
+                              "label": "<Choose>",
+                              "value": "",
+                            },
                             Object {
                               "label": "AUTO APPROVE - MAX CPU",
                               "options": Array [
@@ -2172,6 +2197,11 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                   "value": "prov_max_cpu/5",
                                 },
                               ],
+                            },
+                          ],
+                          "validate": Array [
+                            Object {
+                              "type": "required",
                             },
                           ],
                         },
@@ -2840,9 +2870,14 @@ exports[`Action Form Component should render adding a new action 1`] = `
                             Object {
                               "component": "select",
                               "id": "options.tags",
+                              "isRequired": true,
                               "label": "Tag to Apply",
                               "name": "options.tags",
                               "options": Array [
+                                Object {
+                                  "label": "<Choose>",
+                                  "value": "",
+                                },
                                 Object {
                                   "label": "AUTO APPROVE - MAX CPU",
                                   "options": Array [
@@ -2867,6 +2902,11 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       "value": "prov_max_cpu/5",
                                     },
                                   ],
+                                },
+                              ],
+                              "validate": Array [
+                                Object {
+                                  "type": "required",
                                 },
                               ],
                             },
@@ -3499,9 +3539,14 @@ exports[`Action Form Component should render adding a new action 1`] = `
                             Object {
                               "component": "select",
                               "id": "options.tags",
+                              "isRequired": true,
                               "label": "Tag to Apply",
                               "name": "options.tags",
                               "options": Array [
+                                Object {
+                                  "label": "<Choose>",
+                                  "value": "",
+                                },
                                 Object {
                                   "label": "AUTO APPROVE - MAX CPU",
                                   "options": Array [
@@ -3526,6 +3571,11 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       "value": "prov_max_cpu/5",
                                     },
                                   ],
+                                },
+                              ],
+                              "validate": Array [
+                                Object {
+                                  "type": "required",
                                 },
                               ],
                             },
@@ -4169,9 +4219,14 @@ exports[`Action Form Component should render adding a new action 1`] = `
                               Object {
                                 "component": "select",
                                 "id": "options.tags",
+                                "isRequired": true,
                                 "label": "Tag to Apply",
                                 "name": "options.tags",
                                 "options": Array [
+                                  Object {
+                                    "label": "<Choose>",
+                                    "value": "",
+                                  },
                                   Object {
                                     "label": "AUTO APPROVE - MAX CPU",
                                     "options": Array [
@@ -4196,6 +4251,11 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         "value": "prov_max_cpu/5",
                                       },
                                     ],
+                                  },
+                                ],
+                                "validate": Array [
+                                  Object {
+                                    "type": "required",
                                   },
                                 ],
                               },
@@ -4834,9 +4894,14 @@ exports[`Action Form Component should render adding a new action 1`] = `
                               Object {
                                 "component": "select",
                                 "id": "options.tags",
+                                "isRequired": true,
                                 "label": "Tag to Apply",
                                 "name": "options.tags",
                                 "options": Array [
+                                  Object {
+                                    "label": "<Choose>",
+                                    "value": "",
+                                  },
                                   Object {
                                     "label": "AUTO APPROVE - MAX CPU",
                                     "options": Array [
@@ -4861,6 +4926,11 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         "value": "prov_max_cpu/5",
                                       },
                                     ],
+                                  },
+                                ],
+                                "validate": Array [
+                                  Object {
+                                    "type": "required",
                                   },
                                 ],
                               },
@@ -5519,9 +5589,14 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                 Object {
                                   "component": "select",
                                   "id": "options.tags",
+                                  "isRequired": true,
                                   "label": "Tag to Apply",
                                   "name": "options.tags",
                                   "options": Array [
+                                    Object {
+                                      "label": "<Choose>",
+                                      "value": "",
+                                    },
                                     Object {
                                       "label": "AUTO APPROVE - MAX CPU",
                                       "options": Array [
@@ -5546,6 +5621,11 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           "value": "prov_max_cpu/5",
                                         },
                                       ],
+                                    },
+                                  ],
+                                  "validate": Array [
+                                    Object {
+                                      "type": "required",
                                     },
                                   ],
                                 },
@@ -6184,9 +6264,14 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                 Object {
                                   "component": "select",
                                   "id": "options.tags",
+                                  "isRequired": true,
                                   "label": "Tag to Apply",
                                   "name": "options.tags",
                                   "options": Array [
+                                    Object {
+                                      "label": "<Choose>",
+                                      "value": "",
+                                    },
                                     Object {
                                       "label": "AUTO APPROVE - MAX CPU",
                                       "options": Array [
@@ -6211,6 +6296,11 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           "value": "prov_max_cpu/5",
                                         },
                                       ],
+                                    },
+                                  ],
+                                  "validate": Array [
+                                    Object {
+                                      "type": "required",
                                     },
                                   ],
                                 },
@@ -6860,9 +6950,14 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                   Object {
                                     "component": "select",
                                     "id": "options.tags",
+                                    "isRequired": true,
                                     "label": "Tag to Apply",
                                     "name": "options.tags",
                                     "options": Array [
+                                      Object {
+                                        "label": "<Choose>",
+                                        "value": "",
+                                      },
                                       Object {
                                         "label": "AUTO APPROVE - MAX CPU",
                                         "options": Array [
@@ -6887,6 +6982,11 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             "value": "prov_max_cpu/5",
                                           },
                                         ],
+                                      },
+                                    ],
+                                    "validate": Array [
+                                      Object {
+                                        "type": "required",
                                       },
                                     ],
                                   },
@@ -7513,9 +7613,14 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       Object {
                                         "component": "select",
                                         "id": "options.tags",
+                                        "isRequired": true,
                                         "label": "Tag to Apply",
                                         "name": "options.tags",
                                         "options": Array [
+                                          Object {
+                                            "label": "<Choose>",
+                                            "value": "",
+                                          },
                                           Object {
                                             "label": "AUTO APPROVE - MAX CPU",
                                             "options": Array [
@@ -7540,6 +7645,11 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 "value": "prov_max_cpu/5",
                                               },
                                             ],
+                                          },
+                                        ],
+                                        "validate": Array [
+                                          Object {
+                                            "type": "required",
                                           },
                                         ],
                                       },
@@ -8170,9 +8280,14 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         Object {
                                           "component": "select",
                                           "id": "options.tags",
+                                          "isRequired": true,
                                           "label": "Tag to Apply",
                                           "name": "options.tags",
                                           "options": Array [
+                                            Object {
+                                              "label": "<Choose>",
+                                              "value": "",
+                                            },
                                             Object {
                                               "label": "AUTO APPROVE - MAX CPU",
                                               "options": Array [
@@ -8197,6 +8312,11 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                   "value": "prov_max_cpu/5",
                                                 },
                                               ],
+                                            },
+                                          ],
+                                          "validate": Array [
+                                            Object {
+                                              "type": "required",
                                             },
                                           ],
                                         },
@@ -13171,9 +13291,14 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         Object {
                                           "component": "select",
                                           "id": "options.tags",
+                                          "isRequired": true,
                                           "label": "Tag to Apply",
                                           "name": "options.tags",
                                           "options": Array [
+                                            Object {
+                                              "label": "<Choose>",
+                                              "value": "",
+                                            },
                                             Object {
                                               "label": "AUTO APPROVE - MAX CPU",
                                               "options": Array [
@@ -13200,6 +13325,11 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               ],
                                             },
                                           ],
+                                          "validate": Array [
+                                            Object {
+                                              "type": "required",
+                                            },
+                                          ],
                                         },
                                       ]
                                     }
@@ -13222,9 +13352,14 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             Object {
                                               "component": "select",
                                               "id": "options.tags",
+                                              "isRequired": true,
                                               "label": "Tag to Apply",
                                               "name": "options.tags",
                                               "options": Array [
+                                                Object {
+                                                  "label": "<Choose>",
+                                                  "value": "",
+                                                },
                                                 Object {
                                                   "label": "AUTO APPROVE - MAX CPU",
                                                   "options": Array [
@@ -13251,6 +13386,11 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                   ],
                                                 },
                                               ],
+                                              "validate": Array [
+                                                Object {
+                                                  "type": "required",
+                                                },
+                                              ],
                                             },
                                           ],
                                           "id": "subform-17",
@@ -13273,9 +13413,14 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               Object {
                                                 "component": "select",
                                                 "id": "options.tags",
+                                                "isRequired": true,
                                                 "label": "Tag to Apply",
                                                 "name": "options.tags",
                                                 "options": Array [
+                                                  Object {
+                                                    "label": "<Choose>",
+                                                    "value": "",
+                                                  },
                                                   Object {
                                                     "label": "AUTO APPROVE - MAX CPU",
                                                     "options": Array [
@@ -13300,6 +13445,11 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                         "value": "prov_max_cpu/5",
                                                       },
                                                     ],
+                                                  },
+                                                ],
+                                                "validate": Array [
+                                                  Object {
+                                                    "type": "required",
                                                   },
                                                 ],
                                               },
@@ -13337,9 +13487,14 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                   Object {
                                                     "component": "select",
                                                     "id": "options.tags",
+                                                    "isRequired": true,
                                                     "label": "Tag to Apply",
                                                     "name": "options.tags",
                                                     "options": Array [
+                                                      Object {
+                                                        "label": "<Choose>",
+                                                        "value": "",
+                                                      },
                                                       Object {
                                                         "label": "AUTO APPROVE - MAX CPU",
                                                         "options": Array [
@@ -13364,6 +13519,11 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                             "value": "prov_max_cpu/5",
                                                           },
                                                         ],
+                                                      },
+                                                    ],
+                                                    "validate": Array [
+                                                      Object {
+                                                        "type": "required",
                                                       },
                                                     ],
                                                   },
@@ -13394,9 +13554,14 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                     Object {
                                                       "component": "select",
                                                       "id": "options.tags",
+                                                      "isRequired": true,
                                                       "label": "Tag to Apply",
                                                       "name": "options.tags",
                                                       "options": Array [
+                                                        Object {
+                                                          "label": "<Choose>",
+                                                          "value": "",
+                                                        },
                                                         Object {
                                                           "label": "AUTO APPROVE - MAX CPU",
                                                           "options": Array [
@@ -13421,6 +13586,11 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                               "value": "prov_max_cpu/5",
                                                             },
                                                           ],
+                                                        },
+                                                      ],
+                                                      "validate": Array [
+                                                        Object {
+                                                          "type": "required",
                                                         },
                                                       ],
                                                     },
@@ -13450,9 +13620,14 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                       Object {
                                                         "component": "select",
                                                         "id": "options.tags",
+                                                        "isRequired": true,
                                                         "label": "Tag to Apply",
                                                         "name": "options.tags",
                                                         "options": Array [
+                                                          Object {
+                                                            "label": "<Choose>",
+                                                            "value": "",
+                                                          },
                                                           Object {
                                                             "label": "AUTO APPROVE - MAX CPU",
                                                             "options": Array [
@@ -13477,6 +13652,11 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                                 "value": "prov_max_cpu/5",
                                                               },
                                                             ],
+                                                          },
+                                                        ],
+                                                        "validate": Array [
+                                                          Object {
+                                                            "type": "required",
                                                           },
                                                         ],
                                                       },
@@ -14166,9 +14346,14 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           Object {
                                             "component": "select",
                                             "id": "options.tags",
+                                            "isRequired": true,
                                             "label": "Tag to Apply",
                                             "name": "options.tags",
                                             "options": Array [
+                                              Object {
+                                                "label": "<Choose>",
+                                                "value": "",
+                                              },
                                               Object {
                                                 "label": "AUTO APPROVE - MAX CPU",
                                                 "options": Array [
@@ -14193,6 +14378,11 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                     "value": "prov_max_cpu/5",
                                                   },
                                                 ],
+                                              },
+                                            ],
+                                            "validate": Array [
+                                              Object {
+                                                "type": "required",
                                               },
                                             ],
                                           },
@@ -14905,9 +15095,14 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           Object {
                                             "component": "select",
                                             "id": "options.tags",
+                                            "isRequired": true,
                                             "label": "Tag to Apply",
                                             "name": "options.tags",
                                             "options": Array [
+                                              Object {
+                                                "label": "<Choose>",
+                                                "value": "",
+                                              },
                                               Object {
                                                 "label": "AUTO APPROVE - MAX CPU",
                                                 "options": Array [
@@ -14932,6 +15127,11 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                     "value": "prov_max_cpu/5",
                                                   },
                                                 ],
+                                              },
+                                            ],
+                                            "validate": Array [
+                                              Object {
+                                                "type": "required",
                                               },
                                             ],
                                           },
@@ -15665,9 +15865,14 @@ exports[`Action Form Component should render correctly 1`] = `
                 Object {
                   "component": "select",
                   "id": "options.tags",
+                  "isRequired": true,
                   "label": "Tag to Apply",
                   "name": "options.tags",
                   "options": Array [
+                    Object {
+                      "label": "<Choose>",
+                      "value": "",
+                    },
                     Object {
                       "label": "AUTO APPROVE - MAX CPU",
                       "options": Array [
@@ -15692,6 +15897,11 @@ exports[`Action Form Component should render correctly 1`] = `
                           "value": "prov_max_cpu/5",
                         },
                       ],
+                    },
+                  ],
+                  "validate": Array [
+                    Object {
+                      "type": "required",
                     },
                   ],
                 },

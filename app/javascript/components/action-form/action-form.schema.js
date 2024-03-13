@@ -488,6 +488,8 @@ function createSchema(recordId, promise, inheritTags, evaluateAlert, tags, ansib
           id: 'options.tags',
           name: 'options.tags',
           label: __('Tag to Apply'),
+          isRequired: true,
+          validate: [{ type: validatorTypes.REQUIRED }],
           options: buildTags(tags, inheritTags),
         },
       ],
