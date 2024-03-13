@@ -187,7 +187,7 @@ const findLabel = (inheritTags, catLabel) => {
 
 const buildTags = (tags, inheritTags) => {
   const entry = Object.entries(tags);
-  const tagArray = [];
+  const tagArray = [{ label: __('<Choose>'), value: '' }];
   entry.forEach((pt) => {
     const catOptions = [];
     const tempObj = { label: pt[0], value: pt[1] };
