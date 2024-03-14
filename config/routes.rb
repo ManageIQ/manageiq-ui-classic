@@ -1948,6 +1948,7 @@ Rails.application.routes.draw do
         update_method
         update_namespace
         validate_method_data
+        validate_automate_method_data
         x_button
         x_history
         x_show
