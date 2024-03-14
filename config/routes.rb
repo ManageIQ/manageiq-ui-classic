@@ -1906,6 +1906,8 @@ Rails.application.routes.draw do
         explorer
         method_form_fields
         namespace
+        ae_domains
+        ae_methods
         show
       ],
       :post => %w[
