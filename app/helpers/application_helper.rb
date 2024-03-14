@@ -10,7 +10,7 @@ module ApplicationHelper
   include StiRoutingHelper
   include ToolbarHelper
   include TextualSummaryHelper
-  include NumberHelper
+  ActionView::Helpers::NumberHelper.prepend NumberHelper # override rails number helper with our needs for number_to_human_size
   include Title
   include ReactjsHelper
   include Webpack
