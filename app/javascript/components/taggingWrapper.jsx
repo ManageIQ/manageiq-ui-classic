@@ -9,7 +9,7 @@ const selectedTags = (state, tag) => {
   return [state.tagging.appState.assignedTags.map((t) => t.values.map((val) => val.id)).flat(), selectedVal].flat();
 };
 
-const params = (type = 'default', state, tag = { tagCategory: undefined, tagValue: { id: undefined } }) => ({
+const params = (type = 'default', state, tag = {}, selectedId) => ({
   provision: {
     id: 'new',
     ids_checked: selectedTags(state, tag),
@@ -17,8 +17,8 @@ const params = (type = 'default', state, tag = { tagCategory: undefined, tagValu
   },
   default: {
     id: state.tagging.appState.affectedItems[0] || 'new',
-    cat: tag.tagCategory.id,
-    val: tag.tagValue.id || tag.tagValue[0],
+    cat: tag.tagCategory ? tag.tagCategory.id : undefined,
+    val: selectedId,
     check: 1,
     tree_typ: 'tags',
   },
@@ -72,7 +72,7 @@ class TaggingWrapper extends React.Component {
         </div>
       );
     }
-    const isDisabled = this.props.isDisabled;
+    const { isDisabled } = this.props;
     const { urls, options, tagging } = this.props;
     // eslint-disable-next-line no-mixed-operators
     return (options && options.hideButtons && <TaggingConnected options={{ ...options, params, onDelete }} /> || (
@@ -104,7 +104,9 @@ class TaggingWrapper extends React.Component {
           disabled: _.isEqual({ ...tagging.initialState, selected: undefined }, { ...tagging.appState, selected: undefined }),
           description: __('Reset'),
         }}
-        options={{ ...options, params, onDelete, isDisabled }}
+        options={{
+          ...options, params, onDelete, isDisabled,
+        }}
       />
     ));
   }

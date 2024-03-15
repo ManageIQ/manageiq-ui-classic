@@ -97,7 +97,7 @@ class ValueSelector extends React.Component {
       return (
         <MultiSelect
           className="tag-select"
-          id="tag-select"
+          id="multiselect-tag-select"
           open
           label={label}
           initialSelectedItems={selectedOptions}
@@ -113,7 +113,7 @@ class ValueSelector extends React.Component {
     return (
       <Dropdown
         className="tag-select"
-        id="tag-select"
+        id="dropdown-tag-select"
         label={label}
         defaultValue="placeholder"
         // eslint-disable-next-line react/destructuring-assignment
