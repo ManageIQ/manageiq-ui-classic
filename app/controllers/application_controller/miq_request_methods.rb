@@ -150,6 +150,9 @@ module ApplicationController::MiqRequestMethods
       @edit = session[:edit]
       @edit[:hide_deprecated_templates] = params[:hide_deprecated_templates] == "true"
       render_updated_templates
+    elsif params[:search_query].present?
+    # Image search action handling
+    @images = MiqTemplate.where("name LIKE ?", "%#{params[:search_query]}%")
     else # First time in, build pre-provision screen
       set_pre_prov_vars
     end

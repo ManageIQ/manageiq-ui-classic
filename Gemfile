@@ -9,4 +9,4 @@ gemspec
 # your gem to rubygems.org.
 
 # Load Gemfile with dependencies from manageiq
-eval_gemfile(File.expand_path("spec/manageiq/Gemfile", __dir__))
+eval_gemfile(File.expand_path("../../manageiq/Gemfile", __dir__))
