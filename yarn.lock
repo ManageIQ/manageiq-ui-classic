@@ -1906,9 +1906,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@manageiq/ui-components@npm:1.5.1":
-  version: 1.5.1
-  resolution: "@manageiq/ui-components@npm:1.5.1"
+"@manageiq/ui-components@npm:1.6.0":
+  version: 1.6.0
+  resolution: "@manageiq/ui-components@npm:1.6.0"
   dependencies:
     angular-bootstrap-switch: "npm:^0.5.1"
     angular-dragdrop: "npm:^1.0.13"
@@ -1916,7 +1916,7 @@ __metadata:
     es6-shim: "npm:^0.35.3"
     es7-shim: "npm:^6.0.0"
     sprintf-js: "npm:^1.1.1"
-  checksum: aea616d81d0a119e558708825de9d560dc2fe2fe56688631734f49004bc18982c39084303bdf98f659e95c7357393de4a342dc47a7d9bf802a954716658ae5cf
+  checksum: 094b9a41af68add68051d1a6138122c0e61afe2c2bf5cea91ca924e85b5395a4bd3f4e00307eb60d8af1b7ccee00c0d3573929d3cfc5934e427e83032ca5b21f
   languageName: node
   linkType: hard
 
@@ -11526,7 +11526,7 @@ __metadata:
     "@data-driven-forms/carbon-component-mapper": "npm:~3.18.8"
     "@data-driven-forms/react-form-renderer": "npm:~3.18.8"
     "@manageiq/font-fabulous": "npm:~1.0.5"
-    "@manageiq/ui-components": "npm:1.5.1"
+    "@manageiq/ui-components": "npm:1.6.0"
     "@novnc/novnc": "npm:~1.2.0"
     "@pf3/select": "npm:~1.12.6"
     "@tshepomgaga/aws-sfn-graph": "npm:0.0.6"

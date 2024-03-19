@@ -39,7 +39,7 @@
     "@data-driven-forms/carbon-component-mapper": "~3.18.8",
     "@data-driven-forms/react-form-renderer": "~3.18.8",
     "@manageiq/font-fabulous": "~1.0.5",
-    "@manageiq/ui-components": "1.5.1",
+    "@manageiq/ui-components": "1.6.0",
     "@novnc/novnc": "~1.2.0",
     "@pf3/select": "~1.12.6",
     "@tshepomgaga/aws-sfn-graph": "0.0.6",
