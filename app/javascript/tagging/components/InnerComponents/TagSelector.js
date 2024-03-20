@@ -64,7 +64,7 @@ class TagSelector extends React.Component {
     return (
       <Dropdown
         className="tag-select"
-        id="tag-select"
+        id="dropdown-tag-select"
         label={`${__('Select tag category')}`}
         disabled={isDisabled}
         onChange={(val) => this.handleChange(val)}
