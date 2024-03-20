@@ -309,14 +309,14 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           :klass       => ApplicationHelper::Button::VmNativeConsole
         ),
         button(
-          :vm_native_console,
+          :vm_management_console,
           'pficon pficon-screen fa-lg',
           N_('Open a management console for this VM'),
           N_('Management Console'),
           :keepSpinner => true,
           :url         => "management_console",
           :klass       => ApplicationHelper::Button::VmManagementConsole,
-          :options     => {:feature => :native_console}
+          :options     => {:feature => :management_console}
         ),
       ]
     ),
