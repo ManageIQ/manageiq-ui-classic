@@ -20,7 +20,8 @@
     - if @edit[:new][:use_filter_expression]
       = render(:partial => "layouts/group_filter_expression")
     - else
-      = react 'TaggingWrapperConnected', { :tags => @tags, :urls => @button_urls, :options => { :hideHeaders => true, :hideButtons => true,  :url => url_for_only_path(:action => 'rbac_group_field_changed')} }
+      .tagging-container
+        = react 'TaggingWrapperConnected', {:tags => @tags, :urls => @button_urls, :options => {:hideHeaders => false, :hideButtons => true, :url => url_for_only_path(:action => 'rbac_group_field_changed')}}
   - elsif @use_filter_expression
     = render(:partial => "layouts/group_filter_expression")
   - else
@@ -30,4 +31,4 @@
     - if @tags[:assignedTags].blank?
       = _('There are not tags assigned to this group.')
     - else
-      = react 'TagView', { :assignedTags => @tags[:assignedTags], :hideHeader => true }
+      = react 'TagView', {:assignedTags => @tags[:assignedTags], :hideHeader => true, :showCloseButton => false}
