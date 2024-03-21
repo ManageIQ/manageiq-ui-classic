@@ -12,7 +12,7 @@ describe('Show Timeline Page', () => {
   it('should render empty page', async(done) => {
     let wrapper;
     await act(async() => {
-      wrapper = mount(<TimelineTable />);
+      wrapper = mount(<TimelineTable data={[]} />);
     });
     setImmediate(() => {
       wrapper.update();
