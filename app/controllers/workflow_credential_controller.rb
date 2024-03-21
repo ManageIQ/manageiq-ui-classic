@@ -12,7 +12,7 @@ class WorkflowCredentialController < ApplicationController
   include Mixins::BreadcrumbsMixin
   include Mixins::WorkflowCheckPrototypeMixin
 
-  menu_section :workflow_credentials
+  menu_section :embedded_workflow_credentials
 
   def self.display_methods
     %w[repositories]
