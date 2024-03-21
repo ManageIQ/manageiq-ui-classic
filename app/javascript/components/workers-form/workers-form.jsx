@@ -8,6 +8,7 @@ import { API } from '../../http_api';
 import {
   toBytes, parseWorker, buildPatch, toRubyMethod,
 } from './helpers';
+import './workers.style.scss';
 
 const WorkersForm = ({ server: { id, name }, product, zone }) => {
   const [isLoading, setIsLoading] = useState(true);
