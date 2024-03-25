@@ -1,2 +1,5 @@
 #main_div
-  = render :partial => 'layouts/textual_groups_generic'
+  - if %w[repositories].include?(@display)
+    = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
+  - else
+    = render :partial => 'layouts/textual_groups_generic'
