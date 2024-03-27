@@ -23,11 +23,7 @@ describe('MiqCustomTab component', () => {
   };
 
   it('should render tabs for catalog summary page', () => {
-    const tabLabels = [
-      { name: 'basic', text: _('Basic Information') },
-      { name: 'detail', text: _('Details') },
-      { name: 'resource', text: _('Selected Resources') },
-    ];
+    const tabLabels = ['basic', 'detail', 'resource'];
     const wrapper = reduxMount(<MiqCustomTab
       containerId="catalog-tabs"
       tabLabels={tabLabels}
@@ -38,15 +34,7 @@ describe('MiqCustomTab component', () => {
   });
 
   it('should render tabs for request info page under catalog summary page', () => {
-    const tabLabels = [
-      { name: 'requester', text: _('Requester') },
-      { name: 'purpose', text: _('Purpose') },
-      { name: 'service', text: _('Catalog') },
-      { name: 'environment', text: _('Environment') },
-      { name: 'hardware', text: _('Properties') },
-      { name: 'customize', text: _('Customize') },
-      { name: 'schedule', text: _('Schedule') },
-    ];
+    const tabLabels = ['requester', 'purpose', 'service', 'environment', 'hardware', 'customize', 'schedule'];
     const wrapper = reduxMount(<MiqCustomTab
       containerId="request-info-tabs"
       tabLabels={tabLabels}
@@ -57,11 +45,7 @@ describe('MiqCustomTab component', () => {
   });
 
   it('should render tabs for catalog edit page', () => {
-    const tabLabels = [
-      { name: 'basic', text: _('Basic Information') },
-      { name: 'detail', text: _('Details') },
-      { name: 'resource', text: _('Selected Resources') },
-    ];
+    const tabLabels = ['basic', 'detail', 'resource'];
     const wrapper = reduxMount(<MiqCustomTab
       containerId="catalog-edit-tabs"
       tabLabels={tabLabels}

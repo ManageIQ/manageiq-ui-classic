@@ -18,18 +18,9 @@ exports[`MiqCustomTab component should render tabs for catalog edit page 1`] = `
       containerId="catalog-edit-tabs"
       tabLabels={
         Array [
-          Object {
-            "name": "basic",
-            "text": "Basic Information",
-          },
-          Object {
-            "name": "detail",
-            "text": "Details",
-          },
-          Object {
-            "name": "resource",
-            "text": "Selected Resources",
-          },
+          "basic",
+          "detail",
+          "resource",
         ]
       }
       type="CATALOG_EDIT"
@@ -278,18 +269,9 @@ exports[`MiqCustomTab component should render tabs for catalog summary page 1`] 
       containerId="catalog-tabs"
       tabLabels={
         Array [
-          Object {
-            "name": "basic",
-            "text": "Basic Information",
-          },
-          Object {
-            "name": "detail",
-            "text": "Details",
-          },
-          Object {
-            "name": "resource",
-            "text": "Selected Resources",
-          },
+          "basic",
+          "detail",
+          "resource",
         ]
       }
       type="CATALOG_SUMMARY"
@@ -538,34 +520,13 @@ exports[`MiqCustomTab component should render tabs for request info page under c
       containerId="request-info-tabs"
       tabLabels={
         Array [
-          Object {
-            "name": "requester",
-            "text": "Requester",
-          },
-          Object {
-            "name": "purpose",
-            "text": "Purpose",
-          },
-          Object {
-            "name": "service",
-            "text": "Catalog",
-          },
-          Object {
-            "name": "environment",
-            "text": "Environment",
-          },
-          Object {
-            "name": "hardware",
-            "text": "Properties",
-          },
-          Object {
-            "name": "customize",
-            "text": "Customize",
-          },
-          Object {
-            "name": "schedule",
-            "text": "Schedule",
-          },
+          "requester",
+          "purpose",
+          "service",
+          "environment",
+          "hardware",
+          "customize",
+          "schedule",
         ]
       }
       type="CATALOG_REQUEST_INFO"
