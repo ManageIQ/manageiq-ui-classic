@@ -1,5 +1,6 @@
 #pre_prov_div
   - typ = request.parameters[:controller] == "vm_cloud" ? ui_lookup(:table => "template_cloud") : ui_lookup(:table => "template_infra")
+  = react 'CustomSearchBar', onSearch: -> (searchQuery) { handleSearch(searchQuery) }
   %h3
     = _("Provision %{what} based on the selected %{type}") % {:what => ui_lookup(:tables => request.parameters[:controller]), :type => typ}
   %label
