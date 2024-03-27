@@ -20,7 +20,6 @@ class ApplicationController < ActionController::Base
   helper ChartingHelper
   ManageIQ::Reporting::Charting.load_helpers(self)
 
-  include ActionView::Helpers::NumberHelper # bring in the number helpers for number_to_human_size
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::DateHelper
   include ApplicationHelper
