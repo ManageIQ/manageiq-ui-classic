@@ -48,8 +48,12 @@ const AnsiblePlaybookWorkflow = ({ payload, payloadType }) => {
 };
 
 AnsiblePlaybookWorkflow.propTypes = {
-  payload: PropTypes.string.isRequired,
+  payload: PropTypes.string,
   payloadType: PropTypes.string.isRequired,
+};
+
+AnsiblePlaybookWorkflow.defaultProps = {
+  payload: undefined,
 };
 
 export default AnsiblePlaybookWorkflow;
