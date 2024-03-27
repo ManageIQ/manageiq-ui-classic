@@ -24,10 +24,10 @@ export const settingsLabelTagMappingData = () => {
   ];
 
   const rows = [
-    { id: 100, cells: settingsLabelTagCellData },
-    { id: 101, cells: settingsLabelTagCellData },
-    { id: 102, cells: settingsLabelTagCellData },
-    { id: 103, cells: settingsLabelTagCellData },
+    { id: '100', cells: settingsLabelTagCellData },
+    { id: '101', cells: settingsLabelTagCellData },
+    { id: '102', cells: settingsLabelTagCellData },
+    { id: '103', cells: settingsLabelTagCellData },
   ];
 
   return { headers, rows };
