@@ -1,7 +1,7 @@
 export const settingsCompanyCategoriesData = () => {
   const headers = [
     { header: _('Name'), key: 'name' },
-    { header: _('Description'), key: 'descripton' },
+    { header: _('Description'), key: 'description' },
     { header: _('Show in Console'), key: 'show' },
     { header: _('Single Value'), key: 'single_value' },
     { header: _('Capture C & U Data'), key: 'perf_by_tag' },
@@ -20,7 +20,7 @@ export const settingsCompanyCategoriesData = () => {
     className: 'delete_category',
   });
 
-  const comapanyCategoryCellData = (canDelete) => [
+  const companyCategoryCellData = (canDelete) => [
     { text: 'category' },
     { text: 'category description' },
     { text: 'show in console' },
@@ -31,10 +31,10 @@ export const settingsCompanyCategoriesData = () => {
   ];
 
   const rows = [
-    { id: 100, cells: comapanyCategoryCellData(true) },
-    { id: 101, cells: comapanyCategoryCellData(false) },
-    { id: 102, cells: comapanyCategoryCellData(false) },
-    { id: 103, cells: comapanyCategoryCellData(false) },
+    { id: '100', cells: companyCategoryCellData(true) },
+    { id: '101', cells: companyCategoryCellData(false) },
+    { id: '102', cells: companyCategoryCellData(false) },
+    { id: '103', cells: companyCategoryCellData(false) },
   ];
 
   return { headers, rows, pageTitle: __('My Company Categories') };
