@@ -51,20 +51,31 @@ const TimelineTable = ({ data }) => {
    * for the VM & Templates page
    */
 
-  const TimestampLabel = (
+  const renderTimeStampLabel = () => (
     <label className="bx--label">
-      {sprintf(__('This is a group of events that happened on %s.'), Date(data[0].timestamp))}
+      {
+        sprintf(__('This is a group of events that happened on %s.'), Date(data[0].timestamp))
+      }
     </label>
   );
 
   return (
     <div className="timeline-data-table">
-      {TimestampLabel}
-      <MiqDataTable
-        rows={data}
-        headers={headers}
-        truncateText={false}
-      />
+      {
+        data && data.length > 0 && (
+          <>
+            {
+              data[0].timeline && renderTimeStampLabel()
+            }
+            <MiqDataTable
+              rows={data}
+              headers={headers}
+              truncateText={false}
+            />
+          </>
+        )
+      }
+
     </div>
 
   );
