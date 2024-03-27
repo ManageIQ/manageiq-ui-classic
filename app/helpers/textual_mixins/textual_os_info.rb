@@ -28,7 +28,7 @@ module TextualMixins::TextualOsInfo
     if @record.operating_system.present?
       os_info = {:product_name => _("Operating System"), :service_pack => _("Service Pack"),
                  :productid => _("Product ID"), :version => _("Version"), :build_number => _("Build Number"),
-                 :bitness => _("System Type")}.map do |method, title|
+                 :bitness => _("System Type"), :name => _("Description")}.map do |method, title|
                    value = @record.operating_system.send(method)
                    value ? OsInfo.new(title, value) : next
                  end
