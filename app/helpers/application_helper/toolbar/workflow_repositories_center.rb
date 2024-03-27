@@ -25,7 +25,6 @@ class ApplicationHelper::Toolbar::WorkflowRepositoriesCenter < ApplicationHelper
                        N_('Refresh Selected Workflow Repositories'),
                        N_('Refresh Selected Workflow Repositories'),
                        :klass        => ApplicationHelper::Button::EmbeddedWorkflow,
-                       :url          => "repository_refresh",
                        :confirm      => N_("Refresh selected Workflow Repositories?"),
                        :enabled      => false,
                        :url_parms    => 'unused_div',
