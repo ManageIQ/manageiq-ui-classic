@@ -9,7 +9,7 @@ exports[`NotificationMessage component blank message should not render message 1
 
 exports[`NotificationMessage component invalid type should not render message 1`] = `
 <NotificationMessage
-  message={"No message will be displayed"}
+  message="No message will be displayed"
   type="unknown"
 >
   <div
@@ -19,7 +19,7 @@ exports[`NotificationMessage component invalid type should not render message 1`
       className="pficon fa fa-regular fa-question-circle"
     />
     <strong>
-      <Component />
+      No message will be displayed
     </strong>
   </div>
 </NotificationMessage>
@@ -27,7 +27,7 @@ exports[`NotificationMessage component invalid type should not render message 1`
 
 exports[`NotificationMessage component should render error message 1`] = `
 <NotificationMessage
-  message={"Error message goes here"}
+  message="Error message goes here"
   type="error"
 >
   <div
@@ -37,7 +37,7 @@ exports[`NotificationMessage component should render error message 1`] = `
       className="pficon pficon-error-circle-o"
     />
     <strong>
-      <Component />
+      Error message goes here
     </strong>
   </div>
 </NotificationMessage>
@@ -45,7 +45,7 @@ exports[`NotificationMessage component should render error message 1`] = `
 
 exports[`NotificationMessage component should render information message 1`] = `
 <NotificationMessage
-  message={"Information message goes here"}
+  message="Information message goes here"
   type="info"
 >
   <div
@@ -55,7 +55,7 @@ exports[`NotificationMessage component should render information message 1`] = `
       className="pficon pficon-info"
     />
     <strong>
-      <Component />
+      Information message goes here
     </strong>
   </div>
 </NotificationMessage>
@@ -63,7 +63,7 @@ exports[`NotificationMessage component should render information message 1`] = `
 
 exports[`NotificationMessage component should render success message 1`] = `
 <NotificationMessage
-  message={"Success message goes here"}
+  message="Success message goes here"
   type="success"
 >
   <div
@@ -73,7 +73,7 @@ exports[`NotificationMessage component should render success message 1`] = `
       className="pficon pficon-ok"
     />
     <strong>
-      <Component />
+      Success message goes here
     </strong>
   </div>
 </NotificationMessage>
@@ -81,7 +81,7 @@ exports[`NotificationMessage component should render success message 1`] = `
 
 exports[`NotificationMessage component should render warning message 1`] = `
 <NotificationMessage
-  message={"Warning message goes here"}
+  message="Warning message goes here"
   type="warning"
 >
   <div
@@ -91,7 +91,7 @@ exports[`NotificationMessage component should render warning message 1`] = `
       className="pficon pficon-warning-triangle-o"
     />
     <strong>
-      <Component />
+      Warning message goes here
     </strong>
   </div>
 </NotificationMessage>
@@ -99,7 +99,7 @@ exports[`NotificationMessage component should render warning message 1`] = `
 
 exports[`NotificationMessage component unknown error type message should be rendered with blank type 1`] = `
 <NotificationMessage
-  message={"Message goes here"}
+  message="Message goes here"
   type=""
 >
   <div
@@ -109,7 +109,7 @@ exports[`NotificationMessage component unknown error type message should be rend
       className="pficon fa fa-regular fa-question-circle"
     />
     <strong>
-      <Component />
+      Message goes here
     </strong>
   </div>
 </NotificationMessage>
@@ -117,7 +117,7 @@ exports[`NotificationMessage component unknown error type message should be rend
 
 exports[`NotificationMessage component unknown error type message should be rendered with no type 1`] = `
 <NotificationMessage
-  message={"Message goes here"}
+  message="Message goes here"
 >
   <div
     className="miq-notification-message-container alert alert-info"
@@ -126,7 +126,7 @@ exports[`NotificationMessage component unknown error type message should be rend
       className="pficon fa fa-regular fa-question-circle"
     />
     <strong>
-      <Component />
+      Message goes here
     </strong>
   </div>
 </NotificationMessage>
