@@ -29,6 +29,9 @@ describe ResourcePoolHelper::TextualSummary do
     cpu_limit
     cpu_shares
     cpu_shares_level
+    cpu_cores_available
+    cpu_cores_reserve
+    cpu_cores_limit
   )
 
   include_examples "textual_group_smart_management"

@@ -1,4 +1,4 @@
-class ResourcePoolController < ApplicationController
+class ResourcePoolInfraController < ApplicationController
   before_action :check_privileges
   before_action :get_session_data
   after_action :cleanup_action
@@ -18,7 +18,6 @@ class ResourcePoolController < ApplicationController
   def button
     @edit = session[:edit] # Restore @edit for adv search box
     params[:display] = @display if %w[all_vms vms resource_pools].include?(@display) # Were we displaying sub-items
-
     @refresh_div = 'main_div' unless @display # Default div for button.rjs to refresh
     case params[:pressed]
     when 'resource_pool_delete'
@@ -33,15 +32,42 @@ class ResourcePoolController < ApplicationController
     else
       super
     end
+    render_flash unless performed?
+  end
+
+  def self.model
+    ManageIQ::Providers::InfraManager::ResourcePool
+  end
+
+  def self.table_name
+    @table_name ||= "resource_pool"
+  end
+
+  def breadcrumb_name(_model)
+    _("Infrastructure Resource Pools")
   end
 
   def download_data
-    assert_privileges('resource_pool_show_list')
+    assert_privileges('resource_pool_infra_view')
     super
   end
 
   def download_summary_pdf
-    assert_privileges('resource_pool_show')
+    assert_privileges('resource_pool_infra_view')
+    super
+  end
+
+  def index
+    redirect_to(:action => 'show_list')
+  end
+
+  def show_list
+    assert_privileges('resource_pool_infra_show_list')
+    super
+  end
+
+  def show
+    assert_privileges('resource_pool_infra_show')
     super
   end
 
@@ -54,6 +80,7 @@ class ResourcePoolController < ApplicationController
   def textual_group_list
     [%i[properties relationships], %i[configuration smart_management]]
   end
+
   helper_method :textual_group_list
 
   def breadcrumbs_options
@@ -61,11 +88,11 @@ class ResourcePoolController < ApplicationController
       :breadcrumbs => [
         {:title => _("Compute")},
         {:title => _("Infrastructure")},
-        {:title => _("Resource Pools"), :url => controller_url},
-      ],
+        {:title => _("Resource Pools"), :url => controller_url}
+      ]
     }
   end
 
-  menu_section :inf
+  menu_section :resource_pool_infra
   feature_for_actions "#{controller_name}_show_list", *ADV_SEARCH_ACTIONS
 end
