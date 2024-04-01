@@ -1,9 +1,20 @@
 module ApplicationController::Tags
   extend ActiveSupport::Concern
 
+  def nested_page?
+    (@display == "repositories" && params[:controller] == "ansible_credential") ||
+    (@display == "playbooks" && params[:controller] == "ansible_repository") ||
+    (@display == "repositories" && params[:controller] == "workflow_credential") ||
+    (@display == "workflows" && params[:controller] == "workflow_repository")
+  end
+
   # Edit user, group or tenant tags
   def tagging_edit(db = nil, assert = true)
-    assert_privileges("#{@display && @display != "main" ? @display.singularize : controller_for_common_methods}_tag") if assert
+    if nested_page?
+      assert_privileges("#{controller_for_common_methods}_tag")
+    else
+      assert_privileges("#{@display && @display != "main" ? @display.singularize : controller_for_common_methods}_tag") if assert
+    end
     @explorer = true if request.xml_http_request? # Ajax request means in explorer
 
     @tagging = session[:tag_db] = params[:db] || db if params[:db] || db
