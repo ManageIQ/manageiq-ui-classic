@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { TextInput, Button } from 'carbon-components-react';
 import { Search32 } from '@carbon/icons-react';
 
-const CustomSearchBar = ({ onSearch }) => {
+const ProvisionInstanceFilter = ({ onSearch }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearch = () => {
@@ -11,7 +11,7 @@ const CustomSearchBar = ({ onSearch }) => {
   };
 
   return (
-    <div className="custom-search-bar">
+    <div className="provision-instance-filter">
       <TextInput
         id="search_input"
         labelText="Search"
@@ -30,8 +30,8 @@ const CustomSearchBar = ({ onSearch }) => {
   );
 };
 
-CustomSearchBar.propTypes = {
+ProvisionInstanceFilter.propTypes = {
   onSearch: PropTypes.func.isRequired,
 };
 
-export default CustomSearchBar;
+export default ProvisionInstanceFilter;
