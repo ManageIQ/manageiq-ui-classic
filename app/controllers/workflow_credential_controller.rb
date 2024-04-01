@@ -44,9 +44,9 @@ class WorkflowCredentialController < ApplicationController
       javascript_redirect(:action => 'edit', :id => params[:miq_grid_checks])
     when 'embedded_configuration_script_source_edit' # edit repository from nested list
       javascript_redirect(:controller => 'workflow_repository', :action => 'edit', :id => params[:miq_grid_checks])
-    when 'ansible_credential_tag' # tag credentials
+    when 'embedded_automation_manager_credential_tag' # tag credentials
       tag(self.class.model)
-    when "ansible_repository_tag" # tag repositories from nested list
+    when "embedded_configuration_script_source_tag" # tag repositories from nested list
       tag(ManageIQ::Providers::Workflows::AutomationManager::ConfigurationScriptSource)
     end
   end
@@ -120,7 +120,7 @@ class WorkflowCredentialController < ApplicationController
   end
 
   def tag_edit_form_field_changed
-    assert_privileges('ansible_credential_tag')
+    assert_privileges('embedded_automation_manager_credential_tag')
 
     $log.warn(caller.pretty_inspect)
 

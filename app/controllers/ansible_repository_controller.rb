@@ -57,7 +57,7 @@ class AnsibleRepositoryController < ApplicationController
         show
         render_update("main_div", "show", false)
       end
-    when "ansible_repository_tag" # tag repositories
+    when "embedded_configuration_script_source_tag" # tag repositories
       tag(self.class.model)
     when "embedded_configuration_script_payload_tag" # tag playbooks from nested list
       tag(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook)
@@ -144,7 +144,7 @@ class AnsibleRepositoryController < ApplicationController
   end
 
   def tag_edit_form_field_changed
-    assert_privileges('ansible_repository_tag')
+    assert_privileges('embedded_configuration_script_source_tag')
     super
   end
 
