@@ -412,7 +412,7 @@ exports[`Custom Button form component should edit a generic object custom button
         "parse_provider_category",
       ]
     }
-    recId="128"
+    recId={128}
     url="/generic_object_definition/show_list"
   >
     <Loading
@@ -459,7 +459,7 @@ exports[`Custom Button form component should edit a generic object custom button
 </Provider>
 `;
 
-exports[`Custom Button form component should render the adding form for generic objbuttons 1`] = `
+exports[`Custom Button form component should render the adding form for generic obj buttons 1`] = `
 <div
   className="col-md-12 button-form"
 >
@@ -871,7 +871,7 @@ exports[`Custom Button form component should render the editing form for generic
         "parse_provider_category",
       ]
     }
-    recId="128"
+    recId={128}
     url="/generic_object_definition/show_list"
   >
     <Loading

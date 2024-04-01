@@ -92,7 +92,7 @@ describe('Custom Button form component', () => {
     submitSpy.mockRestore();
   });
 
-  it('should render the adding form for generic objbuttons', () => {
+  it('should render the adding form for generic obj buttons', () => {
     const wrapper = shallow(<CustomButtonForm
       url="/generic_object_definition/show_list"
       appliesToClass="GenericObjectDefinition"
@@ -115,7 +115,7 @@ describe('Custom Button form component', () => {
     let wrapper;
     await act(async() => {
       wrapper = mount(<CustomButtonForm
-        recId="128"
+        recId={128}
         url="/generic_object_definition/show_list"
         appliesToClass="GenericObjectDefinition"
         distinctInstances={distinctInstances}
@@ -202,7 +202,7 @@ describe('Custom Button form component', () => {
     let wrapper;
     await act(async() => {
       wrapper = mount(<CustomButtonForm
-        recId="128"
+        recId={128}
         url="/generic_object_definition/show_list"
         appliesToClass="GenericObjectDefinition"
         distinctInstances={distinctInstances}

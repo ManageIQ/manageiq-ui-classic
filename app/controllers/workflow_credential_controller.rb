@@ -12,7 +12,7 @@ class WorkflowCredentialController < ApplicationController
   include Mixins::BreadcrumbsMixin
   include Mixins::WorkflowCheckPrototypeMixin
 
-  menu_section :workflow_credentials
+  menu_section :embedded_workflow_credentials
 
   def self.display_methods
     %w[repositories]
@@ -32,15 +32,28 @@ class WorkflowCredentialController < ApplicationController
 
   def button
     case params[:pressed]
-    when 'embedded_automation_manager_credentials_add'
+    when 'workflow_repositories_reload'
+      javascript_redirect(:action => 'show', :id => params[:id], :display => 'repositories')
+    when 'embedded_configuration_script_source_refresh' # refresh repositories from nested list
+      repository_refresh
+    when 'embedded_automation_manager_credentials_add' # add credential
       javascript_redirect(:action => 'new')
-    when 'embedded_automation_manager_credentials_edit'
+    when 'embedded_configuration_script_source_add' # add repository from nested list
+      javascript_redirect(:controller => 'workflow_repository', :action => 'new')
+    when 'embedded_automation_manager_credentials_edit' # edit credential
       javascript_redirect(:action => 'edit', :id => params[:miq_grid_checks])
-    when 'ansible_credential_tag'
+    when 'embedded_configuration_script_source_edit' # edit repository from nested list
+      javascript_redirect(:controller => 'workflow_repository', :action => 'edit', :id => params[:miq_grid_checks])
+    when 'ansible_credential_tag' # tag credentials
       tag(self.class.model)
-    when "workflow_repository_tag" # repositories from nested list
+    when "ansible_repository_tag" # tag repositories from nested list
       tag(ManageIQ::Providers::Workflows::AutomationManager::ConfigurationScriptSource)
     end
+  end
+
+  def check_button_rbac
+    # Allow reload to skip RBAC check
+    %w[workflow_repositories_reload].include?(params[:pressed]) || super
   end
 
   def new
@@ -57,6 +70,23 @@ class WorkflowCredentialController < ApplicationController
                     :url  => "/workflow_credential/edit/#{params[:id]}")
     @in_a_form = true
     @id = auth.id
+  end
+
+  def repository_refresh
+    assert_privileges("embedded_configuration_script_source_refresh")
+    checked = find_checked_items
+    checked[0] = params[:id] if checked.blank? && params[:id]
+
+    WorkflowRepositoryController.model.where(:id => checked).each do |repo|
+      repo.sync_queue
+      add_flash(_("Refresh of Repository \"%{name}\" was successfully initiated.") % {:name => repo.name})
+    rescue StandardError => ex
+      add_flash(_("Unable to refresh Repository \"%{name}\": %{details}") % {:name    => repo.name,
+                                                                             :details => ex},
+                :error)
+    end
+
+    javascript_flash
   end
 
   def toolbar

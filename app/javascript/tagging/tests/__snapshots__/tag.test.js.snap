@@ -10,6 +10,10 @@ exports[`Tag Component match snapshot 1`] = `
     id="tag_value_1"
     key="1"
     title="duck"
-  />
+  >
+    <div
+      className="value-label"
+    />
+  </FormLabel>
 </li>
 `;

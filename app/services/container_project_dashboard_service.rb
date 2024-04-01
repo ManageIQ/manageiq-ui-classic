@@ -67,6 +67,7 @@ class ContainerProjectDashboardService < DashboardService
   def pods
     @project.container_groups.collect do |pod|
       {
+        :id                         => pod.id,
         :name                       => pod.name,
         :phase                      => pod.phase,
         :running_containers_summary => pod.running_containers_summary,

@@ -67,7 +67,7 @@ describe WorkflowCredentialController do
     end
 
     context 'tagging one or more workflow repositories from nested list' do
-      let(:params) { {:pressed => "workflow_repository_tag"} }
+      let(:params) { {:pressed => "ansible_repository_tag"} }
 
       before do
         controller.instance_variable_set(:@display, "repositories")

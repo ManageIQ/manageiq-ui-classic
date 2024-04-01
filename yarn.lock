@@ -1906,9 +1906,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@manageiq/ui-components@npm:1.5.1":
-  version: 1.5.1
-  resolution: "@manageiq/ui-components@npm:1.5.1"
+"@manageiq/ui-components@npm:1.6.0":
+  version: 1.6.0
+  resolution: "@manageiq/ui-components@npm:1.6.0"
   dependencies:
     angular-bootstrap-switch: "npm:^0.5.1"
     angular-dragdrop: "npm:^1.0.13"
@@ -1916,7 +1916,7 @@ __metadata:
     es6-shim: "npm:^0.35.3"
     es7-shim: "npm:^6.0.0"
     sprintf-js: "npm:^1.1.1"
-  checksum: aea616d81d0a119e558708825de9d560dc2fe2fe56688631734f49004bc18982c39084303bdf98f659e95c7357393de4a342dc47a7d9bf802a954716658ae5cf
+  checksum: 094b9a41af68add68051d1a6138122c0e61afe2c2bf5cea91ca924e85b5395a4bd3f4e00307eb60d8af1b7ccee00c0d3573929d3cfc5934e427e83032ca5b21f
   languageName: node
   linkType: hard
 
@@ -8190,12 +8190,12 @@ __metadata:
   linkType: hard
 
 "follow-redirects@npm:^1.0.0":
-  version: 1.15.4
-  resolution: "follow-redirects@npm:1.15.4"
+  version: 1.15.6
+  resolution: "follow-redirects@npm:1.15.6"
   peerDependenciesMeta:
     debug:
       optional: true
-  checksum: 2e8f5f259a6b02dfa8dc199e08431848a7c3beed32eb4c19945966164a52c89f07b86c3afcc32ebe4279cf0a960520e45a63013d6350309c5ec90133c5d9351a
+  checksum: 70c7612c4cab18e546e36b991bbf8009a1a41cf85354afe04b113d1117569abf760269409cb3eb842d9f7b03d62826687086b081c566ea7b1e6613cf29030bf7
   languageName: node
   linkType: hard
 
@@ -11526,7 +11526,7 @@ __metadata:
     "@data-driven-forms/carbon-component-mapper": "npm:~3.18.8"
     "@data-driven-forms/react-form-renderer": "npm:~3.18.8"
     "@manageiq/font-fabulous": "npm:~1.0.5"
-    "@manageiq/ui-components": "npm:1.5.1"
+    "@manageiq/ui-components": "npm:1.6.0"
     "@novnc/novnc": "npm:~1.2.0"
     "@pf3/select": "npm:~1.12.6"
     "@tshepomgaga/aws-sfn-graph": "npm:0.0.6"
@@ -17929,8 +17929,8 @@ __metadata:
   linkType: hard
 
 "webpack-dev-middleware@npm:^5.3.1":
-  version: 5.3.3
-  resolution: "webpack-dev-middleware@npm:5.3.3"
+  version: 5.3.4
+  resolution: "webpack-dev-middleware@npm:5.3.4"
   dependencies:
     colorette: "npm:^2.0.10"
     memfs: "npm:^3.4.3"
@@ -17939,7 +17939,7 @@ __metadata:
     schema-utils: "npm:^4.0.0"
   peerDependencies:
     webpack: ^4.0.0 || ^5.0.0
-  checksum: 31a2f7a11e58a76bdcde1eb8da310b6643844d9b442f9916f48be5b46c103f23490c393c32a9af501ce68226fbb018b811f5a956635ed60a03f9481a4bcd6c76
+  checksum: 3004374130f31c2910da39b80e24296009653bb11caa0b8449d962b67e003d7e73d01fbcfda9be1f1f04179f66a9c39f4caf7963df54303b430e39ba5a94f7c2
   languageName: node
   linkType: hard
 

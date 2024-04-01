@@ -1078,7 +1078,8 @@ module OpsController::OpsRbac
     if params[:check]                               # User checked/unchecked a tree node
       if params[:tree_typ] == "tags"                # MyCompany tag checked
         cat_name = Classification.find_by(:id => params[:cat]).name
-        tag_name = Classification.find_by(:id => params[:val]).name
+        classification = Classification.find_by(:id => params[:val])
+        tag_name = classification ? classification.name : ''
         if params[:check] == "0" #   unchecked
           @edit[:new][:filters].except!("#{cat_name}-#{tag_name}") # Remove the tag from the filters array
         else

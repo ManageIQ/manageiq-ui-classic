@@ -35,7 +35,7 @@ ValueModifier.propTypes = {
 };
 
 ValueModifier.defaultProps = {
-  selectedTagValues: {},
+  selectedTagValues: [],
   valueLabel: __('Value'),
   multiValue: true,
   isDisabled: false,
