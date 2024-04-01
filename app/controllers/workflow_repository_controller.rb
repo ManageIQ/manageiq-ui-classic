@@ -37,26 +37,30 @@ class WorkflowRepositoryController < ApplicationController
 
   def button
     case params[:pressed]
-    when "embedded_configuration_script_source_edit"
+    when 'embedded_configuration_script_source_refresh' # refresh repositories
+      repository_refresh
+    when "embedded_configuration_script_source_edit" # edit repository
       id = params[:miq_grid_checks]
       javascript_redirect(:action => 'edit', :id => id)
-    when "embedded_configuration_script_source_add"
+    when "embedded_configuration_script_source_add" # add repository
       javascript_redirect(:action => 'new')
-    when "workflow_repositories_reload"
+    when "embedded_configuration_script_payload_map_credentials" # map credentials from nested list
+      javascript_redirect(:controller => 'workflow', :action => 'map_credentials', :id => params[:miq_grid_checks])
+    when "workflow_repositories_reload" # repositories reload
       show_list
       render :update do |page|
         page << javascript_prologue
         page.replace("gtl_div", :partial => "layouts/gtl")
       end
-    when "workflow_repository_reload"
+    when "workflow_repository_reload" # repository reload
       show
       render :update do |page|
         page << javascript_prologue
         page.replace("main_div", :template => "workflow_repository/show")
       end
-    when "ansible_repository_tag"
+    when "ansible_repository_tag" # tag repositories
       tag(self.class.model)
-    when "embedded_configuration_script_payload_tag" # workflows from nested list
+    when "embedded_configuration_script_payload_tag" # tag workflows from nested list
       tag(ManageIQ::Providers::Workflows::AutomationManager::Workflow)
     end
   end
