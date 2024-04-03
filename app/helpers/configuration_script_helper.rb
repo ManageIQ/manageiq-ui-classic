@@ -4,7 +4,55 @@ module ConfigurationScriptHelper
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i[hostname ipmi_present ipaddress mac_address provider_name zone]
+      %i[configuration_script_name configuration_script_region]
+    )
+  end
+
+  def textual_configuration_script_name
+    {:label => _("Name"), :value => @record.name}
+  end
+
+  def textual_configuration_script_region
+    {:label => _("Region"), :value => @record.region_description}
+  end
+
+  def textual_group_variables
+    variables = Array(@record.variables).collect do |item|
+      [
+        item[0].to_s,
+        item[1].to_s
+      ]
+    end
+    TextualMultilabel.new(
+      _('Variables (%{count})') % {:count => @record.variables.count},
+      :additional_table_class => "table-fixed",
+      :labels                 => [_('Name'), _('Value')],
+      :values                 => variables
+    )
+  end
+
+  def textual_group_surveys
+    return unless @record.survey_spec['spec']
+
+    headers = [_('Question Name'), _('Question Description'), _('Variable'),
+               _('Type'),  _('Min'), _('Max'), _('Default'), _('Required'), _('Choices')]
+    items = @record.survey_spec['spec'].collect do |item|
+      [
+        item['question_name'],
+        item['question_description'],
+        item['variable'],
+        item['type'],
+        item['min'],
+        item['max'],
+        item['default'],
+        item['required'],
+        item['choices']
+      ]
+    end
+    TextualTable.new(
+      _("Surveys"),
+      items,
+      headers
     )
   end
 
@@ -71,14 +119,6 @@ module ConfigurationScriptHelper
        configuration_script_region]
   end
 
-  def textual_configuration_script_name
-    {:label => _("Name"), :value => @record.name}
-  end
-
-  def textual_configuration_script_region
-    {:label => _("Region"), :value => @record.region_description}
-  end
-
   def textual_configuration_script_variables
     textual_variables(@record.variables)
   end
@@ -132,4 +172,3 @@ module ConfigurationScriptHelper
     TextualTags.new(_("Smart Management"), %i[tags])
   end
 end
-#

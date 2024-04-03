@@ -45,7 +45,7 @@ class ConfigurationScriptController < ApplicationController
   private
 
   def textual_group_list
-    [%i[properties tags]]
+    [%i[properties variables tags surveys]]
   end
   helper_method :textual_group_list
 
