@@ -1,6 +1,7 @@
 import React from 'react';
 import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
+import { act } from 'react-dom/test-utils';
 import { mount } from '../helpers/mountForm';
 import CloudVolumeActions from '../../components/cloud-volume-actions-form';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
@@ -16,8 +17,20 @@ const expectedKeys = {
   cancel: ['url', 'message'],
 };
 
+describe('create form data object has keys containing', () => {
+  const cloudVolume = { ...record, type: CloudVolumeActionTypes.CREATE_BACKUP };
+  const data = formData(cloudVolume.recordId, cloudVolume.name, cloudVolume.type);
+  it('matches the expected type and object keys of formData', () => {
+    expect(data.type).toEqual(CloudVolumeActionTypes.CREATE_BACKUP);
+    expect(Object.keys(data)).toEqual(expect.arrayContaining(expectedKeys.main));
+    expect(Object.keys(data.cancel)).toEqual(expect.arrayContaining(expectedKeys.cancel));
+    expect(Object.keys(data.save)).toEqual(expect.arrayContaining(expectedKeys.save));
+  });
+});
+
 describe('Cloud Volume Backup Create form component', () => {
   const cloudVolume = { ...record, type: CloudVolumeActionTypes.CREATE_BACKUP };
+  const data = formData(cloudVolume.recordId, cloudVolume.name, cloudVolume.type);
   const createBackupComponent = (
     <CloudVolumeActions
       recordId={cloudVolume.recordId}
@@ -26,18 +39,7 @@ describe('Cloud Volume Backup Create form component', () => {
     />
   );
 
-  const data = formData(cloudVolume.recordId, cloudVolume.name, cloudVolume.type);
-
-  describe('create form data object has keys containing', () => {
-    it('matches the expected type and object keys of formData', () => {
-      expect(data.type).toEqual(CloudVolumeActionTypes.CREATE_BACKUP);
-      expect(Object.keys(data)).toEqual(expect.arrayContaining(expectedKeys.main));
-      expect(Object.keys(data.cancel)).toEqual(expect.arrayContaining(expectedKeys.cancel));
-      expect(Object.keys(data.save)).toEqual(expect.arrayContaining(expectedKeys.save));
-    });
-  });
-
-  it('should render the cloud volume backup create form', () => {
+  it('should render the cloud volume backup create form', async() => {
     const wrapper = mount(createBackupComponent);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
@@ -90,20 +92,29 @@ describe('Cloud Volume Restore from backup form component', () => {
     });
   });
 
-  it('should render the cloud volume backup restore form', () => {
-    const wrapper = mount(restoreFromBackupComponent);
+  it('should render the cloud volume backup restore form', async() => {
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(restoreFromBackupComponent);
+    });
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
-  it('when restoring cloud volume from backup', () => {
+  it('when restoring cloud volume from backup', async() => {
+    let wrapper;
     fetchMock.postOnce(data.save.postUrl, { backup_id: '1' });
-    const wrapper = mount(restoreFromBackupComponent);
+    await act(async() => {
+      wrapper = mount(restoreFromBackupComponent);
+    });
 
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
-  it('should call miqRedirectBack when the restore from backup form is cancelled', () => {
-    const wrapper = mount(restoreFromBackupComponent);
+  it('should call miqRedirectBack when the restore from backup form is cancelled', async() => {
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(restoreFromBackupComponent);
+    });
     wrapper.find('button').last().simulate('click');
     expect(miqRedirectBack).toHaveBeenCalledWith(data.cancel.message, 'success', data.cancel.url);
   });

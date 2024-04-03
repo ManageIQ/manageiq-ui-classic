@@ -3772,7 +3772,7 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
                                                 </IsRequired>
                                               }
                                               loadOptions={[Function]}
-                                              loadOptionsChangeCounter={1}
+                                              loadOptionsChangeCounter={0}
                                               loadingMessage="Loading..."
                                               name="backup_id"
                                               onBlur={[Function]}
@@ -3785,11 +3785,13 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
                                               value=""
                                             >
                                               <ClearedSelect
+                                                className=""
+                                                closeMenuOnSelect={true}
+                                                hideSelectedOptions={false}
                                                 id="backup_id"
                                                 invalidText=""
                                                 isClearable={false}
-                                                isDisabled={true}
-                                                isFetching={true}
+                                                isFetching={false}
                                                 isSearchable={false}
                                                 labelText={
                                                   <IsRequired>
@@ -3803,10 +3805,11 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
                                                 onFocus={[Function]}
                                                 onInputChange={[Function]}
                                                 options={Array []}
-                                                placeholder="Loading..."
+                                                placeholder="<Choose>"
                                                 value=""
                                               >
                                                 <Select
+                                                  className=""
                                                   disabled={false}
                                                   helperText=""
                                                   id="backup_id"
@@ -3857,23 +3860,7 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
                                                           onChange={[Function]}
                                                           onFocus={[Function]}
                                                           value=""
-                                                        >
-                                                          <SelectItem
-                                                            disabled={false}
-                                                            hidden={false}
-                                                            text="Loading..."
-                                                            value=""
-                                                          >
-                                                            <option
-                                                              className="bx--select-option"
-                                                              disabled={false}
-                                                              hidden={false}
-                                                              value=""
-                                                            >
-                                                              Loading...
-                                                            </option>
-                                                          </SelectItem>
-                                                        </select>
+                                                        />
                                                         <ForwardRef(ChevronDown16)
                                                           className="bx--select__arrow"
                                                         >
@@ -4011,9 +3998,7 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
                                 "dirtyFieldsSinceLastSubmit": Object {},
                                 "dirtySinceLastSubmit": false,
                                 "error": undefined,
-                                "errors": Object {
-                                  "backup_id": "Required",
-                                },
+                                "errors": Object {},
                                 "form": Object {
                                   "batch": [Function],
                                   "blur": [Function],
@@ -4049,12 +4034,10 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
                                   "subscribe": [Function],
                                 },
                                 "hasSubmitErrors": false,
-                                "hasValidationErrors": true,
+                                "hasValidationErrors": false,
                                 "initialValues": Object {},
-                                "invalid": true,
-                                "modified": Object {
-                                  "backup_id": false,
-                                },
+                                "invalid": false,
+                                "modified": Object {},
                                 "modifiedSinceLastSubmit": false,
                                 "pristine": true,
                                 "submitError": undefined,
@@ -4062,15 +4045,11 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
                                 "submitFailed": false,
                                 "submitSucceeded": false,
                                 "submitting": false,
-                                "touched": Object {
-                                  "backup_id": false,
-                                },
-                                "valid": false,
+                                "touched": Object {},
+                                "valid": true,
                                 "validating": false,
                                 "values": Object {},
-                                "visited": Object {
-                                  "backup_id": false,
-                                },
+                                "visited": Object {},
                               }
                             }
                             onCancel={[Function]}
@@ -4892,7 +4871,7 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
                                                 </IsRequired>
                                               }
                                               loadOptions={[Function]}
-                                              loadOptionsChangeCounter={1}
+                                              loadOptionsChangeCounter={0}
                                               loadingMessage="Loading..."
                                               name="backup_id"
                                               onBlur={[Function]}
@@ -4905,11 +4884,13 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
                                               value=""
                                             >
                                               <ClearedSelect
+                                                className=""
+                                                closeMenuOnSelect={true}
+                                                hideSelectedOptions={false}
                                                 id="backup_id"
                                                 invalidText=""
                                                 isClearable={false}
-                                                isDisabled={true}
-                                                isFetching={true}
+                                                isFetching={false}
                                                 isSearchable={false}
                                                 labelText={
                                                   <IsRequired>
@@ -4923,10 +4904,11 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
                                                 onFocus={[Function]}
                                                 onInputChange={[Function]}
                                                 options={Array []}
-                                                placeholder="Loading..."
+                                                placeholder="<Choose>"
                                                 value=""
                                               >
                                                 <Select
+                                                  className=""
                                                   disabled={false}
                                                   helperText=""
                                                   id="backup_id"
@@ -4977,23 +4959,7 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
                                                           onChange={[Function]}
                                                           onFocus={[Function]}
                                                           value=""
-                                                        >
-                                                          <SelectItem
-                                                            disabled={false}
-                                                            hidden={false}
-                                                            text="Loading..."
-                                                            value=""
-                                                          >
-                                                            <option
-                                                              className="bx--select-option"
-                                                              disabled={false}
-                                                              hidden={false}
-                                                              value=""
-                                                            >
-                                                              Loading...
-                                                            </option>
-                                                          </SelectItem>
-                                                        </select>
+                                                        />
                                                         <ForwardRef(ChevronDown16)
                                                           className="bx--select__arrow"
                                                         >
@@ -5131,9 +5097,7 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
                                 "dirtyFieldsSinceLastSubmit": Object {},
                                 "dirtySinceLastSubmit": false,
                                 "error": undefined,
-                                "errors": Object {
-                                  "backup_id": "Required",
-                                },
+                                "errors": Object {},
                                 "form": Object {
                                   "batch": [Function],
                                   "blur": [Function],
@@ -5169,12 +5133,10 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
                                   "subscribe": [Function],
                                 },
                                 "hasSubmitErrors": false,
-                                "hasValidationErrors": true,
+                                "hasValidationErrors": false,
                                 "initialValues": Object {},
-                                "invalid": true,
-                                "modified": Object {
-                                  "backup_id": false,
-                                },
+                                "invalid": false,
+                                "modified": Object {},
                                 "modifiedSinceLastSubmit": false,
                                 "pristine": true,
                                 "submitError": undefined,
@@ -5182,15 +5144,11 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
                                 "submitFailed": false,
                                 "submitSucceeded": false,
                                 "submitting": false,
-                                "touched": Object {
-                                  "backup_id": false,
-                                },
-                                "valid": false,
+                                "touched": Object {},
+                                "valid": true,
                                 "validating": false,
                                 "values": Object {},
-                                "visited": Object {
-                                  "backup_id": false,
-                                },
+                                "visited": Object {},
                               }
                             }
                             onCancel={[Function]}
