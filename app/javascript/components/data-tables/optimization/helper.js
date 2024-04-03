@@ -8,7 +8,13 @@ const buttonData = (item) => ({
   alt: __('Queue Report'),
   disabled: false,
   is_button: true,
-  onclick: `miqQueueReport(${item.id});`,
+  onclick: {
+    remote: true,
+    action: {
+      name: 'miqQueueReport',
+      id: item.id,
+    },
+  },
   text: __('Queue Report'),
   title: __('Queue Report'),
 });
