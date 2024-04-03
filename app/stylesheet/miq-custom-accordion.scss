@@ -1,0 +1,21 @@
+.miq-custom-accordion
+ {
+   border: 1px solid #e0e0e0;
+
+   li button.bx--accordion__heading {
+     background: #e0e0e0;
+   }
+   .bx--accordion__item:last-child{
+     border: 0;
+   }
+
+   .bx--accordion__content {
+     padding: 20px;
+     margin: 0;
+
+     .custom-accordion-buttons {
+       display: flex;
+       justify-content: flex-end;
+     }
+   }
+ }
