@@ -2,11 +2,9 @@ describe ApplicationHelper::Button::AuthKeyPairCloudCreate do
   let(:button) { described_class.new(setup_view_context_with_sandbox({}), {}, {}, {}) }
   let(:ems)    { FactoryBot.create(:ems_cloud) }
 
-  before { stub_supports(ems.class::AuthKeyPair, :create, :supported => supported) }
-
   describe '#disabled?' do
     context 'when the create action is supported' do
-      let(:supported) { true }
+      before { stub_supports(ems.class::AuthKeyPair, :create) }
 
       it 'then the button is enabled' do
         expect(button.disabled?).to be false
@@ -14,7 +12,7 @@ describe ApplicationHelper::Button::AuthKeyPairCloudCreate do
     end
 
     context 'when the create action is not supported' do
-      let(:supported) { false }
+      before { stub_supports_not(ems.class::AuthKeyPair, :create) }
 
       it 'then the button is disabled' do
         expect(button.disabled?).to be true
@@ -24,7 +22,7 @@ describe ApplicationHelper::Button::AuthKeyPairCloudCreate do
 
   describe '#calculate_properties' do
     context "when the create action is not supported" do
-      let(:supported) { false }
+      before { stub_supports_not(ems.class::AuthKeyPair, :create) }
 
       it "then the button has the error in the title" do
         button.calculate_properties
@@ -33,7 +31,7 @@ describe ApplicationHelper::Button::AuthKeyPairCloudCreate do
     end
 
     context "when the create action is supported" do
-      let(:supported) { true }
+      before { stub_supports(ems.class::AuthKeyPair, :create) }
 
       it "then the button has no error in the title" do
         button.calculate_properties
