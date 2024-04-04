@@ -22,11 +22,11 @@ exports[`Pxe Iso Datastore Form Component should render adding a new iso datasto
     emses={
       Array [
         Object {
-          "id": "1",
+          "id": 1,
           "name": "provider 1",
         },
         Object {
-          "id": "2",
+          "id": 2,
           "name": "provider 2",
         },
       ]
