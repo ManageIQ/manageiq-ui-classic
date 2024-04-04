@@ -1,6 +1,6 @@
 #pre_prov_div
   - typ = request.parameters[:controller] == "vm_cloud" ? ui_lookup(:table => "template_cloud") : ui_lookup(:table => "template_infra")
-  = react 'ProvisionInstanceFilter', onSearch: -> (searchQuery) { handleSearch(searchQuery) } 
+  = react 'ProvisionInstanceFilter', { onSearch: ->(data) { console.log(data); } }
   %h3
     = _("Provision %{what} based on the selected %{type}") % {:what => ui_lookup(:tables => request.parameters[:controller]), :type => typ}
   %label
@@ -25,4 +25,7 @@
                                                                   :continue_button => true,
                                                                   :no_reset => true}
   :javascript
+    window.handleSearch = (data) => {
+      console.log(data);
+    };
     $(provisioningListenToRx);

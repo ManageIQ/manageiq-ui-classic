@@ -89,8 +89,8 @@ module ApplicationController::MiqRequestMethods
     end
   end
 
-  # Pre provisioning, select a template
-  def pre_prov
+  # Pre provisioning, select a template 
+  def pre_prov 
     assert_privileges("miq_request_edit")
     if params[:button] == "cancel"
       flash_to_session(_("Add of new %{type} Request was cancelled by the user") % {:type => session[:edit][:prov_type]})
@@ -150,9 +150,9 @@ module ApplicationController::MiqRequestMethods
       @edit = session[:edit]
       @edit[:hide_deprecated_templates] = params[:hide_deprecated_templates] == "true"
       render_updated_templates
-    elsif params[:search_query].present?
+    elsif params[:search_input].present?
     # Image search action handling
-    @images = MiqTemplate.where("name LIKE ?", "%#{params[:search_query]}%")
+      @images = MiqTemplate.where("name LIKE ?", "%#{params[:search_input]}%")
     else # First time in, build pre-provision screen
       set_pre_prov_vars
     end
