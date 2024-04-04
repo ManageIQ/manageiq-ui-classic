@@ -155,7 +155,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
     href="http://localhost:3000/api/zones/68"
     id="68"
     name="test add zone name"
-    recordId={68}
+    recordId="68"
   >
     <Connect(MiqFormRenderer)
       buttonsLabels={
