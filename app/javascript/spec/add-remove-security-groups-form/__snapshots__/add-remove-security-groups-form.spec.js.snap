@@ -90,46 +90,919 @@ exports[`Add/remove security groups form component should remove security group 
     recordId="1850"
     redirectURL="/vm_cloud/explorer"
   >
-    <Loading
-      active={true}
-      className="export-spinner"
-      description="Active loading indicator"
-      small={true}
-      withOverlay={false}
+    <Connect(MiqFormRenderer)
+      buttonsLabels={
+        Object {
+          "submitLabel": "Save",
+        }
+      }
+      onCancel={[Function]}
+      onSubmit={[Function]}
+      schema={
+        Object {
+          "fields": Array [
+            Object {
+              "component": "select",
+              "id": "security_group",
+              "includeEmpty": true,
+              "label": "Security Group",
+              "name": "security_group",
+              "options": Array [
+                Object {
+                  "label": "default",
+                  "value": "default",
+                },
+              ],
+              "placeholder": "<Choose>",
+            },
+          ],
+        }
+      }
     >
-      <div
-        aria-atomic="true"
-        aria-live="assertive"
-        className="export-spinner bx--loading bx--loading--small"
+      <MiqFormRenderer
+        buttonsLabels={
+          Object {
+            "submitLabel": "Save",
+          }
+        }
+        canReset={false}
+        className="form-react"
+        componentMapper={
+          Object {
+            "checkbox": [Function],
+            "code-editor": [Function],
+            "date-picker": [Function],
+            "dual-list-select": [Function],
+            "edit-password-field": [Function],
+            "field-array": [Function],
+            "file-upload": [Function],
+            "font-icon-picker": [Function],
+            "font-icon-picker-ddf": [Function],
+            "multi-select": [Function],
+            "password-field": [Function],
+            "plain-text": [Function],
+            "radio": [Function],
+            "select": [Function],
+            "slider": [Function],
+            "sub-form": [Function],
+            "switch": [Function],
+            "tabs": [Function],
+            "text-field": [Function],
+            "textarea": [Function],
+            "time-picker": [Function],
+            "tree-selector": [Function],
+            "tree-view": [Function],
+            "validate-credentials": [Function],
+            "wizard": [Function],
+          }
+        }
+        disableSubmit={
+          Array [
+            "pristine",
+            "invalid",
+          ]
+        }
+        dispatch={[Function]}
+        onCancel={[Function]}
+        onSubmit={[Function]}
+        schema={
+          Object {
+            "fields": Array [
+              Object {
+                "component": "select",
+                "id": "security_group",
+                "includeEmpty": true,
+                "label": "Security Group",
+                "name": "security_group",
+                "options": Array [
+                  Object {
+                    "label": "default",
+                    "value": "default",
+                  },
+                ],
+                "placeholder": "<Choose>",
+              },
+            ],
+          }
+        }
+        showFormControls={true}
       >
-        <label
-          className="bx--visually-hidden"
-          id="loading-id-4"
+        <FormRenderer
+          FormTemplate={[Function]}
+          clearOnUnmount={false}
+          componentMapper={
+            Object {
+              "checkbox": [Function],
+              "code-editor": [Function],
+              "date-picker": [Function],
+              "dual-list-select": [Function],
+              "edit-password-field": [Function],
+              "field-array": [Function],
+              "file-upload": [Function],
+              "font-icon-picker": [Function],
+              "font-icon-picker-ddf": [Function],
+              "multi-select": [Function],
+              "password-field": [Function],
+              "plain-text": [Function],
+              "radio": [Function],
+              "select": [Function],
+              "slider": [Function],
+              "spy-field": [Function],
+              "sub-form": [Function],
+              "switch": [Function],
+              "tabs": [Function],
+              "text-field": [Function],
+              "textarea": [Function],
+              "time-picker": [Function],
+              "tree-selector": [Function],
+              "tree-view": [Function],
+              "validate-credentials": [Function],
+              "wizard": [Function],
+            }
+          }
+          dispatch={[Function]}
+          initialValues={Object {}}
+          onCancel={[Function]}
+          onReset={[Function]}
+          onSubmit={[Function]}
+          schema={
+            Object {
+              "fields": Array [
+                Object {
+                  "component": "select",
+                  "id": "security_group",
+                  "includeEmpty": true,
+                  "label": "Security Group",
+                  "name": "security_group",
+                  "options": Array [
+                    Object {
+                      "label": "default",
+                      "value": "default",
+                    },
+                  ],
+                  "placeholder": "<Choose>",
+                },
+                Object {
+                  "component": "spy-field",
+                  "initialize": undefined,
+                  "name": "spy-field",
+                },
+              ],
+            }
+          }
         >
-          Active loading indicator
-        </label>
-        <svg
-          className="bx--loading__svg"
-          viewBox="0 0 100 100"
-        >
-          <title>
-            Active loading indicator
-          </title>
-          <circle
-            className="bx--loading__background"
-            cx="50%"
-            cy="50%"
-            r="44"
-          />
-          <circle
-            className="bx--loading__stroke"
-            cx="50%"
-            cy="50%"
-            r="44"
-          />
-        </svg>
-      </div>
-    </Loading>
+          <ReactFinalForm
+            decorators={
+              Array [
+                [Function],
+              ]
+            }
+            dispatch={[Function]}
+            initialValues={Object {}}
+            mutators={
+              Object {
+                "concat": [Function],
+                "insert": [Function],
+                "move": [Function],
+                "pop": [Function],
+                "push": [Function],
+                "remove": [Function],
+                "removeBatch": [Function],
+                "shift": [Function],
+                "swap": [Function],
+                "unshift": [Function],
+                "update": [Function],
+              }
+            }
+            onSubmit={[Function]}
+            render={[Function]}
+            subscription={
+              Object {
+                "pristine": true,
+                "submitting": true,
+                "valid": true,
+              }
+            }
+          >
+            <Component
+              formFields={
+                Array [
+                  <SingleField
+                    component="select"
+                    id="security_group"
+                    includeEmpty={true}
+                    label="Security Group"
+                    name="security_group"
+                    options={
+                      Array [
+                        Object {
+                          "label": "default",
+                          "value": "default",
+                        },
+                      ]
+                    }
+                    placeholder="<Choose>"
+                  />,
+                  <SingleField
+                    component="spy-field"
+                    name="spy-field"
+                  />,
+                ]
+              }
+              schema={
+                Object {
+                  "fields": Array [
+                    Object {
+                      "component": "select",
+                      "id": "security_group",
+                      "includeEmpty": true,
+                      "label": "Security Group",
+                      "name": "security_group",
+                      "options": Array [
+                        Object {
+                          "label": "default",
+                          "value": "default",
+                        },
+                      ],
+                      "placeholder": "<Choose>",
+                    },
+                    Object {
+                      "component": "spy-field",
+                      "initialize": undefined,
+                      "name": "spy-field",
+                    },
+                  ],
+                }
+              }
+            >
+              <WrappedFormTemplate
+                canReset={false}
+                cancelLabel="Cancel"
+                disableSubmit={
+                  Array [
+                    "pristine",
+                    "invalid",
+                  ]
+                }
+                formFields={
+                  Array [
+                    <SingleField
+                      component="select"
+                      id="security_group"
+                      includeEmpty={true}
+                      label="Security Group"
+                      name="security_group"
+                      options={
+                        Array [
+                          Object {
+                            "label": "default",
+                            "value": "default",
+                          },
+                        ]
+                      }
+                      placeholder="<Choose>"
+                    />,
+                    <SingleField
+                      component="spy-field"
+                      name="spy-field"
+                    />,
+                  ]
+                }
+                formWrapperProps={
+                  Object {
+                    "className": "form-react",
+                  }
+                }
+                resetLabel="Reset"
+                schema={
+                  Object {
+                    "fields": Array [
+                      Object {
+                        "component": "select",
+                        "id": "security_group",
+                        "includeEmpty": true,
+                        "label": "Security Group",
+                        "name": "security_group",
+                        "options": Array [
+                          Object {
+                            "label": "default",
+                            "value": "default",
+                          },
+                        ],
+                        "placeholder": "<Choose>",
+                      },
+                      Object {
+                        "component": "spy-field",
+                        "initialize": undefined,
+                        "name": "spy-field",
+                      },
+                    ],
+                  }
+                }
+                showFormControls={true}
+                submitLabel="Save"
+              >
+                <FormTemplate
+                  Button={[Function]}
+                  ButtonGroup={[Function]}
+                  Description={[Function]}
+                  FormWrapper={[Function]}
+                  Header={[Function]}
+                  Title={[Function]}
+                  buttonOrder={
+                    Array [
+                      "submit",
+                      "reset",
+                      "cancel",
+                    ]
+                  }
+                  canReset={false}
+                  cancelLabel="Cancel"
+                  disableSubmit={
+                    Array [
+                      "pristine",
+                      "invalid",
+                    ]
+                  }
+                  formFields={
+                    Array [
+                      <SingleField
+                        component="select"
+                        id="security_group"
+                        includeEmpty={true}
+                        label="Security Group"
+                        name="security_group"
+                        options={
+                          Array [
+                            Object {
+                              "label": "default",
+                              "value": "default",
+                            },
+                          ]
+                        }
+                        placeholder="<Choose>"
+                      />,
+                      <SingleField
+                        component="spy-field"
+                        name="spy-field"
+                      />,
+                    ]
+                  }
+                  formWrapperProps={
+                    Object {
+                      "className": "form-react",
+                    }
+                  }
+                  resetLabel="Reset"
+                  schema={
+                    Object {
+                      "fields": Array [
+                        Object {
+                          "component": "select",
+                          "id": "security_group",
+                          "includeEmpty": true,
+                          "label": "Security Group",
+                          "name": "security_group",
+                          "options": Array [
+                            Object {
+                              "label": "default",
+                              "value": "default",
+                            },
+                          ],
+                          "placeholder": "<Choose>",
+                        },
+                        Object {
+                          "component": "spy-field",
+                          "initialize": undefined,
+                          "name": "spy-field",
+                        },
+                      ],
+                    }
+                  }
+                  showFormControls={true}
+                  submitLabel="Save"
+                >
+                  <Form
+                    className="form-react"
+                    onSubmit={[Function]}
+                  >
+                    <Form
+                      className="form-0-2-3 form-react"
+                      noValidate={true}
+                      onSubmit={[Function]}
+                    >
+                      <form
+                        className="bx--form form-0-2-3 form-react"
+                        noValidate={true}
+                        onSubmit={[Function]}
+                      >
+                         
+                        <SingleField
+                          component="select"
+                          id="security_group"
+                          includeEmpty={true}
+                          key="security_group"
+                          label="Security Group"
+                          name="security_group"
+                          options={
+                            Array [
+                              Object {
+                                "label": "default",
+                                "value": "default",
+                              },
+                            ]
+                          }
+                          placeholder="<Choose>"
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "select",
+                                "id": "security_group",
+                                "includeEmpty": true,
+                                "label": "Security Group",
+                                "name": "security_group",
+                                "options": Array [
+                                  Object {
+                                    "label": "default",
+                                    "value": "default",
+                                  },
+                                ],
+                                "placeholder": "<Choose>",
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <SelectWithOnChange
+                                component="select"
+                                id="security_group"
+                                includeEmpty={true}
+                                label="Security Group"
+                                name="security_group"
+                                options={
+                                  Array [
+                                    Object {
+                                      "label": "default",
+                                      "value": "default",
+                                    },
+                                  ]
+                                }
+                                placeholder="<Choose>"
+                              >
+                                <Select
+                                  component="select"
+                                  id="security_group"
+                                  label="Security Group"
+                                  loadingMessage="Loading..."
+                                  name="security_group"
+                                  options={
+                                    Array [
+                                      Object {
+                                        "label": "<Choose>",
+                                        "value": undefined,
+                                      },
+                                      Object {
+                                        "label": "default",
+                                        "value": "default",
+                                      },
+                                    ]
+                                  }
+                                  placeholder="<Choose>"
+                                >
+                                  <Select
+                                    SelectComponent={[Function]}
+                                    compareValues={[Function]}
+                                    id="security_group"
+                                    invalid={false}
+                                    invalidText=""
+                                    isClearable={false}
+                                    isSearchable={false}
+                                    labelText="Security Group"
+                                    loadOptionsChangeCounter={1}
+                                    loadingMessage="Loading..."
+                                    name="security_group"
+                                    onBlur={[Function]}
+                                    onChange={[Function]}
+                                    onFocus={[Function]}
+                                    options={
+                                      Array [
+                                        Object {
+                                          "label": "<Choose>",
+                                          "value": undefined,
+                                        },
+                                        Object {
+                                          "label": "default",
+                                          "value": "default",
+                                        },
+                                      ]
+                                    }
+                                    placeholder="<Choose>"
+                                    pluckSingleValue={true}
+                                    simpleValue={false}
+                                    value=""
+                                  >
+                                    <ClearedSelect
+                                      className=""
+                                      closeMenuOnSelect={true}
+                                      hideSelectedOptions={false}
+                                      id="security_group"
+                                      invalidText=""
+                                      isClearable={false}
+                                      isFetching={false}
+                                      isSearchable={false}
+                                      labelText="Security Group"
+                                      name="security_group"
+                                      noOptionsMessage={[Function]}
+                                      onBlur={[Function]}
+                                      onChange={[Function]}
+                                      onFocus={[Function]}
+                                      onInputChange={[Function]}
+                                      options={
+                                        Array [
+                                          Object {
+                                            "label": "<Choose>",
+                                            "value": undefined,
+                                          },
+                                          Object {
+                                            "label": "default",
+                                            "value": "default",
+                                          },
+                                        ]
+                                      }
+                                      placeholder="<Choose>"
+                                      value=""
+                                    >
+                                      <Select
+                                        className=""
+                                        disabled={false}
+                                        helperText=""
+                                        id="security_group"
+                                        inline={false}
+                                        invalid={false}
+                                        invalidText=""
+                                        labelText="Security Group"
+                                        light={false}
+                                        name="security_group"
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                        value=""
+                                      >
+                                        <div
+                                          className="bx--form-item"
+                                        >
+                                          <div
+                                            className="bx--select"
+                                          >
+                                            <label
+                                              className="bx--label"
+                                              htmlFor="security_group"
+                                            >
+                                              Security Group
+                                            </label>
+                                            <div
+                                              className="bx--select-input__wrapper"
+                                              data-invalid={null}
+                                            >
+                                              <select
+                                                className="bx--select-input"
+                                                id="security_group"
+                                                name="security_group"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                value=""
+                                              >
+                                                <SelectItem
+                                                  disabled={false}
+                                                  hidden={false}
+                                                  key="0"
+                                                  label="<Choose>"
+                                                  text="<Choose>"
+                                                  value=""
+                                                >
+                                                  <option
+                                                    className="bx--select-option"
+                                                    disabled={false}
+                                                    hidden={false}
+                                                    label="<Choose>"
+                                                    value=""
+                                                  >
+                                                    &lt;Choose&gt;
+                                                  </option>
+                                                </SelectItem>
+                                                <SelectItem
+                                                  disabled={false}
+                                                  hidden={false}
+                                                  key="default"
+                                                  label="default"
+                                                  text="default"
+                                                  value="default"
+                                                >
+                                                  <option
+                                                    className="bx--select-option"
+                                                    disabled={false}
+                                                    hidden={false}
+                                                    label="default"
+                                                    value="default"
+                                                  >
+                                                    default
+                                                  </option>
+                                                </SelectItem>
+                                              </select>
+                                              <ForwardRef(ChevronDown16)
+                                                className="bx--select__arrow"
+                                              >
+                                                <Icon
+                                                  className="bx--select__arrow"
+                                                  fill="currentColor"
+                                                  height={16}
+                                                  preserveAspectRatio="xMidYMid meet"
+                                                  viewBox="0 0 16 16"
+                                                  width={16}
+                                                  xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                  <svg
+                                                    aria-hidden={true}
+                                                    className="bx--select__arrow"
+                                                    fill="currentColor"
+                                                    focusable="false"
+                                                    height={16}
+                                                    preserveAspectRatio="xMidYMid meet"
+                                                    viewBox="0 0 16 16"
+                                                    width={16}
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                  >
+                                                    <path
+                                                      d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                    />
+                                                  </svg>
+                                                </Icon>
+                                              </ForwardRef(ChevronDown16)>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </Select>
+                                    </ClearedSelect>
+                                  </Select>
+                                </Select>
+                              </SelectWithOnChange>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <SingleField
+                          component="spy-field"
+                          key="spy-field"
+                          name="spy-field"
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "spy-field",
+                                "initialize": undefined,
+                                "name": "spy-field",
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <SpyField
+                                component="spy-field"
+                                name="spy-field"
+                              >
+                                <FormSpy
+                                  onChange={[Function]}
+                                  subscription={
+                                    Object {
+                                      "pristine": true,
+                                      "valid": true,
+                                    }
+                                  }
+                                />
+                              </SpyField>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <FormSpy>
+                          <FormControls
+                            Button={[Function]}
+                            ButtonGroup={[Function]}
+                            FormSpy={[Function]}
+                            buttonOrder={
+                              Array [
+                                "submit",
+                                "reset",
+                                "cancel",
+                              ]
+                            }
+                            buttonsProps={Object {}}
+                            canReset={false}
+                            canSubmit={false}
+                            cancelLabel="Cancel"
+                            disableSubmit={true}
+                            formFields={
+                              Array [
+                                <SingleField
+                                  component="select"
+                                  id="security_group"
+                                  includeEmpty={true}
+                                  label="Security Group"
+                                  name="security_group"
+                                  options={
+                                    Array [
+                                      Object {
+                                        "label": "default",
+                                        "value": "default",
+                                      },
+                                    ]
+                                  }
+                                  placeholder="<Choose>"
+                                />,
+                                <SingleField
+                                  component="spy-field"
+                                  name="spy-field"
+                                />,
+                              ]
+                            }
+                            formSpyProps={
+                              Object {
+                                "active": undefined,
+                                "dirty": false,
+                                "dirtyFields": Object {},
+                                "dirtyFieldsSinceLastSubmit": Object {},
+                                "dirtySinceLastSubmit": false,
+                                "error": undefined,
+                                "errors": Object {},
+                                "form": Object {
+                                  "batch": [Function],
+                                  "blur": [Function],
+                                  "change": [Function],
+                                  "destroyOnUnregister": false,
+                                  "focus": [Function],
+                                  "getFieldState": [Function],
+                                  "getRegisteredFields": [Function],
+                                  "getState": [Function],
+                                  "initialize": [Function],
+                                  "isValidationPaused": [Function],
+                                  "mutators": Object {
+                                    "concat": [Function],
+                                    "insert": [Function],
+                                    "move": [Function],
+                                    "pop": [Function],
+                                    "push": [Function],
+                                    "remove": [Function],
+                                    "removeBatch": [Function],
+                                    "shift": [Function],
+                                    "swap": [Function],
+                                    "unshift": [Function],
+                                    "update": [Function],
+                                  },
+                                  "pauseValidation": [Function],
+                                  "registerField": [Function],
+                                  "reset": [Function],
+                                  "resetFieldState": [Function],
+                                  "restart": [Function],
+                                  "resumeValidation": [Function],
+                                  "setConfig": [Function],
+                                  "submit": [Function],
+                                  "subscribe": [Function],
+                                },
+                                "hasSubmitErrors": false,
+                                "hasValidationErrors": false,
+                                "initialValues": Object {},
+                                "invalid": false,
+                                "modified": Object {},
+                                "modifiedSinceLastSubmit": false,
+                                "pristine": true,
+                                "submitError": undefined,
+                                "submitErrors": undefined,
+                                "submitFailed": false,
+                                "submitSucceeded": false,
+                                "submitting": false,
+                                "touched": Object {},
+                                "valid": true,
+                                "validating": false,
+                                "values": Object {},
+                                "visited": Object {},
+                              }
+                            }
+                            onCancel={[Function]}
+                            onReset={[Function]}
+                            resetLabel="Reset"
+                            schema={
+                              Object {
+                                "fields": Array [
+                                  Object {
+                                    "component": "select",
+                                    "id": "security_group",
+                                    "includeEmpty": true,
+                                    "label": "Security Group",
+                                    "name": "security_group",
+                                    "options": Array [
+                                      Object {
+                                        "label": "default",
+                                        "value": "default",
+                                      },
+                                    ],
+                                    "placeholder": "<Choose>",
+                                  },
+                                  Object {
+                                    "component": "spy-field",
+                                    "initialize": undefined,
+                                    "name": "spy-field",
+                                  },
+                                ],
+                              }
+                            }
+                            submitLabel="Save"
+                          >
+                            <ButtonGroup>
+                              <ButtonSet
+                                className=""
+                              >
+                                <div
+                                  className="bx--btn-set"
+                                >
+                                  <Button
+                                    buttonType="submit"
+                                    disabled={true}
+                                    key="form-submit"
+                                    label="Save"
+                                    type="submit"
+                                    variant="primary"
+                                  >
+                                    <Button
+                                      disabled={true}
+                                      kind="primary"
+                                      type="submit"
+                                      variant="primary"
+                                    >
+                                      <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
+                                        className="bx--btn bx--btn--primary bx--btn--disabled"
+                                        disabled={true}
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
+                                        tabIndex={0}
+                                        type="submit"
+                                        variant="primary"
+                                      >
+                                        Save
+                                      </button>
+                                    </Button>
+                                  </Button>
+                                  <Button
+                                    buttonType="cancel"
+                                    key="form-cancel"
+                                    label="Cancel"
+                                    onClick={[Function]}
+                                    type="button"
+                                  >
+                                    <Button
+                                      kind="secondary"
+                                      onClick={[Function]}
+                                      type="button"
+                                    >
+                                      <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
+                                        className="bx--btn bx--btn--secondary"
+                                        disabled={false}
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
+                                        tabIndex={0}
+                                        type="button"
+                                      >
+                                        Cancel
+                                      </button>
+                                    </Button>
+                                  </Button>
+                                </div>
+                              </ButtonSet>
+                            </ButtonGroup>
+                          </FormControls>
+                        </FormSpy>
+                         
+                      </form>
+                    </Form>
+                  </Form>
+                </FormTemplate>
+              </WrappedFormTemplate>
+            </Component>
+          </ReactFinalForm>
+        </FormRenderer>
+      </MiqFormRenderer>
+    </Connect(MiqFormRenderer)>
   </AddRemoveSecurityGroupForm>
 </Provider>
 `;
