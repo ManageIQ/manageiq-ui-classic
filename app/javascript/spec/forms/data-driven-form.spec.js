@@ -13,6 +13,7 @@ describe('DataDrivenForm', () => {
       fields: [{
         component: componentTypes.TEXT_FIELD,
         name: 'name',
+        labelText: 'label',
       }],
     };
     initialProps = {
@@ -31,7 +32,7 @@ describe('DataDrivenForm', () => {
 
   it('should set pristine in reducer when changing state', () => {
     const wrapper = mount(<MiqFormRenderer {...initialProps} />);
-    const changeInput = value => act(() => {
+    const changeInput = (value) => act(() => {
       wrapper.find('input').first().simulate('change', { target: { value } });
     });
 
