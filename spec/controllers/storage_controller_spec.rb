@@ -91,8 +91,8 @@ describe StorageController do
         host = FactoryBot.create(:host)
         command = button.split('_', 2)[1]
 
-        stub_supports_all_others(Host)
-        stub_supports(Host, command)
+        stub_supports_all_others(host.class)
+        stub_supports(host.class, command)
 
         controller.params = {:pressed => button, :miq_grid_checks => host.id.to_s}
         controller.instance_variable_set(:@lastaction, "show_list")
