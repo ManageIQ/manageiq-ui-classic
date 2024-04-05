@@ -23,15 +23,23 @@ cols:
 - ports
 - switch_uuid
 
+# Included tables (joined, has_one, has_many) and columns
+include:
+  ext_management_system:
+    columns:
+    - name
+
 # Order of columns (from all tables)
 col_order:
 - name
+- ext_management_system.name
 - ports
 - switch_uuid
 
 # Column titles, in order
 headers:
 - Name
+- Provider
 - Ports
 - UUID
 
