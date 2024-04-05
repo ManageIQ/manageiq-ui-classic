@@ -97,7 +97,7 @@ describe CloudObjectStoreObjectController do
     end
 
     it "delete shows expected flash" do
-      stub_supports(CloudObjectStoreObject, :delete)
+      stub_supports(object.class, :delete)
 
       post :button, :params => {
         :pressed => "cloud_object_store_object_delete", :format => :js, :id => object.id
