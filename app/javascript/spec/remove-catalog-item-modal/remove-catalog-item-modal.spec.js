@@ -11,8 +11,8 @@ import '../helpers/miqSparkle';
 import '../helpers/sprintf';
 
 describe('RemoveCatalogItemModal', () => {
-  const item1 = 123;
-  const item2 = 456;
+  const item1 = '123';
+  const item2 = '456';
   const url1 = `/api/service_templates/${item1}?attributes=services`;
   const url2 = `/api/service_templates/${item2}?attributes=services`;
   const apiResponse1 = {
