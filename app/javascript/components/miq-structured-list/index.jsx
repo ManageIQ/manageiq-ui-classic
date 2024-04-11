@@ -48,7 +48,7 @@ const MiqStructuredList = ({
 export default MiqStructuredList;
 
 MiqStructuredList.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.shape({})]),
   headers: PropTypes.arrayOf(PropTypes.any),
   rows: PropTypes.arrayOf(PropTypes.any),
   onClick: PropTypes.func,
