@@ -234,7 +234,6 @@ exports[`TreeSelector component should render correctly 1`] = `
       </div>
       <Modal
         hasScrollingContent={false}
-        iconDescription="Close"
         modalHeading="tree-selector"
         modalLabel=""
         onKeyDown={[Function]}
@@ -282,7 +281,6 @@ exports[`TreeSelector component should render correctly 1`] = `
                 aria-label="close"
                 className="bx--modal-close"
                 onClick={[Function]}
-                title="Close"
                 type="button"
               >
                 <ForwardRef(Close20)

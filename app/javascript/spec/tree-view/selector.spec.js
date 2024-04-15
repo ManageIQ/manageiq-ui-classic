@@ -39,6 +39,10 @@ const RendererWrapper = ({ initialValue, onSubmit = () => {}, ...props }) => (
 describe('TreeSelector component', () => {
   it('should render correctly', async(done) => {
     const wrapper = mount(<RendererWrapper />);
+    await act(async() => {
+      wrapper.find(TreeViewSelector);
+      wrapper.update();
+    });
     setImmediate(() => {
       expect(toJson(wrapper.find(TreeViewSelector))).toMatchSnapshot();
       done();
