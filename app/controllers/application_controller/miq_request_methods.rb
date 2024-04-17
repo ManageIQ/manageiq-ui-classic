@@ -148,7 +148,7 @@ module ApplicationController::MiqRequestMethods
       end
     elsif params[:hide_deprecated_templates]
       @edit = session[:edit]
-      @edit[:hide_deprecated_templates] = params[:hide_deprecated_templates] == "true"
+      @edit[:hide_deprecated_templates] = provisioning_is_cloud? ? params[:hide_deprecated_templates] == "true" : nil
       render_updated_templates
     else # First time in, build pre-provision screen
       set_pre_prov_vars
@@ -159,6 +159,7 @@ module ApplicationController::MiqRequestMethods
 
   def render_updated_templates
     report_scopes = [:eligible_for_provisioning]
+    report_scopes.push([:filter_with_name, params[:search_text]])
     report_scopes.push(:non_deprecated) if @edit[:hide_deprecated_templates]
     options = options_for_provisioning(get_template_kls.to_s, report_scopes)
 
