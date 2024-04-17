@@ -1,3 +1,16 @@
+.miq-filter-provision-instance {
+  display: flex;
+  align-items: center;
+
+  .checkbox_wrapper {
+    padding-left: 0;
+  }
+
+  .search_bar_wrapper {
+    padding-right: 0;
+  }
+}
+
 .search_bar {
   display: flex;
 
