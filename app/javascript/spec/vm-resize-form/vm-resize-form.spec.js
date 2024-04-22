@@ -2,14 +2,13 @@ import React from 'react';
 import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
 import { shallow } from 'enzyme';
-import { mount } from '../helpers/mountForm';
 import { act } from 'react-dom/test-utils';
+import { mount } from '../helpers/mountForm';
 import VmResizeForm from '../../components/vm-resize-form/vm-resize-form';
 
 require('../helpers/miqSparkle.js');
 
 describe('vm resize form component', () => {
-
   const response = {
     data: {
       form_schema: {
@@ -29,8 +28,7 @@ describe('vm resize form component', () => {
   };
 
   beforeEach(() => {
-    fetchMock
-      .once('/api/vms/1?option_action=resize', response);
+    fetchMock.once('/api/vms/1?option_action=resize', response);
   });
 
   afterEach(() => {
@@ -46,7 +44,7 @@ describe('vm resize form component', () => {
   it('should render a resize form', async(done) => {
     let wrapper;
     await act(async() => {
-      wrapper = mount(<VmResizeForm recordId='1' vmCloudResizeFormId='53'/>);
+      wrapper = mount(<VmResizeForm recordId="1" vmCloudResizeFormId="53" />);
     });
 
     setImmediate(() => {
@@ -60,17 +58,16 @@ describe('vm resize form component', () => {
     const submitData = {
       action: 'resize',
       resource: {
-        resizeValues: {flavor: 'bh1-16x1600'}
+        resizeValues: { flavor: 'bh1-16x1600' },
       },
       resizeFormId: '53',
     };
     fetchMock.postOnce('/api/vms/1', submitData);
-    let wrapper
+    let wrapper;
     await act(async() => {
-      wrapper = mount(<VmResizeForm recordId='1' vmCloudResizeFormId='53'/>);
+      wrapper = mount(<VmResizeForm recordId="1" vmCloudResizeFormId="53" />);
     });
     expect(toJson(wrapper)).toMatchSnapshot();
     done();
   });
-
 });
