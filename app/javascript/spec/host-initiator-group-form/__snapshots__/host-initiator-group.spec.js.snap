@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Host Initiator Group Form  Loads data and renders  1`] = `
+exports[`Host Initiator Group Form Loads data and renders 1`] = `
 <Provider
   store={
     Object {
@@ -884,12 +884,14 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                       value="2"
                                     >
                                       <ClearedSelect
+                                        className=""
+                                        closeMenuOnSelect={true}
                                         disabled={false}
+                                        hideSelectedOptions={false}
                                         id="ems_id"
                                         invalidText=""
                                         isClearable={false}
-                                        isDisabled={true}
-                                        isFetching={true}
+                                        isFetching={false}
                                         isSearchable={false}
                                         labelText={
                                           <IsRequired>
@@ -902,11 +904,23 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                         onChange={[Function]}
                                         onFocus={[Function]}
                                         onInputChange={[Function]}
-                                        options={Array []}
-                                        placeholder="Loading..."
+                                        options={
+                                          Array [
+                                            Object {
+                                              "label": "<Choose>",
+                                              "value": undefined,
+                                            },
+                                            Object {
+                                              "label": "172",
+                                              "value": "2",
+                                            },
+                                          ]
+                                        }
+                                        placeholder="<Choose>"
                                         value="2"
                                       >
                                         <Select
+                                          className=""
                                           disabled={false}
                                           helperText=""
                                           id="ems_id"
@@ -961,16 +975,37 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                                   <SelectItem
                                                     disabled={false}
                                                     hidden={false}
-                                                    text="Loading..."
+                                                    key="0"
+                                                    label="<Choose>"
+                                                    text="<Choose>"
                                                     value=""
                                                   >
                                                     <option
                                                       className="bx--select-option"
                                                       disabled={false}
                                                       hidden={false}
+                                                      label="<Choose>"
                                                       value=""
                                                     >
-                                                      Loading...
+                                                      &lt;Choose&gt;
+                                                    </option>
+                                                  </SelectItem>
+                                                  <SelectItem
+                                                    disabled={false}
+                                                    hidden={false}
+                                                    key="2"
+                                                    label="172"
+                                                    text="172"
+                                                    value="2"
+                                                  >
+                                                    <option
+                                                      className="bx--select-option"
+                                                      disabled={false}
+                                                      hidden={false}
+                                                      label="172"
+                                                      value="2"
+                                                    >
+                                                      172
                                                     </option>
                                                   </SelectItem>
                                                 </select>
@@ -1366,14 +1401,16 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                                 placeholder="<Choose>"
                                                 pluckSingleValue={true}
                                                 simpleValue={false}
-                                                value=""
+                                                value="1"
                                               >
                                                 <ClearedSelect
+                                                  className=""
+                                                  closeMenuOnSelect={true}
+                                                  hideSelectedOptions={false}
                                                   id="physical_storage_id"
                                                   invalidText=""
                                                   isClearable={false}
-                                                  isDisabled={true}
-                                                  isFetching={true}
+                                                  isFetching={false}
                                                   isSearchable={false}
                                                   labelText={
                                                     <IsRequired>
@@ -1386,11 +1423,27 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
                                                   onInputChange={[Function]}
-                                                  options={Array []}
-                                                  placeholder="Loading..."
-                                                  value=""
+                                                  options={
+                                                    Array [
+                                                      Object {
+                                                        "label": "<Choose>",
+                                                        "value": undefined,
+                                                      },
+                                                      Object {
+                                                        "label": "178",
+                                                        "value": 1,
+                                                      },
+                                                      Object {
+                                                        "label": "179",
+                                                        "value": 2,
+                                                      },
+                                                    ]
+                                                  }
+                                                  placeholder="<Choose>"
+                                                  value="1"
                                                 >
                                                   <Select
+                                                    className=""
                                                     disabled={false}
                                                     helperText=""
                                                     id="physical_storage_id"
@@ -1407,7 +1460,7 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                                     onBlur={[Function]}
                                                     onChange={[Function]}
                                                     onFocus={[Function]}
-                                                    value=""
+                                                    value="1"
                                                   >
                                                     <div
                                                       className="bx--form-item"
@@ -1440,21 +1493,60 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                                             onBlur={[Function]}
                                                             onChange={[Function]}
                                                             onFocus={[Function]}
-                                                            value=""
+                                                            value="1"
                                                           >
                                                             <SelectItem
                                                               disabled={false}
                                                               hidden={false}
-                                                              text="Loading..."
+                                                              key="0"
+                                                              label="<Choose>"
+                                                              text="<Choose>"
                                                               value=""
                                                             >
                                                               <option
                                                                 className="bx--select-option"
                                                                 disabled={false}
                                                                 hidden={false}
+                                                                label="<Choose>"
                                                                 value=""
                                                               >
-                                                                Loading...
+                                                                &lt;Choose&gt;
+                                                              </option>
+                                                            </SelectItem>
+                                                            <SelectItem
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              key="1"
+                                                              label="178"
+                                                              text="178"
+                                                              value={1}
+                                                            >
+                                                              <option
+                                                                className="bx--select-option"
+                                                                disabled={false}
+                                                                hidden={false}
+                                                                label="178"
+                                                                value={1}
+                                                              >
+                                                                178
+                                                              </option>
+                                                            </SelectItem>
+                                                            <SelectItem
+                                                              disabled={false}
+                                                              hidden={false}
+                                                              key="2"
+                                                              label="179"
+                                                              text="179"
+                                                              value={2}
+                                                            >
+                                                              <option
+                                                                className="bx--select-option"
+                                                                disabled={false}
+                                                                hidden={false}
+                                                                label="179"
+                                                                value={2}
+                                                              >
+                                                                179
                                                               </option>
                                                             </SelectItem>
                                                           </select>
@@ -1553,7 +1645,6 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                               canReset={false}
                               canSubmit={false}
                               cancelLabel="Cancel"
-                              disableSubmit={true}
                               formFields={
                                 Array [
                                   <SingleField
@@ -1626,16 +1717,16 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                   "dirtyFields": Object {
                                     "ems_id": true,
                                     "name": true,
+                                    "physical_storage_id": true,
                                   },
                                   "dirtyFieldsSinceLastSubmit": Object {
                                     "ems_id": true,
                                     "name": true,
+                                    "physical_storage_id": true,
                                   },
                                   "dirtySinceLastSubmit": false,
                                   "error": undefined,
-                                  "errors": Object {
-                                    "physical_storage_id": "Required",
-                                  },
+                                  "errors": Object {},
                                   "form": Object {
                                     "batch": [Function],
                                     "blur": [Function],
@@ -1671,13 +1762,13 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                     "subscribe": [Function],
                                   },
                                   "hasSubmitErrors": false,
-                                  "hasValidationErrors": true,
+                                  "hasValidationErrors": false,
                                   "initialValues": Object {},
-                                  "invalid": true,
+                                  "invalid": false,
                                   "modified": Object {
                                     "ems_id": false,
                                     "name": true,
-                                    "physical_storage_id": false,
+                                    "physical_storage_id": true,
                                   },
                                   "modifiedSinceLastSubmit": false,
                                   "pristine": false,
@@ -1691,11 +1782,12 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                     "name": false,
                                     "physical_storage_id": false,
                                   },
-                                  "valid": false,
-                                  "validating": true,
+                                  "valid": true,
+                                  "validating": false,
                                   "values": Object {
                                     "ems_id": "2",
                                     "name": "my_group",
+                                    "physical_storage_id": "1",
                                   },
                                   "visited": Object {
                                     "ems_id": false,
@@ -1780,14 +1872,12 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                   >
                                     <Button
                                       buttonType="submit"
-                                      disabled={true}
                                       key="form-submit"
                                       label="Add"
                                       type="submit"
                                       variant="primary"
                                     >
                                       <Button
-                                        disabled={true}
                                         kind="primary"
                                         type="submit"
                                         variant="primary"
@@ -1795,8 +1885,8 @@ exports[`Host Initiator Group Form  Loads data and renders  1`] = `
                                         <button
                                           aria-describedby={null}
                                           aria-pressed={null}
-                                          className="bx--btn bx--btn--primary bx--btn--disabled"
-                                          disabled={true}
+                                          className="bx--btn bx--btn--primary"
+                                          disabled={false}
                                           onBlur={[Function]}
                                           onClick={[Function]}
                                           onFocus={[Function]}
