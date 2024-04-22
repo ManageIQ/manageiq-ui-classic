@@ -38,16 +38,7 @@ describe('Physical storage form component', () => {
     physical_chassis_id: null,
     total_space: null,
     physical_storage_family_id: '1',
-    capabilities: {
-      compression: [
-        'False',
-        'True',
-      ],
-      thin_provision: [
-        'False',
-        'True',
-      ],
-    },
+    capabilities: 'Default',
     actions: [
       { name: 'edit', method: 'patch', href: 'https://9.151.190.197/api/physical_storages/1' },
       { name: 'edit', method: 'put', href: 'https://9.151.190.197/api/physical_storages/1' },
@@ -59,16 +50,7 @@ describe('Physical storage form component', () => {
   const physicalStorageFamilyMock = {
     href: 'https://9.151.190.130/api/providers/2',
     type: 'ManageIQ::Providers::Autosde::StorageManager',
-    capabilities: {
-      compression: [
-        'False',
-        'True',
-      ],
-      thin_provision: [
-        'False',
-        'True',
-      ],
-    },
+    capabilities: 'Default',
     id: '2',
     physical_storage_families: [
       {
@@ -79,20 +61,17 @@ describe('Physical storage form component', () => {
         ems_ref: '4689c707-3064-4b1c-b001-7688bd9b5655',
         created_at: '2021-08-29T10:40:21Z',
         updated_at: '2021-08-29T10:40:21Z',
-        capabilities: {
-          compression: [
-            'False',
-            'True',
-          ],
-          thin_provision: [
-            'False',
-            'True',
-          ],
-        },
+        capabilities: 'Default',
       },
 
       {
-        id: '2', namec: 'xiv', version: '1.1', ems_id: '2', ems_ref: 'b91e94ab-8056-4c61-bec6-00430e9c1e4c', created_at: '2021-08-29T10:40:21Z', updated_at: '2021-08-29T10:40:21Z',
+        id: '2',
+        namec: 'xiv',
+        version: '1.1',
+        ems_id: '2',
+        ems_ref: 'b91e94ab-8056-4c61-bec6-00430e9c1e4c',
+        created_at: '2021-08-29T10:40:21Z',
+        updated_at: '2021-08-29T10:40:21Z',
       },
     ],
   };
