@@ -11,6 +11,11 @@ const customJsAction = ({ action }) => {
         window.miqOnClickSelectRbacTreeNode(action.treeId);
       }
       break;
+    case 'miqQueueReport':
+      if (action.id) {
+        miqQueueReport(action.id);
+      }
+      break;
     default:
       console.warn(`Unrecognized action name: ${action.name}`);
   }

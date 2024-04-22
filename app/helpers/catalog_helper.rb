@@ -60,18 +60,18 @@ module CatalogHelper
 
   def catalog_tab_configuration(record)
     condition = catalog_tab_conditions(record)
-    tab_labels = [tab_label(:basic)]
-    tab_labels.push(tab_label(:detail)) if condition[:detail]
+    tab_labels = [:basic]
+    tab_labels.push(:detail) if condition[:detail]
 
     if condition[:resource]
-      tab_labels.push(tab_label(:resource))
+      tab_labels.push(:resource)
     elsif condition[:request]
-      tab_labels.push(tab_label(:request))
+      tab_labels.push(:request)
     end
 
     if condition[:provision]
-      tab_labels.push(tab_label(:provision))
-      tab_labels.push(tab_label(:retirement)) if condition[:retirement]
+      tab_labels.push(:provision)
+      tab_labels.push(:retirement) if condition[:retirement]
     end
 
     return tab_labels, condition
@@ -79,19 +79,15 @@ module CatalogHelper
 
   def catalog_tab_edit_configuration(record)
     condition = catalog_tab_edit_conditions(record)
-    tab_labels = [tab_label(:basic)]
-    tab_labels.push(tab_label(:detail)) if condition[:detail]
-    tab_labels.push(tab_label(:resource)) if condition[:resource]
-    tab_labels.push(tab_label(:request)) if condition[:request]
+    tab_labels = [:basic]
+    tab_labels.push(:detail) if condition[:detail]
+    tab_labels.push(:resource) if condition[:resource]
+    tab_labels.push(:request) if condition[:request]
     return tab_labels, condition
   end
 
-  def catalog_tab_edit_generic_configuration
-    [tab_label(:basic), tab_label(:provision), tab_label(:retirement)]
-  end
-
   def catalog_tab_content(key_name, &block)
-    if catalog_tabs_types[key_name]
+    if catalog_tabs_types.include?(key_name)
       class_name = key_name == :basic ? 'tab_content active' : 'tab_content'
       content_tag(:div, :id => key_name, :class => class_name, &block)
     end
@@ -253,14 +249,7 @@ module CatalogHelper
   private
 
   def catalog_tabs_types
-    {
-      :basic      => _('Basic Information'),
-      :detail     => _('Details'),
-      :resource   => _('Selected Resources'),
-      :request    => _('Request Info'),
-      :provision  => _('Provisioning'),
-      :retirement => _('Retirement')
-    }
+    [:basic, :detail, :resource, :request, :provision, :retirement]
   end
 
   def catalog_tab_conditions(record)
@@ -296,10 +285,6 @@ module CatalogHelper
 
   def catalog_provision?(record, type)
     record.prov_type == catalog_provision_types[type]
-  end
-
-  def tab_label(item)
-    {:name => item, :text => catalog_tabs_types[item]}
   end
 
   # Method which return true if workflows are behing prototype flag.

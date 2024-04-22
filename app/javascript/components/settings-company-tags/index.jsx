@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'carbon-components-react';
+import { Button, Accordion, AccordionItem } from 'carbon-components-react';
+import { AddAlt16 } from '@carbon/icons-react';
 import MiqDataTable from '../miq-data-table';
 import MiqStructuredList from '../miq-structured-list';
 import SettingsCompanyTagsEntryForm from '../settings-company-tags-entry-form';
 import { rowData, CellAction } from '../miq-data-table/helper';
 import NoRecordsFound from '../no-records-found';
+import MiqConfirmActionModal, { modalCallbackTypes } from '../miq-confirm-action-modal';
 import { http } from '../../http_api';
 import { categoryOptions, pageData } from './helper';
 
@@ -25,6 +27,7 @@ const SettingsCompanyTags = ({ pageTitle, categoryId }) => {
     list: undefined,
     isLoading: true,
     listLoading: true,
+    confirm: false,
   });
 
   /** Function to fetch the information needed for summary and list when the select box is changed. */
@@ -34,6 +37,7 @@ const SettingsCompanyTags = ({ pageTitle, categoryId }) => {
       const { summary, list, selectedCategory } = pageData(response, data.options);
       setData({
         ...data,
+        confirm: false,
         summary,
         list,
         selectedCategory,
@@ -70,7 +74,7 @@ const SettingsCompanyTags = ({ pageTitle, categoryId }) => {
     });
   };
 
-  /** Function to be exeuted after the add/save/cancel/delete action */
+  /** Function to be executed after the add/save/cancel/delete action */
   const formCallback = (actionType, responseData) => {
     if (responseData.status === 'error') {
       return setData({
@@ -100,20 +104,7 @@ const SettingsCompanyTags = ({ pageTitle, categoryId }) => {
   /** Function to handle the delete button click event from the list. */
   const onButtonCallback = (item) => {
     if (item && item.callbackAction && item.callbackAction === 'deleteEntryCallback') {
-      // confirm box will be changed after other tab contents are changed.
-      // eslint-disable-next-line no-alert
-      if (window.confirm(__('Are you sure you want to delete this entry?'))) {
-        miqSparkleOn();
-        http.post(`/ops/ce_delete/${data.selectedCategory.id}?entry_id=${item.id}`).then((response) => {
-          setData({
-            ...data,
-            notification: { visible: true, type: 'danger', message: response.message },
-          });
-          miqSparkleOff();
-          add_flash(__('Category entry was successfully deleted'), response.type);
-          return categoryInformation(response.category_id);
-        });
-      }
+      setData({ ...data, selectedEntryId: item.id, confirm: true });
     }
   };
 
@@ -128,27 +119,36 @@ const SettingsCompanyTags = ({ pageTitle, categoryId }) => {
     }
   };
 
+  const deleteEntry = (actionType) => {
+    if (actionType === modalCallbackTypes.OK) {
+      miqSparkleOn();
+      http.post(`/ops/ce_delete/${data.selectedCategory.id}?entry_id=${data.selectedEntryId}`).then((response) => {
+        setData({
+          ...data,
+          confirm: false,
+          notification: { visible: true, type: 'danger', message: response.message },
+        });
+        miqSparkleOff();
+        add_flash(__('Category entry was successfully deleted'), response.type);
+        return categoryInformation(response.category_id);
+      });
+    } else {
+      setData({ ...data, confirm: false });
+    }
+  };
+
   /** Function to render the add new button */
   const renderActionButton = () => (
-    <Button
-      onClick={() => onSelect('new')}
-      onKeyPress={() => onSelect('new')}
-      title={__('Click to add a new entry')}
-    >
-      {__('Add Entry')}
-    </Button>
-  );
-
-  /** Function to render the title bar */
-  const renderTitleBar = (title, hasButton) => (
-    <div className="miq-custom-tab-content-header">
-      <div className="tab-content-header-title">
-        <h3>{title}</h3>
-      </div>
-      <div className="tab-content-header-actions" />
-      {
-        hasButton && renderActionButton()
-      }
+    <div className="custom-accordion-buttons">
+      <Button
+        onClick={() => onSelect('new')}
+        onKeyPress={() => onSelect('new')}
+        renderIcon={AddAlt16}
+        size="sm"
+        title={__('Click to add a new entry')}
+      >
+        {__('Add Entry')}
+      </Button>
     </div>
   );
 
@@ -158,10 +158,21 @@ const SettingsCompanyTags = ({ pageTitle, categoryId }) => {
     return (
       <MiqStructuredList
         rows={rows}
+        title={pageTitle}
         mode={mode}
         onClick={(dropDownData) => onDropDownChange(dropDownData)} // ToDo: onClick must be generic name
       />
     );
+  };
+
+  /** Function to render a confirmation-modal-box. */
+  const renderConfirmModal = () => {
+    const modalData = {
+      open: data.confirm,
+      confirm: __('Are you sure you want to delete this entry?'),
+      callback: (actionType) => deleteEntry(actionType),
+    };
+    return <MiqConfirmActionModal modalData={modalData} />;
   };
 
   /** Function to render the entries list with a header and button. */
@@ -174,7 +185,7 @@ const SettingsCompanyTags = ({ pageTitle, categoryId }) => {
     return (
       <>
         <input type="hidden" id="ignore_form_changes" />
-        {renderTitleBar(sprintf(__('%s Entries'), data.selectedCategory.description), true)}
+        {renderActionButton()}
         <MiqDataTable
           rows={miqRows.rowItems}
           headers={data.list.headers}
@@ -182,6 +193,9 @@ const SettingsCompanyTags = ({ pageTitle, categoryId }) => {
           showPagination={false}
           mode="settings-company-tags-list"
         />
+        {
+          data.confirm && renderConfirmModal()
+        }
         {miqRows.rowItems.length === 0 && <NoRecordsFound />}
       </>
     );
@@ -205,7 +219,12 @@ const SettingsCompanyTags = ({ pageTitle, categoryId }) => {
   const renderTabContent = () => (
     <>
       {data.summary && data.options && renderSummary()}
-      {data.pageType === pageTypes.list ? renderList() : renderForm()}
+      <Accordion align="start" className="miq-custom-accordion">
+        <AccordionItem title={sprintf(__('%s Entries'), data.selectedCategory.description)} open>
+          {data.pageType === pageTypes.list ? renderList() : renderForm()}
+        </AccordionItem>
+      </Accordion>
+
     </>
   );
 
@@ -215,7 +234,6 @@ const SettingsCompanyTags = ({ pageTitle, categoryId }) => {
   */
   return (
     <>
-      {renderTitleBar(pageTitle, false)}
       {!data.isLoading && renderTabContent()}
     </>
   );

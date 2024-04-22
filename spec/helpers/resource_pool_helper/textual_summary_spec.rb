@@ -10,6 +10,7 @@ describe ResourcePoolHelper::TextualSummary do
   )
 
   include_examples "textual_group", "Relationships", %i(
+    ext_management_system
     parent_datacenter
     parent_cluster
     parent_host

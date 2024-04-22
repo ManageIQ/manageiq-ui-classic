@@ -36,7 +36,11 @@ describe('DiagnosticsCURepairForm Component', () => {
     ];
     fetchMock.getOnce('/api', { timezones });
     fetchMock.postOnce('/api/instances/1850//ops/cu_repair?button=submit/', paramsData);
-    const wrapper = mount(<DiagnosticsCURepairForm />);
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<DiagnosticsCURepairForm />);
+    });
+    wrapper.update();
     expect(toJson(wrapper)).toMatchSnapshot();
     done();
   });

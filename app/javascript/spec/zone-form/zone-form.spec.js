@@ -7,15 +7,13 @@ import { act } from 'react-dom/test-utils';
 import { mount } from '../helpers/mountForm';
 import ZoneForm from '../../components/zone-form/index';
 
-
-const zoneForm = require('../../components/zone-form/index');
 describe('zone Form Component', () => {
   const zone = {
     authentications: [],
     created_on: '2021-05-13T19:47:24Z',
     description: 'test add zone',
     href: 'http://localhost:3000/api/zones/68',
-    id: "68",
+    id: '68',
     name: 'test add zone name',
   };
 
@@ -35,7 +33,7 @@ describe('zone Form Component', () => {
     fetchMock.get('/api/zones/68?attributes=authentications', zone);
     let wrapper;
     await act(async() => {
-      wrapper = mount(<ZoneForm recordId={68} {...zone} />);
+      wrapper = mount(<ZoneForm recordId="68" {...zone} />);
     });
     wrapper.update();
     expect(toJson(wrapper)).toMatchSnapshot();
