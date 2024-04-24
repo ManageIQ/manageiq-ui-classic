@@ -2,8 +2,6 @@ require 'simplecov'
 SimpleCov.start
 
 ENV["RAILS_ENV"] ||= 'test'
-require 'pathname'
-require Pathname.new(__dir__).join("manageiq/config/environment").to_s
 require 'rails-controller-testing'
 require 'rspec/rails'
 
