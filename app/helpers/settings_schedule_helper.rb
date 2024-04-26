@@ -75,7 +75,7 @@ module SettingsScheduleHelper
     ]
 
     if schedule.next_run_on.present?
-      rows.push(row_data(_('Request'), schedule.filter[:uri_parts][:message]))
+      rows.push(row_data(_('Request'), schedule.filter[:parameters][:request]))
     else
       rows.push(row_data(_('Request'), ''))
     end
