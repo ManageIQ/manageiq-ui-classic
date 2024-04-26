@@ -289,10 +289,10 @@
             = field_hash[:notes]
       - elsif [:tag_ids, :vm_tags].include?(field)
         -# tree control for tags fields
-        .col-md-10
+        .col-md-10.tagging-container
           = react('TaggingWrapperConnected',
             :tags    => @tags,
-            :options => { :type => 'provision', :hideHeaders => true, :hideButtons => true,
+            :options => { :type => 'provision', :hideHeaders => false, :hideButtons => true,
                           :url => url, :isDisabled => @tags[:isDisabled]})
           - unless field_hash[:notes_display] == :hide || field_hash[:notes].blank?
             -# Display notes if available
