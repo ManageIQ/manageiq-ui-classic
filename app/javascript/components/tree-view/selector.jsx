@@ -98,7 +98,6 @@ const TreeViewSelector = ({
         modalHeading={label}
         primaryButtonText={selectLabel}
         secondaryButtonText={closeLabel}
-        iconDescription={closeLabel}
         primaryButtonDisabled={!active}
         onRequestSubmit={changeValue}
         onSecondarySubmit={closeModal}
