@@ -253,10 +253,15 @@
 .provision-instance-container {
   display: flex;
   flex-direction: column;
+  margin-top: 20px;
 
   .provision-instance-list {
-    height: calc(100vh - 255px);
+    height: calc(100vh - 200px);
     overflow: auto;
+
+    .miq-data-table {
+      margin-top: 0;
+    }
   }
   .provision-instance-actions {
 
