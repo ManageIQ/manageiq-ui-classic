@@ -1888,14 +1888,14 @@ class ApplicationController < ActionController::Base
       "vm"
     when "generic_object_definition" # tagging for nested list on the generic object class
       "generic_object"
-    when "ansible_playbook", "workflow"
+    when "ansible_playbook", "workflow", "embedded_terraform_template"
       "embedded_configuration_script_payload"
-    when "workflow_repository"
+    when "workflow_repository", "embedded_terraform_repository"
       "ansible_repository"
     # TODO: Update manageiq/db/fixtures/miq_product_features.yml by replacing ansible_credential_tag with embedded_automation_manager_credential_tag
     # when "workflow_credential", "ansible_credential"
     #  "embedded_automation_manager_credential"
-    when "workflow_credential"
+    when "workflow_credential", "embedded_terraform_credential"
       "ansible_credential"
     else
       controller_name

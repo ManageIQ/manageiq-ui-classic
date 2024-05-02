@@ -89,14 +89,14 @@ module ApplicationHelper
         _("Playbooks (Ansible Tower)")
       when "manageiq/providers/embedded_ansible/automation_manager/playbook"
         _("Playbooks")
-      when "manageiq/providers/embedded_ansible/automation_manager/credential", "manageiq/providers/workflows/automation_manager/credential"
+      when "manageiq/providers/embedded_ansible/automation_manager/credential", "manageiq/providers/workflows/automation_manager/credential", "manageiq/providers/embedded_terraform/automation_manager/credential"
         _("Credentials")
-      when "manageiq/providers/embedded_ansible/automation_manager/configuration_script_source"
-        _("Repositories")
-      when "manageiq/providers/workflows/automation_manager/configuration_script_source"
+      when "manageiq/providers/embedded_ansible/automation_manager/configuration_script_source", "manageiq/providers/workflows/automation_manager/configuration_script_source", "manageiq/providers/embedded_terraform/automation_manager/configuration_script_source"
         _("Repositories")
       when "manageiq/providers/workflows/automation_manager/workflow"
         _("Workflows")
+      when "manageiq/providers/embedded_terraform/automation_manager/template"
+        _("Templates")
 
       else
         fallback_title(layout)

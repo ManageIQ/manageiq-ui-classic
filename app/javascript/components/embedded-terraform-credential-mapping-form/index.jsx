@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
 import MiqFormRenderer from '@@ddf';
-import { CredentialMapperComponent } from './helper';
+import { CredentialMapperComponent } from '../workflow-credential-mapping-form/helper';
 import componentMapper from '../../forms/mappers/componentMapper';
-import createSchema from './workflow-credential-mapping-form.schema';
+import createSchema from './embedded-terraform-credential-mapping-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
-const WorkflowCredentialMappingForm = ({ recordId }) => {
+const EmbeddedTerraformCredentialMappingForm = ({ recordId }) => {
   const [{
     credentials,
     credentialReferences,
@@ -27,10 +26,11 @@ const WorkflowCredentialMappingForm = ({ recordId }) => {
   useEffect(() => {
     // eslint-disable-next-line camelcase
     API.get(
-      `/api/authentications?expand=resources&filter[]=type='ManageIQ::Providers::Workflows::AutomationManager::WorkflowCredential'`
+      `/api/authentications?expand=resources&filter[]=type='ManageIQ::Providers::EmbeddedTerraform::AutomationManager::ScmCredential'`
     ).then(({ resources }) => {
       API.get(`/api/configuration_script_payloads/${recordId}`).then(({ name, payload, credentials }) => {
         const initialCredentials = credentials != null ? credentials : {};
+
         /*
           Creates the list of credential references from the workflow payload by parsing each state and saving them to payloadCredentials.
           Duplicate references get overridden.
@@ -51,7 +51,7 @@ const WorkflowCredentialMappingForm = ({ recordId }) => {
 
         // Returns the user to the show_list page if the workflow has no credential references in it's payload
         if (Object.keys(payloadCredentials).length === 0) {
-          throw __('Workflow does not have any credentials to map.');
+          miqRedirectBack(__('Workflow does not have any credentials to map.'), 'error', '/embedded_terraform_workflow/show_list');
         }
 
         /*
@@ -73,12 +73,12 @@ const WorkflowCredentialMappingForm = ({ recordId }) => {
           isLoading: false,
         });
       }).catch((error) => {
-        const message = __('Embedded Workflow service is not available.');
-        miqRedirectBack(error || message, 'error', '/workflow/show_list');
+        const message = __('Embedded Terraform service is not available.');
+        miqRedirectBack(error || message, 'error', '/embedded_terraform_workflow/show_list');
       });
     }).catch(() => {
-      const message = __('Embedded Workflow service is not available.');
-      miqRedirectBack(message, 'error', '/workflow/show_list');
+      const message = __('Embedded Terraform service is not available.');
+      miqRedirectBack(message, 'error', '/embedded_terraform_workflow/show_list');
     });
   }, []);
 
@@ -90,7 +90,7 @@ const WorkflowCredentialMappingForm = ({ recordId }) => {
     const request = API.patch(`/api/configuration_script_payloads/${recordId}`, submission);
     request.then(() => {
       const message = sprintf(__('Credential Mapping for "%s" was saved.'), initialValues.name);
-      miqRedirectBack(message, undefined, '/workflow/show_list');
+      miqRedirectBack(message, undefined, '/embedded_terraform_workflow/show_list');
     }).catch(miqSparkleOff);
   };
 
@@ -103,7 +103,7 @@ const WorkflowCredentialMappingForm = ({ recordId }) => {
 
   const onCancel = () => {
     const message = sprintf(__('Credential Mapping for "%s" was canceled by the user.'), initialValues && initialValues.name);
-    miqRedirectBack(message, 'warning', '/workflow/show_list');
+    miqRedirectBack(message, 'warning', '/embedded_terraform_workflow/show_list');
   };
 
   return !isLoading && (
@@ -120,11 +120,11 @@ const WorkflowCredentialMappingForm = ({ recordId }) => {
   );
 };
 
-WorkflowCredentialMappingForm.propTypes = {
+EmbeddedTerraformCredentialMappingForm.propTypes = {
   recordId: PropTypes.string,
 };
-WorkflowCredentialMappingForm.defaultProps = {
+EmbeddedTerraformCredentialMappingForm.defaultProps = {
   recordId: undefined,
 };
 
-export default WorkflowCredentialMappingForm;
+export default EmbeddedTerraformCredentialMappingForm;
