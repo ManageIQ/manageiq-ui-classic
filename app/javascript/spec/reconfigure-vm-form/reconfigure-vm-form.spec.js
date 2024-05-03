@@ -5,6 +5,7 @@ import { act } from 'react-dom/test-utils';
 import ReconfigureVmForm from '../../components/reconfigure-vm-form/index';
 import {
   valueFromHelpers, valueFromHelpersTwo, responseDataOne, responseDataThree, responseDataTwo,
+  valueFromHelpersThree,
 } from './data';
 import { mount } from '../helpers/mountForm';
 
@@ -167,6 +168,23 @@ describe('Reconfigure VM form component', () => {
     wrapper.update();
     expect(fetchMock.calls()).toHaveLength(1);
     expect(wrapper.find('button[title="Cancel Disconnect"]')).toBeDefined();
+    expect(toJson(wrapper)).toMatchSnapshot();
+    done();
+  });
+
+  it('should render form with only fields it has permission for', async(done) => {
+    fetchMock.get('vm_infra/reconfigure_form_fields/new,12', responseDataOne);
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<ReconfigureVmForm {...valueFromHelpersThree} />);
+    });
+    wrapper.update();
+    expect(fetchMock.calls()).toHaveLength(1);
+    expect(wrapper.contains('Memory')).toBe(true);
+    expect(wrapper.contains('Processor')).toBe(false);
+    expect(wrapper.contains('Disks')).toBe(false);
+    expect(wrapper.contains('Network Adapters')).toBe(false);
+    expect(wrapper.contains('CD/DVD Drives')).toBe(true);
     expect(toJson(wrapper)).toMatchSnapshot();
     done();
   });

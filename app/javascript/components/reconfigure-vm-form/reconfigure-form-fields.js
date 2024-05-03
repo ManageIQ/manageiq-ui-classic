@@ -5,13 +5,12 @@ import { setNetworkData } from './helpers/network';
 import { setDrivesData } from './helpers/drive';
 import { TYPES } from './helpers/general';
 
-const memoryField = (roles) => ({
+const memoryField = () => ({
   component: 'switch',
   name: 'cb_memory',
   label: __('Memory'),
   onText: __('Yes'),
   offText: __('No'),
-  isDisabled: roles.allowMemoryChange === false,
 });
 
 const memoryValueField = () => ({
@@ -56,13 +55,12 @@ const memoryFormFields = (memory) => ({
   ],
 });
 
-const processorField = (roles) => ({
+const processorField = () => ({
   component: 'switch',
   name: 'processor',
   label: __('Processor'),
   onText: __('Yes'),
   offText: __('No'),
-  isDisabled: roles.allowCpuChange === false,
 });
 
 const socketField = (data, setData, options) => ({
@@ -123,6 +121,7 @@ const diskTable = (data, roles, setData, onCellClick, buttonClick) => ({
   formType: TYPES.DISK,
   addButtonLabel: __('Add Disk'),
   buttonClick,
+  roleAllowed: roles.allowDiskChange,
 });
 
 const networkTable = (data, roles, setData, onCellClick, buttonClick) => ({
@@ -135,6 +134,7 @@ const networkTable = (data, roles, setData, onCellClick, buttonClick) => ({
   formType: TYPES.NETWORK,
   addButtonLabel: __('Add Network Adapter'),
   buttonClick,
+  roleAllowed: roles.allowNetworkChange,
 });
 
 const driveTable = (data, roles, setData, onCellClick) => ({
@@ -147,6 +147,7 @@ const driveTable = (data, roles, setData, onCellClick) => ({
   addButton: false,
   formType: TYPES.DRIVE,
   hideField: !data.dataTable.drives || data.dataTable.drives.length === 0,
+  roleAllowed: roles.allowCdromsChange,
 });
 
 const renderDatatables = (recordId, data, roles, setData, onCellClick, buttonClick) => [diskTable(data, roles, setData, onCellClick, buttonClick),
@@ -154,12 +155,15 @@ const renderDatatables = (recordId, data, roles, setData, onCellClick, buttonCli
   driveTable(data, roles, setData, onCellClick)];
 
 export const reconfigureFormFields = (recordId, roles, memory, data, setData, options, onCellClick, buttonClick) => {
-  const formFields = [
-    memoryField(roles),
-    memoryFormFields(memory),
-    processorField(roles),
-    processorFormFields(data, setData, options, memory.max_cpu),
-  ];
+  const formFields = [];
+  if (roles.allowMemoryChange) {
+    formFields.push(memoryField());
+    formFields.push(memoryFormFields(roles));
+  }
+  if (roles.allowCpuChange) {
+    formFields.push(processorField());
+    formFields.push(processorFormFields(data, setData, options, memory.max_cpu));
+  }
   if (recordId.length === 1) {
     formFields.push(renderDatatables(recordId, data, roles, setData, onCellClick, buttonClick));
   }
