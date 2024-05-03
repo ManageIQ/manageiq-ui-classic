@@ -11,4 +11,4 @@
     = render :partial => 'layouts/info_msg', :locals => {:message => msg}
   - if @ajax_action
     :javascript
-      ManageIQ.afterOnload = "miqAsyncAjax('#{url_for_only_path :action => @ajax_action, :id => @record}');"
+      ManageIQ.afterOnload = {action: () => miqAsyncAjax("#{url_for_only_path(:action => @ajax_action, :id => @record)}")}

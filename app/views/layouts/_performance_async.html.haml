@@ -1,4 +1,4 @@
 = render(:partial => "layouts/performance")
 
 :javascript
-  ManageIQ.afterOnload = "miqAsyncAjax('#{url_for_only_path(:action => @ajax_action, :id => @record.id)}');"
+  ManageIQ.afterOnload = {action: () => miqAsyncAjax("#{url_for_only_path(:action => @ajax_action, :id => @record.id)}")}

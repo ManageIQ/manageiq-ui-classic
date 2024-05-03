@@ -9,5 +9,5 @@
   - if @sb[:active_tab] == "db_utilization"
     miqAsyncAjax('#{url_for_only_path(:action => @ajax_action, :id => @record)}');
   };
-  ManageIQ.afterOnload = "miqOpsAfterOnload();"
+  ManageIQ.afterOnload = {action: () => miqOpsAfterOnload()}
 
