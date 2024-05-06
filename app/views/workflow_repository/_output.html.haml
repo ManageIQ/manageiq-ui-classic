@@ -1,5 +1,7 @@
-- if @record.last_update_error.nil?
-  = _('No output for the last refresh.')
-- else
-  %pre
-    = @record.last_update_error
+#flash_msg_div
+#output_div
+  - if @record.last_update_error.nil?
+    = _('No output for the last refresh.')
+  - else
+    %pre
+      = @record.last_update_error

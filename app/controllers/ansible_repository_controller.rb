@@ -48,10 +48,14 @@ class AnsibleRepositoryController < ApplicationController
         page.replace("gtl_div", :partial => "layouts/gtl")
       end
     when "ansible_repository_reload" # repository reload
-      show
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("main_div", :template => "ansible_repository/show")
+      if @display == "output"
+        show
+        show_output
+        @display = "output" # reset @display back to "output" after show changes it to "main"
+        render_update("output_div", "output", true)
+      else
+        show
+        render_update("main_div", "show", false)
       end
     when "ansible_repository_tag" # tag repositories
       tag(self.class.model)
@@ -145,6 +149,17 @@ class AnsibleRepositoryController < ApplicationController
   end
 
   private
+
+  def render_update(div_id, partial, is_partial)
+    render :update do |page|
+      page << javascript_prologue
+      if is_partial
+        page.replace(div_id, :partial => "ansible_repository/#{partial}")
+      else
+        page.replace(div_id, :template => "ansible_repository/#{partial}")
+      end
+    end
+  end
 
   def textual_group_list
     [%i[properties relationships options smart_management]]

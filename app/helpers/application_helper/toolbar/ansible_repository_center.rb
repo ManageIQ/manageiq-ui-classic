@@ -22,7 +22,6 @@ class ApplicationHelper::Toolbar::AnsibleRepositoryCenter < ApplicationHelper::T
           N_('Refresh this Repository'),
           N_('Refresh this Repository'),
           :klass   => ApplicationHelper::Button::EmbeddedAnsible,
-          :url     => "repository_refresh",
           :confirm => N_("Refresh this Repository?"),
           :enabled => true,
         ),
