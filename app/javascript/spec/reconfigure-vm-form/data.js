@@ -74,6 +74,56 @@ export const valueFromHelpersTwo = {
     cores_options: [1, 2, 3, 4],
   },
 };
+
+export const valueFromHelpersThree = {
+  recordId: [12],
+  requestId: 'new',
+  roles: {
+    allowMemoryChange: true,
+    allowCpuChange: false,
+    allowDiskChange: false,
+    allowDiskSizeChange: false,
+    allowNetworkChange: false,
+    allowCdromsChange: true,
+    isVmwareInfra: true,
+    isVmwareCloud: false,
+    isRedhat: true,
+  },
+  memory: {
+    min: 1024,
+    max: 10,
+  },
+  options: {
+    controller_types: [
+      'VirtualController',
+      'ParaVirtualController',
+      'VirtualBusController',
+    ],
+    vlan_options: [
+      'vlan test 0',
+      'vlan test 1',
+      'vlan test 3',
+    ],
+    avail_adapter_names: [],
+    host_file_options: [
+      [
+        'host file test 1.iso',
+        'host file test 1.iso,18',
+      ],
+      [
+        'host file test 2.iso',
+        'host file test 2.iso,18',
+      ],
+      [
+        'host file test 3.iso',
+        'host file test 3.iso,18',
+      ],
+    ],
+    socket_options: [1, 2, 3, 4],
+    cores_options: [1, 2, 3, 4],
+  },
+};
+
 export const responseDataOne = {
   objectIds: [
     12,
