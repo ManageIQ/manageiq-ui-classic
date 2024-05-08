@@ -4866,9 +4866,7 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={true}
-                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={
@@ -6022,12 +6020,8 @@ exports[`Show Edit Host Form Component should render form for multiple hosts 1`]
                                 >
                                   <Select
                                     SelectComponent={[Function]}
-                                    compareValues={[Function]}
                                     id="host_validate_against"
-                                    invalid={false}
                                     invalidText=""
-                                    isClearable={false}
-                                    isSearchable={false}
                                     labelText={
                                       <IsRequired>
                                         Select a Host to validate against
@@ -6040,9 +6034,7 @@ exports[`Show Edit Host Form Component should render form for multiple hosts 1`]
                                     onBlur={[Function]}
                                     onChange={[Function]}
                                     onFocus={[Function]}
-                                    options={Array []}
                                     placeholder="<Choose>"
-                                    pluckSingleValue={true}
                                     simpleValue={false}
                                     value=""
                                   >
@@ -6279,9 +6271,7 @@ exports[`Show Edit Host Form Component should render form for multiple hosts 1`]
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={true}
-                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={

@@ -462,12 +462,8 @@ exports[`Host aggregate form component should render add host form variant (remv
                                 >
                                   <Select
                                     SelectComponent={[Function]}
-                                    compareValues={[Function]}
                                     id="host_id"
-                                    invalid={false}
                                     invalidText=""
-                                    isClearable={false}
-                                    isSearchable={false}
                                     labelText={
                                       <IsRequired>
                                         Host
@@ -488,7 +484,6 @@ exports[`Host aggregate form component should render add host form variant (remv
                                       ]
                                     }
                                     placeholder="<Choose>"
-                                    pluckSingleValue={true}
                                     simpleValue={false}
                                     value=""
                                   >
@@ -681,9 +676,7 @@ exports[`Host aggregate form component should render add host form variant (remv
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={true}
-                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={

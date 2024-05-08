@@ -4566,12 +4566,8 @@ exports[`VM common form component should render adding form variant add new time
                                   >
                                     <Select
                                       SelectComponent={[Function]}
-                                      compareValues={[Function]}
                                       id="profile_type"
-                                      invalid={false}
                                       invalidText=""
-                                      isClearable={false}
-                                      isSearchable={false}
                                       labelText="Scope"
                                       loadOptionsChangeCounter={0}
                                       loadingMessage="Loading..."
@@ -4592,7 +4588,6 @@ exports[`VM common form component should render adding form variant add new time
                                         ]
                                       }
                                       placeholder="<Choose>"
-                                      pluckSingleValue={true}
                                       simpleValue={false}
                                       value=""
                                     >
@@ -12673,12 +12668,8 @@ exports[`VM common form component should render adding form variant add new time
                                   >
                                     <Select
                                       SelectComponent={[Function]}
-                                      compareValues={[Function]}
                                       id="profile.tz"
-                                      invalid={false}
                                       invalidText=""
-                                      isClearable={false}
-                                      isSearchable={false}
                                       labelText="Timezone"
                                       loadOptionsChangeCounter={0}
                                       loadingMessage="Loading..."
@@ -12695,7 +12686,6 @@ exports[`VM common form component should render adding form variant add new time
                                         ]
                                       }
                                       placeholder="<Choose>"
-                                      pluckSingleValue={true}
                                       simpleValue={false}
                                       value="null"
                                     >
@@ -13018,9 +13008,7 @@ exports[`VM common form component should render adding form variant add new time
                                   "cancel",
                                 ]
                               }
-                              buttonsProps={Object {}}
                               canReset={false}
-                              canSubmit={false}
                               cancelLabel="Cancel"
                               disableSubmit={true}
                               formFields={

@@ -2453,12 +2453,8 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="settings.concurrent_vm_scans"
-                                              invalid={false}
                                               invalidText=""
-                                              isClearable={false}
-                                              isSearchable={false}
                                               labelText="Max Active VM Scans"
                                               loadOptionsChangeCounter={1}
                                               loadingMessage="Loading..."
@@ -2531,7 +2527,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                 ]
                                               }
                                               placeholder="<Choose>"
-                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value=""
                                             >
@@ -3021,9 +3016,7 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={true}
-                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={
