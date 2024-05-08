@@ -14,8 +14,8 @@ class ConfigurationScriptController < ApplicationController
   menu_section :at
   feature_for_actions controller_name, *ADV_SEARCH_ACTIONS
 
-  def self.table_name
-    @table_name ||= "configuration_script"
+  def self.model
+    ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript
   end
 
   def button
