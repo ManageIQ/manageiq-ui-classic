@@ -55,7 +55,7 @@ describe AnsibleCredentialController do
     end
 
     context 'tagging one or more ansible credentials' do
-      let(:params) { {:pressed => "ansible_credential_tag"} }
+      let(:params) { {:pressed => "embedded_automation_manager_credential_tag"} }
 
       it 'calls tag method' do
         expect(controller).to receive(:tag).with(controller.class.model)
@@ -64,7 +64,7 @@ describe AnsibleCredentialController do
     end
 
     context 'tagging one or more ansible repositories from nested list' do
-      let(:params) { {:pressed => "ansible_repository_tag"} }
+      let(:params) { {:pressed => "embedded_configuration_script_source_tag"} }
 
       before do
         controller.instance_variable_set(:@display, "repositories")

@@ -1890,13 +1890,10 @@ class ApplicationController < ActionController::Base
       "generic_object"
     when "ansible_playbook", "workflow", "embedded_terraform_template"
       "embedded_configuration_script_payload"
-    when "workflow_repository", "embedded_terraform_repository"
-      "ansible_repository"
-    # TODO: Update manageiq/db/fixtures/miq_product_features.yml by replacing ansible_credential_tag with embedded_automation_manager_credential_tag
-    # when "workflow_credential", "ansible_credential"
-    #  "embedded_automation_manager_credential"
-    when "workflow_credential", "embedded_terraform_credential"
-      "ansible_credential"
+    when "workflow_repository", "ansible_repository", "embedded_terraform_repository"
+      "embedded_configuration_script_source"
+    when "workflow_credential", "ansible_credential", "embedded_terraform_credential"
+      "embedded_automation_manager_credential"
     else
       controller_name
     end

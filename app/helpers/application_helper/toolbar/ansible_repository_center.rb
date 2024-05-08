@@ -58,7 +58,7 @@ class ApplicationHelper::Toolbar::AnsibleRepositoryCenter < ApplicationHelper::T
                    t,
                    :items => [
                      button(
-                       :ansible_repository_tag,
+                       :embedded_configuration_script_source_tag,
                        'pficon pficon-edit fa-lg',
                        N_('Edit Tags for this Ansible Repository'),
                        N_('Edit Tags'),

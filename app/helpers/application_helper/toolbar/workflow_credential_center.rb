@@ -40,7 +40,7 @@ class ApplicationHelper::Toolbar::WorkflowCredentialCenter < ApplicationHelper::
                    t,
                    :items => [
                      button(
-                       :ansible_credential_tag,
+                       :embedded_automation_manager_credential_tag,
                        'pficon pficon-edit fa-lg',
                        N_('Edit Tags for this Workflow Credential'),
                        N_('Edit Tags')

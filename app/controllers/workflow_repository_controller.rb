@@ -62,7 +62,7 @@ class WorkflowRepositoryController < ApplicationController
         show
         render_update("main_div", "show", false)
       end
-    when "ansible_repository_tag" # tag repositories
+    when "embedded_configuration_script_source_tag" # tag repositories
       tag(self.class.model)
     when "embedded_configuration_script_payload_tag" # tag workflows from nested list
       tag(ManageIQ::Providers::Workflows::AutomationManager::Workflow)
