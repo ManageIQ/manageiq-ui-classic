@@ -3,17 +3,17 @@ module ApplicationController::Tags
 
   def nested_page?
     (@display == "repositories" && params[:controller] == "ansible_credential") ||
-    (@display == "playbooks" && params[:controller] == "ansible_repository") ||
-    (@display == "repositories" && params[:controller] == "workflow_credential") ||
-    (@display == "workflows" && params[:controller] == "workflow_repository")
+      (@display == "playbooks" && params[:controller] == "ansible_repository") ||
+      (@display == "repositories" && params[:controller] == "workflow_credential") ||
+      (@display == "workflows" && params[:controller] == "workflow_repository")
   end
 
   # Edit user, group or tenant tags
   def tagging_edit(db = nil, assert = true)
     if nested_page?
       assert_privileges("#{controller_for_common_methods}_tag")
-    else
-      assert_privileges("#{@display && @display != "main" ? @display.singularize : controller_for_common_methods}_tag") if assert
+    elsif assert
+      assert_privileges("#{@display && @display != "main" && @display != "output" ? @display.singularize : controller_for_common_methods}_tag")
     end
     @explorer = true if request.xml_http_request? # Ajax request means in explorer
 
