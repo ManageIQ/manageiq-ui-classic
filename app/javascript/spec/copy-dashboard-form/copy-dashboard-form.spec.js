@@ -113,7 +113,7 @@ describe('Copy Dashboard form', () => {
     done();
   });
 
-  it('should handle submit', async(done) => {
+  it('should handle submit', async() => {
     fetchMock
       .getOnce(baseUrl, dashboardData)
       .getOnce(apiUrl, apiData)
@@ -133,16 +133,19 @@ describe('Copy Dashboard form', () => {
     await act(async() => {
       wrapper.find('input[name="name"]').simulate('change', { target: { value: 'new_name' } });
       wrapper.find('input[name="group_id"]').simulate('change', { target: { value: '80s' } });
-      wrapper.find('form').simulate('submit');
     });
 
-    setTimeout(() => {
-      expect(spyMiqAjaxButton).toHaveBeenCalledWith(
-        '/report/dashboard_render',
-        { group: 'current group', name: 'new_name', original_name: 'original_name' },
-      );
-      expect(fetchMock.calls()).toHaveLength(4);
-      done();
-    }, 500);
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    wrapper.update();
+
+    await act(async() => {
+      setTimeout(() => {
+        expect(spyMiqAjaxButton).toHaveBeenCalledWith(
+          '/report/dashboard_render',
+          { group: 'current group', name: 'new_name', original_name: 'original_name' },
+        );
+        expect(fetchMock.calls()).toHaveLength(4);
+      }, 500);
+    });
   });
 });
