@@ -7630,12 +7630,8 @@ exports[`Schedule form component should render edit form when filter_type is not
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="action"
-                                              invalid={false}
                                               invalidText=""
-                                              isClearable={false}
-                                              isSearchable={false}
                                               labelText={
                                                 <IsRequired>
                                                   Action
@@ -7672,7 +7668,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                 ]
                                               }
                                               placeholder="<Choose>"
-                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value="vm"
                                             >
@@ -8046,12 +8041,8 @@ exports[`Schedule form component should render edit form when filter_type is not
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="filter_type"
-                                              invalid={false}
                                               invalidText=""
-                                              isClearable={false}
-                                              isSearchable={false}
                                               labelText={
                                                 <IsRequired>
                                                   Filter
@@ -8088,7 +8079,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                 ]
                                               }
                                               placeholder="<Choose>"
-                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value="all"
                                             >
@@ -8376,12 +8366,8 @@ exports[`Schedule form component should render edit form when filter_type is not
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="filter_value"
-                                                invalid={false}
                                                 invalidText=""
-                                                isClearable={false}
-                                                isSearchable={false}
                                                 labelText="Filter Item"
                                                 loadOptionsChangeCounter={1}
                                                 loadingMessage="Loading..."
@@ -8391,7 +8377,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                 onFocus={[Function]}
                                                 options={Array []}
                                                 placeholder="<Choose>"
-                                                pluckSingleValue={true}
                                                 simpleValue={false}
                                                 value=""
                                               >
@@ -8691,12 +8676,8 @@ exports[`Schedule form component should render edit form when filter_type is not
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="zone"
-                                                invalid={false}
                                                 invalidText=""
-                                                isClearable={false}
-                                                isSearchable={false}
                                                 labelText={
                                                   <IsRequired>
                                                     Zone
@@ -8741,7 +8722,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                   ]
                                                 }
                                                 placeholder="<Choose>"
-                                                pluckSingleValue={true}
                                                 simpleValue={false}
                                                 value=""
                                               >
@@ -9153,12 +9133,8 @@ exports[`Schedule form component should render edit form when filter_type is not
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="system"
-                                                invalid={false}
                                                 invalidText=""
-                                                isClearable={false}
-                                                isSearchable={false}
                                                 labelText={
                                                   <IsRequired>
                                                     System/Process
@@ -9179,7 +9155,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                   ]
                                                 }
                                                 placeholder="<Choose>"
-                                                pluckSingleValue={true}
                                                 simpleValue={false}
                                                 value=""
                                               >
@@ -9710,12 +9685,8 @@ exports[`Schedule form component should render edit form when filter_type is not
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="object_type"
-                                                invalid={false}
                                                 invalidText=""
-                                                isClearable={false}
-                                                isSearchable={false}
                                                 labelText="Type"
                                                 loadOptionsChangeCounter={1}
                                                 loadingMessage="Loading..."
@@ -9732,7 +9703,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                   ]
                                                 }
                                                 placeholder="<Choose>"
-                                                pluckSingleValue={true}
                                                 simpleValue={true}
                                                 value=""
                                               >
@@ -9915,7 +9885,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                                         xmlns="http://www.w3.org/2000/svg"
                                                                       >
                                                                         <path
-                                                                          d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"
+                                                                          d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
                                                                         />
                                                                       </svg>
                                                                     </Icon>
@@ -10111,12 +10081,8 @@ exports[`Schedule form component should render edit form when filter_type is not
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="object_item"
-                                                invalid={false}
                                                 invalidText=""
-                                                isClearable={false}
-                                                isSearchable={false}
                                                 labelText="Object"
                                                 loadOptionsChangeCounter={1}
                                                 loadingMessage="Loading..."
@@ -10133,7 +10099,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                   ]
                                                 }
                                                 placeholder="<Choose>"
-                                                pluckSingleValue={true}
                                                 simpleValue={true}
                                                 value=""
                                               >
@@ -10316,7 +10281,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                                         xmlns="http://www.w3.org/2000/svg"
                                                                       >
                                                                         <path
-                                                                          d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"
+                                                                          d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
                                                                         />
                                                                       </svg>
                                                                     </Icon>
@@ -11629,12 +11594,8 @@ exports[`Schedule form component should render edit form when filter_type is not
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="run"
-                                              invalid={false}
                                               invalidText=""
-                                              isClearable={false}
-                                              isSearchable={false}
                                               labelText={
                                                 <IsRequired>
                                                   Run
@@ -11671,7 +11632,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                 ]
                                               }
                                               placeholder="<Choose>"
-                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value="Daily"
                                             >
@@ -12066,12 +12026,8 @@ exports[`Schedule form component should render edit form when filter_type is not
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="timer_value"
-                                              invalid={false}
                                               invalidText=""
-                                              isClearable={false}
-                                              isSearchable={false}
                                               labelText={
                                                 <IsRequired>
                                                   Every
@@ -12112,7 +12068,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                 ]
                                               }
                                               placeholder="<Choose>"
-                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value={5}
                                             >
@@ -12551,12 +12506,8 @@ exports[`Schedule form component should render edit form when filter_type is not
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="time_zone"
-                                              invalid={false}
                                               invalidText=""
-                                              isClearable={false}
-                                              isSearchable={false}
                                               labelText="Time Zone"
                                               loadOptionsChangeCounter={1}
                                               loadingMessage="Loading..."
@@ -12593,9 +12544,8 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                 ]
                                               }
                                               placeholder="<Choose>"
-                                              pluckSingleValue={true}
                                               simpleValue={true}
-                                              value=""
+                                              value="Arizona"
                                             >
                                               <ClearedSelectSearchable
                                                 className=""
@@ -12816,7 +12766,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                                       xmlns="http://www.w3.org/2000/svg"
                                                                     >
                                                                       <path
-                                                                        d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"
+                                                                        d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
                                                                       />
                                                                     </svg>
                                                                   </Icon>
@@ -13281,11 +13231,8 @@ exports[`Schedule form component should render edit form when filter_type is not
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={true}
-                            canSubmit={false}
                             cancelLabel="Cancel"
-                            disableSubmit={true}
                             formFields={
                               Array [
                                 <SingleField
@@ -13854,7 +13801,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                 "dirty": true,
                                 "dirtyFields": Object {
                                   "filter_value": true,
-                                  "time_zone": true,
                                 },
                                 "dirtyFieldsSinceLastSubmit": Object {
                                   "action_typ": true,
@@ -13863,14 +13809,13 @@ exports[`Schedule form component should render edit form when filter_type is not
                                   "name": true,
                                   "start_date": true,
                                   "start_hour": true,
+                                  "time_zone": true,
                                   "timer_typ": true,
                                   "timer_value": true,
                                 },
                                 "dirtySinceLastSubmit": false,
                                 "error": undefined,
-                                "errors": Object {
-                                  "time_zone": "Required",
-                                },
+                                "errors": Object {},
                                 "form": Object {
                                   "batch": [Function],
                                   "blur": [Function],
@@ -13906,7 +13851,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                   "subscribe": [Function],
                                 },
                                 "hasSubmitErrors": false,
-                                "hasValidationErrors": true,
+                                "hasValidationErrors": false,
                                 "initialValues": Object {
                                   "action_typ": "vm",
                                   "action_type": "vm",
@@ -13940,7 +13885,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                   "value_4": "",
                                   "value_5": "",
                                 },
-                                "invalid": true,
+                                "invalid": false,
                                 "modified": Object {
                                   "action_typ": false,
                                   "description": false,
@@ -13955,7 +13900,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                   "start_hour": false,
                                   "target_class": false,
                                   "target_id": false,
-                                  "time_zone": true,
+                                  "time_zone": false,
                                   "timer_typ": false,
                                   "timer_value": false,
                                   "zone_id": false,
@@ -13986,7 +13931,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                   "timer_value": false,
                                   "zone_id": false,
                                 },
-                                "valid": false,
+                                "valid": true,
                                 "validating": false,
                                 "values": Object {
                                   "action_typ": "vm",
@@ -14011,6 +13956,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                   "schedule_timer_value": 5,
                                   "start_date": "02/10/2023",
                                   "start_hour": "12:50",
+                                  "time_zone": "Arizona",
                                   "timer_typ": "Daily",
                                   "timer_value": 5,
                                   "value_1": "",
@@ -14617,14 +14563,12 @@ exports[`Schedule form component should render edit form when filter_type is not
                                 >
                                   <Button
                                     buttonType="submit"
-                                    disabled={true}
                                     key="form-submit"
                                     label="Save"
                                     type="submit"
                                     variant="primary"
                                   >
                                     <Button
-                                      disabled={true}
                                       kind="primary"
                                       type="submit"
                                       variant="primary"
@@ -14632,8 +14576,8 @@ exports[`Schedule form component should render edit form when filter_type is not
                                       <button
                                         aria-describedby={null}
                                         aria-pressed={null}
-                                        className="bx--btn bx--btn--primary bx--btn--disabled"
-                                        disabled={true}
+                                        className="bx--btn bx--btn--primary"
+                                        disabled={false}
                                         onBlur={[Function]}
                                         onClick={[Function]}
                                         onFocus={[Function]}
@@ -23453,12 +23397,8 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="action"
-                                              invalid={false}
                                               invalidText=""
-                                              isClearable={false}
-                                              isSearchable={false}
                                               labelText={
                                                 <IsRequired>
                                                   Action
@@ -23495,7 +23435,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                 ]
                                               }
                                               placeholder="<Choose>"
-                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value="automation_request"
                                             >
@@ -23782,12 +23721,8 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="filter_type"
-                                                invalid={false}
                                                 invalidText=""
-                                                isClearable={false}
-                                                isSearchable={false}
                                                 labelText={
                                                   <IsRequired>
                                                     Filter
@@ -23801,7 +23736,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                 onFocus={[Function]}
                                                 options={Array []}
                                                 placeholder="<Choose>"
-                                                pluckSingleValue={true}
                                                 simpleValue={false}
                                                 value=""
                                               >
@@ -23976,12 +23910,8 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="filter_value"
-                                                invalid={false}
                                                 invalidText=""
-                                                isClearable={false}
-                                                isSearchable={false}
                                                 labelText="Filter Item"
                                                 loadOptionsChangeCounter={1}
                                                 loadingMessage="Loading..."
@@ -23991,7 +23921,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                 onFocus={[Function]}
                                                 options={Array []}
                                                 placeholder="<Choose>"
-                                                pluckSingleValue={true}
                                                 simpleValue={false}
                                                 value=""
                                               >
@@ -24288,12 +24217,8 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="zone"
-                                              invalid={false}
                                               invalidText=""
-                                              isClearable={false}
-                                              isSearchable={false}
                                               labelText={
                                                 <IsRequired>
                                                   Zone
@@ -24338,7 +24263,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                 ]
                                               }
                                               placeholder="<Choose>"
-                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value="5"
                                             >
@@ -24877,12 +24801,8 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="system"
-                                              invalid={false}
                                               invalidText=""
-                                              isClearable={false}
-                                              isSearchable={false}
                                               labelText={
                                                 <IsRequired>
                                                   System/Process
@@ -24935,7 +24855,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                 ]
                                               }
                                               placeholder="<Choose>"
-                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value="GenericObject"
                                             >
@@ -25729,12 +25648,8 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="object_type"
-                                              invalid={false}
                                               invalidText=""
-                                              isClearable={false}
-                                              isSearchable={false}
                                               labelText="Type"
                                               loadOptionsChangeCounter={1}
                                               loadingMessage="Loading..."
@@ -25775,7 +25690,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                 ]
                                               }
                                               placeholder="<Choose>"
-                                              pluckSingleValue={true}
                                               simpleValue={true}
                                               value="AvailabilityZone"
                                             >
@@ -26013,7 +25927,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                                       xmlns="http://www.w3.org/2000/svg"
                                                                     >
                                                                       <path
-                                                                        d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"
+                                                                        d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
                                                                       />
                                                                     </svg>
                                                                   </Icon>
@@ -26324,12 +26238,8 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="object_item"
-                                              invalid={false}
                                               invalidText=""
-                                              isClearable={false}
-                                              isSearchable={false}
                                               labelText="Object"
                                               loadOptionsChangeCounter={1}
                                               loadingMessage="Loading..."
@@ -26374,9 +26284,8 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                 ]
                                               }
                                               placeholder="<Choose>"
-                                              pluckSingleValue={true}
                                               simpleValue={true}
-                                              value=""
+                                              value="20"
                                             >
                                               <ClearedSelectSearchable
                                                 className=""
@@ -26613,7 +26522,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                                       xmlns="http://www.w3.org/2000/svg"
                                                                     >
                                                                       <path
-                                                                        d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"
+                                                                        d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
                                                                       />
                                                                     </svg>
                                                                   </Icon>
@@ -29759,12 +29668,8 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="run"
-                                              invalid={false}
                                               invalidText=""
-                                              isClearable={false}
-                                              isSearchable={false}
                                               labelText={
                                                 <IsRequired>
                                                   Run
@@ -29801,7 +29706,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                 ]
                                               }
                                               placeholder="<Choose>"
-                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value="Daily"
                                             >
@@ -30196,12 +30100,8 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="timer_value"
-                                              invalid={false}
                                               invalidText=""
-                                              isClearable={false}
-                                              isSearchable={false}
                                               labelText={
                                                 <IsRequired>
                                                   Every
@@ -30242,7 +30142,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                 ]
                                               }
                                               placeholder="<Choose>"
-                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value={5}
                                             >
@@ -30681,12 +30580,8 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="time_zone"
-                                              invalid={false}
                                               invalidText=""
-                                              isClearable={false}
-                                              isSearchable={false}
                                               labelText="Time Zone"
                                               loadOptionsChangeCounter={1}
                                               loadingMessage="Loading..."
@@ -30723,9 +30618,8 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                 ]
                                               }
                                               placeholder="<Choose>"
-                                              pluckSingleValue={true}
                                               simpleValue={true}
-                                              value=""
+                                              value="Arizona"
                                             >
                                               <ClearedSelectSearchable
                                                 className=""
@@ -30946,7 +30840,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                                       xmlns="http://www.w3.org/2000/svg"
                                                                     >
                                                                       <path
-                                                                        d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"
+                                                                        d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
                                                                       />
                                                                     </svg>
                                                                   </Icon>
@@ -31411,11 +31305,8 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={true}
-                            canSubmit={false}
                             cancelLabel="Cancel"
-                            disableSubmit={true}
                             formFields={
                               Array [
                                 <SingleField
@@ -32050,8 +31941,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                 "dirty": true,
                                 "dirtyFields": Object {
                                   "filter_value": true,
-                                  "target_id": true,
-                                  "time_zone": true,
                                 },
                                 "dirtyFieldsSinceLastSubmit": Object {
                                   "action_typ": true,
@@ -32071,6 +31960,8 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                   "start_hour": true,
                                   "starting_object": true,
                                   "target_class": true,
+                                  "target_id": true,
+                                  "time_zone": true,
                                   "timer_typ": true,
                                   "timer_value": true,
                                   "value_1": true,
@@ -32082,10 +31973,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                 },
                                 "dirtySinceLastSubmit": false,
                                 "error": undefined,
-                                "errors": Object {
-                                  "target_id": "Required",
-                                  "time_zone": "Required",
-                                },
+                                "errors": Object {},
                                 "form": Object {
                                   "batch": [Function],
                                   "blur": [Function],
@@ -32121,7 +32009,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                   "subscribe": [Function],
                                 },
                                 "hasSubmitErrors": false,
-                                "hasValidationErrors": true,
+                                "hasValidationErrors": false,
                                 "initialValues": Object {
                                   "action_typ": "automation_request",
                                   "action_type": "automation_request",
@@ -32230,7 +32118,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                   "value_5": "",
                                   "zone_id": "5",
                                 },
-                                "invalid": true,
+                                "invalid": false,
                                 "modified": Object {
                                   "action_typ": false,
                                   "attribute_1": false,
@@ -32250,8 +32138,8 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                   "start_hour": false,
                                   "starting_object": false,
                                   "target_class": false,
-                                  "target_id": true,
-                                  "time_zone": true,
+                                  "target_id": false,
+                                  "time_zone": false,
                                   "timer_typ": false,
                                   "timer_value": false,
                                   "value_1": false,
@@ -32298,7 +32186,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                   "value_5": false,
                                   "zone_id": false,
                                 },
-                                "valid": false,
+                                "valid": true,
                                 "validating": false,
                                 "values": Object {
                                   "action_typ": "automation_request",
@@ -32366,6 +32254,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                       "CloudVolume",
                                     ],
                                   ],
+                                  "target_id": "20",
                                   "targets": Array [
                                     Array [
                                       "asia-east1-a",
@@ -32396,6 +32285,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                       "15",
                                     ],
                                   ],
+                                  "time_zone": "Arizona",
                                   "timer_typ": "Daily",
                                   "timer_value": 5,
                                   "value_1": "",
@@ -33080,14 +32970,12 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                 >
                                   <Button
                                     buttonType="submit"
-                                    disabled={true}
                                     key="form-submit"
                                     label="Save"
                                     type="submit"
                                     variant="primary"
                                   >
                                     <Button
-                                      disabled={true}
                                       kind="primary"
                                       type="submit"
                                       variant="primary"
@@ -33095,8 +32983,8 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                       <button
                                         aria-describedby={null}
                                         aria-pressed={null}
-                                        className="bx--btn bx--btn--primary bx--btn--disabled"
-                                        disabled={true}
+                                        className="bx--btn bx--btn--primary"
+                                        disabled={false}
                                         onBlur={[Function]}
                                         onClick={[Function]}
                                         onFocus={[Function]}
@@ -40112,12 +40000,8 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="action"
-                                              invalid={false}
                                               invalidText=""
-                                              isClearable={false}
-                                              isSearchable={false}
                                               labelText={
                                                 <IsRequired>
                                                   Action
@@ -40154,7 +40038,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                 ]
                                               }
                                               placeholder="<Choose>"
-                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value="vm"
                                             >
@@ -40528,12 +40411,8 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="filter_type"
-                                              invalid={false}
                                               invalidText=""
-                                              isClearable={false}
-                                              isSearchable={false}
                                               labelText={
                                                 <IsRequired>
                                                   Filter
@@ -40570,7 +40449,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                 ]
                                               }
                                               placeholder="<Choose>"
-                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value=""
                                             >
@@ -40858,12 +40736,8 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="filter_value"
-                                                invalid={false}
                                                 invalidText=""
-                                                isClearable={false}
-                                                isSearchable={false}
                                                 labelText="Filter Item"
                                                 loadOptionsChangeCounter={1}
                                                 loadingMessage="Loading..."
@@ -40873,7 +40747,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                 onFocus={[Function]}
                                                 options={Array []}
                                                 placeholder="<Choose>"
-                                                pluckSingleValue={true}
                                                 simpleValue={false}
                                                 value=""
                                               >
@@ -41070,12 +40943,8 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="zone"
-                                                invalid={false}
                                                 invalidText=""
-                                                isClearable={false}
-                                                isSearchable={false}
                                                 labelText={
                                                   <IsRequired>
                                                     Zone
@@ -41096,7 +40965,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                   ]
                                                 }
                                                 placeholder="<Choose>"
-                                                pluckSingleValue={true}
                                                 simpleValue={false}
                                                 value=""
                                               >
@@ -41376,12 +41244,8 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="system"
-                                                invalid={false}
                                                 invalidText=""
-                                                isClearable={false}
-                                                isSearchable={false}
                                                 labelText={
                                                   <IsRequired>
                                                     System/Process
@@ -41402,7 +41266,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                   ]
                                                 }
                                                 placeholder="<Choose>"
-                                                pluckSingleValue={true}
                                                 simpleValue={false}
                                                 value=""
                                               >
@@ -41933,12 +41796,8 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="object_type"
-                                                invalid={false}
                                                 invalidText=""
-                                                isClearable={false}
-                                                isSearchable={false}
                                                 labelText="Type"
                                                 loadOptionsChangeCounter={1}
                                                 loadingMessage="Loading..."
@@ -41955,7 +41814,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                   ]
                                                 }
                                                 placeholder="<Choose>"
-                                                pluckSingleValue={true}
                                                 simpleValue={true}
                                                 value=""
                                               >
@@ -42138,7 +41996,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                                         xmlns="http://www.w3.org/2000/svg"
                                                                       >
                                                                         <path
-                                                                          d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"
+                                                                          d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
                                                                         />
                                                                       </svg>
                                                                     </Icon>
@@ -42334,12 +42192,8 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="object_item"
-                                                invalid={false}
                                                 invalidText=""
-                                                isClearable={false}
-                                                isSearchable={false}
                                                 labelText="Object"
                                                 loadOptionsChangeCounter={1}
                                                 loadingMessage="Loading..."
@@ -42356,7 +42210,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                   ]
                                                 }
                                                 placeholder="<Choose>"
-                                                pluckSingleValue={true}
                                                 simpleValue={true}
                                                 value=""
                                               >
@@ -42539,7 +42392,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                                         xmlns="http://www.w3.org/2000/svg"
                                                                       >
                                                                         <path
-                                                                          d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"
+                                                                          d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
                                                                         />
                                                                       </svg>
                                                                     </Icon>
@@ -43852,12 +43705,8 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="run"
-                                              invalid={false}
                                               invalidText=""
-                                              isClearable={false}
-                                              isSearchable={false}
                                               labelText={
                                                 <IsRequired>
                                                   Run
@@ -43894,7 +43743,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                 ]
                                               }
                                               placeholder="<Choose>"
-                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value="Once"
                                             >
@@ -44186,12 +44034,8 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="timer_value"
-                                                invalid={false}
                                                 invalidText=""
-                                                isClearable={false}
-                                                isSearchable={false}
                                                 labelText={
                                                   <IsRequired>
                                                     Every
@@ -44205,9 +44049,8 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                 onFocus={[Function]}
                                                 options={Array []}
                                                 placeholder="<Choose>"
-                                                pluckSingleValue={true}
                                                 simpleValue={false}
-                                                value=""
+                                                value={1}
                                               >
                                                 <ClearedSelect
                                                   className=""
@@ -44231,7 +44074,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                   onInputChange={[Function]}
                                                   options={Array []}
                                                   placeholder="<Choose>"
-                                                  value=""
+                                                  value={1}
                                                 >
                                                   <Select
                                                     className=""
@@ -44251,7 +44094,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                     onBlur={[Function]}
                                                     onChange={[Function]}
                                                     onFocus={[Function]}
-                                                    value=""
+                                                    value={1}
                                                   >
                                                     <div
                                                       className="bx--form-item"
@@ -44284,7 +44127,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                             onBlur={[Function]}
                                                             onChange={[Function]}
                                                             onFocus={[Function]}
-                                                            value=""
+                                                            value={1}
                                                           />
                                                           <ForwardRef(ChevronDown16)
                                                             className="bx--select__arrow"
@@ -44509,12 +44352,8 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="time_zone"
-                                              invalid={false}
                                               invalidText=""
-                                              isClearable={false}
-                                              isSearchable={false}
                                               labelText="Time Zone"
                                               loadOptionsChangeCounter={1}
                                               loadingMessage="Loading..."
@@ -44551,7 +44390,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                 ]
                                               }
                                               placeholder="<Choose>"
-                                              pluckSingleValue={true}
                                               simpleValue={true}
                                               value=""
                                             >
@@ -44774,7 +44612,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                                       xmlns="http://www.w3.org/2000/svg"
                                                                     >
                                                                       <path
-                                                                        d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"
+                                                                        d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
                                                                       />
                                                                     </svg>
                                                                   </Icon>
@@ -45239,9 +45077,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={false}
-                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={
@@ -45762,11 +45598,11 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                 "dirty": true,
                                 "dirtyFields": Object {
                                   "filter_value": true,
-                                  "timer_value": true,
                                 },
                                 "dirtyFieldsSinceLastSubmit": Object {
                                   "action_typ": true,
                                   "timer_typ": true,
+                                  "timer_value": true,
                                 },
                                 "dirtySinceLastSubmit": false,
                                 "error": undefined,
@@ -45837,7 +45673,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                   "target_id": false,
                                   "time_zone": false,
                                   "timer_typ": false,
-                                  "timer_value": true,
+                                  "timer_value": false,
                                   "zone_id": false,
                                 },
                                 "modifiedSinceLastSubmit": false,
@@ -45872,6 +45708,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                   "action_typ": "vm",
                                   "filter_type": "all",
                                   "timer_typ": "Once",
+                                  "timer_value": 1,
                                 },
                                 "visited": Object {
                                   "action_typ": false,

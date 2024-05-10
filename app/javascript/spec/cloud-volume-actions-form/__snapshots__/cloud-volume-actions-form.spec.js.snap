@@ -1257,9 +1257,7 @@ exports[`Cloud Volume Backup Create form component should render the cloud volum
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={false}
-                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={
@@ -2797,9 +2795,7 @@ exports[`Cloud Volume Backup Create form component when adding a new backup of c
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={false}
-                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={
@@ -3760,12 +3756,8 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="backup_id"
-                                              invalid={false}
                                               invalidText=""
-                                              isClearable={false}
-                                              isSearchable={false}
                                               labelText={
                                                 <IsRequired>
                                                   Cloud Volume Backup
@@ -3778,9 +3770,7 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
-                                              options={Array []}
                                               placeholder="<Choose>"
-                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value=""
                                             >
@@ -3952,9 +3942,7 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={false}
-                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={
@@ -4859,12 +4847,8 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="backup_id"
-                                              invalid={false}
                                               invalidText=""
-                                              isClearable={false}
-                                              isSearchable={false}
                                               labelText={
                                                 <IsRequired>
                                                   Cloud Volume Backup
@@ -4877,9 +4861,7 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
-                                              options={Array []}
                                               placeholder="<Choose>"
-                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value=""
                                             >
@@ -5051,9 +5033,7 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={false}
-                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={
@@ -5918,9 +5898,7 @@ exports[`Cloud Volume Snapshot Create form component should render the cloud vol
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={false}
-                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={
@@ -6769,9 +6747,7 @@ exports[`Cloud Volume Snapshot Create form component when adding a new snapshot 
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={false}
-                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={

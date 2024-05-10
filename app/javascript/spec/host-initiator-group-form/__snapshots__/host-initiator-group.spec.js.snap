@@ -858,13 +858,9 @@ exports[`Host Initiator Group Form Loads data and renders 1`] = `
                                   >
                                     <Select
                                       SelectComponent={[Function]}
-                                      compareValues={[Function]}
                                       disabled={false}
                                       id="ems_id"
-                                      invalid={false}
                                       invalidText=""
-                                      isClearable={false}
-                                      isSearchable={false}
                                       labelText={
                                         <IsRequired>
                                           Provider:
@@ -877,9 +873,7 @@ exports[`Host Initiator Group Form Loads data and renders 1`] = `
                                       onBlur={[Function]}
                                       onChange={[Function]}
                                       onFocus={[Function]}
-                                      options={Array []}
                                       placeholder="<Choose>"
-                                      pluckSingleValue={true}
                                       simpleValue={false}
                                       value="2"
                                     >
@@ -1379,12 +1373,8 @@ exports[`Host Initiator Group Form Loads data and renders 1`] = `
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
-                                                compareValues={[Function]}
                                                 id="physical_storage_id"
-                                                invalid={false}
                                                 invalidText=""
-                                                isClearable={false}
-                                                isSearchable={false}
                                                 labelText={
                                                   <IsRequired>
                                                     Physical Storage:
@@ -1397,9 +1387,7 @@ exports[`Host Initiator Group Form Loads data and renders 1`] = `
                                                 onBlur={[Function]}
                                                 onChange={[Function]}
                                                 onFocus={[Function]}
-                                                options={Array []}
                                                 placeholder="<Choose>"
-                                                pluckSingleValue={true}
                                                 simpleValue={false}
                                                 value="1"
                                               >
@@ -1641,9 +1629,7 @@ exports[`Host Initiator Group Form Loads data and renders 1`] = `
                                   "cancel",
                                 ]
                               }
-                              buttonsProps={Object {}}
                               canReset={false}
-                              canSubmit={false}
                               cancelLabel="Cancel"
                               formFields={
                                 Array [

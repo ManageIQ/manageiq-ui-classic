@@ -3976,9 +3976,7 @@ exports[`Generic Object Form Component should render adding a new generic object
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={false}
-                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={
@@ -7991,11 +7989,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                               >
                                                                 <Select
                                                                   SelectComponent={[Function]}
-                                                                  compareValues={[Function]}
-                                                                  invalid={false}
                                                                   invalidText=""
-                                                                  isClearable={false}
-                                                                  isSearchable={false}
                                                                   labelText="Type"
                                                                   loadOptions={[Function]}
                                                                   loadOptionsChangeCounter={1}
@@ -8004,9 +7998,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                   onBlur={[Function]}
                                                                   onChange={[Function]}
                                                                   onFocus={[Function]}
-                                                                  options={Array []}
                                                                   placeholder="<Choose>"
-                                                                  pluckSingleValue={true}
                                                                   simpleValue={false}
                                                                   value="string"
                                                                 >
@@ -9044,12 +9036,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                 <Select
                                                                   SelectComponent={[Function]}
                                                                   className="class"
-                                                                  compareValues={[Function]}
                                                                   id="class"
-                                                                  invalid={false}
                                                                   invalidText=""
-                                                                  isClearable={false}
-                                                                  isSearchable={false}
                                                                   labelText="Class"
                                                                   loadOptionsChangeCounter={1}
                                                                   loadingMessage="Loading..."
@@ -9070,7 +9058,6 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                     ]
                                                                   }
                                                                   placeholder="<Choose>"
-                                                                  pluckSingleValue={true}
                                                                   simpleValue={true}
                                                                   value="BottleneckEvent"
                                                                 >
@@ -9268,7 +9255,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                                           xmlns="http://www.w3.org/2000/svg"
                                                                                         >
                                                                                           <path
-                                                                                            d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"
+                                                                                            d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
                                                                                           />
                                                                                         </svg>
                                                                                       </Icon>
@@ -9711,12 +9698,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                 <Select
                                                                   SelectComponent={[Function]}
                                                                   className="class"
-                                                                  compareValues={[Function]}
                                                                   id="class"
-                                                                  invalid={false}
                                                                   invalidText=""
-                                                                  isClearable={false}
-                                                                  isSearchable={false}
                                                                   labelText="Class"
                                                                   loadOptionsChangeCounter={1}
                                                                   loadingMessage="Loading..."
@@ -9737,7 +9720,6 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                     ]
                                                                   }
                                                                   placeholder="<Choose>"
-                                                                  pluckSingleValue={true}
                                                                   simpleValue={true}
                                                                   value="ContainerProjectPerformance"
                                                                 >
@@ -9935,7 +9917,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                                           xmlns="http://www.w3.org/2000/svg"
                                                                                         >
                                                                                           <path
-                                                                                            d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"
+                                                                                            d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
                                                                                           />
                                                                                         </svg>
                                                                                       </Icon>
@@ -11432,9 +11414,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={true}
-                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={
@@ -15618,11 +15598,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                               >
                                                                 <Select
                                                                   SelectComponent={[Function]}
-                                                                  compareValues={[Function]}
-                                                                  invalid={false}
                                                                   invalidText=""
-                                                                  isClearable={false}
-                                                                  isSearchable={false}
                                                                   labelText="Type"
                                                                   loadOptions={[Function]}
                                                                   loadOptionsChangeCounter={1}
@@ -15631,9 +15607,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                   onBlur={[Function]}
                                                                   onChange={[Function]}
                                                                   onFocus={[Function]}
-                                                                  options={Array []}
                                                                   placeholder="<Choose>"
-                                                                  pluckSingleValue={true}
                                                                   simpleValue={false}
                                                                   value="string"
                                                                 >
@@ -16671,12 +16645,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                 <Select
                                                                   SelectComponent={[Function]}
                                                                   className="class"
-                                                                  compareValues={[Function]}
                                                                   id="class"
-                                                                  invalid={false}
                                                                   invalidText=""
-                                                                  isClearable={false}
-                                                                  isSearchable={false}
                                                                   labelText="Class"
                                                                   loadOptionsChangeCounter={1}
                                                                   loadingMessage="Loading..."
@@ -16697,7 +16667,6 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                     ]
                                                                   }
                                                                   placeholder="<Choose>"
-                                                                  pluckSingleValue={true}
                                                                   simpleValue={true}
                                                                   value="BottleneckEvent"
                                                                 >
@@ -16895,7 +16864,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                                           xmlns="http://www.w3.org/2000/svg"
                                                                                         >
                                                                                           <path
-                                                                                            d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"
+                                                                                            d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
                                                                                           />
                                                                                         </svg>
                                                                                       </Icon>
@@ -17338,12 +17307,8 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                 <Select
                                                                   SelectComponent={[Function]}
                                                                   className="class"
-                                                                  compareValues={[Function]}
                                                                   id="class"
-                                                                  invalid={false}
                                                                   invalidText=""
-                                                                  isClearable={false}
-                                                                  isSearchable={false}
                                                                   labelText="Class"
                                                                   loadOptionsChangeCounter={1}
                                                                   loadingMessage="Loading..."
@@ -17364,7 +17329,6 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                     ]
                                                                   }
                                                                   placeholder="<Choose>"
-                                                                  pluckSingleValue={true}
                                                                   simpleValue={true}
                                                                   value="ContainerProjectPerformance"
                                                                 >
@@ -17562,7 +17526,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                                           xmlns="http://www.w3.org/2000/svg"
                                                                                         >
                                                                                           <path
-                                                                                            d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"
+                                                                                            d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
                                                                                           />
                                                                                         </svg>
                                                                                       </Icon>
@@ -19026,9 +18990,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={true}
-                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={
