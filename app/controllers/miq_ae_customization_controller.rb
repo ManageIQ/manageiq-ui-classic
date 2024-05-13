@@ -318,6 +318,9 @@ class MiqAeCustomizationController < ApplicationController
         }
         presenter.update(:form_buttons_div, render_proc[:partial => "layouts/x_edit_buttons", :locals => locals])
         presenter.remove_paging.show(:form_buttons_div)
+        if @hide_bottom_bar
+          presenter.hide(:form_buttons_div)
+        end
       end
       presenter.show(:paging_div)
     else
