@@ -491,3 +491,28 @@
     }
   }
 }
+
+.dialog-provision-form {
+  .custom-button-wrapper {
+    display: flex;
+    flex-direction: row;
+
+    .btnRight {
+      margin-right: 8px;
+      width: 20%;
+    }
+
+    .bx--btn {
+      margin-right: 8px;
+      width: 20%;
+    }
+  }
+
+  .bx--form-item.bx--text-input-wrapper {
+    margin-bottom: 40px;
+  }
+
+  #code-section {
+    margin-top: 40px;
+  }
+}
