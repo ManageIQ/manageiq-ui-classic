@@ -5,6 +5,7 @@ export const workflowStateTypes = {
   failure: { text: 'failure', tagType: 'red' },
   failed: { text: 'failed', tagType: 'gray' },
   pending: { text: 'pending', tagType: 'gray' },
+  running: { text: 'running', tagType: 'gray' },
 };
 
 /** Function to get the header data of workflow states table. */
