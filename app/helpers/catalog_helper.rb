@@ -193,7 +193,6 @@ module CatalogHelper
       rows.push(row_data(_('Playbook'), info[:playbook]))
       rows.push(row_data(_('Machine Credential'), info[:machine_credential]))
       rows.push(row_data(_('Vault Credential'), info[:vault_credential]))
-      rows.push(row_data(_('Vault Credential'), info[:vault_credential]))
       rows.push(row_data(_('Cloud Credential'), info[:cloud_credential]))
       rows.push(row_data(_('Max TTL (mins)'), record.config_info[type][:execution_ttl]))
       rows.push(row_data(_('Hosts'), record.config_info[type][:hosts]))
