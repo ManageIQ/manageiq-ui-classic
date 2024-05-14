@@ -8,7 +8,7 @@ describe "miq_ae_class/show.html.haml" do
   end
 
   it 'renders partial all_tabs' do
-    render
+    render :template => "miq_ae_class/show"
     expect(response).to include("<div id='ae_tabs'>", "<div id='ns_details_div'>", 'miqInitCodemirror({"text_area_id":"miq_none"')
   end
 end

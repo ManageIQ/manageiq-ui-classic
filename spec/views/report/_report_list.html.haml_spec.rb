@@ -27,7 +27,7 @@ describe "report/_report_list.html.haml" do
     end
 
     it 'Check if report list is present' do
-      render
+      render :template => "report/_report_list"
       expect(response).to have_selector("//div[@id=\"report_list_div\"]")
     end
   end

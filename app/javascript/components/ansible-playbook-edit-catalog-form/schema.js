@@ -163,8 +163,8 @@ const provisionTabSchema = (
       },
       {
         component: componentTypes.SELECT,
-        id: 'config_info.provision.vault_credentials',
-        name: 'config_info.provision.vault_credentials',
+        id: 'config_info.provision.vault_credential_id',
+        name: 'config_info.provision.vault_credential_id',
         label: __('Vault Credential'),
         options: transformGeneralOptions(vaultCredentials),
         condition: {
@@ -371,8 +371,8 @@ const retirementTabSchema = (
       },
       {
         component: componentTypes.SELECT,
-        id: 'config_info.retirement.vault_credentials',
-        name: 'config_info.retirement.vault_credentials',
+        id: 'config_info.retirement.vault_credential_id',
+        name: 'config_info.retirement.vault_credential_id',
         label: __('Vault Credential'),
         options: transformGeneralOptions(vaultCredentials),
         condition: {

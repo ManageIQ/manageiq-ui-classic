@@ -12,7 +12,7 @@ describe 'ops/_rbac_user_details.html.haml' do
     end
 
     it "displays full name" do
-      render
+      render :template => "ops/_rbac_user_details"
       expect(rendered).to have_field("name", :with => "Joe Test")
     end
   end

@@ -160,7 +160,7 @@ module Mixins
     end
 
     def display_images
-      nested_list(ManageIQ::Providers::CloudManager::Template, :named_scope => :without_volume_templates)
+      nested_list(ManageIQ::Providers::CloudManager::Template)
     end
 
     # options:

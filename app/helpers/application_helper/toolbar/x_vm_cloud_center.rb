@@ -129,11 +129,12 @@ class ApplicationHelper::Toolbar::XVmCloudCenter < ApplicationHelper::Toolbar::B
           'pficon pficon-edit fa-lg',
           N_('Manage Policies for this Instance'),
           N_('Manage Policies')),
-        button(
-          :instance_policy_sim,
-          'fa fa-play-circle-o fa-lg',
-          N_('View Policy Simulation for this Instance'),
-          N_('Policy Simulation')),
+        # TODO: Add this button back when the page is fixed
+        # button(
+        #   :instance_policy_sim,
+        #   'fa fa-play-circle-o fa-lg',
+        #   N_('View Policy Simulation for this Instance'),
+        #   N_('Policy Simulation')),
         button(
           :instance_tag,
           'pficon pficon-edit fa-lg',

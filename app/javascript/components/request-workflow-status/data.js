@@ -65,12 +65,19 @@ const convertDuration = (duration) => {
 };
 
 const getItemIcon = (item) => {
-  if (item.RunnerContext && item.RunnerContext.success) {
-    return { icon: 'carbon--CheckmarkOutline' };
-  } if (item.RunnerContext && item.RunnerContext.Error) {
-    return { icon: 'carbon--MisuseOutline' };
+  if (item.FinishedTime) {
+    if (item.Output && item.Output.Error) {
+      if (item.RetryCount) {
+        return { icon: 'carbon--RetryFailed' }
+      } else {
+        return { icon: 'carbon--MisuseOutline' }
+      }
+    } else {
+      return { icon: 'carbon--CheckmarkOutline' }
+    }
+  } else {
+    return { icon: 'carbon--PlayOutline' }
   }
-  return { icon: 'carbon--PlayOutline' };
 };
 
 /** Function to get the row data of workflow states table. */
@@ -89,7 +96,7 @@ export const workflowStatusData = (response) => {
     return undefined;
   }
   const rows = response.context ? rowData(response.context) : [];
-  if (response.context && response.context.State) {
+  if (response.context && response.context.State && !response.context.State.FinishedTime) {
     const state = response.context.State;
     const currentTime = new Date(); // Date Object for current time
     const oldTime = Date.parse(state.EnteredTime); // ms since start time to entered time in UTC
@@ -97,7 +104,7 @@ export const workflowStatusData = (response) => {
 
     rows.push({
       id: state.Guid.toString(),
-      name: { text: state.Name, icon: 'carbon--PlayOutline' },
+      name: { text: state.Name, ...getItemIcon(state)  },
       enteredTime: convertDate(state.EnteredTime.toString()),
       finishedTime: '',
       duration: convertDuration(durationTime),
