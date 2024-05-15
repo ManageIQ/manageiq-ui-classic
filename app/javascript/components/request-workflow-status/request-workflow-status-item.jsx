@@ -87,11 +87,14 @@ const RequestWorkflowStatusItem = ({ recordId }) => {
   /** Function to render the status of workflow. */
   const renderStatusTag = () => {
     const status = workflowStateTypes[data.responseData.status];
-    return (
-      <Tag type={status.tagType} title={status.text}>
-        {status.text.toUpperCase()}
-      </Tag>
-    );
+    if (typeof (status) === 'object' && status.tagType && status.text) {
+      return (
+        <Tag type={status.tagType} title={status.text}>
+          {status.text.toUpperCase()}
+        </Tag>
+      );
+    }
+    return null;
   };
 
   /** Function to render the status of workflow status. */
@@ -117,13 +120,18 @@ const RequestWorkflowStatusItem = ({ recordId }) => {
   );
 
   /** Function to render the list. */
-  const renderList = ({ headers, rows }) => (
-    <MiqDataTable
-      headers={headers}
-      rows={rows}
-      mode="request-workflow-status"
-    />
-  );
+  const renderList = ({ headers, rows }) => {
+    rows.forEach((row) => {
+      row.id = `${row.id}+${row.duration}`;
+    });
+    return (
+      <MiqDataTable
+        headers={headers}
+        rows={rows}
+        mode="request-workflow-status"
+      />
+    );
+  };
 
   return (
     <>
