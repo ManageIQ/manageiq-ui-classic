@@ -1032,8 +1032,12 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                                 >
                                   <Select
                                     SelectComponent={[Function]}
+                                    compareValues={[Function]}
                                     id="timezone"
+                                    invalid={false}
                                     invalidText=""
+                                    isClearable={false}
+                                    isSearchable={false}
                                     labelText="Timezone"
                                     loadOptionsChangeCounter={1}
                                     loadingMessage="Loading..."
@@ -1066,6 +1070,7 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                                       ]
                                     }
                                     placeholder="<Choose>"
+                                    pluckSingleValue={true}
                                     simpleValue={true}
                                     value="UTC"
                                   >
@@ -1691,7 +1696,9 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                                 "cancel",
                               ]
                             }
+                            buttonsProps={Object {}}
                             canReset={false}
+                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={

@@ -1614,7 +1614,9 @@ exports[`evacuate form component should render evacuate form when hosts empty 1`
                                 "cancel",
                               ]
                             }
+                            buttonsProps={Object {}}
                             canReset={false}
+                            canSubmit={false}
                             cancelLabel="Cancel"
                             formFields={
                               Array [
@@ -3904,7 +3906,9 @@ exports[`evacuate form component should render evacuate form with host options 1
                                 "cancel",
                               ]
                             }
+                            buttonsProps={Object {}}
                             canReset={false}
+                            canSubmit={false}
                             cancelLabel="Cancel"
                             formFields={
                               Array [
@@ -5856,7 +5860,9 @@ exports[`evacuate form component should render evacuate form with multiple insta
                                 "cancel",
                               ]
                             }
+                            buttonsProps={Object {}}
                             canReset={false}
+                            canSubmit={false}
                             cancelLabel="Cancel"
                             formFields={
                               Array [

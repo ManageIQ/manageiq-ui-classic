@@ -1267,7 +1267,9 @@ exports[`Datastore form component Datastore domain form component should render 
                                 "cancel",
                               ]
                             }
+                            buttonsProps={Object {}}
                             canReset={true}
+                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={
@@ -2868,7 +2870,9 @@ exports[`Datastore form component Datastore namespace form component should rend
                                 "cancel",
                               ]
                             }
+                            buttonsProps={Object {}}
                             canReset={true}
+                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={

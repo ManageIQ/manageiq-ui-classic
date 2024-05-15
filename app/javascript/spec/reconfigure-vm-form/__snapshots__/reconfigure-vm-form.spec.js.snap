@@ -16974,8 +16974,12 @@ exports[`Reconfigure VM form component should render reconfigure form and show c
                                     >
                                       <Select
                                         SelectComponent={[Function]}
+                                        compareValues={[Function]}
                                         id="host_file"
+                                        invalid={false}
                                         invalidText=""
+                                        isClearable={false}
+                                        isSearchable={false}
                                         labelText={
                                           <IsRequired>
                                             Host File
@@ -17008,6 +17012,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show c
                                           ]
                                         }
                                         placeholder="<Choose>"
+                                        pluckSingleValue={true}
                                         simpleValue={false}
                                         value=""
                                       >
@@ -19490,9 +19495,13 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                       <Select
                                         SelectComponent={[Function]}
                                         autoFocus={true}
+                                        compareValues={[Function]}
                                         disabled={false}
                                         id="type"
+                                        invalid={false}
                                         invalidText=""
+                                        isClearable={false}
+                                        isSearchable={false}
                                         labelText={
                                           <IsRequired>
                                             Type
@@ -19521,6 +19530,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                           ]
                                         }
                                         placeholder="<Choose>"
+                                        pluckSingleValue={true}
                                         readOnly={false}
                                         simpleValue={false}
                                         value=""
@@ -19925,8 +19935,12 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                     >
                                       <Select
                                         SelectComponent={[Function]}
+                                        compareValues={[Function]}
                                         id="unit"
+                                        invalid={false}
                                         invalidText=""
+                                        isClearable={false}
+                                        isSearchable={false}
                                         labelText="Unit"
                                         loadOptionsChangeCounter={1}
                                         loadingMessage="Loading..."
@@ -19947,6 +19961,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                           ]
                                         }
                                         placeholder="<Choose>"
+                                        pluckSingleValue={true}
                                         simpleValue={false}
                                         value="GB"
                                       >
@@ -20238,9 +20253,13 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                     >
                                       <Select
                                         SelectComponent={[Function]}
+                                        compareValues={[Function]}
                                         disabled={false}
                                         id="mode"
+                                        invalid={false}
                                         invalidText=""
+                                        isClearable={false}
+                                        isSearchable={false}
                                         labelText={
                                           <IsRequired>
                                             Mode
@@ -20269,6 +20288,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                           ]
                                         }
                                         placeholder="<Choose>"
+                                        pluckSingleValue={true}
                                         readOnly={false}
                                         simpleValue={false}
                                         value=""
@@ -20576,9 +20596,13 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                     >
                                       <Select
                                         SelectComponent={[Function]}
+                                        compareValues={[Function]}
                                         disabled={false}
                                         id="controller"
+                                        invalid={false}
                                         invalidText=""
+                                        isClearable={false}
+                                        isSearchable={false}
                                         labelText="Controller"
                                         loadOptionsChangeCounter={1}
                                         loadingMessage="Loading..."
@@ -20603,6 +20627,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                           ]
                                         }
                                         placeholder="<Choose>"
+                                        pluckSingleValue={true}
                                         readOnly={false}
                                         simpleValue={false}
                                         value=""
@@ -23281,9 +23306,13 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                       <Select
                                         SelectComponent={[Function]}
                                         autoFocus={true}
+                                        compareValues={[Function]}
                                         disabled={true}
                                         id="type"
+                                        invalid={false}
                                         invalidText=""
+                                        isClearable={false}
+                                        isSearchable={false}
                                         labelText={
                                           <IsRequired>
                                             Type
@@ -23312,6 +23341,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                           ]
                                         }
                                         placeholder="<Choose>"
+                                        pluckSingleValue={true}
                                         readOnly={true}
                                         simpleValue={false}
                                         value="thin"
@@ -23717,8 +23747,12 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                     >
                                       <Select
                                         SelectComponent={[Function]}
+                                        compareValues={[Function]}
                                         id="unit"
+                                        invalid={false}
                                         invalidText=""
+                                        isClearable={false}
+                                        isSearchable={false}
                                         labelText="Unit"
                                         loadOptionsChangeCounter={1}
                                         loadingMessage="Loading..."
@@ -23739,6 +23773,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                           ]
                                         }
                                         placeholder="<Choose>"
+                                        pluckSingleValue={true}
                                         simpleValue={false}
                                         value="GB"
                                       >
@@ -24030,9 +24065,13 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                     >
                                       <Select
                                         SelectComponent={[Function]}
+                                        compareValues={[Function]}
                                         disabled={true}
                                         id="mode"
+                                        invalid={false}
                                         invalidText=""
+                                        isClearable={false}
+                                        isSearchable={false}
                                         labelText={
                                           <IsRequired>
                                             Mode
@@ -24061,6 +24100,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                           ]
                                         }
                                         placeholder="<Choose>"
+                                        pluckSingleValue={true}
                                         readOnly={true}
                                         simpleValue={false}
                                         value="persistent"
@@ -24369,9 +24409,13 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                     >
                                       <Select
                                         SelectComponent={[Function]}
+                                        compareValues={[Function]}
                                         disabled={true}
                                         id="controller"
+                                        invalid={false}
                                         invalidText=""
+                                        isClearable={false}
+                                        isSearchable={false}
                                         labelText="Controller"
                                         loadOptionsChangeCounter={1}
                                         loadingMessage="Loading..."
@@ -24396,6 +24440,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                           ]
                                         }
                                         placeholder="<Choose>"
+                                        pluckSingleValue={true}
                                         readOnly={true}
                                         simpleValue={false}
                                         value="None"
@@ -27877,9 +27922,13 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                                   >
                                                                     <Select
                                                                       SelectComponent={[Function]}
+                                                                      compareValues={[Function]}
                                                                       helperText="Between undefinedMB and NaNGB"
                                                                       id="memoryType"
+                                                                      invalid={false}
                                                                       invalidText=""
+                                                                      isClearable={false}
+                                                                      isSearchable={false}
                                                                       labelText="Unit"
                                                                       loadOptionsChangeCounter={1}
                                                                       loadingMessage="Loading..."
@@ -27900,6 +27949,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                                         ]
                                                                       }
                                                                       placeholder="<Choose>"
+                                                                      pluckSingleValue={true}
                                                                       simpleValue={false}
                                                                       value="GB"
                                                                     >
@@ -28996,8 +29046,12 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                         >
                                                           <Select
                                                             SelectComponent={[Function]}
+                                                            compareValues={[Function]}
                                                             id="socket"
+                                                            invalid={false}
                                                             invalidText=""
+                                                            isClearable={false}
+                                                            isSearchable={false}
                                                             labelText="Sockets"
                                                             loadOptionsChangeCounter={1}
                                                             loadingMessage="Loading..."
@@ -29026,6 +29080,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                               ]
                                                             }
                                                             placeholder="<Choose>"
+                                                            pluckSingleValue={true}
                                                             simpleValue={false}
                                                             value="3"
                                                           >
@@ -29371,8 +29426,12 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                         >
                                                           <Select
                                                             SelectComponent={[Function]}
+                                                            compareValues={[Function]}
                                                             id="cores"
+                                                            invalid={false}
                                                             invalidText=""
+                                                            isClearable={false}
+                                                            isSearchable={false}
                                                             labelText="Cores Per Socket"
                                                             loadOptionsChangeCounter={1}
                                                             loadingMessage="Loading..."
@@ -29401,6 +29460,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                               ]
                                                             }
                                                             placeholder="<Choose>"
+                                                            pluckSingleValue={true}
                                                             simpleValue={false}
                                                             value="1"
                                                           >
@@ -31344,8 +31404,12 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
                                     >
                                       <Select
                                         SelectComponent={[Function]}
+                                        compareValues={[Function]}
                                         id="vlan"
+                                        invalid={false}
                                         invalidText=""
+                                        isClearable={false}
+                                        isSearchable={false}
                                         labelText={
                                           <IsRequired>
                                             vLan
@@ -31378,6 +31442,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
                                           ]
                                         }
                                         placeholder="<Choose>"
+                                        pluckSingleValue={true}
                                         simpleValue={false}
                                         value=""
                                       >
@@ -31685,8 +31750,12 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
                                       >
                                         <Select
                                           SelectComponent={[Function]}
+                                          compareValues={[Function]}
                                           id="network"
+                                          invalid={false}
                                           invalidText=""
+                                          isClearable={false}
+                                          isSearchable={false}
                                           labelText={
                                             <IsRequired>
                                               Network
@@ -31707,6 +31776,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
                                             ]
                                           }
                                           placeholder="<Choose>"
+                                          pluckSingleValue={true}
                                           simpleValue={false}
                                           value=""
                                         >
@@ -46552,9 +46622,13 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                                   >
                                                                     <Select
                                                                       SelectComponent={[Function]}
+                                                                      compareValues={[Function]}
                                                                       helperText="Between undefinedMB and NaNGB"
                                                                       id="memoryType"
+                                                                      invalid={false}
                                                                       invalidText=""
+                                                                      isClearable={false}
+                                                                      isSearchable={false}
                                                                       labelText="Unit"
                                                                       loadOptionsChangeCounter={1}
                                                                       loadingMessage="Loading..."
@@ -46575,6 +46649,7 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                                         ]
                                                                       }
                                                                       placeholder="<Choose>"
+                                                                      pluckSingleValue={true}
                                                                       simpleValue={false}
                                                                       value="GB"
                                                                     >
@@ -47671,8 +47746,12 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                         >
                                                           <Select
                                                             SelectComponent={[Function]}
+                                                            compareValues={[Function]}
                                                             id="socket"
+                                                            invalid={false}
                                                             invalidText=""
+                                                            isClearable={false}
+                                                            isSearchable={false}
                                                             labelText="Sockets"
                                                             loadOptionsChangeCounter={1}
                                                             loadingMessage="Loading..."
@@ -47701,6 +47780,7 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                               ]
                                                             }
                                                             placeholder="<Choose>"
+                                                            pluckSingleValue={true}
                                                             simpleValue={false}
                                                             value="3"
                                                           >
@@ -48046,8 +48126,12 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                         >
                                                           <Select
                                                             SelectComponent={[Function]}
+                                                            compareValues={[Function]}
                                                             id="cores"
+                                                            invalid={false}
                                                             invalidText=""
+                                                            isClearable={false}
+                                                            isSearchable={false}
                                                             labelText="Cores Per Socket"
                                                             loadOptionsChangeCounter={1}
                                                             loadingMessage="Loading..."
@@ -48076,6 +48160,7 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                               ]
                                                             }
                                                             placeholder="<Choose>"
+                                                            pluckSingleValue={true}
                                                             simpleValue={false}
                                                             value="1"
                                                           >

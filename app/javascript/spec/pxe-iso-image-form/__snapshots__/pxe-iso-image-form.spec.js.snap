@@ -595,8 +595,12 @@ exports[`Pxe Edit Iso Image Form Component should render editing a iso image 1`]
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="pxe_image_type_id"
+                                              invalid={false}
                                               invalidText=""
+                                              isClearable={false}
+                                              isSearchable={false}
                                               labelText="Type"
                                               loadOptions={[Function]}
                                               loadOptionsChangeCounter={1}
@@ -605,7 +609,9 @@ exports[`Pxe Edit Iso Image Form Component should render editing a iso image 1`]
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              options={Array []}
                                               placeholder="<Choose>"
+                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value="1"
                                             >
@@ -831,7 +837,9 @@ exports[`Pxe Edit Iso Image Form Component should render editing a iso image 1`]
                                 "cancel",
                               ]
                             }
+                            buttonsProps={Object {}}
                             canReset={true}
+                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={

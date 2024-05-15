@@ -950,8 +950,12 @@ exports[`Diagnostics Collect Log form component should render edit DiagnosticsCo
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="log_protocol"
+                                              invalid={false}
                                               invalidText=""
+                                              isClearable={false}
+                                              isSearchable={false}
                                               labelText="Type"
                                               loadOptionsChangeCounter={1}
                                               loadingMessage="Loading..."
@@ -984,6 +988,7 @@ exports[`Diagnostics Collect Log form component should render edit DiagnosticsCo
                                                 ]
                                               }
                                               placeholder="<Choose>"
+                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value=""
                                             >
@@ -1253,7 +1258,9 @@ exports[`Diagnostics Collect Log form component should render edit DiagnosticsCo
                                 "cancel",
                               ]
                             }
+                            buttonsProps={Object {}}
                             canReset={true}
+                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={
@@ -2493,8 +2500,12 @@ exports[`Diagnostics Collect Log form component should render edit DiagnosticsCo
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="log_protocol"
+                                              invalid={false}
                                               invalidText=""
+                                              isClearable={false}
+                                              isSearchable={false}
                                               labelText="Type"
                                               loadOptionsChangeCounter={1}
                                               loadingMessage="Loading..."
@@ -2527,6 +2538,7 @@ exports[`Diagnostics Collect Log form component should render edit DiagnosticsCo
                                                 ]
                                               }
                                               placeholder="<Choose>"
+                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value=""
                                             >
@@ -2796,7 +2808,9 @@ exports[`Diagnostics Collect Log form component should render edit DiagnosticsCo
                                 "cancel",
                               ]
                             }
+                            buttonsProps={Object {}}
                             canReset={true}
+                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={
@@ -4056,8 +4070,12 @@ exports[`Diagnostics Collect Log form component should render new DiagnosticsCol
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="log_protocol"
+                                              invalid={false}
                                               invalidText=""
+                                              isClearable={false}
+                                              isSearchable={false}
                                               labelText="Type"
                                               loadOptionsChangeCounter={1}
                                               loadingMessage="Loading..."
@@ -4090,6 +4108,7 @@ exports[`Diagnostics Collect Log form component should render new DiagnosticsCol
                                                 ]
                                               }
                                               placeholder="<Choose>"
+                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value=""
                                             >
@@ -4359,7 +4378,9 @@ exports[`Diagnostics Collect Log form component should render new DiagnosticsCol
                                 "cancel",
                               ]
                             }
+                            buttonsProps={Object {}}
                             canReset={true}
+                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={

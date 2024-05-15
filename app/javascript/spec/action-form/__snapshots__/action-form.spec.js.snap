@@ -8568,8 +8568,12 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="action_type"
+                                              invalid={false}
                                               invalidText=""
+                                              isClearable={false}
+                                              isSearchable={false}
                                               labelText={
                                                 <IsRequired>
                                                   Action Type
@@ -8582,7 +8586,9 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              options={Array []}
                                               placeholder="<Choose>"
+                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value=""
                                             >
@@ -8598,7 +8604,6 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                     Action Type
                                                   </IsRequired>
                                                 }
-                                                loadingMessage="Loading..."
                                                 name="action_type"
                                                 noOptionsMessage={[Function]}
                                                 onBlur={[Function]}
@@ -8606,7 +8611,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 onFocus={[Function]}
                                                 onInputChange={[Function]}
                                                 options={Array []}
-                                                placeholder="<Choose>"
+                                                placeholder="Loading..."
                                                 value=""
                                               >
                                                 <Select
@@ -8622,7 +8627,6 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                     </IsRequired>
                                                   }
                                                   light={false}
-                                                  loadingMessage="Loading..."
                                                   name="action_type"
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
@@ -8656,7 +8660,6 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                         <select
                                                           className="bx--select-input"
                                                           id="action_type"
-                                                          loadingMessage="Loading..."
                                                           name="action_type"
                                                           onBlur={[Function]}
                                                           onChange={[Function]}
@@ -8666,7 +8669,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                           <SelectItem
                                                             disabled={false}
                                                             hidden={false}
-                                                            text="<Choose>"
+                                                            text="Loading..."
                                                             value=""
                                                           >
                                                             <option
@@ -8675,7 +8678,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                               hidden={false}
                                                               value=""
                                                             >
-                                                              &lt;Choose&gt;
+                                                              Loading...
                                                             </option>
                                                           </SelectItem>
                                                         </select>
@@ -13780,7 +13783,9 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                 "cancel",
                               ]
                             }
+                            buttonsProps={Object {}}
                             canReset={false}
+                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={

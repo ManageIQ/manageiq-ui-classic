@@ -2114,7 +2114,9 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                 "cancel",
                               ]
                             }
+                            buttonsProps={Object {}}
                             canReset={false}
+                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={

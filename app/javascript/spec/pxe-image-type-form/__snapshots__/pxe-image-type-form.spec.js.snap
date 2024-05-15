@@ -973,8 +973,12 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="provision_type"
+                                              invalid={false}
                                               invalidText=""
+                                              isClearable={false}
+                                              isSearchable={false}
                                               labelText="Type"
                                               loadOptionsChangeCounter={1}
                                               loadingMessage="Loading..."
@@ -999,6 +1003,7 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                                 ]
                                               }
                                               placeholder="<Choose>"
+                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value=""
                                             >
@@ -1224,7 +1229,9 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                 "cancel",
                               ]
                             }
+                            buttonsProps={Object {}}
                             canReset={false}
+                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={
@@ -2487,8 +2494,12 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="provision_type"
+                                              invalid={false}
                                               invalidText=""
+                                              isClearable={false}
+                                              isSearchable={false}
                                               labelText="Type"
                                               loadOptionsChangeCounter={1}
                                               loadingMessage="Loading..."
@@ -2513,6 +2524,7 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                                 ]
                                               }
                                               placeholder="<Choose>"
+                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value="host"
                                             >
@@ -2738,7 +2750,9 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                 "cancel",
                               ]
                             }
+                            buttonsProps={Object {}}
                             canReset={true}
+                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={

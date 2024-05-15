@@ -3319,9 +3319,13 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                             >
                                               <Select
                                                 SelectComponent={[Function]}
+                                                compareValues={[Function]}
                                                 disabled={true}
                                                 id="ems_id"
+                                                invalid={false}
                                                 invalidText=""
+                                                isClearable={false}
+                                                isSearchable={false}
                                                 labelText={
                                                   <IsRequired>
                                                     Provider:
@@ -3334,7 +3338,9 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                 onBlur={[Function]}
                                                 onChange={[Function]}
                                                 onFocus={[Function]}
+                                                options={Array []}
                                                 placeholder="<Choose>"
+                                                pluckSingleValue={true}
                                                 simpleValue={false}
                                                 value=""
                                               >
@@ -5557,7 +5563,9 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                   "cancel",
                                 ]
                               }
+                              buttonsProps={Object {}}
                               canReset={true}
+                              canSubmit={false}
                               cancelLabel="Cancel"
                               disableSubmit={true}
                               formFields={

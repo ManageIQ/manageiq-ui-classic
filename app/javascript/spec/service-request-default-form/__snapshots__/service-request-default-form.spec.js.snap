@@ -1473,8 +1473,12 @@ exports[`Show Service Request Page should render 1`] = `
                             >
                               <Select
                                 SelectComponent={[Function]}
+                                compareValues={[Function]}
                                 id="selectedUser"
+                                invalid={false}
                                 invalidText=""
+                                isClearable={false}
+                                isSearchable={false}
                                 labelText={
                                   <IsRequired>
                                     Requester:
@@ -1499,6 +1503,7 @@ exports[`Show Service Request Page should render 1`] = `
                                   ]
                                 }
                                 placeholder="<Choose>"
+                                pluckSingleValue={true}
                                 simpleValue={false}
                                 value=""
                               >
@@ -2576,8 +2581,12 @@ exports[`Show Service Request Page should render 1`] = `
                             >
                               <Select
                                 SelectComponent={[Function]}
+                                compareValues={[Function]}
                                 id="types"
+                                invalid={false}
                                 invalidText=""
+                                isClearable={false}
+                                isSearchable={false}
                                 labelText={
                                   <IsRequired>
                                     Type:
@@ -2654,6 +2663,7 @@ exports[`Show Service Request Page should render 1`] = `
                                   ]
                                 }
                                 placeholder="<Choose>"
+                                pluckSingleValue={true}
                                 simpleValue={false}
                                 value=""
                               >
@@ -3211,8 +3221,12 @@ exports[`Show Service Request Page should render 1`] = `
                             >
                               <Select
                                 SelectComponent={[Function]}
+                                compareValues={[Function]}
                                 id="selectedPeriod"
+                                invalid={false}
                                 invalidText=""
+                                isClearable={false}
+                                isSearchable={false}
                                 labelText={
                                   <IsRequired>
                                     Request Date:
@@ -3241,6 +3255,7 @@ exports[`Show Service Request Page should render 1`] = `
                                   ]
                                 }
                                 placeholder="<Choose>"
+                                pluckSingleValue={true}
                                 simpleValue={false}
                                 value={7}
                               >

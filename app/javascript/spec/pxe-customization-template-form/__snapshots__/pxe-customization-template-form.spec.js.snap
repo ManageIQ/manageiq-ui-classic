@@ -1535,8 +1535,12 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="pxe_image_type_id"
+                                              invalid={false}
                                               invalidText=""
+                                              isClearable={false}
+                                              isSearchable={false}
                                               labelText={
                                                 <IsRequired>
                                                   Image Type
@@ -1549,7 +1553,9 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              options={Array []}
                                               placeholder="<Choose>"
+                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value=""
                                             >
@@ -1878,8 +1884,12 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="type"
+                                              invalid={false}
                                               invalidText=""
+                                              isClearable={false}
+                                              isSearchable={false}
                                               labelText={
                                                 <IsRequired>
                                                   Type
@@ -1912,6 +1922,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                                 ]
                                               }
                                               placeholder="<Choose>"
+                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value=""
                                             >
@@ -2258,7 +2269,9 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                 "cancel",
                               ]
                             }
+                            buttonsProps={Object {}}
                             canReset={false}
+                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={
@@ -4186,8 +4199,12 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="pxe_image_type_id"
+                                              invalid={false}
                                               invalidText=""
+                                              isClearable={false}
+                                              isSearchable={false}
                                               labelText={
                                                 <IsRequired>
                                                   Image Type
@@ -4200,7 +4217,9 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              options={Array []}
                                               placeholder="<Choose>"
+                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value="1"
                                             >
@@ -4529,8 +4548,12 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="type"
+                                              invalid={false}
                                               invalidText=""
+                                              isClearable={false}
+                                              isSearchable={false}
                                               labelText={
                                                 <IsRequired>
                                                   Type
@@ -4563,6 +4586,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                                 ]
                                               }
                                               placeholder="<Choose>"
+                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value="CustomizationTemplateKickstart"
                                             >
@@ -4909,7 +4933,9 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                 "cancel",
                               ]
                             }
+                            buttonsProps={Object {}}
                             canReset={false}
+                            canSubmit={false}
                             cancelLabel="Cancel"
                             formFields={
                               Array [
@@ -6848,8 +6874,12 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="pxe_image_type_id"
+                                              invalid={false}
                                               invalidText=""
+                                              isClearable={false}
+                                              isSearchable={false}
                                               labelText={
                                                 <IsRequired>
                                                   Image Type
@@ -6862,7 +6892,9 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              options={Array []}
                                               placeholder="<Choose>"
+                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value="1"
                                             >
@@ -7191,8 +7223,12 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                           >
                                             <Select
                                               SelectComponent={[Function]}
+                                              compareValues={[Function]}
                                               id="type"
+                                              invalid={false}
                                               invalidText=""
+                                              isClearable={false}
+                                              isSearchable={false}
                                               labelText={
                                                 <IsRequired>
                                                   Type
@@ -7225,6 +7261,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                                 ]
                                               }
                                               placeholder="<Choose>"
+                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value="CustomizationTemplateKickstart"
                                             >
@@ -7571,7 +7608,9 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                 "cancel",
                               ]
                             }
+                            buttonsProps={Object {}}
                             canReset={true}
+                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={

@@ -597,7 +597,9 @@ exports[`vm resize form component should render a resize form 1`] = `
                                         "cancel",
                                       ]
                                     }
+                                    buttonsProps={Object {}}
                                     canReset={false}
+                                    canSubmit={false}
                                     cancelLabel="Cancel"
                                     disableSubmit={true}
                                     formFields={

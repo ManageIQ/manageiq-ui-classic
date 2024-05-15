@@ -573,8 +573,12 @@ exports[`Add/remove security groups form component should remove security group 
                                 >
                                   <Select
                                     SelectComponent={[Function]}
+                                    compareValues={[Function]}
                                     id="security_group"
+                                    invalid={false}
                                     invalidText=""
+                                    isClearable={false}
+                                    isSearchable={false}
                                     labelText="Security Group"
                                     loadOptionsChangeCounter={1}
                                     loadingMessage="Loading..."
@@ -595,6 +599,7 @@ exports[`Add/remove security groups form component should remove security group 
                                       ]
                                     }
                                     placeholder="<Choose>"
+                                    pluckSingleValue={true}
                                     simpleValue={false}
                                     value=""
                                   >
@@ -793,7 +798,9 @@ exports[`Add/remove security groups form component should remove security group 
                                 "cancel",
                               ]
                             }
+                            buttonsProps={Object {}}
                             canReset={false}
+                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={
