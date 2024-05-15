@@ -4,9 +4,6 @@
   - id = @edit[:req_id] || "new"
   - hide_deprecated_url = url_for_only_path(:action => "vm_pre_prov", :template_klass => params[:template_klass], :id => id.to_s)
 
-  %h3
-    = _("Provision %{what} based on the selected %{type}") % {:what => ui_lookup(:tables => request.parameters[:controller]), :type => typ}
-  %label
   = react('FilterProvisionInstance', {:hideDeprecated => @edit[:hide_deprecated_templates], :searchText => params[:search_text] || '', :url => hide_deprecated_url, :showCheckbox => show_checkbox})
 
   .provision-instance-container
