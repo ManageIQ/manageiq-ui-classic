@@ -1,4 +1,4 @@
-export const samepleInitialValues = {
+export const sampleInitialValues = {
   id: '1',
   name: '10.197.65.254',
   hostname: null,
@@ -7,7 +7,7 @@ export const samepleInitialValues = {
   type: 'ManageIQ::Providers::IbmPowerHmc::InfraManager::Host',
 };
 
-export const sampleSingleReponse = {
+export const sampleSingleResponse = {
   data: {
     form_schema: {
       fields: [
