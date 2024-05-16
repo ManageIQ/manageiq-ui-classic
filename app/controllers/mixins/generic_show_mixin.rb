@@ -38,6 +38,13 @@ module Mixins
         end
       end
 
+      if @showtype == @display
+        case @display
+          when "instances"
+	
+        end
+      end
+
       if params[:action] == 'show' && !performed? && self.class.respond_to?(:default_show_template)
         render :template => self.class.default_show_template
       end
@@ -182,5 +189,33 @@ module Mixins
       @view, @pages = get_view(model, view_options)
       @showtype = @display
     end
+
+   #private
+
+   #def handle_display_modes
+   # @search_text = params[:text]
+   # @items = fetch_items_based_on_display(@display, @search_text)
+   #end
+   
+   #def fetch_items_based_on_display(display, search_text)
+    # case display
+    # when "images"
+    #   filter_items(Image, search_text)
+    # when "instance"
+    #   filter_items(MiqAeInstance, search_text)
+    # when "cloud_object_store_containers"
+    #   filter_items(CloudObjectStoreContainer, search_text)
+    # when "security_groups"
+    #   filter_items(SecurityGroup, search_text)
+    # when "cloud_networks"
+    #   filter_items(CloudNetwork, search_text)
+    # end
+    #end
+
+    #def filter_items(model_class, search_text)
+    #  query = model_class.all
+    #  query = query.where("name ILIKE ?", "%#{search_text}%") if search_text.present?
+    #  query
+    #end
   end
 end
