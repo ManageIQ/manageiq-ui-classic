@@ -123,7 +123,7 @@
 
       button {
         padding: 0;
-        margin: 5px 0;
+        margin: -5px 0 0 0;
 
         span {
           display: flex;
@@ -253,10 +253,15 @@
 .provision-instance-container {
   display: flex;
   flex-direction: column;
+  margin-top: 20px;
 
   .provision-instance-list {
-    height: calc(100vh - 210px);
+    height: calc(100vh - 200px);
     overflow: auto;
+
+    .miq-data-table {
+      margin-top: 0;
+    }
   }
   .provision-instance-actions {
 

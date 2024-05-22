@@ -1,6 +1,7 @@
 import React from 'react';
 import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
+import { act } from 'react-dom/test-utils';
 import { mount } from '../helpers/mountForm';
 import AddRemoveSecurityGroupForm from '../../components/vm-cloud-add-remove-security-group-form';
 
@@ -65,7 +66,11 @@ describe('Add/remove security groups form component', () => {
     };
     fetchMock.getOnce('/api/instances/1850/security_groups?expand=resources&attributes=id,name', currentSecurityGroups);
     fetchMock.postOnce('/api/instances/1850/security_groups/', saveObject);
-    const wrapper = mount(<AddRemoveSecurityGroupForm recordId="1850" redirectURL="/vm_cloud/explorer" isAdd={false} />);
+    let wrapper;
+    await act(async() => {
+      wrapper = mount(<AddRemoveSecurityGroupForm recordId="1850" redirectURL="/vm_cloud/explorer" isAdd={false} />);
+    });
+    wrapper.update();
     expect(toJson(wrapper)).toMatchSnapshot();
     done();
   });

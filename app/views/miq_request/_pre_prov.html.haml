@@ -1,27 +1,17 @@
 #pre_prov_div
   - typ = request.parameters[:controller] == "vm_cloud" ? ui_lookup(:table => "template_cloud") : ui_lookup(:table => "template_infra")
-  %h3
-    = _("Provision %{what} based on the selected %{type}") % {:what => ui_lookup(:tables => request.parameters[:controller]), :type => typ}
-  %label
-    - id = @edit[:req_id] || "new"
-    - unless @edit[:hide_deprecated_templates].nil?
-      - hide_depricated_url = url_for_only_path({:action => "vm_pre_prov",
-                                              :template_klass => params[:template_klass],
-                                              :id => id.to_s,
-                                              :hide_deprecated_templates => !@edit[:hide_deprecated_templates]})
-      %input{:type => "checkbox",
-             :onclick => "miqAjax('#{hide_depricated_url}')",
-             :checked => @edit[:hide_deprecated_templates]}
-        = _('Hide deprecated')
-  
+  - show_checkbox = !@edit[:hide_deprecated_templates].nil?
+  - id = @edit[:req_id] || "new"
+  - hide_deprecated_url = url_for_only_path(:action => "vm_pre_prov", :template_klass => params[:template_klass], :id => id.to_s)
+
+  = react('FilterProvisionInstance', {:hideDeprecated => @edit[:hide_deprecated_templates], :searchText => params[:search_text] || '', :url => hide_deprecated_url, :showCheckbox => show_checkbox})
+
   .provision-instance-container
     .provision-instance-list
       = render :partial => "layouts/x_gtl"
 
     .provision-instance-actions
       #pre_prov_form_buttons_div.pull-right
-        = render :partial => 'layouts/x_edit_buttons', :locals => {:action_url => 'pre_prov',
-                                                                  :continue_button => true,
-                                                                  :no_reset => true}
+        = render :partial => 'layouts/x_edit_buttons', :locals => {:action_url => 'pre_prov', :continue_button => true, :no_reset => true}
   :javascript
     $(provisioningListenToRx);

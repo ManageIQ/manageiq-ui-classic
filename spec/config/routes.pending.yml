@@ -419,6 +419,17 @@ DashboardController:
 - tree_select
 - wait_for_task
 - widget_to_pdf
+EmbeddedTerraformCredentialController:
+- report_data
+- index
+- search_clear
+EmbeddedTerraformRepositoryController:
+- report_data
+- index
+EmbeddedTerraformTemplateController:
+- search_clear
+- index
+- report_data
 EmsCloudController:
 - compare_cancel
 - compare_choose_base

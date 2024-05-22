@@ -96,7 +96,7 @@ describe WorkflowRepositoryController do
     end
 
     context 'tagging one or more repositories' do
-      let(:params) { {:pressed => "ansible_repository_tag"} }
+      let(:params) { {:pressed => "embedded_configuration_script_source_tag"} }
 
       it 'calls tag method' do
         expect(controller).to receive(:tag).with(controller.class.model)

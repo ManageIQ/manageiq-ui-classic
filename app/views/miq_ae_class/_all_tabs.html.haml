@@ -17,7 +17,8 @@
       = miq_tab_content("instances", @sb[:active_tab]) do
         = render :partial => "class_instances"
       = miq_tab_content("methods", @sb[:active_tab]) do
-        = render :partial => "class_methods"
+        #class_methods_div
+          = render :partial => "class_methods"
       = miq_tab_content("props", @sb[:active_tab]) do
         = render :partial => "class_props"
       = miq_tab_content("schema", @sb[:active_tab]) do

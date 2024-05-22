@@ -4,6 +4,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
 <ProvGrid
   initialData={
     Object {
+      "field": "environment__placement_ds_name",
       "fieldId": "environment__placement_ds_name",
       "headers": Array [
         Object {
@@ -224,6 +225,7 @@ exports[`ProvGrid component should render prov_ds_grid table 1`] = `
         },
       ],
       "selected": "5",
+      "spec": true,
       "type": "ds",
     }
   }
@@ -5654,6 +5656,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
 <ProvGrid
   initialData={
     Object {
+      "field": "environment__placement_host_name",
       "fieldId": "environment__placement_host_name",
       "headers": Array [
         Object {
@@ -5950,6 +5953,7 @@ exports[`ProvGrid component should render prov_host_grid table 1`] = `
         },
       ],
       "selected": "5",
+      "spec": true,
       "type": "host",
     }
   }
@@ -15574,6 +15578,7 @@ exports[`ProvGrid component should render prov_iso_img_grid table 1`] = `
 <ProvGrid
   initialData={
     Object {
+      "field": "service__iso_image_id",
       "fieldId": "service__iso_image_id",
       "headers": Array [
         Object {
@@ -15680,6 +15685,7 @@ exports[`ProvGrid component should render prov_iso_img_grid table 1`] = `
         },
       ],
       "selected": "5",
+      "spec": true,
       "type": "iso_img",
     }
   }
@@ -16919,6 +16925,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
 <ProvGrid
   initialData={
     Object {
+      "field": "service__pxe_image_id",
       "fieldId": "service__pxe_image_id",
       "headers": Array [
         Object {
@@ -17063,6 +17070,7 @@ exports[`ProvGrid component should render prov_pxe_img_grid table 1`] = `
         },
       ],
       "selected": "5",
+      "spec": true,
       "type": "pxe_img",
     }
   }
@@ -19419,6 +19427,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
 <ProvGrid
   initialData={
     Object {
+      "field": "customize__customization_template_id",
       "fieldId": "customize__customization_template_id",
       "headers": Array [
         Object {
@@ -19601,6 +19610,7 @@ exports[`ProvGrid component should render prov_template_grid table 1`] = `
         },
       ],
       "selected": "5",
+      "spec": true,
       "type": "template",
     }
   }
@@ -23354,6 +23364,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
 <ProvGrid
   initialData={
     Object {
+      "field": "service__src_vm_id",
       "fieldId": "service__src_vm_id",
       "headers": Array [
         Object {
@@ -23726,6 +23737,7 @@ exports[`ProvGrid component should render prov_vm_grid table 1`] = `
         },
       ],
       "selected": "5",
+      "spec": true,
       "type": "vm",
     }
   }

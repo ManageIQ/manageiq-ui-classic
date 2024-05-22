@@ -18,7 +18,7 @@ export default MiqStructuredListSub;
 
 MiqStructuredListSub.propTypes = {
   row: PropTypes.shape({
-    subItems: PropTypes.shape({}).isRequired,
+    sub_items: PropTypes.arrayOf(PropTypes.any).isRequired,
   }).isRequired,
   clickEvents: PropTypes.bool.isRequired,
   onClick: PropTypes.func,

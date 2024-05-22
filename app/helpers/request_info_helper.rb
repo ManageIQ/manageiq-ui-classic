@@ -6,9 +6,7 @@ module RequestInfoHelper
   PROV_FIELDS = [:src_vm_id, :placement_host_name, :placement_ds_name, :attached_ds, :sysprep_custom_spec, :customization_template_id, :pxe_image_id, :iso_image_id, :windows_image_id].freeze
 
   def provision_tab_configuration(workflow)
-    prov_tab_labels = workflow.provisioning_tab_list.map do |dialog|
-      {:name => dialog[:name], :text => dialog[:description]}
-    end
+    prov_tab_labels = workflow.provisioning_tab_list.pluck(:name)
     return prov_tab_labels, workflow.get_dialog_order
   end
 

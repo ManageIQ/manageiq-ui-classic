@@ -31,7 +31,6 @@ const WorkflowCredentialMappingForm = ({ recordId }) => {
     ).then(({ resources }) => {
       API.get(`/api/configuration_script_payloads/${recordId}`).then(({ name, payload, credentials }) => {
         const initialCredentials = credentials != null ? credentials : {};
-
         /*
           Creates the list of credential references from the workflow payload by parsing each state and saving them to payloadCredentials.
           Duplicate references get overridden.

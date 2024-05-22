@@ -11,7 +11,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
         },
         Object {
           "header": "Description",
-          "key": "descripton",
+          "key": "description",
         },
         Object {
           "header": "Show in Console",
@@ -67,7 +67,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
               "title": "Category cannot be deleted",
             },
           ],
-          "id": 100,
+          "id": "100",
         },
         Object {
           "cells": Array [
@@ -100,7 +100,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
               "title": "Click to delete this category",
             },
           ],
-          "id": 101,
+          "id": "101",
         },
         Object {
           "cells": Array [
@@ -133,7 +133,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
               "title": "Click to delete this category",
             },
           ],
-          "id": 102,
+          "id": "102",
         },
         Object {
           "cells": Array [
@@ -166,7 +166,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
               "title": "Click to delete this category",
             },
           ],
-          "id": 103,
+          "id": "103",
         },
       ],
     }
@@ -220,7 +220,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
         },
         Object {
           "header": "Description",
-          "key": "descripton",
+          "key": "description",
         },
         Object {
           "header": "Show in Console",
@@ -279,10 +279,10 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
           "default": Object {
             "text": "false",
           },
-          "descripton": Object {
+          "description": Object {
             "text": "category description",
           },
-          "id": 100,
+          "id": "100",
           "name": Object {
             "text": "category",
           },
@@ -311,10 +311,10 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
           "default": Object {
             "text": "false",
           },
-          "descripton": Object {
+          "description": Object {
             "text": "category description",
           },
-          "id": 101,
+          "id": "101",
           "name": Object {
             "text": "category",
           },
@@ -343,10 +343,10 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
           "default": Object {
             "text": "false",
           },
-          "descripton": Object {
+          "description": Object {
             "text": "category description",
           },
-          "id": 102,
+          "id": "102",
           "name": Object {
             "text": "category",
           },
@@ -375,10 +375,10 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
           "default": Object {
             "text": "false",
           },
-          "descripton": Object {
+          "description": Object {
             "text": "category description",
           },
-          "id": 103,
+          "id": "103",
           "name": Object {
             "text": "category",
           },
@@ -413,7 +413,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
             },
             Object {
               "header": "Description",
-              "key": "descripton",
+              "key": "description",
             },
             Object {
               "header": "Show in Console",
@@ -457,10 +457,10 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
               "default": Object {
                 "text": "false",
               },
-              "descripton": Object {
+              "description": Object {
                 "text": "category description",
               },
-              "id": 100,
+              "id": "100",
               "name": Object {
                 "text": "category",
               },
@@ -489,10 +489,10 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
               "default": Object {
                 "text": "false",
               },
-              "descripton": Object {
+              "description": Object {
                 "text": "category description",
               },
-              "id": 101,
+              "id": "101",
               "name": Object {
                 "text": "category",
               },
@@ -521,10 +521,10 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
               "default": Object {
                 "text": "false",
               },
-              "descripton": Object {
+              "description": Object {
                 "text": "category description",
               },
-              "id": 102,
+              "id": "102",
               "name": Object {
                 "text": "category",
               },
@@ -553,10 +553,10 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
               "default": Object {
                 "text": "false",
               },
-              "descripton": Object {
+              "description": Object {
                 "text": "category description",
               },
-              "id": 103,
+              "id": "103",
               "name": Object {
                 "text": "category",
               },
@@ -699,7 +699,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                         className="miq-data-table-header"
                         isSortHeader={false}
                         isSortable={true}
-                        key="descripton"
+                        key="description"
                         onClick={[Function]}
                         scope="col"
                         sortDirection="NONE"
@@ -1370,9 +1370,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "100:descripton",
+                                "id": "100:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -1458,7 +1458,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 100,
+                            "id": "100",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -1493,9 +1493,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               "text": "category description",
                             },
                             "errors": null,
-                            "id": "100:descripton",
+                            "id": "100:description",
                             "info": Object {
-                              "header": "descripton",
+                              "header": "description",
                             },
                             "isEditable": false,
                             "isEditing": false,
@@ -1527,9 +1527,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "100:descripton",
+                                "id": "100:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -1615,7 +1615,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 100,
+                            "id": "100",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -1624,7 +1624,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                       >
                         <TableCell
                           className=""
-                          key="100:descripton"
+                          key="100:description"
                           onClick={[Function]}
                         >
                           <td
@@ -1684,9 +1684,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "100:descripton",
+                                "id": "100:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -1772,7 +1772,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 100,
+                            "id": "100",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -1841,9 +1841,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "100:descripton",
+                                "id": "100:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -1929,7 +1929,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 100,
+                            "id": "100",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -1998,9 +1998,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "100:descripton",
+                                "id": "100:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -2086,7 +2086,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 100,
+                            "id": "100",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -2155,9 +2155,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "100:descripton",
+                                "id": "100:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -2243,7 +2243,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 100,
+                            "id": "100",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -2319,9 +2319,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "100:descripton",
+                                "id": "100:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -2407,7 +2407,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 100,
+                            "id": "100",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -2431,14 +2431,14 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size="default"
+                                size="sm"
                                 tabIndex={0}
                                 title="Category cannot be deleted"
                               >
                                 <button
                                   aria-describedby="danger-description-9"
                                   aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--danger"
+                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
                                   disabled={false}
                                   onBlur={[Function]}
                                   onClick={[Function]}
@@ -2529,9 +2529,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "101:descripton",
+                                "id": "101:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -2617,7 +2617,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 101,
+                            "id": "101",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -2652,9 +2652,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               "text": "category description",
                             },
                             "errors": null,
-                            "id": "101:descripton",
+                            "id": "101:description",
                             "info": Object {
-                              "header": "descripton",
+                              "header": "description",
                             },
                             "isEditable": false,
                             "isEditing": false,
@@ -2686,9 +2686,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "101:descripton",
+                                "id": "101:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -2774,7 +2774,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 101,
+                            "id": "101",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -2783,7 +2783,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                       >
                         <TableCell
                           className=""
-                          key="101:descripton"
+                          key="101:description"
                           onClick={[Function]}
                         >
                           <td
@@ -2843,9 +2843,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "101:descripton",
+                                "id": "101:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -2931,7 +2931,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 101,
+                            "id": "101",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -3000,9 +3000,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "101:descripton",
+                                "id": "101:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -3088,7 +3088,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 101,
+                            "id": "101",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -3157,9 +3157,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "101:descripton",
+                                "id": "101:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -3245,7 +3245,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 101,
+                            "id": "101",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -3314,9 +3314,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "101:descripton",
+                                "id": "101:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -3402,7 +3402,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 101,
+                            "id": "101",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -3478,9 +3478,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "101:descripton",
+                                "id": "101:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -3566,7 +3566,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 101,
+                            "id": "101",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -3590,14 +3590,14 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size="default"
+                                size="sm"
                                 tabIndex={0}
                                 title="Click to delete this category"
                               >
                                 <button
                                   aria-describedby="danger-description-10"
                                   aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--danger bx--btn--disabled"
+                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger bx--btn--disabled"
                                   disabled={true}
                                   onBlur={[Function]}
                                   onClick={[Function]}
@@ -3688,9 +3688,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "102:descripton",
+                                "id": "102:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -3776,7 +3776,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 102,
+                            "id": "102",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -3811,9 +3811,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               "text": "category description",
                             },
                             "errors": null,
-                            "id": "102:descripton",
+                            "id": "102:description",
                             "info": Object {
-                              "header": "descripton",
+                              "header": "description",
                             },
                             "isEditable": false,
                             "isEditing": false,
@@ -3845,9 +3845,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "102:descripton",
+                                "id": "102:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -3933,7 +3933,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 102,
+                            "id": "102",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -3942,7 +3942,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                       >
                         <TableCell
                           className=""
-                          key="102:descripton"
+                          key="102:description"
                           onClick={[Function]}
                         >
                           <td
@@ -4002,9 +4002,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "102:descripton",
+                                "id": "102:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -4090,7 +4090,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 102,
+                            "id": "102",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -4159,9 +4159,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "102:descripton",
+                                "id": "102:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -4247,7 +4247,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 102,
+                            "id": "102",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -4316,9 +4316,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "102:descripton",
+                                "id": "102:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -4404,7 +4404,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 102,
+                            "id": "102",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -4473,9 +4473,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "102:descripton",
+                                "id": "102:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -4561,7 +4561,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 102,
+                            "id": "102",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -4637,9 +4637,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "102:descripton",
+                                "id": "102:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -4725,7 +4725,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 102,
+                            "id": "102",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -4749,14 +4749,14 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size="default"
+                                size="sm"
                                 tabIndex={0}
                                 title="Click to delete this category"
                               >
                                 <button
                                   aria-describedby="danger-description-11"
                                   aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--danger bx--btn--disabled"
+                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger bx--btn--disabled"
                                   disabled={true}
                                   onBlur={[Function]}
                                   onClick={[Function]}
@@ -4847,9 +4847,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "103:descripton",
+                                "id": "103:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -4935,7 +4935,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 103,
+                            "id": "103",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -4970,9 +4970,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               "text": "category description",
                             },
                             "errors": null,
-                            "id": "103:descripton",
+                            "id": "103:description",
                             "info": Object {
-                              "header": "descripton",
+                              "header": "description",
                             },
                             "isEditable": false,
                             "isEditing": false,
@@ -5004,9 +5004,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "103:descripton",
+                                "id": "103:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -5092,7 +5092,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 103,
+                            "id": "103",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -5101,7 +5101,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                       >
                         <TableCell
                           className=""
-                          key="103:descripton"
+                          key="103:description"
                           onClick={[Function]}
                         >
                           <td
@@ -5161,9 +5161,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "103:descripton",
+                                "id": "103:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -5249,7 +5249,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 103,
+                            "id": "103",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -5318,9 +5318,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "103:descripton",
+                                "id": "103:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -5406,7 +5406,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 103,
+                            "id": "103",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -5475,9 +5475,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "103:descripton",
+                                "id": "103:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -5563,7 +5563,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 103,
+                            "id": "103",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -5632,9 +5632,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "103:descripton",
+                                "id": "103:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -5720,7 +5720,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 103,
+                            "id": "103",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -5796,9 +5796,9 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   "text": "category description",
                                 },
                                 "errors": null,
-                                "id": "103:descripton",
+                                "id": "103:description",
                                 "info": Object {
-                                  "header": "descripton",
+                                  "header": "description",
                                 },
                                 "isEditable": false,
                                 "isEditing": false,
@@ -5884,7 +5884,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                               },
                             ],
                             "disabled": false,
-                            "id": 103,
+                            "id": "103",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -5908,14 +5908,14 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size="default"
+                                size="sm"
                                 tabIndex={0}
                                 title="Click to delete this category"
                               >
                                 <button
                                   aria-describedby="danger-description-12"
                                   aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--danger bx--btn--disabled"
+                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger bx--btn--disabled"
                                   disabled={true}
                                   onBlur={[Function]}
                                   onClick={[Function]}

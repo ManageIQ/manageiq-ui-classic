@@ -332,9 +332,8 @@ describe VmInfraController do
   end
 
   it 'can set retirement date' do
-    # allow the other supports (from other buttons) to still work:
-    allow_any_instance_of(Vm).to receive(:supports?).and_call_original
-    stub_supports(Vm, :retire)
+    stub_supports_all_others(vm_vmware.class)
+    stub_supports(vm_vmware.class, :retire)
     get :show, :params => {:id => vm_vmware.id}
     expect(response).to redirect_to(:action => 'explorer')
 

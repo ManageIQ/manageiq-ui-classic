@@ -1,0 +1,14 @@
+.worker_schema_row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px !important;
+
+  > div:first-child {
+    flex-basis: 100%;
+  }
+
+  > div:nth-child(n+2):nth-last-child(-n+2) {
+    flex-basis: calc(50% - 10px);
+    margin-right: 10px; 
+  }
+}

@@ -23,7 +23,6 @@ class ApplicationHelper::Toolbar::WorkflowRepositoryCenter < ApplicationHelper::
                        N_('Refresh this Repository'),
                        N_('Refresh this Repository'),
                        :klass   => ApplicationHelper::Button::EmbeddedWorkflow,
-                       :url     => "repository_refresh",
                        :confirm => N_("Refresh this Repository?"),
                        :enabled => true,
                      ),
@@ -63,7 +62,7 @@ class ApplicationHelper::Toolbar::WorkflowRepositoryCenter < ApplicationHelper::
                    :items =>
                              [
                                button(
-                                 :ansible_repository_tag,
+                                 :embedded_configuration_script_source_tag,
                                  'pficon pficon-edit fa-lg',
                                  N_('Edit Tags for this Workflow Repository'),
                                  N_('Edit Tags')

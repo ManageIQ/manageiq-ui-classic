@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import MiqDataTable from '../../miq-data-table';
 
 const ReconfigureTable = ({
-  label, headers, rows, addButtonLabel, buttonClick, onCellClick, formType,
+  label, headers, rows, addButtonLabel, buttonClick, onCellClick, formType, roleAllowed,
 }) => {
   const renderAddButton = () => addButtonLabel && (
     <Button
@@ -18,7 +18,7 @@ const ReconfigureTable = ({
       {addButtonLabel}
     </Button>
   );
-  return (
+  return roleAllowed ? (
     <div className={classNames(`${formType}-table`, 'reconfigure-form-table')}>
       <div className="form-section-title">
         <h3>{label}</h3>
@@ -31,7 +31,7 @@ const ReconfigureTable = ({
         mode={`${formType}-table-list`}
       />
     </div>
-  );
+  ) : null;
 };
 
 ReconfigureTable.propTypes = {
@@ -42,6 +42,7 @@ ReconfigureTable.propTypes = {
   formType: PropTypes.string,
   onCellClick: PropTypes.func,
   buttonClick: PropTypes.func,
+  roleAllowed: PropTypes.bool,
 };
 
 ReconfigureTable.defaultProps = {
@@ -52,5 +53,6 @@ ReconfigureTable.defaultProps = {
   addButtonLabel: '',
   formType: '',
   label: '',
+  roleAllowed: false,
 };
 export default ReconfigureTable;

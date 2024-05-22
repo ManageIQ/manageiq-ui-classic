@@ -1,4 +1,15 @@
 module MiqActionHelper
+  def control_action_summary(record, alert_guids, cats, action_policies)
+    safe_join([
+                miq_summary_action_info(record),
+                miq_summary_action_type(record, alert_guids, cats),
+                miq_summary_attribute_value_pair(record),
+                miq_summary_action_policies(action_policies)
+              ])
+  end
+
+  private
+
   def miq_summary_action_info(record)
     data = {:title => _("Basic Information"), :mode => "miq_action_info"}
     rows = []
@@ -24,17 +35,6 @@ module MiqActionHelper
       rows.push({:cells => {:label => _('Object Details')}})
       rows.push({:cells => {:label => _('Starting Message'), :value => record_options[:ae_message]}})
       rows.push({:cells => {:label => _('Request'), :value => record_options[:ae_request]}})
-
-      value_pair = []
-      if record_options[:ae_hash].present?
-        record_options[:ae_hash].each do |k, v|
-          value_pair.push({:label => k})
-          value_pair.push({:label => v})
-        end
-      else
-        value_pair.push({:label => _('No Attribute/Value Pairs found')})
-      end
-      rows.push({:cells => {:label => _('Attribute/Value Pairs'), :value => value_pair}})
 
     when "email"
       data[:title] = _('E-mail Settings')
@@ -127,6 +127,21 @@ module MiqActionHelper
       data[:rows] = rows
       miq_structured_list(data)
     end
+  end
+
+  def miq_summary_attribute_value_pair(record)
+    record_options = record.options
+    rows = []
+    if record_options[:ae_hash].present?
+      record_options[:ae_hash].each do |k, v|
+        rows.push({:cells => [{:value => k}, {:value => v}]})
+      end
+    end
+    miq_structured_list(
+      :title => _('Attribute/Value Pairs'),
+      :mode  => "control_action_attribute_value_pairs",
+      :rows  => rows
+    )
   end
 
   def miq_summary_action_policies(action_policies)

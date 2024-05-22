@@ -22,11 +22,11 @@ exports[`Pxe Iso Datastore Form Component should render adding a new iso datasto
     emses={
       Array [
         Object {
-          "id": "1",
+          "id": 1,
           "name": "provider 1",
         },
         Object {
-          "id": "2",
+          "id": 2,
           "name": "provider 2",
         },
       ]
@@ -827,12 +827,8 @@ exports[`Pxe Iso Datastore Form Component should render adding a new iso datasto
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="ems_id"
-                                              invalid={false}
                                               invalidText=""
-                                              isClearable={false}
-                                              isSearchable={false}
                                               labelText="Provider"
                                               loadOptionsChangeCounter={1}
                                               loadingMessage="Loading..."
@@ -857,7 +853,6 @@ exports[`Pxe Iso Datastore Form Component should render adding a new iso datasto
                                                 ]
                                               }
                                               placeholder="<Choose>"
-                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value=""
                                             >
@@ -1083,9 +1078,7 @@ exports[`Pxe Iso Datastore Form Component should render adding a new iso datasto
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={false}
-                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={

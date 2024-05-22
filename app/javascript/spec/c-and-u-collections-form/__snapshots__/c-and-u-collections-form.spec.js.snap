@@ -19,6 +19,1971 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
   }
 >
   <DiagnosticsCURepairForm>
+    <Connect(MiqFormRenderer)
+      onSubmit={[Function]}
+      schema={
+        Object {
+          "fields": Array [
+            Object {
+              "component": "select",
+              "id": "timezone",
+              "initialValue": "UTC",
+              "isSearchable": true,
+              "label": "Timezone",
+              "name": "timezone",
+              "options": Array [
+                Object {
+                  "label": "(GMT-12:00) International Date Line West",
+                  "value": "International Date Line West",
+                },
+                Object {
+                  "label": "(GMT-11:00) American Samoa",
+                  "value": "American Samoa",
+                },
+                Object {
+                  "label": "(GMT-11:00) Midway Island",
+                  "value": "Midway Island",
+                },
+                Object {
+                  "label": "(GMT-10:00) Hawaii",
+                  "value": "Hawaii",
+                },
+                Object {
+                  "label": "(GMT-09:00) Alaska",
+                  "value": "Alaska",
+                },
+              ],
+              "simpleValue": true,
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+              ],
+            },
+            Object {
+              "component": "date-picker",
+              "id": "startDate",
+              "isRequired": true,
+              "label": "Start Date",
+              "name": "startDate",
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+              ],
+            },
+            Object {
+              "component": "date-picker",
+              "id": "endDate",
+              "isRequired": true,
+              "label": "End Date",
+              "name": "endDate",
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+              ],
+            },
+          ],
+          "title": "Collection Options",
+        }
+      }
+    >
+      <MiqFormRenderer
+        buttonsLabels={Object {}}
+        canReset={false}
+        className="form-react"
+        componentMapper={
+          Object {
+            "checkbox": [Function],
+            "code-editor": [Function],
+            "date-picker": [Function],
+            "dual-list-select": [Function],
+            "edit-password-field": [Function],
+            "field-array": [Function],
+            "file-upload": [Function],
+            "font-icon-picker": [Function],
+            "font-icon-picker-ddf": [Function],
+            "multi-select": [Function],
+            "password-field": [Function],
+            "plain-text": [Function],
+            "radio": [Function],
+            "select": [Function],
+            "slider": [Function],
+            "sub-form": [Function],
+            "switch": [Function],
+            "tabs": [Function],
+            "text-field": [Function],
+            "textarea": [Function],
+            "time-picker": [Function],
+            "tree-selector": [Function],
+            "tree-view": [Function],
+            "validate-credentials": [Function],
+            "wizard": [Function],
+          }
+        }
+        disableSubmit={
+          Array [
+            "pristine",
+            "invalid",
+          ]
+        }
+        dispatch={[Function]}
+        onSubmit={[Function]}
+        schema={
+          Object {
+            "fields": Array [
+              Object {
+                "component": "select",
+                "id": "timezone",
+                "initialValue": "UTC",
+                "isSearchable": true,
+                "label": "Timezone",
+                "name": "timezone",
+                "options": Array [
+                  Object {
+                    "label": "(GMT-12:00) International Date Line West",
+                    "value": "International Date Line West",
+                  },
+                  Object {
+                    "label": "(GMT-11:00) American Samoa",
+                    "value": "American Samoa",
+                  },
+                  Object {
+                    "label": "(GMT-11:00) Midway Island",
+                    "value": "Midway Island",
+                  },
+                  Object {
+                    "label": "(GMT-10:00) Hawaii",
+                    "value": "Hawaii",
+                  },
+                  Object {
+                    "label": "(GMT-09:00) Alaska",
+                    "value": "Alaska",
+                  },
+                ],
+                "simpleValue": true,
+                "validate": Array [
+                  Object {
+                    "type": "required",
+                  },
+                ],
+              },
+              Object {
+                "component": "date-picker",
+                "id": "startDate",
+                "isRequired": true,
+                "label": "Start Date",
+                "name": "startDate",
+                "validate": Array [
+                  Object {
+                    "type": "required",
+                  },
+                ],
+              },
+              Object {
+                "component": "date-picker",
+                "id": "endDate",
+                "isRequired": true,
+                "label": "End Date",
+                "name": "endDate",
+                "validate": Array [
+                  Object {
+                    "type": "required",
+                  },
+                ],
+              },
+            ],
+            "title": "Collection Options",
+          }
+        }
+        showFormControls={true}
+      >
+        <FormRenderer
+          FormTemplate={[Function]}
+          clearOnUnmount={false}
+          componentMapper={
+            Object {
+              "checkbox": [Function],
+              "code-editor": [Function],
+              "date-picker": [Function],
+              "dual-list-select": [Function],
+              "edit-password-field": [Function],
+              "field-array": [Function],
+              "file-upload": [Function],
+              "font-icon-picker": [Function],
+              "font-icon-picker-ddf": [Function],
+              "multi-select": [Function],
+              "password-field": [Function],
+              "plain-text": [Function],
+              "radio": [Function],
+              "select": [Function],
+              "slider": [Function],
+              "spy-field": [Function],
+              "sub-form": [Function],
+              "switch": [Function],
+              "tabs": [Function],
+              "text-field": [Function],
+              "textarea": [Function],
+              "time-picker": [Function],
+              "tree-selector": [Function],
+              "tree-view": [Function],
+              "validate-credentials": [Function],
+              "wizard": [Function],
+            }
+          }
+          dispatch={[Function]}
+          initialValues={Object {}}
+          onReset={[Function]}
+          onSubmit={[Function]}
+          schema={
+            Object {
+              "fields": Array [
+                Object {
+                  "component": "select",
+                  "id": "timezone",
+                  "initialValue": "UTC",
+                  "isSearchable": true,
+                  "label": "Timezone",
+                  "name": "timezone",
+                  "options": Array [
+                    Object {
+                      "label": "(GMT-12:00) International Date Line West",
+                      "value": "International Date Line West",
+                    },
+                    Object {
+                      "label": "(GMT-11:00) American Samoa",
+                      "value": "American Samoa",
+                    },
+                    Object {
+                      "label": "(GMT-11:00) Midway Island",
+                      "value": "Midway Island",
+                    },
+                    Object {
+                      "label": "(GMT-10:00) Hawaii",
+                      "value": "Hawaii",
+                    },
+                    Object {
+                      "label": "(GMT-09:00) Alaska",
+                      "value": "Alaska",
+                    },
+                  ],
+                  "simpleValue": true,
+                  "validate": Array [
+                    Object {
+                      "type": "required",
+                    },
+                  ],
+                },
+                Object {
+                  "component": "date-picker",
+                  "id": "startDate",
+                  "isRequired": true,
+                  "label": "Start Date",
+                  "name": "startDate",
+                  "validate": Array [
+                    Object {
+                      "type": "required",
+                    },
+                  ],
+                },
+                Object {
+                  "component": "date-picker",
+                  "id": "endDate",
+                  "isRequired": true,
+                  "label": "End Date",
+                  "name": "endDate",
+                  "validate": Array [
+                    Object {
+                      "type": "required",
+                    },
+                  ],
+                },
+                Object {
+                  "component": "spy-field",
+                  "initialize": undefined,
+                  "name": "spy-field",
+                },
+              ],
+              "title": "Collection Options",
+            }
+          }
+        >
+          <ReactFinalForm
+            decorators={
+              Array [
+                [Function],
+              ]
+            }
+            dispatch={[Function]}
+            initialValues={Object {}}
+            mutators={
+              Object {
+                "concat": [Function],
+                "insert": [Function],
+                "move": [Function],
+                "pop": [Function],
+                "push": [Function],
+                "remove": [Function],
+                "removeBatch": [Function],
+                "shift": [Function],
+                "swap": [Function],
+                "unshift": [Function],
+                "update": [Function],
+              }
+            }
+            onSubmit={[Function]}
+            render={[Function]}
+            subscription={
+              Object {
+                "pristine": true,
+                "submitting": true,
+                "valid": true,
+              }
+            }
+          >
+            <Component
+              formFields={
+                Array [
+                  <SingleField
+                    component="select"
+                    id="timezone"
+                    initialValue="UTC"
+                    isSearchable={true}
+                    label="Timezone"
+                    name="timezone"
+                    options={
+                      Array [
+                        Object {
+                          "label": "(GMT-12:00) International Date Line West",
+                          "value": "International Date Line West",
+                        },
+                        Object {
+                          "label": "(GMT-11:00) American Samoa",
+                          "value": "American Samoa",
+                        },
+                        Object {
+                          "label": "(GMT-11:00) Midway Island",
+                          "value": "Midway Island",
+                        },
+                        Object {
+                          "label": "(GMT-10:00) Hawaii",
+                          "value": "Hawaii",
+                        },
+                        Object {
+                          "label": "(GMT-09:00) Alaska",
+                          "value": "Alaska",
+                        },
+                      ]
+                    }
+                    simpleValue={true}
+                    validate={
+                      Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ]
+                    }
+                  />,
+                  <SingleField
+                    component="date-picker"
+                    id="startDate"
+                    isRequired={true}
+                    label="Start Date"
+                    name="startDate"
+                    validate={
+                      Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ]
+                    }
+                  />,
+                  <SingleField
+                    component="date-picker"
+                    id="endDate"
+                    isRequired={true}
+                    label="End Date"
+                    name="endDate"
+                    validate={
+                      Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ]
+                    }
+                  />,
+                  <SingleField
+                    component="spy-field"
+                    name="spy-field"
+                  />,
+                ]
+              }
+              schema={
+                Object {
+                  "fields": Array [
+                    Object {
+                      "component": "select",
+                      "id": "timezone",
+                      "initialValue": "UTC",
+                      "isSearchable": true,
+                      "label": "Timezone",
+                      "name": "timezone",
+                      "options": Array [
+                        Object {
+                          "label": "(GMT-12:00) International Date Line West",
+                          "value": "International Date Line West",
+                        },
+                        Object {
+                          "label": "(GMT-11:00) American Samoa",
+                          "value": "American Samoa",
+                        },
+                        Object {
+                          "label": "(GMT-11:00) Midway Island",
+                          "value": "Midway Island",
+                        },
+                        Object {
+                          "label": "(GMT-10:00) Hawaii",
+                          "value": "Hawaii",
+                        },
+                        Object {
+                          "label": "(GMT-09:00) Alaska",
+                          "value": "Alaska",
+                        },
+                      ],
+                      "simpleValue": true,
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
+                    },
+                    Object {
+                      "component": "date-picker",
+                      "id": "startDate",
+                      "isRequired": true,
+                      "label": "Start Date",
+                      "name": "startDate",
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
+                    },
+                    Object {
+                      "component": "date-picker",
+                      "id": "endDate",
+                      "isRequired": true,
+                      "label": "End Date",
+                      "name": "endDate",
+                      "validate": Array [
+                        Object {
+                          "type": "required",
+                        },
+                      ],
+                    },
+                    Object {
+                      "component": "spy-field",
+                      "initialize": undefined,
+                      "name": "spy-field",
+                    },
+                  ],
+                  "title": "Collection Options",
+                }
+              }
+            >
+              <WrappedFormTemplate
+                canReset={false}
+                cancelLabel="Cancel"
+                disableSubmit={
+                  Array [
+                    "pristine",
+                    "invalid",
+                  ]
+                }
+                formFields={
+                  Array [
+                    <SingleField
+                      component="select"
+                      id="timezone"
+                      initialValue="UTC"
+                      isSearchable={true}
+                      label="Timezone"
+                      name="timezone"
+                      options={
+                        Array [
+                          Object {
+                            "label": "(GMT-12:00) International Date Line West",
+                            "value": "International Date Line West",
+                          },
+                          Object {
+                            "label": "(GMT-11:00) American Samoa",
+                            "value": "American Samoa",
+                          },
+                          Object {
+                            "label": "(GMT-11:00) Midway Island",
+                            "value": "Midway Island",
+                          },
+                          Object {
+                            "label": "(GMT-10:00) Hawaii",
+                            "value": "Hawaii",
+                          },
+                          Object {
+                            "label": "(GMT-09:00) Alaska",
+                            "value": "Alaska",
+                          },
+                        ]
+                      }
+                      simpleValue={true}
+                      validate={
+                        Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ]
+                      }
+                    />,
+                    <SingleField
+                      component="date-picker"
+                      id="startDate"
+                      isRequired={true}
+                      label="Start Date"
+                      name="startDate"
+                      validate={
+                        Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ]
+                      }
+                    />,
+                    <SingleField
+                      component="date-picker"
+                      id="endDate"
+                      isRequired={true}
+                      label="End Date"
+                      name="endDate"
+                      validate={
+                        Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ]
+                      }
+                    />,
+                    <SingleField
+                      component="spy-field"
+                      name="spy-field"
+                    />,
+                  ]
+                }
+                formWrapperProps={
+                  Object {
+                    "className": "form-react",
+                  }
+                }
+                resetLabel="Reset"
+                schema={
+                  Object {
+                    "fields": Array [
+                      Object {
+                        "component": "select",
+                        "id": "timezone",
+                        "initialValue": "UTC",
+                        "isSearchable": true,
+                        "label": "Timezone",
+                        "name": "timezone",
+                        "options": Array [
+                          Object {
+                            "label": "(GMT-12:00) International Date Line West",
+                            "value": "International Date Line West",
+                          },
+                          Object {
+                            "label": "(GMT-11:00) American Samoa",
+                            "value": "American Samoa",
+                          },
+                          Object {
+                            "label": "(GMT-11:00) Midway Island",
+                            "value": "Midway Island",
+                          },
+                          Object {
+                            "label": "(GMT-10:00) Hawaii",
+                            "value": "Hawaii",
+                          },
+                          Object {
+                            "label": "(GMT-09:00) Alaska",
+                            "value": "Alaska",
+                          },
+                        ],
+                        "simpleValue": true,
+                        "validate": Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ],
+                      },
+                      Object {
+                        "component": "date-picker",
+                        "id": "startDate",
+                        "isRequired": true,
+                        "label": "Start Date",
+                        "name": "startDate",
+                        "validate": Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ],
+                      },
+                      Object {
+                        "component": "date-picker",
+                        "id": "endDate",
+                        "isRequired": true,
+                        "label": "End Date",
+                        "name": "endDate",
+                        "validate": Array [
+                          Object {
+                            "type": "required",
+                          },
+                        ],
+                      },
+                      Object {
+                        "component": "spy-field",
+                        "initialize": undefined,
+                        "name": "spy-field",
+                      },
+                    ],
+                    "title": "Collection Options",
+                  }
+                }
+                showFormControls={true}
+                submitLabel="Save"
+              >
+                <FormTemplate
+                  Button={[Function]}
+                  ButtonGroup={[Function]}
+                  Description={[Function]}
+                  FormWrapper={[Function]}
+                  Header={[Function]}
+                  Title={[Function]}
+                  buttonOrder={
+                    Array [
+                      "submit",
+                      "reset",
+                      "cancel",
+                    ]
+                  }
+                  canReset={false}
+                  cancelLabel="Cancel"
+                  disableSubmit={
+                    Array [
+                      "pristine",
+                      "invalid",
+                    ]
+                  }
+                  formFields={
+                    Array [
+                      <SingleField
+                        component="select"
+                        id="timezone"
+                        initialValue="UTC"
+                        isSearchable={true}
+                        label="Timezone"
+                        name="timezone"
+                        options={
+                          Array [
+                            Object {
+                              "label": "(GMT-12:00) International Date Line West",
+                              "value": "International Date Line West",
+                            },
+                            Object {
+                              "label": "(GMT-11:00) American Samoa",
+                              "value": "American Samoa",
+                            },
+                            Object {
+                              "label": "(GMT-11:00) Midway Island",
+                              "value": "Midway Island",
+                            },
+                            Object {
+                              "label": "(GMT-10:00) Hawaii",
+                              "value": "Hawaii",
+                            },
+                            Object {
+                              "label": "(GMT-09:00) Alaska",
+                              "value": "Alaska",
+                            },
+                          ]
+                        }
+                        simpleValue={true}
+                        validate={
+                          Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ]
+                        }
+                      />,
+                      <SingleField
+                        component="date-picker"
+                        id="startDate"
+                        isRequired={true}
+                        label="Start Date"
+                        name="startDate"
+                        validate={
+                          Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ]
+                        }
+                      />,
+                      <SingleField
+                        component="date-picker"
+                        id="endDate"
+                        isRequired={true}
+                        label="End Date"
+                        name="endDate"
+                        validate={
+                          Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ]
+                        }
+                      />,
+                      <SingleField
+                        component="spy-field"
+                        name="spy-field"
+                      />,
+                    ]
+                  }
+                  formWrapperProps={
+                    Object {
+                      "className": "form-react",
+                    }
+                  }
+                  resetLabel="Reset"
+                  schema={
+                    Object {
+                      "fields": Array [
+                        Object {
+                          "component": "select",
+                          "id": "timezone",
+                          "initialValue": "UTC",
+                          "isSearchable": true,
+                          "label": "Timezone",
+                          "name": "timezone",
+                          "options": Array [
+                            Object {
+                              "label": "(GMT-12:00) International Date Line West",
+                              "value": "International Date Line West",
+                            },
+                            Object {
+                              "label": "(GMT-11:00) American Samoa",
+                              "value": "American Samoa",
+                            },
+                            Object {
+                              "label": "(GMT-11:00) Midway Island",
+                              "value": "Midway Island",
+                            },
+                            Object {
+                              "label": "(GMT-10:00) Hawaii",
+                              "value": "Hawaii",
+                            },
+                            Object {
+                              "label": "(GMT-09:00) Alaska",
+                              "value": "Alaska",
+                            },
+                          ],
+                          "simpleValue": true,
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
+                        },
+                        Object {
+                          "component": "date-picker",
+                          "id": "startDate",
+                          "isRequired": true,
+                          "label": "Start Date",
+                          "name": "startDate",
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
+                        },
+                        Object {
+                          "component": "date-picker",
+                          "id": "endDate",
+                          "isRequired": true,
+                          "label": "End Date",
+                          "name": "endDate",
+                          "validate": Array [
+                            Object {
+                              "type": "required",
+                            },
+                          ],
+                        },
+                        Object {
+                          "component": "spy-field",
+                          "initialize": undefined,
+                          "name": "spy-field",
+                        },
+                      ],
+                      "title": "Collection Options",
+                    }
+                  }
+                  showFormControls={true}
+                  submitLabel="Save"
+                >
+                  <Form
+                    className="form-react"
+                    onSubmit={[Function]}
+                  >
+                    <Form
+                      className="form-0-2-3 form-react"
+                      noValidate={true}
+                      onSubmit={[Function]}
+                    >
+                      <form
+                        className="bx--form form-0-2-3 form-react"
+                        noValidate={true}
+                        onSubmit={[Function]}
+                      >
+                         
+                        <Header>
+                          <div
+                            className="header-0-2-2"
+                          >
+                            <Title>
+                              <h3>
+                                Collection Options
+                              </h3>
+                            </Title>
+                          </div>
+                        </Header>
+                        <SingleField
+                          component="select"
+                          id="timezone"
+                          initialValue="UTC"
+                          isSearchable={true}
+                          key="timezone"
+                          label="Timezone"
+                          name="timezone"
+                          options={
+                            Array [
+                              Object {
+                                "label": "(GMT-12:00) International Date Line West",
+                                "value": "International Date Line West",
+                              },
+                              Object {
+                                "label": "(GMT-11:00) American Samoa",
+                                "value": "American Samoa",
+                              },
+                              Object {
+                                "label": "(GMT-11:00) Midway Island",
+                                "value": "Midway Island",
+                              },
+                              Object {
+                                "label": "(GMT-10:00) Hawaii",
+                                "value": "Hawaii",
+                              },
+                              Object {
+                                "label": "(GMT-09:00) Alaska",
+                                "value": "Alaska",
+                              },
+                            ]
+                          }
+                          simpleValue={true}
+                          validate={
+                            Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ]
+                          }
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "select",
+                                "id": "timezone",
+                                "initialValue": "UTC",
+                                "isSearchable": true,
+                                "label": "Timezone",
+                                "name": "timezone",
+                                "options": Array [
+                                  Object {
+                                    "label": "(GMT-12:00) International Date Line West",
+                                    "value": "International Date Line West",
+                                  },
+                                  Object {
+                                    "label": "(GMT-11:00) American Samoa",
+                                    "value": "American Samoa",
+                                  },
+                                  Object {
+                                    "label": "(GMT-11:00) Midway Island",
+                                    "value": "Midway Island",
+                                  },
+                                  Object {
+                                    "label": "(GMT-10:00) Hawaii",
+                                    "value": "Hawaii",
+                                  },
+                                  Object {
+                                    "label": "(GMT-09:00) Alaska",
+                                    "value": "Alaska",
+                                  },
+                                ],
+                                "simpleValue": true,
+                                "validate": Array [
+                                  Object {
+                                    "type": "required",
+                                  },
+                                ],
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <SelectWithOnChange
+                                component="select"
+                                id="timezone"
+                                initialValue="UTC"
+                                isSearchable={true}
+                                label="Timezone"
+                                name="timezone"
+                                options={
+                                  Array [
+                                    Object {
+                                      "label": "(GMT-12:00) International Date Line West",
+                                      "value": "International Date Line West",
+                                    },
+                                    Object {
+                                      "label": "(GMT-11:00) American Samoa",
+                                      "value": "American Samoa",
+                                    },
+                                    Object {
+                                      "label": "(GMT-11:00) Midway Island",
+                                      "value": "Midway Island",
+                                    },
+                                    Object {
+                                      "label": "(GMT-10:00) Hawaii",
+                                      "value": "Hawaii",
+                                    },
+                                    Object {
+                                      "label": "(GMT-09:00) Alaska",
+                                      "value": "Alaska",
+                                    },
+                                  ]
+                                }
+                                placeholder="<Choose>"
+                                simpleValue={true}
+                                validate={
+                                  Array [
+                                    Object {
+                                      "type": "required",
+                                    },
+                                  ]
+                                }
+                              >
+                                <Select
+                                  component="select"
+                                  id="timezone"
+                                  initialValue="UTC"
+                                  isSearchable={true}
+                                  label="Timezone"
+                                  loadingMessage="Loading..."
+                                  name="timezone"
+                                  options={
+                                    Array [
+                                      Object {
+                                        "label": "(GMT-12:00) International Date Line West",
+                                        "value": "International Date Line West",
+                                      },
+                                      Object {
+                                        "label": "(GMT-11:00) American Samoa",
+                                        "value": "American Samoa",
+                                      },
+                                      Object {
+                                        "label": "(GMT-11:00) Midway Island",
+                                        "value": "Midway Island",
+                                      },
+                                      Object {
+                                        "label": "(GMT-10:00) Hawaii",
+                                        "value": "Hawaii",
+                                      },
+                                      Object {
+                                        "label": "(GMT-09:00) Alaska",
+                                        "value": "Alaska",
+                                      },
+                                    ]
+                                  }
+                                  placeholder="<Choose>"
+                                  simpleValue={true}
+                                  validate={
+                                    Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Select
+                                    SelectComponent={[Function]}
+                                    id="timezone"
+                                    invalidText=""
+                                    labelText="Timezone"
+                                    loadOptionsChangeCounter={1}
+                                    loadingMessage="Loading..."
+                                    name="timezone"
+                                    onBlur={[Function]}
+                                    onChange={[Function]}
+                                    onFocus={[Function]}
+                                    options={
+                                      Array [
+                                        Object {
+                                          "label": "(GMT-12:00) International Date Line West",
+                                          "value": "International Date Line West",
+                                        },
+                                        Object {
+                                          "label": "(GMT-11:00) American Samoa",
+                                          "value": "American Samoa",
+                                        },
+                                        Object {
+                                          "label": "(GMT-11:00) Midway Island",
+                                          "value": "Midway Island",
+                                        },
+                                        Object {
+                                          "label": "(GMT-10:00) Hawaii",
+                                          "value": "Hawaii",
+                                        },
+                                        Object {
+                                          "label": "(GMT-09:00) Alaska",
+                                          "value": "Alaska",
+                                        },
+                                      ]
+                                    }
+                                    placeholder="<Choose>"
+                                    simpleValue={true}
+                                    value="UTC"
+                                  >
+                                    <ClearedSelectSearchable
+                                      className=""
+                                      closeMenuOnSelect={true}
+                                      hideSelectedOptions={false}
+                                      id="timezone"
+                                      invalidText=""
+                                      isClearable={false}
+                                      isFetching={false}
+                                      isSearchable={false}
+                                      labelText="Timezone"
+                                      name="timezone"
+                                      noOptionsMessage={[Function]}
+                                      onBlur={[Function]}
+                                      onChange={[Function]}
+                                      onFocus={[Function]}
+                                      onInputChange={[Function]}
+                                      options={
+                                        Array [
+                                          Object {
+                                            "label": "(GMT-12:00) International Date Line West",
+                                            "value": "International Date Line West",
+                                          },
+                                          Object {
+                                            "label": "(GMT-11:00) American Samoa",
+                                            "value": "American Samoa",
+                                          },
+                                          Object {
+                                            "label": "(GMT-11:00) Midway Island",
+                                            "value": "Midway Island",
+                                          },
+                                          Object {
+                                            "label": "(GMT-10:00) Hawaii",
+                                            "value": "Hawaii",
+                                          },
+                                          Object {
+                                            "label": "(GMT-09:00) Alaska",
+                                            "value": "Alaska",
+                                          },
+                                        ]
+                                      }
+                                      placeholder="<Choose>"
+                                      value={Array []}
+                                    >
+                                      <ComboBox
+                                        ariaLabel="Choose an item"
+                                        className=""
+                                        direction="bottom"
+                                        disabled={false}
+                                        id="timezone"
+                                        invalid={false}
+                                        invalidText=""
+                                        itemToElement={null}
+                                        itemToString={[Function]}
+                                        items={
+                                          Array [
+                                            Object {
+                                              "label": "(GMT-12:00) International Date Line West",
+                                              "value": "International Date Line West",
+                                            },
+                                            Object {
+                                              "label": "(GMT-11:00) American Samoa",
+                                              "value": "American Samoa",
+                                            },
+                                            Object {
+                                              "label": "(GMT-11:00) Midway Island",
+                                              "value": "Midway Island",
+                                            },
+                                            Object {
+                                              "label": "(GMT-10:00) Hawaii",
+                                              "value": "Hawaii",
+                                            },
+                                            Object {
+                                              "label": "(GMT-09:00) Alaska",
+                                              "value": "Alaska",
+                                            },
+                                          ]
+                                        }
+                                        light={false}
+                                        name="timezone"
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                        placeholder="<Choose>"
+                                        shouldFilterItem={[Function]}
+                                        titleText="Timezone"
+                                        type="default"
+                                      >
+                                        <Downshift
+                                          defaultHighlightedIndex={null}
+                                          defaultIsOpen={false}
+                                          environment={[Window]}
+                                          getA11yStatusMessage={[Function]}
+                                          inputId="timezone"
+                                          inputValue=""
+                                          itemToString={[Function]}
+                                          onChange={[Function]}
+                                          onInputValueChange={[Function]}
+                                          onOuterClick={[Function]}
+                                          onSelect={[Function]}
+                                          onStateChange={[Function]}
+                                          onUserAction={[Function]}
+                                          scrollIntoView={[Function]}
+                                          selectedItemChanged={[Function]}
+                                          stateReducer={[Function]}
+                                          suppressRefError={false}
+                                        >
+                                          <div
+                                            className="bx--list-box__wrapper"
+                                          >
+                                            <Text
+                                              as="label"
+                                              className="bx--label"
+                                              htmlFor="timezone"
+                                              id="downshift-0-label"
+                                            >
+                                              <label
+                                                className="bx--label"
+                                                dir="auto"
+                                                htmlFor="timezone"
+                                                id="downshift-0-label"
+                                              >
+                                                Timezone
+                                              </label>
+                                            </Text>
+                                            <ListBox
+                                              className="bx--combo-box"
+                                              disabled={false}
+                                              invalid={false}
+                                              invalidText=""
+                                              isOpen={false}
+                                              light={false}
+                                              type="default"
+                                            >
+                                              <div
+                                                className="bx--combo-box bx--list-box"
+                                                onClick={[Function]}
+                                                onKeyDown={[Function]}
+                                              >
+                                                <div
+                                                  className="bx--list-box__field"
+                                                >
+                                                  <input
+                                                    aria-activedescendant={null}
+                                                    aria-autocomplete="list"
+                                                    aria-controls={null}
+                                                    aria-expanded={false}
+                                                    aria-haspopup="listbox"
+                                                    aria-labelledby={null}
+                                                    autoComplete="off"
+                                                    className="bx--text-input bx--text-input--empty"
+                                                    disabled={false}
+                                                    id="timezone"
+                                                    name="timezone"
+                                                    onBlur={[Function]}
+                                                    onChange={[Function]}
+                                                    onClick={[Function]}
+                                                    onFocus={[Function]}
+                                                    onKeyDown={[Function]}
+                                                    placeholder="<Choose>"
+                                                    role="combobox"
+                                                    tabIndex="0"
+                                                    title=""
+                                                    type="text"
+                                                    value=""
+                                                  />
+                                                  <ListBoxTrigger
+                                                    aria-haspopup={true}
+                                                    aria-label="open menu"
+                                                    data-toggle={true}
+                                                    disabled={false}
+                                                    isOpen={false}
+                                                    onBlur={[Function]}
+                                                    onClick={[Function]}
+                                                    onKeyDown={[Function]}
+                                                    onKeyUp={[Function]}
+                                                    onMouseUp={[Function]}
+                                                    role="button"
+                                                    translateWithId={[Function]}
+                                                    type="button"
+                                                  >
+                                                    <button
+                                                      aria-haspopup={true}
+                                                      aria-label="Open"
+                                                      className="bx--list-box__menu-icon"
+                                                      data-toggle={true}
+                                                      disabled={false}
+                                                      onBlur={[Function]}
+                                                      onClick={[Function]}
+                                                      onKeyDown={[Function]}
+                                                      onKeyUp={[Function]}
+                                                      onMouseUp={[Function]}
+                                                      role="button"
+                                                      tabIndex="-1"
+                                                      title="Open"
+                                                      type="button"
+                                                    >
+                                                      <ForwardRef(ChevronDown16)>
+                                                        <Icon
+                                                          fill="currentColor"
+                                                          height={16}
+                                                          preserveAspectRatio="xMidYMid meet"
+                                                          viewBox="0 0 16 16"
+                                                          width={16}
+                                                          xmlns="http://www.w3.org/2000/svg"
+                                                        >
+                                                          <svg
+                                                            aria-hidden={true}
+                                                            fill="currentColor"
+                                                            focusable="false"
+                                                            height={16}
+                                                            preserveAspectRatio="xMidYMid meet"
+                                                            viewBox="0 0 16 16"
+                                                            width={16}
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                          >
+                                                            <path
+                                                              d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                            />
+                                                          </svg>
+                                                        </Icon>
+                                                      </ForwardRef(ChevronDown16)>
+                                                    </button>
+                                                  </ListBoxTrigger>
+                                                </div>
+                                                <ListBoxMenu
+                                                  aria-label="Choose an item"
+                                                  aria-labelledby={null}
+                                                  id="downshift-0-menu"
+                                                  role="listbox"
+                                                >
+                                                  <div
+                                                    aria-label="Choose an item"
+                                                    aria-labelledby={null}
+                                                    className="bx--list-box__menu"
+                                                    id="downshift-0-menu"
+                                                    role="listbox"
+                                                  />
+                                                </ListBoxMenu>
+                                              </div>
+                                            </ListBox>
+                                          </div>
+                                        </Downshift>
+                                      </ComboBox>
+                                    </ClearedSelectSearchable>
+                                  </Select>
+                                </Select>
+                              </SelectWithOnChange>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <SingleField
+                          component="date-picker"
+                          id="startDate"
+                          isRequired={true}
+                          key="startDate"
+                          label="Start Date"
+                          name="startDate"
+                          validate={
+                            Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ]
+                          }
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "date-picker",
+                                "id": "startDate",
+                                "isRequired": true,
+                                "label": "Start Date",
+                                "name": "startDate",
+                                "validate": Array [
+                                  Object {
+                                    "type": "required",
+                                  },
+                                ],
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <DatePicker
+                                component="date-picker"
+                                datePickerType="single"
+                                id="startDate"
+                                isRequired={true}
+                                label="Start Date"
+                                name="startDate"
+                                validate={
+                                  Array [
+                                    Object {
+                                      "type": "required",
+                                    },
+                                  ]
+                                }
+                              >
+                                <div>
+                                  <DatePicker
+                                    dateFormat="m/d/Y"
+                                    datePickerType="single"
+                                    light={false}
+                                    locale="en"
+                                    name="startDate"
+                                    onBlur={[Function]}
+                                    onChange={[Function]}
+                                    onFocus={[Function]}
+                                    short={false}
+                                    value=""
+                                  >
+                                    <div
+                                      className="bx--form-item"
+                                    >
+                                      <div
+                                        className="bx--date-picker bx--date-picker--single"
+                                        name="startDate"
+                                        onBlur={[Function]}
+                                        onFocus={[Function]}
+                                      >
+                                        <DatePickerInput
+                                          datePickerType="single"
+                                          disabled={false}
+                                          id="startDate"
+                                          invalid={false}
+                                          invalidText=""
+                                          key=".0"
+                                          labelText={
+                                            <IsRequired>
+                                              Start Date
+                                            </IsRequired>
+                                          }
+                                          onChange={[Function]}
+                                          onClick={[Function]}
+                                          pattern="\\\\d{1,2}\\\\/\\\\d{1,2}\\\\/\\\\d{4}"
+                                          type="text"
+                                        >
+                                          <div
+                                            className="bx--date-picker-container"
+                                          >
+                                            <label
+                                              className="bx--label"
+                                              htmlFor="startDate"
+                                            >
+                                              <IsRequired>
+                                                <span
+                                                  aria-hidden="true"
+                                                  className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+                                                >
+                                                  *
+                                                </span>
+                                                Start Date
+                                              </IsRequired>
+                                            </label>
+                                            <div
+                                              className="bx--date-picker-input__wrapper"
+                                            >
+                                              <input
+                                                className="bx--date-picker__input"
+                                                disabled={false}
+                                                id="startDate"
+                                                onChange={[Function]}
+                                                onClick={[Function]}
+                                                pattern="\\\\d{1,2}\\\\/\\\\d{1,2}\\\\/\\\\d{4}"
+                                                type="text"
+                                              />
+                                              <ForwardRef(Calendar16)
+                                                aria-hidden="true"
+                                                className="bx--date-picker__icon"
+                                                role="img"
+                                              >
+                                                <Icon
+                                                  aria-hidden="true"
+                                                  className="bx--date-picker__icon"
+                                                  fill="currentColor"
+                                                  height={16}
+                                                  preserveAspectRatio="xMidYMid meet"
+                                                  role="img"
+                                                  viewBox="0 0 32 32"
+                                                  width={16}
+                                                  xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                  <svg
+                                                    aria-hidden={true}
+                                                    className="bx--date-picker__icon"
+                                                    fill="currentColor"
+                                                    focusable="false"
+                                                    height={16}
+                                                    preserveAspectRatio="xMidYMid meet"
+                                                    role="img"
+                                                    viewBox="0 0 32 32"
+                                                    width={16}
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                  >
+                                                    <path
+                                                      d="M26,4h-4V2h-2v2h-8V2h-2v2H6C4.9,4,4,4.9,4,6v20c0,1.1,0.9,2,2,2h20c1.1,0,2-0.9,2-2V6C28,4.9,27.1,4,26,4z M26,26H6V12h20	V26z M26,10H6V6h4v2h2V6h8v2h2V6h4V10z"
+                                                    />
+                                                  </svg>
+                                                </Icon>
+                                              </ForwardRef(Calendar16)>
+                                            </div>
+                                          </div>
+                                        </DatePickerInput>
+                                      </div>
+                                    </div>
+                                  </DatePicker>
+                                  <HelperTextBlock />
+                                </div>
+                              </DatePicker>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <SingleField
+                          component="date-picker"
+                          id="endDate"
+                          isRequired={true}
+                          key="endDate"
+                          label="End Date"
+                          name="endDate"
+                          validate={
+                            Array [
+                              Object {
+                                "type": "required",
+                              },
+                            ]
+                          }
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "date-picker",
+                                "id": "endDate",
+                                "isRequired": true,
+                                "label": "End Date",
+                                "name": "endDate",
+                                "validate": Array [
+                                  Object {
+                                    "type": "required",
+                                  },
+                                ],
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <DatePicker
+                                component="date-picker"
+                                datePickerType="single"
+                                id="endDate"
+                                isRequired={true}
+                                label="End Date"
+                                name="endDate"
+                                validate={
+                                  Array [
+                                    Object {
+                                      "type": "required",
+                                    },
+                                  ]
+                                }
+                              >
+                                <div>
+                                  <DatePicker
+                                    dateFormat="m/d/Y"
+                                    datePickerType="single"
+                                    light={false}
+                                    locale="en"
+                                    name="endDate"
+                                    onBlur={[Function]}
+                                    onChange={[Function]}
+                                    onFocus={[Function]}
+                                    short={false}
+                                    value=""
+                                  >
+                                    <div
+                                      className="bx--form-item"
+                                    >
+                                      <div
+                                        className="bx--date-picker bx--date-picker--single"
+                                        name="endDate"
+                                        onBlur={[Function]}
+                                        onFocus={[Function]}
+                                      >
+                                        <DatePickerInput
+                                          datePickerType="single"
+                                          disabled={false}
+                                          id="endDate"
+                                          invalid={false}
+                                          invalidText=""
+                                          key=".0"
+                                          labelText={
+                                            <IsRequired>
+                                              End Date
+                                            </IsRequired>
+                                          }
+                                          onChange={[Function]}
+                                          onClick={[Function]}
+                                          pattern="\\\\d{1,2}\\\\/\\\\d{1,2}\\\\/\\\\d{4}"
+                                          type="text"
+                                        >
+                                          <div
+                                            className="bx--date-picker-container"
+                                          >
+                                            <label
+                                              className="bx--label"
+                                              htmlFor="endDate"
+                                            >
+                                              <IsRequired>
+                                                <span
+                                                  aria-hidden="true"
+                                                  className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+                                                >
+                                                  *
+                                                </span>
+                                                End Date
+                                              </IsRequired>
+                                            </label>
+                                            <div
+                                              className="bx--date-picker-input__wrapper"
+                                            >
+                                              <input
+                                                className="bx--date-picker__input"
+                                                disabled={false}
+                                                id="endDate"
+                                                onChange={[Function]}
+                                                onClick={[Function]}
+                                                pattern="\\\\d{1,2}\\\\/\\\\d{1,2}\\\\/\\\\d{4}"
+                                                type="text"
+                                              />
+                                              <ForwardRef(Calendar16)
+                                                aria-hidden="true"
+                                                className="bx--date-picker__icon"
+                                                role="img"
+                                              >
+                                                <Icon
+                                                  aria-hidden="true"
+                                                  className="bx--date-picker__icon"
+                                                  fill="currentColor"
+                                                  height={16}
+                                                  preserveAspectRatio="xMidYMid meet"
+                                                  role="img"
+                                                  viewBox="0 0 32 32"
+                                                  width={16}
+                                                  xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                  <svg
+                                                    aria-hidden={true}
+                                                    className="bx--date-picker__icon"
+                                                    fill="currentColor"
+                                                    focusable="false"
+                                                    height={16}
+                                                    preserveAspectRatio="xMidYMid meet"
+                                                    role="img"
+                                                    viewBox="0 0 32 32"
+                                                    width={16}
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                  >
+                                                    <path
+                                                      d="M26,4h-4V2h-2v2h-8V2h-2v2H6C4.9,4,4,4.9,4,6v20c0,1.1,0.9,2,2,2h20c1.1,0,2-0.9,2-2V6C28,4.9,27.1,4,26,4z M26,26H6V12h20	V26z M26,10H6V6h4v2h2V6h8v2h2V6h4V10z"
+                                                    />
+                                                  </svg>
+                                                </Icon>
+                                              </ForwardRef(Calendar16)>
+                                            </div>
+                                          </div>
+                                        </DatePickerInput>
+                                      </div>
+                                    </div>
+                                  </DatePicker>
+                                  <HelperTextBlock />
+                                </div>
+                              </DatePicker>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <SingleField
+                          component="spy-field"
+                          key="spy-field"
+                          name="spy-field"
+                        >
+                          <FormConditionWrapper
+                            field={
+                              Object {
+                                "component": "spy-field",
+                                "initialize": undefined,
+                                "name": "spy-field",
+                              }
+                            }
+                          >
+                            <FormFieldHideWrapper
+                              hideField={false}
+                            >
+                              <SpyField
+                                component="spy-field"
+                                name="spy-field"
+                              >
+                                <FormSpy
+                                  onChange={[Function]}
+                                  subscription={
+                                    Object {
+                                      "pristine": true,
+                                      "valid": true,
+                                    }
+                                  }
+                                />
+                              </SpyField>
+                            </FormFieldHideWrapper>
+                          </FormConditionWrapper>
+                        </SingleField>
+                        <FormSpy>
+                          <FormControls
+                            Button={[Function]}
+                            ButtonGroup={[Function]}
+                            FormSpy={[Function]}
+                            buttonOrder={
+                              Array [
+                                "submit",
+                                "reset",
+                                "cancel",
+                              ]
+                            }
+                            canReset={false}
+                            cancelLabel="Cancel"
+                            disableSubmit={true}
+                            formFields={
+                              Array [
+                                <SingleField
+                                  component="select"
+                                  id="timezone"
+                                  initialValue="UTC"
+                                  isSearchable={true}
+                                  label="Timezone"
+                                  name="timezone"
+                                  options={
+                                    Array [
+                                      Object {
+                                        "label": "(GMT-12:00) International Date Line West",
+                                        "value": "International Date Line West",
+                                      },
+                                      Object {
+                                        "label": "(GMT-11:00) American Samoa",
+                                        "value": "American Samoa",
+                                      },
+                                      Object {
+                                        "label": "(GMT-11:00) Midway Island",
+                                        "value": "Midway Island",
+                                      },
+                                      Object {
+                                        "label": "(GMT-10:00) Hawaii",
+                                        "value": "Hawaii",
+                                      },
+                                      Object {
+                                        "label": "(GMT-09:00) Alaska",
+                                        "value": "Alaska",
+                                      },
+                                    ]
+                                  }
+                                  simpleValue={true}
+                                  validate={
+                                    Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ]
+                                  }
+                                />,
+                                <SingleField
+                                  component="date-picker"
+                                  id="startDate"
+                                  isRequired={true}
+                                  label="Start Date"
+                                  name="startDate"
+                                  validate={
+                                    Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ]
+                                  }
+                                />,
+                                <SingleField
+                                  component="date-picker"
+                                  id="endDate"
+                                  isRequired={true}
+                                  label="End Date"
+                                  name="endDate"
+                                  validate={
+                                    Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ]
+                                  }
+                                />,
+                                <SingleField
+                                  component="spy-field"
+                                  name="spy-field"
+                                />,
+                              ]
+                            }
+                            formSpyProps={
+                              Object {
+                                "active": undefined,
+                                "dirty": false,
+                                "dirtyFields": Object {},
+                                "dirtyFieldsSinceLastSubmit": Object {
+                                  "timezone": true,
+                                },
+                                "dirtySinceLastSubmit": false,
+                                "error": undefined,
+                                "errors": Object {
+                                  "endDate": "Required",
+                                  "startDate": "Required",
+                                },
+                                "form": Object {
+                                  "batch": [Function],
+                                  "blur": [Function],
+                                  "change": [Function],
+                                  "destroyOnUnregister": false,
+                                  "focus": [Function],
+                                  "getFieldState": [Function],
+                                  "getRegisteredFields": [Function],
+                                  "getState": [Function],
+                                  "initialize": [Function],
+                                  "isValidationPaused": [Function],
+                                  "mutators": Object {
+                                    "concat": [Function],
+                                    "insert": [Function],
+                                    "move": [Function],
+                                    "pop": [Function],
+                                    "push": [Function],
+                                    "remove": [Function],
+                                    "removeBatch": [Function],
+                                    "shift": [Function],
+                                    "swap": [Function],
+                                    "unshift": [Function],
+                                    "update": [Function],
+                                  },
+                                  "pauseValidation": [Function],
+                                  "registerField": [Function],
+                                  "reset": [Function],
+                                  "resetFieldState": [Function],
+                                  "restart": [Function],
+                                  "resumeValidation": [Function],
+                                  "setConfig": [Function],
+                                  "submit": [Function],
+                                  "subscribe": [Function],
+                                },
+                                "hasSubmitErrors": false,
+                                "hasValidationErrors": true,
+                                "initialValues": Object {
+                                  "timezone": "UTC",
+                                },
+                                "invalid": true,
+                                "modified": Object {
+                                  "endDate": false,
+                                  "startDate": false,
+                                  "timezone": false,
+                                },
+                                "modifiedSinceLastSubmit": false,
+                                "pristine": true,
+                                "submitError": undefined,
+                                "submitErrors": undefined,
+                                "submitFailed": false,
+                                "submitSucceeded": false,
+                                "submitting": false,
+                                "touched": Object {
+                                  "endDate": false,
+                                  "startDate": false,
+                                  "timezone": false,
+                                },
+                                "valid": false,
+                                "validating": false,
+                                "values": Object {
+                                  "timezone": "UTC",
+                                },
+                                "visited": Object {
+                                  "endDate": false,
+                                  "startDate": false,
+                                  "timezone": false,
+                                },
+                              }
+                            }
+                            onReset={[Function]}
+                            resetLabel="Reset"
+                            schema={
+                              Object {
+                                "fields": Array [
+                                  Object {
+                                    "component": "select",
+                                    "id": "timezone",
+                                    "initialValue": "UTC",
+                                    "isSearchable": true,
+                                    "label": "Timezone",
+                                    "name": "timezone",
+                                    "options": Array [
+                                      Object {
+                                        "label": "(GMT-12:00) International Date Line West",
+                                        "value": "International Date Line West",
+                                      },
+                                      Object {
+                                        "label": "(GMT-11:00) American Samoa",
+                                        "value": "American Samoa",
+                                      },
+                                      Object {
+                                        "label": "(GMT-11:00) Midway Island",
+                                        "value": "Midway Island",
+                                      },
+                                      Object {
+                                        "label": "(GMT-10:00) Hawaii",
+                                        "value": "Hawaii",
+                                      },
+                                      Object {
+                                        "label": "(GMT-09:00) Alaska",
+                                        "value": "Alaska",
+                                      },
+                                    ],
+                                    "simpleValue": true,
+                                    "validate": Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ],
+                                  },
+                                  Object {
+                                    "component": "date-picker",
+                                    "id": "startDate",
+                                    "isRequired": true,
+                                    "label": "Start Date",
+                                    "name": "startDate",
+                                    "validate": Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ],
+                                  },
+                                  Object {
+                                    "component": "date-picker",
+                                    "id": "endDate",
+                                    "isRequired": true,
+                                    "label": "End Date",
+                                    "name": "endDate",
+                                    "validate": Array [
+                                      Object {
+                                        "type": "required",
+                                      },
+                                    ],
+                                  },
+                                  Object {
+                                    "component": "spy-field",
+                                    "initialize": undefined,
+                                    "name": "spy-field",
+                                  },
+                                ],
+                                "title": "Collection Options",
+                              }
+                            }
+                            submitLabel="Save"
+                          >
+                            <ButtonGroup>
+                              <ButtonSet
+                                className=""
+                              >
+                                <div
+                                  className="bx--btn-set"
+                                >
+                                  <Button
+                                    buttonType="submit"
+                                    disabled={true}
+                                    key="form-submit"
+                                    label="Save"
+                                    type="submit"
+                                    variant="primary"
+                                  >
+                                    <Button
+                                      disabled={true}
+                                      kind="primary"
+                                      type="submit"
+                                      variant="primary"
+                                    >
+                                      <button
+                                        aria-describedby={null}
+                                        aria-pressed={null}
+                                        className="bx--btn bx--btn--primary bx--btn--disabled"
+                                        disabled={true}
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onMouseEnter={[Function]}
+                                        onMouseLeave={[Function]}
+                                        tabIndex={0}
+                                        type="submit"
+                                        variant="primary"
+                                      >
+                                        Save
+                                      </button>
+                                    </Button>
+                                  </Button>
+                                </div>
+                              </ButtonSet>
+                            </ButtonGroup>
+                          </FormControls>
+                        </FormSpy>
+                         
+                      </form>
+                    </Form>
+                  </Form>
+                </FormTemplate>
+              </WrappedFormTemplate>
+            </Component>
+          </ReactFinalForm>
+        </FormRenderer>
+      </MiqFormRenderer>
+    </Connect(MiqFormRenderer)>
     Note : Gap Collection is only available for VMware vSphere Infrastructures
   </DiagnosticsCURepairForm>
 </Provider>

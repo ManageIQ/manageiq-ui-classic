@@ -1,12 +1,11 @@
-#class_methods_div
-  - if !@in_a_form && !@angular_form
-    %h3= _('Methods')
-    - if @record.ae_methods.present?
-      = render :partial => 'datastore_list', :locals => {:type => MiqAeClassHelper::DATASTORE_TYPES[:methods], :data => @record.ae_methods.order(:name)}
-    - else
-      = render :partial => "layouts/info_msg",
-               :locals  => {:message => _("No methods found")}
-  - elsif @angular_form || @edit[:new][:fields]
-    .form_div
-      - partial_name = @angular_form ? 'angular_method_form' : 'method_form'
-      = render :partial => partial_name, :locals  => {:prefix => "cls_", :location => @edit[:new][:location]}
+
+- if !@in_a_form && !@angular_form
+  %h3= _('Methods')
+  - if @record.ae_methods.present?
+    = render :partial => 'datastore_list', :locals => {:type => MiqAeClassHelper::DATASTORE_TYPES[:methods], :data => @record.ae_methods.order(:name)}
+  - else
+    = render :partial => "layouts/info_msg", :locals => {:message => _("No methods found")}
+- elsif @angular_form || @edit[:new][:fields]
+  .form_div
+    - partial_name = @angular_form ? 'angular_method_form' : 'method_form'
+    = render :partial => partial_name, :locals => {:prefix => "cls_", :location => @edit[:new][:location]}

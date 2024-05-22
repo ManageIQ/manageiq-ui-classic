@@ -44,7 +44,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
               "title": "Click to delete this mapping",
             },
           ],
-          "id": 100,
+          "id": "100",
         },
         Object {
           "cells": Array [
@@ -67,7 +67,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
               "title": "Click to delete this mapping",
             },
           ],
-          "id": 101,
+          "id": "101",
         },
         Object {
           "cells": Array [
@@ -90,7 +90,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
               "title": "Click to delete this mapping",
             },
           ],
-          "id": 102,
+          "id": "102",
         },
         Object {
           "cells": Array [
@@ -113,7 +113,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
               "title": "Click to delete this mapping",
             },
           ],
-          "id": 103,
+          "id": "103",
         },
       ],
       "warning": true,
@@ -230,7 +230,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
             "title": "Click to delete this mapping",
           },
           "clickable": undefined,
-          "id": 100,
+          "id": "100",
           "resource_entity": Object {
             "text": "resource name",
           },
@@ -252,7 +252,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
             "title": "Click to delete this mapping",
           },
           "clickable": undefined,
-          "id": 101,
+          "id": "101",
           "resource_entity": Object {
             "text": "resource name",
           },
@@ -274,7 +274,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
             "title": "Click to delete this mapping",
           },
           "clickable": undefined,
-          "id": 102,
+          "id": "102",
           "resource_entity": Object {
             "text": "resource name",
           },
@@ -296,7 +296,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
             "title": "Click to delete this mapping",
           },
           "clickable": undefined,
-          "id": 103,
+          "id": "103",
           "resource_entity": Object {
             "text": "resource name",
           },
@@ -356,7 +356,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 "title": "Click to delete this mapping",
               },
               "clickable": undefined,
-              "id": 100,
+              "id": "100",
               "resource_entity": Object {
                 "text": "resource name",
               },
@@ -378,7 +378,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 "title": "Click to delete this mapping",
               },
               "clickable": undefined,
-              "id": 101,
+              "id": "101",
               "resource_entity": Object {
                 "text": "resource name",
               },
@@ -400,7 +400,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 "title": "Click to delete this mapping",
               },
               "clickable": undefined,
-              "id": 102,
+              "id": "102",
               "resource_entity": Object {
                 "text": "resource name",
               },
@@ -422,7 +422,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 "title": "Click to delete this mapping",
               },
               "clickable": undefined,
-              "id": 103,
+              "id": "103",
               "resource_entity": Object {
                 "text": "resource name",
               },
@@ -975,7 +975,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 100,
+                            "id": "100",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -1089,7 +1089,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 100,
+                            "id": "100",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -1203,7 +1203,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 100,
+                            "id": "100",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -1323,7 +1323,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 100,
+                            "id": "100",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -1346,14 +1346,14 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size="default"
+                                size="sm"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
                                 <button
                                   aria-describedby="danger-description-15"
                                   aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--danger"
+                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
                                   disabled={false}
                                   onBlur={[Function]}
                                   onClick={[Function]}
@@ -1489,7 +1489,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 101,
+                            "id": "101",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -1603,7 +1603,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 101,
+                            "id": "101",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -1717,7 +1717,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 101,
+                            "id": "101",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -1837,7 +1837,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 101,
+                            "id": "101",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -1860,14 +1860,14 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size="default"
+                                size="sm"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
                                 <button
                                   aria-describedby="danger-description-16"
                                   aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--danger"
+                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
                                   disabled={false}
                                   onBlur={[Function]}
                                   onClick={[Function]}
@@ -2003,7 +2003,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 102,
+                            "id": "102",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -2117,7 +2117,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 102,
+                            "id": "102",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -2231,7 +2231,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 102,
+                            "id": "102",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -2351,7 +2351,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 102,
+                            "id": "102",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -2374,14 +2374,14 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size="default"
+                                size="sm"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
                                 <button
                                   aria-describedby="danger-description-17"
                                   aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--danger"
+                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
                                   disabled={false}
                                   onBlur={[Function]}
                                   onClick={[Function]}
@@ -2517,7 +2517,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 103,
+                            "id": "103",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -2631,7 +2631,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 103,
+                            "id": "103",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -2745,7 +2745,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 103,
+                            "id": "103",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -2865,7 +2865,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 103,
+                            "id": "103",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -2888,14 +2888,14 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size="default"
+                                size="sm"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
                                 <button
                                   aria-describedby="danger-description-18"
                                   aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--danger"
+                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
                                   disabled={false}
                                   onBlur={[Function]}
                                   onClick={[Function]}
@@ -2982,7 +2982,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
               "title": "Click to delete this mapping",
             },
           ],
-          "id": 100,
+          "id": "100",
         },
         Object {
           "cells": Array [
@@ -3005,7 +3005,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
               "title": "Click to delete this mapping",
             },
           ],
-          "id": 101,
+          "id": "101",
         },
         Object {
           "cells": Array [
@@ -3028,7 +3028,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
               "title": "Click to delete this mapping",
             },
           ],
-          "id": 102,
+          "id": "102",
         },
         Object {
           "cells": Array [
@@ -3051,7 +3051,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
               "title": "Click to delete this mapping",
             },
           ],
-          "id": 103,
+          "id": "103",
         },
       ],
       "warning": false,
@@ -3149,7 +3149,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
             "title": "Click to delete this mapping",
           },
           "clickable": undefined,
-          "id": 100,
+          "id": "100",
           "resource_entity": Object {
             "text": "resource name",
           },
@@ -3171,7 +3171,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
             "title": "Click to delete this mapping",
           },
           "clickable": undefined,
-          "id": 101,
+          "id": "101",
           "resource_entity": Object {
             "text": "resource name",
           },
@@ -3193,7 +3193,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
             "title": "Click to delete this mapping",
           },
           "clickable": undefined,
-          "id": 102,
+          "id": "102",
           "resource_entity": Object {
             "text": "resource name",
           },
@@ -3215,7 +3215,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
             "title": "Click to delete this mapping",
           },
           "clickable": undefined,
-          "id": 103,
+          "id": "103",
           "resource_entity": Object {
             "text": "resource name",
           },
@@ -3275,7 +3275,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 "title": "Click to delete this mapping",
               },
               "clickable": undefined,
-              "id": 100,
+              "id": "100",
               "resource_entity": Object {
                 "text": "resource name",
               },
@@ -3297,7 +3297,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 "title": "Click to delete this mapping",
               },
               "clickable": undefined,
-              "id": 101,
+              "id": "101",
               "resource_entity": Object {
                 "text": "resource name",
               },
@@ -3319,7 +3319,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 "title": "Click to delete this mapping",
               },
               "clickable": undefined,
-              "id": 102,
+              "id": "102",
               "resource_entity": Object {
                 "text": "resource name",
               },
@@ -3341,7 +3341,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                 "title": "Click to delete this mapping",
               },
               "clickable": undefined,
-              "id": 103,
+              "id": "103",
               "resource_entity": Object {
                 "text": "resource name",
               },
@@ -3894,7 +3894,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 100,
+                            "id": "100",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -4008,7 +4008,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 100,
+                            "id": "100",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -4122,7 +4122,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 100,
+                            "id": "100",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -4242,7 +4242,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 100,
+                            "id": "100",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -4265,14 +4265,14 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size="default"
+                                size="sm"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
                                 <button
                                   aria-describedby="danger-description-6"
                                   aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--danger"
+                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
                                   disabled={false}
                                   onBlur={[Function]}
                                   onClick={[Function]}
@@ -4408,7 +4408,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 101,
+                            "id": "101",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -4522,7 +4522,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 101,
+                            "id": "101",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -4636,7 +4636,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 101,
+                            "id": "101",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -4756,7 +4756,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 101,
+                            "id": "101",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -4779,14 +4779,14 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size="default"
+                                size="sm"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
                                 <button
                                   aria-describedby="danger-description-7"
                                   aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--danger"
+                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
                                   disabled={false}
                                   onBlur={[Function]}
                                   onClick={[Function]}
@@ -4922,7 +4922,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 102,
+                            "id": "102",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -5036,7 +5036,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 102,
+                            "id": "102",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -5150,7 +5150,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 102,
+                            "id": "102",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -5270,7 +5270,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 102,
+                            "id": "102",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -5293,14 +5293,14 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size="default"
+                                size="sm"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
                                 <button
                                   aria-describedby="danger-description-8"
                                   aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--danger"
+                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
                                   disabled={false}
                                   onBlur={[Function]}
                                   onClick={[Function]}
@@ -5436,7 +5436,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 103,
+                            "id": "103",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -5550,7 +5550,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 103,
+                            "id": "103",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -5664,7 +5664,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 103,
+                            "id": "103",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -5784,7 +5784,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               },
                             ],
                             "disabled": false,
-                            "id": 103,
+                            "id": "103",
                             "isExpanded": false,
                             "isSelected": false,
                           }
@@ -5807,14 +5807,14 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 kind="danger"
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                size="default"
+                                size="sm"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
                                 <button
                                   aria-describedby="danger-description-9"
                                   aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--danger"
+                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
                                   disabled={false}
                                   onBlur={[Function]}
                                   onClick={[Function]}

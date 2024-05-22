@@ -494,12 +494,8 @@ exports[`Associate / Disassociate form component should render associate form va
                                 >
                                   <Select
                                     SelectComponent={[Function]}
-                                    compareValues={[Function]}
                                     id="floating_ip"
-                                    invalid={false}
                                     invalidText=""
-                                    isClearable={false}
-                                    isSearchable={false}
                                     labelText={
                                       <IsRequired>
                                         Floating IP
@@ -512,9 +508,7 @@ exports[`Associate / Disassociate form component should render associate form va
                                     onBlur={[Function]}
                                     onChange={[Function]}
                                     onFocus={[Function]}
-                                    options={Array []}
                                     placeholder="<Choose>"
-                                    pluckSingleValue={true}
                                     simpleValue={false}
                                     value=""
                                   >
@@ -817,9 +811,7 @@ exports[`Associate / Disassociate form component should render associate form va
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={false}
-                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={
@@ -1528,12 +1520,8 @@ exports[`Associate / Disassociate form component should render disassociate form
                                 >
                                   <Select
                                     SelectComponent={[Function]}
-                                    compareValues={[Function]}
                                     id="floating_ip"
-                                    invalid={false}
                                     invalidText=""
-                                    isClearable={false}
-                                    isSearchable={false}
                                     labelText={
                                       <IsRequired>
                                         Floating IP
@@ -1546,9 +1534,7 @@ exports[`Associate / Disassociate form component should render disassociate form
                                     onBlur={[Function]}
                                     onChange={[Function]}
                                     onFocus={[Function]}
-                                    options={Array []}
                                     placeholder="<Choose>"
-                                    pluckSingleValue={true}
                                     simpleValue={false}
                                     value=""
                                   >
@@ -1851,9 +1837,7 @@ exports[`Associate / Disassociate form component should render disassociate form
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={false}
-                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={
@@ -2589,12 +2573,8 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                                 >
                                   <Select
                                     SelectComponent={[Function]}
-                                    compareValues={[Function]}
                                     id="floating_ip"
-                                    invalid={false}
                                     invalidText=""
-                                    isClearable={false}
-                                    isSearchable={false}
                                     labelText={
                                       <IsRequired>
                                         Floating IP
@@ -2607,9 +2587,7 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                                     onBlur={[Function]}
                                     onChange={[Function]}
                                     onFocus={[Function]}
-                                    options={Array []}
                                     placeholder="<Choose>"
-                                    pluckSingleValue={true}
                                     simpleValue={false}
                                     value=""
                                   >
@@ -2625,6 +2603,7 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                                           Floating IP
                                         </IsRequired>
                                       }
+                                      loadingMessage="Loading..."
                                       name="floating_ip"
                                       noOptionsMessage={[Function]}
                                       onBlur={[Function]}
@@ -2632,7 +2611,7 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                                       onFocus={[Function]}
                                       onInputChange={[Function]}
                                       options={Array []}
-                                      placeholder="Loading..."
+                                      placeholder="<Choose>"
                                       value=""
                                     >
                                       <Select
@@ -2648,6 +2627,7 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                                           </IsRequired>
                                         }
                                         light={false}
+                                        loadingMessage="Loading..."
                                         name="floating_ip"
                                         onBlur={[Function]}
                                         onChange={[Function]}
@@ -2681,6 +2661,7 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                                               <select
                                                 className="bx--select-input"
                                                 id="floating_ip"
+                                                loadingMessage="Loading..."
                                                 name="floating_ip"
                                                 onBlur={[Function]}
                                                 onChange={[Function]}
@@ -2690,7 +2671,7 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                                                 <SelectItem
                                                   disabled={false}
                                                   hidden={false}
-                                                  text="Loading..."
+                                                  text="<Choose>"
                                                   value=""
                                                 >
                                                   <option
@@ -2699,7 +2680,7 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                                                     hidden={false}
                                                     value=""
                                                   >
-                                                    Loading...
+                                                    &lt;Choose&gt;
                                                   </option>
                                                 </SelectItem>
                                               </select>
@@ -2789,9 +2770,7 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={false}
-                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={
@@ -3500,12 +3479,8 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                                 >
                                   <Select
                                     SelectComponent={[Function]}
-                                    compareValues={[Function]}
                                     id="floating_ip"
-                                    invalid={false}
                                     invalidText=""
-                                    isClearable={false}
-                                    isSearchable={false}
                                     labelText={
                                       <IsRequired>
                                         Floating IP
@@ -3518,9 +3493,7 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                                     onBlur={[Function]}
                                     onChange={[Function]}
                                     onFocus={[Function]}
-                                    options={Array []}
                                     placeholder="<Choose>"
-                                    pluckSingleValue={true}
                                     simpleValue={false}
                                     value=""
                                   >
@@ -3536,6 +3509,7 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                                           Floating IP
                                         </IsRequired>
                                       }
+                                      loadingMessage="Loading..."
                                       name="floating_ip"
                                       noOptionsMessage={[Function]}
                                       onBlur={[Function]}
@@ -3543,7 +3517,7 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                                       onFocus={[Function]}
                                       onInputChange={[Function]}
                                       options={Array []}
-                                      placeholder="Loading..."
+                                      placeholder="<Choose>"
                                       value=""
                                     >
                                       <Select
@@ -3559,6 +3533,7 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                                           </IsRequired>
                                         }
                                         light={false}
+                                        loadingMessage="Loading..."
                                         name="floating_ip"
                                         onBlur={[Function]}
                                         onChange={[Function]}
@@ -3592,6 +3567,7 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                                               <select
                                                 className="bx--select-input"
                                                 id="floating_ip"
+                                                loadingMessage="Loading..."
                                                 name="floating_ip"
                                                 onBlur={[Function]}
                                                 onChange={[Function]}
@@ -3601,7 +3577,7 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                                                 <SelectItem
                                                   disabled={false}
                                                   hidden={false}
-                                                  text="Loading..."
+                                                  text="<Choose>"
                                                   value=""
                                                 >
                                                   <option
@@ -3610,7 +3586,7 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                                                     hidden={false}
                                                     value=""
                                                   >
-                                                    Loading...
+                                                    &lt;Choose&gt;
                                                   </option>
                                                 </SelectItem>
                                               </select>
@@ -3700,9 +3676,7 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={false}
-                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={

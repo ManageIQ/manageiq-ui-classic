@@ -91,6 +91,8 @@ export const provGridData = (data) => {
     selected: '5',
     recordId: 21,
     fieldId: data.fieldId,
+    field: data.fieldId,
     type: data.type,
+    spec: true,
   };
 };

@@ -22,7 +22,6 @@ class ApplicationHelper::Toolbar::AnsibleRepositoryCenter < ApplicationHelper::T
           N_('Refresh this Repository'),
           N_('Refresh this Repository'),
           :klass   => ApplicationHelper::Button::EmbeddedAnsible,
-          :url     => "repository_refresh",
           :confirm => N_("Refresh this Repository?"),
           :enabled => true,
         ),
@@ -59,7 +58,7 @@ class ApplicationHelper::Toolbar::AnsibleRepositoryCenter < ApplicationHelper::T
                    t,
                    :items => [
                      button(
-                       :ansible_repository_tag,
+                       :embedded_configuration_script_source_tag,
                        'pficon pficon-edit fa-lg',
                        N_('Edit Tags for this Ansible Repository'),
                        N_('Edit Tags'),

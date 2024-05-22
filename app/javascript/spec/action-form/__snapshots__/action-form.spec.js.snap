@@ -387,6 +387,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                   "title": "Custom Automation",
                 },
                 Object {
+                  "className": "attribute_value_pair_wrapper",
                   "component": "sub-form",
                   "condition": Object {
                     "is": "custom_automation",
@@ -404,6 +405,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                       "fieldKey": "field_array",
                       "fields": Array [
                         Object {
+                          "className": "attribute_value_field_wrapper",
                           "component": "text-field",
                           "id": "attribute",
                           "isRequired": true,
@@ -416,6 +418,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                           ],
                         },
                         Object {
+                          "className": "attribute_value_field_wrapper",
                           "component": "text-field",
                           "id": "value",
                           "isRequired": true,
@@ -1099,6 +1102,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                     "title": "Custom Automation",
                   },
                   Object {
+                    "className": "attribute_value_pair_wrapper",
                     "component": "sub-form",
                     "condition": Object {
                       "is": "custom_automation",
@@ -1116,6 +1120,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                         "fieldKey": "field_array",
                         "fields": Array [
                           Object {
+                            "className": "attribute_value_field_wrapper",
                             "component": "text-field",
                             "id": "attribute",
                             "isRequired": true,
@@ -1128,6 +1133,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                             ],
                           },
                           Object {
+                            "className": "attribute_value_field_wrapper",
                             "component": "text-field",
                             "id": "value",
                             "isRequired": true,
@@ -1804,6 +1810,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                       "title": "Custom Automation",
                     },
                     Object {
+                      "className": "attribute_value_pair_wrapper",
                       "component": "sub-form",
                       "condition": Object {
                         "is": "custom_automation",
@@ -1821,6 +1828,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                           "fieldKey": "field_array",
                           "fields": Array [
                             Object {
+                              "className": "attribute_value_field_wrapper",
                               "component": "text-field",
                               "id": "attribute",
                               "isRequired": true,
@@ -1833,6 +1841,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                               ],
                             },
                             Object {
+                              "className": "attribute_value_field_wrapper",
                               "component": "text-field",
                               "id": "value",
                               "isRequired": true,
@@ -2509,6 +2518,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                           "title": "Custom Automation",
                         },
                         Object {
+                          "className": "attribute_value_pair_wrapper",
                           "component": "sub-form",
                           "condition": Object {
                             "is": "custom_automation",
@@ -2526,6 +2536,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                               "fieldKey": "field_array",
                               "fields": Array [
                                 Object {
+                                  "className": "attribute_value_field_wrapper",
                                   "component": "text-field",
                                   "id": "attribute",
                                   "isRequired": true,
@@ -2538,6 +2549,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                   ],
                                 },
                                 Object {
+                                  "className": "attribute_value_field_wrapper",
                                   "component": "text-field",
                                   "id": "value",
                                   "isRequired": true,
@@ -3178,6 +3190,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                           "title": "Custom Automation",
                         },
                         Object {
+                          "className": "attribute_value_pair_wrapper",
                           "component": "sub-form",
                           "condition": Object {
                             "is": "custom_automation",
@@ -3195,6 +3208,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                               "fieldKey": "field_array",
                               "fields": Array [
                                 Object {
+                                  "className": "attribute_value_field_wrapper",
                                   "component": "text-field",
                                   "id": "attribute",
                                   "isRequired": true,
@@ -3207,6 +3221,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                   ],
                                 },
                                 Object {
+                                  "className": "attribute_value_field_wrapper",
                                   "component": "text-field",
                                   "id": "value",
                                   "isRequired": true,
@@ -3858,6 +3873,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                             "title": "Custom Automation",
                           },
                           Object {
+                            "className": "attribute_value_pair_wrapper",
                             "component": "sub-form",
                             "condition": Object {
                               "is": "custom_automation",
@@ -3875,6 +3891,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                 "fieldKey": "field_array",
                                 "fields": Array [
                                   Object {
+                                    "className": "attribute_value_field_wrapper",
                                     "component": "text-field",
                                     "id": "attribute",
                                     "isRequired": true,
@@ -3887,6 +3904,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                     ],
                                   },
                                   Object {
+                                    "className": "attribute_value_field_wrapper",
                                     "component": "text-field",
                                     "id": "value",
                                     "isRequired": true,
@@ -4533,6 +4551,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                             "title": "Custom Automation",
                           },
                           Object {
+                            "className": "attribute_value_pair_wrapper",
                             "component": "sub-form",
                             "condition": Object {
                               "is": "custom_automation",
@@ -4550,6 +4569,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                 "fieldKey": "field_array",
                                 "fields": Array [
                                   Object {
+                                    "className": "attribute_value_field_wrapper",
                                     "component": "text-field",
                                     "id": "attribute",
                                     "isRequired": true,
@@ -4562,6 +4582,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                     ],
                                   },
                                   Object {
+                                    "className": "attribute_value_field_wrapper",
                                     "component": "text-field",
                                     "id": "value",
                                     "isRequired": true,
@@ -5228,6 +5249,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                               "title": "Custom Automation",
                             },
                             Object {
+                              "className": "attribute_value_pair_wrapper",
                               "component": "sub-form",
                               "condition": Object {
                                 "is": "custom_automation",
@@ -5245,6 +5267,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                   "fieldKey": "field_array",
                                   "fields": Array [
                                     Object {
+                                      "className": "attribute_value_field_wrapper",
                                       "component": "text-field",
                                       "id": "attribute",
                                       "isRequired": true,
@@ -5257,6 +5280,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       ],
                                     },
                                     Object {
+                                      "className": "attribute_value_field_wrapper",
                                       "component": "text-field",
                                       "id": "value",
                                       "isRequired": true,
@@ -5903,6 +5927,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                               "title": "Custom Automation",
                             },
                             Object {
+                              "className": "attribute_value_pair_wrapper",
                               "component": "sub-form",
                               "condition": Object {
                                 "is": "custom_automation",
@@ -5920,6 +5945,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                   "fieldKey": "field_array",
                                   "fields": Array [
                                     Object {
+                                      "className": "attribute_value_field_wrapper",
                                       "component": "text-field",
                                       "id": "attribute",
                                       "isRequired": true,
@@ -5932,6 +5958,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       ],
                                     },
                                     Object {
+                                      "className": "attribute_value_field_wrapper",
                                       "component": "text-field",
                                       "id": "value",
                                       "isRequired": true,
@@ -6589,6 +6616,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                 "title": "Custom Automation",
                               },
                               Object {
+                                "className": "attribute_value_pair_wrapper",
                                 "component": "sub-form",
                                 "condition": Object {
                                   "is": "custom_automation",
@@ -6606,6 +6634,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                     "fieldKey": "field_array",
                                     "fields": Array [
                                       Object {
+                                        "className": "attribute_value_field_wrapper",
                                         "component": "text-field",
                                         "id": "attribute",
                                         "isRequired": true,
@@ -6618,6 +6647,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         ],
                                       },
                                       Object {
+                                        "className": "attribute_value_field_wrapper",
                                         "component": "text-field",
                                         "id": "value",
                                         "isRequired": true,
@@ -7252,6 +7282,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                     "title": "Custom Automation",
                                   },
                                   Object {
+                                    "className": "attribute_value_pair_wrapper",
                                     "component": "sub-form",
                                     "condition": Object {
                                       "is": "custom_automation",
@@ -7269,6 +7300,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         "fieldKey": "field_array",
                                         "fields": Array [
                                           Object {
+                                            "className": "attribute_value_field_wrapper",
                                             "component": "text-field",
                                             "id": "attribute",
                                             "isRequired": true,
@@ -7281,6 +7313,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             ],
                                           },
                                           Object {
+                                            "className": "attribute_value_field_wrapper",
                                             "component": "text-field",
                                             "id": "value",
                                             "isRequired": true,
@@ -7919,6 +7952,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       "title": "Custom Automation",
                                     },
                                     Object {
+                                      "className": "attribute_value_pair_wrapper",
                                       "component": "sub-form",
                                       "condition": Object {
                                         "is": "custom_automation",
@@ -7936,6 +7970,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           "fieldKey": "field_array",
                                           "fields": Array [
                                             Object {
+                                              "className": "attribute_value_field_wrapper",
                                               "component": "text-field",
                                               "id": "attribute",
                                               "isRequired": true,
@@ -7948,6 +7983,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               ],
                                             },
                                             Object {
+                                              "className": "attribute_value_field_wrapper",
                                               "component": "text-field",
                                               "id": "value",
                                               "isRequired": true,
@@ -8532,12 +8568,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           >
                                             <Select
                                               SelectComponent={[Function]}
-                                              compareValues={[Function]}
                                               id="action_type"
-                                              invalid={false}
                                               invalidText=""
-                                              isClearable={false}
-                                              isSearchable={false}
                                               labelText={
                                                 <IsRequired>
                                                   Action Type
@@ -8550,9 +8582,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
-                                              options={Array []}
                                               placeholder="<Choose>"
-                                              pluckSingleValue={true}
                                               simpleValue={false}
                                               value=""
                                             >
@@ -8568,6 +8598,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                     Action Type
                                                   </IsRequired>
                                                 }
+                                                loadingMessage="Loading..."
                                                 name="action_type"
                                                 noOptionsMessage={[Function]}
                                                 onBlur={[Function]}
@@ -8575,7 +8606,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 onFocus={[Function]}
                                                 onInputChange={[Function]}
                                                 options={Array []}
-                                                placeholder="Loading..."
+                                                placeholder="<Choose>"
                                                 value=""
                                               >
                                                 <Select
@@ -8591,6 +8622,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                     </IsRequired>
                                                   }
                                                   light={false}
+                                                  loadingMessage="Loading..."
                                                   name="action_type"
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
@@ -8624,6 +8656,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                         <select
                                                           className="bx--select-input"
                                                           id="action_type"
+                                                          loadingMessage="Loading..."
                                                           name="action_type"
                                                           onBlur={[Function]}
                                                           onChange={[Function]}
@@ -8633,7 +8666,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                           <SelectItem
                                                             disabled={false}
                                                             hidden={false}
-                                                            text="Loading..."
+                                                            text="<Choose>"
                                                             value=""
                                                           >
                                                             <option
@@ -8642,7 +8675,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                               hidden={false}
                                                               value=""
                                                             >
-                                                              Loading...
+                                                              &lt;Choose&gt;
                                                             </option>
                                                           </SelectItem>
                                                         </select>
@@ -10403,6 +10436,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                     </FormConditionWrapper>
                                   </SingleField>
                                   <SingleField
+                                    className="attribute_value_pair_wrapper"
                                     component="sub-form"
                                     condition={
                                       Object {
@@ -10423,6 +10457,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           "fieldKey": "field_array",
                                           "fields": Array [
                                             Object {
+                                              "className": "attribute_value_field_wrapper",
                                               "component": "text-field",
                                               "id": "attribute",
                                               "isRequired": true,
@@ -10435,6 +10470,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               ],
                                             },
                                             Object {
+                                              "className": "attribute_value_field_wrapper",
                                               "component": "text-field",
                                               "id": "value",
                                               "isRequired": true,
@@ -10466,6 +10502,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       }
                                       field={
                                         Object {
+                                          "className": "attribute_value_pair_wrapper",
                                           "component": "sub-form",
                                           "fields": Array [
                                             Object {
@@ -10479,6 +10516,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               "fieldKey": "field_array",
                                               "fields": Array [
                                                 Object {
+                                                  "className": "attribute_value_field_wrapper",
                                                   "component": "text-field",
                                                   "id": "attribute",
                                                   "isRequired": true,
@@ -10491,6 +10529,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                   ],
                                                 },
                                                 Object {
+                                                  "className": "attribute_value_field_wrapper",
                                                   "component": "text-field",
                                                   "id": "value",
                                                   "isRequired": true,
@@ -10522,6 +10561,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         }
                                         field={
                                           Object {
+                                            "className": "attribute_value_pair_wrapper",
                                             "component": "sub-form",
                                             "fields": Array [
                                               Object {
@@ -10535,6 +10575,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 "fieldKey": "field_array",
                                                 "fields": Array [
                                                   Object {
+                                                    "className": "attribute_value_field_wrapper",
                                                     "component": "text-field",
                                                     "id": "attribute",
                                                     "isRequired": true,
@@ -10547,6 +10588,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                     ],
                                                   },
                                                   Object {
+                                                    "className": "attribute_value_field_wrapper",
                                                     "component": "text-field",
                                                     "id": "value",
                                                     "isRequired": true,
@@ -10591,6 +10633,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             }
                                             field={
                                               Object {
+                                                "className": "attribute_value_pair_wrapper",
                                                 "component": "sub-form",
                                                 "fields": Array [
                                                   Object {
@@ -10604,6 +10647,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                     "fieldKey": "field_array",
                                                     "fields": Array [
                                                       Object {
+                                                        "className": "attribute_value_field_wrapper",
                                                         "component": "text-field",
                                                         "id": "attribute",
                                                         "isRequired": true,
@@ -10616,6 +10660,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                         ],
                                                       },
                                                       Object {
+                                                        "className": "attribute_value_field_wrapper",
                                                         "component": "text-field",
                                                         "id": "value",
                                                         "isRequired": true,
@@ -10653,6 +10698,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               }
                                               field={
                                                 Object {
+                                                  "className": "attribute_value_pair_wrapper",
                                                   "component": "sub-form",
                                                   "fields": Array [
                                                     Object {
@@ -10666,6 +10712,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                       "fieldKey": "field_array",
                                                       "fields": Array [
                                                         Object {
+                                                          "className": "attribute_value_field_wrapper",
                                                           "component": "text-field",
                                                           "id": "attribute",
                                                           "isRequired": true,
@@ -10678,6 +10725,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                           ],
                                                         },
                                                         Object {
+                                                          "className": "attribute_value_field_wrapper",
                                                           "component": "text-field",
                                                           "id": "value",
                                                           "isRequired": true,
@@ -10714,6 +10762,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 }
                                                 field={
                                                   Object {
+                                                    "className": "attribute_value_pair_wrapper",
                                                     "component": "sub-form",
                                                     "fields": Array [
                                                       Object {
@@ -10727,6 +10776,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                         "fieldKey": "field_array",
                                                         "fields": Array [
                                                           Object {
+                                                            "className": "attribute_value_field_wrapper",
                                                             "component": "text-field",
                                                             "id": "attribute",
                                                             "isRequired": true,
@@ -10739,6 +10789,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                             ],
                                                           },
                                                           Object {
+                                                            "className": "attribute_value_field_wrapper",
                                                             "component": "text-field",
                                                             "id": "value",
                                                             "isRequired": true,
@@ -13729,9 +13780,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={false}
-                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={
@@ -13985,6 +14034,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         "title": "Custom Automation",
                                       },
                                       Object {
+                                        "className": "attribute_value_pair_wrapper",
                                         "component": "sub-form",
                                         "condition": Object {
                                           "is": "custom_automation",
@@ -14002,6 +14052,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             "fieldKey": "field_array",
                                             "fields": Array [
                                               Object {
+                                                "className": "attribute_value_field_wrapper",
                                                 "component": "text-field",
                                                 "id": "attribute",
                                                 "isRequired": true,
@@ -14014,6 +14065,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 ],
                                               },
                                               Object {
+                                                "className": "attribute_value_field_wrapper",
                                                 "component": "text-field",
                                                 "id": "value",
                                                 "isRequired": true,
@@ -14734,6 +14786,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         "title": "Custom Automation",
                                       },
                                       Object {
+                                        "className": "attribute_value_pair_wrapper",
                                         "component": "sub-form",
                                         "condition": Object {
                                           "is": "custom_automation",
@@ -14751,6 +14804,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             "fieldKey": "field_array",
                                             "fields": Array [
                                               Object {
+                                                "className": "attribute_value_field_wrapper",
                                                 "component": "text-field",
                                                 "id": "attribute",
                                                 "isRequired": true,
@@ -14763,6 +14817,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 ],
                                               },
                                               Object {
+                                                "className": "attribute_value_field_wrapper",
                                                 "component": "text-field",
                                                 "id": "value",
                                                 "isRequired": true,
@@ -15504,6 +15559,7 @@ exports[`Action Form Component should render correctly 1`] = `
               "title": "Custom Automation",
             },
             Object {
+              "className": "attribute_value_pair_wrapper",
               "component": "sub-form",
               "condition": Object {
                 "is": "custom_automation",
@@ -15521,6 +15577,7 @@ exports[`Action Form Component should render correctly 1`] = `
                   "fieldKey": "field_array",
                   "fields": Array [
                     Object {
+                      "className": "attribute_value_field_wrapper",
                       "component": "text-field",
                       "id": "attribute",
                       "isRequired": true,
@@ -15533,6 +15590,7 @@ exports[`Action Form Component should render correctly 1`] = `
                       ],
                     },
                     Object {
+                      "className": "attribute_value_field_wrapper",
                       "component": "text-field",
                       "id": "value",
                       "isRequired": true,

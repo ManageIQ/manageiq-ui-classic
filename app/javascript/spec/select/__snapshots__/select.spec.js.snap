@@ -40,11 +40,7 @@ exports[`Select component should match the snapshot 1`] = `
   >
     <Select
       SelectComponent={[Function]}
-      compareValues={[Function]}
-      invalid={false}
       invalidText=""
-      isClearable={false}
-      isSearchable={false}
       labelText="Choose"
       loadOptionsChangeCounter={1}
       loadingMessage="Loading..."
@@ -65,7 +61,6 @@ exports[`Select component should match the snapshot 1`] = `
         ]
       }
       placeholder="<Choose>"
-      pluckSingleValue={true}
       simpleValue={false}
       value=""
     >

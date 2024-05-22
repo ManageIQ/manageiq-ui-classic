@@ -55,7 +55,7 @@ class ApplicationHelper::Toolbar::AnsibleCredentialsCenter < ApplicationHelper::
                    :onwhen  => "1+",
                    :items   => [
                      button(
-                       :ansible_credential_tag,
+                       :embedded_automation_manager_credential_tag,
                        'pficon pficon-edit fa-lg',
                        N_('Edit Tags for the selected Ansible Credentials'),
                        N_('Edit Tags'),

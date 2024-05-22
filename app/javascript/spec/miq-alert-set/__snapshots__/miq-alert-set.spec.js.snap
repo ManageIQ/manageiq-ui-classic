@@ -1,110 +1,150 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MiqAlertSetStructuredList should render alert set alerts structured list 1`] = `
-<FeatureToggle(StructuredListWrapper)
-  ariaLabel="Structured list"
-  className="miq-structured-list miq_alert_set"
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion miq_alert_set"
 >
-  <MiqStructuredListBody
-    clickEvents={false}
-    mode="miq_alert_set"
-    rows={
-      Array [
-        Object {
-          "cells": Array [
+  <AccordionItem
+    open={true}
+    title="Alerts"
+  >
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list miq_alert_set"
+    >
+      <MiqStructuredListBody
+        clickEvents={false}
+        mode="miq_alert_set"
+        rows={
+          Array [
             Object {
-              "icon": "pficon pficon-warning-triangle-o",
-              "value": "Alert description",
+              "cells": Array [
+                Object {
+                  "icon": "pficon pficon-warning-triangle-o",
+                  "value": "Alert description",
+                },
+              ],
+              "onclick": Object {
+                "url": "/miq_alert/show/1",
+              },
+              "title": "View this Alert",
             },
-          ],
-          "onclick": Object {
-            "url": "/miq_alert/show/1",
-          },
-          "title": "View this Alert",
-        },
-      ]
-    }
-  />
-</FeatureToggle(StructuredListWrapper)>
+          ]
+        }
+      />
+    </FeatureToggle(StructuredListWrapper)>
+  </AccordionItem>
+</Accordion>
 `;
 
 exports[`MiqAlertSetStructuredList should render alert set assigned structured list 1`] = `
-<FeatureToggle(StructuredListWrapper)
-  ariaLabel="Structured list"
-  className="miq-structured-list miq_alert_set_assigned"
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion miq_alert_set_assigned"
 >
-  <MiqStructuredListBody
-    clickEvents={false}
-    mode="miq_alert_set_assigned"
-    rows={
-      Array [
-        Object {
-          "label": "The Enterprise",
-        },
-        Object {
-          "label": "Object class",
-          "value": Array [
+  <AccordionItem
+    open={true}
+    title="Assigned To"
+  >
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list miq_alert_set_assigned"
+    >
+      <MiqStructuredListBody
+        clickEvents={false}
+        mode="miq_alert_set_assigned"
+        rows={
+          Array [
             Object {
-              "value": "path1",
+              "label": "The Enterprise",
             },
             Object {
-              "value": "path2",
+              "label": "Object class",
+              "value": Array [
+                Object {
+                  "value": "path1",
+                },
+                Object {
+                  "value": "path2",
+                },
+                Object {
+                  "value": "path3",
+                },
+              ],
             },
-            Object {
-              "value": "path3",
-            },
-          ],
-        },
-      ]
-    }
-  />
-</FeatureToggle(StructuredListWrapper)>
+          ]
+        }
+      />
+    </FeatureToggle(StructuredListWrapper)>
+  </AccordionItem>
+</Accordion>
 `;
 
 exports[`MiqAlertSetStructuredList should render alert set info structured list 1`] = `
-<FeatureToggle(StructuredListWrapper)
-  ariaLabel="Structured list"
-  className="miq-structured-list miq_alert_set_info"
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion miq_alert_set_info"
 >
-  <MiqStructuredListBody
-    clickEvents={false}
-    mode="miq_alert_set_info"
-    rows={
-      Array [
-        Object {
-          "label": "Description",
-          "value": "bar",
-        },
-        Object {
-          "label": "Mode",
-          "value": "Mode",
-        },
-      ]
-    }
-  />
-</FeatureToggle(StructuredListWrapper)>
+  <AccordionItem
+    open={true}
+    title="Basic Information"
+  >
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list miq_alert_set_info"
+    >
+      <MiqStructuredListBody
+        clickEvents={false}
+        mode="miq_alert_set_info"
+        rows={
+          Array [
+            Object {
+              "label": "Description",
+              "value": "bar",
+            },
+            Object {
+              "label": "Mode",
+              "value": "Mode",
+            },
+          ]
+        }
+      />
+    </FeatureToggle(StructuredListWrapper)>
+  </AccordionItem>
+</Accordion>
 `;
 
 exports[`MiqAlertSetStructuredList should render alert set notes structured list 1`] = `
-<FeatureToggle(StructuredListWrapper)
-  ariaLabel="Structured list"
-  className="miq-structured-list miq_alert_set_notes"
+<Accordion
+  align="start"
+  className="miq-structured-list-accordion miq_alert_set_notes"
 >
-  <MiqStructuredListBody
-    clickEvents={false}
-    mode="miq_alert_set_notes"
-    rows={
-      Array [
-        Object {
-          "value": Object {
-            "input": "text_area",
-            "readonly": true,
-            "rows": 4,
-            "text": "text area description",
-          },
-        },
-      ]
-    }
-  />
-</FeatureToggle(StructuredListWrapper)>
+  <AccordionItem
+    open={true}
+    title="Notes"
+  >
+    <FeatureToggle(StructuredListWrapper)
+      ariaLabel="Structured list"
+      className="miq-structured-list miq_alert_set_notes"
+    >
+      <MiqStructuredListBody
+        clickEvents={false}
+        mode="miq_alert_set_notes"
+        rows={
+          Array [
+            Object {
+              "value": Object {
+                "input": "text_area",
+                "readonly": true,
+                "rows": 4,
+                "text": "text area description",
+              },
+            },
+          ]
+        }
+      />
+    </FeatureToggle(StructuredListWrapper)>
+  </AccordionItem>
+</Accordion>
 `;

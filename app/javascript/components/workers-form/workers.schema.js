@@ -15,6 +15,7 @@ const addSchema = (formValues) => {
       id: 'genericWorkers',
       name: 'genericWorkers',
       title: __('Generic Workers'),
+      className: 'worker_schema_row',
       fields: [
         {
           component: componentTypes.SELECT,
@@ -37,6 +38,7 @@ const addSchema = (formValues) => {
       id: 'priorityWorkers',
       name: 'priorityWorkers',
       title: __('Priority Workers'),
+      className: 'worker_schema_row',
       fields: [
         {
           component: componentTypes.SELECT,
@@ -59,6 +61,7 @@ const addSchema = (formValues) => {
       id: 'cuCollectors',
       name: 'cuCollectors',
       title: __('C & U Data Collectors'),
+      className: 'worker_schema_row',
       fields: [
         {
           component: componentTypes.SELECT,
@@ -80,6 +83,7 @@ const addSchema = (formValues) => {
       id: 'cuProccesors',
       name: 'cuProccesors',
       title: __('C & U Data Processors'),
+      className: 'worker_schema_row',
       fields: [
         {
           component: componentTypes.SELECT,
@@ -102,6 +106,7 @@ const addSchema = (formValues) => {
       id: 'eventMonitor',
       name: 'eventMonitor',
       title: __('Event Monitor'),
+      className: 'worker_schema_row',
       fields: [
         {
           component: componentTypes.SELECT,
@@ -117,6 +122,7 @@ const addSchema = (formValues) => {
       id: 'refresh',
       name: 'refresh',
       title: __('Refresh'),
+      className: 'worker_schema_row',
       fields: [
         {
           component: componentTypes.SELECT,
@@ -132,6 +138,7 @@ const addSchema = (formValues) => {
       id: 'vmAnalysisCollectors',
       name: 'vmAnalysisCollectors',
       title: __('VM Analysis Collectors'),
+      className: 'worker_schema_row',
       fields: [
         {
           component: componentTypes.SELECT,
@@ -154,6 +161,7 @@ const addSchema = (formValues) => {
       id: 'uiWorker',
       name: 'uiWorker',
       title: __('UI Worker'),
+      className: 'worker_schema_row',
       fields: [
         {
           component: componentTypes.SELECT,
@@ -176,6 +184,7 @@ const addSchema = (formValues) => {
       id: 'remoteWorkers',
       name: 'remoteWorkers',
       title: __('Remote Console Workers'),
+      className: 'worker_schema_row',
       fields: [
         {
           component: componentTypes.SELECT,
@@ -191,6 +200,7 @@ const addSchema = (formValues) => {
       id: 'reportingWorkers',
       name: 'reportingWorkers',
       title: __('Reporting Workers'),
+      className: 'worker_schema_row',
       fields: [
         {
           component: componentTypes.SELECT,
@@ -213,6 +223,7 @@ const addSchema = (formValues) => {
       id: 'webServiceWorkers',
       name: 'webServiceWorkers',
       title: __('Web Service Workers'),
+      className: 'worker_schema_row',
       fields: [
         {
           component: componentTypes.SELECT,

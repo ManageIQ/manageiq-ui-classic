@@ -48,12 +48,16 @@ class AnsibleRepositoryController < ApplicationController
         page.replace("gtl_div", :partial => "layouts/gtl")
       end
     when "ansible_repository_reload" # repository reload
-      show
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("main_div", :template => "ansible_repository/show")
+      if @display == "output"
+        show
+        show_output
+        @display = "output" # reset @display back to "output" after show changes it to "main"
+        render_update("output_div", "output", true)
+      else
+        show
+        render_update("main_div", "show", false)
       end
-    when "ansible_repository_tag" # tag repositories
+    when "embedded_configuration_script_source_tag" # tag repositories
       tag(self.class.model)
     when "embedded_configuration_script_payload_tag" # tag playbooks from nested list
       tag(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook)
@@ -140,11 +144,22 @@ class AnsibleRepositoryController < ApplicationController
   end
 
   def tag_edit_form_field_changed
-    assert_privileges('ansible_repository_tag')
+    assert_privileges('embedded_configuration_script_source_tag')
     super
   end
 
   private
+
+  def render_update(div_id, partial, is_partial)
+    render :update do |page|
+      page << javascript_prologue
+      if is_partial
+        page.replace(div_id, :partial => "ansible_repository/#{partial}")
+      else
+        page.replace(div_id, :template => "ansible_repository/#{partial}")
+      end
+    end
+  end
 
   def textual_group_list
     [%i[properties relationships options smart_management]]

@@ -41,7 +41,9 @@ const Tag = ({
         className="tagColor"
         title={tagValue.description}
       >
-        {truncate(tagValue.description)}
+        <div className="value-label">
+          {truncate(tagValue.description)}
+        </div>
       </FormLabel>
     </li>
   );
@@ -52,12 +54,13 @@ Tag.propTypes = {
   tagCategory: TaggingPropTypes.category,
   tagValue: TaggingPropTypes.value,
   truncate: PropTypes.func.isRequired,
-  showCloseButton: PropTypes.bool.isRequired,
+  showCloseButton: PropTypes.bool,
 };
 
 Tag.defaultProps = {
   tagCategory: undefined,
   tagValue: undefined,
+  showCloseButton: false,
 };
 
 export default Tag;

@@ -504,12 +504,8 @@ exports[`Cloud Object Store Container form component should add Amazon cloud obj
                                 >
                                   <Select
                                     SelectComponent={[Function]}
-                                    compareValues={[Function]}
                                     id="storage_manager_id"
-                                    invalid={false}
                                     invalidText=""
-                                    isClearable={false}
-                                    isSearchable={false}
                                     labelText={
                                       <IsRequired>
                                         Storage Manager
@@ -522,9 +518,7 @@ exports[`Cloud Object Store Container form component should add Amazon cloud obj
                                     onBlur={[Function]}
                                     onChange={[Function]}
                                     onFocus={[Function]}
-                                    options={Array []}
                                     placeholder="<Choose>"
-                                    pluckSingleValue={true}
                                     simpleValue={false}
                                     value=""
                                   >
@@ -540,6 +534,7 @@ exports[`Cloud Object Store Container form component should add Amazon cloud obj
                                           Storage Manager
                                         </IsRequired>
                                       }
+                                      loadingMessage="Loading..."
                                       name="storage_manager_id"
                                       noOptionsMessage={[Function]}
                                       onBlur={[Function]}
@@ -547,7 +542,7 @@ exports[`Cloud Object Store Container form component should add Amazon cloud obj
                                       onFocus={[Function]}
                                       onInputChange={[Function]}
                                       options={Array []}
-                                      placeholder="Loading..."
+                                      placeholder="<Choose>"
                                       value=""
                                     >
                                       <Select
@@ -563,6 +558,7 @@ exports[`Cloud Object Store Container form component should add Amazon cloud obj
                                           </IsRequired>
                                         }
                                         light={false}
+                                        loadingMessage="Loading..."
                                         name="storage_manager_id"
                                         onBlur={[Function]}
                                         onChange={[Function]}
@@ -596,6 +592,7 @@ exports[`Cloud Object Store Container form component should add Amazon cloud obj
                                               <select
                                                 className="bx--select-input"
                                                 id="storage_manager_id"
+                                                loadingMessage="Loading..."
                                                 name="storage_manager_id"
                                                 onBlur={[Function]}
                                                 onChange={[Function]}
@@ -605,7 +602,7 @@ exports[`Cloud Object Store Container form component should add Amazon cloud obj
                                                 <SelectItem
                                                   disabled={false}
                                                   hidden={false}
-                                                  text="Loading..."
+                                                  text="<Choose>"
                                                   value=""
                                                 >
                                                   <option
@@ -614,7 +611,7 @@ exports[`Cloud Object Store Container form component should add Amazon cloud obj
                                                     hidden={false}
                                                     value=""
                                                   >
-                                                    Loading...
+                                                    &lt;Choose&gt;
                                                   </option>
                                                 </SelectItem>
                                               </select>
@@ -704,9 +701,7 @@ exports[`Cloud Object Store Container form component should add Amazon cloud obj
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={false}
-                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={
@@ -1425,36 +1420,32 @@ exports[`Cloud Object Store Container form component should add Openstack cloud 
                                 >
                                   <Select
                                     SelectComponent={[Function]}
-                                    compareValues={[Function]}
                                     id="storage_manager_id"
-                                    invalid={false}
                                     invalidText=""
-                                    isClearable={false}
-                                    isSearchable={false}
                                     labelText={
                                       <IsRequired>
                                         Storage Manager
                                       </IsRequired>
                                     }
                                     loadOptions={[Function]}
-                                    loadOptionsChangeCounter={1}
+                                    loadOptionsChangeCounter={0}
                                     loadingMessage="Loading..."
                                     name="storage_manager_id"
                                     onBlur={[Function]}
                                     onChange={[Function]}
                                     onFocus={[Function]}
-                                    options={Array []}
                                     placeholder="<Choose>"
-                                    pluckSingleValue={true}
                                     simpleValue={false}
                                     value=""
                                   >
                                     <ClearedSelect
+                                      className=""
+                                      closeMenuOnSelect={true}
+                                      hideSelectedOptions={false}
                                       id="storage_manager_id"
                                       invalidText=""
                                       isClearable={false}
-                                      isDisabled={true}
-                                      isFetching={true}
+                                      isFetching={false}
                                       isSearchable={false}
                                       labelText={
                                         <IsRequired>
@@ -1468,10 +1459,11 @@ exports[`Cloud Object Store Container form component should add Openstack cloud 
                                       onFocus={[Function]}
                                       onInputChange={[Function]}
                                       options={Array []}
-                                      placeholder="Loading..."
+                                      placeholder="<Choose>"
                                       value=""
                                     >
                                       <Select
+                                        className=""
                                         disabled={false}
                                         helperText=""
                                         id="storage_manager_id"
@@ -1522,23 +1514,7 @@ exports[`Cloud Object Store Container form component should add Openstack cloud 
                                                 onChange={[Function]}
                                                 onFocus={[Function]}
                                                 value=""
-                                              >
-                                                <SelectItem
-                                                  disabled={false}
-                                                  hidden={false}
-                                                  text="Loading..."
-                                                  value=""
-                                                >
-                                                  <option
-                                                    className="bx--select-option"
-                                                    disabled={false}
-                                                    hidden={false}
-                                                    value=""
-                                                  >
-                                                    Loading...
-                                                  </option>
-                                                </SelectItem>
-                                              </select>
+                                              />
                                               <ForwardRef(ChevronDown16)
                                                 className="bx--select__arrow"
                                               >
@@ -1625,9 +1601,7 @@ exports[`Cloud Object Store Container form component should add Openstack cloud 
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={false}
-                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={
@@ -1662,9 +1636,7 @@ exports[`Cloud Object Store Container form component should add Openstack cloud 
                                 "dirtyFieldsSinceLastSubmit": Object {},
                                 "dirtySinceLastSubmit": false,
                                 "error": undefined,
-                                "errors": Object {
-                                  "storage_manager_id": "Required",
-                                },
+                                "errors": Object {},
                                 "form": Object {
                                   "batch": [Function],
                                   "blur": [Function],
@@ -1700,12 +1672,10 @@ exports[`Cloud Object Store Container form component should add Openstack cloud 
                                   "subscribe": [Function],
                                 },
                                 "hasSubmitErrors": false,
-                                "hasValidationErrors": true,
+                                "hasValidationErrors": false,
                                 "initialValues": Object {},
-                                "invalid": true,
-                                "modified": Object {
-                                  "storage_manager_id": false,
-                                },
+                                "invalid": false,
+                                "modified": Object {},
                                 "modifiedSinceLastSubmit": false,
                                 "pristine": true,
                                 "submitError": undefined,
@@ -1713,15 +1683,11 @@ exports[`Cloud Object Store Container form component should add Openstack cloud 
                                 "submitFailed": false,
                                 "submitSucceeded": false,
                                 "submitting": false,
-                                "touched": Object {
-                                  "storage_manager_id": false,
-                                },
-                                "valid": false,
+                                "touched": Object {},
+                                "valid": true,
                                 "validating": false,
                                 "values": Object {},
-                                "visited": Object {
-                                  "storage_manager_id": false,
-                                },
+                                "visited": Object {},
                               }
                             }
                             onCancel={[Function]}
@@ -2346,12 +2312,8 @@ exports[`Cloud Object Store Container form component should render add cloud obj
                                 >
                                   <Select
                                     SelectComponent={[Function]}
-                                    compareValues={[Function]}
                                     id="storage_manager_id"
-                                    invalid={false}
                                     invalidText=""
-                                    isClearable={false}
-                                    isSearchable={false}
                                     labelText={
                                       <IsRequired>
                                         Storage Manager
@@ -2364,9 +2326,7 @@ exports[`Cloud Object Store Container form component should render add cloud obj
                                     onBlur={[Function]}
                                     onChange={[Function]}
                                     onFocus={[Function]}
-                                    options={Array []}
                                     placeholder="<Choose>"
-                                    pluckSingleValue={true}
                                     simpleValue={false}
                                     value=""
                                   >
@@ -2382,6 +2342,7 @@ exports[`Cloud Object Store Container form component should render add cloud obj
                                           Storage Manager
                                         </IsRequired>
                                       }
+                                      loadingMessage="Loading..."
                                       name="storage_manager_id"
                                       noOptionsMessage={[Function]}
                                       onBlur={[Function]}
@@ -2389,7 +2350,7 @@ exports[`Cloud Object Store Container form component should render add cloud obj
                                       onFocus={[Function]}
                                       onInputChange={[Function]}
                                       options={Array []}
-                                      placeholder="Loading..."
+                                      placeholder="<Choose>"
                                       value=""
                                     >
                                       <Select
@@ -2405,6 +2366,7 @@ exports[`Cloud Object Store Container form component should render add cloud obj
                                           </IsRequired>
                                         }
                                         light={false}
+                                        loadingMessage="Loading..."
                                         name="storage_manager_id"
                                         onBlur={[Function]}
                                         onChange={[Function]}
@@ -2438,6 +2400,7 @@ exports[`Cloud Object Store Container form component should render add cloud obj
                                               <select
                                                 className="bx--select-input"
                                                 id="storage_manager_id"
+                                                loadingMessage="Loading..."
                                                 name="storage_manager_id"
                                                 onBlur={[Function]}
                                                 onChange={[Function]}
@@ -2447,7 +2410,7 @@ exports[`Cloud Object Store Container form component should render add cloud obj
                                                 <SelectItem
                                                   disabled={false}
                                                   hidden={false}
-                                                  text="Loading..."
+                                                  text="<Choose>"
                                                   value=""
                                                 >
                                                   <option
@@ -2456,7 +2419,7 @@ exports[`Cloud Object Store Container form component should render add cloud obj
                                                     hidden={false}
                                                     value=""
                                                   >
-                                                    Loading...
+                                                    &lt;Choose&gt;
                                                   </option>
                                                 </SelectItem>
                                               </select>
@@ -2546,9 +2509,7 @@ exports[`Cloud Object Store Container form component should render add cloud obj
                                 "cancel",
                               ]
                             }
-                            buttonsProps={Object {}}
                             canReset={false}
-                            canSubmit={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
                             formFields={

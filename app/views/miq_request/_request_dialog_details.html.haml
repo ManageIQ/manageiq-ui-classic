@@ -32,7 +32,9 @@
 
     - when 'DialogFieldTagControl'
       - value = wf.value(field.name) || '' # it returns in format Clasification::id
-      - classifications = value.split(',').map { |c| Classification.find_by(:id => c.split('::').second).description }
+      - classifications = value.split(',').map do |c|
+        - classification = Classification.find_by(id: c.split('::').second)
+        - classification.description if classification
       - if classifications.empty?
         = h('')
       -else
