@@ -1,0 +1,2 @@
+- role_allows = role_allows?(:feature => 'rbac_tenant_view') ? true : false
+= react('TerraformTemplateCatalogForm', {:initialData => {:catalogFormId => params[:id], :allCatalogs => @available_catalogs, :zones => @zones, :currentRegion => @current_region, :tenantTree => @tenants_tree, :roleAllows => role_allows}})
