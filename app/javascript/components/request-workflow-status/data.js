@@ -43,13 +43,43 @@ const convertDate = (date) => {
   return formattedDate.toString();
 };
 
+// Converts the duration time in ms and returns a string in format: w days x hours y minutes z seconds
+// duration: time in ms
+const convertDuration = (duration) => {
+  const durationString = moment.duration(duration, 'milliseconds').toISOString().split('PT')[1];
+  let startIndex = 0;
+  let resultString = '';
+  if (durationString.indexOf('H') >= 0) {
+    resultString += `${durationString.slice(startIndex, durationString.indexOf('H'))}h `;
+    startIndex = durationString.indexOf('H') + 1;
+  }
+  if (durationString.indexOf('M') >= 0) {
+    resultString += `${durationString.slice(startIndex, durationString.indexOf('M'))}m `;
+    startIndex = durationString.indexOf('M') + 1;
+  }
+  if (durationString.indexOf('S') >= 0) {
+    resultString += `${durationString.slice(startIndex, durationString.indexOf('S'))}s`;
+    startIndex = durationString.indexOf('S') + 1;
+  }
+  return resultString;
+};
+
+const getItemIcon = (item) => {
+  if (item.RunnerContext && item.RunnerContext.success) {
+    return { icon: 'carbon--CheckmarkOutline' };
+  } if (item.RunnerContext && item.RunnerContext.Error) {
+    return { icon: 'carbon--MisuseOutline' };
+  }
+  return { icon: 'carbon--PlayOutline' };
+};
+
 /** Function to get the row data of workflow states table. */
 const rowData = ({ StateHistory }) => StateHistory.map((item) => ({
   id: item.Guid.toString(),
-  name: item.Name,
+  name: { text: item.Name, ...getItemIcon(item) },
   enteredTime: convertDate(item.EnteredTime.toString()),
   finishedTime: convertDate(item.FinishedTime.toString()),
-  duration: item.Duration.toFixed(3).toString(),
+  duration: convertDuration(item.Duration * 1000),
 }));
 
 /** Function to return the header, row and status data required for the RequestWorkflowStatus component.  */
@@ -59,6 +89,20 @@ export const workflowStatusData = (response) => {
     return undefined;
   }
   const rows = response.context ? rowData(response.context) : [];
+  if (response.context && response.context.State) {
+    const state = response.context.State;
+    const currentTime = new Date(); // Date Object for current time
+    const oldTime = Date.parse(state.EnteredTime); // ms since start time to entered time in UTC
+    const durationTime = currentTime.getTime() - oldTime; // ms from entered time to current time
+
+    rows.push({
+      id: state.Guid.toString(),
+      name: { text: state.Name, icon: 'carbon--PlayOutline' },
+      enteredTime: convertDate(state.EnteredTime.toString()),
+      finishedTime: '',
+      duration: convertDuration(durationTime),
+    });
+  }
   const headers = headerData();
   const name = response.name || response.description;
   return {

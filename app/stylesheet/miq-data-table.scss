@@ -1,3 +1,9 @@
+:root {
+  --green: #2d7623;
+  --red: #cc0000;
+  --yellow: #ec7a08;
+}
+
 .tenant-quota-data-table {
   .miq-data-table {
     margin-bottom: 32px;
@@ -113,7 +119,7 @@
       }
 
       .icon.fa-ruby {
-        color: #cc0000 !important;
+        color: var(--red) !important;
       }
 
       span {
@@ -387,3 +393,20 @@ table.miq_preview {
   }
 }
 
+.request-workflow-status {
+  .carbon-icons-style {
+    margin-right: 5px;
+  }
+
+  .carbon--CheckmarkOutline {
+    color: var(--green);
+  }
+
+  .carbon--MisuseOutline {
+    color: var(--red);
+  }
+
+  .carbon--PlayOutline {
+    color: var(--yellow)
+  }
+}
