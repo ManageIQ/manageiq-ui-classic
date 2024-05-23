@@ -25,11 +25,11 @@
 
   - if condition[:provision]
     = catalog_tab_content(:provision) do
-      = catalog_generic_ansible_playbook_info(:provision, record, provisioning)
+      = catalog_generic_template_info(:provision, record, provisioning)
       = catalog_variables_default_data(:provision, record)
       = catalog_dialog(provisioning)  
 
     - if condition[:retirement]
       = catalog_tab_content(:retirement) do
-        = catalog_generic_ansible_playbook_info(:retirement, record, retirement)
+        = catalog_generic_template_info(:retirement, record, retirement)
         = catalog_variables_default_data(:retirement, record)

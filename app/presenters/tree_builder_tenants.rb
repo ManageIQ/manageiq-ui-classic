@@ -4,7 +4,7 @@ class TreeBuilderTenants < TreeBuilder
   def initialize(name, sandbox, build, **params)
     @additional_tenants = params[:additional_tenants]
     @selectable = params[:selectable]
-    @ansible_playbook = params[:ansible_playbook]
+    @show_tenant_tree = params[:show_tenant_tree]
     @catalog_bundle = params[:catalog_bundle]
     super(name, sandbox, build)
   end
@@ -23,7 +23,7 @@ class TreeBuilderTenants < TreeBuilder
   end
 
   def tenant_tree_or_generic
-    if @ansible_playbook
+    if @show_tenant_tree
       'miqOnCheckTenantTree'
     else
       'miqOnCheckGeneric'
