@@ -1387,7 +1387,7 @@ describe CatalogController do
     let(:tree) do
       TreeBuilderTenants.new('tenants_tree', {}, true, :additional_tenants => [tenant],
                                                        :selectable         => edit.present?,
-                                                       :ansible_playbook   => edit.present? && edit[:new][:st_prov_type] == 'generic_ansible_playbook',
+                                                       :show_tenant_tree   => edit.present? && edit[:new][:st_prov_type] == 'generic_ansible_playbook',
                                                        :catalog_bundle     => cat_bundle)
     end
 

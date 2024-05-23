@@ -237,7 +237,7 @@ class CatalogController < ApplicationController
     build_automate_tree(:automate_catalog) if automate_tree_needed?
     if params[:st_prov_type] # build request screen for selected item type
       @_params[:org_controller] = "service_template"
-      if ansible_playbook?
+      if ansible_playbook_type? || terraform_template_type?
         @record = ServiceTemplate.new
         # waiting for back-end PR to be merged to implement this
         # if false
@@ -285,7 +285,10 @@ class CatalogController < ApplicationController
 
     render :update do |page|
       page << javascript_prologue
-      if @edit[:new][:st_prov_type] == "generic_ansible_playbook"
+      if @edit[:new][:st_prov_type] == "generic_terraform_template"
+        page.replace("form_div", :partial => "tt_react_form")
+        page << javascript_hide("form_buttons_div")
+      elsif @edit[:new][:st_prov_type] == "generic_ansible_playbook"
         page.replace("form_div", :partial => "st_angular_form")
         page << javascript_hide("form_buttons_div")
       else
@@ -370,6 +373,7 @@ class CatalogController < ApplicationController
     end
     template_locals = {:locals => {:controller => "catalog"}}
     template_locals[:locals].merge!(fetch_playbook_details) if need_ansible_locals?
+    template_locals[:locals].merge!(fetch_terraform_template_details) if need_terraform_locals?
     template_locals[:locals].merge!(fetch_ct_details) if need_container_template_locals?
     template_locals[:locals].merge!(fetch_ovf_template_details) if need_ovf_template_locals?
 
@@ -890,7 +894,7 @@ class CatalogController < ApplicationController
   def build_tenants_tree
     tenants = @record ? @record.additional_tenants : Tenant.where(:id => @edit[:new][:tenant_ids])
     catalog_bundle = @edit.present? && @edit[:key] && @edit[:key].starts_with?('st_edit') # Get the info if adding/editing Catalog Item or Bundle; not important if only displaying
-    TreeBuilderTenants.new('tenants_tree', @sb, true, :additional_tenants => tenants, :selectable => @edit.present?, :ansible_playbook => ansible_playbook_type?, :catalog_bundle => catalog_bundle)
+    TreeBuilderTenants.new('tenants_tree', @sb, true, :additional_tenants => tenants, :selectable => @edit.present?, :show_tenant_tree => ansible_playbook_type? || terraform_template_type?, :catalog_bundle => catalog_bundle)
   end
 
   def svc_catalog_provision_finish_submit_endpoint
@@ -905,15 +909,25 @@ class CatalogController < ApplicationController
                 elsif @edit
                   @edit[:new][:st_prov_type]
                 end
+    if prov_type == 'generic_ansible_playbook'
+      @current_region = MiqRegion.my_region.region
+    end
     prov_type == 'generic_ansible_playbook'
   end
 
-  def ansible_playbook?
-    ansible_playbook = ansible_playbook_type?
-    @current_region = MiqRegion.my_region.region if ansible_playbook
-    ansible_playbook
+  def terraform_template_type?
+    prov_type = if params[:st_prov_type]
+                  params[:st_prov_type]
+                elsif @record
+                  @record.prov_type
+                elsif @edit
+                  @edit[:new][:st_prov_type]
+                end
+    if prov_type == 'generic_terraform_template'
+      @current_region = MiqRegion.my_region.region
+    end
+    prov_type == 'generic_terraform_template'
   end
-  helper_method :ansible_playbook?
 
   # Get all the available Catalogs
   def available_catalogs
@@ -1904,7 +1918,7 @@ class CatalogController < ApplicationController
         @no_wf_msg = _("Request is missing for selected item")
       end
     end
-    unless @record.prov_type == "generic_ansible_playbook"
+    unless @record.prov_type == "generic_ansible_playbook" || @record.prov_type == "generic_terraform_template"
       @sb[:dialog_label]       = _("No Dialog")
       @sb[:fqname]             = nil
       @sb[:reconfigure_fqname] = nil
@@ -2166,37 +2180,73 @@ class CatalogController < ApplicationController
   def fetch_playbook_details
     playbook_details = {}
     provision = @record.config_info[:provision]
-    playbook_details[:provisioning] = {}
-    playbook_details[:provisioning][:repository] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource, provision[:repository_id])
-    playbook_details[:provisioning][:playbook] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook, provision[:playbook_id])
-    playbook_details[:provisioning][:machine_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential, provision[:credential_id])
-    playbook_details[:provisioning][:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, provision[:network_credential_id]) if provision[:network_credential_id]
-    playbook_details[:provisioning][:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, provision[:cloud_credential_id]) if provision[:cloud_credential_id]
-    playbook_details[:provisioning][:vault_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential, provision[:vault_credential_id]) if provision[:vault_credential_id]
+    provisioning_details = {}
+    provisioning_details[:repository] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource, provision[:repository_id])
+    provisioning_details[:playbook] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook, provision[:playbook_id])
+    provisioning_details[:machine_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential, provision[:credential_id])
+    provisioning_details[:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, provision[:network_credential_id]) if provision[:network_credential_id]
+    provisioning_details[:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, provision[:cloud_credential_id]) if provision[:cloud_credential_id]
+    provisioning_details[:vault_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential, provision[:vault_credential_id]) if provision[:vault_credential_id]
+    provisioning_details[:execution_ttl] = provision[:execution_ttl]
+    provisioning_details[:verbosity] = provision[:verbosity]
+    provisioning_details[:log_output] = provision[:log_output]
+    provisioning_details[:become_enabled] = provision[:become_enabled] == true ? _('Yes') : _('No')
+    playbook_details[:provisioning] = provisioning_details
     fetch_dialog(playbook_details, provision[:dialog_id], :provisioning)
-    playbook_details[:provisioning][:execution_ttl] = provision[:execution_ttl]
-    playbook_details[:provisioning][:verbosity] = provision[:verbosity]
-    playbook_details[:provisioning][:log_output] = provision[:log_output]
-    playbook_details[:provisioning][:become_enabled] = provision[:become_enabled] == true ? _('Yes') : _('No')
 
     if @record.config_info[:retirement]
       retirement = @record.config_info[:retirement]
-      playbook_details[:retirement] = {}
-      playbook_details[:retirement][:remove_resources] = retirement[:remove_resources]
+      retirement_details = {}
+      retirement_details[:remove_resources] = retirement[:remove_resources]
       if retirement[:repository_id]
-        playbook_details[:retirement][:repository] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource, retirement[:repository_id])
-        playbook_details[:retirement][:playbook] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook, retirement[:playbook_id])
-        playbook_details[:retirement][:machine_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential, retirement[:credential_id])
-        playbook_details[:retirement][:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, retirement[:network_credential_id]) if retirement[:network_credential_id]
-        playbook_details[:retirement][:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, retirement[:cloud_credential_id]) if retirement[:cloud_credential_id]
-        playbook_details[:retirement][:vault_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential, retirement[:vault_credential_id]) if retirement[:vault_credential_id]
+        retirement_details[:repository] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource, retirement[:repository_id])
+        retirement_details[:playbook] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook, retirement[:playbook_id])
+        retirement_details[:machine_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential, retirement[:credential_id])
+        retirement_details[:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, retirement[:network_credential_id]) if retirement[:network_credential_id]
+        retirement_details[:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, retirement[:cloud_credential_id]) if retirement[:cloud_credential_id]
+        retirement_details[:vault_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential, retirement[:vault_credential_id]) if retirement[:vault_credential_id]
       end
-      playbook_details[:retirement][:execution_ttl] = retirement[:execution_ttl]
-      playbook_details[:retirement][:verbosity] = retirement[:verbosity]
-      playbook_details[:retirement][:log_output] = retirement[:log_output]
-      playbook_details[:retirement][:become_enabled] = retirement[:become_enabled] == true ? _('Yes') : _('No')
+      retirement_details[:execution_ttl] = retirement[:execution_ttl]
+      retirement_details[:verbosity] = retirement[:verbosity]
+      retirement_details[:log_output] = retirement[:log_output]
+      retirement_details[:become_enabled] = retirement[:become_enabled] == true ? _('Yes') : _('No')
+      playbook_details[:retirement] = retirement_details
     end
     playbook_details
+  end
+
+  def fetch_terraform_template_details
+    terraform_template_details = {}
+    provision = @record.config_info[:provision]
+    provisioning_details = {}
+    provisioning_details[:repository] = fetch_name_from_object(ManageIQ::Providers::EmbeddedTerraform::AutomationManager::ConfigurationScriptSource, provision[:repository_id])
+    provisioning_details[:template] = fetch_name_from_object(ManageIQ::Providers::EmbeddedTerraform::AutomationManager::ConfigurationScriptPayload, provision[:configuration_script_payload_id])
+    provisioning_details[:credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedTerraform::AutomationManager::Credential, provision[:credential_id])
+    provisioning_details[:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedTerraform::AutomationManager::NetworkCredential, provision[:network_credential_id]) if provision[:network_credential_id]
+    provisioning_details[:execution_ttl] = provision[:execution_ttl]
+    provisioning_details[:verbosity] = provision[:verbosity]
+    provisioning_details[:log_output] = provision[:log_output]
+    provisioning_details[:become_enabled] = provision[:become_enabled] == true ? _('Yes') : _('No')
+    terraform_template_details[:provisioning] = provisioning_details
+    fetch_dialog(terraform_template_details, provision[:dialog_id], :provisioning)
+
+    # NOTE: This code is commented out since the retirement tab is not needed yet
+    # if @record.config_info[:retirement]
+    #   retirement = @record.config_info[:retirement]
+    #   terraform_template_details[:retirement] = {}
+    #   terraform_template_details[:retirement][:remove_resources] = retirement[:remove_resources]
+    #   if retirement[:repository_id]
+    #     terraform_template_details[:retirement][:repository] = fetch_name_from_object(ManageIQ::Providers::EmbeddedTerraform::AutomationManager::ConfigurationScriptSource, retirement[:repository_id])
+    #     terraform_template_details[:retirement][:template] = fetch_name_from_object(ManageIQ::Providers::EmbeddedTerraform::AutomationManager::ConfigurationScriptPayload, retirement[:configuration_script_payload_id])
+    #     terraform_template_details[:retirement][:credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedTerraform::AutomationManager::Credential, retirement[:credential_id])
+    #     terraform_template_details[:retirement][:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedTerraform::AutomationManager::NetworkCredential, retirement[:network_credential_id]) if retirement[:network_credential_id]
+    #   end
+    #   terraform_template_details[:retirement][:execution_ttl] = retirement[:execution_ttl]
+    #   terraform_template_details[:retirement][:verbosity] = retirement[:verbosity]
+    #   terraform_template_details[:retirement][:log_output] = retirement[:log_output]
+    #   terraform_template_details[:retirement][:become_enabled] = retirement[:become_enabled] == true ? _('Yes') : _('No')
+    # end
+    terraform_template_details
   end
 
   def fetch_dialog(playbook_details, dialog_id, key)
@@ -2303,8 +2353,10 @@ class CatalogController < ApplicationController
     content = if @tagging
                 action_url = x_active_tree == :ot_tree ? "ot_tags_edit" : "st_tags_edit"
                 r[:partial => "layouts/x_tagging", :locals => {:action_url => action_url}]
+              elsif action && %w[at_st_new st_new].include?(action) && terraform_template_type?
+                r[:partial => "tt_react_form"]
               elsif action && %w[at_st_new st_new].include?(action)
-                r[:partial => ansible_playbook? ? "st_angular_form" : "st_form"]
+                r[:partial => ansible_playbook_type? ? "st_angular_form" : "st_form"]
               elsif action && %w[ownership].include?(action)
                 r[:partial => @refresh_partial]
               elsif action && %w[st_catalog_new st_catalog_edit].include?(action)
@@ -2321,6 +2373,7 @@ class CatalogController < ApplicationController
                 else
                   template_locals = {:controller => "catalog"}
                   template_locals.merge!(fetch_playbook_details) if need_ansible_locals?
+                  template_locals.merge!(fetch_terraform_template_details) if need_terraform_locals?
                   template_locals.merge!(fetch_ct_details) if need_container_template_locals?
                   template_locals.merge!(fetch_ovf_template_details) if need_ovf_template_locals?
                   r[:partial => "catalog/#{x_active_tree}_show", :locals => template_locals]
@@ -2344,7 +2397,7 @@ class CatalogController < ApplicationController
         presenter.hide(:toolbar).show(:paging_div)
         # incase it was hidden for summary screen, and incase there were no records on show_list
         presenter.remove_paging
-        if (action == 'at_st_new' && ansible_playbook?) || %w[st_catalog_new st_catalog_edit copy_catalog].include?(action)
+        if (action == 'at_st_new' && (ansible_playbook_type? || terraform_template_type?)) || %w[st_catalog_new st_catalog_edit copy_catalog].include?(action)
           presenter.hide(:form_buttons_div)
         else
           presenter.show(:form_buttons_div)
@@ -2405,6 +2458,12 @@ class CatalogController < ApplicationController
     x_active_tree == :sandt_tree &&
       TreeBuilder.get_model_for_prefix(@nodetype) == "ServiceTemplate" &&
       @record.prov_type == "generic_ansible_playbook"
+  end
+
+  def need_terraform_locals?
+    x_active_tree == :sandt_tree &&
+      TreeBuilder.get_model_for_prefix(@nodetype) == "ServiceTemplate" &&
+      @record.prov_type == "generic_terraform_template"
   end
 
   def need_container_template_locals?
