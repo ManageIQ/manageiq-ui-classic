@@ -33,8 +33,12 @@ window.miqOnLoad = function() {
   }
 
   // Run MIQ after onload code if present
-  if (typeof ManageIQ.afterOnload === 'string') {
-    eval(ManageIQ.afterOnload);
+  if (ManageIQ.afterOnload) {
+    const data = ManageIQ.afterOnload;
+
+    if (typeof data === 'object' && data.action) {
+      data.action.call();
+    }
   }
 
   // Focus on search box, if it's there and allows focus
@@ -654,6 +658,13 @@ window.miqAjax = function(url, serialize_fields, options) {
 window.miqAsyncAjax = function(url) {
   miqJqueryRequest(url, {beforeSend: true});
 }
+
+/** Function to display the advanced search bar in storage, inventory list. */
+window.showSearchBox = () => {
+  if (window.miqDomElementExists('adv_searchbox_div')) {
+    $('#adv_searchbox_div').show();
+  }
+};
 
 ManageIQ.oneTransition.oneTrans = 0;
 

@@ -16,7 +16,7 @@
       = render :partial => "catalog/form"
       - @upload_sysprep_file = false
       :javascript
-        ManageIQ.afterOnload = "miqPrepRightCellForm('#{x_active_tree}');"
+        ManageIQ.afterOnload = {action: () => miqPrepRightCellForm("#{x_active_tree}")}
     - else
       = render :partial => "layouts/x_gtl"
 
