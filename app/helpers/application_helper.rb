@@ -399,6 +399,8 @@ module ApplicationHelper
       action = "show"
     when "ServiceResource", "ServiceTemplate"
       controller = "catalog"
+    when "ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript"
+      controller = "configuration_script"
     when "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook"
       controller = "ansible_playbook"
     when "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Credential"

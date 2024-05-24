@@ -34,7 +34,7 @@ ManageIQ.angular.app.service('DialogEditorHttp', ['$http', 'API', function($http
 
   /** Function to load all available workflows when 'Embedded Workflow' is selected for dynamic field. */
   this.loadAvailableWorkflows = () => {
-    const url = '/api/configuration_script_payloads/?expand=resources&attributes=configuration_script_source.name';
+    const url = '/api/configuration_script_payloads/?expand=resources&attributes=configuration_script_source.name&collection_class=ManageIQ::Providers::Workflows::AutomationManager::Workflow';
     return API.get(url);
   };
 
