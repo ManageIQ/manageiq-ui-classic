@@ -10,6 +10,7 @@ import {
   CellAction, hasIcon, hasImage, hasButton, hasTextInput, hasToggle, hasLink, isObject, isArray, isNumber, decimalCount,
 } from './helper';
 import { customOnClickHandler } from '../../helpers/custom-click-handler';
+import { carbonizeIcon } from '../../menu/icon';
 
 const MiqTableCell = ({
   cell, onCellClick, row, truncate,
@@ -74,6 +75,20 @@ const MiqTableCell = ({
     );
   };
 
+  const returnIcon = (icon, style, styledIconClass, longerTextClass, index = undefined) => {
+    const extraProps = {};
+    if (index !== undefined) {
+      extraProps.key = index.toString();
+    }
+    if (icon.startsWith('carbon--')) {
+      const IconElement = carbonizeIcon(icon);
+      return (
+        <IconElement aria-label={icon} className={classNames('icon', 'carbon-icons-style', icon)} style={style} {...extraProps} />
+      );
+    }
+    return (<i className={classNames('fa-lg', 'icon', icon, styledIconClass, longerTextClass)} style={style} {...extraProps} />);
+  };
+
   /** Function to render icon(s) in cell. */
   const renderIcon = (icon, style, showText) => {
     const hasBackground = Object.keys(style).includes('background');
@@ -83,8 +98,8 @@ const MiqTableCell = ({
       <div className={cellClass}>
         {
           typeof (icon) === 'string'
-            ? <i className={classNames('fa-lg', 'icon', icon, styledIconClass, longerTextClass)} style={style} />
-            : icon.map((i, index) => <i className={classNames('fa-lg', 'icon', i)} key={index.toString()} />)
+            ? returnIcon(icon, style, styledIconClass, longerTextClass)
+            : icon.map((i, index) => returnIcon(i, style, styledIconClass, longerTextClass, index))
         }
         {showText && truncateText}
       </div>
