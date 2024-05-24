@@ -89,7 +89,7 @@ export const workflowStatusData = (response) => {
     return undefined;
   }
   const rows = response.context ? rowData(response.context) : [];
-  if (response.context && response.context.State) {
+  if (response.context && response.context.State && !response.context.State.FinishedTime) {
     const state = response.context.State;
     const currentTime = new Date(); // Date Object for current time
     const oldTime = Date.parse(state.EnteredTime); // ms since start time to entered time in UTC
