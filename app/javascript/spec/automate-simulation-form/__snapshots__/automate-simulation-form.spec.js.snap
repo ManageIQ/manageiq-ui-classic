@@ -1,0 +1,606 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Automate Simulation Form should submit a new simulation 1`] = `
+<div
+  className="automate-simulation-page"
+>
+  <div
+    className="automate-simulation-form-wrapper"
+  >
+    <Connect(MiqFormRenderer)
+      FormTemplate={[Function]}
+      canReset={true}
+      className="automate-simulation-form"
+      onReset={[Function]}
+      onSubmit={[Function]}
+      schema={
+        Object {
+          "fields": Array [
+            Object {
+              "className": "automate-object-details",
+              "component": "plain-text",
+              "id": "object_details",
+              "label": "Object Details",
+              "name": "object_details",
+              "style": Object {
+                "fontSize": "16px",
+              },
+            },
+            Object {
+              "className": "automate-instance-name",
+              "component": "select",
+              "id": "instance_name",
+              "initialValue": Array [
+                "Request",
+                "parse_provider_category",
+                "parse_event_stream",
+                "parse_automation_request",
+                "MiqEvent",
+                "GenericObject",
+                "Event",
+                "Automation",
+              ],
+              "isSearchable": true,
+              "label": "System/Process",
+              "name": "instance_name",
+              "options": Array [
+                Object {
+                  "label": "Request",
+                  "value": "Request",
+                },
+                Object {
+                  "label": "parse_provider_category",
+                  "value": "parse_provider_category",
+                },
+                Object {
+                  "label": "parse_event_stream",
+                  "value": "parse_event_stream",
+                },
+                Object {
+                  "label": "parse_automation_request",
+                  "value": "parse_automation_request",
+                },
+                Object {
+                  "label": "MiqEvent",
+                  "value": "MiqEvent",
+                },
+                Object {
+                  "label": "GenericObject",
+                  "value": "GenericObject",
+                },
+                Object {
+                  "label": "Event",
+                  "value": "Event",
+                },
+                Object {
+                  "label": "Automation",
+                  "value": "Automation",
+                },
+              ],
+              "simpleValue": true,
+              "url": undefined,
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+              ],
+            },
+            Object {
+              "className": "automate-object-message",
+              "component": "text-field",
+              "id": "object_message",
+              "initialValue": "create",
+              "isRequired": true,
+              "label": "Message",
+              "maxLength": undefined,
+              "name": "object_message",
+            },
+            Object {
+              "className": "automate-object-request",
+              "component": "text-field",
+              "id": "object_request",
+              "initialValue": "",
+              "label": "Request",
+              "name": "object_request",
+            },
+            Object {
+              "className": "automate-object-attribute",
+              "component": "plain-text",
+              "id": "object_attribute",
+              "label": "Object Attribute",
+              "name": "object_attribute",
+              "style": Object {
+                "fontSize": "16px",
+              },
+            },
+            Object {
+              "className": "automate-target-class",
+              "component": "select",
+              "id": "target_class",
+              "initialValue": null,
+              "isSearchable": true,
+              "label": "Type",
+              "name": "target_class",
+              "onChange": [Function],
+              "options": Array [
+                Object {
+                  "label": "<None>",
+                  "value": "-1",
+                },
+                Object {
+                  "label": "Availability Zone",
+                  "value": "AvailabilityZone",
+                },
+                Object {
+                  "label": "Cloud Network",
+                  "value": "CloudNetwork",
+                },
+                Object {
+                  "label": "Cloud Object Store Container",
+                  "value": "CloudObjectStoreContainer",
+                },
+                Object {
+                  "label": "Cloud Subnet",
+                  "value": "CloudSubnet",
+                },
+                Object {
+                  "label": "Cloud Tenant",
+                  "value": "CloudTenant",
+                },
+                Object {
+                  "label": "Cloud Volume",
+                  "value": "CloudVolume",
+                },
+                Object {
+                  "label": "Container Pod",
+                  "value": "ContainerGroup",
+                },
+                Object {
+                  "label": "Container Image",
+                  "value": "ContainerImage",
+                },
+                Object {
+                  "label": "Container Node",
+                  "value": "ContainerNode",
+                },
+                Object {
+                  "label": "Container Project",
+                  "value": "ContainerProject",
+                },
+                Object {
+                  "label": "Container Template",
+                  "value": "ContainerTemplate",
+                },
+                Object {
+                  "label": "Container Volume",
+                  "value": "ContainerVolume",
+                },
+                Object {
+                  "label": "Cluster",
+                  "value": "EmsCluster",
+                },
+                Object {
+                  "label": "Provider",
+                  "value": "ExtManagementSystem",
+                },
+                Object {
+                  "label": "Generic Object",
+                  "value": "GenericObject",
+                },
+                Object {
+                  "label": "Host",
+                  "value": "Host",
+                },
+                Object {
+                  "label": "Group",
+                  "value": "MiqGroup",
+                },
+                Object {
+                  "label": "VM Template and Image",
+                  "value": "MiqTemplate",
+                },
+                Object {
+                  "label": "Network Router",
+                  "value": "NetworkRouter",
+                },
+                Object {
+                  "label": "Network Service",
+                  "value": "NetworkService",
+                },
+                Object {
+                  "label": "Orchestration Stack",
+                  "value": "OrchestrationStack",
+                },
+                Object {
+                  "label": "Physical Chassis",
+                  "value": "PhysicalChassis",
+                },
+                Object {
+                  "label": "Physical Rack",
+                  "value": "PhysicalRack",
+                },
+                Object {
+                  "label": "Physical Server",
+                  "value": "PhysicalServer",
+                },
+                Object {
+                  "label": "Physical Storage",
+                  "value": "PhysicalStorage",
+                },
+                Object {
+                  "label": "Security Group",
+                  "value": "SecurityGroup",
+                },
+                Object {
+                  "label": "Security Policy",
+                  "value": "SecurityPolicy",
+                },
+                Object {
+                  "label": "Security Policy Rule",
+                  "value": "SecurityPolicyRule",
+                },
+                Object {
+                  "label": "Service",
+                  "value": "Service",
+                },
+                Object {
+                  "label": "Datastore",
+                  "value": "Storage",
+                },
+                Object {
+                  "label": "Virtual Infra Switch",
+                  "value": "Switch",
+                },
+                Object {
+                  "label": "Tenant",
+                  "value": "Tenant",
+                },
+                Object {
+                  "label": "User",
+                  "value": "User",
+                },
+                Object {
+                  "label": "VM and Instance",
+                  "value": "Vm",
+                },
+              ],
+              "simpleValue": true,
+              "validate": Array [
+                Object {
+                  "condition": Object {
+                    "not": Object {
+                      "or": Array [
+                        Object {
+                          "is": "-1",
+                          "when": "target_class",
+                        },
+                        Object {
+                          "isEmpty": true,
+                          "when": "target_class",
+                        },
+                      ],
+                    },
+                  },
+                  "type": "required",
+                },
+              ],
+            },
+            Object {
+              "className": "automate-selection-target",
+              "component": "select",
+              "condition": Object {
+                "not": Object {
+                  "or": Array [
+                    Object {
+                      "is": "-1",
+                      "when": "target_class",
+                    },
+                    Object {
+                      "isEmpty": true,
+                      "when": "target_class",
+                    },
+                  ],
+                },
+              },
+              "id": "selection_target",
+              "initialValue": null,
+              "key": "selection_target_-1",
+              "label": "Selection",
+              "loadOptions": [Function],
+              "name": "selection_target",
+              "validate": Array [
+                Object {
+                  "condition": Object {
+                    "not": Object {
+                      "or": Array [
+                        Object {
+                          "is": "-1",
+                          "when": "target_class",
+                        },
+                        Object {
+                          "isEmpty": true,
+                          "when": "target_class",
+                        },
+                      ],
+                    },
+                  },
+                  "type": "required",
+                },
+              ],
+            },
+            Object {
+              "className": "automate-simulation-parameters",
+              "component": "plain-text",
+              "id": "simulationParameters",
+              "label": "Simulation Parameters",
+              "name": "simulationParameters",
+              "style": Object {
+                "fontSize": "16px",
+              },
+            },
+            Object {
+              "className": "automate-readonly",
+              "component": "checkbox",
+              "id": "readonly",
+              "initialValue": true,
+              "label": "Execute Methods",
+              "name": "readonly",
+              "title": "Simulation parameters",
+            },
+            Object {
+              "component": "plain-text",
+              "id": "AttributeValuePairs",
+              "label": "Attribute/Value Pairs",
+              "name": "AttributeValuePairs",
+              "style": Object {
+                "fontSize": "16px",
+              },
+            },
+            Array [
+              Object {
+                "className": "subform",
+                "component": "sub-form",
+                "fields": Array [
+                  Object {
+                    "className": "attributeValuePairLabel",
+                    "component": "plain-text",
+                    "id": "attributeValuePairLabel_1",
+                    "label": "1",
+                    "name": "attributeValuePairLabel_1",
+                    "style": Object {
+                      "fontWeight": "bold",
+                    },
+                  },
+                  Object {
+                    "component": "text-field",
+                    "fieldprops": Object {
+                      "className": "field-input",
+                      "data-miq_observe": "{\\"interval\\":\\".5\\"}",
+                    },
+                    "id": "attribute_1",
+                    "initialValue": undefined,
+                    "label": " ",
+                    "maxLength": undefined,
+                    "name": "attribute_1",
+                  },
+                  Object {
+                    "component": "text-field",
+                    "fieldprops": Object {
+                      "className": "value-input",
+                      "data-miq_observe": "{\\"interval\\":\\".5\\"}",
+                    },
+                    "id": "value_1",
+                    "initialValue": undefined,
+                    "label": " ",
+                    "maxLength": undefined,
+                    "name": "value_1",
+                  },
+                ],
+                "id": "subform_1",
+                "name": "subform_1",
+              },
+            ],
+            Array [
+              Object {
+                "className": "subform",
+                "component": "sub-form",
+                "fields": Array [
+                  Object {
+                    "className": "attributeValuePairLabel",
+                    "component": "plain-text",
+                    "id": "attributeValuePairLabel_2",
+                    "label": "2",
+                    "name": "attributeValuePairLabel_2",
+                    "style": Object {
+                      "fontWeight": "bold",
+                    },
+                  },
+                  Object {
+                    "component": "text-field",
+                    "fieldprops": Object {
+                      "className": "field-input",
+                      "data-miq_observe": "{\\"interval\\":\\".5\\"}",
+                    },
+                    "id": "attribute_2",
+                    "initialValue": undefined,
+                    "label": " ",
+                    "maxLength": undefined,
+                    "name": "attribute_2",
+                  },
+                  Object {
+                    "component": "text-field",
+                    "fieldprops": Object {
+                      "className": "value-input",
+                      "data-miq_observe": "{\\"interval\\":\\".5\\"}",
+                    },
+                    "id": "value_2",
+                    "initialValue": undefined,
+                    "label": " ",
+                    "maxLength": undefined,
+                    "name": "value_2",
+                  },
+                ],
+                "id": "subform_2",
+                "name": "subform_2",
+              },
+            ],
+            Array [
+              Object {
+                "className": "subform",
+                "component": "sub-form",
+                "fields": Array [
+                  Object {
+                    "className": "attributeValuePairLabel",
+                    "component": "plain-text",
+                    "id": "attributeValuePairLabel_3",
+                    "label": "3",
+                    "name": "attributeValuePairLabel_3",
+                    "style": Object {
+                      "fontWeight": "bold",
+                    },
+                  },
+                  Object {
+                    "component": "text-field",
+                    "fieldprops": Object {
+                      "className": "field-input",
+                      "data-miq_observe": "{\\"interval\\":\\".5\\"}",
+                    },
+                    "id": "attribute_3",
+                    "initialValue": undefined,
+                    "label": " ",
+                    "maxLength": undefined,
+                    "name": "attribute_3",
+                  },
+                  Object {
+                    "component": "text-field",
+                    "fieldprops": Object {
+                      "className": "value-input",
+                      "data-miq_observe": "{\\"interval\\":\\".5\\"}",
+                    },
+                    "id": "value_3",
+                    "initialValue": undefined,
+                    "label": " ",
+                    "maxLength": undefined,
+                    "name": "value_3",
+                  },
+                ],
+                "id": "subform_3",
+                "name": "subform_3",
+              },
+            ],
+            Array [
+              Object {
+                "className": "subform",
+                "component": "sub-form",
+                "fields": Array [
+                  Object {
+                    "className": "attributeValuePairLabel",
+                    "component": "plain-text",
+                    "id": "attributeValuePairLabel_4",
+                    "label": "4",
+                    "name": "attributeValuePairLabel_4",
+                    "style": Object {
+                      "fontWeight": "bold",
+                    },
+                  },
+                  Object {
+                    "component": "text-field",
+                    "fieldprops": Object {
+                      "className": "field-input",
+                      "data-miq_observe": "{\\"interval\\":\\".5\\"}",
+                    },
+                    "id": "attribute_4",
+                    "initialValue": undefined,
+                    "label": " ",
+                    "maxLength": undefined,
+                    "name": "attribute_4",
+                  },
+                  Object {
+                    "component": "text-field",
+                    "fieldprops": Object {
+                      "className": "value-input",
+                      "data-miq_observe": "{\\"interval\\":\\".5\\"}",
+                    },
+                    "id": "value_4",
+                    "initialValue": undefined,
+                    "label": " ",
+                    "maxLength": undefined,
+                    "name": "value_4",
+                  },
+                ],
+                "id": "subform_4",
+                "name": "subform_4",
+              },
+            ],
+            Array [
+              Object {
+                "className": "subform",
+                "component": "sub-form",
+                "fields": Array [
+                  Object {
+                    "className": "attributeValuePairLabel",
+                    "component": "plain-text",
+                    "id": "attributeValuePairLabel_5",
+                    "label": "5",
+                    "name": "attributeValuePairLabel_5",
+                    "style": Object {
+                      "fontWeight": "bold",
+                    },
+                  },
+                  Object {
+                    "component": "text-field",
+                    "fieldprops": Object {
+                      "className": "field-input",
+                      "data-miq_observe": "{\\"interval\\":\\".5\\"}",
+                    },
+                    "id": "attribute_5",
+                    "initialValue": undefined,
+                    "label": " ",
+                    "maxLength": undefined,
+                    "name": "attribute_5",
+                  },
+                  Object {
+                    "component": "text-field",
+                    "fieldprops": Object {
+                      "className": "value-input",
+                      "data-miq_observe": "{\\"interval\\":\\".5\\"}",
+                    },
+                    "id": "value_5",
+                    "initialValue": undefined,
+                    "label": " ",
+                    "maxLength": undefined,
+                    "name": "value_5",
+                  },
+                ],
+                "id": "subform_5",
+                "name": "subform_5",
+              },
+            ],
+          ],
+          "title": "Object Details",
+        }
+      }
+    />
+  </div>
+  <div
+    className="automate-simulation-summary-wrapper"
+  >
+    <div
+      className="simulation-title-text"
+    >
+      Simulation
+    </div>
+    <div
+      className="automate-simulation-summary"
+    >
+      <AutomationSimulation
+        data={
+          Object {
+            "notice": "Enter Automation Simulation options on the left and press Submit",
+          }
+        }
+      />
+    </div>
+  </div>
+</div>
+`;
