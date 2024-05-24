@@ -85,6 +85,8 @@ module ApplicationHelper
         _("Utilization")
       when /^miq_request/
         _("Requests")
+      when "configuration_script"
+        _("Templates")
       when "manageiq/providers/ansible_tower/automation_manager/playbook"
         _("Playbooks (Ansible Tower)")
       when "manageiq/providers/embedded_ansible/automation_manager/playbook"
