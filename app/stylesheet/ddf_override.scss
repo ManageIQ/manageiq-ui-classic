@@ -491,3 +491,18 @@
     }
   }
 }
+
+.user-form {
+  #passwordWarning {
+    color: #da1e28;
+    font-size: 14px;
+  }
+
+  .custom-button-wrapper {
+    margin-top: 10px;
+
+    .submit-button {
+      margin-right: 8px;
+    }
+  }
+}
