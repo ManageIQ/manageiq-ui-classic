@@ -1,0 +1,24 @@
+#selected-groups-label {
+    display: inline-flex;
+    font-family: inherit;
+    font-size: 0.75rem;
+    letter-spacing: 0.32px;
+    color: #525252;
+    font-weight: 400;
+    line-height: 1rem;
+}
+
+#selected-groups {
+    padding-left: 3rem;
+    display: inline-table;
+}
+
+.group-name {
+    display: inline-flex;
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.67;
+    color: #363636;
+    padding-left: 2px;
+    margin-bottom: 0px;
+}
