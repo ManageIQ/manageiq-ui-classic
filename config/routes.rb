@@ -1308,6 +1308,7 @@ Rails.application.routes.draw do
         show_list
         show
         quick_search
+        download_summary_pdf
       ],
 
       :post   =>  %w[
