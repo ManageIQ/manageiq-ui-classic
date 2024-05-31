@@ -4,10 +4,13 @@ import PropTypes from 'prop-types';
 import MiqStructuredList from '../miq-structured-list';
 
 export default function SimpleTable(props) {
-  const { rows, labels, title } = props;
+  const {
+    rows, labels, title, className,
+  } = props;
 
   return (
     <MiqStructuredList
+      className={className}
       headers={labels}
       rows={rows}
       title={title}
@@ -25,9 +28,11 @@ SimpleTable.propTypes = {
   ])),
   rows: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.any)),
   onClick: PropTypes.func.isRequired,
+  className: PropTypes.string,
 };
 
 SimpleTable.defaultProps = {
   rows: [],
   labels: '',
+  className: undefined,
 };
