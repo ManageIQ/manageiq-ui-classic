@@ -10,7 +10,7 @@ import { hasClickEvents } from './helpers';
 
 /** Component to render the items in summary pages */
 const MiqStructuredList = ({
-  title, headers, rows, mode, onClick, message,
+  title, headers, rows, mode, onClick, message, className = '',
 }) => {
   const clickEvents = hasClickEvents(mode);
 
@@ -35,7 +35,7 @@ const MiqStructuredList = ({
   };
 
   const accordionList = () => (
-    <Accordion align="start" className={classNames('miq-structured-list-accordion', mode)}>
+    <Accordion align="start" className={classNames('miq-structured-list-accordion', mode, className)}>
       <AccordionItem title={title} open>
         {simpleList()}
       </AccordionItem>
