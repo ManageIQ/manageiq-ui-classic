@@ -20,6 +20,7 @@ const renderComponent = (props) => {
     case 'SimpleTable':
       return (
         <SimpleTable
+          className={group.className}
           labels={group.labels}
           rows={group.rows}
           title={group.title}

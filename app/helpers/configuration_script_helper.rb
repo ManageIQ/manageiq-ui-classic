@@ -52,7 +52,8 @@ module ConfigurationScriptHelper
     TextualTable.new(
       _("Surveys"),
       items,
-      headers
+      headers,
+      'survey-table'
     )
   end
 
