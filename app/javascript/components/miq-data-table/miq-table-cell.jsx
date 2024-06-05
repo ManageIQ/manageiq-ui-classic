@@ -90,12 +90,12 @@ const MiqTableCell = ({
   };
 
   /** Function to render icon(s) in cell. */
-  const renderIcon = (icon, style, showText) => {
+  const renderIcon = (icon, style, showText, title = '') => {
     const hasBackground = Object.keys(style).includes('background');
     const styledIconClass = hasBackground ? 'styled_icon' : '';
     const longerTextClass = hasBackground && veryLongText ? 'styled_icon_margin' : '';
     return (
-      <div className={cellClass}>
+      <div className={cellClass} title={title}>
         {
           typeof (icon) === 'string'
             ? returnIcon(icon, style, styledIconClass, longerTextClass)
@@ -111,7 +111,7 @@ const MiqTableCell = ({
     if (showText) {
       const color = item.props ? item.props.style : {};
       const iconStyle = item.background ? { background: item.background, color: '#FFF' } : color;
-      return renderIcon(item.icon, iconStyle, showText);
+      return renderIcon(item.icon, iconStyle, showText, item.title);
     }
     const { className, style } = item.props ? item.props : { className: item.icon, style: { color: '#000' } };
     return renderIcon(className, style, showText);
