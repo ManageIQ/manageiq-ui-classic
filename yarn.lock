@@ -3240,17 +3240,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"angular-animate@npm:1.3.0 - 1.5.*":
+"angular-animate@npm:1.5.*, angular-animate@npm:~1.5.11":
   version: 1.5.11
   resolution: "angular-animate@npm:1.5.11"
   checksum: 10/1d0e80c65cbaecc20d65eba7ecf5835fcabc3351490e52196eae7937cf42d19bb9eb6ef531ee6afb93d75091754821b0774665627f9bc24adef3461642e90bd6
-  languageName: node
-  linkType: hard
-
-"angular-animate@npm:~1.6.6":
-  version: 1.6.10
-  resolution: "angular-animate@npm:1.6.10"
-  checksum: 10/e1094394f39feaed4de437aeeb063328a3a0879fb59d72a93410e45969da04d5630051ef0e0470e45344fa6e98dde4ae49b5021e5491b7793e9046d720be0707
   languageName: node
   linkType: hard
 
@@ -3294,49 +3287,82 @@ __metadata:
   languageName: node
   linkType: hard
 
-"angular-patternfly@npm:~3.26.0":
-  version: 3.26.0
-  resolution: "angular-patternfly@npm:3.26.0"
+"angular-patternfly@npm:~4.18.7":
+  version: 4.18.7
+  resolution: "angular-patternfly@npm:4.18.7"
   dependencies:
-    angular: "npm:1.3.0 - 1.5.*"
-    angular-animate: "npm:1.3.0 - 1.5.*"
+    angular: "npm:1.5.*"
+    angular-animate: "npm:1.5.*"
     angular-drag-and-drop-lists: "npm:2.0.0"
-    angular-sanitize: "npm:1.3.0 - 1.5.*"
-    angular-ui-bootstrap: "npm:0.14.x"
-    jquery: "npm:^2.2.4"
-    lodash: "npm:3.x"
-    patternfly: "npm:~3.31.1"
-  checksum: 10/3917bbfb7b57fd8aff43c118801cd6abf1daee5c9d8e363c775f5b9866a10a9a5a10f71fbf0932660135c6c83d448ee7dae43aab4a2b117b16417117fe2ae34f
+    angular-sanitize: "npm:1.5.*"
+    angular-svg-base-fix: "npm:2.0.0"
+    angular-ui-bootstrap: "npm:2.3.x"
+    angularjs-datatables: "npm:^0.5.9"
+    bootstrap: "npm:~3.3.7"
+    bootstrap-select: "npm:~1.12.4"
+    c3: "npm:~0.4.11"
+    d3: "npm:~3.5.17"
+    datatables.net: "npm:^1.10.12"
+    datatables.net-select: "npm:~1.2.0"
+    jquery: "npm:~3.2.1"
+    jquery-ui-dist: "npm:~1.12.1"
+    lodash: "npm:4.x"
+    moment: "npm:~2.19.3"
+    patternfly: "npm:^3.37.1"
+  dependenciesMeta:
+    angular-drag-and-drop-lists:
+      optional: true
+    angularjs-datatables:
+      optional: true
+    bootstrap:
+      optional: true
+    bootstrap-select:
+      optional: true
+    c3:
+      optional: true
+    d3:
+      optional: true
+    datatables.net:
+      optional: true
+    datatables.net-select:
+      optional: true
+    jquery:
+      optional: true
+    jquery-ui-dist:
+      optional: true
+    moment:
+      optional: true
+  checksum: 10/7cb76816b4ac3b77ca4ab21fddd613b4ad36e1429cfc5b472228eb32ca54a669e00dfc27be87ef5a674a345005ec1754347c40ea7769b8f0edf426bd50fdf98e
   languageName: node
   linkType: hard
 
-"angular-sanitize@npm:1.3.0 - 1.5.*":
+"angular-sanitize@npm:1.5.*, angular-sanitize@npm:~1.5.11":
   version: 1.5.11
   resolution: "angular-sanitize@npm:1.5.11"
   checksum: 10/08c42f15fcca4ef1f2af4fa311eee73a88a4646af7c5b6222e8b6825ebec7ba84d5a7ab534f65097d9ddea321541d1b2809e667383baca47a09116e537c9e31e
   languageName: node
   linkType: hard
 
-"angular-sanitize@npm:~1.6.6":
-  version: 1.6.10
-  resolution: "angular-sanitize@npm:1.6.10"
-  checksum: 10/77577af2836aa2207af4237f330919831cfe77b4fda77f4e1dad56bf419f5d5915112f4ee2157239999c8f399a477fa2168f00e5f4aedf298e559a4d120dd61c
-  languageName: node
-  linkType: hard
-
-"angular-ui-bootstrap@npm:0.14.x":
-  version: 0.14.3
-  resolution: "angular-ui-bootstrap@npm:0.14.3"
+"angular-svg-base-fix@npm:2.0.0":
+  version: 2.0.0
+  resolution: "angular-svg-base-fix@npm:2.0.0"
   peerDependencies:
-    angular: ^1.3.x || >= 1.4.0-beta.0 || >= 1.5.0-beta.0
-  checksum: 10/53bfd37c73ebf20c1af31665d1de2490fc4f51d78a24329e6969248e369a0b810900119e0ae12422413f5963525d23d2d031a2fb88a3753cc7223f55495f95a6
+    angular: 1.x
+  checksum: 10/853420035b96852b8f5eb4d1371fd9ba204c5a1e249e283af3f5e90451a326610b0f25611badbb3854797a2fd3df1644f6346fcde114eaeb124345e42f7a1f4b
   languageName: node
   linkType: hard
 
-"angular-ui-bootstrap@npm:~2.5.6":
-  version: 2.5.6
-  resolution: "angular-ui-bootstrap@npm:2.5.6"
-  checksum: 10/04b4660344b32db4b3b7f700cf74802f995dece114a3ec1e0bf2025f33dfe8953cffff83e31d53647f5b9744f2020424e776afcca5317347e401d3d21a58c7e3
+"angular-ui-bootstrap@npm:2.3.x":
+  version: 2.3.2
+  resolution: "angular-ui-bootstrap@npm:2.3.2"
+  checksum: 10/064a9e43a4fc42c9b990d1af719deab57ece9e2a4768957c5976da909fbabda01a876ccb76f3d9f349c73508e47488814d2bda6e1a05fc1578f3aebd5bd290e9
+  languageName: node
+  linkType: hard
+
+"angular-ui-bootstrap@npm:~2.4.0":
+  version: 2.4.0
+  resolution: "angular-ui-bootstrap@npm:2.4.0"
+  checksum: 10/11a79b7a8436c6b860e31e07126e90a7b4a22a8ecac2cb1e04b5144a6938adb790ea495acf94a72b3560567cbb7f4c3f238903ffe64fb3c36976865b02998ab9
   languageName: node
   linkType: hard
 
@@ -3361,24 +3387,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"angular@npm:1.3.0 - 1.5.*":
+"angular@npm:1.5.*, angular@npm:~1.5.11":
   version: 1.5.11
   resolution: "angular@npm:1.5.11"
   checksum: 10/6bebfef42f636017c5a3b80f92823c9271f68a283dc26a4634d9f3f361e6299ee07104b09d6a551bf878737b99f880ca08b703911bc17cfbb8321863c2c04518
   languageName: node
   linkType: hard
 
-"angular@npm:>=1.4.0":
+"angular@npm:>=1.3.0, angular@npm:>=1.4.0":
   version: 1.8.3
   resolution: "angular@npm:1.8.3"
   checksum: 10/4a21f1f74790dc2cdceb582386abdc7b55a0463f86aaa59573c940295cb51ed61b8fa610011134280ae0da7f97fbbc660f3a4e4491b24c92b2c32a547073a1c2
   languageName: node
   linkType: hard
 
-"angular@npm:~1.6.6":
-  version: 1.6.10
-  resolution: "angular@npm:1.6.10"
-  checksum: 10/fae00d27c3ab53f4021daabe447f0364bdbc78cf14241cf1651621170e609b32a7553999795c36c3abf5d5d7a6b0d8e7ff4ae7b1677cc25b80347ab9d7038746
+"angularjs-datatables@npm:^0.5.9":
+  version: 0.5.9
+  resolution: "angularjs-datatables@npm:0.5.9"
+  dependencies:
+    angular: "npm:>=1.3.0"
+    datatables.net: "npm:^1.10.11"
+    datatables.net-dt: "npm:^1.10.11"
+    jquery: "npm:>=1.11.0"
+  checksum: 10/fbc41591db89028588bf9b890bc60195466329503e22145dbc84a4ae3a24a24d7efd042955a56c49501aa3706e0ccf99e161afdb0da722768bb76ee8fb6d2933
   languageName: node
   linkType: hard
 
@@ -4241,15 +4272,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bootstrap-datepicker@npm:~1.6.4":
-  version: 1.6.4
-  resolution: "bootstrap-datepicker@npm:1.6.4"
-  dependencies:
-    jquery: "npm:>=1.7.1"
-  checksum: 10/8d07e86a11e3e5af344d7699785b23fe0ff640343f5642137b27d16b518f0917575ba114fa47a58037109979e0cd78ae11f4eca83a2ceae3915243392c5d2e05
-  languageName: node
-  linkType: hard
-
 "bootstrap-filestyle@npm:~1.2.1":
   version: 1.2.1
   resolution: "bootstrap-filestyle@npm:1.2.1"
@@ -4257,7 +4279,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bootstrap-sass@npm:^3.3.7, bootstrap-sass@npm:^3.4.0":
+"bootstrap-sass@npm:^3.4.0":
   version: 3.4.3
   resolution: "bootstrap-sass@npm:3.4.3"
   checksum: 10/4e22d8ac986f61a2bc444bbb0b04a2b426f7962ee0a68b5b72225923a1ad79915494352ea8f92a01dc5a12cbf377828c057e7ed7dd0b05912e3213b8d0ef9f76
@@ -4273,13 +4295,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bootstrap-select@npm:^1.12.2":
-  version: 1.13.18
-  resolution: "bootstrap-select@npm:1.13.18"
-  peerDependencies:
-    bootstrap: ">=3.0.0"
-    jquery: 1.9.1 - 3
-  checksum: 10/660f1fdf826ccd2093ba4597406a664808e95fe34efb0a22ca85171ab6b902d7637fc649577d131c192a9c4dddb480ab1ba2132f8d0941f0d74760391909ec9a
+"bootstrap-select@npm:~1.12.4":
+  version: 1.12.4
+  resolution: "bootstrap-select@npm:1.12.4"
+  dependencies:
+    jquery: "npm:>=1.8"
+  checksum: 10/e15afcd606f8cc537b87bcd1cb816b825b7e9dea1e37f2e5083fa529a66fd2aeefe1cfd681a53a45a4beeaa9df32e7d4c85bbabae0425d007f56e119b6b4982d
   languageName: node
   linkType: hard
 
@@ -4306,16 +4327,6 @@ __metadata:
     bootstrap: ^3.1.1
     jquery: ">=1.9.0"
   checksum: 10/357c5e2add66054a341292a8e788472072bdc578b2fef78325fc084e2cd3323566f8e08d1be4446d4d829a83578a7b95f7228a0061e34150a3f9b1e2be80be39
-  languageName: node
-  linkType: hard
-
-"bootstrap-switch@npm:~3.3.4":
-  version: 3.3.5
-  resolution: "bootstrap-switch@npm:3.3.5"
-  peerDependencies:
-    bootstrap: ^3.3.7
-    jquery: ">=1.12.4"
-  checksum: 10/105c326e7fbe57a8b559e087912c740b244228f48fb0a695de08888af9df1036a931713e8c30320d13337cae2db17979b0c1893136622052d24c0eaf9b8865f3
   languageName: node
   linkType: hard
 
@@ -6379,13 +6390,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"datatables.net-colreorder@npm:~1.3.2":
-  version: 1.3.3
-  resolution: "datatables.net-colreorder@npm:1.3.3"
+"datatables.net-dt@npm:^1.10.11":
+  version: 1.13.11
+  resolution: "datatables.net-dt@npm:1.13.11"
   dependencies:
-    datatables.net: "npm:>=1.10.9"
-    jquery: "npm:>=1.7"
-  checksum: 10/b7cd56dde56e8346d5410aa353bbf099b9775bfb807e4eeb069d11c0e82f87cd6b318dedbc6093bc268f0b391adcbce7c613682c1f3af21770fc484368d049e0
+    datatables.net: "npm:1.13.11"
+    jquery: "npm:1.8 - 4"
+  checksum: 10/974f660345291f7749544b4229ae970a70375f802ca828842a6165dda75654800c2ba93acd9d531d8fe63d52d5196e6bce60e4fcecaf78bf06e2fa3f74d53f0e
   languageName: node
   linkType: hard
 
@@ -6399,21 +6410,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"datatables.net@npm:2.0.7, datatables.net@npm:>=1.10.9, datatables.net@npm:^2":
-  version: 2.0.7
-  resolution: "datatables.net@npm:2.0.7"
-  dependencies:
-    jquery: "npm:>=1.7"
-  checksum: 10/d6194b48b58ac4752bb8ef971fd7d57c3874013cd85b320b47aeb1c4d59e960d9610a3608b4e5ca10f892b448b4cbd293c1f4a9f2708d7b57fa62787e7ed5023
-  languageName: node
-  linkType: hard
-
-"datatables.net@npm:^1.10.15, datatables.net@npm:^1.13.0":
+"datatables.net@npm:1.13.11, datatables.net@npm:^1.10.11, datatables.net@npm:^1.10.12, datatables.net@npm:^1.10.15, datatables.net@npm:^1.13.0":
   version: 1.13.11
   resolution: "datatables.net@npm:1.13.11"
   dependencies:
     jquery: "npm:1.8 - 4"
   checksum: 10/77fa5c5fc4dbda0de4def7f0915433bf40ccee4505734085283f03be2dc0ae58e944674e665f5db50edfa70d9c127ff602ba3dfff256b88fc4651b368fe146ff
+  languageName: node
+  linkType: hard
+
+"datatables.net@npm:2.0.7, datatables.net@npm:^2":
+  version: 2.0.7
+  resolution: "datatables.net@npm:2.0.7"
+  dependencies:
+    jquery: "npm:>=1.7"
+  checksum: 10/d6194b48b58ac4752bb8ef971fd7d57c3874013cd85b320b47aeb1c4d59e960d9610a3608b4e5ca10f892b448b4cbd293c1f4a9f2708d7b57fa62787e7ed5023
   languageName: node
   linkType: hard
 
@@ -10727,6 +10738,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jquery-ui-dist@npm:~1.12.1":
+  version: 1.12.1
+  resolution: "jquery-ui-dist@npm:1.12.1"
+  checksum: 10/8d3eec364cecf75bd16f9eb457acfdef988a67d7ab0a6e7217a1e7395a0dd458c0f94bc6ca99497306710c752cefb353140c6b3593401326c29548c3689253c5
+  languageName: node
+  linkType: hard
+
 "jquery-ui@npm:~1.13.2":
   version: 1.13.3
   resolution: "jquery-ui@npm:1.13.3"
@@ -10759,14 +10777,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jquery@npm:1.8 - 4, jquery@npm:>=1.7, jquery@npm:>=1.7.0, jquery@npm:>=1.7.1, jquery@npm:>=1.8, jquery@npm:>=1.8.0 <4.0.0, jquery@npm:>=1.9.0, jquery@npm:>=3.4.0 <4.0.0, jquery@npm:^3.4.1, jquery@npm:^3.5.1":
+"jquery@npm:1.8 - 4, jquery@npm:>=1.11.0, jquery@npm:>=1.7, jquery@npm:>=1.7.0, jquery@npm:>=1.8, jquery@npm:>=1.8.0 <4.0.0, jquery@npm:>=1.9.0, jquery@npm:>=3.4.0 <4.0.0, jquery@npm:^3.4.1, jquery@npm:^3.5.1":
   version: 3.7.1
   resolution: "jquery@npm:3.7.1"
   checksum: 10/17be9929f5fa37697d9848284f0d108c543318ef79ec794e130cd0c49f6c050d60c803a69e8cfa16fa19f5ff7cdb814a6905cceab0831186560c65ed113cd579
   languageName: node
   linkType: hard
 
-"jquery@npm:^2.2.4, jquery@npm:~2.2.4":
+"jquery@npm:~2.2.4":
   version: 2.2.4
   resolution: "jquery@npm:2.2.4"
   checksum: 10/fe1bb90423eda61255b969fed0420dfb09dc055793b83ad380a2fbe5b5ce3bc747029d010e580bf39c95bdd07fb309ef8c0fc22a700ca97015311626881db152
@@ -11525,14 +11543,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:3.x":
-  version: 3.10.1
-  resolution: "lodash@npm:3.10.1"
-  checksum: 10/3fa24526ced39885889d5609239d14c4145b3736f103fcdde247524203bfeb38e641653df7bdcc172b316a9775ca32787dda09430872ce906f017a699c92fad8
-  languageName: node
-  linkType: hard
-
-"lodash@npm:>=3.5 <5, lodash@npm:^4.17.13, lodash@npm:^4.17.14, lodash@npm:^4.17.15, lodash@npm:^4.17.19, lodash@npm:^4.17.21, lodash@npm:^4.17.4, lodash@npm:~4.17.10":
+"lodash@npm:4.x, lodash@npm:>=3.5 <5, lodash@npm:^4.17.13, lodash@npm:^4.17.14, lodash@npm:^4.17.15, lodash@npm:^4.17.19, lodash@npm:^4.17.21, lodash@npm:^4.17.4, lodash@npm:~4.17.10":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: 10/c08619c038846ea6ac754abd6dd29d2568aa705feb69339e836dfa8d8b09abbb2f859371e86863eda41848221f9af43714491467b5b0299122431e202bb0c532
@@ -11671,15 +11682,15 @@ __metadata:
     "@pf3/select": "npm:~1.12.6"
     "@tshepomgaga/aws-sfn-graph": "npm:0.0.6"
     actioncable: "npm:^5.2.4-2"
-    angular: "npm:~1.6.6"
-    angular-animate: "npm:~1.6.6"
+    angular: "npm:~1.5.11"
+    angular-animate: "npm:~1.5.11"
     angular-bootstrap-switch: "npm:~0.5.2"
     angular-dragdrop: "npm:~1.0.13"
     angular-gettext: "npm:^2.4.1"
     angular-mocks: "npm:~1.6.9"
-    angular-patternfly: "npm:~3.26.0"
-    angular-sanitize: "npm:~1.6.6"
-    angular-ui-bootstrap: "npm:~2.5.6"
+    angular-patternfly: "npm:~4.18.7"
+    angular-sanitize: "npm:~1.5.11"
+    angular-ui-bootstrap: "npm:~2.4.0"
     angular-ui-codemirror: "npm:~0.3.0"
     angular-ui-sortable: "npm:~0.16.1"
     angular.validators: "npm:~4.4.3"
@@ -12299,10 +12310,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"moment@npm:~2.14.1":
-  version: 2.14.1
-  resolution: "moment@npm:2.14.1"
-  checksum: 10/d73e1f9825954ccf867a0d9d47927967d53e9bd6dfef5a40defe27a961c56f95df7f9d3c4fac8c6eff26753091da4de2b16e48b267a3c6618038885da0bdf1a2
+"moment@npm:~2.19.3":
+  version: 2.19.4
+  resolution: "moment@npm:2.19.4"
+  checksum: 10/bfdd3d74bf9c9b20230bf62bac0afae1d033bd7d639f202b82efbf2a6676702493618ab7bbb2655826cb707c9e01dd18c7b10e7284f540bc21a505bcc3171997
   languageName: node
   linkType: hard
 
@@ -13320,7 +13331,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"patternfly-bootstrap-treeview@npm:~2.1.0, patternfly-bootstrap-treeview@npm:~2.1.10":
+"patternfly-bootstrap-treeview@npm:~2.1.10":
   version: 2.1.10
   resolution: "patternfly-bootstrap-treeview@npm:2.1.10"
   dependencies:
@@ -13330,82 +13341,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"patternfly@npm:~3.31.1":
-  version: 3.31.2
-  resolution: "patternfly@npm:3.31.2"
-  dependencies:
-    bootstrap: "npm:~3.3.7"
-    bootstrap-datepicker: "npm:~1.6.4"
-    bootstrap-sass: "npm:^3.3.7"
-    bootstrap-select: "npm:^1.12.2"
-    bootstrap-slider: "npm:^9.9.0"
-    bootstrap-switch: "npm:~3.3.4"
-    bootstrap-touchspin: "npm:~3.1.1"
-    c3: "npm:~0.4.11"
-    d3: "npm:~3.5.17"
-    datatables.net: "npm:^1.10.15"
-    datatables.net-colreorder: "npm:~1.3.2"
-    datatables.net-colreorder-bs: "npm:~1.3.2"
-    datatables.net-select: "npm:~1.2.0"
-    drmonty-datatables-colvis: "npm:~1.1.2"
-    eonasdan-bootstrap-datetimepicker: "npm:^4.17.47"
-    font-awesome: "npm:^4.7.0"
-    font-awesome-sass: "npm:^4.7.0"
-    google-code-prettify: "npm:~1.0.5"
-    jquery: "npm:~3.2.1"
-    jquery-match-height: "npm:^0.7.2"
-    moment: "npm:~2.14.1"
-    moment-timezone: "npm:^0.4.1"
-    patternfly-bootstrap-combobox: "npm:~1.1.7"
-    patternfly-bootstrap-treeview: "npm:~2.1.0"
-  dependenciesMeta:
-    bootstrap-datepicker:
-      optional: true
-    bootstrap-sass:
-      optional: true
-    bootstrap-select:
-      optional: true
-    bootstrap-slider:
-      optional: true
-    bootstrap-switch:
-      optional: true
-    bootstrap-touchspin:
-      optional: true
-    c3:
-      optional: true
-    d3:
-      optional: true
-    datatables.net:
-      optional: true
-    datatables.net-colreorder:
-      optional: true
-    datatables.net-colreorder-bs:
-      optional: true
-    datatables.net-select:
-      optional: true
-    drmonty-datatables-colvis:
-      optional: true
-    eonasdan-bootstrap-datetimepicker:
-      optional: true
-    font-awesome-sass:
-      optional: true
-    google-code-prettify:
-      optional: true
-    jquery-match-height:
-      optional: true
-    moment:
-      optional: true
-    moment-timezone:
-      optional: true
-    patternfly-bootstrap-combobox:
-      optional: true
-    patternfly-bootstrap-treeview:
-      optional: true
-  checksum: 10/a6d2b77399dddd55f15a188a688da42a6654384cda87efe2c10ba2ba4c2c8e3c570f9d309ee93ed5653d3ef9faea64c13fb6b0df70179665a332c3711f5c75e4
-  languageName: node
-  linkType: hard
-
-"patternfly@npm:~3.59.5":
+"patternfly@npm:^3.37.1, patternfly@npm:~3.59.5":
   version: 3.59.5
   resolution: "patternfly@npm:3.59.5"
   dependencies:
