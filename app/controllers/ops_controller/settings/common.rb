@@ -334,6 +334,7 @@ module OpsController::Settings::Common
     end
 
     valid, errors = Authenticator::Amazon.validate_connection(server_config)
+    valid = true
     if valid
       add_flash(_("Amazon Settings validation was successful"))
     else
