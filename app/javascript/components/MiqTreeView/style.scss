@@ -1,0 +1,43 @@
+.tree-row {
+  padding: 5px;
+
+  &.parent-tree {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background: lightblue;
+    }
+
+    &.selected-node{
+      background: #0f62fe;
+      color:#FFF;
+
+      .tree-icon {
+        background: #FFF;
+      }
+
+      .selected-node-check {
+        color: lightgreen;
+      }
+    }
+  }
+
+  &.intend-right {
+    margin-left: 20px;
+  }
+ 
+
+  .tree-caret {
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+  }
+
+  .tree-text {
+    display: flex;
+    flex-grow: 1;
+  }
+}
