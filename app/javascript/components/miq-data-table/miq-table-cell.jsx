@@ -248,7 +248,7 @@ const MiqTableCell = ({
     <TableCell
       key={cell.id}
       onClick={(event) => cellClick && onCellClick(row, CellAction.itemClick, event)}
-      className={classNames(showText ? '' : 'no_text', wrapClass ? 'vertical_align_top' : '')}
+      className={classNames(showText ? '' : 'no_text', wrapClass ? 'vertical_align_top' : '', cell.data.actionCell ? 'action-cell-holder' : '')}
     >
       {component}
     </TableCell>
@@ -259,7 +259,9 @@ export default MiqTableCell;
 
 MiqTableCell.propTypes = {
   onCellClick: PropTypes.func,
-  row: PropTypes.shape({}),
+  row: PropTypes.shape({
+    actionCell: PropTypes.bool,
+  }),
   cell: PropTypes.shape({
     id: PropTypes.string,
     value: PropTypes.string,
