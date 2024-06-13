@@ -153,11 +153,20 @@ module OpsController::Settings::Common
     assert_privileges("ops_settings")
     require 'byebug'
     byebug
-    if params[:authentication][:amazon_secret].nil?
-      server_config = MiqServer.find(@sb[:selected_server_id]).settings
-      params[:authentication][:amazon_secret] = server_config[:authentication][:amazon_secret]
+
+    server_config = MiqServer.find(@sb[:selected_server_id]).settings
+    amazon_params = {}
+    amazon_params[:authentication] = server_config[:authentication]
+    amazon_params[:authentication][:amazon_key] = params[:authentication][:amazon_key]
+
+    if params[:authentication][:amazon_secret]
+      # server_config = MiqServer.find(@sb[:selected_server_id]).settings
+      # amazon_params[:authentication][:amazon_secret] = server_config[:authentication][:amazon_secret]
+      amazon_params[:authentication][:amazon_secret] = params[:authentication][:amazon_secret]
+    # else
+    #   amazon_params[:authentication][:amazon_secret] = params[:authentication][:amazon_secret]
     end
-    valid, errors = Authenticator::Amazon.validate_connection(params)
+    valid, errors = Authenticator::Amazon.validate_connection(amazon_params)
     if valid
       add_flash(_("Amazon Settings validation was successful"))
     else
