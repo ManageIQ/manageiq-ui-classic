@@ -71,11 +71,12 @@ class ApplicationHelper::Toolbar::XTemplateCloudCenter < ApplicationHelper::Tool
                        'pficon pficon-edit fa-lg',
                        N_('Manage Policies for this Image'),
                        N_('Manage Policies')),
-                     button(
-                       :image_policy_sim,
-                       'fa fa-play-circle-o fa-lg',
-                       N_('View Policy Simulation for this Image'),
-                       N_('Policy Simulation')),
+                    # TODO: Add this button back when the page is fixed
+                    #  button(
+                    #    :image_policy_sim,
+                    #    'fa fa-play-circle-o fa-lg',
+                    #    N_('View Policy Simulation for this Image'),
+                    #    N_('Policy Simulation')),
                      button(
                        :image_tag,
                        'pficon pficon-edit fa-lg',

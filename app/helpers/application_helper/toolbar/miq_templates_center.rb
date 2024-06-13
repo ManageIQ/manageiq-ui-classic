@@ -77,15 +77,16 @@ class ApplicationHelper::Toolbar::MiqTemplatesCenter < ApplicationHelper::Toolba
           :send_checked => true,
           :enabled      => false,
           :onwhen       => "1+"),
-        button(
-          :miq_template_policy_sim,
-          'fa fa-play-circle-o fa-lg',
-          N_('View Policy Simulation for the selected Templates'),
-          N_('Policy Simulation'),
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :enabled      => false,
-          :onwhen       => "1+"),
+        # TODO: Add this button back when the page is fixed
+        # button(
+        #   :miq_template_policy_sim,
+        #   'fa fa-play-circle-o fa-lg',
+        #   N_('View Policy Simulation for the selected Templates'),
+        #   N_('Policy Simulation'),
+        #   :url_parms    => "main_div",
+        #   :send_checked => true,
+        #   :enabled      => false,
+        #   :onwhen       => "1+"),
         button(
           :miq_template_tag,
           'pficon pficon-edit fa-lg',
