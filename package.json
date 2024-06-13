@@ -176,7 +176,7 @@
     "node": ">= 18.0.0",
     "npm": ">= 8.6.0"
   },
-  "packageManager": "yarn@4.2.2",
+  "packageManager": "yarn@4.3.0",
   "resolutions": {
     "decode-uri-component": "^0.2.2",
     "express": "^4.18.2",
