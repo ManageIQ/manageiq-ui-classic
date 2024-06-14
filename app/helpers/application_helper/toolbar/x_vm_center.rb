@@ -103,12 +103,13 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           N_('Manage Policies for this VM'),
           N_('Manage Policies'),
           :klass => ApplicationHelper::Button::VmTemplatePolicy),
-        button(
-          :vm_policy_sim,
-          'fa fa-play-circle-o fa-lg',
-          N_('View Policy Simulation for this VM'),
-          N_('Policy Simulation'),
-          :klass => ApplicationHelper::Button::VmTemplatePolicy),
+        # TODO: Add this button back when the page is fixed
+        # button(
+        #   :vm_policy_sim,
+        #   'fa fa-play-circle-o fa-lg',
+        #   N_('View Policy Simulation for this VM'),
+        #   N_('Policy Simulation'),
+        #   :klass => ApplicationHelper::Button::VmTemplatePolicy),
         button(
           :vm_tag,
           'pficon pficon-edit fa-lg',

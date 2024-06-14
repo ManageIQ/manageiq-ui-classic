@@ -54,6 +54,7 @@ class ApplicationHelper::Toolbar::XMiqTemplateCenter < ApplicationHelper::Toolba
           N_('Manage Policies for this Template'),
           N_('Manage Policies'),
           :klass => ApplicationHelper::Button::VmTemplatePolicy),
+        # TODO: Add this button back when the page is fixed
         button(
           :miq_template_policy_sim,
           'fa fa-play-circle-o fa-lg',
