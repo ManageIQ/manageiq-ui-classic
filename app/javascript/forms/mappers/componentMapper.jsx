@@ -1,6 +1,7 @@
 import React from 'react';
 import { componentMapper } from '@data-driven-forms/carbon-component-mapper';
 import { componentTypes } from '@@ddf';
+import AWSAccountValidation from '../../components/aws-account-validation';
 import AsyncCredentials from '../../components/async-credentials/async-credentials';
 import EditPasswordField from '../../components/async-credentials/edit-password-field';
 import FileUploadComponent from '../../components/file-upload';
@@ -14,6 +15,7 @@ import FontIconPickerDdf from '../../components/fonticon-picker/font-icon-picker
 
 const mapper = {
   ...componentMapper,
+  'aws-account-validation': AWSAccountValidation,
   'code-editor': CodeEditor,
   'edit-password-field': EditPasswordField,
   'file-upload': FileUploadComponent,
