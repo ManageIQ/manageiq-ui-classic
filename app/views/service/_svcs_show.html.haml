@@ -22,16 +22,7 @@
         - unless child_services.blank?
           .row
             .col-md-12.col-lg-6
-              %h3
-                = _('Child Services')
-              %table.table.table-striped.table-bordered.table-hover
-                %tbody
-                  - child_services.sort_by { |o| o.name.downcase }.each do |s|
-                    %tr{:onclick => "miqTreeSelect('s-#{s.id}');", :title => _("View this Service")}
-                      %td.table-view-pf-select
-                        %i.pficon.pficon-service
-                      %td
-                        = h(s.name)
+              = child_service_summary(child_services)
         .row
           .col-md-12
             %h3
