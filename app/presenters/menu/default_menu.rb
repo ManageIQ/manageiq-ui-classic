@@ -84,6 +84,7 @@ module Menu
           Menu::Item.new('orchestration_stack', N_('Stacks'),             'orchestration_stack', {:feature => 'orchestration_stack_show_list'},   '/orchestration_stack/show_list'),
           Menu::Item.new('auth_key_pair_cloud', N_('Key Pairs'),          'auth_key_pair_cloud', {:feature => 'auth_key_pair_cloud_show_list'},   '/auth_key_pair_cloud/show_list'),
           Menu::Item.new('placement_group',     N_('Placement Groups'),   'placement_group',     {:feature => 'placement_group_show_list'},       '/placement_group/show_list'),
+          Menu::Item.new('resource_pool_cloud', N_('Cloud Resource Pools'), 'resource_pool_cloud', {:feature => 'resource_pool_cloud_show_list'}, '/resource_pool_cloud/show_list'),
           Menu::Item.new('cloud_databases',     N_('Databases'),          'cloud_database',      {:feature => 'cloud_database'},                  '/cloud_database/show_list'),
         ])
       end
@@ -94,7 +95,7 @@ module Menu
           Menu::Item.new('ems_cluster',       N_("Clusters"),          'ems_cluster',                {:feature => 'ems_cluster_show_list'},           '/ems_cluster/show_list'),
           Menu::Item.new('host',              N_("Hosts"),             'host',                       {:feature => 'host_show_list'},                  '/host/show_list'),
           Menu::Item.new('vm_infra',          N_('Virtual Machines'),  'vm_infra_explorer',          {:feature => 'vm_infra_explorer', :any => true}, '/vm_infra/explorer'),
-          Menu::Item.new('resource_pool',     N_('Resource Pools'),    'resource_pool',              {:feature => 'resource_pool_show_list'},         '/resource_pool/show_list'),
+          Menu::Item.new('resource_pool_infra', N_('Infrastructure Resource Pools'), 'resource_pool_infra', {:feature => 'resource_pool_infra_show_list'}, '/resource_pool_infra/show_list'),
           Menu::Item.new('storage',           N_('Datastores'),        'storage',                    {:feature => 'storage_show_list'},               '/storage/explorer'),
           Menu::Item.new('pxe',               N_('PXE'),               'pxe',                        {:feature => 'pxe', :any => true},               '/pxe/explorer'),
           Menu::Item.new('switch',            N_('Networking'),        'infra_networking',           {:feature => 'infra_networking', :any => true},  '/infra_networking/explorer'),

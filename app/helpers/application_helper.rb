@@ -394,6 +394,10 @@ module ApplicationHelper
     when "PlacementGroup"
       controller = "placement_group"
       action = "show"
+    when "ManageIQ::Providers::CloudManager::ResourcePool"
+      controller = "resource_pool_cloud"
+    when "ManageIQ::Providers::InfraManager::ResourcePool"
+      controller = "resource_pool_infra"
     when "SecurityGroup"
       controller = "security_group"
       action = "show"
@@ -796,7 +800,8 @@ module ApplicationHelper
        physical_server
        placement_group
        provider_foreman
-       resource_pool
+       resource_pool_cloud
+       resource_pool_infra
        retired
        security_group
        security_policy
