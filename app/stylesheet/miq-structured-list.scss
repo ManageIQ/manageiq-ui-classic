@@ -263,7 +263,11 @@
     width: 100%;
   }
 
-  .miq-structured-list-accordion {
+  .miq-structured-list-accordion {      
+    .list_header {
+      width: 50%;
+    }
+
     width: 50%;
   }
   
