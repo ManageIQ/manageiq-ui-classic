@@ -246,7 +246,7 @@
       vertical-align: top;
     }
 
-    thead tr th {  
+    thead tr th {
       vertical-align: middle;
 
       .bx--table-header-label {
@@ -310,7 +310,7 @@ table.miq_preview {
   width: 100px !important;
 }
 
-.reconfigure-form {
+.reconfigure-form, .automate-method-form {
   .reconfigure-sub-form {
     display: flex;
     gap: 20px;
@@ -321,7 +321,7 @@ table.miq_preview {
     .form-section-title {
       display: flex;
 
-      h3 { 
+      h3 {
         flex-grow: 1;
       }
       .reconfigure-add-button {
@@ -385,7 +385,7 @@ table.miq_preview {
     display: flex;
     align-items: center;
   }
-  
+
   .workflows-entry-point-modal-body {
     .miq-data-table {
       margin-top: 0px;
