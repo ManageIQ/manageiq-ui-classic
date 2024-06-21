@@ -1,8 +1,11 @@
 import moment from 'moment';
 
-const dailyTimeTooltip = () => (data) => {
+const dailyTimeTooltip = (units = undefined) => (data) => {
   const theMoment = moment(data[0].date);
-  const htmlString = `<div class="tooltip-inner">${theMoment.format('MM/DD/YYYY')}  ${data[0].value} ${data[0].group} </div>`;
+  let htmlString = `<div class="tooltip-inner">${theMoment.format('MM/DD/YYYY')}  ${data[0].value} ${data[0].group} </div>`;
+  if (units) {
+    htmlString = `<div class="tooltip-inner">${theMoment.format('MM/DD/YYYY')}  ${data[0].value} ${__(units)} </div>`;
+  }
   return htmlString;
 };
 
@@ -26,9 +29,12 @@ const hourlyPodTimeTooltip = () => (data) => {
   ${theMoment.format('h:mm A')}  ${data[0].value} ${__(data[0].group)} </div>`;
 };
 
-const hourlyTimeTooltip = () => (data) => {
+const hourlyTimeTooltip = (units = undefined) => (data) => {
   const theMoment = moment(data[0].date);
-  const htmlString = `<div class="tooltip-inner">${theMoment.format('h:mm A')}  ${data[0].value} ${data[0].name} </div>`;
+  let htmlString = `<div class="tooltip-inner">${theMoment.format('h:mm A')}  ${data[0].value} </div>`;
+  if (units) {
+    htmlString = `<div class="tooltip-inner">${theMoment.format('h:mm A')}  ${data[0].value} ${__(units)} </div>`;
+  }
   return htmlString;
 };
 
@@ -43,7 +49,7 @@ export const chartConfig = {
     legendRightText: '',
     numDays: 30,
     availableof: __('Available of'),
-    sparklineTooltip: dailyTimeTooltip,
+    sparklineTooltip: () => dailyTimeTooltip(),
   },
 
   cpuUsageDonutConfig: {
@@ -60,7 +66,7 @@ export const chartConfig = {
     legendRightText: '',
     numDays: 30,
     availableof: __('Available of'),
-    sparklineTooltip: dailyTimeTooltip,
+    sparklineTooltip: () => dailyTimeTooltip(),
   },
 
   memoryUsageDonutConfig: {
@@ -69,7 +75,7 @@ export const chartConfig = {
   },
   recentResourcesConfig: {
     chartId: 'recentResourcesChart',
-    tooltipFn: dailyTimeTooltip,
+    tooltipFn: () => dailyTimeTooltip(),
     point: { r: 1 },
     size: { height: '145px' },
     grid: { y: { show: false } },
@@ -81,7 +87,7 @@ export const chartConfig = {
     chartId: 'recentVmsChart',
     headTitle: __('Recent VMs'),
     label: __('VMs'),
-    tooltipFn: dailyTimeTooltip,
+    tooltipFn: () => dailyTimeTooltip(),
     point: { r: 1 },
     size: { height: '145px' },
     grid: { y: { show: false } },
@@ -95,7 +101,7 @@ export const chartConfig = {
     timeFrame: __('Last 30 Days'),
     units: __('KBps'),
     dataName: __('KBps'),
-    tooltipFn: dailyTimeTooltip,
+    tooltipFn: () => dailyTimeTooltip('KBps'),
     size: { height: '150px' },
     createdLabel: __('Network'),
     valueType: 'actual',
@@ -106,7 +112,7 @@ export const chartConfig = {
     timeFrame: __('Last 24 Hours'),
     units: __('KBps'),
     dataName: __('KBps'),
-    tooltipFn: hourlyTimeTooltip,
+    tooltipFn: () => hourlyTimeTooltip('KBps'),
     size: { height: '150px' },
     createdLabel: __('Network'),
     valueType: 'actual',
@@ -140,7 +146,7 @@ export const chartConfig = {
     headTitle: __('New Image Usage Trend'),
     timeFrame: __('Last 30 days'),
     createdLabel: __('Images'),
-    tooltipFn: dailyTimeTooltip,
+    tooltipFn: () => dailyTimeTooltip('KBps'),
     units: __('KBps'),
     point: { r: 1 },
     size: { height: '150px' },
@@ -152,7 +158,7 @@ export const chartConfig = {
     headTitle: __('New Image Usage Trend'),
     timeFrame: __('Last 24 hours'),
     createdLabel: __('Images'),
-    tooltipFn: hourlyTimeTooltip,
+    tooltipFn: () => hourlyTimeTooltip('KBps'),
     units: __('KBps'),
     point: { r: 1 },
     size: { height: '150px' },
@@ -184,7 +190,7 @@ export const chartConfig = {
   },
   recentServersConfig: {
     chartId: 'recentServersChart',
-    tooltipFn: dailyTimeTooltip,
+    tooltipFn: () => dailyTimeTooltip(),
     units: __('Servers'),
     point: { r: 1 },
     size: { height: '145px' },
@@ -194,7 +200,7 @@ export const chartConfig = {
   },
   recentInstancesConfig: {
     chartId: 'recentInstancesChart',
-    tooltipFn: dailyTimeTooltip,
+    tooltipFn: () => dailyTimeTooltip(),
     units: __('Instances'),
     point: { r: 1 },
     size: { height: '145px' },
@@ -204,7 +210,7 @@ export const chartConfig = {
   },
   recentImagesConfig: {
     chartId: 'recentInstancesChart',
-    tooltipFn: dailyTimeTooltip,
+    tooltipFn: () => dailyTimeTooltip(),
     units: __('Images'),
     point: { r: 1 },
     size: { height: '145px' },
