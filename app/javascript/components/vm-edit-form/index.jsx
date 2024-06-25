@@ -7,11 +7,23 @@ import createSchema from './vm-edit-form.schema';
 import { API } from '../../http_api';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import handleFailure from '../../helpers/handle-failure';
-import { getInitialValues, getNoEmsInitialValues, getSubmitData } from './helper';
+import {
+  getInitialValues, getNoEmsInitialValues, getSubmitData, descriptionData,
+} from './helper';
 
 const VmEditForm = ({
-  recordId, emsId, displayName, isTemplate,
+  recordId, emsId, displayName, isTemplate, editDescription,
 }) => {
+  let returnURL = '/vm_infra/explorer/';
+  if (displayName === 'Image' || displayName === 'Instance') {
+    returnURL = '/vm_cloud/explorer/';
+  }
+
+  let URL = `/api/vms/${recordId}`;
+  if (isTemplate) {
+    URL = `/api/templates/${recordId}`;
+  }
+
   const [{
     initialValues, parentOptions, isLoading,
   }, setState] = useState({
@@ -34,20 +46,22 @@ const VmEditForm = ({
     }
   });
 
-  const onSubmit = (values) => {
-    miqSparkleOn();
-    let URL = `/api/vms/${recordId}`;
-    let returnURL = '/vm_infra/explorer/';
+  /** Function to update just the description of the record on form submit. */
+  const updateDescription = (values) => {
+    // const data = descriptionData(values);
+    const payload = { action: 'set_description', resource: { new_description: 'test_description' } };
+    return API.post(URL, payload)
+      .then(() => {
+        miqSparkleOn();
+        const message = sprintf(__('%s "%s" description was saved'), displayName, initialValues.name);
+        miqRedirectBack(message, 'success', returnURL);
+      })
+      .catch(handleFailure);
+  };
+
+  /** Function to update the entire record on form submit. */
+  const updateRecord = (values) => {
     const data = getSubmitData(values);
-
-    if (displayName === 'Image' || displayName === 'Instance') {
-      returnURL = '/vm_cloud/explorer/';
-    }
-
-    if (isTemplate) {
-      URL = `/api/templates/${recordId}`;
-    }
-
     return API.post(URL, data)
       .then(() => {
         miqSparkleOn();
@@ -57,6 +71,13 @@ const VmEditForm = ({
       .catch(handleFailure);
   };
 
+  /** Function to handle the form submit event. */
+  const onSubmit = (values) => {
+    miqSparkleOn();
+    return editDescription ? updateDescription(values) : updateRecord(values);
+  };
+
+  /** Function to handle the form cancel event. */
   const onCancel = () => {
     miqSparkleOn();
     let returnURL = '/vm_infra/explorer/';
@@ -70,7 +91,7 @@ const VmEditForm = ({
   if (isLoading) return <Loading className="export-spinner" withOverlay={false} small />;
   return !isLoading && (
     <MiqFormRenderer
-      schema={createSchema(emsId, parentOptions)}
+      schema={createSchema(emsId, parentOptions, editDescription)}
       initialValues={initialValues}
       canReset={!!recordId}
       validate={validation}
@@ -88,6 +109,7 @@ VmEditForm.propTypes = {
   emsId: PropTypes.string,
   displayName: PropTypes.string.isRequired,
   isTemplate: PropTypes.bool.isRequired,
+  editDescription: PropTypes.bool.isRequired,
 };
 
 VmEditForm.defaultProps = {
