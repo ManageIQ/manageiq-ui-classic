@@ -20,7 +20,7 @@ class ContainerRouteController < ApplicationController
   private
 
   def textual_group_list
-    [%i[properties container_labels], %i[relationships smart_management]]
+    [%i[properties container_labels annotations], %i[relationships smart_management]]
   end
   helper_method :textual_group_list
 

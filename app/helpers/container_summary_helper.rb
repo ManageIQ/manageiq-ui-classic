@@ -73,6 +73,10 @@ module ContainerSummaryHelper
     TextualGroup.new(_("Labels"), textual_key_value_group(@record.labels.to_a))
   end
 
+  def textual_group_annotations
+    TextualGroup.new(_("Annotations"), textual_key_value_group(@record.annotations))
+  end
+
   def textual_group_miq_custom_attributes
     TextualGroup.new(_("Custom Attributes"), textual_miq_custom_attributes)
   end

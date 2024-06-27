@@ -14,8 +14,8 @@ class ContainerNodeController < ApplicationController
 
   def textual_group_list
     [
-      %i[properties container_labels compliance miq_custom_attributes],
-      %i[relationships conditions smart_management]
+      %i[properties container_labels compliance],
+      %i[relationships conditions smart_management annotations]
     ]
   end
   helper_method :textual_group_list
