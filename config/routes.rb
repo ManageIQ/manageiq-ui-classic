@@ -2000,8 +2000,11 @@ Rails.application.routes.draw do
         fetch_log
         import_export
         log
+        get_form_targets
         resolve
+        resolve_automate_simulation
         review_import
+        get_simulation_form_vars
       ],
       :post => %w[
         button
@@ -2011,6 +2014,7 @@ Rails.application.routes.draw do
         import_via_git
         reset_datastore
         resolve
+        resolve_automate_simulation
         retrieve_git_datastore
         upload
         upload_import_file

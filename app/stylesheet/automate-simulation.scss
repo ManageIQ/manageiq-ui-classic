@@ -1,0 +1,57 @@
+.automate-simulation-page {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .automate-simulation-form-wrapper {
+        border-right: 0.5px solid lightgray;
+        width: 500px;
+        padding: 15px;
+    }
+
+    .automate-simulation-summary-wrapper {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        padding: 15px;
+
+        .simulation-title-text {
+            font-size: x-large;
+            font-weight: lighter;
+        }
+
+        .automate-simulation-summary {
+            height: 30%;
+        }
+    }
+
+    .attributeValuePairLabel {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1%;
+    }
+
+    .subform {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 5%;
+    }
+
+    .bx--btn-set {
+        width: 50%;
+        padding-bottom: 30%;
+        margin-left: 8%
+    }
+    .bx--btn--primary {
+        margin-right: 10%;
+    }
+
+    .summary-spinner {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
