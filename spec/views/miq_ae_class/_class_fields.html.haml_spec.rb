@@ -17,7 +17,7 @@ describe "miq_ae_class/_class_fields.html.haml" do
     end
 
     it "Check instance", :js => true do
-      render
+      render :template => "miq_ae_class/_class_fields"
       expect(response).to have_text('ae_var1')
       expect(response).to have_text('Wilma')
     end
@@ -50,7 +50,7 @@ describe "miq_ae_class/_class_fields.html.haml" do
     end
 
     it "Check instance", :js => true do
-      render
+      render :template => "miq_ae_class/_class_fields"
       expect(rendered).to have_selector('input#fields_default_value_0[value=\'Wilma\']')
     end
   end
