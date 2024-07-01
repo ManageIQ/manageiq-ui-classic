@@ -15,7 +15,7 @@ describe "ems_cluster/show.html.haml" do
     let(:showtype) { 'drift' }
 
     it 'should render the compare partial' do
-      render
+      render :template => "ems_cluster/show"
       expect(response).to render_template(:partial => 'layouts/_compare')
     end
   end

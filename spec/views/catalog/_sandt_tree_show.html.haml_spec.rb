@@ -13,7 +13,7 @@ describe "catalog/_sandt_tree_show.html.haml" do
   end
 
   it "Renders bundle summary screen" do
-    render
+    render :template => "catalog/_sandt_tree_show"
     expect(rendered).to include(bundle.name)
     expect(rendered).to include(bundle.tenant.name)
   end

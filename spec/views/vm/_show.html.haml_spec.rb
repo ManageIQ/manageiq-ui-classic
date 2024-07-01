@@ -24,7 +24,7 @@ describe "vm/show.html.haml" do
     it 'should render policies view' do
       assign(:lastaction, 'policy_sim')
       stub_template "vm_common/_policies.html.haml" => "Stubbed Content"
-      render
+      render :template => "vm/show"
       expect(rendered).to render_template(:partial => 'vm_common/policies', :locals => {:controller => 'vm'})
     end
   end

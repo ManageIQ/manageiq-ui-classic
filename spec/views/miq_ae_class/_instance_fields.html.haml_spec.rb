@@ -16,7 +16,7 @@ describe "miq_ae_class/_instance_fields.html.haml" do
     end
 
     it "Check instance", :js => true do
-      render
+      render :template => "miq_ae_class/_instance_fields"
       expect(response).to have_text('ae_var1')
       expect(response).to have_text('hello world')
     end

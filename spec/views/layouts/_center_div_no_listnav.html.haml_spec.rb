@@ -11,7 +11,7 @@ describe "layouts/_center_div_no_listnav.html.haml" do
   end
 
   it 'renders Search bar' do
-    render
+    render :template => "layouts/_center_div_no_listnav"
     expect(rendered).to include('SearchBar')
   end
 end

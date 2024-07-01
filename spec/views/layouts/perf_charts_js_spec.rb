@@ -9,12 +9,12 @@ describe 'layouts/_perf_chart_js.html.haml' do
     let(:zoom_url)    { "javascript:miqAsyncAjax('/vm_infra/perf_chart_chooser/10000000000011?chart_idx=0')" }
 
     it 'with simple chart' do
-      render :partial => '/layouts/perf_chart_js.html.haml', :locals => {:chart_data => chart_data, :chart_index => 0, :chart_set => 'candu', :charts => charts}
+      render :partial => '/layouts/perf_chart_js', :locals => {:chart_data => chart_data, :chart_index => 0, :chart_set => 'candu', :charts => charts}
       expect(response).to include("<ul aria-labelledby='miq_chart_candu_0' class='dropdown-menu' id='miq_chartmenu_candu_0' role='menu' style='position: fixed;'></ul>")
     end
 
     it 'with composite chart' do
-      render :partial => '/layouts/perf_chart_js.html.haml', :locals => {:chart_data => chart_data2, :chart_index => 0, :chart_set => 'candu', :charts => charts}
+      render :partial => '/layouts/perf_chart_js', :locals => {:chart_data => chart_data2, :chart_index => 0, :chart_set => 'candu', :charts => charts}
       expect(response).to include("<ul aria-labelledby='miq_chart_candu_0' class='dropdown-menu' id='miq_chartmenu_candu_0' role='menu' style='position:fixed;'></ul>")
       expect(response).to include("<ul aria-labelledby='miq_chart_candu_0_2' class='dropdown-menu' id='miq_chartmenu_candu_0_2' role='menu' style='position: fixed;'></ul>")
     end

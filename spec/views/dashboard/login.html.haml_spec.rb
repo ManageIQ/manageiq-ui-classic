@@ -8,7 +8,7 @@ describe "dashboard/login.html.haml" do
     end
 
     it "when authentication is 'database'" do
-      render
+      render :template => "dashboard/login"
       expect(response).to have_selector("form#login_div:has(input#browser_name)")
       expect(response).to have_selector("form#login_div:has(input#browser_version)")
       expect(response).to have_selector("form#login_div:has(input#browser_os)")
@@ -16,7 +16,7 @@ describe "dashboard/login.html.haml" do
     end
 
     it "when authentication is not 'database'" do
-      render
+      render :template => "dashboard/login"
       expect(response).to have_selector("form#login_div:has(input#browser_name)")
       expect(response).to have_selector("form#login_div:has(input#browser_version)")
       expect(response).to have_selector("form#login_div:has(input#browser_os)")
@@ -33,7 +33,7 @@ describe "dashboard/login.html.haml" do
 
     it "show" do
       stub_settings(:server => {}, :session => {:show_login_info => true}, :authentication => {})
-      render
+      render :template => "dashboard/login"
       labels.each do |label|
         expect(response).to have_selector('p', :text => label)
       end
@@ -41,7 +41,7 @@ describe "dashboard/login.html.haml" do
 
     it "hide" do
       stub_settings(:server => {}, :session => {:show_login_info => false}, :authentication => {})
-      render
+      render :template => "dashboard/login"
       labels.each do |label|
         expect(response).not_to have_selector('p', :text => label)
       end

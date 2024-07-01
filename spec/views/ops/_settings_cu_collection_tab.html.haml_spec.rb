@@ -32,14 +32,14 @@ describe "ops/_settings_cu_collection_tab.html.haml" do
   it "Displays note if there are no Clusters" do
     @cluster_tree = nil
     assign(:edit, :new => {:all_clusters => false})
-    render
+    render :template => "ops/_settings_cu_collection_tab"
     expect(response).to have_selector("div.note b", :text => "Note: No Clusters available.")
   end
 
   it "Displays note if there are no Datastores" do
     @datastore_tree = nil
     assign(:edit, :new => {:all_storages => false})
-    render
+    render :template => "ops/_settings_cu_collection_tab"
     expect(response).to have_selector("div.note b", :text => "Note: No Datastores available.")
   end
 end

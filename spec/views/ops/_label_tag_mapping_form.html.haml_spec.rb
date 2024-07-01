@@ -14,14 +14,6 @@ describe 'ops/_label_tag_mapping_form.html.haml' do
       render :partial => "ops/label_tag_mapping_form"
     end
 
-    it 'renders the entity select box' do
-      expect(render).to have_selector('select#entity')
-    end
-
-    it 'renders the label name text box' do
-      expect(render).to have_selector('input#label_name')
-    end
-
     it 'entity should be enabled when adding a new mapping' do
       expect(response.body).to include('<select name="entity" id="entity" class="selectpicker">')
     end

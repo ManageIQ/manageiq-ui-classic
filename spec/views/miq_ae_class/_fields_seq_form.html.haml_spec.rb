@@ -7,7 +7,7 @@ describe "miq_ae_class/_fields_seq_form.html.haml" do
   end
 
   it "Check links in the list view", :js => true do
-    render
+    render :template => "miq_ae_class/_fields_seq_form"
     expect(response).to have_text("miq_tabs_disable_inactive('#ae_tabs')")
   end
 end

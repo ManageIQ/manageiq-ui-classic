@@ -5,7 +5,7 @@ describe "layouts/_item.html.haml" do
     assign(:view, FactoryBot.create(:miq_report_filesystem))
     assign(:item, fs)
     assign(:lastaction, 'filesystems')
-    render
+    render :template => "layouts/_item"
 
     expect(response).to have_selector('label', :text => 'Name')
     expect(response).to have_selector('label', :text => 'File Name')
