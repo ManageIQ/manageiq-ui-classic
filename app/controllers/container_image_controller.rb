@@ -11,7 +11,7 @@ class ContainerImageController < ApplicationController
     [
       %i[properties container_labels compliance],
       %i[relationships smart_management configuration openscap_failed_rules],
-      %i[env container_docker_labels]
+      %i[env container_docker_labels annotations]
     ]
   end
   helper_method :textual_group_list

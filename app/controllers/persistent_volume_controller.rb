@@ -20,7 +20,7 @@ class PersistentVolumeController < ApplicationController
   private
 
   def textual_group_list
-    [%i[properties claim_properties], %i[relationships smart_management capacity]]
+    [%i[properties claim_properties annotations], %i[relationships smart_management capacity]]
   end
   helper_method :textual_group_list
 
