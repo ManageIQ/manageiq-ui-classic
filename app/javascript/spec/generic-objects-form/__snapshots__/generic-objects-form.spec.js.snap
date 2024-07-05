@@ -29,6 +29,7 @@ exports[`Generic Object Form Component should render adding a new generic object
       componentMapper={
         Object {
           "checkbox": [Function],
+          "checkbox-tree": [Function],
           "code-editor": [Function],
           "date-picker": [Function],
           "dual-list-select": [Function],
@@ -52,6 +53,13 @@ exports[`Generic Object Form Component should render adding a new generic object
           "time-picker": [Function],
           "tree-selector": [Function],
           "tree-view": [Function],
+          "tree-view-redux": Object {
+            "$$typeof": Symbol(react.memo),
+            "WrappedComponent": [Function],
+            "compare": null,
+            "displayName": "Connect(TreeView)",
+            "type": [Function],
+          },
           "validate-credentials": [Function],
           "wizard": [Function],
         }
@@ -287,6 +295,7 @@ exports[`Generic Object Form Component should render adding a new generic object
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -310,6 +319,13 @@ exports[`Generic Object Form Component should render adding a new generic object
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -548,6 +564,7 @@ exports[`Generic Object Form Component should render adding a new generic object
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -572,6 +589,13 @@ exports[`Generic Object Form Component should render adding a new generic object
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }
@@ -4626,6 +4650,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
       componentMapper={
         Object {
           "checkbox": [Function],
+          "checkbox-tree": [Function],
           "code-editor": [Function],
           "date-picker": [Function],
           "dual-list-select": [Function],
@@ -4649,6 +4674,13 @@ exports[`Generic Object Form Component should render editing a generic object wi
           "time-picker": [Function],
           "tree-selector": [Function],
           "tree-view": [Function],
+          "tree-view-redux": Object {
+            "$$typeof": Symbol(react.memo),
+            "WrappedComponent": [Function],
+            "compare": null,
+            "displayName": "Connect(TreeView)",
+            "type": [Function],
+          },
           "validate-credentials": [Function],
           "wizard": [Function],
         }
@@ -4942,6 +4974,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -4965,6 +4998,13 @@ exports[`Generic Object Form Component should render editing a generic object wi
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -5261,6 +5301,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -5285,6 +5326,13 @@ exports[`Generic Object Form Component should render editing a generic object wi
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }
@@ -12247,6 +12295,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
       componentMapper={
         Object {
           "checkbox": [Function],
+          "checkbox-tree": [Function],
           "code-editor": [Function],
           "date-picker": [Function],
           "dual-list-select": [Function],
@@ -12270,6 +12319,13 @@ exports[`Generic Object Form Component should render editing a generic object wi
           "time-picker": [Function],
           "tree-selector": [Function],
           "tree-view": [Function],
+          "tree-view-redux": Object {
+            "$$typeof": Symbol(react.memo),
+            "WrappedComponent": [Function],
+            "compare": null,
+            "displayName": "Connect(TreeView)",
+            "type": [Function],
+          },
           "validate-credentials": [Function],
           "wizard": [Function],
         }
@@ -12560,6 +12616,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -12583,6 +12640,13 @@ exports[`Generic Object Form Component should render editing a generic object wi
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -12876,6 +12940,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -12900,6 +12965,13 @@ exports[`Generic Object Form Component should render editing a generic object wi
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }
