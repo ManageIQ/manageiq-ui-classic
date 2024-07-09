@@ -28,13 +28,14 @@
       = h(field.values.detect { |k, _v| k == wf.value(field.name) }.try(:last) || wf.value(field.name))
 
     - when "DialogFieldDropDownList"
-      = h(field.value.blank? ? _("<None>") : field.value.to_s.gsub("\x1F", ", "))
+      - if field.value.instance_of?(Array)
+        = h(field.value.blank? ? _("<None>") : h(field.value.join(", ")))
+      - else
+        = h(field.value.blank? ? _("<None>") : h(field.value))
 
     - when 'DialogFieldTagControl'
-      - value = wf.value(field.name) || '' # it returns in format Clasification::id
-      - classifications = value.split(',').map do |c|
-        - classification = Classification.find_by(id: c.split('::').second)
-        - classification.description if classification
+      - value = wf.value(field.name) || ''
+      - classifications = Classification.where(:id => value).pluck(:description)
       - if classifications.empty?
         = h('')
       -else
