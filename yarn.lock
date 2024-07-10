@@ -1410,7 +1410,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/icons-react@npm:^10.49.0, @carbon/icons-react@npm:^10.49.5, @carbon/icons-react@npm:~10.49.2":
+"@carbon/icons-react@npm:^10.49.0, @carbon/icons-react@npm:^10.49.5, @carbon/icons-react@npm:~10.49.5":
   version: 10.49.5
   resolution: "@carbon/icons-react@npm:10.49.5"
   dependencies:
@@ -1450,7 +1450,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/themes@npm:~10.55.3":
+"@carbon/themes@npm:~10.55.5":
   version: 10.55.5
   resolution: "@carbon/themes@npm:10.55.5"
   dependencies:
@@ -4757,9 +4757,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"carbon-components-react@npm:~7.59.17":
-  version: 7.59.23
-  resolution: "carbon-components-react@npm:7.59.23"
+"carbon-components-react@npm:~7.59.24":
+  version: 7.59.24
+  resolution: "carbon-components-react@npm:7.59.24"
   dependencies:
     "@babel/runtime": "npm:^7.16.7"
     "@carbon/feature-flags": "npm:^0.7.2"
@@ -4779,14 +4779,13 @@ __metadata:
     prop-types: "npm:^15.7.2"
     react-is: "npm:^17.0.2"
     use-resize-observer: "npm:^6.0.0"
-    wicg-inert: "npm:^3.1.1"
     window-or-global: "npm:^1.0.1"
   peerDependencies:
     carbon-components: ^10.30.0
     carbon-icons: ^7.0.7
     react: ^16.8.6 || ^17.0.1
     react-dom: ^16.8.6 || ^17.0.1
-  checksum: 10/a67edf67750876cbf5787202c73ba2e73180df2c1bb66940fec0c150e93c31c174979e704488f17dab9ba233394e80551a595e5672d9ac056c14e364df88c99e
+  checksum: 10/8006fbfc21aa85e4212974c2437a2f16e40665b42cf70e24b86abb4ca6f24b714f077c5c4d401c3a99c26e77a89ed76ee4ae6ae27065eb45b89a2b5bb49350d2
   languageName: node
   linkType: hard
 
@@ -4802,7 +4801,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"carbon-components@npm:~10.58.12":
+"carbon-components@npm:~10.58.15":
   version: 10.58.15
   resolution: "carbon-components@npm:10.58.15"
   dependencies:
@@ -11669,8 +11668,8 @@ __metadata:
     "@babel/runtime-corejs3": "npm:~7.9.0"
     "@carbon/charts": "npm:^0.58.2"
     "@carbon/charts-react": "npm:^0.58.2"
-    "@carbon/icons-react": "npm:~10.49.2"
-    "@carbon/themes": "npm:~10.55.3"
+    "@carbon/icons-react": "npm:~10.49.5"
+    "@carbon/themes": "npm:~10.55.5"
     "@data-driven-forms/carbon-component-mapper": "npm:~3.18.8"
     "@data-driven-forms/react-form-renderer": "npm:~3.18.8"
     "@manageiq/font-fabulous": "npm:~1.0.5"
@@ -11699,8 +11698,8 @@ __metadata:
     babel-loader: "npm:~8.2.0"
     bootstrap-filestyle: "npm:~1.2.1"
     bootstrap-switch: "npm:3.3.4"
-    carbon-components: "npm:~10.58.12"
-    carbon-components-react: "npm:~7.59.17"
+    carbon-components: "npm:~10.58.15"
+    carbon-components-react: "npm:~7.59.24"
     carbon-icons: "npm:~7.0.7"
     classnames: "npm:~2.2.6"
     codemirror: "npm:~5.58.2"
@@ -18387,13 +18386,6 @@ __metadata:
   bin:
     node-which: bin/which.js
   checksum: 10/f17e84c042592c21e23c8195108cff18c64050b9efb8459589116999ea9da6dd1509e6a1bac3aeebefd137be00fabbb61b5c2bc0aa0f8526f32b58ee2f545651
-  languageName: node
-  linkType: hard
-
-"wicg-inert@npm:^3.1.1":
-  version: 3.1.2
-  resolution: "wicg-inert@npm:3.1.2"
-  checksum: 10/a726f5ca2d3535dba9a638ff60b720d9f81857cb9b51bcaf9c2a71ee50d784ff3be6c5d9f0acc35edd8fee92bb3587c0a9daabb70baa725a106d149ae0fd8584
   languageName: node
   linkType: hard
 
