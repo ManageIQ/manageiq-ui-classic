@@ -12300,24 +12300,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"moment@npm:^2.10, moment@npm:^2.11.2, moment@npm:^2.19.1, moment@npm:^2.29.4":
+"moment@npm:^2.29.2":
   version: 2.30.1
   resolution: "moment@npm:2.30.1"
   checksum: 10/ae42d876d4ec831ef66110bdc302c0657c664991e45cf2afffc4b0f6cd6d251dde11375c982a5c0564ccc0fa593fc564576ddceb8c8845e87c15f58aa6baca69
-  languageName: node
-  linkType: hard
-
-"moment@npm:~2.14.1":
-  version: 2.14.1
-  resolution: "moment@npm:2.14.1"
-  checksum: 10/d73e1f9825954ccf867a0d9d47927967d53e9bd6dfef5a40defe27a961c56f95df7f9d3c4fac8c6eff26753091da4de2b16e48b267a3c6618038885da0bdf1a2
-  languageName: node
-  linkType: hard
-
-"moment@npm:~2.29.4":
-  version: 2.29.4
-  resolution: "moment@npm:2.29.4"
-  checksum: 10/157c5af5a0ba8196e577bc67feb583303191d21ba1f7f2af30b3b40d4c63a64d505ba402be2a1454832082fac6be69db1e0d186c3279dae191e6634b0c33705c
   languageName: node
   linkType: hard
 
