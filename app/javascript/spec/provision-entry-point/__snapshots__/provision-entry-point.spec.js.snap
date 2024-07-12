@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CodeEditor component should render correctly 1`] = `
+<div>
+  <div
+    className="entry-point-wrapper"
+  >
+    <div
+      className="entry-point-text-input"
+    >
+      <TextInput
+        id="provisioning_entry_point_workflow"
+        labelText="Provisioning Entry Point"
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="entry-point-buttons"
+    >
+      <Button
+        hasIconOnly={true}
+        iconDescription="Click to select Provisioning Entry Point"
+        onClick={[Function]}
+        renderIcon={
+          Object {
+            "$$typeof": Symbol(react.forward_ref),
+            "render": [Function],
+          }
+        }
+      />
+    </div>
+  </div>
+</div>
+`;
