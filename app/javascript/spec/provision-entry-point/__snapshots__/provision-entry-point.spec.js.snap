@@ -19,17 +19,36 @@ exports[`CodeEditor component should render correctly 1`] = `
     <div
       className="entry-point-buttons"
     >
-      <Button
-        hasIconOnly={true}
-        iconDescription="Click to select Provisioning Entry Point"
-        onClick={[Function]}
-        renderIcon={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "render": [Function],
+      <div
+        className="entry-point-open"
+      >
+        <Button
+          hasIconOnly={true}
+          iconDescription="Click to select Provisioning Entry Point"
+          onClick={[Function]}
+          renderIcon={
+            Object {
+              "$$typeof": Symbol(react.forward_ref),
+              "render": [Function],
+            }
           }
-        }
-      />
+        />
+      </div>
+      <div
+        className="entry-point-remove"
+      >
+        <Button
+          hasIconOnly={true}
+          iconDescription="Remove this Provisioning Entry Point"
+          onClick={[Function]}
+          renderIcon={
+            Object {
+              "$$typeof": Symbol(react.forward_ref),
+              "render": [Function],
+            }
+          }
+        />
+      </div>
     </div>
   </div>
 </div>
