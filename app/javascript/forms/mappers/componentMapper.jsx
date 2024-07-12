@@ -11,6 +11,7 @@ import MultiSelectWithSelectAll from '../../components/multiselect-with-selectal
 import FontIconPicker from '../../components/fonticon-picker';
 import FontIconPickerDdf from '../../components/fonticon-picker/font-icon-picker-ddf';
 import KeyValueListComponent from '../../components/key-value-list';
+import ProvisionEntryPoint from '../../components/provision-entry-point';
 
 const mapper = {
   ...componentMapper,
@@ -19,6 +20,7 @@ const mapper = {
   'file-upload': FileUploadComponent,
   'key-value-list': KeyValueListComponent,
   'password-field': PasswordField,
+  'provision-entry-point': ProvisionEntryPoint,
   'validate-credentials': AsyncCredentials,
   'tree-view': TreeViewField,
   'tree-selector': TreeViewSelector,
