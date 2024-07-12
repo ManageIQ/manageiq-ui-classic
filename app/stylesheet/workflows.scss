@@ -42,6 +42,11 @@
   }
 
   .entry-point-buttons {
+    display: inline-flex;
     margin-top: 20px;
+
+    .entry-point-open {
+      margin-right: 10px;
+    }
   }
 }
