@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button, TextInput } from 'carbon-components-react';
-import { TreeViewAlt16 } from '@carbon/icons-react';
+import { Close16, TreeViewAlt16 } from '@carbon/icons-react';
 import { useFieldApi } from '@@ddf';
 import WorkflowEntryPoints from '../workflows/workflow-entry-points';
 
@@ -46,13 +46,25 @@ const ProvisionEntryPoint = (props) => {
         <div className="entry-point-text-input">
           <TextInput id={id} type="text" labelText={__(label)} onChange={(value) => setTextValue(value.target.value)} value={textValue} />
         </div>
-        <div className="entry-point-buttons">
-          <Button
-            renderIcon={TreeViewAlt16}
-            iconDescription={sprintf(__('Click to select %s'), label)}
-            hasIconOnly
-            onClick={() => setShowModal(true)}
-          />
+        <div className='entry-point-buttons'>
+          <div className="entry-point-open">
+            <Button
+              renderIcon={TreeViewAlt16}
+              iconDescription={sprintf(__('Click to select %s'), label)}
+              hasIconOnly
+              onClick={() => setShowModal(true)}
+            />
+          </div>
+          <div className="entry-point-remove">
+            <Button
+              renderIcon={Close16}
+              iconDescription={sprintf(__('Remove this %s'), label)}
+              hasIconOnly
+              onClick={() => {
+                setSelectedValue({});
+              }}
+            />
+          </div>
         </div>
       </div>
     </div>
