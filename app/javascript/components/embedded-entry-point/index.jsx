@@ -5,7 +5,7 @@ import { Close16, TreeViewAlt16 } from '@carbon/icons-react';
 import { useFieldApi } from '@@ddf';
 import WorkflowEntryPoints from '../workflows/workflow-entry-points';
 
-const ProvisionEntryPoint = (props) => {
+const EmbeddedEntryPoint = (props) => {
   console.log(props);
   const {
     label, initialValue, id, field, selected, type,
@@ -70,7 +70,8 @@ const ProvisionEntryPoint = (props) => {
     </div>
   );
 };
-ProvisionEntryPoint.propTypes = {
+
+EmbeddedEntryPoint.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   initialValue: PropTypes.string,
@@ -79,9 +80,9 @@ ProvisionEntryPoint.propTypes = {
   type: PropTypes.string.isRequired,
 };
 
-ProvisionEntryPoint.defaultProps = {
+EmbeddedEntryPoint.defaultProps = {
   initialValue: '',
   selected: '',
 };
 
-export default ProvisionEntryPoint;
+export default EmbeddedEntryPoint;
