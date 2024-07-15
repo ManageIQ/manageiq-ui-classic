@@ -743,6 +743,7 @@ class CatalogController < ApplicationController
         ra, st, svc_catalog_provision_finish_submit_endpoint
       )
       @in_a_form = true
+      @dialog_locals = options[:dialog_locals]
       replace_right_cell(:action => "dialog_provision", :dialog_locals => options[:dialog_locals])
     else
       # if catalog item has no dialog and provision button was pressed from list view
