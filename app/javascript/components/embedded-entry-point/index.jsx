@@ -46,7 +46,7 @@ const EmbeddedEntryPoint = (props) => {
         <div className="entry-point-text-input">
           <TextInput id={id} type="text" labelText={__(label)} onChange={(value) => setTextValue(value.target.value)} value={textValue} />
         </div>
-        <div className='entry-point-buttons'>
+        <div className="entry-point-buttons">
           <div className="entry-point-open">
             <Button
               renderIcon={TreeViewAlt16}
