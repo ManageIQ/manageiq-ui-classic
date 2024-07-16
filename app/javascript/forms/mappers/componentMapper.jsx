@@ -20,7 +20,7 @@ const mapper = {
   'file-upload': FileUploadComponent,
   'key-value-list': KeyValueListComponent,
   'password-field': PasswordField,
-  'provision-entry-point': EmbeddedEntryPoint,
+  'embedded-entry-point': EmbeddedEntryPoint,
   'validate-credentials': AsyncCredentials,
   'tree-view': TreeViewField,
   'tree-selector': TreeViewSelector,
