@@ -2,6 +2,7 @@
   #form_div
     = render :partial => "layouts/flash_msg"
     - if @resolve[:instance_names]
+      -# %p= @resolve.inspect
       = render(:partial => "layouts/ae_resolve_options",
         :locals         => {:resolve => @resolve,
           :form_action               => "ae_resolve",
