@@ -20,7 +20,7 @@ class ContainerTemplateController < ApplicationController
   private
 
   def textual_group_list
-    [%i[properties parameters objects], %i[relationships container_labels smart_management]]
+    [%i[properties parameters objects], %i[relationships container_labels smart_management annotations]]
   end
   helper_method :textual_group_list
 
