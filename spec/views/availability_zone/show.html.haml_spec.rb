@@ -1,15 +1,16 @@
 describe "availability_zone/show.html.haml" do
   shared_examples_for "miq_before_onload JS is needed" do
     it "renders proper JS" do
-      js_string = "ManageIQ.afterOnload = {action: () => miqAsyncAjax(\"/availability_zone/#{action}/#{availability_zone.id}\")}"
+      template_path = "availability_zone/#{action}"
+      js_string = "ManageIQ.afterOnload = {action: () => miqAsyncAjax(\"/#{template_path}/#{availability_zone.id}\")}"
       
-      render
+      render :template => template_path
       expect(rendered).to include(js_string)
     end
   end
 
   let(:availability_zone) { double("AvailabilityZone", :name => 'My AZ', :id => 1) }
-  let(:action) { 'index' }
+  let(:action) { 'show' }
 
   before do
     assign(:record, availability_zone)

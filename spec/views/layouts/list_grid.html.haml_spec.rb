@@ -5,7 +5,7 @@ describe "layouts/_list_grid.html.haml" do
       allow(view).to receive(:js_options).and_return(:row_url => '_none_')
       record = FactoryBot.create(:ems_infra)
       assign(:parent, record)
-      render
+      render :template => "layouts/_list_grid"
     end
   end
 

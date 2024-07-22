@@ -10,7 +10,7 @@ describe 'ops/_rbac_tenant_details.html.haml' do
   end
 
   it 'renders textual summary of a Tenant' do
-    render :partial => 'ops/rbac_tenant_details.html.haml'
+    render :partial => 'ops/rbac_tenant_details'
     expect(rendered).to include("<div id='textual_summary'>", 'Properties', 'Relationships', 'Smart Management')
     expect(rendered).to include(tenant.description)
   end
