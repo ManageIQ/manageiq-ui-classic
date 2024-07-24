@@ -6,7 +6,6 @@ import textualSummaryGenericClick from './textual_summary_click';
 export default (props) => {
   const onClick = props.onClick || textualSummaryGenericClick;
   const component = <TextualSummary onClick={onClick} {...props} />;
-
   if (props.options && Object.keys(props.options).length > 0) {
     document.addEventListener('DOMContentLoaded', () => {
       ReactDOM.render(component, document.body.appendChild(document.createElement('div')));
