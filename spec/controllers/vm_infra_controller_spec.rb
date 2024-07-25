@@ -56,7 +56,7 @@ describe VmInfraController do
 
   let(:custom_attr1) do
     FactoryBot.create(
-      :custom_attribute,
+      :ems_custom_attribute,
       :resource => vm_vmware,
       :name     => 'Proč by si jeden nepokrad',
       :value    => 'jó, v tom je Pepa demokrat'
@@ -65,7 +65,7 @@ describe VmInfraController do
 
   let(:custom_attr2) do
     FactoryBot.create(
-      :custom_attribute,
+      :ems_custom_attribute,
       :resource => vm_vmware,
       :name     => nil,
       :value    => 'a šikulovi má být dána šance'
