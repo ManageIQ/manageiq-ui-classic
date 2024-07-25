@@ -1,7 +1,14 @@
 -# if dialogs is selected
+- miq_dialog_s = MiqDialog::DIALOG_TYPES.map do |label, model|
+  - [_(label), model]
+- miq_dialog_s = miq_dialog_s.sort
+- dialog_types = @dialog.dialog_type ? miq_dialog_s : [["<#{_('Choose')}>", ""]] + miq_dialog_s
+
 - if @dialog
-  - if @edit
-    = render :partial => "old_dialogs_form"
+  - if @in_a_form
+    = react('MiqAeCustomization',
+      :dialogRecord => @dialog,
+      :dialogTypes  => dialog_types)
   - else
     = render :partial => "layouts/flash_msg"
     %h3

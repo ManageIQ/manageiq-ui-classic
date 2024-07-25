@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MiqAeCustomization Form Component should render add dialog form correctly 1`] = `""`;
+
+exports[`MiqAeCustomization Form Component should render copy dialog form correctly 1`] = `""`;
+
+exports[`MiqAeCustomization Form Component should render edit dialog form correctly 1`] = `""`;
