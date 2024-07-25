@@ -7,6 +7,7 @@ class MiqAeCustomizationController < ApplicationController
   helper ApplicationHelper::ImportExportHelper
   include Mixins::GenericSessionMixin
   include Mixins::BreadcrumbsMixin
+  include MiqAeCustomizationHelper
 
   before_action :check_privileges
   before_action :get_session_data
