@@ -179,10 +179,10 @@ describe VmCloudController do
       post :explorer
       expect(response.status).to eq(200)
       expect_any_instance_of(GtlHelper).to receive(:render_gtl).with match_gtl_options(
-        :model_name                     => 'ManageIQ::Providers::CloudManager::Vm',
+        :model_name                     => 'VmOrTemplate',
         :selected_records               => [vm_openstack_tmd.id],
         :report_data_additional_options => {
-          :model      => 'ManageIQ::Providers::CloudManager::Vm',
+          :model      => 'VmOrTemplate',
           :lastaction => 'show_list',
         }
       )
