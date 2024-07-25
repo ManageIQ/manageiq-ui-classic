@@ -18,8 +18,8 @@ describe('Automation > Embedded Automate > Customization', () => {
 
     it('Clicks on a sample dialog', () => {
       cy.get('[title="Sample Configuration Management Provisioning Dialog"]').click({force: true});
-      cy.get('[class="form-control-static"]').contains('miq_provision_configured_system_foreman_dialogs');
-      cy.get('[class="form-control-static"]').contains('Sample Configuration Management Provisioning Dialog');
+      cy.get('.miq_ae_customization_summary').contains('miq_provision_configured_system_foreman_dialogs');
+      cy.get('.miq_ae_customization_summary').contains('Sample Configuration Management Provisioning Dialog');
       cy.get('[class="CodeMirror-code"]').contains('---');
       cy.get('[class="CodeMirror-code"]').contains(':buttons:');
     });
@@ -33,12 +33,12 @@ describe('Automation > Embedded Automate > Customization', () => {
       cy.get('[name="dialog_type"]').select('Configured System Provision');
       cy.get('[class="CodeMirror-lines"]').type(':Buttons:');
       cy.get('[class="btnRight bx--btn bx--btn--primary"]').click({force: true});
-      cy.get('[class="col-md-12"]').contains('Test Description');
+      cy.get('.miq_ae_customization_summary').contains('Test Description');
 
       // check correct data is displaying
       cy.contains('Test Description').click({force: true});
-      cy.get('[class="form-control-static"]').contains('Test User');
-      cy.get('[class="form-control-static"]').contains('Test Description');
+      cy.get('.miq_ae_customization_summary').contains('Test User');
+      cy.get('.miq_ae_customization_summary').contains('Test Description');
       cy.get('[class="CodeMirror-code"]').contains('---');
       cy.get('[class="CodeMirror-code"]').contains(':Buttons:');
 
@@ -81,8 +81,8 @@ describe('Automation > Embedded Automate > Customization', () => {
       // check correct data is displaying
       // cy.get('[id="main_div"]').contains('Test Description');
       cy.contains('Test Description').click({force: true});
-      cy.get('[class="form-control-static"]').contains('Test User');
-      cy.get('[class="form-control-static"]').contains('Test Description');
+      cy.get('.miq_ae_customization_summary').contains('Test User');
+      cy.get('.miq_ae_customization_summary').contains('Test Description');
       cy.get('[class="CodeMirror-code"]').contains('---');
       cy.get('[class="CodeMirror-code"]').contains(':Buttons:');
 
@@ -101,8 +101,8 @@ describe('Automation > Embedded Automate > Customization', () => {
 
       // check correct data after editing
       cy.contains('Edited Test Description').click({force: true});
-      cy.get('[class="form-control-static"]').contains('Edited Test User');
-      cy.get('[class="form-control-static"]').contains('Edited Test Description');
+      cy.get('.miq_ae_customization_summary').contains('Edited Test User');
+      cy.get('.miq_ae_customization_summary').contains('Edited Test Description');
       cy.get('[class="CodeMirror-code"]').contains('---');
       cy.get('[class="CodeMirror-code"]').contains(':Buttons:');
       cy.get('[class="CodeMirror-code"]').contains(':submit:');
@@ -110,7 +110,7 @@ describe('Automation > Embedded Automate > Customization', () => {
 
       // check correct data after copying
       cy.contains('Edited Test Description').click({force: true});
-      cy.get('[class="form-control-static"]').contains('Edited Test Description');
+      cy.get('.miq_ae_customization_summary').contains('Edited Test Description');
       cy.get('[class="CodeMirror-code"]').contains('---');
       cy.get('[class="CodeMirror-code"]').contains(':Buttons:');
       cy.get('[class="CodeMirror-code"]').contains(':submit:');
@@ -136,8 +136,8 @@ describe('Automation > Embedded Automate > Customization', () => {
 
       // check correct data is displaying
       cy.contains('Test Description').click({force: true});
-      cy.get('[class="form-control-static"]').contains('Test User');
-      cy.get('[class="form-control-static"]').contains('Test Description');
+      cy.get('.miq_ae_customization_summary').contains('Test User');
+      cy.get('.miq_ae_customization_summary').contains('Test Description');
       cy.get('[class="CodeMirror-code"]').contains('---');
       cy.get('[class="CodeMirror-code"]').contains(':Buttons:');
 
