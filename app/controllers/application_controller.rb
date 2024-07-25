@@ -1031,14 +1031,14 @@ class ApplicationController < ActionController::Base
     # {Processes,Users,...} in that case, search shoult NOT be applied.
     # If loading a form such as provisioning, don't filter records
     # FIXME: This needs to be changed to apply search in some explicit way.
-    return nil if @display || @in_a_form
+    return nil if @in_a_form
 
     # If we came in through Chart pop-up menu click we don't filter records.
     return nil if session[:menu_click]
 
     # Build sub_filter where clause from search text
     # This part is for the Hosts screen. In explorer screens we have search (that includes vm_infra and Control/Explorer/Policies)
-    if (!@parent && @lastaction == "show_list") || @explorer
+    if (!@parent && @lastaction == "show_list") || @explorer || @display
       stxt = @search_text.gsub("_", "`_") # Escape underscores
       stxt.gsub!("%", "`%") # and percents
 
