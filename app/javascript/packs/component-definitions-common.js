@@ -18,6 +18,7 @@ import AnsiblePlaybookWorkflow from '../components/ansible-playbook-workflow';
 import AnsibleRepositoryForm from '../components/ansible-repository-form';
 import AttachDetachCloudVolumeForm from '../components/cloud-volume-form/attach-detach-cloud-volume-form';
 import AuthKeypairCloudForm from '../components/auth-key-pair-cloud';
+import AutomateMethodForm from '../components/automate-method-form'
 import AutomationSimulation from '../components/AutomationSimulation';
 import ButtonList from '../components/data-tables/button-list';
 import ButtonGroupList from '../components/data-tables/button-group-list';
@@ -193,6 +194,7 @@ ManageIQ.component.addReact('AnsiblePlaybookWorkflow', AnsiblePlaybookWorkflow);
 ManageIQ.component.addReact('AnsibleRepositoryForm', AnsibleRepositoryForm);
 ManageIQ.component.addReact('AttachDetachCloudVolumeForm', AttachDetachCloudVolumeForm);
 ManageIQ.component.addReact('AuthKeypairCloudForm', AuthKeypairCloudForm);
+ManageIQ.component.addReact('AutomateMethodForm', AutomateMethodForm);
 ManageIQ.component.addReact('AutomationSimulation', AutomationSimulation);
 ManageIQ.component.addReact('BreadcrumbsBar', BreadcrumbsBar);
 ManageIQ.component.addReact('ButtonList', ButtonList);

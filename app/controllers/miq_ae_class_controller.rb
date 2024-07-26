@@ -804,6 +804,25 @@ class MiqAeClassController < ApplicationController
     record.id ? record.ae_class : MiqAeClass.find(x_node.split("-").last)
   end
 
+  def validate_automate_method_data
+    assert_privileges("miq_ae_method_edit")
+    @edit[:new][:data] = params[:cls_method_data] if params[:cls_method_data]
+    @edit[:new][:data] = params[:method_data] if params[:method_data]
+    res = MiqAeMethod.validate_syntax(@edit[:new][:data])
+    line = 0
+    if !res
+      render :json =>  {:status => true, :message => _("Data validated successfully")}
+    else
+      res.each do |err|
+        line = err[0] if line.zero?
+        render :json =>  {
+          :status   => false,
+          :message  => (_("Error on line %{line_num}: %{err_txt}") % {:line_num => err[0], :err_txt => err[1]})
+        }
+      end
+    end
+  end
+
   def validate_method_data
     assert_privileges("miq_ae_method_edit")
     return unless load_edit("aemethod_edit__#{params[:id]}", "replace_cell__explorer")
