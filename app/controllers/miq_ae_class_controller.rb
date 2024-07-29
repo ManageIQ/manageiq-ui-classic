@@ -520,6 +520,7 @@ class MiqAeClassController < ApplicationController
       id = x_node.split('-')
     end
     @ae_method = find_record_with_rbac(MiqAeMethod, id[1])
+    @embedded_methods = MiqAeMethod.where(:relative_path => @ae_method[:embedded_methods].map { |str| str.sub(/^\//, '') })
     @selectable_methods = embedded_method_regex(@ae_method.fqname)
     if playbook_style_location?(@ae_method.location)
       # these variants are implemented in Angular
@@ -1813,6 +1814,32 @@ class MiqAeClassController < ApplicationController
   def namespace
     assert_privileges("miq_ae_namespace_edit")
     render :json => find_record_with_rbac(MiqAeNamespace, params[:id]).attributes.slice('name', 'description', 'enabled')
+  end
+
+  def ae_domains
+    domains = MiqAeDomain.where(:enabled => true).order("name").select("id, name")
+    render :json => {:domains => domains}
+  end
+
+  def ae_methods
+    methods = MiqAeMethod
+              .name_path_search(params[:search])
+              .where(params[:domain_id] ? {:domain_id => params[:domain_id]} : {})
+              .where(params[:ids] ? {:id => params[:ids]&.split(',')} : {})
+              .select("id, relative_path, name")
+              .order('name')
+    render :json => {:methods => methods}
+  end
+
+  def ae_method_operations
+    ids = params[:ids].split(",")
+    @edit[:new][:embedded_methods] = MiqAeMethod.where(:id => ids).pluck(:relative_path).map { |path| "/#{path}" }
+    @changed = true
+    render :update do |page|
+      page << javascript_prologue
+      page << javascript_for_miq_button_visibility(@changed)
+      page << "miqSparkle(false);"
+    end
   end
 
   private
