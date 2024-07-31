@@ -10791,21 +10791,14 @@ moment-strftime@~0.5.0:
   dependencies:
     moment "^2.11.2"
 
-moment-timezone@^0.4.0, moment-timezone@^0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.4.1.tgz#81f598c3ad5e22cdad796b67ecd8d88d0f5baa06"
-  integrity sha1-gfWYw61eIs2teWtn7NjYjQ9bqgY=
-  dependencies:
-    moment ">= 2.6.0"
-
-moment-timezone@~0.5.37:
+moment-timezone@^0.4.0, moment-timezone@^0.4.1, moment-timezone@~0.5.37, moment-timezone@~0.5.40:
   version "0.5.45"
   resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.45.tgz#cb685acd56bac10e69d93c536366eb65aa6bcf5c"
   integrity sha512-HIWmqA86KcmCAhnMAN0wuDOARV/525R2+lOLotuGFzn4HO+FH+/645z2wx0Dt3iDv6/p61SIvKnDstISainhLQ==
   dependencies:
     moment "^2.29.4"
 
-"moment@>= 2.6.0", moment@^2.10, moment@^2.11.2, moment@^2.19.1, moment@^2.27.0:
+moment@^2.10, moment@^2.11.2, moment@^2.19.1, moment@^2.27.0:
   version "2.29.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
