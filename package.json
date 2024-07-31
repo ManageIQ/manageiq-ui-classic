@@ -174,7 +174,8 @@
   "resolutions": {
     "ip": "1.1.9",
     "minimist": "1.2.6",
-    "moment-timezone": "~0.5.40"
+    "moment-timezone": "~0.5.40",
+    "tough-cookie": "~4.1.3"
   },
   "engines": {
     "node": ">= 12.0.0",
