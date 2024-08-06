@@ -56,7 +56,7 @@ describe VmInfraController do
 
   let(:custom_attr1) do
     FactoryBot.create(
-      :custom_attribute,
+      :ems_custom_attribute,
       :resource => vm_vmware,
       :name     => 'Proč by si jeden nepokrad',
       :value    => 'jó, v tom je Pepa demokrat'
@@ -65,7 +65,7 @@ describe VmInfraController do
 
   let(:custom_attr2) do
     FactoryBot.create(
-      :custom_attribute,
+      :ems_custom_attribute,
       :resource => vm_vmware,
       :name     => nil,
       :value    => 'a šikulovi má být dána šance'
@@ -75,7 +75,7 @@ describe VmInfraController do
   # http://localhost:3000/vm_infra/show/10000000000449
   it 'can display VM details for vm with ems_custom_attributes and a null attribute name' do
     vm_vmware.ems_custom_attributes.push(custom_attr1, custom_attr2)
-    expect(controller).to receive(:identify_record).and_return(vm_vmware)
+    expect(controller).to receive(:identify_record).twice.and_return(vm_vmware)
 
     get :show, :params => { :id => vm_vmware.id }
     expect(response).to redirect_to(:action => 'explorer')
