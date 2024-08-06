@@ -69,7 +69,7 @@ const NamespaceSelector = ({ onSelectMethod, selectedIds }) => {
    * List is memoized to prevent unnecessary re-renders when other state values change. */
   const renderContents = useMemo(() => {
     if (!data || data.length === 0) {
-      return <NotificationMessage type="info" message={__('No methods available.')} />;
+      return <NotificationMessage type="info" message={__('No methods available')} />;
     }
 
     return (

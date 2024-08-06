@@ -133,7 +133,7 @@ const AeInlineMethod = ({ type, selected }) => {
     )
     : (
       <div className="ae-inline-methods-notification">
-        <NotificationMessage type="info" message={__('No methods selected.')} />
+        <NotificationMessage type="info" message={__('No methods selected')} />
       </div>
     ));
 
@@ -156,7 +156,7 @@ const AeInlineMethod = ({ type, selected }) => {
         onClick={() => showModal(true)}
         size="sm"
       >
-        {__('Add method')}
+        {__('Add Method')}
       </Button>
     </div>
   );
