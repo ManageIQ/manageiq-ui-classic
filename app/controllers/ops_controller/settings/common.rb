@@ -182,11 +182,7 @@ module OpsController::Settings::Common
       task_opts = {:action => "Save subscriptions for global region", :userid => session[:userid]}
       queue_opts = {:class_name => "MiqPglogical", :method_name => "save_global_region",
                     :args       => [subscriptions_to_save, subsciptions_to_remove]}
-      if ActiveRecord.respond_to?(:yaml_column_permitted_classes)
-        ActiveRecord.yaml_column_permitted_classes       = YamlPermittedClasses.app_yaml_permitted_classes | [subscriptions_to_save.first.class, subsciptions_to_remove.first.class]
-      else
-        ActiveRecord::Base.yaml_column_permitted_classes = YamlPermittedClasses.app_yaml_permitted_classes | [subscriptions_to_save.first.class, subsciptions_to_remove.first.class]
-      end
+      ActiveRecord.yaml_column_permitted_classes = YamlPermittedClasses.app_yaml_permitted_classes | [subscriptions_to_save.first.class, subsciptions_to_remove.first.class]
     when "remote"
       task_opts  = {:action => "Configure the database to be a replication remote region",
                     :userid => session[:userid]}
