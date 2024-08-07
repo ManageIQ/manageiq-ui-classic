@@ -37,7 +37,10 @@ module ManageIQ
         config.assets.paths << root.join('vendor', 'assets', 'stylesheets').to_s
 
         if Rails.env.production? || Rails.env.test?
-          config.assets.js_compressor = :uglifier
+          # Workaround rails 7 + es6 syntax in some js causing uglifier errors by running harmony mode
+          # See: https://www.github.com/lautis/uglifier/issues/127
+          require 'uglifier'
+          config.assets.js_compressor = Uglifier.new(:harmony => true)
         end
 
         def self.vmdb_plugin?
