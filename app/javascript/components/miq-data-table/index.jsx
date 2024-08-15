@@ -100,7 +100,9 @@ const MiqDataTable = ({
         isSortable={isSortable}
         isSortHeader={sortHeader}
         sortDirection={sortDirection}
-        className={classNames('miq-data-table-header', (header.contentButton ? 'header-button' : ''))}
+        className={
+          classNames('miq-data-table-header', (header.contentButton ? 'header-button' : ''), (header.actionCell ? 'action-cell-holder' : ''))
+        }
       >
         {headerLabel(header.header)}
       </TableHeader>

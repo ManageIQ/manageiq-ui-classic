@@ -1907,6 +1907,9 @@ Rails.application.routes.draw do
         explorer
         method_form_fields
         namespace
+        ae_domains
+        ae_methods
+        ae_method_operations
         show
       ],
       :post => %w[
@@ -1961,6 +1964,7 @@ Rails.application.routes.draw do
         editor
         export_service_dialogs
         show
+        old_dialogs_edit_get
       ],
       :post => %w[
         ab_group_reorder
@@ -1980,6 +1984,7 @@ Rails.application.routes.draw do
         old_dialogs_form_field_changed
         old_dialogs_list
         old_dialogs_update
+        provision_dialogs_update
         reload
         resolve
         tree_autoload

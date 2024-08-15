@@ -107,15 +107,16 @@ class ApplicationHelper::Toolbar::TemplateCloudsCenter < ApplicationHelper::Tool
           :send_checked => true,
           :enabled      => false,
           :onwhen       => "1+"),
-        button(
-          :image_policy_sim,
-          'fa fa-play-circle-o fa-lg',
-          N_('View Policy Simulation for the selected items'),
-          N_('Policy Simulation'),
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :enabled      => false,
-          :onwhen       => "1+"),
+        # TODO: Add this button back when the page is fixed
+        # button(
+        #   :image_policy_sim,
+        #   'fa fa-play-circle-o fa-lg',
+        #   N_('View Policy Simulation for the selected items'),
+        #   N_('Policy Simulation'),
+        #   :url_parms    => "main_div",
+        #   :send_checked => true,
+        #   :enabled      => false,
+        #   :onwhen       => "1+"),
         button(
           :image_tag,
           'pficon pficon-edit fa-lg',

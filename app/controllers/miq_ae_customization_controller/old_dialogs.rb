@@ -11,29 +11,6 @@ module MiqAeCustomizationController::OldDialogs
     @edit[:new][:content] = @edit[:new][:content] + "..." if !params[:name] && !params[:description] && !params[:dialog_type] && !params[:content_data]
   end
 
-  # Set form variables for edit
-  def old_dialogs_set_form_vars
-    @edit = {}
-    @edit[:dialog] = @dialog
-
-    @edit[:new] = {}
-    @edit[:current] = {}
-    @edit[:key] = "dialog_edit__#{@dialog.id || "new"}"
-
-    @edit[:new][:name] = @dialog.name
-    @edit[:new][:description] = @dialog.description
-    @edit[:new][:dialog_type] = if @dialog.dialog_type
-                                  @dialog.dialog_type
-                                else
-                                  # if new customization dialogs, check if add button was pressed form folder level, to auto select image type
-                                  x_node == "root" ? @dialog.dialog_type : x_node.split('_')[1]
-                                end
-
-    @edit[:new][:content] = @dialog.content.to_yaml
-    @edit[:current] = copy_hash(@edit[:new])
-    session[:edit] = @edit
-  end
-
   def old_dialogs_set_record_vars(dialog)
     dialog.name = @edit[:new][:name]
     dialog.description = @edit[:new][:description]
@@ -161,15 +138,30 @@ module MiqAeCustomizationController::OldDialogs
   def old_dialogs_new
     assert_privileges("old_dialogs_new")
     @dialog = MiqDialog.new
-    old_dialogs_set_form_vars
+    @dialog.dialog_type = x_node == "root" ? @dialog.dialog_type : x_node.split('_')[1]
+    @hide_bottom_bar = true
     @in_a_form = true
     replace_right_cell(:nodetype => "odg-")
   end
 
   def old_dialogs_copy
     assert_privileges("old_dialogs_copy")
-    @_params[:typ] = "copy"
-    old_dialogs_edit
+    @hide_bottom_bar = true
+    dialog = MiqDialog.find(params[:id])
+    @dialog = MiqDialog.new
+    @dialog.name = "Copy of " + dialog.name
+    @dialog.description = dialog.description
+    @dialog.dialog_type = dialog.dialog_type
+    @dialog.content = YAML.dump(dialog.content)
+    session[:changed] = true
+    if @dialog.default == true
+      add_flash(_("Default Dialog \"%{name}\" can not be edited") % {:name => @dialog.name}, :error)
+      get_node_info
+      replace_right_cell(:nodetype => x_node)
+      return
+    end
+    @in_a_form = true
+    replace_right_cell(:nodetype => "odg-#{params[:id]}")
   end
 
   def old_dialogs_edit
@@ -180,28 +172,37 @@ module MiqAeCustomizationController::OldDialogs
       obj = find_checked_items
       @_params[:id] = obj[0]
     end
-
-    if params[:typ] == "copy"
-      dialog = MiqDialog.find(params[:id])
-      @dialog = MiqDialog.new
-      @dialog.name = "Copy of " + dialog.name
-      @dialog.description = dialog.description
-      @dialog.dialog_type = dialog.dialog_type
-      @dialog.content = dialog.content
-      session[:changed] = true
-    else
-      @dialog = @record = identify_record(params[:id], MiqDialog) if params[:id]
-      session[:changed] = false
-    end
+    @hide_bottom_bar = true
+    @dialog = @record = identify_record(params[:id], MiqDialog) if params[:id]
+    session[:changed] = false
     if @dialog.default == true
       add_flash(_("Default Dialog \"%{name}\" can not be edited") % {:name => @dialog.name}, :error)
       get_node_info
       replace_right_cell(:nodetype => x_node)
       return
     end
-    old_dialogs_set_form_vars
     @in_a_form = true
     replace_right_cell(:nodetype => "odg-#{params[:id]}")
+  end
+
+  def old_dialogs_edit_get
+    assert_privileges("old_dialogs_edit")
+    unless params[:id]
+      obj = find_checked_items
+      @_params[:id] = obj[0]
+    end
+    @hide_bottom_bar = true
+
+    dialog = MiqDialog.find(params[:id])
+    if dialog.default == true
+      add_flash(_("Default Dialog \"%{name}\" can not be edited") % {:name => dialog.name}, :error)
+    end
+    render :json => {
+      :name        => dialog.name,
+      :description => dialog.description,
+      :content     => YAML.dump(dialog.content),
+      :dialog_type => dialog.dialog_type
+    }
   end
 
   def old_dialogs_update
@@ -211,7 +212,71 @@ module MiqAeCustomizationController::OldDialogs
     old_dialogs_update_create
   end
 
+  def provision_dialogs_update
+    assert_privileges(params[:id].present? ? 'old_dialogs_edit' : 'old_dialogs_new')
+    @hide_bottom_bar = true
+    id = params[:id] ? params[:id] : "new"
+    provision_dialogs_update_create
+  end
+
   private
+
+  def provision_dialogs_update_create
+    case params[:button]
+    when "add", "save"
+      dialog = params[:id].blank? ? MiqDialog.new : MiqDialog.find(params[:id]) # Get new or existing record
+      if params[:name].blank?
+        add_flash(_("Name is required"), :error)
+      end
+      if params[:dialog_type].blank?
+        add_flash(_("Dialog Type must be selected"), :error)
+      end
+      unless @flash_array
+        begin
+          YAML.parse(params[:content_data])
+        rescue YAML::SyntaxError => ex
+          add_flash(_("Syntax error in YAML file: %{error_message}") % {:error_message => ex.message}, :error)
+        end
+      end
+      if @flash_array
+        javascript_flash
+        return
+      end
+      dialog.name = params[:name]
+      dialog.description = params[:description]
+      dialog.dialog_type = params[:dialog_type]
+      dialog.content = YAML.safe_load(params[:content_data])
+      begin
+        dialog.save!
+      rescue StandardError
+        dialog.errors.each do |error|
+          add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
+        end
+        @changed = true
+        javascript_flash
+      else
+        edit_hash = {}
+        edit_hash[:new] = {:name => params[:name], :description => params[:description], :dialog_type => params[:dialog_type], :content => params[:content_data]}
+
+        if params[:old_data]
+          edit_hash[:current] = {:name => params[:old_data][:name], :description => params[:old_data][:description], :dialog_type => params[:old_data][:dialog_type], :content => params[:old_data][:content]}
+        else
+          edit_hash[:current] = {:name => nil, :description => nil, :dialog_type => nil, :content => nil}
+        end
+        AuditEvent.success(build_saved_audit(dialog, edit_hash))
+        @edit = session[:edit] = nil # clean out the saved info
+        # if editing from list view then change active_node to be same as updated image_type folder node
+        if x_node.split('-')[0] == "xx"
+          self.x_node = "xx-MiqDialog_#{dialog.dialog_type}"
+        elsif params[:button] == "add"
+          d = MiqDialog.find_by(:name => dialog.name, :dialog_type => dialog.dialog_type)
+          self.x_node = "odg-#{d.id}"
+        end
+        get_node_info
+        replace_right_cell(:nodetype => x_node, :replace_trees => [:old_dialogs])
+      end
+    end
+  end
 
   def old_dialogs_update_create
     old_dialogs_get_form_vars

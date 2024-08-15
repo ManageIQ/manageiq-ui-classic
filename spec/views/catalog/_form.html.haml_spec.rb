@@ -17,7 +17,7 @@ describe "catalog/_form.html.haml" do
   end
 
   it "Renders form when adding catalog bundle and st_prov_type is not set" do
-    render
+    render :template => "catalog/_form"
     expect(response).to render_template(:partial => "catalog/_form_basic_info")
   end
 end

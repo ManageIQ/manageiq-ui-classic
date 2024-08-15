@@ -722,6 +722,9 @@ MiqActionController:
 - x_search_by_name
 - x_show
 MiqAeClassController:
+- ae_domains
+- ae_methods
+- ae_method_operations
 - adv_search_button
 - adv_search_clear
 - adv_search_load_choice

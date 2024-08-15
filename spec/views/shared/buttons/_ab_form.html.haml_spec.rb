@@ -16,14 +16,14 @@ describe "shared/buttons/_ab_form.html.haml" do
     it "is enabled if the copied target class is the same as the current target class" do
       allow(view).to receive(:session)
         .and_return(:resolve_object => {:new => {:target_class => "CloudNetwork"}})
-      render
+      render :template => "shared/buttons/_ab_form"
       expect(rendered).to include("Paste object details for use in a Button.")
     end
 
     it "is disabled if the copied target class differs from the current target class" do
       allow(view).to receive(:session)
         .and_return(:resolve_object => {:new => {:target_class => "AvailabilityZone"}})
-      render
+      render :template => "shared/buttons/_ab_form"
       expect(rendered).to include("Paste is not available, target class differs from the target class of the object copied from the Simulation screen")
     end
   end

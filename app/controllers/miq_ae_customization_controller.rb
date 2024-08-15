@@ -7,6 +7,7 @@ class MiqAeCustomizationController < ApplicationController
   helper ApplicationHelper::ImportExportHelper
   include Mixins::GenericSessionMixin
   include Mixins::BreadcrumbsMixin
+  include MiqAeCustomizationHelper
 
   before_action :check_privileges
   before_action :get_session_data
@@ -318,6 +319,9 @@ class MiqAeCustomizationController < ApplicationController
         }
         presenter.update(:form_buttons_div, render_proc[:partial => "layouts/x_edit_buttons", :locals => locals])
         presenter.remove_paging.show(:form_buttons_div)
+        if @hide_bottom_bar
+          presenter.hide(:form_buttons_div)
+        end
       end
       presenter.show(:paging_div)
     else

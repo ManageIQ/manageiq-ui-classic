@@ -17,4 +17,35 @@ module MiqAeCustomizationHelper
       {:id => '', :action => 'new'}
     end
   end
+
+  def miq_ae_customization_summary(record)
+    summary = [
+      miq_ae_customization_basic_info(record),
+      miq_ae_customization_content(record),
+    ]
+    safe_join(summary)
+  end
+
+  def miq_ae_customization_basic_info(record)
+    rows = [
+      row_data(_('Name'), record.name),
+      row_data(_('Description'), record.description),
+    ]
+    miq_structured_list({
+                          :title => _('Basic Information'),
+                          :mode  => "miq_ae_customization_summary",
+                          :rows  => rows
+                        })
+  end
+
+  def miq_ae_customization_content(record)
+    rows = [
+      row_data('', {:input => 'code_mirror', :props => {:mode => 'yaml', :payload => YAML.dump(record.content)}})
+    ]
+    miq_structured_list({
+                          :title => _('Content'),
+                          :mode  => "method_built_in_data",
+                          :rows  => rows
+                        })
+  end
 end
