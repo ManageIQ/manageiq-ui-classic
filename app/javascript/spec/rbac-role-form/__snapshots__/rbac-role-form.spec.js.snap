@@ -1,0 +1,301 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Rbac Role Form Component render add rbac role form 1`] = `
+<div>
+  <div
+    className="dialog-provision-form"
+  >
+    <Connect(MiqFormRenderer)
+      FormTemplate={[Function]}
+      initialValues={Object {}}
+      onCancel={[Function]}
+      onReset={[Function]}
+      onSubmit={[Function]}
+      schema={
+        Object {
+          "fields": Array [
+            Object {
+              "className": "role-information",
+              "component": "plain-text",
+              "id": "role-information",
+              "label": "Role Information",
+              "name": "role-information",
+            },
+            Object {
+              "className": "name-label",
+              "component": "text-field",
+              "id": "name",
+              "initialValue": "",
+              "isRequired": true,
+              "label": "Name",
+              "maxLength": 128,
+              "name": "name",
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+              ],
+            },
+            Object {
+              "className": "access-restriction-orchestration",
+              "component": "select",
+              "id": "vm_restriction",
+              "initialValue": "",
+              "label": "Access Restriction for Orchestration Stacks, Key Pairs, Services, VMs, and Templates",
+              "maxLength": 128,
+              "name": "vm_restriction",
+              "options": Array [
+                Object {
+                  "label": "<#{_('None')}>",
+                  "value": "-1",
+                },
+                Object {
+                  "label": "Only User Owned",
+                  "value": "user",
+                },
+                Object {
+                  "label": "Only User Owned or Group Owned",
+                  "value": "user_or_group",
+                },
+              ],
+            },
+            Object {
+              "className": "access-restriction-catalog",
+              "component": "select",
+              "id": "service_template_restriction",
+              "initialValue": "",
+              "label": "Access Restriction for Catalog Items",
+              "maxLength": 128,
+              "name": "service_template_restriction",
+              "options": Array [
+                Object {
+                  "label": "<#{_('None')}>",
+                  "value": "-1",
+                },
+                Object {
+                  "label": "Only User Owned",
+                  "value": "user",
+                },
+                Object {
+                  "label": "Only User Owned or Group Owned",
+                  "value": "user_or_group",
+                },
+              ],
+            },
+            Object {
+              "checked": Array [],
+              "className": "checkbox-tree",
+              "component": "checkbox-tree",
+              "id": "tree_dropdown",
+              "label": "Product Features (Editing)",
+              "name": "tree_dropdown",
+              "nodes": Array [],
+            },
+          ],
+        }
+      }
+      validate={[Function]}
+    />
+  </div>
+</div>
+`;
+
+exports[`Rbac Role Form Component render copy rbac role form 1`] = `
+<div>
+  <div
+    className="dialog-provision-form"
+  >
+    <Connect(MiqFormRenderer)
+      FormTemplate={[Function]}
+      initialValues={Object {}}
+      onCancel={[Function]}
+      onReset={[Function]}
+      onSubmit={[Function]}
+      schema={
+        Object {
+          "fields": Array [
+            Object {
+              "className": "role-information",
+              "component": "plain-text",
+              "id": "role-information",
+              "label": "Role Information",
+              "name": "role-information",
+            },
+            Object {
+              "className": "name-label",
+              "component": "text-field",
+              "id": "name",
+              "initialValue": "",
+              "isRequired": true,
+              "label": "Name",
+              "maxLength": 128,
+              "name": "name",
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+              ],
+            },
+            Object {
+              "className": "access-restriction-orchestration",
+              "component": "select",
+              "id": "vm_restriction",
+              "initialValue": "",
+              "label": "Access Restriction for Orchestration Stacks, Key Pairs, Services, VMs, and Templates",
+              "maxLength": 128,
+              "name": "vm_restriction",
+              "options": Array [
+                Object {
+                  "label": "<#{_('None')}>",
+                  "value": "-1",
+                },
+                Object {
+                  "label": "Only User Owned",
+                  "value": "user",
+                },
+                Object {
+                  "label": "Only User Owned or Group Owned",
+                  "value": "user_or_group",
+                },
+              ],
+            },
+            Object {
+              "className": "access-restriction-catalog",
+              "component": "select",
+              "id": "service_template_restriction",
+              "initialValue": "",
+              "label": "Access Restriction for Catalog Items",
+              "maxLength": 128,
+              "name": "service_template_restriction",
+              "options": Array [
+                Object {
+                  "label": "<#{_('None')}>",
+                  "value": "-1",
+                },
+                Object {
+                  "label": "Only User Owned",
+                  "value": "user",
+                },
+                Object {
+                  "label": "Only User Owned or Group Owned",
+                  "value": "user_or_group",
+                },
+              ],
+            },
+            Object {
+              "checked": Array [],
+              "className": "checkbox-tree",
+              "component": "checkbox-tree",
+              "id": "tree_dropdown",
+              "label": "Product Features (Editing)",
+              "name": "tree_dropdown",
+              "nodes": Array [],
+            },
+          ],
+        }
+      }
+      validate={[Function]}
+    />
+  </div>
+</div>
+`;
+
+exports[`Rbac Role Form Component render edit rbac role form 1`] = `
+<div>
+  <div
+    className="dialog-provision-form"
+  >
+    <Connect(MiqFormRenderer)
+      FormTemplate={[Function]}
+      initialValues={Object {}}
+      onCancel={[Function]}
+      onReset={[Function]}
+      onSubmit={[Function]}
+      schema={
+        Object {
+          "fields": Array [
+            Object {
+              "className": "role-information",
+              "component": "plain-text",
+              "id": "role-information",
+              "label": "Role Information",
+              "name": "role-information",
+            },
+            Object {
+              "className": "name-label",
+              "component": "text-field",
+              "id": "name",
+              "initialValue": "",
+              "isRequired": true,
+              "label": "Name",
+              "maxLength": 128,
+              "name": "name",
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+              ],
+            },
+            Object {
+              "className": "access-restriction-orchestration",
+              "component": "select",
+              "id": "vm_restriction",
+              "initialValue": "",
+              "label": "Access Restriction for Orchestration Stacks, Key Pairs, Services, VMs, and Templates",
+              "maxLength": 128,
+              "name": "vm_restriction",
+              "options": Array [
+                Object {
+                  "label": "<#{_('None')}>",
+                  "value": "-1",
+                },
+                Object {
+                  "label": "Only User Owned",
+                  "value": "user",
+                },
+                Object {
+                  "label": "Only User Owned or Group Owned",
+                  "value": "user_or_group",
+                },
+              ],
+            },
+            Object {
+              "className": "access-restriction-catalog",
+              "component": "select",
+              "id": "service_template_restriction",
+              "initialValue": "",
+              "label": "Access Restriction for Catalog Items",
+              "maxLength": 128,
+              "name": "service_template_restriction",
+              "options": Array [
+                Object {
+                  "label": "<#{_('None')}>",
+                  "value": "-1",
+                },
+                Object {
+                  "label": "Only User Owned",
+                  "value": "user",
+                },
+                Object {
+                  "label": "Only User Owned or Group Owned",
+                  "value": "user_or_group",
+                },
+              ],
+            },
+            Object {
+              "checked": Array [],
+              "className": "checkbox-tree",
+              "component": "checkbox-tree",
+              "id": "tree_dropdown",
+              "label": "Product Features (Editing)",
+              "name": "tree_dropdown",
+              "nodes": Array [],
+            },
+          ],
+        }
+      }
+      validate={[Function]}
+    />
+  </div>
+</div>
+`;

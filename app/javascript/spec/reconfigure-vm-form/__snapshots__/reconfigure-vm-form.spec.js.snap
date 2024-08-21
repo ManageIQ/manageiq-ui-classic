@@ -92,6 +92,7 @@ exports[`Reconfigure VM form component should render form with only fields it ha
       componentMapper={
         Object {
           "checkbox": [Function],
+          "checkbox-tree": [Function],
           "code-editor": [Function],
           "date-picker": [Function],
           "dual-list-select": [Function],
@@ -115,6 +116,13 @@ exports[`Reconfigure VM form component should render form with only fields it ha
           "time-picker": [Function],
           "tree-selector": [Function],
           "tree-view": [Function],
+          "tree-view-redux": Object {
+            "$$typeof": Symbol(react.memo),
+            "WrappedComponent": [Function],
+            "compare": null,
+            "displayName": "Connect(TreeView)",
+            "type": [Function],
+          },
           "validate-credentials": [Function],
           "wizard": [Function],
         }
@@ -398,6 +406,7 @@ exports[`Reconfigure VM form component should render form with only fields it ha
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -421,6 +430,13 @@ exports[`Reconfigure VM form component should render form with only fields it ha
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -709,6 +725,7 @@ exports[`Reconfigure VM form component should render form with only fields it ha
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -733,6 +750,13 @@ exports[`Reconfigure VM form component should render form with only fields it ha
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }
@@ -4576,6 +4600,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
       componentMapper={
         Object {
           "checkbox": [Function],
+          "checkbox-tree": [Function],
           "code-editor": [Function],
           "date-picker": [Function],
           "dual-list-select": [Function],
@@ -4599,6 +4624,13 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
           "time-picker": [Function],
           "tree-selector": [Function],
           "tree-view": [Function],
+          "tree-view-redux": Object {
+            "$$typeof": Symbol(react.memo),
+            "WrappedComponent": [Function],
+            "compare": null,
+            "displayName": "Connect(TreeView)",
+            "type": [Function],
+          },
           "validate-credentials": [Function],
           "wizard": [Function],
         }
@@ -4986,6 +5018,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -5009,6 +5042,13 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -5401,6 +5441,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -5425,6 +5466,13 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }
@@ -15922,6 +15970,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show c
       componentMapper={
         Object {
           "checkbox": [Function],
+          "checkbox-tree": [Function],
           "code-editor": [Function],
           "date-picker": [Function],
           "dual-list-select": [Function],
@@ -15945,6 +15994,13 @@ exports[`Reconfigure VM form component should render reconfigure form and show c
           "time-picker": [Function],
           "tree-selector": [Function],
           "tree-view": [Function],
+          "tree-view-redux": Object {
+            "$$typeof": Symbol(react.memo),
+            "WrappedComponent": [Function],
+            "compare": null,
+            "displayName": "Connect(TreeView)",
+            "type": [Function],
+          },
           "validate-credentials": [Function],
           "wizard": [Function],
         }
@@ -16034,6 +16090,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show c
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -16057,6 +16114,13 @@ exports[`Reconfigure VM form component should render reconfigure form and show c
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -16151,6 +16215,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show c
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -16175,6 +16240,13 @@ exports[`Reconfigure VM form component should render reconfigure form and show c
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }
@@ -17391,6 +17463,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
       componentMapper={
         Object {
           "checkbox": [Function],
+          "checkbox-tree": [Function],
           "code-editor": [Function],
           "date-picker": [Function],
           "dual-list-select": [Function],
@@ -17414,6 +17487,13 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
           "time-picker": [Function],
           "tree-selector": [Function],
           "tree-view": [Function],
+          "tree-view-redux": Object {
+            "$$typeof": Symbol(react.memo),
+            "WrappedComponent": [Function],
+            "compare": null,
+            "displayName": "Connect(TreeView)",
+            "type": [Function],
+          },
           "validate-credentials": [Function],
           "wizard": [Function],
         }
@@ -17608,6 +17688,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -17631,6 +17712,13 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -17830,6 +17918,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -17854,6 +17943,13 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }
@@ -21186,6 +21282,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
       componentMapper={
         Object {
           "checkbox": [Function],
+          "checkbox-tree": [Function],
           "code-editor": [Function],
           "date-picker": [Function],
           "dual-list-select": [Function],
@@ -21209,6 +21306,13 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
           "time-picker": [Function],
           "tree-selector": [Function],
           "tree-view": [Function],
+          "tree-view-redux": Object {
+            "$$typeof": Symbol(react.memo),
+            "WrappedComponent": [Function],
+            "compare": null,
+            "displayName": "Connect(TreeView)",
+            "type": [Function],
+          },
           "validate-credentials": [Function],
           "wizard": [Function],
         }
@@ -21403,6 +21507,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -21426,6 +21531,13 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -21625,6 +21737,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -21649,6 +21762,13 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }
@@ -24960,6 +25080,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
       componentMapper={
         Object {
           "checkbox": [Function],
+          "checkbox-tree": [Function],
           "code-editor": [Function],
           "date-picker": [Function],
           "dual-list-select": [Function],
@@ -24983,6 +25104,13 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
           "time-picker": [Function],
           "tree-selector": [Function],
           "tree-view": [Function],
+          "tree-view-redux": Object {
+            "$$typeof": Symbol(react.memo),
+            "WrappedComponent": [Function],
+            "compare": null,
+            "displayName": "Connect(TreeView)",
+            "type": [Function],
+          },
           "validate-credentials": [Function],
           "wizard": [Function],
         }
@@ -25183,6 +25311,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -25206,6 +25335,13 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -25411,6 +25547,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -25435,6 +25572,13 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }
@@ -30011,6 +30155,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
       componentMapper={
         Object {
           "checkbox": [Function],
+          "checkbox-tree": [Function],
           "code-editor": [Function],
           "date-picker": [Function],
           "dual-list-select": [Function],
@@ -30034,6 +30179,13 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
           "time-picker": [Function],
           "tree-selector": [Function],
           "tree-view": [Function],
+          "tree-view-redux": Object {
+            "$$typeof": Symbol(react.memo),
+            "WrappedComponent": [Function],
+            "compare": null,
+            "displayName": "Connect(TreeView)",
+            "type": [Function],
+          },
           "validate-credentials": [Function],
           "wizard": [Function],
         }
@@ -30153,6 +30305,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -30176,6 +30329,13 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -30300,6 +30460,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -30324,6 +30485,13 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }
@@ -32114,6 +32282,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
       componentMapper={
         Object {
           "checkbox": [Function],
+          "checkbox-tree": [Function],
           "code-editor": [Function],
           "date-picker": [Function],
           "dual-list-select": [Function],
@@ -32137,6 +32306,13 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
           "time-picker": [Function],
           "tree-selector": [Function],
           "tree-view": [Function],
+          "tree-view-redux": Object {
+            "$$typeof": Symbol(react.memo),
+            "WrappedComponent": [Function],
+            "compare": null,
+            "displayName": "Connect(TreeView)",
+            "type": [Function],
+          },
           "validate-credentials": [Function],
           "wizard": [Function],
         }
@@ -32525,6 +32701,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -32548,6 +32725,13 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -32941,6 +33125,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -32965,6 +33150,13 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }
@@ -43635,6 +43827,7 @@ exports[`Reconfigure VM form component should render reconfigure form without da
       componentMapper={
         Object {
           "checkbox": [Function],
+          "checkbox-tree": [Function],
           "code-editor": [Function],
           "date-picker": [Function],
           "dual-list-select": [Function],
@@ -43658,6 +43851,13 @@ exports[`Reconfigure VM form component should render reconfigure form without da
           "time-picker": [Function],
           "tree-selector": [Function],
           "tree-view": [Function],
+          "tree-view-redux": Object {
+            "$$typeof": Symbol(react.memo),
+            "WrappedComponent": [Function],
+            "compare": null,
+            "displayName": "Connect(TreeView)",
+            "type": [Function],
+          },
           "validate-credentials": [Function],
           "wizard": [Function],
         }
@@ -43858,6 +44058,7 @@ exports[`Reconfigure VM form component should render reconfigure form without da
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -43881,6 +44082,13 @@ exports[`Reconfigure VM form component should render reconfigure form without da
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -44086,6 +44294,7 @@ exports[`Reconfigure VM form component should render reconfigure form without da
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -44110,6 +44319,13 @@ exports[`Reconfigure VM form component should render reconfigure form without da
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }
@@ -48686,6 +48902,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
       componentMapper={
         Object {
           "checkbox": [Function],
+          "checkbox-tree": [Function],
           "code-editor": [Function],
           "date-picker": [Function],
           "dual-list-select": [Function],
@@ -48709,6 +48926,13 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
           "time-picker": [Function],
           "tree-selector": [Function],
           "tree-view": [Function],
+          "tree-view-redux": Object {
+            "$$typeof": Symbol(react.memo),
+            "WrappedComponent": [Function],
+            "compare": null,
+            "displayName": "Connect(TreeView)",
+            "type": [Function],
+          },
           "validate-credentials": [Function],
           "wizard": [Function],
         }
@@ -49095,6 +49319,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -49118,6 +49343,13 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -49509,6 +49741,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -49533,6 +49766,13 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }

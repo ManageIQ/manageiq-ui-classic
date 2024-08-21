@@ -1,50 +1,18 @@
 = render :partial => "layouts/flash_msg"
+- role_restrictions = MiqUserRole::RESTRICTIONS.map do |label, model|
+  - [_(label), model]
+- role_restrictions = role_restrictions.sort
+- select_options =  [["-1", "<#{_('None')}>"]] + role_restrictions
 - if @edit
-  - url = url_for_only_path(:action => 'rbac_role_field_changed', :id => (@edit[:role_id] || "new"))
-  #role_info
-  .row
-    .col-md-12.col-lg-6
-      %h3
-        = _("Role Information")
-      .form-horizontal
-        .form-group
-          %label.col-md-4.control-label
-            = _("Name")
-          .col-md-8
-            = text_field_tag("name",
-                               @edit[:new][:name],
-                               :maxlength => 50,
-                               :class => "form-control",
-                               "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-            = javascript_tag(javascript_focus('name'))
-        .form-group
-          %label.col-md-4.control-label
-            = _('Access Restriction for Orchestration Stacks, Key Pairs, Services, VMs, and Templates')
-          .col-md-8
-            - restrictions = MiqUserRole::RESTRICTIONS.map { |k, v| [_(v), k] }.sort_by { |name, _value| name.downcase }
-            = select_tag('vm_restriction',
-                          options_for_select([[_("None"), "none"]] + restrictions,
-                          @edit[:new][:vm_restriction].to_sym),
-                          :class => "selectpicker")
-          :javascript
-            miqInitSelectPicker();
-            miqSelectPickerEvent('vm_restriction', "#{url}")
-        .form-group
-          %label.col-md-4.control-label
-            = _('Access Restriction for Catalog Items')
-          .col-md-8
-            - restrictions = MiqUserRole::RESTRICTIONS.map { |k, v| [_(v), k] }.sort_by { |name, _value| name.downcase }
-            = select_tag('service_template_restriction',
-                          options_for_select([[_("None"), "none"]] + restrictions,
-                          @edit[:new][:service_template_restriction].to_sym),
-                          :class => "selectpicker")
-          :javascript
-            miqInitSelectPicker();
-            miqSelectPickerEvent('service_template_restriction', "#{url}")
-    .col-md-12.col-lg-6
-      %hr
-        = _("Product Features (Editing)")
-      %h3
-      = render(:partial => "shared/tree", :locals => {:tree => @rbac_menu_tree, :name => @rbac_menu_tree.name})
+  - get_url = url_for_only_path(:action => 'rbac_role_edit_get')
+  - url = url_for_only_path(:action => 'rbac_role_add_react', :id => (@edit[:role_id] || "new"))
+  - custom_props = rbac_role_product_features(@role, @rbac_menu_tree)
+  = react('RbacRoleForm', 
+    :selectOptions => select_options,
+    :url           => url,
+    :getURL        => get_url,
+    :customProps   => custom_props,
+    :role          => @role,
+    :rbacMenuTree  => @rbac_menu_tree)
 - else
   = role_rbac_details(@role, @rbac_menu_tree)
