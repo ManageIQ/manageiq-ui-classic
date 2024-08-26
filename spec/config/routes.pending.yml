@@ -1102,7 +1102,6 @@ ResourcePoolInfraController:
 - sections_field_changed
 - tree_autoload
 RestfulRedirectController:
-- compare_mode
 - index
 - report_data
 SecurityGroupController:
