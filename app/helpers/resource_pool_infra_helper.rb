@@ -1,4 +1,4 @@
 module ResourcePoolInfraHelper
-  include_concern 'TextualSummary'
+  include TextualSummary
   include ResourcePoolConfigHelper
 end

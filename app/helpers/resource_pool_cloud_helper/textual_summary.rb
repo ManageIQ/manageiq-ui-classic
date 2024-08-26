@@ -2,7 +2,7 @@ module ResourcePoolCloudHelper::TextualSummary
   #
   # Groups
   #
-  
+
   def textual_ext_management_system
     textual_link(@record.ext_management_system)
   end
