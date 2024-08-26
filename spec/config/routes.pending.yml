@@ -1069,7 +1069,6 @@ ReportController:
 - x_show
 ResourcePoolCloudController:
 - compare_cancel
-- compare_choose
 - compare_choose_base
 - compare_compress
 - compare_miq
@@ -1087,7 +1086,6 @@ ResourcePoolCloudController:
 - tree_autoload
 ResourcePoolInfraController:
 - compare_cancel
-- compare_choose
 - compare_choose_base
 - compare_compress
 - compare_miq
