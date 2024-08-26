@@ -35,7 +35,10 @@
 
     - when 'DialogFieldTagControl'
       - value = wf.value(field.name) || ''
-      - classifications = Classification.where(:id => value).pluck(:description)
+      - classifications = []
+      - value.each do |tag|
+        - classification = Classification.find_by(:id => tag.split('::').second)
+        - classifications.push(classification.description) if classification
       - if classifications.empty?
         = h('')
       -else
