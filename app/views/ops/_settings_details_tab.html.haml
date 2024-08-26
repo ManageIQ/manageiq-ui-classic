@@ -7,32 +7,9 @@
 
     %table.table.table-striped.table-bordered.table-hover
       %tbody
-        - unless @edit
-          %tr
-            %td.table-view-pf-select{:onclick => remote_function(:url => {:action => 'region_edit', :id => region.id},
-                                                                 :loading => "miqSparkle(true);"),
-                                     :title => _("Edit this Region")}
-              %i.pficon.pficon-regions
-            %td{:onclick => remote_function(:url => {:action => 'region_edit', :id => region.id},
-                                            :loading => "miqSparkle(true);"),
-                :title => _("Edit this Region")}
-              = h(region.description)
-              [#{h(region.region)}]
-        %tr
-          %td.table-view-pf-select{:onclick => "miqTreeActivateNode('settings_tree', 'xx-sis');", :title => _("View Analysis Profiles")}
-            %i.fa.fa-search
-          %td{:onclick => "miqTreeActivateNode('settings_tree', 'xx-sis');", :title => _("View Analysis Profiles")}
-            = _("Analysis Profiles")
-            (#{h(@scan_items.size)})
-        %tr
-          %td.table-view-pf-select{:onclick => "miqTreeActivateNode('settings_tree', 'xx-z');", :title => _("View Zones")}
-            %i.pficon.pficon-zone
-          %td{:onclick => "miqTreeActivateNode('settings_tree', 'xx-z');", :title => _("View Zones")}
-            = _("Zones")
-            (#{h(@zones.size)})
-        %tr
-          %td.table-view-pf-select{:onclick => "miqTreeActivateNode('settings_tree', 'xx-msc');", :title => _("View Schedules")}
-            %i.fa.fa-clock-o
-          %td{:onclick => "miqTreeActivateNode('settings_tree', 'xx-msc');", :title => _("View Schedules")}
-            = _("Schedules")
-            (#{h(@miq_schedules.size)})
+        = react('SettingsDetailsTab', 
+          :region       => region,
+          :scanItemsCount    => @scan_items.size,
+          :zonesCount        => @zones.size,
+          :miqSchedulesCount => @miq_schedules.size)
+       
