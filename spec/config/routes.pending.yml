@@ -1068,13 +1068,8 @@ ReportController:
 - x_history
 - x_show
 ResourcePoolCloudController:
-- adv_search_button
-- adv_search_clear
-- adv_search_load_choice
-- adv_search_name
-- adv_search_name_typed
-- adv_search_toggle
 - compare_cancel
+- compare_choose
 - compare_choose_base
 - compare_compress
 - compare_miq
@@ -1087,31 +1082,12 @@ ResourcePoolCloudController:
 - compare_to_csv
 - compare_to_pdf
 - compare_to_txt
-- download_data
-- download_summary_pdf
-- exp_button
-- exp_changed
-- exp_token_pressed
 - index
-- listnav_search_selected
-- protect
-- quick_search
-- report_data
-- save_default_search
-- search_clear
 - sections_field_changed
-- show
-- show_list
-- tagging_edit
 - tree_autoload
 ResourcePoolInfraController:
-- adv_search_button
-- adv_search_clear
-- adv_search_load_choice
-- adv_search_name
-- adv_search_name_typed
-- adv_search_toggle
 - compare_cancel
+- compare_choose
 - compare_choose_base
 - compare_compress
 - compare_miq
@@ -1124,24 +1100,11 @@ ResourcePoolInfraController:
 - compare_to_csv
 - compare_to_pdf
 - compare_to_txt
-- download_data
-- download_summary_pdf
-- exp_button
-- exp_changed
-- exp_token_pressed
 - index
-- listnav_search_selected
-- protect
-- quick_search
-- report_data
-- save_default_search
-- search_clear
 - sections_field_changed
-- show
-- show_list
-- tagging_edit
 - tree_autoload
 RestfulRedirectController:
+- compare_mode
 - index
 - report_data
 SecurityGroupController:
