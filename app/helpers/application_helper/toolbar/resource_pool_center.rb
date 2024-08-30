@@ -1,4 +1,4 @@
-class ApplicationHelper::Toolbar::ResourcePoolInfraCenter < ApplicationHelper::Toolbar::Basic
+class ApplicationHelper::Toolbar::ResourcePoolCenter < ApplicationHelper::Toolbar::Basic
   button_group('resource_pool_vmdb', [
     select(
       :resource_pool_vmdb_choice,
@@ -7,7 +7,7 @@ class ApplicationHelper::Toolbar::ResourcePoolInfraCenter < ApplicationHelper::T
       t,
       :items => [
         button(
-          :resource_pool_infra_delete,
+          :resource_pool_delete,
           'pficon pficon-delete fa-lg',
           N_('Remove this Resource Pool from Inventory'),
           N_('Remove Resource Pool from Inventory'),
@@ -24,12 +24,12 @@ class ApplicationHelper::Toolbar::ResourcePoolInfraCenter < ApplicationHelper::T
       t,
       :items => [
         button(
-          :resource_pool_infra_protect,
+          :resource_pool_protect,
           'pficon pficon-edit fa-lg',
           N_('Manage Policies for this Resource Pool'),
           N_('Manage Policies')),
         button(
-          :resource_pool_infra_tag,
+          :resource_pool_tag,
           'pficon pficon-edit fa-lg',
           N_('Edit Tags for this Resource Pool'),
           N_('Edit Tags')),

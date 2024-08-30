@@ -1,4 +1,4 @@
-describe ResourcePoolCloudHelper::TextualSummary do
+describe ResourcePoolHelper::TextualSummary do
   include_examples "textual_group", "Properties", %i(
     vapp
     aggregate_cpu_speed
@@ -30,9 +30,6 @@ describe ResourcePoolCloudHelper::TextualSummary do
     cpu_limit
     cpu_shares
     cpu_shares_level
-    cpu_cores_available
-    cpu_cores_reserve
-    cpu_cores_limit
   )
 
   include_examples "textual_group_smart_management"

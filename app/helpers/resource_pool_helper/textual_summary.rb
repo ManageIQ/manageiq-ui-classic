@@ -1,4 +1,4 @@
-module ResourcePoolInfraHelper::TextualSummary
+module ResourcePoolHelper::TextualSummary
   #
   # Groups
   #
@@ -29,7 +29,7 @@ module ResourcePoolInfraHelper::TextualSummary
       _("Configuration"),
       %i[
         memory_reserve memory_reserve_expand memory_limit memory_shares memory_shares_level cpu_reserve
-        cpu_reserve_expand cpu_limit cpu_shares cpu_shares_level cpu_cores_available cpu_cores_reserve cpu_cores_limit
+        cpu_reserve_expand cpu_limit cpu_shares cpu_shares_level
       ]
     )
   end
@@ -48,25 +48,21 @@ module ResourcePoolInfraHelper::TextualSummary
 
   def textual_aggregate_cpu_speed
     # TODO: Why aren't we using mhz_to_human_size here?
-    return nil if @record.aggregate_cpu_speed == 0
     {:label => _("Total Host CPU Resources"),
      :value => "#{number_with_delimiter(@record.aggregate_cpu_speed)} MHz"}
   end
 
   def textual_aggregate_cpu_memory
-    return nil if @record.aggregate_memory == 0
     {:label => _("Total Host Memory"),
      :value => number_to_human_size(@record.aggregate_memory.megabytes, :precision => 0)}
   end
 
   def textual_aggregate_physical_cpus
-    return nil if @record.aggregate_physical_cpus == 0
     {:label => _("Total Host CPUs"),
      :value => number_with_delimiter(@record.aggregate_physical_cpus)}
   end
 
   def textual_aggregate_cpu_total_cores
-    return nil if @record.aggregate_cpu_total_cores == 0
     {:label => _("Total Host CPU Cores"),
      :value => number_with_delimiter(@record.aggregate_cpu_total_cores)}
   end
@@ -80,13 +76,11 @@ module ResourcePoolInfraHelper::TextualSummary
   end
 
   def textual_parent_datacenter
-    return nil if @record.v_parent_datacenter.nil?
     {:label => _("Parent Datacenter"), :icon => "fa fa-building-o", :value => @record.v_parent_datacenter || _("None")}
   end
 
   def textual_parent_cluster
     cluster = @record.parent_cluster
-    return nil if cluster.nil?
     h = {:label => _("Parent Cluster"),
          :icon  => "pficon pficon-cluster",
          :value => (cluster.nil? ? _("None") : cluster.name)}
@@ -99,7 +93,6 @@ module ResourcePoolInfraHelper::TextualSummary
 
   def textual_parent_host
     host = @record.parent_host
-    return nil if host.nil?
     h = {:label => _("Parent Host"),
          :icon  => "pficon pficon-container-node",
          :value => (host.nil? ? _("None") : host.name)}
@@ -115,7 +108,7 @@ module ResourcePoolInfraHelper::TextualSummary
     h = {:label => _("Direct VMs"), :icon => "pficon pficon-virtual-machine", :value => num}
     if num.positive? && role_allows?(:feature => "vm_show_list")
       h[:title] = _("Show VMs in this Resource Pool, but not in Resource Pools below")
-      h[:link]  = url_for_only_path(:controller => 'resource_pool_infra', :action => 'show', :id => @record, :display => 'vms')
+      h[:link]  = url_for_only_path(:controller => 'resource_pool', :action => 'show', :id => @record, :display => 'vms')
     end
     h
   end
@@ -125,7 +118,7 @@ module ResourcePoolInfraHelper::TextualSummary
     h = {:label => _("All VMs"), :icon => "pficon pficon-virtual-machine", :value => num}
     if num.positive? && role_allows?(:feature => "vm_show_list")
       h[:title] = _("Show all VMs in this Resource Pool")
-      h[:link]  = url_for_only_path(:controller => 'resource_pool_infra', :action => 'show', :id => @record, :display => 'all_vms')
+      h[:link]  = url_for_only_path(:controller => 'resource_pool', :action => 'show', :id => @record, :display => 'all_vms')
     end
     h
   end
@@ -133,9 +126,9 @@ module ResourcePoolInfraHelper::TextualSummary
   def textual_resource_pools
     num = @record.number_of(:resource_pools)
     h = {:label => _("Resource Pools"), :icon => "pficon pficon-resource-pool", :value => num}
-    if num.positive? && role_allows?(:feature => "resource_pool_infra_show_list")
-      h[:title] = _("Show all Resource Pools in this Cloud")
-      h[:link]  = url_for_only_path(:controller => "resource_pool_infra", :action => 'show', :id => @record, :display => 'resource_pools')
+    if num.positive? && role_allows?(:feature => "resource_pool_show_list")
+      h[:title] = _("Show all Resource Pools")
+      h[:link]  = url_for_only_path(:controller => "resource_pool", :action => 'show', :id => @record, :display => 'resource_pools')
     end
     h
   end
@@ -198,23 +191,5 @@ module ResourcePoolInfraHelper::TextualSummary
     value = @record.cpu_shares_level
     return nil if value.nil?
     {:label => _("CPU Shares Level"), :value => value}
-  end
-
-  def textual_cpu_cores_available
-    value = @record.cpu_cores_available
-    return nil if value.nil?
-    {:label => _("CPU Cores Available"), :value => value}
-  end
-
-  def textual_cpu_cores_reserve
-    value = @record.cpu_cores_reserve
-    return nil if value.nil?
-    {:label => _("CPU Cores Reserve"), :value => value}
-  end
-
-  def textual_cpu_cores_limit
-    value = @record.cpu_cores_limit
-    return nil if value.nil?
-    {:label => _("CPU Cores Limit"), :value => (value == -1 ? _("Unlimited") : value)}
   end
 end

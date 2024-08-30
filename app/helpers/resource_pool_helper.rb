@@ -1,4 +1,6 @@
-module ResourcePoolConfigHelper
+module ResourcePoolHelper
+  include TextualSummary
+
   def calculate_rp_config(db_record)
     rp_config = []
     unless db_record.memory_reserve.nil?
