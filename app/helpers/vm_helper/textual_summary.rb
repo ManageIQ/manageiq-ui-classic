@@ -59,7 +59,7 @@ module VmHelper::TextualSummary
     TextualGroup.new(
       _("Relationships"),
       %i[
-        ems cluster host resource_pool_cloud resource_pool_infra storage service parent_vm genealogy drift scan_history
+        ems cluster host resource_pool storage service parent_vm genealogy drift scan_history
         cloud_network cloud_subnet custom_button_events
       ]
     )
@@ -245,22 +245,12 @@ module VmHelper::TextualSummary
     h
   end
 
-  def textual_resource_pool_cloud
+  def textual_resource_pool
     rp = @record.parent_resource_pool
     h = {:label => _("Resource Pool"), :icon => "pficon pficon-resource-pool", :value => (rp.nil? ? _("None") : rp.name)}
-    if rp && role_allows?(:feature => "resource_pool_cloud_show")
+    if rp && role_allows?(:feature => "resource_pool_show")
       h[:title] = _("Show this VM's Resource Pool")
-      h[:link]  = url_for_only_path(:controller => 'resource_pool_cloud', :action => 'show', :id => rp)
-    end
-    h
-  end
-
-  def textual_resource_pool_infra
-    rp = @record.parent_resource_pool
-    h = {:label => _("Resource Pool"), :icon => "pficon pficon-resource-pool", :value => (rp.nil? ? _("None") : rp.name)}
-    if rp && role_allows?(:feature => "resource_pool_infra_show")
-      h[:title] = _("Show this VM's Resource Pool")
-      h[:link]  = url_for_only_path(:controller => 'resource_pool_infra', :action => 'show', :id => rp)
+      h[:link]  = url_for_only_path(:controller => 'resource_pool', :action => 'show', :id => rp)
     end
     h
   end

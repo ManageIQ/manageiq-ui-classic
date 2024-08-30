@@ -1,7 +1,7 @@
 require "routing/shared_examples"
 
-describe "routes for ResourcePoolCloudController" do
-  let(:controller_name) { "resource_pool_cloud" }
+describe "routes for AvailabilityZoneController" do
+  let(:controller_name) { "resource_pool" }
 
   it_behaves_like "A controller that has advanced search routes"
   it_behaves_like "A controller that has download_data routes"

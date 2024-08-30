@@ -61,8 +61,7 @@ module ApplicationHelper
         physical_server
         physical_storage
         physical_switch
-        resource_pool_cloud
-        resource_pool_infra
+        resource_pool
         security_group
         security_policy
         security_policy_rule
