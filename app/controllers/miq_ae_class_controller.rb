@@ -1031,12 +1031,11 @@ class MiqAeClassController < ApplicationController
       # ManageIQ::Providers::AnsibleTower::Provider.where('zone_id != ?', Zone.maintenance_zone.id)
       list_of_managers = ManageIQ::Providers::ExternalAutomationManager
                          .where(:enabled => true)
-                         .pluck(:id, :name)
-                         .map { |r| {:id => r[0], :name => r[1]} }
+                         .map { |provider| {:id => provider.id, :name => provider.name} }
 
       if method&.options[:ansible_template_id]
-        manager_id = ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript
-                     .find_by(:id => method.options[:ansible_template_id])&.manager_id
+        manager_class = get_template_class(method.location)
+        manager_id = manager_class.find_by(:id => method.options[:ansible_template_id])&.manager_id
       end
     end
 
@@ -1843,6 +1842,14 @@ class MiqAeClassController < ApplicationController
   end
 
   private
+
+  def get_template_class(location)
+    if location == "ansible_workflow_template"
+      ManageIQ::Providers::ExternalAutomationManager::ConfigurationWorkflow
+    else
+      ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript
+    end
+  end
 
   def feature_by_action
     features_in_action = %w[
@@ -2819,13 +2826,15 @@ class MiqAeClassController < ApplicationController
     set_right_cell_text(x_node, @record)
   end
 
-  def fetch_manager_name(ansible_template_id)
+  def fetch_manager_name(ansible_template_id, klass)
     return nil if ansible_template_id.blank?
 
-    ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript.find_by(:id => ansible_template_id)&.manager&.name
+    klass.find_by(:id => ansible_template_id)&.manager&.name
   end
 
   def fetch_playbook_details(record)
+    template_class = get_template_class(record.location)
+
     options = record.options
     details = {
       :repository          => fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource, options[:repository_id]),
@@ -2837,12 +2846,12 @@ class MiqAeClassController < ApplicationController
       :hosts               => options[:hosts],
       :log_output          => options[:log_output],
       :ansible_template_id => options[:ansible_template_id],
-      :manager_name        => fetch_manager_name(options[:ansible_template_id]),
+      :manager_name        => fetch_manager_name(options[:ansible_template_id], template_class),
     }
     details[:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, options[:network_credential_id]) if options[:network_credential_id]
     details[:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, options[:cloud_credential_id]) if options[:cloud_credential_id]
     details[:vault_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential, options[:vault_credential_id]) if options[:vault_credential_id]
-    details[:ansible_template] = fetch_name_from_object(ManageIQ::Providers::ExternalAutomationManager::ConfigurationScript, options[:ansible_template_id]) if options[:ansible_template_id]
+    details[:ansible_template] = fetch_name_from_object(template_class, options[:ansible_template_id]) if options[:ansible_template_id]
     details
   end
 
