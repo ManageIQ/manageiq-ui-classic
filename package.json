@@ -186,6 +186,7 @@
     "moment": "^2.29.2",
     "moment-timezone": "~0.5.40",
     "nwsapi": "^2.2.1",
+    "path-to-regexp": "~8.0.0",
     "terser": "~4.8.1"
   }
 }
