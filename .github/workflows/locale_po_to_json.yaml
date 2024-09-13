@@ -1,0 +1,56 @@
+name: "Locale PO to JSON"
+
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  locale_po_to_json:
+    if: github.repository_owner == 'ManageIQ'
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: manageiq/postgresql:13
+        env:
+          POSTGRESQL_USER: root
+          POSTGRESQL_PASSWORD: smartvm
+          POSTGRESQL_DATABASE: vmdb_i18n
+        options: --health-cmd pg_isready --health-interval 2s --health-timeout 5s --health-retries 5
+        ports:
+        - 5432:5432
+    env:
+      PGHOST: localhost
+      PGPASSWORD: smartvm
+      RAILS_ENV: i18n
+      SKIP_TEST_RESET: true
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up system
+      run: bin/before_install
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: "3.1"
+        bundler-cache: true
+      timeout-minutes: 30
+    - name: Prepare dependencies
+      run: bin/setup
+    - name: Install gettext for msgfmt --check support
+      run: sudo apt-get install -y gettext
+    - name: Run app:locale:po_to_json
+      run: bundle exec rake app:locale:po_to_json
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v6
+      with:
+        add-paths: |
+          app/javascript/oldjs/locale
+        commit-message: Update UI json translation files
+        branch: update_ui_json_translation_files
+        author: ManageIQ Bot <bot@manageiq.org>
+        committer: ManageIQ Bot <bot@manageiq.org>
+        delete-branch: true
+        labels: internationalization
+        push-to-fork: ManageIQ/manageiq-ui-classic
+        title: Update UI json translation files
+        body: Update UI json translation files
+        token: ${{ secrets.PR_TOKEN }}
