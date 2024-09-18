@@ -50,7 +50,7 @@ jobs:
         committer: ManageIQ Bot <bot@manageiq.org>
         delete-branch: true
         labels: internationalization
-        push-to-fork: ManageIQ/manageiq-ui-classic
+        push-to-fork: miq-bot/manageiq-ui-classic
         title: Update UI json translation files
         body: Update UI json translation files
         token: ${{ secrets.PR_TOKEN }}
