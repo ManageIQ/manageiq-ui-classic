@@ -1,8 +1,4 @@
 describe Mixins::GenericShowMixin do
-  class GenericShowMixinTestController < ActionController::Base
-    include Mixins::GenericShowMixin
-  end
-
   describe '#nested_list' do
     context 'displaying Service Templates thru Tenant textual summary' do
       let(:controller) { OpsController.new }
