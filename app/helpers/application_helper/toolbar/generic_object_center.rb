@@ -10,7 +10,11 @@ class ApplicationHelper::Toolbar::GenericObjectCenter < ApplicationHelper::Toolb
           :generic_object_tag,
           'pficon pficon-edit fa-lg',
           N_('Edit Tags for this Generic Object Instance'),
-          N_('Edit Tags')),
+          N_('Edit Tags'),
+          :send_checked => true,
+          :enabled      => false,
+          :onwhen       => "1+"
+        ),
       ]
     ),
   ])
