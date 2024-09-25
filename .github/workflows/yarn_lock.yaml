@@ -36,7 +36,7 @@ jobs:
         committer: ManageIQ Bot <bot@manageiq.org>
         delete-branch: true
         labels: dependencies
-        assignees: jeffibm
+        assignees: GilbertCherrie
         team-reviewers: ManageIQ/committers-ui
         push-to-fork: miq-bot/manageiq-ui-classic
         title: Update yarn.lock with latest dependencies
