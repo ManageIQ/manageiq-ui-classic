@@ -137,25 +137,8 @@ module OpsController::OpsRbac
       :name                         => role.name,
       :vm_restriction               => role[:settings][:restrictions][:vms],
       :service_template_restriction => role[:settings][:restrictions][:service_templates],
-      :features                     => role[:checked_boxes],
       :featuresWithId               => role[:features_with_id],
     }
-  end
-
-  def role_features
-    assert_privileges("rbac_role_edit")
-    unless params[:id]
-      obj = find_checked_items
-      @_params[:id] = obj[0]
-    end
-    @hide_bottom_bar = true
-
-    role = MiqUserRole.find_by(id: params[:id])
-    if role
-      render :json => {
-        :features => role.miq_product_features,
-      }
-    end
   end
 
   def rbac_tenant_add
@@ -1428,7 +1411,6 @@ module OpsController::OpsRbac
       role.settings[:restrictions][:service_templates] = @edit[:new][:service_template_restriction]
     end
     role.settings = nil if role.settings[:restrictions].blank?
-    role[:checked_boxes] = @edit[:new][:features]
     role[:features_with_id] = @edit[:new][:features_with_id]
   end
 
