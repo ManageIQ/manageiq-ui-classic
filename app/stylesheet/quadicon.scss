@@ -128,11 +128,11 @@ div.miq-quadicon {
       }
 
       .text.font-small {
-        font-size: $font-size * 3/3;
+        font-size: math.div($font-size * 3, 3);
       }
 
       .text.font-tiny {
-        font-size: $font-size * 2/3;
+        font-size: math.div($font-size * 2, 3);
       }
     }
   }
