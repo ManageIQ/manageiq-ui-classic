@@ -101,7 +101,7 @@ const NetworkSecurityGroupsForm = ({ securityGroupId }) => {
     return errors;
   };
 
-  if (isLoading) return <Loading className="export-spinner" withOverlay={false} small />;
+  if (isLoading) return <Loading className="export-spinner" />;
   return !isLoading && (
     <MiqFormRenderer
       schema={createSchema(securityGroupId, fields, subnets, loadSchema, emptySchema)}

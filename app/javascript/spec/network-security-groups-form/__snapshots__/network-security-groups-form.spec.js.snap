@@ -52,8 +52,8 @@ exports[`Network Router Interfaces Form Component should edit security group 1`]
   active={true}
   className="export-spinner"
   description="Active loading indicator"
-  small={true}
-  withOverlay={false}
+  small={false}
+  withOverlay={true}
 />
 `;
 
@@ -62,8 +62,8 @@ exports[`Network Router Interfaces Form Component should edit security group fir
   active={true}
   className="export-spinner"
   description="Active loading indicator"
-  small={true}
-  withOverlay={false}
+  small={false}
+  withOverlay={true}
 />
 `;
 
@@ -119,7 +119,7 @@ exports[`Network Router Interfaces Form Component should render edit security gr
   active={true}
   className="export-spinner"
   description="Active loading indicator"
-  small={true}
-  withOverlay={false}
+  small={false}
+  withOverlay={true}
 />
 `;
