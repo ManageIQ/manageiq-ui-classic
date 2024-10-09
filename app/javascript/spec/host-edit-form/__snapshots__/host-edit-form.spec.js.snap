@@ -30,6 +30,7 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
       componentMapper={
         Object {
           "checkbox": [Function],
+          "checkbox-tree": [Function],
           "code-editor": [Function],
           "date-picker": [Function],
           "dual-list-select": [Function],
@@ -250,6 +251,7 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -477,6 +479,7 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -5515,6 +5518,7 @@ exports[`Show Edit Host Form Component should render form for multiple hosts 1`]
       componentMapper={
         Object {
           "checkbox": [Function],
+          "checkbox-tree": [Function],
           "code-editor": [Function],
           "date-picker": [Function],
           "dual-list-select": [Function],
@@ -5574,6 +5578,7 @@ exports[`Show Edit Host Form Component should render form for multiple hosts 1`]
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -5640,6 +5645,7 @@ exports[`Show Edit Host Form Component should render form for multiple hosts 1`]
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],

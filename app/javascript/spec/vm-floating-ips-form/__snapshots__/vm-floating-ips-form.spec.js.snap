@@ -53,6 +53,7 @@ exports[`Associate / Disassociate form component should render associate form va
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -116,6 +117,7 @@ exports[`Associate / Disassociate form component should render associate form va
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -1079,6 +1081,7 @@ exports[`Associate / Disassociate form component should render disassociate form
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -1142,6 +1145,7 @@ exports[`Associate / Disassociate form component should render disassociate form
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -2132,6 +2136,7 @@ exports[`Associate / Disassociate form component should submit Associate API cal
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -2195,6 +2200,7 @@ exports[`Associate / Disassociate form component should submit Associate API cal
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -3038,6 +3044,7 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -3101,6 +3108,7 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],

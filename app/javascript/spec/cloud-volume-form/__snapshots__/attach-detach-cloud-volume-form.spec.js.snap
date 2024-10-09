@@ -123,6 +123,7 @@ exports[`Attach / Detach form component should render Attach Cloud Volume to the
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -216,6 +217,7 @@ exports[`Attach / Detach form component should render Attach Cloud Volume to the
             componentMapper={
               Object {
                 "checkbox": [Function],
+                "checkbox-tree": [Function],
                 "code-editor": [Function],
                 "date-picker": [Function],
                 "dual-list-select": [Function],
@@ -1384,6 +1386,7 @@ exports[`Attach / Detach form component should render Attach Selected Cloud Volu
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -1477,6 +1480,7 @@ exports[`Attach / Detach form component should render Attach Selected Cloud Volu
             componentMapper={
               Object {
                 "checkbox": [Function],
+                "checkbox-tree": [Function],
                 "code-editor": [Function],
                 "date-picker": [Function],
                 "dual-list-select": [Function],
@@ -2632,6 +2636,7 @@ exports[`Attach / Detach form component should render Detach Cloud Volume from t
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -2712,6 +2717,7 @@ exports[`Attach / Detach form component should render Detach Cloud Volume from t
             componentMapper={
               Object {
                 "checkbox": [Function],
+                "checkbox-tree": [Function],
                 "code-editor": [Function],
                 "date-picker": [Function],
                 "dual-list-select": [Function],
@@ -3673,6 +3679,7 @@ exports[`Attach / Detach form component should render Detach Selected Cloud Volu
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -3753,6 +3760,7 @@ exports[`Attach / Detach form component should render Detach Selected Cloud Volu
             componentMapper={
               Object {
                 "checkbox": [Function],
+                "checkbox-tree": [Function],
                 "code-editor": [Function],
                 "date-picker": [Function],
                 "dual-list-select": [Function],
@@ -4729,6 +4737,7 @@ exports[`Attach / Detach form component should submit Attach API call 1`] = `
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -4822,6 +4831,7 @@ exports[`Attach / Detach form component should submit Attach API call 1`] = `
             componentMapper={
               Object {
                 "checkbox": [Function],
+                "checkbox-tree": [Function],
                 "code-editor": [Function],
                 "date-picker": [Function],
                 "dual-list-select": [Function],
@@ -5977,6 +5987,7 @@ exports[`Attach / Detach form component should submit Detach API call 1`] = `
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -6057,6 +6068,7 @@ exports[`Attach / Detach form component should submit Detach API call 1`] = `
             componentMapper={
               Object {
                 "checkbox": [Function],
+                "checkbox-tree": [Function],
                 "code-editor": [Function],
                 "date-picker": [Function],
                 "dual-list-select": [Function],

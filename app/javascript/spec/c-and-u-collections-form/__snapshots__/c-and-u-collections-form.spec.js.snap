@@ -96,6 +96,7 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -205,6 +206,7 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],

@@ -35,7 +35,6 @@ describe "routing for OpsController" do
     ce_new_cat
     ce_select
     change_tab
-    cu_collection_field_changed
     cu_collection_update
     cu_repair
     cu_repair_field_changed

@@ -491,6 +491,7 @@ exports[`VM common form component should render adding form variant add new time
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -989,6 +990,7 @@ exports[`VM common form component should render adding form variant add new time
             componentMapper={
               Object {
                 "checkbox": [Function],
+                "checkbox-tree": [Function],
                 "code-editor": [Function],
                 "date-picker": [Function],
                 "dual-list-select": [Function],

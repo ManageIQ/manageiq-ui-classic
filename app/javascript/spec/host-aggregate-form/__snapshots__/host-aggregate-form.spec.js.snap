@@ -86,6 +86,7 @@ exports[`Host aggregate form component should render add host form variant (remv
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -144,6 +145,7 @@ exports[`Host aggregate form component should render add host form variant (remv
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],

@@ -11747,6 +11747,7 @@ __metadata:
     proxy-polyfill: "npm:^0.1.7"
     react: "npm:~16.13.1"
     react-bootstrap: "npm:~0.33.0"
+    react-checkbox-tree: "npm:^1.8.0"
     react-codemirror2: "npm:^6.0.0"
     react-dom: "npm:~16.13.1"
     react-markdown: "npm:6.0.0"
@@ -12384,7 +12385,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^3.3.7":
+"nanoid@npm:^3.0.0, nanoid@npm:^3.3.7":
   version: 3.3.7
   resolution: "nanoid@npm:3.3.7"
   bin:
@@ -14580,6 +14581,20 @@ __metadata:
     react: ">=16.3.0"
     react-dom: ">=16.3.0"
   checksum: 10/74df0f7ddee25e55c0b015ca989b6138684540a4fb9f625df62ee787545ee9f385ed59d3daa6fb8cfbfa280f4134d0053e4b1611eed61c707c7540fff8367d11
+  languageName: node
+  linkType: hard
+
+"react-checkbox-tree@npm:^1.8.0":
+  version: 1.8.0
+  resolution: "react-checkbox-tree@npm:1.8.0"
+  dependencies:
+    classnames: "npm:^2.2.5"
+    lodash: "npm:^4.17.10"
+    nanoid: "npm:^3.0.0"
+    prop-types: "npm:^15.5.8"
+  peerDependencies:
+    react: ^15.3.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 10/700e87c0d6b1c7a15e104d0ef01ac1c15b8eb74905cd2a3b1e087a1c6fa596e4a58894ef553d5f8651782d7012c07eab87f9646f44def3569163a89c1cbb0f71
   languageName: node
   linkType: hard
 
