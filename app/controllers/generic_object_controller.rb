@@ -38,4 +38,5 @@ class GenericObjectController < ApplicationController
   end
 
   helper_method :textual_group_list
+  has_custom_buttons
 end

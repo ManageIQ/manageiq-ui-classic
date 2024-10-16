@@ -55,6 +55,8 @@ module ApplicationHelper::Toolbar::Mixins::CustomButtonToolbarMixin
     return false if @display.nil?
     display_class = @display.camelize.singularize
     return false unless custom_button_appliable_class?(display_class)
+    # Don't render custom buttons on nested generic object lists since it could contain generic objects with different definitions and custom buttons
+    return false if @display == 'generic_objects'
 
     show_action = @lastaction == "show"
     display_model = custom_button_class_model(display_class)
