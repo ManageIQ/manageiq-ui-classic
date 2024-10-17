@@ -88,4 +88,14 @@ class ApplicationHelper::Toolbar::ServiceCenter < ApplicationHelper::Toolbar::Ba
                    ]
                  ),
                ])
+  button_group('service_refresh', [
+                button(
+                  :service_view,
+                  'fa fa-refresh fa-lg',
+                  N_('Refresh this page'),
+                  N_('Refresh'),
+                  # needs the function because reload can't be called with different this
+                  :data => { 'function' => 'function() { window.location.reload(); }' }
+                )
+              ])
 end
