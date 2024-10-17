@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SettingsDetailsTab Component should render settings details tab 1`] = `
+<settingsDetailsTab
+  miqSchedulesCount={0}
+  region={
+    Object {
+      "description": "Region 3",
+      "id": 1,
+      "maintenance_zone_id": 1,
+      "region": 0,
+    }
+  }
+  scanItemsCount={3}
+  zonesCount={1}
+/>
+`;
