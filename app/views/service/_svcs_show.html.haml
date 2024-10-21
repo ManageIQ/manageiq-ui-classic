@@ -3,6 +3,10 @@
     %ul.nav.nav-tabs{'role' => 'tablist'}
       = miq_tab_header("details") do
         = _("Details")
+      - if @record.type == "ServiceTerraformTemplate"   
+        - stack = @record.try(:stack, "Provision")
+        = miq_tab_header("output") do
+          = _("Output")
       - if @record.type == "ServiceAnsiblePlaybook"
         - provision_job = @record.try(:job, "Provision")
         - retirement_job = @record.try(:job, "Retirement")
@@ -29,6 +33,12 @@
               = _('VMs')
             - if @view
               = render :partial => "layouts/gtl", :locals => {:view => @view, :no_flash_div => true}
+      
+      - if @record.type == "ServiceTerraformTemplate"
+        = miq_tab_content("output", 'default', :class => 'cm-tab') do
+          - if stack
+            = react('ServiceDetailStdout', { :taskid => stack.raw_stdout_via_worker(User.current_user&.userid, 'html')});
+
       - if @record.type == "ServiceAnsibleTower" || @record.type == "ServiceAwx"
         = miq_tab_content("tower_job", 'default', :class => 'cm-tab') do
           = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_tower_job_group_list, :tab_id => "tower_job"}
