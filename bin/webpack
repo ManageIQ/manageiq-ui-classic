@@ -25,9 +25,10 @@ end
 #   If nodejs is compiled with openssl 1.1, then this flag is not available
 #     and will fail if we hardcode it into NODE_OPTIONS
 #
-# This can be removed once we upgrade webpack as then we don't need the
-# flag anymore.
-has_legacy_openssl = system('node --help | grep -qs "\\--openssl-legacy-provider"')
+# This can be removed once we upgrade from webpack 4.0 to 5.0
+`node --openssl-legacy-provider -v`
+# if node supported this flag, then the command return status (i.e.: $? ) will be successful
+has_legacy_openssl = $?.success?
 node_options = "--max_old_space_size=4096"
 node_options << " --openssl-legacy-provider" if has_legacy_openssl
 
