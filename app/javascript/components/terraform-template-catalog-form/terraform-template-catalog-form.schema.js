@@ -207,11 +207,22 @@ const provisionTabSchema = (
         valueLabel: __('Default value'),
       },
       {
+        component: componentTypes.RADIO,
+        id: 'config_info.provision.dialog_type',
+        name: 'config_info.provision.dialog_type',
+        label: __('Dialog'),
+        options: [{ value: 'useExisting', label: __('Use Existing') }, { value: 'createNew', label: __('Create New') }],
+      },      
+      {
         component: componentTypes.SELECT,
         id: 'config_info.provision.dialog_id',
         name: 'config_info.provision.dialog_id',
         label: __('Existing Dialog'),
         options: transformGeneralOptions(dialogs),
+        condition: {
+          when: 'config_info.provision.dialog_type',
+          is: 'useExisting',
+        },
         includeEmpty: true,
         isRequired: true,
         validate: [{ type: validatorTypes.REQUIRED }],
