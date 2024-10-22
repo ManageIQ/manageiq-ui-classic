@@ -2318,7 +2318,9 @@ class MiqAeClassController < ApplicationController
             fld[field] = params[var_name.to_sym] if params[var_name.to_sym]
           elsif field == "default_value"
             fld[field] = params[field_name] if params[field_name]
-            fld[field] = params["fields_password_value_#{i}".to_sym] if params["fields_password_value_#{i}".to_sym]
+            if fld['datatype'] == 'password'
+              fld[field] = params["fields_password_value_#{i}".to_sym] if params["fields_password_value_#{i}".to_sym]
+            end
           elsif params[field_name]
             fld[field] = params[field_name]
           end
