@@ -49,7 +49,7 @@ module ApplicationController::WaitForTask
     session[:async][:params] ||= {}
 
     # save the incoming parms + extra_params
-    session[:async][:params] = params.deep_dup.merge(options[:extra_params] || {})
+    session[:async][:params] = params.to_unsafe_h.merge(options[:extra_params] || {})
     session[:async][:params][:task_id] = task_id
 
     # override method to be called, when the task is done
