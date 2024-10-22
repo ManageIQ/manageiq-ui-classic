@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
   # TODO: fix manageiq-decorators so we can eager load after manageiq-ui-classic
   # s.add_dependency "manageiq-decorators"
   s.add_dependency "more_core_extensions", ">= 3.2", "< 5"
-  s.add_dependency "sass-rails"
+  s.add_dependency "sprockets-rails"
   s.add_dependency "uglifier", "~>4.2.0"
   s.add_dependency "webpacker", "~>2.0.0"
 
