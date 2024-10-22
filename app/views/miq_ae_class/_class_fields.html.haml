@@ -61,6 +61,7 @@
                       = password_field_tag("fields_password_value_#{i}", '',
                         :placeholder       => placeholder_if_present(default_value),
                         :style             => field['datatype'] == "password" ? "" : "display:none",
+                        :autocomplete      => "new-password",
                         "data-miq_observe" => obs)
                     - else
                       = text_field_tag("fields_#{fname}_#{i}", field[fname],
