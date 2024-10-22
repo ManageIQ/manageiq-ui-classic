@@ -66,6 +66,9 @@ namespace :webpack do
   end
 
   task :paths do
+    require "bundler"
+    require "bundler/cli"
+
     i18n_path = Bundler::CLI::Common.select_spec("gettext_i18n_rails_js").full_gem_path
 
     json = JSON.pretty_generate(
