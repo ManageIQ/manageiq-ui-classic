@@ -3,6 +3,7 @@ class CatalogController < ApplicationController
   include Mixins::ServiceDialogCreationMixin
   include Mixins::BreadcrumbsMixin
   include Mixins::AutomationMixin
+  include Mixins::ImageValidationMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -540,7 +541,7 @@ class CatalogController < ApplicationController
     elsif params[:upload] && params[:upload][:image] &&
           params[:upload][:image].respond_to?(:read)
       ext = params[:upload][:image].original_filename.split(".").last.downcase
-      if !%w[png jpg].include?(ext)
+      if !valid_image_file?(params[:upload][:image])
         msg = _("Custom Image must be a .png or .jpg file")
         err = true
       else
