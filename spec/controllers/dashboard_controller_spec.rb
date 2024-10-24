@@ -90,6 +90,54 @@ describe DashboardController do
     end
   end
 
+  context "external auth support" do
+    let(:user) { FactoryBot.create(:user, :role => "random") }
+    let(:user_name) { user.userid }
+    let(:user_domain) { "ipa.example.org" }
+    let(:user_email) { "#{user_name}@#{user_domain}" }
+    let(:user_group) { user.miq_groups.first.description }
+
+    before do
+      EvmSpecHelper.create_guid_miq_server_zone
+
+      stub_settings_merge(:authentication => {:mode => 'httpd', :httpd_role => true})
+      request.headers.merge!(
+        "HTTP_X_REMOTE_USER"        => user_name,
+        "HTTP_X_REMOTE_USER_EMAIL"  => user_email,
+        "HTTP_X_REMOTE_USER_DOMAIN" => user_domain,
+        "HTTP_X_REMOTE_USER_GROUPS" => user_group
+      )
+    end
+
+    it "initiates a task when logging in" do
+      skip_data_checks
+      post :external_authenticate, :params => {:user_name => user_name, :user_password => 'dummy'}
+      expect_failed_login # Not really failed, but waiting to complete
+
+      task = MiqTask.first
+      expect(task).to have_attributes(
+        :name    => "External httpd User Authorization of '#{user_name}'",
+        :message => "User authorized successfully",
+        :state   => "Finished",
+        :status  => "Ok",
+        :userid  => user_email
+      )
+
+      post :wait_for_task, :params => {:task_id => task.id}
+      expect_successful_login(user)
+    end
+
+    it "serializes the session properly between the task initiation and waiting for the task" do
+      skip_data_checks
+      post :external_authenticate, :params => {:user_name => user_name, :user_password => 'dummy'}
+
+      # In Rails test environment, we use memory session storage, but in production
+      # we use memcached. memcached Marshal.dump's the session, so we do that here
+      # manually to ensure it doesn't blow up.
+      Marshal.load(Marshal.dump(session))
+    end
+  end
+
   context "SAML and OIDC support" do
     before { EvmSpecHelper.create_guid_miq_server_zone }
 
