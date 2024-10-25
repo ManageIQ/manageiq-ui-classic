@@ -534,31 +534,28 @@ class CatalogController < ApplicationController
 
     err = false
     identify_catalog(params[:id])
+    image_file = params.dig(:upload, :image)
     if params[:pressed]
       @record.picture = nil
       @record.save
       msg = _("Custom Image successfully removed")
-    elsif params[:upload] && params[:upload][:image] &&
-          params[:upload][:image].respond_to?(:read)
-      ext = params[:upload][:image].original_filename.split(".").last.downcase
-      if !valid_image_file?(params[:upload][:image])
-        msg = _("Custom Image must be a .png or .jpg file")
-        err = true
-      else
-        picture = {:content   => params[:upload][:image].read,
-                   :extension => ext}
-        if @record.picture.nil?
-          @record.picture = Picture.new(picture)
-        else
-          @record.picture.update(picture)
-        end
-        @record.save
-        msg = _("Custom Image file \"%{name}\" successfully uploaded") %
-              {:name => params[:upload][:image].original_filename}
-      end
-    else
+    elsif !image_file&.respond_to?(:read)
       msg = _("Use the Choose file button to locate a .png or .jpg image file")
       err = true
+    elsif !valid_image_file?(image_file)
+      msg = _("Custom Image must be a .png or .jpg file")
+      err = true
+    else
+      ext = image_file.original_filename.split(".").last.downcase
+      picture = {:content => image_file.read, :extension => ext}
+      if @record.picture.nil?
+        @record.picture = Picture.new(picture)
+      else
+        @record.picture.update(picture)
+      end
+      @record.save
+      msg = _("Custom Image file \"%{name}\" successfully uploaded") %
+            {:name => image_file.original_filename}
     end
     params[:id] = x_build_node_id(@record) # Get the tree node id
     add_flash(msg, err == true ? :error : nil)
