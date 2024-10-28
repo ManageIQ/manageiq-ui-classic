@@ -302,6 +302,11 @@ const GtlView = ({
   const [state, dispatch] = useReducer(gtlReducer, initState);
 
   useEffect(() => {
+    // If id is explorer_wide, change back to explorer to ensure search bar fits on the same line of the page.
+    if (document.getElementById('explorer_wide')) {
+      document.getElementById('explorer_wide').setAttribute('id', 'explorer');
+    }
+
     // eslint-disable-next-line no-unused-expressions
     if (!noFlashDiv) {
       flashMessages && flashMessages.forEach((message) => add_flash(message.message, message.level));
