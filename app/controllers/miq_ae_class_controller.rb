@@ -341,6 +341,9 @@ class MiqAeClassController < ApplicationController
           :serialize    => @sb[:active_tab] == 'methods',
         }
       ])
+      if @hide_bottom_bar
+        presenter.hide(:paging_div, :form_buttons_div)
+      end
     else
       # incase it was hidden for summary screen, and incase there were no records on show_list
       presenter.hide(:paging_div, :form_buttons_div)
@@ -459,6 +462,7 @@ class MiqAeClassController < ApplicationController
       @ae_class = find_record_with_rbac(MiqAeClass, params[:id])
     end
     set_form_vars
+    @hide_bottom_bar = true
     # have to get name and set node info, to load multiple tabs correctly
     # rec_name = get_rec_name(@ae_class)
     # get_node_info("aec-#{@ae_class.id}")
@@ -466,6 +470,24 @@ class MiqAeClassController < ApplicationController
     @in_a_form_props = true
     session[:changed] = @changed = false
     replace_right_cell
+  end
+
+  def edit_class_record
+    assert_privileges("miq_ae_class_edit")
+    unless params[:id]
+      obj = find_checked_items
+      @_params[:id] = obj[0]
+    end
+    @hide_bottom_bar = true
+
+    class_rec = MiqAeClass.find(params[:id])
+
+    render :json => {
+      :fqname       => class_rec.fqname,
+      :name         => class_rec.name,
+      :display_name => class_rec.display_name,
+      :description  => class_rec.description
+    }
   end
 
   def edit_fields
@@ -1291,6 +1313,7 @@ class MiqAeClassController < ApplicationController
     assert_privileges("miq_ae_class_new")
     @ae_class = MiqAeClass.new
     set_form_vars
+    @hide_bottom_bar = true
     @in_a_form = true
     replace_right_cell
   end
@@ -1841,7 +1864,48 @@ class MiqAeClassController < ApplicationController
     end
   end
 
+  def class_update
+    assert_privileges(params[:id].present? ? 'miq_ae_class_edit' : 'miq_ae_class_new')
+    @hide_bottom_bar = true
+    class_update_create
+  end
+
   private
+
+  def class_update_create
+    case params[:button]
+    when "add", "save"
+      class_rec = params[:id].blank? ? MiqAeClass.new : MiqAeClass.find(params[:id]) # Get new or existing record
+      add_flash(_("Name is required"), :error) if params[:name].blank?
+      class_rec.name = params[:name]
+      class_rec.display_name = params[:display_name]
+      class_rec.description = params[:description]
+      class_rec.namespace_id = x_node.split('-')[1] if params[:id].blank?
+      begin
+        class_rec.save!
+      rescue StandardError
+        class_rec.errors.each do |error|
+          add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
+        end
+        @changed = true
+        javascript_flash
+      else
+        edit_hash = {}
+        edit_hash[:new] = {:name => params[:name],
+                           :display_name => params[:display_name], :description => params[:description]}
+        edit_hash[:current] = if params[:old_data]
+                                {:name         => params[:old_data][:name],
+                                 :display_name => params[:old_data][:display_name],
+                                 :description  => params[:old_data][:description]}
+                              else
+                                {:name => nil, :display_name => nil, :description => nil}
+                              end
+        AuditEvent.success(build_saved_audit(class_rec, edit_hash))
+        @edit = session[:edit] = nil # clean out the saved info
+        replace_right_cell(:nodetype => x_node, :replace_trees => [:ae])
+      end
+    end
+  end
 
   def get_template_class(location)
     if location == "ansible_workflow_template"
