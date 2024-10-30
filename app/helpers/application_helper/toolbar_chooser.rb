@@ -345,7 +345,7 @@ class ApplicationHelper::ToolbarChooser
     # toolbar buttons on sub-screens
     to_display = %w[availability_zones cloud_networks cloud_object_store_containers cloud_subnets configured_systems
                     cloud_tenants cloud_volumes cloud_volume_snapshots ems_clusters flavors floating_ips host_aggregates hosts host_initiators host_initiator_groups
-                    volume_mappings network_ports network_routers network_services orchestration_stacks resource_pools
+                    volume_mappings network_ports network_routers network_services orchestration_stacks resource_pool_clouds resource_pool_infras
                     security_groups security_policies security_policy_rules storages physical_storages storage_services]
     to_display_center = %w[stack_orchestration_template cloud_object_store_objects generic_objects physical_servers guest_devices]
     performance_layouts = %w[vm host ems_container]
@@ -441,7 +441,8 @@ class ApplicationHelper::ToolbarChooser
             placement_group
             container_template
             storage_service
-            resource_pool
+            resource_pool_cloud
+            resource_pool_infra
             timeline
             usage
             guest_device

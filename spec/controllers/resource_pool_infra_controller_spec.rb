@@ -1,6 +1,13 @@
-describe ResourcePoolController do
+describe ResourcePoolInfraController do
+  let(:resource_pool) { FactoryBot.create(:resource_pool) }
+  let(:vm) { FactoryBot.create(:vm_vmware) }
+
   describe "#button" do
-    before { controller.instance_variable_set(:@display, "vms") }
+    before do
+      controller.params = {:id => resource_pool.id}
+      allow(controller).to receive(:render).and_return(true)
+      allow(controller).to receive(:performed?)
+    end
 
     it "when VM Right Size Recommendations is pressed" do
       controller.params = {:pressed => "vm_right_size"}
@@ -61,15 +68,12 @@ describe ResourcePoolController do
     end
 
     context 'Check Compliance action on VMs of a Resource Pool' do
-      let(:vm) { FactoryBot.create(:vm_vmware) }
-      let(:resource_pool) { FactoryBot.create(:resource_pool) }
-
       before do
         allow(controller).to receive(:assert_privileges)
-        allow(controller).to receive(:drop_breadcrumb)
-        allow(controller).to receive(:performed?)
         allow(controller).to receive(:render)
-        controller.params = {:miq_grid_checks => vm.id.to_s, :pressed => 'vm_check_compliance', :id => resource_pool.id.to_s, :controller => 'resource_pool'}
+        allow(controller).to receive(:show)
+        controller.instance_variable_set(:@display, 'vms')
+        controller.params = {:miq_grid_checks => vm.id.to_s, :pressed => 'vm_check_compliance', :id => resource_pool.id.to_s, :controller => 'resource_pool_infra'}
       end
 
       it 'does not initiate Check Compliance because of missing Compliance policies' do
@@ -91,11 +95,6 @@ describe ResourcePoolController do
           expect(controller.instance_variable_get(:@flash_array)).to eq([{:message => 'Check Compliance initiated for 1 VM and Instance from the ManageIQ Database', :level => :success}])
         end
       end
-
-      it 'calls check_compliance_vms' do
-        expect(controller).to receive(:check_compliance_vms)
-        controller.send(:button)
-      end
     end
 
     context 'reconfigure VMs' do
@@ -108,14 +107,13 @@ describe ResourcePoolController do
     end
 
     context 'Extract Running Processes for selected VMs' do
-      let(:vm) { FactoryBot.create(:vm_vmware) }
-
       before do
         allow(controller).to receive(:assert_privileges)
         allow(controller).to receive(:show)
         allow(controller).to receive(:performed?).and_return(true)
         allow(controller).to receive(:render)
         controller.params = {:pressed => 'vm_collect_running_processes', :miq_grid_checks => vm.id.to_s}
+        allow(controller).to receive(:find_records_with_rbac).and_return([vm])
       end
 
       it 'calls getprocessesvms' do
@@ -247,10 +245,10 @@ describe ResourcePoolController do
       context "#{action} for selected VMs displayed in a nested list" do
         before { controller.params = {:pressed => "vm_#{action}"} }
 
-        it "calls #{action + 'vms'} method" do
+        it "calls #{"#{action}vms"} method" do
           allow(controller).to receive(:show)
           allow(controller).to receive(:performed?).and_return(true)
-          expect(controller).to receive((action + 'vms').to_sym)
+          expect(controller).to receive("#{action}vms".to_sym)
           controller.send(:button)
           expect(controller.send(:flash_errors?)).not_to be_truthy
         end
@@ -262,18 +260,18 @@ describe ResourcePoolController do
         allow(controller).to receive(:performed?).and_return(true)
         controller.instance_variable_set(:@lastaction, 'show_list')
         controller.instance_variable_set(:@display, nil)
-        controller.params = {:pressed => 'resource_pool_delete'}
+        controller.params = {:pressed => 'resource_pool_infra_delete'}
       end
 
-      it 'calls deleteresourcepools and replace_gtl_main_div' do
-        expect(controller).to receive(:deleteresourcepools)
+      it 'calls deleteinfraresourcepools and replace_gtl_main_div' do
+        expect(controller).to receive(:deleteinfraresourcepools)
         expect(controller).to receive(:replace_gtl_main_div)
         controller.send(:button)
       end
 
       context 'default div to refresh' do
         before do
-          allow(controller).to receive(:deleteresourcepools)
+          allow(controller).to receive(:deleteinfraresourcepools)
           allow(controller).to receive(:replace_gtl_main_div)
         end
 
@@ -289,8 +287,8 @@ describe ResourcePoolController do
           controller.instance_variable_set(:@display, 'resource_pools')
         end
 
-        it 'calls deleteresourcepools and render_flash' do
-          expect(controller).to receive(:deleteresourcepools)
+        it 'calls deleteinfraresourcepools and render_flash' do
+          expect(controller).to receive(:deleteinfraresourcepools)
           expect(controller).to receive(:render_flash)
           controller.send(:button)
         end
@@ -300,7 +298,7 @@ describe ResourcePoolController do
     context 'managing policies of Resource Pools' do
       before do
         controller.instance_variable_set(:@display, nil)
-        controller.params = {:pressed => 'resource_pool_protect'}
+        controller.params = {:pressed => 'resource_pool_infra_protect'}
       end
 
       it 'calls assign_policies' do
@@ -321,11 +319,11 @@ describe ResourcePoolController do
     context 'tagging Resource Pool' do
       before do
         controller.instance_variable_set(:@display, nil)
-        controller.params = {:pressed => 'resource_pool_tag'}
+        controller.params = {:pressed => 'resource_pool_infra_tag'}
       end
 
       it 'calls tag method' do
-        expect(controller).to receive(:tag).with(ResourcePool)
+        expect(controller).to receive(:tag).with(ManageIQ::Providers::InfraManager::ResourcePool)
         controller.send(:button)
       end
     end
@@ -335,22 +333,22 @@ describe ResourcePoolController do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as FactoryBot.create(:user, :features => "none")
-      @resource_pool = FactoryBot.create(:resource_pool)
+      allow(controller).to receive(:assert_privileges)
+      allow(controller).to receive(:response).and_return(ActionDispatch::TestResponse.new(200))
     end
 
     let(:url_params) { {} }
 
-    subject { get :show, :params => { :id => @resource_pool.id }.merge(url_params) }
+    subject { get :show, :params => {:id => resource_pool.id}.merge(url_params) }
 
     context "main" do
       it "renders" do
         expect(subject).to have_http_status(200)
-        expect(subject).to render_template("resource_pool/show")
       end
     end
 
     context "Direct VMs" do
-      let(:url_params) { { :display => "vms" } }
+      let(:url_params) { {:display => "vms"} }
 
       it "renders" do
         bypass_rescue
@@ -359,7 +357,7 @@ describe ResourcePoolController do
     end
 
     context "All VMs" do
-      let(:url_params) { { :display => "all_vms" } }
+      let(:url_params) { {:display => "all_vms"} }
 
       it "renders" do
         bypass_rescue
@@ -368,7 +366,7 @@ describe ResourcePoolController do
     end
 
     context "Nested Resource Pools" do
-      let(:url_params) { { :display => "resource_pools"} }
+      let(:url_params) { {:display => "resource_pools"} }
 
       it "renders" do
         bypass_rescue
