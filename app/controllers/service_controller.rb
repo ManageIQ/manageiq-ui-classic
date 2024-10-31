@@ -16,10 +16,6 @@ class ServiceController < ApplicationController
     process_show_list(:dbname => :service, :gtl_dbname => :service)
   end
 
-  def show
-    super
-  end
-
   def button
     case params[:pressed]
     when 'service_tag'
@@ -36,7 +32,7 @@ class ServiceController < ApplicationController
       javascript_redirect(:action => 'service_reconfigure', :id => params[:id])
     when "custom_button"
       @display == 'generic_objects' ? generic_object_custom_buttons : custom_buttons
-    when 'generic_object_tag'
+    when "generic_object_tag"
       tag(GenericObject)
     else
       add_flash(_("Invalid button action"), :error)
