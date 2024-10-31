@@ -353,13 +353,19 @@ describe CatalogController do
       end
 
       it "uploads a selected png file " do
-        file = fixture_file_upload('files/upload_image.png', 'image/png')
+        file = fixture_file_upload('spec/fixtures/image.png', 'image/png')
         post :st_upload_image, :params => { :format => :js, :id => @st.id, :upload => {:image => file}, :active_tree => :sandt_tree, :commit => 'Upload' }
-        expect(assigns(:flash_array).first[:message]).to include('Custom Image file "upload_image.png" successfully uploaded')
+        expect(assigns(:flash_array).first[:message]).to include('Custom Image file "image.png" successfully uploaded')
+      end
+
+      it "uploads a selected jpg file " do
+        file = fixture_file_upload('spec/fixtures/image.jpg', 'image/jpeg')
+        post :st_upload_image, :params => { :format => :js, :id => @st.id, :upload => {:image => file}, :active_tree => :sandt_tree, :commit => 'Upload' }
+        expect(assigns(:flash_array).first[:message]).to include('Custom Image file "image.jpg" successfully uploaded')
       end
 
       it "displays an error when the selected file is not a png file or .jpg " do
-        file = fixture_file_upload('files/upload_image.txt', 'image/png')
+        file = fixture_file_upload('spec/fixtures/test.txt.png', 'image/png')
         post :st_upload_image, :params => { :format => :js, :id => @st.id, :upload => {:image => file}, :commit => 'Upload' }
         expect(assigns(:flash_array).first[:message]).to include("Custom Image must be a .png or .jpg file")
       end
