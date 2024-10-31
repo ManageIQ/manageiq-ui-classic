@@ -37,7 +37,7 @@ describe GenericObjectHelper::TextualSummary do
     it "displays 'No Attributes defined' when Attributes do not exist" do
       @record = FactoryBot.create(:generic_object, :generic_object_definition_id => @generic_obj_defn.id)
 
-      expected = TextualEmpty.new('Attributes', 'No Attributes defined')
+      expected = TextualEmpty.new('Attributes')
 
       expect(textual_group_attribute_details_list).to eq(expected)
     end
@@ -59,7 +59,7 @@ describe GenericObjectHelper::TextualSummary do
     it "displays 'No Associations defined' when do not Associations exist" do
       @record = FactoryBot.create(:generic_object, :generic_object_definition_id => @generic_obj_defn_with_no_properties.id)
 
-      expected = TextualEmpty.new('Associations', 'No Associations defined')
+      expected = TextualEmpty.new('Associations')
 
       expect(textual_group_associations).to eq(expected)
     end
@@ -75,7 +75,7 @@ describe GenericObjectHelper::TextualSummary do
     it "displays 'No Methods defined' when do not Methods exist" do
       @record = FactoryBot.create(:generic_object, :generic_object_definition_id => @generic_obj_defn_with_no_properties.id)
 
-      expected = TextualEmpty.new('Methods', 'No Methods defined')
+      expected = TextualEmpty.new('Methods')
 
       expect(textual_group_methods).to eq(expected)
     end
