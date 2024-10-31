@@ -6,7 +6,6 @@ import { useFieldApi } from '@@ddf';
 import WorkflowEntryPoints from '../workflows/workflow-entry-points';
 
 const EmbeddedEntryPoint = (props) => {
-  console.log(props);
   const {
     label, initialValue, id, field, selected, type,
   } = props;
