@@ -12,7 +12,7 @@ const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack
 const { SplitChunksPlugin } = require('webpack').optimize;
 const { execSync } = require('child_process');
 
-const { env, settings, output, engines } = require('./configuration.js');
+const { env, settings, i18n, output, engines } = require('./configuration.js');
 const loaders = require('./loaders.js');
 const RailsEnginesPlugin = require('./RailsEnginesPlugin');
 
@@ -20,7 +20,7 @@ const extensionGlob = `**/*{${settings.extensions.join(',')}}*`; // */
 const entryPath = join(settings.source_path, settings.source_entry_path);
 const moduleDir = engines['manageiq-ui-classic'].node_modules;
 
-const gettextDir = execSync('bundle info --path gettext_i18n_rails_js', { encoding: 'utf-8' }).trim();
+const gettextDir = i18n;
 
 const sharedPackages = [
   '@carbon/icons-react',

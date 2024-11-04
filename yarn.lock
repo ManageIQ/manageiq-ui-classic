@@ -3247,17 +3247,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"angular-animate@npm:1.3.0 - 1.5.*":
-  version: 1.5.11
-  resolution: "angular-animate@npm:1.5.11"
-  checksum: 10/1d0e80c65cbaecc20d65eba7ecf5835fcabc3351490e52196eae7937cf42d19bb9eb6ef531ee6afb93d75091754821b0774665627f9bc24adef3461642e90bd6
-  languageName: node
-  linkType: hard
-
-"angular-animate@npm:~1.6.6":
-  version: 1.6.10
-  resolution: "angular-animate@npm:1.6.10"
-  checksum: 10/e1094394f39feaed4de437aeeb063328a3a0879fb59d72a93410e45969da04d5630051ef0e0470e45344fa6e98dde4ae49b5021e5491b7793e9046d720be0707
+"angular-animate@npm:~1.8.3":
+  version: 1.8.3
+  resolution: "angular-animate@npm:1.8.3"
+  checksum: 10/2c307aa6a69492a23cec5b50d0f2dda6f5f058fdf32fea2019ff6f82eb33c4d79ca15ce9806a984f26e6f17b4251f34834d36dbbf6ef49d7b1db4039535309b0
   languageName: node
   linkType: hard
 
@@ -3317,17 +3310,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"angular-sanitize@npm:1.3.0 - 1.5.*":
-  version: 1.5.11
-  resolution: "angular-sanitize@npm:1.5.11"
-  checksum: 10/08c42f15fcca4ef1f2af4fa311eee73a88a4646af7c5b6222e8b6825ebec7ba84d5a7ab534f65097d9ddea321541d1b2809e667383baca47a09116e537c9e31e
-  languageName: node
-  linkType: hard
-
-"angular-sanitize@npm:~1.6.6":
-  version: 1.6.10
-  resolution: "angular-sanitize@npm:1.6.10"
-  checksum: 10/77577af2836aa2207af4237f330919831cfe77b4fda77f4e1dad56bf419f5d5915112f4ee2157239999c8f399a477fa2168f00e5f4aedf298e559a4d120dd61c
+"angular-sanitize@npm:~1.8.3":
+  version: 1.8.3
+  resolution: "angular-sanitize@npm:1.8.3"
+  checksum: 10/50227cd12259bc12b91d53f23bab9a026831d56f0b4cb74ddb3571c6da602720041e9238857837d014ef2beccf4a9565a19aa01cb2ec8ba2d3111b6c05af93e8
   languageName: node
   linkType: hard
 
@@ -3368,24 +3354,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"angular@npm:1.3.0 - 1.5.*":
-  version: 1.5.11
-  resolution: "angular@npm:1.5.11"
-  checksum: 10/6bebfef42f636017c5a3b80f92823c9271f68a283dc26a4634d9f3f361e6299ee07104b09d6a551bf878737b99f880ca08b703911bc17cfbb8321863c2c04518
-  languageName: node
-  linkType: hard
-
-"angular@npm:>=1.4.0":
+"angular@npm:~1.8.3":
   version: 1.8.3
   resolution: "angular@npm:1.8.3"
   checksum: 10/4a21f1f74790dc2cdceb582386abdc7b55a0463f86aaa59573c940295cb51ed61b8fa610011134280ae0da7f97fbbc660f3a4e4491b24c92b2c32a547073a1c2
-  languageName: node
-  linkType: hard
-
-"angular@npm:~1.6.6":
-  version: 1.6.10
-  resolution: "angular@npm:1.6.10"
-  checksum: 10/fae00d27c3ab53f4021daabe447f0364bdbc78cf14241cf1651621170e609b32a7553999795c36c3abf5d5d7a6b0d8e7ff4ae7b1677cc25b80347ab9d7038746
   languageName: node
   linkType: hard
 
@@ -6889,8 +6861,8 @@ __metadata:
   linkType: hard
 
 "elliptic@npm:^6.5.3, elliptic@npm:^6.5.5":
-  version: 6.5.5
-  resolution: "elliptic@npm:6.5.5"
+  version: 6.6.0
+  resolution: "elliptic@npm:6.6.0"
   dependencies:
     bn.js: "npm:^4.11.9"
     brorand: "npm:^1.1.0"
@@ -6899,7 +6871,7 @@ __metadata:
     inherits: "npm:^2.0.4"
     minimalistic-assert: "npm:^1.0.1"
     minimalistic-crypto-utils: "npm:^1.0.1"
-  checksum: 10/5444b4f18e0c0fdfa14de26f69f7dbc44c78a211e91825823d698dcc91071ef1a3954d87730f364183fc83b0a86d8affed864e347da2e549bdcead3b46de126f
+  checksum: 10/27575b0403e010e5d7e7a131fcadce6a7dd1ae82ccb24cc7c20b275d32ab1cb7ecb6a070225795df08407441dc8c7a32efd986596d48d1d6846f64ff8f094af7
   languageName: node
   linkType: hard
 
@@ -9249,8 +9221,8 @@ __metadata:
   linkType: hard
 
 "http-proxy-middleware@npm:^2.0.3":
-  version: 2.0.6
-  resolution: "http-proxy-middleware@npm:2.0.6"
+  version: 2.0.7
+  resolution: "http-proxy-middleware@npm:2.0.7"
   dependencies:
     "@types/http-proxy": "npm:^1.17.8"
     http-proxy: "npm:^1.18.1"
@@ -9262,7 +9234,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/express":
       optional: true
-  checksum: 10/768e7ae5a422bbf4b866b64105b4c2d1f468916b7b0e9c96750551c7732383069b411aa7753eb7b34eab113e4f77fb770122cb7fb9c8ec87d138d5ddaafda891
+  checksum: 10/4a51bf612b752ad945701995c1c029e9501c97e7224c0cf3f8bf6d48d172d6a8f2b57c20fec469534fdcac3aa8a6f332224a33c6b0d7f387aa2cfff9b67216fd
   languageName: node
   linkType: hard
 
@@ -11694,14 +11666,14 @@ __metadata:
     "@pf3/select": "npm:~1.12.6"
     "@tshepomgaga/aws-sfn-graph": "npm:0.0.6"
     actioncable: "npm:^5.2.4-2"
-    angular: "npm:~1.6.6"
-    angular-animate: "npm:~1.6.6"
+    angular: "npm:~1.8.3"
+    angular-animate: "npm:~1.8.3"
     angular-bootstrap-switch: "npm:~0.5.2"
     angular-dragdrop: "npm:~1.0.13"
     angular-gettext: "npm:^2.4.1"
     angular-mocks: "npm:~1.6.9"
     angular-patternfly: "npm:~3.26.0"
-    angular-sanitize: "npm:~1.6.6"
+    angular-sanitize: "npm:~1.8.3"
     angular-ui-bootstrap: "npm:~2.5.6"
     angular-ui-codemirror: "npm:~0.3.0"
     angular-ui-sortable: "npm:~0.16.1"

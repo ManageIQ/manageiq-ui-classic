@@ -286,11 +286,7 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
     if params[:upload] && params[:upload][:datastore].present?
       begin
         MiqAeDatastore.upload(params[:upload][:datastore])
-        flash_to_session(_("Datastore import was successful.
-Namespaces updated/added: %{namespace_stats}
-Classes updated/added: %{class_stats}
-Instances updated/added: %{instance_stats}
-Methods updated/added: %{method_stats}") % stat_options)
+        flash_to_session(_("Datastore import was successful. Added/Updated %{namespace_stats} Namespaces, %{class_stats} Classes, %{instance_stats} Instances, %{method_stats} Methods.") % stat_options)
         redirect_to(:action => 'import_export')
       rescue StandardError => bang
         flash_to_session(_("Error during 'upload': %{message}") % {:message => bang.message}, :error)

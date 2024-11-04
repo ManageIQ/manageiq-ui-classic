@@ -16,12 +16,6 @@ class ServiceController < ApplicationController
     process_show_list(:dbname => :service, :gtl_dbname => :service)
   end
 
-  def show
-    super
-    @options = {}
-    @view, @pages = get_view(Vm, :parent => @record, :parent_method => :all_vms, :all_pages => true)
-  end
-
   def button
     case params[:pressed]
     when 'service_tag'
@@ -38,6 +32,8 @@ class ServiceController < ApplicationController
       javascript_redirect(:action => 'service_reconfigure', :id => params[:id])
     when "custom_button"
       @display == 'generic_objects' ? generic_object_custom_buttons : custom_buttons
+    when "generic_object_tag"
+      tag(GenericObject)
     else
       add_flash(_("Invalid button action"), :error)
       render_flash
@@ -48,7 +44,7 @@ class ServiceController < ApplicationController
     display_options = {}
     ids = @lastaction == 'generic_object' ? @sb[:rec_id] : 'LIST'
     display_options[:display] = @display
-    display_options[:record_id] = parse_nodetype_and_id(x_node).last
+    display_options[:record_id] = @sb[:rec_id]
     display_options[:display_id] = params[:id] if @lastaction == 'generic_object'
     custom_buttons(ids, display_options)
   end
@@ -57,18 +53,16 @@ class ServiceController < ApplicationController
     _("My Services")
   end
 
+  def toolbar
+    return 'generic_object_center' if %w[generic_objects].include?(@display) # for nested generic objects list screen
+
+    %w[show_list].include?(@lastaction) ? 'services_center' : 'service_center'
+  end
+
   def set_display
     @display = params[:display]
     @display ||= default_display unless pagination_or_gtl_request?
     @display ||= 'generic_objects' if role_allows?(:feature => "generic_object_view") && @record.number_of(:generic_objects).positive?
-  end
-
-  def show_generic_object
-    if params[:generic_object_id]
-      show_single_generic_object
-    else
-      display_nested_list(@display)
-    end
   end
 
   def edit
@@ -101,27 +95,17 @@ class ServiceController < ApplicationController
     }
   end
 
-  # display a single generic object
-  #
-  def show_single_generic_object
-    return unless init_show_variables
-
-    @lastaction = 'generic_object'
-    @item = @record.generic_objects.find { |e| e[:id] == params[:generic_object_id].to_i }
-    drop_breadcrumb(:name => _("%{name} (All Generic Objects)") % {:name => @record.name}, :url => show_link(@record, :display => 'generic_objects'))
-    drop_breadcrumb(:name => @item.name, :url => show_link(@record, :display => 'generic_objects', :generic_object_id => params[:generic_object_id]))
-    @view = get_db_view(GenericObject)
-    @sb[:rec_id] = params[:generic_object_id]
-    @record = @item
-    show_item
-  end
-
   def self.display_methods
     %w[generic_objects custom_button_events]
   end
 
   def display_generic_objects
     nested_list(GenericObject)
+
+    if params[:generic_object_id]
+      generic_object_id = params[:generic_object_id]
+      redirect_to(:controller => 'generic_object', :action => "show", :id => generic_object_id)
+    end
   end
 
   def reconfigure_form_fields
@@ -287,5 +271,4 @@ class ServiceController < ApplicationController
   menu_section :svc
   feature_for_actions "service_view", *ADV_SEARCH_ACTIONS
   has_custom_buttons
-  toolbar :service, :services
 end

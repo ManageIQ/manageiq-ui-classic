@@ -1,5 +1,6 @@
 module OpsController::Settings::Upload
   extend ActiveSupport::Concern
+  include Mixins::ImageValidationMixin
 
   def upload_logo
     assert_privileges("ops_settings")
@@ -31,7 +32,7 @@ module OpsController::Settings::Upload
 
   def upload_logos(file, field, text, type)
     if field && field[:logo] && field[:logo].respond_to?(:read)
-      unless valid_file?(field[:logo], type)
+      unless valid_image_file?(field[:logo], type)
         add_flash(_("%{image} must be a .%{type} file") % {:image => text, :type => type}, :error)
       else
         File.open(file, "wb") { |f| f.write(field[:logo].read) }
@@ -114,29 +115,5 @@ module OpsController::Settings::Upload
     dir = Rails.root.join('public', 'upload').expand_path
     Dir.mkdir(dir) unless dir.exist?
     dir.to_s
-  end
-
-  def valid_file?(file, type)
-    ext = file.original_filename.split(".").last.downcase
-    return false unless ext == type
-
-    case type
-    when "ico"
-      valid_magic_number = "\x00\x00\x01\x00".force_encoding("ASCII-8BIT")
-    when "png"
-      valid_magic_number = "\x89PNG\r\n\x1A\n".force_encoding("ASCII-8BIT")
-    else
-      return false
-    end
-
-    magic_number = File.open(file.tempfile.path, 'rb') do |f|
-      begin
-        f.readpartial(valid_magic_number.size)
-      rescue EOFError
-        return false
-      end
-    end
-
-    magic_number == valid_magic_number
   end
 end
