@@ -183,7 +183,8 @@ export const KeyValueListComponent = (props) => {
       <label htmlFor={input.name} className="bx--label">{label}</label>
       <br />
       {input.value && input.value.map((pair, index) => (
-        <div key={pair.key} className="key-value-list-pair">
+        // eslint-disable-next-line react/no-array-index-key
+        <div key={index} className="key-value-list-pair">
           <TextInput
             id={`${input.name}.${index}.key`}
             labelText={keyLabel}
