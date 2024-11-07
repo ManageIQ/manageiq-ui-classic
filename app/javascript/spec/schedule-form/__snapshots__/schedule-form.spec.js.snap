@@ -721,6 +721,7 @@ exports[`Schedule form component should render edit form when filter_type is not
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -746,6 +747,13 @@ exports[`Schedule form component should render edit form when filter_type is not
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -1364,6 +1372,7 @@ exports[`Schedule form component should render edit form when filter_type is not
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -1390,6 +1399,13 @@ exports[`Schedule form component should render edit form when filter_type is not
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }
@@ -15540,6 +15556,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -15565,6 +15582,13 @@ exports[`Schedule form component should render edit form when filter_type is nul
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -16325,6 +16349,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -16351,6 +16376,13 @@ exports[`Schedule form component should render edit form when filter_type is nul
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }
@@ -33734,6 +33766,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -33759,6 +33792,13 @@ exports[`Schedule form component should render schedule add form 1`] = `
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -34300,6 +34340,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -34326,6 +34367,13 @@ exports[`Schedule form component should render schedule add form 1`] = `
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }
