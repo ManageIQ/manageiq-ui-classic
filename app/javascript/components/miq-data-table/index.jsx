@@ -100,9 +100,11 @@ const MiqDataTable = ({
         isSortable={isSortable}
         isSortHeader={sortHeader}
         sortDirection={sortDirection}
-        className={
-          classNames('miq-data-table-header', (header.contentButton ? 'header-button' : ''), (header.actionCell ? 'action-cell-holder' : ''))
-        }
+        className={classNames(
+          'miq-data-table-header',
+          header.contentButton ? 'header-button' : '',
+          header.actionCell ? 'action-cell-holder' : ''
+        )}
       >
         {headerLabel(header.header)}
       </TableHeader>
@@ -148,15 +150,17 @@ const MiqDataTable = ({
         stickyHeader={stickyHeader}
       >
         {({
-          rows, getTableProps, getHeaderProps, getRowProps, getSelectionProps,
+          rows, headers, getTableProps, getHeaderProps, getRowProps, getSelectionProps,
         }) => (
           <Table {...getTableProps()}>
-            <TableHead>
-              <TableRow>
-                {rowCheckBox && selectAll(getSelectionProps)}
-                {renderHeaders(getHeaderProps)}
-              </TableRow>
-            </TableHead>
+            {headers[0] && headers[0].header !== '' ? (
+              <TableHead>
+                <TableRow>
+                  {rowCheckBox && selectAll(getSelectionProps)}
+                  {renderHeaders(getHeaderProps)}
+                </TableRow>
+              </TableHead>
+            ) : undefined}
             <TableBody>
               {sortableRows(rows).map((row, index) => {
                 const item = propRows[index];
