@@ -49,6 +49,19 @@ const basicInformationTabSchema = (availableCatalogs, tenantTree, roleAllows, zo
           is: 'embedded_automate',
         },
       },
+      // {
+      //   component: 'embedded-automate-entry-point',
+      //   id: 'provisioning_entry_point_automate',
+      //   name: 'provisioning_entry_point_automate',
+      //   label: 'Provisioning Entry Point',
+      //   field: 'fqname',
+      //   selected: '',
+      //   type: 'provision',
+      //   condition: {
+      //     when: 'provisioning_entry_point_type',
+      //     is: 'embedded_automate',
+      //   },
+      // },
       {
         component: 'embedded-workflow-entry-point',
         id: 'provisioning_entry_point_workflow',

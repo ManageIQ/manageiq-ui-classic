@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Button, TextInput } from 'carbon-components-react';
 import { Close16, TreeViewAlt16 } from '@carbon/icons-react';
 import { useFieldApi } from '@@ddf';
-import WorkflowEntryPoints from '../workflows/workflow-entry-points';
+import AutomateEntryPoints from '../automate-entry-points';
 
-const EmbeddedEntryPoint = (props) => {
+const EmbeddedAutomateEntryPoint = (props) => {
   const {
     label, initialValue, id, field, selected, type,
   } = props;
@@ -33,7 +33,7 @@ const EmbeddedEntryPoint = (props) => {
   return (
     <div>
       {showModal ? (
-        <WorkflowEntryPoints
+        <AutomateEntryPoints
           field={field}
           selected={selected}
           type={type}
@@ -70,7 +70,7 @@ const EmbeddedEntryPoint = (props) => {
   );
 };
 
-EmbeddedEntryPoint.propTypes = {
+EmbeddedAutomateEntryPoint.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   initialValue: PropTypes.string,
@@ -79,9 +79,9 @@ EmbeddedEntryPoint.propTypes = {
   type: PropTypes.string.isRequired,
 };
 
-EmbeddedEntryPoint.defaultProps = {
+EmbeddedAutomateEntryPoint.defaultProps = {
   initialValue: '',
   selected: '',
 };
 
-export default EmbeddedEntryPoint;
+export default EmbeddedAutomateEntryPoint;

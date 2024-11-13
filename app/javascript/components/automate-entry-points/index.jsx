@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Loading, Modal, ModalBody } from 'carbon-components-react';
 import MiqDataTable from '../miq-data-table';
-import { workflowsEntryPoints } from './helper';
 import { http } from '../../http_api';
 
-const WorkflowEntryPoints = ({
+const AutomateEntryPoints = ({
   field, selected, type, setShowModal, setSelectedValue,
 }) => {
   const [data, setData] = useState({
@@ -19,14 +18,18 @@ const WorkflowEntryPoints = ({
   };
 
   useEffect(() => {
-    http.post(`/catalog/ae_tree_select_toggle?typ=${type}`, {}, { headers: {}, skipJsonParsing: true })
+    http.post(`/catalog/ae_tree_load?typ=${type}`, {}, { headers: {}, skipJsonParsing: true })
       .then((_data) => {
-        API.get('/api/configuration_script_payloads?expand=resources')
+        console.log(data);
+        API.get('/api/automate_domains?expand=resources')
           .then((response) => {
+            console.log(response);
+            // API.get('/api/automate_workspaces?expand=resources').then((response) => {
+            //   console.log(response);
+            // });
             setData({
               ...data,
               isLoading: false,
-              list: workflowsEntryPoints(response),
             });
           });
       });
@@ -99,10 +102,9 @@ const WorkflowEntryPoints = ({
         />
       </ModalBody>
     </Modal>
-
   );
 };
-WorkflowEntryPoints.propTypes = {
+AutomateEntryPoints.propTypes = {
   field: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   selected: PropTypes.string,
@@ -110,10 +112,10 @@ WorkflowEntryPoints.propTypes = {
   setSelectedValue: PropTypes.func,
 };
 
-WorkflowEntryPoints.defaultProps = {
+AutomateEntryPoints.defaultProps = {
   selected: '',
   setShowModal: undefined,
   setSelectedValue: undefined,
 };
 
-export default WorkflowEntryPoints;
+export default AutomateEntryPoints;
