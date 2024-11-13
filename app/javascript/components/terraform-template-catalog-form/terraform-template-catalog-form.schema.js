@@ -64,6 +64,37 @@ const basicInformationTabSchema = (availableCatalogs, tenantTree, roleAllows, zo
       },
       {
         component: componentTypes.SELECT,
+        id: 'reconfigure_entry_point_type',
+        name: 'reconfigure_entry_point_type',
+        label: __('Reconfigure Entry Point'),
+        initialValue: 'embedded_automate',
+        options: [{ value: 'embedded_automate', label: __('Embedded Automate') }, { value: 'embedded_workflow', label: __('Embedded Workflow') }],
+      },
+      {
+        component: componentTypes.TEXT_FIELD,
+        id: 'reconfigure_entry_point_automate',
+        name: 'reconfigure_entry_point_automate',
+        label: __('Reconfigure Entry Point'),
+        condition: {
+          when: 'reconfigure_entry_point_type',
+          is: 'embedded_automate',
+        },
+      },
+      {
+        component: 'embedded-entry-point',
+        id: 'reconfigure_entry_point_workflow',
+        name: 'reconfigure_entry_point_workflow',
+        label: 'Reconfigure Entry Point',
+        field: 'fqname',
+        selected: '',
+        type: 'provision',
+        condition: {
+          when: 'reconfigure_entry_point_type',
+          is: 'embedded_workflow',
+        },
+      },
+      {
+        component: componentTypes.SELECT,
         id: 'retirement_entry_point_type',
         name: 'retirement_entry_point_type',
         label: __('Retirement Entry Point'),
