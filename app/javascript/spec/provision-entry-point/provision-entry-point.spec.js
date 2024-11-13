@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 
-import EmbeddedEntryPoint from '../../components/embedded-entry-point';
+import EmbeddedWorkflowEntryPoint from '../../components/embedded-workflow-entry-point';
 
 jest.mock('@@ddf', () => ({
   useFieldApi: (props) => ({ meta: {}, input: {}, ...props }),
@@ -22,7 +22,7 @@ describe('CodeEditor component', () => {
   });
 
   it('should render correctly', () => {
-    const wrapper = shallow(<EmbeddedEntryPoint {...initialProps} />);
+    const wrapper = shallow(<EmbeddedWorkflowEntryPoint {...initialProps} />);
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });
