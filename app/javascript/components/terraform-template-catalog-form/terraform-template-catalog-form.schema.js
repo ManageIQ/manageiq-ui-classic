@@ -50,7 +50,7 @@ const basicInformationTabSchema = (availableCatalogs, tenantTree, roleAllows, zo
         },
       },
       {
-        component: 'embedded-entry-point',
+        component: 'embedded-workflow-entry-point',
         id: 'provisioning_entry_point_workflow',
         name: 'provisioning_entry_point_workflow',
         label: 'Provisioning Entry Point',
@@ -81,7 +81,7 @@ const basicInformationTabSchema = (availableCatalogs, tenantTree, roleAllows, zo
         },
       },
       {
-        component: 'embedded-entry-point',
+        component: 'embedded-workflow-entry-point',
         id: 'reconfigure_entry_point_workflow',
         name: 'reconfigure_entry_point_workflow',
         label: 'Reconfigure Entry Point',
@@ -113,7 +113,7 @@ const basicInformationTabSchema = (availableCatalogs, tenantTree, roleAllows, zo
         },
       },
       {
-        component: 'embedded-entry-point',
+        component: 'embedded-workflow-entry-point',
         id: 'retirement_entry_point_workflow',
         name: 'retirement_entry_point_workflow',
         label: 'Retirement Entry Point',
