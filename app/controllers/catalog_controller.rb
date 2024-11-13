@@ -664,6 +664,14 @@ class CatalogController < ApplicationController
     session[:edit] = @edit
   end
 
+  def ae_tree_load
+    assert_new_or_edit_by_service_type
+
+    require 'byebug'
+    byebug
+    session[:edit]
+  end
+
   # Method to open the workflows dialog box
   # params[:field]    => :fqname || :retire_fqname || :reconfigure_fqname
   # params[:selected] => Holds the value of the *_configuration_script_id
