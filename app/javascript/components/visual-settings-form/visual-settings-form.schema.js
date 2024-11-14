@@ -1,5 +1,24 @@
 import { componentTypes } from '@@ddf';
 
+// const loadData = API.get('/api/automate?depth=1&attributes=klass,id,fqname,domain_fqname,name').then((data) => {
+//   console.log(data);
+//   const tree = [];
+//   if (data && data.resources) {
+//     data.resources.forEach((domain) => {
+//       // console.log(domain);
+//       tree.push({
+//         key: domain.fqname,
+//         icon: 'pficon pficon-folder-close',
+//         selectable: false,
+//         text: domain.name,
+//         tooltip: 'root node',
+//         state: {},
+//       });
+//     });
+//   }
+//   return tree;
+// });
+
 const createSchema = (timezoneOptions) => ({
   fields: [
     {
