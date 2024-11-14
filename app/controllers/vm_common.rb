@@ -362,6 +362,10 @@ module VmCommon
     show_association('placement_groups', _('Placement Groups'), :placement_groups, PlacementGroup)
   end
 
+  def resource_pool
+    show_association('resource_pools', _('Resource Pools'), :resource_pools, ResourcePool)
+  end
+
   def cloud_subnets
     show_association('cloud_subnets', _('Subnets'), :cloud_subnets, CloudSubnet)
   end

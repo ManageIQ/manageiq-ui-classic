@@ -1067,7 +1067,24 @@ ReportController:
 - wait_for_task
 - x_history
 - x_show
-ResourcePoolController:
+ResourcePoolCloudController:
+- compare_cancel
+- compare_choose_base
+- compare_compress
+- compare_miq
+- compare_miq_all
+- compare_miq_differences
+- compare_miq_same
+- compare_mode
+- compare_remove
+- compare_set_state
+- compare_to_csv
+- compare_to_pdf
+- compare_to_txt
+- index
+- sections_field_changed
+- tree_autoload
+ResourcePoolInfraController:
 - compare_cancel
 - compare_choose_base
 - compare_compress
