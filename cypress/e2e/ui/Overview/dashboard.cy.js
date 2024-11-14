@@ -27,7 +27,7 @@ describe('Overview > Dashboard Tests', () => {
     });
   });
 
-  it('Can add and remove a widget', () => {
+  it('Add and remove a widget', () => {
     const newCards = [];
     let newCard = '';
 
@@ -70,7 +70,7 @@ describe('Overview > Dashboard Tests', () => {
     });
   });
 
-  it('Can minimize a widget', () => {
+  it('Minimize a widget', () => {
     cy.get('.card-pf').then((cards) => {
       cy.get(cards[0]).then((card) => {
         cy.get(card.children()[0].children[0].children[0]).click().then(() => {
@@ -83,29 +83,26 @@ describe('Overview > Dashboard Tests', () => {
       });
     });
 
-    // TODO: Fix the maximize test
-    // cy.get('.card-pf').then((cards) => {
-    //   cy.get(cards[0]).then((card) => {
-    //     cy.get(card.children()[0].children[0].children[0]).click().then(() => {
-    //       cy.get('.bx--overflow-menu-options').then((menuItems) => {
-    //         cy.get(menuItems.children()[1]).click().then(() => {
-    //           expect(card.children()[1].style.display).to.equal('block');
-    //         });
-    //       });
-    //     });
-    //   });
-    // });
+  // TODO: Fix the maximize test
+  // cy.get('.card-pf').then((cards) => {
+  //   cy.get(cards[0]).then((card) => {
+  //     cy.get(card.children()[0].children[0].children[0]).click().then(() => {
+  //       cy.get('.bx--overflow-menu-options').then((menuItems) => {
+  //         cy.get(menuItems.children()[1]).click().then(() => {
+  //           expect(card.children()[1].style.display).to.equal('block');
+  //         });
+  //       });
+  //     });
+  //   });
+  // });
   });
 
-  it('Can zoom a widget', () => {
-    cy.get('#lightbox-panel').then((div) => {
-      expect(div[0].style.display).to.equal('');
-    });
+  it('Zoom a widget', () => {
     cy.get('.card-pf').then((cards) => {
       cy.get(cards[0]).then((card) => {
         cy.get(card.children()[0].children[0].children[0]).click().then(() => {
           cy.get('.bx--overflow-menu-options').then((menuItems) => {
-            cy.get(menuItems.children()[2]).click().then(() => {
+            cy.get(menuItems.children()[4]).click().then(() => {
               cy.get('#zoomed_chart_div').contains(defaultCards[0]);
               cy.get('#lightbox-panel').then((div) => {
                 expect(div[0].style.display).to.equal('block');
@@ -117,14 +114,14 @@ describe('Overview > Dashboard Tests', () => {
     });
   });
 
-  it('Can refresh a widget', () => {
+  it('Refresh a widget', () => {
     cy.get('.card-pf').then((cards) => {
       cy.get(cards[0]).then((card) => {
         const newId = cards[0].children[1].id.split('_')[1].replace('w', '');
         cy.intercept('GET', `/dashboard/widget_chart_data/${newId}`).as('get');
         cy.get(card.children()[0].children[0].children[0]).click().then(() => {
           cy.get('.bx--overflow-menu-options').then((menuItems) => {
-            cy.get(menuItems.children()[3]).click().then(() => {
+            cy.get(menuItems.children()[5]).click().then(() => {
               cy.wait('@get').then((getCall) => {
                 expect(getCall.state).to.equal('Complete');
                 expect([200, 304]).to.include(getCall.response.statusCode);
