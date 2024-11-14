@@ -310,7 +310,6 @@ Rails.application.routes.draw do
         ae_tree_select
         ae_tree_select_discard
         ae_tree_select_toggle
-        ae_tree_load
         atomic_form_field_changed
         atomic_st_edit
         automate_button_field_changed
