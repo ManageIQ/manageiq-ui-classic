@@ -9,6 +9,8 @@ module OpsHelper
   include SettingsLabelTagMappingHelper
   include SettingsScheduleHelper
   include SettingsServerDescHelper
+  include SettingsTabsHelper
+  include SettingsTagsHelper
   include SettingsUsersHelper
   include SettingsZoneHelper
   include SettingsRbacTagHelper

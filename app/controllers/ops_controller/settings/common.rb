@@ -859,6 +859,8 @@ module OpsController::Settings::Common
     nodes = nodetype.downcase.split("-")
     case nodes[0]
     when "root"
+      @settings_tab, @settings_tab_length = settings_tab_index_by_name(@sb[:active_tab])
+      @subtab = settings_tags_tab_index_by_name(@sb[:active_subtab])
       @right_cell_text = _("%{product} Region \"%{name}\"") %
                          {:name    => "#{MiqRegion.my_region.description} [#{MiqRegion.my_region.region}]",
                           :product => Vmdb::Appliance.PRODUCT_NAME}
@@ -870,9 +872,9 @@ module OpsController::Settings::Common
         @in_a_form = true
       when "settings_tags"
         case @sb[:active_subtab]
-        when "settings_co_categories"
+        when "settings_my_company_categories"
           category_get_all
-        when "settings_co_tags"
+        when "settings_my_company_tags"
           # dont hide the disabled categories, so user can remove tags from the disabled ones
           cats = Classification.categories.sort_by(&:description)  # Get the categories, sort by name
           @cats = {}                                               # Classifications array for first chooser
@@ -887,7 +889,7 @@ module OpsController::Settings::Common
           @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
           add_flash(_("Locate and upload a file to start the import process"), :info)
           @in_a_form = true
-        when "settings_import" # Import tab
+        when "settings_import_variables" # Import tab
           @edit = {}
           @edit[:new] = {}
           @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
@@ -895,7 +897,7 @@ module OpsController::Settings::Common
           @sb[:good] = nil unless @sb[:show_button]
           add_flash(_("Choose the type of custom variables to be imported"), :info)
           @in_a_form = true
-        when "settings_label_tag_mapping"
+        when "settings_map_tags"
           label_tag_mapping_get_all
         end
       when "settings_help_menu"

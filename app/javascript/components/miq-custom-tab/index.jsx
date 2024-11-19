@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Tabs, Tab } from 'carbon-components-react';
 import { useDispatch } from 'react-redux';
 import { miqCustomTabActions } from '../../miq-redux/actions/miq-custom-tab-actions';
 import { labelConfig, tabText } from './helper';
 
-const MiqCustomTab = ({ containerId, tabLabels, type }) => {
+const MiqCustomTab = ({
+  containerId, tabLabels, type, activeTab, subtab, tabLength,
+}) => {
   const dispatch = useDispatch();
   const [data, setData] = useState({ loading: false });
+  const activeTabClassName = 'bx--tabs--scrollable__nav-item--selected';
+  const selectedClassName = 'bx--tabs__nav-item--selected';
 
   /** Labels used for a Tab found from the 'type'. */
   const selectedLabels = labelConfig(type);
@@ -23,6 +27,13 @@ const MiqCustomTab = ({ containerId, tabLabels, type }) => {
     { type: 'CATALOG_EDIT', js: () => name === 'detail' && dispatch(miqCustomTabActions.incrementClickCount()) },
     { type: 'CATALOG_REQUEST_INFO', url: `/miq_request/prov_field_changed?tab_id=${name}&edit_mode=true` },
     { type: 'UTILIZATION' },
+    {
+      type: 'SETTINGS',
+      url: name === 'tags'
+        ? `/ops/change_tab?tab_id=settings_my_company_categories&parent_tab_id=settings_${name}`
+        : `/ops/change_tab?tab_id=settings_${name}`,
+    },
+    { type: 'SETTINGS_TAGS', url: `/ops/change_tab?parent_tab_id=settings_tags&tab_id=settings_${name}` },
   ];
 
   const configuration = (name) => tabConfigurations(name).find((item) => item.type === type);
@@ -78,6 +89,7 @@ const MiqCustomTab = ({ containerId, tabLabels, type }) => {
 
   /** Function to handle tab click events. */
   const onTabSelect = (name) => {
+    setData(true);
     if (!data.loading) {
       miqSparkleOn();
       const config = configuration(name);
@@ -90,6 +102,23 @@ const MiqCustomTab = ({ containerId, tabLabels, type }) => {
   const renderTabs = () => tabLabels.map((label) => (
     <Tab key={`tab${label}`} label={`${tabText(selectedLabels, label)}`} onClick={() => onTabSelect(label)} />
   ));
+
+  useEffect(() => {
+    if (activeTab) {
+      let elements = document.getElementsByClassName('bx--tabs--scrollable__nav-item');
+      elements.forEach((element) => {
+        element.classList.remove(activeTabClassName);
+        element.classList.remove(selectedClassName);
+      });
+      if (subtab !== undefined && subtab !== -1) {
+        elements[tabLength].classList.remove(activeTabClassName);
+        elements[subtab + tabLength].classList.add(activeTabClassName);
+      }
+      elements[activeTab].classList.add(activeTabClassName);
+
+      elements = document.getElementsByClassName('bx--tabs--scrollable__nav-item');
+    }
+  }, [data.loading]);
 
   return (
     <Tabs className="miq_custom_tabs" id={tabIdentifier('')}>
@@ -104,4 +133,13 @@ MiqCustomTab.propTypes = {
   containerId: PropTypes.string.isRequired,
   tabLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
   type: PropTypes.string.isRequired,
+  activeTab: PropTypes.number,
+  subtab: PropTypes.number,
+  tabLength: PropTypes.number,
+};
+
+MiqCustomTab.defaultProps = {
+  activeTab: undefined,
+  subtab: undefined,
+  tabLength: undefined,
 };
