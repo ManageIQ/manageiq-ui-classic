@@ -30,7 +30,7 @@ const HelpMenuTab = ({ initialValues, initialDropdownValues }) => {
           ...data,
           isLoading: false,
         });
-        add_flash(__('Storing the custom help menu configuration was not successful.'), 'failure');
+        add_flash(__('Storing the custom help menu configuration was not successful.'), 'error');
         window.location.reload();
       });
       setData({ ...data, isLoading: false });

@@ -2444,7 +2444,6 @@ Rails.application.routes.draw do
         forest_delete
         forest_form_field_changed
         forest_select
-        help_menu_form_field_changed
         label_tag_mapping_delete
         label_tag_mapping_edit
         label_tag_mapping_update
