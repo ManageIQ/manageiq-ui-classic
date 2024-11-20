@@ -806,6 +806,10 @@ class OpsController < ApplicationController
     if ["settings_workers", "diagnostics_cu_repair"].include?(@sb[:active_tab])
       presenter.hide(:form_buttons_div)
     end
+
+    if @hide_bottom_bar
+      presenter.hide(:form_buttons_div)
+    end
   end
 
   def replace_explorer_trees(replace_trees, presenter)
