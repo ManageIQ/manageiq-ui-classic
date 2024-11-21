@@ -131,6 +131,7 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -263,6 +264,7 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],

@@ -20,6 +20,7 @@ exports[`Physical storage form component should render adding form variant 1`] =
       componentMapper={
         Object {
           "checkbox": [Function],
+          "checkbox-tree": [Function],
           "code-editor": [Function],
           "date-picker": [Function],
           "dual-list-select": [Function],
@@ -293,6 +294,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -541,6 +543,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -792,6 +795,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
             componentMapper={
               Object {
                 "checkbox": [Function],
+                "checkbox-tree": [Function],
                 "code-editor": [Function],
                 "date-picker": [Function],
                 "dual-list-select": [Function],

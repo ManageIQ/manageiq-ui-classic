@@ -1,0 +1,40 @@
+.parent-div {
+    display: flex;
+    flex-direction: row;
+  }
+  .clusters-section, .datastores-section {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10%;
+  }
+  .clusters, .datastores {
+    font-size: large;
+  }
+  .clusters-box, .datastores-box {
+    width: 45%;
+    border: 1px solid; 
+    padding: 2%;
+  }
+  .available-clusters, .available-datastores, .collect-note {
+    font-weight: bold;
+  }
+  .clusters-box, .datastores-box {
+    margin-bottom: 5%;
+  }
+  .clusters-box {
+    margin-right: 10%;
+  }
+  .clusters-labels, .datastores-labels {
+    margin-right: 30%;
+  }
+  .bx--btn--primary {
+    margin-right: 10%;
+  }
+
+  .bx--btn--primary, .bx--btn--secondary {
+    width: 20%;
+  }
+
+  .dropdown-label {
+    font-size: x-small;
+  }

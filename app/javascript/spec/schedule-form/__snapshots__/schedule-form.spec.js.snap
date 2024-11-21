@@ -721,6 +721,7 @@ exports[`Schedule form component should render edit form when filter_type is not
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -1361,6 +1362,7 @@ exports[`Schedule form component should render edit form when filter_type is not
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -15534,6 +15536,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -16316,6 +16319,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -33722,6 +33726,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -34285,6 +34290,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],

@@ -103,6 +103,7 @@ exports[`Diagnostics Collect Log form component should render edit DiagnosticsCo
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -195,6 +196,7 @@ exports[`Diagnostics Collect Log form component should render edit DiagnosticsCo
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -1646,6 +1648,7 @@ exports[`Diagnostics Collect Log form component should render edit DiagnosticsCo
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -1738,6 +1741,7 @@ exports[`Diagnostics Collect Log form component should render edit DiagnosticsCo
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -3194,6 +3198,7 @@ exports[`Diagnostics Collect Log form component should render new DiagnosticsCol
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -3291,6 +3296,7 @@ exports[`Diagnostics Collect Log form component should render new DiagnosticsCol
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],

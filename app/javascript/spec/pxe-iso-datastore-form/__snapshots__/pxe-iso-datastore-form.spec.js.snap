@@ -89,6 +89,7 @@ exports[`Pxe Iso Datastore Form Component should render adding a new iso datasto
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -169,6 +170,7 @@ exports[`Pxe Iso Datastore Form Component should render adding a new iso datasto
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],

@@ -1,0 +1,210 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`C&U Form Collection Form Render C&U Collection form 1`] = `
+<Connect(MiqFormRenderer)
+  FormTemplate={[Function]}
+  canReset={true}
+  canSubmit={true}
+  className="toggle"
+  onReset={[Function]}
+  onSubmit={[Function]}
+  schema={
+    Object {
+      "fields": Array [
+        Object {
+          "className": "parent-div",
+          "component": "sub-form",
+          "fields": Array [
+            Object {
+              "className": "clusters-box",
+              "component": "sub-form",
+              "fields": Array [
+                Object {
+                  "className": "clusters-section",
+                  "component": "sub-form",
+                  "fields": Array [
+                    Object {
+                      "className": "clusters-labels",
+                      "component": "sub-form",
+                      "fields": Array [
+                        Object {
+                          "className": "clusters",
+                          "component": "plain-text",
+                          "id": "clusters",
+                          "label": "Clusters",
+                          "name": "clusters",
+                          "style": Object {
+                            "fontSize": "16px",
+                          },
+                        },
+                        Object {
+                          "className": "collect-clusters",
+                          "component": "plain-text",
+                          "id": "collect-clusters",
+                          "label": "Collect for All Clusters",
+                          "name": "collect_clusters",
+                          "style": Object {
+                            "fontSize": "16px",
+                          },
+                        },
+                      ],
+                      "id": "clusters-labels",
+                      "name": "clusters_labels",
+                    },
+                    Object {
+                      "className": "toggle",
+                      "component": "switch",
+                      "id": "all-clusters",
+                      "initialValue": false,
+                      "name": "all_clusters",
+                    },
+                  ],
+                  "id": "clusters-selection",
+                  "name": "clusters_section",
+                },
+                Object {
+                  "className": "collect-note",
+                  "component": "plain-text",
+                  "id": "collect-note",
+                  "label": "Note: Collect for All Clusters must be checked to be able to collect C & U data from Cloud Providers such as Red Hat OpenStack or Amazon EC2",
+                  "name": "collect_note",
+                  "style": Object {
+                    "fontSize": "16px",
+                  },
+                },
+                Object {
+                  "checked": Array [],
+                  "className": "clusters-tree",
+                  "component": "checkbox-tree",
+                  "condition": Object {
+                    "and": Array [
+                      Object {
+                        "is": false,
+                        "when": "all_clusters",
+                      },
+                    ],
+                  },
+                  "id": "clusters-tree",
+                  "key": "00",
+                  "label": "Enable Collection by Cluster",
+                  "name": "clusters_tree",
+                  "nodes": Array [],
+                },
+                Object {
+                  "className": "vm-data",
+                  "component": "plain-text",
+                  "condition": Object {
+                    "and": Array [
+                      Object {
+                        "is": false,
+                        "when": "all_clusters",
+                      },
+                    ],
+                  },
+                  "id": "vm-data",
+                  "label": "VM data will be collected for VMs under selected Hosts only. Data is collected for a Cluster and all of its Hosts when at least one Host is selected.",
+                  "name": "vm_data",
+                },
+                Object {
+                  "className": "available-clusters",
+                  "component": "plain-text",
+                  "id": "available-clusters",
+                  "label": "Note: No Clusters available.",
+                  "name": "available_clusters",
+                  "style": Object {
+                    "fontSize": "16px",
+                  },
+                },
+              ],
+              "id": "clusters-box",
+              "name": "clusters_box",
+            },
+            Object {
+              "className": "datastores-box",
+              "component": "sub-form",
+              "fields": Array [
+                Object {
+                  "className": "datastores-section",
+                  "component": "sub-form",
+                  "fields": Array [
+                    Object {
+                      "className": "datastores-labels",
+                      "component": "sub-form",
+                      "fields": Array [
+                        Object {
+                          "className": "datastores",
+                          "component": "plain-text",
+                          "id": "datastores",
+                          "label": "Datastores",
+                          "name": "datastores",
+                          "style": Object {
+                            "fontSize": "16px",
+                          },
+                        },
+                        Object {
+                          "className": "collect-datastores",
+                          "component": "plain-text",
+                          "id": "collect-datastores",
+                          "label": "Collect for All Datastores",
+                          "name": "collect_datastores",
+                          "style": Object {
+                            "fontSize": "16px",
+                          },
+                        },
+                      ],
+                      "id": "datastores-labels",
+                      "name": "datastores_labels",
+                    },
+                    Object {
+                      "className": "toggle",
+                      "component": "switch",
+                      "id": "all_datastores",
+                      "initialValue": false,
+                      "name": "all_datastores",
+                    },
+                  ],
+                  "id": "datastores-section",
+                  "name": "datastores_section",
+                },
+                Object {
+                  "checked": Array [],
+                  "className": "datastores-tree",
+                  "component": "checkbox-tree",
+                  "condition": Object {
+                    "and": Array [
+                      Object {
+                        "is": false,
+                        "when": "all_datastores",
+                      },
+                    ],
+                  },
+                  "id": "datastores-tree",
+                  "key": "00",
+                  "label": "Enable Collection by Datastore",
+                  "name": "datastores_tree",
+                  "nodes": Array [],
+                },
+                Object {
+                  "className": "available-datastores",
+                  "component": "plain-text",
+                  "id": "available-datastores",
+                  "label": "Note: No Datastores available.",
+                  "name": "available_datastores",
+                  "style": Object {
+                    "fontSize": "16px",
+                  },
+                },
+              ],
+              "id": "datastores-box",
+              "name": "datastores_box",
+            },
+          ],
+          "id": "parent-div",
+          "name": "parent_div",
+        },
+      ],
+    }
+  }
+  validate={[Function]}
+/>
+`;

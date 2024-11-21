@@ -99,6 +99,7 @@ exports[`Host Initiator Group Form Loads data and renders 1`] = `
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -200,6 +201,7 @@ exports[`Host Initiator Group Form Loads data and renders 1`] = `
             componentMapper={
               Object {
                 "checkbox": [Function],
+                "checkbox-tree": [Function],
                 "code-editor": [Function],
                 "date-picker": [Function],
                 "dual-list-select": [Function],

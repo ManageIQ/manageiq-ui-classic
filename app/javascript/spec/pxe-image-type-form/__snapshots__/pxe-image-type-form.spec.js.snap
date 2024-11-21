@@ -84,6 +84,7 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -171,6 +172,7 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -1582,6 +1584,7 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -1675,6 +1678,7 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],

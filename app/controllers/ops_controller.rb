@@ -596,6 +596,10 @@ class OpsController < ApplicationController
 
     presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
 
+    if params["tab_id"] == "settings_cu_collection"
+      @hide_bottom_bar = true
+    end
+
     replace_explorer_trees(replace_trees, presenter)
     rebuild_toolbars(presenter)
     handle_bottom_cell(nodetype, presenter, locals)
@@ -804,6 +808,9 @@ class OpsController < ApplicationController
       presenter.hide(:paging_div).hide(:form_buttons_div)
     end
     if ["settings_workers", "diagnostics_cu_repair"].include?(@sb[:active_tab])
+      presenter.hide(:form_buttons_div)
+    end
+    if @hide_bottom_bar
       presenter.hide(:form_buttons_div)
     end
   end

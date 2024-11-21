@@ -129,6 +129,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -255,6 +256,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -2755,6 +2757,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -2890,6 +2893,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -5417,6 +5421,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -5552,6 +5557,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],

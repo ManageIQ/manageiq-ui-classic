@@ -109,6 +109,7 @@ exports[`Live Migrate form component should render live migrate form when hosts 
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -218,6 +219,7 @@ exports[`Live Migrate form component should render live migrate form when hosts 
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -1984,6 +1986,7 @@ exports[`Live Migrate form component should render live migrate form with host o
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -2114,6 +2117,7 @@ exports[`Live Migrate form component should render live migrate form with host o
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -4239,6 +4243,7 @@ exports[`Live Migrate form component should render live migrate form with multip
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -4348,6 +4353,7 @@ exports[`Live Migrate form component should render live migrate form with multip
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
