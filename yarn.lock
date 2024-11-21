@@ -6400,12 +6400,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"datatables.net@npm:2.0.8, datatables.net@npm:>=1.10.9, datatables.net@npm:^2":
+"datatables.net@npm:2.0.8, datatables.net@npm:^2":
   version: 2.0.8
   resolution: "datatables.net@npm:2.0.8"
   dependencies:
     jquery: "npm:>=1.7"
   checksum: 10/da0780838e0d7b595c14891f7691b282f78c21664730499e6f8cb211df6798e381c437a583a3bed93688f2007db172330ad3edbb0a07d768a5cb1d23c780ee0f
+  languageName: node
+  linkType: hard
+
+"datatables.net@npm:>=1.10.9":
+  version: 2.1.8
+  resolution: "datatables.net@npm:2.1.8"
+  dependencies:
+    jquery: "npm:>=1.7"
+  checksum: 10/1c065cd91ce850c7e355532c2b173c20abfb632d9ac6a6407ca7d5884dd99d8dc4423e272401478d5d18934afaface546a21ba9ba9d416e9149c96b79fa9a185
   languageName: node
   linkType: hard
 
