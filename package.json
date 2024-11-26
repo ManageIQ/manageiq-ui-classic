@@ -87,7 +87,7 @@
     "proxy-polyfill": "^0.1.7",
     "react": "~16.13.1",
     "react-bootstrap": "~0.33.0",
-    "react-codemirror2": "^6.0.0",
+    "react-codemirror2": "^8.0.0",
     "react-dom": "~16.13.1",
     "react-markdown": "6.0.0",
     "react-query": "^3.39.3",

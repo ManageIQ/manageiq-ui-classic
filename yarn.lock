@@ -11747,7 +11747,7 @@ __metadata:
     proxy-polyfill: "npm:^0.1.7"
     react: "npm:~16.13.1"
     react-bootstrap: "npm:~0.33.0"
-    react-codemirror2: "npm:^6.0.0"
+    react-codemirror2: "npm:^8.0.0"
     react-dom: "npm:~16.13.1"
     react-markdown: "npm:6.0.0"
     react-query: "npm:^3.39.3"
@@ -14583,13 +14583,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-codemirror2@npm:^6.0.0":
-  version: 6.0.1
-  resolution: "react-codemirror2@npm:6.0.1"
+"react-codemirror2@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "react-codemirror2@npm:8.0.0"
   peerDependencies:
     codemirror: 5.x
-    react: ">=15.5 <=16.x"
-  checksum: 10/47f962971af4c89b6169e17405899f056afb532af088b37c21acd52f3152a137be813e0421d890c14da9565d1e48a473d65088d969de871fbf4bbc643fb4aa3c
+    react: ">=15.5 <=18.x"
+  checksum: 10/1bbe8584df9ace554586ba81409b1666bc168edb77adca2ffac3c4c3a8bad1675a11fe64ff05aa9f58f0814dabbc0265874d6fc91a2f1713a1e57272a85c404e
   languageName: node
   linkType: hard
 
