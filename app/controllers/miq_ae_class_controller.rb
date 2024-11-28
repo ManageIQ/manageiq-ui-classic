@@ -1884,11 +1884,12 @@ class MiqAeClassController < ApplicationController
       begin
         class_rec.save!
       rescue StandardError
+        errors = []
         class_rec.errors.each do |error|
-          add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error)
+          errors.push("#{error.attribute.to_s.capitalize} #{error.message}")
         end
         @changed = true
-        javascript_flash
+        render :json => {:error => errors, :status => 500}
       else
         edit_hash = {}
         edit_hash[:new] = {:name => params[:name],
@@ -1902,7 +1903,7 @@ class MiqAeClassController < ApplicationController
                               end
         AuditEvent.success(build_saved_audit(class_rec, edit_hash))
         @edit = session[:edit] = nil # clean out the saved info
-        replace_right_cell(:nodetype => x_node, :replace_trees => [:ae])
+        render :json => {:status => 200}
       end
     end
   end

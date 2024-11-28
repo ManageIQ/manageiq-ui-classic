@@ -5,6 +5,7 @@ import MiqFormRenderer, { useFormApi } from '@@ddf';
 import PropTypes from 'prop-types';
 import createSchema from './class-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
+import miqFlash from '../../helpers/miq-flash';
 
 const MiqAeClass = ({ classRecord, fqname }) => {
   const [data, setData] = useState({
@@ -49,9 +50,14 @@ const MiqAeClass = ({ classRecord, fqname }) => {
       : http.post(`/miq_ae_class/class_update/`, params);
 
     request
-      .then(() => {
-        const confirmation = isEdit ? __(`Class "${values.name}" was saved`) : __(`Class "${values.name}" was added`);
-        miqRedirectBack(sprintf(confirmation, values.name), 'success', '/miq_ae_class/explorer');
+      .then((response) => {
+        if (response.status === 200) {
+          const confirmation = isEdit ? __(`Class "${values.name}" was saved`) : __(`Class "${values.name}" was added`);
+          miqRedirectBack(sprintf(confirmation, values.name), 'success', '/miq_ae_class/explorer');
+        } else {
+          miqSparkleOff();
+          miqFlash('error', response.error);
+        }
       })
       .catch(miqSparkleOff);
   };
@@ -65,12 +71,25 @@ const MiqAeClass = ({ classRecord, fqname }) => {
     miqRedirectBack(message, 'warning', '/miq_ae_class/explorer');
   };
 
+  const customValidatorMapper = {
+    customValidatorForNameField: () => (value) => {
+      if (!value) {
+        return __('Required');
+      }
+      if (!value.match('^[a-zA-Z0-9_.-]*$')) {
+        return __('Name may contain only alphanumeric and _ . - characters');
+      }
+      return false;
+    },
+  };
+
   return (!data.isLoading
     ? (
       <div className="dialog-provision-form">
         <MiqFormRenderer
           schema={createSchema(fqname)}
           initialValues={data.initialValues}
+          validatorMapper={customValidatorMapper}
           onSubmit={onSubmit}
           onCancel={onCancel}
           canReset={!!classRecord.id}

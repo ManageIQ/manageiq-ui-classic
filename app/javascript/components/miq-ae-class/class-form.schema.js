@@ -1,4 +1,4 @@
-import { componentTypes, validatorTypes } from '@@ddf';
+import { componentTypes } from '@@ddf';
 
 const createSchema = (fqname) => ({
   fields: [
@@ -13,7 +13,7 @@ const createSchema = (fqname) => ({
       name: 'name',
       label: __('Name'),
       maxLength: 128,
-      validate: [{ type: validatorTypes.REQUIRED }],
+      validate: [{ type: 'customValidatorForNameField' }],
       isRequired: true,
     },
     {
