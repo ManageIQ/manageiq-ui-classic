@@ -52,8 +52,9 @@ const MiqAeClass = ({ classRecord, fqname }) => {
     request
       .then((response) => {
         if (response.status === 200) {
-          const confirmation = isEdit ? __(`Class "${values.name}" was saved`) : __(`Class "${values.name}" was added`);
-          miqRedirectBack(sprintf(confirmation, values.name), 'success', '/miq_ae_class/explorer');
+          const confirmation = isEdit ? __(`Class "%s" was saved`) : __(`Class "%s" was added`);
+          const message = sprintf(confirmation, values.name);
+          miqRedirectBack(message, 'success', '/miq_ae_class/explorer');
         } else {
           miqSparkleOff();
           miqFlash('error', response.error);
@@ -63,11 +64,9 @@ const MiqAeClass = ({ classRecord, fqname }) => {
   };
 
   const onCancel = () => {
-    const confirmation = classRecord.id ? __(`Edit of Class "${classRecord.name}" cancelled by the user`)
+    const confirmation = classRecord.id ? __(`Edit of Class "%s" cancelled by the user`)
       : __(`Add of new Class was cancelled by the user`);
-    const message = sprintf(
-      confirmation
-    );
+    const message = sprintf(confirmation, classRecord.name);
     miqRedirectBack(message, 'warning', '/miq_ae_class/explorer');
   };
 
