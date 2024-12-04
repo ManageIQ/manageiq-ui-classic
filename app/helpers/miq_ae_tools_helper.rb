@@ -18,7 +18,7 @@ module MiqAeToolsHelper
 
   def automation_simulation_data(tree, results, resolve)
     if results
-      {
+      render :json => {
         :tree   => {:text => _('Tree View'),   :rows => ae_result_tree(tree)},
         :xml    => {:text => _('Xml View'),    :rows => ae_result_xml(results)},
         :object => {:text => _('Object info'), :rows => ae_result_uri(resolve)}
