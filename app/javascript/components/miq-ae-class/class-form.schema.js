@@ -3,9 +3,11 @@ import { componentTypes } from '@@ddf';
 const createSchema = (fqname) => ({
   fields: [
     {
-      component: componentTypes.PLAIN_TEXT,
+      component: componentTypes.TEXT_FIELD,
       name: 'fqname',
-      label: `${__('Fully Qualified Name')}:\t ${fqname}`,
+      label: 'Fully Qualified Name',
+      value: `${fqname}`,
+      disabled: true,
     },
     {
       component: componentTypes.TEXT_FIELD,

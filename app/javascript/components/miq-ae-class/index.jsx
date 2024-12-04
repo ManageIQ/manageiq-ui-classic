@@ -8,6 +8,7 @@ import miqRedirectBack from '../../helpers/miq-redirect-back';
 import miqFlash from '../../helpers/miq-flash';
 
 const MiqAeClass = ({ classRecord, fqname }) => {
+  const formattedFqname = fqname.replace(/\s+/g, '');
   const [data, setData] = useState({
     isLoading: true,
     initialValues: undefined,
@@ -24,7 +25,7 @@ const MiqAeClass = ({ classRecord, fqname }) => {
       });
     } else {
       const initialValues = {
-        fqname,
+        formattedFqname,
         name: classRecord && classRecord.name,
         display_name: classRecord && classRecord.display_name,
         description: classRecord && classRecord.description,
@@ -86,7 +87,7 @@ const MiqAeClass = ({ classRecord, fqname }) => {
     ? (
       <div className="dialog-provision-form">
         <MiqFormRenderer
-          schema={createSchema(fqname)}
+          schema={createSchema(formattedFqname)}
           initialValues={data.initialValues}
           validatorMapper={customValidatorMapper}
           onSubmit={onSubmit}
