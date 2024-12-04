@@ -4227,15 +4227,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bootstrap-datepicker@npm:~1.6.4":
-  version: 1.6.4
-  resolution: "bootstrap-datepicker@npm:1.6.4"
-  dependencies:
-    jquery: "npm:>=1.7.1"
-  checksum: 10/8d07e86a11e3e5af344d7699785b23fe0ff640343f5642137b27d16b518f0917575ba114fa47a58037109979e0cd78ae11f4eca83a2ceae3915243392c5d2e05
-  languageName: node
-  linkType: hard
-
 "bootstrap-filestyle@npm:~1.2.1":
   version: 1.2.1
   resolution: "bootstrap-filestyle@npm:1.2.1"
@@ -4243,7 +4234,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bootstrap-sass@npm:^3.3.7, bootstrap-sass@npm:^3.4.0":
+"bootstrap-sass@npm:^3.4.0":
   version: 3.4.3
   resolution: "bootstrap-sass@npm:3.4.3"
   checksum: 10/4e22d8ac986f61a2bc444bbb0b04a2b426f7962ee0a68b5b72225923a1ad79915494352ea8f92a01dc5a12cbf377828c057e7ed7dd0b05912e3213b8d0ef9f76
@@ -4256,16 +4247,6 @@ __metadata:
   dependencies:
     jquery: "npm:>=1.8"
   checksum: 10/2ca42119455c8a50bd9c3737f1fda09bb288cf482da98eb24ba81a25b2eff9392c413e1ca7f92d5b857a8f027035736de7edacd582dff7250d6959e08168d0fd
-  languageName: node
-  linkType: hard
-
-"bootstrap-select@npm:^1.12.2":
-  version: 1.13.18
-  resolution: "bootstrap-select@npm:1.13.18"
-  peerDependencies:
-    bootstrap: ">=3.0.0"
-    jquery: 1.9.1 - 3
-  checksum: 10/660f1fdf826ccd2093ba4597406a664808e95fe34efb0a22ca85171ab6b902d7637fc649577d131c192a9c4dddb480ab1ba2132f8d0941f0d74760391909ec9a
   languageName: node
   linkType: hard
 
@@ -4295,16 +4276,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bootstrap-switch@npm:~3.3.4":
-  version: 3.3.5
-  resolution: "bootstrap-switch@npm:3.3.5"
-  peerDependencies:
-    bootstrap: ^3.3.7
-    jquery: ">=1.12.4"
-  checksum: 10/105c326e7fbe57a8b559e087912c740b244228f48fb0a695de08888af9df1036a931713e8c30320d13337cae2db17979b0c1893136622052d24c0eaf9b8865f3
-  languageName: node
-  linkType: hard
-
 "bootstrap-touchspin@npm:~3.1.1":
   version: 3.1.1
   resolution: "bootstrap-touchspin@npm:3.1.1"
@@ -4325,13 +4296,6 @@ __metadata:
   version: 3.4.1
   resolution: "bootstrap@npm:3.4.1"
   checksum: 10/c46285f9d46f6d7a716fa2d294a68b83d8da5f394b2df80e96e0015055e78899312186ac998474568949545e8edcea5c396d500fb9de71c2c81ad5bac1fb56b6
-  languageName: node
-  linkType: hard
-
-"bootstrap@npm:~3.3.7":
-  version: 3.3.7
-  resolution: "bootstrap@npm:3.3.7"
-  checksum: 10/bc978de5b63ea67e21eb6a23de91a1b761c13f77715e4887293f304d03bb449aa44e2ecacfc32309502cdb9e4c542fd5ec1a230f667f4d611c7fa855fe37d731
   languageName: node
   linkType: hard
 
@@ -6380,16 +6344,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"datatables.net-colreorder@npm:~1.3.2":
-  version: 1.3.3
-  resolution: "datatables.net-colreorder@npm:1.3.3"
-  dependencies:
-    datatables.net: "npm:>=1.10.9"
-    jquery: "npm:>=1.7"
-  checksum: 10/b7cd56dde56e8346d5410aa353bbf099b9775bfb807e4eeb069d11c0e82f87cd6b318dedbc6093bc268f0b391adcbce7c613682c1f3af21770fc484368d049e0
-  languageName: node
-  linkType: hard
-
 "datatables.net-select@npm:~1.2.0":
   version: 1.2.7
   resolution: "datatables.net-select@npm:1.2.7"
@@ -6400,7 +6354,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"datatables.net@npm:2.0.8, datatables.net@npm:>=1.10.9, datatables.net@npm:^2":
+"datatables.net@npm:2.0.8, datatables.net@npm:^2":
   version: 2.0.8
   resolution: "datatables.net@npm:2.0.8"
   dependencies:
@@ -10754,7 +10708,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jquery@npm:1.8 - 4, jquery@npm:>=1.7, jquery@npm:>=1.7.0, jquery@npm:>=1.7.1, jquery@npm:>=1.8, jquery@npm:>=1.8.0 <4.0.0, jquery@npm:>=1.9.0, jquery@npm:>=3.4.0 <4.0.0, jquery@npm:^3.4.1, jquery@npm:^3.5.1":
+"jquery@npm:1.8 - 4, jquery@npm:>=1.7, jquery@npm:>=1.7.0, jquery@npm:>=1.8, jquery@npm:>=1.8.0 <4.0.0, jquery@npm:>=1.9.0, jquery@npm:>=3.4.0 <4.0.0, jquery@npm:^3.4.1, jquery@npm:^3.5.1":
   version: 3.7.1
   resolution: "jquery@npm:3.7.1"
   checksum: 10/17be9929f5fa37697d9848284f0d108c543318ef79ec794e130cd0c49f6c050d60c803a69e8cfa16fa19f5ff7cdb814a6905cceab0831186560c65ed113cd579
@@ -10765,13 +10719,6 @@ __metadata:
   version: 2.2.4
   resolution: "jquery@npm:2.2.4"
   checksum: 10/fe1bb90423eda61255b969fed0420dfb09dc055793b83ad380a2fbe5b5ce3bc747029d010e580bf39c95bdd07fb309ef8c0fc22a700ca97015311626881db152
-  languageName: node
-  linkType: hard
-
-"jquery@npm:~3.2.1":
-  version: 3.2.1
-  resolution: "jquery@npm:3.2.1"
-  checksum: 10/88aa997c1a0770e28ca4c0309dd1b44df0e141f389d651b5b5e5a83e1dc059235a8f96b9cf845599fbb75c137f28391fc224c14ab254fea339627290a3bf9835
   languageName: node
   linkType: hard
 
@@ -13326,88 +13273,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"patternfly-bootstrap-treeview@npm:~2.1.0, patternfly-bootstrap-treeview@npm:~2.1.10":
+"patternfly-bootstrap-treeview@npm:~2.1.10":
   version: 2.1.10
   resolution: "patternfly-bootstrap-treeview@npm:2.1.10"
   dependencies:
     bootstrap: "npm:^3.4.1"
     jquery: "npm:^3.4.1"
   checksum: 10/a8569b852e09c6bec8c483741b6844416d0a20f95a79301ab02e5b66428d46e6dd1e351c4db7e34963997715e60ace6bd214b76d854a22a4b72ebc7dcf5725e8
-  languageName: node
-  linkType: hard
-
-"patternfly@npm:~3.31.1":
-  version: 3.31.2
-  resolution: "patternfly@npm:3.31.2"
-  dependencies:
-    bootstrap: "npm:~3.3.7"
-    bootstrap-datepicker: "npm:~1.6.4"
-    bootstrap-sass: "npm:^3.3.7"
-    bootstrap-select: "npm:^1.12.2"
-    bootstrap-slider: "npm:^9.9.0"
-    bootstrap-switch: "npm:~3.3.4"
-    bootstrap-touchspin: "npm:~3.1.1"
-    c3: "npm:~0.4.11"
-    d3: "npm:~3.5.17"
-    datatables.net: "npm:^1.10.15"
-    datatables.net-colreorder: "npm:~1.3.2"
-    datatables.net-colreorder-bs: "npm:~1.3.2"
-    datatables.net-select: "npm:~1.2.0"
-    drmonty-datatables-colvis: "npm:~1.1.2"
-    eonasdan-bootstrap-datetimepicker: "npm:^4.17.47"
-    font-awesome: "npm:^4.7.0"
-    font-awesome-sass: "npm:^4.7.0"
-    google-code-prettify: "npm:~1.0.5"
-    jquery: "npm:~3.2.1"
-    jquery-match-height: "npm:^0.7.2"
-    moment: "npm:~2.14.1"
-    moment-timezone: "npm:^0.4.1"
-    patternfly-bootstrap-combobox: "npm:~1.1.7"
-    patternfly-bootstrap-treeview: "npm:~2.1.0"
-  dependenciesMeta:
-    bootstrap-datepicker:
-      optional: true
-    bootstrap-sass:
-      optional: true
-    bootstrap-select:
-      optional: true
-    bootstrap-slider:
-      optional: true
-    bootstrap-switch:
-      optional: true
-    bootstrap-touchspin:
-      optional: true
-    c3:
-      optional: true
-    d3:
-      optional: true
-    datatables.net:
-      optional: true
-    datatables.net-colreorder:
-      optional: true
-    datatables.net-colreorder-bs:
-      optional: true
-    datatables.net-select:
-      optional: true
-    drmonty-datatables-colvis:
-      optional: true
-    eonasdan-bootstrap-datetimepicker:
-      optional: true
-    font-awesome-sass:
-      optional: true
-    google-code-prettify:
-      optional: true
-    jquery-match-height:
-      optional: true
-    moment:
-      optional: true
-    moment-timezone:
-      optional: true
-    patternfly-bootstrap-combobox:
-      optional: true
-    patternfly-bootstrap-treeview:
-      optional: true
-  checksum: 10/a6d2b77399dddd55f15a188a688da42a6654384cda87efe2c10ba2ba4c2c8e3c570f9d309ee93ed5653d3ef9faea64c13fb6b0df70179665a332c3711f5c75e4
   languageName: node
   linkType: hard
 
