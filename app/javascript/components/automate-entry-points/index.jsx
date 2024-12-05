@@ -131,83 +131,110 @@ const DirectoryTreeView = () => {
 //   },
 //   ]);
 
-  const folder = {
+  // const folder = {
+  //   id: 'root',
+  //   name: '',
+  //   children: [
+  //     {
+  //       id: 'src_folder',
+  //       name: 'src',
+  //       children: [
+  //         {
+  //           id: 'index.js_file',
+  //           name: 'index.js',
+  //           metadata: { a: '1', b: '2', c: 'test' },
+  //         },
+  //         {
+  //           id: 'styles.css_file',
+  //           name: 'styles.css',
+  //           metadata: { a: '1', b: '2', c: 'test' },
+  //         }],
+  //     },
+  //     {
+  //       id: 'node_modules_folder',
+  //       name: 'node_modules',
+  //       children: [
+  //         {
+  //           id: 'react-accessible-treeview-folder',
+  //           name: 'react-accessible-treeview',
+  //           children: [{
+  //             id: 'index.js_file2',
+  //             name: 'index.js',
+  //           }],
+  //         },
+  //         {
+  //           id: 'react_folder',
+  //           name: 'react',
+  //           children: [{
+  //             id: 'index.js_file3',
+  //             name: 'index.js',
+  //           }],
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       id: '.npmignore_file',
+  //       name: '.npmignore',
+  //     },
+  //     {
+  //       id: 'package.json_file',
+  //       name: 'package.json',
+  //     },
+  //     {
+  //       id: 'webpack.config.js_file',
+  //       name: 'webpack.config.js',
+  //     },
+  //   ],
+  // };
+
+  const root = {
     id: 'root',
     name: '',
     children: [
-      {
-        id: 'src_folder',
-        name: 'src',
-        children: [
-          {
-            id: 'index.js_file',
-            name: 'index.js',
-            metadata: { a: '1', b: '2', c: 'test' },
-          },
-          {
-            id: 'styles.css_file',
-            name: 'styles.css',
-            metadata: { a: '1', b: '2', c: 'test' },
-          }],
-      },
-      {
-        id: 'node_modules_folder',
-        name: 'node_modules',
-        children: [
-          {
-            id: 'react-accessible-treeview-folder',
-            name: 'react-accessible-treeview',
-            children: [{
-              id: 'index.js_file2',
-              name: 'index.js',
-            }],
-          },
-          {
-            id: 'react_folder',
-            name: 'react',
-            children: [{
-              id: 'index.js_file3',
-              name: 'index.js',
-            }],
-          },
-        ],
-      },
-      {
-        id: '.npmignore_file',
-        name: '.npmignore',
-      },
-      {
-        id: 'package.json_file',
-        name: 'package.json',
-      },
-      {
-        id: 'webpack.config.js_file',
-        name: 'webpack.config.js',
-      },
+      // {
+      //   id: 'datastore_folder',
+      //   name: __('Datastore'),
+      //   children: [{}],
+      // },
     ],
   };
 
-  const data = flattenTree(folder);
-  console.log(data);
-
-  const initialData = {
-    id: 'root',
-    name: '',
-    children: [
-      {
-        id: 'root-node',
-        name: '',
-      },
-    ],
-  };
-
-  const [rawTreeData, setRawTreeData] = useState(folder);
-  const [treeData, setTreeData] = useState(flattenTree(initialData));
+  const [rawTreeData, setRawTreeData] = useState(root);
+  const [treeData, setTreeData] = useState(flattenTree(root));
   const [expandedIds, setExpandedIds] = useState([]);
+  const [treeIds, setTreeIds] = useState(['datastore_folder']);
   const [key, setKey] = useState('initial');
 
   useEffect(() => {
-    setTreeData(data);
+    const newChildren = [];
+    API.get('/api/automate_domains?expand=resources').then((apiData) => {
+      console.log(apiData);
+      apiData.resources.forEach((domain) => {
+        newChildren.push({
+          id: domain.id,
+          name: domain.name,
+          children: [{}],
+          parent: 'datastore_folder',
+          metadata: {},
+        });
+      });
+      return newChildren;
+    }).then((newChildren) => {
+      const tempIdsArray = treeIds;
+      newChildren.forEach((node) => {
+        if (!treeIds.includes(node.id)) {
+          tempIdsArray.push(node.id);
+        }
+      });
+      const tempData = root;
+      tempData.children = [{
+        id: 'datastore_folder',
+        name: __('Datastore'),
+      }];
+      tempData.children[0].children = newChildren;
+      setTreeIds(tempIdsArray);
+      setTreeData(flattenTree(tempData));
+    });
   }, []);
 
   useEffect(() => {
@@ -217,9 +244,9 @@ const DirectoryTreeView = () => {
 
   useEffect(() => {
     console.log(treeData);
-    if (treeData.length > 12) {
-      setExpandedIds(['src_folder']);
-      setKey('new');
+    if (treeData.length > 3) {
+      setExpandedIds(['datastore_folder']);
+      setKey(treeData.length);
     }
   }, [treeData]);
 
@@ -231,18 +258,22 @@ const DirectoryTreeView = () => {
     ));
 
   const FileIcon = ({ filename }) => {
-    const extension = filename.slice(filename.lastIndexOf('.') + 1);
-    switch (extension) {
-      case 'js':
-        return <Document16 className="icon" />;
-      case 'css':
-        return <Document16 className="icon" />;
-      case 'json':
-        return <Document16 className="icon" />;
-      case 'npmignore':
-        return <Document16 className="icon" />;
-      default:
-        return <Document16 className="icon" />;
+    if (filename) {
+      const extension = filename.slice(filename.lastIndexOf('.') + 1);
+      switch (extension) {
+        case 'js':
+          return <Document16 className="icon" />;
+        case 'css':
+          return <Document16 className="icon" />;
+        case 'json':
+          return <Document16 className="icon" />;
+        case 'npmignore':
+          return <Document16 className="icon" />;
+        default:
+          return <Document16 className="icon" />;
+      }
+    } else {
+      return <Document16 className="icon" />;
     }
   };
 
@@ -257,73 +288,104 @@ const DirectoryTreeView = () => {
     const tempData = treeData;
     const newChildren = [];
 
-    if (value && value.element) {
-      const ids = value.element.id.split('_');
-      if (ids.includes('folder')) {
-        tempData.forEach((item) => {
-          if (item.id === value.element.id) {
-            console.log(item.name);
-            API.get('/api/automate_domains?expand=resources').then((apiData) => {
-              console.log(apiData);
-              apiData.resources.forEach((domain) => {
-                newChildren.push({
-                  id: domain.id,
-                  name: domain.name,
-                  children: [],
-                  parent: item.id,
-                  metadata: {},
-                });
-              });
-              return newChildren;
-            }).then((newChildrenArray) => {
-              const newTreeData = treeData.concat(newChildrenArray[2]);
-              if (treeData.includes(newChildrenArray[0]) === false) {
-                newTreeData[1].children = ['index.js_file', 'styles.css_file', '1177'];
-                if (treeData.length === 12) {
-                  setTreeData(newTreeData);
-                  // Send all relevant data including new children and the clicked item to a new useffect using a new state variable
-                  // From this new use effect we can set the treedata, expandedids and the key state variables
-                }
-              }
+    if (value && value.element && value.element.id !== 'datastore_folder') {
+      API.get(`/api/automate/${value.element.name}?depth=1`).then((test) => {
+        tempData.forEach((node) => {
+          if (node.id === value.element.id) {
+            node.children = ['new-test-0'];
+            tempData.push({
+              id: 'new-test-0',
+              name: 'new test',
+              children: [],
+              parent: node.id,
+              metadata: {},
             });
+            console.log(tempData);
+            setTreeData(tempData);
           }
         });
-      }
+      });
     }
+    // if (value && value.element && value.element.id === 'datastore_folder') {
+    //   const ids = value.element.id.split('_');
+    //   if (ids.includes('folder')) {
+    //     tempData.forEach((item) => {
+    //       if (item.id === value.element.id) {
+    //         console.log(item.name);
+    //         API.get('/api/automate_domains?expand=resources').then((apiData) => {
+    //           console.log(apiData);
+    //           apiData.resources.forEach((domain) => {
+    //             newChildren.push({
+    //               id: domain.id,
+    //               name: domain.name,
+    //               children: [],
+    //               parent: item.id,
+    //               metadata: {},
+    //             });
+    //           });
+    //           return newChildren;
+    //         }).then((newChildrenArray) => {
+    //           const newTreeData = treeData;
+    //           const tempIdsArray = treeIds;
+    //           newChildrenArray.forEach((node) => {
+    //             if (!treeIds.includes(node.id)) {
+    //               newTreeData.push(node);
+    //               tempIdsArray.push(node.id);
+    //               newTreeData[1].children.push(node.id);
+    //             }
+    //           });
+    //           setTreeIds(tempIdsArray);
+    //           setTreeData(newTreeData);
+    //           // if (treeData.includes(newChildrenArray[0]) === false) {
+    //           //   // newTreeData[1].children = ['index.js_file', 'styles.css_file', '1177'];
+    //           //   if (treeData.length === 12) {
+    //           //     setTreeData(newTreeData);
+    //           //     // Send all relevant data including new children and the clicked item to a new useffect using a new state variable
+    //           //     // From this new use effect we can set the treedata, expandedids and the key state variables
+    //           //   }
+    //           // }
+    //         });
+    //       }
+    //     });
+    //   }
+    // }
   };
 
   return (
     <div>
       <div className="directory">
-        <TreeView
-          key={key}
-          data={treeData}
-          aria-label="directory tree"
-          defaultSelectedIds={[]}
-          onSelect={onSelect}
-          onExpand={onExpand}
-          defaultExpandedIds={expandedIds}
-          nodeRenderer={({
-            element,
-            isBranch,
-            isExpanded,
-            getNodeProps,
-            level,
-          }) => {
-            getNodeProps();
-            return (
-              <div {...getNodeProps()} style={{ paddingLeft: 20 * (level - 1) }}>
-                {isBranch ? (
-                  <FolderIcon isOpen={isExpanded} />
-                ) : (
-                  <FileIcon filename={element.name} />
-                )}
+        {treeData.length > 1
+          ? (
+            <TreeView
+              key={key}
+              data={treeData}
+              aria-label="directory tree"
+              defaultSelectedIds={[]}
+              onSelect={onSelect}
+              onExpand={onExpand}
+              defaultExpandedIds={expandedIds}
+              nodeRenderer={({
+                element,
+                isBranch,
+                isExpanded,
+                getNodeProps,
+                level,
+              }) => {
+                getNodeProps();
+                return (
+                  <div {...getNodeProps()} style={{ paddingLeft: 20 * (level - 1) }}>
+                    {isBranch ? (
+                      <FolderIcon isOpen={isExpanded} />
+                    ) : (
+                      <FileIcon filename={element.name} />
+                    )}
 
-                {element.name}
-              </div>
-            );
-          }}
-        />
+                    {element.name}
+                  </div>
+                );
+              }}
+            />
+          ) : null}
       </div>
     </div>
   );
