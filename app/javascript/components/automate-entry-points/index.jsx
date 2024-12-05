@@ -245,8 +245,8 @@ const DirectoryTreeView = () => {
   useEffect(() => {
     console.log(treeData);
     if (treeData.length > 3) {
-      setExpandedIds(['datastore_folder']);
-      setKey(treeData.length);
+      setExpandedIds(['datastore_folder', '11785']);
+      // setKey(treeData.length + 1);
     }
   }, [treeData]);
 
@@ -286,22 +286,49 @@ const DirectoryTreeView = () => {
   const onExpand = (value) => {
     console.log(value);
     const tempData = treeData;
-    const newChildren = [];
 
     if (value && value.element && value.element.id !== 'datastore_folder') {
-      API.get(`/api/automate/${value.element.name}?depth=1`).then((test) => {
-        tempData.forEach((node) => {
-          if (node.id === value.element.id) {
-            node.children = ['new-test-0'];
-            tempData.push({
-              id: 'new-test-0',
-              name: 'new test',
+      API.get(`/api/automate/${value.element.name}?depth=1`).then((newNodes) => {
+        const newChildren = [];
+        newNodes.resources.forEach((newNode) => {
+          if (value.element.id !== newNode.id) {
+            newChildren.push({
+              id: newNode.id,
+              name: newNode.name,
               children: [],
-              parent: node.id,
+              parent: value.element.id,
               metadata: {},
             });
+          }
+        });
+        console.log(newChildren);
+        return newChildren;
+      }).then((newChildrenArray) => {
+        console.log(newChildrenArray);
+        const tempIdsArray = treeIds;
+        newChildrenArray.forEach((node) => {
+          if (!treeIds.includes(node.id)) {
+            tempIdsArray.push(node.id);
+            tempData.forEach((parentNode) => {
+              if (parentNode.id === node.parent) {
+                const childrenNodesToKeep = [];
+                parentNode.children.forEach((child) => {
+                  console.log(typeof child === 'string');
+                  console.log(child);
+                  if (typeof child === 'string') {
+                    childrenNodesToKeep.push(child);
+                  }
+                });
+                console.log(childrenNodesToKeep);
+                parentNode.children = childrenNodesToKeep;
+                parentNode.children = parentNode.children.concat(node.id);
+              }
+            });
+            tempData.push(node);
             console.log(tempData);
+            setTreeIds(tempIdsArray);
             setTreeData(tempData);
+            setKey(Math.random());
           }
         });
       });
