@@ -7,7 +7,7 @@ module.exports = defineConfig({
     baseUrl: 'http://localhost:3000',
     viewportHeight: 800,
     viewportWidth: 1800,
-    numTestsKeptInMemory: 5,
+    numTestsKeptInMemory: 0,
     videoCompression: false,
     // eslint-disable-next-line no-unused-vars
     setupNodeEvents(on, config) {
