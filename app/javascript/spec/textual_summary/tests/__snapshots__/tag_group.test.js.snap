@@ -782,7 +782,8 @@ exports[`TagGroup renders just fine 1`] = `
                                                               <div
                                                                 className="expand wrap_text"
                                                               >
-                                                                Policy,2
+                                                                Policy
+2
                                                               </div>
                                                             </MiqStructuredListText>
                                                           </div>
@@ -1173,7 +1174,9 @@ exports[`TagGroup renders just fine 1`] = `
                                                               <div
                                                                 className="expand wrap_text"
                                                               >
-                                                                Policy,2,3
+                                                                Policy
+2
+3
                                                               </div>
                                                             </MiqStructuredListText>
                                                           </div>
