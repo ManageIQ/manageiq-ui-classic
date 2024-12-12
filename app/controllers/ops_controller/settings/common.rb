@@ -192,9 +192,11 @@ module OpsController::Settings::Common
       queue_opts = {:class_name => "MiqRegion", :method_name => "replication_type=", :args => [:none]}
     end
     MiqTask.generic_action_with_callback(task_opts, queue_opts)
-    add_flash(_("Replication configuration save initiated. Check status of task \"%{task_name}\" on My Tasks screen") %
-                {:task_name => task_opts[:name]})
-    javascript_flash
+    flash_msg =
+      (_("Replication configuration save initiated. Check status of task \"%{task_name}\" on My Tasks screen") %
+      {:task_name => task_opts[:name]})
+
+    render :json => {:message => flash_msg}
   end
 
   def pglogical_validate_subscription
@@ -203,13 +205,14 @@ module OpsController::Settings::Common
     subscription = find_or_new_subscription(params[:id])
     valid = subscription.validate(params_for_connection_validation(params))
     if valid.nil?
-      add_flash(_("Subscription Credentials validated successfully"))
+      message = _("Subscription Credentials validated successfully")
+      status = 'success'
     else
-      valid.each do |v|
-        add_flash(v, :error)
-      end
+      message = valid.join('\n')
+      status = 'fail'
     end
-    javascript_flash
+
+    render :json => {:message => message, :status => status}
   end
 
   private
