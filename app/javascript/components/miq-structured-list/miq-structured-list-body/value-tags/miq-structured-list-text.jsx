@@ -4,8 +4,12 @@ import classNames from 'classnames';
 
 /** Component to print the text value inside a cell. */
 const MiqStructuredListText = ({ value }) => {
-  const text = (value === null || value === undefined ? '' : String(value));
-
+  let text;
+  if (Array.isArray(value)) {
+    text = value.join('\n');
+  } else {
+    text = (value === null || value === undefined ? '' : String(value));
+  }
   return (
     <div className={classNames(text ? 'expand' : '', 'wrap_text')}>
       {text}
