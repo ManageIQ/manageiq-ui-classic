@@ -131,7 +131,6 @@ class MiqAeClassController < ApplicationController
       txt = rec.domain? ? _('Automate Domain') : _('Automate Namespace')
       @sb[:namespace_path] = rec.fqname
     end
-    @sb[:namespace_path]&.gsub!(%r{\/}, " / ")
     @right_cell_text = "#{txt} #{_("\"%s\"") % get_rec_name(rec)}" unless %w[root aei aem].include?(nodes[0])
   end
 
