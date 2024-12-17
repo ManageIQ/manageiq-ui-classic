@@ -44,7 +44,7 @@ const settingsTags = {
   import_tags: ('Import Tags'),
   import_variables: __('Import Variables'),
   map_tags: __('Map Tags'),
-}
+};
 
 /** Function to select the tab labels. */
 export const labelConfig = (type) => {

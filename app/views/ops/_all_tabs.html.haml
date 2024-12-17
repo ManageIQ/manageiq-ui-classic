@@ -52,7 +52,7 @@
             = render :partial => "settings_list_tab"
       - else
         = render(:partial => "layouts/flash_msg")
-        #utilization-tabs-wrapper
+        #settings-tabs-wrapper
           = react('MiqCustomTab', {:containerId => 'settings-tabs',
                             :tabLabels => settings_tab_configuration,
                             :type      => 'SETTINGS',
