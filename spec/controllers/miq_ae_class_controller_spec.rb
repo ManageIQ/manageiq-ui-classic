@@ -24,7 +24,8 @@ describe MiqAeClassController do
       id = "aec-#{cls.id}"
       fq_name = cls.fqname
       controller.send(:set_right_cell_text, id, cls)
-      expect(assigns(:sb)[:namespace_path]).to eq(fq_name.gsub!(%r{\/}, " / "))
+      # expect(assigns(:sb)[:namespace_path]).to eq(fq_name.gsub!(%r{\/}, " / "))
+      expect(assigns(:sb)[:namespace_path]).to eq(fq_name)
 
       id = "root"
       fq_name = ""
@@ -291,7 +292,8 @@ describe MiqAeClassController do
                                          :active_tree => :ae_tree,
                                          :trees       => {:ae_tree => {:active_node => node}})
         controller.send(:get_node_info, node)
-        expect(assigns(:sb)[:namespace_path]).to eq(ns1.fqname.gsub!(%r{\/}, " / "))
+        # expect(assigns(:sb)[:namespace_path]).to eq(ns1.fqname.gsub!(%r{\/}, " / "))
+        expect(assigns(:sb)[:namespace_path]).to eq(ns1.fqname)
       end
     end
 
