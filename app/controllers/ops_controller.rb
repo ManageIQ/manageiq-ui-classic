@@ -685,8 +685,7 @@ class OpsController < ApplicationController
                            @edit ? _("Editing Schedule \"%{name}\"") % {:name => @schedule.name} : _("Schedule \"%{name}\"") % {:name => @schedule.name}
                          end
     else
-      if %w[accordion_select change_tab tree_select].include?(params[:action]) &&
-         params[:tab_id] != "settings_advanced"
+      if %w[accordion_select change_tab tree_select].include?(params[:action])
         presenter.replace(:ops_tabs, r[:partial => "all_tabs"])
       elsif %w[zone_delete].include?(params[:pressed])
         presenter.replace(:ops_tabs, r[:partial => "all_tabs"])

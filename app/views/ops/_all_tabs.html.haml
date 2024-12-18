@@ -52,58 +52,45 @@
             = render :partial => "settings_list_tab"
       - else
         = render(:partial => "layouts/flash_msg")
-        %ul.nav.nav-tabs{'role' => 'tablist'}
-          = miq_tab_header("settings_details", @sb[:active_tab]) do
-            = _("Details")
-          = miq_tab_header("settings_cu_collection", @sb[:active_tab]) do
-            = _("C & U Collection")
-          = miq_tab_header("settings_tags", @sb[:active_tab]) do
-            = _("Tags")
-          = miq_tab_header("settings_replication", @sb[:active_tab]) do
-            = _("Replication")
-          = miq_tab_header("settings_help_menu", @sb[:active_tab]) do
-            = _("Help Menu")
-          = miq_tab_header("settings_advanced", @sb[:active_tab]) do
-            = _("Advanced")
-        .tab-content
-          = miq_tab_content("settings_details", @sb[:active_tab]) do
-            = render :partial => "settings_details_tab"
-          = miq_tab_content("settings_cu_collection", @sb[:active_tab]) do
-            = render :partial => "settings_cu_collection_tab"
-          = miq_tab_content("settings_tags", @sb[:active_tab]) do
-            #ops_tags_subtabs
-              %ul.nav.nav-tabs.nav-tabs-pf{:style => 'font-size: 12px'}
-                = miq_tab_header("settings_co_categories", @sb[:active_subtab]) do
-                  = escape_javascript(current_tenant.name)
-                  = _("Categories")
-                = miq_tab_header("settings_co_tags", @sb[:active_subtab]) do
-                  = escape_javascript(current_tenant.name)
-                  = _("Tags")
-                = miq_tab_header("settings_import_tags", @sb[:active_subtab]) do
-                  = _("Import Tags")
-                = miq_tab_header("settings_import", @sb[:active_subtab]) do
-                  = _("Import Variables")
-                = miq_tab_header("settings_label_tag_mapping", @sb[:active_subtab]) do
-                  = _("Map Tags")
-              .tab-content
-                = miq_tab_content("settings_co_categories", @sb[:active_subtab]) do
-                  = render :partial => "settings_co_categories_tab"
-                = miq_tab_content("settings_co_tags", @sb[:active_subtab]) do
-                  = render :partial => "settings_co_tags_tab"
-                = miq_tab_content("settings_import_tags", @sb[:active_subtab]) do
-                  = render :partial => "settings_import_tags_tab"
-                = miq_tab_content("settings_import", @sb[:active_subtab]) do
-                  = render :partial => "settings_import_tab"
-                = miq_tab_content("settings_label_tag_mapping", @sb[:active_subtab]) do
-                  = render :partial => "settings_label_tag_mapping_tab"
-            :javascript
-              miq_tabs_init("#ops_tags_subtabs", "/ops/change_tab", {parent_tab_id: 'settings_tags'});
-          = miq_tab_content("settings_replication", @sb[:active_tab]) do
-            = render :partial => "settings_replication_tab"
-          = miq_tab_content("settings_help_menu", @sb[:active_tab]) do
-            = render :partial => "settings_help_menu_tab"
-          = miq_tab_content("settings_advanced", @sb[:active_tab]) do
-            = render :partial => "settings_advanced_tab"
+        #settings-tabs-wrapper
+          = react('MiqCustomTab', {:containerId => 'settings-tabs',
+                            :tabLabels => settings_tab_configuration,
+                            :type      => 'SETTINGS',
+                            :activeTab => @settings_tab,
+            })
+          #settings-tabs
+            = settings_tab_content(:details) do
+              = render :partial => "settings_details_tab"
+            = settings_tab_content(:cu_collection) do
+              = render :partial => "settings_cu_collection_tab"
+            = settings_tab_content(:tags) do
+              - if @sb[:active_tab] == 'settings_tags'
+                #ops_tags_subtabs
+                  %ul.nav.nav-tabs.nav-tabs-pf{:style => 'font-size: 12px'}
+                    = react('MiqCustomTab', {:containerId => 'ops_tags_subtabs',
+                            :tabLabels => settings_tags_configuration,
+                            :type      => 'SETTINGS_TAGS',
+                            :activeTab => @settings_tab,
+                            :subtab    => @subtab,
+                            :tabLength => @settings_tab_length,
+                    })
+                  .tab-content
+                    = settings_tags_content(:my_company_categories) do
+                      = render :partial => "settings_co_categories_tab"
+                    = settings_tags_content(:my_company_tags) do
+                      = render :partial => "settings_co_tags_tab"
+                    = settings_tags_content(:import_tags) do
+                      = render :partial => "settings_import_tags_tab"
+                    = settings_tags_content(:import_variables) do
+                      = render :partial => "settings_import_tab"
+                    = settings_tags_content(:map_tags) do
+                      = render :partial => "settings_label_tag_mapping_tab"
+            = settings_tab_content(:replication) do
+              = render :partial => "settings_replication_tab"
+            = settings_tab_content(:help_menu) do
+              = render :partial => "settings_help_menu_tab"
+            = settings_tab_content(:advanced) do
+              = render :partial => "settings_advanced_tab"
     -# Diagnostics
   - when :diagnostics_tree
     - if x_node.split("-")[0] == "z"
