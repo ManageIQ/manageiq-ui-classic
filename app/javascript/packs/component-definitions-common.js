@@ -178,6 +178,7 @@ import WorkflowPayload from '../components/workflows/workflow_payload';
 import WorkflowRepositoryForm from '../components/workflow-repository-form';
 import XmlHolder from '../components/XmlHolder';
 import ZoneForm from '../components/zone-form';
+import MiqAeClass from '../components/miq-ae-class';
 
 /**
 * Add component definitions to this file.
@@ -365,3 +366,4 @@ ManageIQ.component.addReact('WorkflowPayload', WorkflowPayload);
 ManageIQ.component.addReact('WorkflowRepositoryForm', WorkflowRepositoryForm);
 ManageIQ.component.addReact('XmlHolder', XmlHolder);
 ManageIQ.component.addReact('ZoneForm', ZoneForm);
+ManageIQ.component.addReact('MiqAeClass', MiqAeClass);
