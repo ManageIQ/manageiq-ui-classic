@@ -17,9 +17,6 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   }, setState] = useState({ isLoading: !!pglogicalReplicationFormId });
   const submitLabel = __('Save');
 
-  console.log(initialValues);
-  console.log(subscriptions);
-
   const componentMapper = {
     ...mapper,
     'subscriptions-table': SubscriptionsTableComponent,

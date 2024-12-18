@@ -4,17 +4,20 @@ import { createRows } from './helper';
 
 const createSchema = (initialValues, subscriptions, form, replicationHelperText, setState) => {
   const deleteSubscription = (selectedRow, cellType, formOptions) => {
+    console.log('here');
+    console.log('subscriptions: ', subscriptions);
     subscriptions.splice(selectedRow.id, 1);
+    console.log('subscriptions after: ', subscriptions);
 
     setState((state) => ({
       ...state,
       subscriptions,
     }));
 
-    console.log(formOptions.getFieldState('subscriptions-table'));
-    console.log(formOptions.getRegisteredFields());
-    console.log(formOptions.getState());
-    console.log(formOptions.schema);
+    console.log("subscriptions table: ", formOptions.getFieldState('subscriptions-table'));
+    console.log("registered fields: ", formOptions.getRegisteredFields());
+    console.log("state: ", formOptions.getState());
+    console.log("schema: ", formOptions.schema);
   };
 
   const editSubscription = (selectedRow) => {

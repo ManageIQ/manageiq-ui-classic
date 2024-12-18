@@ -22,7 +22,6 @@ export const SubscriptionsTableComponent = (props) => {
           {addButtonLabel}
         </Button>
       </div>
-
       <div className="subscriptions-table" style={{ display: 'grid', overflow: 'auto' }}>
         <MiqDataTable
           headers={[
