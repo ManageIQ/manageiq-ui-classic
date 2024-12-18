@@ -7,11 +7,12 @@ import MiqStructuredList from '../miq-structured-list';
 /** Component to render the summary contents displayed in the Automation / Embedded Automate / Simulation */
 const AutomationSimulation = ({ data }) => {
   const [tabConfig, setTabConfig] = useState([]);
-
   useEffect(() => {
-    const config = Object.keys(data).map((name) => ({ name, text: data[name].text }));
-    setTabConfig(config);
-  }, []);
+    if (Object.keys(data).length > 1) {
+      const config = Object.keys(data).map((name) => ({ name, text: data[name].text }));
+      setTabConfig(config);
+    }
+  }, [data]);
 
   /** Function to render the tabs contents. */
   const renderTabContent = (name) => {
@@ -37,7 +38,7 @@ const AutomationSimulation = ({ data }) => {
       </Tabs>
     );
 
-  return data.notice
+  return Object.keys(data).length <= 1
     ? <NotificationMessage type="info" message={data.notice} />
     : renderTabs();
 };

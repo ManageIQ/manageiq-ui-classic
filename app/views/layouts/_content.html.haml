@@ -12,7 +12,7 @@
           = miq_toolbar toolbar_from_hash
     %main.row.max-height.content-focus-order.responsive-layout-main
       - if simulate?
-        #left_div.sidebar-pf.sidebar-pf-left.scrollable.max-height.col-sm-5.col-md-4.col-sm-pull-7.col-md-pull-8
+        #left_div.sidebar-pf.scrollable.sidebar-pf-left.max-height.col-md-12
           #default_left_cell
             = yield :left
       - else
@@ -22,37 +22,38 @@
               = render :partial => "layouts/listnav"
             = yield :left
           #custom_left_cell
-      .full-content.max-height{:class => simulate? ? 'col-sm-7 col-md-8 col-sm-push-5 col-md-push-4' : 'col-sm-8 col-md-9 col-sm-push-4 col-md-push-3'}
-        #main-content.row.miq-layout-center_div_with_listnav
-          .col-md-12
-            .row
-              .col-md-7#explorer
-                %h1#explorer_title
-                  %span#explorer_title_text
-                    = safe_right_cell_text
-                  -# Link to clear the current applied filter, will be moved via JS to the right cell header
-                  %span#clear_search{:style => "display:none"}
-                    - if route_exists?(:action => 'adv_search_clear')
-                      (
-                      = link_to(_("clear"),
-                                {:action              => "adv_search_clear"},
-                                "data-miq_sparkle_on" => true,
-                                :remote               => true,
-                                "data-method"         => :post,
-                                :title                => _("Remove the current filter"),
-                                :style                => "text-decoration: underline;")
-                      )
-              .col-md-5
-                %br
-                = yield :search
-            .row
-              .col-md-12
-                = yield
-        .col-md-12.no-padding
-          = render :partial => 'layouts/x_form_buttons'
-          .row#paging_div{:style => saved_report_paging? ? "" : "display: none"}
-            - if saved_report_paging?
-              = render(:partial => 'layouts/saved_report_paging_bar', :locals => {:pages => @sb[:pages]})
+      - if !simulate?
+        .full-content.max-height{:class => simulate? ? 'col-sm-7 col-md-8 col-sm-push-5 col-md-push-4' : 'col-sm-8 col-md-9 col-sm-push-4 col-md-push-3'}
+          #main-content.row.miq-layout-center_div_with_listnav
+            .col-md-12
+              .row
+                .col-md-7#explorer
+                  %h1#explorer_title
+                    %span#explorer_title_text
+                      = safe_right_cell_text
+                    -# Link to clear the current applied filter, will be moved via JS to the right cell header
+                    %span#clear_search{:style => "display:none"}
+                      - if route_exists?(:action => 'adv_search_clear')
+                        (
+                        = link_to(_("clear"),
+                                  {:action              => "adv_search_clear"},
+                                  "data-miq_sparkle_on" => true,
+                                  :remote               => true,
+                                  "data-method"         => :post,
+                                  :title                => _("Remove the current filter"),
+                                  :style                => "text-decoration: underline;")
+                        )
+                .col-md-5
+                  %br
+                  = yield :search
+              .row
+                .col-md-12
+                  = yield
+          .col-md-12.no-padding
+            = render :partial => 'layouts/x_form_buttons'
+            .row#paging_div{:style => saved_report_paging? ? "" : "display: none"}
+              - if saved_report_paging?
+                = render(:partial => 'layouts/saved_report_paging_bar', :locals => {:pages => @sb[:pages]})
 - elsif layout_full_center
   = render :partial => layout_full_center
 - else
