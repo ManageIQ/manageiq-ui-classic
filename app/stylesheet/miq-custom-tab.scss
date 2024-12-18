@@ -45,3 +45,9 @@
     margin-bottom: 0px;
   }
 }
+
+#settings-tabs-wrapper {
+  .bx--tab-content {
+    display: none;
+  }
+}

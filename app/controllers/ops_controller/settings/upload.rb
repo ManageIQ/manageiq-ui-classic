@@ -60,7 +60,7 @@ module OpsController::Settings::Upload
     @sb[:good] = nil
     render :update do |page|
       page << javascript_prologue
-      page.replace_html("settings_import", :partial => "settings_import_tab")
+      page.replace_html("import_variables", :partial => "settings_import_tab")
     end
   end
 

@@ -28,6 +28,24 @@ const requestInfo = {
   network: __('Network'),
 };
 
+/** Tab labels used for settings in application settings page. */
+const settings = {
+  details: __('Details'),
+  cu_collection: __('C & U Collection'),
+  tags: __('Tags'),
+  replication: __('Replication'),
+  help_menu: __('Help'),
+  advanced: __('Advanced'),
+};
+
+const settingsTags = {
+  my_company_categories: __('My Company Categories'),
+  my_company_tags: __('My Company Tags'),
+  import_tags: ('Import Tags'),
+  import_variables: __('Import Variables'),
+  map_tags: __('Map Tags'),
+};
+
 /** Function to select the tab labels. */
 export const labelConfig = (type) => {
   const configMap = {
@@ -35,6 +53,8 @@ export const labelConfig = (type) => {
     CATALOG_EDIT: catalog,
     UTILIZATION: utilization,
     CATALOG_REQUEST_INFO: requestInfo,
+    SETTINGS: settings,
+    SETTINGS_TAGS: settingsTags,
   };
 
   return configMap[type];

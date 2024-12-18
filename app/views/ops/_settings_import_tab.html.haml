@@ -1,4 +1,4 @@
-- if @sb[:active_tab] == "settings_tags" && @sb[:active_subtab] == "settings_import"
+- if @sb[:active_tab] == "settings_tags" && @sb[:active_subtab] == "settings_import_variables"
   - url = url_for_only_path(:action => 'upload_form_field_changed', :id => @sb[:active_tab].split('_').last)
   %h3= _("Messages")
   %hr
