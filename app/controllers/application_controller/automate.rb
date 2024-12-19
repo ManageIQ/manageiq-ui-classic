@@ -1,5 +1,6 @@
 module ApplicationController::Automate
   extend ActiveSupport::Concern
+  include MiqAeToolsHelper
 
   def resolve_button_throw
     if valid_resolve_object?
@@ -21,15 +22,7 @@ module ApplicationController::Automate
         add_flash(_("Automation Error: %{error_message}") % {:error_message => bang.message}, :error)
       end
     end
-    render :update do |page|
-      page << javascript_prologue
-      page.replace("left_cell_bottom", :partial => "resolve_form_buttons")
-      page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-      page << "miqScrollTop();" if @flash_array.present?
-      page.replace_html("main_div", :partial => "results_tabs")
-      page << javascript_reload_toolbars
-      page << "miqSparkle(false);"
-    end
+    automation_simulation_data(@ae_simulation_tree, @results, @resolve)
   end
   private :resolve_button_throw
 
@@ -84,6 +77,24 @@ module ApplicationController::Automate
     end
   end
   private :resolve_button_reset_or_none
+
+  def resolve_automate_simulation
+    custom_button_redirect = params[:button] == 'simulate' || params[:simulate] == 'simulate'
+    assert_privileges(custom_button_redirect ? 'ab_button_simulate' : 'miq_ae_class_simulation')
+    @explorer = true
+    @breadcrumbs = []
+    drop_breadcrumb(:name => _("Resolve"), :url => "/miq_ae_tools/resolve")
+    @lastaction = "resolve"
+    @right_cell_text = _("Simulation")
+    get_simulation_form_vars
+    case params[:button]
+    when "throw", "retry" then resolve_button_throw
+    when "copy"     then resolve_button_copy
+    when "paste"    then resolve_button_paste
+    when "simulate" then resolve_button_simulate
+    else                 resolve_button_reset_or_none
+    end
+  end
 
   def resolve
     custom_button_redirect = params[:button] == 'simulate' || params[:simulate] == 'simulate'

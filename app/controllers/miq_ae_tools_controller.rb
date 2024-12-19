@@ -329,6 +329,51 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
     javascript_flash(:spinner_off => true)
   end
 
+  def get_simulation_form_vars
+    assert_privileges('miq_ae_class_simulation')
+    if params[:object_request]
+      @resolve[:new][:object_request] = params[:object_request]
+    end
+    if params.key?(:starting_object)
+      @resolve[:new][:starting_object] = params[:starting_object]
+      @resolve[:new][:instance_name] = nil
+    end
+    if params[:readonly]
+      @resolve[:new][:readonly] = (params[:readonly] != "1")
+    end
+
+    copy_params_if_present(@resolve[:new], params, %i[instance_name other_name object_message object_request target_class target_id])
+
+    ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
+      ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
+        f = ("attribute_" + (i + 1).to_s)
+        v = ("value_" + (i + 1).to_s)
+        @resolve[:new][:attrs][i][0] = params[f.to_sym] || nil
+        @resolve[:new][:attrs][i][1] = params[v.to_sym] || nil
+      end
+    end
+    @resolve[:new][:target_id] = nil if params[:target_class] == ""
+    copy_params_if_present(@resolve, params, %i[button_text button_number])
+    @resolve[:throw_ready] = ready_to_throw
+  end
+
+  def get_form_targets
+    assert_privileges('miq_ae_class_simulation')
+    if params.key?(:target_class) && params[:target_class] != '-1'
+      targets = Rbac.filtered(params[:target_class]).select(:id, *columns_for_klass(params[:target_class])) if params[:target_class].present?
+      unless targets.nil?
+        @resolve[:targets] = targets.sort_by { |t| t.name.downcase }.collect { |t| [t.name, t.id.to_s] }
+        if !@resolve[:target_id]
+          @resolve[:target_id] = nil
+        end
+      end
+    end
+
+    render_json = {}
+    render_json[:targets] = @resolve[:targets] if @resolve[:targets].present?
+    render :json => render_json
+  end
+
   private ###########################
 
   def automate_import_json_serializer

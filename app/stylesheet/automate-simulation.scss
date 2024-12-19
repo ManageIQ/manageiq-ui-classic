@@ -1,0 +1,102 @@
+.automate-simulation-page {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .automate-simulation-form-wrapper {
+        border-right: 0.5px solid lightgray;
+        width: 500px;
+        padding: 25px;
+
+        .automate-object-details, .automate-object-message, 
+        .automate-object-request, .automate-object-attribute, 
+        .automate-selection-target, .automate-readonly,
+        .automate-simulation-parameters {
+            margin-bottom: 5%;
+        }
+
+        .subform {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 5%;
+        }
+    
+        .custom-button-wrapper {
+            display: flex;
+            width: 100%;
+            margin-top: 5%;
+            padding-bottom: 20%;
+            margin-left: 8%
+        }
+        .bx--btn--primary {
+            margin-right: 8%;
+            width: 40%;
+        }
+        .bx--btn--secondary {
+            width: 40%;
+        }
+
+        .attributeValuePairLabel {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10%;
+        }
+    }
+
+    .automate-simulation-summary-wrapper {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        padding: 15px;
+        padding-bottom: 10%;
+
+        .simulation-title-text {
+            font-size: x-large;
+            font-weight: lighter;
+        }
+    }
+
+    .summary-spinner {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .flash-message {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        margin-bottom: 15px;
+        background-color: #dff0d8;
+        opacity: 0.7;
+        color: black;
+        border: 1px solid black;
+        position: relative;
+        font-weight: bold;
+      }
+      
+      .flash-icon {
+        font-size: 16px;
+        font-weight: bold;
+        color: green;
+        width: 24px;
+        height: 24px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid green; 
+        border-radius: 50%;
+        margin-right: 2%;
+      }
+      
+      .flash-close {
+        margin-left: auto;
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+      }
+}
