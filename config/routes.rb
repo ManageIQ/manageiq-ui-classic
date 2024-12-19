@@ -1911,6 +1911,7 @@ Rails.application.routes.draw do
         ae_methods
         ae_method_operations
         show
+        edit_class_record
       ],
       :post => %w[
         add_update_method
@@ -1955,6 +1956,7 @@ Rails.application.routes.draw do
         x_button
         x_history
         x_show
+        class_update
       ] + adv_search_post +
         exp_post
     },
