@@ -245,7 +245,7 @@ const DirectoryTreeView = () => {
   useEffect(() => {
     console.log(treeData);
     if (treeData.length > 3) {
-      setExpandedIds(['datastore_folder', '11785']);
+      setExpandedIds(['datastore_folder']);
       // setKey(treeData.length + 1);
     }
   }, [treeData]);
@@ -284,48 +284,93 @@ const DirectoryTreeView = () => {
   };
 
   const onExpand = (value) => {
-    console.log(value);
+    console.log(value.element);
     const tempData = treeData;
+    // if (value && value.element && value.element.id !== 'datastore_folder') {
+    //   API.get(`/api/automate/${value.element.name}?depth=-1`).then((newNodes) => {
+    //     console.log(newNodes);
+    //     const newChildren = [];
+    //     newNodes.resources.forEach((newNode) => {
+    //       if (value.element.id !== newNode.id) {
+    //         newChildren.
+    //       }
+    //     });
+    //   });
+    // }
 
+    // if (value.element.metadata && value.element.metadata.fqname) {
+    //   console.log(value);
+    //   console.log('STOP');
+    // }
     if (value && value.element && value.element.id !== 'datastore_folder') {
-      API.get(`/api/automate/${value.element.name}?depth=1`).then((newNodes) => {
+      let path = value.element.name;
+      if (value.element.metadata && value.element.metadata.fqname) {
+        path = value.element.metadata.fqname;
+      }
+      API.get(`/api/automate/${path}?depth=1`).then((newNodes) => {
         const newChildren = [];
         newNodes.resources.forEach((newNode) => {
           if (value.element.id !== newNode.id) {
-            newChildren.push({
-              id: newNode.id,
-              name: newNode.name,
-              children: [],
-              parent: value.element.id,
-              metadata: {},
-            });
+            if (newNode.klass !== 'MiqAeClass') {
+              newChildren.push({
+                id: newNode.id,
+                name: newNode.name,
+                children: [`${newNode.id}_child_placeholder`],
+                parent: value.element.id,
+                metadata: { fqname: newNode.fqname },
+              });
+              newChildren.push({
+                id: `${newNode.id}_child_placeholder`,
+                name: 'Loading',
+                children: [],
+                parent: newNode.id,
+                metadata: {},
+              });
+            } else {
+              newChildren.push({
+                id: newNode.id,
+                name: newNode.name,
+                children: [],
+                parent: value.element.id,
+                metadata: { fqname: newNode.fqname },
+              });
+            }
           }
         });
-        console.log(newChildren);
         return newChildren;
       }).then((newChildrenArray) => {
-        console.log(newChildrenArray);
         const tempIdsArray = treeIds;
         newChildrenArray.forEach((node) => {
           if (!treeIds.includes(node.id)) {
             tempIdsArray.push(node.id);
             tempData.forEach((parentNode) => {
               if (parentNode.id === node.parent) {
+                setExpandedIds([...expandedIds, value.element.id]);
                 const childrenNodesToKeep = [];
                 parentNode.children.forEach((child) => {
-                  console.log(typeof child === 'string');
-                  console.log(child);
                   if (typeof child === 'string') {
                     childrenNodesToKeep.push(child);
                   }
                 });
-                console.log(childrenNodesToKeep);
                 parentNode.children = childrenNodesToKeep;
-                parentNode.children = parentNode.children.concat(node.id);
+                if (parentNode.children.length >= 1) {
+                  parentNode.children.forEach((child) => {
+                    if (child.includes('_placeholder')) {
+                      parentNode.children.shift();
+                    }
+                  });
+                }
+                if (!parentNode.children.includes(node.id)) {
+                  parentNode.children = parentNode.children.concat(node.id);
+                }
+                if (node.id.includes('_placeholder')) {
+                  // console.log(node);
+                  // console.log(parentNode);
+                  // console.log(value);
+                }
               }
             });
             tempData.push(node);
-            console.log(tempData);
             setTreeIds(tempIdsArray);
             setTreeData(tempData);
             setKey(Math.random());
@@ -333,6 +378,7 @@ const DirectoryTreeView = () => {
         });
       });
     }
+
     // if (value && value.element && value.element.id === 'datastore_folder') {
     //   const ids = value.element.id.split('_');
     //   if (ids.includes('folder')) {
