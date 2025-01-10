@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import MiqFormRenderer from '@@ddf';
+import { Modal } from 'carbon-components-react';
 // import { Button } from 'carbon-components-react';
 // import MiqDataTable from '../miq-data-table';
 import createSchema from './settings-replication-form.schema';
+import createSubscriptionSchema from './modal-form.schema';
 import { SubscriptionsTableComponent } from './subscriptions-table';
 import ValidateSubscription from './validate-subscription';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
@@ -16,6 +18,21 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
     initialValues, subscriptions, form, replicationHelperText, isLoading,
   }, setState] = useState({ isLoading: !!pglogicalReplicationFormId });
   const submitLabel = __('Save');
+
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [modalAction, setModalAction] = useState('');
+  const [currentSubscription, setCurrentSubscription] = useState(null);
+
+  const handleModalOpen = (action, subscription = null) => {
+    setModalAction(action);
+    setCurrentSubscription(subscription);
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+    setCurrentSubscription(null);
+  };
 
   const componentMapper = {
     ...mapper,
@@ -142,16 +159,41 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   };
 
   return !isLoading && (
-    <MiqFormRenderer
-      schema={createSchema(initialValues, subscriptions, form, replicationHelperText, setState)}
-      componentMapper={componentMapper}
-      initialValues={initialValues}
-      onSubmit={onSubmit}
-      onCancel={onCancel}
-      canReset
-      buttonsLabels={{ submitLabel }}
-      clearOnUnmount={form.type !== 'replication'}
-    />
+    <div>
+      <MiqFormRenderer
+        schema={createSchema(initialValues, subscriptions, form, replicationHelperText, setState, setModalOpen)}
+        componentMapper={componentMapper}
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        onCancel={onCancel}
+        canReset
+        buttonsLabels={{ submitLabel }}
+        clearOnUnmount={form.type !== 'replication'}
+      />
+
+      <Modal
+        open={isModalOpen}
+        modalHeading={currentSubscription ? `Edit ${currentSubscription.dbname}` : 'Add Subscription'}
+        onRequestClose={handleModalClose}
+        primaryButtonText="Save"
+        secondaryButtonText="Cancel"
+        onSecondaryButtonClick={handleModalClose}
+        onRequestSubmit={() => onSubmit(currentSubscription || {})}
+      >
+        {/* Render the MiqFormRenderer inside the modal */}
+        <MiqFormRenderer
+          schema={createSubscriptionSchema(initialValues, subscriptions, form, replicationHelperText, setState, setModalOpen)}
+          componentMapper={componentMapper}
+          initialValues={initialValues}
+          onSubmit={onSubmit} // This will save and close the modal
+          onCancel={handleModalClose} // This will close the modal
+          canReset
+          buttonsLabels={{ submitLabel }}
+          clearOnUnmount={form.type !== 'replication'}
+        />
+      </Modal>
+    </div>
+
   );
 
   /* if (form.type === 'subscription') {
