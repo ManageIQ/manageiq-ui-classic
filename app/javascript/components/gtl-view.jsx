@@ -273,7 +273,7 @@ const setPaging = (settings, start, perPage) => ({
 const computePagination = (settings) => ({
   page: settings.current,
   perPage: settings.perpage,
-  perPageOptions: [10, 20, 50, 100, 200, 500, 1000],
+  perPageOptions: [5, 10, 20, 50, 100, 200, 500, 1000],
 });
 
 const GtlView = ({
@@ -292,6 +292,9 @@ const GtlView = ({
   noFlashDiv,
 }) => {
   // const { settings, data } = props;
+  if (pages && pages.perpage) {
+    initialState.settings.perpage = pages.perpage;
+  }
   const initState = {
     ...initialState,
     additionalOptions,
@@ -387,7 +390,7 @@ const GtlView = ({
     isExplorer,
     setPaging(settings, 0, perPage),
     records,
-    additionalOptions,
+    additionalOptions
   );
 
   /** Function execution when a page or perPage is changed in carbon pagination events. */
@@ -528,7 +531,9 @@ GtlView.propTypes = {
   records: PropTypes.arrayOf(PropTypes.any), // fixme
   hideSelect: PropTypes.bool,
   showUrl: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  pages: PropTypes.shape({}), // fixme
+  pages: PropTypes.shape({
+    list: PropTypes.number, reports: PropTypes.number, grid: PropTypes.number, tile: PropTypes.number,
+  }),
   isAscending: PropTypes.bool,
 };
 
