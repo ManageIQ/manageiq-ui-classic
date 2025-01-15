@@ -4241,12 +4241,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bootstrap-select@npm:1.12.2":
-  version: 1.12.2
-  resolution: "bootstrap-select@npm:1.12.2"
-  dependencies:
-    jquery: "npm:>=1.8"
-  checksum: 10/2ca42119455c8a50bd9c3737f1fda09bb288cf482da98eb24ba81a25b2eff9392c413e1ca7f92d5b857a8f027035736de7edacd582dff7250d6959e08168d0fd
+"bootstrap-select@npm:~1.13.18":
+  version: 1.13.18
+  resolution: "bootstrap-select@npm:1.13.18"
+  peerDependencies:
+    bootstrap: ">=3.0.0"
+    jquery: 1.9.1 - 3
+  checksum: 10/660f1fdf826ccd2093ba4597406a664808e95fe34efb0a22ca85171ab6b902d7637fc649577d131c192a9c4dddb480ab1ba2132f8d0941f0d74760391909ec9a
   languageName: node
   linkType: hard
 
@@ -10708,7 +10709,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jquery@npm:1.8 - 4, jquery@npm:>=1.7, jquery@npm:>=1.7.0, jquery@npm:>=1.8, jquery@npm:>=1.8.0 <4.0.0, jquery@npm:>=1.9.0, jquery@npm:>=3.4.0 <4.0.0, jquery@npm:^3.4.1, jquery@npm:^3.5.1":
+"jquery@npm:1.8 - 4, jquery@npm:>=1.7, jquery@npm:>=1.7.0, jquery@npm:>=1.8.0 <4.0.0, jquery@npm:>=1.9.0, jquery@npm:>=3.4.0 <4.0.0, jquery@npm:^3.4.1, jquery@npm:^3.5.1":
   version: 3.7.1
   resolution: "jquery@npm:3.7.1"
   checksum: 10/17be9929f5fa37697d9848284f0d108c543318ef79ec794e130cd0c49f6c050d60c803a69e8cfa16fa19f5ff7cdb814a6905cceab0831186560c65ed113cd579
@@ -11632,6 +11633,7 @@ __metadata:
     babel-jest: "npm:~25.5.1"
     babel-loader: "npm:~8.2.0"
     bootstrap-filestyle: "npm:~1.2.1"
+    bootstrap-select: "npm:^1.13.18"
     bootstrap-switch: "npm:3.3.4"
     carbon-components: "npm:~10.58.15"
     carbon-components-react: "npm:~7.59.24"
