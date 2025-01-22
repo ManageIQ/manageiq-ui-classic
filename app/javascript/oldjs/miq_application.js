@@ -1168,6 +1168,7 @@ window.miqDomElementExists = function(element) {
 };
 
 window.miqSerializeForm = function(element) {
+  console.log(element);
   return $(`#${element}`).find('input,select,textarea').serialize().replace(/%0D%0A/g, '%0A');
 };
 
