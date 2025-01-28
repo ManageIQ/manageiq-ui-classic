@@ -119,4 +119,7 @@ namespace :spec do
   end
 end
 
+desc "Rebuild yarn audit pending list"
+task :rebuild_yarn_audit_pending => "app:test:security:rebuild_yarn_audit_pending"
+
 task :default => ENV["TEST_SUITE"] || :spec
