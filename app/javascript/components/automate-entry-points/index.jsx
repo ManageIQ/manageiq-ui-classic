@@ -213,7 +213,13 @@ const DirectoryTreeView = () => {
         newChildren.push({
           id: domain.id,
           name: domain.name,
-          children: [{}],
+          children: [{
+            id: `${domain.id}_child_placeholder`,
+            name: 'Loading',
+            children: [],
+            parent: `${domain.id}`,
+            metadata: {},
+          }],
           parent: 'datastore_folder',
           metadata: {},
         });
@@ -284,8 +290,8 @@ const DirectoryTreeView = () => {
   };
 
   const onExpand = (value) => {
-    console.log(value.element);
     const tempData = treeData;
+    console.log(value.element);
     // if (value && value.element && value.element.id !== 'datastore_folder') {
     //   API.get(`/api/automate/${value.element.name}?depth=-1`).then((newNodes) => {
     //     console.log(newNodes);
@@ -303,6 +309,7 @@ const DirectoryTreeView = () => {
     //   console.log('STOP');
     // }
     if (value && value.element && value.element.id !== 'datastore_folder') {
+      miqSparkleOn();
       let path = value.element.name;
       if (value.element.metadata && value.element.metadata.fqname) {
         path = value.element.metadata.fqname;
@@ -373,9 +380,11 @@ const DirectoryTreeView = () => {
             tempData.push(node);
             setTreeIds(tempIdsArray);
             setTreeData(tempData);
-            setKey(Math.random());
+            setKey(tempData.length);
           }
         });
+      }).then(() => {
+        miqSparkleOff();
       });
     }
 
