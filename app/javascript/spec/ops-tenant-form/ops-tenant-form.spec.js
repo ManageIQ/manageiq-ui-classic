@@ -52,6 +52,9 @@ describe('OpstTenantForm', () => {
   });
 
   it('should mount and set initialValues', async(done) => {
+    fetchMock.getOnce('/api/tenants?filter[]=name=&expand=resources', {
+      resources: [],
+    });
     fetchMock.getOnce('/api/tenants/123?expand=resources&attributes=name,description,use_config_for_attributes,ancestry,divisible', {
       name: 'foo',
     });
