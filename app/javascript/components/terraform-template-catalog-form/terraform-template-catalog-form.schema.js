@@ -212,7 +212,7 @@ const provisionTabSchema = (
         name: 'config_info.provision.dialog_type',
         label: __('Dialog'),
         options: [{ value: 'useExisting', label: __('Use Existing') }, { value: 'createNew', label: __('Create New') }],
-      },      
+      },
       {
         component: componentTypes.SELECT,
         id: 'config_info.provision.dialog_id',
