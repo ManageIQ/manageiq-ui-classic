@@ -20,3 +20,4 @@ config/webpack/paths.json
 cypress/screenshots
 cypress/videos
 .DS_Store
+.yarn/

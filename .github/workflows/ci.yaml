@@ -9,7 +9,7 @@ jobs:
       fail-fast: false
       matrix:
         ruby-version:
-        - '2.7'
+        - '2.6'
         node-version:
         - 12
         test-suite:
@@ -19,10 +19,6 @@ jobs:
         - spec:javascript
         - spec:jest
         - spec:routes
-        include:
-        - ruby-version: '2.6'
-          node-version: 12
-          test-suite: spec
     services:
       postgres:
         image: manageiq/postgresql:10
@@ -39,7 +35,7 @@ jobs:
       PGPASSWORD: smartvm
       CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Set up system
       run: bin/before_install
     - name: Set up Ruby
@@ -49,7 +45,7 @@ jobs:
         bundler-cache: true
     - name: Set up Node
       if: ${{ matrix.test-suite == 'spec:compile' || matrix.test-suite == 'spec:javascript' || matrix.test-suite == 'spec:jest' }}
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: yarn
@@ -58,7 +54,3 @@ jobs:
       run: bin/setup
     - name: Run tests
       run: bundle exec rake
-    - name: Report code coverage
-      if: ${{ github.ref == 'refs/heads/master' && matrix.ruby-version == '2.7' && matrix.test-suite == 'spec' }}
-      continue-on-error: true
-      uses: paambaati/codeclimate-action@v3.0.0
