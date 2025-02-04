@@ -2,7 +2,8 @@
 
 if [ -n "$CI" ]; then
   echo "== Installing system packages =="
-  sudo apt-get install libcurl4-openssl-dev
+  sudo apt-get update
+  sudo apt-get install -y libcurl4-openssl-dev
   echo
 fi
 
@@ -11,7 +12,18 @@ if [ -n "$CI" -a \( "$TEST_SUITE" = "spec:javascript" -o "$TEST_SUITE" = "spec:j
   wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
   sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
   sudo apt-get update
-  sudo apt-get install google-chrome-beta
+  sudo apt-get install -y google-chrome-beta
+  echo
+fi
+
+if [ -n "$ACT" ]; then
+  # Install yarn
+  curl -o- -L https://yarnpkg.com/install.sh | bash
+  echo "$HOME/.yarn/bin" >> $GITHUB_PATH
+  echo "$HOME/.config/yarn/global/node_modules/.bin" >> $GITHUB_PATH
+
+  # Install cmake so we can build rugged gem
+  sudo apt-get install -y cmake
   echo
 fi
 
