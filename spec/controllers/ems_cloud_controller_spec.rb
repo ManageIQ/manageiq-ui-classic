@@ -168,8 +168,8 @@ describe EmsCloudController do
       expect(ems).to receive(:sync_users_queue)
       post :sync_users, :params => {:id => ems.id, :sync => "", :admin_role => 1, :member_role => 2}
       expect(session[:flash_msgs]).to match [a_hash_including(:message => "Sync users queued.", :level => :success)]
-      expect(response.body).to include("redirected")
-      expect(response.body).to include("ems_cloud/#{ems.id}")
+      expect(response.status).to eq(302)
+      assert_redirected_to(controller.ems_cloud_path(ems.id))
     end
 
     it "returns error if admin role is not selected" do

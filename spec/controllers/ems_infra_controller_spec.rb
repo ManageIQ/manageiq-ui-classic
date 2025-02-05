@@ -206,8 +206,8 @@ describe EmsInfraController do
       post :scaling, :params => { :id => @ems.id, :scale => "", :orchestration_stack_id => @orchestration_stack.id,
                                   @orchestration_stack_parameter_compute.name => 2 }
       expect(controller.send(:flash_errors?)).to be_falsey
-      expect(response.body).to include("redirected")
-      expect(response.body).to include("ems_infra")
+      expect(response.status).to eq(302)
+      assert_redirected_to(controller.ems_infra_path(@ems.id))
       expect(session[:flash_msgs]).to match [a_hash_including(:message => "Scaling compute-1::count from 1 to 2 ", :level => :success)]
     end
 
@@ -266,8 +266,8 @@ describe EmsInfraController do
       post :scaledown, :params => {:id => @ems.id, :scaledown => "",
                                    :orchestration_stack_id => @orchestration_stack.id, :host_ids => [@host2.id]}
       expect(controller.send(:flash_errors?)).to be_falsey
-      expect(response.body).to include("redirected")
-      expect(response.body).to include("ems_infra")
+      expect(response.status).to eq(302)
+      assert_redirected_to(controller.ems_infra_path(@ems.id))
       expect(session[:flash_msgs]).to match [a_hash_including(:message => " Scaling down to 1 compute nodes", :level => :success)]
     end
 
@@ -299,8 +299,8 @@ describe EmsInfraController do
         .to receive(:register_and_configure_nodes).and_return("SUCCESS")
       post :register_nodes, :params => {:id => @ems.id, :nodes_json => @nodes_example, :register => 1}
       expect(controller.send(:flash_errors?)).to be_falsey
-      expect(response.body).to include("redirected")
-      expect(response.body).to include("ems_infra")
+      expect(response.status).to eq(302)
+      assert_redirected_to(%r(#{controller.ems_infra_path(@ems.id)}))
     end
 
     it "when failure expected, workflow service not reachable" do
