@@ -102,7 +102,7 @@ module SecurityGroupHelper::TextualSummary
     elsif rule.port == rule.end_port
       rule.port.to_s
     else
-      rule.port_range.to_s(:dash)
+      rule.port_range.to_fs(:dash)
     end
   end
 end
