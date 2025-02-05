@@ -91,7 +91,7 @@ end
 # compile and clobber when running assets:* tasks
 if Rake::Task.task_defined?("assets:precompile")
   Rake::Task["assets:precompile"].enhance do
-    Rake::Task["webpack:compile"].invoke unless ENV["TRAVIS"]
+    Rake::Task["webpack:compile"].invoke unless ENV["CI"]
   end
 
   Rake::Task["assets:precompile"].actions.each do |action|
@@ -103,7 +103,7 @@ end
 
 if Rake::Task.task_defined?("assets:clobber")
   Rake::Task["assets:clobber"].enhance do
-    Rake::Task["webpack:clobber"].invoke unless ENV["TRAVIS"]
+    Rake::Task["webpack:clobber"].invoke unless ENV["CI"]
   end
 
   Rake::Task["assets:clobber"].actions.each do |action|
