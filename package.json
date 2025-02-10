@@ -179,6 +179,7 @@
     "moment": "^2.29.4",
     "moment-timezone": "~0.5.40",
     "path-to-regexp": "~1.9.0",
+    "semver-regex": "~4.0.3",
     "tar": "~6.2.1",
     "tough-cookie": "~4.1.3"
   },
