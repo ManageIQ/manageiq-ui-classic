@@ -11,7 +11,6 @@ module ApplicationController::WaitForTask
     @edit = session[:edit]  # If in edit, need to preserve @edit object
     raise Forbidden, _('Invalid input for "wait_for_task".') unless params[:task_id]
 
-    @edit = session[:edit]  # If in edit, need to preserve @edit object
     session[:async] ||= {}
     session[:async][:interval] ||= 1000 # Default interval to 1 second
     session[:async][:params] ||= {}
