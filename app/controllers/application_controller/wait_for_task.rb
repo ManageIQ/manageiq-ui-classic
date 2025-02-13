@@ -23,7 +23,7 @@ module ApplicationController::WaitForTask
     end
   end
 
-  def browser_refresh_task(task_id, should_flash = false)
+  def browser_refresh_task(task_id, should_flash: false)
     session[:async][:interval] += 250 if session[:async][:interval] < 5000 # Slowly move up to 5 second retries
     render :update do |page|
       page << javascript_prologue
@@ -61,7 +61,7 @@ module ApplicationController::WaitForTask
       session[:async][:params][:rx_action] = options[:rx_action]
     end
 
-    browser_refresh_task(task_id, !!options[:flash])
+    browser_refresh_task(task_id, :should_flash => !!options[:flash])
   end
   private :initiate_wait_for_task
 
