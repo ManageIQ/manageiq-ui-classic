@@ -2715,6 +2715,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/trusted-types@npm:^2.0.7":
+  version: 2.0.7
+  resolution: "@types/trusted-types@npm:2.0.7"
+  checksum: 10/8e4202766a65877efcf5d5a41b7dd458480b36195e580a3b1085ad21e948bc417d55d6f8af1fd2a7ad008015d4117d5fdfe432731157da3c68678487174e4ba3
+  languageName: node
+  linkType: hard
+
 "@types/unist@npm:^2, @types/unist@npm:^2.0.0, @types/unist@npm:^2.0.2, @types/unist@npm:^2.0.3":
   version: 2.0.10
   resolution: "@types/unist@npm:2.0.10"
@@ -6719,10 +6726,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:^2.3.6":
-  version: 2.5.5
-  resolution: "dompurify@npm:2.5.5"
-  checksum: 10/4429b9b22a0e67391c27b497b77d6417dd434b63e4d96de6470b6bc37faf2db8669a81aa05b012fbccb6c4ac694e7d8008204cf560b321cd23b97d79611cdc16
+"dompurify@npm:^3.2.4":
+  version: 3.2.4
+  resolution: "dompurify@npm:3.2.4"
+  dependencies:
+    "@types/trusted-types": "npm:^2.0.7"
+  dependenciesMeta:
+    "@types/trusted-types":
+      optional: true
+  checksum: 10/98570c53385518a2f9b617f796926338856acfdd3369c88b5905bddf96bd7d391bf8a5433127155e0046e6faa2bfb767185fcd571b865dfabe624c099e2537f5
   languageName: node
   linkType: hard
 
@@ -11634,7 +11646,7 @@ __metadata:
     css-loader: "npm:~3.4.2"
     cypress: "npm:12.17.1"
     d3: "npm:^7.8.2"
-    dompurify: "npm:^2.3.6"
+    dompurify: "npm:^3.2.4"
     duplicate-package-checker-webpack-plugin: "npm:~3.0.0"
     enhanced-resolve: "npm:~4.0.0"
     enzyme: "npm:^3.9.0"
