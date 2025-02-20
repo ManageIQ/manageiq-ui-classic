@@ -84,6 +84,8 @@ module ApplicationController::Explorer
 
     # Process model actions that are currently implemented
     if X_BUTTON_ALLOWED_ACTIONS[action] == :s1
+      # resetting action that was stored during other operations
+      @sb[:action] = nil if @sb
       send(method)
     elsif X_BUTTON_ALLOWED_ACTIONS[action] == :s2
       # don't need to set params[:id] and do find_checked_items for methods
