@@ -66,8 +66,8 @@ class CloudNetworkController < ApplicationController
   end
 
   def create_finished
-    task_id = session[:async][:params][:task_id]
-    network_name = session[:async][:params][:name]
+    task_id = params[:task_id]
+    network_name = params[:name]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
       add_flash(_("Cloud Network \"%{name}\" created") % {:name => network_name })
@@ -164,8 +164,8 @@ class CloudNetworkController < ApplicationController
   end
 
   def update_finished
-    task_id = session[:async][:params][:task_id]
-    cloud_network_name = session[:async][:params][:name]
+    task_id = params[:task_id]
+    cloud_network_name = params[:name]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
       flash_and_redirect(_("Cloud Network \"%{name}\" updated") % {:name => cloud_network_name})

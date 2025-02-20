@@ -161,9 +161,9 @@ class HostAggregateController < ApplicationController
   end
 
   def add_host_finished
-    task_id = session[:async][:params][:task_id]
-    host_aggregate_name = session[:async][:params][:name]
-    host_id = session[:async][:params][:host_id]
+    task_id = params[:task_id]
+    host_aggregate_name = params[:name]
+    host_id = params[:host_id]
 
     task = MiqTask.find(task_id)
     host = Host.find(host_id)
@@ -244,9 +244,9 @@ class HostAggregateController < ApplicationController
   end
 
   def remove_host_finished
-    task_id = session[:async][:params][:task_id]
-    host_aggregate_name = session[:async][:params][:name]
-    host_id = session[:async][:params][:host_id]
+    task_id = params[:task_id]
+    host_aggregate_name = params[:name]
+    host_id = params[:host_id]
 
     task = MiqTask.find(task_id)
     host = Host.find(host_id)

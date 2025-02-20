@@ -76,8 +76,8 @@ class SecurityGroupController < ApplicationController
   end
 
   def create_finished
-    task_id = session[:async][:params][:task_id]
-    security_group_name = session[:async][:params][:name]
+    task_id = params[:task_id]
+    security_group_name = params[:name]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
       flash_and_redirect(_("Security Group \"%{name}\" created") % {:name => security_group_name})
@@ -181,7 +181,7 @@ class SecurityGroupController < ApplicationController
   end
 
   def update_finished
-    security_group_id = session[:async][:params][:id]
+    security_group_id = params[:id]
 
     td = session[:security_group][:task]
     task = MiqTask.find(td[:id])
