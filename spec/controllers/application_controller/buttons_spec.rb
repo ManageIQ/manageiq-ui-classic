@@ -51,8 +51,9 @@ describe ApplicationController do
       end
 
       it "Vm button" do
+        task = MiqTask.create
         controller.params = {:id => vm.id, :button_id => button.id}
-        expect_any_instance_of(CustomButton).to receive(:invoke_async).with(vm, 'UI')
+        expect_any_instance_of(CustomButton).to receive(:invoke_async).with(vm, 'UI').and_return(task.id)
 
         controller.send(:custom_buttons)
         expect(assigns(:right_cell_text)).to include(vm.name)
