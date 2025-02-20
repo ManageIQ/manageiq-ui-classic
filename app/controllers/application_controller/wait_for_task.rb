@@ -11,15 +11,15 @@ module ApplicationController::WaitForTask
     @edit = session[:edit]  # If in edit, need to preserve @edit object
     raise Forbidden, _('Invalid input for "wait_for_task".') unless params[:task_id]
 
-    session[:async] ||= {}
     async_interval = params[:async_interval] || 1000 # Default interval to 1 second
-    session[:async][:params] ||= {}
 
-    if MiqTask.find(params[:task_id].to_i).state != "Finished" # Task not done --> retry
+    task = MiqTask.find(params[:task_id].to_i)
+    if task.state != "Finished" # Task not done --> retry
       browser_refresh_task(params[:task_id], async_interval)
     else # Task done
-      session[:async][:params].each { |k, v| @_params[k] = v } # Merge in the original params and
-      send(session.fetch_path(:async, :params, :action)) # call the orig. method
+      async_params = task.context_data[:async_params]
+      async_params.each { |k, v| @_params[k] = v } # Merge in the original params and
+      send(async_params[:action]) # call the orig. method
     end
   end
 
@@ -37,30 +37,33 @@ module ApplicationController::WaitForTask
   private :browser_refresh_task
 
   #
-  # :task_id => id of task to wait for
-  # :action  => 'action_to_call' -- action to be called when the task finishes
-  # :rx_action => 'method_to_call' -- a method to create a RxJs message
-  # :flash => true|false -- output queued flash messages *while waiting*
+  # @option options :task_id [Numeric] id of task to wait for
+  # @option options :action  [String] action to be called when the task finishes
+  # @option options :rx_action [String]  a method to create a RxJs message
+  # @option options :flash [Boolean] output queued flash messages *while waiting*
+  # @option options :extra_params [Hash] asynchronous
   #
   def initiate_wait_for_task(options = {})
     task_id = options[:task_id]
-    session[:async] ||= {}
     async_interval = 1000 # Default interval to 1 second
-    session[:async][:params] ||= {}
 
-    # save the incoming parms + extra_params
-    session[:async][:params] = params.to_unsafe_h.merge(options[:extra_params] || {})
-    session[:async][:params][:task_id] = task_id
+    # save the incoming params + extra_params
+    async_params = params.to_unsafe_h.merge(options[:extra_params] || {})
+    async_params[:task_id] = task_id
 
     # override method to be called, when the task is done
-    session[:async][:params][:action] = options[:action] if options.key?(:action)
+    async_params[:action] = options[:action] if options.key?(:action)
 
     if options.key?(:rx_action)
       raise "Unsupported combination" if options.key?(:action)
 
-      session[:async][:params][:action] = 'wait_for_task_rx'
-      session[:async][:params][:rx_action] = options[:rx_action]
+      async_params[:action] = 'wait_for_task_rx'
+      async_params[:rx_action] = options[:rx_action]
     end
+
+    task = MiqTask.find(task_id)
+    task.context_data = (task.context_data || {}).merge(:async_params => async_params)
+    task.save!
 
     browser_refresh_task(task_id, async_interval, :should_flash => !!options[:flash])
   end
@@ -69,9 +72,10 @@ module ApplicationController::WaitForTask
   # used for any task with rx_action
   def wait_for_task_rx
     task_id = params[:task_id]
-    rx_action = session[:async][:params][:rx_action]
-
     task = MiqTask.find(task_id)
+    async_params = task.context_data[:async_params]
+    rx_action = async_params[:rx_action]
+
     result = send(rx_action, task)
     raise "Non-hash rx_action return" unless result.kind_of?(Hash)
 
