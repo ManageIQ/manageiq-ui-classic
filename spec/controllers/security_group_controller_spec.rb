@@ -406,12 +406,11 @@ describe SecurityGroupController do
 
   describe '#create_finished' do
     let(:group) { FactoryBot.create(:security_group) }
-    let(:miq_task) { double("MiqTask", :state => 'Finished', :status => status, :message => 'some message') }
+    let(:miq_task) { MiqTask.create(:state => 'Finished', :status => status, :message => 'some message') }
     let(:status) { 'Error' }
 
     before do
-      allow(MiqTask).to receive(:find).with(123).and_return(miq_task)
-      allow(controller).to receive(:session).and_return(:async => {:params => {:task_id => 123, :name => group.name}})
+      allow(controller).to receive(:params).and_return({:task_id => miq_task.id, :name => group.name})
     end
 
     it 'calls flash_and_redirect with appropriate arguments for unsuccesful creating of a Security Group' do

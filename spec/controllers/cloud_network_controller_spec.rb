@@ -197,11 +197,10 @@ describe CloudNetworkController do
   end
 
   describe '#update_finished' do
-    let(:miq_task) { double("MiqTask", :state => 'Finished', :status => 'ok', :message => 'some message') }
+    let(:miq_task) { MiqTask.create(:state => 'Finished', :status => 'ok', :message => 'some message') }
 
     before do
-      allow(MiqTask).to receive(:find).with(123).and_return(miq_task)
-      allow(controller).to receive(:session).and_return(:async => {:params => {:task_id => 123, :name => network.name}})
+      allow(controller).to receive(:params).and_return({:task_id => miq_task.id, :name => network.name})
     end
 
     it 'calls flash_and_redirect with appropriate arguments for succesful updating of a Cloud Network' do
@@ -210,7 +209,7 @@ describe CloudNetworkController do
     end
 
     context 'unsuccesful updating of a Cloud Network' do
-      let(:miq_task) { double("MiqTask", :state => 'Finished', :status => 'Error', :message => 'some message') }
+      let(:miq_task) { MiqTask.create(:state => 'Finished', :status => 'Error', :message => 'some message') }
 
       it 'calls flash_and_redirect with appropriate arguments' do
         expect(controller).to receive(:flash_and_redirect).with(_("Unable to update Cloud Network \"%{name}\": %{details}") % {
