@@ -110,6 +110,27 @@ describe VmCloudController do
       expect(response).to render_template(:partial => 'vm_common/_resize')
     end
 
+    it 'can open instance refresh tab' do
+      post :explorer
+      expect(response.status).to eq(200)
+      allow(controller).to receive(:x_node).and_return("v-#{vm_openstack.id}")
+
+      post :x_button, :params => {:pressed => 'instance_refresh', :id => vm_openstack.id}
+      expect(response.status).to eq(200)
+    end
+
+    it 'can do instance refresh after its reconfigure' do
+      post :explorer
+      expect(response.status).to eq(200)
+      allow(controller).to receive(:x_node).and_return("v-#{vm_openstack.id}")
+
+      post :x_button, :params => {:pressed => 'instance_resize', :id => vm_openstack.id}
+      expect(response.status).to eq(200)
+
+      post :x_button, :params => {:pressed => 'instance_refresh', :id => vm_openstack.id}
+      expect(response.status).to eq(200)
+    end
+
     it 'can open instance live migrate tab' do
       post :explorer
       expect(response.status).to eq(200)
