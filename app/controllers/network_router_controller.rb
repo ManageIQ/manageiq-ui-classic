@@ -129,10 +129,10 @@ class NetworkRouterController < ApplicationController
   end
 
   def add_interface_finished
-    task_id = session[:async][:params][:task_id]
-    router_id = session[:async][:params][:id]
-    router_name = session[:async][:params][:name]
-    cloud_subnet_id = session[:async][:params][:cloud_subnet_id]
+    task_id = params[:task_id]
+    router_id = params[:id]
+    router_name = params[:name]
+    cloud_subnet_id = params[:cloud_subnet_id]
 
     task = MiqTask.find(task_id)
     cloud_subnet = CloudSubnet.find(cloud_subnet_id)
@@ -222,10 +222,10 @@ class NetworkRouterController < ApplicationController
   end
 
   def remove_interface_finished
-    task_id = session[:async][:params][:task_id]
-    router_id = session[:async][:params][:id]
-    router_name = session[:async][:params][:name]
-    cloud_subnet_id = session[:async][:params][:cloud_subnet_id]
+    task_id = params[:task_id]
+    router_id = params[:id]
+    router_name = params[:name]
+    cloud_subnet_id = params[:cloud_subnet_id]
 
     task = MiqTask.find(task_id)
     cloud_subnet = CloudSubnet.find(cloud_subnet_id)

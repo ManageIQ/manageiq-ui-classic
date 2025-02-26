@@ -67,8 +67,8 @@ class FloatingIpController < ApplicationController
   end
 
   def create_finished
-    task_id = session[:async][:params][:task_id]
-    floating_ip_address = session[:async][:params][:address]
+    task_id = params[:task_id]
+    floating_ip_address = params[:address]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
       add_flash(_("Floating IP \"%{address}\" created") % { :address => floating_ip_address })

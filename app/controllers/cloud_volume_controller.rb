@@ -146,8 +146,8 @@ class CloudVolumeController < ApplicationController
   end
 
   def create_finished
-    task_id = session[:async][:params][:task_id]
-    volume_name = session[:async][:params][:name]
+    task_id = params[:task_id]
+    volume_name = params[:name]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
       add_flash(_("Cloud Volume \"%{name}\" created") % {
@@ -211,9 +211,9 @@ class CloudVolumeController < ApplicationController
   end
 
   def update_finished
-    task_id = session[:async][:params][:task_id]
-    volume_id = session[:async][:params][:id]
-    volume_name = session[:async][:params][:name]
+    task_id = params[:task_id]
+    volume_id = params[:id]
+    volume_name = params[:name]
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
       add_flash(_("Cloud Volume \"%{name}\" updated") % {

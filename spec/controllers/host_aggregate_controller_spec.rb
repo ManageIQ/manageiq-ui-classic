@@ -44,12 +44,11 @@ describe HostAggregateController do
   end
 
   describe '#create_finished' do
-    let(:miq_task) { double("MiqTask", :state => 'Finished', :status => status, :message => 'some message') }
+    let(:miq_task) { MiqTask.create(:state => 'Finished', :status => status, :message => 'some message') }
     let(:status) { 'Error' }
 
     before do
-      allow(MiqTask).to receive(:find).with(123).and_return(miq_task)
-      allow(controller).to receive(:session).and_return(:async => {:params => {:task_id => 123, :name => aggregate.name}})
+      allow(controller).to receive(:params).and_return({:task_id => miq_task.id, :name => aggregate.name})
     end
   end
 
@@ -76,12 +75,11 @@ describe HostAggregateController do
   end
 
   describe '#update_finished' do
-    let(:miq_task) { double("MiqTask", :state => 'Finished', :status => status, :message => 'some message') }
+    let(:miq_task) { MiqTask.create(:state => 'Finished', :status => status, :message => 'some message') }
     let(:status) { 'Error' }
 
     before do
-      allow(MiqTask).to receive(:find).with(123).and_return(miq_task)
-      allow(controller).to receive(:session).and_return(:async => {:params => {:task_id => 123, :id => aggregate.id, :name => aggregate.name}})
+      allow(controller).to receive(:params).and_return({:task_id => miq_task.id, :id => aggregate.id, :name => aggregate.name})
     end
   end
 
@@ -184,12 +182,11 @@ describe HostAggregateController do
   end
 
   describe '#add_host_finished' do
-    let(:miq_task) { double("MiqTask", :state => 'Finished', :status => status, :message => 'some message') }
+    let(:miq_task) { MiqTask.create(:state => 'Finished', :status => status, :message => 'some message') }
     let(:status) { 'Error' }
 
     before do
-      allow(MiqTask).to receive(:find).with(123).and_return(miq_task)
-      allow(controller).to receive(:session).and_return(:async => {:params => {:task_id => 123, :id => aggregate.id, :name => aggregate.name, :host_id => host.id}})
+      allow(controller).to receive(:params).and_return({:task_id => miq_task.id, :id => aggregate.id, :name => aggregate.name, :host_id => host.id})
     end
 
     it 'calls flash_and_redirect with appropriate arguments' do
@@ -267,12 +264,11 @@ describe HostAggregateController do
   end
 
   describe '#remove_host_finished' do
-    let(:miq_task) { double("MiqTask", :state => 'Finished', :status => status, :message => 'some message') }
+    let(:miq_task) { MiqTask.create(:state => 'Finished', :status => status, :message => 'some message') }
     let(:status) { 'Error' }
 
     before do
-      allow(MiqTask).to receive(:find).with(123).and_return(miq_task)
-      allow(controller).to receive(:session).and_return(:async => {:params => {:task_id => 123, :id => aggregate.id, :name => aggregate.name, :host_id => host.id}})
+      allow(controller).to receive(:params).and_return({:task_id => miq_task.id, :id => aggregate.id, :name => aggregate.name, :host_id => host.id})
     end
 
     it 'calls flash_and_redirect with appropriate arguments' do
