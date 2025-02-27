@@ -1,0 +1,97 @@
+.settings-help-menu-tab {
+  display: flex;
+  width: 100%;
+
+  form {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .col1, .col2, .col3, .labels {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+  }
+  .item-label, .url, .dropdown {
+    margin-bottom: -5%;
+  }
+}
+
+.bx--btn-set {
+  position: absolute;
+  bottom: -20%;
+}
+
+.title {
+  font-size: large;
+}
+
+.info-box {
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid black;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.info-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background-color: #5a5a5a;
+  color: white;
+  font-weight: bold;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.left-divider, .middle-divider, .right-divider, .divider {
+  border-top: 1px solid black;
+}
+
+.middle-divider {
+  margin-left: -50%;
+  margin-right: -50%
+}
+
+.flash-message {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: #dff0d8;
+  opacity: 0.7;
+  color: black;
+  border: 1px solid black;
+  position: relative;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.flash-icon {
+  font-size: 16px;
+  font-weight: bold;
+  color: green;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid green; 
+  border-radius: 50%;
+  margin-right: 2%;
+}
+
+.flash-close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
