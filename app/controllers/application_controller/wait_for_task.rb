@@ -12,23 +12,24 @@ module ApplicationController::WaitForTask
     raise Forbidden, _('Invalid input for "wait_for_task".') unless params[:task_id]
 
     session[:async] ||= {}
-    session[:async][:interval] ||= 1000 # Default interval to 1 second
+    async_interval = params[:async_interval] || 1000 # Default interval to 1 second
     session[:async][:params] ||= {}
 
     if MiqTask.find(params[:task_id].to_i).state != "Finished" # Task not done --> retry
-      browser_refresh_task(params[:task_id])
+      browser_refresh_task(params[:task_id], async_interval)
     else # Task done
       session[:async][:params].each { |k, v| @_params[k] = v } # Merge in the original params and
       send(session.fetch_path(:async, :params, :action)) # call the orig. method
     end
   end
 
-  def browser_refresh_task(task_id, should_flash: false)
-    session[:async][:interval] += 250 if session[:async][:interval] < 5000 # Slowly move up to 5 second retries
+  def browser_refresh_task(task_id, async_interval, should_flash: false)
+    async_interval = 1000 if async_interval.to_i < 1000 # if it is not an integer, assign to 1 second
+    async_interval += 250 if async_interval < 5000 # Slowly move up to 5 second retries
     render :update do |page|
       page << javascript_prologue
-      ajax_call = remote_function(:url => {:action => 'wait_for_task', :task_id => task_id})
-      page << "setTimeout(\"#{ajax_call}\", #{session[:async][:interval]});"
+      ajax_call = remote_function(:url => {:action => 'wait_for_task', :task_id => task_id, :async_interval => async_interval})
+      page << "setTimeout(\"#{ajax_call}\", #{async_interval});"
       page.replace("flash_msg_div", :partial => "layouts/flash_msg") if should_flash
       page << "miqScrollTop();" if @flash_array.present?
     end
@@ -44,7 +45,7 @@ module ApplicationController::WaitForTask
   def initiate_wait_for_task(options = {})
     task_id = options[:task_id]
     session[:async] ||= {}
-    session[:async][:interval] ||= 1000 # Default interval to 1 second
+    async_interval = 1000 # Default interval to 1 second
     session[:async][:params] ||= {}
 
     # save the incoming parms + extra_params
@@ -61,7 +62,7 @@ module ApplicationController::WaitForTask
       session[:async][:params][:rx_action] = options[:rx_action]
     end
 
-    browser_refresh_task(task_id, :should_flash => !!options[:flash])
+    browser_refresh_task(task_id, async_interval, :should_flash => !!options[:flash])
   end
   private :initiate_wait_for_task
 
