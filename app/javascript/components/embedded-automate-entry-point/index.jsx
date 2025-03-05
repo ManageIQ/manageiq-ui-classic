@@ -12,12 +12,13 @@ const EmbeddedAutomateEntryPoint = (props) => {
   const { input } = useFieldApi(props);
 
   const [showModal, setShowModal] = useState(false);
-  const [selectedValue, setSelectedValue] = useState({});
+  const [selectedValue, setSelectedValue] = useState();
   const [textValue, setTextValue] = useState('');
 
   useEffect(() => {
-    if (selectedValue && selectedValue.name && selectedValue.name.text) {
-      setTextValue(selectedValue.name.text);
+    console.log(selectedValue);
+    if (selectedValue && selectedValue.element && selectedValue.element.name && selectedValue.element.metadata) {
+      setTextValue(selectedValue.element.metadata.fqname);
     } else {
       setTextValue('');
     }
@@ -32,15 +33,15 @@ const EmbeddedAutomateEntryPoint = (props) => {
 
   return (
     <div>
-      {showModal ? (
-        <AutomateEntryPoints
-          field={field}
-          selected={selected}
-          type={type}
-          setShowModal={setShowModal}
-          setSelectedValue={setSelectedValue}
-        />
-      ) : undefined}
+      <AutomateEntryPoints
+        field={field}
+        selected={selected}
+        selectedValue={selectedValue}
+        showModal={showModal}
+        type={type}
+        setShowModal={setShowModal}
+        setSelectedValue={setSelectedValue}
+      />
       <div className="entry-point-wrapper">
         <div className="entry-point-text-input">
           <TextInput id={id} type="text" labelText={__(label)} onChange={(value) => setTextValue(value.target.value)} value={textValue} />
