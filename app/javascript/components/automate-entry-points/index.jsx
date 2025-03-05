@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Loading, Modal, ModalBody } from 'carbon-components-react';
-import PropTypes, { number } from 'prop-types';
+import PropTypes from 'prop-types';
 import {
   Document16,
   Folder16,
@@ -18,12 +18,14 @@ const initialData = [
   },
 ];
 
-const MultiSelectCheckboxAsync = () => {
+const AutomateEntryPoints = ({
+  selected, selectedValue, showModal, setShowModal, setSelectedValue,
+}) => {
   const [data, setData] = useState(initialData);
+  const [isLoading, setIsLoading] = useState(true);
   const [nodesAlreadyLoaded, setNodesAlreadyLoaded] = useState([]);
-  const [open, setOpen] = useState(true);
-  const [selectedValue, setSelectedValue] = useState();
   const [disableSubmit, setDisableSubmit] = useState(true);
+  const [selectedNode, setSelectedNode] = useState();
 
   const updateTreeData = (list, id, children) => {
     const data = list.map((node) => {
@@ -34,6 +36,18 @@ const MultiSelectCheckboxAsync = () => {
     });
     return data.concat(children);
   };
+
+  useEffect(() => {
+    if (selectedValue.element) {
+      data.forEach((node) => {
+        if (node.id === selectedValue.element.id) {
+          console.log(document.getElementById(node.id));
+          document.getElementById(node.id).classList.add('currently-selected');
+          document.getElementById(node.id).style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
+        }
+      });
+    }
+  }, [selectedValue]);
 
   useEffect(() => {
     miqSparkleOn();
@@ -57,6 +71,7 @@ const MultiSelectCheckboxAsync = () => {
         resolve();
       }, 1000);
     })).then(() => {
+      setIsLoading(false);
       miqSparkleOff();
     });
   }, []);
@@ -120,17 +135,39 @@ const MultiSelectCheckboxAsync = () => {
     }
   };
   wrappedOnLoadData.propTypes = {
-    element: PropTypes.objectOf({ children: PropTypes.array, id: number }).isRequired,
+    element: PropTypes.objectOf({ children: PropTypes.array, id: PropTypes.number }).isRequired,
   };
   wrappedOnLoadData.defaultProps = {
   };
 
   const onSelect = (value) => {
+    console.log(value.element);
     if (value.isBranch === false && value.isSelected) {
-      setSelectedValue(value);
+      data.forEach((node) => {
+        if (selectedNode && (node.id === selectedNode.element.id)) {
+          console.log(selectedNode);
+          document.getElementById(node.id).style.backgroundColor = 'transparent';
+          // #b8b8b8
+          // document.getElementById(node.id).classList.remove('prevSelected');
+          // document.getElementById(node.id).parentNode.className = 'tree-leaf-list-item';
+          // document.getElementById(node.id).className = 'tree-node';
+          // document.getElementById(node.id).setAttribute('aria-selected', 'false');
+        }
+      });
+      document.getElementById(value.element.id).style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
+      setSelectedNode(value);
       setDisableSubmit(false);
     }
   };
+
+  const onExpand = ((value) => {
+    console.log('test');
+    console.log(value);
+    console.log(selectedNode);
+    if (value.isExpanded && selectedNode && document.getElementById(selectedNode.element.id)) {
+      document.getElementById(selectedNode.element.id).style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
+    }
+  });
 
   const FolderIcon = ({ isOpen }) =>
     (isOpen ? (
@@ -148,31 +185,32 @@ const MultiSelectCheckboxAsync = () => {
 
   const FileIcon = () => <Document16 className="icon" />;
 
-  return (
+  return !isLoading && (
     <Modal
-      open={open}
+      open={showModal}
       primaryButtonText={__('OK')}
       secondaryButtonText={__('Cancel')}
       onRequestSubmit={() => {
-        console.log(selectedValue);
-        setOpen(false);
+        setSelectedValue(selectedNode);
+        setShowModal(false);
       }}
       onRequestClose={() => {
-        setOpen(false);
+        setShowModal(false);
       }}
       onSecondarySubmit={() => {
-        setOpen(false);
+        setShowModal(false);
       }}
       primaryButtonDisabled={disableSubmit}
     >
       <ModalBody>
         <div>
-          <div className="checkbox">
+          <div className="automate_entry_points">
             <TreeView
               data={data}
-              aria-label="Checkbox tree"
+              aria-label="Automate Entry Points tree"
               onSelect={(value) => onSelect(value)}
               onLoadData={wrappedOnLoadData}
+              onExpand={(value) => onExpand(value)}
               togglableSelect
               nodeRenderer={({
                 element,
@@ -192,6 +230,7 @@ const MultiSelectCheckboxAsync = () => {
                   <div
                     {...getNodeProps()}
                     style={{ marginLeft: 40 * (level - 1) }}
+                    id={element.id}
                   >
                     {isBranch && branchNode(isExpanded, element)}
                     {isBranch ? (
@@ -215,10 +254,20 @@ const MultiSelectCheckboxAsync = () => {
   );
 };
 
-MultiSelectCheckboxAsync.propTypes = {
+AutomateEntryPoints.propTypes = {
+  field: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  selected: PropTypes.string,
+  selectedValue: PropTypes.objectOf(PropTypes.any),
+  showModal: PropTypes.bool,
+  setShowModal: PropTypes.func.isRequired,
+  setSelectedValue: PropTypes.func.isRequired,
 };
 
-MultiSelectCheckboxAsync.defaultProps = {
+AutomateEntryPoints.defaultProps = {
+  selected: '',
+  selectedValue: {},
+  showModal: false,
 };
 
-export default MultiSelectCheckboxAsync;
+export default AutomateEntryPoints;

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Loading } from 'carbon-components-react';
 import MiqFormRenderer from '@@ddf';
 import createSchema from './visual-settings-form.schema';
-import DirectoryTreeView from '../automate-entry-points';
 
 const VisualSettingsForm = ({ recordId }) => {
   const [{ initialValues, timezoneOptions, isLoading }, setState] = useState({ isLoading: true });
@@ -43,7 +42,6 @@ const VisualSettingsForm = ({ recordId }) => {
   }
   return (
     <div>
-      <DirectoryTreeView />
       <MiqFormRenderer
         schema={createSchema(timezoneOptions)}
         initialValues={initialValues}

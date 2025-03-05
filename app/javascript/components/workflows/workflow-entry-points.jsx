@@ -99,9 +99,9 @@ const WorkflowEntryPoints = ({
         />
       </ModalBody>
     </Modal>
-
   );
 };
+
 WorkflowEntryPoints.propTypes = {
   field: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
