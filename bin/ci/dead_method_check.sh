@@ -1,5 +1,5 @@
 # Run only against PR that is based on master
-if [ "$TRAVIS_PULL_REQUEST" != "false" -a "$TRAVIS_BRANCH" = "master" ]; then
+if [ "$GITHUB_BASE_REF" = "master" ]; then
   OLD=`mktemp`
   NEW=`mktemp`
 
