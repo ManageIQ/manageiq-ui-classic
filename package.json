@@ -184,6 +184,7 @@
     "angular-animate": "~1.8.3",
     "angular-sanitize": "~1.8.3",
     "bootstrap-select": "~1.13.18",
+    "cross-spawn": "~7.0.5",
     "decode-uri-component": "^0.2.2",
     "express": "^4.18.2",
     "jquery": "~3.7.1",
@@ -194,7 +195,6 @@
     "nwsapi": "^2.2.1",
     "path-to-regexp": "~8.0.0",
     "patternfly": "~3.59.5",
-    "terser": "~4.8.1",
-    "cross-spawn": "~7.0.5"
+    "terser": "~4.8.1"
   }
 }
