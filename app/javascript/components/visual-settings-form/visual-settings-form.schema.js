@@ -1,26 +1,20 @@
 import { componentTypes } from '@@ddf';
 
-// const loadData = API.get('/api/automate?depth=1&attributes=klass,id,fqname,domain_fqname,name').then((data) => {
-//   console.log(data);
-//   const tree = [];
-//   if (data && data.resources) {
-//     data.resources.forEach((domain) => {
-//       // console.log(domain);
-//       tree.push({
-//         key: domain.fqname,
-//         icon: 'pficon pficon-folder-close',
-//         selectable: false,
-//         text: domain.name,
-//         tooltip: 'root node',
-//         state: {},
-//       });
-//     });
-//   }
-//   return tree;
-// });
-
 const createSchema = (timezoneOptions) => ({
   fields: [
+    {
+      component: 'embedded-automate-entry-point',
+      id: 'provisioning_entry_point_automate',
+      name: 'provisioning_entry_point_automate',
+      label: 'Provisioning Entry Point',
+      field: 'fqname',
+      selected: '',
+      type: 'provision',
+      // condition: {
+      //   when: 'provisioning_entry_point_type',
+      //   is: 'embedded_automate',
+      // },
+    },
     {
       component: componentTypes.SUB_FORM,
       name: 'general-subform',
