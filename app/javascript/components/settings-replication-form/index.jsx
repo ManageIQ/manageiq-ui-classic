@@ -175,10 +175,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
         open={isModalOpen}
         modalHeading={currentSubscription ? `Edit ${currentSubscription.dbname}` : 'Add Subscription'}
         onRequestClose={handleModalClose}
-        primaryButtonText="Save"
-        secondaryButtonText="Cancel"
-        onSecondaryButtonClick={handleModalClose}
-        onRequestSubmit={() => onSubmit(currentSubscription || {})}
+        passiveModal
       >
         {/* Render the MiqFormRenderer inside the modal */}
         <MiqFormRenderer
