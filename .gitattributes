@@ -3,5 +3,6 @@
 #   2) Add this to ~/.gitconfig:
 #     [diff "gron"]
 #          textconv=gron
+#          cachetextconv=true
 # Now, git log -p, show, and friends will use gron for json differences.
 app/javascript/oldjs/locale/*.json diff=gron
