@@ -65,69 +65,105 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
     }
   }, [pglogicalReplicationFormId]);
 
+  // const onSubmit = (values) => {
+  //   debugger
+  //   if (form.type === 'subscription') {
+  //     if (form.action === 'add') {
+  //       const newSubscriptions = [];
+
+  //       newSubscriptions.push({
+  //         dbname: values.dbname,
+  //         host: values.host,
+  //         user: values.user,
+  //         password: values.password,
+  //         port: values.port,
+  //       });
+
+  //       setState((state) => ({
+  //         ...state,
+  //         initialValues: {
+  //           replication_type: state.initialValues.replication_type,
+  //           subscriptions: state.initialValues.subscriptions,
+  //         },
+  //         subscriptions: subscriptions.concat(newSubscriptions),
+  //         form: {
+  //           type: 'replication',
+  //           className: 'replication_form',
+  //           action: 'edit',
+  //         },
+  //       }));
+  //     } else if (form.action === 'edit') {
+  //       let modifiedSubscriptions = [];
+  //       modifiedSubscriptions = modifiedSubscriptions.concat(subscriptions);
+
+  //       const editedSub = {
+  //         dbname: values.dbname,
+  //         host: values.host,
+  //         password: values.password,
+  //         port: values.port,
+  //         user: values.user,
+  //       };
+
+  //       modifiedSubscriptions[initialValues.subId] = editedSub;
+
+  //       setState((state) => ({
+  //         ...state,
+  //         initialValues: {
+  //           replication_type: state.initialValues.replication_type,
+  //           subscriptions: state.initialValues.subscriptions,
+  //         },
+  //         subscriptions: modifiedSubscriptions,
+  //         form: {
+  //           type: 'replication',
+  //           className: 'replication_form',
+  //           action: 'edit',
+  //         },
+  //       }));
+  //     }
+  //   } else {
+  //     debugger
+  //     // Redirect to Settings -> Tasks
+
+  //     /* http.post(`/ops/pglogical_save_subscriptions/${pglogicalReplicationFormId}?button=${'save'}`, submitData, { skipErrors: [400] }).then(() => {
+  //       const message = __('Order Request was Submitted');
+  //       miqRedirectBack(message, 'success', '/miq_request/show_list?typ=service/');
+  //     }).catch((err) => {
+  //       console.log(err);
+  //     }); */
+  //   }
+  // };
+
   const onSubmit = (values) => {
-    if (form.type === 'subscription') {
-      if (form.action === 'add') {
-        const newSubscriptions = [];
+    debugger
+    // let submitData = {};
 
-        newSubscriptions.push({
-          dbname: values.dbname,
-          host: values.host,
-          user: values.user,
-          password: values.password,
-          port: values.port,
-        });
+    if (values.replication_type === undefined) {
+      debugger
+      const newSubscriptions = [];
 
-        setState((state) => ({
-          ...state,
-          initialValues: {
-            replication_type: state.initialValues.replication_type,
-            subscriptions: state.initialValues.subscriptions,
-          },
-          subscriptions: subscriptions.concat(newSubscriptions),
-          form: {
-            type: 'replication',
-            className: 'replication_form',
-            action: 'edit',
-          },
-        }));
-      } else if (form.action === 'edit') {
-        let modifiedSubscriptions = [];
-        modifiedSubscriptions = modifiedSubscriptions.concat(subscriptions);
+      newSubscriptions.push({
+        dbname: values.dbname,
+        host: values.host,
+        user: values.user,
+        password: values.password,
+        port: values.port,
+      });
 
-        const editedSub = {
-          dbname: values.dbname,
-          host: values.host,
-          password: values.password,
-          port: values.port,
-          user: values.user,
-        };
 
-        modifiedSubscriptions[initialValues.subId] = editedSub;
-
-        setState((state) => ({
-          ...state,
-          initialValues: {
-            replication_type: state.initialValues.replication_type,
-            subscriptions: state.initialValues.subscriptions,
-          },
-          subscriptions: modifiedSubscriptions,
-          form: {
-            type: 'replication',
-            className: 'replication_form',
-            action: 'edit',
-          },
-        }));
-      }
-    } else {
-      // Redirect to Settings -> Tasks
-
-      /* http.post(`/ops/pglogical_save_subscriptions/${pglogicalReplicationFormId}?button=${'save'}`, submitData, { skipErrors: [400] }).then(() => {
-        const message = __('Order Request was Submitted');
-        miqRedirectBack(message, 'success', '/miq_request/show_list?typ=service/');
+      http.post(`/ops/pglogical_save_subscriptions/${pglogicalReplicationFormId}?button=${'save'}`, newSubscriptions[0], { skipErrors: [400] }).then(() => {
+        // const message = __('Order Request was Submitted');
+        // miqRedirectBack(message, 'success', '/miq_request/show_list?typ=service/');
       }).catch((err) => {
         console.log(err);
-      }); */
+      });
+    }
+    else if (values.replication_type === 'remote') {
+      http.post(`/ops/pglogical_save_subscriptions/${pglogicalReplicationFormId}?button=${'save'}`, values, { skipErrors: [400] }).then(() => {
+        // const message = __('Order Request was Submitted');
+        // miqRedirectBack(message, 'success', '/miq_request/show_list?typ=service/');
+      }).catch((err) => {
+        console.log(err);
+      });
     }
   };
 
