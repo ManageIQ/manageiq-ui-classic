@@ -12,7 +12,6 @@ exports[`Search Bar component should render the search bar component 1`] = `
     <input
       name="authenticity_token"
       type="hidden"
-      value=""
     />
     <TextInput
       hideLabel={true}
@@ -73,7 +72,6 @@ exports[`Search Bar component should render the search bar component with advanc
     <input
       name="authenticity_token"
       type="hidden"
-      value=""
     />
     <TextInput
       hideLabel={true}
@@ -134,7 +132,6 @@ exports[`Search Bar component should render the search bar component with search
     <input
       name="authenticity_token"
       type="hidden"
-      value=""
     />
     <TextInput
       hideLabel={true}
