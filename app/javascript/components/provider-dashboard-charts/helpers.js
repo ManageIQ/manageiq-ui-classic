@@ -9,7 +9,7 @@ export const getConvertedData = (data, units) => {
       columnsData.forEach((item, i) => {
         const obj = {};
         obj.group = units;
-        obj.date = moment(item).tz(ManageIQ.timezone || 'UTC').format('MM/DD/YYYY HH:mm:ss z')
+        obj.date = moment(item).tz(ManageIQ.timezone || 'UTC').format('MM/DD/YYYY HH:mm:ss');
         obj.value = rowsData[i];
         arr.push(obj);
       });
