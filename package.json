@@ -185,6 +185,7 @@
     "angular-sanitize": "~1.8.3",
     "@babel/traverse": "~7.26.7",
     "bootstrap-select": "~1.13.18",
+    "cross-spawn": "~7.0.5",
     "decode-uri-component": "^0.2.2",
     "express": "^4.18.2",
     "jquery": "~3.7.1",
