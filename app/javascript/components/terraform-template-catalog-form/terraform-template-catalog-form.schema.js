@@ -84,10 +84,13 @@ const basicInformationTabSchema = (availableCatalogs, tenantTree, roleAllows, zo
         options: [{ value: 'embedded_automate', label: __('Embedded Automate') }, { value: 'embedded_workflow', label: __('Embedded Workflow') }],
       },
       {
-        component: componentTypes.TEXT_FIELD,
+        component: 'embedded-automate-entry-point',
         id: 'reconfigure_entry_point_automate',
-        name: 'reconfigure_entry_point_automate',
-        label: __('Reconfigure Entry Point'),
+        name: 'recounfigure_entry_point_automate',
+        label: 'Reconfigure Entry Point',
+        field: 'fqname',
+        selected: '',
+        type: 'provision',
         condition: {
           when: 'reconfigure_entry_point_type',
           is: 'embedded_automate',
