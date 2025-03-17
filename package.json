@@ -196,6 +196,7 @@
     "nwsapi": "^2.2.1",
     "path-to-regexp": "~8.0.0",
     "patternfly": "~3.59.5",
+    "tar": "~6.2.1",
     "terser": "~4.8.1"
   }
 }
