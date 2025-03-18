@@ -1,6 +1,7 @@
 module CatalogHelper::TextualSummary
   def tags_from_record
     tags = []
+    tag_categories = {}
     @record.tags.each do |tag|
       values = tag.name.split('/')
       p = tags.find { |x| x[:label] == values[2].humanize }
@@ -9,8 +10,15 @@ module CatalogHelper::TextualSummary
         p[:value].push(value)
       else
         name = Classification.find_by(:id => Classification.find_by(:tag_id => tag.id).parent_id).description
-        tags.push(:icon => "fa fa-tag", :label => name, :value => [value])
+        if tag_categories[name].nil?
+          tag_categories[name] = [value]
+        else
+          tag_categories[name].append(value)
+        end
       end
+    end
+    tag_categories.each do |tag_category, tag_values|
+      tags.push(:icon => "fa fa-tag", :label => tag_category, :value => tag_values)
     end
     tags
   end
