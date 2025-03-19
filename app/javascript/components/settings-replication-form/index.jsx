@@ -15,7 +15,7 @@ import { http } from '../../http_api';
 
 const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   const [{
-    initialValues, subscriptions, form, replicationHelperText, isLoading,
+    initialValues, subscriptions, form, replicationHelperText, isLoading, replicationType,
   }, setState] = useState({ isLoading: !!pglogicalReplicationFormId });
   const submitLabel = __('Save');
 
@@ -41,6 +41,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   };
 
   // console.log(initialValues, form);
+  // console.log("Repl type- ", replicationType);
 
   useEffect(() => {
     if (pglogicalReplicationFormId) {
@@ -137,8 +138,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
     debugger
     // let submitData = {};
 
-    if (values.replication_type === undefined) {
-      debugger
+    if (replicationType === 'global') {
       const newSubscriptions = [];
 
       newSubscriptions.push({
@@ -148,17 +148,34 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
         password: values.password,
         port: values.port,
       });
+      const x = { 0: newSubscriptions[0] };
 
+      const data = {};
+      data.replication_type = 'global';
+      data.subscriptions = x;
 
-      http.post(`/ops/pglogical_save_subscriptions/${pglogicalReplicationFormId}?button=${'save'}`, newSubscriptions[0], { skipErrors: [400] }).then(() => {
-        // const message = __('Order Request was Submitted');
-        // miqRedirectBack(message, 'success', '/miq_request/show_list?typ=service/');
-      }).catch((err) => {
-        console.log(err);
+      http.post(`/ops/pglogical_save_subscriptions/${pglogicalReplicationFormId}?button=${'save'}`, data, {
+        skipErrors: [400],
+      }).then((response) => {
+        debugger
+        setModalOpen(false);
+
+        setState((state) => ({
+          ...state,
+          // subscriptions: subscriptions.concat(newSubscriptions),
+          subscriptions: newSubscriptions,
+        }));
+
+        add_flash(__('Order Request was Submitted'), 'success');
+      }).catch((response) => {
+        debugger
+        add_flash(__('Order Request Failed'), 'error');
       });
-    }
-    else if (values.replication_type === 'remote') {
-      http.post(`/ops/pglogical_save_subscriptions/${pglogicalReplicationFormId}?button=${'save'}`, values, { skipErrors: [400] }).then(() => {
+    } else if (replicationType === 'remote') {
+      values.replication_type = 'remote';
+      http.post(`/ops/pglogical_save_subscriptions/${pglogicalReplicationFormId}?button=${'save'}`, values, {
+        skipErrors: [400],
+      }).then(() => {
         // const message = __('Order Request was Submitted');
         // miqRedirectBack(message, 'success', '/miq_request/show_list?typ=service/');
       }).catch((err) => {
