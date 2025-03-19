@@ -44,12 +44,20 @@ const createSchema = (initialValues, subscriptions, form, replicationHelperText,
         onChange: (value) => {
           let helperText;
 
-          if (initialValues.replication_type === 'none' && value === 'none') {
+          // if (initialValues.replication_type === 'none' && value === 'none') {
+          //   helperText = __('No replication role has been set');
+          // } else if (initialValues.replication_type === 'remote' && value === 'none') {
+          //   helperText = __('Replication will be disabled for this region');
+          // } else if (initialValues.replication_type === 'global' && value === 'none') {
+          //   helperText = __('All current subscriptions will be removed');
+          // } else if (initialValues.replication_type === 'global' && value === 'remote') {
+          //   helperText = __('Changing to remote replication role will remove all current subscriptions');
+          // }
+
+          if (value === 'none') {
             helperText = __('No replication role has been set');
-          } else if (initialValues.replication_type === 'remote' && value === 'none') {
-            helperText = __('Replication will be disabled for this region');
-          } else if (initialValues.replication_type === 'global' && value === 'none') {
-            helperText = __('All current subscriptions will be removed');
+          } else if (value === 'global') {
+            helperText = __('At least 1 subscription must be added to save server replication type');
           } else if (initialValues.replication_type === 'global' && value === 'remote') {
             helperText = __('Changing to remote replication role will remove all current subscriptions');
           }
@@ -57,6 +65,7 @@ const createSchema = (initialValues, subscriptions, form, replicationHelperText,
           setState((state) => ({
             ...state,
             replicationHelperText: helperText,
+            replicationType: value,
           }));
         },
         options: [
@@ -102,18 +111,18 @@ const createSchema = (initialValues, subscriptions, form, replicationHelperText,
           addButtonLabel: __('Add Subscription'),
           onButtonClick: (formOptions) => {
             setModalOpen(true);
-            setState((state) => ({
-              ...state,
-              initialValues: {
-                replication_type: state.initialValues.replication_type,
-                subscriptions: state.initialValues.subscriptions,
-              },
+            // setState((state) => ({
+            //   ...state,
+            //   initialValues: {
+            //     replication_type: state.initialValues.replication_type,
+            //     subscriptions: state.initialValues.subscriptions,
+            //   },
               // form: {
               //   type: 'subscription',
               //   className: 'subscription-form',
               //   action: 'add',
               // },
-            }));
+            // }));
           },
         }],
       },
