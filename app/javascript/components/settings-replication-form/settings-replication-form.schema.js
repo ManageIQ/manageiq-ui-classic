@@ -3,35 +3,59 @@ import { componentTypes, validatorTypes } from '@@ddf';
 import { createRows } from './helper';
 
 const createSchema = (initialValues, subscriptions, form, replicationHelperText, setState, setModalOpen) => {
+
   const deleteSubscription = (selectedRow, cellType, formOptions) => {
-    subscriptions.splice(selectedRow.id, 1);
-
-    setState((state) => ({
-      ...state,
-      subscriptions,
-    }));
+    setState((state) => {
+      const updatedSubscriptions = { ...state.subscriptions }; 
+      delete updatedSubscriptions[selectedRow.id]; 
+    
+      return {
+        ...state,
+        subscriptions: updatedSubscriptions, 
+        selectedRowId: selectedRow.id,
+      };
+    });
   };
 
-  const editSubscription = (selectedRow) => {
-    setState((state) => ({
-      ...state,
-      initialValues: {
-        ...state.initialValues,
-        dbname: selectedRow.cells[0].value,
-        host: selectedRow.cells[1].value,
-        user: selectedRow.cells[2].value,
-        password: selectedRow.cells[3].value,
-        port: selectedRow.cells[4].value,
-        subId: selectedRow.id,
-      },
-      // form: {
-      //   type: 'subscription',
-      //   className: 'subscription-form',
-      //   action: 'edit',
-      // },
-    }));
+  const editSubscription = (selectedRow, cellType, formOptions) => {
     setModalOpen(true);
+    // setState((state) => ({ ...state, selectedRowId: selectedRow.id }));
+    setState((state) => {
+      return {
+        ...state,
+        selectedRowId: selectedRow.id,
+        form: {
+          type: 'replication',
+          className: 'replication_form',
+          action: 'edit',
+        },
+      };
+    });
   };
+
+  // const editSubscription = (selectedRow) => {
+  //   debugger
+  //   setState((state) => ({
+  //     ...state,
+  //     // replicationType: 'global',
+  //     // initialValues: {
+  //     //   ...state.initialValues,
+  //     //   dbname: selectedRow.cells[0].value,
+  //     //   host: selectedRow.cells[1].value,
+  //     //   user: selectedRow.cells[2].value,
+  //     //   password: selectedRow.cells[3].value,
+  //     //   port: selectedRow.cells[4].value,
+  //     //   subId: selectedRow.id,
+  //     // },
+  //     selectedRowId: selectedRow.id,
+  //     // form: {
+  //     //   type: 'subscription',
+  //     //   className: 'subscription-form',
+  //     //   action: 'edit',
+  //     // },
+  //   }));
+  //   setModalOpen(true);
+  // };
 
   const replicationFields = ({
     fields: [
@@ -99,6 +123,8 @@ const createSchema = (initialValues, subscriptions, form, replicationHelperText,
           onCellClick: (selectedRow, cellType, formOptions) => {
             switch (selectedRow.callbackAction) {
               case 'editSubscription':
+                // setModalOpen(true);
+                // setState((state) => ({ ...state, selectedRowId: selectedRow.id }));
                 editSubscription(selectedRow);
                 break;
               case 'deleteSubscription':
@@ -113,14 +139,23 @@ const createSchema = (initialValues, subscriptions, form, replicationHelperText,
             setModalOpen(true);
             // setState((state) => ({
             //   ...state,
-            //   initialValues: {
-            //     replication_type: state.initialValues.replication_type,
-            //     subscriptions: state.initialValues.subscriptions,
-            //   },
+              // initialValues: {
+                // replication_type: state.initialValues.replication_type,
+                // subscriptions: state.initialValues.subscriptions,
+              // },
               // form: {
               //   type: 'subscription',
               //   className: 'subscription-form',
               //   action: 'add',
+              // },
+              // initialValues: {
+              //   ...state.initialValues,
+              //   dbname: selectedRow.cells[0].value,
+              //   host: selectedRow.cells[1].value,
+              //   user: selectedRow.cells[2].value,
+              //   password: selectedRow.cells[3].value,
+              //   port: selectedRow.cells[4].value,
+              //   subId: selectedRow.id,
               // },
             // }));
           },
@@ -185,6 +220,7 @@ const createSchema = (initialValues, subscriptions, form, replicationHelperText,
   //     },
   //   ],
   // });
+
 
   return replicationFields;
 };
