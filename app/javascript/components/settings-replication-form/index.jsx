@@ -15,7 +15,7 @@ import { http } from '../../http_api';
 
 const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   const [{
-    initialValues, subscriptions, form, replicationHelperText, isLoading, replicationType,
+    initialValues, subscriptions, form, replicationHelperText, isLoading, replicationType, selectedRowId,
   }, setState] = useState({ isLoading: !!pglogicalReplicationFormId });
   const submitLabel = __('Save');
 
@@ -44,19 +44,24 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   // console.log("Repl type- ", replicationType);
 
   useEffect(() => {
+    console.log("selectedRowId updated:", selectedRowId);
+  }, [selectedRowId]);
+
+  useEffect(() => {
     if (pglogicalReplicationFormId) {
       miqSparkleOn();
+      debugger
       http.get(`/ops/pglogical_subscriptions_form_fields/${pglogicalReplicationFormId}`).then((response) => {
         setState({
           initialValues: {
-            replication_type: response.replication_type,
-            subscriptions: response.subscriptions,
+            // replication_type: response.replication_type,
+            // subscriptions: response.subscriptions,
           },
           subscriptions: response.subscriptions,
           form: {
             type: 'replication',
             className: 'replication_form',
-            action: 'edit',
+            action: 'add',
           },
           replicationHelperText: '',
           isLoading: false,
@@ -66,109 +71,106 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
     }
   }, [pglogicalReplicationFormId]);
 
-  // const onSubmit = (values) => {
-  //   debugger
-  //   if (form.type === 'subscription') {
-  //     if (form.action === 'add') {
-  //       const newSubscriptions = [];
+  const onModalSubmit = (values) => {
+    debugger
+    if (replicationType === 'global') {
+      if (form.action === 'add') {
+        const newSubscriptions = [];
 
-  //       newSubscriptions.push({
-  //         dbname: values.dbname,
-  //         host: values.host,
-  //         user: values.user,
-  //         password: values.password,
-  //         port: values.port,
-  //       });
+        newSubscriptions.push({
+          dbname: values.dbname,
+          host: values.host,
+          user: values.user,
+          password: values.password,
+          port: values.port,
+        });
 
-  //       setState((state) => ({
-  //         ...state,
-  //         initialValues: {
-  //           replication_type: state.initialValues.replication_type,
-  //           subscriptions: state.initialValues.subscriptions,
-  //         },
-  //         subscriptions: subscriptions.concat(newSubscriptions),
-  //         form: {
-  //           type: 'replication',
-  //           className: 'replication_form',
-  //           action: 'edit',
-  //         },
-  //       }));
-  //     } else if (form.action === 'edit') {
-  //       let modifiedSubscriptions = [];
-  //       modifiedSubscriptions = modifiedSubscriptions.concat(subscriptions);
+        const subscriptionData = newSubscriptions.reduce((acc, item, index) => {
+          acc[index] = item;
+          return acc;
+        }, {});
 
-  //       const editedSub = {
-  //         dbname: values.dbname,
-  //         host: values.host,
-  //         password: values.password,
-  //         port: values.port,
-  //         user: values.user,
-  //       };
+        // setState((state) => ({
+        //   ...state,
+        //   subscriptions: subscriptions.concat(newSubscriptions), // adds to existing subscriptions
+        // }));
 
-  //       modifiedSubscriptions[initialValues.subId] = editedSub;
+        // setState((state) => ({
+        //   ...state,
+        //   subscriptions: subscriptionData, // adds to existing subscriptions
+        // }));
 
-  //       setState((state) => ({
-  //         ...state,
-  //         initialValues: {
-  //           replication_type: state.initialValues.replication_type,
-  //           subscriptions: state.initialValues.subscriptions,
-  //         },
-  //         subscriptions: modifiedSubscriptions,
-  //         form: {
-  //           type: 'replication',
-  //           className: 'replication_form',
-  //           action: 'edit',
-  //         },
-  //       }));
-  //     }
-  //   } else {
-  //     debugger
-  //     // Redirect to Settings -> Tasks
+        debugger
 
-  //     /* http.post(`/ops/pglogical_save_subscriptions/${pglogicalReplicationFormId}?button=${'save'}`, submitData, { skipErrors: [400] }).then(() => {
-  //       const message = __('Order Request was Submitted');
-  //       miqRedirectBack(message, 'success', '/miq_request/show_list?typ=service/');
-  //     }).catch((err) => {
-  //       console.log(err);
-  //     }); */
-  //   }
-  // };
+        // setState((state) => ({
+        //   ...state,
+        //   subscriptions: {
+        //     ...state.subscriptions,
+        //     subscriptionData,
+        //   },
+        // }));
+
+        setState((state) => {
+          const nextIndex = Object.keys(state.subscriptions || {}).length; // Get next available index
+        
+          return {
+            ...state,
+            subscriptions: {
+              ...state.subscriptions,  // Keep existing subscriptions
+              [nextIndex]: { ...values },  // Store new entry at next index
+            },
+          };
+        });
+      }
+      else if (form.action === 'edit') {
+        debugger
+        // let modifiedSubscriptions = [];
+        // modifiedSubscriptions = modifiedSubscriptions.concat(subscriptions);
+
+
+        const editedSub = {
+          dbname: values.dbname,
+          host: values.host,
+          password: values.password,
+          port: values.port,
+          user: values.user,
+        };
+
+        // modifiedSubscriptions[selectedRowId] = editedSub;
+        subscriptions[selectedRowId] = editedSub;
+
+        setState((state) => ({
+          ...state,
+          // subscriptions: subscriptions.concat(modifiedSubscriptions),
+          subscriptions,
+        }));
+      }
+    }
+
+    setModalOpen(false);
+  };
 
   const onSubmit = (values) => {
-    debugger
     // let submitData = {};
 
     if (replicationType === 'global') {
-      const newSubscriptions = [];
-
-      newSubscriptions.push({
-        dbname: values.dbname,
-        host: values.host,
-        user: values.user,
-        password: values.password,
-        port: values.port,
-      });
-      const x = { 0: newSubscriptions[0] };
+      // const subscriptionData = subscriptions.reduce((acc, item, index) => {
+      //   acc[index] = item;
+      //   return acc;
+      // }, {});
 
       const data = {};
       data.replication_type = 'global';
-      data.subscriptions = x;
+      // data.subscriptions = subscriptionData;
+      data.subscriptions = subscriptions;
 
       http.post(`/ops/pglogical_save_subscriptions/${pglogicalReplicationFormId}?button=${'save'}`, data, {
         skipErrors: [400],
       }).then((response) => {
-        debugger
         setModalOpen(false);
-
-        setState((state) => ({
-          ...state,
-          // subscriptions: subscriptions.concat(newSubscriptions),
-          subscriptions: newSubscriptions,
-        }));
 
         add_flash(__('Order Request was Submitted'), 'success');
       }).catch((response) => {
-        debugger
         add_flash(__('Order Request Failed'), 'error');
       });
     } else if (replicationType === 'remote') {
@@ -183,17 +185,6 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
       });
     }
   };
-
-  /* const onReset = () => {
-    setEnforced(() => ({ ...initialValues.enforced }));
-    setValues(() => ({ ...initialValues.values }));
-    setDisabled(true);
-    setChanged(true);
-    setInvalid(() => ({ ...initialValues.invalid }));
-    // eslint-disable-next-line no-return-assign
-    Array.from(document.querySelectorAll('.quota-table-input')).forEach((input, index) => input.value = initialValues.values[index]);
-    add_flash(__('All changes have been reset'), 'warn');
-  }; */
 
   const onCancel = () => {
     if (form.type === 'subscription') {
@@ -211,6 +202,8 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
     }
   };
 
+  debugger
+
   return !isLoading && (
     <div>
       <MiqFormRenderer
@@ -221,7 +214,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
         onCancel={onCancel}
         canReset
         buttonsLabels={{ submitLabel }}
-        clearOnUnmount={form.type !== 'replication'}
+        // clearOnUnmount={form.type !== 'replication'}
       />
 
       <Modal
@@ -235,68 +228,16 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
           schema={createSubscriptionSchema(initialValues, subscriptions, form, replicationHelperText, setState, setModalOpen)}
           componentMapper={componentMapper}
           initialValues={initialValues}
-          onSubmit={onSubmit} // This will save and close the modal
+          onSubmit={onModalSubmit} // This will save and close the modal
           onCancel={handleModalClose} // This will close the modal
           canReset
           buttonsLabels={{ submitLabel }}
-          clearOnUnmount={form.type !== 'replication'}
+          // clearOnUnmount={form.type !== 'replication'}
         />
       </Modal>
     </div>
 
   );
-
-  /* if (form.type === 'subscription') {
-  } else {
-    return !isLoading && (
-      <div className="settings-replication-form">
-        <div className="subscriptions-section">
-          <div className="subscriptions-button" style={{ display: 'flex', flexDirection: 'row-reverse' }}>
-            <Button
-              kind="primary"
-              className="subscription-add bx--btn bx--btn--primary pull-right"
-              type="button"
-              variant="contained"
-              onClick={() => onButtonClick(formOptions)}
-            >
-              {addButtonLabel}
-            </Button>
-          </div>
-          <div className="subscriptions-table" style={{ display: 'grid', overflow: 'auto' }}>
-            <MiqDataTable
-              headers={[
-                { key: 'dbname', header: __('Database') },
-                { key: 'host', header: __('Host') },
-                { key: 'user', header: __('Username') },
-                { key: 'password', header: __('Password') },
-                { key: 'port', header: __('Port') },
-                { key: 'backlog', header: __('Backlog') },
-                { key: 'status', header: __('Status') },
-                { key: 'provider_region', header: __('Region') },
-                { key: 'edit', header: __('Edit') },
-                { key: 'delete', header: __('Delete') },
-              ]}
-              rows={rows}
-              size="md"
-              sortable={false}
-              onCellClick={(selectedRow, cellType) => onCellClick(selectedRow, cellType, formOptions)}
-            />
-          </div>
-        </div>
-        <div className="bx--btn-set">
-          <Button kind="primary" tabIndex={0} disabled={disabled} type="submit" onClick={onSubmit}>
-            {submitLabel}
-          </Button>
-          <Button kind="secondary" style={{ marginLeft: '10px' }} tabIndex={0} disabled={changed} type="reset" onClick={onReset}>
-            {__('Reset')}
-          </Button>
-          <Button kind="secondary" style={{ marginLeft: '10px' }} tabIndex={0} type="button" onClick={onCancel}>
-            {__('Cancel')}
-          </Button>
-        </div>
-      </div>
-    );
-  } */
 };
 
 SettingsReplicationForm.propTypes = {
