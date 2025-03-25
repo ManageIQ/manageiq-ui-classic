@@ -17,7 +17,12 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   const [{
     initialValues, subscriptions, form, replicationHelperText,
     isLoading, replicationType, selectedRowId, selectedSubscription,
-  }, setState] = useState({ isLoading: !!pglogicalReplicationFormId });
+  }, setState] = useState(
+    {
+      isLoading: !!pglogicalReplicationFormId,
+      selectedSubscription: {},
+    }
+  );
   const submitLabel = __('Save');
 
   const [isModalOpen, setModalOpen] = useState(false);
@@ -154,7 +159,9 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
 
       <Modal
         open={isModalOpen}
-        modalHeading={selectedSubscription ? `Edit ${selectedSubscription.dbname}` : 'Add Subscription'}
+        modalHeading={selectedSubscription && Object.keys(selectedSubscription).length
+          ? `Edit ${selectedSubscription.dbname}`
+          : 'Add Subscription'}
         onRequestClose={handleModalClose}
         passiveModal
       >
@@ -167,7 +174,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
           onCancel={handleModalClose} // This will close the modal
           canReset
           buttonsLabels={{ submitLabel }}
-          // clearOnUnmount={form.type !== 'replication'}
+          // clearOnUnmount
         />
       </Modal>
     </div>
