@@ -21,20 +21,9 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   const submitLabel = __('Save');
 
   const [isModalOpen, setModalOpen] = useState(false);
-  // const [modalAction, setModalAction] = useState('');
-  // const [currentSubscription, setCurrentSubscription] = useState(null);
-
-  // const handleModalOpen = (action, subscription = null) => {
-  //   debugger
-  //   // setModalAction(action);
-  //   setCurrentSubscription(subscription);
-  //   // setModalOpen(true);
-  //   return isModalOpen;
-  // };
 
   const handleModalClose = () => {
     setModalOpen(false);
-    // setCurrentSubscription(null);
     setState((state) => ({ ...state, selectedSubscription: {} }));
   };
 
@@ -44,18 +33,12 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
     'validate-subscription': ValidateSubscription,
   };
 
-  // console.log(initialValues, form);
-  // console.log("Repl type- ", replicationType);
-
   useEffect(() => {
     if (pglogicalReplicationFormId) {
       miqSparkleOn();
       http.get(`/ops/pglogical_subscriptions_form_fields/${pglogicalReplicationFormId}`).then((response) => {
         setState({
-          initialValues: {
-            // replication_type: response.replication_type,
-            // subscriptions: response.subscriptions,
-          },
+          initialValues: {},
           subscriptions: response.subscriptions,
           form: {
             type: 'replication',
@@ -71,7 +54,6 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   }, [pglogicalReplicationFormId]);
 
   const onModalSubmit = (values) => {
-    debugger
     if (replicationType === 'global') {
       if (form.action === 'add') {
         const newSubscriptions = [];
@@ -84,31 +66,11 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
           port: values.port,
         });
 
-        // const subscriptionData = newSubscriptions.reduce((acc, item, index) => {
-        //   acc[index] = item;
-        //   return acc;
-        // }, {});
-
-        setState((state) => {
-          const nextIndex = Object.keys(state.subscriptions || {}).length;
-          return {
-            ...state,
-            // subscriptions: {
-            //   ...state.subscriptions,
-            //   [nextIndex]: { ...values }, // Store new entry at next index
-            // },
-
-            // subscriptions: {
-            //   ...state.subscriptions,
-            //   subscriptions: newSubscriptions,
-            // },
-            // subscriptions: [...(state.subscriptions), newSubscriptions],
-            subscriptions: [...state.subscriptions, ...newSubscriptions],
-          };
-        });
+        setState((state) => ({
+          ...state,
+          subscriptions: [...state.subscriptions, ...newSubscriptions],
+        }));
       } else if (form.action === 'edit') {
-        debugger
-
         const editedSub = {
           dbname: values.dbname,
           host: values.host,
@@ -116,13 +78,6 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
           port: values.port,
           user: values.user,
         };
-
-        // subscriptions[selectedRowId] = editedSub;
-
-        // setState((state) => ({
-        //   ...state,
-        //   subscriptions,
-        // }));
 
         setState((prev) => ({
           ...prev,
@@ -136,10 +91,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   };
 
   const onSubmit = (values) => {
-    // let submitData = {};
-
     if (replicationType === 'global') {
-      debugger
       const subscriptionData = subscriptions.reduce((acc, item, index) => {
         acc[index] = item;
         return acc;
@@ -148,15 +100,14 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
       const data = {};
       data.replication_type = 'global';
       data.subscriptions = subscriptionData;
-      // data.subscriptions = subscriptions;
 
       http.post(`/ops/pglogical_save_subscriptions/${pglogicalReplicationFormId}?button=${'save'}`, data, {
         skipErrors: [400],
-      }).then((response) => {
+      }).then(() => {
         handleModalClose();
 
         add_flash(__('Order Request was Submitted'), 'success');
-      }).catch((response) => {
+      }).catch(() => {
         add_flash(__('Order Request Failed'), 'error');
       });
     } else if (replicationType === 'remote') {

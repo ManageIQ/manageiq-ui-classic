@@ -2,10 +2,7 @@
 export const createRows = (subscriptions) => {
   const rows = [];
 
-  debugger
-
   if (Array.isArray(subscriptions) && subscriptions.length > 0) {
-    // Object.entries(subscriptions).forEach(([index, value]) => {
     subscriptions.forEach((value, index) => {
       rows.push({
         id: index.toString(),
@@ -32,7 +29,6 @@ export const createRows = (subscriptions) => {
           callback: 'deleteSubscription',
         },
       });
-    // });
     });
   }
   return rows;
