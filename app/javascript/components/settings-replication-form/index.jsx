@@ -15,23 +15,27 @@ import { http } from '../../http_api';
 
 const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   const [{
-    initialValues, subscriptions, form, replicationHelperText, isLoading, replicationType, selectedRowId,
+    initialValues, subscriptions, form, replicationHelperText,
+    isLoading, replicationType, selectedRowId, selectedSubscription,
   }, setState] = useState({ isLoading: !!pglogicalReplicationFormId });
   const submitLabel = __('Save');
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalAction, setModalAction] = useState('');
-  const [currentSubscription, setCurrentSubscription] = useState(null);
+  // const [currentSubscription, setCurrentSubscription] = useState(null);
 
-  const handleModalOpen = (action, subscription = null) => {
-    setModalAction(action);
-    setCurrentSubscription(subscription);
-    setModalOpen(true);
-  };
+  // const handleModalOpen = (action, subscription = null) => {
+  //   debugger
+  //   // setModalAction(action);
+  //   setCurrentSubscription(subscription);
+  //   // setModalOpen(true);
+  //   return isModalOpen;
+  // };
 
   const handleModalClose = () => {
     setModalOpen(false);
-    setCurrentSubscription(null);
+    // setCurrentSubscription(null);
+    setState((state) => ({ ...state, selectedSubscription: {} }));
   };
 
   const componentMapper = {
@@ -44,13 +48,8 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   // console.log("Repl type- ", replicationType);
 
   useEffect(() => {
-    console.log("selectedRowId updated:", selectedRowId);
-  }, [selectedRowId]);
-
-  useEffect(() => {
     if (pglogicalReplicationFormId) {
       miqSparkleOn();
-      debugger
       http.get(`/ops/pglogical_subscriptions_form_fields/${pglogicalReplicationFormId}`).then((response) => {
         setState({
           initialValues: {
@@ -85,48 +84,23 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
           port: values.port,
         });
 
-        const subscriptionData = newSubscriptions.reduce((acc, item, index) => {
-          acc[index] = item;
-          return acc;
-        }, {});
-
-        // setState((state) => ({
-        //   ...state,
-        //   subscriptions: subscriptions.concat(newSubscriptions), // adds to existing subscriptions
-        // }));
-
-        // setState((state) => ({
-        //   ...state,
-        //   subscriptions: subscriptionData, // adds to existing subscriptions
-        // }));
-
-        debugger
-
-        // setState((state) => ({
-        //   ...state,
-        //   subscriptions: {
-        //     ...state.subscriptions,
-        //     subscriptionData,
-        //   },
-        // }));
+        // const subscriptionData = newSubscriptions.reduce((acc, item, index) => {
+        //   acc[index] = item;
+        //   return acc;
+        // }, {});
 
         setState((state) => {
-          const nextIndex = Object.keys(state.subscriptions || {}).length; // Get next available index
-        
+          const nextIndex = Object.keys(state.subscriptions || {}).length;
           return {
             ...state,
             subscriptions: {
-              ...state.subscriptions,  // Keep existing subscriptions
-              [nextIndex]: { ...values },  // Store new entry at next index
+              ...state.subscriptions,
+              [nextIndex]: { ...values }, // Store new entry at next index
             },
           };
         });
-      }
-      else if (form.action === 'edit') {
+      } else if (form.action === 'edit') {
         debugger
-        // let modifiedSubscriptions = [];
-        // modifiedSubscriptions = modifiedSubscriptions.concat(subscriptions);
-
 
         const editedSub = {
           dbname: values.dbname,
@@ -136,18 +110,17 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
           user: values.user,
         };
 
-        // modifiedSubscriptions[selectedRowId] = editedSub;
         subscriptions[selectedRowId] = editedSub;
+        // subscriptions[selectedSubscription.id] = editedSub;
 
         setState((state) => ({
           ...state,
-          // subscriptions: subscriptions.concat(modifiedSubscriptions),
           subscriptions,
         }));
       }
     }
 
-    setModalOpen(false);
+    handleModalClose();
   };
 
   const onSubmit = (values) => {
@@ -167,7 +140,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
       http.post(`/ops/pglogical_save_subscriptions/${pglogicalReplicationFormId}?button=${'save'}`, data, {
         skipErrors: [400],
       }).then((response) => {
-        setModalOpen(false);
+        handleModalClose();
 
         add_flash(__('Order Request was Submitted'), 'success');
       }).catch((response) => {
@@ -202,8 +175,6 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
     }
   };
 
-  debugger
-
   return !isLoading && (
     <div>
       <MiqFormRenderer
@@ -219,7 +190,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
 
       <Modal
         open={isModalOpen}
-        modalHeading={currentSubscription ? `Edit ${currentSubscription.dbname}` : 'Add Subscription'}
+        modalHeading={selectedSubscription ? `Edit ${selectedSubscription.dbname}` : 'Add Subscription'}
         onRequestClose={handleModalClose}
         passiveModal
       >
@@ -227,7 +198,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
         <MiqFormRenderer
           schema={createSubscriptionSchema(initialValues, subscriptions, form, replicationHelperText, setState, setModalOpen)}
           componentMapper={componentMapper}
-          initialValues={initialValues}
+          initialValues={selectedSubscription || {}}
           onSubmit={onModalSubmit} // This will save and close the modal
           onCancel={handleModalClose} // This will close the modal
           canReset
