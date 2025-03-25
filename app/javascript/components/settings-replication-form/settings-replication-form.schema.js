@@ -5,32 +5,42 @@ import { createRows } from './helper';
 const createSchema = (initialValues, subscriptions, form, replicationHelperText, setState, setModalOpen) => {
 
   const deleteSubscription = (selectedRow) => {
-    setState((state) => {
-      const updatedSubscriptions = { ...state.subscriptions }; 
-      delete updatedSubscriptions[selectedRow.id]; 
+    // setState((state) => {
+    //   const updatedSubscriptions = { ...state.subscriptions }; 
+    //   delete updatedSubscriptions[selectedRow.id]; 
     
-      return {
-        ...state,
-        subscriptions: updatedSubscriptions, 
-        selectedRowId: selectedRow.id,
-        selectedSubscription: subscriptions[selectedRow.id],
-      };
-    });
+    //   return {
+    //     ...state,
+    //     subscriptions: updatedSubscriptions, 
+    //     selectedRowId: selectedRow.id,
+    //     selectedSubscription: subscriptions[selectedRow.id],
+    //   };
+    // });
+
+    const rowId = parseInt(selectedRow.id, 10);
+
+    setState((prev) => ({
+      ...prev,
+      subscriptions: prev.subscriptions.filter((_, i) => i !== rowId),
+      selectedRowId:rowId,
+      selectedSubscription: subscriptions[rowId],
+    }));
   };
 
   const editSubscription = (selectedRow) => {
+    const rowId = parseInt(selectedRow.id, 10);
     debugger
     setModalOpen(true);
     setState((state) => {
       return {
         ...state,
-        selectedRowId: selectedRow.id,
+        selectedRowId: rowId,
         form: {
           type: 'replication',
           className: 'replication_form',
           action: 'edit',
         },
-        selectedSubscription: subscriptions[selectedRow.id],
+        selectedSubscription: subscriptions[rowId],
       };
     });
   };

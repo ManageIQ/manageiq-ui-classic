@@ -4,9 +4,9 @@ export const createRows = (subscriptions) => {
 
   debugger
 
-  // if (Array.isArray(subscriptions) && subscriptions.length > 0) {
-    Object.entries(subscriptions).forEach(([index, value]) => {
-    // subscriptions.forEach((index, value) => {
+  if (Array.isArray(subscriptions) && subscriptions.length > 0) {
+    // Object.entries(subscriptions).forEach(([index, value]) => {
+    subscriptions.forEach((value, index) => {
       rows.push({
         id: index.toString(),
         dbname: { text: value.dbname },
@@ -32,8 +32,8 @@ export const createRows = (subscriptions) => {
           callback: 'deleteSubscription',
         },
       });
+    // });
     });
-  // }
-debugger
+  }
   return rows;
 };

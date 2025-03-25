@@ -21,7 +21,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   const submitLabel = __('Save');
 
   const [isModalOpen, setModalOpen] = useState(false);
-  const [modalAction, setModalAction] = useState('');
+  // const [modalAction, setModalAction] = useState('');
   // const [currentSubscription, setCurrentSubscription] = useState(null);
 
   // const handleModalOpen = (action, subscription = null) => {
@@ -93,10 +93,17 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
           const nextIndex = Object.keys(state.subscriptions || {}).length;
           return {
             ...state,
-            subscriptions: {
-              ...state.subscriptions,
-              [nextIndex]: { ...values }, // Store new entry at next index
-            },
+            // subscriptions: {
+            //   ...state.subscriptions,
+            //   [nextIndex]: { ...values }, // Store new entry at next index
+            // },
+
+            // subscriptions: {
+            //   ...state.subscriptions,
+            //   subscriptions: newSubscriptions,
+            // },
+            // subscriptions: [...(state.subscriptions), newSubscriptions],
+            subscriptions: [...state.subscriptions, ...newSubscriptions],
           };
         });
       } else if (form.action === 'edit') {
@@ -110,12 +117,17 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
           user: values.user,
         };
 
-        subscriptions[selectedRowId] = editedSub;
-        // subscriptions[selectedSubscription.id] = editedSub;
+        // subscriptions[selectedRowId] = editedSub;
 
-        setState((state) => ({
-          ...state,
-          subscriptions,
+        // setState((state) => ({
+        //   ...state,
+        //   subscriptions,
+        // }));
+
+        setState((prev) => ({
+          ...prev,
+          subscriptions: prev.subscriptions.map((subscription, i) =>
+            (i === selectedRowId ? editedSub : subscription)),
         }));
       }
     }
@@ -127,15 +139,16 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
     // let submitData = {};
 
     if (replicationType === 'global') {
-      // const subscriptionData = subscriptions.reduce((acc, item, index) => {
-      //   acc[index] = item;
-      //   return acc;
-      // }, {});
+      debugger
+      const subscriptionData = subscriptions.reduce((acc, item, index) => {
+        acc[index] = item;
+        return acc;
+      }, {});
 
       const data = {};
       data.replication_type = 'global';
-      // data.subscriptions = subscriptionData;
-      data.subscriptions = subscriptions;
+      data.subscriptions = subscriptionData;
+      // data.subscriptions = subscriptions;
 
       http.post(`/ops/pglogical_save_subscriptions/${pglogicalReplicationFormId}?button=${'save'}`, data, {
         skipErrors: [400],
