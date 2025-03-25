@@ -5,18 +5,6 @@ import { createRows } from './helper';
 const createSchema = (initialValues, subscriptions, form, replicationHelperText, setState, setModalOpen) => {
 
   const deleteSubscription = (selectedRow) => {
-    // setState((state) => {
-    //   const updatedSubscriptions = { ...state.subscriptions }; 
-    //   delete updatedSubscriptions[selectedRow.id]; 
-    
-    //   return {
-    //     ...state,
-    //     subscriptions: updatedSubscriptions, 
-    //     selectedRowId: selectedRow.id,
-    //     selectedSubscription: subscriptions[selectedRow.id],
-    //   };
-    // });
-
     const rowId = parseInt(selectedRow.id, 10);
 
     setState((prev) => ({
@@ -29,7 +17,6 @@ const createSchema = (initialValues, subscriptions, form, replicationHelperText,
 
   const editSubscription = (selectedRow) => {
     const rowId = parseInt(selectedRow.id, 10);
-    debugger
     setModalOpen(true);
     setState((state) => {
       return {
@@ -44,30 +31,6 @@ const createSchema = (initialValues, subscriptions, form, replicationHelperText,
       };
     });
   };
-
-  // const editSubscription = (selectedRow) => {
-  //   debugger
-  //   setState((state) => ({
-  //     ...state,
-  //     // replicationType: 'global',
-  //     // initialValues: {
-  //     //   ...state.initialValues,
-  //     //   dbname: selectedRow.cells[0].value,
-  //     //   host: selectedRow.cells[1].value,
-  //     //   user: selectedRow.cells[2].value,
-  //     //   password: selectedRow.cells[3].value,
-  //     //   port: selectedRow.cells[4].value,
-  //     //   subId: selectedRow.id,
-  //     // },
-  //     selectedRowId: selectedRow.id,
-  //     // form: {
-  //     //   type: 'subscription',
-  //     //   className: 'subscription-form',
-  //     //   action: 'edit',
-  //     // },
-  //   }));
-  //   setModalOpen(true);
-  // };
 
   const replicationFields = ({
     fields: [
@@ -135,8 +98,6 @@ const createSchema = (initialValues, subscriptions, form, replicationHelperText,
           onCellClick: (selectedRow, cellType, formOptions) => {
             switch (selectedRow.callbackAction) {
               case 'editSubscription':
-                // setModalOpen(true);
-                // setState((state) => ({ ...state, selectedRowId: selectedRow.id }));
                 editSubscription(selectedRow);
                 break;
               case 'deleteSubscription':
@@ -159,91 +120,11 @@ const createSchema = (initialValues, subscriptions, form, replicationHelperText,
                 },
               };
             });
-
-            // setState((state) => ({
-            //   ...state,
-              // initialValues: {
-                // replication_type: state.initialValues.replication_type,
-                // subscriptions: state.initialValues.subscriptions,
-              // },
-              // form: {
-              //   type: 'subscription',
-              //   className: 'subscription-form',
-              //   action: 'add',
-              // },
-              // initialValues: {
-              //   ...state.initialValues,
-              //   dbname: selectedRow.cells[0].value,
-              //   host: selectedRow.cells[1].value,
-              //   user: selectedRow.cells[2].value,
-              //   password: selectedRow.cells[3].value,
-              //   port: selectedRow.cells[4].value,
-              //   subId: selectedRow.id,
-              // },
-            // }));
           },
         }],
       },
     ],
   });
-
-  // const subscriptionFields = ({
-  //   fields: [
-  //     {
-  //       component: 'validate-subscription',
-  //       name: 'validate-sub',
-  //       id: 'validate-sub',
-  //       isRequired: true,
-  //       validate: [{ type: validatorTypes.REQUIRED }],
-  //       skipSubmit: true,
-  //       fields: [
-  //         {
-  //           component: componentTypes.TEXT_FIELD,
-  //           name: 'dbname',
-  //           id: 'dbname',
-  //           label: __('Database'),
-  //           isRequired: true,
-  //           validate: [{ type: validatorTypes.REQUIRED }],
-  //         },
-  //         {
-  //           component: componentTypes.TEXT_FIELD,
-  //           name: 'host',
-  //           id: 'host',
-  //           label: __('Host'),
-  //           isRequired: true,
-  //           validate: [{ type: validatorTypes.REQUIRED }],
-  //         },
-  //         {
-  //           component: componentTypes.TEXT_FIELD,
-  //           name: 'user',
-  //           id: 'user',
-  //           label: __('Username'),
-  //           isRequired: true,
-  //           validate: [{ type: validatorTypes.REQUIRED }],
-  //         },
-  //         {
-  //           component: componentTypes.TEXT_FIELD,
-  //           name: 'password',
-  //           id: 'password',
-  //           label: __('Password'),
-  //           type: 'password',
-  //           isReadOnly: form.action === 'edit',
-  //           isRequired: true,
-  //           validate: [{ type: validatorTypes.REQUIRED }],
-  //         },
-  //         {
-  //           component: componentTypes.TEXT_FIELD,
-  //           name: 'port',
-  //           id: 'port',
-  //           label: __('Port'),
-  //           isRequired: true,
-  //           validate: [{ type: validatorTypes.REQUIRED }],
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // });
-
 
   return replicationFields;
 };
