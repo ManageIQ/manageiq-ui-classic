@@ -4,7 +4,7 @@ import { createRows } from './helper';
 
 const createSchema = (initialValues, subscriptions, form, replicationHelperText, setState, setModalOpen) => {
 
-  const deleteSubscription = (selectedRow, cellType, formOptions) => {
+  const deleteSubscription = (selectedRow) => {
     setState((state) => {
       const updatedSubscriptions = { ...state.subscriptions }; 
       delete updatedSubscriptions[selectedRow.id]; 
@@ -13,13 +13,14 @@ const createSchema = (initialValues, subscriptions, form, replicationHelperText,
         ...state,
         subscriptions: updatedSubscriptions, 
         selectedRowId: selectedRow.id,
+        selectedSubscription: subscriptions[selectedRow.id],
       };
     });
   };
 
-  const editSubscription = (selectedRow, cellType, formOptions) => {
+  const editSubscription = (selectedRow) => {
+    debugger
     setModalOpen(true);
-    // setState((state) => ({ ...state, selectedRowId: selectedRow.id }));
     setState((state) => {
       return {
         ...state,
@@ -29,6 +30,7 @@ const createSchema = (initialValues, subscriptions, form, replicationHelperText,
           className: 'replication_form',
           action: 'edit',
         },
+        selectedSubscription: subscriptions[selectedRow.id],
       };
     });
   };
@@ -137,6 +139,17 @@ const createSchema = (initialValues, subscriptions, form, replicationHelperText,
           addButtonLabel: __('Add Subscription'),
           onButtonClick: (formOptions) => {
             setModalOpen(true);
+            setState((state) => {
+              return {
+                ...state,
+                form: {
+                  type: 'replication',
+                  className: 'replication_form',
+                  action: 'add',
+                },
+              };
+            });
+
             // setState((state) => ({
             //   ...state,
               // initialValues: {

@@ -6,7 +6,6 @@ import AsyncCredentials from '../async-credentials/async-credentials';
 
 const ValidateSubscription = ({ ...props }) => {
   const asyncValidate = (fields, fieldNames) => new Promise((resolve, reject) => {
-    debugger
     const resource = pick(fields, fieldNames);
 
     resolve();
