@@ -41,12 +41,14 @@ const VisualSettingsForm = ({ recordId }) => {
     );
   }
   return (
-    <MiqFormRenderer
-      schema={createSchema(timezoneOptions)}
-      initialValues={initialValues}
-      onSubmit={onSubmit}
-      canReset
-    />
+    <div>
+      <MiqFormRenderer
+        schema={createSchema(timezoneOptions)}
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        canReset
+      />
+    </div>
   );
 };
 
