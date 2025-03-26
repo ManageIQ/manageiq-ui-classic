@@ -3,19 +3,6 @@ import { componentTypes } from '@@ddf';
 const createSchema = (timezoneOptions) => ({
   fields: [
     {
-      component: 'embedded-automate-entry-point',
-      id: 'provisioning_entry_point_automate',
-      name: 'provisioning_entry_point_automate',
-      label: 'Provisioning Entry Point',
-      field: 'fqname',
-      selected: '',
-      type: 'provision',
-      // condition: {
-      //   when: 'provisioning_entry_point_type',
-      //   is: 'embedded_automate',
-      // },
-    },
-    {
       component: componentTypes.SUB_FORM,
       name: 'general-subform',
       title: __('General'),
