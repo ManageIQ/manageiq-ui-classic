@@ -1245,12 +1245,12 @@ __metadata:
   linkType: hard
 
 "@babel/runtime-corejs2@npm:^7.0.0":
-  version: 7.26.10
-  resolution: "@babel/runtime-corejs2@npm:7.26.10"
+  version: 7.27.0
+  resolution: "@babel/runtime-corejs2@npm:7.27.0"
   dependencies:
     core-js: "npm:^2.6.12"
     regenerator-runtime: "npm:^0.14.0"
-  checksum: 10/82a3aaf3933470c00a666b030fdcb7d3a965b8fdeaf56a6f031ab1eacf1b29a82236ef6722bfb07a49d73e764bc6153262a52b9528dc52bb630b7a646eea09f8
+  checksum: 10/43505abb334f18449a8028246306ff8f544087c48c4542954781cca52133643b4d74a85c7c363944e70d5c142f879f45fade40b478d55f3af59f22b4bcc52d3e
   languageName: node
   linkType: hard
 
