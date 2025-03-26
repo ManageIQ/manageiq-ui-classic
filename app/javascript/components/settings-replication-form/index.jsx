@@ -40,7 +40,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
 
   useEffect(() => {
     if (pglogicalReplicationFormId) {
-      miqSparkleOn();
+      // miqSparkleOn();
       http.get(`/ops/pglogical_subscriptions_form_fields/${pglogicalReplicationFormId}`).then((response) => {
         setState({
           initialValues: {},
@@ -54,7 +54,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
           isLoading: false,
         });
       });
-      miqSparkleOff();
+      // miqSparkleOff();
     }
   }, [pglogicalReplicationFormId]);
 

@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SettingsReplicationForm Component should render SettingsReplicationForm correctly 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <SettingsReplicationForm
+    pglogicalReplicationFormId="new"
+  />
+</Provider>
+`;
