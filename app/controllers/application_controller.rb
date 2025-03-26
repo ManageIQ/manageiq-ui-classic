@@ -124,10 +124,6 @@ class ApplicationController < ActionController::Base
   # **************************************************************************************************
   rescue_from StandardError, :with => :error_handler
 
-  def local_request?
-    Rails.env.development? || Rails.env.test?
-  end
-
   def allow_websocket
     override_content_security_policy_directives(:connect_src => ["'self'", 'https://fonts.gstatic.com', websocket_origin])
   end
