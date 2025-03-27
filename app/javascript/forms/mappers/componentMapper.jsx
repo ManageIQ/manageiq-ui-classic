@@ -11,6 +11,7 @@ import { TreeViewField, TreeViewSelector } from '../../components/tree-view';
 import MultiSelectWithSelectAll from '../../components/multiselect-with-selectall';
 import FontIconPicker from '../../components/fonticon-picker';
 import FontIconPickerDdf from '../../components/fonticon-picker/font-icon-picker-ddf';
+import SelectedGroupsList from '../../components/selected-groups-list';
 
 const mapper = {
   ...componentMapper,
@@ -19,6 +20,7 @@ const mapper = {
   'file-upload': FileUploadComponent,
   'password-field': PasswordField,
   'validate-credentials': AsyncCredentials,
+  'selected-groups-list': SelectedGroupsList,
   'tree-view': TreeViewField,
   'tree-selector': TreeViewSelector,
   [componentTypes.SELECT]: Select,
