@@ -128,13 +128,13 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
         handleModalClose();
         // response is currently received as html content
         handleHtmlResponseForSave(response);
-      }).catch((error) => {
+      }).catch(() => {
         setState((state) => ({
           ...state,
           replicationHelperText: 'Something went wrong',
           helperTextType: 'error',
         }));
-        console.log(error);
+        // console.log(error);
       });
     // } else if (replicationType === 'remote') {
     } else {
@@ -144,13 +144,13 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
       }).then((response) => {
         // response is currently received as html content
         handleHtmlResponseForSave(response);
-      }).catch((error) => {
+      }).catch(() => {
         setState((state) => ({
           ...state,
           replicationHelperText: 'Something went wrong',
           helperTextType: 'error',
         }));
-        console.log(error);
+        // console.log(error);
       });
     }
   };

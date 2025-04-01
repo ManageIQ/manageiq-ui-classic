@@ -5,7 +5,7 @@ import { pick } from 'lodash';
 import AsyncCredentials from '../async-credentials/async-credentials';
 
 const ValidateSubscription = ({ ...props }) => {
-  const asyncValidate = (fields, fieldNames) => new Promise((resolve, reject) => {
+  const asyncValidate = (fields, fieldNames) => new Promise((resolve, _reject) => {
     const resource = pick(fields, fieldNames);
 
     http.post(`/ops/pglogical_validate_subscription`, resource, { skipErrors: [400] }).then((_response) => {
@@ -18,12 +18,10 @@ const ValidateSubscription = ({ ...props }) => {
       // reject(__(formattedText));
 
       resolve();
-    }).catch((error) => {
-      console.log(error);
+    }).catch(() => {
+      // console.log(error);
     });
   });
-
-
 
   return <AsyncCredentials {...props} asyncValidate={asyncValidate} />;
 };
