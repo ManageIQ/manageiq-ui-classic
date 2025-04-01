@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import MiqFormRenderer from '@@ddf';
 import { Modal } from 'carbon-components-react';
-// import { Button } from 'carbon-components-react';
-// import MiqDataTable from '../miq-data-table';
 import createSchema from './settings-replication-form.schema';
 import createSubscriptionSchema from './modal-form.schema';
 import { SubscriptionsTableComponent } from './subscriptions-table';
@@ -15,11 +13,12 @@ import { http } from '../../http_api';
 
 const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   const [{
-    initialValues, subscriptions, form, replicationHelperText,
+    initialValues, subscriptions, form, replicationHelperText, helperTextType,
     isLoading, replicationType, selectedRowId, selectedSubscription,
   }, setState] = useState(
     {
       isLoading: !!pglogicalReplicationFormId,
+      helperTextType: 'warning',
       selectedSubscription: {},
     }
   );
@@ -50,13 +49,20 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
             className: 'replication_form',
             action: 'add',
           },
-          replicationHelperText: '',
+          replicationHelperText: 'No replication role has been set',
+          helperTextType: 'warning',
           isLoading: false,
         });
       });
       // miqSparkleOff();
     }
   }, [pglogicalReplicationFormId]);
+
+  useEffect(() => {
+    if (replicationHelperText) {
+      add_flash(__(replicationHelperText), helperTextType);
+    }
+  }, [replicationHelperText]);
 
   const onModalSubmit = (values) => {
     if (replicationType === 'global') {
@@ -93,6 +99,18 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
     handleModalClose();
   };
 
+  const handleHtmlResponseForSave = (response) => {
+    const htmlContent = (response && response.replacePartials && response.replacePartials.flash_msg_div) || '';
+    const doc = new DOMParser().parseFromString(htmlContent, 'text/html');
+    const txt = doc.body.textContent || '';
+    const formattedText = txt.replace(/\s+/g, ' ').trim();
+    setState((state) => ({
+      ...state,
+      replicationHelperText: formattedText,
+      helperTextType: 'success',
+    }));
+  };
+
   const onSubmit = (values) => {
     if (replicationType === 'global') {
       const subscriptionData = subscriptions.reduce((acc, item, index) => {
@@ -101,27 +119,38 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
       }, {});
 
       const data = {};
-      data.replication_type = 'global';
+      data.replication_type = replicationType;
       data.subscriptions = subscriptionData;
 
       http.post(`/ops/pglogical_save_subscriptions/${pglogicalReplicationFormId}?button=${'save'}`, data, {
         skipErrors: [400],
-      }).then(() => {
+      }).then((response) => {
         handleModalClose();
-
-        add_flash(__('Order Request was Submitted'), 'success');
-      }).catch(() => {
-        add_flash(__('Order Request Failed'), 'error');
+        // response is currently received as html content
+        handleHtmlResponseForSave(response);
+      }).catch((error) => {
+        setState((state) => ({
+          ...state,
+          replicationHelperText: 'Something went wrong',
+          helperTextType: 'error',
+        }));
+        console.log(error);
       });
-    } else if (replicationType === 'remote') {
-      values.replication_type = 'remote';
+    // } else if (replicationType === 'remote') {
+    } else {
+      values.replication_type = replicationType;
       http.post(`/ops/pglogical_save_subscriptions/${pglogicalReplicationFormId}?button=${'save'}`, values, {
         skipErrors: [400],
-      }).then(() => {
-        // const message = __('Order Request was Submitted');
-        // miqRedirectBack(message, 'success', '/miq_request/show_list?typ=service/');
-      }).catch((err) => {
-        console.log(err);
+      }).then((response) => {
+        // response is currently received as html content
+        handleHtmlResponseForSave(response);
+      }).catch((error) => {
+        setState((state) => ({
+          ...state,
+          replicationHelperText: 'Something went wrong',
+          helperTextType: 'error',
+        }));
+        console.log(error);
       });
     }
   };
@@ -145,7 +174,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   return !isLoading && (
     <div>
       <MiqFormRenderer
-        schema={createSchema(initialValues, subscriptions, form, replicationHelperText, setState, setModalOpen)}
+        schema={createSchema(initialValues, subscriptions, form, setState, setModalOpen)}
         componentMapper={componentMapper}
         initialValues={initialValues}
         onSubmit={onSubmit}
