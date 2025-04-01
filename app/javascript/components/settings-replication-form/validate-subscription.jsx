@@ -9,8 +9,7 @@ const ValidateSubscription = ({ ...props }) => {
     const resource = pick(fields, fieldNames);
 
     http.post(`/ops/pglogical_validate_subscription`, resource, { skipErrors: [400] }).then((_response) => {
-      // ToDo:: validation is not blocking save button in the previous workflow;
-      // so keeping it as it is; might need to revisit
+      // ToDo:: validation needs to be handled
 
       // const htmlContent = (response && response.replacePartials && response.replacePartials.flash_msg_div) || '';
       // const doc = new DOMParser().parseFromString(htmlContent, 'text/html');
