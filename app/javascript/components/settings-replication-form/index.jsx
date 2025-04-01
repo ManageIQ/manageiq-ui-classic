@@ -61,19 +61,17 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   const onModalSubmit = (values) => {
     if (replicationType === 'global') {
       if (form.action === 'add') {
-        const newSubscriptions = [];
-
-        newSubscriptions.push({
+        const newSubscription = {
           dbname: values.dbname,
           host: values.host,
           user: values.user,
           password: values.password,
           port: values.port,
-        });
+        };
 
         setState((state) => ({
           ...state,
-          subscriptions: [...state.subscriptions, ...newSubscriptions],
+          subscriptions: [...state.subscriptions, newSubscription],  // Adding directly to the subscriptions array
         }));
       } else if (form.action === 'edit') {
         const editedSub = {
