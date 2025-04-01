@@ -16,30 +16,30 @@ describe('SettingsReplicationForm Form Component', () => {
     subscriptions: [],
   };
 
-  const subscriptionMockDataForValidation = {
-    dbname: 'test db',
-    host: 'test host',
-    user: 'user1',
-    password: 'pwd',
-    port: '1234',
-  };
+  // const subscriptionMockDataForValidation = {
+  //   dbname: 'test db',
+  //   host: 'test host',
+  //   user: 'user1',
+  //   password: 'pwd',
+  //   port: '1234',
+  // };
 
-  const subscriptionMockDataForGlobalType = {
-    replication_type: 'global',
-    subscriptions: {
-      0: {
-        dbname: 'test db',
-        host: 'test host',
-        user: 'user1',
-        password: 'pwd',
-        port: '1234',
-      },
-    },
-  };
+  // const subscriptionMockDataForGlobalType = {
+  //   replication_type: 'global',
+  //   subscriptions: {
+  //     0: {
+  //       dbname: 'test db',
+  //       host: 'test host',
+  //       user: 'user1',
+  //       password: 'pwd',
+  //       port: '1234',
+  //     },
+  //   },
+  // };
 
-  const subscriptionMockDataForRemoteType = {
-    replication_type: 'remote',
-  };
+  // const subscriptionMockDataForRemoteType = {
+  //   replication_type: 'remote',
+  // };
 
   afterEach(() => {
     fetchMock.reset();
@@ -56,7 +56,7 @@ describe('SettingsReplicationForm Form Component', () => {
     await new Promise((resolve) => {
       setImmediate(() => {
         wrapper.update();
-        console.log(wrapper.debug());
+        // console.log(wrapper.debug());
         expect(toJson(wrapper)).toMatchSnapshot();
         resolve();
       });

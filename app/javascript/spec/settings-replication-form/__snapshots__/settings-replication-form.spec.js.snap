@@ -63,7 +63,6 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
             "fields": Array [
               Object {
                 "component": "select",
-                "helperText": "At least 1 subscription must be added to save server replication type",
                 "id": "replication_type",
                 "label": "Type",
                 "name": "replication_type",
@@ -161,7 +160,6 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
               "fields": Array [
                 Object {
                   "component": "select",
-                  "helperText": "At least 1 subscription must be added to save server replication type",
                   "id": "replication_type",
                   "label": "Type",
                   "name": "replication_type",
@@ -251,7 +249,6 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                 "fields": Array [
                   Object {
                     "component": "select",
-                    "helperText": "At least 1 subscription must be added to save server replication type",
                     "id": "replication_type",
                     "label": "Type",
                     "name": "replication_type",
@@ -338,7 +335,6 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                   Array [
                     <SingleField
                       component="select"
-                      helperText="At least 1 subscription must be added to save server replication type"
                       id="replication_type"
                       label="Type"
                       name="replication_type"
@@ -395,7 +391,6 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                     "fields": Array [
                       Object {
                         "component": "select",
-                        "helperText": "At least 1 subscription must be added to save server replication type",
                         "id": "replication_type",
                         "label": "Type",
                         "name": "replication_type",
@@ -457,7 +452,6 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                     Array [
                       <SingleField
                         component="select"
-                        helperText="At least 1 subscription must be added to save server replication type"
                         id="replication_type"
                         label="Type"
                         name="replication_type"
@@ -520,7 +514,6 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                       "fields": Array [
                         Object {
                           "component": "select",
-                          "helperText": "At least 1 subscription must be added to save server replication type",
                           "id": "replication_type",
                           "label": "Type",
                           "name": "replication_type",
@@ -597,7 +590,6 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                       Array [
                         <SingleField
                           component="select"
-                          helperText="At least 1 subscription must be added to save server replication type"
                           id="replication_type"
                           label="Type"
                           name="replication_type"
@@ -660,7 +652,6 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                         "fields": Array [
                           Object {
                             "component": "select",
-                            "helperText": "At least 1 subscription must be added to save server replication type",
                             "id": "replication_type",
                             "label": "Type",
                             "name": "replication_type",
@@ -728,7 +719,6 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                            
                           <SingleField
                             component="select"
-                            helperText="At least 1 subscription must be added to save server replication type"
                             id="replication_type"
                             key="replication_type"
                             label="Type"
@@ -755,7 +745,6 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                               field={
                                 Object {
                                   "component": "select",
-                                  "helperText": "At least 1 subscription must be added to save server replication type",
                                   "id": "replication_type",
                                   "label": "Type",
                                   "name": "replication_type",
@@ -782,7 +771,6 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                               >
                                 <SelectWithOnChange
                                   component="select"
-                                  helperText="At least 1 subscription must be added to save server replication type"
                                   id="replication_type"
                                   label="Type"
                                   name="replication_type"
@@ -807,7 +795,6 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                                 >
                                   <Select
                                     component="select"
-                                    helperText="At least 1 subscription must be added to save server replication type"
                                     id="replication_type"
                                     label="Type"
                                     loadingMessage="Loading..."
@@ -832,7 +819,6 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                                   >
                                     <Select
                                       SelectComponent={[Function]}
-                                      helperText="At least 1 subscription must be added to save server replication type"
                                       id="replication_type"
                                       invalidText=""
                                       labelText="Type"
@@ -865,7 +851,6 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                                       <ClearedSelect
                                         className=""
                                         closeMenuOnSelect={true}
-                                        helperText="At least 1 subscription must be added to save server replication type"
                                         hideSelectedOptions={false}
                                         id="replication_type"
                                         invalidText=""
@@ -901,7 +886,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                                         <Select
                                           className=""
                                           disabled={false}
-                                          helperText="At least 1 subscription must be added to save server replication type"
+                                          helperText=""
                                           id="replication_type"
                                           inline={false}
                                           invalid={false}
@@ -931,7 +916,6 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                                                 data-invalid={null}
                                               >
                                                 <select
-                                                  aria-describedby="select-helper-text-11"
                                                   className="bx--select-input"
                                                   id="replication_type"
                                                   name="replication_type"
@@ -1024,12 +1008,6 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                                                     </svg>
                                                   </Icon>
                                                 </ForwardRef(ChevronDown16)>
-                                              </div>
-                                              <div
-                                                className="bx--form__helper-text"
-                                                id="select-helper-text-11"
-                                              >
-                                                At least 1 subscription must be added to save server replication type
                                               </div>
                                             </div>
                                           </div>
@@ -1775,7 +1753,6 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                                 Array [
                                   <SingleField
                                     component="select"
-                                    helperText="At least 1 subscription must be added to save server replication type"
                                     id="replication_type"
                                     label="Type"
                                     name="replication_type"
@@ -1912,7 +1889,6 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                                   "fields": Array [
                                     Object {
                                       "component": "select",
-                                      "helperText": "At least 1 subscription must be added to save server replication type",
                                       "id": "replication_type",
                                       "label": "Type",
                                       "name": "replication_type",
@@ -4622,7 +4598,6 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
             "fields": Array [
               Object {
                 "component": "select",
-                "helperText": undefined,
                 "id": "replication_type",
                 "label": "Type",
                 "name": "replication_type",
@@ -4720,7 +4695,6 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
               "fields": Array [
                 Object {
                   "component": "select",
-                  "helperText": undefined,
                   "id": "replication_type",
                   "label": "Type",
                   "name": "replication_type",
@@ -4810,7 +4784,6 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                 "fields": Array [
                   Object {
                     "component": "select",
-                    "helperText": undefined,
                     "id": "replication_type",
                     "label": "Type",
                     "name": "replication_type",
@@ -4953,7 +4926,6 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                     "fields": Array [
                       Object {
                         "component": "select",
-                        "helperText": undefined,
                         "id": "replication_type",
                         "label": "Type",
                         "name": "replication_type",
@@ -5077,7 +5049,6 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                       "fields": Array [
                         Object {
                           "component": "select",
-                          "helperText": undefined,
                           "id": "replication_type",
                           "label": "Type",
                           "name": "replication_type",
@@ -5216,7 +5187,6 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                         "fields": Array [
                           Object {
                             "component": "select",
-                            "helperText": undefined,
                             "id": "replication_type",
                             "label": "Type",
                             "name": "replication_type",
@@ -5310,7 +5280,6 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                               field={
                                 Object {
                                   "component": "select",
-                                  "helperText": undefined,
                                   "id": "replication_type",
                                   "label": "Type",
                                   "name": "replication_type",
@@ -5960,7 +5929,6 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                                   "fields": Array [
                                     Object {
                                       "component": "select",
-                                      "helperText": undefined,
                                       "id": "replication_type",
                                       "label": "Type",
                                       "name": "replication_type",
@@ -8672,7 +8640,6 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
             "fields": Array [
               Object {
                 "component": "select",
-                "helperText": "",
                 "id": "replication_type",
                 "label": "Type",
                 "name": "replication_type",
@@ -8770,7 +8737,6 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
               "fields": Array [
                 Object {
                   "component": "select",
-                  "helperText": "",
                   "id": "replication_type",
                   "label": "Type",
                   "name": "replication_type",
@@ -8860,7 +8826,6 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                 "fields": Array [
                   Object {
                     "component": "select",
-                    "helperText": "",
                     "id": "replication_type",
                     "label": "Type",
                     "name": "replication_type",
@@ -8947,7 +8912,6 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                   Array [
                     <SingleField
                       component="select"
-                      helperText=""
                       id="replication_type"
                       label="Type"
                       name="replication_type"
@@ -9004,7 +8968,6 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                     "fields": Array [
                       Object {
                         "component": "select",
-                        "helperText": "",
                         "id": "replication_type",
                         "label": "Type",
                         "name": "replication_type",
@@ -9066,7 +9029,6 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                     Array [
                       <SingleField
                         component="select"
-                        helperText=""
                         id="replication_type"
                         label="Type"
                         name="replication_type"
@@ -9129,7 +9091,6 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                       "fields": Array [
                         Object {
                           "component": "select",
-                          "helperText": "",
                           "id": "replication_type",
                           "label": "Type",
                           "name": "replication_type",
@@ -9206,7 +9167,6 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                       Array [
                         <SingleField
                           component="select"
-                          helperText=""
                           id="replication_type"
                           label="Type"
                           name="replication_type"
@@ -9269,7 +9229,6 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                         "fields": Array [
                           Object {
                             "component": "select",
-                            "helperText": "",
                             "id": "replication_type",
                             "label": "Type",
                             "name": "replication_type",
@@ -9337,7 +9296,6 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                            
                           <SingleField
                             component="select"
-                            helperText=""
                             id="replication_type"
                             key="replication_type"
                             label="Type"
@@ -9364,7 +9322,6 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                               field={
                                 Object {
                                   "component": "select",
-                                  "helperText": "",
                                   "id": "replication_type",
                                   "label": "Type",
                                   "name": "replication_type",
@@ -9391,7 +9348,6 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                               >
                                 <SelectWithOnChange
                                   component="select"
-                                  helperText=""
                                   id="replication_type"
                                   label="Type"
                                   name="replication_type"
@@ -9416,7 +9372,6 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                                 >
                                   <Select
                                     component="select"
-                                    helperText=""
                                     id="replication_type"
                                     label="Type"
                                     loadingMessage="Loading..."
@@ -9441,7 +9396,6 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                                   >
                                     <Select
                                       SelectComponent={[Function]}
-                                      helperText=""
                                       id="replication_type"
                                       invalidText=""
                                       labelText="Type"
@@ -9474,7 +9428,6 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                                       <ClearedSelect
                                         className=""
                                         closeMenuOnSelect={true}
-                                        helperText=""
                                         hideSelectedOptions={false}
                                         id="replication_type"
                                         invalidText=""
@@ -9886,7 +9839,6 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                                 Array [
                                   <SingleField
                                     component="select"
-                                    helperText=""
                                     id="replication_type"
                                     label="Type"
                                     name="replication_type"
@@ -10008,7 +9960,6 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                                   "fields": Array [
                                     Object {
                                       "component": "select",
-                                      "helperText": "",
                                       "id": "replication_type",
                                       "label": "Type",
                                       "name": "replication_type",
@@ -12720,7 +12671,6 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
             "fields": Array [
               Object {
                 "component": "select",
-                "helperText": "At least 1 subscription must be added to save server replication type",
                 "id": "replication_type",
                 "label": "Type",
                 "name": "replication_type",
@@ -12818,7 +12768,6 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
               "fields": Array [
                 Object {
                   "component": "select",
-                  "helperText": "At least 1 subscription must be added to save server replication type",
                   "id": "replication_type",
                   "label": "Type",
                   "name": "replication_type",
@@ -12908,7 +12857,6 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                 "fields": Array [
                   Object {
                     "component": "select",
-                    "helperText": "At least 1 subscription must be added to save server replication type",
                     "id": "replication_type",
                     "label": "Type",
                     "name": "replication_type",
@@ -12995,7 +12943,6 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                   Array [
                     <SingleField
                       component="select"
-                      helperText="At least 1 subscription must be added to save server replication type"
                       id="replication_type"
                       label="Type"
                       name="replication_type"
@@ -13052,7 +12999,6 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                     "fields": Array [
                       Object {
                         "component": "select",
-                        "helperText": "At least 1 subscription must be added to save server replication type",
                         "id": "replication_type",
                         "label": "Type",
                         "name": "replication_type",
@@ -13114,7 +13060,6 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                     Array [
                       <SingleField
                         component="select"
-                        helperText="At least 1 subscription must be added to save server replication type"
                         id="replication_type"
                         label="Type"
                         name="replication_type"
@@ -13177,7 +13122,6 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                       "fields": Array [
                         Object {
                           "component": "select",
-                          "helperText": "At least 1 subscription must be added to save server replication type",
                           "id": "replication_type",
                           "label": "Type",
                           "name": "replication_type",
@@ -13254,7 +13198,6 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                       Array [
                         <SingleField
                           component="select"
-                          helperText="At least 1 subscription must be added to save server replication type"
                           id="replication_type"
                           label="Type"
                           name="replication_type"
@@ -13317,7 +13260,6 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                         "fields": Array [
                           Object {
                             "component": "select",
-                            "helperText": "At least 1 subscription must be added to save server replication type",
                             "id": "replication_type",
                             "label": "Type",
                             "name": "replication_type",
@@ -13385,7 +13327,6 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                            
                           <SingleField
                             component="select"
-                            helperText="At least 1 subscription must be added to save server replication type"
                             id="replication_type"
                             key="replication_type"
                             label="Type"
@@ -13412,7 +13353,6 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                               field={
                                 Object {
                                   "component": "select",
-                                  "helperText": "At least 1 subscription must be added to save server replication type",
                                   "id": "replication_type",
                                   "label": "Type",
                                   "name": "replication_type",
@@ -13439,7 +13379,6 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                               >
                                 <SelectWithOnChange
                                   component="select"
-                                  helperText="At least 1 subscription must be added to save server replication type"
                                   id="replication_type"
                                   label="Type"
                                   name="replication_type"
@@ -13464,7 +13403,6 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                                 >
                                   <Select
                                     component="select"
-                                    helperText="At least 1 subscription must be added to save server replication type"
                                     id="replication_type"
                                     label="Type"
                                     loadingMessage="Loading..."
@@ -13489,7 +13427,6 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                                   >
                                     <Select
                                       SelectComponent={[Function]}
-                                      helperText="At least 1 subscription must be added to save server replication type"
                                       id="replication_type"
                                       invalidText=""
                                       labelText="Type"
@@ -13522,7 +13459,6 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                                       <ClearedSelect
                                         className=""
                                         closeMenuOnSelect={true}
-                                        helperText="At least 1 subscription must be added to save server replication type"
                                         hideSelectedOptions={false}
                                         id="replication_type"
                                         invalidText=""
@@ -13558,7 +13494,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                                         <Select
                                           className=""
                                           disabled={false}
-                                          helperText="At least 1 subscription must be added to save server replication type"
+                                          helperText=""
                                           id="replication_type"
                                           inline={false}
                                           invalid={false}
@@ -13588,7 +13524,6 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                                                 data-invalid={null}
                                               >
                                                 <select
-                                                  aria-describedby="select-helper-text-3"
                                                   className="bx--select-input"
                                                   id="replication_type"
                                                   name="replication_type"
@@ -13681,12 +13616,6 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                                                     </svg>
                                                   </Icon>
                                                 </ForwardRef(ChevronDown16)>
-                                              </div>
-                                              <div
-                                                className="bx--form__helper-text"
-                                                id="select-helper-text-3"
-                                              >
-                                                At least 1 subscription must be added to save server replication type
                                               </div>
                                             </div>
                                           </div>
@@ -14432,7 +14361,6 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                                 Array [
                                   <SingleField
                                     component="select"
-                                    helperText="At least 1 subscription must be added to save server replication type"
                                     id="replication_type"
                                     label="Type"
                                     name="replication_type"
@@ -14569,7 +14497,6 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                                   "fields": Array [
                                     Object {
                                       "component": "select",
-                                      "helperText": "At least 1 subscription must be added to save server replication type",
                                       "id": "replication_type",
                                       "label": "Type",
                                       "name": "replication_type",
