@@ -2142,7 +2142,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
               <Connect(MiqFormRenderer)
                 buttonsLabels={
                   Object {
-                    "submitLabel": "Save",
+                    "submitLabel": "Accept",
                   }
                 }
                 canReset={true}
@@ -2265,7 +2265,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                 <MiqFormRenderer
                   buttonsLabels={
                     Object {
-                      "submitLabel": "Save",
+                      "submitLabel": "Accept",
                     }
                   }
                   canReset={true}
@@ -2918,7 +2918,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                             }
                           }
                           showFormControls={true}
-                          submitLabel="Save"
+                          submitLabel="Accept"
                         >
                           <FormTemplate
                             Button={[Function]}
@@ -3122,7 +3122,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                               }
                             }
                             showFormControls={true}
-                            submitLabel="Save"
+                            submitLabel="Accept"
                           >
                             <Form
                               className="form-react"
@@ -4402,7 +4402,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                                           ],
                                         }
                                       }
-                                      submitLabel="Save"
+                                      submitLabel="Accept"
                                     >
                                       <ButtonGroup>
                                         <ButtonSet
@@ -4415,7 +4415,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                                               buttonType="submit"
                                               disabled={true}
                                               key="form-submit"
-                                              label="Save"
+                                              label="Accept"
                                               type="submit"
                                               variant="primary"
                                             >
@@ -4439,7 +4439,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                                                   type="submit"
                                                   variant="primary"
                                                 >
-                                                  Save
+                                                  Accept
                                                 </button>
                                               </Button>
                                             </Button>
@@ -6182,7 +6182,7 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
               <Connect(MiqFormRenderer)
                 buttonsLabels={
                   Object {
-                    "submitLabel": "Save",
+                    "submitLabel": "Accept",
                   }
                 }
                 canReset={true}
@@ -6305,7 +6305,7 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                 <MiqFormRenderer
                   buttonsLabels={
                     Object {
-                      "submitLabel": "Save",
+                      "submitLabel": "Accept",
                     }
                   }
                   canReset={true}
@@ -6958,7 +6958,7 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                             }
                           }
                           showFormControls={true}
-                          submitLabel="Save"
+                          submitLabel="Accept"
                         >
                           <FormTemplate
                             Button={[Function]}
@@ -7162,7 +7162,7 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                               }
                             }
                             showFormControls={true}
-                            submitLabel="Save"
+                            submitLabel="Accept"
                           >
                             <Form
                               className="form-react"
@@ -8442,7 +8442,7 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                                           ],
                                         }
                                       }
-                                      submitLabel="Save"
+                                      submitLabel="Accept"
                                     >
                                       <ButtonGroup>
                                         <ButtonSet
@@ -8455,7 +8455,7 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                                               buttonType="submit"
                                               disabled={true}
                                               key="form-submit"
-                                              label="Save"
+                                              label="Accept"
                                               type="submit"
                                               variant="primary"
                                             >
@@ -8479,7 +8479,7 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                                                   type="submit"
                                                   variant="primary"
                                                 >
-                                                  Save
+                                                  Accept
                                                 </button>
                                               </Button>
                                             </Button>
@@ -10215,7 +10215,7 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
               <Connect(MiqFormRenderer)
                 buttonsLabels={
                   Object {
-                    "submitLabel": "Save",
+                    "submitLabel": "Accept",
                   }
                 }
                 canReset={true}
@@ -10338,7 +10338,7 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                 <MiqFormRenderer
                   buttonsLabels={
                     Object {
-                      "submitLabel": "Save",
+                      "submitLabel": "Accept",
                     }
                   }
                   canReset={true}
@@ -10991,7 +10991,7 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                             }
                           }
                           showFormControls={true}
-                          submitLabel="Save"
+                          submitLabel="Accept"
                         >
                           <FormTemplate
                             Button={[Function]}
@@ -11195,7 +11195,7 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                               }
                             }
                             showFormControls={true}
-                            submitLabel="Save"
+                            submitLabel="Accept"
                           >
                             <Form
                               className="form-react"
@@ -12475,7 +12475,7 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                                           ],
                                         }
                                       }
-                                      submitLabel="Save"
+                                      submitLabel="Accept"
                                     >
                                       <ButtonGroup>
                                         <ButtonSet
@@ -12488,7 +12488,7 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                                               buttonType="submit"
                                               disabled={true}
                                               key="form-submit"
-                                              label="Save"
+                                              label="Accept"
                                               type="submit"
                                               variant="primary"
                                             >
@@ -12512,7 +12512,7 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                                                   type="submit"
                                                   variant="primary"
                                                 >
-                                                  Save
+                                                  Accept
                                                 </button>
                                               </Button>
                                             </Button>
@@ -14750,7 +14750,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
               <Connect(MiqFormRenderer)
                 buttonsLabels={
                   Object {
-                    "submitLabel": "Save",
+                    "submitLabel": "Accept",
                   }
                 }
                 canReset={true}
@@ -14873,7 +14873,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                 <MiqFormRenderer
                   buttonsLabels={
                     Object {
-                      "submitLabel": "Save",
+                      "submitLabel": "Accept",
                     }
                   }
                   canReset={true}
@@ -15526,7 +15526,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                             }
                           }
                           showFormControls={true}
-                          submitLabel="Save"
+                          submitLabel="Accept"
                         >
                           <FormTemplate
                             Button={[Function]}
@@ -15730,7 +15730,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                               }
                             }
                             showFormControls={true}
-                            submitLabel="Save"
+                            submitLabel="Accept"
                           >
                             <Form
                               className="form-react"
@@ -17010,7 +17010,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                                           ],
                                         }
                                       }
-                                      submitLabel="Save"
+                                      submitLabel="Accept"
                                     >
                                       <ButtonGroup>
                                         <ButtonSet
@@ -17023,7 +17023,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                                               buttonType="submit"
                                               disabled={true}
                                               key="form-submit"
-                                              label="Save"
+                                              label="Accept"
                                               type="submit"
                                               variant="primary"
                                             >
@@ -17047,7 +17047,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                                                   type="submit"
                                                   variant="primary"
                                                 >
-                                                  Save
+                                                  Accept
                                                 </button>
                                               </Button>
                                             </Button>
