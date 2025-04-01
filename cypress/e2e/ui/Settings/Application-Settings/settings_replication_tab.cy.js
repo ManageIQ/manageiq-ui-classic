@@ -36,6 +36,14 @@ describe('Settings > Application Settings > Replication', () => {
       cy.get('.bx--modal').should('be.visible');
       cy.get('.bx--modal-header__heading').should('have.text', 'Add Subscription');
 
+      // Click cancel button in the modal
+      cy.get('.bx--modal button').contains('Cancel').click();
+      cy.get('.bx--modal').should('not.be.visible');
+
+      // Open the modal again
+      cy.get('button').contains('Add Subscription').click();
+      cy.get('.bx--modal').should('be.visible');
+
       // Check if the modal contains the required fields
       cy.get('input[name="dbname"]').should('be.visible');
       cy.get('input[name="host"]').should('be.visible');
