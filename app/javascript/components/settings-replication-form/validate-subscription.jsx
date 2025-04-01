@@ -8,31 +8,19 @@ const ValidateSubscription = ({ ...props }) => {
   const asyncValidate = (fields, fieldNames) => new Promise((resolve, reject) => {
     const resource = pick(fields, fieldNames);
 
-    resolve();
+    http.post(`/ops/pglogical_validate_subscription`, resource, { skipErrors: [400] }).then((_response) => {
+      // ToDo:: validation is not blocking save button in the previous workflow;
+      // so keeping it as it is; might need to revisit
 
-    /* API.post('/api/ops/', { action: 'validate', resource }).then((response) => {
-      console.log(response);
-    }).catch(({ message }) => { console.log(message); return reject([__('Validation failed:'), message].join(' ')); }); */
+      // const htmlContent = (response && response.replacePartials && response.replacePartials.flash_msg_div) || '';
+      // const doc = new DOMParser().parseFromString(htmlContent, 'text/html');
+      // const txt = doc.body.textContent || '';
+      // const formattedText = txt.replace(/\s+/g, ' ').trim();
+      // reject(__(formattedText));
 
-    // API.post('/ops/pglogical_validate_subscription', { resource })
-    //   .then((response) => {
-    //     debugger
-    //     console.log('Server Response:', response);
-    //     // Do something with the response, like updating the UI or handling data
-    //   })
-    //   .catch((error) => {
-    //     debugger
-    //     console.error('Error during API call:', error);
-    //     // Handle errors, such as network issues or bad responses
-    //   });
-
-    http.post(`/ops/pglogical_validate_subscription`, resource, { skipErrors: [400] }).then(() => {
-      debugger
-      // const message = __('Order Request was Submitted');
-      // miqRedirectBack(message, 'success', '/miq_request/show_list?typ=service/');
-    }).catch((err) => {
-      debugger
-      console.log(err);
+      resolve();
+    }).catch((error) => {
+      console.log(error);
     });
   });
 
