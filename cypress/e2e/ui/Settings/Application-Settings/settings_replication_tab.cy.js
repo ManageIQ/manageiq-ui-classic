@@ -54,8 +54,8 @@ describe('Settings > Application Settings > Replication', () => {
       // Check that the Validate button is initially disabled
       cy.get('.bx--modal button').contains('Validate').should('be.disabled');
 
-      // Check that the Save button is initially disabled
-      cy.get('.bx--modal button').contains('Save').should('be.disabled');
+      // Check that the Accept button is initially disabled
+      cy.get('.bx--modal button').contains('Accept').should('be.disabled');
 
       // Type into the fields
       cy.get('input[name="dbname"]').type('test_db');
@@ -70,8 +70,8 @@ describe('Settings > Application Settings > Replication', () => {
       // Click Validate
       cy.get('.bx--modal button').contains('Validate').click();
 
-      // Verify that the Save button is now enabled
-      cy.get('.bx--modal button').contains('Save').should('not.be.disabled');
+      // Verify that the Accept button is now enabled
+      cy.get('.bx--modal button').contains('Accept').should('not.be.disabled');
 
       // Click the Reset button
       cy.get('.bx--modal button').contains('Reset').should('be.visible').click();

@@ -20,9 +20,9 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
       isLoading: !!pglogicalReplicationFormId,
       helperTextType: 'warning',
       selectedSubscription: {},
+      savedReplicationType: 'none',
     }
   );
-  const submitLabel = __('Save');
 
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -108,6 +108,8 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
       ...state,
       replicationHelperText: formattedText,
       helperTextType: 'success',
+      savedReplicationType: state.replicationType,
+      subscriptions: (state.replicationType !== 'global') ? [] : state.subscriptions,
     }));
   };
 
@@ -126,6 +128,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
         skipErrors: [400],
       }).then((response) => {
         handleModalClose();
+
         // response is currently received as html content
         handleHtmlResponseForSave(response);
       }).catch(() => {
@@ -180,7 +183,9 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
         onSubmit={onSubmit}
         onCancel={onCancel}
         canReset
-        buttonsLabels={{ submitLabel }}
+        buttonsLabels={{
+          submitLabel: __('Save'),
+        }}
         // clearOnUnmount={form.type !== 'replication'}
       />
 
@@ -200,7 +205,9 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
           onSubmit={onModalSubmit} // This will save and close the modal
           onCancel={handleModalClose} // This will close the modal
           canReset
-          buttonsLabels={{ submitLabel }}
+          buttonsLabels={{
+            submitLabel: __('Accept'),
+          }}
           // clearOnUnmount
         />
       </Modal>
