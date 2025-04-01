@@ -77,7 +77,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
 
         setState((state) => ({
           ...state,
-          subscriptions: [...state.subscriptions, newSubscription],  // Adding directly to the subscriptions array
+          subscriptions: [...state.subscriptions, newSubscription],
         }));
       } else if (form.action === 'edit') {
         const editedSub = {
