@@ -17,8 +17,8 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
     isLoading, replicationType, selectedRowId, selectedSubscription,
   }, setState] = useState(
     {
-      isLoading: !!pglogicalReplicationFormId,
       helperTextType: 'warning',
+      isLoading: !!pglogicalReplicationFormId,
       selectedSubscription: {},
       savedReplicationType: 'none',
     }
@@ -97,7 +97,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
     handleModalClose();
   };
 
-  const handleOnSave = (message) => {
+  const handleSaveResponse = (message) => {
     setState((state) => ({
       ...state,
       replicationHelperText: message,
@@ -122,6 +122,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
         skipErrors: [400],
       }).then((response) => {
         handleModalClose();
+        handleSaveResponse(response.message);
       }).catch(() => {
         add_flash(__('Something went wrong'), 'error');
       });
@@ -130,7 +131,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
       http.post(`/ops/pglogical_save_subscriptions/${pglogicalReplicationFormId}?button=${'save'}`, values, {
         skipErrors: [400],
       }).then((response) => {
-        handleOnSave(response.message);
+        handleSaveResponse(response.message);
       }).catch(() => {
         add_flash(__('Something went wrong'), 'error');
       });
@@ -156,7 +157,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   return !isLoading && (
     <div>
       <MiqFormRenderer
-        schema={createSchema(initialValues, subscriptions, form, setState, setModalOpen)}
+        schema={createSchema(subscriptions, setState, setModalOpen, replicationType)}
         componentMapper={componentMapper}
         initialValues={initialValues}
         onSubmit={onSave}
@@ -165,7 +166,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
         buttonsLabels={{
           submitLabel: __('Save'),
         }}
-        // clearOnUnmount={form.type !== 'replication'}
+        // key={subscriptions.length}
       />
 
       <Modal
@@ -178,7 +179,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
       >
         {/* Render the MiqFormRenderer inside the modal */}
         <MiqFormRenderer
-          schema={createSubscriptionSchema(initialValues, subscriptions, form, replicationHelperText, setState, setModalOpen)}
+          schema={createSubscriptionSchema()}
           componentMapper={componentMapper}
           initialValues={selectedSubscription || {}}
           onSubmit={onModalSubmit} // This will save and close the modal

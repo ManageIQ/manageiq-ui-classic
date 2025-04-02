@@ -2,7 +2,7 @@
 import { componentTypes } from '@@ddf';
 import { createRows } from './helper';
 
-const createSchema = (initialValues, subscriptions, form, setState, setModalOpen) => {
+const createSchema = (subscriptions, setState, setModalOpen, replicationType) => {
   const deleteSubscription = (selectedRow) => {
     const rowId = parseInt(selectedRow.id, 10);
 
@@ -36,6 +36,7 @@ const createSchema = (initialValues, subscriptions, form, setState, setModalOpen
         id: 'replication_type',
         name: 'replication_type',
         label: __('Type'),
+        // initialValue: replicationType,
         onChange: (newValue) => {
           let helperText;
 
