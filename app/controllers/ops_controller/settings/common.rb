@@ -204,14 +204,16 @@ module OpsController::Settings::Common
 
     subscription = find_or_new_subscription(params[:id])
     valid = subscription.validate(params_for_connection_validation(params))
+    
     if valid.nil?
-      add_flash(_("Subscription Credentials validated successfully"))
+      message = (_("Subscription Credentials validated successfully"))
+      status = 'success'
     else
-      valid.each do |v|
-        add_flash(v, :error)
-      end
+      message = valid.join('\n')
+      status = 'fail'
     end
-    javascript_flash
+
+    render json: { message: message, status: status }
   end
 
   private
