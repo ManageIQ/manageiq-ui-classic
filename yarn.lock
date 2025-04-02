@@ -1491,8 +1491,8 @@ __metadata:
   linkType: hard
 
 "@data-driven-forms/common@npm:^3.18.11":
-  version: 3.22.4
-  resolution: "@data-driven-forms/common@npm:3.22.4"
+  version: 3.23.5
+  resolution: "@data-driven-forms/common@npm:3.23.5"
   dependencies:
     clsx: "npm:^1.0.4"
     lodash: "npm:^4.17.15"
@@ -1500,7 +1500,7 @@ __metadata:
   peerDependencies:
     react: ^16.13.1 || ^17.0.2 || ^18.0.0
     react-dom: ^16.13.1 || ^17.0.2 || ^18.0.0
-  checksum: 10/ffdcc4fe27fc97492e03951e86d843ba48f012246f51579e1e070fa9e9ea736db54c4b104997307f0d1d5bdecb7c35f459a105621c0f63a9a1092747987023ed
+  checksum: 10/7cf3c334a60bee18a481d7245d1fe67b5789dcb685de9192a99b06ab0adfcd4aa8536b3e48253ad837f5edafda70eb2a155a88ed5ed4136e96aada274138e223
   languageName: node
   linkType: hard
 
