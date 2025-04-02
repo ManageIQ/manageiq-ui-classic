@@ -122,7 +122,6 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
         skipErrors: [400],
       }).then((response) => {
         handleModalClose();
-        handleOnSave(response.message);
       }).catch(() => {
         add_flash(__('Something went wrong'), 'error');
       });
