@@ -39,7 +39,6 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
 
   useEffect(() => {
     if (pglogicalReplicationFormId) {
-      // miqSparkleOn();
       http.get(`/ops/pglogical_subscriptions_form_fields/${pglogicalReplicationFormId}`).then((response) => {
         setState({
           initialValues: {},
@@ -54,7 +53,6 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
           isLoading: false,
         });
       });
-      // miqSparkleOff();
     }
   }, [pglogicalReplicationFormId]);
 
@@ -190,7 +188,6 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
           buttonsLabels={{
             submitLabel: __('Accept'),
           }}
-          // clearOnUnmount
         />
       </Modal>
     </div>
