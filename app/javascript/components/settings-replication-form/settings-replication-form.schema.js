@@ -39,8 +39,6 @@ const createSchema = (initialValues, subscriptions, form, setState, setModalOpen
         onChange: (newValue) => {
           let helperText;
 
-          debugger
-
           setState((state) => {
             if (state.savedReplicationType === 'none' && newValue === 'none') {
               helperText = 'No replication role has been set';

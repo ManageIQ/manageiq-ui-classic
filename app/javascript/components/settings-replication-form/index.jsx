@@ -99,21 +99,17 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
     handleModalClose();
   };
 
-  const handleHtmlResponseForSave = (response) => {
-    const htmlContent = (response && response.replacePartials && response.replacePartials.flash_msg_div) || '';
-    const doc = new DOMParser().parseFromString(htmlContent, 'text/html');
-    const txt = doc.body.textContent || '';
-    const formattedText = txt.replace(/\s+/g, ' ').trim();
+  const handleOnSave = (message) => {
     setState((state) => ({
       ...state,
-      replicationHelperText: formattedText,
+      replicationHelperText: message,
       helperTextType: 'success',
       savedReplicationType: state.replicationType,
       subscriptions: (state.replicationType !== 'global') ? [] : state.subscriptions,
     }));
   };
 
-  const onSubmit = (values) => {
+  const onSave = (values) => {
     if (replicationType === 'global') {
       const subscriptionData = subscriptions.reduce((acc, item, index) => {
         acc[index] = item;
@@ -128,32 +124,18 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
         skipErrors: [400],
       }).then((response) => {
         handleModalClose();
-
-        // response is currently received as html content
-        handleHtmlResponseForSave(response);
+        handleOnSave(response.message);
       }).catch(() => {
-        setState((state) => ({
-          ...state,
-          replicationHelperText: 'Something went wrong',
-          helperTextType: 'error',
-        }));
-        // console.log(error);
+        add_flash(__('Something went wrong'), 'error');
       });
-    // } else if (replicationType === 'remote') {
     } else {
       values.replication_type = replicationType;
       http.post(`/ops/pglogical_save_subscriptions/${pglogicalReplicationFormId}?button=${'save'}`, values, {
         skipErrors: [400],
       }).then((response) => {
-        // response is currently received as html content
-        handleHtmlResponseForSave(response);
+        handleOnSave(response.message);
       }).catch(() => {
-        setState((state) => ({
-          ...state,
-          replicationHelperText: 'Something went wrong',
-          helperTextType: 'error',
-        }));
-        // console.log(error);
+        add_flash(__('Something went wrong'), 'error');
       });
     }
   };
@@ -180,7 +162,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
         schema={createSchema(initialValues, subscriptions, form, setState, setModalOpen)}
         componentMapper={componentMapper}
         initialValues={initialValues}
-        onSubmit={onSubmit}
+        onSubmit={onSave}
         onCancel={onCancel}
         canReset
         buttonsLabels={{
