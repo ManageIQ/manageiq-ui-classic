@@ -1,5 +1,5 @@
 const miqFlashClear = () => {
-  document.getElementById('flash_msg_div').text = '';
+  document.getElementById('flash_msg_div').textContent = '';
 };
 
 export default miqFlashClear;

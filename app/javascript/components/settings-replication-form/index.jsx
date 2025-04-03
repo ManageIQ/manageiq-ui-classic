@@ -10,6 +10,7 @@ import ValidateSubscription from './validate-subscription';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import mapper from '../../forms/mappers/componentMapper';
 import { http } from '../../http_api';
+import miqFlash from '../../helpers/miq-flash';
 
 const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   const [{
@@ -40,10 +41,6 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   };
 
   useEffect(() => {
-    setState((state) => ({ ...state, lastUpdatedAt: Date.now() }));
-  }, [subscriptions]);
-
-  useEffect(() => {
     if (pglogicalReplicationFormId) {
       http.get(`/ops/pglogical_subscriptions_form_fields/${pglogicalReplicationFormId}`).then((response) => {
         setState({
@@ -63,8 +60,12 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   }, [pglogicalReplicationFormId]);
 
   useEffect(() => {
+    setState((state) => ({ ...state, lastUpdatedAt: Date.now() }));
+  }, [subscriptions]);
+
+  useEffect(() => {
     if (replicationHelperText) {
-      add_flash(__(replicationHelperText), helperTextType);
+      miqFlash(helperTextType, __(replicationHelperText));
     }
   }, [replicationHelperText]);
 
@@ -130,7 +131,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
         handleModalClose();
         handleSaveResponse(response.message);
       }).catch(() => {
-        add_flash(__('Something went wrong'), 'error');
+        miqFlash('error', __('Something went wrong'));
       });
     } else {
       values.replication_type = replicationType;
@@ -139,7 +140,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
       }).then((response) => {
         handleSaveResponse(response.message);
       }).catch(() => {
-        add_flash(__('Something went wrong'), 'error');
+        miqFlash('error', __('Something went wrong'));
       });
     }
   };
@@ -188,8 +189,8 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
           schema={createSubscriptionSchema()}
           componentMapper={componentMapper}
           initialValues={selectedSubscription || {}}
-          onSubmit={onModalSubmit} // This will save and close the modal
-          onCancel={handleModalClose} // This will close the modal
+          onSubmit={onModalSubmit}
+          onCancel={handleModalClose}
           canReset
           buttonsLabels={{
             submitLabel: __('Accept'),
