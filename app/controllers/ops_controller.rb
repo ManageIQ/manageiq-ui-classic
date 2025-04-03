@@ -436,7 +436,7 @@ class OpsController < ApplicationController
       case node[0]
       when "root"
         @sb[:active_tab] = "settings_details"
-        @sb[:active_subtab] = "settings_co_categories"
+        @sb[:active_subtab] = "settings_my_company_categories"
       when "z"
         @sb[:active_tab] = "settings_evm_servers"
       when "xx", "sis", "msc", "l", "lr", "ld"
@@ -512,7 +512,7 @@ class OpsController < ApplicationController
           action_url = "zone_edit"
           record_id = @edit[:zone_id] ? @edit[:zone_id] : nil
         end
-      elsif @sb[:active_tab] == "settings_tags" && @sb[:active_subtab] == "settings_co_categories" && @in_a_form
+      elsif @sb[:active_tab] == "settings_tags" && @sb[:active_subtab] == "settings_my_company_categories" && @in_a_form
         action_url = "category_edit"
         record_id = @category.try(:id)
       elsif @sb[:active_tab] == "settings_tags" && @sb[:active_subtab] == "settings_label_tag_mapping" && @in_a_form
@@ -651,7 +651,7 @@ class OpsController < ApplicationController
       presenter[:update_partials][partial_div] = r[:partial => "zone_form"]
     when "ce" # category edit
       # when editing/adding category in settings tree
-      presenter.update(:settings_co_categories, r[:partial => "category_form"])
+      presenter.update(:my_company_categories, r[:partial => "category_form"])
       @right_cell_text = if !@category
                            _("Adding a new Category")
                          else
