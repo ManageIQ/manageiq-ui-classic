@@ -10,16 +10,10 @@ import SettingsReplicationForm from '../../components/settings-replication-form'
 describe('SettingsReplicationForm Form Component', () => {
   const mockStore = configureStore();
   const store = mockStore({});
-  let mockTimestamp;
-
-  beforeEach(() => {
-    mockTimestamp = jest.spyOn(global.Date, 'now').mockImplementation(() => 1700000000000); // Mock Date.now()
-  });
 
   afterEach(() => {
     fetchMock.reset();
     fetchMock.restore();
-    mockTimestamp.mockRestore();
   });
 
   const replicationMockData = {
