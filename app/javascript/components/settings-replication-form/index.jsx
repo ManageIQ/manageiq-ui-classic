@@ -14,13 +14,15 @@ import { http } from '../../http_api';
 const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   const [{
     initialValues, subscriptions, form, replicationHelperText, helperTextType,
-    isLoading, replicationType, selectedRowId, selectedSubscription,
+    isLoading, replicationType, selectedRowId, selectedSubscription, lastUpdatedAt,
   }, setState] = useState(
     {
+      subscriptions: [],
       helperTextType: 'warning',
       isLoading: !!pglogicalReplicationFormId,
       selectedSubscription: {},
       savedReplicationType: 'none',
+      lastUpdatedAt: Date.now(),
     }
   );
 
@@ -36,6 +38,10 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
     'subscriptions-table': SubscriptionsTableComponent,
     'validate-subscription': ValidateSubscription,
   };
+
+  useEffect(() => {
+    setState((state) => ({ ...state, lastUpdatedAt: Date.now() }));
+  }, [subscriptions]);
 
   useEffect(() => {
     if (pglogicalReplicationFormId) {
@@ -166,7 +172,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
         buttonsLabels={{
           submitLabel: __('Save'),
         }}
-        // key={subscriptions.length}
+        key={lastUpdatedAt}
       />
 
       <Modal

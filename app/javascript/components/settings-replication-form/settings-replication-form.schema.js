@@ -36,7 +36,7 @@ const createSchema = (subscriptions, setState, setModalOpen, replicationType) =>
         id: 'replication_type',
         name: 'replication_type',
         label: __('Type'),
-        // initialValue: replicationType,
+        initialValue: replicationType,
         onChange: (newValue) => {
           let helperText;
 
