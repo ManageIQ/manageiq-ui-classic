@@ -14,7 +14,7 @@ import miqFlash from '../../helpers/miq-flash';
 
 const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   const [{
-    initialValues, subscriptions, form, replicationHelperText, helperTextType,
+    subscriptions, form, replicationHelperText, helperTextType,
     isLoading, replicationType, selectedRowId, selectedSubscription, lastUpdatedAt,
   }, setState] = useState(
     {
@@ -44,7 +44,6 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
     if (pglogicalReplicationFormId) {
       http.get(`/ops/pglogical_subscriptions_form_fields/${pglogicalReplicationFormId}`).then((response) => {
         setState({
-          initialValues: {},
           subscriptions: response.subscriptions,
           form: {
             type: 'replication',
@@ -166,7 +165,6 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
       <MiqFormRenderer
         schema={createSchema(subscriptions, setState, setModalOpen, replicationType)}
         componentMapper={componentMapper}
-        initialValues={initialValues}
         onSubmit={onSave}
         onCancel={onCancel}
         canReset
