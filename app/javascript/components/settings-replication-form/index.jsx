@@ -114,34 +114,28 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   };
 
   const onSave = (values) => {
+    let data;
     if (replicationType === 'global') {
       const subscriptionData = subscriptions.reduce((acc, item, index) => {
         acc[index] = item;
         return acc;
       }, {});
-
-      const data = {};
-      data.replication_type = replicationType;
-      data.subscriptions = subscriptionData;
-
-      http.post(`/ops/pglogical_save_subscriptions/${pglogicalReplicationFormId}?button=${'save'}`, data, {
-        skipErrors: [400],
-      }).then((response) => {
-        handleModalClose();
-        handleSaveResponse(response.message);
-      }).catch(() => {
-        miqFlash('error', __('Something went wrong'));
-      });
+      data = { replication_type: replicationType, subscriptions: subscriptionData };
     } else {
-      values.replication_type = replicationType;
-      http.post(`/ops/pglogical_save_subscriptions/${pglogicalReplicationFormId}?button=${'save'}`, values, {
-        skipErrors: [400],
-      }).then((response) => {
+      data = { ...values, replication_type: replicationType };
+    }
+    http.post(`/ops/pglogical_save_subscriptions/${pglogicalReplicationFormId}?button=save`, data, {
+      skipErrors: [400],
+    })
+      .then((response) => {
+        if (replicationType === 'global') {
+          handleModalClose();
+        }
         handleSaveResponse(response.message);
-      }).catch(() => {
+      })
+      .catch(() => {
         miqFlash('error', __('Something went wrong'));
       });
-    }
   };
 
   const onCancel = () => {
