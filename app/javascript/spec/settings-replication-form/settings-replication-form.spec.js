@@ -27,31 +27,6 @@ describe('SettingsReplicationForm Form Component', () => {
     subscriptions: [],
   };
 
-  // const subscriptionMockDataForValidation = {
-  //   dbname: 'test db',
-  //   host: 'test host',
-  //   user: 'user1',
-  //   password: 'pwd',
-  //   port: '1234',
-  // };
-
-  // const subscriptionMockDataForGlobalType = {
-  //   replication_type: 'global',
-  //   subscriptions: {
-  //     0: {
-  //       dbname: 'test db',
-  //       host: 'test host',
-  //       user: 'user1',
-  //       password: 'pwd',
-  //       port: '1234',
-  //     },
-  //   },
-  // };
-
-  // const subscriptionMockDataForRemoteType = {
-  //   replication_type: 'remote',
-  // };
-
   it('should render SettingsReplicationForm correctly', async() => {
     const wrapper = shallow(<SettingsReplicationForm
       pglogicalReplicationFormId="new"
