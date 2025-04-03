@@ -15,7 +15,7 @@ import miqFlash from '../../helpers/miq-flash';
 const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   const [{
     subscriptions, form, replicationHelperText, helperTextType,
-    isLoading, replicationType, selectedRowId, selectedSubscription, lastUpdatedAt,
+    isLoading, replicationType, selectedRowId, selectedSubscription, isSubscriptionModified,
   }, setState] = useState(
     {
       subscriptions: [],
@@ -23,7 +23,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
       isLoading: !!pglogicalReplicationFormId,
       selectedSubscription: {},
       savedReplicationType: 'none',
-      lastUpdatedAt: Date.now(),
+      isSubscriptionModified: false,
     }
   );
 
@@ -59,7 +59,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   }, [pglogicalReplicationFormId]);
 
   useEffect(() => {
-    setState((state) => ({ ...state, lastUpdatedAt: Date.now() }));
+    setState((state) => ({ ...state, isSubscriptionModified: !isSubscriptionModified }));
   }, [subscriptions]);
 
   useEffect(() => {
@@ -165,7 +165,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
         buttonsLabels={{
           submitLabel: __('Save'),
         }}
-        key={lastUpdatedAt}
+        key={isSubscriptionModified}
       />
 
       <Modal

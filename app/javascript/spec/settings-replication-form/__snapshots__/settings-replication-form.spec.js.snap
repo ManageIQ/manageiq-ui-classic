@@ -55,7 +55,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
             "wizard": [Function],
           }
         }
-        key="1700000000000"
+        key="true"
         onCancel={[Function]}
         onSubmit={[Function]}
         schema={
@@ -4604,7 +4604,7 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
             "wizard": [Function],
           }
         }
-        key="1700000000000"
+        key="true"
         onCancel={[Function]}
         onSubmit={[Function]}
         schema={
@@ -8660,7 +8660,7 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
             "wizard": [Function],
           }
         }
-        key="1700000000000"
+        key="true"
         onCancel={[Function]}
         onSubmit={[Function]}
         schema={
@@ -12698,7 +12698,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
             "wizard": [Function],
           }
         }
-        key="1700000000000"
+        key="true"
         onCancel={[Function]}
         onSubmit={[Function]}
         schema={
