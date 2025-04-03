@@ -10,6 +10,17 @@ import SettingsReplicationForm from '../../components/settings-replication-form'
 describe('SettingsReplicationForm Form Component', () => {
   const mockStore = configureStore();
   const store = mockStore({});
+  let mockTimestamp;
+
+  beforeEach(() => {
+    mockTimestamp = jest.spyOn(global.Date, 'now').mockImplementation(() => 1700000000000); // Mock Date.now()
+  });
+
+  afterEach(() => {
+    fetchMock.reset();
+    fetchMock.restore();
+    mockTimestamp.mockRestore();
+  });
 
   const replicationMockData = {
     replication_type: 'none',
@@ -41,11 +52,6 @@ describe('SettingsReplicationForm Form Component', () => {
   //   replication_type: 'remote',
   // };
 
-  afterEach(() => {
-    fetchMock.reset();
-    fetchMock.restore();
-  });
-
   it('should render SettingsReplicationForm correctly', async() => {
     const wrapper = shallow(<SettingsReplicationForm
       pglogicalReplicationFormId="new"
@@ -56,7 +62,6 @@ describe('SettingsReplicationForm Form Component', () => {
     await new Promise((resolve) => {
       setImmediate(() => {
         wrapper.update();
-        // console.log(wrapper.debug());
         expect(toJson(wrapper)).toMatchSnapshot();
         resolve();
       });

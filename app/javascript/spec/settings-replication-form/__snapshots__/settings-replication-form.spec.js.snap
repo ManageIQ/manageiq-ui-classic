@@ -55,7 +55,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
             "wizard": [Function],
           }
         }
-        initialValues={Object {}}
+        key="1700000000000"
         onCancel={[Function]}
         onSubmit={[Function]}
         schema={
@@ -64,6 +64,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
               Object {
                 "component": "select",
                 "id": "replication_type",
+                "initialValue": "global",
                 "label": "Type",
                 "name": "replication_type",
                 "onChange": [Function],
@@ -152,7 +153,6 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
             ]
           }
           dispatch={[Function]}
-          initialValues={Object {}}
           onCancel={[Function]}
           onSubmit={[Function]}
           schema={
@@ -161,6 +161,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                 Object {
                   "component": "select",
                   "id": "replication_type",
+                  "initialValue": "global",
                   "label": "Type",
                   "name": "replication_type",
                   "onChange": [Function],
@@ -250,6 +251,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                   Object {
                     "component": "select",
                     "id": "replication_type",
+                    "initialValue": "global",
                     "label": "Type",
                     "name": "replication_type",
                     "onChange": [Function],
@@ -336,6 +338,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                     <SingleField
                       component="select"
                       id="replication_type"
+                      initialValue="global"
                       label="Type"
                       name="replication_type"
                       onChange={[Function]}
@@ -392,6 +395,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                       Object {
                         "component": "select",
                         "id": "replication_type",
+                        "initialValue": "global",
                         "label": "Type",
                         "name": "replication_type",
                         "onChange": [Function],
@@ -453,6 +457,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                       <SingleField
                         component="select"
                         id="replication_type"
+                        initialValue="global"
                         label="Type"
                         name="replication_type"
                         onChange={[Function]}
@@ -515,6 +520,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                         Object {
                           "component": "select",
                           "id": "replication_type",
+                          "initialValue": "global",
                           "label": "Type",
                           "name": "replication_type",
                           "onChange": [Function],
@@ -591,6 +597,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                         <SingleField
                           component="select"
                           id="replication_type"
+                          initialValue="global"
                           label="Type"
                           name="replication_type"
                           onChange={[Function]}
@@ -653,6 +660,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                           Object {
                             "component": "select",
                             "id": "replication_type",
+                            "initialValue": "global",
                             "label": "Type",
                             "name": "replication_type",
                             "onChange": [Function],
@@ -720,6 +728,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                           <SingleField
                             component="select"
                             id="replication_type"
+                            initialValue="global"
                             key="replication_type"
                             label="Type"
                             name="replication_type"
@@ -746,6 +755,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                                 Object {
                                   "component": "select",
                                   "id": "replication_type",
+                                  "initialValue": "global",
                                   "label": "Type",
                                   "name": "replication_type",
                                   "onChange": [Function],
@@ -772,6 +782,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                                 <SelectWithOnChange
                                   component="select"
                                   id="replication_type"
+                                  initialValue="global"
                                   label="Type"
                                   name="replication_type"
                                   onChange={[Function]}
@@ -796,6 +807,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                                   <Select
                                     component="select"
                                     id="replication_type"
+                                    initialValue="global"
                                     label="Type"
                                     loadingMessage="Loading..."
                                     name="replication_type"
@@ -1754,6 +1766,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                                   <SingleField
                                     component="select"
                                     id="replication_type"
+                                    initialValue="global"
                                     label="Type"
                                     name="replication_type"
                                     onChange={[Function]}
@@ -1890,6 +1903,7 @@ exports[`SettingsReplicationForm Form Component display a button for adding subs
                                     Object {
                                       "component": "select",
                                       "id": "replication_type",
+                                      "initialValue": "global",
                                       "label": "Type",
                                       "name": "replication_type",
                                       "onChange": [Function],
@@ -4590,7 +4604,7 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
             "wizard": [Function],
           }
         }
-        initialValues={Object {}}
+        key="1700000000000"
         onCancel={[Function]}
         onSubmit={[Function]}
         schema={
@@ -4599,6 +4613,7 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
               Object {
                 "component": "select",
                 "id": "replication_type",
+                "initialValue": "remote",
                 "label": "Type",
                 "name": "replication_type",
                 "onChange": [Function],
@@ -4687,7 +4702,6 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
             ]
           }
           dispatch={[Function]}
-          initialValues={Object {}}
           onCancel={[Function]}
           onSubmit={[Function]}
           schema={
@@ -4696,6 +4710,7 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                 Object {
                   "component": "select",
                   "id": "replication_type",
+                  "initialValue": "remote",
                   "label": "Type",
                   "name": "replication_type",
                   "onChange": [Function],
@@ -4785,6 +4800,7 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                   Object {
                     "component": "select",
                     "id": "replication_type",
+                    "initialValue": "remote",
                     "label": "Type",
                     "name": "replication_type",
                     "onChange": [Function],
@@ -4871,6 +4887,7 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                     <SingleField
                       component="select"
                       id="replication_type"
+                      initialValue="remote"
                       label="Type"
                       name="replication_type"
                       onChange={[Function]}
@@ -4927,6 +4944,7 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                       Object {
                         "component": "select",
                         "id": "replication_type",
+                        "initialValue": "remote",
                         "label": "Type",
                         "name": "replication_type",
                         "onChange": [Function],
@@ -4988,6 +5006,7 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                       <SingleField
                         component="select"
                         id="replication_type"
+                        initialValue="remote"
                         label="Type"
                         name="replication_type"
                         onChange={[Function]}
@@ -5050,6 +5069,7 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                         Object {
                           "component": "select",
                           "id": "replication_type",
+                          "initialValue": "remote",
                           "label": "Type",
                           "name": "replication_type",
                           "onChange": [Function],
@@ -5126,6 +5146,7 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                         <SingleField
                           component="select"
                           id="replication_type"
+                          initialValue="remote"
                           label="Type"
                           name="replication_type"
                           onChange={[Function]}
@@ -5188,6 +5209,7 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                           Object {
                             "component": "select",
                             "id": "replication_type",
+                            "initialValue": "remote",
                             "label": "Type",
                             "name": "replication_type",
                             "onChange": [Function],
@@ -5255,6 +5277,7 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                           <SingleField
                             component="select"
                             id="replication_type"
+                            initialValue="remote"
                             key="replication_type"
                             label="Type"
                             name="replication_type"
@@ -5281,6 +5304,7 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                                 Object {
                                   "component": "select",
                                   "id": "replication_type",
+                                  "initialValue": "remote",
                                   "label": "Type",
                                   "name": "replication_type",
                                   "onChange": [Function],
@@ -5307,6 +5331,7 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                                 <SelectWithOnChange
                                   component="select"
                                   id="replication_type"
+                                  initialValue="remote"
                                   label="Type"
                                   name="replication_type"
                                   onChange={[Function]}
@@ -5331,6 +5356,7 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                                   <Select
                                     component="select"
                                     id="replication_type"
+                                    initialValue="remote"
                                     label="Type"
                                     loadingMessage="Loading..."
                                     name="replication_type"
@@ -5797,6 +5823,7 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                                   <SingleField
                                     component="select"
                                     id="replication_type"
+                                    initialValue="remote"
                                     label="Type"
                                     name="replication_type"
                                     onChange={[Function]}
@@ -5930,6 +5957,7 @@ exports[`SettingsReplicationForm Form Component should not render the subscripti
                                     Object {
                                       "component": "select",
                                       "id": "replication_type",
+                                      "initialValue": "remote",
                                       "label": "Type",
                                       "name": "replication_type",
                                       "onChange": [Function],
@@ -8632,7 +8660,7 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
             "wizard": [Function],
           }
         }
-        initialValues={Object {}}
+        key="1700000000000"
         onCancel={[Function]}
         onSubmit={[Function]}
         schema={
@@ -8641,6 +8669,7 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
               Object {
                 "component": "select",
                 "id": "replication_type",
+                "initialValue": undefined,
                 "label": "Type",
                 "name": "replication_type",
                 "onChange": [Function],
@@ -8729,7 +8758,6 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
             ]
           }
           dispatch={[Function]}
-          initialValues={Object {}}
           onCancel={[Function]}
           onSubmit={[Function]}
           schema={
@@ -8738,6 +8766,7 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                 Object {
                   "component": "select",
                   "id": "replication_type",
+                  "initialValue": undefined,
                   "label": "Type",
                   "name": "replication_type",
                   "onChange": [Function],
@@ -8827,6 +8856,7 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                   Object {
                     "component": "select",
                     "id": "replication_type",
+                    "initialValue": undefined,
                     "label": "Type",
                     "name": "replication_type",
                     "onChange": [Function],
@@ -8969,6 +8999,7 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                       Object {
                         "component": "select",
                         "id": "replication_type",
+                        "initialValue": undefined,
                         "label": "Type",
                         "name": "replication_type",
                         "onChange": [Function],
@@ -9092,6 +9123,7 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                         Object {
                           "component": "select",
                           "id": "replication_type",
+                          "initialValue": undefined,
                           "label": "Type",
                           "name": "replication_type",
                           "onChange": [Function],
@@ -9230,6 +9262,7 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                           Object {
                             "component": "select",
                             "id": "replication_type",
+                            "initialValue": undefined,
                             "label": "Type",
                             "name": "replication_type",
                             "onChange": [Function],
@@ -9323,6 +9356,7 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                                 Object {
                                   "component": "select",
                                   "id": "replication_type",
+                                  "initialValue": undefined,
                                   "label": "Type",
                                   "name": "replication_type",
                                   "onChange": [Function],
@@ -9961,6 +9995,7 @@ exports[`SettingsReplicationForm Form Component should render the replication ty
                                     Object {
                                       "component": "select",
                                       "id": "replication_type",
+                                      "initialValue": undefined,
                                       "label": "Type",
                                       "name": "replication_type",
                                       "onChange": [Function],
@@ -12663,7 +12698,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
             "wizard": [Function],
           }
         }
-        initialValues={Object {}}
+        key="1700000000000"
         onCancel={[Function]}
         onSubmit={[Function]}
         schema={
@@ -12672,6 +12707,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
               Object {
                 "component": "select",
                 "id": "replication_type",
+                "initialValue": "global",
                 "label": "Type",
                 "name": "replication_type",
                 "onChange": [Function],
@@ -12760,7 +12796,6 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
             ]
           }
           dispatch={[Function]}
-          initialValues={Object {}}
           onCancel={[Function]}
           onSubmit={[Function]}
           schema={
@@ -12769,6 +12804,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                 Object {
                   "component": "select",
                   "id": "replication_type",
+                  "initialValue": "global",
                   "label": "Type",
                   "name": "replication_type",
                   "onChange": [Function],
@@ -12858,6 +12894,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                   Object {
                     "component": "select",
                     "id": "replication_type",
+                    "initialValue": "global",
                     "label": "Type",
                     "name": "replication_type",
                     "onChange": [Function],
@@ -12944,6 +12981,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                     <SingleField
                       component="select"
                       id="replication_type"
+                      initialValue="global"
                       label="Type"
                       name="replication_type"
                       onChange={[Function]}
@@ -13000,6 +13038,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                       Object {
                         "component": "select",
                         "id": "replication_type",
+                        "initialValue": "global",
                         "label": "Type",
                         "name": "replication_type",
                         "onChange": [Function],
@@ -13061,6 +13100,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                       <SingleField
                         component="select"
                         id="replication_type"
+                        initialValue="global"
                         label="Type"
                         name="replication_type"
                         onChange={[Function]}
@@ -13123,6 +13163,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                         Object {
                           "component": "select",
                           "id": "replication_type",
+                          "initialValue": "global",
                           "label": "Type",
                           "name": "replication_type",
                           "onChange": [Function],
@@ -13199,6 +13240,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                         <SingleField
                           component="select"
                           id="replication_type"
+                          initialValue="global"
                           label="Type"
                           name="replication_type"
                           onChange={[Function]}
@@ -13261,6 +13303,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                           Object {
                             "component": "select",
                             "id": "replication_type",
+                            "initialValue": "global",
                             "label": "Type",
                             "name": "replication_type",
                             "onChange": [Function],
@@ -13328,6 +13371,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                           <SingleField
                             component="select"
                             id="replication_type"
+                            initialValue="global"
                             key="replication_type"
                             label="Type"
                             name="replication_type"
@@ -13354,6 +13398,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                                 Object {
                                   "component": "select",
                                   "id": "replication_type",
+                                  "initialValue": "global",
                                   "label": "Type",
                                   "name": "replication_type",
                                   "onChange": [Function],
@@ -13380,6 +13425,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                                 <SelectWithOnChange
                                   component="select"
                                   id="replication_type"
+                                  initialValue="global"
                                   label="Type"
                                   name="replication_type"
                                   onChange={[Function]}
@@ -13404,6 +13450,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                                   <Select
                                     component="select"
                                     id="replication_type"
+                                    initialValue="global"
                                     label="Type"
                                     loadingMessage="Loading..."
                                     name="replication_type"
@@ -14362,6 +14409,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                                   <SingleField
                                     component="select"
                                     id="replication_type"
+                                    initialValue="global"
                                     label="Type"
                                     name="replication_type"
                                     onChange={[Function]}
@@ -14498,6 +14546,7 @@ exports[`SettingsReplicationForm Form Component should render the subscription s
                                     Object {
                                       "component": "select",
                                       "id": "replication_type",
+                                      "initialValue": "global",
                                       "label": "Type",
                                       "name": "replication_type",
                                       "onChange": [Function],
