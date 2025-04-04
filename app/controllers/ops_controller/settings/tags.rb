@@ -29,7 +29,7 @@ module OpsController::Settings::Tags
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
         page << "miqScrollTop();" if @flash_array.present?
-        page.replace_html('settings_co_categories', :partial => 'settings_co_categories_tab')
+        page.replace_html('my_company_categories', :partial => 'settings_my_company_categories_tab')
       end
     else
       category.errors.each { |error| add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error) }
@@ -45,14 +45,24 @@ module OpsController::Settings::Tags
       add_flash(_("Edit of Category \"%{name}\" was cancelled by the user") % {:name => category.name})
     end
     get_node_info(x_node)
-    replace_right_cell(:nodetype => "root")
+    render :update do |page|
+      page << javascript_prologue
+      page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+      page << "miqScrollTop();" if @flash_array.present?
+      page.replace_html('my_company_categories', :partial => 'settings_my_company_categories_tab')
+    end
   end
 
   def add_category
     category = Classification.find(params[:id])
     add_flash(_("Category \"%{name}\" was added") % {:name => category.name})
     get_node_info(x_node)
-    replace_right_cell(:nodetype => "root")
+    render :update do |page|
+      page << javascript_prologue
+      page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+      page << "miqScrollTop();" if @flash_array.present?
+      page.replace_html('my_company_categories', :partial => 'settings_my_company_categories_tab')
+    end
   end
 
   def save_category
