@@ -185,7 +185,6 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
           onSubmit={onModalSubmit}
           onCancel={handleModalClose}
           canReset
-          // disableSubmit={[]}
           buttonsLabels={{
             submitLabel: __('Accept'),
           }}
