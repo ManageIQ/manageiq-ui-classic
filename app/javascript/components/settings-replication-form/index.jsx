@@ -6,7 +6,6 @@ import { Modal } from 'carbon-components-react';
 import createSchema from './settings-replication-form.schema';
 import createSubscriptionSchema from './modal-form.schema';
 import { SubscriptionsTableComponent } from './subscriptions-table';
-import ValidateSubscription from './validate-subscription';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import mapper from '../../forms/mappers/componentMapper';
 import { http } from '../../http_api';
@@ -37,7 +36,6 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   const componentMapper = {
     ...mapper,
     'subscriptions-table': SubscriptionsTableComponent,
-    'validate-subscription': ValidateSubscription,
   };
 
   useEffect(() => {
