@@ -10,6 +10,7 @@ import miqRedirectBack from '../../helpers/miq-redirect-back';
 import mapper from '../../forms/mappers/componentMapper';
 import { http } from '../../http_api';
 import miqFlash from '../../helpers/miq-flash';
+import miqFlashClear from '../../helpers/miq-flash-clear';
 
 const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   const [{
@@ -58,6 +59,13 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
 
   useEffect(() => {
     setState((state) => ({ ...state, isSubscriptionModified: !isSubscriptionModified }));
+    if (replicationType === 'global') {
+      if (subscriptions.length === 0) {
+        miqFlash('warning', __('At least 1 subscription must be added to save server replication type'));
+      } else {
+        miqFlashClear();
+      }
+    }
   }, [subscriptions]);
 
   useEffect(() => {
