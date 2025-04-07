@@ -21,6 +21,13 @@ export const createRows = (subscriptions) => {
           size: 'md',
           callback: 'editSubscription',
         },
+        validate: {
+          is_button: true,
+          text: __('Validate'),
+          kind: 'tertiary',
+          size: 'md',
+          callback: 'validateSubscription',
+        },
         delete: {
           is_button: true,
           text: __('Delete'),

@@ -34,6 +34,7 @@ export const SubscriptionsTableComponent = (props) => {
             { key: 'status', header: __('Status') },
             { key: 'provider_region', header: __('Region') },
             { key: 'edit', header: __('Edit') },
+            { key: 'validate', header: __('Validate') },
             { key: 'delete', header: __('Delete') },
           ]}
           rows={rows}
