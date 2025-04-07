@@ -114,6 +114,10 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   const onSave = (values) => {
     let data;
     if (replicationType === 'global') {
+      if (subscriptions.length === 0) {
+        miqFlash('error', __('At least 1 subscription must be added to save server replication type'));
+        return;
+      }
       const subscriptionData = subscriptions.reduce((acc, item, index) => {
         acc[index] = item;
         return acc;
