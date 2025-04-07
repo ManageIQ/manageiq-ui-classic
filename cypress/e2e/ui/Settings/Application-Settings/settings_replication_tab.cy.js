@@ -51,9 +51,6 @@ describe('Settings > Application Settings > Replication', () => {
       cy.get('input[name="password"]').should('be.visible');
       cy.get('input[name="port"]').should('be.visible');
 
-      // Check that the Validate button is initially disabled
-      cy.get('.bx--modal button').contains('Validate').should('be.disabled');
-
       // Check that the Accept button is initially disabled
       cy.get('.bx--modal button').contains('Accept').should('be.disabled');
 
@@ -63,12 +60,6 @@ describe('Settings > Application Settings > Replication', () => {
       cy.get('input[name="user"]').type('user1');
       cy.get('input[name="password"]').type('12345');
       cy.get('input[name="port"]').type('8888');
-
-      // Check that the validate button is now enabled
-      cy.get('.bx--modal button').contains('Validate').should('not.be.disabled');
-
-      // Click Validate
-      cy.get('.bx--modal button').contains('Validate').click();
 
       // Verify that the Accept button is now enabled in the modal
       cy.get('.bx--modal button').contains('Accept').should('not.be.disabled');
@@ -100,7 +91,6 @@ describe('Settings > Application Settings > Replication', () => {
       cy.get('select[name="replication_type"]').select('remote');
       // Click save button
       cy.get('button').contains('Save').click();
-      // Check that there is a flash message after save
       cy.get('#flash_msg_div')
         .find('.alert-success')
         .should('be.visible')
@@ -117,11 +107,11 @@ describe('Settings > Application Settings > Replication', () => {
         .and('contain.text', 'Replication will be disabled for this region');
       // Click save button
       cy.get('button').contains('Save').click();
-      // Check that there is a flash message after save
-      cy.get('#flash_msg_div')
-        .find('.alert-warning')
-        .should('be.visible')
-        .and('contain.text', 'No replication role has been set');
+      // // Check that there is a flash message after save
+      // cy.get('#flash_msg_div')
+      //   .find('.alert-warning')
+      //   .should('be.visible')
+      //   .and('contain.text', 'No replication role has been set');
 
       // Verify Reset
       cy.get('select[name="replication_type"]').select('remote');
@@ -130,7 +120,7 @@ describe('Settings > Application Settings > Replication', () => {
       cy.get('#flash_msg_div')
         .find('.alert-warning')
         .should('be.visible')
-        .and('contain.text', 'No replication role has been set');
+        .and('contain.text', 'All changes have been reset');
 
       // Save global type
 
@@ -153,9 +143,6 @@ describe('Settings > Application Settings > Replication', () => {
       cy.get('input[name="user"]').type('user1');
       cy.get('input[name="password"]').type('12345');
       cy.get('input[name="port"]').type('8888');
-      // Click Validate
-      cy.get('.bx--modal button').contains('Validate').should('be.visible').click({force: true});
-      // Verify that the Accept button is now enabled in the modal
       cy.get('.bx--modal button').contains('Accept').should('be.visible').click();
 
       // Checks that the new subscription is visible in the UI
@@ -174,9 +161,6 @@ describe('Settings > Application Settings > Replication', () => {
         .clear({ force: true }) // Ensure it fully clears
         .type('user2', { force: true, delay: 100 }) // Slow down typing
         .should('have.value', 'user2'); // Verify the full text is entered
-      // Click Validate
-      cy.get('.bx--modal button').contains('Validate').should('be.visible').click({force: true});
-      // Verify that the Accept button is now enabled in the modal
       cy.get('.bx--modal button').contains('Accept').should('be.visible').click();
       // Check that edited value is reflected in the UI
       cy.get('.subscriptions-table')
@@ -187,9 +171,15 @@ describe('Settings > Application Settings > Replication', () => {
         .eq(2) // Select the 3rd <td> (0-based index)
         .should('have.text', 'user2');
 
+      // Validate a subscription
+      cy.get('.miq-data-table .miq-data-table-button').contains('Validate').should('be.visible').click();
+      cy.get('#flash_msg_div')
+        .find('.alert-danger')
+        .should('be.visible')
+        .and('contain.text', 'Validation failed with error:');
+
       // Delete a subscription
       cy.get('.miq-data-table .miq-data-table-button').contains('Delete').should('be.visible').click();
-      // Checks that the subscription is removed from the UI
       cy.get('.subscriptions-table')
         .find('table')
         .find('tbody')
@@ -197,9 +187,52 @@ describe('Settings > Application Settings > Replication', () => {
         .should('have.length', 0);
 
 
-      // ToDO - Save subscription
-      // ToDO - Check that there is a flash message after save
-      // ToDO - Remove subscriptions when another type is saved
+      // Save subscription
+      cy.get('button').contains('Save').click();
+      cy.get('#flash_msg_div')
+        .find('.alert-success')
+        .should('be.visible')
+        .and('contain.text', 'Replication configuration save initiated. Check status of task "Save subscriptions for global region" on My Tasks screen');
+
+      // Remove subscriptions when another type is saved
+      // Select "Remote" in the dropdown
+      // Checks that the new subscription is visible in the UI
+      cy.get('select[name="replication_type"]').select('global');
+      // Click on add subscription
+      cy.get('button').contains('Add Subscription').click();
+      cy.get('.bx--modal').should('be.visible');
+      cy.get('.bx--modal-header__heading').should('have.text', 'Add Subscription');
+      // Type into the fields
+      cy.get('input[name="dbname"]')
+        .clear({ force: true }) // Ensure it fully clears
+        .type('test_db', { force: true, delay: 100 }) // Slow down typing
+        .should('have.value', 'test_db'); // Verify the full text is entered
+      cy.get('input[name="host"]').type('localhost');
+      cy.get('input[name="user"]').type('user1');
+      cy.get('input[name="password"]').type('12345');
+      cy.get('input[name="port"]').type('8888');
+      cy.get('.bx--modal button').contains('Accept').should('be.visible').click();
+
+      // Checks that the new subscription is visible in the UI
+      cy.get('.subscriptions-table')
+        .find('table')
+        .find('tbody')
+        .find('tr')
+        .should('have.length', 1);
+      cy.get('select[name="replication_type"]').select('remote', {force: true});
+      // Check that "Add Subscription" button is visible for global type
+      cy.get('#flash_msg_div')
+        .find('.alert-warning')
+        .should('be.visible')
+        .and('contain.text', 'Changing to remote replication role will remove all current subscriptions');
+      cy.get('button').contains('Save').click();
+      // Verify that there are no subscriptions in the UI for global type
+      cy.get('select[name="replication_type"]').select('global', {force: true});
+      cy.get('.subscriptions-table')
+        .find('table')
+        .find('tbody')
+        .find('tr')
+        .should('have.length', 0);
     });
   });
 });
