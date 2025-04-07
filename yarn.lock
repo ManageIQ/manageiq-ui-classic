@@ -17112,15 +17112,15 @@ __metadata:
   linkType: hard
 
 "table@npm:^6.8.0":
-  version: 6.8.2
-  resolution: "table@npm:6.8.2"
+  version: 6.9.0
+  resolution: "table@npm:6.9.0"
   dependencies:
     ajv: "npm:^8.0.1"
     lodash.truncate: "npm:^4.4.2"
     slice-ansi: "npm:^4.0.0"
     string-width: "npm:^4.2.3"
     strip-ansi: "npm:^6.0.1"
-  checksum: 10/2946162eb87a91b9bf4283214d26830db96f09cf517eff18e7501d47a4770c529b432bb54c9394337c3dfd6c8dbf66581f76edb37e9838beb6ec394080af4ac2
+  checksum: 10/976da6d89841566e39628d1ba107ffab126964c9390a0a877a7c54ebb08820bf388d28fe9f8dcf354b538f19634a572a506c38a3762081640013a149cc862af9
   languageName: node
   linkType: hard
 
@@ -17167,8 +17167,8 @@ __metadata:
   linkType: hard
 
 "terser-webpack-plugin@npm:^1.4.3":
-  version: 1.4.5
-  resolution: "terser-webpack-plugin@npm:1.4.5"
+  version: 1.4.6
+  resolution: "terser-webpack-plugin@npm:1.4.6"
   dependencies:
     cacache: "npm:^12.0.2"
     find-cache-dir: "npm:^2.1.0"
@@ -17181,7 +17181,7 @@ __metadata:
     worker-farm: "npm:^1.7.0"
   peerDependencies:
     webpack: ^4.0.0
-  checksum: 10/b2db5a78d744fdcb7a50e0c884f43434e374df7aa47734ffbf4e8edd924f31a918de6ff255f5cef5c85b652f5fccc3b2ea8d529dbce89fe7601c6695a40cbc88
+  checksum: 10/ac1c34420639d8e6ac1a369553e1b3fe76dd6b063ee259659cc12267f318b7b41a8d6842b837c7169ea759a1645ed19ed46e116d111a55cc41fd2d63a54aae72
   languageName: node
   linkType: hard
 
@@ -17467,9 +17467,9 @@ __metadata:
   linkType: hard
 
 "tslib@npm:^2.1.0":
-  version: 2.6.3
-  resolution: "tslib@npm:2.6.3"
-  checksum: 10/52109bb681f8133a2e58142f11a50e05476de4f075ca906d13b596ae5f7f12d30c482feb0bff167ae01cfc84c5803e575a307d47938999246f5a49d174fc558c
+  version: 2.8.1
+  resolution: "tslib@npm:2.8.1"
+  checksum: 10/3e2e043d5c2316461cb54e5c7fe02c30ef6dccb3384717ca22ae5c6b5bc95232a6241df19c622d9c73b809bea33b187f6dbc73030963e29950c2141bc32a79f7
   languageName: node
   linkType: hard
 
