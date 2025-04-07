@@ -2,7 +2,7 @@
 import { componentTypes } from '@@ddf';
 import { createRows } from './helper';
 
-const createSchema = (subscriptions, setState, setModalOpen, replicationType) => {
+const createSchema = (subscriptions, setState, setModalOpen, replicationType, isSubscriptionModified) => {
   const deleteSubscription = (selectedRow) => {
     const rowId = parseInt(selectedRow.id, 10);
 
@@ -80,6 +80,7 @@ const createSchema = (subscriptions, setState, setModalOpen, replicationType) =>
         component: componentTypes.SUB_FORM,
         name: 'subscriptions_section',
         id: 'subscriptions_section',
+        key: isSubscriptionModified,
         condition: {
           when: 'replication_type',
           is: 'global',

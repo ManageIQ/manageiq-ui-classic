@@ -157,7 +157,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   return !isLoading && (
     <div>
       <MiqFormRenderer
-        schema={createSchema(subscriptions, setState, setModalOpen, replicationType)}
+        schema={createSchema(subscriptions, setState, setModalOpen, replicationType, isSubscriptionModified)}
         componentMapper={componentMapper}
         onSubmit={onSave}
         onCancel={onCancel}
@@ -165,7 +165,6 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
         buttonsLabels={{
           submitLabel: __('Save'),
         }}
-        key={isSubscriptionModified}
       />
 
       <Modal
@@ -184,6 +183,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
           onSubmit={onModalSubmit}
           onCancel={handleModalClose}
           canReset
+          // disableSubmit={[]}
           buttonsLabels={{
             submitLabel: __('Accept'),
           }}
