@@ -102,8 +102,7 @@ class CloudTenantDashboardService < DashboardService
 
   def recent_records(model, relation)
     db_table     = model.arel_table
-    to_char_args = [db_table[:created_on], Arel::Nodes::SqlLiteral.new("'YYYY-MM-DD'")]
-    group_by_sql = Arel::Nodes::NamedFunction.new("to_char", to_char_args)
+    group_by_sql = Arel::Nodes::NamedFunction.new("to_char", [db_table[:created_on], Arel.sql("'YYYY-MM-DD'")])
 
     relation.where(db_table[:created_on].gt(30.days.ago.utc))
             .group(group_by_sql.to_sql)
