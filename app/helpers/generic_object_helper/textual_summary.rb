@@ -20,7 +20,7 @@ module GenericObjectHelper::TextualSummary
 
   def textual_group_attribute_details_list
     if @record.property_attributes.count.zero?
-      TextualEmpty.new(_('Attributes'), _('No Attributes defined'))
+      TextualEmpty.new(_('Attributes'))
     else
       TextualMultilabel.new(
         _('Attributes'),
@@ -33,7 +33,7 @@ module GenericObjectHelper::TextualSummary
 
   def textual_group_associations
     if @record.property_associations.count.zero?
-      TextualEmpty.new(_('Associations'), _('No Associations defined'))
+      TextualEmpty.new(_('Associations'))
     else
       TextualGroup.new(_("Associations"), associations)
     end
@@ -62,7 +62,7 @@ module GenericObjectHelper::TextualSummary
     end
 
     if methods.count.zero?
-      TextualEmpty.new(_('Methods'), _('No Methods defined'))
+      TextualEmpty.new(_('Methods'))
     else
       TextualGroup.new(_('Methods'), methods)
     end
