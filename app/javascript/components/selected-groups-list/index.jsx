@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 const SelectedGroupsList = ({ groups }) => {
   const selectedGroups = [];
-  // console.log(groups);
-  groups.sort();
+
   if (groups) {
+    groups.sort();
     groups.forEach((group) => {
       selectedGroups.push(
         <div key={group}>
