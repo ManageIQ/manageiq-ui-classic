@@ -1,4 +1,3 @@
-import React from 'react';
 import { componentMapper } from '@data-driven-forms/carbon-component-mapper';
 import { componentTypes } from '@@ddf';
 import AsyncCredentials from '../../components/async-credentials/async-credentials';
@@ -11,12 +10,14 @@ import { TreeViewField, TreeViewSelector } from '../../components/tree-view';
 import MultiSelectWithSelectAll from '../../components/multiselect-with-selectall';
 import FontIconPicker from '../../components/fonticon-picker';
 import FontIconPickerDdf from '../../components/fonticon-picker/font-icon-picker-ddf';
+import KeyValueListComponent from '../../components/key-value-list';
 
 const mapper = {
   ...componentMapper,
   'code-editor': CodeEditor,
   'edit-password-field': EditPasswordField,
   'file-upload': FileUploadComponent,
+  'key-value-list': KeyValueListComponent,
   'password-field': PasswordField,
   'validate-credentials': AsyncCredentials,
   'tree-view': TreeViewField,
