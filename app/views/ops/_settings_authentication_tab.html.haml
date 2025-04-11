@@ -92,7 +92,7 @@
           %label
             %input{:type              => 'radio',
                    :name              => 'provider_type',
-                   :id                => 'provider_type_none',
+                   :id                => 'provider_type',
                    :value             => 'none',
                    "data-miq_observe" => {:url => url}.to_json,
                    :checked           => @edit[:new][:authentication][:provider_type] == "none"}
@@ -101,7 +101,7 @@
           %label
             %input{:type              => 'radio',
                    :name              => 'provider_type',
-                   :id                => 'provider_type_saml',
+                   :id                => 'provider_type',
                    :value             => 'saml',
                    "data-miq_observe" => {:url => url}.to_json,
                    :checked           => @edit[:new][:authentication][:provider_type] == "saml"}
@@ -110,7 +110,7 @@
           %label
             %input{:type              => 'radio',
                    :name              => 'provider_type',
-                   :id                => 'provider_type_oidc',
+                   :id                => 'provider_type',
                    :value             => 'oidc',
                    "data-miq_observe" => {:url => url}.to_json,
                    :checked           => @edit[:new][:authentication][:provider_type] == "oidc"}
