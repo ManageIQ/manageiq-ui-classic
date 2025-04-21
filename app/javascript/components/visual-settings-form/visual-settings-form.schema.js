@@ -8,6 +8,15 @@ const createSchema = (timezoneOptions) => ({
       title: __('General'),
       fields: [
         {
+          component: 'embedded-automate-entry-point',
+          id: 'provisioning_entry_point_automate',
+          name: 'provisioning_entry_point_automate',
+          label: 'Provisioning Entry Point',
+          field: 'fqname',
+          selected: '',
+          type: 'provision',
+        },
+        {
           component: componentTypes.SELECT,
           name: 'view.compare',
           id: 'view.compare',

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Loading, Modal, ModalBody } from 'carbon-components-react';
+import {
+  Checkbox, Loading, Modal, ModalBody,
+} from 'carbon-components-react';
 import PropTypes from 'prop-types';
 import {
   Document16,
@@ -19,7 +21,7 @@ const initialData = [
 ];
 
 const AutomateEntryPoints = ({
-  selected, selectedValue, showModal, setShowModal, setSelectedValue,
+  selected, selectedValue, showModal, includeDomainPrefix, setSelectedValue, setShowModal, setIncludeDomainPrefix,
 }) => {
   const [data, setData] = useState(initialData);
   const [isLoading, setIsLoading] = useState(true);
@@ -41,7 +43,7 @@ const AutomateEntryPoints = ({
     if (selectedValue.element) {
       data.forEach((node) => {
         if (node.id === selectedValue.element.id) {
-          console.log(document.getElementById(node.id));
+          // console.log(document.getElementById(node.id));
           document.getElementById(node.id).classList.add('currently-selected');
           document.getElementById(node.id).style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
         }
@@ -60,7 +62,7 @@ const AutomateEntryPoints = ({
           name: domain.name,
           children: [],
           parent: 'datastore_folder',
-          metadata: {},
+          metadata: { parent: domain.name },
           isBranch: true,
         });
       });
@@ -92,7 +94,7 @@ const AutomateEntryPoints = ({
               children: [],
               isBranch: true,
               parent: element.id,
-              metadata: { fqname: newNode.fqname },
+              metadata: { domain_fqname: newNode.domain_fqname, fqname: newNode.fqname },
             });
           } else {
             newChildren.push({
@@ -100,7 +102,7 @@ const AutomateEntryPoints = ({
               name: newNode.name,
               children: [],
               parent: element.id,
-              metadata: { fqname: newNode.fqname },
+              metadata: { domain_fqname: newNode.domain_fqname, fqname: newNode.fqname },
             });
           }
         }
@@ -161,9 +163,9 @@ const AutomateEntryPoints = ({
   };
 
   const onExpand = ((value) => {
-    console.log('test');
-    console.log(value);
-    console.log(selectedNode);
+    // console.log('test');
+    // console.log(value);
+    // console.log(selectedNode);
     if (value.isExpanded && selectedNode && document.getElementById(selectedNode.element.id)) {
       document.getElementById(selectedNode.element.id).style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
     }
@@ -248,6 +250,17 @@ const AutomateEntryPoints = ({
               }}
             />
           </div>
+          {setIncludeDomainPrefix
+            ? (
+              <div className="checkboxDiv">
+                <Checkbox
+                  id="includeDomainPrefix"
+                  labelText={__('Include Domain prefix in the path')}
+                  checked={includeDomainPrefix}
+                  onChange={(checked) => setIncludeDomainPrefix(checked)}
+                />
+              </div>
+            ) : null}
         </div>
       </ModalBody>
     </Modal>
@@ -260,14 +273,18 @@ AutomateEntryPoints.propTypes = {
   selected: PropTypes.string,
   selectedValue: PropTypes.objectOf(PropTypes.any),
   showModal: PropTypes.bool,
-  setShowModal: PropTypes.func.isRequired,
+  includeDomainPrefix: PropTypes.bool,
   setSelectedValue: PropTypes.func.isRequired,
+  setShowModal: PropTypes.func.isRequired,
+  setIncludeDomainPrefix: PropTypes.func,
 };
 
 AutomateEntryPoints.defaultProps = {
   selected: '',
   selectedValue: {},
   showModal: false,
+  includeDomainPrefix: false,
+  setIncludeDomainPrefix: undefined,
 };
 
 export default AutomateEntryPoints;

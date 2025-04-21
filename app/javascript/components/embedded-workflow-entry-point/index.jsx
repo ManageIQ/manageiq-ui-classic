@@ -7,7 +7,7 @@ import WorkflowEntryPoints from '../workflows/workflow-entry-points';
 
 const EmbeddedWorkflowEntryPoint = (props) => {
   const {
-    label, initialValue, id, field, selected, type,
+    label, id, field, selected, type,
   } = props;
   const { input } = useFieldApi(props);
 
@@ -73,14 +73,12 @@ const EmbeddedWorkflowEntryPoint = (props) => {
 EmbeddedWorkflowEntryPoint.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  initialValue: PropTypes.string,
   field: PropTypes.string.isRequired,
   selected: PropTypes.string,
   type: PropTypes.string.isRequired,
 };
 
 EmbeddedWorkflowEntryPoint.defaultProps = {
-  initialValue: '',
   selected: '',
 };
 

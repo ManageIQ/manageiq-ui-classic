@@ -116,3 +116,7 @@
 .automate_entry_points .arrow--open {
   transform: rotate(270deg);
 }
+
+.checkboxDiv {
+  float: right;
+}

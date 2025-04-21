@@ -7,22 +7,35 @@ import AutomateEntryPoints from '../automate-entry-points';
 
 const EmbeddedAutomateEntryPoint = (props) => {
   const {
-    label, initialValue, id, field, selected, type,
+    label, id, field, selected, type,
   } = props;
   const { input } = useFieldApi(props);
+  // const { meta } = useFieldApi(props);
+  // const initialValue = meta.initial;
 
   const [showModal, setShowModal] = useState(false);
   const [selectedValue, setSelectedValue] = useState();
   const [textValue, setTextValue] = useState('');
+  const [includeDomainPrefix, setIncludeDomainPrefix] = useState(false);
 
   useEffect(() => {
-    console.log(selectedValue);
+    if (selected) {
+      setTextValue(selected);
+      setSelectedValue(selected);
+    }
+  }, []);
+
+  useEffect(() => {
     if (selectedValue && selectedValue.element && selectedValue.element.name && selectedValue.element.metadata) {
-      setTextValue(selectedValue.element.metadata.fqname);
-    } else {
+      if (includeDomainPrefix) {
+        setTextValue(selectedValue.element.metadata.fqname);
+      } else {
+        setTextValue(selectedValue.element.metadata.domain_fqname);
+      }
+    } else if (!selected) {
       setTextValue('');
     }
-  }, [selectedValue]);
+  }, [selectedValue, includeDomainPrefix]);
 
   useEffect(() => {
     if (selectedValue && selectedValue.name && selectedValue.name.text) {
@@ -38,9 +51,11 @@ const EmbeddedAutomateEntryPoint = (props) => {
         selected={selected}
         selectedValue={selectedValue}
         showModal={showModal}
+        includeDomainPrefix={includeDomainPrefix}
         type={type}
-        setShowModal={setShowModal}
         setSelectedValue={setSelectedValue}
+        setShowModal={setShowModal}
+        setIncludeDomainPrefix={setIncludeDomainPrefix}
       />
       <div className="entry-point-wrapper">
         <div className="entry-point-text-input">
@@ -62,6 +77,7 @@ const EmbeddedAutomateEntryPoint = (props) => {
               hasIconOnly
               onClick={() => {
                 setSelectedValue({});
+                setTextValue('');
               }}
             />
           </div>
@@ -74,14 +90,12 @@ const EmbeddedAutomateEntryPoint = (props) => {
 EmbeddedAutomateEntryPoint.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  initialValue: PropTypes.string,
   field: PropTypes.string.isRequired,
   selected: PropTypes.string,
   type: PropTypes.string.isRequired,
 };
 
 EmbeddedAutomateEntryPoint.defaultProps = {
-  initialValue: '',
   selected: '',
 };
 
