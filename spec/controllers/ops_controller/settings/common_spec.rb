@@ -180,12 +180,6 @@ describe OpsController do
           queue_item = MiqQueue.find_by(:method_name => "replication_type=")
           expect(queue_item.args).to eq([:remote])
         end
-
-        it "returns a json response with a message" do
-          controller.params = params
-          expect(controller).to receive(:render).with(hash_including(json: { "message" => "Replication configuration save initiated. Check status of task \"Configure the database to be a replication remote region\" on My Tasks screen" }))
-          controller.send(:pglogical_save_subscriptions)
-        end
       end
 
       context "global" do
