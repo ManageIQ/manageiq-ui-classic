@@ -170,8 +170,6 @@ describe OpsController do
     end
 
     describe "#pglogical_save_subscriptions" do
-      before { allow(controller).to receive(:javascript_flash) }
-
       context "remote" do
         let(:params) { {:replication_type => "remote"} }
 
@@ -183,11 +181,11 @@ describe OpsController do
           expect(queue_item.args).to eq([:remote])
         end
 
-        # it "returns a json response with a message" do
-        #   controller.params = params
-        #   expect(controller).to receive(:render).with(hash_including(json: { "message" => "Replication configuration save initiated. Check status of task \"Configure the database to be a replication remote region\" on My Tasks screen" }))
-        #   controller.send(:pglogical_save_subscriptions)
-        # end
+        it "returns a json response with a message" do
+          controller.params = params
+          expect(controller).to receive(:render).with(hash_including(json: { "message" => "Replication configuration save initiated. Check status of task \"Configure the database to be a replication remote region\" on My Tasks screen" }))
+          controller.send(:pglogical_save_subscriptions)
+        end
       end
 
       context "global" do

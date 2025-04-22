@@ -9,7 +9,7 @@ export const createRows = (subscriptions) => {
         dbname: { text: value.dbname },
         host: { text: value.host },
         user: { text: value.user },
-        password: { text: value.password },
+        password: { text: '*'.repeat(value.password.length) },
         port: { text: value.port },
         backlog: { text: value.backlog ? value.backlog : '' },
         status: { text: value.status ? value.status : '' },
