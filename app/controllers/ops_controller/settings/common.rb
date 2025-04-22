@@ -194,9 +194,9 @@ module OpsController::Settings::Common
     MiqTask.generic_action_with_callback(task_opts, queue_opts)
     flash_msg =
       (_("Replication configuration save initiated. Check status of task \"%{task_name}\" on My Tasks screen") %
-      {task_name: task_opts[:name]})
-    
-    render json: { message: flash_msg }
+      {:task_name => task_opts[:name]})
+
+    render :json => {:message => flash_msg}
   end
 
   def pglogical_validate_subscription
@@ -204,16 +204,15 @@ module OpsController::Settings::Common
 
     subscription = find_or_new_subscription(params[:id])
     valid = subscription.validate(params_for_connection_validation(params))
-    
     if valid.nil?
-      message = (_("Subscription Credentials validated successfully"))
+      message = _("Subscription Credentials validated successfully")
       status = 'success'
     else
       message = valid.join('\n')
       status = 'fail'
     end
 
-    render json: { message: message, status: status }
+    render :json => {:message => message, :status => status}
   end
 
   private
