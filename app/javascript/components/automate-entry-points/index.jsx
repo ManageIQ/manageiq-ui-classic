@@ -55,7 +55,6 @@ const AutomateEntryPoints = ({
     miqSparkleOn();
     const newChildren = [];
     API.get('/api/automate_domains?expand=resources').then((apiData) => {
-      console.log(apiData);
       apiData.resources.forEach((domain) => {
         newChildren.push({
           id: domain.id,
@@ -143,17 +142,10 @@ const AutomateEntryPoints = ({
   };
 
   const onSelect = (value) => {
-    console.log(value.element);
     if (value.isBranch === false && value.isSelected) {
       data.forEach((node) => {
         if (selectedNode && (node.id === selectedNode.element.id)) {
-          console.log(selectedNode);
           document.getElementById(node.id).style.backgroundColor = 'transparent';
-          // #b8b8b8
-          // document.getElementById(node.id).classList.remove('prevSelected');
-          // document.getElementById(node.id).parentNode.className = 'tree-leaf-list-item';
-          // document.getElementById(node.id).className = 'tree-node';
-          // document.getElementById(node.id).setAttribute('aria-selected', 'false');
         }
       });
       document.getElementById(value.element.id).style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
@@ -163,9 +155,6 @@ const AutomateEntryPoints = ({
   };
 
   const onExpand = ((value) => {
-    // console.log('test');
-    // console.log(value);
-    // console.log(selectedNode);
     if (value.isExpanded && selectedNode && document.getElementById(selectedNode.element.id)) {
       document.getElementById(selectedNode.element.id).style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
     }
