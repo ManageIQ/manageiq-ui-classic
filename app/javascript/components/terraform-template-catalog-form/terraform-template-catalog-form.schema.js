@@ -107,17 +107,6 @@ const basicInformationTabSchema = (availableCatalogs, tenantTree, roleAllows, zo
         options: [{ value: 'embedded_automate', label: __('Embedded Automate') }, { value: 'embedded_workflow', label: __('Embedded Workflow') }],
       },
       {
-        component: componentTypes.TEXT_FIELD,
-        id: 'retirement_entry_point_automate',
-        name: 'retirement_entry_point_automate',
-        label: __('Retirement Entry Point'),
-        initialValue: '/Service/Generic/StateMachines/GenericLifecycle/Retire_Basic_Resource',
-        condition: {
-          when: 'retirement_entry_point_type',
-          is: 'embedded_automate',
-        },
-      },
-      {
         component: 'embedded-automate-entry-point',
         id: 'reconfigure_entry_point_automate',
         name: 'recounfigure_entry_point_automate',
