@@ -12,8 +12,10 @@
 .automate_entry_points {
   font-size: 16px;
   user-select: none;
-  /* min-height: 320px; */
+  height: 250px;
+  overflow-y: scroll;
   padding: 20px;
+  margin-bottom: 10px;
   box-sizing: content-box;
 }
 
@@ -66,6 +68,14 @@
 
 .automate_entry_points .arrow--open {
   transform: rotate(270deg);
+}
+
+.bx--modal-content {
+  margin-bottom: 1rem;
+}
+
+.bx--btn--primary {
+  margin-right: 10px;
 }
 
 .checkboxDiv {
