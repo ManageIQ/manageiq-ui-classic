@@ -92,16 +92,6 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
     miqAjaxButton(url, model || true);
   };
 
-  this.validateWithREST = function($event, credType, url, formSubmit) {
-    angular.element('#button_name').val('validate');
-    angular.element('#cred_type').val(credType);
-    if (formSubmit) {
-      miqSparkleOn();
-      return $q.when(miqRESTAjaxButton(url, $event.target, 'json'));
-    }
-    $event.preventDefault();
-  };
-
   this.disabledClick = function($event) {
     $event.preventDefault();
   };
