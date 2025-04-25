@@ -87,11 +87,6 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
       .catch(options.handleFailure);
   };
 
-  this.validateWithAjax = function(url, model) {
-    miqSparkleOn();
-    miqAjaxButton(url, model || true);
-  };
-
   this.disabledClick = function($event) {
     $event.preventDefault();
   };

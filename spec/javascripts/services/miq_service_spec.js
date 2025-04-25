@@ -154,20 +154,6 @@ describe('miqService', function() {
     });
   });
 
-  describe('#validateWithAjax', function() {
-    beforeEach(function() {
-      testService.validateWithAjax('/host/create/new?button=validate&type=default');
-    });
-
-    it('turns the spinner on via the miqService', function() {
-      expect(window.miqSparkleOn).toHaveBeenCalled();
-    });
-
-    it('delegates to miqService.miqAjaxButton', function() {
-      expect(window.miqAjaxButton).toHaveBeenCalledWith('/host/create/new?button=validate&type=default', true);
-    });
-  });
-
   describe('#disabledClick', function() {
     it('prevents a submit action', function() {
       var event = $.Event('click');
