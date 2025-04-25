@@ -27,10 +27,6 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
     miqJqueryRequest(url, {beforeSend: true, data: serializeFields});
   };
 
-  this.restAjaxButton = function(url, button, dataType, data) {
-    miqRESTAjaxButton(url, button, dataType, data);
-  };
-
   this.jqueryRequest = function(url, options) {
     return miqJqueryRequest(url, options);
   };
