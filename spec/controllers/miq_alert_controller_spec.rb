@@ -154,6 +154,44 @@ describe MiqAlertController do
       expect(assigns(:flash_array)).to be_nil
     end
 
+    it "forces Event to check to be present for eval_method - Event threshold" do
+      @miq_alert = FactoryBot.create(
+        :miq_alert,
+        :db         => "Host",
+        :options    => {:notifications => {:email => {:to => ["fred@test.com"]}}},
+        :expression => {:eval_method => 'event_threshold', :mode => "internal", :options => {:event_types => []}},
+        :severity   => 'info'
+      )
+
+      edit = {
+        :new => {
+          :expression => {:eval_method => 'event_threshold', :mode => "internal", :options => {:event_types => []}},
+        }
+      }
+      controller.instance_variable_set(:@edit, edit)
+      controller.send(:alert_valid_record?, @miq_alert)
+      expect(assigns(:flash_array).first[:message]).to(match("Event to Check is required"))
+    end
+
+    it "does not force Event to check to be present for eval_method - Event threshold" do
+      @miq_alert = FactoryBot.create(
+        :miq_alert,
+        :db         => "Host",
+        :options    => {:notifications => {:email => {:to => ["fred@test.com"]}}},
+        :expression => {:eval_method => 'event_threshold', :mode => "internal", :options => {:event_types => ["PowerOnVM_Task_Complete"]}},
+        :severity   => 'info'
+      )
+
+      edit = {
+        :new => {
+          :expression => {:eval_method => 'event_threshold', :mode => "internal", :options => {:event_types => ["PowerOnVM_Task_Complete"]}},
+        }
+      }
+      controller.instance_variable_set(:@edit, edit)
+      controller.send(:alert_valid_record?, @miq_alert)
+      expect(assigns(:flash_array)).to(be_nil)
+    end
+
     context 'not choosing Send an E-mail option while adding new Alert' do
       let(:alert) do
         FactoryBot.create(:miq_alert,
