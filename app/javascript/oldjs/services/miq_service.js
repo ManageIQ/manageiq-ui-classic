@@ -69,12 +69,6 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
     return form.$valid && form.$dirty;
   };
 
-  this.detectWithRest = function($event, url) {
-    angular.element('#button_name').val('detect');
-    miqSparkleOn();
-    return $q.when(miqRESTAjaxButton(url, $event.target, 'json'));
-  };
-
   this.networkProviders = function(options) {
     options = Object.assign(options || {}, {
       attributes: ['id', 'name'],
