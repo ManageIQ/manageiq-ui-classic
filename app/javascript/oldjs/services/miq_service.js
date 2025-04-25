@@ -102,19 +102,6 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
     $event.preventDefault();
   };
 
-  this.validateClicked = function($event, authType, formSubmit, angularForm, url) {
-    miqService.validateWithREST($event, authType, url, formSubmit)
-      .then(function success(data) {
-        if (data.level === 'error') {
-          angularForm.default_auth_status.$setViewValue(false);
-        } else {
-          angularForm.default_auth_status.$setViewValue(true);
-        }
-        miqService.miqFlash(data.level, data.message);
-        miqService.sparkleOff();
-      });
-  };
-
   this.disabledClick = function($event) {
     $event.preventDefault();
   };
