@@ -97,25 +97,6 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
     return $q.reject(e);
   };
 
-  this.getCloudNetworksByEms = function(callback) {
-    return function(id) {
-      if (!id) {
-        callback([]);
-        return;
-      }
-      miqService.sparkleOn();
-
-      API.get('/api/cloud_networks?expand=resources&attributes=name,ems_ref&filter[]=external_facing=true&filter[]=ems_id=' + id)
-        .then(getCloudNetworksByEmsData)
-        .catch(miqService.handleFailure);
-    };
-
-    function getCloudNetworksByEmsData(data) {
-      callback(data);
-      miqService.sparkleOff();
-    }
-  };
-
   this.getProviderTenants = function(callback) {
     return function(id) {
       if (!id) {
