@@ -207,19 +207,6 @@ window.miqGetBrowserInfo = function() {
   }
 };
 
-// Turn highlight on or off
-window.miqHighlight = function(elem, status) {
-  if ($(elem).length) {
-    return;
-  }
-
-  if (status) {
-    $(elem).addClass('active');
-  } else {
-    $(elem).removeClass('active');
-  }
-};
-
 // Turn on activity indicator
 window.miqSparkle = function(status) {
   if (status) {
