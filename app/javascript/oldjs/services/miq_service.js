@@ -79,30 +79,6 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
       .catch(options.handleFailure);
   };
 
-  this.serializeModel = function(model) {
-    var serializedObj = angular.copy(model);
-
-    for (var k in serializedObj) {
-      if (serializedObj.hasOwnProperty(k) && !serializedObj[k]) {
-        delete serializedObj[k];
-      }
-    }
-
-    return serializedObj;
-  };
-
-  this.serializeModelWithIgnoredFields = function(model, ignoredFields) {
-    var serializedObj = angular.copy(model);
-
-    for (var k in serializedObj) {
-      if ((ignoredFields.indexOf(k) >= 0) || (serializedObj.hasOwnProperty(k) && !serializedObj[k])) {
-        delete serializedObj[k];
-      }
-    }
-
-    return serializedObj;
-  };
-
   this.handleFailure = function(e) {
     miqSparkleOff();
 
