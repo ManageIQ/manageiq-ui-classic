@@ -153,12 +153,4 @@ describe('miqService', function() {
       });
     });
   });
-
-  describe('#disabledClick', function() {
-    it('prevents a submit action', function() {
-      var event = $.Event('click');
-      testService.disabledClick(event);
-      expect(event.isDefaultPrevented()).toBeTruthy();
-    });
-  });
 });
