@@ -918,13 +918,6 @@ window.miq_tabs_show_hide = function(tab_id, show) {
   $(tab_id).toggleClass('hidden', !show);
 };
 
-// Send explorer search by name via ajax
-window.miqSearchByName = function(button) {
-  if (button == null) {
-    miqJqueryRequest('x_search_by_name', { beforeSend: true, data: miqSerializeForm('searchbox') });
-  }
-};
-
 // Send transaction to server so automate tree selection box can be made active
 // and rest of the screen can be blocked
 window.miqShowAE_Tree = function(typ) {
