@@ -56,10 +56,6 @@ module JsHelper
       .html_safe
   end
 
-  def javascript_update_element(element, content)
-    "$('##{element}').html('#{escape_javascript(content)}');"
-  end
-
   def js_build_calendar(options = {})
     skip_days = options[:skip_days].nil? ? 'undefined' : options[:skip_days].to_a.to_json
 
