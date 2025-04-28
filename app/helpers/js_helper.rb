@@ -18,10 +18,6 @@ module JsHelper
     "$('##{j_str(element)}').focus();".html_safe
   end
 
-  def javascript_prepend_span(element, cls)
-    "$('##{j_str(element)}').prepend('#{content_tag(:span, nil, :class => cls)}');".html_safe
-  end
-
   def javascript_disable_field(element)
     "$('##{j_str(element)}').prop('disabled', true);".html_safe
   end
