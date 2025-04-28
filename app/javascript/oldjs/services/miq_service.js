@@ -23,10 +23,6 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
     miqAjaxButton(url, serializeFields, options);
   };
 
-  this.jqueryRequest = function(url, options) {
-    return miqJqueryRequest(url, options);
-  };
-
   this.refreshSelectpicker = function() {
     $('select').selectpicker('refresh');
   };
