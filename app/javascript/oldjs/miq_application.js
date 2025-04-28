@@ -842,18 +842,6 @@ window.miqSendDateRequest = function(el) {
   return miqObserveRequest(urlstring, options);
 };
 
-// common function to pass ajax request to server
-window.miqAjaxRequest = function(itemId, path) {
-  if (miqCheckForChanges()) {
-    miqJqueryRequest(
-      miqPassFields(path, { id: itemId }),
-      { beforeSend: true, complete: true }
-    );
-    return true;
-  }
-  return false;
-};
-
 // Handle an element onclick to open href in a new window with optional confirmation
 window.miqClickAndPop = function(el) {
   const conmsg = el.getAttribute('data-miq_confirm');
