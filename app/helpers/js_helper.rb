@@ -42,10 +42,6 @@ module JsHelper
     "if (miqDomElementExists('#{j_str(element)}')) #{javascript_hide(element)}".html_safe
   end
 
-  def jquery_pulsate_element(element)
-    "$('##{element}').fadeIn().fadeOut().fadeIn().fadeOut().fadeIn().fadeOut().fadeIn().fadeOut().fadeIn().fadeOut().fadeIn();".html_safe
-  end
-
   def partial_replace(from, partial, locals)
     "$(\"##{h(from)}\").replaceWith(\"#{escape_javascript(render(:partial => partial, :locals => locals))}\");".html_safe
   end
