@@ -1485,16 +1485,6 @@ window.miqFormatNotification = function(text, bindings) {
   return str;
 };
 
-window.fontIconChar = _.memoize((klass) => {
-  const tmp = document.createElement('i');
-  tmp.className = `hidden ${klass}`;
-  document.body.appendChild(tmp);
-  const char = window.getComputedStyle(tmp, ':before').content.replace(/'|"/g, '');
-  const font = window.getComputedStyle(tmp, ':before').fontFamily;
-  tmp.remove();
-  return { font, char };
-});
-
 window.redirectLogin = function(msg) {
   if (ManageIQ.logoutInProgress) {
     return; // prevent double redirect after pressing the Logout button or when changing group
