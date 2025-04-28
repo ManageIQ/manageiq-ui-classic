@@ -1493,11 +1493,3 @@ window.redirectLogin = function(msg) {
   add_flash(msg, 'warning');
   window.document.location.href = '/dashboard/login?timeout=true';
 };
-
-window.camelizeQuadicon = function(quad) {
-  return _.reduce(quad, (result, current, key) => {
-    const item = {};
-    item[_.camelCase(key)] = current;
-    return Object.assign(result, item);
-  }, {});
-};
