@@ -198,14 +198,14 @@ const provisionTabSchema = (
         label: __('Verbosity'),
         options: transformObjectToSelectOptions(verbosityTypes),
       },
-      {
-        component: 'key-value-list',
-        id: 'config_info.provision.extra_vars',
-        name: 'config_info.provision.extra_vars',
-        label: __('Variables & Default Values'),
-        keyLabel: __('Variable'),
-        valueLabel: __('Default value'),
-      },
+      // {
+      //   component: 'key-value-list',
+      //   id: 'config_info.provision.extra_vars',
+      //   name: 'config_info.provision.extra_vars',
+      //   label: __('Variables & Default Values'),
+      //   keyLabel: __('Variable'),
+      //   valueLabel: __('Default value'),
+      // },
       {
         component: componentTypes.RADIO,
         id: 'config_info.provision.dialog_type',
