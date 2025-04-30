@@ -9,13 +9,13 @@
 #
 
 # Report title
-title: Ansible Tower Jobs
+title: Automation Jobs
 
 # Menu name
-name: Ansible Tower Job
+name: Automation Job
 
 # Main DB table report is based on
-db: ManageIQ::Providers::AnsibleTower::AutomationManager::Job
+db: ManageIQ::Providers::ExternalAutomationManager::OrchestrationStack
 
 # Columns to fetch from the main table
 cols:
