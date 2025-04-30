@@ -175,8 +175,8 @@
     "webpack-stats-plugin": "^0.3.2"
   },
   "engines": {
-    "node": ">= 18.0.0",
-    "npm": ">= 8.6.0"
+    "node": ">= 20.19.1",
+    "npm": ">= 10.8.2"
   },
   "packageManager": "yarn@4.9.1",
   "resolutions": {
