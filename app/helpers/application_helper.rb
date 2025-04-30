@@ -424,7 +424,8 @@ module ApplicationHelper
         "ManageIQ::Providers::CloudManager::CloudDatabase",
         "ManageIQ::Providers::ConfigurationManager",
         "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem",
-        "ManageIQ::Providers::AnsibleTower::AutomationManager::Job", "ConfigurationScript"
+        "ManageIQ::Providers::ExternalAutomationManager::OrchestrationStack",
+        "ConfigurationScript"
       controller = request.parameters[:controller]
     when "ContainerVolume"
       controller = "persistent_volume"
