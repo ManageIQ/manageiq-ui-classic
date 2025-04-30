@@ -36,7 +36,7 @@ $.ajaxSetup({
         return jQuery.parseJSON(text);
       });
     }),
-    'text script': logError(function(text) {
+    'text miq_script': logError(function(text) {
       if (text.match(/^{/)) {
         return jQuery.jsonPayload(text, function(text) {
           return text;
