@@ -27,10 +27,6 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
     miqJqueryRequest(url, {beforeSend: true, data: serializeFields});
   };
 
-  this.restAjaxButton = function(url, button, dataType, data) {
-    miqRESTAjaxButton(url, button, dataType, data);
-  };
-
   this.jqueryRequest = function(url, options) {
     return miqJqueryRequest(url, options);
   };
@@ -69,12 +65,6 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
     return form.$valid && form.$dirty;
   };
 
-  this.detectWithRest = function($event, url) {
-    angular.element('#button_name').val('detect');
-    miqSparkleOn();
-    return $q.when(miqRESTAjaxButton(url, $event.target, 'json'));
-  };
-
   this.networkProviders = function(options) {
     options = Object.assign(options || {}, {
       attributes: ['id', 'name'],
@@ -95,34 +85,6 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
         return response.resources || [];
       })
       .catch(options.handleFailure);
-  };
-
-  this.validateWithAjax = function(url, model) {
-    miqSparkleOn();
-    miqAjaxButton(url, model || true);
-  };
-
-  this.validateWithREST = function($event, credType, url, formSubmit) {
-    angular.element('#button_name').val('validate');
-    angular.element('#cred_type').val(credType);
-    if (formSubmit) {
-      miqSparkleOn();
-      return $q.when(miqRESTAjaxButton(url, $event.target, 'json'));
-    }
-    $event.preventDefault();
-  };
-
-  this.validateClicked = function($event, authType, formSubmit, angularForm, url) {
-    miqService.validateWithREST($event, authType, url, formSubmit)
-      .then(function success(data) {
-        if (data.level === 'error') {
-          angularForm.default_auth_status.$setViewValue(false);
-        } else {
-          angularForm.default_auth_status.$setViewValue(true);
-        }
-        miqService.miqFlash(data.level, data.message);
-        miqService.sparkleOff();
-      });
   };
 
   this.disabledClick = function($event) {
