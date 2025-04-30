@@ -71,7 +71,7 @@ describe('Rbac Role Form Component', () => {
       role={RbacRoleEditData}
     />);
 
-    fetchMock.get(`/ops/rbac_role_edit_get/${RbacRoleEditData.id}`, RbacRoleEditData);
+    fetchMock.get(`/ops/rbac_role_get_values/${RbacRoleEditData.id}`, RbacRoleEditData);
     await new Promise((resolve) => {
       setImmediate(() => {
         wrapper.update();

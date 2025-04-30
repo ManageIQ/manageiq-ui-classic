@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Folder20, Search20, RuleFilled20, Edit20
+  Folder20, Search20, RuleFilled20, Edit20,
 } from '@carbon/icons-react';
 import MiqFormRenderer, { useFormApi } from '@@ddf';
 import { FormSpy } from '@data-driven-forms/react-form-renderer';
@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import { Loading, Button } from 'carbon-components-react';
 import createSchema from './rbac-role-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
+import miqFlash from '../../helpers/miq-flash';
 
 let idCounter = 0;
 
@@ -15,19 +16,22 @@ let modified = false;
 let features = new Set();
 const RbacRoleForm = (props) => {
   const {
-    selectOptions, url, getURL, customProps, role, existingProductFeatures,
+    selectOptions, url, customProps, role, existingProductFeatures,
   } = props;
 
-  const generateId = () => idCounter++;
+  const generateId = () => {
+    idCounter += 1;
+    return idCounter;
+  };
 
   // necessary for older roles that do only have top level nodes as features
   const checkChildren = (productFeature, child) => {
     if (!child.children) {
       features.add(child.value);
     } else {
-      for (let nextChild of child.children) {
+      child.children.forEach((nextChild) => {
         checkChildren(productFeature, nextChild);
-      }
+      });
     }
   };
 
@@ -38,15 +42,15 @@ const RbacRoleForm = (props) => {
     if (result === productFeature) {
       features.add(node.value);
       if (node.children) {
-        for (let child of node.children) {
+        node.children.forEach((child) => {
           checkChildren(productFeature, child);
-        }
+        });
       }
     }
     if (node.children) {
-      for (let child of node.children) {
+      node.children.forEach((child) => {
         findCheck(productFeature, child);
-      }
+      });
     }
   };
 
@@ -103,6 +107,7 @@ const RbacRoleForm = (props) => {
     if (values.tree_dropdown === undefined) {
       values.tree_dropdown = formData.initialValues.miqProductFeatures || [];
     }
+
     if (values) {
       if (values.name === formData.initialValues.name
         && values.vm_restriction === formData.initialValues.vm_restriction
@@ -111,6 +116,10 @@ const RbacRoleForm = (props) => {
         modified = false;
       } else {
         modified = true;
+      }
+
+      if (values.tree_dropdown.length === 0 || values.tree_dropdown.length === undefined) {
+        errors.tree_dropdown = 'Required';
       }
 
       if (values.name === '' || (values && values.tree_dropdown && values.tree_dropdown.length === 0)) {
@@ -123,15 +132,9 @@ const RbacRoleForm = (props) => {
   const isEdit = !!(role && role.id);
 
   useEffect(() => {
-    if (formData.isLoading) {
-      http.post(url, formData.params)
-        .then(() => {
-          const confirmation = isEdit ? __('Role Edited') : __('Role Created');
-          miqRedirectBack(sprintf(confirmation), 'success', '/ops/explorer');
-        })
-        .catch((error) => console.log('error: ', error));
-    } else if (isEdit) {
-      http.get(`${getURL}/${role.id}`).then((roleValues) => {
+    if (isEdit) {
+      miqSparkleOn();
+      http.get(`rbac_role_get_values/${role.id}`).then((roleValues) => {
         if (roleValues) {
           const bsTree = JSON.parse(customProps.bs_tree);
           const nodes = bsTree.map(transformTree);
@@ -141,6 +144,7 @@ const RbacRoleForm = (props) => {
           setFormData({
             ...formData, isLoading: false, initialValues: roleValues, nodes, checked: features,
           });
+          miqSparkleOff();
         }
       });
     } else {
@@ -160,7 +164,6 @@ const RbacRoleForm = (props) => {
         });
       }
       initialValues.tree_dropdown = features;
-      console.log("initial Values: ", initialValues);
       if (initialValues) {
         setFormData({
           ...formData, isLoading: false, initialValues, nodes, checked: features,
@@ -196,11 +199,15 @@ const RbacRoleForm = (props) => {
       features: productFeatures,
     };
 
-    setFormData({
-      ...formData,
-      isLoading: true,
-      params,
-    });
+    http.post(url, params)
+      .then(() => {
+        const confirmation = sprintf(__('Role "%s" was saved'), params.name);
+        miqRedirectBack(sprintf(confirmation), 'success', '/ops/explorer');
+      })
+      .catch((error) => {
+        miqSparkleOff();
+        miqFlash('error', error);
+      });
   };
 
   const onCancel = () => {
@@ -215,7 +222,7 @@ const RbacRoleForm = (props) => {
   const onReset = () => {
     features = new Set();
     idCounter = 0;
-    http.get(`${getURL}/${role.id}`).then((roleValues) => {
+    http.get(`rbac_role_get_values/${role.id}`).then((roleValues) => {
       if (roleValues) {
         if (roleValues.miqProductFeatures) {
           const bsTree = JSON.parse(customProps.bs_tree);
@@ -317,7 +324,6 @@ const FormTemplate = ({
 RbacRoleForm.propTypes = {
   selectOptions: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string.isRequired)).isRequired,
   url: PropTypes.string,
-  getURL: PropTypes.string,
   customProps: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array]).isRequired,
   role: PropTypes.shape({
     id: PropTypes.number,
@@ -334,7 +340,6 @@ RbacRoleForm.propTypes = {
 
 RbacRoleForm.defaultProps = {
   url: '',
-  getURL: '',
   role: undefined,
   existingProductFeatures: undefined,
 };
@@ -343,9 +348,8 @@ FormTemplate.propTypes = {
   formFields: PropTypes.arrayOf(
     PropTypes.shape({ selectOptions: PropTypes.arrayOf(PropTypes.string) }),
     PropTypes.shape({ url: PropTypes.string }),
-    PropTypes.shape({ getURL: PropTypes.string }),
-    PropTypes.shape({ customProps: PropTypes.object }),
-    PropTypes.shape({ role: PropTypes.object }),
+    PropTypes.shape({ customProps: PropTypes.objectOf(PropTypes.any) }),
+    PropTypes.shape({ role: PropTypes.objectOf(PropTypes.any) }),
   ),
   roleId: PropTypes.number,
 };

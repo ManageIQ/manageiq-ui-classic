@@ -526,3 +526,30 @@
     margin-right: 5%;
   }
 }
+
+.rbac-role-form {
+  .access-restriction-orchestration, .access-restriction-catalog {
+    margin-top: 3%;
+  }
+
+  .access-restriction-catalog {
+    margin-bottom: 3%;
+  }
+  
+  .role-information {
+    font-size: x-large;
+    font-weight: lighter;
+    margin-top: 2%;
+    margin-bottom: 2%;
+  }
+  
+  .custom-button-wrapper {
+    margin-top: 2%;
+    padding-bottom: 5%;
+  
+    .bx--btn--primary, .bx--btn--secondary {
+        margin-right: 3%;
+        width: 20%;
+    }
+  }
+}
