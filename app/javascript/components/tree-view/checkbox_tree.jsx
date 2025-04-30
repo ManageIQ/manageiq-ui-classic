@@ -18,7 +18,9 @@ const carbonIcons = {
 };
 
 const CheckboxTreeComponent = (props) => {
-  const { label, nodes, checked } = props;
+  const {
+    label, nodes, checked, isRequired,
+  } = props;
   const { input } = useFieldApi(props);
 
   const [treeState, setTreeState] = useState({
@@ -32,8 +34,9 @@ const CheckboxTreeComponent = (props) => {
   }, [treeState.checked]);
 
   return (
-    <div>
-      <p>{label}</p>
+    <div className="checkbox-tree-wrapper">
+      {isRequired ? <span className="checkbox-tree-required-tag">*</span> : undefined}
+      <p className="checkbox-tree-title">{label}</p>
       <CheckboxTree
         icons={carbonIcons}
         nodes={nodes}
@@ -52,11 +55,13 @@ CheckboxTreeComponent.propTypes = {
   label: PropTypes.string.isRequired,
   nodes: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   checked: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  isRequired: PropTypes.bool,
 };
 
 CheckboxTreeComponent.defaultProps = {
   nodes: {},
   checked: [],
+  isRequired: false,
 };
 
 export default CheckboxTreeComponent;

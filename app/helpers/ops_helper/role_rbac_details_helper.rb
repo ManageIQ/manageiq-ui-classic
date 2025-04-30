@@ -22,7 +22,7 @@ module OpsHelper::RoleRbacDetailsHelper
                         })
   end
 
-  def rbac_role_product_features(role, rbac_menu_tree)
+  def rbac_role_product_features(rbac_menu_tree)
     cells = row_data(_("Product Features (Read Only)"), {:input => 'component', :component => 'TREE_VIEW_REDUX', :props => rbac_menu_tree.locals_for_render, :name => rbac_menu_tree.name})
     cells[:cells][:value][:props]
   end

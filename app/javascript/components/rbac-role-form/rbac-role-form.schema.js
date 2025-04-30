@@ -48,6 +48,7 @@ const createSchema = (selectOptions, customProps, formData) => ({
       className: 'checkbox-tree',
       nodes: formData.nodes,
       checked: formData.checked,
+      isRequired: true,
     },
   ],
 });
