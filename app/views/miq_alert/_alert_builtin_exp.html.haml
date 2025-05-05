@@ -12,7 +12,7 @@
         edit[:new][:expression][:options][:event_types]),
         :class => "selectpicker")
       :javascript
-        miqInitSelectPicker f();
+        miqInitSelectPicker();
         miqSelectPickerEvent('event_types', '#{url}', {beforeSend: true, complete: true})
   - when :time_threshold
     %label.control-label.col-md-2
