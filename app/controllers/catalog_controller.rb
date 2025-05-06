@@ -1094,7 +1094,7 @@ class CatalogController < ApplicationController
            end
       common_st_record_vars(st)
       add_orchestration_template_vars(st) if st.kind_of?(ServiceTemplateOrchestration)
-      add_ansible_tower_job_template_vars(st) if st.kind_of?(ServiceTemplateAnsibleTower) || st.kind_of?(ServiceTemplateAwx)
+      add_configuration_script_vars(st) if st.kind_of?(ServiceTemplateAnsibleTower) || st.kind_of?(ServiceTemplateAwx) || st.kind_of?(ServiceTemplateTerraformEnterprise)
       add_server_profile_template_vars(st) if @edit[:new][:st_prov_type] == 'cisco_intersight'
       st.service_type = "atomic"
 
@@ -1658,7 +1658,7 @@ class CatalogController < ApplicationController
     st.orchestration_manager  = @edit[:new][:manager_id].nil? ? nil : ExtManagementSystem.find(@edit[:new][:manager_id])
   end
 
-  def add_ansible_tower_job_template_vars(st)
+  def add_configuration_script_vars(st)
     st.job_template = @edit[:new][:template_id].nil? ? nil : ConfigurationScript.find(@edit[:new][:template_id])
   end
 
