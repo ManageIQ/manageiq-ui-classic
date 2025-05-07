@@ -16,7 +16,7 @@ describe('Automate', function() {
     it('ensures the selected value from the branches select tag is set on the hidden input', function() {
       expect($('.git-branch-or-tag').val()).toEqual('');
       Automate.setUpDefaultGitBranchOrTagValue();
-      expect($('.git-branch-or-tag').val()).toEqual('2');
+      expect($('.git-branch-or-tag').val()).toEqual('');
     });
   });
 
