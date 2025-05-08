@@ -18,14 +18,6 @@ module JsHelper
     "$('##{j_str(element)}').focus();".html_safe
   end
 
-  def javascript_prepend_span(element, cls)
-    "$('##{j_str(element)}').prepend('#{content_tag(:span, nil, :class => cls)}');".html_safe
-  end
-
-  def javascript_highlight(element, status)
-    "miqHighlight('##{j_str(element)}', #{j_str(status)});".html_safe
-  end
-
   def javascript_disable_field(element)
     "$('##{j_str(element)}').prop('disabled', true);".html_safe
   end
@@ -50,10 +42,6 @@ module JsHelper
     "if (miqDomElementExists('#{j_str(element)}')) #{javascript_hide(element)}".html_safe
   end
 
-  def jquery_pulsate_element(element)
-    "$('##{element}').fadeIn().fadeOut().fadeIn().fadeOut().fadeIn().fadeOut().fadeIn().fadeOut().fadeIn().fadeOut().fadeIn();".html_safe
-  end
-
   def partial_replace(from, partial, locals)
     "$(\"##{h(from)}\").replaceWith(\"#{escape_javascript(render(:partial => partial, :locals => locals))}\");".html_safe
   end
@@ -66,10 +54,6 @@ module JsHelper
   def javascript_unchecked(element)
     "if ($('##{j_str(element)}').prop('type') == 'checkbox') {$('##{j_str(element)}').prop('checked', false);}"
       .html_safe
-  end
-
-  def javascript_update_element(element, content)
-    "$('##{element}').html('#{escape_javascript(content)}');"
   end
 
   def js_build_calendar(options = {})
