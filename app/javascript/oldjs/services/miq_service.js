@@ -23,14 +23,6 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
     miqAjaxButton(url, serializeFields, options);
   };
 
-  this.miqAsyncAjaxButton = function(url, serializeFields) {
-    miqJqueryRequest(url, {beforeSend: true, data: serializeFields});
-  };
-
-  this.jqueryRequest = function(url, options) {
-    return miqJqueryRequest(url, options);
-  };
-
   this.refreshSelectpicker = function() {
     $('select').selectpicker('refresh');
   };
@@ -87,34 +79,6 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
       .catch(options.handleFailure);
   };
 
-  this.disabledClick = function($event) {
-    $event.preventDefault();
-  };
-
-  this.serializeModel = function(model) {
-    var serializedObj = angular.copy(model);
-
-    for (var k in serializedObj) {
-      if (serializedObj.hasOwnProperty(k) && !serializedObj[k]) {
-        delete serializedObj[k];
-      }
-    }
-
-    return serializedObj;
-  };
-
-  this.serializeModelWithIgnoredFields = function(model, ignoredFields) {
-    var serializedObj = angular.copy(model);
-
-    for (var k in serializedObj) {
-      if ((ignoredFields.indexOf(k) >= 0) || (serializedObj.hasOwnProperty(k) && !serializedObj[k])) {
-        delete serializedObj[k];
-      }
-    }
-
-    return serializedObj;
-  };
-
   this.handleFailure = function(e) {
     miqSparkleOff();
 
@@ -131,44 +95,6 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
     miqService.miqFlash('error', message);
 
     return $q.reject(e);
-  };
-
-  this.getCloudNetworksByEms = function(callback) {
-    return function(id) {
-      if (!id) {
-        callback([]);
-        return;
-      }
-      miqService.sparkleOn();
-
-      API.get('/api/cloud_networks?expand=resources&attributes=name,ems_ref&filter[]=external_facing=true&filter[]=ems_id=' + id)
-        .then(getCloudNetworksByEmsData)
-        .catch(miqService.handleFailure);
-    };
-
-    function getCloudNetworksByEmsData(data) {
-      callback(data);
-      miqService.sparkleOff();
-    }
-  };
-
-  this.getProviderTenants = function(callback) {
-    return function(id) {
-      if (!id) {
-        callback([]);
-        return;
-      }
-      miqService.sparkleOn();
-
-      API.get('/api/providers/' + id + '/cloud_tenants?expand=resources&attributes=id,name')
-        .then(getCloudTenantsByEms)
-        .catch(miqService.handleFailure);
-    };
-
-    function getCloudTenantsByEms(data) {
-      callback(data);
-      miqService.sparkleOff();
-    }
   };
 
   this.redirectBack = function(message, flashType, redirectUrl) {
