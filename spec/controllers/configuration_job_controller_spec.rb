@@ -9,7 +9,7 @@ describe ConfigurationJobController do
 
   describe '#show' do
     context "instances" do
-      let(:record) { FactoryBot.create(:ansible_tower_job) }
+      let(:record) { FactoryBot.create(:awx_job) }
 
       before do
         session[:settings] = {
@@ -39,7 +39,7 @@ describe ConfigurationJobController do
     let!(:user) { stub_user(:features => :all) }
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      @cj = FactoryBot.create(:ansible_tower_job, :name => "testJob")
+      @cj = FactoryBot.create(:awx_job, :name => "testJob")
       allow(@cj).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
       classification = FactoryBot.create(:classification, :name => "department", :description => "Department")
       @tag1 = FactoryBot.create(:classification_tag,
@@ -49,10 +49,10 @@ describe ConfigurationJobController do
                                  :name   => "tag2",
                                  :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@cj).and_return([@tag1, @tag2])
-      session[:tag_db] = "ManageIQ::Providers::AnsibleTower::AutomationManager::Job"
+      session[:tag_db] = "ManageIQ::Providers::Awx::AutomationManager::Job"
       edit = {
-        :key        => "ManageIQ::Providers::AnsibleTower::AutomationManager::Job_edit_tags__#{@cj.id}",
-        :tagging    => "ManageIQ::Providers::AnsibleTower::AutomationManager::Job",
+        :key        => "ManageIQ::Providers::Awx::AutomationManager::Job_edit_tags__#{@cj.id}",
+        :tagging    => "ManageIQ::Providers::Awx::AutomationManager::Job",
         :object_ids => [@cj.id],
         :current    => {:assignments => []},
         :new        => {:assignments => [@tag1.id, @tag2.id]}
@@ -84,5 +84,5 @@ describe ConfigurationJobController do
     end
   end
 
-  include_examples '#download_summary_pdf', :ansible_tower_job
+  include_examples '#download_summary_pdf', :awx_job
 end
