@@ -5,7 +5,9 @@ import MiqDataTable from '../miq-data-table';
 import { workflowsEntryPoints } from './helper';
 import { http } from '../../http_api';
 
-const WorkflowEntryPoints = ({ field, selected, type }) => {
+const WorkflowEntryPoints = ({
+  field, selected, type, setShowModal, setSelectedValue,
+}) => {
   const [data, setData] = useState({
     isLoading: true, list: {}, selectedItemId: selected,
   });
@@ -44,24 +46,33 @@ const WorkflowEntryPoints = ({ field, selected, type }) => {
   }
   /** Function to handle the modal box close button click event. */
   const onCloseModal = () => {
-    document.getElementById(`${type}-workflows`).innerHTML = '';
-    http.post('/catalog/ae_tree_select_toggle?button=cancel', {}, { headers: {}, skipJsonParsing: true });
+    if (setShowModal) {
+      setShowModal(false);
+    } else {
+      document.getElementById(`${type}-workflows`).innerHTML = '';
+      http.post('/catalog/ae_tree_select_toggle?button=cancel', {}, { headers: {}, skipJsonParsing: true });
+    }
   };
   /** Function to handle the modal box apply button click event. */
   const onApply = () => {
     const seletedItem = data.list.rows.find((item) => item.id === data.selectedItemId);
     const name = seletedItem.name.text;
     if (seletedItem) {
-      const nameField = document.getElementById(field);
-      const selectedField = document.getElementById(`${type}_configuration_script_id`);
+      if (setShowModal && setSelectedValue) {
+        setShowModal(false);
+        setSelectedValue(seletedItem);
+      } else {
+        const nameField = document.getElementById(field);
+        const selectedField = document.getElementById(`${type}_configuration_script_id`);
 
-      if (nameField && selectedField) {
-        nameField.value = name;
-        selectedField.value = data.selectedItemId;
-        http.post('/catalog/ae_tree_select_toggle?button=submit&automation_type=workflow', {}, { headers: {}, skipJsonParsing: true })
-          .then((_data) => {
-            document.getElementById(`${type}-workflows`).innerHTML = '';
-          });
+        if (nameField && selectedField) {
+          nameField.value = name;
+          selectedField.value = data.selectedItemId;
+          http.post('/catalog/ae_tree_select_toggle?button=submit&automation_type=workflow', {}, { headers: {}, skipJsonParsing: true })
+            .then((_data) => {
+              document.getElementById(`${type}-workflows`).innerHTML = '';
+            });
+        }
       }
     }
   };
@@ -88,17 +99,21 @@ const WorkflowEntryPoints = ({ field, selected, type }) => {
         />
       </ModalBody>
     </Modal>
-
   );
 };
+
 WorkflowEntryPoints.propTypes = {
   field: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   selected: PropTypes.string,
+  setShowModal: PropTypes.func,
+  setSelectedValue: PropTypes.func,
 };
 
 WorkflowEntryPoints.defaultProps = {
   selected: '',
+  setShowModal: undefined,
+  setSelectedValue: undefined,
 };
 
 export default WorkflowEntryPoints;
