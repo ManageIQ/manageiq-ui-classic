@@ -17,6 +17,8 @@ module ConfigurationScriptHelper
   end
 
   def textual_group_variables
+    return unless @record.variables
+
     variables = Array(@record.variables).collect do |item|
       [
         item[0].to_s,
@@ -32,7 +34,7 @@ module ConfigurationScriptHelper
   end
 
   def textual_group_surveys
-    return unless @record.survey_spec['spec']
+    return unless @record.survey_spec&.key?('spec')
 
     headers = [_('Question Name'), _('Question Description'), _('Variable'),
                _('Type'),  _('Min'), _('Max'), _('Default'), _('Required'), _('Choices')]
