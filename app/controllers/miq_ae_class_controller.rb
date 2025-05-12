@@ -1438,6 +1438,7 @@ class MiqAeClassController < ApplicationController
 
   # AJAX driven routine to select a classification entry
   def field_select
+    require 'byebug'
     assert_privileges('miq_ae_field_edit')
     fields_get_form_vars
     @combo_xml = build_type_options
@@ -1446,8 +1447,9 @@ class MiqAeClassController < ApplicationController
     @edit[:new_field][:substitute] = session[:field_data][:substitute] = true
     @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
-      page << javascript_prologue
-      page.replace("class_fields_div", :partial => "class_fields")
+      # page << javascript_prologue
+      # page.replace('class_fields_div', :partial => 'class_fields')
+      page.replace_html('class_fields_div', :partial => 'class_fields')
       page << javascript_for_miq_button_visibility(@changed)
       page << "miqSparkle(false);"
     end
@@ -1461,8 +1463,9 @@ class MiqAeClassController < ApplicationController
     @combo_xml = build_type_options
     @dtype_combo_xml = build_dtype_options
     render :update do |page|
-      page << javascript_prologue
-      page.replace("class_fields_div", :partial => "class_fields")
+      # page << javascript_prologue
+      # page.replace("class_fields_div", :partial => "class_fields")
+      page.replace_html('class_fields_div', :partial => 'class_fields')
       page << javascript_for_miq_button_visibility(@changed)
       page << "miqSparkle(false);"
     end
@@ -1482,8 +1485,9 @@ class MiqAeClassController < ApplicationController
     @edit[:new][:fields].delete_at(params[:arr_id].to_i)
     @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
-      page << javascript_prologue
-      page.replace("class_fields_div", :partial => "class_fields")
+      # page << javascript_prologue
+      # page.replace("class_fields_div", :partial => "class_fields")
+      page.replace_html('class_fields_div', :partial => 'class_fields')
       page << javascript_for_miq_button_visibility(@changed)
       page << "miqSparkle(false);"
     end
