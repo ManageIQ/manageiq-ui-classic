@@ -21,13 +21,6 @@ describe JsHelper do
     end
   end
 
-  context '#javascript_highlight' do
-    it 'returns js to to add or remove the active class on the element' do
-      expect(javascript_highlight('foo', true)).to eq("miqHighlight('\#foo', true);")
-      expect(javascript_highlight('foo', false)).to eq("miqHighlight('\#foo', false);")
-    end
-  end
-
   context '#javascript_disable_field' do
     it 'returns js to disable the provided element' do
       expect(javascript_disable_field('foo')).to eq("$('#foo').prop('disabled', true);")

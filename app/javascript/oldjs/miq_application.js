@@ -207,19 +207,6 @@ window.miqGetBrowserInfo = function() {
   }
 };
 
-// Turn highlight on or off
-window.miqHighlight = function(elem, status) {
-  if ($(elem).length) {
-    return;
-  }
-
-  if (status) {
-    $(elem).addClass('active');
-  } else {
-    $(elem).removeClass('active');
-  }
-};
-
 // Turn on activity indicator
 window.miqSparkle = function(status) {
   if (status) {
@@ -855,18 +842,6 @@ window.miqSendDateRequest = function(el) {
   return miqObserveRequest(urlstring, options);
 };
 
-// common function to pass ajax request to server
-window.miqAjaxRequest = function(itemId, path) {
-  if (miqCheckForChanges()) {
-    miqJqueryRequest(
-      miqPassFields(path, { id: itemId }),
-      { beforeSend: true, complete: true }
-    );
-    return true;
-  }
-  return false;
-};
-
 // Handle an element onclick to open href in a new window with optional confirmation
 window.miqClickAndPop = function(el) {
   const conmsg = el.getAttribute('data-miq_confirm');
@@ -941,13 +916,6 @@ window.miq_tabs_disable_inactive = function(id) {
 
 window.miq_tabs_show_hide = function(tab_id, show) {
   $(tab_id).toggleClass('hidden', !show);
-};
-
-// Send explorer search by name via ajax
-window.miqSearchByName = function(button) {
-  if (button == null) {
-    miqJqueryRequest('x_search_by_name', { beforeSend: true, data: miqSerializeForm('searchbox') });
-  }
 };
 
 // Send transaction to server so automate tree selection box can be made active
@@ -1341,29 +1309,6 @@ window.miqInitMainContent = function() {
   $('#main-content').css('height', `calc(100% - ${height}px)`);
 };
 
-window.miqHideSearchClearButton = function(explorer) {
-  // Hide the clear button if the search input is empty
-  $('.search-pf .has-clear .clear').each(function() {
-    if (!$(this).prev('.form-control').val()) {
-      $(this).hide();
-    }
-  });
-  // Show the clear button upon entering text in the search input
-  $('.search-pf .has-clear .form-control').keyup(function() {
-    const t = $(this);
-    t.nextAll('button.clear').toggle(Boolean(t.val()));
-  });
-  // Upon clicking the clear button, empty the entered text and hide the clear button
-  $('.search-pf .has-clear .clear').click(function() {
-    $(this).prev('.form-control').val('').focus();
-    $(this).hide();
-    // Clear Search text values as well
-    const url = `/${ManageIQ.controller}/search_clear` + `?in_explorer=${explorer}`;
-    ManageIQ.gridChecks = [];
-    miqJqueryRequest(url);
-  });
-};
-
 window.toggle_expansion = function(link) {
   link = $(link);
   link.find('i').toggleClass('fa-angle-right fa-angle-down');
@@ -1540,16 +1485,6 @@ window.miqFormatNotification = function(text, bindings) {
   return str;
 };
 
-window.fontIconChar = _.memoize((klass) => {
-  const tmp = document.createElement('i');
-  tmp.className = `hidden ${klass}`;
-  document.body.appendChild(tmp);
-  const char = window.getComputedStyle(tmp, ':before').content.replace(/'|"/g, '');
-  const font = window.getComputedStyle(tmp, ':before').fontFamily;
-  tmp.remove();
-  return { font, char };
-});
-
 window.redirectLogin = function(msg) {
   if (ManageIQ.logoutInProgress) {
     return; // prevent double redirect after pressing the Logout button or when changing group
@@ -1557,12 +1492,4 @@ window.redirectLogin = function(msg) {
 
   add_flash(msg, 'warning');
   window.document.location.href = '/dashboard/login?timeout=true';
-};
-
-window.camelizeQuadicon = function(quad) {
-  return _.reduce(quad, (result, current, key) => {
-    const item = {};
-    item[_.camelCase(key)] = current;
-    return Object.assign(result, item);
-  }, {});
 };
