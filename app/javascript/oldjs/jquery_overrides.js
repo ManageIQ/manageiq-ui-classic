@@ -45,5 +45,15 @@ $.ajaxSetup({
       jQuery.globalEval(text.slice('throw "error";'.length));
       return text;
     }),
+    'text script': logError(function(text) {
+      console.log(text);
+      if (text.match(/^{/)) {
+        return jQuery.jsonPayload(text, function(text) {
+          return text;
+        });
+      }  // JavaScript payload
+      jQuery.globalEval(text.slice('throw "error";'.length));
+      return text;
+    }),
   },
 });
