@@ -29,15 +29,6 @@
           = _("Not Available")
     .form-group
       %label.col-md-2.control-label
-        = _("Company Name")
-      .col-md-8
-        = text_field_tag("server_company",
-                          @edit[:new][:server][:company],
-                          :maxlength => 20,
-                          :class => "form-control",
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-    .form-group
-      %label.col-md-2.control-label
         = _("Appliance Name")
       .col-md-8
         = text_field_tag("server_name",

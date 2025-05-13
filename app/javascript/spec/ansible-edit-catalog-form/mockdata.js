@@ -168,7 +168,6 @@ export const initalDataForFirstTestCase = {
                 "ancestry": "1/2",
                 "divisible": true,
                 "description": "admin tenant",
-                "use_config_for_attributes": false,
                 "default_miq_group_id": 21,
                 "source_type": "CloudTenant",
                 "source_id": 2
@@ -190,7 +189,6 @@ export const initalDataForFirstTestCase = {
                 "ancestry": "1/2",
                 "divisible": true,
                 "description": "cloud-southeast",
-                "use_config_for_attributes": false,
                 "default_miq_group_id": 22,
                 "source_type": "CloudTenant",
                 "source_id": 5
@@ -212,7 +210,6 @@ export const initalDataForFirstTestCase = {
                 "ancestry": "1/2",
                 "divisible": true,
                 "description": "cloud-user-demo",
-                "use_config_for_attributes": false,
                 "default_miq_group_id": 23,
                 "source_type": "CloudTenant",
                 "source_id": 1
@@ -234,7 +231,6 @@ export const initalDataForFirstTestCase = {
                 "ancestry": "1/2",
                 "divisible": true,
                 "description": "cloudwest",
-                "use_config_for_attributes": false,
                 "default_miq_group_id": 24,
                 "source_type": "CloudTenant",
                 "source_id": 7
@@ -256,7 +252,6 @@ export const initalDataForFirstTestCase = {
                 "ancestry": "1/2",
                 "divisible": true,
                 "description": "Loic Tenant",
-                "use_config_for_attributes": false,
                 "default_miq_group_id": 25,
                 "source_type": "CloudTenant",
                 "source_id": 6
@@ -278,7 +273,6 @@ export const initalDataForFirstTestCase = {
                 "ancestry": "1/2",
                 "divisible": true,
                 "description": "openshift_demo",
-                "use_config_for_attributes": false,
                 "default_miq_group_id": 26,
                 "source_type": "CloudTenant",
                 "source_id": 3
@@ -300,7 +294,6 @@ export const initalDataForFirstTestCase = {
                 "ancestry": "1/2",
                 "divisible": true,
                 "description": "testtel",
-                "use_config_for_attributes": false,
                 "default_miq_group_id": 27,
                 "source_type": "CloudTenant",
                 "source_id": 4
@@ -322,7 +315,6 @@ export const initalDataForFirstTestCase = {
                 "ancestry": "1/2",
                 "divisible": true,
                 "description": "test-ivy",
-                "use_config_for_attributes": false,
                 "default_miq_group_id": 50,
                 "source_type": "CloudTenant",
                 "source_id": 13
@@ -344,7 +336,6 @@ export const initalDataForFirstTestCase = {
                 "ancestry": "1/2",
                 "divisible": true,
                 "description": "Massachusetts",
-                "use_config_for_attributes": false,
                 "default_miq_group_id": 34,
                 "source_type": "CloudTenant",
                 "source_id": 8
@@ -366,7 +357,6 @@ export const initalDataForFirstTestCase = {
                 "ancestry": "1/2",
                 "divisible": true,
                 "description": "testetot",
-                "use_config_for_attributes": false,
                 "default_miq_group_id": 41,
                 "source_type": "CloudTenant",
                 "source_id": 10
@@ -388,7 +378,6 @@ export const initalDataForFirstTestCase = {
                 "ancestry": "1/2/9",
                 "divisible": true,
                 "description": "test-ivr",
-                "use_config_for_attributes": false,
                 "default_miq_group_id": 51,
                 "source_type": "CloudTenant",
                 "source_id": 12
@@ -410,7 +399,6 @@ export const initalDataForFirstTestCase = {
                 "ancestry": "1/2",
                 "divisible": true,
                 "description": "loic",
-                "use_config_for_attributes": false,
                 "default_miq_group_id": 46,
                 "source_type": null,
                 "source_id": null
@@ -432,7 +420,6 @@ export const initalDataForFirstTestCase = {
                 "ancestry": "1/2",
                 "divisible": true,
                 "description": "Training environment",
-                "use_config_for_attributes": false,
                 "default_miq_group_id": 36,
                 "source_type": null,
                 "source_id": null
@@ -454,7 +441,6 @@ export const initalDataForFirstTestCase = {
                 "ancestry": "1",
                 "divisible": true,
                 "description": "OpenStack Cloud Provider OpenStack",
-                "use_config_for_attributes": false,
                 "default_miq_group_id": 20,
                 "source_type": "ExtManagementSystem",
                 "source_id": 7
@@ -476,7 +462,6 @@ export const initalDataForFirstTestCase = {
                 "ancestry": "1",
                 "divisible": true,
                 "description": "new",
-                "use_config_for_attributes": false,
                 "default_miq_group_id": 38,
                 "source_type": null,
                 "source_id": null

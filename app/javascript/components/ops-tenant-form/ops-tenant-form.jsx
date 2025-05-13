@@ -19,7 +19,7 @@ const OpsTenantForm = ({
   useEffect(() => {
     if (recordId) {
       miqSparkleOn();
-      API.get(`/api/tenants/${recordId}?expand=resources&attributes=name,description,use_config_for_attributes,ancestry,divisible`)
+      API.get(`/api/tenants/${recordId}?expand=resources&attributes=name,description,ancestry,divisible`)
         .then(setInitialValues)
         .then(() => {
           miqSparkleOff();
@@ -78,7 +78,7 @@ const OpsTenantForm = ({
     <div>
       <MiqFormRenderer
         initialValues={initialValues}
-        schema={createSchema(!recordId, !initialValues.ancestry, ancestry || initialValues.ancestry, initialValues.id)}
+        schema={createSchema(!recordId, ancestry || initialValues.ancestry, initialValues.id)}
         onSubmit={handleSubmit}
         onCancel={handleCancel}
         canReset={!!recordId}

@@ -35,7 +35,7 @@ describe('OpstTenantForm', () => {
   });
 
   it('should mount form without initialValues', async(done) => {
-    fetchMock.getOnce(`/api/tenants/${initialProps.recordId}?expand=resources&attributes=name,description,use_config_for_attributes,ancestry,divisible`, {
+    fetchMock.getOnce(`/api/tenants/${initialProps.recordId}?expand=resources&attributes=name,description,ancestry,divisible`, {
       name: 'foo',
     });
     let wrapper;
@@ -52,7 +52,7 @@ describe('OpstTenantForm', () => {
   });
 
   it('should mount and set initialValues', async(done) => {
-    fetchMock.getOnce('/api/tenants/123?expand=resources&attributes=name,description,use_config_for_attributes,ancestry,divisible', {
+    fetchMock.getOnce('/api/tenants/123?expand=resources&attributes=name,description,ancestry,divisible', {
       name: 'foo',
     });
     let wrapper;
@@ -111,11 +111,10 @@ describe('OpstTenantForm', () => {
   });
 
   it('should correctly edit existing entity.', async(done) => {
-    fetchMock.getOnce('/api/tenants/123?expand=resources&attributes=name,description,use_config_for_attributes,ancestry,divisible', {
+    fetchMock.getOnce('/api/tenants/123?expand=resources&attributes=name,description,ancestry,divisible', {
       name: 'foo',
       description: 'bar',
       ancestry: null,
-      use_config_for_attributes: true,
       divisible: false,
     });
     fetchMock.getOnce('/api/tenants?filter[]=name=foo&expand=resources', {
@@ -141,7 +140,6 @@ describe('OpstTenantForm', () => {
         name: 'foo',
         description: 'desc',
         divisible: false,
-        use_config_for_attributes: true,
       });
       expect(miqRedirectBack).toHaveBeenCalledWith('Project "foo" has been successfully saved.', 'success', '/foo/bar');
       done();
