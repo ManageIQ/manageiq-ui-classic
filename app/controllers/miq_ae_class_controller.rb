@@ -2820,11 +2820,6 @@ class MiqAeClassController < ApplicationController
     @branch_names = git_repo.git_branches.collect(&:name)
     @tag_names = git_repo.git_tags.collect(&:name)
     @ref_type = MiqAeDomain.find(params[:id]).ref_type
-    if @ref_type == "tag"
-      @ref_type = "Tag"
-    elsif @ref_type == "branch"
-      @ref_type = "Branch"
-    end
     @ref_name = MiqAeDomain.find(params[:id]).ref
     @git_repo_id = git_repo.id
     @right_cell_text = _("Refreshing branch/tag for Git-based Domain")

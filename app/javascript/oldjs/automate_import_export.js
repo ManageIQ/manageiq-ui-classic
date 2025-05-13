@@ -216,9 +216,9 @@ window.Automate = {
   },
 
   setUpDefaultGitBranchOrTagValue(refType, refName) {
-    if (refType === 'Branch') {
-      $('select.git-branch-or-tag').val('Branch');
-      $('select.git-branch-or-tag-select').val('Branch');
+    if (refType === 'branch') {
+      $('select.git-branch-or-tag').val('branch');
+      $('select.git-branch-or-tag-select').val('branch');
 
       $('select.git-branches').val(refName);
       $('select.git-branches').selectpicker('refresh');
@@ -226,8 +226,8 @@ window.Automate = {
       $('.git-branch-group').show();
       $('.git-tag-group').hide();
     } else {
-      $('select.git-branch-or-tag').val('Tag');
-      $('select.git-branch-or-tag-select').val('Tag');
+      $('select.git-branch-or-tag').val('tag');
+      $('select.git-branch-or-tag-select').val('tag');
 
       $('select.git-tags').val(refName);
       $('select.git-tags').selectpicker('refresh');
@@ -247,11 +247,11 @@ window.Automate = {
 
     $('.git-branch-or-tag-select').on('change', function(event) {
       event.preventDefault();
-      if ($(event.currentTarget).val() === 'Branch') {
+      if ($(event.currentTarget).val() === 'branch') {
         $('.git-branch-group').show();
         $('.git-tag-group').hide();
         $('.git-branch-or-tag').val($('select.git-branches').val());
-      } else if ($(event.currentTarget).val() === 'Tag') {
+      } else if ($(event.currentTarget).val() === 'tag') {
         $('.git-branch-group').hide();
         $('.git-tag-group').show();
         $('.git-branch-or-tag').val($('select.git-tags').val());
