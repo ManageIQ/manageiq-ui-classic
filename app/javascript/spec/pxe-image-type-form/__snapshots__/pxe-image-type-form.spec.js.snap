@@ -84,6 +84,7 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -107,6 +108,13 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -172,6 +180,7 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -196,6 +205,13 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }
@@ -1584,6 +1600,7 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -1607,6 +1624,13 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -1678,6 +1702,7 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -1702,6 +1727,13 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }

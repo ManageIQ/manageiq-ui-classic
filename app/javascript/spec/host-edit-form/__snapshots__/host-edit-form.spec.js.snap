@@ -30,6 +30,7 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
       componentMapper={
         Object {
           "checkbox": [Function],
+          "checkbox-tree": [Function],
           "code-editor": [Function],
           "date-picker": [Function],
           "dual-list-select": [Function],
@@ -54,6 +55,13 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
           "time-picker": [Function],
           "tree-selector": [Function],
           "tree-view": [Function],
+          "tree-view-redux": Object {
+            "$$typeof": Symbol(react.memo),
+            "WrappedComponent": [Function],
+            "compare": null,
+            "displayName": "Connect(TreeView)",
+            "type": [Function],
+          },
           "validate-credentials": [Function],
           "validate-host-credentials": [Function],
           "wizard": [Function],
@@ -251,6 +259,7 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -275,6 +284,13 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "validate-host-credentials": [Function],
             "wizard": [Function],
@@ -479,6 +495,7 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -504,6 +521,13 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "validate-host-credentials": [Function],
               "wizard": [Function],
@@ -5518,6 +5542,7 @@ exports[`Show Edit Host Form Component should render form for multiple hosts 1`]
       componentMapper={
         Object {
           "checkbox": [Function],
+          "checkbox-tree": [Function],
           "code-editor": [Function],
           "date-picker": [Function],
           "dual-list-select": [Function],
@@ -5542,6 +5567,13 @@ exports[`Show Edit Host Form Component should render form for multiple hosts 1`]
           "time-picker": [Function],
           "tree-selector": [Function],
           "tree-view": [Function],
+          "tree-view-redux": Object {
+            "$$typeof": Symbol(react.memo),
+            "WrappedComponent": [Function],
+            "compare": null,
+            "displayName": "Connect(TreeView)",
+            "type": [Function],
+          },
           "validate-credentials": [Function],
           "validate-host-credentials": [Function],
           "wizard": [Function],
@@ -5578,6 +5610,7 @@ exports[`Show Edit Host Form Component should render form for multiple hosts 1`]
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -5602,6 +5635,13 @@ exports[`Show Edit Host Form Component should render form for multiple hosts 1`]
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "validate-host-credentials": [Function],
             "wizard": [Function],
@@ -5645,6 +5685,7 @@ exports[`Show Edit Host Form Component should render form for multiple hosts 1`]
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -5670,6 +5711,13 @@ exports[`Show Edit Host Form Component should render form for multiple hosts 1`]
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "validate-host-credentials": [Function],
               "wizard": [Function],

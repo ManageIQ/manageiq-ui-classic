@@ -2532,11 +2532,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 22.14.1
-  resolution: "@types/node@npm:22.14.1"
+  version: 22.15.3
+  resolution: "@types/node@npm:22.15.3"
   dependencies:
     undici-types: "npm:~6.21.0"
-  checksum: 10/561b1ad98ef5176d6da856ffbbe494f16655149f6a7d561de0423c8784910c81267d7d6459f59d68a97b3cbae9b5996b3b5dfe64f4de3de2239d295dcf4a4dcc
+  checksum: 10/6b4ff03c36598432b419980f828281aa16383e2de6eb61f73275495ef8d2cbf8cb5607659b4cae5ff8b2b2ff69913ea07ffcc0be029e4280b6e8bc138dc6629b
   languageName: node
   linkType: hard
 
@@ -4093,16 +4093,16 @@ __metadata:
   linkType: hard
 
 "bn.js@npm:^4.0.0, bn.js@npm:^4.1.0, bn.js@npm:^4.11.9":
-  version: 4.12.1
-  resolution: "bn.js@npm:4.12.1"
-  checksum: 10/07f22df8880b423c4890648e95791319898b96712b6ebc5d6b1082b34074f09dedb8601e717d67f905ce29bb1a5313f9a2b1a2015a679e42c9eed94392c0d379
+  version: 4.12.2
+  resolution: "bn.js@npm:4.12.2"
+  checksum: 10/5803983405c087443e0e6c9bb5d0bc863d9f987d77e710f81b14c55616494f5a274e1650ee892531acb3529d52c0e0ea48aa12d2873dd80a75dde9d73a2ec518
   languageName: node
   linkType: hard
 
 "bn.js@npm:^5.2.1":
-  version: 5.2.1
-  resolution: "bn.js@npm:5.2.1"
-  checksum: 10/7a7e8764d7a6e9708b8b9841b2b3d6019cc154d2fc23716d0efecfe1e16921b7533c6f7361fb05471eab47986c4aa310c270f88e3507172104632ac8df2cfd84
+  version: 5.2.2
+  resolution: "bn.js@npm:5.2.2"
+  checksum: 10/51ebb2df83b33e5d8581165206e260d5e9c873752954616e5bf3758952b84d7399a9c6d00852815a0aeefb1150a7f34451b62d4287342d457fa432eee869e83e
   languageName: node
   linkType: hard
 
@@ -6759,9 +6759,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.5.73":
-  version: 1.5.141
-  resolution: "electron-to-chromium@npm:1.5.141"
-  checksum: 10/461176a23e3429a575c4263bd141c833a5793b36929e8de6d7568062dbc4ee2d374b9ca0dd7d03e6a166f75c69fba99281fc3cfab3fff675a8009020dd8ed83b
+  version: 1.5.143
+  resolution: "electron-to-chromium@npm:1.5.143"
+  checksum: 10/91a7980f96da5ad33b77e95c7e628f468e6bb53eac41437612882810a7552514132728f7c34ee5c967c599557af491fcc4f75e9138f82d22c1b1cdfc63fb8d6b
   languageName: node
   linkType: hard
 
@@ -11756,6 +11756,7 @@ __metadata:
     proxy-polyfill: "npm:^0.1.7"
     react: "npm:~16.13.1"
     react-bootstrap: "npm:~0.33.0"
+    react-checkbox-tree: "npm:^1.8.0"
     react-codemirror2: "npm:^8.0.0"
     react-dom: "npm:~16.13.1"
     react-markdown: "npm:6.0.0"
@@ -12405,7 +12406,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^3.3.8":
+"nanoid@npm:^3.0.0, nanoid@npm:^3.3.8":
   version: 3.3.11
   resolution: "nanoid@npm:3.3.11"
   bin:
@@ -14542,6 +14543,20 @@ __metadata:
     react: ">=16.3.0"
     react-dom: ">=16.3.0"
   checksum: 10/74df0f7ddee25e55c0b015ca989b6138684540a4fb9f625df62ee787545ee9f385ed59d3daa6fb8cfbfa280f4134d0053e4b1611eed61c707c7540fff8367d11
+  languageName: node
+  linkType: hard
+
+"react-checkbox-tree@npm:^1.8.0":
+  version: 1.8.0
+  resolution: "react-checkbox-tree@npm:1.8.0"
+  dependencies:
+    classnames: "npm:^2.2.5"
+    lodash: "npm:^4.17.10"
+    nanoid: "npm:^3.0.0"
+    prop-types: "npm:^15.5.8"
+  peerDependencies:
+    react: ^15.3.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 10/700e87c0d6b1c7a15e104d0ef01ac1c15b8eb74905cd2a3b1e087a1c6fa596e4a58894ef553d5f8651782d7012c07eab87f9646f44def3569163a89c1cbb0f71
   languageName: node
   linkType: hard
 
