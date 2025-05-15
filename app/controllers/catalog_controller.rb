@@ -1649,8 +1649,8 @@ class CatalogController < ApplicationController
   def available_automation_managers
     @edit[:new][:available_managers] =
       ManageIQ::Providers::AutomationManager.all.collect { |t| [t.name, t.id] }.sort
-    @edit[:new][:template_id] = @record.job_template.try(:id)
-    @edit[:new][:manager_id] = @record.job_template.try(:manager).try(:id)
+    @edit[:new][:template_id] = @record.configuration_script.try(:id)
+    @edit[:new][:manager_id] = @record.configuration_script.try(:manager).try(:id)
     available_job_templates(@edit[:new][:manager_id]) if @edit[:new][:manager_id]
   end
 
@@ -1660,7 +1660,7 @@ class CatalogController < ApplicationController
   end
 
   def add_configuration_script_vars(st)
-    st.job_template = @edit[:new][:template_id].nil? ? nil : ConfigurationScript.find(@edit[:new][:template_id])
+    st.configuration_script = @edit[:new][:template_id].nil? ? nil : ConfigurationScript.find(@edit[:new][:template_id])
   end
 
   def add_server_profile_template_vars(service_template)
