@@ -69,7 +69,12 @@ module OpsController::Settings::Tags
     category = Classification.find(params[:id])
     add_flash(_("Category \"%{name}\" was saved") % {:name => category.name})
     get_node_info(x_node)
-    replace_right_cell(:nodetype => "root")
+    render :update do |page|
+      page << javascript_prologue
+      page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+      page << "miqScrollTop();" if @flash_array.present?
+      page.replace_html('my_company_categories', :partial => 'settings_my_company_categories_tab')
+    end
   end
 
   def category_form
