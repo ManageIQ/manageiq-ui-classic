@@ -263,8 +263,8 @@ describe('Automate', function() {
         it('refreshes the selectpicker for git-branches and git-tags', function() {
           Automate.renderGitImport(['branches'], ['tags'], '123', {message: 'the message', level: 'warning'});
           expect($.fn.selectpicker.calls.allArgs()).toEqual([['refresh'], ['refresh']]);
-          expect($.fn.selectpicker.calls.first().object[0].className).toEqual('git-branches');
-          expect($.fn.selectpicker.calls.mostRecent().object[0].className).toEqual('git-tags');
+          expect($.fn.selectpicker.calls.first().object.selector).toEqual('select.git-branches');
+          expect($.fn.selectpicker.calls.mostRecent().object.selector).toEqual('select.git-tags');
         });
       });
 

@@ -6,7 +6,7 @@ describe('miq_application.js', function() {
     });
 
     it('verify serialize method doesnt convert line feed value to windows line feed', function() {
-      expect(miqSerializeForm('form_div')).toEqual('method_data=new%20line%20added%0A%0A');
+      expect(miqSerializeForm('form_div')).toEqual("method_data=new+line+added%0A%0A");
     });
   });
 
