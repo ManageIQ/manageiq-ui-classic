@@ -42,10 +42,6 @@ module JsHelper
     "if (miqDomElementExists('#{j_str(element)}')) #{javascript_hide(element)}".html_safe
   end
 
-  def partial_replace(from, partial, locals)
-    "$(\"##{h(from)}\").replaceWith(\"#{escape_javascript(render(:partial => partial, :locals => locals))}\");".html_safe
-  end
-
   def javascript_checked(element)
     "if ($('##{j_str(element)}').prop('type') == 'checkbox') {$('##{j_str(element)}').prop('checked', true);}"
       .html_safe
