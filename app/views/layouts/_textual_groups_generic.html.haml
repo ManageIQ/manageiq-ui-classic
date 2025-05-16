@@ -2,6 +2,6 @@
 - if respond_to?(:textual_summary_flash_list)
   - process_flash_messages(textual_summary_flash_list).each do |flash|
     :javascript
-      add_flash("#{j_str(flash[:message])}", "#{j_str(flash[:level])}")
+      add_flash("#{j(flash[:message])}", "#{j(flash[:level])}")
 #textual_summary
   = react('TextualSummaryWrapper', {:options => @options, :summary => process_textual_info(textual_group_list, @record)})

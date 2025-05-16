@@ -71,8 +71,8 @@ module OpsController::Settings::AnalysisProfiles
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
         page << "miqScrollTop();" if @flash_array.present?
         page.replace_html("ap_form_div", :partial => "ap_form", :locals => {:entry => session[:edit_filename], :edit => true})
-        page << javascript_focus("entry_#{j_str(params[:field])}")
-        page << "$('#entry_#{j_str(params[:field])}').select();"
+        page << javascript_focus("entry_#{j(params[:field])}")
+        page << "$('#entry_#{j(params[:field])}').select();"
       end
     elsif params[:edit_entry] == "edit_registry"
       session[:reg_data] = {}
@@ -83,8 +83,8 @@ module OpsController::Settings::AnalysisProfiles
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
         page << "miqScrollTop();" if @flash_array.present?
         page.replace("ap_form_div", :partial => "ap_form", :locals => {:entry => session[:reg_data], :edit => true})
-        page << javascript_focus("entry_#{j_str(params[:field])}")
-        page << "$('#entry_#{j_str(params[:field])}').select();"
+        page << javascript_focus("entry_#{j(params[:field])}")
+        page << "$('#entry_#{j(params[:field])}').select();"
       end
     elsif params[:edit_entry] == "edit_nteventlog"
       session[:nteventlog_data] = {}
@@ -104,8 +104,8 @@ module OpsController::Settings::AnalysisProfiles
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
         page << "miqScrollTop();" if @flash_array.present?
         page.replace("ap_form_div", :partial => "ap_form", :locals => {:entry => session[:nteventlog_data], :edit => true})
-        page << javascript_focus("entry_#{j_str(params[:field])}")
-        page << "$('#entry_#{j_str(params[:field])}').select();"
+        page << javascript_focus("entry_#{j(params[:field])}")
+        page << "$('#entry_#{j(params[:field])}').select();"
       end
     else
       session[:edit_filename] = ""
