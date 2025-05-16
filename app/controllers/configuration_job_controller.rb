@@ -10,7 +10,7 @@ class ConfigurationJobController < ApplicationController
   include Mixins::BreadcrumbsMixin
 
   def self.model
-    ManageIQ::Providers::AnsibleTower::AutomationManager::Job
+    ManageIQ::Providers::ExternalAutomationManager::OrchestrationStack
   end
 
   def self.table_name
@@ -36,7 +36,7 @@ class ConfigurationJobController < ApplicationController
     when "configuration_job_delete"
       configuration_job_delete
     when "configuration_job_tag"
-      tag(ManageIQ::Providers::AnsibleTower::AutomationManager::Job)
+      tag(self.class.model)
     when "configuration_job_reload"
       # TODO: this line is not needed when feature name "configuration_job_reload" will exist
       assert_privileges("configuration_job_control")
@@ -72,7 +72,6 @@ class ConfigurationJobController < ApplicationController
     {
       :breadcrumbs => [
         {:title => _("Automation")},
-        {:title => _("Ansible Tower")},
         {:title => _("Jobs"), :url => controller_url},
       ],
     }
