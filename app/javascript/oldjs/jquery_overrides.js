@@ -59,6 +59,7 @@ $.ajaxSetup({
       return text;
     }),
     'text script': logError(function(text) {
+      console.log(text);
       if (text.match(/^{/)) {
         return jQuery.jsonPayload(text, function(text) {
           return text;
