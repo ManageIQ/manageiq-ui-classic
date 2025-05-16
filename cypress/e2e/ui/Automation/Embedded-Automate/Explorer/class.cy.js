@@ -130,7 +130,7 @@ describe('Automation > Embedded Automate > Explorer', () => {
 
       // Verify that the class created correctly
       cy.get(':nth-child(1) > .label_header').contains('Fully Qualified Name');
-      cy.get(':nth-child(1) > .content_value').contains('/ TestDomain / TestNameSpace / TestClass');
+      cy.get(':nth-child(1) > .content_value').contains('/TestDomain/TestNameSpace/TestClass');
       cy.get(':nth-child(2) > .label_header').contains('Name');
       cy.get(':nth-child(2) > .content_value').contains('TestClass');
       cy.get(':nth-child(3) > .label_header').contains('Display Name');
@@ -173,7 +173,7 @@ describe('Automation > Embedded Automate > Explorer', () => {
 
       // Verify that the class created correctly
       cy.get(':nth-child(1) > .label_header').contains('Fully Qualified Name');
-      cy.get(':nth-child(1) > .content_value').contains('/ TestDomain / TestNameSpace / NewTestClass');
+      cy.get(':nth-child(1) > .content_value').contains('/TestDomain/TestNameSpace/NewTestClass');
       cy.get(':nth-child(2) > .label_header').contains('Name');
       cy.get(':nth-child(2) > .content_value').contains('NewTestClass');
       cy.get(':nth-child(3) > .label_header').contains('Display Name');
@@ -223,7 +223,7 @@ describe('Automation > Embedded Automate > Explorer', () => {
 
       // Verify that the class created correctly
       cy.get(':nth-child(1) > .label_header').contains('Fully Qualified Name');
-      cy.get(':nth-child(1) > .content_value').contains('/ TestDomain / TestNameSpace / TestClass');
+      cy.get(':nth-child(1) > .content_value').contains('/TestDomain/TestNameSpace/TestClass');
       cy.get(':nth-child(2) > .label_header').contains('Name');
       cy.get(':nth-child(2) > .content_value').contains('TestClass');
       cy.get(':nth-child(3) > .label_header').contains('Display Name');
@@ -246,7 +246,7 @@ describe('Automation > Embedded Automate > Explorer', () => {
 
       // Verify that the class edited correctly
       cy.get(':nth-child(1) > .label_header').contains('Fully Qualified Name');
-      cy.get(':nth-child(1) > .content_value').contains('/ TestDomain / TestNameSpace / TestClassEdit');
+      cy.get(':nth-child(1) > .content_value').contains('/TestDomain/TestNameSpace/TestClassEdit');
       cy.get(':nth-child(2) > .label_header').contains('Name');
       cy.get(':nth-child(2) > .content_value').contains('TestClassEdit');
       cy.get(':nth-child(3) > .label_header').contains('Display Name');
