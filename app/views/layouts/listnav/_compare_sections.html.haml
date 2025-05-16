@@ -3,7 +3,7 @@
 .panel-group{:style => style}
   = miq_accordion_panel(@lastaction == "drift" ? _("Drift Sections") : _("Comparison Sections"), true, "sections") do
     :javascript
-      miqTreeResetState('#{j_str @sections_tree.name}');
+      miqTreeResetState('#{j @sections_tree.name}');
     = render(:partial => 'shared/tree', :locals => {:tree => @sections_tree, :name => @sections_tree.name})
   .spacer
   %table{:width => "100%"}

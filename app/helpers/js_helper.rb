@@ -9,47 +9,40 @@ module JsHelper
     'miqSparkleOff();'
   end
 
-  # safe variant of j/escape_javascript that calls .to_s to work with non-string values
-  def j_str(value)
-    j(value.to_s)
-  end
-
   def javascript_focus(element)
-    "$('##{j_str(element)}').focus();".html_safe
+    "$('##{j(element)}').focus();".html_safe
   end
 
   def javascript_disable_field(element)
-    "$('##{j_str(element)}').prop('disabled', true);".html_safe
+    "$('##{j(element)}').prop('disabled', true);".html_safe
   end
 
   def javascript_enable_field(element)
-    "$('##{j_str(element)}').prop('disabled', false);".html_safe
+    "$('##{j(element)}').prop('disabled', false);".html_safe
   end
 
   def javascript_show(element)
-    "$('##{j_str(element)}').show();".html_safe
+    "$('##{j(element)}').show();".html_safe
   end
 
   def javascript_hide(element)
-    "$('##{j_str(element)}').hide();".html_safe
+    "$('##{j(element)}').hide();".html_safe
   end
 
   def javascript_show_if_exists(element)
-    "if (miqDomElementExists('#{j_str(element)}')) #{javascript_show(element)}".html_safe
+    "if (miqDomElementExists('#{j(element)}')) #{javascript_show(element)}".html_safe
   end
 
   def javascript_hide_if_exists(element)
-    "if (miqDomElementExists('#{j_str(element)}')) #{javascript_hide(element)}".html_safe
+    "if (miqDomElementExists('#{j(element)}')) #{javascript_hide(element)}".html_safe
   end
 
   def javascript_checked(element)
-    "if ($('##{j_str(element)}').prop('type') == 'checkbox') {$('##{j_str(element)}').prop('checked', true);}"
-      .html_safe
+    "if ($('##{j(element)}').prop('type') == 'checkbox') {$('##{j(element)}').prop('checked', true);}".html_safe
   end
 
   def javascript_unchecked(element)
-    "if ($('##{j_str(element)}').prop('type') == 'checkbox') {$('##{j_str(element)}').prop('checked', false);}"
-      .html_safe
+    "if ($('##{j(element)}').prop('type') == 'checkbox') {$('##{j(element)}').prop('checked', false);}".html_safe
   end
 
   def js_build_calendar(options = {})
@@ -60,7 +53,7 @@ module JsHelper
       ManageIQ.calendar.calDateTo = #{js_format_date(options[:date_to])};
       ManageIQ.calendar.calSkipDays = #{skip_days};
       miqBuildCalendar();
-EOD
+    EOD
   end
 
   # JSONP request access prevention

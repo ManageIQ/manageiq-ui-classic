@@ -76,7 +76,7 @@ module VmCommon
       javascript_flash(:spinner_off => true)
     else
       options
-      "$(\"##{h(@refresh_div)}\").replaceWith(\"#{escape_javascript(render(:partial => "vm_common/#{@refresh_partial}"))}\");".html_safe
+      "$(\"##{h(@refresh_div)}\").replaceWith(\"#{j(render(:partial => "vm_common/#{@refresh_partial}"))}\");".html_safe
     end
   end
 
