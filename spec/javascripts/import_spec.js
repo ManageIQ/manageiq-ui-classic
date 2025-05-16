@@ -120,6 +120,7 @@ describe('import.js', function() {
 
           it('disables the git-url-import', function() {
             expect($.fn.prop).toHaveBeenCalledWith('disabled', null);
+            expect($.fn.prop.calls.mostRecent().object.selector).toEqual('#git-url-import');
           });
 
           it('turns the spinner off', function() {
