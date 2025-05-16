@@ -105,6 +105,7 @@ module Mixins
           physical_switches
           physical_storages
           placement_groups
+          resource_pools_cloud
           security_groups
           security_policies
           security_policy_rules
