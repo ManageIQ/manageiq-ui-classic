@@ -41,7 +41,7 @@
             = _("red italics")
         = _("do not change the outcome of the scope or expression")
       %br{:style => "line-height: 2.5em"}
-      .btn.btn-default{:id => "squash_button", :onclick => "miqSquashToggle('#{j_str(@rsop_tree.name.to_s)}')", :title => _('Collapse All')}
+      .btn.btn-default{:id => "squash_button", :onclick => "miqSquashToggle('#{j(@rsop_tree.name.to_s)}')", :title => _('Collapse All')}
         %i{:class => "fa fa-minus-square-o fa-lg"}
       %br{:style => "line-height: 2.5em"}
       = render(:partial => 'shared/tree', :locals => {:tree => @rsop_tree, :name => @rsop_tree.name})
