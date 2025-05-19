@@ -1304,7 +1304,7 @@ class CatalogController < ApplicationController
     @available_catalogs = available_catalogs.sort # Get available catalogs with tenants and ancestors
     @additional_tenants = @edit[:new][:tenant_ids].map(&:to_s) # Get ids of selected Additional Tenants in the Tenants tree
     available_orchestration_templates if @record.kind_of?(ServiceTemplateOrchestration)
-    available_ansible_tower_managers if @record.kind_of?(ServiceTemplateAnsibleTower) || @record.kind_of?(ServiceTemplateAwx)
+    available_automation_managers if @record.kind_of?(ServiceTemplateAnsibleTower) || @record.kind_of?(ServiceTemplateAwx)
     available_container_managers if @record.kind_of?(ServiceTemplateContainerTemplate)
     fetch_zones
     @edit[:new][:zone_id] = @record.zone_id
@@ -1646,11 +1646,10 @@ class CatalogController < ApplicationController
     return job_templates, workflow_templates
   end
 
-  def available_ansible_tower_managers
-    @edit[:new][:available_managers] =
-      ManageIQ::Providers::AutomationManager.all.collect { |t| [t.name, t.id] }.sort
-    @edit[:new][:template_id] = @record.job_template.try(:id)
-    @edit[:new][:manager_id] = @record.job_template.try(:manager).try(:id)
+  def available_automation_managers
+    @edit[:new][:available_managers] = @record.available_managers.collect { |t| [t.name, t.id] }.sort
+    @edit[:new][:template_id] = @record.configuration_script.try(:id)
+    @edit[:new][:manager_id] = @record.configuration_script.try(:manager).try(:id)
     available_job_templates(@edit[:new][:manager_id]) if @edit[:new][:manager_id]
   end
 
