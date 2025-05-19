@@ -57,7 +57,6 @@ class AutomationManagerConfiguredSystemController < ApplicationController
     {
       :breadcrumbs => [
         {:title => _("Automation")},
-        {:title => _("Ansible Tower")},
         {:title => _("Configured Systems"), :url => controller_url},
       ],
     }
