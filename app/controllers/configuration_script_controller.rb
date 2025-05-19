@@ -67,7 +67,6 @@ class ConfigurationScriptController < ApplicationController
     {
       :breadcrumbs => [
         {:title => _("Automation")},
-        {:title => _("Ansible Tower")},
         {:title => _("Templates"), :url => controller_url},
       ],
     }
