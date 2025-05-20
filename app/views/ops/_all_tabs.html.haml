@@ -164,8 +164,6 @@
         - if super_admin_user?
           = miq_tab_header("diagnostics_database", @sb[:active_tab]) do
             = _("Database")
-          = miq_tab_header("diagnostics_orphaned_data", @sb[:active_tab]) do
-            = _("Orphaned Data")
       .tab-content
         = miq_tab_content("diagnostics_zones", @sb[:active_tab]) do
           = render :partial => "diagnostics_zones_tab"
@@ -180,8 +178,6 @@
           = miq_tab_content("diagnostics_database", @sb[:active_tab]) do
             - if @sb[:active_tab] == "diagnostics_database"
               = render :partial => "diagnostics_database_tab"
-          = miq_tab_content("diagnostics_orphaned_data", @sb[:active_tab]) do
-            = render :partial => "diagnostics_orphaned_data_tab"
   - when :rbac_tree
     #rbac_details
       = render :partial => "rbac_details_tab"
