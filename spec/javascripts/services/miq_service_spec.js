@@ -57,6 +57,7 @@ describe('miqService', function() {
 
     it('refreshes all selects', function() {
       testService.refreshSelectpicker();
+      expect($.fn.selectpicker.calls.mostRecent().object.selector).toEqual('select');
       expect($.fn.selectpicker.calls.mostRecent().args[0]).toEqual('refresh');
     });
   });
