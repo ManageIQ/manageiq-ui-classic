@@ -1123,8 +1123,8 @@ window.miqJqueryRequest = function(url, options) {
   };
 
   if (options.dataType === undefined) {
-    ajax_options.accepts = { miq_script: `*/*;q=0.5, ${$.ajaxSettings.accepts.script}` };
-    ajax_options.dataType = 'miq_script';
+    ajax_options.accepts = { script: `*/*;q=0.5, ${$.ajaxSettings.accepts.script}` };
+    ajax_options.dataType = 'script';
   }
 
   // copy selected options over
