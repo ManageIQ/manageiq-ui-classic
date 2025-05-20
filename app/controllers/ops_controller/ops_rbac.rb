@@ -777,7 +777,7 @@ module OpsController::OpsRbac
         page.replace("customer_tags_div", :partial => "ops/rbac_group/customer_tags") if params[:use_filter_expression].present?
 
         # Only update description field value if ldap group user field was selected
-        page << "$('#description').val('#{j_str(@edit[:new][:ldap_groups_user])}');" if params[:ldap_groups_user]
+        page << "$('#description').val('#{j(@edit[:new][:ldap_groups_user])}');" if params[:ldap_groups_user]
 
         # don't do anything to lookup box when checkboxes on the right side are checked
         page << set_element_visible('group_lookup', @edit[:new][:lookup]) unless params[:check]

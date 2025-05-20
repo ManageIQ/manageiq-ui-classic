@@ -30,7 +30,7 @@
                   %b= _("Enable Collection by Cluster")
                   %br/
                   :javascript
-                    miqTreeResetState('#{j_str @cluster_tree.name}');
+                    miqTreeResetState('#{j @cluster_tree.name}');
                   = render(:partial => 'shared/tree', :locals => {:tree => @cluster_tree, :name => @cluster_tree.name})
                   %br/
                   .note= _("VM data will be collected for VMs under selected Hosts only. Data is collected for a Cluster and all of its Hosts when at least one Host is selected.")
@@ -59,7 +59,7 @@
                   %b= _("Enable Collection by Datastore")
                   %br/
                   :javascript
-                    miqTreeResetState('#{j_str @datastore_tree.name}');
+                    miqTreeResetState('#{j @datastore_tree.name}');
                   = render(:partial => 'shared/tree', :locals => {:tree => @datastore_tree, :name => @datastore_tree.name})
             - else
               .note

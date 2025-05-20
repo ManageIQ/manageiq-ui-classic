@@ -151,8 +151,8 @@ module OpsController::Settings::Tags
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
         page << "miqScrollTop();" if @flash_array.present?
         page.replace("classification_entries_div", :partial => "classification_entries", :locals => {:entry => entry, :edit => true})
-        page << javascript_focus("entry_#{j_str(params[:field])}")
-        page << "$('#entry_#{j_str(params[:field])}').select();"
+        page << javascript_focus("entry_#{j(params[:field])}")
+        page << "$('#entry_#{j(params[:field])}').select();"
       end
       session[:entry] = entry
     end

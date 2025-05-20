@@ -195,8 +195,8 @@ class ApplicationController < ActionController::Base
           page << "
             sendDataWithRx({
               serverError: {
-                data: '#{j_str message}',
-                url: '#{j_str request.url}',
+                data: '#{j message}',
+                url: '#{j request.url}',
               },
               source: 'server',
             });
