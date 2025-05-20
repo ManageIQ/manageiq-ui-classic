@@ -492,8 +492,7 @@ describe('Menu', () => {
 
       it('About', () => {
         cy.menu('Settings', 'About').then(() => {
-          cy.wait(50000); // Need to wait before getting the modal container or else the test fails
-          cy.get('.bx--modal-container');
+          cy.get('.bx--modal-container', {timeout: 10000});
         });
       });
     });
