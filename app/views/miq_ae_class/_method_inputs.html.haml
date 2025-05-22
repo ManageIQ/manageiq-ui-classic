@@ -80,5 +80,5 @@
             %tr
               %td= record_name(record)
               %td= record.datatype.blank? ? 'string' : record.datatype
-              %td
+              %td{:autocomplete => "off"}
                 = record.datatype == 'password' ? '********' : record.default_value
