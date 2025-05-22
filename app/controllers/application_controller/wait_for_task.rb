@@ -25,7 +25,7 @@ module ApplicationController::WaitForTask
 
   def browser_refresh_task(task_id, async_interval, should_flash: false)
     async_interval = 1000 if async_interval.to_i < 1000 # if it is not an integer, assign to 1 second
-    async_interval += 250 if async_interval < 5000 # Slowly move up to 5 second retries
+    async_interval += 250 if async_interval.to_i < 5000 # Slowly move up to 5 second retries
     render :update do |page|
       page << javascript_prologue
       ajax_call = remote_function(:url => {:action => 'wait_for_task', :task_id => task_id, :async_interval => async_interval})
