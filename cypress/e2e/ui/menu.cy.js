@@ -339,11 +339,11 @@ describe('Menu', () => {
         });
 
         it('Templates', () => {
-          cy.menu('Automation', 'Automation', 'Templates').expect_show_list_title('Templates (Ansible Tower)');
+          cy.menu('Automation', 'Automation', 'Templates').expect_show_list_title('Templates');
         });
 
         it('Jobs', () => {
-          cy.menu('Automation', 'Automation', 'Jobs').expect_show_list_title('Ansible Tower Jobs');
+          cy.menu('Automation', 'Automation', 'Jobs').expect_show_list_title('Automation Jobs');
         });
       });
 
