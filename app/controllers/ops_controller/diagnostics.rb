@@ -287,30 +287,6 @@ module OpsController::Diagnostics
     log_depot_json
   end
 
-  # to delete orphaned records for user that was delete from db
-  def orphaned_records_delete
-    assert_privileges("ops_diagnostics")
-
-    MiqReportResult.delete_by_userid(params[:userid])
-  rescue => bang
-    add_flash(_("Error during Orphaned Records delete for user %{id}: %{message}") % {:id      => params[:userid],
-                                                                                      :message => bang.message}, :error)
-    javascript_flash(:spinner_off => true)
-  else
-    audit = {:event        => "orphaned_record_delete",
-             :message      => "Orphaned Records deleted for userid [#{params[:userid]}]",
-             :target_id    => params[:userid],
-             :target_class => "MiqReport",
-             :userid       => session[:userid]}
-    AuditEvent.success(audit)
-    add_flash(_("Orphaned Records for userid %{id} were successfully deleted") % {:id => params[:userid]})
-    orphaned_records_get
-    render :update do |page|
-      page << javascript_prologue
-      page.replace_html('diagnostics_orphaned_data', :partial => 'diagnostics_savedreports')
-    end
-  end
-
   def diagnostics_server_list
     assert_privileges("ops_diagnostics_server_view")
 
@@ -655,8 +631,6 @@ module OpsController::Diagnostics
         @selected_server = MiqRegion.my_region
       elsif @sb[:active_tab] == "diagnostics_database"
         database_details
-      elsif @sb[:active_tab] == "diagnostics_orphaned_data"
-        orphaned_records_get
       elsif @sb[:active_tab] == "diagnostics_server_list"
         diagnostics_server_list
       end
@@ -718,10 +692,6 @@ module OpsController::Diagnostics
                               :model => ui_lookup(:model => @selected_server.class.to_s)}
                          end
     end
-  end
-
-  def orphaned_records_get
-    @sb[:orphaned_records] = MiqReportResult.orphaned_counts_by_userid
   end
 
   # Method to build the server tree (parent is a zone or region instance)
