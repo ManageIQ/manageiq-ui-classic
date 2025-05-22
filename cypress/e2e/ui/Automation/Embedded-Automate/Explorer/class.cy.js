@@ -29,7 +29,8 @@ describe('Automation > Embedded Automate > Explorer', () => {
     cy.get('[name="description"]').type('This is a test NameSpace');
     cy.get('.bx--btn--primary').contains('Add').click();
 
-    cy.wait(1000); // Need this wait or else namespace doesn't get added properly
+    // Wait for namespace to be visible
+    cy.get('[title="Automate Namespace: TestNameSpace"]', {timeout: 1000}).should('be.visible')
   });
 
   beforeEach(() => {

@@ -239,7 +239,7 @@ describe('Rates', () => {
       cy.get('#fixed_rate_1_0').clear().type('1');
       cy.get('#per_time_2').select('Monthly');
       cy.get('#per_unit_2').select('KB');
-      cy.get('#finish_2_0').clear();
+      cy.get('#finish_2_0').clear({force: true});
       cy.get('#variable_rate_2_0').clear({force: true }).type('100', { force: true });
       cy.get('#buttons_on > .btn-primary').click({ force: true });
     }).then(() => {

@@ -26,8 +26,8 @@ describe('Search box', () => {
     cy.expect_no_search_box();
   });
 
-  it('Is not present on list view page', () => {
+  it('Is present on list view page', () => {
     cy.menu('Control', 'Alerts');
-    cy.expect_no_search_box();
+    cy.expect_search_box();
   });
 });
