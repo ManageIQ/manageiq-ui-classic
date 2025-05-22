@@ -32,3 +32,21 @@
   }  
 }
 
+.entry-point-wrapper {
+  display: inline-flex;
+  width: 100%;
+
+  .entry-point-text-input {
+    width: 80%;
+    margin-right: 20px;
+  }
+
+  .entry-point-buttons {
+    display: inline-flex;
+    margin-top: 20px;
+
+    .entry-point-open {
+      margin-right: 10px;
+    }
+  }
+}
