@@ -31,7 +31,7 @@ class OrchestrationStackController < ApplicationController
 
   def show_list
     process_show_list(
-      :named_scope => [[:without_type, 'ManageIQ::Providers::AnsibleTower::AutomationManager::Job']]
+      :named_scope => [[:without_type, 'ManageIQ::Providers::ExternalAutomationManager::OrchestrationStack']]
     )
   end
 

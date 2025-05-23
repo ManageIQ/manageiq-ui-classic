@@ -3,8 +3,8 @@
   %h3
     - t = {:amount => @tagitems.length, :object => ui_lookup(:model => @edit[:tagging]), :objects => ui_lookup(:models => @edit[:tagging])}
     - case @edit[:tagging]
-      - when "ManageIQ::Providers::AnsibleTower::AutomationManager::Job"
-        = n_("%{amount} Ansible Tower Job Being Tagged", "%{amount} Ansible Tower Jobs Being Tagged", @tagitems.length) % t
+      - when "ManageIQ::Providers::ExternalAutomationManager::OrchestrationStack"
+        = n_("%{amount} Automation Job Being Tagged", "%{amount} Automation Jobs Being Tagged", @tagitems.length) % t
       - when "ManageIQ::Providers::AnsibleTower::AutomationManager"
         = n_("%{amount} Automation Manager (Ansible Tower) Being Tagged", "%{amount} Automation Managers (Ansible Tower) Being Tagged", @tagitems.length) % t
       - when "AvailabilityZone"
@@ -108,7 +108,7 @@
       - when "Switch"
         = n_("%{amount} Switch Being Tagged", "%{amount} Switches Being Tagged", @tagitems.length) % t
       - when "ConfigurationScript"
-        = n_("%{amount} Template (Ansible Tower) Being Tagged", "%{amount} Templates (Ansible Tower) Being Tagged", @tagitems.length) % t
+        = n_("%{amount} Automation Template Being Tagged", "%{amount} Automation Templates Being Tagged", @tagitems.length) % t
       - when "VmOrTemplate"
         = n_("%{amount} VM or Template Being Tagged", "%{amount} VMs or Templates Being Tagged", @tagitems.length) % t
       - else

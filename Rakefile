@@ -97,8 +97,18 @@ namespace :spec do
       end
       puts "== Rails server started with PID #{rails_pid} =="
 
+      puts "\n== Starting simulated queue worker =="
+      simulator_pid = Bundler.with_original_env do
+        spawn("bin/rails app:evm:simulate_queue_worker", [:out, :err] => "/dev/null")
+      end
+      puts "== Simulated queue worker started with PID #{simulator_pid} =="
+
       Rake::Task["spec:cypress:run"].invoke
     ensure
+      if simulator_pid
+        puts "\n== Killing simulated queue worker with PID #{simulator_pid} =="
+        Process.kill("INT", simulator_pid)
+      end
       if rails_pid
         puts "\n== Killing Rails server with PID #{rails_pid} =="
         Process.kill("INT", rails_pid)

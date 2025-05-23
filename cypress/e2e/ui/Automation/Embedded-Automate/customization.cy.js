@@ -28,7 +28,7 @@ describe('Automation > Embedded Automate > Customization', () => {
       // creates a dialog
       cy.get('[title="Configuration"]').click({force: true});
       cy.get('[title="Add a new Dialog"]').click({force: true});
-      cy.get('[name="name"]').type('Test User');
+      cy.get('[name="name"]').type('Test User', {force: true});
       cy.get('[name="description"').type('Test Description');
       cy.get('[name="dialog_type"]').select('Configured System Provision');
       cy.get('[class="CodeMirror-lines"]').type(':Buttons:');
@@ -72,8 +72,8 @@ describe('Automation > Embedded Automate > Customization', () => {
       // creates a dialog
       cy.get('[title="Configuration"]').click({force: true});
       cy.get('[title="Add a new Dialog"]').click({force: true});
-      cy.get('[name="name"]').type('Test User');
-      cy.get('[name="description"').type('Test Description');
+      cy.get('[name="name"]').type('Test User', {force: true});
+      cy.get('[name="description"').type('Test Description', {force: true});
       cy.get('[name="dialog_type"]').select('Configured System Provision');
       cy.get('[class="CodeMirror-lines"]').type(':Buttons:');
       cy.get('[class="btnRight bx--btn bx--btn--primary"]').click({force: true});
@@ -127,7 +127,7 @@ describe('Automation > Embedded Automate > Customization', () => {
       // creates a dialog
       cy.get('[title="Configuration"]').click({force: true});
       cy.get('[title="Add a new Dialog"]').click({force: true});
-      cy.get('[name="name"]').type('Test User');
+      cy.get('[name="name"]').type('Test User', {force: true});
       cy.get('[name="description"').type('Test Description');
       cy.get('[name="dialog_type"]').select('Configured System Provision');
       cy.get('[class="CodeMirror-lines"]').type(':Buttons:');

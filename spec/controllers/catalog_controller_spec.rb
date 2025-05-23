@@ -1165,6 +1165,55 @@ describe CatalogController do
       controller.send(:set_form_vars)
       expect(controller.instance_variable_get(:@edit)[:new][:dialog_id]).to be_nil
     end
+
+    context "with a ServiceTemplateOrchestration" do
+      let(:record) { FactoryBot.create(:service_template_orchestration) }
+
+      context "with no orchestration templates" do
+        it "sets available_templates to empty array" do
+          controller.send(:set_form_vars)
+          expect(controller.instance_variable_get(:@edit)[:new][:available_templates]).to be_empty
+        end
+      end
+
+      context "with an orchestration template" do
+        let!(:orchestration_template) { FactoryBot.create(:orchestration_template_amazon) }
+
+        it "sets available_templates" do
+          controller.send(:set_form_vars)
+          expect(controller.instance_variable_get(:@edit)[:new][:available_templates]).to eq([[orchestration_template.name, orchestration_template.id]])
+        end
+
+        context "that is selected" do
+          let!(:ems)   { FactoryBot.create(:ems_amazon) }
+          let(:record) { FactoryBot.create(:service_template_orchestration, :orchestration_template => orchestration_template) }
+
+          it "sets available_managers" do
+            controller.send(:set_form_vars)
+            expect(controller.instance_variable_get(:@edit)[:new][:available_managers]).to eq([[ems.name, ems.id]])
+          end
+        end
+      end
+    end
+
+    context "with a ServiceTemplateAnsibleTower" do
+      let!(:ems_ansible_tower)     { FactoryBot.create(:provider_ansible_tower).automation_manager }
+      let(:record)                 { FactoryBot.create(:service_template_ansible_tower) }
+
+      it "sets available_managers" do
+        controller.send(:set_form_vars)
+        expect(controller.instance_variable_get(:@edit)[:new][:available_managers]).to eq([[ems_ansible_tower.name, ems_ansible_tower.id]])
+      end
+
+      context "with other automation managers" do
+        let!(:embedded_ansible) { FactoryBot.create(:provider_embedded_ansible).automation_manager }
+
+        it "doesn't include other automation managers" do
+          controller.send(:set_form_vars)
+          expect(controller.instance_variable_get(:@edit)[:new][:available_managers]).to eq([[ems_ansible_tower.name, ems_ansible_tower.id]])
+        end
+      end
+    end
   end
 
   describe '#get_form_vars' do

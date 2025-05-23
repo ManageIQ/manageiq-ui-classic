@@ -38,7 +38,7 @@ module ApplicationController::MiqRequestMethods
 
       all_dialogs = @edit[:wf].get_all_dialogs rescue []
 
-      if @edit[:new] && @edit[:new][:addr_mode] && @edit[:new][:addr_mode][0] == "dhcp" && all_dialogs[:customize]
+      if @edit[:new] && @edit[:new][:addr_mode] && @edit[:new][:addr_mode][0] == "dhcp" && all_dialogs[:customize] && all_dialogs[:customize][:fields]
         all_dialogs[:customize][:fields][:hostname]&.[]=(:read_only, true)
         all_dialogs[:customize][:fields][:linux_host_name]&.[]=(:read_only, true)
         all_dialogs[:customize][:fields][:subnet_mask][:read_only] = true
@@ -140,8 +140,8 @@ module ApplicationController::MiqRequestMethods
       @edit = session[:edit]
       render :update do |page|
         page << javascript_prologue
-        page << "$('#row_#{j_str(@edit[:src_vm_id])}').removeClass('selected');" if @edit[:src_vm_id]
-        page << "$('#row_#{j_str(params[:sel_id])}').addClass('selected');"
+        page << "$('#row_#{j(@edit[:src_vm_id])}').removeClass('selected');" if @edit[:src_vm_id]
+        page << "$('#row_#{j(params[:sel_id])}').addClass('selected');"
         session[:changed] = true
         page << javascript_for_miq_button_visibility(session[:changed])
         @edit[:src_vm_id] = params[:sel_id].to_i

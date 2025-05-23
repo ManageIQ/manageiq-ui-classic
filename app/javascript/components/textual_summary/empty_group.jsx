@@ -1,25 +1,18 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import MiqStructuredList from '../miq-structured-list';
 
 export default function EmptyGroup(props) {
-  const { title, text } = props;
+  const { title } = props;
   return (
-    <table className="table table-bordered table-striped table-summary-screen">
-      <thead>
-        <tr>
-          <th>{title}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{text}</td>
-        </tr>
-      </tbody>
-    </table>
+    <MiqStructuredList
+      rows={[]}
+      title={title}
+      mode="generic_group"
+    />
   );
 }
 
 EmptyGroup.propTypes = {
   title: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
 };

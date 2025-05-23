@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import createSchema from './schema';
 import componentMapper from '../../forms/mappers/componentMapper';
 import {
-  KeyValueListComponent,
   CopyFromProvisonButton,
   TreeViewReduxWrapper,
   conditionalCheckbox,
@@ -159,7 +158,6 @@ const AnsiblePlayBookEditCatalogForm = ({ initialData }) => {
 
   const mapper = {
     ...componentMapper,
-    'key-value-list': KeyValueListComponent,
     'copy-from-provisioning': CopyFromProvisonButton,
     'tree-view-redux': TreeViewReduxWrapper,
     'conditional-checkbox': conditionalCheckbox,

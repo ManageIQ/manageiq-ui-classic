@@ -1,5 +1,6 @@
 = render :partial => "layouts/flash_msg"
-
+- ref_type = @ref_type || "branch"
+- ref_name = @ref_name || "origin/master"
 %form#form_div
   = hidden_field_tag(:git_repo_id, @git_repo_id, :class => "hidden-git-repo-id")
   %input{:type => "hidden", :class => "git-branch-or-tag", :name => "git_branch_or_tag"}
@@ -10,7 +11,7 @@
         = _("Branch/Tag")
       .col-md-8
         = select_tag("branch_or_tag_select",
-                     options_for_select(%w(Branch Tag)),
+                     options_for_select([["#{_('Branch')}", 'branch'], ["#{_('Tag')}", 'tag']]),
                      :class => "git-branch-or-tag-select selectpicker")
 
     .form-group.git-branch-group
@@ -30,7 +31,7 @@
     miqInitSelectPicker();
 
     Automate.setUpGitRefreshClickHandlers();
-    Automate.setUpDefaultGitBranchOrTagValue();
+    Automate.setUpDefaultGitBranchOrTagValue('#{ref_type}', '#{ref_name}');
 
     miqButtons('show');
   });

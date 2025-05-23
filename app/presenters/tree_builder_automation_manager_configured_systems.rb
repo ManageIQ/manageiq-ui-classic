@@ -1,6 +1,6 @@
 class TreeBuilderAutomationManagerConfiguredSystems < TreeBuilderConfiguredSystems
   def initialize(*args)
-    @root_class = 'ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem'
+    @root_class = 'ManageIQ::Providers::AutomationManager::ConfiguredSystem'
     super(*args)
   end
 
@@ -8,7 +8,7 @@ class TreeBuilderAutomationManagerConfiguredSystems < TreeBuilderConfiguredSyste
 
   def root_options
     {
-      :text    => t = _("All Ansible Tower Configured Systems"),
+      :text    => t = _("All Automation Configured Systems"),
       :tooltip => t
     }
   end
@@ -16,7 +16,7 @@ class TreeBuilderAutomationManagerConfiguredSystems < TreeBuilderConfiguredSyste
   def configured_systems
     {
       :id   => "csa",
-      :text => t = _("Ansible Tower Configured Systems"),
+      :text => t = _("Automation Configured Systems"),
       :icon => "pficon pficon-folder-close",
       :tip  => t
     }

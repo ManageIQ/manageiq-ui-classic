@@ -129,65 +129,6 @@ describe('miqService', function() {
           expect(testService.saveable(scheduleForm)).toBe(false);
         });
       });
-
-      describe('when the passed in model contains few attributes with null vaues', function() {
-        beforeEach(function() {
-          model = {
-          depot_name:   'my_nfs_depot',
-          uri:          'nfs://nfs_location',
-          uri_prefix:   'nfs',
-          log_userid:   null,
-          log_password: null,
-          log_protocol: 'NFS'
-          };
-        });
-
-        it('it returns an object with null attributes excluded', function() {
-          returnedObj = {
-            depot_name:   'my_nfs_depot',
-            uri:          'nfs://nfs_location',
-            uri_prefix:   'nfs',
-            log_protocol: 'NFS'
-          };
-          expect(testService.serializeModel(model)).toEqual(returnedObj);
-        });
-      });
-    });
-  });
-
-  describe('#validateWithREST', function() {
-    beforeEach(function() {
-      testService.validateWithREST($.Event, "default", '/ems_cloud/create/new?button=validate&type=default', true);
-    });
-
-    it('turns the spinner on via the miqService', function() {
-      expect(window.miqSparkleOn).toHaveBeenCalled();
-    });
-
-    it('delegates to miqService.miqAjaxButton', function() {
-      expect(window.miqAjaxButton).toHaveBeenCalledWith('/ems_cloud/create/new?button=validate&type=default', true);
-    });
-  });
-
-  describe('#validateWithAjax', function() {
-    beforeEach(function() {
-      testService.validateWithAjax('/host/create/new?button=validate&type=default');
-    });
-
-    it('turns the spinner on via the miqService', function() {
-      expect(window.miqSparkleOn).toHaveBeenCalled();
-    });
-
-    it('delegates to miqService.miqAjaxButton', function() {
-      expect(window.miqAjaxButton).toHaveBeenCalledWith('/host/create/new?button=validate&type=default', true);
-    });
-  });
-
-  describe('#disabledClick', function() {
-    it('prevents a submit action', function() {
-      var event = $.Event('click');
-      testService.disabledClick(event);
-      expect(event.isDefaultPrevented()).toBeTruthy();
     });
   });
 });

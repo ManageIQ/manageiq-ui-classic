@@ -76,7 +76,7 @@ module VmCommon
       javascript_flash(:spinner_off => true)
     else
       options
-      partial_replace(@refresh_div, "vm_common/#{@refresh_partial}")
+      "$(\"##{h(@refresh_div)}\").replaceWith(\"#{j(render(:partial => "vm_common/#{@refresh_partial}"))}\");".html_safe
     end
   end
 
@@ -580,7 +580,7 @@ module VmCommon
 
   def edit
     @record = find_record_with_rbac(VmOrTemplate, params[:id]) # Set the VM object
-    
+
     # reset @explorer if coming from explorer views
     @edit ||= {}
     @edit[:explorer] = true if params[:action] == "x_button" || session.fetch_path(:edit, :explorer)

@@ -16,7 +16,7 @@ describe('Automate', function() {
     it('ensures the selected value from the branches select tag is set on the hidden input', function() {
       expect($('.git-branch-or-tag').val()).toEqual('');
       Automate.setUpDefaultGitBranchOrTagValue();
-      expect($('.git-branch-or-tag').val()).toEqual('2');
+      expect($('.git-branch-or-tag').val()).toEqual('');
     });
   });
 
@@ -84,8 +84,8 @@ describe('Automate', function() {
     beforeEach(function() {
       var html = '';
       html += '<select class="git-branch-or-tag-select">';
-      html += '  <option value="Branch">Branch</option>';
-      html += '  <option value="Tag">Tag</option>';
+      html += '  <option value="branch">Branch</option>';
+      html += '  <option value="tag">Tag</option>';
       html += '</select>';
       html += '<div class="git-branch-group"></div>';
       html += '<div class="git-tag-group"></div>';
@@ -108,9 +108,9 @@ describe('Automate', function() {
     });
 
     describe('when the git-branch-or-select field changes', function() {
-      describe('when "Branch" is selected', function() {
+      describe('when "branch" is selected', function() {
         beforeEach(function() {
-          $('.git-branch-or-tag-select').val("Branch");
+          $('.git-branch-or-tag-select').val("branch");
           $('.git-branch-or-tag-select').change();
         });
 
@@ -133,7 +133,7 @@ describe('Automate', function() {
 
       describe('when "Tag" is selected', function() {
         beforeEach(function() {
-          $('.git-branch-or-tag-select').val("Tag");
+          $('.git-branch-or-tag-select').val("tag");
           $('.git-branch-or-tag-select').change();
         });
 

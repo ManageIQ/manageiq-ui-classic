@@ -138,7 +138,7 @@
                          :class               => "selectpicker")
             :javascript
               miqSelectPickerEvent('manager_id', '#{url}')
-    - elsif %w(generic_ansible_tower generic_awx generic_container_template).include?(@edit[:new][:st_prov_type])
+    - elsif %w(generic_ansible_tower generic_awx generic_terraform_enterprise generic_container_template).include?(@edit[:new][:st_prov_type])
       - opts = [["<#{_('Choose')}>", nil]] + @edit[:new][:available_managers]
       .form-group
         %label.col-md-2.control-label
@@ -155,7 +155,7 @@
           %label.col-md-2.control-label
             = @edit[:new][:st_prov_type] == "generic_ansible_tower" || @edit[:new][:st_prov_type] == "generic_awx" ? _('Ansible Template') : _('Container Template')
           .col-md-10
-            - if @edit[:new][:st_prov_type] == "generic_ansible_tower" || @edit[:new][:st_prov_type] == "generic_awx"
+            - if @edit[:new][:st_prov_type] == "generic_ansible_tower" || @edit[:new][:st_prov_type] == "generic_awx" || @edit[:new][:st_prov_type] == "generic_terraform_enterprise"
               = select_tag('template_id',
                             grouped_options_for_select(@edit[:new][:available_templates], @edit[:new][:template_id]),
                             "data-miq_sparkle_on" => true,

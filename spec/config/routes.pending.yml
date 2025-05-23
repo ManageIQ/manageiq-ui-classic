@@ -906,7 +906,6 @@ OpsController:
 - log_collection_form_fields
 - log_depot_edit
 - open_url_after_dialog
-- orphaned_records_delete
 - report_data
 - show
 - tl_chooser

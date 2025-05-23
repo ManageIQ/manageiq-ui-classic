@@ -23,18 +23,6 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
     miqAjaxButton(url, serializeFields, options);
   };
 
-  this.miqAsyncAjaxButton = function(url, serializeFields) {
-    miqJqueryRequest(url, {beforeSend: true, data: serializeFields});
-  };
-
-  this.restAjaxButton = function(url, button, dataType, data) {
-    miqRESTAjaxButton(url, button, dataType, data);
-  };
-
-  this.jqueryRequest = function(url, options) {
-    return miqJqueryRequest(url, options);
-  };
-
   this.refreshSelectpicker = function() {
     $('select').selectpicker('refresh');
   };
@@ -69,12 +57,6 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
     return form.$valid && form.$dirty;
   };
 
-  this.detectWithRest = function($event, url) {
-    angular.element('#button_name').val('detect');
-    miqSparkleOn();
-    return $q.when(miqRESTAjaxButton(url, $event.target, 'json'));
-  };
-
   this.networkProviders = function(options) {
     options = Object.assign(options || {}, {
       attributes: ['id', 'name'],
@@ -97,62 +79,6 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
       .catch(options.handleFailure);
   };
 
-  this.validateWithAjax = function(url, model) {
-    miqSparkleOn();
-    miqAjaxButton(url, model || true);
-  };
-
-  this.validateWithREST = function($event, credType, url, formSubmit) {
-    angular.element('#button_name').val('validate');
-    angular.element('#cred_type').val(credType);
-    if (formSubmit) {
-      miqSparkleOn();
-      return $q.when(miqRESTAjaxButton(url, $event.target, 'json'));
-    }
-    $event.preventDefault();
-  };
-
-  this.validateClicked = function($event, authType, formSubmit, angularForm, url) {
-    miqService.validateWithREST($event, authType, url, formSubmit)
-      .then(function success(data) {
-        if (data.level === 'error') {
-          angularForm.default_auth_status.$setViewValue(false);
-        } else {
-          angularForm.default_auth_status.$setViewValue(true);
-        }
-        miqService.miqFlash(data.level, data.message);
-        miqService.sparkleOff();
-      });
-  };
-
-  this.disabledClick = function($event) {
-    $event.preventDefault();
-  };
-
-  this.serializeModel = function(model) {
-    var serializedObj = angular.copy(model);
-
-    for (var k in serializedObj) {
-      if (serializedObj.hasOwnProperty(k) && !serializedObj[k]) {
-        delete serializedObj[k];
-      }
-    }
-
-    return serializedObj;
-  };
-
-  this.serializeModelWithIgnoredFields = function(model, ignoredFields) {
-    var serializedObj = angular.copy(model);
-
-    for (var k in serializedObj) {
-      if ((ignoredFields.indexOf(k) >= 0) || (serializedObj.hasOwnProperty(k) && !serializedObj[k])) {
-        delete serializedObj[k];
-      }
-    }
-
-    return serializedObj;
-  };
-
   this.handleFailure = function(e) {
     miqSparkleOff();
 
@@ -169,44 +95,6 @@ ManageIQ.angular.app.service('miqService', ['$q', 'API', '$window', function($q,
     miqService.miqFlash('error', message);
 
     return $q.reject(e);
-  };
-
-  this.getCloudNetworksByEms = function(callback) {
-    return function(id) {
-      if (!id) {
-        callback([]);
-        return;
-      }
-      miqService.sparkleOn();
-
-      API.get('/api/cloud_networks?expand=resources&attributes=name,ems_ref&filter[]=external_facing=true&filter[]=ems_id=' + id)
-        .then(getCloudNetworksByEmsData)
-        .catch(miqService.handleFailure);
-    };
-
-    function getCloudNetworksByEmsData(data) {
-      callback(data);
-      miqService.sparkleOff();
-    }
-  };
-
-  this.getProviderTenants = function(callback) {
-    return function(id) {
-      if (!id) {
-        callback([]);
-        return;
-      }
-      miqService.sparkleOn();
-
-      API.get('/api/providers/' + id + '/cloud_tenants?expand=resources&attributes=id,name')
-        .then(getCloudTenantsByEms)
-        .catch(miqService.handleFailure);
-    };
-
-    function getCloudTenantsByEms(data) {
-      callback(data);
-      miqService.sparkleOff();
-    }
   };
 
   this.redirectBack = function(message, flashType, redirectUrl) {
