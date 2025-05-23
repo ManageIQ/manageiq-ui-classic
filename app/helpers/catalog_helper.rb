@@ -268,7 +268,8 @@ module CatalogHelper
       :resource   => record.composite?,
       :request    => !record.prov_type || (record.prov_type && need_prov_dialogs?(record.prov_type)),
       :provision  => record.prov_type == catalog_provision_types[:playbook] || record.prov_type == catalog_provision_types[:terraform_template],
-      :retirement => record.prov_type == catalog_provision_types[:terraform_template] ? nil : record.config_info.fetch_path(:retirement)
+      :retirement => record.prov_type == catalog_provision_types[:terraform_template] ? nil : record.config_info.fetch_path(:retirement),
+      :variables  => record.prov_type != catalog_provision_types[:terraform_template]
     }
   end
 
