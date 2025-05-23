@@ -11764,6 +11764,7 @@ __metadata:
     prop-types: "npm:^15.6.0"
     proxy-polyfill: "npm:^0.1.7"
     react: "npm:~16.13.1"
+    react-accessible-treeview: "npm:^2.10.0"
     react-bootstrap: "npm:~0.33.0"
     react-codemirror2: "npm:^8.0.0"
     react-dom: "npm:~16.13.1"
@@ -14528,6 +14529,18 @@ __metadata:
     iconv-lite: "npm:0.4.24"
     unpipe: "npm:1.0.0"
   checksum: 10/863b5171e140546a4d99f349b720abac4410338e23df5e409cfcc3752538c9caf947ce382c89129ba976f71894bd38b5806c774edac35ebf168d02aa1ac11a95
+  languageName: node
+  linkType: hard
+
+"react-accessible-treeview@npm:^2.10.0":
+  version: 2.11.1
+  resolution: "react-accessible-treeview@npm:2.11.1"
+  peerDependencies:
+    classnames: ^2.2.6
+    prop-types: ^15.7.2
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10/99b90dcf2a9853705b72ad435c3e192d9864a2e7d102c66c78c77cdc601db706dab6c0c7e118b7d6d263fd1ae1740023276881a2b12853809660cdeb67a919be
   languageName: node
   linkType: hard
 
