@@ -199,14 +199,6 @@ const provisionTabSchema = (
         options: transformObjectToSelectOptions(verbosityTypes),
       },
       {
-        component: 'key-value-list',
-        id: 'config_info.provision.extra_vars',
-        name: 'config_info.provision.extra_vars',
-        label: __('Variables & Default Values'),
-        keyLabel: __('Variable'),
-        valueLabel: __('Default value'),
-      },
-      {
         component: componentTypes.RADIO,
         id: 'config_info.provision.dialog_type',
         name: 'config_info.provision.dialog_type',
@@ -245,159 +237,6 @@ const provisionTabSchema = (
   return schema;
 };
 
-// const retirementTabSchema = (
-//   repositories,
-//   setData,
-//   retirementRepositoryId,
-//   currentRegion,
-//   retirementEsclationDisplay,
-//   cloudTypes,
-//   retirementCloudType,
-//   logOutputTypes,
-//   verbosityTypes
-// ) => {
-//   const schema = {
-//     component: componentTypes.TAB_ITEM,
-//     id: 'retirement-tab',
-//     name: 'retirement-tab',
-//     label: __('Retirement'),
-//     fields: [
-//       {
-//         component: 'copy-from-provisioning',
-//         id: 'config_info.retirement.copyFromProvisioning',
-//         name: 'config_info.retirement.copyFromProvisioning',
-//         label: __('Copy from Provisioning'),
-//         copyFrom: ['repository_id', 'configuration_script_payload_id', 'credential_id', 'cloud_type'],
-//         copyTo: ['repository_id', 'configuration_script_payload_id', 'credential_id', 'cloud_type'],
-//       },
-//       {
-//         component: componentTypes.SELECT,
-//         id: 'config_info.retirement.repository_id',
-//         name: 'config_info.retirement.repository_id',
-//         label: __('Repository'),
-//         options: transformGeneralOptions(repositories),
-//         includeEmpty: true,
-//         onChange: (repositoryId) => setData((state) => ({ ...state, retirementRepositoryId: repositoryId })),
-//       },
-//       {
-//         component: componentTypes.SELECT,
-//         id: 'config_info.retirement.configuration_script_payload_id',
-//         name: 'config_info.retirement.configuration_script_payload_id',
-//         label: __('Template'),
-//         loadOptions: () => (retirementRepositoryId ? loadRepositoryOptions(retirementRepositoryId, currentRegion) : Promise.resolve([])),
-//         condition: {
-//           when: 'config_info.retirement.repository_id',
-//           isNotEmpty: true,
-//         },
-//         key: `${retirementRepositoryId}-retirement-payload_id`,
-//         validateOnMount: true,
-//         validate: [{ type: 'customValidatorForRetirementFields' }],
-//         includeEmpty: true,
-//       },
-//       {
-//         component: 'conditional-checkbox',
-//         id: 'config_info.retirement.become_method',
-//         name: 'config_info.retirement.become_method',
-//         label: __('Escalate Privilege'),
-//         display: retirementEsclationDisplay,
-//       },
-//       {
-//         component: componentTypes.SELECT,
-//         id: 'config_info.retirement.cloud_type',
-//         name: 'config_info.retirement.cloud_type',
-//         label: __('Cloud Type'),
-//         options: transformcloudTypesOptions(cloudTypes),
-//         onChange: (cloudType) => setData((state) => ({ ...state, retirementCloudType: cloudType })),
-//         includeEmpty: true,
-//         condition: {
-//           when: 'config_info.retirement.repository_id',
-//           isNotEmpty: true,
-//         },
-//       },
-//       {
-//         component: componentTypes.SELECT,
-//         id: 'config_info.retirement.credential_id',
-//         name: 'config_info.retirement.credential_id',
-//         label: __('Credential'),
-//         options: transformcloudTypesOptions(cloudTypes),
-//         loadOptions: () => (retirementCloudType ? loadCloudCredentialOptions(retirementCloudType) : Promise.resolve([])),
-//         key: `${retirementCloudType}-retirement-cloud-credentail-id`,
-//         includeEmpty: true,
-//         condition: {
-//           and: [
-//             {
-//               when: 'config_info.retirement.cloud_type',
-//               isNotEmpty: true,
-//             },
-//             {
-//               when: 'config_info.retirement.repository_id',
-//               isNotEmpty: true,
-//             },
-//           ],
-//         },
-//       },
-//       {
-//         component: componentTypes.TEXT_FIELD,
-//         id: 'config_info.retirement.execution_ttl',
-//         name: 'config_info.retirement.execution_ttl',
-//         label: __('Max TTL (mins)'),
-//         dataType: 'number',
-//       },
-//       {
-//         component: componentTypes.SELECT,
-//         id: 'config_info.retirement.log_output',
-//         name: 'config_info.retirement.log_output',
-//         label: __('Logging Output'),
-//         options: transformObjectToSelectOptions(logOutputTypes),
-//       },
-//       {
-//         component: componentTypes.SELECT,
-//         id: 'config_info.retirement.verbosity',
-//         name: 'config_info.retirement.verbosity',
-//         label: __('Verbosity'),
-//         options: transformObjectToSelectOptions(verbosityTypes),
-//       },
-//       {
-//         component: componentTypes.SELECT,
-//         id: 'config_info.retirement.remove_resources',
-//         name: 'config_info.retirement.remove_resources',
-//         label: __('Remove resources?'),
-//         options: [
-//           { label: 'No', value: 'no_with_playbook' },
-//           { label: 'Before Template runs', value: 'pre_with_playbook' },
-//           { label: 'After Template runs', value: "post_with_playbook'" },
-//         ],
-//         condition: {
-//           when: 'config_info.retirement.repository_id',
-//           isNotEmpty: true,
-//         },
-//       },
-//       {
-//         component: componentTypes.SELECT,
-//         id: 'config_info.retirement.remove_resources_with_no_repistory_id',
-//         name: 'config_info.retirement.remove_resources_with_no_repistory_id',
-//         label: __('Remove resources?'),
-//         options: [
-//           { label: 'No', value: 'no_without_playbook' },
-//           { label: 'Yes', value: 'yes_without_playbook' },
-//         ],
-//         condition: {
-//           when: 'config_info.retirement.repository_id',
-//           isEmpty: true,
-//         },
-//       },
-//       {
-//         component: 'key-value-list',
-//         id: 'config_info.retirement.extra_vars',
-//         name: 'config_info.retirement.extra_vars',
-//         label: __('Variables & Default Values'),
-//         keyLabel: __('Variable'),
-//         valueLabel: __('Default value'),
-//       },
-//     ],
-//   };
-//   return schema;
-// };
 
 const createSchema = ({
   data,
@@ -412,13 +251,10 @@ const createSchema = ({
     currencies,
     repositories,
     provisionRepositoryId,
-    // retirementRepositoryId,
     cloudTypes,
     dialogs,
     provisionCloudType,
-    // retirementCloudType,
     provisionEsclationDisplay,
-    // retirementEsclationDisplay,
   } = data;
 
   const {
@@ -456,19 +292,6 @@ const createSchema = ({
             dialogs
           ),
         },
-        // {
-        //   ...retirementTabSchema(
-        //     repositories,
-        //     setData,
-        //     retirementRepositoryId,
-        //     currentRegion,
-        //     retirementEsclationDisplay,
-        //     cloudTypes,
-        //     retirementCloudType,
-        //     logOutputTypes,
-        //     verbosityTypes
-        //   ),
-        // },
       ],
     },
   ];
