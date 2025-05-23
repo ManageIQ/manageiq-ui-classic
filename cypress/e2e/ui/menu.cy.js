@@ -339,11 +339,11 @@ describe('Menu', () => {
         });
 
         it('Templates', () => {
-          cy.menu('Automation', 'Automation', 'Templates').expect_show_list_title('Templates (Ansible Tower)');
+          cy.menu('Automation', 'Automation', 'Templates').expect_show_list_title('Templates');
         });
 
         it('Jobs', () => {
-          cy.menu('Automation', 'Automation', 'Jobs').expect_show_list_title('Ansible Tower Jobs');
+          cy.menu('Automation', 'Automation', 'Jobs').expect_show_list_title('Automation Jobs');
         });
       });
 
@@ -381,7 +381,9 @@ describe('Menu', () => {
         });
 
         it('Simulation', () => {
-          cy.menu('Automation', 'Embedded Automate', 'Simulation').expect_explorer_title('Simulation');
+          // TODO: change the simulation page to use the correct class so we can use explorer_title_text or expect_show_list_title
+          cy.menu('Automation', 'Embedded Automate', 'Simulation');
+          cy.get('div.simulation-title-text').contains('Simulation');
         });
 
         it('Generic Objects', () => {
