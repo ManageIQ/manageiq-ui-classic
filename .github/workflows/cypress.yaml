@@ -1,6 +1,8 @@
 ---
 name: Cypress
 on:
+  pull_request:
+  push:
   workflow_dispatch:
   schedule:
   - cron: 0 0 * * 0
@@ -37,36 +39,42 @@ jobs:
       TEST_SUITE: spec:cypress
       CYPRESS: true
       CYPRESS_BROWSER: ${{ matrix.cypress-browser }}
+      RUN_CYPRESS: ${{ matrix.cypress-browser == 'chrome' || (matrix.cypress-browser != 'chrome' && github.event_name != 'pull_request') }}
       PGHOST: localhost
       PGPASSWORD: smartvm
     steps:
     - uses: actions/checkout@v4
     - name: Install Edge
       uses: browser-actions/setup-edge@v1
-      if: ${{ matrix.cypress-browser == 'edge' }}
+      if: ${{ matrix.cypress-browser == 'edge' && env.RUN_CYPRESS == 'true' }}
     - name: Set up system
       run: bin/before_install
+      if: ${{ env.RUN_CYPRESS == 'true' }}
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
+      if: ${{ env.RUN_CYPRESS == 'true' }}
       with:
         ruby-version: "${{ matrix.ruby-version }}"
-        bundler-cache: true
+        bundler-cache: 'true'
       timeout-minutes: 30
     - name: Set up Node
       uses: actions/setup-node@v4
+      if: ${{ env.RUN_CYPRESS == 'true' }}
       with:
         node-version: "${{ matrix.node-version }}"
         cache: yarn
     - name: Prepare tests
       run: bin/setup
+      if: ${{ env.RUN_CYPRESS == 'true' }}
       env: # We will be using the development database, so no need for the test database
         SKIP_TEST_RESET: "true"
         SKIP_DATABASE_RESET: "false"
     - name: Run tests
       run: bundle exec rake
+      if: ${{ env.RUN_CYPRESS == 'true' }}
     - name: Save artifacts
       uses: actions/upload-artifact@v4
-      if: failure()
+      if: ${{ failure() && env.RUN_CYPRESS == 'true' }}
       with:
         name: cypress-${{ matrix.cypress-browser }}
         path: |
