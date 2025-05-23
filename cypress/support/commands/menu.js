@@ -6,7 +6,7 @@ const secondary = 'div[role="presentation"] > .bx--side-nav__items';
 // items: Strings with at least 2 to a maximum of 3. These are the strings for the side bar menu names to click.
 Cypress.Commands.add('menu', (...items) => {
   expect(items.length).to.be.within(1, 3);
-  let ret = cy.get(`${primary} > ul > li`)
+  let ret = cy.get(`${primary} > ul > li`, { timeout: 10000 })
     .contains('a > span', items[0])
     .click();
 
