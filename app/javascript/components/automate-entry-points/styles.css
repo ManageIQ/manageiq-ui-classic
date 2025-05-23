@@ -1,0 +1,83 @@
+.iconDiv {
+  display: inline-flex;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
+.loadingDiv {
+  display: inline-flex;
+  margin-right: 1rem;
+}
+
+.automate_entry_points {
+  font-size: 16px;
+  user-select: none;
+  height: 250px;
+  overflow-y: scroll;
+  padding: 20px;
+  margin-bottom: 10px;
+  box-sizing: content-box;
+}
+
+.automate_entry_points .tree,
+.automate_entry_points .tree-node,
+.automate_entry_points .tree-node-group {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.automate_entry_points .tree-branch-wrapper,
+.automate_entry_points .tree-node__leaf {
+  outline: none;
+}
+
+.automate_entry_points .tree-node {
+  cursor: pointer;
+}
+
+.automate_entry_points .tree-node .name:hover {
+  background: rgba(0, 0, 0, 0.1);
+  background-color: transparent;
+}
+
+.automate_entry_points .tree-node--focused .name {
+  background: rgba(0, 0, 0, 0.2);
+  background-color: transparent;
+}
+
+.automate_entry_points .tree-node {
+  display: inline-block;
+}
+
+.automate_entry_points .checkbox-icon {
+  margin: 0 5px;
+  vertical-align: middle;
+}
+
+.automate_entry_points button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.automate_entry_points .arrow {
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+.automate_entry_points .arrow--open {
+  transform: rotate(270deg);
+}
+
+.bx--modal-content {
+  margin-bottom: 1rem;
+}
+
+.bx--btn--primary {
+  margin-right: 10px;
+}
+
+.checkboxDiv {
+  float: right;
+}
