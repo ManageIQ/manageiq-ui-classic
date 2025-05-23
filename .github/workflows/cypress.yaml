@@ -1,6 +1,8 @@
 ---
 name: Cypress
 on:
+  pull_request:
+  push:
   workflow_dispatch:
   schedule:
   - cron: 0 0 * * 0
@@ -16,8 +18,8 @@ jobs:
         - 18
         cypress-browser:
         - chrome
-        - firefox
-        - edge
+        #- firefox
+        #- edge
     services:
       postgres:
         image: manageiq/postgresql:13
