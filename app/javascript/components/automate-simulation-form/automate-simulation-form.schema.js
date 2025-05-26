@@ -12,7 +12,7 @@ const loadTargets = (selectedTargetClass) => http.get(targetsURL(selectedTargetC
         })),
       ];
     }
-    return [];
+    return [{ label: `<${__('None')}>`, value: '-1' }];
   });
 
 const createSchema = (
