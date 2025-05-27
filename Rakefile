@@ -89,7 +89,7 @@ namespace :spec do
       # Set the rate limit to a large number to avoid 429: Too Many Requests errors
       # which can occur as cypress very quickly hits a lots of endpoints.
       puts "\n== Removing rate limit =="
-      exit $?.exitstatus unless system("bundle exec rails runner 'MiqServer.my_server.add_settings_for_resource(:server => {:rate_limiting => {:request => {:limit => 99999}}})'")
+      exit $?.exitstatus unless system("bundle exec rails runner 'MiqServer.my_server.add_settings_for_resource(:server => {:rate_limiting => {:request => {:limit => 99999}, :ui_login => {:limit => 99999}}})'")
 
       puts "\n== Starting Rails server =="
       rails_pid = Bundler.with_original_env do
