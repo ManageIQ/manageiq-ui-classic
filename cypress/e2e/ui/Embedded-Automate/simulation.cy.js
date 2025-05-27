@@ -12,9 +12,9 @@ describe('Automation > Embedded Automate > Simulation', () => {
     it('Resets the form', () => {
       cy.get('#object_request').type('Test Request');
       cy.get('#target_class').click();
-      cy.get('[class="bx--list-box__menu-item__option"]').contains('Availability Zone').click({force: true});
+      cy.get('[class="bx--list-box__menu-item__option"]').contains('User').click({force: true});
 
-      cy.get('#selection_target').select('asia-northeast2-a');
+      cy.get('#selection_target').select('Administrator');
       cy.get('#left_div').scrollTo('bottom');
       cy.contains('button', 'Reset').click();
 
@@ -26,9 +26,9 @@ describe('Automation > Embedded Automate > Simulation', () => {
     it('Submits the form', () => {
       cy.get('#object_request').type('Test Request');
       cy.get('#target_class').click();
-      cy.get('[class="bx--list-box__menu-item__option"]').contains('Availability Zone').click({force: true});
+      cy.get('[class="bx--list-box__menu-item__option"]').contains('User').click({force: true});
 
-      cy.get('#selection_target').select('asia-northeast2-a');
+      cy.get('#selection_target').select('Administrator');
       cy.get('#left_div').scrollTo('bottom');
 
       cy.get('[name="attribute_1"]').type('attribute 1');
@@ -45,7 +45,7 @@ describe('Automation > Embedded Automate > Simulation', () => {
     });
     it('Loads the second dropdown', () => {
       cy.get('#target_class').click();
-      cy.get('[class="bx--list-box__menu-item__option"]').contains('Availability Zone').click({force: true});
+      cy.get('[class="bx--list-box__menu-item__option"]').contains('User').click({force: true});
       cy.get('#selection_target').should('exist');
     });
   });
