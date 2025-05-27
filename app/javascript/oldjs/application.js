@@ -31,7 +31,7 @@ require('./miq_toolbar.js');
 require('./miq_c3.js');
 require('./miq_explorer.js');
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development' && process.env.CYPRESS !== 'true') {
   require('./miq_debug.js');
   require('./miq_debug.css');
 }
