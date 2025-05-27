@@ -19,6 +19,7 @@ describe('Overview > Reports Tests', () => {
         cy.get(list.children()[0]).click();
       });
     });
+
     // Fill out report information
     cy.get('#name').type('Cypress Test Report', { force: true });
     cy.get('#title').type('Cypress test report title', { force: true });
@@ -26,8 +27,9 @@ describe('Overview > Reports Tests', () => {
     let basedOn = '';
     let columns = [];
     let tableName = '';
-    cy.get(':nth-child(4) > .col-md-8 > .btn-group > .btn').click({force: true});
-    cy.get(':nth-child(4) > .col-md-8 > .btn-group > .open > .dropdown-menu > [data-original-index="1"] > a').then((option) => {
+
+    cy.get(':nth-child(3) > .col-md-8 > .btn-group > .btn').click({force: true});
+    cy.get(':nth-child(3) > .col-md-8 > .btn-group > .open > .dropdown-menu > [data-original-index="1"] > a').then((option) => {
       cy.get(option).click({ force: true });
       basedOn = option[0].innerText;
       tableName = basedOn.substring(0, basedOn.length - 1).replace(' ', '');
