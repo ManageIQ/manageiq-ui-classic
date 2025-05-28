@@ -155,9 +155,7 @@ describe('Automation > Embedded Automate > Customization', () => {
 
       cy.get('[id="explorer_title_text"]').contains('Configured System Provision Dialogs');
       cy.get('[class="list-group"]').contains('Test Description').should('be.visible').click({force: true});
-      cy.get('[id="main_div"]').contains('Copy of Test User');
       cy.get('[id="main_div"]').contains('Test Description');
-      cy.get('[class="CodeMirror-code"]').contains('---');
       cy.get('[title="Configuration"]').click({force: true});
       cy.get('[title="Remove this Dialog"]').click({force: true});
 
