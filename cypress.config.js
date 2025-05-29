@@ -9,6 +9,18 @@ module.exports = defineConfig({
     viewportWidth: 1800,
     numTestsKeptInMemory: 0,
     videoCompression: false,
+
+    // See: https://docs.cypress.io/app/references/experiments#Experimental-Flake-Detection-Features
+    retries: {
+      experimentalStrategy: 'detect-flake-and-pass-on-threshold',
+      experimentalOptions: {
+        maxRetries: 2,
+        passesRequired: 1,
+      },
+
+      openMode: true,
+      runMode: true,
+    },
     // eslint-disable-next-line no-unused-vars
     setupNodeEvents(on, config) {
       on('after:spec', (spec, results) => {
