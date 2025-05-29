@@ -9,13 +9,72 @@ const WorkflowEntryPoints = ({
   field, selected, type, setShowModal, setSelectedValue,
 }) => {
   const [data, setData] = useState({
-    isLoading: true, list: {}, selectedItemId: selected,
+    isLoading: true, list: {}, selectedItemId: selected, key: 'workflow-entry-points',
   });
+  const [prevSelectedHeader, setPrevSelectedHeader] = useState('');
+  const [sortDirectionRepository, setSortDirectionRepository] = useState('DESC');
+  const [sortDirectionName, setSortDirectionName] = useState('DESC');
 
   const workflowTypes = {
     provision: __('Provision'),
     reconfigure: __('Reconfigure'),
     retire: __('Retirement'),
+  };
+
+  const sortFunction = (selectedHeader, itemA, itemB) => {
+    if (selectedHeader.key === 'name') {
+      if (itemA.name.text < itemB.name.text) {
+        return -1;
+      } if (itemA.name.text > itemB.name.text) {
+        return 1;
+      } if (itemA.name.text === itemB.name.text) {
+        return itemA.id - itemB.id;
+      }
+    }
+    if (itemA['configuration_script_source.name'] === undefined) {
+      itemA['configuration_script_source.name'] = { text: '' };
+    } else if (itemB['configuration_script_source.name'] === undefined) {
+      itemB['configuration_script_source.name'] = { text: '' };
+    }
+    if (itemA['configuration_script_source.name'].text < itemB['configuration_script_source.name'].text) {
+      return -1;
+    } if (itemA['configuration_script_source.name'].text > itemB['configuration_script_source.name'].text) {
+      return 1;
+    }
+    return 0;
+  };
+
+  const onSort = (itemKey) => {
+    const selectedHeader = data.list.headers.find((item) => item === itemKey);
+    if (selectedHeader) {
+      const sortedList = data.list;
+      sortedList.rows.sort((a, b) => sortFunction(selectedHeader, a, b));
+      if (prevSelectedHeader === selectedHeader.key) {
+        if (selectedHeader.key === 'name') {
+          if (sortDirectionName === 'ASC') {
+            sortedList.rows.sort((a, b) => sortFunction(selectedHeader, a, b));
+          } else {
+            sortedList.rows.sort((a, b) => sortFunction(selectedHeader, b, a));
+          }
+          setSortDirectionName(sortDirectionName === 'ASC' ? 'DESC' : 'ASC');
+        } else {
+          if (sortDirectionRepository === 'ASC') {
+            sortedList.rows.sort((a, b) => sortFunction(selectedHeader, a, b));
+          } else {
+            sortedList.rows.sort((a, b) => sortFunction(selectedHeader, b, a));
+          }
+          setSortDirectionRepository(sortDirectionRepository === 'ASC' ? 'DESC' : 'ASC');
+        }
+      } else {
+        setSortDirectionName('DESC');
+        setSortDirectionRepository('DESC');
+      }
+      const tempKey = `${data.key}-${sortedList.rows[0].id}`;
+      setPrevSelectedHeader(selectedHeader.key);
+      setData({
+        ...data, isLoading: false, list: sortedList, key: tempKey,
+      });
+    }
   };
 
   useEffect(() => {
@@ -93,6 +152,9 @@ const WorkflowEntryPoints = ({
         <MiqDataTable
           headers={data.list.headers}
           rows={data.list.rows}
+          sortable
+          onSort={onSort}
+          key={data.key}
           onCellClick={(selectedRow) => onSelect(selectedRow.id)}
           showPagination={false}
           truncateText={false}
