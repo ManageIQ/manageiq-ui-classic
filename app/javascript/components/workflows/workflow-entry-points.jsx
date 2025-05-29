@@ -21,7 +21,9 @@ const WorkflowEntryPoints = ({
   useEffect(() => {
     http.post(`/catalog/ae_tree_select_toggle?typ=${type}`, {}, { headers: {}, skipJsonParsing: true })
       .then((_data) => {
-        API.get('/api/configuration_script_payloads?expand=resources')
+        const url = '/api/configuration_script_payloads/?expand=resources&attributes=configuration_script_source.name&'
+        + 'collection_class=ManageIQ::Providers::Workflows::AutomationManager::Workflow';
+        API.get(url)
           .then((response) => {
             setData({
               ...data,
@@ -81,6 +83,7 @@ const WorkflowEntryPoints = ({
       open
       modalHeading={sprintf(__('Select Embedded Workflow - %s Entry Point'), workflowTypes[type])}
       primaryButtonText={__('Apply')}
+      primaryButtonDisabled={!data.selectedItemId}
       secondaryButtonText={__('Cancel')}
       onRequestSubmit={onApply}
       onRequestClose={onCloseModal}
