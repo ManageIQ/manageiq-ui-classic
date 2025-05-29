@@ -16,7 +16,7 @@ export const asyncValidator = (value = '', ancestry, itemId) =>
 
 const asyncValidatorDebounced = debouncePromise(asyncValidator);
 
-const createSchema = (newRecord, showUseConfig, ancestry, itemId) => {
+const createSchema = (newRecord, ancestry, itemId) => {
   let fields = [{
     component: componentTypes.TEXT_FIELD,
     id: 'name',
@@ -36,44 +36,6 @@ const createSchema = (newRecord, showUseConfig, ancestry, itemId) => {
     validateOnMount: true,
   }];
 
-  if (!newRecord && showUseConfig) {
-    fields.push({
-      component: componentTypes.SWITCH,
-      id: 'use_config_for_attributes',
-      name: 'use_config_for_attributes',
-      label: 'Use Configuration Settings',
-      onText: __('Yes'),
-      offText: __('No'),
-    });
-
-    const enabledName = {
-      ...fields[0],
-      isDisabled: false,
-      condition: {
-        when: 'use_config_for_attributes',
-        is: false,
-      },
-    };
-
-    const disabledName = {
-      component: componentTypes.SUB_FORM,
-      id: 'disabled-placeholder',
-      name: 'disabled-placeholder',
-      fields: [{
-        ...fields[0],
-        isDisabled: true,
-      }],
-      condition: {
-        when: 'use_config_for_attributes',
-        is: true,
-      },
-    };
-    fields = [
-      enabledName,
-      disabledName,
-      ...fields.slice(1),
-    ];
-  }
   return {
     fields,
   };
