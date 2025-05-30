@@ -23,35 +23,32 @@ describe "miq_ae_class/_class_fields.html.haml" do
     end
   end
 
-  context 'loads class fields edit form' do
+  context 'edit class fields' do
     before do
       assign(:sb,
              :active_tab  => "schema",
              :active_tree => :ae_tree,
              :trees       => {:ae_tree => {:active_node => "aec-1"}})
-      ae_fields = {'ae_var1' => {:aetype => 'relationship', :datatype => 'string', :default_value => "Wilma"}}
       create_ae_model(:ae_class     => "FRED",
                       :ae_instances => [],
-                      :ae_fields    => ae_fields)
-
-      assign(:in_a_form_fields, true)
+                      :ae_fields    => {'ae_var1' => {:aetype => 'relationship', :datatype => 'string', :default_value => "Wilma"}})
       @ae_class = MiqAeClass.where(:name => 'FRED').first
-      assign(:edit,
-             :key              => "aefields_edit__#{@ae_class.id}",
-             :ae_class_id      => @ae_class.id,
-             :fields_to_delete => [],
-             :new              => {
-               :datatypes => [],
-               :aetypes   => [],
-               :fields    => [@ae_class.ae_fields.first]
-             })
-      @combo_xml = [["Assertion", "assertion", {"data-icon"=>"fa fa-comment-o"}]]
-      @dtype_combo_xml = [["String", "string", {"data-icon"=>"ff ff-string"}]]
+
+      assign(:in_a_form, true)
+      assign(:in_a_form_fields, true)
+      assign(:ae_class, @ae_class)
+      assign(:combo_xml, [['Attribute', 'attribute', {'data-icon' => 'ff ff-attribute'}]])
+      assign(:dtype_combo_xml, [['String', 'string', {'data-icon' => 'ff ff-string'}]])
     end
 
-    it "Check instance", :js => true do
+    it "renders the schema editor with the class id and the type options" do
       render :template => "miq_ae_class/_class_fields"
-      expect(rendered).to have_selector('input#fields_default_value_0[value=\'Wilma\']')
+
+      expect(rendered).to include('Datastore')
+      expect(rendered).to include('"isEdit":true')
+      expect(rendered).to include("\"aeClassId\":#{@ae_class.id}")
+      expect(rendered).to include('"aeTypeOptions":[["Attribute","attribute"')
+      expect(rendered).to include('"dTypeOptions":[["String","string"')
     end
   end
 end

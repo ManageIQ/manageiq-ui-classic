@@ -489,3 +489,18 @@ table.miq_preview {
   }
 }
 
+.schema-section {
+  .schema-button {
+    display: flex;
+    flex-direction: row-reverse;
+
+    .schema-add {
+      margin-bottom: 16px;
+    }
+  }
+
+  .schema-table {
+    display: grid;
+    overflow: auto;
+  }
+}
