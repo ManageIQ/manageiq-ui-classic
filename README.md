@@ -8,8 +8,6 @@
 
 [![Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ManageIQ/manageiq/ui?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![Build history for master branch](https://buildstats.info/github/chart/ManageIQ/manageiq-ui-classic?branch=master&buildCount=50&includeBuildsFromPullRequest=false&showstats=false)](https://github.com/ManageIQ/manageiq-ui-classic/actions?query=branch%3Amaster)
-
 ManageIQ UI Classic is the UI that has been split out of the main [manageiq repo](https://github.com/ManageIQ/manageiq).
 
 ## Development Setup
