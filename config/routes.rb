@@ -1912,6 +1912,7 @@ Rails.application.routes.draw do
         ae_method_operations
         show
         edit_class_record
+        fields_seq_data
       ],
       :post => %w[
         add_update_method
@@ -1927,15 +1928,11 @@ Rails.application.routes.draw do
         domains_priority_edit
         explorer
         expand_toggle
-        field_accept
-        field_delete
         field_method_accept
         field_method_delete
         field_method_select
-        field_select
-        fields_form_field_changed
         fields_seq_edit
-        fields_seq_field_changed
+        fields_seq_save
         form_copy_objects_field_changed
         form_field_changed
         form_instance_field_changed
