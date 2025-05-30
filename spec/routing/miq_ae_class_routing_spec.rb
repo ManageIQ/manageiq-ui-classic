@@ -45,18 +45,6 @@ describe MiqAeClassController do
     end
   end
 
-  describe "#field_accept" do
-    it "routes with POST" do
-      expect(post("/miq_ae_class/field_accept")).to route_to("miq_ae_class#field_accept")
-    end
-  end
-
-  describe "#field_delete" do
-    it "routes with POST" do
-      expect(post("/miq_ae_class/field_delete")).to route_to("miq_ae_class#field_delete")
-    end
-  end
-
   describe "#field_method_accept" do
     it "routes with POST" do
       expect(post("/miq_ae_class/field_method_accept")).to route_to("miq_ae_class#field_method_accept")
@@ -75,27 +63,21 @@ describe MiqAeClassController do
     end
   end
 
-  describe "#field_select" do
-    it "routes with POST" do
-      expect(post("/miq_ae_class/field_select")).to route_to("miq_ae_class#field_select")
-    end
-  end
-
-  describe "#fields_form_field_changed" do
-    it "routes with POST" do
-      expect(post("/miq_ae_class/fields_form_field_changed")).to route_to("miq_ae_class#fields_form_field_changed")
-    end
-  end
-
   describe "#fields_seq_edit" do
     it "routes with POST" do
       expect(post("/miq_ae_class/fields_seq_edit")).to route_to("miq_ae_class#fields_seq_edit")
     end
   end
 
-  describe "#fields_seq_field_changed" do
+  describe "#fields_seq_data" do
+    it "routes with GET" do
+      expect(get("/miq_ae_class/fields_seq_data")).to route_to("miq_ae_class#fields_seq_data")
+    end
+  end
+
+  describe "#fields_seq_save" do
     it "routes with POST" do
-      expect(post("/miq_ae_class/fields_seq_field_changed")).to route_to("miq_ae_class#fields_seq_field_changed")
+      expect(post("/miq_ae_class/fields_seq_save")).to route_to("miq_ae_class#fields_seq_save")
     end
   end
 
