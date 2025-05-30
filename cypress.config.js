@@ -35,6 +35,15 @@ module.exports = defineConfig({
           }
         }
       });
+      on('before:browser:launch', (browser = {}, launchOptions) => {
+        console.log('Launching browser:', browser.name);
+        console.log('Input args:', launchOptions.args);
+        if (browser.name === 'chrome') {
+          launchOptions.args.push('--disable-features=AutofillServerCommunication');
+        }
+        console.log('Actual args:', launchOptions.args);
+        return launchOptions;
+      });
     },
   },
 });
