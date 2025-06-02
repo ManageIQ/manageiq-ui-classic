@@ -291,7 +291,7 @@ class MiqAeCustomizationController < ApplicationController
 
   # allowed function is used to show form buttons in custom-button form page.
   def allowed(action)
-    allowed = ['ab_button_new', 'ab_button_edit', 'old_dialogs_new', 'old_dialogs_edit', 'old_dialogs_copy']
+    allowed = ['ab_button_new', 'ab_button_edit', 'ab_group_reorder', 'old_dialogs_new', 'old_dialogs_edit', 'old_dialogs_copy']
     action ? allowed.include?(action.to_s) : false
   end
 
