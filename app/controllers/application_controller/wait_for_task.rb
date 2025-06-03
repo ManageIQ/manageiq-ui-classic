@@ -11,7 +11,7 @@ module ApplicationController::WaitForTask
     @edit = session[:edit]  # If in edit, need to preserve @edit object
     raise Forbidden, _('Invalid input for "wait_for_task".') unless params[:task_id]
 
-    async_interval = params[:async_interval] || 1000 # Default interval to 1 second
+    async_interval = params.fetch(:async_interval, 1000).to_i # Default interval to 1 second
 
     task = MiqTask.find(params[:task_id].to_i)
     if task.state != "Finished" # Task not done --> retry
