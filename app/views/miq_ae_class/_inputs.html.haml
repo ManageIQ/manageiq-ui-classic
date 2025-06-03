@@ -37,6 +37,7 @@
               :style             => flds["datatype"] == "password" ? "display:none" : "",
               "data-miq_observe" => obs)
             = password_field_tag("#{prefix}fields_password_value_#{i}", '',
+              :autocomplete      => "new-password",
               :placeholder       => placeholder_if_present(flds['default_value']),
               :style             => flds["datatype"] == "password" ? "" : "display:none",
               "data-miq_observe" => obs)
@@ -75,6 +76,7 @@
             :style             => session[:field_data][:datatype] == "password" ? "display:none" : "",
             "data-miq_observe" => obs)
           = password_field_tag("#{prefix}field_password_value", '',
+            :autocomplete      => "new-password",
             :placeholder       => placeholder_if_present(session[:field_data][:data_value]),
             :style             => session[:field_data][:datatype] == "password" ? "" : "display:none",
             "data-miq_observe" => obs)
