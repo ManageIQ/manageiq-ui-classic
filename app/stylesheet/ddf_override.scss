@@ -516,3 +516,13 @@
     margin-top: 40px;
   }
 }
+
+.object-attribute {
+  display: inline-flex;
+  width: 100%;
+
+  .attribute-label {
+    margin-left: 25%;
+    margin-right: 5%;
+  }
+}
