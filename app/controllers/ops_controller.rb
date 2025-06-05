@@ -751,7 +751,7 @@ class OpsController < ApplicationController
     presenter[:right_cell_text] = @right_cell_text
     presenter[:osf_node] = x_node
     presenter.reset_one_trans
-    presenter.focus('server_company')
+    presenter.focus('server_name')
     presenter[:ajax_action] = {
       :controller => controller_name,
       :action     => @ajax_action,

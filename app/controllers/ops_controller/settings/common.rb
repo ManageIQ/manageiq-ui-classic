@@ -433,7 +433,6 @@ module OpsController::Settings::Common
           add_flash(_("Configuration settings saved"))
         end
         if @sb[:active_tab] == "settings_server" && @sb[:selected_server_id] == MiqServer.my_server.id # Reset session variables for names fields, if editing current server config
-          session[:customer_name] = @update[:server][:company]
           session[:vmdb_name] = @update[:server][:name]
         end
         set_user_time_zone if @sb[:active_tab] == "settings_server"
