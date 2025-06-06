@@ -213,6 +213,8 @@ module Mixins
 
         # determine available switches for this host...
         def get_vlan_options(host)
+          return [] if host.blank?
+
           switch_ids = Rbac.filtered(host.switches).pluck(:id)
           Rbac.filtered(Lan.where(:switch_id => switch_ids).order(:name)).pluck(:name)
         end
