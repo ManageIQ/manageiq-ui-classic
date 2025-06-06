@@ -6,6 +6,7 @@ class VmController < ApplicationController
   include VmCommon # common methods for vm controllers
   include VmRemote # methods for VM remote access
   include Mixins::BreadcrumbsMixin
+  helper VmInfraHelper
 
   feature_for_actions 'vm_edit', :edit_vm
 
