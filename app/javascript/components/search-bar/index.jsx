@@ -9,6 +9,10 @@ import {
 } from '@carbon/icons-react';
 
 const SearchBar = ({ searchText, advancedSearch, action }) => {
+  const formToken = () => {
+    const csrfToken = document.querySelector('meta[name=csrf-token]');
+    return csrfToken ? csrfToken.getAttribute('content') : '';
+  };
   const [data, setData] = useState({
     formText: searchText || '',
     loading: false,
@@ -92,7 +96,7 @@ const SearchBar = ({ searchText, advancedSearch, action }) => {
   return (
     <div className="search_bar">
       <Form onSubmit={onSearch} method="post" id="search-bar-form">
-        <input type="hidden" name="authenticity_token" />
+        <input type="hidden" name="authenticity_token" value={formToken()} />
         <TextInput
           id="search_text"
           labelText={__('Search')}
