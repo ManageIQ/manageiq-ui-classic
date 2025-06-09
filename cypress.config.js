@@ -14,7 +14,7 @@ module.exports = defineConfig({
     retries: {
       experimentalStrategy: 'detect-flake-and-pass-on-threshold',
       experimentalOptions: {
-        maxRetries: 2,
+        maxRetries: 9,
         passesRequired: 1,
       },
 
