@@ -18,7 +18,7 @@ module.exports = defineConfig({
         passesRequired: 1,
       },
 
-      openMode: true,
+      openMode: false,
       runMode: true,
     },
     // eslint-disable-next-line no-unused-vars
