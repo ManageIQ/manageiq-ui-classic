@@ -45,6 +45,7 @@ import './commands/gtl.js'
 import './commands/login.js'
 import './commands/menu.js'
 import './commands/toolbar.js'
+import './commands/throttle_response.js'
 
 // Assertions
 import './assertions/expect_rates_table.js';
@@ -65,3 +66,8 @@ Cypress.on('uncaught:exception', (err, runnable) => {
         return false;
     }
 });
+
+beforeEach(() => {
+  // Global hook run once before each test
+  // cy.throttle_response(500, 56);
+})
