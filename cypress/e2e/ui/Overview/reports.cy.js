@@ -20,9 +20,13 @@ describe('Overview > Reports Tests', () => {
       });
     });
 
-    // Fill out report information
+    // Fill out report information, wait for fields changed
+    cy.intercept('/report/form_field_changed/new').as('fieldsChanged');
     cy.get('#name').type('Cypress Test Report', { force: true });
-    cy.get('#title').type('Cypress test report title', { force: true });
+    cy.wait('@fieldsChanged')
+
+    cy.get('#title').type('Cypress test report title', { force: true })
+    cy.wait('@fieldsChanged')
 
     let basedOn = '';
     let columns = [];
