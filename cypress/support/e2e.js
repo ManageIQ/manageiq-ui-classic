@@ -44,6 +44,7 @@ import './commands/explorer.js'
 import './commands/gtl.js'
 import './commands/login.js'
 import './commands/menu.js'
+import './commands/stub_notifications.js'
 import './commands/toolbar.js'
 import './commands/throttle_response.js'
 
@@ -70,4 +71,5 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 beforeEach(() => {
   // Global hook run once before each test
   // cy.throttle_response(500, 56);
+  // cy.stub_notifications();
 })
