@@ -32,22 +32,22 @@ describe('Overview > Reports Tests', () => {
     let columns = [];
     let tableName = '';
 
-    cy.get(':nth-child(3) > .col-md-8 > .btn-group > .btn').click({force: true});
-    cy.get(':nth-child(3) > .col-md-8 > .btn-group > .open > .dropdown-menu > [data-original-index="1"] > a').then((option) => {
+    cy.get('.btn[data-id="chosen_model"]').click({ force: true });
+    cy.get('.btn[data-id="chosen_model"] ~ .dropdown-menu [data-original-index="1"] > a').then((option) => {
       cy.get(option).click({ force: true });
       basedOn = option[0].innerText;
       tableName = basedOn.substring(0, basedOn.length - 1).replace(' ', '');
     });
-    cy.get('[align="left"] > .btn-group > .btn').click({ force: true });
-    cy.get('[align="left"] > .btn-group > .open > .dropdown-menu > [data-original-index="0"] > a > .text').then((option) => {
+    cy.get('.btn[data-id="available_fields"]').click({ force: true });
+    cy.get('.btn[data-id="available_fields"] ~ .dropdown-menu [data-original-index="0"] > a > .text').then((option) => {
       cy.get(option).click({ force: true });
       columns.push(option[0].innerText.trim());
     });
-    cy.get('[align="left"] > .btn-group > .open > .dropdown-menu > [data-original-index="1"] > a > .text').then((option) => {
+    cy.get('.btn[data-id="available_fields"] ~ .dropdown-menu [data-original-index="1"] > a > .text').then((option) => {
       cy.get(option).click({ force: true });
       columns.push(option[0].innerText.trim());
     });
-    cy.get('[align="left"] > .btn-group > .btn > .filter-option').click({ force: true});
+    cy.get('.btn[data-id="available_fields"]').click({ force: true});
     cy.intercept('/report/form_field_changed/new?button=right').as('fieldsChanged');
     cy.get('[alt="Move selected fields down"]').click({force: true});
     cy.wait('@fieldsChanged').then(() => {
