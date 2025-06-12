@@ -23,10 +23,10 @@ describe('Overview > Reports Tests', () => {
     // Fill out report information, wait for fields changed
     cy.intercept('/report/form_field_changed/new').as('fieldsChanged');
     cy.get('#name').type('Cypress Test Report', { force: true });
-    cy.wait('@fieldsChanged')
+    cy.wait('@fieldsChanged');
 
     cy.get('#title').type('Cypress test report title', { force: true })
-    cy.wait('@fieldsChanged')
+    cy.wait('@fieldsChanged');
 
     let basedOn = '';
     let columns = [];
@@ -66,14 +66,14 @@ describe('Overview > Reports Tests', () => {
     let sortBy = '';
     let chartType = '';
     cy.get('#Summary_tab > a').click({ force: true });
-    cy.get('#sort_div').get('.btn-group > .btn').click({ force: true });
-    cy.get('[data-original-index="1"] > a').then((option) => {
+    cy.get('#sort_div .btn').click({ force: true });
+    cy.get('#sort_div .btn ~ .dropdown-menu [data-original-index="1"] > a').then((option) => {
       cy.get(option).click({ force: true });
       sortBy = option[0].innerText;
     });
     cy.get('#Charts_tab > a').click({ force: true });
-    cy.get('#chart_div').get('.btn-group > .btn').click({ force: true });
-    cy.get('[data-original-index="1"] > a').then((option) => {
+    cy.get('#chart_div .btn').click({ force: true });
+    cy.get('#chart_div .btn ~ .dropdown-menu [data-original-index="1"] > a').then((option) => {
       cy.get(option).click({ force: true });
       chartType = option[0].innerText;
     });
@@ -81,15 +81,16 @@ describe('Overview > Reports Tests', () => {
 
     // Load report preview and verify column values
     cy.get('#Preview_tab > a').click({ force: true });
-    cy.get('#form_preview > h3').get('a > .fa').click({ force: true });
-    cy.get('#form_preview').get('h3').contains('Chart Preview (up to 50 rows)');
-    cy.get('#form_preview').get('h3').contains('Report Preview (up to 50 rows)');
-    cy.get('#form_preview').get('th').then((result) => {
+    cy.get('#form_preview a').click({ force: true });
+    cy.get('#form_preview h3').contains('Chart Preview (up to 50 rows)');
+    cy.get('#form_preview h3').contains('Report Preview (up to 50 rows)');
+    cy.get('#form_preview table th').then((result) => {
       expect(result[0].innerText).to.eq(columns[0]);
       expect(result[1].innerText).to.eq(columns[1]);
     });
 
     cy.get('#buttons_on > .btn-primary').click({ force: true }); // Click Add button
+    cy.get('.alert-success');
 
     // Navigate to the report that was just added
     cy.expect_show_list_title('All Reports');
@@ -138,15 +139,19 @@ describe('Overview > Reports Tests', () => {
         });
       });
       // Edit report information
+      cy.intercept(/\/report\/form_field_changed\/[0-9]+/).as('fieldsUpdated');
       cy.get('#name').clear({ force: true }).type('Cypress Test Report Edit', { force: true });
-      cy.get('#title').clear({ force: true }).type('Cypress test report title edit', { force: true });
+      cy.wait('@fieldsUpdated');
 
-      cy.get('[align="left"] > .btn-group > .btn').click({ force: true });
-      cy.get('[align="left"] > .btn-group > .open > .dropdown-menu > [data-original-index="24"] > a').then((option) => {
+      cy.get('#title').clear({ force: true }).type('Cypress test report title edit', { force: true });
+      cy.wait('@fieldsUpdated');
+
+      cy.get('.btn[data-id="available_fields"]').click({ force: true });
+      cy.get('.btn[data-id="available_fields"] ~ .dropdown-menu [data-original-index="3"] > a > .text').then((option) => {
         cy.get(option).click({ force: true });
         columns.push(option[0].innerText.trim());
       });
-      cy.get('[align="left"] > .btn-group > .btn > .filter-option').click({ force: true });
+      cy.get('.btn[data-id="available_fields"] > .filter-option').click({ force: true });
       cy.intercept(`/report/form_field_changed/${id}?button=right`).as('fieldsChanged');
       cy.get('.text-center > [alt="Move selected fields down"]').click({force: true});
       cy.wait('@fieldsChanged');
@@ -189,6 +194,7 @@ describe('Overview > Reports Tests', () => {
       });
       cy.get('#buttons_on > .btn-primary').click({ force: true }); // Click save button
     }).then(() => {
+      cy.get('.alert-success');
       // Verify report was edited with correct values on summary page
       tableHeaders = [];
       tableValues = [];
