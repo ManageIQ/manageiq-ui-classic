@@ -10,22 +10,23 @@ describe('Settings > Application Settings > Details', () => {
   });
 
   describe('Settings Details Tab', () => {
-    it('Region row is replaced by region form when clicked', () => {
+    it('Click row and reroute', () => {
       cy.get('.bx--front-line').contains('Region 0').click({force: true});
       cy.get('.bx--label').contains('Description').should('exist');
-    });
-    it('Clicks on analysis profiles row and reroutes', () => {
+      cy.get('[data-nodeid="0.0"].node-treeview-settings_tree').contains('ManageIQ Region').click();
+
       cy.get('.bx--front-line').contains('Analysis Profiles').click({force: true});
       cy.get('#explorer_title_text').contains('Settings Analysis Profiles').should('exist');
-    });
-    it('Clicks on zones row and reroutes', () => {
+      cy.get('[data-nodeid="0.0"].node-treeview-settings_tree').contains('ManageIQ Region').click();
+
       cy.get('.bx--front-line').contains('Zones').click({force: true});
       cy.get('#explorer_title_text').contains('Settings Zones').should('exist');
-    });
-    it('Clicks on schedules row and reroutes', () => {
+      cy.get('[data-nodeid="0.0"].node-treeview-settings_tree').contains('ManageIQ Region').click();
+
       cy.get('.bx--front-line').contains('Schedules').click({force: true});
       cy.get('#explorer_title_text').contains('Settings Schedules').should('exist');
     });
+
     it('Updates region name when changed', () => {
       cy.get('.bx--front-line').contains('Region 0').click({force: true});
       cy.get('#description').clear().type('Region 1');
