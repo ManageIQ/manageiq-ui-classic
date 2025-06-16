@@ -102,7 +102,7 @@ class ValueSelector extends React.Component {
           label={label}
           initialSelectedItems={selectedOptions}
           // eslint-disable-next-line react/destructuring-assignment
-          key={selectedOptions.length === 0 ? -1 : this.props.values[0].id + selectedOptions.length}
+          key={this.props.selectedTagCategory.description}
           items={values}
           disabled={isDisabled}
           onChange={(val) => this.handleChange(val)}
@@ -135,6 +135,10 @@ class ValueSelector extends React.Component {
 }
 
 ValueSelector.propTypes = {
+  selectedTagCategory: PropTypes.objectOf({
+    id: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+  }).isRequired,
   selectedOption: PropTypes.arrayOf(TaggingPropTypes.value),
   values: PropTypes.arrayOf(TaggingPropTypes.value).isRequired,
   onTagValueChange: PropTypes.func.isRequired,

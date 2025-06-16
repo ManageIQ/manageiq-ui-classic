@@ -5,6 +5,7 @@ import ValueSelector from './ValueSelector';
 import TaggingPropTypes from '../TaggingPropTypes';
 
 const ValueModifier = ({
+  selectedTagCategory,
   values,
   onTagValueChange,
   selectedTagValues,
@@ -15,6 +16,7 @@ const ValueModifier = ({
   <FormGroup legendText={valueLabel}>
     <Column className="tag-modifier-form-row value-modifier">
       <ValueSelector
+        selectedTagCategory={selectedTagCategory}
         values={values}
         onTagValueChange={onTagValueChange}
         selectedOption={selectedTagValues}
@@ -26,6 +28,7 @@ const ValueModifier = ({
 );
 
 ValueModifier.propTypes = {
+  selectedTagCategory: PropTypes.string.isRequired,
   selectedTagValues: PropTypes.arrayOf(TaggingPropTypes.value),
   onTagValueChange: PropTypes.func.isRequired,
   valueLabel: PropTypes.string,
