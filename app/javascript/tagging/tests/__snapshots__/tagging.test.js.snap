@@ -55,6 +55,12 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
         isDisabled={false}
         multiValue={true}
         onTagValueChange={[Function]}
+        selectedTagCategory={
+          Object {
+            "description": "animal",
+            "id": 1,
+          }
+        }
         selectedTagValues={
           Array [
             Object {
@@ -161,6 +167,12 @@ exports[`Tagging component without redux mapping should call methods - singleVal
         isDisabled={false}
         multiValue={true}
         onTagValueChange={[Function]}
+        selectedTagCategory={
+          Object {
+            "description": "Food",
+            "id": 4,
+          }
+        }
         selectedTagValues={Array []}
         valueLabel="Value"
         values={
@@ -264,6 +276,12 @@ exports[`Tagging component without redux mapping should call methods - singleVal
         isDisabled={false}
         multiValue={false}
         onTagValueChange={[Function]}
+        selectedTagCategory={
+          Object {
+            "description": "Something",
+            "id": 5,
+          }
+        }
         selectedTagValues={Array []}
         valueLabel="Value"
         values={
