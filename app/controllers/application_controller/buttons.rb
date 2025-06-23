@@ -105,10 +105,14 @@ module ApplicationController::Buttons
 
   def button_visibility_box_edit
     typ_changed = params[:visibility_typ].present?
-    @edit[:new][:visibility_typ] = VISIBILITY_TYPES[params[:visibility_typ]] if typ_changed
+    if typ_changed
+      @edit[:new][:visibility_typ] = VISIBILITY_TYPES[params[:visibility_typ]] if typ_changed
+      visibility_typ = @edit[:new][:visibility_typ]
+    else
+      visibility_typ = @edit[:current][:visibility_typ]
+    end
 
-    visibility_typ = @edit[:new][:visibility_typ]
-    if %w[role].include?(visibility_typ)
+    if visibility_typ.to_s == "role"
       plural = visibility_typ.pluralize
       key    = plural.to_sym
       prefix = "#{plural}_"
@@ -178,20 +182,19 @@ module ApplicationController::Buttons
       end
       unless params[:target_class]
         @changed = session[:changed] = false
-
         # This block checks if any of the fields have changed
         # Broken into different branches for specific fields
         # If no fields are changed it will not set @changed or session[:changed] to true
         @edit[:new].each_key do |key|
           if @edit[:new][key] != @edit[:current][key]
-            if @edit[:new][key] == "" && @edit[:current][key].nil? # check empty string / nil case
+            if @edit[:new][key].blank? && @edit[:current][key].blank? # check empty string / nil case
               next
             elsif @edit[:new][key] == @edit[:current][key].to_s # check string / integer case
               next
             elsif key == :roles # check role values
               if (@edit[:new][key] == ["_ALL_"] || @edit[:new][key] == []) && (@edit[:current][key].nil? || @edit[:current][key] == ["all"] || @edit[:current][key] == ["_ALL_"]) # if visibility is set to "To All"
                 next
-              elsif @edit[:new][key].sort == @edit[:current][key].sort # check if new roles array and current roles array are equal after sorting the ids
+              elsif @edit[:new][key].collect(&:to_i).sort == @edit[:current][key].collect(&:to_i).sort # check if new roles array and current roles array are equal after sorting the ids
                 next
               else # if new roles array and current roles array are not equal
                 @changed = session[:changed] = true
@@ -213,8 +216,6 @@ module ApplicationController::Buttons
 
             elsif key == :visibility_typ # check visibility type
               if @edit[:new][key] == "all" && @edit[:current][key].nil? # if visibility is set to "To All"
-                next
-              elsif @edit[:new][key] == "role" && @edit[:new][:roles] == [] # if visibility type is set to "To Role" and no roles are selected
                 next
               else # if new visibility type value and current visibility type value are not equal
                 @changed = session[:changed] = true
