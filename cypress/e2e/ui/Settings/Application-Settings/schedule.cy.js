@@ -1,8 +1,12 @@
 /* eslint-disable no-undef */
 
-function addSchedule() {
+function selectConfigMenu(configuration = 'Add a new Schedule') {
   cy.get('#miq_schedule_vmdb_choice').click();
-  cy.get('ul[aria-label="Configuration"] [title="Add a new Schedule"]').click();
+  cy.get(`ul[aria-label="Configuration"] [title="${configuration}"]`).click();
+}
+
+function addSchedule() {
+  selectConfigMenu();
   // Checks if Save button is disabled initially
   cy.contains(
     '#main-content .bx--btn-set button[type="submit"]',
@@ -28,19 +32,30 @@ function addSchedule() {
     .click();
 }
 
+function deleteSchedule(scheduleName = 'Test name') {
+  // Selecting the schedule
+  cy.contains('li.list-group-item', scheduleName).click();
+  cy.on('window:confirm', (text) => {
+    expect(text).to.eq(
+      'Warning: This Schedule and ALL of its components will be permanently removed!'
+    );
+    return true;
+  });
+  selectConfigMenu('Delete this Schedule from the Database');
+  cy.get('#main_div #flash_msg_div .alert-success').contains(
+    `Schedule "${scheduleName}": Delete successful`
+  );
+}
+
 describe('Automate Schedule form operations: Settings > Application Settings > Settings > Schedules > Configuration > Add a new schedule', () => {
   beforeEach(() => {
     cy.login();
     cy.menu('Settings', 'Application Settings');
-    cy.get('[title="Schedules"]')
-      .click();
+    cy.get('[title="Schedules"]').click();
   });
 
   it('Validate visibility of elements based on dropdown selections', () => {
-    cy.get('#miq_schedule_vmdb_choice').click();
-    cy.get(
-      'ul[aria-label="Configuration"] [title="Add a new Schedule"]'
-    ).click();
+    selectConfigMenu();
 
     /* ===== Selecting any option other than "Automation Tasks" from "Action" dropdown does not hide the Filter dropdown ===== */
 
@@ -175,10 +190,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
   });
 
   it('Checking whether Cancel button works on the Add form', () => {
-    cy.get('#miq_schedule_vmdb_choice').click();
-    cy.get(
-      'ul[aria-label="Configuration"] [title="Add a new Schedule"]'
-    ).click();
+    selectConfigMenu();
     cy.contains('#main-content .bx--btn-set button[type="button"]', 'Cancel')
       .should('be.enabled')
       .click();
@@ -187,42 +199,51 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     );
   });
 
-  it('Checking whether adding a schedule works', () => {
+  it('Checking whether add, edit & delete schedule works', () => {
+    /* ===== Adding a schedule ===== */
     addSchedule();
     cy.get('#main_div #flash_msg_div .alert-success').contains(
       'Schedule "Test name" was saved'
     );
-  });
 
-  it('Checking whether creating a duplicate record is restricted', () => {
-    addSchedule();
-    cy.get('#main_div #flash_msg_div .alert-danger').contains(
-      'Error when adding a new schedule: Validation failed: MiqSchedule: Name has already been taken'
-    );
-  });
-
-  it('Checking whether Cancel button works on the Edit form', () => {
+    /* ===== Editing a schedule ===== */
     // Selecting the created schedule
     cy.contains('li.list-group-item', 'Test name').click();
-    cy.get('#miq_schedule_vmdb_choice').click();
-    cy.get(
-      'ul[aria-label="Configuration"] [title="Edit this Schedule"]'
-    ).click();
+    selectConfigMenu('Edit this Schedule');
+    // Editing name and description
+    cy.get('input#name').clear().type('Dummy name');
+    cy.get('input#description').clear().type('Dummy description');
+    // Confirms Save button is enabled after making edits
+    cy.contains('#main-content .bx--btn-set button[type="submit"]', 'Save')
+      .should('be.enabled')
+      .click();
+    cy.get('#main_div #flash_msg_div .alert-success').contains(
+      'Schedule "Dummy name" was saved'
+    );
+
+    /* ===== Deleting schedule ===== */
+    deleteSchedule('Dummy name');
+  });
+
+  it('Checking whether Cancel & Reset buttons work fine in the Edit form', () => {
+    /* ===== Adding a schedule ===== */
+    addSchedule();
+
+    /* ===== Checking whether Cancel button works ===== */
+    // Selecting the created schedule
+    cy.contains('li.list-group-item', 'Test name').click();
+    selectConfigMenu('Edit this Schedule');
     cy.contains('#main-content .bx--btn-set button[type="button"]', 'Cancel')
       .should('be.enabled')
       .click();
     cy.get('#main_div #flash_msg_div .alert-success').contains(
       'Edit of "Test name" was cancelled by the user'
     );
-  });
 
-  it('Checking whether Reset button works on the Edit form', () => {
+    /* ===== Checking whether Reset button works ===== */
     // Selecting the created schedule
     cy.contains('li.list-group-item', 'Test name').click();
-    cy.get('#miq_schedule_vmdb_choice').click();
-    cy.get(
-      'ul[aria-label="Configuration"] [title="Edit this Schedule"]'
-    ).click();
+    selectConfigMenu('Edit this Schedule');
     // Editing description and start date
     cy.get('input#description').clear().type('Dummy description');
     cy.get('input#start_date').clear().type('07/21/2025', { force: true });
@@ -235,77 +256,51 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     // Confirming the edited fields contain the old values after resetting
     cy.get('input#description').should('have.value', 'Test description');
     cy.get('input#start_date').should('have.value', '06/30/2025');
+
+    /* ===== Deleting schedule ===== */
+    cy.get('[title="Schedules"]').click();
+    deleteSchedule();
   });
 
-  it('Checking whether Edit functionality works', () => {
-    // Selecting the created schedule
-    cy.contains('li.list-group-item', 'Test name').click();
-    cy.get('#miq_schedule_vmdb_choice').click();
-    cy.get(
-      'ul[aria-label="Configuration"] [title="Edit this Schedule"]'
-    ).click();
-    // Editing name and description
-    cy.get('input#name').clear().type('Dummy name');
-    cy.get('input#description').clear().type('Dummy description');
-    // Confirms Save button is enabled after making edits
-    cy.contains('#main-content .bx--btn-set button[type="submit"]', 'Save')
-      .should('be.enabled')
-      .click();
-    cy.get('#main_div #flash_msg_div .alert-success').contains(
-      'Schedule "Dummy name" was saved'
+  it('Checking whether creating a duplicate record is restricted', () => {
+    /* ===== Adding schedule ===== */
+    addSchedule();
+
+    /* ===== Trying to add the same schedule again ===== */
+    addSchedule();
+    cy.get('#main_div #flash_msg_div .alert-danger').contains(
+      'Error when adding a new schedule: Validation failed: MiqSchedule: Name has already been taken'
     );
+
+    /* ===== Deleting schedule ===== */
+    deleteSchedule();
   });
 
   it('Checking whether Disabling, Enabling & Queueing up the schedule works', () => {
-    // Selecting the schedule
-    cy.contains('li.list-group-item', 'Dummy name').click();
+    /* ===== Adding a schedule ===== */
+    addSchedule();
+    // Selecting the created schedule
+    cy.contains('li.list-group-item', 'Test name').click();
 
-    /* ===== Disabling the Schedule ===== */
-
-    cy.get('#miq_schedule_vmdb_choice').click();
-    cy.get(
-      'ul[aria-label="Configuration"] [title="Disable this Schedule"]'
-    ).click();
+    /* ===== Disabling the schedule ===== */
+    selectConfigMenu('Disable this Schedule');
     cy.get('#main_div #flash_msg_div .alert-info').contains(
       'The selected Schedules were disabled'
     );
 
-    /* ===== Enabling the Schedule ===== */
-
-    cy.get('#miq_schedule_vmdb_choice').click();
-    cy.get(
-      'ul[aria-label="Configuration"] [title="Enable this Schedule"]'
-    ).click();
+    /* ===== Enabling the schedule ===== */
+    selectConfigMenu('Enable this Schedule');
     cy.get('#main_div #flash_msg_div .alert-info').contains(
       'The selected Schedules were enabled'
     );
 
-    /* ===== Queueing-up the Schedule ===== */
-
-    cy.get('#miq_schedule_vmdb_choice').click();
-    cy.get(
-      'ul[aria-label="Configuration"] [title="Queue up this Schedule to run now"]'
-    ).click();
+    /* ===== Queueing-up the schedule ===== */
+    selectConfigMenu('Queue up this Schedule to run now');
     cy.get('#main_div #flash_msg_div .alert-success').contains(
       'The selected Schedule has been queued to run'
     );
-  });
 
-  it('Checking whether Deleting the schedule works', () => {
-    // Selecting the schedule
-    cy.contains('li.list-group-item', 'Dummy name').click();
-    cy.get('#miq_schedule_vmdb_choice').click();
-    cy.on('window:confirm', (text) => {
-      expect(text).to.eq(
-        'Warning: This Schedule and ALL of its components will be permanently removed!'
-      );
-      return true;
-    });
-    cy.get(
-      'ul[aria-label="Configuration"] [title="Delete this Schedule from the Database"]'
-    ).click();
-    cy.get('#main_div #flash_msg_div .alert-success').contains(
-      'Schedule "Dummy name": Delete successful'
-    );
+    /* ===== Deleting schedule ===== */
+    deleteSchedule();
   });
 });
