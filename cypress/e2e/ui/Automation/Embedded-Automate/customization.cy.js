@@ -167,11 +167,10 @@ describe('Automation > Embedded Automate > Customization', () => {
       cy.intercept('POST', '/miq_ae_customization/accordion_select?id=ab_accord').as('accordion');
       cy.get('#control_ab_accord > .panel-title > .collapsed').click();
       cy.wait('@accordion');
+      cy.wait(2000);
     });
 
     it('Validates the save button correctly', () => {
-      cy.get('#treeview-ab_tree > .list-group > [data-nodeid="0.0"]').click({force: true});
-      cy.get('.clickable-row').contains('Availability Zone').click({force: true});
       cy.get('#treeview-ab_tree > .list-group > [data-nodeid="0.0"]').click({force: true});
       cy.get('.clickable-row').contains('Availability Zone').click({force: true});
       cy.get('.clickable-row').contains('Unassigned Buttons').click({force: true});
