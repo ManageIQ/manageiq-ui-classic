@@ -303,4 +303,19 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     /* ===== Deleting schedule ===== */
     deleteSchedule();
   });
+
+  afterEach(() => {
+    cy.get('li.list-group-item').each(($el) => {
+      const text = $el?.text()?.trim();
+      if (text === 'Test name') {
+        deleteSchedule();
+        return false;
+      }
+      if (text === 'Dummy name') {
+        deleteSchedule('Dummy name');
+        return false;
+      }
+      return true;
+    });
+  });
 });
