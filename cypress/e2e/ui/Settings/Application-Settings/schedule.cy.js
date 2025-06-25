@@ -51,7 +51,9 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
   beforeEach(() => {
     cy.login();
     cy.menu('Settings', 'Application Settings');
+    cy.intercept('POST', '/ops/tree_select?id=xx-msc&text=Schedules').as('getSchedules');
     cy.get('[title="Schedules"]').click();
+    cy.wait('@getSchedules');
   });
 
   it('Validate visibility of elements based on dropdown selections', () => {
