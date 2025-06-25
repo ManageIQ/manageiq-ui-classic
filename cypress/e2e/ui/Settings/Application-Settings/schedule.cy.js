@@ -47,6 +47,22 @@ function deleteSchedule(scheduleName = 'Test name') {
   );
 }
 
+function invokeCleanupDeletion() {
+  // Iterate and clean up any leftover schedules created during the test
+  cy.get('li.list-group-item').each(($el) => {
+    const text = $el?.text()?.trim();
+    if (text === 'Test name') {
+      deleteSchedule();
+      return false;
+    }
+    if (text === 'Dummy name') {
+      deleteSchedule('Dummy name');
+      return false;
+    }
+    return true;
+  });
+}
+
 describe('Automate Schedule form operations: Settings > Application Settings > Settings > Schedules > Configuration > Add a new schedule', () => {
   beforeEach(() => {
     cy.login();
@@ -307,17 +323,15 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
   });
 
   afterEach(() => {
-    cy.get('li.list-group-item').each(($el) => {
-      const text = $el?.text()?.trim();
-      if (text === 'Test name') {
-        deleteSchedule();
-        return false;
+    cy?.url()?.then((url) => {
+      // Ensures navigation to Settings -> Application-Settings in the UI
+      if (url?.includes('/ops/explorer')) {
+        invokeCleanupDeletion();
+      } else {
+        // Navigate to Settings -> Application-Settings before looking out for Schedules created during test
+        cy.menu('Settings', 'Application Settings');
+        invokeCleanupDeletion();
       }
-      if (text === 'Dummy name') {
-        deleteSchedule('Dummy name');
-        return false;
-      }
-      return true;
     });
   });
 });
