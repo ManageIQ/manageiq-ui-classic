@@ -32,7 +32,7 @@ Dir[Rails.root.join('spec', 'shared', '**', '*.rb')].each { |f| require f }
 Dir[ManageIQ::UI::Classic::Engine.root.join('spec/shared/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
-  config.fixture_path = Rails.root.join("spec/fixtures")
+  config.fixture_paths = [Rails.root.join("spec/fixtures")]
   config.use_transactional_fixtures = true
   config.use_instantiated_fixtures  = false
 
