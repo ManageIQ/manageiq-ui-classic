@@ -63,10 +63,21 @@ function invokeCleanupDeletion() {
   });
 }
 
+function goToAppSettings() {
+  cy.intercept('GET', '/api/notifications').as('getNotifications');
+  cy.intercept(
+    'GET',
+    '/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc&limit=100'
+  ).as('getExpandedNotifications');
+  cy.menu('Settings', 'Application Settings');
+  cy.wait('@getNotifications');
+  cy.wait('@getExpandedNotifications');
+}
+
 describe('Automate Schedule form operations: Settings > Application Settings > Settings > Schedules > Configuration > Add a new schedule', () => {
   beforeEach(() => {
     cy.login();
-    cy.menu('Settings', 'Application Settings');
+    goToAppSettings();
     cy.intercept('POST', '/ops/tree_select?id=xx-msc&text=Schedules').as('getSchedules');
     cy.get('[title="Schedules"]').click();
     cy.wait('@getSchedules');
@@ -329,7 +340,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
         invokeCleanupDeletion();
       } else {
         // Navigate to Settings -> Application-Settings before looking out for Schedules created during test
-        cy.menu('Settings', 'Application Settings');
+        goToAppSettings();
         invokeCleanupDeletion();
       }
     });
