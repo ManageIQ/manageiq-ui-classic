@@ -61,7 +61,6 @@ Cypress.on('uncaught:exception', (err, runnable) => {
     console.log(err.message);
     if (err.message.includes(`Cannot read properties of undefined (reading 'received')`) || // Error handler for Chrome
         err.message.includes(`Cannot read properties of undefined (reading '0')`) || // Error handler for Chrome
-        err.message.includes('response.filtered_item_list[0] is undefined') || // Error handler for Firefox
         err.message.includes('subscription is undefined') || // Error handler for Firefox
         err.message.includes('NetworkError when attempting to fetch resource.') || // Error handler for Firefox
         err.message.includes('The operation was aborted.')) // Error handler for Firefox

@@ -24,7 +24,7 @@ function addSchedule() {
   cy.contains('[role="option"]', '(GMT-10:00) Hawaii')
     .should('be.visible')
     .click();
-  cy.get('input#start_date').type('06/30/2025', { force: true });
+  cy.get('input#start_date').type('06/30/2025');
   cy.get('input#start_time').type('11:23');
   // Checks if Save button is enabled once all required fields are filled
   cy.contains('#main-content .bx--btn-set button[type="submit"]', 'Save')
@@ -63,22 +63,30 @@ function invokeCleanupDeletion() {
   });
 }
 
-function goToAppSettings() {
-  cy.intercept('GET', '/api/notifications').as('getNotifications');
-  cy.intercept(
-    'GET',
-    '/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc&limit=100'
-  ).as('getExpandedNotifications');
-  cy.menu('Settings', 'Application Settings');
-  cy.wait('@getNotifications');
-  cy.wait('@getExpandedNotifications');
+function disableNotificationsIfVisible() {
+  // Look for notification popups and disable them if present
+  cy.get('body').then(($body) => {
+    const $link = $body.find(
+      '.miq-toast-wrapper .row .alert a:contains("Disable notifications")'
+    );
+    if ($link.length && $link.is(':visible')) {
+      cy.wrap($link).click({ force: true });
+    }
+  });
 }
 
 describe('Automate Schedule form operations: Settings > Application Settings > Settings > Schedules > Configuration > Add a new schedule', () => {
   beforeEach(() => {
+    cy.intercept('GET', '/api/notifications').as('getNotifications');
     cy.login();
-    goToAppSettings();
-    cy.intercept('POST', '/ops/tree_select?id=xx-msc&text=Schedules').as('getSchedules');
+    // After logging in, ensure the notification banner is disabled to avoid blocking other elements
+    cy.wait('@getNotifications').then(() => {
+      disableNotificationsIfVisible();
+    });
+    cy.menu('Settings', 'Application Settings');
+    cy.intercept('POST', '/ops/tree_select?id=xx-msc&text=Schedules').as(
+      'getSchedules'
+    );
     cy.get('[title="Schedules"]').click();
     cy.wait('@getSchedules');
   });
@@ -197,22 +205,22 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
 
     /* ===== Selecting any other option other than "Once" from "Run" dropdown shows the "Every" dropdown ===== */
 
-    cy.get('select#timer_typ').select('Hours', { force: true });
+    cy.get('select#timer_typ').select('Hours');
     // Checking whether the "Every" dropdown exist
     cy.get('label[for="timer_value"]').should('exist');
     cy.get('select#timer_value').should('exist');
 
-    cy.get('select#timer_typ').select('Days', { force: true });
+    cy.get('select#timer_typ').select('Days');
     // Checking whether the "Every" dropdown exist
     cy.get('label[for="timer_value"]').should('exist');
     cy.get('select#timer_value').should('exist');
 
-    cy.get('select#timer_typ').select('Weeks', { force: true });
+    cy.get('select#timer_typ').select('Weeks');
     // Checking whether the "Every" dropdown exist
     cy.get('label[for="timer_value"]').should('exist');
     cy.get('select#timer_value').should('exist');
 
-    cy.get('select#timer_typ').select('Months', { force: true });
+    cy.get('select#timer_typ').select('Months');
     // Checking whether the "Every" dropdown exist
     cy.get('label[for="timer_value"]').should('exist');
     cy.get('select#timer_value').should('exist');
@@ -275,7 +283,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     selectConfigMenu('Edit this Schedule');
     // Editing description and start date
     cy.get('input#description').clear().type('Dummy description');
-    cy.get('input#start_date').clear().type('07/21/2025', { force: true });
+    cy.get('input#start_date').clear().type('07/21/2025');
     cy.contains('#main-content .bx--btn-set button[type="button"]', 'Reset')
       .should('be.enabled')
       .click();
