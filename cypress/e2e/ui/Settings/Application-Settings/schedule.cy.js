@@ -79,9 +79,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.login();
     goToAppSettings();
     cy.intercept('POST', '/ops/tree_select?id=xx-msc&text=Schedules').as('getSchedules');
-    cy.intercept('POST', '/ops/report_data').as('getReportData');
     cy.get('[title="Schedules"]').click();
-    cy.wait('@getReportData');
     cy.wait('@getSchedules');
   });
 
