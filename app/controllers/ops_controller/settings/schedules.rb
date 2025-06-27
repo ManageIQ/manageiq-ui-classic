@@ -59,6 +59,7 @@ module OpsController::Settings::Schedules
 
   def schedule_edit
     assert_privileges("schedule_edit")
+    @in_a_form = true
     case params[:button]
     when "cancel"
       @schedule = MiqSchedule.find_by(:id => params[:id])
