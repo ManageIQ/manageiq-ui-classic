@@ -258,8 +258,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
       'Schedule "Dummy name" was saved'
     );
 
-    /* ===== Deleting schedule ===== */
-    deleteSchedule('Dummy name');
+    /* ===== Delete is already handled from afterEach hook ===== */
   });
 
   it('Checking whether Cancel & Reset buttons work fine in the Edit form', () => {
@@ -294,9 +293,8 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.get('input#description').should('have.value', 'Test description');
     cy.get('input#start_date').should('have.value', '06/30/2025');
 
-    /* ===== Deleting schedule ===== */
+    // Selecting Schedules menu item to bypass a bug, can be removed once #9505 is merged
     cy.get('[title="Schedules"]').click();
-    deleteSchedule();
   });
 
   it('Checking whether creating a duplicate record is restricted', () => {
@@ -308,9 +306,6 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.get('#main_div #flash_msg_div .alert-danger').contains(
       'Error when adding a new schedule: Validation failed: MiqSchedule: Name has already been taken'
     );
-
-    /* ===== Deleting schedule ===== */
-    deleteSchedule();
   });
 
   it('Checking whether Disabling, Enabling & Queueing up the schedule works', () => {
@@ -336,9 +331,6 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.get('#main_div #flash_msg_div .alert-success').contains(
       'The selected Schedule has been queued to run'
     );
-
-    /* ===== Deleting schedule ===== */
-    deleteSchedule();
   });
 
   afterEach(() => {
@@ -348,7 +340,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
         invokeCleanupDeletion();
       } else {
         // Navigate to Settings -> Application-Settings before looking out for Schedules created during test
-        goToAppSettings();
+        cy.menu('Settings', 'Application Settings');
         invokeCleanupDeletion();
       }
     });
