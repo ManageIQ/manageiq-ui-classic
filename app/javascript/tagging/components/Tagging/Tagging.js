@@ -76,6 +76,7 @@ class Tagging extends React.Component {
               isDisabled={isDisabled}
             />
             <ValueModifier
+              selectedTagCategory={selectedTagCategory}
               onTagValueChange={this.onTagValueChange}
               selectedTagValues={this.getSelectedCategoryValues().values}
               multiValue={this.isMulti(selectedTagCategory)}
