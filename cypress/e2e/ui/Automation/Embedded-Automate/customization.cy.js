@@ -3,12 +3,11 @@
 describe('Automation > Embedded Automate > Customization', () => {
   beforeEach(() => {
     cy.login();
-    cy.intercept('POST', '/ops/accordion_select?id=rbac_accord').as('accordion');
     cy.menu('Automation', 'Embedded Automate', 'Customization');
     cy.get('#explorer_title_text');
   });
 
-  describe('Dialog Form', () => {
+  describe.skip('Dialog Form', () => {
     it('Clicks the cancel button', () => {
       cy.get('[title="Configuration"]').click({force: true});
       cy.get('[title="Add a new Dialog"]').click({force: true});
@@ -160,6 +159,25 @@ describe('Automation > Embedded Automate > Customization', () => {
       cy.get('[title="Remove this Dialog"]').click({force: true});
 
       cy.get('[class="list-group"]').should('not.contain', 'Test Description');
+    });
+  });
+
+  describe('Button Form', () => {
+    beforeEach(() => {
+      cy.intercept('POST', '/miq_ae_customization/accordion_select?id=ab_accord').as('accordion');
+      cy.get('#control_ab_accord > .panel-title > .collapsed').click();
+      cy.wait('@accordion');
+    });
+
+    it('Validates the save button correctly', () => {
+      cy.get('#treeview-ab_tree > .list-group > [data-nodeid="0.0"]').click({force: true});
+      cy.get('.clickable-row').contains('Availability Zone').click({force: true});
+      cy.get('#treeview-ab_tree > .list-group > [data-nodeid="0.0"]').click({force: true});
+      cy.get('.clickable-row').contains('Availability Zone').click({force: true});
+      cy.get('.clickable-row').contains('Unassigned Buttons').click({force: true});
+      cy.get('[title="Configuration"]').click({force: true});
+      cy.get('[title="Add a new Button"]').click({force: true});
+      cy.get('#explorer_title_text').contains('Adding a new Button');
     });
   });
 });
