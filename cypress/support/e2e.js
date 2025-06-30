@@ -53,6 +53,7 @@ import './assertions/expect_rates_table.js';
 import './assertions/expect_search_box.js'
 import './assertions/expect_title.js'
 import './assertions/expect_text.js'
+import './assertions/expect_alerts.js';
 
 // This is needed to prevent Cypress tests from failing due to uncaught errors:
 // Undefined errors are occuring on every initial page load of Manage IQ

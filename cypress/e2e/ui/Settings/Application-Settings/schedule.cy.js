@@ -35,16 +35,10 @@ function addSchedule() {
 function deleteSchedule(scheduleName = 'Test name') {
   // Selecting the schedule
   cy.contains('li.list-group-item', scheduleName).click();
-  cy.on('window:confirm', (text) => {
-    expect(text).to.eq(
-      'Warning: This Schedule and ALL of its components will be permanently removed!'
-    );
-    return true;
-  });
-  selectConfigMenu('Delete this Schedule from the Database');
-  cy.get('#main_div #flash_msg_div .alert-success').contains(
-    `Schedule "${scheduleName}": Delete successful`
-  );
+  // Listening for the browser confirm alert and confirming
+  cy.listen_for_browser_confirm_alert();
+  selectConfigMenu(deleteScheduleConfigOption);
+  cy.expect_flash('success');
 }
 
 function invokeCleanupDeletion() {
@@ -224,17 +218,13 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.contains('#main-content .bx--btn-set button[type="button"]', 'Cancel')
       .should('be.enabled')
       .click();
-    cy.get('#main_div #flash_msg_div .alert-success').contains(
-      'Add was cancelled by the user'
-    );
+    cy.expect_flash('success');
   });
 
   it('Checking whether add, edit & delete schedule works', () => {
     /* ===== Adding a schedule ===== */
     addSchedule();
-    cy.get('#main_div #flash_msg_div .alert-success').contains(
-      'Schedule "Test name" was saved'
-    );
+    cy.expect_flash('success');
 
     /* ===== Editing a schedule ===== */
     // Selecting the created schedule
@@ -247,9 +237,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.contains('#main-content .bx--btn-set button[type="submit"]', 'Save')
       .should('be.enabled')
       .click();
-    cy.get('#main_div #flash_msg_div .alert-success').contains(
-      'Schedule "Dummy name" was saved'
-    );
+    cy.expect_flash('success');
 
     /* ===== Delete is already handled from afterEach hook ===== */
   });
@@ -265,9 +253,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.contains('#main-content .bx--btn-set button[type="button"]', 'Cancel')
       .should('be.enabled')
       .click();
-    cy.get('#main_div #flash_msg_div .alert-success').contains(
-      'Edit of "Test name" was cancelled by the user'
-    );
+    cy.expect_flash('success');
 
     /* ===== Checking whether Reset button works ===== */
     // Selecting the created schedule
@@ -279,9 +265,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.contains('#main-content .bx--btn-set button[type="button"]', 'Reset')
       .should('be.enabled')
       .click();
-    cy.get('#main_div #flash_msg_div .alert-warning').contains(
-      'All changes have been reset'
-    );
+    cy.expect_flash('warning');
     // Confirming the edited fields contain the old values after resetting
     cy.get('input#description').should('have.value', 'Test description');
     cy.get('input#start_date').should('have.value', '06/30/2025');
@@ -296,9 +280,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
 
     /* ===== Trying to add the same schedule again ===== */
     addSchedule();
-    cy.get('#main_div #flash_msg_div .alert-danger').contains(
-      'Error when adding a new schedule: Validation failed: MiqSchedule: Name has already been taken'
-    );
+    cy.expect_flash('error');
   });
 
   it('Checking whether Disabling, Enabling & Queueing up the schedule works', () => {
@@ -308,22 +290,16 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.contains('li.list-group-item', 'Test name').click();
 
     /* ===== Disabling the schedule ===== */
-    selectConfigMenu('Disable this Schedule');
-    cy.get('#main_div #flash_msg_div .alert-info').contains(
-      'The selected Schedules were disabled'
-    );
+    selectConfigMenu(disableScheduleConfigOption);
+    cy.expect_flash('info');
 
     /* ===== Enabling the schedule ===== */
-    selectConfigMenu('Enable this Schedule');
-    cy.get('#main_div #flash_msg_div .alert-info').contains(
-      'The selected Schedules were enabled'
-    );
+    selectConfigMenu(enableScheduleConfigOption);
+    cy.expect_flash('info');
 
     /* ===== Queueing-up the schedule ===== */
-    selectConfigMenu('Queue up this Schedule to run now');
-    cy.get('#main_div #flash_msg_div .alert-success').contains(
-      'The selected Schedule has been queued to run'
-    );
+    selectConfigMenu(queueScheduleConfigOption);
+    cy.expect_flash('success');
   });
 
   afterEach(() => {
