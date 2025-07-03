@@ -89,8 +89,14 @@ const {
 } = textConstants;
 
 function selectConfigMenu(configuration = addScheduleConfigOption) {
-  cy.get('#miq_schedule_vmdb_choice').click();
-  cy.get(`ul[aria-label="Configuration"] [title="${configuration}"]`).click();
+  cy.get(
+    `.miq-toolbar-actions .miq-toolbar-group button[title="Configuration"]`
+  ).click();
+  return cy
+    .get(
+      `ul#overflow-menu-1__menu-body button[title="${configuration}"][role="menuitem"]`
+    )
+    .click();
 }
 
 function addSchedule() {
@@ -128,9 +134,10 @@ function addSchedule() {
 function deleteSchedule(scheduleName = initialScheduleName) {
   // Selecting the schedule
   cy.accordionItem(scheduleName);
-  // Listening for the browser confirm alert and confirming
-  cy.listen_for_browser_confirm_alert();
-  selectConfigMenu(deleteScheduleConfigOption);
+  // Listening for the browser confirm alert and confirming deletion
+  cy.expect_browser_confirm_with_text({
+    confirmTriggerFn: () => selectConfigMenu(deleteScheduleConfigOption),
+  });
   cy.expect_flash('success');
 }
 
