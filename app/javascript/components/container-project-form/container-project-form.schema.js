@@ -36,7 +36,6 @@ const createSchema = (emsId, setState) => ({
       isRequired: true,
       label: __('Container Project Name'),
       maxLength: 63,
-      helperText: __('Must be lowercase alphanumeric with hyphens, start and end with alphanumeric'),
     },
     {
       component: componentTypes.SELECT,
@@ -48,7 +47,6 @@ const createSchema = (emsId, setState) => ({
       isRequired: true,
       includeEmpty: true,
       loadOptions: loadProviders,
-      helperText: __('Select the container management provider'),
     },
   ],
 });
