@@ -88,13 +88,6 @@ class ContainerProjectController < ApplicationController
   end
   helper_method :textual_group_list
 
-  def form_params
-    options = {}
-    options[:name] = params[:name] if params[:name]
-    options[:ems_id] = params[:ems_id] if params[:ems_id]
-    options
-  end
-
   def process_container_projects(container_projects, task)
     return if container_projects.empty?
 
