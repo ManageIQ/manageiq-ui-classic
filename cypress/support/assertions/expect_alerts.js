@@ -9,26 +9,26 @@ const flashClassMap = {
 
 /**
  * Custom Cypress command to validate flash messages.
- * @param {string} alertType - Type of alert (success, warning, error, info).
- * @param {string} [containsText] - Optional text that the alert should contain.
- * @returns {Cypress.Chainable} - The alert element if found, or an assertion failure.
+ * @param {string} flashType - Type of flash (success, warning, error, info).
+ * @param {string} [containsText] - Optional text that the flash-message should contain.
+ * @returns {Cypress.Chainable} - The flash-message element if found, or an assertion failure.
  */
 Cypress.Commands.add(
   'expect_flash',
   (flashType = flashClassMap.success, containsText) => {
-    const alertClassName = flashClassMap[flashType] || flashClassMap.success;
-    const alert = cy
-      .get(`#main_div #flash_msg_div .alert-${alertClassName}`)
+    const flashMessageClassName = flashClassMap[flashType] || flashClassMap.success;
+    const flashMessageElement = cy
+      .get(`#main_div #flash_msg_div .alert-${flashMessageClassName}`)
       .should('be.visible');
 
     if (containsText) {
-      return alert.should(($el) => {
+      return flashMessageElement.should(($el) => {
         const actualText = $el.text().toLowerCase();
         expect(actualText).to.include(containsText.toLowerCase());
       });
     }
 
-    return alert;
+    return flashMessageElement;
   }
 );
 
