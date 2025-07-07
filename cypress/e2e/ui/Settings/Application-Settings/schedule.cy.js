@@ -5,8 +5,8 @@ const textConstants = {
   schedulesAccordionItem: 'Schedules',
 
   // Field values
-  initialScheduleName: 'Test name',
-  editedScheduleName: 'Dummy name',
+  initialScheduleName: 'Test-name',
+  editedScheduleName: 'Dummy-name',
   initialDescription: 'Test description',
   editedDescription: 'Dummy description',
   actionTypeVmAnalysis: 'vm',
@@ -152,21 +152,53 @@ function addSchedule() {
     .click();
   cy.get('input#start_date').type(initialStartDate);
   cy.get('input#start_time').type(startTime);
-  // Checks if Save button is enabled once all required fields are filled
+  // Intercepting the API call for adding a new schedule
+  cy.intercept('POST', '/ops/schedule_edit/new?button=save').as(
+    'addScheduleApi'
+  );
   cy.contains('#main-content .bx--btn-set button[type="submit"]', saveButton)
-    .should('be.enabled')
+    .should('be.enabled') // Checks if Save button is enabled once all required fields are filled
     .click();
+  // Wait for the API call to complete
+  cy.wait('@addScheduleApi');
 }
 
 function deleteSchedule(scheduleName = initialScheduleName) {
-  // Selecting the schedule
-  cy.accordionItem(scheduleName);
+  // Selecting the schedule and intercepting the API call to get schedule details
+  interceptGetScheduleDetailsApi(scheduleName);
   // Listening for the browser confirm alert and confirming deletion
   cy.expect_browser_confirm_with_text({
     confirmTriggerFn: () => selectConfigMenu(deleteScheduleConfigOption),
     containsText: browserAlertDeleteConfirmText,
   });
   cy.expect_flash(flashTypeSuccess, flashMessageScheduleDeleted);
+}
+
+function interceptGetScheduleDetailsApi(scheduleName = initialScheduleName) {
+  // Flag to check if the request is fired
+  let requestFired = false;
+  // Intercepting the API call
+  cy.intercept(
+    {
+      method: 'POST',
+      pathname: '/ops/tree_select',
+      query: { text: scheduleName },
+    },
+    // This callback function will be called when the request is fired,
+    // from which the requestFired flag will be set to true
+    () => (requestFired = true)
+  ).as('getCreatedScheduleApi');
+  // Triggering the action that will fire the API call,
+  // which is selecting the created schedule
+  cy.accordionItem(scheduleName);
+  // Wait for the API call to complete if it was fired
+  // This is to ensure that the test does not fail if the request was not fired
+  cy.then(() => {
+    // If the request was fired, wait for the alias
+    if (requestFired) {
+      cy.wait('@getCreatedScheduleApi');
+    }
+  });
 }
 
 function invokeCleanupDeletion() {
@@ -199,9 +231,13 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
   beforeEach(() => {
     cy.login();
     cy.menu(settingsMenuOption, appSettingsMenuOption);
-    cy.intercept('POST', '/ops/tree_select?id=xx-msc&text=Schedules').as(
-      'getSchedules'
-    );
+    cy.intercept(
+      {
+        method: 'POST',
+        pathname: '/ops/tree_select',
+        query: { text: schedulesAccordionItem },
+      },
+    ).as('getSchedules');
     cy.accordionItem(schedulesAccordionItem);
     cy.wait('@getSchedules');
   });
@@ -360,8 +396,8 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.expect_flash(flashTypeSuccess, flashMessageScheduleSaved);
 
     /* ===== Editing a schedule ===== */
-    // Selecting the created schedule
-    cy.accordionItem(initialScheduleName);
+    // Selecting the schedule and intercepting the API call to get schedule details
+    interceptGetScheduleDetailsApi();
     selectConfigMenu(editScheduleConfigOption);
     // Editing name and description
     cy.get('input#name').clear().type(editedScheduleName);
@@ -380,8 +416,8 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     addSchedule();
 
     /* ===== Checking whether Cancel button works ===== */
-    // Selecting the created schedule
-    cy.accordionItem(initialScheduleName);
+    // Selecting the schedule and intercepting the API call to get schedule details
+    interceptGetScheduleDetailsApi();
     selectConfigMenu(editScheduleConfigOption);
     cy.contains(
       '#main-content .bx--btn-set button[type="button"]',
@@ -392,8 +428,8 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.expect_flash(flashTypeSuccess, flashMessageOperationCanceled);
 
     /* ===== Checking whether Reset button works ===== */
-    // Selecting the created schedule
-    cy.accordionItem(initialScheduleName);
+    // Selecting the schedule and intercepting the API call to get schedule details
+    interceptGetScheduleDetailsApi();
     selectConfigMenu(editScheduleConfigOption);
     // Editing description and start date
     cy.get('input#description').clear().type(editedDescription);
@@ -422,8 +458,8 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
   it('Checking whether Disabling, Enabling & Queueing up the schedule works', () => {
     /* ===== Adding a schedule ===== */
     addSchedule();
-    // Selecting the created schedule
-    cy.accordionItem(initialScheduleName);
+    // Selecting the schedule and intercepting the API call to get schedule details
+    interceptGetScheduleDetailsApi();
 
     /* ===== Disabling the schedule ===== */
     selectConfigMenu(disableScheduleConfigOption);
