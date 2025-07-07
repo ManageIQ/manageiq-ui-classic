@@ -47,6 +47,25 @@ const textConstants = {
   // Menu options
   settingsMenuOption: 'Settings',
   appSettingsMenuOption: 'Application Settings',
+
+  // Flash message types
+  flashTypeSuccess: 'success',
+  flashTypeWarning: 'warning',
+  flashTypeError: 'error',
+  flashTypeInfo: 'info',
+
+  // Flash message text snippets
+  flashMessageScheduleQueued: 'queued to run',
+  flashMessageOperationCanceled: 'cancelled',
+  flashMessageScheduleDisabled: 'disabled',
+  flashMessageScheduleEnabled: 'enabled',
+  flashMessageScheduleSaved: 'saved',
+  flashMessageResetSchedule: 'reset',
+  flashMessageScheduleDeleted: 'delete successful',
+  flashMessageFailedToAddSchedule: 'failed',
+
+  // Browser alert text snippets
+  browserAlertDeleteConfirmText: 'will be permanently removed',
 };
 
 const {
@@ -86,6 +105,19 @@ const {
   startTime,
   deleteScheduleConfigOption,
   schedulesAccordionItem,
+  flashTypeSuccess,
+  flashTypeWarning,
+  flashTypeError,
+  flashTypeInfo,
+  flashMessageScheduleQueued,
+  flashMessageOperationCanceled,
+  flashMessageScheduleDisabled,
+  flashMessageScheduleEnabled,
+  flashMessageScheduleSaved,
+  flashMessageResetSchedule,
+  flashMessageScheduleDeleted,
+  flashMessageFailedToAddSchedule,
+  browserAlertDeleteConfirmText,
 } = textConstants;
 
 function selectConfigMenu(configuration = addScheduleConfigOption) {
@@ -137,8 +169,9 @@ function deleteSchedule(scheduleName = initialScheduleName) {
   // Listening for the browser confirm alert and confirming deletion
   cy.expect_browser_confirm_with_text({
     confirmTriggerFn: () => selectConfigMenu(deleteScheduleConfigOption),
+    containsText: browserAlertDeleteConfirmText,
   });
-  cy.expect_flash('success');
+  cy.expect_flash(flashTypeSuccess, flashMessageScheduleDeleted);
 }
 
 function invokeCleanupDeletion() {
@@ -323,13 +356,13 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     )
       .should('be.enabled')
       .click();
-    cy.expect_flash('success');
+    cy.expect_flash(flashTypeSuccess, flashMessageOperationCanceled);
   });
 
   it('Checking whether add, edit & delete schedule works', () => {
     /* ===== Adding a schedule ===== */
     addSchedule();
-    cy.expect_flash('success');
+    cy.expect_flash(flashTypeSuccess, flashMessageScheduleSaved);
 
     /* ===== Editing a schedule ===== */
     // Selecting the created schedule
@@ -342,7 +375,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.contains('#main-content .bx--btn-set button[type="submit"]', saveButton)
       .should('be.enabled')
       .click();
-    cy.expect_flash('success');
+    cy.expect_flash(flashTypeSuccess, flashMessageScheduleSaved);
 
     /* ===== Delete is already handled from afterEach hook ===== */
   });
@@ -361,7 +394,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     )
       .should('be.enabled')
       .click();
-    cy.expect_flash('success');
+    cy.expect_flash(flashTypeSuccess, flashMessageOperationCanceled);
 
     /* ===== Checking whether Reset button works ===== */
     // Selecting the created schedule
@@ -373,7 +406,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.contains('#main-content .bx--btn-set button[type="button"]', resetButton)
       .should('be.enabled')
       .click();
-    cy.expect_flash('warning');
+    cy.expect_flash(flashTypeWarning, flashMessageResetSchedule);
     // Confirming the edited fields contain the old values after resetting
     cy.get('input#description').should('have.value', initialDescription);
     cy.get('input#start_date').should('have.value', initialStartDate);
@@ -388,7 +421,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
 
     /* ===== Trying to add the same schedule again ===== */
     addSchedule();
-    cy.expect_flash('error');
+    cy.expect_flash(flashTypeError, flashMessageFailedToAddSchedule);
   });
 
   it('Checking whether Disabling, Enabling & Queueing up the schedule works', () => {
@@ -399,15 +432,15 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
 
     /* ===== Disabling the schedule ===== */
     selectConfigMenu(disableScheduleConfigOption);
-    cy.expect_flash('info');
+    cy.expect_flash(flashTypeInfo, flashMessageScheduleDisabled);
 
     /* ===== Enabling the schedule ===== */
     selectConfigMenu(enableScheduleConfigOption);
-    cy.expect_flash('info');
+    cy.expect_flash(flashTypeInfo, flashMessageScheduleEnabled);
 
     /* ===== Queueing-up the schedule ===== */
     selectConfigMenu(queueScheduleConfigOption);
-    cy.expect_flash('success');
+    cy.expect_flash(flashTypeSuccess, flashMessageScheduleQueued);
   });
 
   afterEach(() => {
