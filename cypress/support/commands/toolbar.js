@@ -15,18 +15,22 @@ Cypress.Commands.add('toolbar', (toolbarButton, dropdownButton = '') => {
   });
 
   if (dropdownButton) {
-    cy.get('.bx--overflow-menu-options').then((dropdownButtons) => {
+    return cy.get('.bx--overflow-menu-options').then((dropdownButtons) => {
       const buttons = dropdownButtons.children();
-      const nums = [...Array(buttons.length).keys()];
-      nums.forEach((index) => {
+      for (let index = 0; index < buttons.length; index++) {
         const button = buttons[index];
-        if (button && button.innerText && button.innerText.includes(dropdownButton)) {
-          button.children[0].click();
-          return;
+        if (
+          button &&
+          button.innerText &&
+          button.innerText.includes(dropdownButton)
+        ) {
+          return cy.wrap(button.children[0]).click();
         }
-      });
+      }
+      return cy.wrap(null);
     });
   }
+  return cy.wrap(null);
 });
 
 // toolbarButton: String for the text of the toolbar button to click.

@@ -37,6 +37,7 @@ const textConstants = {
   resetButton: 'Reset',
 
   // Config options
+  configToolbarButton: 'Configuration',
   addScheduleConfigOption: 'Add a new Schedule',
   deleteScheduleConfigOption: 'Delete this Schedule from the Database',
   editScheduleConfigOption: 'Edit this Schedule',
@@ -105,6 +106,7 @@ const {
   startTime,
   deleteScheduleConfigOption,
   schedulesAccordionItem,
+  configToolbarButton,
   flashTypeSuccess,
   flashTypeWarning,
   flashTypeError,
@@ -120,15 +122,8 @@ const {
   browserAlertDeleteConfirmText,
 } = textConstants;
 
-function selectConfigMenu(configuration = addScheduleConfigOption) {
-  cy.get(
-    `.miq-toolbar-actions .miq-toolbar-group button[title="Configuration"]`
-  ).click();
-  return cy
-    .get(
-      `ul#overflow-menu-1__menu-body button[title="${configuration}"][role="menuitem"]`
-    )
-    .click();
+function selectConfigMenu(menuOption = addScheduleConfigOption) {
+  return cy.toolbar(configToolbarButton, menuOption);
 }
 
 function addSchedule() {
