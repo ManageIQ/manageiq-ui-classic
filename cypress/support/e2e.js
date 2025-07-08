@@ -53,13 +53,15 @@ import './assertions/expect_rates_table.js';
 import './assertions/expect_search_box.js'
 import './assertions/expect_title.js'
 import './assertions/expect_text.js'
+import './assertions/expect_alerts.js';
 
 // This is needed to prevent Cypress tests from failing due to uncaught errors:
 // Undefined errors are occuring on every initial page load of Manage IQ
 // Network and aborted errors are exlusive to firefox when cypress navigates to a new page before the api calls for the last page are fullly loaded
 Cypress.on('uncaught:exception', (err, runnable) => {
     console.log(err.message);
-    if (err.message.includes(`Cannot read properties of undefined (reading 'received')`) || // Error handler for Chrome 
+    if (err.message.includes(`Cannot read properties of undefined (reading 'received')`) || // Error handler for Chrome
+        err.message.includes(`Cannot read properties of undefined (reading '0')`) || // Error handler for Chrome
         err.message.includes('subscription is undefined') || // Error handler for Firefox
         err.message.includes('NetworkError when attempting to fetch resource.') || // Error handler for Firefox
         err.message.includes('The operation was aborted.')) // Error handler for Firefox
