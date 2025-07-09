@@ -1,17 +1,5 @@
 /* eslint-disable no-undef */
 
-function disableNotificationsIfVisible() {
-  // Look for notification popups and disable them if present
-  cy.get('body').then(($body) => {
-    const $link = $body.find(
-      '.miq-toast-wrapper .row .alert a:contains("Disable notifications")'
-    );
-    if ($link.length && $link.is(':visible')) {
-      cy.wrap($link).click({ force: true });
-    }
-  });
-}
-
 function resetProtocolForServer() {
   // Select Diagnostics
   cy.get('.panel #control_diagnostics_accord .panel-title a')
@@ -161,12 +149,7 @@ function saveButtonValidation() {
 
 describe('Automate Collect logs Edit form operations', () => {
   beforeEach(() => {
-    cy.intercept('GET', '/api/notifications').as('getNotifications');
     cy.login();
-    // After logging in, ensure the notification banner is disabled to avoid blocking other elements
-    cy.wait('@getNotifications').then(() => {
-      disableNotificationsIfVisible();
-    });
     // Navigate to Application settings and Select Diagnostics
     cy.menu('Settings', 'Application Settings');
     cy.get('.panel #control_diagnostics_accord .panel-title a')
