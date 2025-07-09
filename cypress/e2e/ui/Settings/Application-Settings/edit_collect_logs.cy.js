@@ -71,44 +71,42 @@ function interceptAndAwaitApi({
   cy.wait(`@${alias}`);
 }
 
-function invokeAndAwaitRegionInfo({
-  currentApiIntercepts,
-}) {
+function invokeAndAwaitRegionInfo({ currentApiIntercepts }) {
   interceptAndAwaitApi({
     alias: 'getRegionInfo',
     urlPattern: /ops\/tree_select\?id=.*&text=.*ManageIQ.*Region.*Region.*/,
     triggerFn: () =>
-      cy.accordionItem('ManageIQ Region:', true, 'diagnostics_accord'),
+      cy.accordionItem(
+        manageIQRegionAccordItem,
+        true,
+        diagnosticsAccordionItemId
+      ),
     currentApiIntercepts,
   });
 }
 
-function invokeAndAwaitZoneDefaultInfo({
-  currentApiIntercepts,
-}) {
+function invokeAndAwaitZoneDefaultInfo({ currentApiIntercepts }) {
   interceptAndAwaitApi({
     alias: 'getZoneDefaultInfo',
     urlPattern:
       /ops\/tree_select\?id=.*&text=.*Zone.*Default.*Zone.*(current).*/,
-    triggerFn: () => cy.accordionItem('Zone:', true, 'diagnostics_accord'),
+    triggerFn: () =>
+      cy.accordionItem(zoneAccordItem, true, diagnosticsAccordionItemId),
     currentApiIntercepts,
   });
 }
 
-function invokeAndAwaitServerInfo({
-  currentApiIntercepts,
-}) {
+function invokeAndAwaitServerInfo({ currentApiIntercepts }) {
   interceptAndAwaitApi({
     alias: 'getServerInfo',
     urlPattern: /ops\/tree_select\?id=.*&text=.*Server.*EVM.*(current).*/,
-    triggerFn: () => cy.accordionItem('Server:', true, 'diagnostics_accord'),
+    triggerFn: () =>
+      cy.accordionItem(serverAccordItem, true, diagnosticsAccordionItemId),
     currentApiIntercepts,
   });
 }
 
-function invokeAndAwaitCollectLogsTabInfo({
-  currentApiIntercepts,
-}) {
+function invokeAndAwaitCollectLogsTabInfo({ currentApiIntercepts }) {
   interceptAndAwaitApi({
     alias: 'getCollectLogsTabInfo',
     urlPattern: '/ops/change_tab?tab_id=diagnostics_collect_logs',
@@ -122,9 +120,7 @@ function invokeAndAwaitCollectLogsTabInfo({
   });
 }
 
-function invokeAndAwaitEditEventForServer({
-  currentApiIntercepts,
-}) {
+function invokeAndAwaitEditEventForServer({ currentApiIntercepts }) {
   interceptAndAwaitApi({
     alias: 'editEventForServer',
     urlPattern: /\/ops\/x_button\/[^/]+\?pressed=.*log_depot_edit/, // matches both /ops/x_button/1?pressed=log_depot_edit & /ops/x_button/2?pressed=zone_log_depot_edit endpoints
@@ -164,10 +160,10 @@ function resetProtocolDropdown({
     ($select) => {
       const currentValue = $select.val();
       // If the value is not default one(BLANK_VALUE), then setting it to blank
-      if (currentValue !== 'BLANK_VALUE') {
-        cy.wrap($select).select('BLANK_VALUE');
+      if (currentValue !== dropdownBlankValue) {
+        cy.wrap($select).select(dropdownBlankValue);
         cy.get('#diagnostics_collect_logs .bx--btn-set button[type="Submit"]')
-          .contains('Save')
+          .contains(saveButton)
           .click();
         cy.get('#main_div #flash_msg_div .alert-success').contains(
           'Log Depot Settings were saved'
@@ -180,7 +176,7 @@ function resetProtocolDropdown({
 function cancelButtonValidation() {
   // Click cancel button in the form
   cy.get('#diagnostics_collect_logs .bx--btn-set button[type="button"]')
-    .contains('Cancel')
+    .contains(cancelButton)
     .should('be.enabled')
     .click();
   // Validating confirmation alert text displayed
@@ -192,36 +188,36 @@ function cancelButtonValidation() {
 function resetButtonValidation() {
   // Confirm Reset button is disabled initially
   cy.get('#diagnostics_collect_logs .bx--btn-set button[type="button"]')
-    .contains('Reset')
+    .contains(resetButton)
     .should('be.disabled');
   // Selecting Samba option from dropdown
   cy.get('#log-depot-settings .bx--select select#log_protocol').select(
-    'FileDepotSmb'
+    sambaDropdownValue
   );
   // Confirm Reset button is enabled once dropdown value is changed and then click on Reset
   cy.get('#diagnostics_collect_logs .bx--btn-set button[type="button"]')
-    .contains('Reset')
+    .contains(resetButton)
     .should('be.enabled')
     .click();
   // Confirm dropdown has the old value
   cy.get('#log-depot-settings .bx--select select#log_protocol').should(
     'have.value',
-    'BLANK_VALUE'
+    dropdownBlankValue
   );
 }
 
 function saveButtonValidation() {
   // Confirm Save button is disabled initially
   cy.get('#diagnostics_collect_logs .bx--btn-set button[type="Submit"]')
-    .contains('Save')
+    .contains(saveButton)
     .should('be.disabled');
   // Selecting Samba option from dropdown
   cy.get('#log-depot-settings .bx--select select#log_protocol').select(
-    'FileDepotSmb'
+    sambaDropdownValue
   );
   // Confirm Save button is enabled once dropdown value is changed and then click on Save
   cy.get('#diagnostics_collect_logs .bx--btn-set button[type="Submit"]')
-    .contains('Save')
+    .contains(saveButton)
     .should('be.enabled')
     .click();
   // Validating confirmation alert text displayed
@@ -287,13 +283,13 @@ describe('Automate Collect logs Edit form operations', () => {
     after(() => {
       cy?.url()?.then((url) => {
         // Ensures navigation to Settings -> Application-Settings in the UI
-        if (url?.includes('/ops/explorer')) {
+        if (url?.includes(componentRouteUrl)) {
           resetProtocolDropdown({
             currentApiIntercepts: registeredApiIntercepts,
           });
         } else {
           // Navigate to Settings -> Application-Settings before selecting Diagnostics
-          cy.menu('Settings', 'Application Settings');
+          cy.menu(settingsMenuOption, appSettingsMenuOption);
           resetProtocolDropdown({
             currentApiIntercepts: registeredApiIntercepts,
           });
@@ -333,14 +329,14 @@ describe('Automate Collect logs Edit form operations', () => {
     after(() => {
       cy?.url()?.then((url) => {
         // Ensures navigation to Settings -> Application-Settings in the UI
-        if (url?.includes('/ops/explorer')) {
+        if (url?.includes(componentRouteUrl)) {
           resetProtocolDropdown({
             currentApiIntercepts: registeredApiIntercepts,
             needsServerInfoFetch: false,
           });
         } else {
           // Navigate to Settings -> Application-Settings before selecting Diagnostics
-          cy.menu('Settings', 'Application Settings');
+          cy.menu(settingsMenuOption, appSettingsMenuOption);
           resetProtocolDropdown({
             currentApiIntercepts: registeredApiIntercepts,
             needsServerInfoFetch: false,
