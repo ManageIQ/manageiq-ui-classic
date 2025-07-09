@@ -36,7 +36,7 @@ const textConstants = {
 
   // Flash message text snippets
   flashMessageSettingsSaved: 'saved',
-  flashMessageOperationCanceled: 'cancelled',
+  flashMessageOperationCanceled: 'cancel',
 };
 
 const {
@@ -174,9 +174,7 @@ function resetProtocolDropdown({
         cy.wrap($select).select(dropdownBlankValue);
         cy.contains(buttonSelector(submitButtonType), saveButton).click();
         // Validating confirmation flash message
-        cy.get('#main_div #flash_msg_div .alert-success').contains(
-          'Log Depot Settings were saved'
-        );
+        cy.expect_flash(flashTypeSuccess, flashMessageSettingsSaved);
       }
     }
   );
@@ -198,10 +196,8 @@ function cancelButtonValidation() {
   cy.contains(buttonSelector(normalButtonType), cancelButton)
     .should('be.enabled')
     .click();
-  // Validating confirmation alert text displayed
-  cy.get('#main_div #flash_msg_div .alert-success').contains(
-    'Edit Log Depot settings was cancelled by the user'
-  );
+  // Validating confirmation flash message
+  cy.expect_flash(flashTypeSuccess, flashMessageOperationCanceled);
 }
 
 function resetButtonValidation() {
@@ -238,10 +234,8 @@ function saveButtonValidation() {
   cy.contains(buttonSelector(submitButtonType), saveButton)
     .should('be.enabled')
     .click();
-  // Validating confirmation alert text displayed
-  cy.get('#main_div #flash_msg_div .alert-success').contains(
-    'Log Depot Settings were saved'
-  );
+  // Validating confirmation flash message
+  cy.expect_flash(flashTypeSuccess, flashMessageSettingsSaved);
 }
 
 describe('Automate Collect logs Edit form operations', () => {
