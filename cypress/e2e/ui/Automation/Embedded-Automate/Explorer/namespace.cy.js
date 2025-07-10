@@ -1,0 +1,348 @@
+/* eslint-disable no-undef */
+
+const textConstants = {
+  // Menu options
+  automationMenuOption: 'Automation',
+  embeddedAutomationMenuOption: 'Embedded Automate',
+  explorerMenuOption: 'Explorer',
+
+  // Toolbar options
+  toolbarConfiguration: 'Configuration',
+  toolbarAddNewDomain: 'Add a New Domain',
+  toolbarRemoveDomain: 'Remove this Domain',
+  toolbarAddNewNamespace: 'Add a New Namespace',
+  toolbarEditNamespace: 'Edit this Namespace',
+  toolbarRemoveNamespace: 'Remove this Namespace',
+
+  // Common selectors
+  inputFieldSelector: (inputId) =>
+    `#main-content #datastore-form-wrapper input#${inputId}`,
+  buttonSelector: (type) => `#main-content .bx--btn-set button[type="${type}"]`,
+  inputFieldLabelSelector: (forValue) =>
+    `#main-content #datastore-form-wrapper label[for="${forValue}"]`,
+
+  // Element ids
+  nameInputFieldId: 'name',
+  descriptionInputFieldId: 'description',
+  namespacePathInputFieldId: 'namespacePath',
+
+  // Button types
+  submitButtonType: 'submit',
+  normalButtonType: 'button',
+
+  // Field values
+  domainName: 'Test_Domain',
+  description: 'Test description',
+  namespaceName: 'Test_Namespace',
+  editedNamespaceName: 'Test_Namespace_Edited',
+  editedDescription: 'Test description edited',
+  invalidNamespaceName: 'Test Namespace',
+  addNamespaceFormHeader: 'Adding a new Automate Namespace',
+  editNamespaceFormHeader: 'Editing Automate Namespace',
+  namespaceFormSubHeader: 'Info',
+
+  // List items
+  dataStoreAccordionItem: 'Datastore',
+
+  // Buttons
+  addButton: 'Add',
+  cancelButton: 'Cancel',
+  saveButton: 'Save',
+  resetButton: 'Reset',
+
+  // Flash message types
+  flashTypeSuccess: 'success',
+  flashTypeWarning: 'warning',
+  flashTypeError: 'error',
+
+  // Flash message text snippets
+  flashMessageAddSuccess: 'added',
+  flashMessageSaveSuccess: 'saved',
+  flashMessageCancelled: 'cancel',
+  flashMessageInvalidNamespace: 'contain only alphanumeric',
+  flashMessageNamespaceRemoved: 'delete successful',
+  flashMessageNameAlreadyExists: 'taken',
+  flashMessageResetNamespace: 'reset',
+  browserConfirmRemoveMessage: 'remove',
+};
+
+const {
+  automationMenuOption,
+  embeddedAutomationMenuOption,
+  explorerMenuOption,
+  inputFieldSelector,
+  buttonSelector,
+  inputFieldLabelSelector,
+  addButton,
+  cancelButton,
+  resetButton,
+  saveButton,
+  domainName,
+  description,
+  toolbarConfiguration,
+  toolbarAddNewDomain,
+  toolbarAddNewNamespace,
+  toolbarEditNamespace,
+  toolbarRemoveNamespace,
+  toolbarRemoveDomain,
+  addNamespaceFormHeader,
+  editNamespaceFormHeader,
+  namespaceFormSubHeader,
+  namespaceName,
+  editedNamespaceName,
+  editedDescription,
+  invalidNamespaceName,
+  flashTypeError,
+  flashTypeSuccess,
+  flashTypeWarning,
+  flashMessageAddSuccess,
+  flashMessageSaveSuccess,
+  flashMessageCancelled,
+  flashMessageNamespaceRemoved,
+  flashMessageInvalidNamespace,
+  flashMessageNameAlreadyExists,
+  flashMessageResetNamespace,
+  browserConfirmRemoveMessage,
+  dataStoreAccordionItem,
+  nameInputFieldId,
+  descriptionInputFieldId,
+  namespacePathInputFieldId,
+  submitButtonType,
+  normalButtonType,
+} = textConstants;
+
+function addNamespace(nameFieldValue = namespaceName) {
+  // Navigating to the Add Namespace form
+  cy.toolbar(toolbarConfiguration, toolbarAddNewNamespace);
+  // Creating a new namespace
+  cy.get(inputFieldSelector(nameInputFieldId)).type(nameFieldValue);
+  cy.get(inputFieldSelector(descriptionInputFieldId)).type(description);
+  cy.contains(buttonSelector(submitButtonType), addButton).click();
+  cy.wait('@addNamespaceApi');
+}
+
+function selectAccordionTree(textValue) {
+  const aliasObject = {
+    [domainName]: 'getCreatedDomainInfo',
+    [namespaceName]: 'getCreatedNamespaceInfo',
+    [dataStoreAccordionItem]: 'getDataStoreAccordionItemInfo',
+  };
+  cy.intercept(
+    'POST',
+    new RegExp(`/miq_ae_class/tree_select\\?id=.*&text=${textValue}`)
+  ).as(aliasObject[textValue]);
+  cy.accordionItem(textValue);
+  cy.wait(`@${aliasObject[textValue]}`);
+}
+
+function validateNamespaceFormFields(isEditForm = false) {
+  // Validate form header visibility
+  cy.expect_explorer_title(
+    isEditForm
+      ? `${editNamespaceFormHeader} "${namespaceName}"`
+      : addNamespaceFormHeader
+  );
+  // Validate sub header visibility
+  cy.get('#main-content #datastore-form-wrapper h3').contains(
+    namespaceFormSubHeader
+  );
+  // Validate name-space path field visibility
+  cy.get(inputFieldLabelSelector(namespacePathInputFieldId)).should(
+    'be.visible'
+  );
+  cy.get(inputFieldSelector(namespacePathInputFieldId))
+    .should('be.visible')
+    .and('be.disabled')
+    .and(
+      'have.value',
+      isEditForm ? `/${domainName}/${namespaceName}` : `/${domainName}`
+    );
+  // Validate name field visibility
+  cy.get(inputFieldLabelSelector(nameInputFieldId)).should('be.visible');
+  cy.get(inputFieldSelector(nameInputFieldId))
+    .should('be.visible')
+    .and('be.enabled');
+  // Validate description field visibility
+  cy.get(inputFieldLabelSelector(descriptionInputFieldId)).should('be.visible');
+  cy.get(inputFieldSelector(descriptionInputFieldId))
+    .should('be.visible')
+    .and('be.enabled');
+  // Validate cancel button visibility
+  cy.get(buttonSelector(normalButtonType))
+    .contains(cancelButton)
+    .should('be.visible');
+  // Validate add/save button visibility
+  cy.get(buttonSelector(submitButtonType))
+    .contains(isEditForm ? saveButton : addButton)
+    .should('be.visible');
+  if (isEditForm) {
+    // Validate reset button visibility
+    cy.get(buttonSelector(normalButtonType))
+      .contains(resetButton)
+      .should('be.visible');
+  }
+}
+
+function createNamespaceAndOpenEditForm() {
+  // Adding a new namespace
+  addNamespace();
+  // Selecting the created namespace from the accordion list items
+  selectAccordionTree(namespaceName);
+  // Opening the edit form
+  cy.toolbar(toolbarConfiguration, toolbarEditNamespace);
+}
+
+describe('Automate operations on Namespaces: Automation -> Embedded Automate -> Explorer -> {Any-created-domain} -> Namespace form', () => {
+  beforeEach(() => {
+    cy.login();
+    cy.menu(
+      automationMenuOption,
+      embeddedAutomationMenuOption,
+      explorerMenuOption
+    );
+    // Creating a domain to test namespace operations
+    cy.toolbar(toolbarConfiguration, toolbarAddNewDomain);
+    cy.get(inputFieldSelector(nameInputFieldId)).type(domainName);
+    cy.get(inputFieldSelector(descriptionInputFieldId)).type(description);
+    cy.intercept('POST', '/miq_ae_class/create_namespace/new?button=add').as(
+      'addNamespaceApi'
+    );
+    cy.contains(buttonSelector(submitButtonType), addButton).click();
+    cy.wait('@addNamespaceApi');
+    cy.expect_flash(flashTypeSuccess, flashMessageAddSuccess);
+    // Selecting the created domain from the accordion list items
+    selectAccordionTree(domainName);
+  });
+
+  it('Validate Add Namespace form fields', () => {
+    // Navigating to the Add Namespace form
+    cy.toolbar(toolbarConfiguration, toolbarAddNewNamespace);
+
+    // Validating the form fields
+    validateNamespaceFormFields();
+
+    // Cancelling the form
+    cy.contains(buttonSelector(normalButtonType), cancelButton).click();
+  });
+
+  it('Validate Cancel button', () => {
+    // Navigating to the Add Namespace form
+    cy.toolbar(toolbarConfiguration, toolbarAddNewNamespace);
+
+    // Cancelling the form
+    cy.contains(buttonSelector(normalButtonType), cancelButton)
+      .should('be.enabled')
+      .click();
+    cy.expect_flash(flashTypeWarning, flashMessageCancelled);
+  });
+
+  it('Validate Name field allows only alphanumeric and _ . - $ characters', () => {
+    // Trying to add a namespace with invalid characters
+    addNamespace(invalidNamespaceName);
+    cy.expect_flash(flashTypeError, flashMessageInvalidNamespace);
+
+    // Cancelling the form
+    cy.contains(buttonSelector(normalButtonType), cancelButton).click();
+  });
+
+  it('Validate Edit Namespace form fields', () => {
+    // Create a namespace and open the edit form
+    createNamespaceAndOpenEditForm();
+
+    // Validating the form fields
+    validateNamespaceFormFields(true);
+
+    // Cancelling the form
+    cy.contains(buttonSelector(normalButtonType), cancelButton).click();
+  });
+
+  it('Checking whether add, edit & delete namespace works', () => {
+    // Adding a new namespace
+    addNamespace();
+    cy.expect_flash(flashTypeSuccess, flashMessageAddSuccess);
+
+    // Selecting the created namespace from the accordion list items
+    selectAccordionTree(namespaceName);
+    // Editing the namespace
+    cy.toolbar(toolbarConfiguration, toolbarEditNamespace);
+    // Checking if the Save button is disabled initially
+    cy.contains(buttonSelector(submitButtonType), saveButton).should(
+      'be.disabled'
+    );
+    cy.get(inputFieldSelector(descriptionInputFieldId))
+      .clear()
+      .type(editedDescription);
+    cy.contains(buttonSelector(submitButtonType), saveButton)
+      .should('be.enabled')
+      .click();
+    cy.expect_flash(flashTypeSuccess, flashMessageSaveSuccess);
+
+    // Deleting the namespace
+    cy.expect_browser_confirm_with_text({
+      confirmTriggerFn: () =>
+        cy.toolbar(toolbarConfiguration, toolbarRemoveNamespace),
+      containsText: browserConfirmRemoveMessage,
+    });
+    cy.expect_flash(flashTypeSuccess, flashMessageNamespaceRemoved);
+  });
+
+  it('Checking whether creating a duplicate namespace is restricted', () => {
+    // Adding a new namespace
+    addNamespace();
+    // Trying to add duplicate namespace
+    addNamespace();
+    cy.expect_flash(flashTypeError, flashMessageNameAlreadyExists);
+
+    // Cancelling the form
+    cy.contains(buttonSelector(normalButtonType), cancelButton).click();
+  });
+
+  it('Checking whether Cancel & Reset buttons work fine in the Edit form', () => {
+    // Create a namespace and open the edit form
+    createNamespaceAndOpenEditForm();
+
+    /* Validating Reset button */
+    // Checking if the Reset button is disabled initially
+    cy.contains(buttonSelector(normalButtonType), resetButton).should(
+      'be.disabled'
+    );
+    // Editing name and description fields
+    cy.get(inputFieldSelector(nameInputFieldId))
+      .clear()
+      .type(editedNamespaceName);
+    cy.get(inputFieldSelector(descriptionInputFieldId))
+      .clear()
+      .type(editedDescription);
+    // Resetting
+    cy.contains(buttonSelector(normalButtonType), resetButton)
+      .should('be.enabled')
+      .click();
+    cy.expect_flash(flashTypeWarning, flashMessageResetNamespace);
+    // Confirming the edited fields contain the old values after resetting
+    cy.get(inputFieldSelector(nameInputFieldId)).should(
+      'have.value',
+      namespaceName
+    );
+    cy.get(inputFieldSelector(descriptionInputFieldId)).should(
+      'have.value',
+      description
+    );
+
+    /* Validating Cancel button */
+    cy.contains(buttonSelector(normalButtonType), cancelButton).click();
+    cy.expect_flash(flashTypeWarning, flashMessageCancelled);
+  });
+
+  afterEach(() => {
+    // Selecting the created domain(Test_Domain) from the accordion list items
+    selectAccordionTree(dataStoreAccordionItem);
+    cy.accordionItem(domainName);
+    cy.wait('@getCreatedDomainInfo');
+    // Removing the domain
+    cy.expect_browser_confirm_with_text({
+      confirmTriggerFn: () =>
+        cy.toolbar(toolbarConfiguration, toolbarRemoveDomain),
+      containsText: browserConfirmRemoveMessage,
+    });
+  });
+});
