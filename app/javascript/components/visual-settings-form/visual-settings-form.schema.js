@@ -1,6 +1,6 @@
 import { componentTypes } from '@@ddf';
 
-const createSchema = (timezoneOptions) => ({
+const createSchema = (shortcuts, timezoneOptions) => ({
   fields: [
     {
       component: componentTypes.SUB_FORM,
@@ -98,8 +98,8 @@ const createSchema = (timezoneOptions) => ({
           id: 'display.startpage',
           label: __('Start Page'),
           isSearchable: true,
-          loadOptions: () => API.get('/api/shortcuts?expand=resources&attributes=description,url')
-            .then(({ resources }) => resources.map(({ url, description }) => ({ value: url, label: description }))),
+          simpleValue: true,
+          options: shortcuts,
         },
         {
           component: componentTypes.SELECT,
