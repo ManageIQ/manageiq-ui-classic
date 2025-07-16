@@ -5,21 +5,36 @@ import MiqFormRenderer from '@@ddf';
 import createSchema from './visual-settings-form.schema';
 
 const VisualSettingsForm = ({ recordId }) => {
-  const [{ initialValues, timezoneOptions, isLoading }, setState] = useState({ isLoading: true });
+  const [{
+    initialValues, shortcuts, timezoneOptions, isLoading,
+  }, setState] = useState({ isLoading: true });
 
   useEffect(() => {
-    API.get('/api').then(({ timezones }) => {
-      const timezoneOptions = [];
-      timezones.forEach((timezone) => {
-        timezoneOptions.push({ value: timezone.name, label: timezone.description });
+    API.get('/api/shortcuts?expand=resources&attributes=description,url').then(({ resources }) => {
+      const shortcuts = [];
+
+      resources.forEach((shortcut) => {
+        shortcuts.push({ value: shortcut.url, label: shortcut.description });
       });
-      return timezoneOptions;
-    }).then((timezoneOptions) => {
-      API.get(`/api/users/${recordId}?attributes=settings`).then(({ settings }) => setState({
-        initialValues: settings,
-        timezoneOptions,
-        isLoading: false,
-      }));
+
+      return shortcuts;
+    }).then((shortcuts) => {
+      API.get('/api').then(({ timezones }) => {
+        const timezoneOptions = [];
+
+        timezones.forEach((timezone) => {
+          timezoneOptions.push({ value: timezone.name, label: timezone.description });
+        });
+
+        return timezoneOptions;
+      }).then((timezoneOptions) => {
+        API.get(`/api/users/${recordId}?attributes=settings`).then(({ settings }) => setState({
+          initialValues: settings,
+          shortcuts,
+          timezoneOptions,
+          isLoading: false,
+        }));
+      });
     });
   }, [recordId]);
 
@@ -42,7 +57,7 @@ const VisualSettingsForm = ({ recordId }) => {
   }
   return (
     <MiqFormRenderer
-      schema={createSchema(timezoneOptions)}
+      schema={createSchema(shortcuts, timezoneOptions)}
       initialValues={initialValues}
       onSubmit={onSubmit}
       canReset
