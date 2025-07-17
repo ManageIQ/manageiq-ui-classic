@@ -25,6 +25,32 @@ module VmCommon
     helper_method :disable_check?
   end
 
+  def add_volume
+    assert_privileges("vm_common_add_volume")
+    @record = find_record_with_rbac(VmOrTemplate, params[:id])
+    @edit ||= {}
+    @in_a_form = true
+
+    if @explorer
+      @refresh_partial = "vm_common/add_volume"
+      @edit[:explorer] = true
+    end
+  end
+  alias_method :instance_add_volume, :add_volume
+
+  def remove_volume
+    assert_privileges("vm_common_remove_volume")
+    @record = find_record_with_rbac(VmOrTemplate, params[:id])
+    @edit ||= {}
+    @in_a_form = true
+
+    if @explorer
+      @refresh_partial = "vm_common/remove_volume"
+      @edit[:explorer] = true
+    end
+  end
+  alias_method :instance_remove_volume, :remove_volume
+
   # handle buttons pressed on the button bar
   def button
     @edit = session[:edit]                                  # Restore @edit for adv search box
@@ -1297,6 +1323,18 @@ module VmCommon
       partial = "layouts/tl_show"
       header = _("Timelines for %{virtual_machine} \"%{name}\"") % {:virtual_machine => ui_lookup(:table => table), :name => name}
       action = nil
+    when "add_volume", "instance_add_volume"
+      partial = "vm_common/add_volume"
+      header = _("Add Volume to %{vm_or_template} \"%{name}\"") % {
+        :vm_or_template => ui_lookup(:table => table),
+        :name           => name
+      }
+    when "remove_volume", "instance_remove_volume"
+      partial = "vm_common/remove_volume"
+      header = _("Remove Volume %{vm_or_template} \"%{name}\"") % {
+        :vm_or_template => ui_lookup(:table => table),
+        :name           => name
+      }
     else
       # now take care of links on summary screen
       partial = if @showtype == "details"

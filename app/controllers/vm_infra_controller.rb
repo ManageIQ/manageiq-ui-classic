@@ -19,6 +19,34 @@ class VmInfraController < ApplicationController
     redirect_to(:action => 'explorer')
   end
 
+  def persistentvolumeclaims
+    @record = find_record_with_rbac(VmOrTemplate, params[:id])
+     
+    pvcs = @record.persistentvolumeclaims(@record)
+
+    render :json => {
+      :resources => pvcs,
+      :vm_name => @record.name,
+      :vm_namespace => @record.location
+    }
+  rescue => e
+    render :json => { :error => e.message }, :status => :internal_server_error
+  end
+
+  def attached_volumes
+    @record = find_record_with_rbac(VmOrTemplate, params[:id])
+  
+    attached = @record.attached_volumes(@record)
+
+    render json: {
+      resources: attached,
+      vm_name: @record.name,
+      vm_namespace: @record.location
+    }
+  rescue => e
+    render :json => { :error => e.message }, :status => :internal_server_error
+  end
+
   private
 
   def features

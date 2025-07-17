@@ -87,6 +87,20 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           t,
           :klass  => ApplicationHelper::Button::VmSnapshotAdd
         ),
+        button(
+          :instance_add_volume,
+          'fa fa-hdd-o fa-lg',
+          t = N_('Attach Volume'),
+          t,
+          :klass  => ApplicationHelper::Button::VmAttachVolume
+        ),
+        button(
+          :instance_remove_volume,
+          'fa fa-trash-o fa-lg',
+          t = N_('Detach Volume'),
+          t,
+          :klass  => ApplicationHelper::Button::VmDetachVolume
+        ),
       ]
     ),
   ])

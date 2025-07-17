@@ -1,0 +1,6 @@
+#tab_div
+  = render :partial => "layouts/flash_msg"
+  %h3
+    = _('Add Volume')
+  .col-md-12
+    = react('AddVolumeForm', :recordId => @record.id.to_s, :redirect => url_for(:action => :show, :id => @record.id))
