@@ -41,6 +41,7 @@ class VmInfraController < ApplicationController
       :vm_name       => @record.name,
       :vm_namespace  => @record.location
     }
+
   rescue => e
     render :json => {:error => e.message}, :status => 500
   end
