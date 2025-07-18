@@ -37,9 +37,9 @@ class VmInfraController < ApplicationController
     attached = @record.attached_volumes(@record)
 
     render :json => {
-      :resources     => attached,
-      :vm_name       => @record.name,
-      :vm_namespace  => @record.location
+      :resources    => attached,
+      :vm_name      => @record.name,
+      :vm_namespace => @record.location
     }
 
   rescue => e
