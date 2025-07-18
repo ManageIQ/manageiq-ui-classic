@@ -58,7 +58,8 @@ const DetachVolumeForm = ({ recordId, redirect }) => {
       action: "detach",
       resource: {
         volume_name: values.volumeName.trim(),
-        vm_id: recordId
+        vm_id: recordId,
+        device: values.device_mountpoint ? values.device_mountpoint : ''
       },
     };
 

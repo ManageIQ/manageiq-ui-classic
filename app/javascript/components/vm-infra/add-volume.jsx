@@ -87,7 +87,8 @@ const AddVolumeForm = ({ recordId, redirect }) => {
         resource: {
           volume_name: values.newVolumeName.trim(),
           volume_size: values.newVolumeSize.trim(),
-          vm_id: recordId
+          vm_id: recordId,
+          device: values.device_mountpoint ? values.device_mountpoint : ''
         },
       };
     }
