@@ -1,7 +1,9 @@
-#tab_div
+#tab-div
   = render :partial => "layouts/flash_msg"
   %h3= _('Detach Volume')
   .col-md-12
-    = react('RemoveVolumeForm', 
-            :recordId => @record.id.to_s, 
-            :redirect => url_for(:action => :show, :id => @record.id))
+    = react(
+      'RemoveVolumeForm',
+      :recordId => record.id.to_s,
+      :redirect => url_for(:action => :show, :id => record.id)
+    )
