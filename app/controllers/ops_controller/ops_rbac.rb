@@ -9,13 +9,8 @@ module OpsController::OpsRbac
   }.freeze
 
   def role_allows?(**options)
-    if MiqProductFeature.my_root_tenant_identifier?(options[:feature]) && params.key?(:id) && params[:id] != 'xx-tn'
-      if params[:id].to_s.include?('tn')
-        _, id, _ = TreeBuilder.extract_node_model_and_id(params[:id].to_s)
-      else
-        id = params[:id].to_s
-      end
-
+    if MiqProductFeature.my_root_tenant_identifier?(options[:feature]) && self.x_node.to_s.start_with?("tn-")
+        _, id, _ = TreeBuilder.extract_node_model_and_id(self.x_node.to_s)
       options[:feature] = MiqProductFeature.tenant_identifier(options[:feature], id)
     end
 
