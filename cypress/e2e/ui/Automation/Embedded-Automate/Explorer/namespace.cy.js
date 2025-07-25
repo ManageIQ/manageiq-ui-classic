@@ -9,7 +9,6 @@ const textConstants = {
   // Toolbar options
   toolbarConfiguration: 'Configuration',
   toolbarAddNewDomain: 'Add a New Domain',
-  toolbarRemoveDomain: 'Remove this Domain',
   toolbarAddNewNamespace: 'Add a New Namespace',
   toolbarEditNamespace: 'Edit this Namespace',
   toolbarRemoveNamespace: 'Remove this Namespace',
@@ -40,9 +39,6 @@ const textConstants = {
   addNamespaceFormHeader: 'Adding a new Automate Namespace',
   editNamespaceFormHeader: 'Editing Automate Namespace',
   namespaceFormSubHeader: 'Info',
-
-  // List items
-  dataStoreAccordionItem: 'Datastore',
 
   // Buttons
   addButton: 'Add',
@@ -84,7 +80,6 @@ const {
   toolbarAddNewNamespace,
   toolbarEditNamespace,
   toolbarRemoveNamespace,
-  toolbarRemoveDomain,
   addNamespaceFormHeader,
   editNamespaceFormHeader,
   namespaceFormSubHeader,
@@ -103,7 +98,6 @@ const {
   flashMessageNameAlreadyExists,
   flashMessageResetNamespace,
   browserConfirmRemoveMessage,
-  dataStoreAccordionItem,
   nameInputFieldId,
   descriptionInputFieldId,
   namespacePathInputFieldId,
@@ -125,7 +119,6 @@ function selectAccordionTree(textValue) {
   const aliasObject = {
     [domainName]: 'getCreatedDomainInfo',
     [namespaceName]: 'getCreatedNamespaceInfo',
-    [dataStoreAccordionItem]: 'getDataStoreAccordionItemInfo',
   };
   cy.intercept(
     'POST',
@@ -192,6 +185,33 @@ function createNamespaceAndOpenEditForm() {
   cy.toolbar(toolbarConfiguration, toolbarEditNamespace);
 }
 
+function extractDomainIdAndTokenFromResponse(interception) {
+  const rawTreeObject = interception?.response?.body?.reloadTrees?.ae_tree;
+  if (rawTreeObject) {
+    const rawTreeParsed = JSON.parse(rawTreeObject);
+    rawTreeParsed.every((treeObject) => {
+      // Exit iteration once id is extracted from nodes array
+      return treeObject?.nodes?.every((nodeObject) => {
+        if (nodeObject?.text === domainName) {
+          const domainId = nodeObject?.key?.split('-')?.[1];
+          const csrfToken = interception?.request?.headers?.['x-csrf-token'];
+          const idAndToken = {
+            domainId,
+            csrfToken,
+          };
+          // Creating an aliased state to store id and token
+          cy.wrap(idAndToken).as('idAndToken');
+
+          // Stop iterating once the domain id is found
+          return false;
+        }
+        // Continue iterating
+        return true;
+      });
+    });
+  }
+}
+
 describe('Automate operations on Namespaces: Automation -> Embedded Automate -> Explorer -> {Any-created-domain} -> Namespace form', () => {
   beforeEach(() => {
     cy.login();
@@ -208,7 +228,9 @@ describe('Automate operations on Namespaces: Automation -> Embedded Automate -> 
       'addNamespaceApi'
     );
     cy.contains(buttonSelector(submitButtonType), addButton).click();
-    cy.wait('@addNamespaceApi');
+    cy.wait('@addNamespaceApi').then((interception) => {
+      extractDomainIdAndTokenFromResponse(interception);
+    });
     cy.expect_flash(flashTypeSuccess, flashMessageAddSuccess);
     // Selecting the created domain from the accordion list items
     selectAccordionTree(domainName);
@@ -334,15 +356,21 @@ describe('Automate operations on Namespaces: Automation -> Embedded Automate -> 
   });
 
   afterEach(() => {
-    // Selecting the created domain(Test_Domain) from the accordion list items
-    selectAccordionTree(dataStoreAccordionItem);
-    cy.accordionItem(domainName);
-    cy.wait('@getCreatedDomainInfo');
-    // Removing the domain
-    cy.expect_browser_confirm_with_text({
-      confirmTriggerFn: () =>
-        cy.toolbar(toolbarConfiguration, toolbarRemoveDomain),
-      containsText: browserConfirmRemoveMessage,
+    // retrieve the id and token from the aliased state
+    // to invoke api for deleting the created domain
+    cy.get('@idAndToken').then((data) => {
+      const { domainId, csrfToken } = data;
+      if (domainId && csrfToken) {
+        cy.request({
+          method: 'POST',
+          url: `/miq_ae_class/x_button/${domainId}?pressed=miq_ae_domain_delete`,
+          headers: {
+            'X-CSRF-Token': csrfToken,
+          },
+        }).then((response) => {
+          expect(response.status).to.eq(200);
+        });
+      }
     });
   });
 });
