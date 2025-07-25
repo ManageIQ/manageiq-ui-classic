@@ -112,6 +112,7 @@ function validateNamespaceFormFields(isEditForm = false) {
 }
 
 function createNamespaceAndOpenEditForm() {
+  /* TODO: DATA_SETUP - Use API for namespace setup, excluding the test meant to validate functionality via UI */
   // Adding a new namespace
   addNamespace(NAMESPACE_NAME);
   // Selecting the created namespace from the accordion list items
@@ -246,6 +247,7 @@ describe('Automate operations on Namespaces: Automation -> Embedded Automate -> 
   });
 
   it('Checking whether creating a duplicate namespace is restricted', () => {
+    /* TODO: DATA_SETUP - Use API for namespace setup, excluding the test meant to validate functionality via UI */
     // Adding a new namespace
     addNamespace(NAMESPACE_NAME);
     // Trying to add duplicate namespace
