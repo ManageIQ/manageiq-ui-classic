@@ -177,6 +177,7 @@ function validateNamespaceFormFields(isEditForm = false) {
 }
 
 function createNamespaceAndOpenEditForm() {
+  /* TODO: DATA_SETUP - Use API for namespace setup, excluding the test meant to validate functionality via UI */
   // Adding a new namespace
   addNamespace();
   // Selecting the created namespace from the accordion list items
@@ -220,6 +221,7 @@ describe('Automate operations on Namespaces: Automation -> Embedded Automate -> 
       embeddedAutomationMenuOption,
       explorerMenuOption
     );
+    /* TODO: DATA_SETUP - Refactor to use API for domain data setup */
     // Creating a domain to test namespace operations
     cy.toolbar(toolbarConfiguration, toolbarAddNewDomain);
     cy.get(inputFieldSelector(nameInputFieldId)).type(domainName);
@@ -309,6 +311,7 @@ describe('Automate operations on Namespaces: Automation -> Embedded Automate -> 
   });
 
   it('Checking whether creating a duplicate namespace is restricted', () => {
+    /* TODO: DATA_SETUP - Use API for namespace setup, excluding the test meant to validate functionality via UI */
     // Adding a new namespace
     addNamespace();
     // Trying to add duplicate namespace
