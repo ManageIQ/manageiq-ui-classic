@@ -281,15 +281,21 @@ describe('Automate operations on Namespaces: Automation -> Embedded Automate -> 
   });
 
   afterEach(() => {
-    // Selecting the created domain(Test_Domain) from the accordion list items
-    selectAccordionTree(dataStoreAccordionItem);
-    cy.accordionItem(domainName);
-    cy.wait('@getCreatedDomainInfo');
-    // Removing the domain
-    cy.expect_browser_confirm_with_text({
-      confirmTriggerFn: () =>
-        cy.toolbar(toolbarConfiguration, toolbarRemoveDomain),
-      containsText: browserConfirmRemoveMessage,
+    // retrieve the id and token from the aliased state
+    // to invoke api for deleting the created domain
+    cy.get('@idAndToken').then((data) => {
+      const { domainId, csrfToken } = data;
+      if (domainId && csrfToken) {
+        cy.request({
+          method: 'POST',
+          url: `/miq_ae_class/x_button/${domainId}?pressed=miq_ae_domain_delete`,
+          headers: {
+            'X-CSRF-Token': csrfToken,
+          },
+        }).then((response) => {
+          expect(response.status).to.eq(200);
+        });
+      }
     });
   });
 });
