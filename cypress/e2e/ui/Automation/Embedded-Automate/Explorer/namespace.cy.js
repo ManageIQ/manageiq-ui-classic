@@ -40,6 +40,9 @@ const textConstants = {
   editNamespaceFormHeader: 'Editing Automate Namespace',
   namespaceFormSubHeader: 'Info',
 
+  // List items
+  dataStoreAccordionItem: 'Datastore',
+
   // Buttons
   addButton: 'Add',
   cancelButton: 'Cancel',
@@ -98,6 +101,7 @@ const {
   flashMessageNameAlreadyExists,
   flashMessageResetNamespace,
   browserConfirmRemoveMessage,
+  dataStoreAccordionItem,
   nameInputFieldId,
   descriptionInputFieldId,
   namespacePathInputFieldId,
@@ -124,7 +128,10 @@ function selectAccordionTree(textValue) {
     'POST',
     new RegExp(`/miq_ae_class/tree_select\\?id=.*&text=${textValue}`)
   ).as(aliasObject[textValue]);
-  cy.accordionItem(textValue);
+  // Datastore is already set in the tree path, add domain/namespace to the path
+  const pathToTargetNode =
+    textValue === namespaceName ? [domainName, namespaceName] : [domainName];
+  cy.selectAccordionItem([dataStoreAccordionItem, ...pathToTargetNode]);
   cy.wait(`@${aliasObject[textValue]}`);
 }
 
