@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 
-describe('Validate clickItem', () => {
+describe('Validate select accordion item', () => {
   beforeEach(() => {
     cy.login();
     cy.menu('Settings', 'Application Settings');
