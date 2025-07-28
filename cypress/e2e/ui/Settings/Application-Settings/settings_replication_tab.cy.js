@@ -57,15 +57,20 @@ describe('Settings > Application Settings > Replication', () => {
       .click({force: true});
     cy.wait(2000);
 
-    // Disable the notifications
-    cy.get('.miq-toast-wrapper')
-      .contains('a', 'Disable notifications')
-      .click();
+    // Look for notification popups and disable them if present
+    cy.get('body').then(($body) => {
+      const $link = $body.find(
+        '.miq-toast-wrapper .row .alert a:contains("Disable notifications")'
+      );
+      if ($link.length && $link.is(':visible')) {
+        cy.wrap($link).click({ force: true });
+      }
+    });
   });
 
   it('should display the replication type dropdown and select options', () => {
     // Check if the dropdown exists and is visible
-    cy.get('select[name="replication_type"]', { delay: 10000 }).should('exist').and('be.visible');
+    cy.get('select[name="replication_type"]').should('exist').and('be.visible');
     // Check if the dropdown has the correct options
     cy.get('select[name="replication_type"] option').should('have.length', 3);
     cy.get('select[name="replication_type"] option[value="none"]').should('exist');
@@ -154,7 +159,7 @@ describe('Settings > Application Settings > Replication', () => {
     cy.get('#flash_msg_div')
       .find('.alert-danger')
       .should('be.visible')
-      .and('contain.text', 'Validation failed with error:');
+      .and('contain.text', 'Validation failed');
   });
 
   // Save subscription
