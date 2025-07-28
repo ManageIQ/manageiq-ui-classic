@@ -33,7 +33,7 @@ Cypress.Commands.add('accordionItem', (name) => {
  * If the path is not found, it will throw an error.
  */
 Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
-  cy.get('li.list-group-item').then(($items) => {
+  cy.get('div.panel-collapse.collapse.in li.list-group-item').then(($items) => {
     // Converting jQuery collection to an array for easier manipulation
     const listItems = [...$items];
 
