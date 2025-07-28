@@ -5,13 +5,25 @@
 Cypress.Commands.add('toolbar', (toolbarButton, dropdownButton = '') => {
   cy.get('#toolbar').get('button').then((toolbarButtons) => {
     const nums = [...Array(toolbarButtons.length).keys()];
+    let toolbarButtonMatched = false;
     nums.forEach((index) => {
       const button = toolbarButtons[index].children[0];
       if (button && button.innerText && button.innerText.includes(toolbarButton)) {
+        toolbarButtonMatched = true;
         button.click();
         return;
       }
     });
+    if (!toolbarButtonMatched) {
+      // throw error if given toolbar button is not found
+      const errorMessage = `Toolbar button: "${toolbarButton}" was not found`;
+      Cypress.log({
+        name: 'error',
+        displayName: '❗ CypressError:',
+        message: errorMessage,
+      });
+      throw new Error(errorMessage);
+    }
   });
 
   if (dropdownButton) {
@@ -27,7 +39,14 @@ Cypress.Commands.add('toolbar', (toolbarButton, dropdownButton = '') => {
           return cy.wrap(button.children[0]).click();
         }
       }
-      return cy.wrap(null);
+      // throw error if given dropdown button is not found
+      const errorMessage = `"${dropdownButton}" option was not found in the "${toolbarButton}" toolbar`;
+      Cypress.log({
+        name: 'error',
+        displayName: '❗ CypressError:',
+        message: errorMessage,
+      });
+      throw new Error(errorMessage);
     });
   }
   return cy.wrap(null);
