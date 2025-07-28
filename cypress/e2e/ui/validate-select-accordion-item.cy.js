@@ -6,6 +6,18 @@ describe('Validate select accordion item', () => {
     cy.menu('Settings', 'Application Settings');
   });
 
+  it('should search nodes only within expanded tree', () => {
+    // expand Diagnostics tree
+    cy.accordion('Diagnostics');
+    // should open the path under Diagnostics even if
+    // an identical one exists under Settings
+    cy.selectAccordionItem([
+      /^ManageIQ Region:/,
+      /^Zone:/,
+      /^Server:/,
+    ]);
+  });
+
   it('should fail when an invalid node label is passed', (done) => {
     cy.accordion('Access Control');
 
