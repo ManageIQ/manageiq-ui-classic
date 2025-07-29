@@ -16,6 +16,12 @@ class DashboardController < ApplicationController
                                                  external_authenticate kerberos_authenticate saml_login oidc_login]
   after_action :cleanup_action,    :except => %i[csp_report]
 
+  after_action :skip_session
+
+  def skip_session
+    request.session_options[:skip] = %w[widget_chart_data widget_report_data].include?(action_name)
+  end
+
   def index
     redirect_to(:action => 'show')
   end
