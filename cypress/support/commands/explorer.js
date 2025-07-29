@@ -106,7 +106,15 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
         }
       }
       // If we reach here, it means the label was not found
-      throw new Error(`Accordion item: "${accordionLabel}" not found`);
+      const errorMessage = `${
+        isClickableNode ? 'Target' : 'Intermediate'
+      } node - "${accordionLabel}" was not found`;
+      Cypress.log({
+        name: 'error',
+        displayName: '❗ CypressError:',
+        message: errorMessage,
+      });
+      throw new Error(errorMessage);
     };
 
     // Start the recursive call from the first label in the given path
