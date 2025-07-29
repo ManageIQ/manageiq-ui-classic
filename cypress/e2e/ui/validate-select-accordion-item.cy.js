@@ -18,7 +18,7 @@ describe('Validate select accordion item', () => {
     ]);
   });
 
-  it('should fail when an invalid node label is passed', (done) => {
+  it('should fail when an invalid target node label is passed', (done) => {
     cy.accordion('Access Control');
 
     cy.on('fail', (err) => {
@@ -29,7 +29,22 @@ describe('Validate select accordion item', () => {
     cy.selectAccordionItem([
       'ManageIQ Region: Region 0 [0]',
       'Tenants',
-      'No Company', // This label does not exist
+      'No Company', // This target node is not valid
+    ]);
+  });
+
+  it('should fail when an invalid intermediate node label is passed', (done) => {
+    cy.accordion('Access Control');
+
+    cy.on('fail', (err) => {
+      expect(err.message).to.include('not found');
+      done();
+    });
+
+    cy.selectAccordionItem([
+      'ManageIQ Region: Region 0 [0]',
+      'Tenants Section', // This intermediate node is not valid
+      'My Company',
     ]);
   });
 
