@@ -1,55 +1,56 @@
 /* eslint-disable no-undef */
 
 // toolbarButton: String for the text of the toolbar button to click.
-// dropdownButton: String for the text of the dropdown button to click after the toolbar dropdown is opened.
-Cypress.Commands.add('toolbar', (toolbarButton, dropdownButton = '') => {
-  cy.get('#toolbar').get('button').then((toolbarButtons) => {
-    const nums = [...Array(toolbarButtons.length).keys()];
-    let toolbarButtonMatched = false;
-    nums.forEach((index) => {
-      const button = toolbarButtons[index].children[0];
-      if (button && button.innerText && button.innerText.includes(toolbarButton)) {
-        toolbarButtonMatched = true;
-        button.click();
-        return;
-      }
-    });
-    if (!toolbarButtonMatched) {
-      // throw error if given toolbar button is not found
-      const errorMessage = `Toolbar button: "${toolbarButton}" was not found`;
-      Cypress.log({
-        name: 'error',
-        displayName: '❗ CypressError:',
-        message: errorMessage,
-      });
-      throw new Error(errorMessage);
-    }
-  });
+// toolbarOption: String for the text of the dropdown button to click after the toolbar dropdown is opened.
+Cypress.Commands.add('toolbar', (toolbarButton, toolbarOption = '') => {
+  const clickToolbarButton = cy
+    .get('#toolbar')
+    .find('button')
+    .then((buttons) => {
+      const targetToolbarButton = [...buttons].find(
+        (btn) => btn.innerText.trim() === toolbarButton
+      );
 
-  if (dropdownButton) {
-    return cy.get('.bx--overflow-menu-options').then((dropdownButtons) => {
-      const buttons = dropdownButtons.children();
-      for (let index = 0; index < buttons.length; index++) {
-        const button = buttons[index];
-        if (
-          button &&
-          button.innerText &&
-          button.innerText.includes(dropdownButton)
-        ) {
-          return cy.wrap(button.children[0]).click();
-        }
+      if (!targetToolbarButton) {
+        // throw error if given toolbar button is not found
+        const errorMessage = `Toolbar button: "${toolbarButton}" was not found`;
+        Cypress.log({
+          name: 'error',
+          displayName: '❗ CypressError:',
+          message: errorMessage,
+        });
+        throw new Error(errorMessage);
       }
-      // throw error if given dropdown button is not found
-      const errorMessage = `"${dropdownButton}" option was not found in the "${toolbarButton}" toolbar`;
-      Cypress.log({
-        name: 'error',
-        displayName: '❗ CypressError:',
-        message: errorMessage,
+      return cy.wrap(targetToolbarButton).click();
+    });
+
+  // If toolbarOption is provided, wait for toolbar to open,
+  // then look for the given toolbar option
+  if (toolbarOption) {
+    return clickToolbarButton.then(() => {
+      return cy.get('.bx--overflow-menu-options li').then((toolbarOptions) => {
+        const targetToolbarOption = [...toolbarOptions].find(
+          (option) => option.innerText.trim() === toolbarOption
+        );
+
+        if (!targetToolbarOption) {
+          // throw error if given toolbar option is not found
+          const errorMessage = `"${toolbarOption}" option was not found in the "${toolbarButton}" toolbar`;
+          Cypress.log({
+            name: 'error',
+            displayName: '❗ CypressError:',
+            message: errorMessage,
+          });
+          throw new Error(errorMessage);
+        }
+        // returning the cypress chainable to the top of the command scope
+        return cy.wrap(targetToolbarOption).click();
       });
-      throw new Error(errorMessage);
     });
   }
-  return cy.wrap(null);
+
+  // else, just return the toolbar button click chain
+  return clickToolbarButton;
 });
 
 // toolbarButton: String for the text of the toolbar button to click.
