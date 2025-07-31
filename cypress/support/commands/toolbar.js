@@ -12,14 +12,7 @@ Cypress.Commands.add('toolbar', (toolbarButton, toolbarOption = '') => {
       );
 
       if (!targetToolbarButton) {
-        // throw error if given toolbar button is not found
-        const errorMessage = `Toolbar button: "${toolbarButton}" was not found`;
-        Cypress.log({
-          name: 'error',
-          displayName: '❗ CypressError:',
-          message: errorMessage,
-        });
-        throw new Error(errorMessage);
+        cy.logAndThrowError(`Toolbar button: "${toolbarButton}" was not found`);
       }
       return cy.wrap(targetToolbarButton).click();
     });
@@ -34,14 +27,7 @@ Cypress.Commands.add('toolbar', (toolbarButton, toolbarOption = '') => {
         );
 
         if (!targetToolbarOption) {
-          // throw error if given toolbar option is not found
-          const errorMessage = `"${toolbarOption}" option was not found in the "${toolbarButton}" toolbar`;
-          Cypress.log({
-            name: 'error',
-            displayName: '❗ CypressError:',
-            message: errorMessage,
-          });
-          throw new Error(errorMessage);
+          cy.logAndThrowError(`"${toolbarOption}" option was not found in the "${toolbarButton}" toolbar`);
         }
         // returning the cypress chainable to the top of the command scope
         return cy.wrap(targetToolbarOption).click();

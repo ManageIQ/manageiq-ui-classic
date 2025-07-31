@@ -47,6 +47,7 @@ import './commands/menu.js'
 import './commands/stub_notifications.js'
 import './commands/toolbar.js'
 import './commands/throttle_response.js'
+import './commands/custom_logging_commands.js'
 
 // Assertions
 import './assertions/expect_rates_table.js';
