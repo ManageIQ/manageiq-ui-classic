@@ -40,21 +40,21 @@
 // ***********************************************************
 
 // Commands
-import './commands/explorer.js'
-import './commands/gtl.js'
-import './commands/login.js'
-import './commands/menu.js'
-import './commands/stub_notifications.js'
-import './commands/toolbar.js'
-import './commands/throttle_response.js'
-import './commands/custom_logging_commands.js'
+import './commands/custom_logging_commands.js';
+import './commands/explorer.js';
+import './commands/gtl.js';
+import './commands/login.js';
+import './commands/menu.js';
+import './commands/stub_notifications.js';
+import './commands/throttle_response.js';
+import './commands/toolbar.js';
 
 // Assertions
-import './assertions/expect_rates_table.js';
-import './assertions/expect_search_box.js'
-import './assertions/expect_title.js'
-import './assertions/expect_text.js'
 import './assertions/expect_alerts.js';
+import './assertions/expect_rates_table.js';
+import './assertions/expect_search_box.js';
+import './assertions/expect_text.js';
+import './assertions/expect_title.js';
 
 // This is needed to prevent Cypress tests from failing due to uncaught errors:
 // Undefined errors are occuring on every initial page load of Manage IQ
