@@ -32,8 +32,6 @@ const CANCEL_BUTTON_TEXT = 'Cancel';
 const SAVE_BUTTON_TEXT = 'Save';
 const RESET_BUTTON_TEXT = 'Reset';
 
-const FLASH_TYPE_ERROR = 'error';
-
 // Flash message text snippets
 const FLASH_MESSAGE_ADD_SUCCESS = 'added';
 const FLASH_MESSAGE_SAVE_SUCCESS = 'saved';
