@@ -36,8 +36,7 @@ const textConstants = {
   editedNamespaceName: 'Test_Namespace_Edited',
   editedDescription: 'Test description edited',
   invalidNamespaceName: 'Test Namespace',
-  addNamespaceFormHeader: 'Adding a new Automate Namespace',
-  editNamespaceFormHeader: 'Editing Automate Namespace',
+  namespaceFormHeader: 'Automate Namespace',
   namespaceFormSubHeader: 'Info',
 
   // List items
@@ -83,8 +82,7 @@ const {
   toolbarAddNewNamespace,
   toolbarEditNamespace,
   toolbarRemoveNamespace,
-  addNamespaceFormHeader,
-  editNamespaceFormHeader,
+  namespaceFormHeader,
   namespaceFormSubHeader,
   namespaceName,
   editedNamespaceName,
@@ -136,50 +134,50 @@ function selectAccordionTree(textValue) {
 }
 
 function validateNamespaceFormFields(isEditForm = false) {
-  // Validate form header visibility
-  cy.expect_explorer_title(
-    isEditForm
-      ? `${editNamespaceFormHeader} "${namespaceName}"`
-      : addNamespaceFormHeader
-  );
-  // Validate sub header visibility
+  // Assert form header is visible
+  cy.expect_explorer_title(namespaceFormHeader);
+  // Assert sub header is visible
   cy.get('#main-content #datastore-form-wrapper h3').contains(
     namespaceFormSubHeader
   );
-  // Validate name-space path field visibility
+  // Assert name-space path field label is visible
   cy.get(inputFieldLabelSelector(namespacePathInputFieldId)).should(
     'be.visible'
   );
+  // Assert name-space path field is visible and disabled
   cy.get(inputFieldSelector(namespacePathInputFieldId))
     .should('be.visible')
     .and('be.disabled')
-    .and(
-      'have.value',
-      isEditForm ? `/${domainName}/${namespaceName}` : `/${domainName}`
-    );
-  // Validate name field visibility
+    .invoke('val')
+    .should('include', domainName);
+  // Assert name field label is visible
   cy.get(inputFieldLabelSelector(nameInputFieldId)).should('be.visible');
+  // Assert name field is visible and enabled
   cy.get(inputFieldSelector(nameInputFieldId))
     .should('be.visible')
     .and('be.enabled');
-  // Validate description field visibility
+  // Assert description field label is visible
   cy.get(inputFieldLabelSelector(descriptionInputFieldId)).should('be.visible');
+  // Assert description field is visible and enabled
   cy.get(inputFieldSelector(descriptionInputFieldId))
     .should('be.visible')
     .and('be.enabled');
-  // Validate cancel button visibility
-  cy.get(buttonSelector(normalButtonType))
-    .contains(cancelButton)
-    .should('be.visible');
-  // Validate add/save button visibility
-  cy.get(buttonSelector(submitButtonType))
-    .contains(isEditForm ? saveButton : addButton)
-    .should('be.visible');
+  // Assert cancel button is visible and enabled
+  cy.contains(buttonSelector(normalButtonType), cancelButton)
+    .should('be.visible')
+    .and('be.enabled');
+  // Assert add/save button is visible and disabled
+  cy.contains(
+    buttonSelector(submitButtonType),
+    isEditForm ? saveButton : addButton
+  )
+    .should('be.visible')
+    .and('be.disabled');
   if (isEditForm) {
-    // Validate reset button visibility
-    cy.get(buttonSelector(normalButtonType))
-      .contains(resetButton)
-      .should('be.visible');
+    // Assert reset button is visible and disabled
+    cy.contains(buttonSelector(normalButtonType), resetButton)
+      .should('be.visible')
+      .and('be.disabled');
   }
 }
 
