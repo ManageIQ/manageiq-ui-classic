@@ -24,28 +24,17 @@ export function convert(resource) {
 }
 
 export function load(useLimit) {
-  const promises = [];
   const limitFragment = useLimit ? `&limit=${maxNotifications}` : '';
 
-  promises.push(API.get(`/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc${limitFragment}`)
+  return API.get(`/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc${limitFragment}`)
     .then((data) => {
       const notifications = data.resources.map(convert);
 
       return {
         notifications,
-        subcount: data.subcount,
+        subcount: data.count
       };
-    }));
-
-  if (useLimit) {
-    // get real subcount
-    promises.push(API.get('/api/notifications'));
-  }
-
-  return Promise.all(promises).then(([{ notifications, subcount }, meta]) => ({
-    notifications,
-    subcount: meta ? meta.subcount : subcount,
-  }));
+    });
 }
 
 const bulkAction = (action) => (notifications) => API.post(`/api/notifications/`, {
