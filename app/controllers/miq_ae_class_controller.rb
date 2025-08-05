@@ -501,6 +501,7 @@ class MiqAeClassController < ApplicationController
     @in_a_form = true
     @in_a_form_fields = true
     session[:changed] = @changed = false
+    @hide_bottom_bar = true
     replace_right_cell
   end
 
@@ -881,19 +882,11 @@ class MiqAeClassController < ApplicationController
 
     fields_get_form_vars
     @changed = (@edit[:new] != @edit[:current])
-    render :update do |page|
-      page << javascript_prologue
       unless %w[up down].include?(params[:button])
         if params[:field_datatype] == "password"
-          page << javascript_hide("field_default_value")
-          page << javascript_show("field_password_value")
-          page << "$('#field_password_value').val('');"
           session[:field_data][:default_value] =
             @edit[:new_field][:default_value] = ''
         elsif params[:field_datatype]
-          page << javascript_hide("field_password_value")
-          page << javascript_show("field_default_value")
-          page << "$('#field_default_value').val('');"
           session[:field_data][:default_value] =
             @edit[:new_field][:default_value] = ''
         end
@@ -904,19 +897,12 @@ class MiqAeClassController < ApplicationController
           def_field = "fields_default_value_" << f[1].to_s
           pwd_field = "fields_password_value_" << f[1].to_s
           if @edit[:new][:fields][f[1].to_i]['datatype'] == "password"
-            page << javascript_hide(def_field)
-            page << javascript_show(pwd_field)
-            page << "$('##{pwd_field}').val('');"
           else
-            page << javascript_hide(pwd_field)
-            page << javascript_show(def_field)
-            page << "$('##{def_field}').val('');"
           end
           @edit[:new][:fields][f[1].to_i]['default_value'] = nil
         end
       end
-      page << javascript_for_miq_button_visibility_changed(@changed)
-    end
+    render :json => {:message => 'Field updated successfully'}, :status => 200
   end
 
   # AJAX driven routine to check for changes in ANY field on the form
@@ -1140,13 +1126,12 @@ class MiqAeClassController < ApplicationController
     return unless load_edit("aefields_edit__#{params[:id]}", "replace_cell__explorer")
 
     fields_get_form_vars
-    @changed = (@edit[:new] != @edit[:current])
     case params[:button]
     when "cancel"
       @sb[:action] = session[:edit] = nil # clean out the saved info
-      add_flash(_("Edit of schema for Automate Class \"%{name}\" was cancelled by the user") % {:name => @ae_class.name})
       @in_a_form = false
-      replace_right_cell
+      message = _("Edit of schema for Automate Class \"%{name}\" was cancelled by the user") % {:name => @ae_class.name}
+      render :json => {:status => 200, :message => message}
     when "save"
       ae_class = find_record_with_rbac(MiqAeClass, params[:id])
       begin
@@ -1157,27 +1142,26 @@ class MiqAeClassController < ApplicationController
           ae_class.save!
         end
       rescue StandardError => bang
-        add_flash(_("Error during 'save': %{error_message}") % {:error_message => bang.message}, :error)
         session[:changed] = @changed = true
-        javascript_flash
+        error_message = _("Error during 'save': %{error_message}") % {:error_message => bang.message}, :error
+        render :json => {:status => 500, :error => error_message}
       else
-        add_flash(_("Schema for Automate Class \"%{name}\" was saved") % {:name => ae_class.name})
         AuditEvent.success(build_saved_audit(ae_class, @edit))
         @sb[:action] = session[:edit] = nil # clean out the saved info
-        @in_a_form = false
-        replace_right_cell(:replace_trees => [:ae])
-        nil
+        success_message = _("Schema for Automate Class \"%{name}\" was saved") % {:name => ae_class.name}
+        render :json => {:status => 200, :message => success_message}
       end
     when "reset"
       fields_set_form_vars
-      session[:changed] = @changed = false
+      session[:changed] = false
       add_flash(_("All changes have been reset"), :warning)
       @button = "reset"
       @in_a_form = true
-      replace_right_cell
+      success_message = _("All changes have been reset")
+      render :json => {:status => 200, :message => success_message}
     else
       @changed = session[:changed] = (@edit[:new] != @edit[:current])
-      replace_right_cell(:replace_trees => [:ae])
+      render :json => {:status => 200}
     end
   end
 
@@ -1440,17 +1424,9 @@ class MiqAeClassController < ApplicationController
   def field_select
     assert_privileges('miq_ae_field_edit')
     fields_get_form_vars
-    @combo_xml = build_type_options
-    @dtype_combo_xml = build_dtype_options
     session[:field_data] = {}
     @edit[:new_field][:substitute] = session[:field_data][:substitute] = true
-    @changed = (@edit[:new] != @edit[:current])
-    render :update do |page|
-      page << javascript_prologue
-      page.replace("class_fields_div", :partial => "class_fields")
-      page << javascript_for_miq_button_visibility(@changed)
-      page << "miqSparkle(false);"
-    end
+    render :json => {:status => 200}
   end
 
   # AJAX driven routine to select a classification entry
@@ -1458,35 +1434,22 @@ class MiqAeClassController < ApplicationController
     assert_privileges('miq_ae_field_edit')
     fields_get_form_vars
     @changed = (@edit[:new] != @edit[:current])
-    @combo_xml = build_type_options
-    @dtype_combo_xml = build_dtype_options
-    render :update do |page|
-      page << javascript_prologue
-      page.replace("class_fields_div", :partial => "class_fields")
-      page << javascript_for_miq_button_visibility(@changed)
-      page << "miqSparkle(false);"
-    end
+    render :json => {
+      :message => 'Accepted',
+      :status => 200,
+    }
   end
 
   # AJAX driven routine to delete a classification entry
   def field_delete
     assert_privileges('miq_ae_field_edit')
     fields_get_form_vars
-    @combo_xml       = build_type_options
-    @dtype_combo_xml = build_dtype_options
 
     if params.key?(:id) && @edit[:fields_to_delete].exclude?(params[:id])
       @edit[:fields_to_delete].push(params[:id])
     end
-
     @edit[:new][:fields].delete_at(params[:arr_id].to_i)
-    @changed = (@edit[:new] != @edit[:current])
-    render :update do |page|
-      page << javascript_prologue
-      page.replace("class_fields_div", :partial => "class_fields")
-      page << javascript_for_miq_button_visibility(@changed)
-      page << "miqSparkle(false);"
-    end
+    render :json => {:status => 200}
   end
 
   # AJAX driven routine to select a classification entry
@@ -2352,12 +2315,11 @@ class MiqAeClassController < ApplicationController
     if params[:item].blank? && !%w[accept save].include?(params[:button]) && params["action"] != "field_delete"
       field_data = session[:field_data]
       new_field = @edit[:new_field]
-
       field_attributes.each do |field|
         field_name = "field_#{field}".to_sym
         field_sym = field.to_sym
         if field == "substitute"
-          field_data[field_sym] = new_field[field_sym] = params[field_name] == "1" if params[field_name]
+          field_data[field_sym] = new_field[field_sym] = params[field_name] if params.key?(field_name)
         elsif params[field_name]
           field_data[field_sym] = new_field[field_sym] = params[field_name]
         end
@@ -2376,7 +2338,7 @@ class MiqAeClassController < ApplicationController
         field_attributes.each do |field|
           field_name = "fields_#{field}_#{i}"
           if field == "substitute"
-            fld[field] = params[field_name] == "1" if params[field_name]
+            fld[field] = params[field_name] if params.key?(field_name)
           elsif %w[aetype datatype].include?(field)
             var_name = "fields_#{field}#{i}"
             fld[field] = params[var_name.to_sym] if params[var_name.to_sym]
@@ -2389,18 +2351,17 @@ class MiqAeClassController < ApplicationController
         end
       end
     elsif params[:button] == "accept"
-      if session[:field_data][:name].blank? || session[:field_data][:aetype].blank?
-        field = session[:field_data][:name].blank? ? "Name" : "Type"
-        field += " and Type" if field == "Name" && session[:field_data][:aetype].blank?
+      if params[:name].blank? || params[:aetype].blank?
+        field = params[:name].blank? ? "Name" : "Type"
+        field += " and Type" if field == "Name" && params[:aetype].blank?
         add_flash(_("%{field} is required") % {:field => field}, :error)
         return
       end
       new_fields = {}
       field_attributes.each do |field_attribute|
-        new_fields[field_attribute] = @edit[:new_field][field_attribute.to_sym]
+        new_fields[field_attribute] = params[field_attribute.to_sym]
       end
       @edit[:new][:fields].push(new_fields)
-      @edit[:new_field] = session[:field_data] = {}
     end
   end
 

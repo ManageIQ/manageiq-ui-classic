@@ -4,19 +4,25 @@ import PropTypes from 'prop-types';
 import {
   tableData, addSelected, removeSelected,
 } from './helper';
+import { ClassFieldsEditor } from './schema/class-fields-editor';
 import MiqDataTable from '../../miq-data-table';
 import { CellAction } from '../../miq-data-table/helper';
 
 const Datastore = ({
-  type, initialData, hasOptions, datastoreTypes,
+  type, initialData, hasOptions, datastoreTypes, isEdit, aeTypeOptions, dTypeOptions, aeClassId,
 }) => {
   const {
     miqHeaders, miqRows, hasCheckbox, nodeTree,
-  } = tableData(type, hasOptions, initialData, datastoreTypes);
+  } = tableData(type, hasOptions, initialData, datastoreTypes, isEdit);
+
+  const [state, setState] = useState({
+    schemaRecords: miqRows.rowItems,
+  });
 
   if (miqRows.merged) {
     miqHeaders.splice(0, 1);
   }
+
   /** Function to find an item from initialData. */
   const findItem = (item) => initialData.find((row) => row.id.toString() === item.id.toString());
 
@@ -84,6 +90,7 @@ const Datastore = ({
 
   /** Function to handle the cell event actions. */
   const onCellClick = (selectedRow, cellType, event) => {
+    setState((state) => ({ ...state, selectedRowId: selectedRow.id }));
     switch (cellType) {
       case CellAction.selectAll: onSelectAll(event); break;
       case CellAction.itemSelect: onItemSelect(findItem(selectedRow), event.target); break;
@@ -92,15 +99,41 @@ const Datastore = ({
     }
   };
 
+  const renderEditView = () => {
+    switch (type) {
+      case 'class_fields':
+        return (
+          <ClassFieldsEditor
+            aeClassId={aeClassId}
+            initialData={initialData}
+            aeTypeOptions={aeTypeOptions}
+            dTypeOptions={dTypeOptions}
+          />
+        );
+
+      default:
+        return null;
+    }
+  };
+
   return (
-    <MiqDataTable
-      rows={miqRows.rowItems}
-      headers={miqHeaders}
-      onCellClick={(selectedRow, cellType, event) => onCellClick(selectedRow, cellType, event)}
-      rowCheckBox={hasCheckbox}
-      mode={`datastore-list ${type}`}
-      gridChecks={selectionIds}
-    />
+    <>
+      {isEdit ? (
+        renderEditView()
+      ) : (
+        <>
+          <MiqDataTable
+            rows={state.schemaRecords}
+            headers={miqHeaders}
+            onCellClick={(selectedRow, cellType, event) =>
+              onCellClick(selectedRow, cellType, event)}
+            rowCheckBox={hasCheckbox}
+            mode={`datastore-list ${type}`}
+            gridChecks={selectionIds}
+          />
+        </>
+      )}
+    </>
   );
 };
 
@@ -111,8 +144,14 @@ Datastore.propTypes = {
   initialData: PropTypes.arrayOf(PropTypes.any).isRequired,
   hasOptions: PropTypes.bool,
   datastoreTypes: PropTypes.shape({}).isRequired,
+  isEdit: PropTypes.bool.isRequired,
+  aeTypeOptions: PropTypes.arrayOf(PropTypes.any),
+  dTypeOptions: PropTypes.arrayOf(PropTypes.any),
+  aeClassId: PropTypes.number.isRequired,
 };
 
 Datastore.defaultProps = {
   hasOptions: false,
+  aeTypeOptions: [],
+  dTypeOptions: [],
 };

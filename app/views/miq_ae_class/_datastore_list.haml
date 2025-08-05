@@ -1,2 +1,7 @@
 - datastore_data(type, data)
-= react('Datastore', {:type => type, :initialData => @initial_data, :hasOptions => @has_options, :datastoreTypes => MiqAeClassHelper::DATASTORE_TYPES})
+= react('Datastore', {:type => type, :initialData => @initial_data, :hasOptions => @has_options,
+                      :datastoreTypes => MiqAeClassHelper::DATASTORE_TYPES, 
+                      :isEdit => !!@in_a_form_fields,
+                      :aeTypeOptions => @combo_xml, 
+                      :dTypeOptions => @dtype_combo_xml,
+                      :aeClassId => @ae_class&.id})
