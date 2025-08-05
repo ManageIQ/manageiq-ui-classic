@@ -33,7 +33,7 @@ Cypress.Commands.add('accordionItem', (name) => {
  * If the path is not found, it will throw an error.
  */
 Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
-  cy.get('li.list-group-item').then(($items) => {
+  cy.get('div.panel-collapse.collapse.in li.list-group-item').then(($items) => {
     // Converting jQuery collection to an array for easier manipulation
     const listItems = [...$items];
 
@@ -49,7 +49,7 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
       const isClickableNode = accordionPathIndex === accordionPath.length - 1;
 
       for (let i = searchStartIndex; i < listItems.length; i++) {
-        /* To remove */
+        /* @RemoveLater: Remove logger once the command is confirmed to be stable */
         Cypress.log({
           name: 'selectAccordionItem',
           message: `Loop index: ${i} & Searching for label: ${accordionLabel}`,
@@ -66,7 +66,7 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
         }
 
         if (isMatch) {
-          /* To remove */
+          /* @RemoveLater: Remove logger once the command is confirmed to be stable */
           Cypress.log({
             name: 'selectAccordionItem',
             message: `Matched "${liText}" at index ${i}`,
@@ -106,7 +106,15 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
         }
       }
       // If we reach here, it means the label was not found
-      throw new Error(`Accordion item: "${accordionLabel}" not found`);
+      const errorMessage = `${
+        isClickableNode ? 'Target' : 'Intermediate'
+      } node - "${accordionLabel}" was not found`;
+      Cypress.log({
+        name: 'error',
+        displayName: '❗ CypressError:',
+        message: errorMessage,
+      });
+      throw new Error(errorMessage);
     };
 
     // Start the recursive call from the first label in the given path

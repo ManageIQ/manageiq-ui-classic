@@ -1,12 +1,25 @@
 /* eslint-disable no-undef */
 
-describe('Validate clickItem', () => {
+/* @RemoveLater: Remove this test suite once the command is confirmed to be stable */
+describe('Validate select accordion item', () => {
   beforeEach(() => {
     cy.login();
     cy.menu('Settings', 'Application Settings');
   });
 
-  it('should fail when an invalid node label is passed', (done) => {
+  it('should search nodes only within expanded tree', () => {
+    // expand Diagnostics tree
+    cy.accordion('Diagnostics');
+    // should open the path under Diagnostics even if
+    // an identical one exists under Settings
+    cy.selectAccordionItem([
+      /^ManageIQ Region:/,
+      /^Zone:/,
+      /^Server:/,
+    ]);
+  });
+
+  it('should fail when an invalid target node label is passed', (done) => {
     cy.accordion('Access Control');
 
     cy.on('fail', (err) => {
@@ -17,7 +30,22 @@ describe('Validate clickItem', () => {
     cy.selectAccordionItem([
       'ManageIQ Region: Region 0 [0]',
       'Tenants',
-      'No Company', // This label does not exist
+      'No Company', // This target node is not valid
+    ]);
+  });
+
+  it('should fail when an invalid intermediate node label is passed', (done) => {
+    cy.accordion('Access Control');
+
+    cy.on('fail', (err) => {
+      expect(err.message).to.include('not found');
+      done();
+    });
+
+    cy.selectAccordionItem([
+      'ManageIQ Region: Region 0 [0]',
+      'Tenants Section', // This intermediate node is not valid
+      'My Company',
     ]);
   });
 
