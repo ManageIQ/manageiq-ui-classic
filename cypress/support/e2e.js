@@ -41,6 +41,7 @@
 
 // Commands
 import './commands/custom_logging_commands.js';
+import './commands/element_selectors.js';
 import './commands/explorer.js';
 import './commands/gtl.js';
 import './commands/login.js';

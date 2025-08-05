@@ -61,6 +61,13 @@ ManageIQ implements the following cypress extensions:
 
 * `cy.logAndThrowError(messageToLog, messageToThrow)` - Logs a custom error message to Cypress log and then throws an error. `messageToLog` is the message to display in the Cypress command log. `messageToThrow` is the optional error message to throw, defaults to `messageToLog`. e.g. `cy.logAndThrowError('This is the logged message', 'This is the thrown error message');`, `cy.logAndThrowError('This is the message that gets logged and thrown');`
 
+##### element_selectors
+
+* `cy.getFormFooterButtonByType(name, type)` - retrieves form footer button by its name and type. `name` is the name or text content of the button. `type` is the HTML button type (e.g., 'button', 'submit', 'reset'). Defaults to 'button'. e.g. `cy.getFormFooterButtonByType('Save');`, `cy.getFormFooterButtonByType('Reset', 'reset');`
+* `cy.getFormInputFieldById(inputId, type)` - retrieves a form input field by its ID and type. `inputId` is the ID of the input field. `type` is the HTML input type (e.g., 'text', 'email', 'password'). Defaults to 'text'. e.g. `cy.getFormInputFieldById('name');`, `cy.getFormInputFieldById('name', 'text');`
+* `getFormLabelByInputId(inputId)` - retrieves a form label associated with a specific input field by its ID. `inputId` is the ID of the input field. e.g. `cy.getFormLabelByInputId('name');`
+* `cy.getFormSelectFieldById(selectId)` - retrieves a form select field by its ID. `selectId` is the ID of the select field. e.g. `cy.getFormSelectFieldById('select-scan-limit');`
+
 #### Assertions
 
 * `cy.expect_explorer_title(title)` - check that the title on an explorer screen matches the provided title. `title`: String for the title.
