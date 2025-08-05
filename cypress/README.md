@@ -54,7 +54,11 @@ ManageIQ implements the following cypress extensions:
 ##### toolbar
 
 * `cy.toolbarItems(toolbarButton)` - returns an array of objects {text: String, disabled: Boolean} for the toolbar dropdown buttons for when a toolbar button is clicked. `toolbarButton` is the string for the text of the toolbar button that you want to click on.
-* `cy.toolbar(toolbarButton, dropdownButton)` - click on the toolbar button specified by the user. Can also then click on a specified dropdown button as well. `toolbarButton` is the string for the text of the toolbar button that you want to click on. `dropdownButton` is the string for the text of the toolbar dropdown button that you want to click on. s
+* `cy.toolbar(toolbarButton, toolbarOption)` - click on the toolbar button specified by the user. Can also then click on a specified dropdown button as well. `toolbarButton` is the string for the text of the toolbar button that you want to click on. `toolbarOption` is the string for the text of the toolbar dropdown option that you want to click on.
+
+##### custom_logging_commands
+
+* `cy.logAndThrowError(messageToLog, messageToThrow)` - Logs a custom error message to Cypress log and then throws an error. `messageToLog` is the message to display in the Cypress command log. `messageToThrow` is the optional error message to throw, defaults to `messageToLog`. e.g. `cy.logAndThrowError('This is the logged message', 'This is the thrown error message');`, `cy.logAndThrowError('This is the message that gets logged and thrown');`
 
 #### Assertions
 
