@@ -39,7 +39,7 @@ Cypress.Commands.add(
  *                                                                 This function **must return a Cypress.Chainable**, like `cy.get(...).click()`,
  *                                                                 so that Cypress can properly wait and chain `.then()` afterward.
  *                                                                 @example
- *                                                                 cy.expectBrowserConfirm({
+ *                                                                 cy.expect_browser_confirm_with_text({
  *                                                                    containsText: 'sure to proceed?',
  *                                                                    proceed: true,
  *                                                                    confirmTriggerFn: () => {
@@ -47,7 +47,7 @@ Cypress.Commands.add(
  *                                                                    }
  *                                                                 });
  *                                                                 @example
- *                                                                 cy.expectBrowserConfirm({
+ *                                                                 cy.expect_browser_confirm_with_text({
  *                                                                    confirmTriggerFn: () => cy.contains('deleted').click()
  *                                                                 });
  * @param {string} [options.containsText] - Optional text that the confirm alert should contain.
