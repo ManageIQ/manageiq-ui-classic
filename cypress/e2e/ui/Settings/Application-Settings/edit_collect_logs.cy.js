@@ -8,9 +8,9 @@ const textConstants = {
   // List items
   diagnosticsAccordionItem: 'Diagnostics',
   diagnosticsAccordionItemId: 'diagnostics_accord',
-  manageIQRegionAccordItem: 'ManageIQ Region:',
-  zoneAccordItem: 'Zone:',
-  serverAccordItem: 'Server:',
+  manageIQRegionAccordItem: /^ManageIQ Region:/,
+  zoneAccordItem: /^Zone:/,
+  serverAccordItem: /^Server:/,
 
   // Buttons
   saveButton: 'Save',
@@ -81,41 +81,6 @@ function interceptAndAwaitApi({
   cy.wait(`@${alias}`);
 }
 
-function invokeAndAwaitRegionInfo({ currentApiIntercepts }) {
-  interceptAndAwaitApi({
-    alias: 'getRegionInfo',
-    urlPattern: /ops\/tree_select\?id=.*&text=.*ManageIQ.*Region.*Region.*/,
-    triggerFn: () =>
-      cy.accordionItem(
-        manageIQRegionAccordItem,
-        true,
-        diagnosticsAccordionItemId
-      ),
-    currentApiIntercepts,
-  });
-}
-
-function invokeAndAwaitZoneDefaultInfo({ currentApiIntercepts }) {
-  interceptAndAwaitApi({
-    alias: 'getZoneDefaultInfo',
-    urlPattern:
-      /ops\/tree_select\?id=.*&text=.*Zone.*Default.*Zone.*(current).*/,
-    triggerFn: () =>
-      cy.accordionItem(zoneAccordItem, true, diagnosticsAccordionItemId),
-    currentApiIntercepts,
-  });
-}
-
-function invokeAndAwaitServerInfo({ currentApiIntercepts }) {
-  interceptAndAwaitApi({
-    alias: 'getServerInfo',
-    urlPattern: /ops\/tree_select\?id=.*&text=.*Server.*EVM.*(current).*/,
-    triggerFn: () =>
-      cy.accordionItem(serverAccordItem, true, diagnosticsAccordionItemId),
-    currentApiIntercepts,
-  });
-}
-
 function invokeAndAwaitCollectLogsTabInfo({ currentApiIntercepts }) {
   interceptAndAwaitApi({
     alias: 'getCollectLogsTabInfo',
@@ -146,22 +111,17 @@ function invokeAndAwaitEditEventForServer({ currentApiIntercepts }) {
 
 function resetProtocolDropdown({
   currentApiIntercepts,
-  needsServerInfoFetch = true,
+  selectServerListItem = true,
 }) {
   // Select Diagnostics
   cy.accordion(diagnosticsAccordionItem);
-  // Open ManageIQ Region: - list view if not already open
-  invokeAndAwaitRegionInfo({ currentApiIntercepts });
+  // Select "Zone:" or "Server:" accordion item
+  cy.selectAccordionItem([
+    manageIQRegionAccordItem,
+    zoneAccordItem,
+    ...(selectServerListItem ? [serverAccordItem] : []),
+  ]);
 
-  // Open Zone: - list view if not already open
-  invokeAndAwaitZoneDefaultInfo({ currentApiIntercepts });
-
-  if (needsServerInfoFetch) {
-    // Selecting Server: list view
-    invokeAndAwaitServerInfo({ currentApiIntercepts });
-  }
-  // Selecting Collect Logs nav bar
-  invokeAndAwaitCollectLogsTabInfo({ currentApiIntercepts });
   // Clicking Edit button
   invokeAndAwaitEditEventForServer({ currentApiIntercepts });
 
@@ -259,14 +219,12 @@ describe('Automate Collect logs Edit form operations', () => {
 
   describe('Settings > Application Settings > Diagnostics > Manage IQ Region > Zone > Server > Collect logs > Edit', () => {
     beforeEach(() => {
-      // Open Zone: - list view if not already open
-      invokeAndAwaitZoneDefaultInfo({
-        currentApiIntercepts: registeredApiIntercepts,
-      });
-      // Selecting Server: list view
-      invokeAndAwaitServerInfo({
-        currentApiIntercepts: registeredApiIntercepts,
-      });
+      // Select "Server:" accordion item
+      cy.selectAccordionItem([
+        manageIQRegionAccordItem,
+        zoneAccordItem,
+        serverAccordItem,
+      ]);
       // Select collect logs navbar and open edit form
       goToCollectLogsNavbarAndOpenEditForm(registeredApiIntercepts);
     });
@@ -303,8 +261,13 @@ describe('Automate Collect logs Edit form operations', () => {
 
   describe('Settings > Application Settings > Diagnostics > Manage IQ Region > Zone > Collect logs > Edit', () => {
     beforeEach(() => {
-      // Selecting Zone: - list view
-      invokeAndAwaitZoneDefaultInfo({
+      // Select "Zone:" accordion item
+      interceptAndAwaitApi({
+        alias: 'treeSelectApi',
+        urlPattern:
+          /ops\/tree_select\?id=.*&text=.*Zone.*Default.*Zone.*(current).*/,
+        triggerFn: () =>
+          cy.selectAccordionItem([manageIQRegionAccordItem, zoneAccordItem]),
         currentApiIntercepts: registeredApiIntercepts,
       });
       // Select collect logs navbar and open edit form
@@ -329,17 +292,18 @@ describe('Automate Collect logs Edit form operations', () => {
         if (url?.includes(componentRouteUrl)) {
           resetProtocolDropdown({
             currentApiIntercepts: registeredApiIntercepts,
-            needsServerInfoFetch: false,
+            selectServerListItem: false,
           });
         } else {
           // Navigate to Settings -> Application-Settings before selecting Diagnostics
           cy.menu(settingsMenuOption, appSettingsMenuOption);
           resetProtocolDropdown({
             currentApiIntercepts: registeredApiIntercepts,
-            needsServerInfoFetch: false,
+            selectServerListItem: false,
           });
         }
       });
     });
   });
 });
+
