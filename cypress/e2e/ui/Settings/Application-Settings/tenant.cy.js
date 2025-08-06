@@ -23,14 +23,8 @@ const textConstants = {
   initialChildTenantName: 'Child-Tenant',
   initialChildTenantDescription: 'Child Tenant description',
 
-  // Common selectors
-  inputFieldSelector: (inputId) =>
-    `#main-content .bx--form-item input#${inputId}`,
-  buttonSelector: (type) => `#main-content .bx--btn-set button[type="${type}"]`,
-
   // Button types
   submitButtonType: 'submit',
-  normalButtonType: 'button',
   resetButtonType: 'reset',
 
   // Element ids
@@ -108,10 +102,7 @@ const {
   allocatedStorageQuota,
   allocatedVmQuota,
   nameAlreadyTakenError,
-  buttonSelector,
-  inputFieldSelector,
   submitButtonType,
-  normalButtonType,
   resetButtonType,
   nameInputFieldId,
   descriptionInputFieldId,
@@ -139,10 +130,10 @@ function addOrEditOperation(
   isEditOperation = false
 ) {
   // Check if button is disabled initially
-  cy.contains(buttonSelector(submitButtonType), button).should('be.disabled');
+  cy.getFormFooterButtonByType(button, submitButtonType).should('be.disabled');
   // Add or edit name and description
-  const nameField = cy.get(inputFieldSelector(nameInputFieldId));
-  const descriptionField = cy.get(inputFieldSelector(descriptionInputFieldId));
+  const nameField = cy.getFormInputFieldById(nameInputFieldId);
+  const descriptionField = cy.getFormInputFieldById(descriptionInputFieldId);
   if (isEditOperation) {
     nameField.clear().type(name);
     descriptionField.clear().type(description);
@@ -151,7 +142,7 @@ function addOrEditOperation(
     descriptionField.type(description);
   }
   // Save the form
-  cy.contains(buttonSelector(submitButtonType), button)
+  cy.getFormFooterButtonByType(button, submitButtonType)
     .should('be.enabled')
     .click();
   cy.expect_flash(flashTypeSuccess, flashMessageSnippet);
@@ -254,13 +245,13 @@ function editQuotasTable(quotaName = allocatedStorageQuota) {
 
 function quotasResetOperation(quotaName = allocatedStorageQuota) {
   // Check if Reset button is disabled initially
-  cy.contains(buttonSelector(resetButtonType), resetButton).should(
+  cy.getFormFooterButtonByType(resetButton, resetButtonType).should(
     'be.disabled'
   );
   // Editing the quota table
   editQuotasTable(quotaName);
   // Confirm Reset button is enabled once table values are updated and then click on Reset
-  cy.contains(buttonSelector(resetButtonType), resetButton)
+  cy.getFormFooterButtonByType(resetButton, resetButtonType)
     .should('be.enabled')
     .click();
   cy.expect_flash(flashTypeWarning, flashMessageOperationReset);
@@ -270,7 +261,7 @@ function updateQuotas(quotaName = allocatedStorageQuota) {
   // Opting for the desired quota in the table
   editQuotasTable(quotaName);
   // Saving the form
-  cy.contains(buttonSelector(submitButtonType), saveButton).click();
+  cy.getFormFooterButtonByType(saveButton, submitButtonType).click();
   cy.expect_flash(flashTypeSuccess, flashMessageSaved);
 }
 
@@ -288,12 +279,12 @@ function rollbackQuotas() {
     }
   });
   // Saving the form
-  cy.contains(buttonSelector(submitButtonType), saveButton).click();
+  cy.getFormFooterButtonByType(saveButton, submitButtonType).click();
 }
 
 function cancelOperation(flashMessageSnippet = flashMessageOperationCanceled) {
   // Cancel the form
-  cy.contains(buttonSelector(normalButtonType), cancelButton).click();
+  cy.getFormFooterButtonByType(cancelButton).click();
   cy.expect_flash(flashTypeWarning, flashMessageSnippet);
 }
 
@@ -302,20 +293,18 @@ function resetOperation(
   oldDescription = initialParentTenantDescription
 ) {
   // Check if Reset button is disabled initially
-  cy.contains(buttonSelector(normalButtonType), resetButton).should(
-    'be.disabled'
-  );
+  cy.getFormFooterButtonByType(resetButton).should('be.disabled');
   // Editing name and description fields
-  cy.get(inputFieldSelector(nameInputFieldId)).type(editedTenantNameValue);
-  cy.get(inputFieldSelector(descriptionInputFieldId)).type(editedDescriptionValue);
+  cy.getFormInputFieldById(nameInputFieldId).type(editedTenantNameValue);
+  cy.getFormInputFieldById(descriptionInputFieldId).type(
+    editedDescriptionValue
+  );
   // Confirm Reset button is enabled once dropdown value is changed and then click on Reset
-  cy.contains(buttonSelector(normalButtonType), resetButton)
-    .should('be.enabled')
-    .click();
+  cy.getFormFooterButtonByType(resetButton).should('be.enabled').click();
   cy.expect_flash(flashTypeWarning, flashMessageOperationReset);
   // Confirm name and description has old values
-  cy.get(inputFieldSelector(nameInputFieldId)).should('have.value', oldName);
-  cy.get(inputFieldSelector(descriptionInputFieldId)).should(
+  cy.getFormInputFieldById(nameInputFieldId).should('have.value', oldName);
+  cy.getFormInputFieldById(descriptionInputFieldId).should(
     'have.value',
     oldDescription
   );
@@ -446,7 +435,7 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
         // Open the Add child tenant form again
         cy.toolbar(configToolbarButton, addChildTenantConfigOption);
         // Trying to add a child tenant with the same name
-        cy.get(inputFieldSelector(nameInputFieldId)).type(initialChildTenantName);
+        cy.getFormInputFieldById(nameInputFieldId).type(initialChildTenantName);
         cy.get('#rbac_details #name-error-msg').contains(nameAlreadyTakenError);
         // Cancel the add form
         cancelOperation();
