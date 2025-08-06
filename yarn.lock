@@ -5033,10 +5033,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"codemirror@npm:~5.58.2":
-  version: 5.58.3
-  resolution: "codemirror@npm:5.58.3"
-  checksum: 10/dc734a768b614ea2639f6d1473ab369d18a0c0a26a814a881b64eaf875537374f23769bb41173894d969ac294776dd143f96252e86531f6a3f89c6ee5860d992
+"codemirror@npm:~5.65.19":
+  version: 5.65.19
+  resolution: "codemirror@npm:5.65.19"
+  checksum: 10/52d9746d577d591e2d875fb542a7cd48e822b03e58905854bfcf852c2fcc673086c2cd05e72964b24d894452a82f28d35c535adf43d38559aa339a1b299efb2c
   languageName: node
   linkType: hard
 
@@ -11734,7 +11734,7 @@ __metadata:
     carbon-components-react: "npm:~7.59.24"
     carbon-icons: "npm:~7.0.7"
     classnames: "npm:~2.2.6"
-    codemirror: "npm:~5.58.2"
+    codemirror: "npm:~5.65.19"
     compression-webpack-plugin: "npm:^6.1.1"
     connected-react-router: "npm:~6.7.0"
     core-js: "npm:~3.6.4"
