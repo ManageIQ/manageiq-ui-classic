@@ -36,13 +36,6 @@ const textConstants = {
   ipInputFieldId: 'settings\\.proxy_server_ip',
   maxScanSelectFieldId: 'settings\\.concurrent_vm_scans',
 
-  // Common selectors
-  inputFieldLabelSelector: (forValue) =>
-    `#main-content .bx--form label[for="${forValue}"]`,
-  inputFieldSelector: (inputId) => `#main-content .bx--form input#${inputId}`,
-  selectFieldSelector: (selectId) => `#main-content .bx--form select#${selectId}`,
-  buttonSelector: (type) => `#main-content .bx--btn-set button[type="${type}"]`,
-
   // Buttons
   saveButton: 'Save',
   cancelButton: 'Cancel',
@@ -70,10 +63,6 @@ const {
   addZoneConfigOption,
   editZoneConfigOption,
   deleteZoneConfigOption,
-  selectFieldSelector,
-  buttonSelector,
-  inputFieldSelector,
-  inputFieldLabelSelector,
   cancelButton,
   addButton,
   saveButton,
@@ -104,12 +93,12 @@ function addZone() {
   // Open add form
   cy.toolbar(configToolbarButton, addZoneConfigOption);
   // Adding name, description, ip and scan limit
-  cy.get(inputFieldSelector(nameInputFieldId)).type(zoneName);
-  cy.get(inputFieldSelector(descriptionInputFieldId)).type(
+  cy.getFormInputFieldById(nameInputFieldId).type(zoneName);
+  cy.getFormInputFieldById(descriptionInputFieldId).type(
     initialZoneDescription
   );
-  cy.get(inputFieldSelector(ipInputFieldId)).type(initialServerIp);
-  cy.get(selectFieldSelector(maxScanSelectFieldId)).select(initialMaxScanLimit);
+  cy.getFormInputFieldById(ipInputFieldId).type(initialServerIp);
+  cy.getFormSelectFieldById(maxScanSelectFieldId).select(initialMaxScanLimit);
   cy.intercept('POST', '/api/zones').as('createZone');
   cy.getFormFooterButtonByType(addButton, 'submit')
     .should('be.enabled')
@@ -123,9 +112,9 @@ function validateFormElements(isEditForm = false) {
   // Assert Info sub header is visible
   cy.get('#main-content .bx--form h3').contains(infoSubHeader);
   // Assert name field label is visible
-  cy.get(inputFieldLabelSelector(nameInputFieldId)).should('be.visible');
+  cy.getFormLabelByInputId(nameInputFieldId).should('be.visible');
   // Assert name field is visible and enabled
-  cy.get(inputFieldSelector(nameInputFieldId))
+  cy.getFormInputFieldById(nameInputFieldId)
     .should('be.visible')
     .then((nameField) => {
       if (isEditForm) {
@@ -135,32 +124,32 @@ function validateFormElements(isEditForm = false) {
       }
     });
   // Assert description field label is visible
-  cy.get(inputFieldLabelSelector(descriptionInputFieldId)).should('be.visible');
+  cy.getFormLabelByInputId(descriptionInputFieldId).should('be.visible');
   // Assert description field is visible and enabled
-  cy.get(inputFieldSelector(descriptionInputFieldId))
+  cy.getFormInputFieldById(descriptionInputFieldId)
     .should('be.visible')
     .and('be.enabled');
   // Assert IP field label is visible
-  cy.get(inputFieldLabelSelector(ipInputFieldId)).should('be.visible');
+  cy.getFormLabelByInputId(ipInputFieldId).should('be.visible');
   // Assert IP field is visible and enabled
-  cy.get(inputFieldSelector(ipInputFieldId))
+  cy.getFormInputFieldById(ipInputFieldId)
     .should('be.visible')
     .and('be.enabled');
   // Assert Settings sub header is visible
   cy.get('#main-content .bx--form h3').contains(settingsSubHeader);
   // Assert max scan field label is visible
-  cy.get(inputFieldLabelSelector(maxScanSelectFieldId)).should('be.visible');
+  cy.getFormLabelByInputId(maxScanSelectFieldId).should('be.visible');
   // Assert max scan field is visible and enabled
-  cy.get(selectFieldSelector(maxScanSelectFieldId))
+  cy.getFormSelectFieldById(maxScanSelectFieldId)
     .should('be.visible')
     .and('be.enabled');
   // Assert cancel button is visible and enabled
-  cy.contains(buttonSelector(normalButtonType), cancelButton)
+  cy.getFormFooterButtonByType(cancelButton)
     .should('be.visible')
     .and('be.enabled');
   if (isEditForm) {
     // Assert reset button is visible and disabled
-    cy.contains(buttonSelector(normalButtonType), resetButton)
+    cy.getFormFooterButtonByType(resetButton)
       .should('be.visible')
       .and('be.disabled');
   }
@@ -216,7 +205,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     // Open add form
     cy.toolbar(configToolbarButton, addZoneConfigOption);
     // Cancelling the form
-    cy.contains(buttonSelector(normalButtonType), cancelButton).click();
+    cy.getFormFooterButtonByType(cancelButton).click();
     cy.expect_flash(flashTypeWarning, flashMessageOperationCanceled);
   });
 
@@ -238,12 +227,10 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     // Open edit form
     cy.toolbar(configToolbarButton, editZoneConfigOption);
     // Update IP & scan limit
-    cy.get(inputFieldSelector(descriptionInputFieldId))
+    cy.getFormInputFieldById(descriptionInputFieldId)
       .clear()
       .type(updatedServerIp);
-    cy.get(selectFieldSelector(maxScanSelectFieldId)).select(
-      updatedMaxScanLimit
-    );
+    cy.getFormSelectFieldById(maxScanSelectFieldId).select(updatedMaxScanLimit);
     // Save the form
     cy.getFormFooterButtonByType(saveButton, 'submit')
       .should('be.enabled')
@@ -276,7 +263,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     // Validate fields
     validateFormElements(true);
     // Cancelling the form
-    cy.contains(buttonSelector(normalButtonType), cancelButton).click();
+    cy.getFormFooterButtonByType(cancelButton).click();
   });
 
   it('Checking whether cancel & reset buttons work on the edit form', () => {
@@ -295,27 +282,25 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.toolbar(configToolbarButton, editZoneConfigOption);
     /* ===== Reset ===== */
     // Update description & IP
-    cy.get(inputFieldSelector(descriptionInputFieldId))
+    cy.getFormInputFieldById(descriptionInputFieldId)
       .clear()
       .type(updatedZoneDescription);
-    cy.get(inputFieldSelector(ipInputFieldId)).clear().type(updatedServerIp);
+    cy.getFormInputFieldById(ipInputFieldId).clear().type(updatedServerIp);
     // Resetting the form
-    cy.contains(buttonSelector(normalButtonType), resetButton)
-      .should('be.enabled')
-      .click();
+    cy.getFormFooterButtonByType(resetButton).should('be.enabled').click();
     cy.expect_flash(flashTypeWarning, flashMessageOperationReset);
     // Confirming the edited fields contain the old values after resetting
-    cy.get(inputFieldSelector(descriptionInputFieldId)).should(
+    cy.getFormInputFieldById(descriptionInputFieldId).should(
       'have.value',
       initialZoneDescription
     );
-    cy.get(inputFieldSelector(ipInputFieldId)).should(
+    cy.getFormInputFieldById(ipInputFieldId).should(
       'have.value',
       initialServerIp
     );
     /* ===== Cancel ===== */
     // Cancelling the form
-    cy.contains(buttonSelector(normalButtonType), cancelButton).click();
+    cy.getFormFooterButtonByType(cancelButton).click();
     cy.expect_flash(flashTypeWarning, flashMessageOperationCanceled);
   });
 
