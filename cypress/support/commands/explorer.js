@@ -33,9 +33,9 @@ Cypress.Commands.add('accordionItem', (name) => {
  * If the path is not found, it will throw an error.
  */
 Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
-  cy.get('div.panel-collapse.collapse.in li.list-group-item').then(($items) => {
-    // Converting jQuery collection to an array for easier manipulation
-    const listItems = [...$items];
+  cy.get('div.panel-collapse.collapse.in').then((expandedAccordion) => {
+    // Converting the list-items jQuery collection to an array for easier manipulation
+    const listItems = [...expandedAccordion.find('li.list-group-item')];
 
     /**
      * Function to recursively expand the accordion and click the target item.
@@ -105,16 +105,16 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
           return;
         }
       }
-      // If we reach here, it means the label was not found
+      // Reaching this point indicates the label was not found - throw an error and exit.
+      // Traversing up through the ancestors to get the name of the accordion where the lookup was performed
+      const accordionPanel = expandedAccordion
+        .closest('.panel')
+        .find('.panel-heading h4.panel-title a')
+        .text();
       const errorMessage = `${
         isClickableNode ? 'Target' : 'Intermediate'
-      } node - "${accordionLabel}" was not found`;
-      Cypress.log({
-        name: 'error',
-        displayName: '❗ CypressError:',
-        message: errorMessage,
-      });
-      throw new Error(errorMessage);
+      } node - "${accordionLabel}" was not found in the expanded "${accordionPanel}" accordion panel.`;
+      cy.logAndThrowError(errorMessage);
     };
 
     // Start the recursive call from the first label in the given path
