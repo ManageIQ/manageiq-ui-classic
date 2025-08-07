@@ -25,7 +25,6 @@ require('./miq_c3_config.js');
 require('./miq_ujs_bindings.js');
 require('./miq_tree.js');
 require('./miq_formatters.js');
-require('./miq_grid.js');
 require('./miq_list_grid.js');
 require('./miq_toolbar.js');
 require('./miq_c3.js');
