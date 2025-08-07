@@ -182,6 +182,48 @@ export const prepareRequestObject = (values, formId) => {
     requestObject.config_info.provision.extra_vars = convertArrayToObject(requestObject.config_info.provision.extra_vars);
   }
 
+  if (requestObject.provisioning_entry_point_type === 'embedded_automate') {
+    if (requestObject.provisioning_entry_point_automate && requestObject.provisioning_entry_point_automate.element) {
+      requestObject.provisioning_entry_point = {
+        id: requestObject.provisioning_entry_point_automate.element.id,
+        name: requestObject.provisioning_entry_point_automate.element.name,
+      };
+      delete requestObject.provisioning_entry_point_automate;
+    }
+  } else if (requestObject.provisioning_entry_point_workflow) {
+    requestObject.provisioning_entry_point = requestObject.provisioning_entry_point_workflow.id;
+    delete requestObject.provisioning_entry_point_workflow;
+  }
+  delete requestObject.provisioning_entry_point_type;
+
+  if (requestObject.reconfigure_entry_point_type === 'embedded_automate') {
+    if (requestObject.reconfigure_entry_point_automate && requestObject.reconfigure_entry_point_automate.element) {
+      requestObject.reconfigure_entry_point = {
+        id: requestObject.reconfigure_entry_point_automate.element.id,
+        name: requestObject.reconfigure_entry_point_automate.element.name,
+      };
+      delete requestObject.reconfigure_entry_point_automate;
+    }
+  } else if (requestObject.reconfigure_entry_point_workflow) {
+    requestObject.reconfigure_entry_point = requestObject.reconfigure_entry_point_workflow.id;
+    delete requestObject.reconfigure_entry_point_workflow;
+  }
+  delete requestObject.reconfigure_entry_point_type;
+
+  if (requestObject.retirement_entry_point_type === 'embedded_automate') {
+    if (requestObject.retirement_entry_point_automate && requestObject.retirement_entry_point_automate.element) {
+      requestObject.retirement_entry_point = {
+        id: requestObject.reconfigure_entry_point_automate.element.id,
+        name: requestObject.retirement_entry_point_automate.element.name,
+      };
+      delete requestObject.retirement_entry_point_automate;
+    }
+  } else if (requestObject.retirement_entry_point_workflow) {
+    requestObject.retirement_entry_point = requestObject.retirement_entry_point_workflow.id;
+    delete requestObject.retirement_entry_point_workflow;
+  }
+  delete requestObject.retirement_entry_point_type;
+
   //   if (requestObject.config_info.retirement.extra_vars) {
   //     requestObject.config_info.retirement.extra_vars = convertArrayToObject(requestObject.config_info.retirement.extra_vars);
   //   }
