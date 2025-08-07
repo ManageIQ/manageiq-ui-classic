@@ -192,7 +192,6 @@ describe('Automate Collect logs Edit form operations', () => {
   beforeEach(() => {
     registeredApiIntercepts = {};
     cy.login();
-    cy.wait(500);
     // Navigate to Application settings and Select Diagnostics
     cy.menu(settingsMenuOption, appSettingsMenuOption);
     interceptAndAwaitApi({
@@ -228,20 +227,19 @@ describe('Automate Collect logs Edit form operations', () => {
     });
 
     after(() => {
-      cy?.url()?.then((url) => {
-        // Ensures navigation to Settings -> Application-Settings in the UI
-        if (url?.includes(componentRouteUrl)) {
+      cy.url()
+        ?.then((url) => {
+          // Ensures navigation to Settings -> Application-Settings in the UI
+          if (!url?.includes(componentRouteUrl)) {
+            // Navigate to Settings -> Application-Settings before cleanup
+            cy.menu(settingsMenuOption, appSettingsMenuOption);
+          }
+        })
+        .then(() => {
           resetProtocolDropdown({
             currentApiIntercepts: registeredApiIntercepts,
           });
-        } else {
-          // Navigate to Settings -> Application-Settings before selecting Diagnostics
-          cy.menu(settingsMenuOption, appSettingsMenuOption);
-          resetProtocolDropdown({
-            currentApiIntercepts: registeredApiIntercepts,
-          });
-        }
-      });
+        });
     });
   });
 
@@ -273,22 +271,20 @@ describe('Automate Collect logs Edit form operations', () => {
     });
 
     after(() => {
-      cy?.url()?.then((url) => {
-        // Ensures navigation to Settings -> Application-Settings in the UI
-        if (url?.includes(componentRouteUrl)) {
+      cy.url()
+        ?.then((url) => {
+          // Ensures navigation to Settings -> Application-Settings in the UI
+          if (!url?.includes(componentRouteUrl)) {
+            // Navigate to Settings -> Application-Settings before cleanup
+            cy.menu(settingsMenuOption, appSettingsMenuOption);
+          }
+        })
+        .then(() => {
           resetProtocolDropdown({
             currentApiIntercepts: registeredApiIntercepts,
             selectServerListItem: false,
           });
-        } else {
-          // Navigate to Settings -> Application-Settings before selecting Diagnostics
-          cy.menu(settingsMenuOption, appSettingsMenuOption);
-          resetProtocolDropdown({
-            currentApiIntercepts: registeredApiIntercepts,
-            selectServerListItem: false,
-          });
-        }
-      });
+        });
     });
   });
 });
