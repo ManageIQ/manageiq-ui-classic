@@ -6,6 +6,7 @@ const textConstants = {
 
   // List items
   schedulesAccordionItem: 'Schedules',
+  manageIQRegionAccordItem: /^ManageIQ Region:/,
 
   // Field values
   initialScheduleName: 'Test-name',
@@ -110,6 +111,7 @@ const {
   startTime,
   deleteScheduleConfigOption,
   schedulesAccordionItem,
+  manageIQRegionAccordItem,
   configToolbarButton,
   flashTypeSuccess,
   flashTypeWarning,
@@ -184,7 +186,11 @@ function interceptGetScheduleDetailsApi(scheduleName = initialScheduleName) {
   ).as('getCreatedScheduleApi');
   // Triggering the action that will fire the API call,
   // which is selecting the created schedule
-  cy.accordionItem(scheduleName);
+  cy.selectAccordionItem([
+    manageIQRegionAccordItem,
+    schedulesAccordionItem,
+    scheduleName,
+  ]);
   // Wait for the API call to complete if it was fired
   // This is to ensure that the test does not fail if the request was not fired
   cy.then(() => {
@@ -265,7 +271,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
       pathname: '/ops/tree_select',
       query: { text: schedulesAccordionItem },
     }).as('getSchedules');
-    cy.accordionItem(schedulesAccordionItem);
+    cy.selectAccordionItem([manageIQRegionAccordItem, schedulesAccordionItem]);
     cy.wait('@getSchedules');
   });
 
