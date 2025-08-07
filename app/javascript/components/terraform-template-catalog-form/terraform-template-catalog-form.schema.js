@@ -75,7 +75,7 @@ const basicInformationTabSchema = (availableCatalogs, tenantTree, roleAllows, zo
       {
         component: 'embedded-automate-entry-point',
         id: 'reconfigure_entry_point_automate',
-        name: 'recounfigure_entry_point_automate',
+        name: 'reconfigure_entry_point_automate',
         label: 'Reconfigure Entry Point',
         field: 'fqname',
         selected: '',
