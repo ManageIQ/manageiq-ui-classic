@@ -129,7 +129,6 @@ class MiqTaskController < ApplicationController
   def delete_tasks
     assert_privileges("miq_task_delete")
 
-    checked_items = find_checked_items
     new_checked_items = find_checked_items.select { |item| params["select-row-#{item}"] == "on" }
 
     delete_tasks_from_table(new_checked_items, "Delete selected tasks")
@@ -333,12 +332,6 @@ class MiqTaskController < ApplicationController
   def tasks_scopes(opts, use_times = true)
     scope = []
 
-    # Add time scope
-    if use_times
-      t = format_timezone(opts[:time_period].to_i != 0 ? opts[:time_period].days.ago : Time.now, Time.zone, "raw")
-      scope << [:with_updated_on_between, t.beginning_of_day, t.end_of_day]
-    end
-
     # Specify user scope
     if @tabform == "tasks_1"
       scope << [:with_userid, session[:userid]]
@@ -355,6 +348,12 @@ class MiqTaskController < ApplicationController
       scope << [:with_status_in, *status]
     else
       scope << :no_status_selected
+    end
+
+    # Add time scope
+    if use_times
+      t = format_timezone(opts[:time_period].to_i != 0 ? opts[:time_period].days.ago : Time.now, Time.zone, "raw")
+      scope << [:with_updated_on_between, t.beginning_of_day, t.end_of_day]
     end
 
     # Add zone scope
