@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { FormSpy } from '@data-driven-forms/react-form-renderer';
 import createSchema from './settings-tasks-form.schema';
 import loadTable from './load-table-helper';
-import GtlView from '../gtl-view';
 
 const SettingsTasksForm = ({
   allTasks, zones, users, timePeriods, taskStates, tz,
@@ -47,7 +46,6 @@ const SettingsTasksForm = ({
           loadDefaultTable();
         }}
       />
-      <GtlView showUrl="/miq_task/show" />
     </div>
   );
 };
