@@ -49,7 +49,7 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
       const isClickableNode = accordionPathIndex === accordionPath.length - 1;
 
       for (let i = searchStartIndex; i < listItems.length; i++) {
-        /* @RemoveLater: Remove logger once the command is confirmed to be stable */
+        /* TODO: Remove logger once the command is confirmed to be stable */
         Cypress.log({
           name: 'selectAccordionItem',
           message: `Loop index: ${i} & Searching for label: ${accordionLabel}`,
@@ -66,7 +66,7 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
         }
 
         if (isMatch) {
-          /* @RemoveLater: Remove logger once the command is confirmed to be stable */
+          /* TODO: Remove logger once the command is confirmed to be stable */
           Cypress.log({
             name: 'selectAccordionItem',
             message: `Matched "${liText}" at index ${i}`,
