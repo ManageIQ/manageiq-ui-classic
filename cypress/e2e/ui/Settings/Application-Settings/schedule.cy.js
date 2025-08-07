@@ -1,6 +1,9 @@
 /* eslint-disable no-undef */
 
 const textConstants = {
+  // Component route url
+  componentRouteUrl: '/ops/explorer',
+
   // List items
   schedulesAccordionItem: 'Schedules',
 
@@ -36,6 +39,24 @@ const textConstants = {
   cancelButton: 'Cancel',
   resetButton: 'Reset',
 
+  // Common element ids
+  nameInputFieldId: 'name',
+  descriptionInputFieldId: 'description',
+  activeCheckboxFieldId: 'enabled',
+  actionTypeSelectFieldId: 'action_typ',
+  filterTypeSelectFieldId: 'filter_typ',
+  timerTypeSelectFieldId: 'timer_typ',
+  timerValueSelectFieldId: 'timer_value',
+  timeZoneInputFieldId: 'time_zone',
+  startDateInputFieldId: 'start_date',
+  startTimeInputFieldId: 'start_time',
+  zoneSelectFieldId: 'zone_id',
+  systemSelectFieldId: 'instance_name',
+  messageInputFieldId: 'message',
+  requestInputFieldId: 'request',
+  typeInputFieldId: 'target_class',
+  objectInputFieldId: 'target_id',
+
   // Config options
   configToolbarButton: 'Configuration',
   addScheduleConfigOption: 'Add a new Schedule',
@@ -46,7 +67,7 @@ const textConstants = {
   queueScheduleConfigOption: 'Queue up this Schedule to run now',
 
   // Menu options
-  settingsMenuOption: 'Settings',
+  settingsOption: 'Settings',
   appSettingsMenuOption: 'Application Settings',
 
   // Flash message types
@@ -56,22 +77,35 @@ const textConstants = {
   flashTypeInfo: 'info',
 
   // Flash message text snippets
-  flashMessageScheduleQueued: 'queued to run',
-  flashMessageOperationCanceled: 'cancelled',
+  flashMessageScheduleQueued: 'queued',
+  flashMessageOperationCanceled: 'cancel',
   flashMessageScheduleDisabled: 'disabled',
   flashMessageScheduleEnabled: 'enabled',
   flashMessageScheduleSaved: 'saved',
   flashMessageResetSchedule: 'reset',
-  flashMessageScheduleDeleted: 'delete successful',
+  flashMessageScheduleDeleted: 'delete',
   flashMessageFailedToAddSchedule: 'failed',
 
   // Browser alert text snippets
-  browserAlertDeleteConfirmText: 'will be permanently removed',
+  browserAlertDeleteConfirmText: 'removed',
 };
 
 const {
-  settingsMenuOption,
-  appSettingsMenuOption,
+  // Component route url
+  componentRouteUrl,
+
+  // List items
+  schedulesAccordionItem,
+  manageIQRegionAccordItem,
+
+  // Field values
+  initialScheduleName,
+  editedScheduleName,
+  initialDescription,
+  editedDescription,
+  initialStartDate,
+  editedStartDate,
+  startTime,
   actionTypeVmAnalysis,
   actionTypeTemplateAnalysis,
   actionTypeHostAnalysis,
@@ -82,35 +116,61 @@ const {
   actionTypeHostCompilanceCheck,
   actionTypeContainerCompilanceCheck,
   actionTypeAutomationTasks,
+  filterTypeVmCluster,
   timerTypeOnce,
   timerTypeHourly,
   timerTypeDaily,
   timerTypeWeekly,
   timerTypeMonthly,
-  cancelButton,
+  frequencyTypeHour,
+  timezoneTypeHawaii,
+
+  // Buttons
   saveButton,
-  initialScheduleName,
-  editScheduleConfigOption,
-  editedScheduleName,
-  editedDescription,
-  editedStartDate,
+  cancelButton,
   resetButton,
-  initialDescription,
-  initialStartDate,
+
+  // Input types
+  checkboxInputType,
+
+  // Common element ids
+  nameInputFieldId,
+  descriptionInputFieldId,
+  activeCheckboxFieldId,
+  actionTypeSelectFieldId,
+  filterTypeSelectFieldId,
+  timerTypeSelectFieldId,
+  timerValueSelectFieldId,
+  timeZoneInputFieldId,
+  startDateInputFieldId,
+  startTimeInputFieldId,
+  zoneSelectFieldId,
+  systemSelectFieldId,
+  messageInputFieldId,
+  requestInputFieldId,
+  typeInputFieldId,
+  objectInputFieldId,
+
+  // Config options
+  configToolbarButton,
+  addScheduleConfigOption,
+  deleteScheduleConfigOption,
+  editScheduleConfigOption,
   disableScheduleConfigOption,
   enableScheduleConfigOption,
   queueScheduleConfigOption,
-  addScheduleConfigOption,
-  frequencyTypeHour,
-  timezoneTypeHawaii,
-  startTime,
-  deleteScheduleConfigOption,
-  schedulesAccordionItem,
-  configToolbarButton,
+
+  // Menu options
+  settingsOption,
+  appSettingsMenuOption,
+
+  // Flash message types
   flashTypeSuccess,
   flashTypeWarning,
   flashTypeError,
   flashTypeInfo,
+
+  // Flash message text snippets
   flashMessageScheduleQueued,
   flashMessageOperationCanceled,
   flashMessageScheduleDisabled,
@@ -119,24 +179,28 @@ const {
   flashMessageResetSchedule,
   flashMessageScheduleDeleted,
   flashMessageFailedToAddSchedule,
+
+  // Browser alert text snippets
   browserAlertDeleteConfirmText,
 } = textConstants;
 
-function selectConfigMenu(menuOption = addScheduleConfigOption) {
+function selectConfigMenu(menuOption) {
   return cy.toolbar(configToolbarButton, menuOption);
 }
 
 function addSchedule() {
-  selectConfigMenu();
+  // Open add schedule form
+  selectConfigMenu(addScheduleConfigOption);
   // Checks if Save button is disabled initially
-  cy.contains(
-    '#main-content .bx--btn-set button[type="submit"]',
-    saveButton
-  ).should('be.disabled');
+  cy.getFormFooterButtonByType(saveButton, 'submit').should(
+    'be.disabled'
+  );
   // Adding data
-  cy.get('input#name').type(initialScheduleName);
-  cy.get('input#description').type(initialDescription);
-  cy.get('input[type="checkbox"]#enabled').check({ force: true });
+  cy.getFormInputFieldById(nameInputFieldId).type(initialScheduleName);
+  cy.getFormInputFieldById(descriptionInputFieldId).type(initialDescription);
+  cy.getFormInputFieldById(activeCheckboxFieldId, 'checkbox').check({
+    force: true,
+  });
   // Select Action type option: 'VM Analysis'
   cy.get('select#action_typ').select(actionTypeVmAnalysis);
   // Select Filter type option: 'A Single VM'
@@ -156,22 +220,11 @@ function addSchedule() {
   cy.intercept('POST', '/ops/schedule_edit/new?button=save').as(
     'addScheduleApi'
   );
-  cy.contains('#main-content .bx--btn-set button[type="submit"]', saveButton)
+  cy.getFormFooterButtonByType(saveButton, 'submit')
     .should('be.enabled') // Checks if Save button is enabled once all required fields are filled
     .click();
   // Wait for the API call to complete
   cy.wait('@addScheduleApi');
-}
-
-function deleteSchedule(scheduleName = initialScheduleName) {
-  // Selecting the schedule and intercepting the API call to get schedule details
-  interceptGetScheduleDetailsApi(scheduleName);
-  // Listening for the browser confirm alert and confirming deletion
-  cy.expect_browser_confirm_with_text({
-    confirmTriggerFn: () => selectConfigMenu(deleteScheduleConfigOption),
-    containsText: browserAlertDeleteConfirmText,
-  });
-  cy.expect_flash(flashTypeSuccess, flashMessageScheduleDeleted);
 }
 
 function interceptGetScheduleDetailsApi(scheduleName = initialScheduleName) {
@@ -201,9 +254,20 @@ function interceptGetScheduleDetailsApi(scheduleName = initialScheduleName) {
   });
 }
 
+function deleteSchedule(scheduleName = initialScheduleName) {
+  // Selecting the schedule and intercepting the API call to get schedule details
+  interceptGetScheduleDetailsApi(scheduleName);
+  // Listening for the browser confirm alert and confirming deletion
+  cy.expect_browser_confirm_with_text({
+    confirmTriggerFn: () => selectConfigMenu(deleteScheduleConfigOption),
+    containsText: browserAlertDeleteConfirmText,
+  });
+  cy.expect_flash(flashTypeSuccess, flashMessageScheduleDeleted);
+}
+
 function invokeCleanupDeletion() {
   // Iterate and clean up any leftover schedules created during the test
-  cy.get('li.list-group-item').each(($el) => {
+  cy.get('div.panel-collapse.collapse.in li.list-group-item').each(($el) => {
     const text = $el?.text()?.trim();
     if (text === initialScheduleName) {
       deleteSchedule();
@@ -211,134 +275,108 @@ function invokeCleanupDeletion() {
     }
     if (text === editedScheduleName) {
       deleteSchedule(editedScheduleName);
-      return false;
+      return false; // exit iteration
     }
-    return true;
+    return null; // has no impact, just to get rid of eslint warning
   });
 }
 
-function verifyFilterTypeDropdownExists() {
-  cy.get('label[for="filter_typ"]').should('exist');
-  cy.get('select#filter_typ').should('exist');
+function selectAndAssertDropdownValue(id, value) {
+  cy.get(`select#${id}`).select(value);
+  cy.get(`select#${id}`).should('have.value', value);
 }
 
-function verifyTimerDropdownExists() {
-  cy.get('label[for="timer_value"]').should('exist');
-  cy.get('select#timer_value').should('exist');
+function assertSelectFieldWithLabel(id) {
+  cy.get(`label[for="${id}"]`).should('exist');
+  cy.get(`select#${id}`).should('exist');
+}
+
+function selectActionTypeAndAssertFilterTypeDropdown(value) {
+  selectAndAssertDropdownValue('action_typ', value);
+  assertSelectFieldWithLabel('filter_typ');
+}
+
+function selectTimerTypeAndAssertTimerDropdown(value) {
+  selectAndAssertDropdownValue('timer_typ', value);
+  assertSelectFieldWithLabel('timer_value');
+}
+
+function assertComboboxWithLabel(id) {
+  cy.get(`label[for="${id}"]`).should('exist');
+  cy.get(`input[role="combobox"]#${id}`).should('exist');
+}
+
+function assertInputFieldWithLabel(id) {
+  cy.get(`label[for="${id}"]`).should('exist');
+  cy.get(`input#${id}`).should('exist');
 }
 
 describe('Automate Schedule form operations: Settings > Application Settings > Settings > Schedules > Configuration > Add a new schedule', () => {
   beforeEach(() => {
     cy.login();
-    cy.menu(settingsMenuOption, appSettingsMenuOption);
-    cy.intercept(
-      {
-        method: 'POST',
-        pathname: '/ops/tree_select',
-        query: { text: schedulesAccordionItem },
-      },
-    ).as('getSchedules');
+    // Navigate to Application-Settings
+    cy.menu(settingsOption, appSettingsMenuOption);
+    // Expand Settings accordion panel
+    cy.accordion(settingsOption);
+    // Select Schedules accordion item
+    cy.intercept({
+      method: 'POST',
+      pathname: '/ops/tree_select',
+      query: { text: schedulesAccordionItem },
+    }).as('getSchedules');
     cy.accordionItem(schedulesAccordionItem);
     cy.wait('@getSchedules');
   });
 
   it('Validate visibility of elements based on dropdown selections', () => {
-    selectConfigMenu();
+    // Open add schedule form
+    selectConfigMenu(addScheduleConfigOption);
 
     /* ===== Selecting any option other than "Automation Tasks" from "Action" dropdown does not hide the Filter dropdown ===== */
 
-    cy.get('select#action_typ').select(actionTypeVmAnalysis);
-    cy.get('select#action_typ').should('have.value', actionTypeVmAnalysis);
-    // Checking for Filter type dropdown
-    verifyFilterTypeDropdownExists();
-
-    cy.get('select#action_typ').select(actionTypeTemplateAnalysis);
-    cy.get('select#action_typ').should(
-      'have.value',
-      actionTypeTemplateAnalysis
-    );
-    // Checking for Filter type dropdown
-    verifyFilterTypeDropdownExists();
-
-    cy.get('select#action_typ').select(actionTypeHostAnalysis);
-    cy.get('select#action_typ').should('have.value', actionTypeHostAnalysis);
-    // Checking for Filter type dropdown
-    verifyFilterTypeDropdownExists();
-
-    cy.get('select#action_typ').select(actionTypeContainerAnalysis);
-    cy.get('select#action_typ').should(
-      'have.value',
-      actionTypeContainerAnalysis
-    );
-    // Checking for Filter type dropdown
-    verifyFilterTypeDropdownExists();
-
-    cy.get('select#action_typ').select(actionTypeClusterAnalysis);
-    cy.get('select#action_typ').should('have.value', actionTypeClusterAnalysis);
-    // Checking for Filter type dropdown
-    verifyFilterTypeDropdownExists();
-
-    cy.get('select#action_typ').select(actionTypeDataStoreAnalysis);
-    cy.get('select#action_typ').should(
-      'have.value',
-      actionTypeDataStoreAnalysis
-    );
-    // Checking for Filter type dropdown
-    verifyFilterTypeDropdownExists();
-
-    cy.get('select#action_typ').select(actionTypeVmCompilanceCheck);
-    cy.get('select#action_typ').should(
-      'have.value',
-      actionTypeVmCompilanceCheck
-    );
-    // Checking for Filter type dropdown
-    verifyFilterTypeDropdownExists();
-
-    cy.get('select#action_typ').select(actionTypeHostCompilanceCheck);
-    cy.get('select#action_typ').should(
-      'have.value',
-      actionTypeHostCompilanceCheck
-    );
-    // Checking for Filter type dropdown
-    verifyFilterTypeDropdownExists();
-
-    cy.get('select#action_typ').select(actionTypeContainerCompilanceCheck);
-    cy.get('select#action_typ').should(
-      'have.value',
+    // Selecting "Vm Analysis" to verify filter type dropdown
+    selectActionTypeAndAssertFilterTypeDropdown(actionTypeVmAnalysis);
+    // Selecting "Template Analysis" to verify filter type dropdown
+    selectActionTypeAndAssertFilterTypeDropdown(actionTypeTemplateAnalysis);
+    // Selecting "Host Analysis" to verify filter type dropdown
+    selectActionTypeAndAssertFilterTypeDropdown(actionTypeHostAnalysis);
+    // Selecting "Container Analysis" to verify filter type dropdown
+    selectActionTypeAndAssertFilterTypeDropdown(actionTypeContainerAnalysis);
+    // Selecting "Cluster Analysis" to verify filter type dropdown
+    selectActionTypeAndAssertFilterTypeDropdown(actionTypeClusterAnalysis);
+    // Selecting "DataStore Analysis" to verify filter type dropdown
+    selectActionTypeAndAssertFilterTypeDropdown(actionTypeDataStoreAnalysis);
+    // Selecting "Vm Compilance Check" to verify filter type dropdown
+    selectActionTypeAndAssertFilterTypeDropdown(actionTypeVmCompilanceCheck);
+    // Selecting "Host Compilance Check" to verify filter type dropdown
+    selectActionTypeAndAssertFilterTypeDropdown(actionTypeHostCompilanceCheck);
+    // Selecting "Container Compilance Check" to verify filter type dropdown
+    selectActionTypeAndAssertFilterTypeDropdown(
       actionTypeContainerCompilanceCheck
     );
-    // Checking for Filter type dropdown
-    verifyFilterTypeDropdownExists();
 
     /* ===== Selecting "Automation Tasks" option from "Action" dropdown shows Zone, Object details & Object fields ===== */
 
-    cy.get('select#action_typ').select(actionTypeAutomationTasks);
-    cy.get('select#action_typ').should('have.value', actionTypeAutomationTasks);
+    selectAndAssertDropdownValue('action_typ', actionTypeAutomationTasks);
 
     // Checking for Zone dropdown
-    cy.get('label[for="zone_id"]').should('exist');
-    cy.get('select#zone_id').should('exist');
+    assertSelectFieldWithLabel('zone_id');
 
     // Checking for Object Details
     cy.get('h3[name="object_details"]').should('exist');
     // Checking for System/Process dropdown
-    cy.get('label[for="instance_name"]').should('exist');
-    cy.get('select#instance_name').should('exist');
+    assertSelectFieldWithLabel('instance_name');
     // Checking for Messsage textfield
-    cy.get('label[for="message"]').should('exist');
-    cy.get('input#message').should('exist');
+    assertInputFieldWithLabel('message');
     // Checking for Request textfield
-    cy.get('label[for="request"]').should('exist');
-    cy.get('input#request').should('exist');
+    assertInputFieldWithLabel('request');
 
     // Checking for Object
     cy.get('h3[name="object_attributes"]').should('exist');
     // Checking for Type Combobox
-    cy.get('label[for="target_class"]').should('exist');
-    cy.get('input[role="combobox"]#target_class').should('exist');
+    assertComboboxWithLabel('target_class');
     // Checking for Object Combobox
-    cy.get('label[for="target_id"]').should('exist');
-    cy.get('input[role="combobox"]#target_id').should('exist');
+    assertComboboxWithLabel('target_id');
 
     // Checking for Attribute/Value pairs
     cy.contains('h3', 'Attribute/Value Pairs').should('exist');
@@ -356,31 +394,25 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
 
     /* ===== Selecting "Once" option from "Run" dropdown does not show the "Every" dropdown ===== */
 
-    cy.get('select#timer_typ').select(timerTypeOnce);
+    selectAndAssertDropdownValue('timer_typ', timerTypeOnce);
     // Checking whether the Every dropdown is hidden
     cy.get('input#timer_value').should('not.exist');
 
     /* ===== Selecting any other option other than "Once" from "Run" dropdown shows the "Every" dropdown ===== */
-
-    cy.get('select#timer_typ').select(timerTypeHourly);
-    // Checking whether the "Every" dropdown exist
-    verifyTimerDropdownExists();
-
-    cy.get('select#timer_typ').select(timerTypeDaily);
-    // Checking whether the "Every" dropdown exist
-    verifyTimerDropdownExists();
-
-    cy.get('select#timer_typ').select(timerTypeWeekly);
-    // Checking whether the "Every" dropdown exist
-    verifyTimerDropdownExists();
-
-    cy.get('select#timer_typ').select(timerTypeMonthly);
-    // Checking whether the "Every" dropdown exist
-    verifyTimerDropdownExists();
+    // Selecting "Hourly" to verify timer dropdown
+    selectTimerTypeAndAssertTimerDropdown(timerTypeHourly);
+    // Selecting "Daily" to verify timer dropdown
+    selectTimerTypeAndAssertTimerDropdown(timerTypeDaily);
+    // Selecting "Weekly" to verify timer dropdown
+    selectTimerTypeAndAssertTimerDropdown(timerTypeWeekly);
+    // Selecting "Monthly" to verify timer dropdown
+    selectTimerTypeAndAssertTimerDropdown(timerTypeMonthly);
   });
 
   it('Checking whether Cancel button works on the Add form', () => {
-    selectConfigMenu();
+    // Open add schedule form
+    selectConfigMenu(addScheduleConfigOption);
+    // Cancel the form
     cy.contains(
       '#main-content .bx--btn-set button[type="button"]',
       cancelButton
@@ -398,12 +430,13 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     /* ===== Editing a schedule ===== */
     // Selecting the schedule and intercepting the API call to get schedule details
     interceptGetScheduleDetailsApi();
+    // Open edit schedule form
     selectConfigMenu(editScheduleConfigOption);
     // Editing name and description
     cy.get('input#name').clear().type(editedScheduleName);
     cy.get('input#description').clear().type(editedDescription);
     // Confirms Save button is enabled after making edits
-    cy.contains('#main-content .bx--btn-set button[type="submit"]', saveButton)
+    cy.getFormFooterButtonByType(saveButton, 'submit')
       .should('be.enabled')
       .click();
     cy.expect_flash(flashTypeSuccess, flashMessageScheduleSaved);
@@ -415,25 +448,15 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     /* ===== Adding a schedule ===== */
     addSchedule();
 
-    /* ===== Checking whether Cancel button works ===== */
-    // Selecting the schedule and intercepting the API call to get schedule details
-    interceptGetScheduleDetailsApi();
-    selectConfigMenu(editScheduleConfigOption);
-    cy.contains(
-      '#main-content .bx--btn-set button[type="button"]',
-      cancelButton
-    )
-      .should('be.enabled')
-      .click();
-    cy.expect_flash(flashTypeSuccess, flashMessageOperationCanceled);
-
     /* ===== Checking whether Reset button works ===== */
     // Selecting the schedule and intercepting the API call to get schedule details
     interceptGetScheduleDetailsApi();
+    // Open edit schedule form
     selectConfigMenu(editScheduleConfigOption);
     // Editing description and start date
     cy.get('input#description').clear().type(editedDescription);
     cy.get('input#start_date').clear().type(editedStartDate);
+    // Resetting
     cy.contains('#main-content .bx--btn-set button[type="button"]', resetButton)
       .should('be.enabled')
       .click();
@@ -442,8 +465,14 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.get('input#description').should('have.value', initialDescription);
     cy.get('input#start_date').should('have.value', initialStartDate);
 
-    // Selecting Schedules menu item to bypass a bug, can be removed once #9505 is merged
-    cy.accordionItem(schedulesAccordionItem);
+    /* ===== Checking whether Cancel button works ===== */
+    cy.contains(
+      '#main-content .bx--btn-set button[type="button"]',
+      cancelButton
+    )
+      .should('be.enabled')
+      .click();
+    cy.expect_flash(flashTypeSuccess, flashMessageOperationCanceled);
   });
 
   it('Checking whether creating a duplicate record is restricted', () => {
@@ -475,15 +504,16 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
   });
 
   afterEach(() => {
-    cy?.url()?.then((url) => {
-      // Ensures navigation to Settings -> Application-Settings in the UI
-      if (url?.includes('/ops/explorer')) {
+    cy.url()
+      ?.then((url) => {
+        // Ensures navigation to Settings -> Application-Settings in the UI
+        if (!url?.includes(componentRouteUrl)) {
+          // Navigate to Settings -> Application-Settings before looking out for Schedules created during test
+          cy.menu(settingsOption, appSettingsMenuOption);
+        }
+      })
+      .then(() => {
         invokeCleanupDeletion();
-      } else {
-        // Navigate to Settings -> Application-Settings before looking out for Schedules created during test
-        cy.menu(settingsMenuOption, appSettingsMenuOption);
-        invokeCleanupDeletion();
-      }
-    });
+      });
   });
 });
