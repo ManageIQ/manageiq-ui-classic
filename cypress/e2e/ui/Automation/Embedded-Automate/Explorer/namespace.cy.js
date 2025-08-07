@@ -13,13 +13,6 @@ const textConstants = {
   toolbarEditNamespace: 'Edit this Namespace',
   toolbarRemoveNamespace: 'Remove this Namespace',
 
-  // Common selectors
-  inputFieldSelector: (inputId) =>
-    `#main-content #datastore-form-wrapper input#${inputId}`,
-  buttonSelector: (type) => `#main-content .bx--btn-set button[type="${type}"]`,
-  inputFieldLabelSelector: (forValue) =>
-    `#main-content #datastore-form-wrapper label[for="${forValue}"]`,
-
   // Element ids
   nameInputFieldId: 'name',
   descriptionInputFieldId: 'description',
@@ -27,7 +20,6 @@ const textConstants = {
 
   // Button types
   submitButtonType: 'submit',
-  normalButtonType: 'button',
 
   // Field values
   domainName: 'Test_Domain',
@@ -68,9 +60,6 @@ const {
   automationMenuOption,
   embeddedAutomationMenuOption,
   explorerMenuOption,
-  inputFieldSelector,
-  buttonSelector,
-  inputFieldLabelSelector,
   addButton,
   cancelButton,
   resetButton,
@@ -104,16 +93,15 @@ const {
   descriptionInputFieldId,
   namespacePathInputFieldId,
   submitButtonType,
-  normalButtonType,
 } = textConstants;
 
 function addNamespace(nameFieldValue = namespaceName) {
   // Navigating to the Add Namespace form
   cy.toolbar(toolbarConfiguration, toolbarAddNewNamespace);
   // Creating a new namespace
-  cy.get(inputFieldSelector(nameInputFieldId)).type(nameFieldValue);
-  cy.get(inputFieldSelector(descriptionInputFieldId)).type(description);
-  cy.contains(buttonSelector(submitButtonType), addButton).click();
+  cy.getFormInputFieldById(nameInputFieldId).type(nameFieldValue);
+  cy.getFormInputFieldById(descriptionInputFieldId).type(description);
+  cy.getFormFooterButtonByType(addButton, submitButtonType).click();
   cy.wait('@addNamespaceApi');
 }
 
@@ -141,41 +129,39 @@ function validateNamespaceFormFields(isEditForm = false) {
     namespaceFormSubHeader
   );
   // Assert name-space path field label is visible
-  cy.get(inputFieldLabelSelector(namespacePathInputFieldId)).should(
-    'be.visible'
-  );
+  cy.getFormLabelByInputId(namespacePathInputFieldId).should('be.visible');
   // Assert name-space path field is visible and disabled
-  cy.get(inputFieldSelector(namespacePathInputFieldId))
+  cy.getFormInputFieldById(namespacePathInputFieldId)
     .should('be.visible')
     .and('be.disabled')
     .invoke('val')
     .should('include', domainName);
   // Assert name field label is visible
-  cy.get(inputFieldLabelSelector(nameInputFieldId)).should('be.visible');
+  cy.getFormLabelByInputId(nameInputFieldId).should('be.visible');
   // Assert name field is visible and enabled
-  cy.get(inputFieldSelector(nameInputFieldId))
+  cy.getFormInputFieldById(nameInputFieldId)
     .should('be.visible')
     .and('be.enabled');
   // Assert description field label is visible
-  cy.get(inputFieldLabelSelector(descriptionInputFieldId)).should('be.visible');
+  cy.getFormLabelByInputId(descriptionInputFieldId).should('be.visible');
   // Assert description field is visible and enabled
-  cy.get(inputFieldSelector(descriptionInputFieldId))
+  cy.getFormInputFieldById(descriptionInputFieldId)
     .should('be.visible')
     .and('be.enabled');
   // Assert cancel button is visible and enabled
-  cy.contains(buttonSelector(normalButtonType), cancelButton)
+  cy.getFormFooterButtonByType(cancelButton)
     .should('be.visible')
     .and('be.enabled');
   // Assert add/save button is visible and disabled
-  cy.contains(
-    buttonSelector(submitButtonType),
-    isEditForm ? saveButton : addButton
+  cy.getFormFooterButtonByType(
+    isEditForm ? saveButton : addButton,
+    submitButtonType
   )
     .should('be.visible')
     .and('be.disabled');
   if (isEditForm) {
     // Assert reset button is visible and disabled
-    cy.contains(buttonSelector(normalButtonType), resetButton)
+    cy.getFormFooterButtonByType(resetButton)
       .should('be.visible')
       .and('be.disabled');
   }
@@ -229,12 +215,12 @@ describe('Automate operations on Namespaces: Automation -> Embedded Automate -> 
     /* TODO: DATA_SETUP - Refactor to use API for domain data setup */
     // Creating a domain to test namespace operations
     cy.toolbar(toolbarConfiguration, toolbarAddNewDomain);
-    cy.get(inputFieldSelector(nameInputFieldId)).type(domainName);
-    cy.get(inputFieldSelector(descriptionInputFieldId)).type(description);
+    cy.getFormInputFieldById(nameInputFieldId).type(domainName);
+    cy.getFormInputFieldById(descriptionInputFieldId).type(description);
     cy.intercept('POST', '/miq_ae_class/create_namespace/new?button=add').as(
       'addNamespaceApi'
     );
-    cy.contains(buttonSelector(submitButtonType), addButton).click();
+    cy.getFormFooterButtonByType(addButton, submitButtonType).click();
     cy.wait('@addNamespaceApi').then((interception) => {
       extractDomainIdAndTokenFromResponse(interception);
     });
@@ -251,7 +237,7 @@ describe('Automate operations on Namespaces: Automation -> Embedded Automate -> 
     validateNamespaceFormFields();
 
     // Cancelling the form
-    cy.contains(buttonSelector(normalButtonType), cancelButton).click();
+    cy.getFormFooterButtonByType(cancelButton).click();
   });
 
   it('Validate Cancel button', () => {
@@ -259,9 +245,7 @@ describe('Automate operations on Namespaces: Automation -> Embedded Automate -> 
     cy.toolbar(toolbarConfiguration, toolbarAddNewNamespace);
 
     // Cancelling the form
-    cy.contains(buttonSelector(normalButtonType), cancelButton)
-      .should('be.enabled')
-      .click();
+    cy.getFormFooterButtonByType(cancelButton).should('be.enabled').click();
     cy.expect_flash(flashTypeWarning, flashMessageCancelled);
   });
 
@@ -271,7 +255,7 @@ describe('Automate operations on Namespaces: Automation -> Embedded Automate -> 
     cy.expect_flash(flashTypeError, flashMessageInvalidNamespace);
 
     // Cancelling the form
-    cy.contains(buttonSelector(normalButtonType), cancelButton).click();
+    cy.getFormFooterButtonByType(cancelButton).click();
   });
 
   it('Validate Edit Namespace form fields', () => {
@@ -282,7 +266,7 @@ describe('Automate operations on Namespaces: Automation -> Embedded Automate -> 
     validateNamespaceFormFields(true);
 
     // Cancelling the form
-    cy.contains(buttonSelector(normalButtonType), cancelButton).click();
+    cy.getFormFooterButtonByType(cancelButton).click();
   });
 
   it('Checking whether add, edit & delete namespace works', () => {
@@ -295,13 +279,13 @@ describe('Automate operations on Namespaces: Automation -> Embedded Automate -> 
     // Editing the namespace
     cy.toolbar(toolbarConfiguration, toolbarEditNamespace);
     // Checking if the Save button is disabled initially
-    cy.contains(buttonSelector(submitButtonType), saveButton).should(
+    cy.getFormFooterButtonByType(saveButton, submitButtonType).should(
       'be.disabled'
     );
-    cy.get(inputFieldSelector(descriptionInputFieldId))
+    cy.getFormInputFieldById(descriptionInputFieldId)
       .clear()
       .type(editedDescription);
-    cy.contains(buttonSelector(submitButtonType), saveButton)
+    cy.getFormFooterButtonByType(saveButton, submitButtonType)
       .should('be.enabled')
       .click();
     cy.expect_flash(flashTypeSuccess, flashMessageSaveSuccess);
@@ -324,7 +308,7 @@ describe('Automate operations on Namespaces: Automation -> Embedded Automate -> 
     cy.expect_flash(flashTypeError, flashMessageNameAlreadyExists);
 
     // Cancelling the form
-    cy.contains(buttonSelector(normalButtonType), cancelButton).click();
+    cy.getFormFooterButtonByType(cancelButton).click();
   });
 
   it('Checking whether Cancel & Reset buttons work fine in the Edit form', () => {
@@ -333,33 +317,29 @@ describe('Automate operations on Namespaces: Automation -> Embedded Automate -> 
 
     /* Validating Reset button */
     // Checking if the Reset button is disabled initially
-    cy.contains(buttonSelector(normalButtonType), resetButton).should(
-      'be.disabled'
-    );
+    cy.getFormFooterButtonByType(resetButton).should('be.disabled');
     // Editing name and description fields
-    cy.get(inputFieldSelector(nameInputFieldId))
+    cy.getFormInputFieldById(nameInputFieldId)
       .clear()
       .type(editedNamespaceName);
-    cy.get(inputFieldSelector(descriptionInputFieldId))
+    cy.getFormInputFieldById(descriptionInputFieldId)
       .clear()
       .type(editedDescription);
     // Resetting
-    cy.contains(buttonSelector(normalButtonType), resetButton)
-      .should('be.enabled')
-      .click();
+    cy.getFormFooterButtonByType(resetButton).should('be.enabled').click();
     cy.expect_flash(flashTypeWarning, flashMessageResetNamespace);
     // Confirming the edited fields contain the old values after resetting
-    cy.get(inputFieldSelector(nameInputFieldId)).should(
+    cy.getFormInputFieldById(nameInputFieldId).should(
       'have.value',
       namespaceName
     );
-    cy.get(inputFieldSelector(descriptionInputFieldId)).should(
+    cy.getFormInputFieldById(descriptionInputFieldId).should(
       'have.value',
       description
     );
 
     /* Validating Cancel button */
-    cy.contains(buttonSelector(normalButtonType), cancelButton).click();
+    cy.getFormFooterButtonByType(cancelButton).click();
     cy.expect_flash(flashTypeWarning, flashMessageCancelled);
   });
 
