@@ -12,21 +12,27 @@ const textConstants = {
   zoneAccordItem: /^Zone:/,
   serverAccordItem: /^Server:/,
 
+  // Field values
+  formHeader: 'Editing Log Depot settings',
+  formSubheaderSnippet: 'Editing Log Depot Settings',
+
+  // Config options
+  editToolbarButton: 'Edit',
+
   // Buttons
   saveButton: 'Save',
   cancelButton: 'Cancel',
   resetButton: 'Reset',
 
+  // Common element IDs
+  protocolSelectFieldId: 'log_protocol',
+
   // Dropdown values
   dropdownBlankValue: 'BLANK_VALUE',
   sambaDropdownValue: 'FileDepotSmb',
 
-  // Common selectors
-  buttonSelector: (type) => `#main-content .bx--btn-set button[type="${type}"]`,
-
   // Button types
   submitButtonType: 'submit',
-  normalButtonType: 'button',
 
   // Component route url
   componentRouteUrl: '/ops/explorer',
@@ -42,6 +48,7 @@ const textConstants = {
 const {
   diagnosticsAccordionItem,
   dropdownBlankValue,
+  editToolbarButton,
   sambaDropdownValue,
   saveButton,
   cancelButton,
@@ -56,9 +63,10 @@ const {
   flashTypeSuccess,
   flashMessageSettingsSaved,
   flashMessageOperationCanceled,
-  buttonSelector,
   submitButtonType,
-  normalButtonType,
+  protocolSelectFieldId,
+  formHeader,
+  formSubheaderSnippet,
 } = textConstants;
 
 function interceptAndAwaitApi({
@@ -99,12 +107,7 @@ function invokeAndAwaitEditEventForServer({ currentApiIntercepts }) {
   interceptAndAwaitApi({
     alias: 'editEventForServer',
     urlPattern: /\/ops\/x_button\/[^/]+\?pressed=.*log_depot_edit/, // matches both /ops/x_button/1?pressed=log_depot_edit & /ops/x_button/2?pressed=zone_log_depot_edit endpoints
-    triggerFn: () =>
-      cy
-        .get(
-          '.miq-toolbar-actions .miq-toolbar-group button[id$="log_depot_edit"]' // matches both buttons log_depot_edit & zone_log_depot_edit
-        )
-        .click(),
+    triggerFn: () => cy.toolbar(editToolbarButton),
     currentApiIntercepts,
   });
 }
@@ -126,18 +129,16 @@ function resetProtocolDropdown({
   invokeAndAwaitEditEventForServer({ currentApiIntercepts });
 
   // Resetting Protocol dropdown value
-  cy.get('#log-depot-settings .bx--select select#log_protocol').then(
-    ($select) => {
-      const currentValue = $select.val();
-      // If the value is not default one(BLANK_VALUE), then setting it to blank
-      if (currentValue !== dropdownBlankValue) {
-        cy.wrap($select).select(dropdownBlankValue);
-        cy.contains(buttonSelector(submitButtonType), saveButton).click();
-        // Validating confirmation flash message
-        cy.expect_flash(flashTypeSuccess, flashMessageSettingsSaved);
-      }
+  cy.getFormSelectFieldById(protocolSelectFieldId).then(($select) => {
+    const currentValue = $select.val();
+    // If the value is not default one(BLANK_VALUE), then setting it to blank
+    if (currentValue !== dropdownBlankValue) {
+      cy.wrap($select).select(dropdownBlankValue);
+      cy.getFormFooterButtonByType(saveButton, submitButtonType).click();
+      // Validating confirmation flash message
+      cy.expect_flash(flashTypeSuccess, flashMessageSettingsSaved);
     }
-  );
+  });
 }
 
 function goToCollectLogsNavbarAndOpenEditForm(registeredApiIntercepts) {
@@ -151,47 +152,55 @@ function goToCollectLogsNavbarAndOpenEditForm(registeredApiIntercepts) {
   });
 }
 
+function validateFormElements() {
+  // Assert form header is visible
+  cy.expect_explorer_title(formHeader).should('be.visible');
+  // Assert form sub-header is visible
+  cy.contains('#main-content .bx--form h3', formSubheaderSnippet).should(
+    'be.visible'
+  );
+  // Assert protocol field label is visible
+  cy.getFormLabelByInputId(protocolSelectFieldId).should('be.visible');
+  // Assert protocol field is visible and enabled
+  cy.getFormSelectFieldById(protocolSelectFieldId).should('be.visible');
+  // Assert cancel button is visible and enabled
+  cy.getFormFooterButtonByType(cancelButton)
+    .should('be.visible')
+    .and('be.enabled');
+  // Assert save button is visible and disabled
+  cy.getFormFooterButtonByType(saveButton, submitButtonType)
+    .should('be.visible')
+    .and('be.disabled');
+  // Assert reset button is visible and disabled
+  cy.getFormFooterButtonByType(resetButton)
+    .should('be.visible')
+    .and('be.disabled');
+}
+
 function cancelButtonValidation() {
   // Click cancel button in the form
-  cy.contains(buttonSelector(normalButtonType), cancelButton)
-    .should('be.enabled')
-    .click();
+  cy.getFormFooterButtonByType(cancelButton).click();
   // Validating confirmation flash message
   cy.expect_flash(flashTypeSuccess, flashMessageOperationCanceled);
 }
 
 function resetButtonValidation() {
-  // Confirm Reset button is disabled initially
-  cy.contains(buttonSelector(normalButtonType), resetButton).should(
-    'be.disabled'
-  );
-
   // Selecting Samba option from dropdown
-  cy.get('#log-depot-settings .bx--select select#log_protocol').select(
-    sambaDropdownValue
-  );
+  cy.getFormSelectFieldById(protocolSelectFieldId).select(sambaDropdownValue);
   // Confirm Reset button is enabled once dropdown value is changed and then click on Reset
-  cy.contains(buttonSelector(normalButtonType), resetButton)
-    .should('be.enabled')
-    .click();
+  cy.getFormFooterButtonByType(resetButton).should('be.enabled').click();
   // Confirm dropdown has the old value
-  cy.get('#log-depot-settings .bx--select select#log_protocol').should(
+  cy.getFormSelectFieldById(protocolSelectFieldId).should(
     'have.value',
     dropdownBlankValue
   );
 }
 
 function saveButtonValidation() {
-  // Confirm Save button is disabled initially
-  cy.contains(buttonSelector(submitButtonType), saveButton).should(
-    'be.disabled'
-  );
   // Selecting Samba option from dropdown
-  cy.get('#log-depot-settings .bx--select select#log_protocol').select(
-    sambaDropdownValue
-  );
+  cy.getFormSelectFieldById(protocolSelectFieldId).select(sambaDropdownValue);
   // Confirm Save button is enabled once dropdown value is changed and then click on Save
-  cy.contains(buttonSelector(submitButtonType), saveButton)
+  cy.getFormFooterButtonByType(saveButton, submitButtonType)
     .should('be.enabled')
     .click();
   // Validating confirmation flash message
@@ -229,6 +238,10 @@ describe('Automate Collect logs Edit form operations', () => {
       goToCollectLogsNavbarAndOpenEditForm(registeredApiIntercepts);
     });
 
+    it('Validate form elements', () => {
+      validateFormElements();
+    });
+
     it('Validate Cancel button', () => {
       cancelButtonValidation();
     });
@@ -242,20 +255,19 @@ describe('Automate Collect logs Edit form operations', () => {
     });
 
     after(() => {
-      cy?.url()?.then((url) => {
-        // Ensures navigation to Settings -> Application-Settings in the UI
-        if (url?.includes(componentRouteUrl)) {
+      cy.url()
+        ?.then((url) => {
+          // Ensures navigation to Settings -> Application-Settings in the UI
+          if (!url?.includes(componentRouteUrl)) {
+            // Navigate to Settings -> Application-Settings before cleanup
+            cy.menu(settingsMenuOption, appSettingsMenuOption);
+          }
+        })
+        .then(() => {
           resetProtocolDropdown({
             currentApiIntercepts: registeredApiIntercepts,
           });
-        } else {
-          // Navigate to Settings -> Application-Settings before selecting Diagnostics
-          cy.menu(settingsMenuOption, appSettingsMenuOption);
-          resetProtocolDropdown({
-            currentApiIntercepts: registeredApiIntercepts,
-          });
-        }
-      });
+        });
     });
   });
 
@@ -274,6 +286,10 @@ describe('Automate Collect logs Edit form operations', () => {
       goToCollectLogsNavbarAndOpenEditForm(registeredApiIntercepts);
     });
 
+    it('Validate form elements', () => {
+      validateFormElements();
+    });
+
     it('Validate Cancel button', () => {
       cancelButtonValidation();
     });
@@ -287,22 +303,20 @@ describe('Automate Collect logs Edit form operations', () => {
     });
 
     after(() => {
-      cy?.url()?.then((url) => {
-        // Ensures navigation to Settings -> Application-Settings in the UI
-        if (url?.includes(componentRouteUrl)) {
+      cy.url()
+        ?.then((url) => {
+          // Ensures navigation to Settings -> Application-Settings in the UI
+          if (!url?.includes(componentRouteUrl)) {
+            // Navigate to Settings -> Application-Settings before cleanup
+            cy.menu(settingsMenuOption, appSettingsMenuOption);
+          }
+        })
+        .then(() => {
           resetProtocolDropdown({
             currentApiIntercepts: registeredApiIntercepts,
             selectServerListItem: false,
           });
-        } else {
-          // Navigate to Settings -> Application-Settings before selecting Diagnostics
-          cy.menu(settingsMenuOption, appSettingsMenuOption);
-          resetProtocolDropdown({
-            currentApiIntercepts: registeredApiIntercepts,
-            selectServerListItem: false,
-          });
-        }
-      });
+        });
     });
   });
 });
