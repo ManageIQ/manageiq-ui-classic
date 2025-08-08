@@ -12,6 +12,10 @@ const textConstants = {
   zoneAccordItem: /^Zone:/,
   serverAccordItem: /^Server:/,
 
+  // Field values
+  formHeader: 'Editing Log Depot settings',
+  formSubheaderSnippet: 'Editing Log Depot Settings',
+
   // Config options
   editToolbarButton: 'Edit',
 
@@ -61,6 +65,8 @@ const {
   flashMessageOperationCanceled,
   submitButtonType,
   protocolSelectFieldId,
+  formHeader,
+  formSubheaderSnippet,
 } = textConstants;
 
 function interceptAndAwaitApi({
@@ -146,17 +152,41 @@ function goToCollectLogsNavbarAndOpenEditForm(registeredApiIntercepts) {
   });
 }
 
+function validateFormElements() {
+  // Assert form header is visible
+  cy.expect_explorer_title(formHeader).should('be.visible');
+  // Assert form sub-header is visible
+  cy.contains('#main-content .bx--form h3', formSubheaderSnippet).should(
+    'be.visible'
+  );
+  // Assert protocol field label is visible
+  cy.getFormLabelByInputId(protocolSelectFieldId).should('be.visible');
+  // Assert protocol field is visible and enabled
+  cy.getFormSelectFieldById(protocolSelectFieldId)
+    .should('be.visible')
+    .and('be.enabled');
+  // Assert cancel button is visible and enabled
+  cy.getFormFooterButtonByType(cancelButton)
+    .should('be.visible')
+    .and('be.enabled');
+  // Assert save button is visible and disabled
+  cy.getFormFooterButtonByType(saveButton, submitButtonType)
+    .should('be.visible')
+    .and('be.disabled');
+  // Assert reset button is visible and disabled
+  cy.getFormFooterButtonByType(resetButton)
+    .should('be.visible')
+    .and('be.disabled');
+}
+
 function cancelButtonValidation() {
   // Click cancel button in the form
-  cy.getFormFooterButtonByType(cancelButton).should('be.enabled').click();
+  cy.getFormFooterButtonByType(cancelButton).click();
   // Validating confirmation flash message
   cy.expect_flash(flashTypeSuccess, flashMessageOperationCanceled);
 }
 
 function resetButtonValidation() {
-  // Confirm Reset button is disabled initially
-  cy.getFormFooterButtonByType(resetButton).should('be.disabled');
-
   // Selecting Samba option from dropdown
   cy.getFormSelectFieldById(protocolSelectFieldId).select(sambaDropdownValue);
   // Confirm Reset button is enabled once dropdown value is changed and then click on Reset
@@ -169,10 +199,6 @@ function resetButtonValidation() {
 }
 
 function saveButtonValidation() {
-  // Confirm Save button is disabled initially
-  cy.getFormFooterButtonByType(saveButton, submitButtonType).should(
-    'be.disabled'
-  );
   // Selecting Samba option from dropdown
   cy.getFormSelectFieldById(protocolSelectFieldId).select(sambaDropdownValue);
   // Confirm Save button is enabled once dropdown value is changed and then click on Save
@@ -212,6 +238,10 @@ describe('Automate Collect logs Edit form operations', () => {
       ]);
       // Select collect logs navbar and open edit form
       goToCollectLogsNavbarAndOpenEditForm(registeredApiIntercepts);
+    });
+
+    it('Validate form elements', () => {
+      validateFormElements();
     });
 
     it('Validate Cancel button', () => {
@@ -256,6 +286,10 @@ describe('Automate Collect logs Edit form operations', () => {
       });
       // Select collect logs navbar and open edit form
       goToCollectLogsNavbarAndOpenEditForm(registeredApiIntercepts);
+    });
+
+    it('Validate form elements', () => {
+      validateFormElements();
     });
 
     it('Validate Cancel button', () => {
