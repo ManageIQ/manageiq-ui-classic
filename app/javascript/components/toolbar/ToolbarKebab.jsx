@@ -16,7 +16,7 @@ const KebabListItem = (item, props) => {
   }
 
   const ButtonIcon = () => (
-    <i className={item.icon || ''} style={{ color: item.color || '' }} />
+    null
   );
 
   if (item.type === 'buttonSelect') {

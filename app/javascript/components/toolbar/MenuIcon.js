@@ -1,10 +1,11 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { carbonizeIcon } from '../../menu/icon';
 
 export const MenuIcon = (props) => (
   <div>
-    { props.icon && <i className={props.icon} style={{ color: props.color }} /> }
+    { props.icon && carbonizeIcon(props.icon, { color: props.color }) }
     {' '}
     <span>{ props.text }</span>
   </div>

@@ -37,6 +37,7 @@ const toolbarGroupHasContent = (group) =>
       && isVisibleButtonOrSelect(item)).length !== 0;
 
 export const ButtonCase = forwardRef(({ item, index, onClick }, ref) => {
+  console.log(item);
   if (isButton(item) || isButtonTwoState(item)) {
     return <ToolbarButton key={index} {...item} onClick={onClick} />;
   } if (isButtonSelect(item) && (item.items.length > 0)) {
