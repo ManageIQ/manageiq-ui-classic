@@ -19,10 +19,3 @@
         ManageIQ.afterOnload = {action: () => miqPrepRightCellForm("#{x_active_tree}")}
     - else
       = render :partial => "layouts/x_gtl"
-
--# To include MyCodeMirror JS and CSS files
-= render :partial => "/layouts/my_code_mirror",
-         :locals  => {:text_area_id => "miq_none",
-                      :mode         => "htmlmixed",
-                      :height       => '350px',
-                      :width        => '600px'}
