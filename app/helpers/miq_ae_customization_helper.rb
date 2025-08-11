@@ -44,7 +44,7 @@ module MiqAeCustomizationHelper
     ]
     miq_structured_list({
                           :title => _('Content'),
-                          :mode  => "method_built_in_data",
+                          :mode  => "method_inline_data",
                           :rows  => rows
                         })
   end
