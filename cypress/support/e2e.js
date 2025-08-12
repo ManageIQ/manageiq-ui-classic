@@ -40,6 +40,7 @@
 // ***********************************************************
 
 // Commands
+import './commands/api_commands.js';
 import './commands/custom_logging_commands.js';
 import './commands/element_selectors.js';
 import './commands/explorer.js';
@@ -76,4 +77,7 @@ beforeEach(() => {
   // Global hook run once before each test
   // cy.throttle_response(500, 56);
   // cy.stub_notifications();
+  
+  // Reset the intercepted aliases tracking object
+  Cypress.env('interceptedAliases', {});
 })
