@@ -150,8 +150,8 @@
     "identity-obj-proxy": "^3.0.0",
     "imports-loader": "~0.8.0",
     "jasmine-jquery": "~2.1.1",
-    "jest": "~24.9.0",
-    "jest-cli": "~24.9.0",
+    "jest": "~26.6.3",
+    "jest-cli": "~25.5.4",
     "js-yaml": "~3.13.1",
     "ng-annotate-loader": "~0.7.0",
     "node-fetch": "~2.6.1",
@@ -198,7 +198,6 @@
     "nwsapi": "^2.2.1",
     "path-to-regexp": "~8.0.0",
     "patternfly": "~3.59.5",
-    "terser": "~4.8.1",
-    "form-data": "~4.0.4"
+    "terser": "~4.8.1"
   }
 }
