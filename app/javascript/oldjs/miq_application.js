@@ -1,4 +1,4 @@
-/* global add_flash getChartColumnDataValues getChartFormatedValue miqBrowserDetect miqExpressionPrefill miqFlashLater miqFlashSaved miqGridCheckAll miqGridGetCheckedRows miqMenu miqTreeObject miqValueStylePrefill recalculateChartYAxisLabels */
+/* global add_flash getChartColumnDataValues getChartFormatedValue miqBrowserDetect miqExpressionPrefill miqFlashLater miqFlashSaved miqMenu miqTreeObject miqValueStylePrefill recalculateChartYAxisLabels */
 
 // MIQ specific JS functions
 
@@ -351,40 +351,6 @@ window.miqValidateButtons = function(h_or_s, prefix) {
   }
 };
 
-// update all checkboxes on a form when the masterToggle checkbox is changed
-// parms: button_div=<id of div with buttons to update>
-window.miqUpdateAllCheckboxes = function(button_div) {
-  if (!miqDomElementExists('masterToggle')) {
-    return;
-  }
-
-  const state = $('#masterToggle').prop('checked');
-
-  if (ManageIQ.grids.gtl_list_grid) {
-    miqGridCheckAll(state);
-    const crows = miqGridGetCheckedRows();
-
-    ManageIQ.gridChecks = crows;
-    miqSetButtons(crows.length, button_div);
-  } else if ($('input.listcheckbox').length) {
-    // No list_grid on the screen
-    const cbs = $('input.listcheckbox')
-      .prop('checked', state)
-      .trigger('change');
-
-    miqUpdateButtons(cbs[0], button_div);
-  } else if ($("input[id^='storage_cb']").length) {
-    // to handle check/uncheck all for C&U collection
-    $("input[id^='storage_cb']")
-      .prop('checked', state)
-      .trigger('change');
-    miqJqueryRequest(miqPassFields(
-      '/configuration/form_field_changed',
-      { storage_cb_all: state }
-    ));
-  }
-};
-
 // Update buttons based on number of checkboxes that are checked
 // parms: obj=<checkbox element>, button_div=<id of div with buttons to update>
 window.miqUpdateButtons = function(obj, button_div) {
@@ -439,22 +405,22 @@ window.DoNav = function(theUrl) {
 };
 
 // Routines to get the size of the window
-window.miqResetSizeTimer = function() {
-  const height = window.innerHeight;
-  const offset = 427;
-  let h = height - offset;
+// window.miqResetSizeTimer = function() {
+//   const height = window.innerHeight;
+//   const offset = 427;
+//   let h = height - offset;
 
-  if (h < 200) {
-    h = 200;
-  }
+//   if (h < 200) {
+//     h = 200;
+//   }
 
-  // Adjust certain elements, if present
-  if (miqDomElementExists('list_grid')) {
-    $('#list_grid').css({ height: `${h}px` });
-  } else if (miqDomElementExists('logview')) {
-    $('#logview').css({ height: `${h}px` });
-  }
-};
+//   // Adjust certain elements, if present
+//   if (miqDomElementExists('list_grid')) {
+//     $('#list_grid').css({ height: `${h}px` });
+//   } else if (miqDomElementExists('logview')) {
+//     $('#logview').css({ height: `${h}px` });
+//   }
+// };
 
 // Pass fields to server given a URL and fields in name/value pairs
 window.miqPassFields = function(url, args) {
@@ -1460,7 +1426,7 @@ $(() => {
 
   $(window).on('resize', miqInitAccordions);
   $(window).on('resize', miqInitMainContent);
-  $(window).on('resize', _.debounce(miqResetSizeTimer, 1000));
+  // $(window).on('resize', _.debounce(miqResetSizeTimer, 1000));
 
   check_for_ellipsis();
 });
