@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
 
+import { FIELD_IDS } from '../../../../../app/javascript/components/schedule-form/schedule-form-constants';
+
 const textConstants = {
   // Component route url
   componentRouteUrl: '/ops/explorer',
@@ -39,24 +41,6 @@ const textConstants = {
   saveButton: 'Save',
   cancelButton: 'Cancel',
   resetButton: 'Reset',
-
-  // Common element ids
-  nameInputFieldId: 'name',
-  descriptionInputFieldId: 'description',
-  activeCheckboxFieldId: 'enabled',
-  actionTypeSelectFieldId: 'action_typ',
-  filterTypeSelectFieldId: 'filter_typ',
-  timerTypeSelectFieldId: 'timer_typ',
-  timerValueSelectFieldId: 'timer_value',
-  timeZoneInputFieldId: 'time_zone',
-  startDateInputFieldId: 'start_date',
-  startTimeInputFieldId: 'start_time',
-  zoneSelectFieldId: 'zone_id',
-  systemSelectFieldId: 'instance_name',
-  messageInputFieldId: 'message',
-  requestInputFieldId: 'request',
-  typeInputFieldId: 'target_class',
-  objectInputFieldId: 'target_id',
 
   // Config options
   configToolbarButton: 'Configuration',
@@ -134,24 +118,6 @@ const {
   // Input types
   checkboxInputType,
 
-  // Common element ids
-  nameInputFieldId,
-  descriptionInputFieldId,
-  activeCheckboxFieldId,
-  actionTypeSelectFieldId,
-  filterTypeSelectFieldId,
-  timerTypeSelectFieldId,
-  timerValueSelectFieldId,
-  timeZoneInputFieldId,
-  startDateInputFieldId,
-  startTimeInputFieldId,
-  zoneSelectFieldId,
-  systemSelectFieldId,
-  messageInputFieldId,
-  requestInputFieldId,
-  typeInputFieldId,
-  objectInputFieldId,
-
   // Config options
   configToolbarButton,
   addScheduleConfigOption,
@@ -197,30 +163,26 @@ function addSchedule() {
     'be.disabled'
   );
   // Adding data
-  cy.getFormInputFieldById(nameInputFieldId).type(initialScheduleName);
-  cy.getFormInputFieldById(descriptionInputFieldId).type(initialDescription);
-  cy.getFormInputFieldById(activeCheckboxFieldId, 'checkbox').check({
+  cy.getFormInputFieldById(FIELD_IDS.NAME).type(initialScheduleName);
+  cy.getFormInputFieldById(FIELD_IDS.DESCRIPTION).type(initialDescription);
+  cy.getFormInputFieldById(FIELD_IDS.ACTIVE, 'checkbox').check({
     force: true,
   });
   // Select Action type option: 'VM Analysis'
-  cy.getFormSelectFieldById(actionTypeSelectFieldId).select(
-    actionTypeVmAnalysis
-  );
+  cy.getFormSelectFieldById(FIELD_IDS.ACTION_TYPE).select(actionTypeVmAnalysis);
   // Select Filter type option: 'A Single VM'
-  cy.getFormSelectFieldById(filterTypeSelectFieldId).select(
-    actionTypeVmAnalysis
-  );
+  cy.getFormSelectFieldById(FIELD_IDS.FILTER_TYPE).select(actionTypeVmAnalysis);
   // Select Run option: 'Hours'
-  cy.getFormSelectFieldById(timerTypeSelectFieldId).select(timerTypeHourly);
+  cy.getFormSelectFieldById(FIELD_IDS.TIMER_TYPE).select(timerTypeHourly);
   // Select Every option: '1 Hour'
-  cy.getFormSelectFieldById(timerValueSelectFieldId).select(frequencyTypeHour);
+  cy.getFormSelectFieldById(FIELD_IDS.TIMER_VALUE).select(frequencyTypeHour);
   // Select Time zone option: '(GMT-10:00) Hawaii'
-  cy.getFormInputFieldById(timeZoneInputFieldId).click();
+  cy.getFormInputFieldById(FIELD_IDS.TIME_ZONE).click();
   cy.contains('[role="option"]', timezoneTypeHawaii)
     .should('be.visible')
     .click();
-  cy.getFormInputFieldById(startDateInputFieldId).type(initialStartDate);
-  cy.getFormInputFieldById(startTimeInputFieldId).type(startTime);
+  cy.getFormInputFieldById(FIELD_IDS.START_DATE).type(initialStartDate);
+  cy.getFormInputFieldById(FIELD_IDS.START_TIME).type(startTime);
   // Intercepting the API call for adding a new schedule
   cy.intercept('POST', '/ops/schedule_edit/new?button=save').as(
     'addScheduleApi'
@@ -301,13 +263,13 @@ function assertSelectFieldWithLabel(id) {
 }
 
 function selectActionTypeAndAssertFilterTypeDropdown(value) {
-  selectAndAssertDropdownValue(actionTypeSelectFieldId, value);
-  assertSelectFieldWithLabel(filterTypeSelectFieldId);
+  selectAndAssertDropdownValue(FIELD_IDS.ACTION_TYPE, value);
+  assertSelectFieldWithLabel(FIELD_IDS.FILTER_TYPE);
 }
 
 function selectTimerTypeAndAssertTimerDropdown(value) {
-  selectAndAssertDropdownValue(timerTypeSelectFieldId, value);
-  assertSelectFieldWithLabel(timerValueSelectFieldId);
+  selectAndAssertDropdownValue(FIELD_IDS.TIMER_TYPE, value);
+  assertSelectFieldWithLabel(FIELD_IDS.TIMER_VALUE);
 }
 
 function assertComboboxWithLabel(id) {
@@ -367,48 +329,48 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     /* ===== Selecting "Automation Tasks" option from "Action" dropdown shows Zone, Object details & Object fields ===== */
 
     selectAndAssertDropdownValue(
-      actionTypeSelectFieldId,
+      FIELD_IDS.ACTION_TYPE,
       actionTypeAutomationTasks
     );
 
     // Checking for Zone dropdown
-    assertSelectFieldWithLabel(zoneSelectFieldId);
+    assertSelectFieldWithLabel(FIELD_IDS.ZONE);
 
     // Checking for Object Details
     cy.get('h3[name="object_details"]').should('exist');
     // Checking for System/Process dropdown
-    assertSelectFieldWithLabel(systemSelectFieldId);
+    assertSelectFieldWithLabel(FIELD_IDS.SYSTEM);
     // Checking for Messsage textfield
-    assertInputFieldWithLabel(messageInputFieldId);
+    assertInputFieldWithLabel(FIELD_IDS.MESSAGE);
     // Checking for Request textfield
-    assertInputFieldWithLabel(requestInputFieldId);
+    assertInputFieldWithLabel(FIELD_IDS.REQUEST);
 
     // Checking for Object
     cy.get('h3[name="object_attributes"]').should('exist');
     // Checking for Type Combobox
-    assertComboboxWithLabel(typeInputFieldId);
+    assertComboboxWithLabel(FIELD_IDS.OBJECT_TYPE);
     // Checking for Object Combobox
-    assertComboboxWithLabel(objectInputFieldId);
+    assertComboboxWithLabel(FIELD_IDS.OBJECT_ITEM);
 
     // Checking for Attribute/Value pairs
     cy.contains('h3', 'Attribute/Value Pairs').should('exist');
     // Checking for 5 attribute-value pairs text fields
-    cy.getFormInputFieldById('attribute_1').should('exist');
-    cy.getFormInputFieldById('value_1').should('exist');
-    cy.getFormInputFieldById('attribute_2').should('exist');
-    cy.getFormInputFieldById('value_2').should('exist');
-    cy.getFormInputFieldById('attribute_3').should('exist');
-    cy.getFormInputFieldById('value_3').should('exist');
-    cy.getFormInputFieldById('attribute_4').should('exist');
-    cy.getFormInputFieldById('value_4').should('exist');
-    cy.getFormInputFieldById('attribute_5').should('exist');
-    cy.getFormInputFieldById('value_5').should('exist');
+    cy.getFormInputFieldById(`${FIELD_IDS.ATTRIBUTE_PREFIX}1`).should('exist');
+    cy.getFormInputFieldById(`${FIELD_IDS.VALUE_PREFIX}1`).should('exist');
+    cy.getFormInputFieldById(`${FIELD_IDS.ATTRIBUTE_PREFIX}2`).should('exist');
+    cy.getFormInputFieldById(`${FIELD_IDS.VALUE_PREFIX}2`).should('exist');
+    cy.getFormInputFieldById(`${FIELD_IDS.ATTRIBUTE_PREFIX}3`).should('exist');
+    cy.getFormInputFieldById(`${FIELD_IDS.VALUE_PREFIX}3`).should('exist');
+    cy.getFormInputFieldById(`${FIELD_IDS.ATTRIBUTE_PREFIX}4`).should('exist');
+    cy.getFormInputFieldById(`${FIELD_IDS.VALUE_PREFIX}4`).should('exist');
+    cy.getFormInputFieldById(`${FIELD_IDS.ATTRIBUTE_PREFIX}5`).should('exist');
+    cy.getFormInputFieldById(`${FIELD_IDS.VALUE_PREFIX}5`).should('exist');
 
     /* ===== Selecting "Once" option from "Run" dropdown does not show the "Every" dropdown ===== */
 
-    selectAndAssertDropdownValue(timerTypeSelectFieldId, timerTypeOnce);
+    selectAndAssertDropdownValue(FIELD_IDS.TIMER_TYPE, timerTypeOnce);
     // Checking whether the Every dropdown is hidden
-    cy.getFormInputFieldById(timerValueSelectFieldId).should('not.exist');
+    cy.getFormInputFieldById(FIELD_IDS.TIMER_VALUE).should('not.exist');
 
     /* ===== Selecting any other option other than "Once" from "Run" dropdown shows the "Every" dropdown ===== */
     // Selecting "Hourly" to verify timer dropdown
@@ -440,8 +402,8 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     // Open edit schedule form
     selectConfigMenu(editScheduleConfigOption);
     // Editing name and description
-    cy.getFormInputFieldById(nameInputFieldId).clear().type(editedScheduleName);
-    cy.getFormInputFieldById(descriptionInputFieldId)
+    cy.getFormInputFieldById(FIELD_IDS.NAME).clear().type(editedScheduleName);
+    cy.getFormInputFieldById(FIELD_IDS.DESCRIPTION)
       .clear()
       .type(editedDescription);
     // Confirms Save button is enabled after making edits
@@ -463,21 +425,21 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     // Open edit schedule form
     selectConfigMenu(editScheduleConfigOption);
     // Editing description and start date
-    cy.getFormInputFieldById(descriptionInputFieldId)
+    cy.getFormInputFieldById(FIELD_IDS.DESCRIPTION)
       .clear()
       .type(editedDescription);
-    cy.getFormInputFieldById(startDateInputFieldId)
+    cy.getFormInputFieldById(FIELD_IDS.START_DATE)
       .clear()
       .type(editedStartDate);
     // Resetting
     cy.getFormFooterButtonByType(resetButton).should('be.enabled').click();
     cy.expect_flash(flashTypeWarning, flashMessageResetSchedule);
     // Confirming the edited fields contain the old values after resetting
-    cy.getFormInputFieldById(descriptionInputFieldId).should(
+    cy.getFormInputFieldById(FIELD_IDS.DESCRIPTION).should(
       'have.value',
       initialDescription
     );
-    cy.getFormInputFieldById(startDateInputFieldId).should(
+    cy.getFormInputFieldById(FIELD_IDS.START_DATE).should(
       'have.value',
       initialStartDate
     );

@@ -1,0 +1,23 @@
+// Field IDs/names used in both the application and tests
+export const FIELD_IDS = {
+  NAME: 'name',
+  DESCRIPTION: 'description',
+  ACTIVE: 'enabled',
+  ACTION_TYPE: 'action_typ',
+  FILTER_TYPE: 'filter_typ',
+  FILTER_VALUE: 'filter_value',
+  TIMER_TYPE: 'timer_typ',
+  TIMER_VALUE: 'timer_value',
+  TIME_ZONE: 'time_zone',
+  START_DATE: 'start_date',
+  START_TIME: 'start_time',
+  ZONE: 'zone_id',
+  SYSTEM: 'instance_name',
+  MESSAGE: 'message',
+  REQUEST: 'request',
+  OBJECT_TYPE: 'target_class',
+  OBJECT_ITEM: 'target_id',
+  ATTRIBUTE_PREFIX: 'attribute_',
+  STARTING_OBJECT: 'starting_object',
+  VALUE_PREFIX: 'value_',
+};

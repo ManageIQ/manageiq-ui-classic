@@ -2,12 +2,13 @@ import { componentTypes, validatorTypes } from '@@ddf';
 import {
   actionChange, runOptionChange, runOptions, subActionChange, objectTypeChange, restructureOptions,
 } from './helper';
+import { FIELD_IDS } from './schedule-form-constants';
 
 export const attributeValueLimit = 5;
 
 export const nameField = () => ({
   component: componentTypes.TEXT_FIELD,
-  name: 'name',
+  name: FIELD_IDS.NAME,
   label: __('Name'),
   maxLength: 50,
   isRequired: true,
@@ -17,7 +18,7 @@ export const nameField = () => ({
 
 export const descriptionField = () => ({
   component: componentTypes.TEXT_FIELD,
-  name: 'description',
+  name: FIELD_IDS.DESCRIPTION,
   label: __('Description'),
   isRequired: true,
   maxLength: 100,
@@ -26,14 +27,14 @@ export const descriptionField = () => ({
 
 export const activeField = () => ({
   component: componentTypes.CHECKBOX,
-  name: 'enabled',
+  name: FIELD_IDS.ACTIVE,
   label: __('Active'),
 });
 
 export const actionField = (actionOptions, filterOptions, setData, data) => ({
   component: componentTypes.SELECT,
   id: 'action',
-  name: 'action_typ',
+  name: FIELD_IDS.ACTION_TYPE,
   label: __('Action'),
   initialValue: 'vm',
   onChange: (value) => actionChange(value, filterOptions, setData, data),
@@ -44,7 +45,7 @@ export const actionField = (actionOptions, filterOptions, setData, data) => ({
 export const filterField = (setData, data) => ({
   component: componentTypes.SELECT,
   id: 'filter_type',
-  name: 'filter_typ',
+  name: FIELD_IDS.FILTER_TYPE,
   label: __('Filter'),
   onChange: (value) => subActionChange(value, setData, data),
   hideField: data.displayFields.filterType,
@@ -55,7 +56,7 @@ export const filterField = (setData, data) => ({
 export const targetField = (data) => ({
   component: componentTypes.SELECT,
   id: 'filter_value',
-  name: 'filter_value',
+  name: FIELD_IDS.FILTER_VALUE,
   label: __('Filter Item'),
   hideField: data.displayFields.target,
   options: data.options.target,
@@ -66,7 +67,7 @@ export const targetField = (data) => ({
 export const zoneField = (data) => ({
   component: componentTypes.SELECT,
   id: 'zone',
-  name: 'zone_id',
+  name: FIELD_IDS.ZONE,
   label: __('Zone'),
   placeholder: __('<Choose>'),
   includeEmpty: true,
@@ -87,7 +88,7 @@ export const plainField = (name, text, data) => ({
 export const systemField = (data) => ({
   component: componentTypes.SELECT,
   id: 'system',
-  name: 'instance_name',
+  name: FIELD_IDS.SYSTEM,
   label: __('System/Process'),
   hideField: data.displayFields.automationFields,
   options: data.options.request,
@@ -99,7 +100,7 @@ export const systemField = (data) => ({
 
 export const objectMessageField = (data) => ({
   component: componentTypes.TEXT_FIELD,
-  id: 'message',
+  id: FIELD_IDS.MESSAGE,
   name: 'object_message',
   label: __('Message'),
   hideField: data.displayFields.automationFields,
@@ -109,7 +110,7 @@ export const objectMessageField = (data) => ({
 
 export const objectRequestField = (data) => ({
   component: componentTypes.TEXT_FIELD,
-  id: 'request',
+  id: FIELD_IDS.REQUEST,
   name: 'object_request',
   label: __('Request'),
   hideField: data.displayFields.automationFields,
@@ -120,7 +121,7 @@ export const objectRequestField = (data) => ({
 export const objectTypeField = (setData, data) => ({
   component: componentTypes.SELECT,
   id: 'object_type',
-  name: 'target_class',
+  name: FIELD_IDS.OBJECT_TYPE,
   onChange: (value) => objectTypeChange(value, setData, data),
   hideField: data.displayFields.automationFields,
   placeholder: __('<Choose>'),
@@ -137,7 +138,7 @@ export const objectTypeField = (setData, data) => ({
 export const objectItemField = (data) => ({
   component: componentTypes.SELECT,
   id: 'object_item',
-  name: 'target_id',
+  name: FIELD_IDS.OBJECT_ITEM,
   hideField: data.displayFields.objectItem,
   options: data.options.objectItem,
   placeholder: __('<Choose>'),
@@ -165,14 +166,14 @@ const attributeValueField = (count) => ({
     },
     {
       component: componentTypes.TEXT_FIELD,
-      id: `attribute_${count}`,
+      id: `${FIELD_IDS.ATTRIBUTE_PREFIX}${count}`,
       name: `attribute_${count}`,
       label: __(' '),
       className: 'attribute-value-row-attribute',
     },
     {
       component: componentTypes.TEXT_FIELD,
-      id: `value_${count}`,
+      id: `${FIELD_IDS.VALUE_PREFIX}${count}`,
       name: `value_${count}`,
       label: __(' '),
       className: 'attribute-value-row-value',
@@ -194,7 +195,7 @@ export const attributeValueFields = (data, limit) => ({
   fields: [[...Array(limit)].map((_item, i) => attributeValueField(i + 1)),
     {
       component: componentTypes.TEXT_FIELD,
-      id: `starting_object`,
+      id: FIELD_IDS.STARTING_OBJECT,
       name: `starting_object`,
       label: __(' '),
       value: 'SYSTEM/PROCESS',
@@ -206,7 +207,7 @@ export const attributeValueFields = (data, limit) => ({
 export const runField = (setData, data) => ({
   component: componentTypes.SELECT,
   id: 'run',
-  name: 'timer_typ',
+  name: FIELD_IDS.TIMER_TYPE,
   label: __('Run'),
   initialValue: 'Once',
   isRequired: true,
@@ -217,7 +218,7 @@ export const runField = (setData, data) => ({
 export const timerValueField = (data) => ({
   component: componentTypes.SELECT,
   id: 'timer_value',
-  name: 'timer_value',
+  name: FIELD_IDS.TIMER_VALUE,
   label: __('Every'),
   hideField: data.displayFields.everyTime,
   options: data.options.everyTime,
@@ -229,7 +230,7 @@ export const timerValueField = (data) => ({
 export const timezoneField = (data) => ({
   component: componentTypes.SELECT,
   id: 'time_zone',
-  name: 'time_zone',
+  name: FIELD_IDS.TIME_ZONE,
   isRequired: true,
   placeholder: __('<Choose>'),
   includeEmpty: true,
@@ -243,7 +244,7 @@ export const timezoneField = (data) => ({
 
 export const startDateField = () => ({
   component: componentTypes.DATE_PICKER,
-  name: 'start_date',
+  name: FIELD_IDS.START_DATE,
   label: __('Starting Date'),
   datePickerType: 'single',
   isRequired: true,
@@ -252,7 +253,7 @@ export const startDateField = () => ({
 
 export const startTimeField = () => ({
   component: componentTypes.TIME_PICKER,
-  id: 'start_time',
+  id: FIELD_IDS.START_TIME,
   name: 'start_hour',
   label: __('Starting Time'),
   isRequired: true,
