@@ -66,7 +66,7 @@ window.ImportSetup = {
     window.addEventListener('message', function(event) {
       var messageData = event.data.message;
 
-      if (messageData.level === 'error') {
+      if (messageData && messageData.level === 'error') {
         showErrorMessage(messageData.message);
         $('#git-url-import').prop('disabled', null);
       } else if (event.data.git_branches || event.data.git_tags) {
