@@ -65,6 +65,16 @@ describe('Breadcrumbs onClick functions', () => {
   });
 
   describe('onClickToExplorer', () => {
+    const realLocation = window.location;
+
+    beforeAll(() => {
+      delete window.location;
+      window.location = { ...realLocation, assign: jest.fn() };
+    });
+    afterAll(() => {
+      window.location = realLocation;
+    });
+
     it('calls prevent default', () => {
       window.miqCheckForChanges = () => false;
 
@@ -75,7 +85,6 @@ describe('Breadcrumbs onClick functions', () => {
 
     it('calls location assign', () => {
       window.miqCheckForChanges = () => true;
-      window.location.assign = jest.fn();
 
       onClickToExplorer(event, 'pxe', 'explorer');
 
