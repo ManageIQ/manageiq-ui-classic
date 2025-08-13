@@ -61,6 +61,9 @@ module ApplicationController::Explorer
     'remove_security_group'    => :s2,
     'rename'                   => :s2,
 
+    'add_volume'       => :s2,
+    'remove_volume'    => :s2,
+
     # specials
     'perf'         => :show,
     'download_pdf' => :show,
