@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import { flashClassMap } from '../../../../support/assertions/assertion_constants';
 
 const textConstants = {
   // Menu options
@@ -31,9 +32,6 @@ const textConstants = {
   // Component route url
   componentRouteUrl: '/ops/explorer',
 
-  // Flash message types
-  flashTypeSuccess: 'success',
-
   // Flash message text snippets
   flashMessageSettingsSaved: 'saved',
   flashMessageOperationCanceled: 'cancel',
@@ -53,7 +51,6 @@ const {
   zoneAccordItem,
   serverAccordItem,
   componentRouteUrl,
-  flashTypeSuccess,
   flashMessageSettingsSaved,
   flashMessageOperationCanceled,
   buttonSelector,
@@ -134,7 +131,7 @@ function resetProtocolDropdown({
         cy.wrap($select).select(dropdownBlankValue);
         cy.contains(buttonSelector(submitButtonType), saveButton).click();
         // Validating confirmation flash message
-        cy.expect_flash(flashTypeSuccess, flashMessageSettingsSaved);
+        cy.expect_flash(flashClassMap.success, flashMessageSettingsSaved);
       }
     }
   );
@@ -157,7 +154,7 @@ function cancelButtonValidation() {
     .should('be.enabled')
     .click();
   // Validating confirmation flash message
-  cy.expect_flash(flashTypeSuccess, flashMessageOperationCanceled);
+  cy.expect_flash(flashClassMap.success, flashMessageOperationCanceled);
 }
 
 function resetButtonValidation() {
@@ -195,7 +192,7 @@ function saveButtonValidation() {
     .should('be.enabled')
     .click();
   // Validating confirmation flash message
-  cy.expect_flash(flashTypeSuccess, flashMessageSettingsSaved);
+  cy.expect_flash(flashClassMap.success, flashMessageSettingsSaved);
 }
 
 describe('Automate Collect logs Edit form operations', () => {

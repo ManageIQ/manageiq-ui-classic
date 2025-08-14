@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import { flashClassMap } from '../../../../support/assertions/assertion_constants';
 
 const textConstants = {
   // Menu options
@@ -16,7 +17,6 @@ const textConstants = {
   // flash message assertions
   flashMessageOperationAdded: 'added',
   flashMessageOperationDeleted: 'delete',
-  flashTypeSuccess: 'success',
 
   // Configuration menu options and browser alert text snippets
   deleteItem: 'Delete this item',
@@ -28,7 +28,6 @@ const {
   deleteItem,
   flashMessageOperationAdded,
   flashMessageOperationDeleted,
-  flashTypeSuccess,
   initialTenantDescription,
   initialTenantName,
   settingsMenuOption,
@@ -53,7 +52,7 @@ describe('Settings > Application Settings > Access Control', () => {
     cy.getFormInputFieldById('name').type(initialTenantName);
     cy.getFormInputFieldById('description').type(initialTenantDescription);
     cy.getFormFooterButtonByType('Add', 'submit').click();
-    cy.expect_flash(flashTypeSuccess, flashMessageOperationAdded);
+    cy.expect_flash(flashClassMap.success, flashMessageOperationAdded);
     cy.selectAccordionItem([
        /^ManageIQ Region/,
        'Tenants',
@@ -65,6 +64,6 @@ describe('Settings > Application Settings > Access Control', () => {
       confirmTriggerFn: () => cy.toolbar(toolBarConfigMenu, deleteItem),
       containsText: deleteItem,
     });
-    cy.expect_flash(flashTypeSuccess, flashMessageOperationDeleted);
+    cy.expect_flash(flashClassMap.success, flashMessageOperationDeleted);
   });
 });
