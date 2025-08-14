@@ -104,6 +104,16 @@ module ApplicationHelper
       return false
     end
 
+    # ops_rbac role_allows's dynamic tenant features are supported in rbac but not
+    # with direct lookup in validate_features so we skip it.
+    validate_features(features) unless !!options.delete(:skip_feature_validation)
+
+    Rbac.role_allows?(:user => User.current_user, **options) rescue false
+  end
+  module_function :role_allows?
+  public :role_allows?
+
+  def validate_features(features)
     # Detect if queried features are missing from the database and possibly invalid
     if !Rails.env.production? && features.detect { |feature| !MiqProductFeature.feature_exists?(feature) }
       message = "#{__method__} no feature was found with identifier: #{features.inspect}.  Correct the identifier or add it to miq_product_features.yml."
@@ -114,12 +124,8 @@ module ApplicationHelper
         raise("#{message} Note: detected features: #{identifiers.inspect}")
       end
     end
-
-    Rbac.role_allows?(:user => User.current_user, **options) rescue false
   end
-
-  module_function :role_allows?
-  public :role_allows?
+  module_function :validate_features
 
   # NB: This differs from controller_for_model; until they're unified,
   # make sure you have the right one.
