@@ -16,6 +16,7 @@ const textConstants = {
   tenantsAccordionItem: 'Tenants',
 
   // Field values
+  formHeaderFragment: 'Tenant',
   initialParentTenantName: 'My Company',
   initialParentTenantDescription: 'Tenant for My Company',
   editedTenantNameValue: 'Test-Name',
@@ -75,6 +76,7 @@ const {
   tenantsAccordionItem,
 
   // Field values
+  formHeaderFragment,
   initialParentTenantName,
   initialParentTenantDescription,
   editedTenantNameValue,
@@ -170,6 +172,37 @@ function verifyNameAndDescriptionValues(nameValue, descriptionValue) {
     'have.value',
     descriptionValue
   );
+}
+
+function validateFormElements(isEditForm = true) {
+  // Assert form header is visible
+  cy.expect_explorer_title(formHeaderFragment);
+  // Assert name field label is visible
+  cy.getFormLabelByInputId(nameInputFieldId).should('be.visible');
+  // Assert name field is visible and enabled
+  cy.getFormInputFieldById(nameInputFieldId)
+    .should('be.visible')
+    .and('be.enabled');
+  // Assert description field label is visible
+  cy.getFormLabelByInputId(descriptionInputFieldId).should('be.visible');
+  // Assert description field is visible and enabled
+  cy.getFormInputFieldById(descriptionInputFieldId)
+    .should('be.visible')
+    .and('be.enabled');
+  // Assert cancel button is visible and enabled
+  cy.getFormFooterButtonByType(cancelButton)
+    .should('be.visible')
+    .and('be.enabled');
+  if (isEditForm) {
+    // Assert reset button is visible and disabled
+    cy.getFormFooterButtonByType(resetButton)
+      .should('be.visible')
+      .and('be.disabled');
+  }
+  // Assert add/save button is visible and disabled
+  cy.getFormFooterButtonByType(isEditForm ? saveButton : addButton, 'submit')
+    .should('be.visible')
+    .and('be.disabled');
 }
 
 function createAndSelectChildTenant() {
@@ -342,6 +375,11 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
         cy.toolbar(configToolbarButton, editTenantConfigOption);
       });
 
+      it('Validate Edit tenant form elements', () => {
+        // Validate form fields
+        validateFormElements();
+      });
+
       it('Validate Reset & Cancel buttons on Edit tenant form', () => {
         // Update name & description fields
         updateNameAndDescription(editedTenantNameValue, editedDescriptionValue);
@@ -475,6 +513,15 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
         createAndSelectChildTenant();
         // Open the child tenant edit form
         cy.toolbar(configToolbarButton, editTenantConfigOption);
+      });
+
+      it('Validate Edit child tenant form elements', () => {
+        // Validate form fields
+        validateFormElements();
+        // Cancel the edit form
+        cancelForm();
+        // Removing the child tenant
+        deleteAccordionItem(initialChildTenantName);
       });
 
       it('Validate Reset & Cancel buttons on the Edit child tenent form', () => {
