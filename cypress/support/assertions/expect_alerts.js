@@ -1,11 +1,5 @@
 /* eslint-disable no-undef */
-
-const flashClassMap = {
-  warning: 'warning',
-  error: 'danger',
-  info: 'info',
-  success: 'success',
-};
+import { flashClassMap } from './assertion_constants';
 
 /**
  * Custom Cypress command to validate flash messages.
