@@ -349,7 +349,7 @@ module ApplicationController::CiProcessing
   # Refresh the power states for selected or single VMs
   def refreshvms(privilege = DEFAULT_PRIVILEGE)
     if privilege == DEFAULT_PRIVILEGE
-      ActiveSupport::Deprecation.warn(<<-MSG.strip_heredoc)
+      Vmdb::Deprecation.warn(<<-MSG.strip_heredoc, caller_locations[1..-1])
       Please pass the privilege you want to check for when refreshing
       MSG
       privilege = params[:pressed]

@@ -35,18 +35,19 @@ describe('checkchange initialization', function() {
 
       $scope.$digest();
       var newDate = new Date();
-      form.repo_path.$setViewValue(moment.utc([newDate.getFullYear(), newDate.getMonth(), newDate.getDay()]));
+      form.repo_path.$setViewValue(moment.utc([newDate.getFullYear(), newDate.getMonth(), newDate.getDate()]));
       expect(form.repo_path.$pristine).toBe(false);
       expect(form.$pristine).toBe(false);
     });
 
     it('should set the value and form to a pristine state when a date is unchanged', function() {
       var newDate = new Date();
+      var mockDate = moment.utc([newDate.getFullYear(), newDate.getMonth(), newDate.getDate()]).toDate();
       $scope.repoModel = {repo_path : undefined};
-      $scope.modelCopy = {repo_path : moment.utc([newDate.getFullYear(), newDate.getMonth(), newDate.getDay()]).toDate()};
+      $scope.modelCopy = {repo_path : mockDate};
 
       $scope.$digest();
-      form.repo_path.$setViewValue(moment.utc([newDate.getFullYear(), newDate.getMonth(), newDate.getDay()]).toDate());
+      form.repo_path.$setViewValue(mockDate);
       expect(form.repo_path.$pristine).toBe(true);
       expect(form.$pristine).toBe(true);
     });

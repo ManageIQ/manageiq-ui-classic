@@ -1,0 +1,24 @@
+{
+    "name": "notifications",
+    "count": 0,
+    "subcount": 0,
+    "pages": 0,
+    "resources": [],
+    "actions": [
+        {
+            "name": "mark_as_seen",
+            "method": "post",
+            "href": "http://localhost:3000/api/notifications"
+        },
+        {
+            "name": "delete",
+            "method": "post",
+            "href": "http://localhost:3000/api/notifications"
+        }
+    ],
+    "links": {
+        "self": "http://localhost:3000/api/notifications?offset=0",
+        "first": "http://localhost:3000/api/notifications?offset=0",
+        "last": "http://localhost:3000/api/notifications?offset=0"
+    }
+}

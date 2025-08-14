@@ -33,6 +33,7 @@ ManageIQ implements the following cypress extensions:
 
 * `cy.accordion(title)` - open an accordion panel. `title`: String for the accordion title for the accordion panel to open.
 * `cy.accordionItem(name)` - click on a record in the accordion panel. `name`: String for the record to click in the accordion panel.
+* `cy.selectAccordionItem(accordionPath)` - navigates the expanded accordion panel(use cy.accordion to expand an accordion panel) and then expand the nodes along the given path and click the final target item. `accordionPath`: A mixed array of strings and/or regex patterns that represent the path to the intended target node. e.g. Simple string path: `cy.selectAccordionItem(['Datastore', 'My-Domain', 'My-Namespace']);`, Path with regular expressions: `cy.selectAccordionItem([/^ManageIQ Region:/, /^Zone:/, /^Server:/]);`, Mixed path with strings and regular expressions: `cy.selectAccordionItem([/^ManageIQ Region:/, 'Zones', /^Zone:/]);`                                             
 
 ##### gtl
 
@@ -54,7 +55,18 @@ ManageIQ implements the following cypress extensions:
 ##### toolbar
 
 * `cy.toolbarItems(toolbarButton)` - returns an array of objects {text: String, disabled: Boolean} for the toolbar dropdown buttons for when a toolbar button is clicked. `toolbarButton` is the string for the text of the toolbar button that you want to click on.
-* `cy.toolbar(toolbarButton, dropdownButton)` - click on the toolbar button specified by the user. Can also then click on a specified dropdown button as well. `toolbarButton` is the string for the text of the toolbar button that you want to click on. `dropdownButton` is the string for the text of the toolbar dropdown button that you want to click on. s
+* `cy.toolbar(toolbarButton, toolbarOption)` - click on the toolbar button specified by the user. Can also then click on a specified dropdown option as well. `toolbarButton` is the string for the text of the toolbar button that you want to click on. `toolbarOption` is the string for the text of the toolbar dropdown option that you want to click on.
+
+##### custom_logging_commands
+
+* `cy.logAndThrowError(messageToLog, messageToThrow)` - Logs a custom error message to Cypress log and then throws an error. `messageToLog` is the message to display in the Cypress command log. `messageToThrow` is the optional error message to throw, defaults to `messageToLog`. e.g. `cy.logAndThrowError('This is the logged message', 'This is the thrown error message');`, `cy.logAndThrowError('This is the message that gets logged and thrown');`
+
+##### element_selectors
+
+* `cy.getFormFooterButtonByType(name, type)` - retrieves form footer button by its name and type. `name` is the name or text content of the button. `type` is the HTML button type (e.g., 'button', 'submit', 'reset'). Defaults to 'button'. e.g. `cy.getFormFooterButtonByType('Save');`, `cy.getFormFooterButtonByType('Reset', 'reset');`
+* `cy.getFormInputFieldById(inputId, type)` - retrieves a form input field by its ID and type. `inputId` is the ID of the input field. `type` is the HTML input type (e.g., 'text', 'email', 'password'). Defaults to 'text'. e.g. `cy.getFormInputFieldById('name');`, `cy.getFormInputFieldById('name', 'text');`
+* `getFormLabelByInputId(inputId)` - retrieves a form label associated with a specific input field by its ID. `inputId` is the ID of the input field. e.g. `cy.getFormLabelByInputId('name');`
+* `cy.getFormSelectFieldById(selectId)` - retrieves a form select field by its ID. `selectId` is the ID of the select field. e.g. `cy.getFormSelectFieldById('select-scan-limit');`
 
 #### Assertions
 
@@ -64,3 +76,5 @@ ManageIQ implements the following cypress extensions:
 * `cy.expect_show_list_title(title)` - check the title on a show\_list screen matches the provided title. `title`: String for the title.
 * `cy.expect_search_box()` - check if searchbox is present on the screen.
 * `cy.expect_text(element, text)` - check if the text in the element found by doing cy.get on the element String matches the provided text. `element`: String for the Cypress selector to get a specific element on the screen. `text`: String for the text that should be found within the selected element.
+* `cy.expect_flash(flashType, containsText)` - command to validate flash messages. `flashType` is the type of flash (success, warning, error, info). `containsText` is the optional text that the flash-message should contain. e.g. `expect_flash('warning', 'cancelled');`
+* `cy.expect_browser_confirm_with_text({ confirmTriggerFn, containsText, proceed })` - command to validate browser confirm alerts. `confirmTriggerFn` is the function that triggers the confirm dialog. This function **must return a Cypress.Chainable**, like `cy.get(...).click()` so that Cypress can properly wait and chain .then() afterward. `containsText` is the optional text that the confirm alert should contain. `proceed` is the flag to determine whether to proceed with the confirm (true = OK, false = Cancel). e.g. `cy.expect_browser_confirm_with_text({containsText: 'sure to proceed?', proceed: true, confirmTriggerFn: () => { return cy.get('[data-testid="delete"]').click()}});`, `cy.expect_browser_confirm_with_text({ confirmTriggerFn: () => cy.contains('deleted').click()});`

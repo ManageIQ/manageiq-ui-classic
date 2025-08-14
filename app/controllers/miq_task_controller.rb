@@ -128,7 +128,10 @@ class MiqTaskController < ApplicationController
   # Delete selected tasks
   def delete_tasks
     assert_privileges("miq_task_delete")
-    delete_tasks_from_table(find_checked_items, "Delete selected tasks")
+
+    new_checked_items = find_checked_items.select { |item| params["select-row-#{item}"] == "on" }
+
+    delete_tasks_from_table(new_checked_items, "Delete selected tasks")
     jobs
     @refresh_partial = "layouts/tasks"
   end

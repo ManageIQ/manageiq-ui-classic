@@ -40,24 +40,31 @@
 // ***********************************************************
 
 // Commands
-import './commands/explorer.js'
-import './commands/gtl.js'
-import './commands/login.js'
-import './commands/menu.js'
-import './commands/toolbar.js'
+import './commands/api_commands.js';
+import './commands/custom_logging_commands.js';
+import './commands/element_selectors.js';
+import './commands/explorer.js';
+import './commands/gtl.js';
+import './commands/login.js';
+import './commands/menu.js';
+import './commands/stub_notifications.js';
+import './commands/throttle_response.js';
+import './commands/toolbar.js';
 
 // Assertions
+import './assertions/expect_alerts.js';
 import './assertions/expect_rates_table.js';
-import './assertions/expect_search_box.js'
-import './assertions/expect_title.js'
-import './assertions/expect_text.js'
+import './assertions/expect_search_box.js';
+import './assertions/expect_text.js';
+import './assertions/expect_title.js';
 
 // This is needed to prevent Cypress tests from failing due to uncaught errors:
 // Undefined errors are occuring on every initial page load of Manage IQ
 // Network and aborted errors are exlusive to firefox when cypress navigates to a new page before the api calls for the last page are fullly loaded
 Cypress.on('uncaught:exception', (err, runnable) => {
     console.log(err.message);
-    if (err.message.includes(`Cannot read properties of undefined (reading 'received')`) || // Error handler for Chrome 
+    if (err.message.includes(`Cannot read properties of undefined (reading 'received')`) || // Error handler for Chrome
+        err.message.includes(`Cannot read properties of undefined (reading '0')`) || // Error handler for Chrome
         err.message.includes('subscription is undefined') || // Error handler for Firefox
         err.message.includes('NetworkError when attempting to fetch resource.') || // Error handler for Firefox
         err.message.includes('The operation was aborted.')) // Error handler for Firefox
@@ -65,3 +72,12 @@ Cypress.on('uncaught:exception', (err, runnable) => {
         return false;
     }
 });
+
+beforeEach(() => {
+  // Global hook run once before each test
+  // cy.throttle_response(500, 56);
+  // cy.stub_notifications();
+  
+  // Reset the intercepted aliases tracking object
+  Cypress.env('interceptedAliases', {});
+})

@@ -1,8 +1,0 @@
--# Network or Storage Adpater Tree
-%div
-- if x_active_tree == :sa_tree
-  = render(:partial => 'shared/tree', :locals => {:tree => @sa_tree, :name => @sa_tree.name.to_s})
-- else
-  = render(:partial => 'shared/tree', :locals => {:tree => @network_tree, :name => @network_tree.name.to_s})
-
-
