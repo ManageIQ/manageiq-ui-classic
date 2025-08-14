@@ -1,44 +1,26 @@
 /* eslint-disable no-undef */
 import { flashClassMap } from '../../../../support/assertions/assertion_constants';
 
-const textConstants = {
-  // Menu options
-  settingsMenuOption: 'Settings',
-  appSettingsMenuOption: 'Application Settings',
-  toolBarConfigMenu: 'Configuration',
-
-  // added item information
-  initialTenantName: 'Test-name',
-  initialTenantDescription: 'test description',
-
-  // List items
-  accessControlAccordion: 'Access Control',
-
-  // flash message assertions
-  flashMessageOperationAdded: 'added',
-  flashMessageOperationDeleted: 'delete',
-
-  // Configuration menu options and browser alert text snippets
-  deleteItem: 'Delete this item',
-}
-
-const {
-  accessControlAccordion,
-  appSettingsMenuOption,
-  deleteItem,
-  flashMessageOperationAdded,
-  flashMessageOperationDeleted,
-  initialTenantDescription,
-  initialTenantName,
-  settingsMenuOption,
-  toolBarConfigMenu,
-} = textConstants;
-
 describe('Settings > Application Settings > Access Control', () => {
+  // Navigation
+  const PRIMARY_MENU_OPTION = 'Settings';
+  const SECONDARY_MENU_OPTION = 'Application Settings';
+  const ACCORDION = 'Access Control';
+  const TOOLBAR_MENU = 'Configuration';
+
+  // Created item information
+  const INITIAL_TENANT_NAME = 'Test-name';
+  const INITIAL_TENANT_DESCRIPTION = 'test description';
+
+  // CRUD actions
+  const FLASH_MESSAGE_OPERATION_ADDED = 'added';
+  const FLASH_MESSAGE_OPERATION_DELETED = 'delete';
+  const DELETE_ITEM = 'Delete this item';
+
   beforeEach(() => {
     cy.login();
-    cy.menu(settingsMenuOption, appSettingsMenuOption);
-    cy.accordion(accessControlAccordion);
+    cy.menu(PRIMARY_MENU_OPTION, SECONDARY_MENU_OPTION);
+    cy.accordion(ACCORDION);
   });
 
   it('should be able to create and delete a tenant', () => {
@@ -48,22 +30,22 @@ describe('Settings > Application Settings > Access Control', () => {
        'My Company',
     ]);
 
-    cy.toolbar(toolBarConfigMenu, 'Add child Tenant to this Tenant');
-    cy.getFormInputFieldById('name').type(initialTenantName);
-    cy.getFormInputFieldById('description').type(initialTenantDescription);
+    cy.toolbar(TOOLBAR_MENU, 'Add child Tenant to this Tenant');
+    cy.getFormInputFieldById('name').type(INITIAL_TENANT_NAME);
+    cy.getFormInputFieldById('description').type(INITIAL_TENANT_DESCRIPTION);
     cy.getFormFooterButtonByType('Add', 'submit').click();
-    cy.expect_flash(flashClassMap.success, flashMessageOperationAdded);
+    cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_OPERATION_ADDED);
     cy.selectAccordionItem([
        /^ManageIQ Region/,
        'Tenants',
        'My Company',
-       initialTenantName
+       INITIAL_TENANT_NAME
     ]);
 
     cy.expect_browser_confirm_with_text({
-      confirmTriggerFn: () => cy.toolbar(toolBarConfigMenu, deleteItem),
-      containsText: deleteItem,
+      confirmTriggerFn: () => cy.toolbar(TOOLBAR_MENU, DELETE_ITEM),
+      containsText: DELETE_ITEM,
     });
-    cy.expect_flash(flashClassMap.success, flashMessageOperationDeleted);
+    cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_OPERATION_DELETED);
   });
 });
