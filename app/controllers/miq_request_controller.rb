@@ -218,7 +218,8 @@ class MiqRequestController < ApplicationController
     )
 
     if req.kind_of?(ServiceTemplateProvisionRequest)
-      @dialog_replace_data = req.options[:dialog].map { |key, val| {:name => key.split('dialog_').last, :value => val } }.to_json
+      @dialog_replace_data = req.options[:dialog].map { |key, val| {:name => key.split('dialog_').last, :value => parse_val(key, val)} }.to_json
+      # req.options[:dialog]["Array::dialog_param_test1"][1] =="\u001F"
       @new_dialog = true
       template = find_record_with_rbac(ServiceTemplate, req.source_id)
       resource_action = template.resource_actions.find { |r| r.action.downcase == 'provision' && r.dialog_id }
@@ -337,6 +338,38 @@ class MiqRequestController < ApplicationController
   end
 
   private
+
+  def parse_val(key, val)
+    if val.kind_of?(Integer) # Handle integer values
+      if key.include?("Array::") # Handle multi select with integers
+        val = [val]
+      else # Handle single select with integers
+        return val
+      end
+    end
+
+    # TODO: Tag Control Field currently does not handle default values
+    if val.include?("Classification::") # Handle tag control default values
+      if val.include?("\u001F") # Array of tags
+        val = val.split("\u001F")
+        tags = []
+        val.each do |tag|
+          tags.push(Classification.find_by(:id => tag.split('::').second).description)
+        end
+        val = tags
+      else # Single tag
+        val = Classification.find_by(:id => val.split('::').second).description
+      end
+    elsif key.include?("Array::") # Handle drop down with multi select default values
+      if val.kind_of?(String) && val.include?("\u001F") # Check if string is an array of values
+        val = val.split("\u001F") # Split the string into an array
+      else
+        val = [val] # Handle single string value
+      end
+    end
+
+    val # Handles all other conditions such as non-multi-select drop downs, text fields, etc.
+  end
 
   def replace_gtl
     render :update do |page|
