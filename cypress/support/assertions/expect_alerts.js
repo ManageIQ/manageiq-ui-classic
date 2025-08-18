@@ -3,26 +3,39 @@ import { flashClassMap } from './assertion_constants';
 
 /**
  * Custom Cypress command to validate flash messages.
- * @param {string} flashType - Type of flash (success, warning, error, info).
+ * @param {string} flashType - Type of flash. Use values from flashClassMap (e.g., flashClassMap.success, flashClassMap.error).
  * @param {string} [containsText] - Optional text that the flash-message should contain.
  * @returns {Cypress.Chainable} - The flash-message element if found, or an assertion failure.
+ * @example
+ * cy.expect_flash(flashClassMap.success);
+ * cy.expect_flash(flashClassMap.error, 'failed');
  */
 Cypress.Commands.add(
   'expect_flash',
   (flashType = flashClassMap.success, containsText) => {
-    const flashMessageClassName = flashClassMap[flashType] || flashClassMap.success;
-    const flashMessageElement = cy
-      .get(`#main_div #flash_msg_div .alert-${flashMessageClassName}`)
-      .should('be.visible');
+    if (Object.values(flashClassMap).includes(flashType)) {
+      const flashMessageElement = cy
+        .get(`#main_div #flash_msg_div .alert-${flashType}`)
+        .should('be.visible');
 
-    if (containsText) {
-      return flashMessageElement.should(($el) => {
-        const actualText = $el.text().toLowerCase();
-        expect(actualText).to.include(containsText.toLowerCase());
-      });
+      if (containsText) {
+        return flashMessageElement.should((flash) => {
+          const actualText = flash.text().toLowerCase();
+          expect(actualText).to.include(containsText.toLowerCase());
+        });
+      }
+
+      return flashMessageElement;
     }
 
-    return flashMessageElement;
+    // If an invalid flash type is passed, throw an error
+    cy.logAndThrowError(
+      `Invalid flash type: "${flashType}". Valid flash types are: ${Object.values(
+        flashClassMap
+      ).join(
+        ', '
+      )}. It is recommended to use flashClassMap values (e.g., flashClassMap.error, flashClassMap.success) to pass flash types.`
+    );
   }
 );
 
