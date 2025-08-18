@@ -79,28 +79,8 @@ const {
   flashMessageOperationCancelled,
 } = textConstants;
 
-function interceptAndAwaitApi({
-  alias,
-  method = 'POST',
-  urlPattern,
-  triggerFn,
-  currentApiIntercepts,
-}) {
-  // If the alias is already registered, do not register it again
-  // This prevents multiple intercepts for the same API call
-  // which can lead to unexpected behavior in tests.
-  if (!currentApiIntercepts[alias]) {
-    cy.intercept(method, urlPattern).as(alias);
-    currentApiIntercepts[alias] = alias;
-  }
-
-  triggerFn();
-
-  cy.wait(`@${alias}`);
-}
-
-function goToCollectLogsTab({ currentApiIntercepts }) {
-  interceptAndAwaitApi({
+function goToCollectLogsTab() {
+  cy.interceptApi({
     alias: 'getCollectLogsTabInfo',
     urlPattern: '/ops/change_tab?tab_id=diagnostics_collect_logs',
     triggerFn: () =>
@@ -109,24 +89,19 @@ function goToCollectLogsTab({ currentApiIntercepts }) {
           '#tab_all_tabs_div #ops_tabs .nav-tabs li#diagnostics_collect_logs_tab'
         )
         .click(),
-    currentApiIntercepts,
   });
 }
 
 function selectToolbarEditButton() {
-  interceptAndAwaitApi({
+  cy.interceptApi({
     alias: 'editEventForServer',
     // This pattern matches both /ops/x_button/1?pressed=log_depot_edit & /ops/x_button/2?pressed=zone_log_depot_edit endpoints
     urlPattern: /\/ops\/x_button\/[^/]+\?pressed=.*log_depot_edit/,
     triggerFn: () => cy.toolbar(editToolbarButton),
-    currentApiIntercepts,
   });
 }
 
-function resetProtocolDropdown({
-  currentApiIntercepts,
-  selectServerListItem = true,
-}) {
+function resetProtocolDropdown({ selectServerListItem = true } = {}) {
   // Select Diagnostics
   cy.accordion(diagnosticsAccordionItem);
   // Select "Zone:" or "Server:" accordion item
@@ -137,7 +112,7 @@ function resetProtocolDropdown({
   ]);
 
   // Clicking Edit button
-  selectToolbarEditButton({ currentApiIntercepts });
+  selectToolbarEditButton();
 
   // Resetting Protocol dropdown value
   cy.getFormSelectFieldById(protocolSelectFieldId).then((selectField) => {
@@ -152,15 +127,11 @@ function resetProtocolDropdown({
   });
 }
 
-function goToCollectLogsTabAndOpenEditForm(registeredApiIntercepts) {
+function goToCollectLogsTabAndOpenEditForm() {
   // Selecting Collect Logs tab
-  goToCollectLogsTab({
-    currentApiIntercepts: registeredApiIntercepts,
-  });
+  goToCollectLogsTab();
   // Clicking Edit button
-  selectToolbarEditButton({
-    currentApiIntercepts: registeredApiIntercepts,
-  });
+  selectToolbarEditButton();
 }
 
 function validateFormElements() {
@@ -221,21 +192,14 @@ function saveButtonValidation() {
 }
 
 describe('Automate Collect logs Edit form operations', () => {
-  // Map that keeps track of registered API intercepts
-  // This is used to avoid registering the same API intercept multiple times
-  // during the test run, which can lead to unexpected behavior.
-  let registeredApiIntercepts;
-
   beforeEach(() => {
-    registeredApiIntercepts = {};
     cy.login();
     // Navigate to Application settings and expand Diagnostics accordion
     cy.menu(settingsMenuOption, appSettingsMenuOption);
-    interceptAndAwaitApi({
+    cy.interceptApi({
       alias: 'getDiagnosticsInfo',
       urlPattern: `/ops/accordion_select?id=${diagnosticsAccordionItemId}`,
       triggerFn: () => cy.accordion(diagnosticsAccordionItem),
-      currentApiIntercepts: registeredApiIntercepts,
     });
   });
 
@@ -248,7 +212,7 @@ describe('Automate Collect logs Edit form operations', () => {
         serverAccordItem,
       ]);
       // Select collect logs navbar and open edit form
-      goToCollectLogsTabAndOpenEditForm(registeredApiIntercepts);
+      goToCollectLogsTabAndOpenEditForm();
     });
 
     it('Validate form elements', () => {
@@ -276,9 +240,7 @@ describe('Automate Collect logs Edit form operations', () => {
           }
         })
         .then(() => {
-          resetProtocolDropdown({
-            currentApiIntercepts: registeredApiIntercepts,
-          });
+          resetProtocolDropdown();
         });
     });
   });
@@ -286,16 +248,15 @@ describe('Automate Collect logs Edit form operations', () => {
   describe('Settings > Application Settings > Diagnostics > Manage IQ Region > Zone > Collect logs > Edit', () => {
     beforeEach(() => {
       // Select "Zone:" accordion item
-      interceptAndAwaitApi({
+      cy.interceptApi({
         alias: 'treeSelectApi',
         urlPattern:
           /ops\/tree_select\?id=.*&text=.*Zone.*Default.*Zone.*(current).*/,
         triggerFn: () =>
           cy.selectAccordionItem([manageIQRegionAccordItem, zoneAccordItem]),
-        currentApiIntercepts: registeredApiIntercepts,
       });
       // Select collect logs tab and open edit form
-      goToCollectLogsTabAndOpenEditForm(registeredApiIntercepts);
+      goToCollectLogsTabAndOpenEditForm();
     });
 
     it('Validate form elements', () => {
@@ -323,12 +284,8 @@ describe('Automate Collect logs Edit form operations', () => {
           }
         })
         .then(() => {
-          resetProtocolDropdown({
-            currentApiIntercepts: registeredApiIntercepts,
-            selectServerListItem: false,
-          });
+          resetProtocolDropdown({ selectServerListItem: false });
         });
     });
   });
 });
-
