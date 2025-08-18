@@ -1,6 +1,10 @@
 /* eslint-disable no-undef */
+import { flashClassMap } from "../../../../support/assertions/assertion_constants";
 
 const textConstants = {
+  // Component route url
+  componentRouteUrl: '/ops/explorer',
+
   // Menu options
   settingsMenuOption: 'Settings',
   appSettingsMenuOption: 'Application Settings',
@@ -31,42 +35,48 @@ const textConstants = {
   dropdownBlankValue: 'BLANK_VALUE',
   sambaDropdownValue: 'FileDepotSmb',
 
-  // Button types
-  submitButtonType: 'submit',
-
-  // Component route url
-  componentRouteUrl: '/ops/explorer',
-
-  // Flash message types
-  flashTypeSuccess: 'success',
-
   // Flash message text snippets
   flashMessageSettingsSaved: 'saved',
-  flashMessageOperationCanceled: 'cancel',
+  flashMessageOperationCancelled: 'cancel',
 };
 
 const {
-  diagnosticsAccordionItem,
-  dropdownBlankValue,
-  editToolbarButton,
-  sambaDropdownValue,
-  saveButton,
-  cancelButton,
-  resetButton,
+  // Component route url
+  componentRouteUrl,
+
+  // Menu options
   settingsMenuOption,
   appSettingsMenuOption,
+
+  // List items
+  diagnosticsAccordionItem,
   diagnosticsAccordionItemId,
   manageIQRegionAccordItem,
   zoneAccordItem,
   serverAccordItem,
-  componentRouteUrl,
-  flashTypeSuccess,
-  flashMessageSettingsSaved,
-  flashMessageOperationCanceled,
-  submitButtonType,
-  protocolSelectFieldId,
+
+  // Field values
   formHeader,
   formSubheaderSnippet,
+
+  // Config options
+  editToolbarButton,
+
+  // Buttons
+  saveButton,
+  cancelButton,
+  resetButton,
+
+  // Common element IDs
+  protocolSelectFieldId,
+
+  // Dropdown values
+  dropdownBlankValue,
+  sambaDropdownValue,
+
+  // Flash message text snippets
+  flashMessageSettingsSaved,
+  flashMessageOperationCancelled,
 } = textConstants;
 
 function interceptAndAwaitApi({
@@ -89,7 +99,7 @@ function interceptAndAwaitApi({
   cy.wait(`@${alias}`);
 }
 
-function invokeAndAwaitCollectLogsTabInfo({ currentApiIntercepts }) {
+function goToCollectLogsTab({ currentApiIntercepts }) {
   interceptAndAwaitApi({
     alias: 'getCollectLogsTabInfo',
     urlPattern: '/ops/change_tab?tab_id=diagnostics_collect_logs',
@@ -103,10 +113,11 @@ function invokeAndAwaitCollectLogsTabInfo({ currentApiIntercepts }) {
   });
 }
 
-function invokeAndAwaitEditEventForServer({ currentApiIntercepts }) {
+function selectToolbarEditButton() {
   interceptAndAwaitApi({
     alias: 'editEventForServer',
-    urlPattern: /\/ops\/x_button\/[^/]+\?pressed=.*log_depot_edit/, // matches both /ops/x_button/1?pressed=log_depot_edit & /ops/x_button/2?pressed=zone_log_depot_edit endpoints
+    // This pattern matches both /ops/x_button/1?pressed=log_depot_edit & /ops/x_button/2?pressed=zone_log_depot_edit endpoints
+    urlPattern: /\/ops\/x_button\/[^/]+\?pressed=.*log_depot_edit/,
     triggerFn: () => cy.toolbar(editToolbarButton),
     currentApiIntercepts,
   });
@@ -126,28 +137,28 @@ function resetProtocolDropdown({
   ]);
 
   // Clicking Edit button
-  invokeAndAwaitEditEventForServer({ currentApiIntercepts });
+  selectToolbarEditButton({ currentApiIntercepts });
 
   // Resetting Protocol dropdown value
-  cy.getFormSelectFieldById(protocolSelectFieldId).then(($select) => {
-    const currentValue = $select.val();
+  cy.getFormSelectFieldById(protocolSelectFieldId).then((selectField) => {
+    const currentValue = selectField.val();
     // If the value is not default one(BLANK_VALUE), then setting it to blank
     if (currentValue !== dropdownBlankValue) {
-      cy.wrap($select).select(dropdownBlankValue);
-      cy.getFormFooterButtonByType(saveButton, submitButtonType).click();
+      cy.wrap(selectField).select(dropdownBlankValue);
+      cy.getFormFooterButtonByType(saveButton, 'submit').click();
       // Validating confirmation flash message
-      cy.expect_flash(flashTypeSuccess, flashMessageSettingsSaved);
+      cy.expect_flash(flashClassMap.success, flashMessageSettingsSaved);
     }
   });
 }
 
-function goToCollectLogsNavbarAndOpenEditForm(registeredApiIntercepts) {
-  // Selecting Collect Logs nav bar
-  invokeAndAwaitCollectLogsTabInfo({
+function goToCollectLogsTabAndOpenEditForm(registeredApiIntercepts) {
+  // Selecting Collect Logs tab
+  goToCollectLogsTab({
     currentApiIntercepts: registeredApiIntercepts,
   });
   // Clicking Edit button
-  invokeAndAwaitEditEventForServer({
+  selectToolbarEditButton({
     currentApiIntercepts: registeredApiIntercepts,
   });
 }
@@ -170,7 +181,7 @@ function validateFormElements() {
     .should('be.visible')
     .and('be.enabled');
   // Assert save button is visible and disabled
-  cy.getFormFooterButtonByType(saveButton, submitButtonType)
+  cy.getFormFooterButtonByType(saveButton, 'submit')
     .should('be.visible')
     .and('be.disabled');
   // Assert reset button is visible and disabled
@@ -183,7 +194,7 @@ function cancelButtonValidation() {
   // Click cancel button in the form
   cy.getFormFooterButtonByType(cancelButton).click();
   // Validating confirmation flash message
-  cy.expect_flash(flashTypeSuccess, flashMessageOperationCanceled);
+  cy.expect_flash(flashClassMap.success, flashMessageOperationCancelled);
 }
 
 function resetButtonValidation() {
@@ -202,11 +213,11 @@ function saveButtonValidation() {
   // Selecting Samba option from dropdown
   cy.getFormSelectFieldById(protocolSelectFieldId).select(sambaDropdownValue);
   // Confirm Save button is enabled once dropdown value is changed and then click on Save
-  cy.getFormFooterButtonByType(saveButton, submitButtonType)
+  cy.getFormFooterButtonByType(saveButton, 'submit')
     .should('be.enabled')
     .click();
   // Validating confirmation flash message
-  cy.expect_flash(flashTypeSuccess, flashMessageSettingsSaved);
+  cy.expect_flash(flashClassMap.success, flashMessageSettingsSaved);
 }
 
 describe('Automate Collect logs Edit form operations', () => {
@@ -218,7 +229,7 @@ describe('Automate Collect logs Edit form operations', () => {
   beforeEach(() => {
     registeredApiIntercepts = {};
     cy.login();
-    // Navigate to Application settings and Select Diagnostics
+    // Navigate to Application settings and expand Diagnostics accordion
     cy.menu(settingsMenuOption, appSettingsMenuOption);
     interceptAndAwaitApi({
       alias: 'getDiagnosticsInfo',
@@ -237,19 +248,18 @@ describe('Automate Collect logs Edit form operations', () => {
         serverAccordItem,
       ]);
       // Select collect logs navbar and open edit form
-      goToCollectLogsNavbarAndOpenEditForm(registeredApiIntercepts);
+      goToCollectLogsTabAndOpenEditForm(registeredApiIntercepts);
     });
 
     it('Validate form elements', () => {
       validateFormElements();
     });
 
-    it('Validate Cancel button', () => {
-      cancelButtonValidation();
-    });
-
-    it('Validate Reset button', () => {
+    it('Validate Reset & Cancel buttons', () => {
+      // Reset button validation
       resetButtonValidation();
+      // Cancel button validation
+      cancelButtonValidation();
     });
 
     it('Validate Save button', () => {
@@ -284,20 +294,19 @@ describe('Automate Collect logs Edit form operations', () => {
           cy.selectAccordionItem([manageIQRegionAccordItem, zoneAccordItem]),
         currentApiIntercepts: registeredApiIntercepts,
       });
-      // Select collect logs navbar and open edit form
-      goToCollectLogsNavbarAndOpenEditForm(registeredApiIntercepts);
+      // Select collect logs tab and open edit form
+      goToCollectLogsTabAndOpenEditForm(registeredApiIntercepts);
     });
 
     it('Validate form elements', () => {
       validateFormElements();
     });
 
-    it('Validate Cancel button', () => {
-      cancelButtonValidation();
-    });
-
-    it('Validate Reset button', () => {
+    it('Validate Reset & Cancel buttons', () => {
+      // Reset button validation
       resetButtonValidation();
+      // Cancel button validation
+      cancelButtonValidation();
     });
 
     it('Validate Save button', () => {
