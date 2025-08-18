@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import { flashClassMap } from '../../../../support/assertions/assertion_constants';
 
 const textConstants = {
   // List items
@@ -48,12 +49,6 @@ const textConstants = {
   // Menu options
   settingsMenuOption: 'Settings',
   appSettingsMenuOption: 'Application Settings',
-
-  // Flash message types
-  flashTypeSuccess: 'success',
-  flashTypeWarning: 'warning',
-  flashTypeError: 'error',
-  flashTypeInfo: 'info',
 
   // Flash message text snippets
   flashMessageScheduleQueued: 'queued to run',
@@ -107,10 +102,6 @@ const {
   deleteScheduleConfigOption,
   schedulesAccordionItem,
   configToolbarButton,
-  flashTypeSuccess,
-  flashTypeWarning,
-  flashTypeError,
-  flashTypeInfo,
   flashMessageScheduleQueued,
   flashMessageOperationCanceled,
   flashMessageScheduleDisabled,
@@ -171,7 +162,7 @@ function deleteSchedule(scheduleName = initialScheduleName) {
     confirmTriggerFn: () => selectConfigMenu(deleteScheduleConfigOption),
     containsText: browserAlertDeleteConfirmText,
   });
-  cy.expect_flash(flashTypeSuccess, flashMessageScheduleDeleted);
+  cy.expect_flash(flashClassMap.success, flashMessageScheduleDeleted);
 }
 
 function interceptGetScheduleDetailsApi(scheduleName = initialScheduleName) {
@@ -387,13 +378,13 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     )
       .should('be.enabled')
       .click();
-    cy.expect_flash(flashTypeSuccess, flashMessageOperationCanceled);
+    cy.expect_flash(flashClassMap.success, flashMessageOperationCanceled);
   });
 
   it('Checking whether add, edit & delete schedule works', () => {
     /* ===== Adding a schedule ===== */
     addSchedule();
-    cy.expect_flash(flashTypeSuccess, flashMessageScheduleSaved);
+    cy.expect_flash(flashClassMap.success, flashMessageScheduleSaved);
 
     /* ===== Editing a schedule ===== */
     // Selecting the schedule and intercepting the API call to get schedule details
@@ -406,7 +397,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.contains('#main-content .bx--btn-set button[type="submit"]', saveButton)
       .should('be.enabled')
       .click();
-    cy.expect_flash(flashTypeSuccess, flashMessageScheduleSaved);
+    cy.expect_flash(flashClassMap.success, flashMessageScheduleSaved);
 
     /* ===== Delete is already handled from afterEach hook ===== */
   });
@@ -425,7 +416,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     )
       .should('be.enabled')
       .click();
-    cy.expect_flash(flashTypeSuccess, flashMessageOperationCanceled);
+    cy.expect_flash(flashClassMap.success, flashMessageOperationCanceled);
 
     /* ===== Checking whether Reset button works ===== */
     // Selecting the schedule and intercepting the API call to get schedule details
@@ -437,7 +428,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.contains('#main-content .bx--btn-set button[type="button"]', resetButton)
       .should('be.enabled')
       .click();
-    cy.expect_flash(flashTypeWarning, flashMessageResetSchedule);
+    cy.expect_flash(flashClassMap.warning, flashMessageResetSchedule);
     // Confirming the edited fields contain the old values after resetting
     cy.get('input#description').should('have.value', initialDescription);
     cy.get('input#start_date').should('have.value', initialStartDate);
@@ -452,7 +443,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
 
     /* ===== Trying to add the same schedule again ===== */
     addSchedule();
-    cy.expect_flash(flashTypeError, flashMessageFailedToAddSchedule);
+    cy.expect_flash(flashClassMap.error, flashMessageFailedToAddSchedule);
   });
 
   it('Checking whether Disabling, Enabling & Queueing up the schedule works', () => {
@@ -463,15 +454,15 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
 
     /* ===== Disabling the schedule ===== */
     selectConfigMenu(disableScheduleConfigOption);
-    cy.expect_flash(flashTypeInfo, flashMessageScheduleDisabled);
+    cy.expect_flash(flashClassMap.info, flashMessageScheduleDisabled);
 
     /* ===== Enabling the schedule ===== */
     selectConfigMenu(enableScheduleConfigOption);
-    cy.expect_flash(flashTypeInfo, flashMessageScheduleEnabled);
+    cy.expect_flash(flashClassMap.info, flashMessageScheduleEnabled);
 
     /* ===== Queueing-up the schedule ===== */
     selectConfigMenu(queueScheduleConfigOption);
-    cy.expect_flash(flashTypeSuccess, flashMessageScheduleQueued);
+    cy.expect_flash(flashClassMap.success, flashMessageScheduleQueued);
   });
 
   afterEach(() => {
