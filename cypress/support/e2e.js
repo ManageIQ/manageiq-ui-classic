@@ -79,5 +79,5 @@ beforeEach(() => {
   // cy.stub_notifications();
   
   // Reset the intercepted aliases tracking object
-  Cypress.env('interceptedAliases', {});
+  cy.resetInterceptedApiAliases();
 })

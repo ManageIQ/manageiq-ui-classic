@@ -1,6 +1,59 @@
 /* eslint-disable no-undef */
 
 /**
+ * Custom command to get the intercepted API aliases stored in Cypress environment variables.
+ * This command returns the object containing all registered API interception aliases.
+ * 
+ * @returns {Object} An object where keys are the alias names and values are typically the same alias names
+ * @example
+ * cy.getInterceptedApiAliases().then((aliases) => {
+ *   Check if a specific alias exists
+ *   expect(aliases).to.have.property('myApiAlias');
+ *
+ *   Get the number of registered aliases
+ *   const aliasCount = Object.keys(aliases).length;
+ * });
+ */
+Cypress.Commands.add('getInterceptedApiAliases', () =>
+  Cypress.env('interceptedAliases')
+);
+
+/**
+ * Custom command to set an intercepted API alias in the Cypress environment variables.
+ * This command adds an alias in the intercepted aliases tracking object.
+ *
+ * @param {string} aliasKey - The key/name of the alias to set
+ * @param {string} [aliasValue=aliasKey] - The value to store for the alias (defaults to the same as the key)
+ * @example
+ * Set a new alias
+ * cy.setInterceptedApiAlias('getUsersApi');
+ *
+ * Set an alias with a custom value
+ * cy.setInterceptedApiAlias('getUsersApi', 'customValue');
+ */
+Cypress.Commands.add(
+  'setInterceptedApiAlias',
+  (aliasKey, aliasValue = aliasKey) => {
+    cy.getInterceptedApiAliases().then((interceptedAliasesMap) => {
+      interceptedAliasesMap[aliasKey] = aliasValue;
+      Cypress.env('interceptedAliases', interceptedAliasesMap);
+    });
+  }
+);
+
+/**
+ * Custom command to reset all intercepted API aliases stored in Cypress environment variables.
+ * This command clears the tracking object by setting it to an empty object.
+ * Useful for cleaning up between tests or test suites.
+ * @example
+ * Reset all intercepted API aliases
+ * cy.resetInterceptedApiAliases();
+ */
+Cypress.Commands.add('resetInterceptedApiAliases', () =>
+  Cypress.env('interceptedAliases', {})
+);
+
+/**
  * Custom command to intercept API calls and wait for them to complete.
  * This command will:
  * 1. Register an intercept for the given alias and URL pattern if not already registered
@@ -34,24 +87,23 @@ Cypress.Commands.add(
     /* ======================================================= */
 
     // Check if this request is already registered
-    const isAlreadyRegistered = !!Cypress.env('interceptedAliases')[alias];
+    cy.getInterceptedApiAliases().then((interceptedAliasesMap) => {
+      // Check if this request is already registered
+      const isAlreadyRegistered = !!interceptedAliasesMap[alias];
 
-    // Register the intercept if not already done
-    if (!isAlreadyRegistered) {
-      cy.intercept(method, urlPattern).as(alias);
+      // Register the intercept if not already done
+      if (!isAlreadyRegistered) {
+        cy.intercept(method, urlPattern).as(alias);
+        cy.setInterceptedApiAlias(alias);
+      }
 
-      // Store the alias in the tracking object
-      const interceptedAliases = Cypress.env('interceptedAliases');
-      interceptedAliases[alias] = alias;
-      Cypress.env('interceptedAliases', interceptedAliases);
-    }
+      // Execute the function that triggers the API call
+      triggerFn();
 
-    // Execute the function that triggers the API call
-    triggerFn();
-
-    // Wait for the intercepted request to complete
-    cy.wait(`@${alias}`).then((interception) => {
-      onApiResponse(interception);
+      // Wait for the intercepted request to complete
+      cy.wait(`@${alias}`).then((interception) => {
+        onApiResponse(interception);
+      });
     });
   }
 );
