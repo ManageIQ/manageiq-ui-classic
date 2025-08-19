@@ -8,17 +8,20 @@ describe('Validate intercept command', () => {
     cy.menu('Settings', 'Application Settings');
   });
 
-  it('Should register the alias, intercept & wait when API fired', () => {
+  it('Should register the alias, intercept, wait & validate response status code when an API is fired', () => {
     cy.accordion('Diagnostics');
     cy.interceptApi({
       alias: 'treeSelectApi',
       urlPattern: /\/ops\/tree_select\?id=.*&text=.*/,
       triggerFn: () => cy.selectAccordionItem([/^ManageIQ Region:/, /^Zone:/]),
+      onApiResponse: (interception) => {
+        expect(interception.response.statusCode).to.equal(200);
+      },
     }).then(() => {
       // verifies that the alias is set and the request is intercepted & awaited
-      expect(Cypress.env('interceptedAliases')).to.have.property(
-        'treeSelectApi'
-      );
+      cy.getInterceptedApiAliases().then((interceptedAliasesObject) => {
+        expect(interceptedAliasesObject).to.have.property('treeSelectApi');
+      });
     });
   });
 
@@ -36,10 +39,12 @@ describe('Validate intercept command', () => {
       triggerFn: () => cy.selectAccordionItem([/^ManageIQ Region:/, /^Zone:/]),
     }).then(() => {
       // verifies that both the aliases are set and the request is intercepted & awaited
-      expect(Cypress.env('interceptedAliases')).to.include.all.keys(
-        'accordionSelectApi',
-        'treeSelectApi'
-      );
+      cy.getInterceptedApiAliases().then((interceptedAliasesObject) => {
+        expect(interceptedAliasesObject).to.include.all.keys(
+          'accordionSelectApi',
+          'treeSelectApi'
+        );
+      });
     });
   });
 
@@ -50,7 +55,9 @@ describe('Validate intercept command', () => {
       urlPattern: /\/ops\/accordion_select\?id=.*/,
       triggerFn: () => cy.accordion('Diagnostics'),
     }).then(() => {
-      expect(Object.keys(Cypress.env('interceptedAliases')).length).to.equal(1);
+      cy.getInterceptedApiAliases().then((interceptedAliasesObject) => {
+        expect(Object.keys(interceptedAliasesObject).length).to.equal(1);
+      });
     });
     // second first api with alias 'treeSelectApi'
     cy.interceptApi({
@@ -58,7 +65,9 @@ describe('Validate intercept command', () => {
       urlPattern: /\/ops\/tree_select\?id=.*&text=.*/,
       triggerFn: () => cy.selectAccordionItem([/^ManageIQ Region:/, /^Zone:/]),
     }).then(() => {
-      expect(Object.keys(Cypress.env('interceptedAliases')).length).to.equal(2);
+      cy.getInterceptedApiAliases().then((interceptedAliasesObject) => {
+        expect(Object.keys(interceptedAliasesObject).length).to.equal(2);
+      });
     });
     // third api with a duplicate alias as above 'accordionSelectApi'
     cy.interceptApi({
@@ -67,7 +76,9 @@ describe('Validate intercept command', () => {
       triggerFn: () => cy.accordion('Access Control'),
     }).then(() => {
       // assert that the alias is not overwritten
-      expect(Object.keys(Cypress.env('interceptedAliases')).length).to.equal(2);
+      cy.getInterceptedApiAliases().then((interceptedAliasesObject) => {
+        expect(Object.keys(interceptedAliasesObject).length).to.equal(2);
+      });
     });
   });
 });
