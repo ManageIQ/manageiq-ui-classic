@@ -1,0 +1,11 @@
+#main_div
+  - if %w[vms all_vms hosts clusters resource_pools].include?(@display) && @showtype != "compare"
+    = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
+  - else
+    - case @showtype
+    - when "details"
+      = render :partial => "layouts/gtl", :locals => {:action_url => @lastaction}
+    - when 'main'
+      = render :partial => "layouts/textual_groups_generic"
+    - when 'config'
+      = render :partial => "config"

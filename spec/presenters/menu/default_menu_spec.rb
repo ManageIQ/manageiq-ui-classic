@@ -23,7 +23,7 @@ describe Menu::DefaultMenu do
 
     it "shows correct titles for Hosts & Clusters" do
       menu = Menu::DefaultMenu.infrastructure_menu_section.items.map(&:name)
-      result = ["Providers", "Clusters", "Hosts", "Virtual Machines", "Resource Pools",
+      result = ["Providers", "Clusters", "Hosts", "Virtual Machines", "Infrastructure Resource Pools",
                 "Datastores", "PXE", "Networking"]
       expect(menu).to eq(result)
     end
