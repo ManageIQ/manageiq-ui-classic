@@ -15,7 +15,7 @@ Cypress.Commands.add(
   (flashType = flashClassMap.success, containsText) => {
     if (Object.values(flashClassMap).includes(flashType)) {
       const flashMessageElement = cy
-        .get(`#main_div #flash_msg_div .alert-${flashType}`)
+        .get(`#main_div .alert-${flashType}`)
         .should('be.visible');
 
       if (containsText) {
