@@ -8,12 +8,15 @@ describe('Validate intercept command', () => {
     cy.menu('Settings', 'Application Settings');
   });
 
-  it('Should register the alias, intercept & wait when API fired', () => {
+  it('Should register the alias, intercept, wait & validate response status code when an API is fired', () => {
     cy.accordion('Diagnostics');
     cy.interceptApi({
       alias: 'treeSelectApi',
       urlPattern: /\/ops\/tree_select\?id=.*&text=.*/,
       triggerFn: () => cy.selectAccordionItem([/^ManageIQ Region:/, /^Zone:/]),
+      onApiResponse: (interception) => {
+        expect(interception.response.statusCode).to.equal(200);
+      },
     }).then(() => {
       // verifies that the alias is set and the request is intercepted & awaited
       cy.getInterceptedApiAliases().then((interceptedAliasesObject) => {
