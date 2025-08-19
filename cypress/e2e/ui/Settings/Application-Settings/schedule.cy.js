@@ -1,117 +1,66 @@
 /* eslint-disable no-undef */
 import { flashClassMap } from '../../../../support/assertions/assertion_constants';
 
-const textConstants = {
-  // List items
-  schedulesAccordionItem: 'Schedules',
+// List items
+const schedulesAccordionItem = 'Schedules';
 
-  // Field values
-  initialScheduleName: 'Test-name',
-  editedScheduleName: 'Dummy-name',
-  initialDescription: 'Test description',
-  editedDescription: 'Dummy description',
-  actionTypeVmAnalysis: 'vm',
-  actionTypeTemplateAnalysis: 'miq_template',
-  actionTypeHostAnalysis: 'host',
-  actionTypeContainerAnalysis: 'container_image',
-  actionTypeClusterAnalysis: 'emscluster',
-  actionTypeDataStoreAnalysis: 'storage',
-  actionTypeVmCompilanceCheck: 'vm_check_compliance',
-  actionTypeHostCompilanceCheck: 'host_check_compliance',
-  actionTypeContainerCompilanceCheck: 'container_image_check_compliance',
-  actionTypeAutomationTasks: 'automation_request',
-  filterTypeVmCluster: 'cluster',
-  timerTypeOnce: 'Once',
-  timerTypeHourly: 'Hourly',
-  timerTypeDaily: 'Daily',
-  timerTypeWeekly: 'Weekly',
-  timerTypeMonthly: 'Monthly',
-  frequencyTypeHour: '1 Hour',
-  timezoneTypeHawaii: '(GMT-10:00) Hawaii',
-  initialStartDate: '06/30/2025',
-  editedStartDate: '07/21/2025',
-  startTime: '11:23',
+// Field values
+const initialScheduleName = 'Test-name';
+const editedScheduleName = 'Dummy-name';
+const initialDescription = 'Test description';
+const editedDescription = 'Dummy description';
+const actionTypeVmAnalysis = 'vm';
+const actionTypeTemplateAnalysis = 'miq_template';
+const actionTypeHostAnalysis = 'host';
+const actionTypeContainerAnalysis = 'container_image';
+const actionTypeClusterAnalysis = 'emscluster';
+const actionTypeDataStoreAnalysis = 'storage';
+const actionTypeVmCompilanceCheck = 'vm_check_compliance';
+const actionTypeHostCompilanceCheck = 'host_check_compliance';
+const actionTypeContainerCompilanceCheck = 'container_image_check_compliance';
+const actionTypeAutomationTasks = 'automation_request';
+const filterTypeVmCluster = 'cluster';
+const timerTypeOnce = 'Once';
+const timerTypeHourly = 'Hourly';
+const timerTypeDaily = 'Daily';
+const timerTypeWeekly = 'Weekly';
+const timerTypeMonthly = 'Monthly';
+const frequencyTypeHour = '1 Hour';
+const timezoneTypeHawaii = '(GMT-10:00) Hawaii';
+const initialStartDate = '06/30/2025';
+const editedStartDate = '07/21/2025';
+const startTime = '11:23';
 
-  // Buttons
-  saveButton: 'Save',
-  cancelButton: 'Cancel',
-  resetButton: 'Reset',
+// Buttons
+const saveButton = 'Save';
+const cancelButton = 'Cancel';
+const resetButton = 'Reset';
 
-  // Config options
-  configToolbarButton: 'Configuration',
-  addScheduleConfigOption: 'Add a new Schedule',
-  deleteScheduleConfigOption: 'Delete this Schedule from the Database',
-  editScheduleConfigOption: 'Edit this Schedule',
-  disableScheduleConfigOption: 'Disable this Schedule',
-  enableScheduleConfigOption: 'Enable this Schedule',
-  queueScheduleConfigOption: 'Queue up this Schedule to run now',
+// Config options
+const configToolbarButton = 'Configuration';
+const addScheduleConfigOption = 'Add a new Schedule';
+const deleteScheduleConfigOption = 'Delete this Schedule from the Database';
+const editScheduleConfigOption = 'Edit this Schedule';
+const disableScheduleConfigOption = 'Disable this Schedule';
+const enableScheduleConfigOption = 'Enable this Schedule';
+const queueScheduleConfigOption = 'Queue up this Schedule to run now';
 
-  // Menu options
-  settingsMenuOption: 'Settings',
-  appSettingsMenuOption: 'Application Settings',
+// Menu options
+const settingsMenuOption = 'Settings';
+const appSettingsMenuOption = 'Application Settings';
 
-  // Flash message text snippets
-  flashMessageScheduleQueued: 'queued to run',
-  flashMessageOperationCanceled: 'cancelled',
-  flashMessageScheduleDisabled: 'disabled',
-  flashMessageScheduleEnabled: 'enabled',
-  flashMessageScheduleSaved: 'saved',
-  flashMessageResetSchedule: 'reset',
-  flashMessageScheduleDeleted: 'delete successful',
-  flashMessageFailedToAddSchedule: 'failed',
+// Flash message text snippets
+const flashMessageScheduleQueued = 'queued to run';
+const flashMessageOperationCanceled = 'cancelled';
+const flashMessageScheduleDisabled = 'disabled';
+const flashMessageScheduleEnabled = 'enabled';
+const flashMessageScheduleSaved = 'saved';
+const flashMessageResetSchedule = 'reset';
+const flashMessageScheduleDeleted = 'delete successful';
+const flashMessageFailedToAddSchedule = 'failed';
 
-  // Browser alert text snippets
-  browserAlertDeleteConfirmText: 'will be permanently removed',
-};
-
-const {
-  settingsMenuOption,
-  appSettingsMenuOption,
-  actionTypeVmAnalysis,
-  actionTypeTemplateAnalysis,
-  actionTypeHostAnalysis,
-  actionTypeContainerAnalysis,
-  actionTypeClusterAnalysis,
-  actionTypeDataStoreAnalysis,
-  actionTypeVmCompilanceCheck,
-  actionTypeHostCompilanceCheck,
-  actionTypeContainerCompilanceCheck,
-  actionTypeAutomationTasks,
-  timerTypeOnce,
-  timerTypeHourly,
-  timerTypeDaily,
-  timerTypeWeekly,
-  timerTypeMonthly,
-  cancelButton,
-  saveButton,
-  initialScheduleName,
-  editScheduleConfigOption,
-  editedScheduleName,
-  editedDescription,
-  editedStartDate,
-  resetButton,
-  initialDescription,
-  initialStartDate,
-  disableScheduleConfigOption,
-  enableScheduleConfigOption,
-  queueScheduleConfigOption,
-  addScheduleConfigOption,
-  frequencyTypeHour,
-  timezoneTypeHawaii,
-  startTime,
-  deleteScheduleConfigOption,
-  schedulesAccordionItem,
-  configToolbarButton,
-  flashMessageScheduleQueued,
-  flashMessageOperationCanceled,
-  flashMessageScheduleDisabled,
-  flashMessageScheduleEnabled,
-  flashMessageScheduleSaved,
-  flashMessageResetSchedule,
-  flashMessageScheduleDeleted,
-  flashMessageFailedToAddSchedule,
-  browserAlertDeleteConfirmText,
-} = textConstants;
+// Browser alert text snippets
+const browserAlertDeleteConfirmText = 'will be permanently removed';
 
 function selectConfigMenu(menuOption = addScheduleConfigOption) {
   return cy.toolbar(configToolbarButton, menuOption);

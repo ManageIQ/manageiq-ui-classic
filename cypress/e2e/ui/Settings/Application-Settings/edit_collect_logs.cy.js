@@ -1,65 +1,41 @@
 /* eslint-disable no-undef */
 
-const textConstants = {
-  // Menu options
-  settingsMenuOption: 'Settings',
-  appSettingsMenuOption: 'Application Settings',
+// Menu options
+const settingsMenuOption = 'Settings';
+const appSettingsMenuOption = 'Application Settings';
 
-  // List items
-  diagnosticsAccordionItem: 'Diagnostics',
-  diagnosticsAccordionItemId: 'diagnostics_accord',
-  manageIQRegionAccordItem: /^ManageIQ Region:/,
-  zoneAccordItem: /^Zone:/,
-  serverAccordItem: /^Server:/,
+// List items
+const diagnosticsAccordionItem = 'Diagnostics';
+const diagnosticsAccordionItemId = 'diagnostics_accord';
+const manageIQRegionAccordItem = /^ManageIQ Region:/;
+const zoneAccordItem = /^Zone:/;
+const serverAccordItem = /^Server:/;
 
-  // Buttons
-  saveButton: 'Save',
-  cancelButton: 'Cancel',
-  resetButton: 'Reset',
+// Buttons
+const saveButton = 'Save';
+const cancelButton = 'Cancel';
+const resetButton = 'Reset';
 
-  // Dropdown values
-  dropdownBlankValue: 'BLANK_VALUE',
-  sambaDropdownValue: 'FileDepotSmb',
+// Dropdown values
+const dropdownBlankValue = 'BLANK_VALUE';
+const sambaDropdownValue = 'FileDepotSmb';
 
-  // Common selectors
-  buttonSelector: (type) => `#main-content .bx--btn-set button[type="${type}"]`,
+// Common selectors
+const buttonSelector = (type) => `#main-content .bx--btn-set button[type="${type}"]`;
 
-  // Button types
-  submitButtonType: 'submit',
-  normalButtonType: 'button',
+// Button types
+const submitButtonType = 'submit';
+const normalButtonType = 'button';
 
-  // Component route url
-  componentRouteUrl: '/ops/explorer',
+// Component route url
+const componentRouteUrl = '/ops/explorer';
 
-  // Flash message types
-  flashTypeSuccess: 'success',
+// Flash message types
+const flashTypeSuccess = 'success';
 
-  // Flash message text snippets
-  flashMessageSettingsSaved: 'saved',
-  flashMessageOperationCanceled: 'cancel',
-};
-
-const {
-  diagnosticsAccordionItem,
-  dropdownBlankValue,
-  sambaDropdownValue,
-  saveButton,
-  cancelButton,
-  resetButton,
-  settingsMenuOption,
-  appSettingsMenuOption,
-  diagnosticsAccordionItemId,
-  manageIQRegionAccordItem,
-  zoneAccordItem,
-  serverAccordItem,
-  componentRouteUrl,
-  flashTypeSuccess,
-  flashMessageSettingsSaved,
-  flashMessageOperationCanceled,
-  buttonSelector,
-  submitButtonType,
-  normalButtonType,
-} = textConstants;
+// Flash message text snippets
+const flashMessageSettingsSaved = 'saved';
+const flashMessageOperationCanceled = 'cancel';
 
 function interceptAndAwaitApi({
   alias,
@@ -306,4 +282,3 @@ describe('Automate Collect logs Edit form operations', () => {
     });
   });
 });
-
