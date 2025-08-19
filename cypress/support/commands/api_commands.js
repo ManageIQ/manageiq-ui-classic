@@ -12,10 +12,21 @@
  * @param {string} options.method - HTTP method (default: 'POST')
  * @param {string|RegExp} options.urlPattern - URL pattern to intercept
  * @param {Function} options.triggerFn - Function that triggers the API call
+ * @param {Function} [options.onApiResponse] - Optional callback function that receives the interception object after the API call completes.
+ * Use this to perform assertions on the response, extract data, or perform additional actions based on the API result.
+ * Default is a no-op function. e.g. { onApiResponse: (interception) => { expect(interception.response.statusCode).to.equal(200); } }
  */
 Cypress.Commands.add(
   'interceptApi',
-  ({ alias, method = 'POST', urlPattern, triggerFn }) => {
+  ({
+    alias,
+    method = 'POST',
+    urlPattern,
+    triggerFn,
+    onApiResponse = () => {
+      /* default implementation */
+    },
+  }) => {
     /* ===== TODO: Remove this block once interceptApi command becomes stable ===== */
     const envVars = Cypress.env();
     cy.log('Cypress Environment Variables:');
@@ -39,6 +50,8 @@ Cypress.Commands.add(
     triggerFn();
 
     // Wait for the intercepted request to complete
-    cy.wait(`@${alias}`);
+    cy.wait(`@${alias}`).then((interception) => {
+      onApiResponse(interception);
+    });
   }
 );
