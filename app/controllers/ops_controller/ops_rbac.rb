@@ -17,6 +17,8 @@ module OpsController::OpsRbac
       end
 
       options[:feature] = MiqProductFeature.tenant_identifier(options[:feature], id)
+      # dynamic tenant feature identifiers need to bypass feature validation
+      options[:skip_feature_validation] = true
     end
 
     super(**options)
