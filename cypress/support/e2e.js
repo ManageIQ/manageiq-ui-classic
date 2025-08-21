@@ -60,6 +60,18 @@ import './assertions/expect_search_box.js';
 import './assertions/expect_text.js';
 import './assertions/expect_title.js';
 
+// cypress on rails setup:
+// ***********************************************************
+
+// Import commands.js using ES2015 syntax:
+// import 'cypress-on-rails/support/index'
+import './commands'
+import './on-rails'
+
+// Alternatively you can use CommonJS syntax:
+// require('./commands')
+// end of cypress on rails setup
+
 // This is needed to prevent Cypress tests from failing due to uncaught errors:
 // Undefined errors are occuring on every initial page load of Manage IQ
 // Network and aborted errors are exlusive to firefox when cypress navigates to a new page before the api calls for the last page are fullly loaded
