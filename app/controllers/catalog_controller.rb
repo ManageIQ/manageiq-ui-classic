@@ -298,12 +298,10 @@ class CatalogController < ApplicationController
         # when display in catalog is checked, replace div so tabs can be redrawn
         if (params[:st_prov_type] || (params[:display] && @edit[:new][:st_prov_type].starts_with?("generic"))) || params[:ovf_template_id]
           page.replace("form_div", :partial => "st_form")
-        end
-        if automate_tree_needed?
-          page.replace("basic_info_div", :partial => "form_basic_info")
-        end
-        if params[:display]
+        elsif params[:display]
           page << "miq_tabs_show_hide('#details_tab', '#{(params[:display] == "1")}')"
+        elsif automate_tree_needed?
+          page.replace("basic_info_div", :partial => "form_basic_info")
         end
         page.replace_html("provision_entry_point", :partial => "provision_entry_point") if params[:provision_entry_point_type]
         page.replace_html("reconfigure_entry_point", :partial => "reconfigure_entry_point") if params[:reconfigure_entry_point_type]
