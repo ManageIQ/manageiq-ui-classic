@@ -4,6 +4,8 @@ const fs = require('fs');
 
 module.exports = defineConfig({
   e2e: {
+    // baseUrl: "http://localhost:5017",
+    // defaultCommandTimeout: 10000,
     baseUrl: 'http://localhost:3000',
     viewportHeight: 800,
     viewportWidth: 1800,
