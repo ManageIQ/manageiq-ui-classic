@@ -94,22 +94,22 @@ function addSchedule() {
   // Open add schedule form
   selectConfigMenu(ADD_SCHEDULE_CONFIG_OPTION);
   // Checks if Save button is disabled initially
-  cy.contains(
-    '#main-content .bx--btn-set button[type="submit"]',
-    saveButton
-  ).should('be.disabled');
+  cy.getFormFooterButtonByType(SAVE_BUTTON_TEXT, 'submit').should(
+    'be.disabled'
+  );
   // Adding data
-  cy.get('input#name').type(initialScheduleName);
-  cy.get('input#description').type(initialDescription);
-  cy.get('input[type="checkbox"]#enabled').check({ force: true });
+  cy.getFormInputFieldById('name').type(INITIAL_SCHEDULE_NAME);
+  cy.getFormInputFieldById('description').type(INITIAL_DESCRIPTION);
+  // Check "Active" checkbox using its associated label
+  cy.getFormLabelByInputId('enabled').click();
   // Select Action type option: 'VM Analysis'
-  cy.get('select#action_typ').select(actionTypeVmAnalysis);
+  cy.getFormSelectFieldById('action_typ').select(ACTION_TYPE_VM_ANALYSIS);
   // Select Filter type option: 'A Single VM'
-  cy.get('select#filter_typ').select(actionTypeVmAnalysis);
+  cy.getFormSelectFieldById('filter_typ').select(ACTION_TYPE_VM_ANALYSIS);
   // Select Run option: 'Hours'
-  cy.get('select#timer_typ').select(timerTypeHourly);
+  cy.getFormSelectFieldById('timer_typ').select(TIMER_TYPE_HOURLY);
   // Select Every option: '1 Hour'
-  cy.get('select#timer_value').select(frequencyTypeHour);
+  cy.getFormSelectFieldById('timer_value').select(FREQUENCY_TYPE_HOUR);
   // Select Time zone option: '(GMT-10:00) Hawaii'
   cy.getFormInputFieldById('time_zone').click();
   cy.contains('[role="option"]', TIME_ZONE_TYPE_HAWAII).click();
@@ -120,7 +120,8 @@ function addSchedule() {
     alias: 'addScheduleApi',
     urlPattern: '/ops/schedule_edit/new?button=save',
     triggerFn: () =>
-      cy.contains('#main-content .bx--btn-set button[type="submit"]', saveButton)
+      cy
+        .getFormFooterButtonByType(SAVE_BUTTON_TEXT, 'submit')
         .should('be.enabled') // Checks if Save button is enabled once all required fields are filled
         .click(),
   });
@@ -192,11 +193,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.interceptApi({
       alias: 'treeSelectApi',
       urlPattern: /\/ops\/tree_select\?id=.*&text=.*/,
-      triggerFn: () =>
-        cy.selectAccordionItem([
-          MANAGEIQ_REGION_ACCORDION_ITEM,
-          SCHEDULES_ACCORDION_ITEM,
-        ]),
+      triggerFn: () => cy.accordionItem(SCHEDULES_ACCORDION_ITEM),
     });
   });
 
@@ -493,10 +490,10 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     // Open edit schedule form
     selectConfigMenu(EDIT_SCHEDULE_CONFIG_OPTION);
     // Editing name and description
-    cy.get('input#name').clear().type(editedScheduleName);
-    cy.get('input#description').clear().type(editedDescription);
+    cy.getFormInputFieldById('name').clear().type(EDITED_SCHEDULE_NAME);
+    cy.getFormInputFieldById('description').clear().type(EDITED_DESCRIPTION);
     // Confirms Save button is enabled after making edits
-    cy.contains('#main-content .bx--btn-set button[type="submit"]', saveButton)
+    cy.getFormFooterButtonByType(SAVE_BUTTON_TEXT, 'submit')
       .should('be.enabled')
       .click();
     cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SCHEDULE_SAVED);
@@ -514,15 +511,22 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     // Open edit schedule form
     selectConfigMenu(EDIT_SCHEDULE_CONFIG_OPTION);
     // Editing description and start date
-    cy.get('input#description').clear().type(editedDescription);
-    cy.get('input#start_date').clear().type(editedStartDate);
-    cy.contains('#main-content .bx--btn-set button[type="button"]', resetButton)
+    cy.getFormInputFieldById('description').clear().type(EDITED_DESCRIPTION);
+    cy.getFormInputFieldById('start_date').clear().type(EDITED_START_DATE);
+    // Resetting
+    cy.getFormFooterButtonByType(RESET_BUTTON_TEXT)
       .should('be.enabled')
       .click();
     cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_RESET_SCHEDULE);
     // Confirming the edited fields contain the old values after resetting
-    cy.get('input#description').should('have.value', initialDescription);
-    cy.get('input#start_date').should('have.value', initialStartDate);
+    cy.getFormInputFieldById('description').should(
+      'have.value',
+      INITIAL_DESCRIPTION
+    );
+    cy.getFormInputFieldById('start_date').should(
+      'have.value',
+      INITIAL_START_DATE
+    );
 
     /* ===== Checking whether Cancel button works ===== */
     cy.getFormFooterButtonByType(CANCEL_BUTTON_TEXT).click();
