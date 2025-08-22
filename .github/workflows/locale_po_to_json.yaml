@@ -24,7 +24,7 @@ jobs:
       RAILS_ENV: i18n
       SKIP_TEST_RESET: true
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Set up system
       run: bin/before_install
     - name: Set up Ruby
