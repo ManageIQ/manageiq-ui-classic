@@ -144,7 +144,11 @@ function clickScheduleItem(scheduleName) {
   ).as('getCreatedScheduleApi');
   // Triggering the action that will fire the API call,
   // which is selecting the created schedule
-  cy.accordionItem(scheduleName);
+  cy.selectAccordionItem([
+    MANAGEIQ_REGION_ACCORDION_ITEM,
+    SCHEDULES_ACCORDION_ITEM,
+    scheduleName,
+  ]);
   // Wait for the API call to complete if it was fired
   // This is to ensure that the test does not fail if the request was not fired
   cy.then(() => {
@@ -193,7 +197,11 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.interceptApi({
       alias: 'treeSelectApi',
       urlPattern: /\/ops\/tree_select\?id=.*&text=.*/,
-      triggerFn: () => cy.accordionItem(SCHEDULES_ACCORDION_ITEM),
+      triggerFn: () =>
+        cy.selectAccordionItem([
+          MANAGEIQ_REGION_ACCORDION_ITEM,
+          SCHEDULES_ACCORDION_ITEM,
+        ]),
     });
   });
 
