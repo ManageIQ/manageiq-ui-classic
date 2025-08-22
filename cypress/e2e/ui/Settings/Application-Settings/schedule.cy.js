@@ -1,124 +1,78 @@
 /* eslint-disable no-undef */
 import { flashClassMap } from '../../../../support/assertions/assertion_constants';
 
-const textConstants = {
-  // List items
-  schedulesAccordionItem: 'Schedules',
+// Component route url
+const COMPONENT_ROUTE_URL = '/ops/explorer';
 
-  // Field values
-  initialScheduleName: 'Test-name',
-  editedScheduleName: 'Dummy-name',
-  initialDescription: 'Test description',
-  editedDescription: 'Dummy description',
-  actionTypeVmAnalysis: 'vm',
-  actionTypeTemplateAnalysis: 'miq_template',
-  actionTypeHostAnalysis: 'host',
-  actionTypeContainerAnalysis: 'container_image',
-  actionTypeClusterAnalysis: 'emscluster',
-  actionTypeDataStoreAnalysis: 'storage',
-  actionTypeVmCompilanceCheck: 'vm_check_compliance',
-  actionTypeHostCompilanceCheck: 'host_check_compliance',
-  actionTypeContainerCompilanceCheck: 'container_image_check_compliance',
-  actionTypeAutomationTasks: 'automation_request',
-  filterTypeVmCluster: 'cluster',
-  timerTypeOnce: 'Once',
-  timerTypeHourly: 'Hourly',
-  timerTypeDaily: 'Daily',
-  timerTypeWeekly: 'Weekly',
-  timerTypeMonthly: 'Monthly',
-  frequencyTypeHour: '1 Hour',
-  timezoneTypeHawaii: '(GMT-10:00) Hawaii',
-  initialStartDate: '06/30/2025',
-  editedStartDate: '07/21/2025',
-  startTime: '11:23',
+// List items
+const SCHEDULES_ACCORDION_ITEM = 'Schedules';
+const MANAGEIQ_REGION_ACCORDION_ITEM = /^ManageIQ Region:/;
 
-  // Buttons
-  saveButton: 'Save',
-  cancelButton: 'Cancel',
-  resetButton: 'Reset',
+// Field values
+const INITIAL_SCHEDULE_NAME = 'Test-name';
+const EDITED_SCHEDULE_NAME = 'Dummy-name';
+const INITIAL_DESCRIPTION = 'Test description';
+const EDITED_DESCRIPTION = 'Dummy description';
+const ACTION_TYPE_VM_ANALYSIS = 'vm';
+const ACTION_TYPE_TEMPLATE_ANALYSIS = 'miq_template';
+const ACTION_TYPE_HOST_ANALYSIS = 'host';
+const ACTION_TYPE_CONTAINER_ANALYSIS = 'container_image';
+const ACTION_TYPE_CLUSTER_ANALYSIS = 'emscluster';
+const ACTION_TYPE_DATA_STORE_ANALYSIS = 'storage';
+const ACTION_TYPE_VM_COMPILANCE_CHECK = 'vm_check_compliance';
+const ACTION_TYPE_HOST_COMPILANCE_CHECK = 'host_check_compliance';
+const ACTION_TYPE_CONTAINER_COMPILANCE_CHECK =
+  'container_image_check_compliance';
+const ACTION_TYPE_AUTOMATION_TASKS = 'automation_request';
+const TIMER_TYPE_ONCE = 'Once';
+const TIMER_TYPE_HOURLY = 'Hourly';
+const TIMER_TYPE_DAILY = 'Daily';
+const TIMER_TYPE_WEEKLY = 'Weekly';
+const TIMER_TYPE_MONTHLY = 'Monthly';
+const FREQUENCY_TYPE_HOUR = '1 Hour';
+const TIMEZONE_TYPE_HAWAII = '(GMT-10:00) Hawaii';
+const INITIAL_START_DATE = '06/30/2025';
+const EDITED_START_DATE = '07/21/2025';
+const START_TIME = '11:23';
 
-  // Config options
-  configToolbarButton: 'Configuration',
-  addScheduleConfigOption: 'Add a new Schedule',
-  deleteScheduleConfigOption: 'Delete this Schedule from the Database',
-  editScheduleConfigOption: 'Edit this Schedule',
-  disableScheduleConfigOption: 'Disable this Schedule',
-  enableScheduleConfigOption: 'Enable this Schedule',
-  queueScheduleConfigOption: 'Queue up this Schedule to run now',
+// Buttons
+const SAVE_BUTTON_TEXT = 'Save';
+const CANCEL_BUTTON_TEXT = 'Cancel';
+const RESET_BUTTON_TEXT = 'Reset';
 
-  // Menu options
-  settingsMenuOption: 'Settings',
-  appSettingsMenuOption: 'Application Settings',
+// Config options
+const CONFIG_TOOLBAR_BUTTON = 'Configuration';
+const ADD_SCHEDULE_CONFIG_OPTION = 'Add a new Schedule';
+const DELETE_SCHEDULE_CONFIG_OPTION = 'Delete this Schedule from the Database';
+const EDIT_SCHEDULE_CONFIG_OPTION = 'Edit this Schedule';
+const DISABLE_SCHEDULE_CONFIG_OPTION = 'Disable this Schedule';
+const ENABLE_SCHEDULE_CONFIG_OPTION = 'Enable this Schedule';
+const QUEUE_SCHEDULE_CONFIG_OPTION = 'Queue up this Schedule to run now';
 
-  // Flash message text snippets
-  flashMessageScheduleQueued: 'queued to run',
-  flashMessageOperationCanceled: 'cancelled',
-  flashMessageScheduleDisabled: 'disabled',
-  flashMessageScheduleEnabled: 'enabled',
-  flashMessageScheduleSaved: 'saved',
-  flashMessageResetSchedule: 'reset',
-  flashMessageScheduleDeleted: 'delete successful',
-  flashMessageFailedToAddSchedule: 'failed',
+// Menu options
+const SETTINGS_OPTION = 'Settings';
+const APP_SETTINGS_OPTION = 'Application Settings';
 
-  // Browser alert text snippets
-  browserAlertDeleteConfirmText: 'will be permanently removed',
-};
+// Flash message text snippets
+const FLASH_MESSAGE_SCHEDULE_QUEUED = 'queued';
+const FLASH_MESSAGE_OPERATION_CANCELED = 'cancel';
+const FLASH_MESSAGE_SCHEDULE_DISABLED = 'disabled';
+const FLASH_MESSAGE_SCHEDULE_ENABLED = 'enabled';
+const FLASH_MESSAGE_SCHEDULE_SAVED = 'saved';
+const FLASH_MESSAGE_RESET_SCHEDULE = 'reset';
+const FLASH_MESSAGE_SCHEDULE_DELETED = 'delete';
+const FLASH_MESSAGE_FAILED_TO_ADD_SCHEDULE = 'failed';
 
-const {
-  settingsMenuOption,
-  appSettingsMenuOption,
-  actionTypeVmAnalysis,
-  actionTypeTemplateAnalysis,
-  actionTypeHostAnalysis,
-  actionTypeContainerAnalysis,
-  actionTypeClusterAnalysis,
-  actionTypeDataStoreAnalysis,
-  actionTypeVmCompilanceCheck,
-  actionTypeHostCompilanceCheck,
-  actionTypeContainerCompilanceCheck,
-  actionTypeAutomationTasks,
-  timerTypeOnce,
-  timerTypeHourly,
-  timerTypeDaily,
-  timerTypeWeekly,
-  timerTypeMonthly,
-  cancelButton,
-  saveButton,
-  initialScheduleName,
-  editScheduleConfigOption,
-  editedScheduleName,
-  editedDescription,
-  editedStartDate,
-  resetButton,
-  initialDescription,
-  initialStartDate,
-  disableScheduleConfigOption,
-  enableScheduleConfigOption,
-  queueScheduleConfigOption,
-  addScheduleConfigOption,
-  frequencyTypeHour,
-  timezoneTypeHawaii,
-  startTime,
-  deleteScheduleConfigOption,
-  schedulesAccordionItem,
-  configToolbarButton,
-  flashMessageScheduleQueued,
-  flashMessageOperationCanceled,
-  flashMessageScheduleDisabled,
-  flashMessageScheduleEnabled,
-  flashMessageScheduleSaved,
-  flashMessageResetSchedule,
-  flashMessageScheduleDeleted,
-  flashMessageFailedToAddSchedule,
-  browserAlertDeleteConfirmText,
-} = textConstants;
+// Browser alert text snippets
+const BROWSER_ALERT_DELETE_CONFIRM_TEXT = 'removed';
 
-function selectConfigMenu(menuOption = addScheduleConfigOption) {
-  return cy.toolbar(configToolbarButton, menuOption);
+function selectConfigMenu(menuOption) {
+  return cy.toolbar(CONFIG_TOOLBAR_BUTTON, menuOption);
 }
 
 function addSchedule() {
-  selectConfigMenu();
+  // Open add schedule form
+  selectConfigMenu(ADD_SCHEDULE_CONFIG_OPTION);
   // Checks if Save button is disabled initially
   cy.contains(
     '#main-content .bx--btn-set button[type="submit"]',
@@ -144,28 +98,18 @@ function addSchedule() {
   cy.get('input#start_date').type(initialStartDate);
   cy.get('input#start_time').type(startTime);
   // Intercepting the API call for adding a new schedule
-  cy.intercept('POST', '/ops/schedule_edit/new?button=save').as(
-    'addScheduleApi'
-  );
-  cy.contains('#main-content .bx--btn-set button[type="submit"]', saveButton)
-    .should('be.enabled') // Checks if Save button is enabled once all required fields are filled
-    .click();
-  // Wait for the API call to complete
-  cy.wait('@addScheduleApi');
-}
-
-function deleteSchedule(scheduleName = initialScheduleName) {
-  // Selecting the schedule and intercepting the API call to get schedule details
-  interceptGetScheduleDetailsApi(scheduleName);
-  // Listening for the browser confirm alert and confirming deletion
-  cy.expect_browser_confirm_with_text({
-    confirmTriggerFn: () => selectConfigMenu(deleteScheduleConfigOption),
-    containsText: browserAlertDeleteConfirmText,
+  cy.interceptApi({
+    alias: 'addScheduleApi',
+    urlPattern: '/ops/schedule_edit/new?button=save',
+    triggerFn: () =>
+      cy.contains('#main-content .bx--btn-set button[type="submit"]', saveButton)
+        .should('be.enabled') // Checks if Save button is enabled once all required fields are filled
+        .click(),
   });
-  cy.expect_flash(flashClassMap.success, flashMessageScheduleDeleted);
 }
 
-function interceptGetScheduleDetailsApi(scheduleName = initialScheduleName) {
+function clickScheduleItem(scheduleName) {
+  // TODO: Replace with cy.interceptApi after it's enhanced to wait conditionally on request trigger
   // Flag to check if the request is fired
   let requestFired = false;
   // Intercepting the API call
@@ -192,49 +136,55 @@ function interceptGetScheduleDetailsApi(scheduleName = initialScheduleName) {
   });
 }
 
+function deleteSchedule(scheduleName) {
+  // Selecting the schedule and intercepting the API call to get schedule details
+  clickScheduleItem(scheduleName);
+  // Listening for the browser confirm alert and confirming deletion
+  cy.expect_browser_confirm_with_text({
+    confirmTriggerFn: () => selectConfigMenu(DELETE_SCHEDULE_CONFIG_OPTION),
+    containsText: BROWSER_ALERT_DELETE_CONFIRM_TEXT,
+  });
+  cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SCHEDULE_DELETED);
+}
+
 function invokeCleanupDeletion() {
   // Iterate and clean up any leftover schedules created during the test
-  cy.get('li.list-group-item').each(($el) => {
-    const text = $el?.text()?.trim();
-    if (text === initialScheduleName) {
-      deleteSchedule();
+  cy.get('div.panel-collapse.collapse.in li.list-group-item').each((item) => {
+    const text = item?.text()?.trim();
+    if (text === INITIAL_SCHEDULE_NAME) {
+      deleteSchedule(INITIAL_SCHEDULE_NAME);
       return false;
     }
-    if (text === editedScheduleName) {
-      deleteSchedule(editedScheduleName);
-      return false;
+    if (text === EDITED_SCHEDULE_NAME) {
+      deleteSchedule(EDITED_SCHEDULE_NAME);
+      return false; // exit iteration
     }
-    return true;
+    return null; // has no impact, just to get rid of eslint warning
   });
-}
-
-function verifyFilterTypeDropdownExists() {
-  cy.get('label[for="filter_typ"]').should('exist');
-  cy.get('select#filter_typ').should('exist');
-}
-
-function verifyTimerDropdownExists() {
-  cy.get('label[for="timer_value"]').should('exist');
-  cy.get('select#timer_value').should('exist');
 }
 
 describe('Automate Schedule form operations: Settings > Application Settings > Settings > Schedules > Configuration > Add a new schedule', () => {
   beforeEach(() => {
     cy.login();
-    cy.menu(settingsMenuOption, appSettingsMenuOption);
-    cy.intercept(
-      {
-        method: 'POST',
-        pathname: '/ops/tree_select',
-        query: { text: schedulesAccordionItem },
-      },
-    ).as('getSchedules');
-    cy.accordionItem(schedulesAccordionItem);
-    cy.wait('@getSchedules');
+    // Navigate to Application-Settings
+    cy.menu(SETTINGS_OPTION, APP_SETTINGS_OPTION);
+    // Expand Settings accordion panel
+    cy.accordion(SETTINGS_OPTION);
+    // Select Schedules accordion item
+    cy.interceptApi({
+      alias: 'treeSelectApi',
+      urlPattern: /\/ops\/tree_select\?id=.*&text=.*/,
+      triggerFn: () =>
+        cy.selectAccordionItem([
+          MANAGEIQ_REGION_ACCORDION_ITEM,
+          SCHEDULES_ACCORDION_ITEM,
+        ]),
+    });
   });
 
   it('Validate visibility of elements based on dropdown selections', () => {
-    selectConfigMenu();
+    // Open add schedule form
+    selectConfigMenu(ADD_SCHEDULE_CONFIG_OPTION);
 
     /* ===== Selecting any option other than "Automation Tasks" from "Action" dropdown does not hide the Filter dropdown ===== */
 
@@ -371,25 +321,28 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
   });
 
   it('Checking whether Cancel button works on the Add form', () => {
-    selectConfigMenu();
+    // Open add schedule form
+    selectConfigMenu(ADD_SCHEDULE_CONFIG_OPTION);
+    // Cancel the form
     cy.contains(
       '#main-content .bx--btn-set button[type="button"]',
       cancelButton
     )
       .should('be.enabled')
       .click();
-    cy.expect_flash(flashClassMap.success, flashMessageOperationCanceled);
+    cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_OPERATION_CANCELED);
   });
 
   it('Checking whether add, edit & delete schedule works', () => {
     /* ===== Adding a schedule ===== */
     addSchedule();
-    cy.expect_flash(flashClassMap.success, flashMessageScheduleSaved);
+    cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SCHEDULE_SAVED);
 
     /* ===== Editing a schedule ===== */
     // Selecting the schedule and intercepting the API call to get schedule details
-    interceptGetScheduleDetailsApi();
-    selectConfigMenu(editScheduleConfigOption);
+    clickScheduleItem(INITIAL_SCHEDULE_NAME);
+    // Open edit schedule form
+    selectConfigMenu(EDIT_SCHEDULE_CONFIG_OPTION);
     // Editing name and description
     cy.get('input#name').clear().type(editedScheduleName);
     cy.get('input#description').clear().type(editedDescription);
@@ -397,7 +350,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.contains('#main-content .bx--btn-set button[type="submit"]', saveButton)
       .should('be.enabled')
       .click();
-    cy.expect_flash(flashClassMap.success, flashMessageScheduleSaved);
+    cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SCHEDULE_SAVED);
 
     /* ===== Delete is already handled from afterEach hook ===== */
   });
@@ -406,35 +359,27 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     /* ===== Adding a schedule ===== */
     addSchedule();
 
-    /* ===== Checking whether Cancel button works ===== */
-    // Selecting the schedule and intercepting the API call to get schedule details
-    interceptGetScheduleDetailsApi();
-    selectConfigMenu(editScheduleConfigOption);
-    cy.contains(
-      '#main-content .bx--btn-set button[type="button"]',
-      cancelButton
-    )
-      .should('be.enabled')
-      .click();
-    cy.expect_flash(flashClassMap.success, flashMessageOperationCanceled);
-
     /* ===== Checking whether Reset button works ===== */
     // Selecting the schedule and intercepting the API call to get schedule details
-    interceptGetScheduleDetailsApi();
-    selectConfigMenu(editScheduleConfigOption);
+    clickScheduleItem(INITIAL_SCHEDULE_NAME);
+    // Open edit schedule form
+    selectConfigMenu(EDIT_SCHEDULE_CONFIG_OPTION);
     // Editing description and start date
     cy.get('input#description').clear().type(editedDescription);
     cy.get('input#start_date').clear().type(editedStartDate);
     cy.contains('#main-content .bx--btn-set button[type="button"]', resetButton)
       .should('be.enabled')
       .click();
-    cy.expect_flash(flashClassMap.warning, flashMessageResetSchedule);
+    cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_RESET_SCHEDULE);
     // Confirming the edited fields contain the old values after resetting
     cy.get('input#description').should('have.value', initialDescription);
     cy.get('input#start_date').should('have.value', initialStartDate);
 
-    // Selecting Schedules menu item to bypass a bug, can be removed once #9505 is merged
-    cy.accordionItem(schedulesAccordionItem);
+    /* ===== Checking whether Cancel button works ===== */
+    cy.contains('#main-content .bx--btn-set button[type="button"]', CANCEL_BUTTON_TEXT)
+      .should('be.enabled')
+      .click();
+    cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_OPERATION_CANCELED);
   });
 
   it('Checking whether creating a duplicate record is restricted', () => {
@@ -443,38 +388,39 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
 
     /* ===== Trying to add the same schedule again ===== */
     addSchedule();
-    cy.expect_flash(flashClassMap.error, flashMessageFailedToAddSchedule);
+    cy.expect_flash(flashClassMap.error, FLASH_MESSAGE_FAILED_TO_ADD_SCHEDULE);
   });
 
   it('Checking whether Disabling, Enabling & Queueing up the schedule works', () => {
     /* ===== Adding a schedule ===== */
     addSchedule();
     // Selecting the schedule and intercepting the API call to get schedule details
-    interceptGetScheduleDetailsApi();
+    clickScheduleItem(INITIAL_SCHEDULE_NAME);
 
     /* ===== Disabling the schedule ===== */
-    selectConfigMenu(disableScheduleConfigOption);
-    cy.expect_flash(flashClassMap.info, flashMessageScheduleDisabled);
+    selectConfigMenu(DISABLE_SCHEDULE_CONFIG_OPTION);
+    cy.expect_flash(flashClassMap.info, FLASH_MESSAGE_SCHEDULE_DISABLED);
 
     /* ===== Enabling the schedule ===== */
-    selectConfigMenu(enableScheduleConfigOption);
-    cy.expect_flash(flashClassMap.info, flashMessageScheduleEnabled);
+    selectConfigMenu(ENABLE_SCHEDULE_CONFIG_OPTION);
+    cy.expect_flash(flashClassMap.info, FLASH_MESSAGE_SCHEDULE_ENABLED);
 
     /* ===== Queueing-up the schedule ===== */
-    selectConfigMenu(queueScheduleConfigOption);
-    cy.expect_flash(flashClassMap.success, flashMessageScheduleQueued);
+    selectConfigMenu(QUEUE_SCHEDULE_CONFIG_OPTION);
+    cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SCHEDULE_QUEUED);
   });
 
   afterEach(() => {
-    cy?.url()?.then((url) => {
-      // Ensures navigation to Settings -> Application-Settings in the UI
-      if (url?.includes('/ops/explorer')) {
+    cy.url()
+      ?.then((url) => {
+        // Ensures navigation to Settings -> Application-Settings in the UI
+        if (!url?.includes(COMPONENT_ROUTE_URL)) {
+          // Navigate to Settings -> Application-Settings before looking out for Schedules created during test
+          cy.menu(SETTINGS_OPTION, APP_SETTINGS_OPTION);
+        }
+      })
+      .then(() => {
         invokeCleanupDeletion();
-      } else {
-        // Navigate to Settings -> Application-Settings before looking out for Schedules created during test
-        cy.menu(settingsMenuOption, appSettingsMenuOption);
-        invokeCleanupDeletion();
-      }
-    });
+      });
   });
 });
