@@ -1,83 +1,39 @@
 /* eslint-disable no-undef */
-import { flashClassMap } from "../../../../support/assertions/assertion_constants";
+import { flashClassMap } from '../../../../support/assertions/assertion_constants';
 
-const textConstants = {
-  // Component route url
-  componentRouteUrl: '/ops/explorer',
+// Component route url
+const COMPONENT_ROUTE_URL = '/ops/explorer';
 
-  // Menu options
-  settingsMenuOption: 'Settings',
-  appSettingsMenuOption: 'Application Settings',
+// Menu options
+const SETTINGS_MENU_OPTION = 'Settings';
+const APP_SETTINGS_MENU_OPTION = 'Application Settings';
 
-  // List items
-  diagnosticsAccordionItem: 'Diagnostics',
-  diagnosticsAccordionItemId: 'diagnostics_accord',
-  manageIQRegionAccordItem: /^ManageIQ Region:/,
-  zoneAccordItem: /^Zone:/,
-  serverAccordItem: /^Server:/,
+// List items
+const DIAGNOSTICS_ACCORDION_ITEM = 'Diagnostics';
+const DIAGNOSTICS_ACCORDION_ITEM_ID = 'diagnostics_accord';
+const MANAGEIQ_REGION_ACCORDION_ITEM = /^ManageIQ Region:/;
+const ZONE_ACCORDION_ITEM = /^Zone:/;
+const SERVER_ACCORDION_ITEM = /^Server:/;
 
-  // Field values
-  formHeader: 'Editing Log Depot settings',
-  formSubheaderSnippet: 'Editing Log Depot Settings',
+// Field values
+const FORM_HEADER = 'Editing Log Depot settings';
+const FORM_SUBHEADER_SNIPPET = 'Editing Log Depot Settings';
 
-  // Config options
-  editToolbarButton: 'Edit',
+// Config options
+const EDIT_TOOLBAR_BUTTON = 'Edit';
 
-  // Buttons
-  saveButton: 'Save',
-  cancelButton: 'Cancel',
-  resetButton: 'Reset',
+// Buttons
+const SAVE_BUTTON_TEXT = 'Save';
+const CANCEL_BUTTON_TEXT = 'Cancel';
+const RESET_BUTTON_TEXT = 'Reset';
 
-  // Common element IDs
-  protocolSelectFieldId: 'log_protocol',
+// Dropdown values
+const DROPDOWN_BLANK_VALUE = 'BLANK_VALUE';
+const SAMBA_DROPDOWN_VALUE = 'FileDepotSmb';
 
-  // Dropdown values
-  dropdownBlankValue: 'BLANK_VALUE',
-  sambaDropdownValue: 'FileDepotSmb',
-
-  // Flash message text snippets
-  flashMessageSettingsSaved: 'saved',
-  flashMessageOperationCancelled: 'cancel',
-};
-
-const {
-  // Component route url
-  componentRouteUrl,
-
-  // Menu options
-  settingsMenuOption,
-  appSettingsMenuOption,
-
-  // List items
-  diagnosticsAccordionItem,
-  diagnosticsAccordionItemId,
-  manageIQRegionAccordItem,
-  zoneAccordItem,
-  serverAccordItem,
-
-  // Field values
-  formHeader,
-  formSubheaderSnippet,
-
-  // Config options
-  editToolbarButton,
-
-  // Buttons
-  saveButton,
-  cancelButton,
-  resetButton,
-
-  // Common element IDs
-  protocolSelectFieldId,
-
-  // Dropdown values
-  dropdownBlankValue,
-  sambaDropdownValue,
-
-  // Flash message text snippets
-  flashMessageSettingsSaved,
-  flashMessageOperationCancelled,
-} = textConstants;
+// Flash message text snippets
+const FLASH_MESSAGE_SETTINGS_SAVED = 'saved';
+const FLASH_MESSAGE_OPERATION_CANCELLED = 'cancel';
 
 function goToCollectLogsTab() {
   cy.interceptApi({
@@ -97,32 +53,32 @@ function selectToolbarEditButton() {
     alias: 'editEventForServer',
     // This pattern matches both /ops/x_button/1?pressed=log_depot_edit & /ops/x_button/2?pressed=zone_log_depot_edit endpoints
     urlPattern: /\/ops\/x_button\/[^/]+\?pressed=.*log_depot_edit/,
-    triggerFn: () => cy.toolbar(editToolbarButton),
+    triggerFn: () => cy.toolbar(EDIT_TOOLBAR_BUTTON),
   });
 }
 
 function resetProtocolDropdown({ selectServerListItem = true } = {}) {
   // Select Diagnostics
-  cy.accordion(diagnosticsAccordionItem);
+  cy.accordion(DIAGNOSTICS_ACCORDION_ITEM);
   // Select "Zone:" or "Server:" accordion item
   cy.selectAccordionItem([
-    manageIQRegionAccordItem,
-    zoneAccordItem,
-    ...(selectServerListItem ? [serverAccordItem] : []),
+    MANAGEIQ_REGION_ACCORDION_ITEM,
+    ZONE_ACCORDION_ITEM,
+    ...(selectServerListItem ? [SERVER_ACCORDION_ITEM] : []),
   ]);
 
   // Clicking Edit button
   selectToolbarEditButton();
 
   // Resetting Protocol dropdown value
-  cy.getFormSelectFieldById(protocolSelectFieldId).then((selectField) => {
+  cy.getFormSelectFieldById('log_protocol').then((selectField) => {
     const currentValue = selectField.val();
     // If the value is not default one(BLANK_VALUE), then setting it to blank
-    if (currentValue !== dropdownBlankValue) {
-      cy.wrap(selectField).select(dropdownBlankValue);
-      cy.getFormFooterButtonByType(saveButton, 'submit').click();
+    if (currentValue !== DROPDOWN_BLANK_VALUE) {
+      cy.wrap(selectField).select(DROPDOWN_BLANK_VALUE);
+      cy.getFormFooterButtonByType(SAVE_BUTTON_TEXT, 'submit').click();
       // Validating confirmation flash message
-      cy.expect_flash(flashClassMap.success, flashMessageSettingsSaved);
+      cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SETTINGS_SAVED);
     }
   });
 }
@@ -136,70 +92,70 @@ function goToCollectLogsTabAndOpenEditForm() {
 
 function validateFormElements() {
   // Assert form header is visible
-  cy.expect_explorer_title(formHeader).should('be.visible');
+  cy.expect_explorer_title(FORM_HEADER).should('be.visible');
   // Assert form sub-header is visible
-  cy.contains('#main-content .bx--form h3', formSubheaderSnippet).should(
+  cy.contains('#main-content .bx--form h3', FORM_SUBHEADER_SNIPPET).should(
     'be.visible'
   );
   // Assert protocol field label is visible
-  cy.getFormLabelByInputId(protocolSelectFieldId).should('be.visible');
+  cy.getFormLabelByInputId('log_protocol').should('be.visible');
   // Assert protocol field is visible and enabled
-  cy.getFormSelectFieldById(protocolSelectFieldId)
+  cy.getFormSelectFieldById('log_protocol')
     .should('be.visible')
     .and('be.enabled');
   // Assert cancel button is visible and enabled
-  cy.getFormFooterButtonByType(cancelButton)
+  cy.getFormFooterButtonByType(CANCEL_BUTTON_TEXT)
     .should('be.visible')
     .and('be.enabled');
   // Assert save button is visible and disabled
-  cy.getFormFooterButtonByType(saveButton, 'submit')
+  cy.getFormFooterButtonByType(SAVE_BUTTON_TEXT, 'submit')
     .should('be.visible')
     .and('be.disabled');
   // Assert reset button is visible and disabled
-  cy.getFormFooterButtonByType(resetButton)
+  cy.getFormFooterButtonByType(RESET_BUTTON_TEXT)
     .should('be.visible')
     .and('be.disabled');
 }
 
 function cancelButtonValidation() {
   // Click cancel button in the form
-  cy.getFormFooterButtonByType(cancelButton).click();
+  cy.getFormFooterButtonByType(CANCEL_BUTTON_TEXT).click();
   // Validating confirmation flash message
-  cy.expect_flash(flashClassMap.success, flashMessageOperationCancelled);
+  cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_OPERATION_CANCELLED);
 }
 
 function resetButtonValidation() {
   // Selecting Samba option from dropdown
-  cy.getFormSelectFieldById(protocolSelectFieldId).select(sambaDropdownValue);
+  cy.getFormSelectFieldById('log_protocol').select(SAMBA_DROPDOWN_VALUE);
   // Confirm Reset button is enabled once dropdown value is changed and then click on Reset
-  cy.getFormFooterButtonByType(resetButton).should('be.enabled').click();
+  cy.getFormFooterButtonByType(RESET_BUTTON_TEXT).should('be.enabled').click();
   // Confirm dropdown has the old value
-  cy.getFormSelectFieldById(protocolSelectFieldId).should(
+  cy.getFormSelectFieldById('log_protocol').should(
     'have.value',
-    dropdownBlankValue
+    DROPDOWN_BLANK_VALUE
   );
 }
 
 function saveButtonValidation() {
   // Selecting Samba option from dropdown
-  cy.getFormSelectFieldById(protocolSelectFieldId).select(sambaDropdownValue);
+  cy.getFormSelectFieldById('log_protocol').select(SAMBA_DROPDOWN_VALUE);
   // Confirm Save button is enabled once dropdown value is changed and then click on Save
-  cy.getFormFooterButtonByType(saveButton, 'submit')
+  cy.getFormFooterButtonByType(SAVE_BUTTON_TEXT, 'submit')
     .should('be.enabled')
     .click();
   // Validating confirmation flash message
-  cy.expect_flash(flashClassMap.success, flashMessageSettingsSaved);
+  cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SETTINGS_SAVED);
 }
 
 describe('Automate Collect logs Edit form operations', () => {
   beforeEach(() => {
     cy.login();
     // Navigate to Application settings and expand Diagnostics accordion
-    cy.menu(settingsMenuOption, appSettingsMenuOption);
+    cy.menu(SETTINGS_MENU_OPTION, APP_SETTINGS_MENU_OPTION);
     cy.interceptApi({
       alias: 'getDiagnosticsInfo',
-      urlPattern: `/ops/accordion_select?id=${diagnosticsAccordionItemId}`,
-      triggerFn: () => cy.accordion(diagnosticsAccordionItem),
+      urlPattern: `/ops/accordion_select?id=${DIAGNOSTICS_ACCORDION_ITEM_ID}`,
+      triggerFn: () => cy.accordion(DIAGNOSTICS_ACCORDION_ITEM),
     });
   });
 
@@ -207,9 +163,9 @@ describe('Automate Collect logs Edit form operations', () => {
     beforeEach(() => {
       // Select "Server:" accordion item
       cy.selectAccordionItem([
-        manageIQRegionAccordItem,
-        zoneAccordItem,
-        serverAccordItem,
+        MANAGEIQ_REGION_ACCORDION_ITEM,
+        ZONE_ACCORDION_ITEM,
+        SERVER_ACCORDION_ITEM,
       ]);
       // Select collect logs navbar and open edit form
       goToCollectLogsTabAndOpenEditForm();
@@ -234,9 +190,9 @@ describe('Automate Collect logs Edit form operations', () => {
       cy.url()
         ?.then((url) => {
           // Ensures navigation to Settings -> Application-Settings in the UI
-          if (!url?.includes(componentRouteUrl)) {
+          if (!url?.includes(COMPONENT_ROUTE_URL)) {
             // Navigate to Settings -> Application-Settings before cleanup
-            cy.menu(settingsMenuOption, appSettingsMenuOption);
+            cy.menu(SETTINGS_MENU_OPTION, APP_SETTINGS_MENU_OPTION);
           }
         })
         .then(() => {
@@ -253,7 +209,10 @@ describe('Automate Collect logs Edit form operations', () => {
         urlPattern:
           /ops\/tree_select\?id=.*&text=.*Zone.*Default.*Zone.*(current).*/,
         triggerFn: () =>
-          cy.selectAccordionItem([manageIQRegionAccordItem, zoneAccordItem]),
+          cy.selectAccordionItem([
+            MANAGEIQ_REGION_ACCORDION_ITEM,
+            ZONE_ACCORDION_ITEM,
+          ]),
       });
       // Select collect logs tab and open edit form
       goToCollectLogsTabAndOpenEditForm();
@@ -278,9 +237,9 @@ describe('Automate Collect logs Edit form operations', () => {
       cy.url()
         ?.then((url) => {
           // Ensures navigation to Settings -> Application-Settings in the UI
-          if (!url?.includes(componentRouteUrl)) {
+          if (!url?.includes(COMPONENT_ROUTE_URL)) {
             // Navigate to Settings -> Application-Settings before cleanup
-            cy.menu(settingsMenuOption, appSettingsMenuOption);
+            cy.menu(SETTINGS_MENU_OPTION, APP_SETTINGS_MENU_OPTION);
           }
         })
         .then(() => {
