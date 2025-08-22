@@ -74,35 +74,37 @@ function addSchedule() {
   // Open add schedule form
   selectConfigMenu(ADD_SCHEDULE_CONFIG_OPTION);
   // Checks if Save button is disabled initially
-  cy.contains(
-    '#main-content .bx--btn-set button[type="submit"]',
-    saveButton
-  ).should('be.disabled');
+  cy.getFormFooterButtonByType(SAVE_BUTTON_TEXT, 'submit').should(
+    'be.disabled'
+  );
   // Adding data
-  cy.get('input#name').type(initialScheduleName);
-  cy.get('input#description').type(initialDescription);
-  cy.get('input[type="checkbox"]#enabled').check({ force: true });
+  cy.getFormInputFieldById('name').type(INITIAL_SCHEDULE_NAME);
+  cy.getFormInputFieldById('description').type(INITIAL_DESCRIPTION);
+  cy.getFormInputFieldById('enabled', 'checkbox').check({
+    force: true,
+  });
   // Select Action type option: 'VM Analysis'
-  cy.get('select#action_typ').select(actionTypeVmAnalysis);
+  cy.getFormSelectFieldById('action_typ').select(ACTION_TYPE_VM_ANALYSIS);
   // Select Filter type option: 'A Single VM'
-  cy.get('select#filter_typ').select(actionTypeVmAnalysis);
+  cy.getFormSelectFieldById('filter_typ').select(ACTION_TYPE_VM_ANALYSIS);
   // Select Run option: 'Hours'
-  cy.get('select#timer_typ').select(timerTypeHourly);
+  cy.getFormSelectFieldById('timer_typ').select(TIMER_TYPE_HOURLY);
   // Select Every option: '1 Hour'
-  cy.get('select#timer_value').select(frequencyTypeHour);
+  cy.getFormSelectFieldById('timer_value').select(FREQUENCY_TYPE_HOUR);
   // Select Time zone option: '(GMT-10:00) Hawaii'
-  cy.get('input[role="combobox"]#time_zone').click();
-  cy.contains('[role="option"]', timezoneTypeHawaii)
+  cy.getFormInputFieldById('time_zone').click();
+  cy.contains('[role="option"]', TIMEZONE_TYPE_HAWAII)
     .should('be.visible')
     .click();
-  cy.get('input#start_date').type(initialStartDate);
-  cy.get('input#start_time').type(startTime);
+  cy.getFormInputFieldById('start_date').type(INITIAL_START_DATE);
+  cy.getFormInputFieldById('start_time').type(START_TIME);
   // Intercepting the API call for adding a new schedule
   cy.interceptApi({
     alias: 'addScheduleApi',
     urlPattern: '/ops/schedule_edit/new?button=save',
     triggerFn: () =>
-      cy.contains('#main-content .bx--btn-set button[type="submit"]', saveButton)
+      cy
+        .getFormFooterButtonByType(SAVE_BUTTON_TEXT, 'submit')
         .should('be.enabled') // Checks if Save button is enabled once all required fields are filled
         .click(),
   });
@@ -174,11 +176,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.interceptApi({
       alias: 'treeSelectApi',
       urlPattern: /\/ops\/tree_select\?id=.*&text=.*/,
-      triggerFn: () =>
-        cy.selectAccordionItem([
-          MANAGEIQ_REGION_ACCORDION_ITEM,
-          SCHEDULES_ACCORDION_ITEM,
-        ]),
+      triggerFn: () => cy.accordionItem(SCHEDULES_ACCORDION_ITEM),
     });
   });
 
@@ -188,146 +186,139 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
 
     /* ===== Selecting any option other than "Automation Tasks" from "Action" dropdown does not hide the Filter dropdown ===== */
 
-    cy.get('select#action_typ').select(actionTypeVmAnalysis);
-    cy.get('select#action_typ').should('have.value', actionTypeVmAnalysis);
-    // Checking for Filter type dropdown
-    verifyFilterTypeDropdownExists();
-
-    cy.get('select#action_typ').select(actionTypeTemplateAnalysis);
-    cy.get('select#action_typ').should(
-      'have.value',
-      actionTypeTemplateAnalysis
+    // Selecting "Vm Analysis" to verify filter type dropdown
+    cy.getFormSelectFieldById('action_typ').select(ACTION_TYPE_VM_ANALYSIS);
+    cy.getFormLabelByInputId('filter_typ').should('exist');
+    cy.getFormSelectFieldById('filter_typ').should('exist');
+    // Selecting "Template Analysis" to verify filter type dropdown
+    cy.getFormSelectFieldById('action_typ').select(
+      ACTION_TYPE_TEMPLATE_ANALYSIS
     );
-    // Checking for Filter type dropdown
-    verifyFilterTypeDropdownExists();
-
-    cy.get('select#action_typ').select(actionTypeHostAnalysis);
-    cy.get('select#action_typ').should('have.value', actionTypeHostAnalysis);
-    // Checking for Filter type dropdown
-    verifyFilterTypeDropdownExists();
-
-    cy.get('select#action_typ').select(actionTypeContainerAnalysis);
-    cy.get('select#action_typ').should(
-      'have.value',
-      actionTypeContainerAnalysis
+    cy.getFormLabelByInputId('filter_typ').should('exist');
+    cy.getFormSelectFieldById('filter_typ').should('exist');
+    // Selecting "Host Analysis" to verify filter type dropdown
+    cy.getFormSelectFieldById('action_typ').select(ACTION_TYPE_HOST_ANALYSIS);
+    cy.getFormLabelByInputId('filter_typ').should('exist');
+    cy.getFormSelectFieldById('filter_typ').should('exist');
+    // Selecting "Container Analysis" to verify filter type dropdown
+    cy.getFormSelectFieldById('action_typ').select(
+      ACTION_TYPE_CONTAINER_ANALYSIS
     );
-    // Checking for Filter type dropdown
-    verifyFilterTypeDropdownExists();
-
-    cy.get('select#action_typ').select(actionTypeClusterAnalysis);
-    cy.get('select#action_typ').should('have.value', actionTypeClusterAnalysis);
-    // Checking for Filter type dropdown
-    verifyFilterTypeDropdownExists();
-
-    cy.get('select#action_typ').select(actionTypeDataStoreAnalysis);
-    cy.get('select#action_typ').should(
-      'have.value',
-      actionTypeDataStoreAnalysis
+    cy.getFormLabelByInputId('filter_typ').should('exist');
+    cy.getFormSelectFieldById('filter_typ').should('exist');
+    // Selecting "Cluster Analysis" to verify filter type dropdown
+    cy.getFormSelectFieldById('action_typ').select(
+      ACTION_TYPE_CLUSTER_ANALYSIS
     );
-    // Checking for Filter type dropdown
-    verifyFilterTypeDropdownExists();
-
-    cy.get('select#action_typ').select(actionTypeVmCompilanceCheck);
-    cy.get('select#action_typ').should(
-      'have.value',
-      actionTypeVmCompilanceCheck
+    cy.getFormLabelByInputId('filter_typ').should('exist');
+    cy.getFormSelectFieldById('filter_typ').should('exist');
+    // Selecting "DataStore Analysis" to verify filter type dropdown
+    cy.getFormSelectFieldById('action_typ').select(
+      ACTION_TYPE_DATA_STORE_ANALYSIS
     );
-    // Checking for Filter type dropdown
-    verifyFilterTypeDropdownExists();
-
-    cy.get('select#action_typ').select(actionTypeHostCompilanceCheck);
-    cy.get('select#action_typ').should(
-      'have.value',
-      actionTypeHostCompilanceCheck
+    cy.getFormLabelByInputId('filter_typ').should('exist');
+    cy.getFormSelectFieldById('filter_typ').should('exist');
+    // Selecting "Vm Compilance Check" to verify filter type dropdown
+    cy.getFormSelectFieldById('action_typ').select(
+      ACTION_TYPE_VM_COMPILANCE_CHECK
     );
-    // Checking for Filter type dropdown
-    verifyFilterTypeDropdownExists();
-
-    cy.get('select#action_typ').select(actionTypeContainerCompilanceCheck);
-    cy.get('select#action_typ').should(
-      'have.value',
-      actionTypeContainerCompilanceCheck
+    cy.getFormLabelByInputId('filter_typ').should('exist');
+    cy.getFormSelectFieldById('filter_typ').should('exist');
+    // Selecting "Host Compilance Check" to verify filter type dropdown
+    cy.getFormSelectFieldById('action_typ').select(
+      ACTION_TYPE_HOST_COMPILANCE_CHECK
     );
-    // Checking for Filter type dropdown
-    verifyFilterTypeDropdownExists();
+    cy.getFormLabelByInputId('filter_typ').should('exist');
+    cy.getFormSelectFieldById('filter_typ').should('exist');
+    // Selecting "Container Compilance Check" to verify filter type dropdown
+    cy.getFormSelectFieldById('action_typ').select(
+      ACTION_TYPE_CONTAINER_COMPILANCE_CHECK
+    );
+    cy.getFormLabelByInputId('filter_typ').should('exist');
+    cy.getFormSelectFieldById('filter_typ').should('exist');
 
     /* ===== Selecting "Automation Tasks" option from "Action" dropdown shows Zone, Object details & Object fields ===== */
 
-    cy.get('select#action_typ').select(actionTypeAutomationTasks);
-    cy.get('select#action_typ').should('have.value', actionTypeAutomationTasks);
+    cy.getFormSelectFieldById('action_typ').select(
+      ACTION_TYPE_AUTOMATION_TASKS
+    );
+    cy.getFormSelectFieldById('action_typ').should(
+      'have.value',
+      ACTION_TYPE_AUTOMATION_TASKS
+    );
 
     // Checking for Zone dropdown
-    cy.get('label[for="zone_id"]').should('exist');
-    cy.get('select#zone_id').should('exist');
+    cy.getFormLabelByInputId('zone_id').should('exist');
+    cy.getFormSelectFieldById('zone_id').should('exist');
 
     // Checking for Object Details
     cy.get('h3[name="object_details"]').should('exist');
     // Checking for System/Process dropdown
-    cy.get('label[for="instance_name"]').should('exist');
-    cy.get('select#instance_name').should('exist');
+    cy.getFormLabelByInputId('instance_name').should('exist');
+    cy.getFormSelectFieldById('instance_name').should('exist');
     // Checking for Messsage textfield
-    cy.get('label[for="message"]').should('exist');
-    cy.get('input#message').should('exist');
+    cy.getFormLabelByInputId('message').should('exist');
+    cy.getFormInputFieldById('message').should('exist');
     // Checking for Request textfield
-    cy.get('label[for="request"]').should('exist');
-    cy.get('input#request').should('exist');
+    cy.getFormLabelByInputId('request').should('exist');
+    cy.getFormInputFieldById('request').should('exist');
 
     // Checking for Object
     cy.get('h3[name="object_attributes"]').should('exist');
     // Checking for Type Combobox
-    cy.get('label[for="target_class"]').should('exist');
-    cy.get('input[role="combobox"]#target_class').should('exist');
+    cy.getFormLabelByInputId('target_class').should('exist');
+    cy.getFormInputFieldById('target_class').should('exist');
     // Checking for Object Combobox
-    cy.get('label[for="target_id"]').should('exist');
-    cy.get('input[role="combobox"]#target_id').should('exist');
+    cy.getFormLabelByInputId('target_id').should('exist');
+    cy.getFormInputFieldById('target_id').should('exist');
 
     // Checking for Attribute/Value pairs
     cy.contains('h3', 'Attribute/Value Pairs').should('exist');
     // Checking for 5 attribute-value pairs text fields
-    cy.get('input#attribute_1').should('exist');
-    cy.get('input#value_1').should('exist');
-    cy.get('input#attribute_2').should('exist');
-    cy.get('input#value_2').should('exist');
-    cy.get('input#attribute_3').should('exist');
-    cy.get('input#value_3').should('exist');
-    cy.get('input#attribute_4').should('exist');
-    cy.get('input#value_4').should('exist');
-    cy.get('input#attribute_5').should('exist');
-    cy.get('input#value_5').should('exist');
+    cy.getFormInputFieldById('attribute_1').should('exist');
+    cy.getFormInputFieldById('value_1').should('exist');
+    cy.getFormInputFieldById('attribute_2').should('exist');
+    cy.getFormInputFieldById('value_2').should('exist');
+    cy.getFormInputFieldById('attribute_3').should('exist');
+    cy.getFormInputFieldById('value_3').should('exist');
+    cy.getFormInputFieldById('attribute_4').should('exist');
+    cy.getFormInputFieldById('value_4').should('exist');
+    cy.getFormInputFieldById('attribute_5').should('exist');
+    cy.getFormInputFieldById('value_5').should('exist');
 
     /* ===== Selecting "Once" option from "Run" dropdown does not show the "Every" dropdown ===== */
-
-    cy.get('select#timer_typ').select(timerTypeOnce);
+    cy.getFormSelectFieldById('timer_typ').select(TIMER_TYPE_ONCE);
+    cy.getFormSelectFieldById('timer_typ').should(
+      'have.value',
+      TIMER_TYPE_ONCE
+    );
     // Checking whether the Every dropdown is hidden
-    cy.get('input#timer_value').should('not.exist');
+    cy.getFormInputFieldById('timer_value').should('not.exist');
 
     /* ===== Selecting any other option other than "Once" from "Run" dropdown shows the "Every" dropdown ===== */
-
-    cy.get('select#timer_typ').select(timerTypeHourly);
-    // Checking whether the "Every" dropdown exist
-    verifyTimerDropdownExists();
-
-    cy.get('select#timer_typ').select(timerTypeDaily);
-    // Checking whether the "Every" dropdown exist
-    verifyTimerDropdownExists();
-
-    cy.get('select#timer_typ').select(timerTypeWeekly);
-    // Checking whether the "Every" dropdown exist
-    verifyTimerDropdownExists();
-
-    cy.get('select#timer_typ').select(timerTypeMonthly);
-    // Checking whether the "Every" dropdown exist
-    verifyTimerDropdownExists();
+    // Selecting "Hourly" to verify timer dropdown
+    cy.getFormSelectFieldById('timer_typ').select(TIMER_TYPE_HOURLY);
+    cy.getFormLabelByInputId('timer_value').should('exist');
+    cy.getFormSelectFieldById('timer_value').should('exist');
+    // Selecting "Daily" to verify timer dropdown
+    cy.getFormSelectFieldById('timer_typ').select(TIMER_TYPE_DAILY);
+    cy.getFormLabelByInputId('timer_value').should('exist');
+    cy.getFormSelectFieldById('timer_value').should('exist');
+    // Selecting "Weekly" to verify timer dropdown
+    cy.getFormSelectFieldById('timer_typ').select(TIMER_TYPE_WEEKLY);
+    cy.getFormLabelByInputId('timer_value').should('exist');
+    cy.getFormSelectFieldById('timer_value').should('exist');
+    // Selecting "Monthly" to verify timer dropdown
+    cy.getFormSelectFieldById('timer_typ').select(TIMER_TYPE_MONTHLY);
+    cy.getFormLabelByInputId('timer_value').should('exist');
+    cy.getFormSelectFieldById('timer_value').should('exist');
   });
 
   it('Checking whether Cancel button works on the Add form', () => {
     // Open add schedule form
     selectConfigMenu(ADD_SCHEDULE_CONFIG_OPTION);
     // Cancel the form
-    cy.contains(
-      '#main-content .bx--btn-set button[type="button"]',
-      cancelButton
-    )
+    cy.getFormFooterButtonByType(CANCEL_BUTTON_TEXT)
       .should('be.enabled')
       .click();
     cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_OPERATION_CANCELED);
@@ -344,10 +335,10 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     // Open edit schedule form
     selectConfigMenu(EDIT_SCHEDULE_CONFIG_OPTION);
     // Editing name and description
-    cy.get('input#name').clear().type(editedScheduleName);
-    cy.get('input#description').clear().type(editedDescription);
+    cy.getFormInputFieldById('name').clear().type(EDITED_SCHEDULE_NAME);
+    cy.getFormInputFieldById('description').clear().type(EDITED_DESCRIPTION);
     // Confirms Save button is enabled after making edits
-    cy.contains('#main-content .bx--btn-set button[type="submit"]', saveButton)
+    cy.getFormFooterButtonByType(SAVE_BUTTON_TEXT, 'submit')
       .should('be.enabled')
       .click();
     cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SCHEDULE_SAVED);
@@ -365,18 +356,25 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     // Open edit schedule form
     selectConfigMenu(EDIT_SCHEDULE_CONFIG_OPTION);
     // Editing description and start date
-    cy.get('input#description').clear().type(editedDescription);
-    cy.get('input#start_date').clear().type(editedStartDate);
-    cy.contains('#main-content .bx--btn-set button[type="button"]', resetButton)
+    cy.getFormInputFieldById('description').clear().type(EDITED_DESCRIPTION);
+    cy.getFormInputFieldById('start_date').clear().type(EDITED_START_DATE);
+    // Resetting
+    cy.getFormFooterButtonByType(RESET_BUTTON_TEXT)
       .should('be.enabled')
       .click();
     cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_RESET_SCHEDULE);
     // Confirming the edited fields contain the old values after resetting
-    cy.get('input#description').should('have.value', initialDescription);
-    cy.get('input#start_date').should('have.value', initialStartDate);
+    cy.getFormInputFieldById('description').should(
+      'have.value',
+      INITIAL_DESCRIPTION
+    );
+    cy.getFormInputFieldById('start_date').should(
+      'have.value',
+      INITIAL_START_DATE
+    );
 
     /* ===== Checking whether Cancel button works ===== */
-    cy.contains('#main-content .bx--btn-set button[type="button"]', CANCEL_BUTTON_TEXT)
+    cy.getFormFooterButtonByType(CANCEL_BUTTON_TEXT)
       .should('be.enabled')
       .click();
     cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_OPERATION_CANCELED);
