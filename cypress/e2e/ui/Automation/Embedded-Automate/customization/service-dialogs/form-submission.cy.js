@@ -134,5 +134,3 @@ describe('Automation > Embedded Automate > Customization > Service Dialogs > For
       .should('contain', dialogName);
   });
 });
-
-// Made with Bob
