@@ -498,5 +498,3 @@ describe('Automate > Customization > Service Dialogs > Add Dialog > Time Picker 
       .should('have.value', 'PM');
   });
 });
-
-// Made with Bob
