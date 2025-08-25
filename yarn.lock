@@ -929,12 +929,11 @@
     source-map-support "^0.5.16"
 
 "@babel/runtime-corejs2@^7.0.0":
-  version "7.17.0"
-  resolved "https://registry.yarnpkg.com/@babel/runtime-corejs2/-/runtime-corejs2-7.17.0.tgz#d7c0ce349974f1acee1da9d8994bb5c0b546642a"
-  integrity sha512-5GnrnCnHtTjveqE/gU7uDEbXwNhffLbNLpxu2dxUtRgYId7NTEQRg//urSeNPlYXivJzMGXAyGh7d1xSNo1Gog==
+  version "7.28.3"
+  resolved "https://npm.manageiq.org/@babel/runtime-corejs2/-/runtime-corejs2-7.28.3.tgz#8da1aacf2de037dd22b266e245e7f1d59e6bf673"
+  integrity sha512-+1b3F+6P7ewZRsGVD/8sOTsq2YLpwr6ziqkUZ7vOQrW+jWZ/K2dv92LRcdlwta46z93g6IC/v66CzpSzms7U2A==
   dependencies:
-    core-js "^2.6.5"
-    regenerator-runtime "^0.13.4"
+    core-js "^2.6.12"
 
 "@babel/runtime-corejs3@^7.10.2":
   version "7.17.0"
@@ -953,11 +952,9 @@
     regenerator-runtime "^0.13.4"
 
 "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.0", "@babel/runtime@^7.10.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.15.4", "@babel/runtime@^7.4.4", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.1", "@babel/runtime@^7.9.2":
-  version "7.17.0"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.17.0.tgz#b8d142fc0f7664fb3d9b5833fd40dcbab89276c0"
-  integrity sha512-etcO/ohMNaNA2UBdaXBBSX/3aEzFMRrVfaPv8Ptc0k+cWpWW0QFiGZ2XnVqQZI1Cf734LbPGmqBKWESfW4x/dQ==
-  dependencies:
-    regenerator-runtime "^0.13.4"
+  version "7.28.3"
+  resolved "https://npm.manageiq.org/@babel/runtime/-/runtime-7.28.3.tgz#75c5034b55ba868121668be5d5bb31cc64e6e61a"
+  integrity sha512-9uIQ10o0WGdpP6GDhXcdOJPJuDgFtIDtN/9+ArJQ2NAfAmiuhTQdzkaTGR33v43GYS2UrSA0eX2pPPHoFVvpxA==
 
 "@babel/template@^7.16.7", "@babel/template@^7.3.3", "@babel/template@^7.4.0", "@babel/template@^7.8.6":
   version "7.16.7"
@@ -4915,9 +4912,9 @@ core-js@^1.0.0:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
   integrity sha1-ZSKUwUZR2yj6k70tX/KYOk8IxjY=
 
-core-js@^2.4.0, core-js@^2.5.0, core-js@^2.6.5, core-js@^2.6.9:
+core-js@^2.4.0, core-js@^2.5.0, core-js@^2.6.12, core-js@^2.6.9:
   version "2.6.12"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.12.tgz#d9333dfa7b065e347cc5682219d6f690859cc2ec"
+  resolved "https://npm.manageiq.org/core-js/-/core-js-2.6.12.tgz#d9333dfa7b065e347cc5682219d6f690859cc2ec"
   integrity sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==
 
 core-js@~3.6.4:
