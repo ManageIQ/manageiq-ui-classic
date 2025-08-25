@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { RadioButtonGroup, RadioButton } from 'carbon-components-react';
 import { dynamicFieldDataProps, SD_ACTIONS } from '../helper';
@@ -48,7 +48,6 @@ const DynamicRadioButton = ({ dynamicFieldData: { section, field, fieldPosition 
 
   const fieldActions = (event, inputProps) => {
     const type = (event === SD_ACTIONS.field.delete) ? SD_ACTIONS.field.delete : editActionType;
-    // setFieldState((prevState) => ({ ...prevState, ...updatedFields }));
 
     setInputValues({
       ...inputValues,
