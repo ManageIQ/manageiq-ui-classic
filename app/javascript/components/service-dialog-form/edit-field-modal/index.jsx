@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import MiqFormRenderer from '@@ddf';
-// import MiqFormRenderer, { useFormApi } from '@@ddf';
-import { Tabs, Tab, Modal, ModalBody } from 'carbon-components-react';
+import { Modal, ModalBody } from 'carbon-components-react';
 import { dynamicComponents } from '../data';
 import { createSchema } from './edit-field-modal.schema';
 import InlineFlashMessage from '../../common/inline-flash-message';
-// import { componentTypes } from '../component-types';
-// import componentMapper from '../../../forms/mappers/componentMapper';
-// import CustomDateTimePicker from '../../date-time-picker';
 
 const EditFieldModal = ({
   componentId, fieldConfiguration, showModal, onModalHide, onModalApply, initialData,
@@ -16,9 +12,7 @@ const EditFieldModal = ({
 }) => {
   const component = dynamicComponents.find((item) => item.id === componentId);
 
-  // const [newFieldValues, setnewFieldValues] = useState();
   const [formValues, setFormValues] = useState(initialData);
-  // const [inlineFlashMessage, setInlineFlashMessage] = useState(null);
   const [inlineFlashMessage, setInlineFlashMessage] = useState(() => {
     if (component.title === 'Tag Control') {
       return ({
@@ -76,7 +70,6 @@ const EditFieldModal = ({
   const handleSubmit = (submittedValues, e) => {
     const finalValues = { ...formValues, ...submittedValues };
     onSave(e, finalValues);
-    // onSave(e, formValues);
   };
 
   const onChange = (data) => {
@@ -84,8 +77,6 @@ const EditFieldModal = ({
 
     if (data.initialData.label === 'Timepicker') {
       onTimePickerChange(data.value);
-      // setnewFieldValues({ value: data.value });
-      // setFormValues((prev) => ({ ...prev, value: data.value }));
     } else if (data.initialData.label === 'Entry point') {
       // Update form values to make the form dirty when entry point changes
       setFormValues((prev) => ({ ...prev, automateEntryPoint: data.value }));
@@ -111,15 +102,12 @@ const EditFieldModal = ({
       passiveModal // Required to hide the save and cancel buttons on the Modal
       className="edit-field-modal"
       onChange={handleFieldUpdates}
-      // primaryButtonDisabled={false}
     >
       <ModalBody className="edit-field-modal-body">
         <InlineFlashMessage message={inlineFlashMessage} />
         <MiqFormRenderer
           schema={createSchema(fieldConfiguration, formValues, onChange)}
           initialValues={formValues}
-          // initialValues={initialData}
-          // componentMapper={mapper}
           onSubmit={handleSubmit}
           onCancel={onCancel}
         />

@@ -19,39 +19,13 @@ const DynamicTimePicker = ({ dynamicFieldData: { section, field, fieldPosition }
   const inputId = `tab-${tabId}-section-${sectionId}-field-${fieldPosition}-date-time-picker`;
   const editActionType = SD_ACTIONS.field.edit;
 
-  // // Helper function to get the formatted current date
-  // const getCurrentDate = () => {
-  //   const now = new Date();
-  //   return now.toLocaleDateString('en-US', {
-  //     month: '2-digit',
-  //     day: '2-digit',
-  //     year: 'numeric',
-  //   });
-  // };
-
-  // // Helper function to get the current time and period
-  // const getCurrentTimeAndPeriod = () => {
-  //   const now = new Date();
-  //   let hours = now.getHours();
-  //   const minutes = now.getMinutes().toString().padStart(2, '0');
-  //   const currentPeriod = hours >= 12 ? 'PM' : 'AM';
-  //   hours = hours % 12 || 12; // Convert 0 hours to 12 in 12-hour format
-  //   return { time: `${hours}:${minutes}`, period: currentPeriod };
-  // };
-
   const [date, setDate] = useState(getCurrentDate);
   const [time, setTime] = useState(() => getCurrentTimeAndPeriod().time);
   const [isValid, setIsValid] = useState(true);
   const [period, setPeriod] = useState(() => getCurrentTimeAndPeriod().period);
 
-  // const [date, setDate] = React.useState('');
-  // const [time, setTime] = React.useState('');
-  // const [isValid, setIsValid] = useState(true);
-  // const [period, setPeriod] = useState('AM');
-
   const combinedDateTime = () => {
     const dateTime = `${date} ${time} ${period}`;
-    // return new Date(dateTime).toISOString();
     return dateTime;
   };
 
@@ -65,7 +39,6 @@ const DynamicTimePicker = ({ dynamicFieldData: { section, field, fieldPosition }
     label: __('Timepicker'),
     name: inputId,
     visible: true,
-    // value: field.defaultDatePickerValue || '',
     value: '',
     fieldsToRefresh: refreshEnabledFields,
     date,
@@ -104,7 +77,6 @@ const DynamicTimePicker = ({ dynamicFieldData: { section, field, fieldPosition }
   };
 
   const handleFieldUpdate = (event, updatedFields) => {
-    // date = updatedFields.value[0].toLocaleDateString('en-US');
     setFieldState((prevState) => ({ ...prevState, ...updatedFields }));
     onFieldAction({ event, type: editActionType, fieldPosition, inputProps: { ...fieldState, ...updatedFields } });
   };
