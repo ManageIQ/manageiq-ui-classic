@@ -19,7 +19,6 @@ const CustomDateTimePicker = (field) => {
 
   const combinedDateTime = () => {
     const dateTime = `${date} ${time} ${period}`;
-    // return new Date(dateTime).toISOString();
     return dateTime;
   };
 
@@ -31,7 +30,6 @@ const CustomDateTimePicker = (field) => {
         year: 'numeric',
       }).format(newDate[0]);
       setDate(formattedDate);
-      // onChange({ date: newDate, time, period }); // Call the onChange function passed as prop, passing the updated values
       onChange({ value: combinedDateTime(), initialData });
     }
   };
@@ -54,8 +52,6 @@ const CustomDateTimePicker = (field) => {
     onChange({ value: combinedDateTime(), initialData });
   };
 
-  
-
   return (
     <div>
       <FormLabel>{field.label}</FormLabel>
@@ -67,7 +63,6 @@ const CustomDateTimePicker = (field) => {
           id="date-picker-single"
           placeholder="mm/dd/yyyy"
           labelText={__('Select Date')}
-          // value={initialData.date}
           value={date}
           hideLabel
           onChange={handleDateChange}
@@ -80,14 +75,12 @@ const CustomDateTimePicker = (field) => {
           invalidText="Enter a valid 12-hour time (e.g., 01:30)"
           hideLabel
           value={time}
-          // value={initialData.time}
           onChange={handleTimeChange}
         >
           <TimePickerSelect
             id="time-picker-select-1"
             labelText={__('Select Period')}
             defaultValue={period}
-            // defaultValue={initialData.period}
             onChange={handlePeriodChange}
           >
             <SelectItem value="AM" text="AM" />
