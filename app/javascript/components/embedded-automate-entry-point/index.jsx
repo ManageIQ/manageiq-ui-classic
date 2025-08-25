@@ -38,9 +38,14 @@ const EmbeddedAutomateEntryPoint = (props) => {
   useEffect(() => {
     if (selectedValue && selectedValue.name && selectedValue.name.text) {
       selectedValue.name.text = textValue;
+      input.onChange(selectedValue);
+    } else if (!selectedValue || Object.keys(selectedValue).length === 0) {
+      // When selectedValue is empty or undefined, pass null to trigger validation
+      input.onChange(null);
+    } else {
+      input.onChange(selectedValue);
     }
-    input.onChange(selectedValue);
-  }, [textValue]);
+  }, [textValue, selectedValue]);
 
   return (
     <div>
@@ -56,7 +61,7 @@ const EmbeddedAutomateEntryPoint = (props) => {
       />
       <div className="entry-point-wrapper">
         <div className="entry-point-text-input">
-          <TextInput id={id} type="text" labelText={__(label)} onChange={(value) => setTextValue(value.target.value)} value={textValue} />
+          <TextInput id={id} type="text" labelText={__(label)} onChange={(value) => setTextValue(value.target.value)} value={textValue} readOnly />
         </div>
         <div className="entry-point-buttons">
           <div className="entry-point-open">
@@ -75,6 +80,8 @@ const EmbeddedAutomateEntryPoint = (props) => {
               onClick={() => {
                 setSelectedValue({});
                 setTextValue('');
+                // Ensure the input change is triggered to update form state
+                input.onChange(null);
               }}
             />
           </div>
