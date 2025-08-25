@@ -118,13 +118,6 @@ const dropdownShape = PropTypes.shape({
 const radioButtonShape = PropTypes.shape({
   label: PropTypes.string.isRequired,
   required: PropTypes.bool,
-  // items: PropTypes.arrayOf(
-  //   PropTypes.shape({
-  //     id: PropTypes.string.isRequired,
-  //     text: PropTypes.string.isRequired,
-  //   })
-  // ).isRequired,
-  // selectedValue: PropTypes.string,
 });
 
 const datePickerShape = PropTypes.shape({
@@ -152,148 +145,6 @@ export const SD_PROP_SHAPES = {
   dateTimePicker: dateTimePickerShape,
   tagControl: tagControlShape,
 };
-
-const sampleCreatePayload = () => (
-
-  {
-    "action": "create",
-    "resource": {
-      "label": "11_A1234",
-      "buttons": "submit,cancel",
-      "dialog_tabs": [
-        {
-          "label": "New tab",
-          "position": 0,
-          "dialog_groups": [
-            {
-              "label": "New section",
-              "position": 0,
-              "dialog_fields": [
-                {
-                  "name": "text_box_1_1",
-                  "description": "",
-                  "type": "DialogFieldTextBox",
-                  "display": "edit",
-                  "display_method_options": {},
-                  "read_only": false,
-                  "required": false,
-                  "required_method_options": {},
-                  "default_value": "v1",
-                  "values_method_options": {},
-                  "label": "Text Box",
-                  "position": 0,
-                  "dynamic": false,
-                  "show_refresh_button": false,
-                  "load_values_on_init": true,
-                  "auto_refresh": false,
-                  "trigger_auto_refresh": false,
-                  "reconfigurable": false,
-                  "visible": true,
-                  "options": {
-                    "protected": false
-                  },
-                  "resource_action": {
-                    "resource_type": "DialogField",
-                    "ae_attributes": {}
-                  },
-                  "validator_type": false
-                },
-                {
-                  "name": "dropdown_list_1",
-                  "description": "",
-                  "type": "DialogFieldDropDownList",
-                  "display": "edit",
-                  "display_method_options": {},
-                  "read_only": false,
-                  "required": false,
-                  "required_method_options": {},
-                  "default_value": "3",
-                  "values_method_options": {},
-                  "label": "Dropdown",
-                  "position": 1,
-                  "dynamic": false,
-                  "show_refresh_button": false,
-                  "load_values_on_init": true,
-                  "auto_refresh": false,
-                  "trigger_auto_refresh": false,
-                  "reconfigurable": false,
-                  "visible": true,
-                  "options": {
-                    "sort_by": "description",
-                    "sort_order": "ascending",
-                    "force_multi_value": false
-                  },
-                  "resource_action": {
-                    "resource_type": "DialogField",
-                    "ae_attributes": {}
-                  },
-                  "data_type": "string",
-                  "values": [
-                    [
-                      "1",
-                      "One"
-                    ],
-                    [
-                      "2",
-                      "Two"
-                    ],
-                    [
-                      "3",
-                      "Three"
-                    ]
-                  ]
-                },
-                {
-                  "name": "radio_button_1",
-                  "description": "",
-                  "type": "DialogFieldRadioButton",
-                  "display": "edit",
-                  "display_method_options": {},
-                  "read_only": false,
-                  "required": false,
-                  "required_method_options": {},
-                  "default_value": "3",
-                  "values_method_options": {},
-                  "label": "Radio Button",
-                  "position": 2,
-                  "dynamic": false,
-                  "show_refresh_button": false,
-                  "load_values_on_init": true,
-                  "auto_refresh": false,
-                  "trigger_auto_refresh": false,
-                  "reconfigurable": false,
-                  "visible": true,
-                  "options": {
-                    "sort_by": "description",
-                    "sort_order": "ascending"
-                  },
-                  "resource_action": {
-                    "resource_type": "DialogField",
-                    "ae_attributes": {}
-                  },
-                  "data_type": "string",
-                  "values": [
-                    [
-                      "1",
-                      "One"
-                    ],
-                    [
-                      "2",
-                      "Two"
-                    ],
-                    [
-                      "3",
-                      "Three",
-                    ]
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-});
 
 // in the case of Tag Control component
 const getCategoryInfo = ({
@@ -393,52 +244,20 @@ const parseFieldsInfo = (fields) => {
   return result;
 };
 
-
-
 const getFieldsInfo = (fields) => {
   const formattedFields = parseFieldsInfo(fields);
-  // formattedFields.map(({ componentId: _componentId, ...rest }) => rest);
   return formattedFields;
 };
-  
-
-// const getFieldsInfo = (fields) =>
-//   fields.map(({ componentId: _componentId, ...rest }) => rest);
 
 // get details on Sections
-const getSectionsInfo = (sections) => {
-  console.log('Sections::: ', sections);
-  return sections.map((section) => ({
-    label: section.title,
-    position: section.order,
-    // dialog_fields: getFieldsInfo(section.fields),
-    // dialog_fields: section.fields,
-    // dialog_fields: section.fields.map(({ componentID, ...rest }) => rest),
-    dialog_fields: getFieldsInfo(section.fields),
-  }));
-};
-
-// get details on tabs
-// const getTabsInfo = (tabs) => {
-//   console.log("Tabs::: ", tabs);
-//   return tabs.map((tab) => ({
-//     label: tab.name,
-//     position: tab.tabId,
-//     dialog_groups: getSectionsInfo(tab.sections),
-//   }));
-// };
-
-// const getTabsInfo = (tabs) => {
-//   console.log("Tabs::: ", tabs);
-//   return tabs.filter((tab) => tab.sections.filter((section) => section.dialog_groups.length > 0).length > 0).map((tab) => ({
-//     label: tab.name,
-//     position: tab.tabId,
-//     dialog_groups: getSectionsInfo(tab.sections),
-//   }));
-// };
+const getSectionsInfo = (sections) => sections.map((section) => ({
+  label: section.title,
+  position: section.order,
+  dialog_fields: getFieldsInfo(section.fields),
+}));
 
 const getTabsInfo = (tabs) => {
-  console.log("Tabs::: ", tabs);
+  console.log("Tabs: ", tabs);
   return tabs
     .map((tab) => ({
       label: tab.name,
@@ -448,22 +267,12 @@ const getTabsInfo = (tabs) => {
     .filter((tabInfo) => tabInfo.dialog_groups.length > 0); // Filter out objects with empty dialog_groups
 };
 
-// get details on the dialog
-// const getDialogInfo = (data) => ({
-//   label: data.dialog && data.dialog.label,
-//   buttons: 'submit,cancel',
-//   dialog_tabs: getTabsInfo(data.formFields),
-// });
-
-const getDialogInfo = (data) => {
-  // debugger
-  return ({
-    label: data.label,
-    description: data.description,
-    buttons: 'submit,cancel',
-    dialog_tabs: getTabsInfo(data.formFields),
-  });
-};
+const getDialogInfo = (data) => ({
+  label: data.label,
+  description: data.description,
+  buttons: 'submit,cancel',
+  dialog_tabs: getTabsInfo(data.formFields),
+});
 
 // get payload for create
 const payloadForSave = (data) => ({
@@ -472,7 +281,6 @@ const payloadForSave = (data) => ({
 });
 
 export const formattedCatalogPayload = (data) => {
-  // const payload = sampleCreatePayload(data);
   const payload = payloadForSave(data);
   return payload;
 };

@@ -1,5 +1,3 @@
-// import { componentTypes } from '@data-driven-forms/react-form-renderer';
-// import { componentTypes } from '../component-types';
 import { componentTypes } from '@@ddf';
 
 export const textFieldComponent = (field) => ({
@@ -120,14 +118,6 @@ export const datePickerComponent = (field) => ({
   value: field.value,
 });
 
-// export const dateTimePickerComponent = (field) => ({
-//   component: componentTypes.DATE_TIME_PICKER,
-//   id: field.name,
-//   name: field.name,
-//   label: field.label,
-//   value: field.value,
-// });
-
 export const dateTimePickerComponent = (field, initialData, onChange) => ({
   component: 'date-time-picker',
   id: field.name,
@@ -138,33 +128,29 @@ export const dateTimePickerComponent = (field, initialData, onChange) => ({
   onChange,
 });
 
-export const automateEntryPointComponent = (field, initialData, onChange) => {
-  return ({
-    component: 'embedded-automate-entry-point',
-    id: field.name,
-    name: field.name,
-    label: field.label,
-    field: field.name,
-    selected: initialData.automateEntryPoint,
-    type: 'provision',
-    isRequired: true,
-    validate: [{ type: 'required' }]
-  });
-};
+export const automateEntryPointComponent = (field, initialData) => ({
+  component: 'embedded-automate-entry-point',
+  id: field.name,
+  name: field.name,
+  label: field.label,
+  field: field.name,
+  selected: initialData.automateEntryPoint,
+  type: 'provision',
+  isRequired: true,
+  validate: [{ type: 'required' }]
+});
 
-export const workflowEntryPointComponent = (field, initialData, onChange) => {
-  return ({
-    component: 'embedded-workflow-entry-point',
-    id: 'provisioning_entry_point_workflow',
-    name: 'provisioning_entry_point_workflow',
-    label: field.label,
-    field: field.name,
-    selected: '',
-    type: 'provision',
-    // isRequired: true,
-    // validate: [{ type: 'required' }]
-  });
-};
+export const workflowEntryPointComponent = (field) => ({
+  component: 'embedded-workflow-entry-point',
+  id: 'provisioning_entry_point_workflow',
+  name: 'provisioning_entry_point_workflow',
+  label: field.label,
+  field: field.name,
+  selected: '',
+  type: 'provision',
+  // isRequired: true,
+  // validate: [{ type: 'required' }]
+});
 
 const valueTypes = [
   { label: __('String'), value: 'String' },

@@ -49,7 +49,6 @@ export const createNewTab = () => ({
 export const tagControlCategories = async() => {
   try {
     const { resources } = await API.get('/api/categories?expand=resources&attributes=id,name,description,single_value,children');
-    console.log("Resources: ", resources);
 
     return resources;
   } catch (error) {
@@ -61,7 +60,6 @@ export const tagControlCategories = async() => {
 // data has formfields and list (as of now); no dialog related general info - this is needed
 export const saveServiceDialog = (data) => {
   const payload = formattedCatalogPayload(data);
-  // const payload = sample_create_payload();
 
   const { result } = API.post('/api/service_dialogs', payload, {
     skipErrors: [400],

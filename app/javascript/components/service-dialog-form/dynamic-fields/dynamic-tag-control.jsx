@@ -152,9 +152,6 @@ const DynamicTagControl = ({ dynamicFieldData: { section, field, fieldPosition }
           labelText={fieldState.label}
           helperText={fieldState.helperText}
         >
-          {/* {fieldState.subCategories.map((subcat) => (
-            <SelectItem key={subcat.id} text={subcat.label} value={subcat.id} />
-          ))} */}
           {sortedItems().map((subcat) => (
             <SelectItem key={subcat.id} text={subcat.label} value={subcat.id} />
           ))}

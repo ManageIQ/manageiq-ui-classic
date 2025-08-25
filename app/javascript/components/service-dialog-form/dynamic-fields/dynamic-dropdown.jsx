@@ -17,17 +17,6 @@ const DynamicDropdown = ({ dynamicFieldData: { section, field, fieldPosition }, 
   const inputId = `tab-${tabId}-section-${sectionId}-field-${fieldPosition}-dropdown`;
   const editActionType = SD_ACTIONS.field.edit;
 
-  // const defaultDropdownOptions = [
-  //   // { value: 'option-0', description: 'Option 0' },
-  //   // { value: 'option-1', description: 'Option 1' },
-
-  //   { description: 'A', value: '1' },
-  //   { description: 'B', value: '2' },
-  //   { description: 'C', value: '3' },
-  //   { description: 'D', value: '4' },
-  //   { description: 'E', value: '5' },
-  // ];
-
   const refreshEnabledFields = section.fields
     .filter((field) => field.showRefresh)
     .map((field) => ({ value: field.label, label: field.label }));
@@ -50,8 +39,9 @@ const DynamicDropdown = ({ dynamicFieldData: { section, field, fieldPosition }, 
 
   const handleFieldUpdate = (event, updatedFields) => {
     setFieldState((prevState) => ({ ...prevState, ...updatedFields }));
-    // onFieldAction({ ...dynamicFieldData, field: { ...dynamicFieldData.field, ...updatedFields } });
-    onFieldAction({ event, type: editActionType, fieldPosition, inputProps: { ...fieldState, ...updatedFields } });
+    onFieldAction({
+      event, type: editActionType, fieldPosition, inputProps: { ...fieldState, ...updatedFields }
+    });
   };
 
   const fieldActions = (event, inputProps) => {
@@ -154,7 +144,6 @@ const DynamicDropdown = ({ dynamicFieldData: { section, field, fieldPosition }, 
           id={inputId}
           name={fieldState.name}
           label={fieldState.label}
-          // titleText="Dropdown title text"
           helperText={__('This is helper text')}
           items={sortedItems()}
           sortItems={(items) => items}

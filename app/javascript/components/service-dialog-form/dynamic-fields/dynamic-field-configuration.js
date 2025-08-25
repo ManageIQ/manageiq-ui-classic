@@ -1,5 +1,3 @@
-// import { componentTypes } from '@data-driven-forms/react-form-renderer';
-// import { componentTypes } from '../component-types';
 import { componentTypes } from '@@ddf';
 
 export const dynamicFields = {
@@ -73,7 +71,6 @@ export const advanced = () => ({
 const defaultValField = (type) => {
   switch (type) {
     case 'checkBox':
-      // return dynamicFields.defaultCheckboxValue;
       return undefined;
     case 'dropDown':
       return dynamicFields.defaultDropdownValue;

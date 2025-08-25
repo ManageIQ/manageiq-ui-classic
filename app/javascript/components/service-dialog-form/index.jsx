@@ -1,8 +1,7 @@
 /* eslint-disable radix */
 import React, { useState, useRef, useEffect } from 'react';
-import MiqFormRenderer from '@@ddf';
 import {
-  Tabs, Tab, Button, TextInput, TextArea, Modal, ModalBody,
+  Tabs, Tab, Button, TextInput, TextArea,
 } from 'carbon-components-react';
 import { AddAlt16 } from '@carbon/icons-react';
 import {
@@ -17,7 +16,6 @@ import {
 } from './helper';
 import EditTabModal from './edit-tab-modal';
 import EditSectionModal from './edit-section-modal';
-import { createSchema as SectionEditSchema } from './edit-section-modal/section.schema';
 
 
 const ServiceDialogForm = () => {
@@ -144,21 +142,6 @@ const ServiceDialogForm = () => {
     const sectionPosition = parseInt(event.currentTarget.getAttribute('section'));
     hoverItem.current = { tabPosition, sectionPosition };
   };
-
-  //   const onDragOverListener = ({ event }) => {
-  //   event.preventDefault();
-
-  //   const tabAttr = event.currentTarget.getAttribute('tab');
-  //   const sectionAttr = event.currentTarget.getAttribute('section');
-
-  //   const tabPosition = tabAttr ? parseInt(tabAttr) : null;
-  //   const sectionPosition = sectionAttr ? parseInt(sectionAttr) : null;
-
-  //   hoverItem.current = {
-  //     ...(tabPosition !== null ? { tabPosition } : {}),
-  //     ...(sectionPosition !== null ? { sectionPosition } : {}),
-  //   };
-  // };
 
   /** Function to add a tab as the second last item
    * Last item will always be 'Create new tab'.
@@ -346,20 +329,14 @@ const ServiceDialogForm = () => {
       label={tab.name}
       onClick={() => onTabSelect(tab.tabId)}
     >
-      {/* <div
-        data-tab={tabPosition}
-        onDragEnter={(event) => onSectionAction({ event, type: SD_ACTIONS.onDragEnterTab, tab, tabPosition })}
-        onDragOver={(event) => onSectionAction({ type: SD_ACTIONS.onDragOverListener, event })}
-      > */}
-        {tab.tabId !== 'new'
-        && (
-          <section className="dynamic-sections-wrapper">
-            {renderTabName(tab)}
-            {renderSections(tab)}
-            {renderAddSectionButton(tab.tabId)}
-          </section>
-        )}
-      {/* </div> */}
+      {tab.tabId !== 'new'
+      && (
+        <section className="dynamic-sections-wrapper">
+          {renderTabName(tab)}
+          {renderSections(tab)}
+          {renderAddSectionButton(tab.tabId)}
+        </section>
+      )}
     </Tab>
   ));
 
@@ -367,8 +344,6 @@ const ServiceDialogForm = () => {
   const renderTabContents = () => (
     <div
       className="dynamic-tabs-wrapper"
-      // onDrop={(event) => onSectionAction({ event, type: SD_ACTIONS.onDrop })}
-      // onDragOver={(event) => onSectionAction({ event, type: SD_ACTIONS.onDragOverListener })}
     >
       <Tabs className="miq_custom_tabs" id="dynamic-tabs">
         {renderTabs()}
@@ -425,7 +400,6 @@ const ServiceDialogForm = () => {
     <form onSubmit={handleSubmit}>
       <div className="service-dialog-main-wrapper">
         <h2>{__('General')}</h2>
-        {/* Dialog General Info */}
         <div className="service-dialog-info">
           <TextInput
             id="dialogName"

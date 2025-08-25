@@ -395,7 +395,7 @@ describe('Automate > Customization > Service Dialogs > Add Dialog > Radio Button
   });
 
   // Test to verify adding and removing radio button entries
-  it.only('should allow adding and removing radio button entries', () => {
+  it('should allow adding and removing radio button entries', () => {
     cy.openFieldEditModal(0, 0, 0);
 
     // Set values in Field Information tab

@@ -63,7 +63,6 @@ const DynamicFieldActions = ({
         showModal={showModal}
         onModalHide={onModalHide}
         onModalApply={onModalApply}
-        // initialData={editedFields}
         initialData={fieldProps}
         onSave={(e, updatedFields) => {
           updateFieldProps(e, updatedFields);
