@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import MiqFormRenderer from '@@ddf';
-import { Modal, ModalBody } from 'carbon-components-react';
+import { Modal } from 'carbon-components-react';
 import { createSchema } from './tab.schema';
 
 const EditTabModal = ({
@@ -20,7 +20,6 @@ const EditTabModal = ({
       onRequestClose={onModalHide}
       passiveModal // Required to hide the save and cancel buttons on the Modal
       className="edit-tab-modal"
-      // onChange={handleFieldUpdates}
     >
       <MiqFormRenderer
         schema={createSchema(usedTabNames, tabInfo.name)}

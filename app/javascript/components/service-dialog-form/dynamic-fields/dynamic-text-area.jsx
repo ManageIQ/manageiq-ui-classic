@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { TextArea, FormLabel } from 'carbon-components-react';
+import { TextArea } from 'carbon-components-react';
 import { dynamicFieldDataProps, SD_ACTIONS } from '../helper';
 import DynamicFieldActions from '../dynamic-field-actions';
 import {
@@ -21,7 +21,6 @@ const DynamicTextArea = ({ dynamicFieldData: { section, field, fieldPosition }, 
 
   const [fieldState, setFieldState] = useState({
     type: 'DialogFieldTextAreaBox',
-    // resourceType: 'DialogField',
     position: fieldPosition,
     label: __('Text Area'),
     placeholder: '',
@@ -34,7 +33,6 @@ const DynamicTextArea = ({ dynamicFieldData: { section, field, fieldPosition }, 
 
   const handleFieldUpdate = (event, updatedFields) => {
     setFieldState((prevState) => ({ ...prevState, ...updatedFields }));
-    // onFieldAction({ ...dynamicFieldData, field: { ...dynamicFieldData.field, ...updatedFields } });
     onFieldAction({ event, type: editActionType, fieldPosition, inputProps: { ...fieldState, ...updatedFields } });
   };
 
@@ -101,9 +99,6 @@ const DynamicTextArea = ({ dynamicFieldData: { section, field, fieldPosition }, 
   return (
     <div className="dynamic-form-field">
       <div className="dynamic-form-field-item">
-        {/* <FormLabel>
-          Text Area
-        </FormLabel> */}
         <TextArea
           id={inputId}
           name={fieldState.name}
