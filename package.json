@@ -179,6 +179,7 @@
     "ip": "1.1.9",
     "lodash": "~4.17.21",
     "marked": "~4.0.10",
+    "minimatch": "~5.1.6",
     "minimist": "1.2.6",
     "moment": "^2.29.4",
     "moment-timezone": "~0.5.40",
