@@ -108,7 +108,7 @@ const DynamicTextInput = ({ dynamicFieldData: { section, field, fieldPosition },
           helperText={fieldState.helperText}
           placeholder={__('Default value')}
           value={fieldState.value}
-          readOnly={fieldState.readOnly} // this doesn't seem to work here;
+          readOnly={fieldState.readOnly}
           onChange={(e) => handleFieldUpdate(e, { value: e.target.value })}
         />
       </div>

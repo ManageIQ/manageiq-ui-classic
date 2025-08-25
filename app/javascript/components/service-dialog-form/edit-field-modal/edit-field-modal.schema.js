@@ -1,6 +1,4 @@
-// import { componentTypes } from '@data-driven-forms/react-form-renderer';
 import { componentTypes } from '@@ddf';
-// import { componentTypes } from '../component-types';
 import {
   textFieldComponent,
   textAreaComponent,
