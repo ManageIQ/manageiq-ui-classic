@@ -1,0 +1,70 @@
+import React from 'react';
+import {
+  CheckboxChecked32, RadioButtonChecked32, Time32, StringText32, TextSmallCaps32, CaretDown32, Tag32, Calendar32,
+} from '@carbon/icons-react';
+import { formattedCatalogPayload } from './helper';
+
+export const dragItems = {
+  COMPONENT: 'component',
+  SECTION: 'section',
+  FIELD: 'field',
+  TAB: 'tab',
+};
+
+/** Data needed to render the dynamic components on the left hand side of the form. */
+export const dynamicComponents = [
+  { id: 1, title: 'Text Box', icon: <StringText32 /> },
+  { id: 2, title: 'Text Area', icon: <TextSmallCaps32 /> },
+  { id: 3, title: 'Check Box', icon: <CheckboxChecked32 /> },
+  { id: 4, title: 'Dropdown', icon: <CaretDown32 /> },
+  { id: 5, title: 'Radio Button', icon: <RadioButtonChecked32 /> },
+  { id: 6, title: 'Datepicker', icon: <Calendar32 /> },
+  { id: 7, title: 'Timepicker', icon: <Time32 /> },
+  { id: 8, title: 'Tag Control', icon: <Tag32 /> },
+];
+
+/** Function which returens the default data for a section under a tab. */
+export const defaultSectionContents = (tabId, sectionId) => ({
+  tabId,
+  sectionId,
+  title: 'New Section',
+  fields: [],
+  order: 0,
+});
+
+/** Function which returns the default data for a tab with default section. */
+export const defaultTabContents = (tabId) => ({
+  tabId,
+  name: tabId === 0 ? __('New Tab') : __(`New Tab ${tabId}`),
+  sections: [defaultSectionContents(tabId, 0)],
+});
+
+/** Function to create a dummy tab for creating new tabs. */
+export const createNewTab = () => ({
+  tabId: 'new',
+  name: 'Create Tab',
+  sections: [],
+});
+
+export const tagControlCategories = async() => {
+  try {
+    const { resources } = await API.get('/api/categories?expand=resources&attributes=id,name,description,single_value,children');
+    console.log("Resources: ", resources);
+
+    return resources;
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    return [];
+  }
+};
+
+// data has formfields and list (as of now); no dialog related general info - this is needed
+export const saveServiceDialog = (data) => {
+  const payload = formattedCatalogPayload(data);
+  // const payload = sample_create_payload();
+
+  const { result } = API.post('/api/service_dialogs', payload, {
+    skipErrors: [400],
+  });
+  return result;
+};
