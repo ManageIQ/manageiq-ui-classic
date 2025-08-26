@@ -33,6 +33,11 @@ const DynamicFieldActions = ({
     onValueChange(dateTime);
   };
 
+  const onAutomationTypeChange = (val) => {
+    setState((prevState) => ({ ...prevState, automationType: val }));
+    onValueChange(val);
+  };
+
   const renderEditButton = () => (
     <Button
       renderIcon={Edit16}
@@ -71,6 +76,7 @@ const DynamicFieldActions = ({
         onDynamicSwitchToggle={onDynamicSwitchToggle}
         onCategorySelect={onCategorySelect}
         onTimePickerChange={onTimePickerChange}
+        onAutomationTypeChange={onAutomationTypeChange}
       />
     )
   );
