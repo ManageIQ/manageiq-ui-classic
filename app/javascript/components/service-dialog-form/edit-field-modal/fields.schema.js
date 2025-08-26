@@ -130,26 +130,24 @@ export const dateTimePickerComponent = (field, initialData, onChange) => ({
 
 export const automateEntryPointComponent = (field, initialData) => ({
   component: 'embedded-automate-entry-point',
+  // id: 'provisioning_entry_point_automate',
   id: field.name,
   name: field.name,
   label: field.label,
   field: field.name,
   selected: initialData.automateEntryPoint,
   type: 'provision',
-  isRequired: true,
-  validate: [{ type: 'required' }]
 });
 
-export const workflowEntryPointComponent = (field) => ({
+export const workflowEntryPointComponent = (field, initialData) => ({
   component: 'embedded-workflow-entry-point',
   id: 'provisioning_entry_point_workflow',
-  name: 'provisioning_entry_point_workflow',
+  // id: field.name,
+  name: field.name,
   label: field.label,
   field: field.name,
-  selected: '',
+  selected: initialData.workflowEntryPoint,
   type: 'provision',
-  // isRequired: true,
-  // validate: [{ type: 'required' }]
 });
 
 const valueTypes = [
