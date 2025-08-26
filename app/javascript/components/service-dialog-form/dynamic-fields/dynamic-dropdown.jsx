@@ -65,6 +65,10 @@ const DynamicDropdown = ({ dynamicFieldData: { section, field, fieldPosition }, 
     setFieldState((prevState) => ({ ...prevState, dynamic: isDynamic }));
   };
 
+  const updateAutomationType = (value) => {
+    setFieldState((prevState) => ({ ...prevState, automationType: value }));
+  };
+
   const ordinaryDropdownOptions = () => ([
     dynamicFields.readOnly,
     dynamicFields.visible,
@@ -78,17 +82,21 @@ const DynamicDropdown = ({ dynamicFieldData: { section, field, fieldPosition }, 
     dynamicFields.fieldsToRefresh,
   ]);
 
-  const dynamicDropdownOptions = () => ([
-    dynamicFields.automationType,
-    dynamicFields.automateEntryPoint,
-    dynamicFields.workflowEntryPoint,
-    dynamicFields.showRefresh,
-    dynamicFields.loadOnInit,
-    dynamicFields.required,
-    dynamicFields.multiselect,
-    dynamicFields.valueType,
-    dynamicFields.fieldsToRefresh,
-  ]);
+  const dynamicDropdownOptions = () => {
+    const currentAutomationType = fieldState.automationType || 'embedded_automate';
+    return [
+      dynamicFields.automationType,
+      currentAutomationType === 'embedded_workflow'
+        ? dynamicFields.workflowEntryPoint
+        : dynamicFields.automateEntryPoint,
+      dynamicFields.showRefresh,
+      dynamicFields.loadOnInit,
+      dynamicFields.required,
+      dynamicFields.multiselect,
+      dynamicFields.valueType,
+      dynamicFields.fieldsToRefresh,
+    ];
+  };
 
   const DropdownOptions = () => ({
     name: fieldTab.options,
@@ -162,6 +170,7 @@ const DynamicDropdown = ({ dynamicFieldData: { section, field, fieldPosition }, 
         dynamicFieldAction={(event, inputProps) => fieldActions(event, inputProps)}
         fieldConfiguration={DropdownEditFields()}
         dynamicToggleAction={(isDynamic) => resetEditModalTabs(isDynamic)}
+        onValueChange={(value) => updateAutomationType(value)}
       />
     </div>
   );
