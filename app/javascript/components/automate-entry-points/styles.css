@@ -74,6 +74,10 @@
   margin-bottom: 1rem;
 }
 
+.bx--modal-container {
+  overflow-x: scroll;
+}
+
 .bx--btn--primary {
   margin-right: 10px;
 }
