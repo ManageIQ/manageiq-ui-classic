@@ -8,7 +8,7 @@ import InlineFlashMessage from '../../common/inline-flash-message';
 
 const EditFieldModal = ({
   componentId, fieldConfiguration, showModal, onModalHide, onModalApply, initialData,
-  onSave, onDynamicSwitchToggle, onCategorySelect, onTimePickerChange,
+  onSave, onDynamicSwitchToggle, onCategorySelect, onTimePickerChange, onAutomationTypeChange,
 }) => {
   const component = dynamicComponents.find((item) => item.id === componentId);
 
@@ -55,6 +55,8 @@ const EditFieldModal = ({
       }
     } else if (target.name === 'categories') {
       setCategories(val);
+    } else if (target.name === 'automationType') {
+      onAutomationTypeChange(val);
     } else if (target.name === 'name' || target.name === 'label') {
       if (!val) {
         setInlineFlashMessage({
