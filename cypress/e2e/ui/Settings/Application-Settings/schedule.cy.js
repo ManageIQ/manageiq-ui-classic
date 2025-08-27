@@ -125,6 +125,9 @@ function addSchedule() {
         .should('be.enabled') // Checks if Save button is enabled once all required fields are filled
         .click(),
   });
+  return cy.then(() => {
+    return INITIAL_SCHEDULE_NAME;
+  });
 }
 
 function clickScheduleItem(scheduleName) {
@@ -489,12 +492,15 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
 
   it('Checking whether add, edit & delete schedule works', () => {
     /* ===== Adding a schedule ===== */
-    addSchedule();
-    cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SCHEDULE_SAVED);
+    addSchedule().then((createdScheduleName) => {
+      // createdScheduleName value will be "Test-name"
+      // Assert schedule saved flash message
+      cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SCHEDULE_SAVED);
+      // Selecting the schedule and intercepting the API call to get schedule details
+      clickScheduleItem(createdScheduleName);
+    });
 
     /* ===== Editing a schedule ===== */
-    // Selecting the schedule and intercepting the API call to get schedule details
-    clickScheduleItem(INITIAL_SCHEDULE_NAME);
     // Open edit schedule form
     selectConfigMenu(EDIT_SCHEDULE_CONFIG_OPTION);
     // Editing name and description
@@ -511,11 +517,13 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
 
   it('Checking whether Cancel & Reset buttons work fine in the Edit form', () => {
     /* ===== Adding a schedule ===== */
-    addSchedule();
+    addSchedule().then((createdScheduleName) => {
+      // createdScheduleName value will be "Test-name"
+      // Selecting the schedule and intercepting the API call to get schedule details
+      clickScheduleItem(createdScheduleName);
+    });
 
     /* ===== Checking whether Reset button works ===== */
-    // Selecting the schedule and intercepting the API call to get schedule details
-    clickScheduleItem(INITIAL_SCHEDULE_NAME);
     // Open edit schedule form
     selectConfigMenu(EDIT_SCHEDULE_CONFIG_OPTION);
     // Editing description and start date
