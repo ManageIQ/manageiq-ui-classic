@@ -180,6 +180,7 @@
     "@cypress/request": "~3.0.0",
     "decode-uri-component": "~0.2.1",
     "form-data": "~3.0.4",
+    "got": "~11.8.0",
     "http-cache-semantics": "~4.2.0",
     "ip": "~2.0.1",
     "lodash": "~4.17.21",
