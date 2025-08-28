@@ -2,6 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { InlineNotification } from 'carbon-components-react';
 
+/**
+ * @param {Object} message - The notification details to display (kind, title, subtitle).
+ *   If `null`, no notification is shown.
+ * @param {Function} setMessage - Optional state setter.
+ *   If provided, the close button will be shown and will call `setMessage(null)`
+ *   to dismiss the notification. If not provided, the close button is hidden.
+ */
 const InlineFlashMessage = ({ message, setMessage }) => {
   if (!message) return null;
 
