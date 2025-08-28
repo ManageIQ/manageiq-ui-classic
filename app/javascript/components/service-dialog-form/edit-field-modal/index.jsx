@@ -106,7 +106,7 @@ const EditFieldModal = ({
       onChange={handleFieldUpdates}
     >
       <ModalBody className="edit-field-modal-body">
-        <InlineFlashMessage message={inlineFlashMessage} />
+        <InlineFlashMessage message={inlineFlashMessage} showCloseButton={false} />
         <MiqFormRenderer
           schema={createSchema(fieldConfiguration, formValues, onChange)}
           initialValues={formValues}
