@@ -40,6 +40,7 @@ import ContainerProjects from '../components/container-projects';
 import CopyCatalogForm from '../components/copy-catalog-form/copy-catalog-form';
 import CopyDashboardForm from '../components/copy-dashboard-form/copy-dashboard-form';
 import CustomButtonForm from '../components/generic-objects-form/custom-button-form';
+import CustomDateTimePicker from '../components/date-time-picker';
 import CustomURLTabs from '../components/custom-url-tabs';
 import DashboardWidget from '../components/dashboard-widgets/dashboard-charts';
 import Datastore from '../components/data-tables/datastore';
@@ -181,7 +182,6 @@ import WorkflowRepositoryForm from '../components/workflow-repository-form';
 import XmlHolder from '../components/XmlHolder';
 import ZoneForm from '../components/zone-form';
 import MiqAeClass from '../components/miq-ae-class';
-import CustomDateTimePicker from '../components/date-time-picker';
 
 /**
 * Add component definitions to this file.
@@ -222,6 +222,7 @@ ManageIQ.component.addReact('ContainerProjects', ContainerProjects);
 ManageIQ.component.addReact('CopyCatalogForm', CopyCatalogForm);
 ManageIQ.component.addReact('CopyDashboardForm', CopyDashboardForm);
 ManageIQ.component.addReact('CustomButtonForm', CustomButtonForm);
+ManageIQ.component.addReact('CustomDateTimePicker', CustomDateTimePicker);
 ManageIQ.component.addReact('CustomURLTabs', CustomURLTabs);
 ManageIQ.component.addReact('DashboardWidget', DashboardWidget);
 ManageIQ.component.addReact('Datastore', Datastore);
@@ -372,4 +373,3 @@ ManageIQ.component.addReact('WorkflowRepositoryForm', WorkflowRepositoryForm);
 ManageIQ.component.addReact('XmlHolder', XmlHolder);
 ManageIQ.component.addReact('ZoneForm', ZoneForm);
 ManageIQ.component.addReact('MiqAeClass', MiqAeClass);
-ManageIQ.component.addReact('CustomDateTimePicker', CustomDateTimePicker);
