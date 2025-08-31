@@ -12920,7 +12920,7 @@ __metadata:
     react-bootstrap: "npm:~0.33.0"
     react-codemirror2: "npm:^8.0.0"
     react-dom: "npm:~16.13.1"
-    react-markdown: "npm:6.0.0"
+    react-markdown: "npm:6.0.3"
     react-query: "npm:^3.39.3"
     react-redux: "npm:^7.1.1"
     react-router: "npm:~6.3.0"
@@ -15507,7 +15507,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"property-information@npm:^5.0.0":
+"property-information@npm:^5.3.0":
   version: 5.6.0
   resolution: "property-information@npm:5.6.0"
   dependencies:
@@ -15880,15 +15880,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-markdown@npm:6.0.0":
-  version: 6.0.0
-  resolution: "react-markdown@npm:6.0.0"
+"react-markdown@npm:6.0.3":
+  version: 6.0.3
+  resolution: "react-markdown@npm:6.0.3"
   dependencies:
     "@types/hast": "npm:^2.0.0"
     "@types/unist": "npm:^2.0.3"
     comma-separated-tokens: "npm:^1.0.0"
     prop-types: "npm:^15.7.2"
-    property-information: "npm:^5.0.0"
+    property-information: "npm:^5.3.0"
     react-is: "npm:^17.0.0"
     remark-parse: "npm:^9.0.0"
     remark-rehype: "npm:^8.0.0"
@@ -15896,10 +15896,11 @@ __metadata:
     style-to-object: "npm:^0.3.0"
     unified: "npm:^9.0.0"
     unist-util-visit: "npm:^2.0.0"
+    vfile: "npm:^4.0.0"
   peerDependencies:
     "@types/react": ">=16"
     react: ">=16"
-  checksum: 10/b5bd026abddedf685a66ec1d43ef784702cf88db29dfe19f2af26f3f3836a20dd2d7f014093efc5d6c74c920d6cb3332338db56ca002204fdd1a418d001ce7eb
+  checksum: 10/5098927fbc693f4b32941f710fb567047adb3ec626230f666a7312ff4a7802cd421d690700f4b30b1887372fe9985688eea318414c89dc0413e035efac83e146
   languageName: node
   linkType: hard
 
