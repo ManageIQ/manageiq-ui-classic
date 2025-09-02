@@ -10,6 +10,7 @@ const AddVolumeForm = ({ recordId, redirect }) => {
   const [state, setState] = useState({
     isLoading: true,
     volumes: [],
+    storageClasses: [],
   });
 
   const [isSubmitDisabled, setSubmitDisabled] = useState(true);
@@ -19,21 +20,24 @@ const AddVolumeForm = ({ recordId, redirect }) => {
       try {
         setState(prev => ({ ...prev, isLoading: true, error: null }));
 
-        // Use the correct route for your Rails controller
-        const response = await fetch(`/vm_infra/${recordId}/persistentvolumeclaims`);
-        const data = await response.json();
+        // Fetch PVCs
+        const pvcResponse = await fetch(`/vm_infra/persistentvolumeclaims/${recordId}`);
+        const pvcData = await pvcResponse.json();
+        if (!pvcResponse.ok) throw new Error((pvcData.error && pvcData.error.message) || "Failed to fetch PVCs");
 
-        if (!response.ok) {
-          throw new Error((data.error && data.error.message) || 'Failed to fetch persistent volume claims');
-        }
+        // Fetch Storage Classes
+        const scResponse = await fetch(`/vm_infra/storage_class_list/${recordId}`);
+        const scData = await scResponse.json();
+        if (!scResponse.ok) throw new Error((scData.error && scData.error.message) || "Failed to fetch Storage Classes");
 
         setState(prev => ({
           ...prev,
           isLoading: false,
-          volumes: data.resources || [],
+          volumes: pvcData.resources || [],
+          storageClasses: scData.resources || [],
           vmInfo: {
-            name: data.vm_name,
-            namespace: data.vm_namespace
+            name: pvcData.vm_name,
+            namespace: pvcData.vm_namespace
           }
         }));
       } catch (error) {
@@ -42,7 +46,8 @@ const AddVolumeForm = ({ recordId, redirect }) => {
           ...prev,
           isLoading: false,
           error: error.message,
-          volumes: []
+          volumes: [],
+          storageClasses: [],
         }));
       }
     };
@@ -50,7 +55,7 @@ const AddVolumeForm = ({ recordId, redirect }) => {
   fetchPersistentVolumeClaims();
 }, [recordId]);
 
-  const schema = useMemo(() => createSchema(state.volumes), [state.volumes]);
+  const schema = useMemo(() => createSchema(state.volumes, state.storageClasses), [state.volumes, state.storageClasses]);
 
   const onFormChange = (values) => {
     if (values.volumeSourceType === "existing") {
@@ -87,6 +92,8 @@ const AddVolumeForm = ({ recordId, redirect }) => {
         resource: {
           volume_name: values.newVolumeName.trim(),
           volume_size: values.newVolumeSize.trim(),
+          storage_class: values.storage_class,
+          access_mode: values.access_mode,
           vm_id: recordId,
           device: values.device_mountpoint ? values.device_mountpoint : ''
         },
@@ -97,7 +104,7 @@ const AddVolumeForm = ({ recordId, redirect }) => {
 
     request.then(() => {
       const message = sprintf(
-        __('Volume processed successfully.')
+        __('Attechment of Volume has been successfully queued.')
       );
       miqRedirectBack(message, 'success', redirect);
     }).catch((error) => {

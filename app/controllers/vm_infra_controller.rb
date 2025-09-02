@@ -46,6 +46,15 @@ class VmInfraController < ApplicationController
     render :json => {:error => e.message}, :status => 500
   end
 
+  def storage_class_list
+    vm = find_record_with_rbac(VmOrTemplate, params[:id])
+    ems = vm.ext_management_system
+    storage_class = vm.storage_classes
+    render :json => {
+      :resources => storage_class
+    }
+  end
+
   private
 
   def features

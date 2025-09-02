@@ -3050,6 +3050,7 @@ Rails.application.routes.draw do
         tagging_edit
         persistentvolumeclaims
         attached_volumes
+        storage_class_list
       ] +
                compare_get,
       :post => %w[

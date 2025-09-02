@@ -1,6 +1,6 @@
 import { componentTypes } from "@@ddf";
 
-const createSchema = (volumes = []) => ({
+const createSchema = (volumes = [], storageClasses = []) => ({
   fields: [
     {
       component: componentTypes.RADIO,
@@ -69,6 +69,39 @@ const createSchema = (volumes = []) => ({
           pattern: "^[0-9]+Gi$",
           message: __("Size must be in Gi format (e.g., 3Gi)"),
         },
+      ],
+    },
+    {
+      component: componentTypes.SELECT,
+      id: "storage_class",
+      name: "storage_class",
+      label: __("Storage Class"),
+      isRequired: true,
+      condition: { when: "volumeSourceType", is: "new" },
+      includeEmpty: true,
+      options:
+        storageClasses.length > 0
+          ? [
+              { label: __("Select Storage Class"), value: "", isDisabled: true },
+              ...storageClasses.map((sc) => ({
+                label: sc.name || sc,
+                value: sc.name || sc,
+              })),
+            ]
+          : [{ label: __("No Storage Classes Available"), value: "", isDisabled: true }],
+    },
+    {
+      component: componentTypes.SELECT,
+      id: "access_mode",
+      name: "access_mode",
+      label: __("Access Mode"),
+      isRequired: true,
+      condition: { when: "volumeSourceType", is: "new" },
+      includeEmpty: true,
+      options: [
+        { label: "Single Use (RWO)", value: "ReadWriteOnce" },
+        { label: "Shared Access (RWX)", value: "ReadWriteMany" },
+        { label: "Read Write Once Pod (RWOP)", value: "ReadWriteOncePod" },
       ],
     },
   ],

@@ -19,7 +19,7 @@ const DetachVolumeForm = ({ recordId, redirect }) => {
       try {
         setState(prev => ({ ...prev, isLoading: true, error: null }));
 
-        const response = await fetch(`/vm_infra/${recordId}/attached_volumes`);
+        const response = await fetch(`/vm_infra/attached_volumes/${recordId}`);
         const data = await response.json();
 
         if (!response.ok) {
@@ -66,7 +66,7 @@ const DetachVolumeForm = ({ recordId, redirect }) => {
     const request = API.post(`/api/container_volumes/${recordId}`, payload)
     request.then(() => {
       const message = sprintf(
-        __('Detachment of Container Volume has been successfully queued.')
+        __('Detachment of Volume has been successfully queued.')
       );
       miqRedirectBack(message, 'success', redirect);
     }).catch((error) => {
