@@ -31,9 +31,7 @@ function addSubscription() {
 
   // Type into the fields
   cy.get('input[name="dbname"]')
-    // .clear()
     .clear({ force: true }) // Ensure it fully clears
-    // .type('test_db', { delay: 100 }) // Slow down typing
     .type('test_db', { force: true, delay: 100 }) // Slow down typing
     .should('have.value', 'test_db'); // Verify the full text is entered
   cy.get('input[name="host"]').type('localhost');
@@ -172,7 +170,6 @@ describe('Settings > Application Settings > Replication', () => {
     // Edit a field in the modal
     cy.get('input[name="user"]')
       .clear({ force: true })
-      // .type('user2', { delay: 100 }) // Slow down typing
       .type('user2', { force: true, delay: 100 })
       .should('have.value', 'user2'); // Verify the full text is entered
 
@@ -311,4 +308,3 @@ describe('Settings > Application Settings > Replication', () => {
   });
 });
 
-// Made with Bob
