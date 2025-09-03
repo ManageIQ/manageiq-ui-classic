@@ -1,7 +1,4 @@
 - if @sb[:active_tab] == "settings_replication"
   #tab_div
     = react('SettingsReplicationForm', :pglogicalReplicationFormId => 'new')
-
-  :javascript
-    ManageIQ.angular.app.value('pglogicalReplicationFormId', 'new');
-    miq_bootstrap('#form_div');
+    

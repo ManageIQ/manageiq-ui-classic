@@ -31,7 +31,6 @@ const createSchema = (subscriptions, setState, setModalOpen, replicationType, is
   };
 
   const validateSubscription = (selectedRow) => {
-    debugger
     const cellKeys = [0, 1, 2, 3, 4];
     const rowData = {};
 
