@@ -10,9 +10,8 @@ Cypress.Commands.add('accordion', (title) => {
   ret.then((el) => {
     // Do not collapse if already expanded
     if (el.is('.collapsed')) {
-      el.trigger('click');
+      cy.wrap(el).click();
     }
-    return el;
   });
 
   return ret.parents('.panel');
