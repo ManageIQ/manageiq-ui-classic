@@ -219,7 +219,6 @@ class MiqRequestController < ApplicationController
 
     if req.kind_of?(ServiceTemplateProvisionRequest)
       @dialog_replace_data = req.options[:dialog].map { |key, val| {:name => key.split('dialog_').last, :value => parse_val(key, val)} }.to_json
-      # req.options[:dialog]["Array::dialog_param_test1"][1] =="\u001F"
       @new_dialog = true
       template = find_record_with_rbac(ServiceTemplate, req.source_id)
       resource_action = template.resource_actions.find { |r| r.action.downcase == 'provision' && r.dialog_id }
@@ -351,12 +350,9 @@ class MiqRequestController < ApplicationController
     # TODO: Tag Control Field currently does not handle default values
     if val.include?("Classification::") # Handle tag control default values
       if val.include?("\u001F") # Array of tags
-        val = val.split("\u001F")
-        tags = []
-        val.each do |tag|
-          tags.push(Classification.find_by(:id => tag.split('::').second).description)
+        val = val.split("\u001F").map do |tag|
+          Classification.find_by(:id => tag.split('::').second).description
         end
-        val = tags
       else # Single tag
         val = Classification.find_by(:id => val.split('::').second).description
       end
