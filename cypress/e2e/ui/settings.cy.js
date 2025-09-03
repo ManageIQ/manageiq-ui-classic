@@ -10,7 +10,7 @@ describe('Settings > My Settings', () => {
       expect(value[0].value).to.be.oneOf(['', 'Overview / Dashboard']);
     });
     cy.changeSelect('display\\.startpage', 'Overview / Utilization');
-    cy.intercept('PATCH', '/api/users/1').as('settingsUpdate');
+    cy.intercept('PATCH', '/api/users/*').as('settingsUpdate');
     cy.contains('button', 'Save').click();
     cy.wait('@settingsUpdate').its('response.statusCode').should('eq', 200);
 
@@ -25,7 +25,7 @@ describe('Settings > My Settings', () => {
       expect(value[0].value).to.equal('Overview / Utilization');
     });
     cy.changeSelect('display\\.startpage', 'Overview / Dashboard');
-    cy.intercept('PATCH', '/api/users/1').as('settingsUpdate');
+    cy.intercept('PATCH', '/api/users/*').as('settingsUpdate');
     cy.contains('button', 'Save').click();
     cy.wait('@settingsUpdate').its('response.statusCode').should('eq', 200);
 
