@@ -351,10 +351,10 @@ class MiqRequestController < ApplicationController
     if val.include?("Classification::") # Handle tag control default values
       if val.include?("\u001F") # Array of tags
         val = val.split("\u001F").map do |tag|
-          Classification.find_by(:id => tag.split('::').second).description
+          Classification.find_by(:id => tag.split('::').second).id
         end
       else # Single tag
-        val = Classification.find_by(:id => val.split('::').second).description
+        val = Classification.find_by(:id => val.split('::').second).id
       end
     elsif key.include?("Array::") # Handle drop down with multi select default values
       if val.kind_of?(String) && val.include?("\u001F") # Check if string is an array of values
