@@ -21,7 +21,6 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
     _.forEach(vm.dialog.dialog_tabs, function(tab) {
       _.forEach(tab.dialog_groups, function(group) {
         _.forEach(group.dialog_fields, function(field) {
-          console.log(dialogReplaceData);
           const replaceField = dialogReplaceData ? JSON.parse(dialogReplaceData).find(function (replace) { return replace.name === field.name }) : false;
 
           // Handles multi-select dropdowns with integer values
