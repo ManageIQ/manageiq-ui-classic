@@ -44,7 +44,7 @@ Cypress.Commands.add(
       cy.logAndThrowError('inputId is required');
     }
     return cy.get(
-      `#main-content .bx--form input#${inputId}][type="${inputType}"]`
+      `#main-content .bx--form input[id="${inputId}"][type="${inputType}"]`
     );
   }
 );
@@ -82,5 +82,5 @@ Cypress.Commands.add('getFormSelectFieldById', ({ selectId }) => {
   if (!selectId) {
     cy.logAndThrowError('selectId is required');
   }
-  return cy.get(`#main-content .bx--form select#${selectId}]`);
+  return cy.get(`#main-content .bx--form select[id="${selectId}"]`);
 });
