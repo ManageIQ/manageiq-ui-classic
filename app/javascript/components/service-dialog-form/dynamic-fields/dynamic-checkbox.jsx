@@ -20,16 +20,23 @@ const DynamicCheckbox = ({ dynamicFieldData: { section, field, fieldPosition }, 
     .filter((field) => field.showRefresh)
     .map((field) => ({ value: field.label, label: field.label }));
 
+  // Initialize field state with values from the field prop or defaults
   const [fieldState, setFieldState] = useState({
-    type: 'DialogFieldCheckBox',
+    type: field.type || 'DialogFieldCheckBox',
     position: fieldPosition,
-    label: __('Check Box'),
-    required: false,
-    name: inputId,
-    visible: true,
-    checked: false,
+    label: field.label || __('Check Box'),
+    required: field.required || false,
+    name: field.name || inputId,
+    visible: field.visible !== undefined ? field.visible : true,
+    checked: field.default_value || field.value || false,
+    readOnly: field.read_only || false,
+    dynamic: field.dynamic || false,
     fieldsToRefresh: refreshEnabledFields,
   });
+
+  // Log the field data for debugging
+  console.log('Field data in DynamicCheckbox:', field);
+  console.log('Field state initialized as:', fieldState);
 
   const handleFieldUpdate = (event, updatedFields) => {
     setFieldState((prevState) => ({ ...prevState, ...updatedFields }));

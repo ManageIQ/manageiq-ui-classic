@@ -21,21 +21,28 @@ const DynamicDropdown = ({ dynamicFieldData: { section, field, fieldPosition }, 
     .filter((field) => field.showRefresh)
     .map((field) => ({ value: field.label, label: field.label }));
 
+  // Initialize field state with values from the field prop or defaults
   const [fieldState, setFieldState] = useState({
-    type: 'DialogFieldDropDownList',
+    type: field.type || 'DialogFieldDropDownList',
     position: fieldPosition,
-    label: __('Selection Dropdown'),
-    required: false,
-    name: inputId,
-    visible: true,
-    items: defaultDropdownOptions,
-    multiselect: false,
-    value: [],
+    label: field.label || __('Selection Dropdown'),
+    required: field.required || false,
+    name: field.name || inputId,
+    visible: field.visible !== undefined ? field.visible : true,
+    items: field.values ? field.values.map(([value, description]) => ({ value, description })) : defaultDropdownOptions,
+    multiselect: field.force_multi_value || false,
+    value: field.default_value || field.value || [],
+    readOnly: field.read_only || false,
+    dynamic: field.dynamic || false,
     fieldsToRefresh: refreshEnabledFields,
-    sortBy: 'description',
-    sortOrder: 'ascending',
+    sortBy: (field.options && field.options.sort_by) || 'description',
+    sortOrder: (field.options && field.options.sort_order) || 'ascending',
     automationType: 'embedded_automate',
   });
+
+  // Log the field data for debugging
+  console.log('Field data in DynamicDropdown:', field);
+  console.log('Field state initialized as:', fieldState);
 
   const handleFieldUpdate = (event, updatedFields) => {
     setFieldState((prevState) => ({ ...prevState, ...updatedFields }));
