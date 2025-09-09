@@ -100,6 +100,38 @@ module ApplicationController::Buttons
   # we need a "Provider" so adding an "ExtManagementSystem" to the list.
   MODEL_WITH_OPEN_URL = %w[ExtManagementSystem Service User MiqGroup Tenant CloudTenant GenericObject Vm].freeze
 
+  # Types of visibility for the custom buttons
+  VISIBILITY_TYPES = {'role' => 'role', 'all' => 'all'}.freeze
+  ALL_ROLES = ["_ALL_", "all"].freeze
+  FIELDS_EMPTY = [[""], ["", ""]].freeze
+
+  def button_visibility_box_edit
+    typ_changed = params[:visibility_typ].present?
+    @edit[:new][:visibility_typ] = VISIBILITY_TYPES[params[:visibility_typ]] if typ_changed
+    visibility_typ = @edit[:new][:visibility_typ]
+
+    if visibility_typ.to_s == "role"
+      plural = visibility_typ.pluralize
+      key    = plural.to_sym
+      prefix = "#{plural}_"
+
+      @edit[:new][key] = [] if typ_changed
+      params.each do |var, value|
+        next unless var.starts_with?(prefix)
+
+        name = var.split(prefix).last.to_i
+        if value == "1"
+          @edit[:new][key] |= [name] # union
+        elsif value.downcase == "null"
+          @edit[:new][key].delete(name)
+        end
+      end
+    else
+      @edit[:new][:roles] ||= []
+      @edit[:new][:roles] |= ["_ALL_"]
+    end
+  end
+
   def automate_button_field_changed
     assert_privileges(feature_by_action)
 
@@ -125,7 +157,7 @@ module ApplicationController::Buttons
       @edit[:new][:dialog_id] = nil if params[:display_for].present? && params[:display_for] != 'single'
 
       @edit[:new][:dialog_id] = params[:dialog_id] == "" ? nil : params[:dialog_id] if params.key?("dialog_id")
-      visibility_box_edit
+      button_visibility_box_edit
 
       if params[:button_type] == 'default'
         clear_playbook_variables
@@ -147,7 +179,55 @@ module ApplicationController::Buttons
         page.replace("form_role_visibility", :partial => "layouts/role_visibility", :locals => {:rec_id => (@custom_button.id || "new").to_s, :action => "automate_button_field_changed"})
       end
       unless params[:target_class]
-        @changed = session[:changed] = (@edit[:new] != @edit[:current])
+        @changed = session[:changed] = false
+        # This block checks if any of the fields have changed
+        # Broken into different branches for specific fields
+        # If no fields are changed it will not set @changed or session[:changed] to true
+        @edit[:new].each_key do |key|
+          if @edit[:new][key] != @edit[:current][key]
+            if @edit[:new][key].blank? && @edit[:current][key].blank? # check empty string / nil case
+              next
+            elsif @edit[:new][key] == @edit[:current][key].to_s # check string / integer case
+              next
+            elsif key == :roles # check role values
+              if (ALL_ROLES.include?(@edit[:new][key]) || @edit[:new][key].empty?) && (ALL_ROLES.include?(@edit[:current][key]) || @edit[:current][key].nil?) # if visibility is set to "To All"
+                next
+              elsif @edit[:new][key].collect(&:to_i).sort == @edit[:current][key].collect(&:to_i).sort # check if new roles array and current roles array are equal after sorting the ids
+                next
+              else # if new roles array and current roles array are not equal
+                @changed = session[:changed] = true
+                break
+
+              end
+            elsif key == :attrs # check attribute values
+              @edit[:new][key].each_with_index do |_item, index|
+                if FIELDS_EMPTY.include?(@edit[:new][:attrs][index]) && @edit[:current][:attrs][index].empty? # check if attribute and value field is empty
+                  next
+                elsif @edit[:new][:attrs][index].empty? && @edit[:current][:attrs][index].empty? # check if attribute or value field is empty
+                  next
+                else # if new attribute array and current attribute array are not equal
+                  @changed = session[:changed] = true
+                  break
+
+                end
+              end
+
+            elsif key == :visibility_typ # check visibility type
+              if @edit[:new][key] == "all" && @edit[:current][key].nil? # if visibility is set to "To All"
+                next
+              else # if new visibility type value and current visibility type value are not equal
+                @changed = session[:changed] = true
+                break
+
+              end
+            else # if new value and current value are not equal
+              @changed = session[:changed] = true
+              break
+
+            end
+          end
+        end
+
         page << javascript_for_miq_button_visibility(@changed)
       end
       page << "miqSparkle(false);"
