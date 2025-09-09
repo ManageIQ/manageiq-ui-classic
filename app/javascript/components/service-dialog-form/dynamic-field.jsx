@@ -12,7 +12,16 @@ import { dynamicFieldDataProps } from './helper';
 /** Component to render a Field. */
 const DynamicField = ({ fieldData, onFieldAction }) => {
   const fieldSelector = (fieldData) => {
-    switch (fieldData.field.componentId) {
+    console.log('Field data in DynamicField:', fieldData);
+    
+    // Make sure we have a componentId
+    const componentId = fieldData.field.componentId ||
+                       (fieldData.field.type && getComponentIdFromType(fieldData.field.type)) ||
+                       1; // Default to text box
+    
+    console.log('Using componentId:', componentId);
+    
+    switch (componentId) {
       case 1:
         return <DynamicTextInput dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
       case 2:
@@ -31,6 +40,30 @@ const DynamicField = ({ fieldData, onFieldAction }) => {
         return <DynamicTagControl dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
       default:
         return <DynamicTextInput dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
+    }
+  };
+  
+  // Helper function to determine componentId from field type
+  const getComponentIdFromType = (type) => {
+    switch (type) {
+      case 'DialogFieldTextBox':
+        return 1;
+      case 'DialogFieldTextAreaBox':
+        return 2;
+      case 'DialogFieldCheckBox':
+        return 3;
+      case 'DialogFieldDropDownList':
+        return 4;
+      case 'DialogFieldRadioButton':
+        return 5;
+      case 'DialogFieldDateControl':
+        return 6;
+      case 'DialogFieldDateTimeControl':
+        return 7;
+      case 'DialogFieldTagControl':
+        return 8;
+      default:
+        return 1; // Default to text box
     }
   };
 

@@ -1,5 +1,5 @@
 /* eslint-disable radix */
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
   Tabs, Tab, Button, TextInput, TextArea,
 } from 'carbon-components-react';
@@ -17,16 +17,163 @@ import {
 import EditTabModal from './edit-tab-modal';
 import EditSectionModal from './edit-section-modal';
 
+// Helper function to determine componentId from field type
+const getComponentIdFromType = (type) => {
+  switch (type) {
+    case 'DialogFieldTextBox':
+      return 1;
+    case 'DialogFieldTextAreaBox':
+      return 2;
+    case 'DialogFieldCheckBox':
+      return 3;
+    case 'DialogFieldDropDownList':
+      return 4;
+    case 'DialogFieldRadioButton':
+      return 5;
+    case 'DialogFieldDateControl':
+      return 6;
+    case 'DialogFieldDateTimeControl':
+      return 7;
+    case 'DialogFieldTagControl':
+      return 8;
+    default:
+      return 1; // Default to text box
+  }
+};
 
-const ServiceDialogForm = () => {
+
+const ServiceDialogForm = ({ dialogData, dialogAction }) => {
   const dragEnterItem = useRef(null); /** Stores the information of component where the dragged item is being hovered before release. */
   const draggedItem = useRef(null); /** Stores the information of component being dragged. */
   const hoverItem = useRef(null); /** Stores the tab and section position during the drop event. */
 
+  // State to store the dialog data
   const [data, setData] = useState({
     list: dynamicComponents,
     formFields: [defaultTabContents(0), createNewTab()],
+    label: dialogData ? dialogData.label || '' : '',
+    description: dialogData ? dialogData.description || '' : '',
   });
+
+  // Effect to fetch dialog data when editing
+  useEffect(() => {
+    // If we're editing an existing dialog, fetch its complete structure
+    if (dialogData && dialogData.id && dialogAction && dialogAction.action === 'edit') {
+      console.log('Fetching complete dialog structure for editing...');
+      
+      // Fetch the complete dialog structure from the API
+      API.get(`/api/service_dialogs/${dialogData.id}?expand=resources&attributes=content,dialog_tabs`)
+        .then((response) => {
+          console.log('API response:', response);
+
+          if (response.content && response.content[0]) {
+            const fullDialogData = response.content[0];
+            console.log('Full dialog data:', fullDialogData);
+
+            // Extract dialog tabs from the API response
+            const dialogTabs = fullDialogData.dialog_tabs || [];
+            console.log('Dialog tabs from API:', dialogTabs);
+
+            if (dialogTabs.length > 0) {
+              const formattedTabs = dialogTabs.map((tab, index) => {
+                console.log(`Processing tab ${index}:`, tab);
+
+                const formattedTab = {
+                  tabId: index,
+                  name: tab.label,
+                  sections: (tab.dialog_groups || []).map((group, groupIndex) => {
+                    console.log(`Processing group ${groupIndex} in tab ${index}:`, group);
+
+                    const fields = (group.dialog_fields || []).map(field => {
+                      console.log(`Processing field in group ${groupIndex}:`, field);
+
+                      const componentId = getComponentIdFromType(field.type);
+                      console.log(`Mapped field type ${field.type} to componentId ${componentId}`);
+                      
+                      return {
+                        // Ensure each field has componentId based on its type
+                        componentId,
+                        ...field,
+                        // Make sure field has all required properties
+                        name: field.name || `field_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
+                        label: field.label || 'Field',
+                        position: field.position || 0,
+                        visible: field.visible !== undefined ? field.visible : true,
+                        required: field.required || false,
+                        readOnly: field.read_only || false
+                      };
+                    });
+                    
+                    console.log(`Processed fields for group ${groupIndex}:`, fields);
+                    
+                    return {
+                      tabId: index,
+                      sectionId: groupIndex,
+                      title: group.label,
+                      description: group.description || '',
+                      fields,
+                      order: group.position || 0,
+                    };
+                  }),
+                };
+                
+                console.log(`Formatted tab ${index}:`, formattedTab);
+                return formattedTab;
+              });
+              
+              // Add the "Create new tab" option
+              formattedTabs.push(createNewTab());
+              
+              // Update the state with the fetched data
+              setData({
+                list: dynamicComponents,
+                formFields: formattedTabs,
+                label: dialogData.label || '',
+                description: dialogData.description || '',
+              });
+            }
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching dialog data:', error);
+        });
+    } else if (dialogData && dialogData.dialog_tabs && dialogData.dialog_tabs.length > 0) {
+      // If dialog_tabs is already available in the passed data, use it
+      console.log('Using dialog tabs from props:', dialogData.dialog_tabs);
+      
+      const formattedTabs = dialogData.dialog_tabs.map((tab, index) => ({
+        tabId: index,
+        name: tab.label,
+        sections: (tab.dialog_groups || []).map((group, groupIndex) => ({
+          tabId: index,
+          sectionId: groupIndex,
+          title: group.label,
+          description: group.description || '',
+          fields: (group.dialog_fields || []).map(field => ({
+            componentId: getComponentIdFromType(field.type),
+            ...field,
+            name: field.name || `field_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
+            label: field.label || 'Field',
+            position: field.position || 0,
+            visible: field.visible !== undefined ? field.visible : true,
+            required: field.required || false,
+            readOnly: field.read_only || false
+          })),
+          order: group.position || 0,
+        })),
+      }));
+      
+      // Add the "Create new tab" option
+      formattedTabs.push(createNewTab());
+      
+      setData({
+        list: dynamicComponents,
+        formFields: formattedTabs,
+        label: dialogData.label || '',
+        description: dialogData.description || '',
+      });
+    }
+  }, [dialogData, dialogAction]);
 
   const [isSubmitButtonEnabled, setIsSubmitButtonEnabled] = useState(false);
 
@@ -351,8 +498,51 @@ const ServiceDialogForm = () => {
     </div>
   );
 
-  const handleSubmit = () => {
-    saveServiceDialog(data);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // If dialogAction contains an id and action is 'edit', we're updating an existing dialog
+    if (dialogAction && dialogAction.id && dialogAction.action === 'edit') {
+      // Update existing dialog
+      API.put(`/api/service_dialogs/${dialogAction.id}`, {
+        action: 'edit',
+        resource: {
+          label: data.label,
+          description: data.description,
+          dialog_tabs: data.formFields
+            .filter(tab => tab.tabId !== 'new') // Filter out the "Create new tab" option
+            .map((tab, index) => ({
+              label: tab.name,
+              position: index,
+              dialog_groups: tab.sections.map((section, sectionIndex) => ({
+                label: section.title,
+                description: section.description || '',
+                position: sectionIndex,
+                dialog_fields: section.fields.map((field, fieldIndex) => {
+                  // Make sure we have all required properties for each field
+                  const fieldData = {
+                    ...field,
+                    position: fieldIndex,
+                    name: field.name || `field_${Date.now()}_${fieldIndex}`,
+                    label: field.label || 'Field Label',
+                    type: field.type || 'DialogFieldTextBox',
+                    data_type: field.dataType || 'string'
+                  };
+                  
+                  return fieldData;
+                })
+              }))
+            }))
+        }
+      }).then(() => {
+        window.location.href = '/miq_ae_customization/explorer';
+      }).catch(error => {
+        console.error('Error updating dialog:', error);
+      });
+    } else {
+      // Create new dialog
+      saveServiceDialog(data);
+    }
   };
 
   const updateTabInfo = (data, tabId) => {
