@@ -20,7 +20,7 @@ describe('Validate intercept command', () => {
     }).then(() => {
       // verifies that the alias is set and the request is intercepted & awaited
       cy.getInterceptedApiAliases().then((interceptedAliasesObject) => {
-        expect(interceptedAliasesObject).to.have.property('treeSelectApi');
+        expect(interceptedAliasesObject).to.have.property('post-treeSelectApi');
       });
     });
   });
@@ -41,8 +41,8 @@ describe('Validate intercept command', () => {
       // verifies that both the aliases are set and the request is intercepted & awaited
       cy.getInterceptedApiAliases().then((interceptedAliasesObject) => {
         expect(interceptedAliasesObject).to.include.all.keys(
-          'accordionSelectApi',
-          'treeSelectApi'
+          'post-accordionSelectApi',
+          'post-treeSelectApi'
         );
       });
     });
