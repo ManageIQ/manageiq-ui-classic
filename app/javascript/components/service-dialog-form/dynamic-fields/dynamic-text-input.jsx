@@ -18,16 +18,23 @@ const DynamicTextInput = ({ dynamicFieldData: { section, field, fieldPosition },
     .filter((field) => field.showRefresh)
     .map((field) => ({ value: field.label, label: field.label }));
 
+  // Initialize field state with values from the field prop or defaults
   const [fieldState, setFieldState] = useState({
-    type: 'DialogFieldTextBox',
+    type: field.type || 'DialogFieldTextBox',
     position: fieldPosition,
-    label: __('Text Box'),
-    name: inputId,
-    visible: true,
-    value: '',
-    dynamic: false,
+    label: field.label || __('Text Box'),
+    name: field.name || inputId,
+    visible: field.visible !== undefined ? field.visible : true,
+    value: field.default_value || field.value || '',
+    dynamic: field.dynamic || false,
+    required: field.required || false,
+    readOnly: field.read_only || false,
     fieldsToRefresh: refreshEnabledFields,
   });
+
+  // Log the field data for debugging
+  console.log('Field data in DynamicTextInput:', field);
+  console.log('Field state initialized as:', fieldState);
 
   const handleFieldUpdate = (event, updatedFields) => {
     setFieldState((prevState) => ({ ...prevState, ...updatedFields }));
