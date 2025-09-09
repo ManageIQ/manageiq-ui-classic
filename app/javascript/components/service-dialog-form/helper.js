@@ -82,7 +82,134 @@ export const dropTab = (formFields, { tabId }, dragEnterItem) => {
 
 /** Function to drop a component after its been dragged */
 export const dropComponent = (section, { componentId }) => {
-  section.fields.push({ componentId });
+  // Create a proper field object based on the component type
+  let fieldData = { componentId };
+  
+  // Add default properties based on component type
+  switch(componentId) {
+    case 1: // Text Box
+      fieldData = {
+        ...fieldData,
+        type: 'DialogFieldTextBox',
+        dataType: 'string',
+        name: `text_box_${Date.now()}`,
+        label: 'Text Box',
+        value: '',
+        position: section.fields.length,
+        visible: true,
+        required: false,
+        readOnly: false
+      };
+      break;
+    case 2: // Text Area
+      fieldData = {
+        ...fieldData,
+        type: 'DialogFieldTextAreaBox',
+        dataType: 'string',
+        name: `text_area_${Date.now()}`,
+        label: 'Text Area',
+        value: '',
+        position: section.fields.length,
+        visible: true,
+        required: false,
+        readOnly: false
+      };
+      break;
+    case 3: // Check Box
+      fieldData = {
+        ...fieldData,
+        type: 'DialogFieldCheckBox',
+        dataType: 'boolean',
+        name: `check_box_${Date.now()}`,
+        label: 'Check Box',
+        checked: false,
+        position: section.fields.length,
+        visible: true,
+        required: false,
+        readOnly: false
+      };
+      break;
+    case 4: // Dropdown
+      fieldData = {
+        ...fieldData,
+        type: 'DialogFieldDropDownList',
+        dataType: 'string',
+        name: `dropdown_${Date.now()}`,
+        label: 'Dropdown',
+        items: [
+          { id: '1', text: 'Option 1', value: '1' },
+          { id: '2', text: 'Option 2', value: '2' }
+        ],
+        position: section.fields.length,
+        visible: true,
+        required: false,
+        readOnly: false
+      };
+      break;
+    case 5: // Radio Button
+      fieldData = {
+        ...fieldData,
+        type: 'DialogFieldRadioButton',
+        dataType: 'string',
+        name: `radio_button_${Date.now()}`,
+        label: 'Radio Button',
+        items: [
+          { id: '1', text: 'Option 1', value: '1' },
+          { id: '2', text: 'Option 2', value: '2' }
+        ],
+        position: section.fields.length,
+        visible: true,
+        required: false,
+        readOnly: false
+      };
+      break;
+    case 6: // Datepicker
+      fieldData = {
+        ...fieldData,
+        type: 'DialogFieldDateControl',
+        dataType: 'string',
+        name: `date_picker_${Date.now()}`,
+        label: 'Date Picker',
+        value: new Date().toISOString(),
+        position: section.fields.length,
+        visible: true,
+        required: false,
+        readOnly: false
+      };
+      break;
+    case 7: // Timepicker
+      fieldData = {
+        ...fieldData,
+        type: 'DialogFieldDateTimeControl',
+        dataType: 'string',
+        name: `time_picker_${Date.now()}`,
+        label: 'Time Picker',
+        value: new Date().toISOString(),
+        position: section.fields.length,
+        visible: true,
+        required: false,
+        readOnly: false
+      };
+      break;
+    case 8: // Tag Control
+      fieldData = {
+        ...fieldData,
+        type: 'DialogFieldTagControl',
+        dataType: 'string',
+        name: `tag_control_${Date.now()}`,
+        label: 'Tag Control',
+        position: section.fields.length,
+        visible: true,
+        required: false,
+        readOnly: false
+      };
+      break;
+    default:
+      break;
+  }
+  
+  console.log('Adding field to section:', fieldData);
+  section.fields.push(fieldData);
 };
 
 // Shapes for each service dialog components as needed
