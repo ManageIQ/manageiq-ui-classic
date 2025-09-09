@@ -39,12 +39,7 @@ function goToCollectLogsTab() {
   cy.interceptApi({
     alias: 'getCollectLogsTabInfo',
     urlPattern: '/ops/change_tab?tab_id=diagnostics_collect_logs',
-    triggerFn: () =>
-      cy
-        .get(
-          '#tab_all_tabs_div #ops_tabs .nav-tabs li#diagnostics_collect_logs_tab'
-        )
-        .click(),
+    triggerFn: () => cy.tabs({ tabLabel: 'Collect Logs' }),
   });
 }
 
