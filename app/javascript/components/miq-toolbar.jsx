@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 import { Toolbar } from './toolbar';
 
 import DashboardToolbar from './dashboard_toolbar';
-import { convertMultParamsToRailsMultParams } from '../toolbar-actions/util'
+import { convertMultParamsToRailsMultParams } from '../toolbar-actions/util';
+import { sendDataWithRx } from '../miq_observable';
 
 /* global miqJqueryRequest, miqSerializeForm */
 /* eslint no-restricted-globals: ["off", "miqJqueryRequest", "miqSerializeForm"] */
@@ -89,9 +90,7 @@ const onClick = (button) => {
     }
   } else if (button.data && button.data.function) {
     // Client-side buttons use 'function' and 'function-data'.
-    /* eslint no-new-func: "off" */
-    const fn = new Function(`return ${button.data.function}`);
-    fn().call(button, button.data['function-data']);
+    sendDataWithRx(button.data['function-data']);
     return;
   } else { // Most of (classic) buttons.
     // If no url was specified, run standard button ajax transaction.
