@@ -61,8 +61,12 @@ export const tagControlCategories = async() => {
 export const saveServiceDialog = (data) => {
   const payload = formattedCatalogPayload(data);
 
-  const { result } = API.post('/api/service_dialogs', payload, {
+  API.post('/api/service_dialogs', payload, {
     skipErrors: [400],
+  }).then(() => {
+    // Redirect to the service dialogs explorer page after successful save
+    window.location.href = '/miq_ae_customization/explorer';
+  }).catch((error) => {
+    console.error('Error saving dialog:', error);
   });
-  return result;
 };
