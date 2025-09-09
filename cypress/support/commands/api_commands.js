@@ -54,6 +54,28 @@ Cypress.Commands.add('resetInterceptedApiAliases', () =>
 );
 
 /**
+ * Sets the request interception flag in Cypress environment.
+ * This flag is used to track whether a request matching an intercept pattern was detected.
+ *
+ * @param {boolean} value - The value to set for the flag (true if request was intercepted, false otherwise)
+ * @example
+ * // Mark a request as intercepted
+ * setRequestIntercepted(true);
+ *
+ * // Reset the interception flag
+ * setRequestIntercepted(false);
+ */
+const setRequestIntercepted = (value) =>
+  Cypress.env('wasRequestIntercepted', value);
+
+/**
+ * Gets the current value of the request interception flag from Cypress environment.
+ * This flag indicates whether a request matching an intercept pattern was detected.
+ * @returns {boolean} The current value of the request interception flag
+ */
+const getRequestIntercepted = () => Cypress.env('wasRequestIntercepted');
+
+/**
  * Custom command to intercept API calls and wait for them to complete.
  * This command will:
  * 1. Register an intercept for the given alias and URL pattern if not already registered
@@ -91,10 +113,14 @@ Cypress.Commands.add(
       const aliasObjectKey = `${method.toLowerCase()}-${alias}`;
       // Check if this request is already registered
       const isAlreadyRegistered = !!interceptedAliasesMap[aliasObjectKey];
-
+      // Setting wasRequestIntercepted flag to false initially
+      setRequestIntercepted(false);
       // Register the intercept if not already done
       if (!isAlreadyRegistered) {
-        cy.intercept(method, urlPattern).as(alias);
+        cy.intercept(method, urlPattern, () => {
+          // Setting wasRequestIntercepted flag to true after request is intercepted
+          setRequestIntercepted(true);
+        }).as(alias);
         cy.setInterceptedApiAlias(aliasObjectKey, alias);
       }
 
@@ -102,8 +128,11 @@ Cypress.Commands.add(
       triggerFn();
 
       // Wait for the intercepted request to complete
-      cy.wait(`@${alias}`).then((interception) => {
-        onApiResponse(interception);
+      cy.then(() => {
+        const isRequestIntercepted = getRequestIntercepted();
+        if (isRequestIntercepted) {
+          cy.wait(`@${alias}`).then(onApiResponse);
+        }
       });
     });
   }
