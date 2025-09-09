@@ -3,7 +3,6 @@
 describe('Automation > Embedded Automate > Customization', () => {
   beforeEach(() => {
     cy.login();
-    cy.intercept('POST', '/ops/accordion_select?id=rbac_accord').as('accordion');
     cy.menu('Automation', 'Embedded Automate', 'Customization');
     cy.get('#explorer_title_text');
   });
@@ -160,6 +159,84 @@ describe('Automation > Embedded Automate > Customization', () => {
       cy.get('[title="Remove this Dialog"]').click({force: true});
 
       cy.get('[class="list-group"]').should('not.contain', 'Test Description');
+    });
+  });
+
+  describe('Button Form', () => {
+    beforeEach(() => {
+      cy.intercept('POST', '/miq_ae_customization/accordion_select?id=ab_accord').as('accordion');
+      cy.get('#control_ab_accord > .panel-title > .collapsed').click();
+      cy.wait('@accordion');
+      cy.wait(5000);
+    });
+
+    it('Validates the save button correctly', () => {
+      cy.get('.clickable-row').contains('Availability Zone').click({force: true});
+      cy.get('.clickable-row').contains('Unassigned Buttons').click({force: true});
+      cy.get('[title="Configuration"]').click({force: true});
+      cy.get('[title="Add a new Button"]').click({force: true});
+      cy.get('#explorer_title_text').contains('Adding a new Button');
+
+      cy.get('#name').type('Test Button');
+      cy.get('#description').type('Test Description');
+      cy.get('.icon-button').click();
+      cy.get(':nth-child(1) > span > .ff').click();
+      cy.get('.bx--modal-footer > .bx--btn--primary').click();
+
+      cy.get('#ab_advanced_tab_tab > a').click();
+      cy.get('#object_request').type('Test Request');
+      cy.get('#attribute_1').type('1-attribute');
+      cy.get('#value_1').type('1-value');
+      cy.get('#attribute_2').type('2-attribute');
+      cy.get('#value_2').type('2-value');
+      cy.get('.col-md-10 > .btn-group > .btn').click();
+      cy.get('.col-md-10 > .btn-group > .open > .dropdown-menu > [data-original-index="1"] > a').click();
+
+      cy.get('#roles_1').click();
+      cy.get('#roles_2').click();
+      cy.get('#roles_3').click();
+      cy.get('#roles_4').click();
+
+      cy.get('#buttons_on > .btn-primary').click();
+      cy.get('.clickable-row').contains('Test Button').click();
+
+      cy.get('.attribute_value_pair').contains('1-attribute, 1-value');
+      cy.get('.attribute_value_pair').contains('2-attribute, 2-value');
+      cy.get('.visibility').contains('EvmRole-administrator, EvmRole-approver, EvmRole-physical_storages_administrator, EvmRole-super_administrator');
+
+      cy.get('[title="Configuration"]').click();
+      cy.get('[title="Edit this Button"]').click();
+
+      cy.get('#buttons_off > .btn-primary');
+      cy.get('#ab_advanced_tab_tab > a').click();
+      cy.get('#attribute_2').clear();
+      cy.get('#value_2').clear();
+
+      cy.get('#buttons_on > .btn-primary').click();
+
+      cy.get('.attribute_value_pair').contains('1-attribute, 1-value');
+      cy.get('.attribute_value_pair').should('not.contain', '2-attribute, 2-value');
+
+      cy.get('[title="Configuration"]').click();
+      cy.get('[title="Edit this Button"]').click();
+
+      cy.get('#buttons_off > .btn-primary');
+      cy.get('#ab_advanced_tab_tab > a').click();
+
+      cy.get('#roles_2').click();
+      cy.get('#roles_3').click();
+
+      cy.get('#buttons_on > .btn-primary').click();
+
+      cy.get('.visibility').contains('EvmRole-approver, EvmRole-super_administrator');
+      cy.get('.visibility').should('not.contain', 'EvmRole-administrator, EvmRole-physical_storages_administrator');
+
+      cy.get('[title="Configuration"]').click();
+      cy.get('[title="Remove this Button"]').click();
+      cy.get('h4 > strong').contains('Test Button');
+      cy.get('.Delete').click({ force: true });
+
+      cy.get('.alert').contains('The item "Test Button" has been successfully deleted');
     });
   });
 });
