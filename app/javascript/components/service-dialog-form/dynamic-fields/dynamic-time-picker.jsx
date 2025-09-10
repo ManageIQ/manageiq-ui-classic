@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   DatePicker, DatePickerInput, TimePicker, TimePickerSelect, SelectItem, FormLabel,
 } from 'carbon-components-react';
 import {
-  dynamicFieldDataProps, SD_ACTIONS, getCurrentDate, getCurrentTimeAndPeriod,
+  dynamicFieldDataProps, SD_ACTIONS, getCurrentDate, getCurrentTimeAndPeriod, getFieldValues,
 } from '../helper';
 import DynamicFieldActions from '../dynamic-field-actions';
 import {
@@ -19,32 +19,76 @@ const DynamicTimePicker = ({ dynamicFieldData: { section, field, fieldPosition }
   const inputId = `tab-${tabId}-section-${sectionId}-field-${fieldPosition}-date-time-picker`;
   const editActionType = SD_ACTIONS.field.edit;
 
+  // Initialize with default values
   const [date, setDate] = useState(getCurrentDate);
   const [time, setTime] = useState(() => getCurrentTimeAndPeriod().time);
   const [isValid, setIsValid] = useState(true);
   const [period, setPeriod] = useState(() => getCurrentTimeAndPeriod().period);
+
+  // Initialize field state with values from the helper function
+  const fieldValues = getFieldValues(field);
+  const [fieldState, setFieldState] = useState({
+    ...fieldValues,
+    position: fieldPosition,
+    name: fieldValues.name || inputId,
+    label: fieldValues.label || __('Timepicker'),
+    fieldsToRefresh: section.fields
+      .filter((field) => field.showRefresh)
+      .map((field) => ({ value: field.label, label: field.label })),
+  });
 
   const combinedDateTime = () => {
     const dateTime = `${date} ${time} ${period}`;
     return dateTime;
   };
 
-  const refreshEnabledFields = section.fields
-    .filter((field) => field.showRefresh)
-    .map((field) => ({ value: field.label, label: field.label }));
+  // Use useEffect to parse date and time from field value if available
+  useEffect(() => {
+    if (fieldValues.value) {
+      try {
+        const dateObj = new Date(fieldValues.value);
+        if (Number.isNaN(dateObj.getTime())) {
+          console.error('Invalid date value:', fieldValues.value);
+        } else {
+          // Format date as MM/DD/YYYY
+          const formattedDate = dateObj.toLocaleDateString('en-US', {
+            month: '2-digit',
+            day: '2-digit',
+            year: 'numeric',
+          });
 
-  const [fieldState, setFieldState] = useState({
-    type: 'DialogFieldDateTimeControl',
-    position: fieldPosition,
-    label: __('Timepicker'),
-    name: inputId,
-    visible: true,
-    value: '',
-    fieldsToRefresh: refreshEnabledFields,
-    date,
-    time,
-    period,
-  });
+          // Format time as HH:MM
+          const hours = dateObj.getHours();
+          const minutes = dateObj.getMinutes().toString().padStart(2, '0');
+          const newPeriod = hours >= 12 ? 'PM' : 'AM';
+          const hour12 = hours % 12 || 12; // Convert 0 to 12 for 12-hour format
+          const formattedTime = `${hour12}:${minutes}`;
+          
+          // Update state variables
+          setDate(formattedDate);
+          setTime(formattedTime);
+          setPeriod(newPeriod);
+          
+          // Update field state
+          setFieldState(prevState => ({
+            ...prevState,
+            date: formattedDate,
+            time: formattedTime,
+            period: newPeriod
+          }));
+        }
+      } catch (e) {
+        console.error('Error parsing date value:', e);
+      }
+    }
+  }, [fieldValues.value]);
+
+  // Log the field data for debugging
+  useEffect(() => {
+    console.log('Field data in DynamicTimePicker:', field);
+    console.log('Field values from helper:', fieldValues);
+    console.log('Field state initialized as:', fieldState);
+  }, [field, fieldValues, fieldState]);
 
   const handleDateChange = (selectedDates) => {
     if (selectedDates.length > 0) {
@@ -78,7 +122,15 @@ const DynamicTimePicker = ({ dynamicFieldData: { section, field, fieldPosition }
 
   const handleFieldUpdate = (event, updatedFields) => {
     setFieldState((prevState) => ({ ...prevState, ...updatedFields }));
-    onFieldAction({ event, type: editActionType, fieldPosition, inputProps: { ...fieldState, ...updatedFields } });
+    onFieldAction({
+      event,
+      type: editActionType,
+      fieldPosition,
+      inputProps: {
+        ...fieldState,
+        ...updatedFields
+      }
+    });
   };
 
   const fieldActions = (event, inputProps) => {
@@ -195,3 +247,5 @@ DynamicTimePicker.propTypes = {
 };
 
 export default DynamicTimePicker;
+
+// Made with Bob

@@ -273,6 +273,90 @@ export const SD_PROP_SHAPES = {
   tagControl: tagControlShape,
 };
 
+/**
+ * Helper function to extract field values from API data
+ * @param {Object} field - The field data from the API
+ * @returns {Object} - The standardized field values
+ */
+export const getFieldValues = (field) => {
+  console.log('Getting field values for:', field);
+  
+  // Common properties for all field types
+  const commonProps = {
+    type: field.type || '',
+    name: field.name || '',
+    label: field.label || '',
+    position: field.position || 0,
+    visible: field.visible !== undefined ? field.visible : true,
+    required: field.required || false,
+    readOnly: field.read_only || false,
+    dynamic: field.dynamic || false,
+  };
+  
+  // Type-specific properties
+  switch (field.type) {
+    case 'DialogFieldTextBox':
+      return {
+        ...commonProps,
+        value: field.default_value || field.value || '',
+      };
+      
+    case 'DialogFieldTextAreaBox':
+      return {
+        ...commonProps,
+        value: field.default_value || field.value || '',
+      };
+      
+    case 'DialogFieldCheckBox':
+      return {
+        ...commonProps,
+        checked: field.default_value || field.value || false,
+      };
+      
+    case 'DialogFieldDropDownList':
+      return {
+        ...commonProps,
+        items: field.values ? field.values.map(([value, description]) => ({ value, description })) : [],
+        multiselect: field.force_multi_value || false,
+        value: field.default_value || field.value || [],
+        sortBy: field.options && field.options.sort_by ? field.options.sort_by : 'description',
+        sortOrder: field.options && field.options.sort_order ? field.options.sort_order : 'ascending',
+      };
+      
+    case 'DialogFieldRadioButton':
+      return {
+        ...commonProps,
+        items: field.values ? field.values.map(([value, description]) => ({ value, description })) : [],
+        value: field.default_value || field.value || '',
+      };
+      
+    case 'DialogFieldDateControl':
+      return {
+        ...commonProps,
+        value: field.default_value || field.value || new Date().toISOString(),
+        showPastDates: field.options && field.options.show_past_dates ? field.options.show_past_dates : false,
+      };
+      
+    case 'DialogFieldDateTimeControl':
+      return {
+        ...commonProps,
+        value: field.default_value || field.value || new Date().toISOString(),
+        showPastDates: field.options && field.options.show_past_dates ? field.options.show_past_dates : false,
+      };
+      
+    case 'DialogFieldTagControl':
+      return {
+        ...commonProps,
+        categoryId: field.options && field.options.category_id ? field.options.category_id : '',
+        categoryName: field.options && field.options.category_name ? field.options.category_name : '',
+        singleValue: field.options && field.options.category_single_value ? field.options.category_single_value : false,
+      };
+      
+    default:
+      return commonProps;
+  }
+};
+
 // in the case of Tag Control component
 const getCategoryInfo = ({
   selectedCategory: {
