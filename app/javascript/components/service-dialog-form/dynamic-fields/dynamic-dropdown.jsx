@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { MultiSelect } from 'carbon-components-react';
-import { dynamicFieldDataProps, SD_ACTIONS } from '../helper';
+import { dynamicFieldDataProps, SD_ACTIONS, getFieldValues } from '../helper';
 import DynamicFieldActions from '../dynamic-field-actions';
 import { defaultDropdownOptions } from '../edit-field-modal/fields.schema';
 import {
@@ -21,27 +21,19 @@ const DynamicDropdown = ({ dynamicFieldData: { section, field, fieldPosition }, 
     .filter((field) => field.showRefresh)
     .map((field) => ({ value: field.label, label: field.label }));
 
-  // Initialize field state with values from the field prop or defaults
+  // Initialize field state with values from the helper function
+  const fieldValues = getFieldValues(field);
   const [fieldState, setFieldState] = useState({
-    type: field.type || 'DialogFieldDropDownList',
+    ...fieldValues,
     position: fieldPosition,
-    label: field.label || __('Selection Dropdown'),
-    required: field.required || false,
-    name: field.name || inputId,
-    visible: field.visible !== undefined ? field.visible : true,
-    items: field.values ? field.values.map(([value, description]) => ({ value, description })) : defaultDropdownOptions,
-    multiselect: field.force_multi_value || false,
-    value: field.default_value || field.value || [],
-    readOnly: field.read_only || false,
-    dynamic: field.dynamic || false,
+    name: fieldValues.name || inputId,
     fieldsToRefresh: refreshEnabledFields,
-    sortBy: (field.options && field.options.sort_by) || 'description',
-    sortOrder: (field.options && field.options.sort_order) || 'ascending',
     automationType: 'embedded_automate',
   });
 
   // Log the field data for debugging
   console.log('Field data in DynamicDropdown:', field);
+  console.log('Field values from helper:', fieldValues);
   console.log('Field state initialized as:', fieldState);
 
   const handleFieldUpdate = (event, updatedFields) => {
