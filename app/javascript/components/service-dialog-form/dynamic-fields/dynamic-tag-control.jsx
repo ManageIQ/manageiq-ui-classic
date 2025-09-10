@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Select, SelectItem } from 'carbon-components-react';
-import { dynamicFieldDataProps, SD_ACTIONS } from '../helper';
+import { dynamicFieldDataProps, SD_ACTIONS, getFieldValues } from '../helper';
 import DynamicFieldActions from '../dynamic-field-actions';
 import {
   fieldInformation, advanced, fieldTab, dynamicFields,
@@ -20,19 +20,24 @@ const DynamicTagControl = ({ dynamicFieldData: { section, field, fieldPosition }
     .filter((field) => field.showRefresh)
     .map((field) => ({ value: field.label, label: field.label }));
 
+  // Initialize field state with values from the helper function
+  const fieldValues = getFieldValues(field);
   const [fieldState, setFieldState] = useState({
-    type: 'DialogFieldTagControl',
+    ...fieldValues,
     position: fieldPosition,
-    label: __('Tag Control'),
-    name: inputId,
-    visible: true,
+    name: fieldValues.name || inputId,
     categories: [],
     selectedCategory: [],
     subCategories: [],
     fieldsToRefresh: refreshEnabledFields,
-    sortBy: 'description',
-    sortOrder: 'ascending',
+    sortBy: fieldValues.sortBy || 'description',
+    sortOrder: fieldValues.sortOrder || 'ascending',
   });
+
+  // Log the field data for debugging
+  console.log('Field data in DynamicTagControl:', field);
+  console.log('Field values from helper:', fieldValues);
+  console.log('Field state initialized as:', fieldState);
 
   useEffect(() => {
     if (fieldState.categories.length === 0) {
@@ -68,7 +73,15 @@ const DynamicTagControl = ({ dynamicFieldData: { section, field, fieldPosition }
       categories: prevState.categories, // this is required to retain the options in the dropdown (not the selected category)
     }));
 
-    onFieldAction({ event, type: editActionType, fieldPosition, inputProps: { ...fieldState, ...updatedFields } });
+    onFieldAction({
+      event,
+      type: editActionType,
+      fieldPosition,
+      inputProps: {
+        ...fieldState,
+        ...updatedFields
+      }
+    });
   };
 
   const fieldActions = (event, inputProps) => {

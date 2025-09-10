@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { RadioButtonGroup, RadioButton } from 'carbon-components-react';
-import { dynamicFieldDataProps, SD_ACTIONS } from '../helper';
+import { dynamicFieldDataProps, SD_ACTIONS, getFieldValues } from '../helper';
 import { defaultRadioButtonOptions } from '../edit-field-modal/fields.schema';
 import DynamicFieldActions from '../dynamic-field-actions';
 import {
@@ -20,18 +20,15 @@ const DynamicRadioButton = ({ dynamicFieldData: { section, field, fieldPosition 
     .filter((field) => field.showRefresh)
     .map((field) => ({ value: field.label, label: field.label }));
 
+  // Initialize field state with values from the helper function
+  const fieldValues = getFieldValues(field);
   const [fieldState, setFieldState] = useState({
-    type: 'DialogFieldRadioButton',
+    ...fieldValues,
     position: fieldPosition,
-    label: __('Radio Button'),
-    required: false,
-    name: inputId,
-    visible: true,
-    items: defaultRadioButtonOptions,
-    value: '',
+    name: fieldValues.name || inputId,
     fieldsToRefresh: refreshEnabledFields,
-    sortBy: 'description',
-    sortOrder: 'ascending',
+    sortBy: fieldValues.sortBy || 'description',
+    sortOrder: fieldValues.sortOrder || 'ascending',
   });
 
   const handleFieldUpdate = (event, updatedFields) => {
