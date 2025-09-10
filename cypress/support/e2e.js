@@ -47,11 +47,11 @@ import './commands/explorer.js';
 import './commands/gtl.js';
 import './commands/login.js';
 import './commands/menu.js';
+import './commands/select.js';
 import './commands/stub_notifications.js';
 import './commands/tabs.js';
 import './commands/throttle_response.js';
 import './commands/toolbar.js';
-import './commands/select.js';
 
 // Assertions
 import './assertions/expect_alerts.js';
