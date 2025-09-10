@@ -84,3 +84,21 @@ Cypress.Commands.add('getFormSelectFieldById', ({ selectId }) => {
   }
   return cy.get(`#main-content .bx--form select[id="${selectId}"]`);
 });
+
+/**
+ * Retrieves a form textarea field by its ID using an object parameter.
+ *
+ * @param {Object} options - The options object.
+ * @param {string} options.textareaId - The ID of the textarea field (required).
+ * @returns {Element} The matched textarea field element.
+ * @throws {Error} If textareaId is not provided.
+ *
+ * Example:
+ *   cy.getFormTextareaById({ textareaId: 'default.auth_key' });
+ */
+Cypress.Commands.add('getFormTextareaById', ({ textareaId }) => {
+  if (!textareaId) {
+    cy.logAndThrowError('textareaId is required');
+  }
+  return cy.get(`#main-content .bx--form textarea[id="${textareaId}"]`);
+});
