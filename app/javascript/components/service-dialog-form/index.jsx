@@ -502,50 +502,100 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
     </div>
   );
 
+  // Helper function to navigate back to the explorer page
+  const navigateToExplorer = () => {
+    window.location.href = '/miq_ae_customization/explorer';
+  };
+
+  // Helper function to clean up field data for submission
+  const cleanupField = (field) => {
+    // Create a clean copy without React-specific or UI-specific properties
+    const cleanField = { ...field };
+    
+    // Remove properties that shouldn't be sent to the backend
+    delete cleanField.componentId;
+    delete cleanField.fieldsToRefresh;
+    delete cleanField.categories;
+    delete cleanField.selectedCategory;
+    delete cleanField.subCategories;
+    
+    return {
+      name: cleanField.name || `field_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
+      description: cleanField.description || '',
+      data_type: cleanField.dataType || 'string',
+      notes: cleanField.notes || '',
+      notes_display: cleanField.notesDisplay || '',
+      display: cleanField.display || 'edit',
+      display_method: cleanField.displayMethod || null,
+      display_method_options: cleanField.displayMethodOptions || {},
+      required: cleanField.required || false,
+      required_method: cleanField.requiredMethod || null,
+      required_method_options: cleanField.requiredMethodOptions || {},
+      default_value: cleanField.value || '',
+      values: cleanField.values || null,
+      values_method: cleanField.valuesMethod || null,
+      values_method_options: cleanField.valuesMethodOptions || {},
+      options: {
+        protected: cleanField.protected || false,
+        show_past_days: cleanField.showPastDates || false,
+        sort_by: cleanField.sortBy || 'description',
+        sort_order: cleanField.sortOrder || 'ascending',
+        force_multi_value: cleanField.multiselect || false
+      },
+      label: cleanField.label || 'Field Label',
+      position: cleanField.position || 0,
+      validator_type: cleanField.validatorType || '',
+      validator_rule: cleanField.validatorRule || null,
+      reconfigurable: cleanField.reconfigurable || false,
+      dynamic: cleanField.dynamic || false,
+      show_refresh_button: cleanField.showRefresh || false,
+      load_values_on_init: cleanField.loadOnInit || false,
+      read_only: cleanField.readOnly || false,
+      auto_refresh: cleanField.autoRefresh || false,
+      trigger_auto_refresh: cleanField.triggerAutoRefresh || false,
+      visible: cleanField.visible !== undefined ? cleanField.visible : true,
+      type: cleanField.type || 'DialogFieldTextBox'
+    };
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    // If dialogAction contains an id and action is 'edit', we're updating an existing dialog
-    if (dialogAction && dialogAction.id && dialogAction.action === 'edit') {
-      // Update existing dialog
-      API.put(`/api/service_dialogs/${dialogAction.id}`, {
-        action: 'edit',
-        resource: {
-          label: data.label,
-          description: data.description,
-          dialog_tabs: data.formFields
-            .filter(tab => tab.tabId !== 'new') // Filter out the "Create new tab" option
-            .map((tab, index) => ({
-              label: tab.name,
-              position: index,
-              dialog_groups: tab.sections.map((section, sectionIndex) => ({
-                label: section.title,
-                description: section.description || '',
-                position: sectionIndex,
-                dialog_fields: section.fields.map((field, fieldIndex) => {
-                  // Make sure we have all required properties for each field
-                  const fieldData = {
-                    ...field,
-                    position: fieldIndex,
-                    name: field.name || `field_${Date.now()}_${fieldIndex}`,
-                    label: field.label || 'Field Label',
-                    type: field.type || 'DialogFieldTextBox',
-                    data_type: field.dataType || 'string'
-                  };
-                  
-                  return fieldData;
-                })
-              }))
+    // Prepare the dialog data in the format expected by the backend
+    const dialogFormData = {
+      label: data.label,
+      description: data.description,
+      dialog_tabs: data.formFields
+        .filter((tab) => tab.tabId !== 'new') // Filter out the "Create new tab" option
+        .map((tab, index) => ({
+          label: tab.name,
+          position: index,
+          dialog_groups: tab.sections.map((section, sectionIndex) => ({
+            label: section.title,
+            description: section.description || '',
+            position: sectionIndex,
+            dialog_fields: section.fields.map((field, fieldIndex) => cleanupField({
+              ...field,
+              position: fieldIndex
             }))
-        }
+          }))
+        }))
+    };
+
+    // If dialogData contains an id and dialogAction.action is 'edit', we're updating an existing dialog
+    if (dialogData && dialogData.id && dialogAction && dialogAction.action === 'edit') {
+      // Update existing dialog using the API endpoint
+      API.post(`/api/service_dialogs/${dialogData.id}`, {
+        action: 'edit',
+        resource: dialogFormData
       }).then(() => {
-        window.location.href = '/miq_ae_customization/explorer';
-      }).catch(error => {
+        navigateToExplorer();
+      }).catch((error) => {
         console.error('Error updating dialog:', error);
       });
     } else {
       // Create new dialog
-      saveServiceDialog(data);
+      saveServiceDialog(data, navigateToExplorer);
     }
   };
 
@@ -638,7 +688,12 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
           >
             { __('Submit')}
           </Button>
-          <Button variant="contained" type="button" onClick={() => console.log('this is on cancel')} kind="secondary">
+          <Button
+            variant="contained"
+            type="button"
+            onClick={navigateToExplorer}
+            kind="secondary"
+          >
             { __('Cancel')}
           </Button>
         </div>
