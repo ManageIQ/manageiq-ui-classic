@@ -78,6 +78,7 @@ ManageIQ implements the following cypress extensions:
 * `cy.getFormInputFieldByIdAndType({ inputId, inputType })` - retrieves a form input field by its ID and type. `inputId` is the ID of the input field. `inputType` is the HTML input type (e.g., 'text', 'email', 'password'). Defaults to 'text'. e.g. `cy.getFormInputFieldByIdAndType({inputId: 'name'});`, `cy.getFormInputFieldByIdAndType({inputId: 'name', inputType: 'text'});`
 * `cy.getFormLabelByForAttribute({ forValue })` - retrieves a form label associated with a specific input field by its 'for' attribute. `forValue` is the value of the 'for' attribute that matches the input field's ID. e.g. `cy.getFormLabelByForAttribute({forValue: 'name'});`
 * `cy.getFormSelectFieldById({ selectId })` - retrieves a form select field by its ID. `selectId` is the ID of the select field. e.g. `cy.getFormSelectFieldById({selectId: 'select-scan-limit'});`
+* `cy.getFormTextareaById({ textareaId })` - retrieves a form textarea field by its ID. `textareaId` is the ID of the textarea field. e.g. `cy.getFormTextareaById({textareaId: 'default.auth_key'});`
 
 #### Assertions
 
