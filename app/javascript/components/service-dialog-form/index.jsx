@@ -86,6 +86,10 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
 
                     const fields = (group.dialog_fields || []).map(field => {
                       console.log(`Processing field in group ${groupIndex}:`, field);
+                      console.log(`Field default_value:`, field.default_value);
+                      console.log(`Field value:`, field.value);
+                      console.log(`Field values:`, field.values);
+                      console.log(`Field options:`, field.options);
 
                       const componentId = getComponentIdFromType(field.type);
                       console.log(`Mapped field type ${field.type} to componentId ${componentId}`);

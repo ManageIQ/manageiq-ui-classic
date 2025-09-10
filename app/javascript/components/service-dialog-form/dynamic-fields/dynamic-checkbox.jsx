@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox } from 'carbon-components-react';
-import { dynamicFieldDataProps, SD_ACTIONS } from '../helper';
+import { dynamicFieldDataProps, SD_ACTIONS, getFieldValues } from '../helper';
 import DynamicFieldActions from '../dynamic-field-actions';
 import {
   fieldInformation, advanced, overridableOptions, fieldTab, dynamicFields,
@@ -20,22 +20,18 @@ const DynamicCheckbox = ({ dynamicFieldData: { section, field, fieldPosition }, 
     .filter((field) => field.showRefresh)
     .map((field) => ({ value: field.label, label: field.label }));
 
-  // Initialize field state with values from the field prop or defaults
+  // Initialize field state with values from the helper function
+  const fieldValues = getFieldValues(field);
   const [fieldState, setFieldState] = useState({
-    type: field.type || 'DialogFieldCheckBox',
+    ...fieldValues,
     position: fieldPosition,
-    label: field.label || __('Check Box'),
-    required: field.required || false,
-    name: field.name || inputId,
-    visible: field.visible !== undefined ? field.visible : true,
-    checked: field.default_value || field.value || false,
-    readOnly: field.read_only || false,
-    dynamic: field.dynamic || false,
+    name: fieldValues.name || inputId,
     fieldsToRefresh: refreshEnabledFields,
   });
 
   // Log the field data for debugging
   console.log('Field data in DynamicCheckbox:', field);
+  console.log('Field values from helper:', fieldValues);
   console.log('Field state initialized as:', fieldState);
 
   const handleFieldUpdate = (event, updatedFields) => {

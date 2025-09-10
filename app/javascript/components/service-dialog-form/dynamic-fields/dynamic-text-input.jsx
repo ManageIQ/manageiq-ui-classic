@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { TextInput } from 'carbon-components-react';
-import { dynamicFieldDataProps, SD_ACTIONS } from '../helper';
+import { dynamicFieldDataProps, SD_ACTIONS, getFieldValues } from '../helper';
 import DynamicFieldActions from '../dynamic-field-actions';
 import {
   fieldInformation, advanced, overridableOptions, fieldTab, dynamicFields,
@@ -18,22 +18,18 @@ const DynamicTextInput = ({ dynamicFieldData: { section, field, fieldPosition },
     .filter((field) => field.showRefresh)
     .map((field) => ({ value: field.label, label: field.label }));
 
-  // Initialize field state with values from the field prop or defaults
+  // Initialize field state with values from the helper function
+  const fieldValues = getFieldValues(field);
   const [fieldState, setFieldState] = useState({
-    type: field.type || 'DialogFieldTextBox',
+    ...fieldValues,
     position: fieldPosition,
-    label: field.label || __('Text Box'),
-    name: field.name || inputId,
-    visible: field.visible !== undefined ? field.visible : true,
-    value: field.default_value || field.value || '',
-    dynamic: field.dynamic || false,
-    required: field.required || false,
-    readOnly: field.read_only || false,
+    name: fieldValues.name || inputId,
     fieldsToRefresh: refreshEnabledFields,
   });
 
   // Log the field data for debugging
   console.log('Field data in DynamicTextInput:', field);
+  console.log('Field values from helper:', fieldValues);
   console.log('Field state initialized as:', fieldState);
 
   const handleFieldUpdate = (event, updatedFields) => {

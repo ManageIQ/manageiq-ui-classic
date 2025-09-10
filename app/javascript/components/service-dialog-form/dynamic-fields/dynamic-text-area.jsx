@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { TextArea } from 'carbon-components-react';
-import { dynamicFieldDataProps, SD_ACTIONS } from '../helper';
+// import { dynamicFieldDataProps, SD_ACTIONS } from '../helper';
+import { dynamicFieldDataProps, SD_ACTIONS, getFieldValues } from '../helper';
 import DynamicFieldActions from '../dynamic-field-actions';
 import {
   fieldInformation, advanced, overridableOptions, fieldTab, dynamicFields,
@@ -19,17 +20,19 @@ const DynamicTextArea = ({ dynamicFieldData: { section, field, fieldPosition }, 
     .filter((field) => field.showRefresh)
     .map((field) => ({ value: field.label, label: field.label }));
 
+  // Initialize field state with values from the helper function
+  const fieldValues = getFieldValues(field);
   const [fieldState, setFieldState] = useState({
-    type: 'DialogFieldTextAreaBox',
+    ...fieldValues,
     position: fieldPosition,
-    label: __('Text Area'),
-    placeholder: '',
-    required: false,
-    name: inputId,
-    visible: true,
-    value: '',
+    name: fieldValues.name || inputId,
     fieldsToRefresh: refreshEnabledFields,
   });
+
+  // Log the field data for debugging
+  console.log('Field data in DynamicTextArea:', field);
+  console.log('Field values from helper:', fieldValues);
+  console.log('Field state initialized as:', fieldState);
 
   const handleFieldUpdate = (event, updatedFields) => {
     setFieldState((prevState) => ({ ...prevState, ...updatedFields }));

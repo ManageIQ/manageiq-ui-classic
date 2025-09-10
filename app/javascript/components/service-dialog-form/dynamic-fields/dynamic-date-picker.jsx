@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { DatePicker, DatePickerInput } from 'carbon-components-react';
-import { dynamicFieldDataProps, SD_ACTIONS } from '../helper';
+import { dynamicFieldDataProps, SD_ACTIONS, getFieldValues } from '../helper';
 import DynamicFieldActions from '../dynamic-field-actions';
 import {
   fieldInformation, advanced, overridableOptions, fieldTab, dynamicFields,
@@ -19,13 +19,12 @@ const DynamicDatePicker = ({ dynamicFieldData: { section, field, fieldPosition }
     .filter((field) => field.showRefresh)
     .map((field) => ({ value: field.label, label: field.label }));
 
+  // Initialize field state with values from the helper function
+  const fieldValues = getFieldValues(field);
   const [fieldState, setFieldState] = useState({
-    type: 'DialogFieldDateControl',
+    ...fieldValues,
     position: fieldPosition,
-    label: __('Datepicker'),
-    name: inputId,
-    visible: true,
-    value: '',
+    name: fieldValues.name || inputId,
     fieldsToRefresh: refreshEnabledFields,
   });
 
