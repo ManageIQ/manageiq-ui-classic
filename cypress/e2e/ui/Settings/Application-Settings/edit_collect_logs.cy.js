@@ -66,16 +66,21 @@ function resetProtocolDropdown({ selectServerListItem = true } = {}) {
   selectToolbarEditButton();
 
   // Resetting Protocol dropdown value
-  cy.getFormSelectFieldById('log_protocol').then((selectField) => {
-    const currentValue = selectField.val();
-    // If the value is not default one(BLANK_VALUE), then setting it to blank
-    if (currentValue !== DROPDOWN_BLANK_VALUE) {
-      cy.wrap(selectField).select(DROPDOWN_BLANK_VALUE);
-      cy.getFormFooterButtonByType(SAVE_BUTTON_TEXT, 'submit').click();
-      // Validating confirmation flash message
-      cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SETTINGS_SAVED);
+  cy.getFormSelectFieldById({ selectId: 'log_protocol' }).then(
+    (selectField) => {
+      const currentValue = selectField.val();
+      // If the value is not default one(BLANK_VALUE), then setting it to blank
+      if (currentValue !== DROPDOWN_BLANK_VALUE) {
+        cy.wrap(selectField).select(DROPDOWN_BLANK_VALUE);
+        cy.getFormFooterButtonByTypeWithText({
+          buttonText: SAVE_BUTTON_TEXT,
+          buttonType: 'submit',
+        }).click();
+        // Validating confirmation flash message
+        cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SETTINGS_SAVED);
+      }
     }
-  });
+  );
 }
 
 function goToCollectLogsTabAndOpenEditForm() {
@@ -93,39 +98,56 @@ function validateFormElements() {
     'be.visible'
   );
   // Assert protocol field label is visible
-  cy.getFormLabelByInputId('log_protocol').should('be.visible');
+  cy.getFormLabelByForAttribute({ forValue: 'log_protocol' }).should(
+    'be.visible'
+  );
   // Assert protocol field is visible and enabled
-  cy.getFormSelectFieldById('log_protocol')
+  cy.getFormSelectFieldById({ selectId: 'log_protocol' })
     .should('be.visible')
     .and('be.enabled');
   // Assert cancel button is visible and enabled
-  cy.getFormFooterButtonByType(CANCEL_BUTTON_TEXT)
+  cy.getFormFooterButtonByTypeWithText({
+    buttonText: CANCEL_BUTTON_TEXT,
+  })
     .should('be.visible')
     .and('be.enabled');
   // Assert save button is visible and disabled
-  cy.getFormFooterButtonByType(SAVE_BUTTON_TEXT, 'submit')
+  cy.getFormFooterButtonByTypeWithText({
+    buttonText: SAVE_BUTTON_TEXT,
+    buttonType: 'submit',
+  })
     .should('be.visible')
     .and('be.disabled');
   // Assert reset button is visible and disabled
-  cy.getFormFooterButtonByType(RESET_BUTTON_TEXT)
+  cy.getFormFooterButtonByTypeWithText({
+    buttonText: RESET_BUTTON_TEXT,
+  })
     .should('be.visible')
     .and('be.disabled');
 }
 
 function cancelButtonValidation() {
   // Click cancel button in the form
-  cy.getFormFooterButtonByType(CANCEL_BUTTON_TEXT).click();
+  cy.getFormFooterButtonByTypeWithText({
+    buttonText: CANCEL_BUTTON_TEXT,
+  }).click();
   // Validating confirmation flash message
   cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_OPERATION_CANCELLED);
 }
 
 function resetButtonValidation() {
   // Selecting Samba option from dropdown
-  cy.getFormSelectFieldById('log_protocol').select(SAMBA_DROPDOWN_VALUE);
+  cy.getFormSelectFieldById({ selectId: 'log_protocol' }).select(
+    SAMBA_DROPDOWN_VALUE
+  );
   // Confirm Reset button is enabled once dropdown value is changed and then click on Reset
-  cy.getFormFooterButtonByType(RESET_BUTTON_TEXT).should('be.enabled').click();
+  cy.getFormFooterButtonByTypeWithText({
+    buttonText: RESET_BUTTON_TEXT,
+  })
+    .should('be.enabled')
+    .click();
   // Confirm dropdown has the old value
-  cy.getFormSelectFieldById('log_protocol').should(
+  cy.getFormSelectFieldById({ selectId: 'log_protocol' }).should(
     'have.value',
     DROPDOWN_BLANK_VALUE
   );
@@ -133,9 +155,14 @@ function resetButtonValidation() {
 
 function saveButtonValidation() {
   // Selecting Samba option from dropdown
-  cy.getFormSelectFieldById('log_protocol').select(SAMBA_DROPDOWN_VALUE);
+  cy.getFormSelectFieldById({ selectId: 'log_protocol' }).select(
+    SAMBA_DROPDOWN_VALUE
+  );
   // Confirm Save button is enabled once dropdown value is changed and then click on Save
-  cy.getFormFooterButtonByType(SAVE_BUTTON_TEXT, 'submit')
+  cy.getFormFooterButtonByTypeWithText({
+    buttonText: SAVE_BUTTON_TEXT,
+    buttonType: 'submit',
+  })
     .should('be.enabled')
     .click();
   // Validating confirmation flash message
