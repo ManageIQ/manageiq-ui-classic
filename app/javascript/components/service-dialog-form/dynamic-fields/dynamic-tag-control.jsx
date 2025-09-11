@@ -34,11 +34,6 @@ const DynamicTagControl = ({ dynamicFieldData: { section, field, fieldPosition }
     sortOrder: fieldValues.sortOrder || 'ascending',
   });
 
-  // Log the field data for debugging
-  console.log('Field data in DynamicTagControl:', field);
-  console.log('Field values from helper:', fieldValues);
-  console.log('Field state initialized as:', fieldState);
-
   useEffect(() => {
     if (fieldState.categories.length === 0) {
       tagControlCategories().then((fetchedCategories) => {
