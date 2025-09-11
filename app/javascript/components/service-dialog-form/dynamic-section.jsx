@@ -86,38 +86,30 @@ const DynamicSection = ({ section, sectionAction }) => {
     </div>
   );
 
-  const renderSectionContents = () => {
-    console.log('Rendering section contents for section:', section);
-    console.log('Fields in section:', section.fields);
-    
-    return (
-      <div className="dynamic-section-contents">
-        {
-          section.fields && section.fields.map((field, fieldPosition) => {
-            console.log(`Rendering field ${fieldPosition}:`, field);
-            return (
-              <div
-                className="dynamic-form-field-wrapper"
-                key={`field-${fieldPosition.toString()}`}
-                draggable
-                onDragEnter={(event) => onFieldAction({ event, fieldPosition, type: SD_ACTIONS.onDragEnterField })}
-                onDragStart={(event) => onFieldAction({ event, fieldPosition, type: SD_ACTIONS.onDragStartField })}
-              >
-                <DynamicField
-                  key={fieldPosition.toString()}
-                  fieldData={{ field, fieldPosition, section }}
-                  onFieldAction={(newFieldData) => onFieldAction(newFieldData)}
-                />
-              </div>
-            );
-          })
-        }
-        {
-          (!section.fields || section.fields.length === 0) && renderHelpText()
-        }
-      </div>
-    );
-  };
+  const renderSectionContents = () => (
+    <div className="dynamic-section-contents">
+      {
+        section.fields && section.fields.map((field, fieldPosition) => (
+          <div
+            className="dynamic-form-field-wrapper"
+            key={`field-${fieldPosition.toString()}`}
+            draggable
+            onDragEnter={(event) => onFieldAction({ event, fieldPosition, type: SD_ACTIONS.onDragEnterField })}
+            onDragStart={(event) => onFieldAction({ event, fieldPosition, type: SD_ACTIONS.onDragStartField })}
+          >
+            <DynamicField
+              key={fieldPosition.toString()}
+              fieldData={{ field, fieldPosition, section }}
+              onFieldAction={(newFieldData) => onFieldAction(newFieldData)}
+            />
+          </div>
+        ))
+      }
+      {
+        (!section.fields || section.fields.length === 0) && renderHelpText()
+      }
+    </div>
+  );
 
   return (
     <div

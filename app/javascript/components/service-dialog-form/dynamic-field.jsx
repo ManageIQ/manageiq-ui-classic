@@ -11,38 +11,7 @@ import DynamicTagControl from './dynamic-fields/dynamic-tag-control';
 import { dynamicFieldDataProps } from './helper';
 /** Component to render a Field. */
 const DynamicField = ({ fieldData, onFieldAction }) => {
-  const fieldSelector = (fieldData) => {
-    console.log('Field data in DynamicField:', fieldData);
-    
-    // Make sure we have a componentId
-    const componentId = fieldData.field.componentId ||
-                       (fieldData.field.type && getComponentIdFromType(fieldData.field.type)) ||
-                       1; // Default to text box
-    
-    console.log('Using componentId:', componentId);
-    
-    switch (componentId) {
-      case 1:
-        return <DynamicTextInput dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
-      case 2:
-        return <DynamicTextArea dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
-      case 3:
-        return <DynamicCheckbox dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
-      case 4:
-        return <DynamicDropdown dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
-      case 5:
-        return <DynamicRadioButton dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
-      case 6:
-        return <DynamicDatepicker dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
-      case 7:
-        return <DynamicTimepicker dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
-      case 8:
-        return <DynamicTagControl dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
-      default:
-        return <DynamicTextInput dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
-    }
-  };
-  
+
   // Helper function to determine componentId from field type
   const getComponentIdFromType = (type) => {
     switch (type) {
@@ -64,6 +33,33 @@ const DynamicField = ({ fieldData, onFieldAction }) => {
         return 8;
       default:
         return 1; // Default to text box
+    }
+  };
+
+  const fieldSelector = (fieldData) => {
+    const componentId = fieldData.field.componentId
+                       || (fieldData.field.type && getComponentIdFromType(fieldData.field.type))
+                       || 1; // Default to text box
+
+    switch (componentId) {
+      case 1:
+        return <DynamicTextInput dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
+      case 2:
+        return <DynamicTextArea dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
+      case 3:
+        return <DynamicCheckbox dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
+      case 4:
+        return <DynamicDropdown dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
+      case 5:
+        return <DynamicRadioButton dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
+      case 6:
+        return <DynamicDatepicker dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
+      case 7:
+        return <DynamicTimepicker dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
+      case 8:
+        return <DynamicTagControl dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
+      default:
+        return <DynamicTextInput dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
     }
   };
 

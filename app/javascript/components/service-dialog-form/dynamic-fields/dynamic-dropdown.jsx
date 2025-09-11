@@ -31,11 +31,6 @@ const DynamicDropdown = ({ dynamicFieldData: { section, field, fieldPosition }, 
     automationType: 'embedded_automate',
   });
 
-  // Log the field data for debugging
-  console.log('Field data in DynamicDropdown:', field);
-  console.log('Field values from helper:', fieldValues);
-  console.log('Field state initialized as:', fieldState);
-
   const handleFieldUpdate = (event, updatedFields) => {
     setFieldState((prevState) => ({ ...prevState, ...updatedFields }));
     onFieldAction({

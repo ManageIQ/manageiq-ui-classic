@@ -207,8 +207,7 @@ export const dropComponent = (section, { componentId }) => {
     default:
       break;
   }
-  
-  console.log('Adding field to section:', fieldData);
+
   section.fields.push(fieldData);
 };
 
@@ -279,8 +278,6 @@ export const SD_PROP_SHAPES = {
  * @returns {Object} - The standardized field values
  */
 export const getFieldValues = (field) => {
-  console.log('Getting field values for:', field);
-  
   // Common properties for all field types
   const commonProps = {
     type: field.type || '',
@@ -467,16 +464,14 @@ const getSectionsInfo = (sections) => sections.map((section) => ({
   dialog_fields: getFieldsInfo(section.fields),
 }));
 
-const getTabsInfo = (tabs) => {
-  console.log("Tabs: ", tabs);
-  return tabs
+const getTabsInfo = (tabs) =>
+  tabs
     .map((tab) => ({
       label: tab.name,
       position: tab.tabId,
       dialog_groups: getSectionsInfo(tab.sections),
     }))
-    .filter((tabInfo) => tabInfo.dialog_groups.length > 0); // Filter out objects with empty dialog_groups
-};
+    .filter((tabInfo) => tabInfo.dialog_groups.length > 0);
 
 const getDialogInfo = (data) => ({
   label: data.label,

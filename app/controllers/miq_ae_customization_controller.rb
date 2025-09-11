@@ -140,11 +140,9 @@ class MiqAeCustomizationController < ApplicationController
   end
 
   def editor
-    puts "Paramss - #{params}"
     if params[:id].present?
       feature = 'dialog_edit_editor'
       @record = Dialog.find(params[:id])
-      puts "Record1 - #{@record.as_json}"
     elsif params[:copy].present?
       feature = 'dialog_copy_editor'
       @record = Dialog.find(params[:copy])
