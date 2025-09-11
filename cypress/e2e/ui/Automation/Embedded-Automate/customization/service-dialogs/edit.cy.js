@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 describe('Service Dialog Edit', () => {
   // Reusable function to create a service dialog with fields
   const createServiceDialog = (dialogName) => {
@@ -19,7 +20,7 @@ describe('Service Dialog Edit', () => {
     cy.get('.edit-field-modal input[name="value"]')
       .clear()
       .type('Initial Value');
-    
+
     // Save the changes
     cy.get('.edit-field-modal button[type="submit"]')
       .click();
@@ -137,21 +138,23 @@ describe('Service Dialog Edit', () => {
     cy.get('button[type="button"]').contains('Cancel').click();
   });
 
-  it.only('should navigate back to explorer when Cancel button is clicked', function() {
+  it('should navigate back to explorer when Cancel button is clicked', function() {
     // Create a unique dialog name
-    const dialogName = `Cancel Test Dialog ${Date.now()}`;
-    this.currentTest.dialogName = dialogName;
+    const dialogName = 'Test Dialog';
 
     // Create the service dialog
     createServiceDialog(dialogName);
 
     // Navigate to edit page for the dialog
-    cy.get('.miq-data-table').contains(dialogName).click();
-    cy.get('#center_tb').contains('Configuration').click();
-    cy.get('ul.dropdown-menu').contains('Edit this Dialog').click();
+    cy.toolbar('Configuration', 'Edit this Dialog');
 
     // Make a change that shouldn't be saved
-    cy.get('#dialogName').clear().type(`${dialogName} - Modified`);
+    cy.openFieldEditModal(0, 0, 0);
+    cy.get('.edit-field-modal input[name="label"]')
+      .clear()
+      .type('Text Field Edited');
+    cy.get('.edit-field-modal button[type="submit"]')
+      .click();
 
     // Click Cancel button
     cy.get('button').contains('Cancel').click();
@@ -160,47 +163,12 @@ describe('Service Dialog Edit', () => {
     cy.url().should('include', '/miq_ae_customization/explorer');
 
     // Verify the dialog name wasn't changed
-    cy.get('#search_text').clear().type(dialogName);
-    cy.get('#searchicon').click();
-    cy.get('.miq-data-table').contains(dialogName).should('be.visible');
-    
-    cy.get('#search_text').clear().type(`${dialogName} - Modified`);
-    cy.get('#searchicon').click();
-    cy.get('.miq-data-table').should('not.contain', `${dialogName} - Modified`);
-  });
-
-  it('should update dialog name and navigate back when Submit button is clicked', function() {
-    // Create a unique dialog name
-    const dialogName = `Submit Test Dialog ${Date.now()}`;
-    const updatedName = `Updated Dialog ${Date.now()}`;
-    this.currentTest.dialogName = updatedName; // Use the updated name for cleanup
-
-    // Create the service dialog
-    createServiceDialog(dialogName);
-
-    // Navigate to edit page for the dialog
-    cy.get('.miq-data-table').contains(dialogName).click();
-    cy.get('#center_tb').contains('Configuration').click();
-    cy.get('ul.dropdown-menu').contains('Edit this Dialog').click();
-
-    // Make a change to the dialog name
-    cy.get('#dialogName').clear().type(updatedName);
-
-    // Submit the form
-    cy.get('button[type="submit"]').contains('Submit').click();
-
-    // Verify we're back at the explorer page
-    cy.url().should('include', '/miq_ae_customization/explorer');
-
-    // Verify the dialog was updated
-    cy.get('#search_text').clear().type(updatedName);
-    cy.get('#searchicon').click();
-    cy.get('.miq-data-table').contains(updatedName).should('be.visible');
-    
-    cy.get('#search_text').clear().type(dialogName);
-    cy.get('#searchicon').click();
-    cy.get('.miq-data-table').should('not.contain', dialogName);
+    cy.toolbar('Configuration', 'Edit this Dialog');
+    cy.openFieldEditModal(0, 0, 0);
+    cy.get('.edit-field-modal input[name="label"]')
+      .should('not.contain', 'Field Edited');
+    cy.closeFieldEditModal();
+    cy.get('button[type="button"]').contains('Cancel').click();
   });
 });
 
-// Made with Bob

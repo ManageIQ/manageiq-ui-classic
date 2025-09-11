@@ -113,7 +113,8 @@ describe('Automation > Embedded Automate > Customization > Service Dialogs > For
     cy.get('.edit-field-modal button[type="submit"]').click();
 
     // Step 10: Save the dialog
-    cy.get('button').contains('Save').click();
+    cy.get('button').contains('Submit').click();
+    // cy.get('.service-dialog-main-wrapper .custom-button-wrapper button').contains('Submit').click();
 
     // Step 11: Verify the dialog appears in the list
     cy.get('.flash-messages .flash_text_success')
