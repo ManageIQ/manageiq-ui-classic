@@ -83,13 +83,6 @@ const DynamicTimePicker = ({ dynamicFieldData: { section, field, fieldPosition }
     }
   }, [fieldValues.value]);
 
-  // Log the field data for debugging
-  useEffect(() => {
-    console.log('Field data in DynamicTimePicker:', field);
-    console.log('Field values from helper:', fieldValues);
-    console.log('Field state initialized as:', fieldState);
-  }, [field, fieldValues, fieldState]);
-
   const handleDateChange = (selectedDates) => {
     if (selectedDates.length > 0) {
       const formattedDate = new Intl.DateTimeFormat('en-US', {
@@ -247,5 +240,3 @@ DynamicTimePicker.propTypes = {
 };
 
 export default DynamicTimePicker;
-
-// Made with Bob
