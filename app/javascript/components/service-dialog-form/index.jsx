@@ -59,41 +59,24 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
   useEffect(() => {
     // If we're editing an existing dialog, fetch its complete structure
     if (dialogData && dialogData.id && dialogAction && dialogAction.action === 'edit') {
-      console.log('Fetching complete dialog structure for editing...');
-      
       // Fetch the complete dialog structure from the API
       API.get(`/api/service_dialogs/${dialogData.id}?expand=resources&attributes=content,dialog_tabs`)
         .then((response) => {
-          console.log('API response:', response);
-
           if (response.content && response.content[0]) {
             const fullDialogData = response.content[0];
-            console.log('Full dialog data:', fullDialogData);
 
             // Extract dialog tabs from the API response
             const dialogTabs = fullDialogData.dialog_tabs || [];
-            console.log('Dialog tabs from API:', dialogTabs);
 
             if (dialogTabs.length > 0) {
               const formattedTabs = dialogTabs.map((tab, index) => {
-                console.log(`Processing tab ${index}:`, tab);
-
                 const formattedTab = {
                   tabId: index,
                   name: tab.label,
                   sections: (tab.dialog_groups || []).map((group, groupIndex) => {
-                    console.log(`Processing group ${groupIndex} in tab ${index}:`, group);
-
                     const fields = (group.dialog_fields || []).map(field => {
-                      console.log(`Processing field in group ${groupIndex}:`, field);
-                      console.log(`Field default_value:`, field.default_value);
-                      console.log(`Field value:`, field.value);
-                      console.log(`Field values:`, field.values);
-                      console.log(`Field options:`, field.options);
-
                       const componentId = getComponentIdFromType(field.type);
-                      console.log(`Mapped field type ${field.type} to componentId ${componentId}`);
-                      
+
                       return {
                         // Ensure each field has componentId based on its type
                         componentId,
@@ -107,9 +90,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
                         readOnly: field.read_only || false
                       };
                     });
-                    
-                    console.log(`Processed fields for group ${groupIndex}:`, fields);
-                    
+
                     return {
                       tabId: index,
                       sectionId: groupIndex,
@@ -120,14 +101,13 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
                     };
                   }),
                 };
-                
-                console.log(`Formatted tab ${index}:`, formattedTab);
+
                 return formattedTab;
               });
-              
+
               // Add the "Create new tab" option
               formattedTabs.push(createNewTab());
-              
+
               // Update the state with the fetched data
               setData({
                 list: dynamicComponents,
@@ -139,12 +119,10 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
           }
         })
         .catch((error) => {
-          console.error('Error fetching dialog data:', error);
         });
     } else if (dialogData && dialogData.dialog_tabs && dialogData.dialog_tabs.length > 0) {
       // If dialog_tabs is already available in the passed data, use it
-      console.log('Using dialog tabs from props:', dialogData.dialog_tabs);
-      
+
       const formattedTabs = dialogData.dialog_tabs.map((tab, index) => ({
         tabId: index,
         name: tab.label,
@@ -153,7 +131,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
           sectionId: groupIndex,
           title: group.label,
           description: group.description || '',
-          fields: (group.dialog_fields || []).map(field => ({
+          fields: (group.dialog_fields || []).map((field) => ({
             componentId: getComponentIdFromType(field.type),
             ...field,
             name: field.name || `field_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
@@ -166,10 +144,10 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
           order: group.position || 0,
         })),
       }));
-      
+
       // Add the "Create new tab" option
       formattedTabs.push(createNewTab());
-      
+
       setData({
         list: dynamicComponents,
         formFields: formattedTabs,

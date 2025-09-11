@@ -27,11 +27,6 @@ const DynamicTextInput = ({ dynamicFieldData: { section, field, fieldPosition },
     fieldsToRefresh: refreshEnabledFields,
   });
 
-  // Log the field data for debugging
-  console.log('Field data in DynamicTextInput:', field);
-  console.log('Field values from helper:', fieldValues);
-  console.log('Field state initialized as:', fieldState);
-
   const handleFieldUpdate = (event, updatedFields) => {
     setFieldState((prevState) => ({ ...prevState, ...updatedFields }));
     onFieldAction({ event, type: editActionType, fieldPosition, inputProps: { ...fieldState, ...updatedFields } });
