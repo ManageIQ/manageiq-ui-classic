@@ -64,7 +64,7 @@ Cypress.Commands.add(
   'expect_browser_confirm_with_text',
   ({ confirmTriggerFn, containsText, proceed = true }) => {
     let alertTriggered = false;
-    cy.on('window:confirm', (actualText) => {
+    cy.once('window:confirm', (actualText) => {
       alertTriggered = true;
       if (containsText) {
         expect(actualText.toLowerCase()).to.include(containsText.toLowerCase());
