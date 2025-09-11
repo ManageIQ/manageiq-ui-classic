@@ -6,7 +6,7 @@
       %label.col-md-2.control-label
         = _("Tag Category")
       .col-md-8
-        = select_tag('category', options_for_select(categories, category), "data-live-search" => "true", :class => "selectpicker")
+        = select_tag('category', options_for_select([[_("<Choose>"), nil]] + categories, category), "data-live-search" => "true", :class => "selectpicker")
         :javascript
           miqInitSelectPicker();
           miqSelectPickerEvent('category', "#{url}")
