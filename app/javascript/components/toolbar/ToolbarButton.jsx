@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { adjustColor, isEnabled } from './utility';
 import CountContext from './ToolbarContext';
+import { carbonizeIcon } from '../../menu/icon';
 
 const classNames = require('classnames');
 
@@ -10,7 +11,10 @@ const ButtonIcon = ({
   img_url: imgUrl, icon, color, enabled,
 }) => {
   if (icon) {
-    return <i className={icon} style={{ color: adjustColor(color, enabled) }} />;
+    const options = {
+      color: adjustColor(color, enabled),
+    };
+    return carbonizeIcon(icon, options);
   }
 
   if (imgUrl && !icon) {
