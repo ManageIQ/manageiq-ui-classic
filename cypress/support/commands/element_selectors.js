@@ -15,7 +15,7 @@ Cypress.Commands.add(
   'getFormFooterButtonByTypeWithText',
   ({ buttonType = 'button', buttonText } = {}) => {
     if (!buttonText) {
-      cy.logAndThrowError('buttonName is required');
+      cy.logAndThrowError('buttonText is required');
     }
     return cy.contains(
       `#main-content .bx--btn-set button[type="${buttonType}"]`,
