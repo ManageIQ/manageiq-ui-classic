@@ -48,7 +48,7 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
       const isClickableNode = accordionPathIndex === accordionPath.length - 1;
 
       for (let i = searchStartIndex; i < listItems.length; i++) {
-        /* @RemoveLater: Remove logger once the command is confirmed to be stable */
+        /* TODO: Remove logger once the command is confirmed to be stable */
         Cypress.log({
           name: 'selectAccordionItem',
           message: `Loop index: ${i} & Searching for label: ${accordionLabel}`,
@@ -65,7 +65,7 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
         }
 
         if (isMatch) {
-          /* @RemoveLater: Remove logger once the command is confirmed to be stable */
+          /* TODO: Remove logger once the command is confirmed to be stable */
           Cypress.log({
             name: 'selectAccordionItem',
             message: `Matched "${liText}" at index ${i}`,
@@ -75,8 +75,13 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
           const currentLiElement = Cypress.$(listItems[i]);
           // If it's the last label in the path, then that is the desired item to click
           if (isClickableNode) {
-            // Click the node corresponding to the last label in the given path and terminate
-            cy.wrap(currentLiElement).click();
+            // Click the node corresponding to the last label in the given path,
+            // intercept & wait for the Tree-Select api and then terminate
+            cy.interceptApi({
+              alias: 'treeSelectApi',
+              urlPattern: /\/[^\/]+\/tree_select\?id=.*&text=.*/,
+              triggerFn: () => cy.wrap(currentLiElement).click(),
+            });
             return;
           }
 
