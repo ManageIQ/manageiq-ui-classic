@@ -226,16 +226,10 @@ describe('Automate Collect logs Edit form operations', () => {
   describe('Settings > Application Settings > Diagnostics > Manage IQ Region > Zone > Collect logs > Edit', () => {
     beforeEach(() => {
       // Select "Zone:" accordion item
-      cy.interceptApi({
-        alias: 'treeSelectApi',
-        urlPattern:
-          /ops\/tree_select\?id=.*&text=.*Zone.*Default.*Zone.*(current).*/,
-        triggerFn: () =>
-          cy.selectAccordionItem([
-            MANAGEIQ_REGION_ACCORDION_ITEM,
-            ZONE_ACCORDION_ITEM,
-          ]),
-      });
+      cy.selectAccordionItem([
+        MANAGEIQ_REGION_ACCORDION_ITEM,
+        ZONE_ACCORDION_ITEM,
+      ]);
       // Select collect logs tab and open edit form
       goToCollectLogsTabAndOpenEditForm();
     });
