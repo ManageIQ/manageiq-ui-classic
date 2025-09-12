@@ -19,12 +19,8 @@ describe('Validate intercept command', () => {
   });
 
   it('Should register multiple unique aliases', () => {
-    // first api with alias 'accordionSelectApi'
-    cy.interceptApi({
-      alias: 'accordionSelectApi',
-      urlPattern: /\/ops\/accordion_select\?id=.*/,
-      triggerFn: () => cy.accordion('Diagnostics'),
-    });
+    // first api with alias 'accordionSelectApi'(Accordion select api wait is handled from cy.accordion command with alias 'accordionSelectApi')
+    cy.accordion('Diagnostics');
     // second api with alias 'treeSelectApi'(Tree select api wait is handled from selectAccordionItem with alias 'treeSelectApi')
     cy.selectAccordionItem([/^ManageIQ Region:/, /^Zone:/]);
     // verifies that both the aliases are set and the request is intercepted & awaited
@@ -37,31 +33,21 @@ describe('Validate intercept command', () => {
   });
 
   it('Should not register duplicate alias', () => {
-    // add first api with alias 'accordionSelectApi'
-    cy.interceptApi({
-      alias: 'accordionSelectApi',
-      urlPattern: /\/ops\/accordion_select\?id=.*/,
-      triggerFn: () => cy.accordion('Diagnostics'),
-    }).then(() => {
-      cy.getInterceptedApiAliases().then((interceptedAliasesObject) => {
-        expect(Object.keys(interceptedAliasesObject).length).to.equal(1);
-      });
+    // first api with alias 'accordionSelectApi'(Accordion select api wait is handled from cy.accordion command with alias 'accordionSelectApi')
+    cy.accordion('Diagnostics');
+    cy.getInterceptedApiAliases().then((interceptedAliasesObject) => {
+      expect(Object.keys(interceptedAliasesObject).length).to.equal(1);
     });
     // second api with alias 'treeSelectApi'(Tree select api wait is handled from selectAccordionItem with alias 'treeSelectApi')
     cy.selectAccordionItem([/^ManageIQ Region:/, /^Zone:/]);
     cy.getInterceptedApiAliases().then((interceptedAliasesObject) => {
       expect(Object.keys(interceptedAliasesObject).length).to.equal(2);
     });
-    // third api with a duplicate alias as above 'accordionSelectApi'
-    cy.interceptApi({
-      alias: 'accordionSelectApi',
-      urlPattern: /\/ops\/accordion_select\?id=.*/,
-      triggerFn: () => cy.accordion('Access Control'),
-    }).then(() => {
-      // assert that the alias is not overwritten
-      cy.getInterceptedApiAliases().then((interceptedAliasesObject) => {
-        expect(Object.keys(interceptedAliasesObject).length).to.equal(2);
-      });
+    // third api with a duplicate alias as above 'accordionSelectApi'(Accordion select api wait is handled from cy.accordion command with alias 'accordionSelectApi')
+    cy.accordion('Access Control');
+    // assert that the alias is not overwritten
+    cy.getInterceptedApiAliases().then((interceptedAliasesObject) => {
+      expect(Object.keys(interceptedAliasesObject).length).to.equal(2);
     });
   });
 });
