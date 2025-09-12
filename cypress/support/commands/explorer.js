@@ -75,8 +75,13 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
           const currentLiElement = Cypress.$(listItems[i]);
           // If it's the last label in the path, then that is the desired item to click
           if (isClickableNode) {
-            // Click the node corresponding to the last label in the given path and terminate
-            cy.wrap(currentLiElement).click();
+            // Click the node corresponding to the last label in the given path,
+            // intercept & wait for the Tree-Select api and then terminate
+            cy.interceptApi({
+              alias: 'treeSelectApi',
+              urlPattern: /\/[^\/]+\/tree_select\?id=.*&text=.*/,
+              triggerFn: () => cy.wrap(currentLiElement).click(),
+            });
             return;
           }
 
