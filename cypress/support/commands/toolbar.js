@@ -27,7 +27,14 @@ Cypress.Commands.add('toolbar', (toolbarButton, toolbarOption = '') => {
         );
 
         if (!targetToolbarOption) {
-          cy.logAndThrowError(`"${toolbarOption}" option was not found in the "${toolbarButton}" toolbar`);
+          cy.logAndThrowError(
+            `"${toolbarOption}" option was not found in the "${toolbarButton}" toolbar`
+          );
+        }
+        if (targetToolbarOption.className.includes('--disabled')) {
+          cy.logAndThrowError(
+            `"${toolbarOption}" option is disabled and cannot be clicked`
+          );
         }
         // returning the cypress chainable to the top of the command scope
         return cy.wrap(targetToolbarOption).click();
