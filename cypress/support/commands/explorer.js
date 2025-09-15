@@ -10,11 +10,13 @@ Cypress.Commands.add('accordion', (title) => {
   ret.then((el) => {
     // Do not collapse if already expanded
     if (el.is('.collapsed')) {
-      cy.wrap(el).click();
+      cy.interceptApi({
+        alias: 'accordionSelectApi',
+        urlPattern: /\/[^\/]+\/accordion_select\?id=.*/,
+        triggerFn: () => cy.wrap(el).click(),
+      });
     }
   });
-
-  return ret.parents('.panel');
 });
 
 // name: String of the record in the accordion panel to click.

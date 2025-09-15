@@ -10,7 +10,6 @@ const APP_SETTINGS_MENU_OPTION = 'Application Settings';
 
 // List items
 const DIAGNOSTICS_ACCORDION_ITEM = 'Diagnostics';
-const DIAGNOSTICS_ACCORDION_ITEM_ID = 'diagnostics_accord';
 const MANAGEIQ_REGION_ACCORDION_ITEM = /^ManageIQ Region:/;
 const ZONE_ACCORDION_ITEM = /^Zone:/;
 const SERVER_ACCORDION_ITEM = /^Server:/;
@@ -174,11 +173,8 @@ describe('Automate Collect logs Edit form operations', () => {
     cy.login();
     // Navigate to Application settings and expand Diagnostics accordion
     cy.menu(SETTINGS_MENU_OPTION, APP_SETTINGS_MENU_OPTION);
-    cy.interceptApi({
-      alias: 'getDiagnosticsInfo',
-      urlPattern: `/ops/accordion_select?id=${DIAGNOSTICS_ACCORDION_ITEM_ID}`,
-      triggerFn: () => cy.accordion(DIAGNOSTICS_ACCORDION_ITEM),
-    });
+    // Expand Diagnostics accordion
+    cy.accordion(DIAGNOSTICS_ACCORDION_ITEM);
   });
 
   describe('Settings > Application Settings > Diagnostics > Manage IQ Region > Zone > Server > Collect logs > Edit', () => {
