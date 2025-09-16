@@ -1,6 +1,6 @@
 class PingController < ApplicationController
   def index
-    raise PG::Error unless ActiveRecord::Base.connectable?
+    ActiveRecord::Base.connectable!
 
     render :plain => 'pong', :status => 200
   end
@@ -8,7 +8,7 @@ class PingController < ApplicationController
   private def error_handler(e)
     message =
       case e
-      when PG::Error
+      when *ActiveRecord::Base::CONNECTIVITY_ERRORS
         "Unable to connect to the database"
       else
         "Unknown"

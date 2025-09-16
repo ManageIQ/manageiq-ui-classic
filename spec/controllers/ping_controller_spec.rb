@@ -9,16 +9,16 @@ describe PingController do
   end
 
   it 'fails gracefully with database errors' do
-    expect(ActiveRecord::Base).to receive(:connectable?).and_return(false)
+    expect(ActiveRecord::Base).to receive(:connectable!).and_raise(PG::ConnectionBad)
 
     get :index
 
     expect(response.status).to eq(500)
-    expect(response.body).to eq("ERROR: Unable to connect to the database (PG::Error)")
+    expect(response.body).to eq("ERROR: Unable to connect to the database (PG::ConnectionBad)")
   end
 
   it 'fails gracefully with non-database errors' do
-    expect(ActiveRecord::Base).to receive(:connectable?).and_raise(RuntimeError)
+    expect(ActiveRecord::Base).to receive(:connectable!).and_raise(RuntimeError)
 
     get :index
 
