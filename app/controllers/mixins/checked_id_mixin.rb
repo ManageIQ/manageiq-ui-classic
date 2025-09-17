@@ -10,7 +10,10 @@ module Mixins
     # Common routine to find checked items on a page (checkbox ids are
     # "check_xxx" where xxx is the item id or index)
     def find_checked_items(prefix = nil)
-      if params[:miq_grid_checks].present?
+      # If id is present use id, example on summary pages
+      if params[:id].present?
+        [params[:id]]
+      elsif params[:miq_grid_checks].present?
         params[:miq_grid_checks].split(",").collect(&:to_i)
       else
         prefix = "check" if prefix.nil?
