@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'carbon-components-react';
 import MiqDataTable from '../miq-data-table';
@@ -10,7 +10,16 @@ const SettingsLabelTagMapping = ({ initialData }) => {
   const headerKeys = initialData.headers.map((item) => item.key);
   const miqRows = rowData(headerKeys, initialData.rows, false);
 
-  const onSelect = (selectedRowId) => window.miqJqueryRequest(`/ops/label_tag_mapping_edit/${selectedRowId}`)
+  useEffect(() => {
+    if (document.getElementById('paging_div')) {
+      document.getElementById('paging_div').style.display = 'none';
+    }
+    if (document.getElementById('form_buttons_div')) {
+      document.getElementById('form_buttons_div').style.display = 'none';
+    }
+  }, []);
+
+  const onSelect = (selectedRowId) => window.miqJqueryRequest(`/ops/label_tag_mapping_edit/${selectedRowId}`);
 
   /** Function to render a warning message */
   const renderWarning = () => (
