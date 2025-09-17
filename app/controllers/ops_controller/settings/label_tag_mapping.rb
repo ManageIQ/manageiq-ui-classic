@@ -63,12 +63,20 @@ module OpsController::Settings::LabelTagMapping
       end
       get_node_info(x_node)
       @lt_map = @edit = session[:edit] = nil # clean out the saved info
-      replace_right_cell(:nodetype => @nodetype)
+      render :update do |page|
+        page << javascript_prologue
+        page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
+        page.replace_html('map_tags', :partial => 'settings_map_tags_tab')
+      end
     when "save", "add"
       id = params[:id] || "new"
       return unless load_edit("label_tag_mapping_edit__#{id}", "replace_cell__explorer")
 
       @lt_map = @edit[:lt_map] if @edit && @edit[:lt_map]
+      if @edit[:new][:entity].blank?
+        add_flash(_("Entity is required"), :error)
+      end
       if @edit[:new][:label_name].blank?
         add_flash(_("Label is required"), :error)
       end
@@ -109,7 +117,7 @@ module OpsController::Settings::LabelTagMapping
         ui_lookup(:model => model)
       end
     else
-      _("<All>")
+      _("<Choose>")
     end
   end
 
@@ -277,7 +285,12 @@ module OpsController::Settings::LabelTagMapping
       add_flash(_("Provider Tag Mapping \"%{name}\" was added") % {:name => label_name})
       get_node_info(x_node)
       @lt_map = @edit = session[:edit] = nil # clean out the saved info
-      replace_right_cell(:nodetype => "root")
+      render :update do |page|
+        page << javascript_prologue
+        page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
+        page.replace_html('map_tags', :partial => 'settings_map_tags_tab')
+      end
     end
   end
 
@@ -307,7 +320,12 @@ module OpsController::Settings::LabelTagMapping
       add_flash(_("Provider Tag Mapping \"%{name}\" was saved") % {:name => mapping.label_name})
       get_node_info(x_node)
       @lt_map = @edit = session[:edit] = nil # clean out the saved info
-      replace_right_cell(:nodetype => "root")
+      render :update do |page|
+        page << javascript_prologue
+        page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page << "miqScrollTop();" if @flash_array.present?
+        page.replace_html('map_tags', :partial => 'settings_map_tags_tab')
+      end
     end
   end
 
@@ -336,7 +354,7 @@ module OpsController::Settings::LabelTagMapping
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
         page << "miqScrollTop();" if @flash_array.present?
-        page.replace_html('settings_label_tag_mapping', :partial => 'settings_label_tag_mapping_tab')
+        page.replace_html('map_tags', :partial => 'settings_map_tags_tab')
       end
     else
       mapping.errors.each { |error| add_flash("#{error.attribute.to_s.capitalize} #{error.message}", :error) }
@@ -360,7 +378,7 @@ module OpsController::Settings::LabelTagMapping
     def tag_category_parameters_for_haml
       {:lt_map       => @lt_map,
        :categories   => categories_for_select,
-       :category     => @edit[:new][:category] || categories_for_select.first,
+       :category     => @edit[:new][:category],
        :all_entities => @edit[:new][:entity] == ALL_ENTITIES}
     end
   end
