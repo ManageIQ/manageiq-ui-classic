@@ -1,7 +1,16 @@
 /** Function to check if a field is disabled during onLoad or Refresh event. */
-const isDisabled = ({ isOrderServiceForm, fieldsToRefresh, locked }) => (!isOrderServiceForm || !!fieldsToRefresh.length > 0 || locked);
+const isDisabled = ({
+  isOrderServiceForm, isServiceReconfigure, fieldsToRefresh, locked,
+}, isReconfigurable) => {
+  // For service reconfigure, we rely on the field's reconfigure property from the API
+  // For other forms, we use the standard logic
+  if (isServiceReconfigure) {
+    return !isReconfigurable;
+  }
 
-/** Function to render the required label in the form component label */
+  return !isOrderServiceForm || !!fieldsToRefresh.length > 0 || locked;
+};
+
 /** Function to render the required label in the form component label */
 const requiredLabel = (isRequired, fieldData) => {
   if (isRequired) {
@@ -27,7 +36,7 @@ export const isArrayOfObjects = (value) => Array.isArray(value) && value.every((
 export const fieldProperties = (field, data) => {
   const fieldData = data.dialogFields[field.name];
   return {
-    isDisabled: isDisabled(data),
+    isDisabled: isDisabled(data, field.reconfigurable),
     requiredLabel: requiredLabel(field, fieldData),
     fieldId: fieldComponentId(field),
     fieldData,
