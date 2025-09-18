@@ -120,14 +120,14 @@ describe ApplicationController do
   end
 
   describe "#find_checked_items" do
-    it "returns empty array when button is pressed from summary screen with params as symbol" do
+    it "returns array with id when button is pressed from summary screen with params as symbol" do
       controller.params = {:id => "1"}
-      expect(controller.send(:find_checked_items)).to eq([])
+      expect(controller.send(:find_checked_items)).to eq(["1"])
     end
 
-    it "returns empty array when button is pressed from summary screen with params as string" do
+    it "returns array with id when button is pressed from summary screen with params as string" do
       controller.params = {"id" => "1"}
-      expect(controller.send(:find_checked_items)).to eq([])
+      expect(controller.send(:find_checked_items)).to eq(["1"])
     end
 
     it "returns list of items selected from list view" do

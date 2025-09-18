@@ -90,7 +90,7 @@ describe AuthKeyPairCloudController do
         allow(controller).to receive(:performed?).and_return(true)
         allow(controller).to receive(:render)
         controller.instance_variable_set(:@display, 'instances')
-        controller.params = {:miq_grid_checks => vm_instance.id.to_s, :pressed => 'instance_check_compliance', :id => kp.id.to_s, :controller => 'auth_key_pair_cloud'}
+        controller.params = {:miq_grid_checks => vm_instance.id.to_s, "select-row-#{vm_instance.id.to_s}" => "on", :pressed => 'instance_check_compliance', :id => kp.id.to_s, :controller => 'auth_key_pair_cloud'}
       end
 
       it 'does not initiate Check Compliance because of missing Compliance policies' do

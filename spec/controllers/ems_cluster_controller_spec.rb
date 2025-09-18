@@ -71,7 +71,7 @@ describe EmsClusterController do
         allow(controller).to receive(:render)
         allow(controller).to receive(:show)
         controller.instance_variable_set(:@display, 'vms')
-        controller.params = {:miq_grid_checks => vm.id.to_s, :pressed => 'vm_check_compliance', :id => cluster.id.to_s, :controller => 'ems_cluster'}
+        controller.params = {:miq_grid_checks => vm.id.to_s, "select-row-#{vm.id.to_s}" => "on", :pressed => 'vm_check_compliance', :id => cluster.id.to_s, :controller => 'ems_cluster'}
       end
 
       it 'does not initiate Check Compliance because of missing Compliance policies' do
@@ -105,7 +105,7 @@ describe EmsClusterController do
         allow(controller).to receive(:drop_breadcrumb)
         allow(controller).to receive(:records_support_feature?).and_return(true)
         allow(controller).to receive(:render)
-        controller.params = {:id => cluster.id.to_s, :miq_grid_checks => vm.id.to_s, :pressed => 'vm_scan' }
+        controller.params = {:id => cluster.id.to_s, :miq_grid_checks => vm.id.to_s, "select-row-#{vm.id.to_s}" => "on", :pressed => 'vm_scan' }
       end
 
       %w[vms all_vms].each do |display|
@@ -127,7 +127,7 @@ describe EmsClusterController do
         it 'initiates SSA for selected Template successfully' do
           controller.params = {:display => 'miq_templates', :id => cluster.id.to_s}
           controller.send(:show)
-          controller.params = {:id => cluster.id.to_s, :miq_grid_checks => template.id.to_s, :pressed => 'miq_template_scan'}
+          controller.params = {:id => cluster.id.to_s, :miq_grid_checks => template.id.to_s, "select-row-#{template.id.to_s}" => "on", :pressed => 'miq_template_scan'}
           controller.send(:button)
           expect(controller.instance_variable_get(:@record)).to eq(cluster)
           expect(controller.instance_variable_get(:@view).db).to eq('MiqTemplate')
