@@ -10,6 +10,7 @@ module Mixins
     # Common routine to find checked items on a page (checkbox ids are
     # "check_xxx" where xxx is the item id or index)
     def find_checked_items(prefix = nil)
+      has_no_check = true
       nested_list_item_string = ""
       # Check if nested list items are tagged.
       if params["miq_grid_checks"].present?
@@ -19,9 +20,21 @@ module Mixins
         nested_list_item_string = "select-row-#{nested_list_item}"
       end
 
+      params.each do |var, val|
+        if var.starts_with?("check_")
+          has_no_check = false
+        else
+          next
+        end
+      end
+
       # If id is present use id, unless when nested list exists, example on summary pages
-      if params[:id].present? && params[nested_list_item_string] != "on"
-        [params[:id]]
+      if params[:id].present? && params[nested_list_item_string] != "on" && has_no_check
+        if params[:id].kind_of?(Array)
+          params[:id]
+        else
+          [params[:id]]
+        end
       elsif params[:miq_grid_checks].present?
         params[:miq_grid_checks].split(",").collect(&:to_i)
       else

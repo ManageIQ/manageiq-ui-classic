@@ -126,7 +126,7 @@ describe StorageController do
         allow(controller).to receive(:assert_privileges)
         allow(controller).to receive(:render)
         controller.instance_variable_set(:@display, 'vms')
-        controller.params = {:miq_grid_checks => vm.id.to_s, :pressed => 'vm_check_compliance', :id => storage.id.to_s, :controller => 'storage'}
+        controller.params = {:miq_grid_checks => vm.id.to_s, "select-row-#{vm.id.to_s}" => "on", :pressed => 'vm_check_compliance', :id => storage.id.to_s, :controller => 'storage'}
       end
 
       it 'does not initiate Check Compliance because of missing Compliance policies' do

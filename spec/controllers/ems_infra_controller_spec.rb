@@ -128,7 +128,7 @@ describe EmsInfraController do
         allow(controller).to receive(:performed?).and_return(true)
         allow(controller).to receive(:render)
         controller.instance_variable_set(:@display, 'vms')
-        controller.params = {:miq_grid_checks => vm.id.to_s, :pressed => 'vm_check_compliance', :id => ems_infra.id.to_s, :controller => 'ems_infra'}
+        controller.params = {:miq_grid_checks => vm.id.to_s, "select-row-#{vm.id.to_s}" => "on", :pressed => 'vm_check_compliance', :id => ems_infra.id.to_s, :controller => 'ems_infra'}
       end
 
       it 'does not initiate Check Compliance because of missing Compliance policies' do
@@ -427,7 +427,7 @@ describe EmsInfraController do
       datastore.parent = @ems
       controller.instance_variable_set(:@_orig_action, "x_history")
       get :show, :params => {:id => @ems.id, :display => 'storages'}
-      post :button, :params => {:id => @ems.id, :display => 'storages', :miq_grid_checks => datastore.id, :pressed => "storage_tag", :format => :js}
+      post :button, :params => {:id => @ems.id, :display => 'storages', :miq_grid_checks => datastore.id, "select-row-#{datastore.id.to_s}" => "on", :pressed => "storage_tag", :format => :js}
       expect(response.status).to eq(200)
       _breadcrumbs = controller.instance_variable_get(:@breadcrumbs)
       expect(assigns(:breadcrumbs)).to eq([{:name => "Infrastructure Providers", :url => "/ems_infra/show_list"},

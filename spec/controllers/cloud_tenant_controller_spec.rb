@@ -50,7 +50,7 @@ describe CloudTenantController do
         allow(controller).to receive(:performed?).and_return(true)
         allow(controller).to receive(:render)
         controller.instance_variable_set(:@display, 'instances')
-        controller.params = {:miq_grid_checks => vm_instance.id.to_s, :pressed => 'instance_check_compliance', :id => tenant.id.to_s, :controller => 'cloud_tenant'}
+        controller.params = {:miq_grid_checks => vm_instance.id.to_s, "select-row-#{vm_instance.id.to_s}" => "on", :pressed => 'instance_check_compliance', :id => tenant.id.to_s, :controller => 'cloud_tenant'}
       end
 
       it 'does not initiate Check Compliance because of missing Compliance policies' do
