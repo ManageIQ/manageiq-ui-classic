@@ -12,6 +12,7 @@ class ServiceValidator {
   static validateField(data) {
     switch (ServiceValidator.instance.serviceType) {
       case ServiceType.order:
+      case ServiceType.reconfigure:
         return this.orderServiceValidation(data);
       case ServiceType.dialog:
       case ServiceType.request:

@@ -17,6 +17,7 @@ const renderLoader = () => <div className="loadingSpinner"><Loading active small
  * 1. Order Service Form
  * 2. Service Dialogs
  * 3. Service Request
+ * 4. Service Reconfigure
  * */
 const Service = ({
   initialData: {
@@ -24,9 +25,13 @@ const Service = ({
   }, serviceType,
 }) => {
   const isOrderServiceForm = serviceType === ServiceType.order;
+  const isServiceReconfigure = serviceType === ServiceType.reconfigure;
+  const showButtons = isOrderServiceForm || isServiceReconfigure;
+  
   ServiceValidator.instance = new ServiceValidator(serviceType);
+  
   let resource;
-  if (isOrderServiceForm) {
+  if (isOrderServiceForm || isServiceReconfigure) {
     resource = {
       resource_action_id: params.resourceActionId,
       target_id: params.targetId,
@@ -42,6 +47,7 @@ const Service = ({
     dialogFields: undefined,
     urls,
     isOrderServiceForm,
+    isServiceReconfigure,
     locked: false,
     groupFieldsByTab: {},
     serviceType,
@@ -70,18 +76,25 @@ const Service = ({
   };
 
   useEffect(() => {
-    let url = `/api/service_dialogs/${dialogId}`;
-    if (isOrderServiceForm) {
-      const urlParams = `?resource_action_id=${params.resourceActionId}&target_id=${params.targetId}&target_type=${params.targetType}`;
-      url = `/api/service_dialogs/${dialogId}${urlParams}`;
+    let url;
+    
+    if (isServiceReconfigure) {
+      url = `/api/services/${params.targetId}?attributes=reconfigure_dialog`;
+    } else {
+      url = `/api/service_dialogs/${dialogId}`;
+      if (isOrderServiceForm) {
+        const urlParams = `?resource_action_id=${params.resourceActionId}&target_id=${params.targetId}&target_type=${params.targetType}`;
+        url = `/api/service_dialogs/${dialogId}${urlParams}`;
+      }
     }
+    
     fetchInitialData(url, requestDialogOptions, serviceType)
       .then((response) => setData((prevData) => ({ ...prevData, ...response })))
       .catch(() => setData((prevData) => ({ ...prevData, isLoading: false })));
   }, []);
 
   useEffect(() => {
-    if (isOrderServiceForm && data.dialogFields) {
+    if ((isOrderServiceForm || isServiceReconfigure) && data.dialogFields) {
       if (data.fieldsToRefresh.length > 0) {
         refreshField({ ...data });
       } else if (refreshStatus.current !== RefreshStatus.notStarted) {
@@ -94,7 +107,7 @@ const Service = ({
   const renderContent = () => (
     <ServiceContext.Provider value={{ data, setData }}>
       <DialogTabs />
-      {isOrderServiceForm && <ServiceButtons />}
+      {showButtons && <ServiceButtons />}
     </ServiceContext.Provider>
   );
 
@@ -102,7 +115,6 @@ const Service = ({
     <div className={classNames('service-container', serviceType)}>
       { data.isLoading ? renderLoader() : renderContent() }
     </div>
-
   );
 };
 
@@ -121,7 +133,7 @@ Service.propTypes = {
       apiAction: PropTypes.string.isRequired,
       cancelEndPoint: PropTypes.string.isRequired,
       finishSubmitEndpoint: PropTypes.string.isRequired,
-      openUrl: PropTypes.bool.isRequired,
+      openUrl: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
     }),
   }).isRequired,
   serviceType: PropTypes.string.isRequired,
