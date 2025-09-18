@@ -40,12 +40,17 @@ export const defaultFieldOptions = (field, data) => {
 };
 
 /** Function to extract the dialog_tabs from the api's response. */
-export const extractDialogTabs = (apiResponse) => ((apiResponse
-  && apiResponse.content
-  && apiResponse.content[0]
-  && apiResponse.content[0].dialog_tabs)
-? apiResponse.content[0].dialog_tabs
-: []);
+export const extractDialogTabs = (apiResponse) => {
+  if (apiResponse && apiResponse.content && apiResponse.content[0] && apiResponse.content[0].dialog_tabs) {
+    return apiResponse.content[0].dialog_tabs;
+  }
+  
+  if (apiResponse && apiResponse.reconfigure_dialog && apiResponse.reconfigure_dialog[0] && apiResponse.reconfigure_dialog[0].dialog_tabs) {
+    return apiResponse.reconfigure_dialog[0].dialog_tabs;
+  }
+  
+  return [];
+};
 
 const otherServiceTypesValue = (field) => {
   if (typeof field.default_value === 'string' || field.default_value instanceof String) {
@@ -147,15 +152,21 @@ const updateRefreshResponse = (apiResponse, currentRefreshField, result) => {
 export const fetchInitialData = async(url, requestDialogOptions, serviceType) => {
   try {
     const apiResponse = await API.get(url, { skipErrors: [500] });
-    const {dialogFields, groupFieldsByTab} = buildDialogFields(apiResponse, requestDialogOptions, serviceType);
+    
+    // For service reconfigure, we need to extract the dialog ID from the response
+    if (serviceType === ServiceType.reconfigure && apiResponse.reconfigure_dialog && apiResponse.reconfigure_dialog[0]) {
+      apiResponse.id = apiResponse.reconfigure_dialog[0].id;
+    }
+    
+    const { dialogFields, groupFieldsByTab } = buildDialogFields(apiResponse, requestDialogOptions, serviceType);
     return {
       isLoading: false,
       apiResponse,
       dialogFields,
       groupFieldsByTab,
     };
-  } catch {
-    console.error('Unexpected error occurred while fetching the data.');
+  } catch (error) {
+    console.error('Unexpected error occurred while fetching the data:', error);
     throw new Error('Fetch error');
   }
 };

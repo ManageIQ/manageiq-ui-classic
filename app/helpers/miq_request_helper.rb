@@ -1,4 +1,3 @@
-require 'byebug'
 module MiqRequestHelper
   include RequestInfoHelper
   include RequestDetailsHelper

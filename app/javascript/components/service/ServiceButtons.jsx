@@ -3,12 +3,17 @@ import { Button } from 'carbon-components-react';
 import ServiceContext from './ServiceContext';
 import { omitValidation } from './helper';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
+import { API } from '../../http_api';
+import { ServiceType } from './constants';
 
 const ServiceButtons = React.memo(() => {
   const { data, setData } = useContext(ServiceContext);
   const {
-    apiAction, apiSubmitEndpoint, openUrl, finishSubmitEndpoint,
+    apiAction, apiSubmitEndpoint, openUrl, finishSubmitEndpoint, cancelEndPoint,
   } = data.urls;
+  
+  const isReconfigure = data.serviceType === ServiceType.reconfigure;
+  const successMessage = isReconfigure ? __('Reconfigure Request was Submitted') : __('Order Request was Submitted');
 
   useEffect(() => {
     if (data.locked) {
@@ -25,23 +30,29 @@ const ServiceButtons = React.memo(() => {
         try {
           const response = await API.post(apiSubmitEndpoint, submitData, { skipErrors: [400] });
           if (openUrl === 'true') {
+            const { params } = data;
             const taskResponse = await API.wait_for_task(response)
               .then(() =>
                 // eslint-disable-next-line no-undef
-                $http.post('open_url_after_dialog', { targetId, realTargetType }));
+                $http.post('open_url_after_dialog', {
+                  targetId: params.targetId,
+                  realTargetType: params.realTargetType
+                }));
 
             if (taskResponse.data.open_url) {
               window.open(response.data.open_url);
-              miqRedirectBack(__('Order Request was Submitted'), 'success', finishSubmitEndpoint);
+              miqRedirectBack(successMessage, 'success', finishSubmitEndpoint);
             } else {
               add_flash(__('Automate failed to obtain URL.'), 'error');
               miqSparkleOff();
             }
           } else {
-            miqRedirectBack(__('Order Request was Submitted'), 'success', finishSubmitEndpoint);
+            miqRedirectBack(successMessage, 'success', finishSubmitEndpoint);
           }
-        } catch (_error) {
-          // Handle error if needed
+        } catch (error) {
+          console.error('Error submitting form:', error);
+          miqSparkleOff();
+          add_flash(__('Error submitting request'), 'error');
         }
       };
 
@@ -73,7 +84,7 @@ const ServiceButtons = React.memo(() => {
       <Button
         kind="secondary"
         disabled={data.locked || data.fieldsToRefresh.length > 0}
-        onClick={() => miqRedirectBack(__('Dialog Cancelled'), 'warning', '/catalog')}
+        onClick={() => miqRedirectBack(__('Dialog Cancelled'), 'warning', cancelEndPoint)}
       >
         {__('Cancel')}
       </Button>

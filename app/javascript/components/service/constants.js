@@ -13,6 +13,7 @@ export const ServiceType = {
   order: 'orderServiceForm',
   dialog: 'serviceDialog',
   request: 'serviceRequest',
+  reconfigure: 'serviceReconfigure',
 };
 
 export const RefreshStatus = {
