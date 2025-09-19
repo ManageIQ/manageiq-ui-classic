@@ -236,10 +236,6 @@ class ServiceController < ApplicationController
       partial = "shared/views/retire"
       header = _("Set/Remove retirement date for Service")
       action = "retire"
-    when "reconfigure_dialog"
-      partial = "shared/dialogs/reconfigure_dialog"
-      header = @right_cell_text
-      action = nil
     when "service_edit"
       partial = "service_form"
       header = _("Editing Service \"%{name}\"") % {:name => @service.name}
