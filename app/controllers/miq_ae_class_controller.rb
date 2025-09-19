@@ -401,7 +401,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def build_details_grid(view, mode = true)
-    xml = REXML::Document.load("")
+    xml = REXML::Document.load(nil)
     xml << REXML::XMLDecl.new(1.0, "UTF-8")
 
     # Create root element
