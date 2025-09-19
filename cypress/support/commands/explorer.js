@@ -14,6 +14,7 @@ Cypress.Commands.add('accordion', (title) => {
         alias: 'accordionSelectApi',
         urlPattern: /\/[^\/]+\/accordion_select\?id=.*/,
         triggerFn: () => cy.wrap(el).click(),
+        waitOnlyIfRequestIntercepted: true,
       });
     }
   });
@@ -83,6 +84,7 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
               alias: 'treeSelectApi',
               urlPattern: /\/[^\/]+\/tree_select\?id=.*&text=.*/,
               triggerFn: () => cy.wrap(currentLiElement).click(),
+              waitOnlyIfRequestIntercepted: true,
             });
             return;
           }

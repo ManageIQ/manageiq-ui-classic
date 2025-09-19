@@ -86,6 +86,9 @@ const getRequestIntercepted = () => Cypress.env('wasRequestIntercepted');
  * @param {string} options.alias - Unique alias for this interception
  * @param {string} options.method - HTTP method (default: 'POST')
  * @param {string|RegExp} options.urlPattern - URL pattern to intercept
+ * @param {boolean} [options.waitOnlyIfRequestIntercepted=false] - When set to true, the command will only wait for the response
+ * if the request was actually intercepted. This is useful for conditional API calls that may or may not happen like in tree navigations.
+ * If false (default), the command will always wait for the intercepted request, where a request is always expected (e.g., button events).
  * @param {Function} options.triggerFn - Function that triggers the API call
  * @param {Function} [options.onApiResponse] - Optional callback function that receives the interception object after the API call completes.
  * Use this to perform assertions on the response, extract data, or perform additional actions based on the API result.
@@ -97,6 +100,7 @@ Cypress.Commands.add(
     alias,
     method = 'POST',
     urlPattern,
+    waitOnlyIfRequestIntercepted = false,
     triggerFn,
     onApiResponse = () => {
       /* default implementation */
@@ -114,12 +118,16 @@ Cypress.Commands.add(
       // Check if this request is already registered
       const isAlreadyRegistered = !!interceptedAliasesMap[aliasObjectKey];
       // Setting wasRequestIntercepted flag to false initially
-      setRequestIntercepted(false);
+      if (waitOnlyIfRequestIntercepted) {
+        setRequestIntercepted(false);
+      }
       // Register the intercept if not already done
       if (!isAlreadyRegistered) {
         cy.intercept(method, urlPattern, () => {
           // Setting wasRequestIntercepted flag to true after request is intercepted
-          setRequestIntercepted(true);
+          if (waitOnlyIfRequestIntercepted) {
+            setRequestIntercepted(true);
+          }
         }).as(alias);
         cy.setInterceptedApiAlias(aliasObjectKey, alias);
       }
@@ -129,8 +137,16 @@ Cypress.Commands.add(
 
       // Wait for the intercepted request to complete
       cy.then(() => {
-        const isRequestIntercepted = getRequestIntercepted();
-        if (isRequestIntercepted) {
+        // If waitOnlyIfRequestIntercepted is true, check if the request was intercepted
+        // and then wait for the response
+        if (waitOnlyIfRequestIntercepted) {
+          const isRequestIntercepted = getRequestIntercepted();
+          if (isRequestIntercepted) {
+            cy.wait(`@${alias}`).then(onApiResponse);
+          }
+        }
+        // If waitOnlyIfRequestIntercepted is not required then directly wait for the response
+        else {
           cy.wait(`@${alias}`).then(onApiResponse);
         }
       });
