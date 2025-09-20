@@ -3048,6 +3048,9 @@ Rails.application.routes.draw do
         retire
         show
         tagging_edit
+        persistentvolumeclaims
+        attached_volumes
+        storage_class_list
       ] +
                compare_get,
       :post => %w[
@@ -3097,6 +3100,8 @@ Rails.application.routes.draw do
         wait_for_task
         win32_services
         ownership_update
+        add_volume
+        remove_volume
       ] +
                adv_search_post +
                compare_post +
