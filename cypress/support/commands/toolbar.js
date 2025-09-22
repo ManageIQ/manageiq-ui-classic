@@ -21,13 +21,15 @@ Cypress.Commands.add('toolbar', (toolbarButton, toolbarOption = '') => {
   // then look for the given toolbar option
   if (toolbarOption) {
     return clickToolbarButton.then(() => {
-      return cy.get('.bx--overflow-menu-options li').then((toolbarOptions) => {
+      return cy.get('.bx--overflow-menu-options li button').then((toolbarOptions) => {
         const targetToolbarOption = [...toolbarOptions].find(
           (option) => option.innerText.trim() === toolbarOption
         );
 
         if (!targetToolbarOption) {
-          cy.logAndThrowError(`"${toolbarOption}" option was not found in the "${toolbarButton}" toolbar`);
+          cy.logAndThrowError(
+            `"${toolbarOption}" option was not found in the "${toolbarButton}" toolbar`
+          );
         }
         // returning the cypress chainable to the top of the command scope
         return cy.wrap(targetToolbarOption).click();
