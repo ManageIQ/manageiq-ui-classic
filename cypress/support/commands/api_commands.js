@@ -84,12 +84,12 @@ const getRequestIntercepted = () => Cypress.env('wasRequestIntercepted');
  *
  * @param {Object} options - The options for the intercept
  * @param {string} options.alias - Unique alias for this interception
- * @param {string} options.method - HTTP method (default: 'POST')
+ * @param {string} [options.method] - HTTP method (default: 'POST')
  * @param {string|RegExp} options.urlPattern - URL pattern to intercept
- * @param {boolean} [options.waitOnlyIfRequestIntercepted=false] - When set to true, the command will only wait for the response
+ * @param {boolean} [options.waitOnlyIfRequestIntercepted] - When set to true(default: false), the command will only wait for the response
  * if the request was actually intercepted. This is useful for conditional API calls that may or may not happen like in tree navigations.
  * If false (default), the command will always wait for the intercepted request, where a request is always expected (e.g., button events).
- * @param {Function} options.triggerFn - Function that triggers the API call
+ * @param {Function} options.triggerFn - Function that triggers the API call. e.g. { triggerFn: () => { cy.get('button').click(); } }
  * @param {Function} [options.responseInterceptor] - Optional function that can modify the response before it's returned to the application.
  * This function receives the request object and can handle the response in different ways:
  * 1. req.reply({body: {...}}) - Immediately respond with a stubbed response (request never goes to origin)
@@ -97,6 +97,7 @@ const getRequestIntercepted = () => Cypress.env('wasRequestIntercepted');
  * 3. req.continue((res) => { res.send({...}) }) - Let the request go to origin, then modify the response
  * Examples:
  * - Stub response: { responseInterceptor: (req) => req.reply({ body: { customData: 'value' } }) }
+ * - Using fixture to stub response: { responseInterceptor: (req) => req.reply({ fixture: 'users.json' }) }
  * - Pass through to origin: { responseInterceptor: (req) => req.continue() }
  * - Modify origin response: { responseInterceptor: (req) => req.continue((res) => { res.send(200, { modified: true }) }) }
  * @param {Function} [options.onApiResponse] - Optional callback function that receives the interception object after the API call completes.
