@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { OverflowMenu, OverflowMenuItem } from 'carbon-components-react';
+import { OverflowMenu, OverflowMenuItem } from "@carbon/react";
 import { ChevronDown20 } from '@carbon/icons-react';
 import { MenuIcon } from './MenuIcon';
 import { isEnabled } from './utility';

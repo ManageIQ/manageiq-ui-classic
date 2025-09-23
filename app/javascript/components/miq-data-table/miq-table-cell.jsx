@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button, TableCell, TextInput, Toggle, Link,
-} from 'carbon-components-react';
+} from "@carbon/react";
 import classNames from 'classnames';
 import MiqConfirmActionModal, { modalCallbackTypes } from '../miq-confirm-action-modal';
 import {

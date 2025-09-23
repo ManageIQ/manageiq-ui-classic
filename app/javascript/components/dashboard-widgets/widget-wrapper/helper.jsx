@@ -1,7 +1,7 @@
 /* eslint-disable no-alert */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { OverflowMenuItem, Loading } from 'carbon-components-react';
+import { OverflowMenuItem, Loading } from "@carbon/react";
 import classNames from 'classnames';
 import WidgetChart from '../widget-chart';
 import WidgetError from '../widget-error';

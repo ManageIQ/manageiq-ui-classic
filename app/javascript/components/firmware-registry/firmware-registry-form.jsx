@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from 'carbon-components-react';
+import { Grid } from "@carbon/react";
 import schema from './firmware-registry-form.schema';
 import MiqFormRenderer from '../../forms/data-driven-form';
 

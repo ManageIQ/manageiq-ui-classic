@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Loading, Modal, ModalBody } from 'carbon-components-react';
+import { Loading, Modal, ModalBody } from "@carbon/react";
 import MiqDataTable from '../miq-data-table';
 import { workflowsEntryPoints } from './helper';
 import { http } from '../../http_api';

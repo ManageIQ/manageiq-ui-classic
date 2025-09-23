@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Tabs, Tab } from 'carbon-components-react';
+import { Tabs, Tab } from "@carbon/react";
 import NotificationMessage from '../notification-message';
 import MiqStructuredList from '../miq-structured-list';
 

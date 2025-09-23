@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Row, Column } from 'carbon-components-react';
+import { Form, Row, Column } from "@carbon/react";
 
 const TagModifier = ({ header, hideHeader, children }) => (
   <>

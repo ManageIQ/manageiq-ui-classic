@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Dropdown } from 'carbon-components-react';
+import { Dropdown } from "@carbon/react";
 import { SideNavItems, SideNavItem } from 'carbon-components-react/es/components/UIShell';
 import { Collaborate20 } from '@carbon/icons-react';
 import TooltipIcon from 'carbon-components-react/es/components/TooltipIcon';

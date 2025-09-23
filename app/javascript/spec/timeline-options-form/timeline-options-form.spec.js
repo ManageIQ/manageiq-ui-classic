@@ -2,7 +2,7 @@ import React from 'react';
 import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
 import { act } from 'react-dom/test-utils';
-import { Button, Select } from 'carbon-components-react';
+import { Button, Select } from "@carbon/react";
 import TimelineOptions from '../../components/timeline-options/timeline-options';
 import { sampleReponse, sampleSubmitPressedValues, sampleVmData } from './sample-data';
 import { mount, shallow } from '../helpers/mountForm';
