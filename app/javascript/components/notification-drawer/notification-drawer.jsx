@@ -6,7 +6,7 @@ import { ChevronLeft16, ChevronRight16, Close16 } from '@carbon/icons-react';
 import classNames from 'classnames';
 import {
   Button, Accordion, AccordionItem, InlineNotification, OverflowMenu, OverflowMenuItem,
-} from 'carbon-components-react';
+} from "@carbon/react";
 import { getNotficationStatusIconName, newCountText, viewDetails } from './helpers';
 import { maxNotifications as maxNotificationsConstant } from '../../notifications/backend';
 import {

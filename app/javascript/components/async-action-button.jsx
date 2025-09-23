@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   isEqual, flatMap, get, set,
 } from 'lodash';
-import { Button, InlineLoading } from 'carbon-components-react';
+import { Button, InlineLoading } from "@carbon/react";
 
 import {
   useFormApi, useFieldApi, validatorTypes, FormSpy,

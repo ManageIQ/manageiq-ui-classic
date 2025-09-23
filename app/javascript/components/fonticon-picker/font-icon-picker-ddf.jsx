@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   FormGroup, Button,
-} from 'carbon-components-react';
+} from "@carbon/react";
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { prepareProps } from '@data-driven-forms/carbon-component-mapper';

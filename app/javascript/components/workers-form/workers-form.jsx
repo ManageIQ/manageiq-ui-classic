@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'carbon-components-react';
+import { Grid } from "@carbon/react";
 import { get } from 'lodash';
 import addSchema from './workers.schema';
 import MiqFormRenderer from '../../forms/data-driven-form';

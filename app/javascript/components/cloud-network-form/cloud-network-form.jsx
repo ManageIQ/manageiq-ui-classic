@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'carbon-components-react';
+import { Grid } from "@carbon/react";
 import MiqFormRenderer from '../../forms/data-driven-form';
 import createSchema from './cloud-network-form.schema';
 import { networkProviders } from '../../helpers/network-providers';

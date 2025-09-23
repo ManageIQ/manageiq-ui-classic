@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import MiqFormRenderer from '@@ddf';
 import PropTypes from 'prop-types';
-import { Loading } from 'carbon-components-react';
+import { Loading } from "@carbon/react";
 import createSchema from './miq-alert-set-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 

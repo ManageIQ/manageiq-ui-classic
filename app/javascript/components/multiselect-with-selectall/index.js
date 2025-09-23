@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { prepareProps } from '@data-driven-forms/carbon-component-mapper';
-import { MultiSelect } from 'carbon-components-react';
+import { MultiSelect } from "@carbon/react";
 import { useFieldApi } from '@@ddf';
 
 const MultiSelectWithSelectAll = (props) => {

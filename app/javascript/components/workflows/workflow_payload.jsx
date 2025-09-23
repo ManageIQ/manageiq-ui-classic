@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   Loading, Tabs, Tab,
-} from 'carbon-components-react';
+} from "@carbon/react";
 import AWSSfnGraph from '@tshepomgaga/aws-sfn-graph';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import '@tshepomgaga/aws-sfn-graph/index.css';

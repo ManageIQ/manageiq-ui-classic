@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Loading } from 'carbon-components-react';
+import { Loading } from "@carbon/react";
 import { TaggingWithButtonsConnected, TaggingConnected, taggingApp } from '../tagging';
 
 const selectedTags = (state, tag) => {

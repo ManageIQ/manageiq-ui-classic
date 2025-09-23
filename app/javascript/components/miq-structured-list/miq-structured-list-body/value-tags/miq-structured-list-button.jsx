@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'carbon-components-react';
+import { Button } from "@carbon/react";
 import { customOnClickHandler } from '../../../../helpers/custom-click-handler';
 
 /** Component to render a button in the cell.  */

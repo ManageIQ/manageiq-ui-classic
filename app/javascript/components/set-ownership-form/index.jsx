@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { groupBy } from 'lodash';
-import { Grid } from 'carbon-components-react';
+import { Grid } from "@carbon/react";
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { API } from '../../http_api';
 import createSchema from './ownership-form.schema';

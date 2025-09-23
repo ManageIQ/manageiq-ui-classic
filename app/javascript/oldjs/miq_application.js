@@ -1148,7 +1148,7 @@ window.miqInitSelectPicker = function(selector, options) {
     size: 10,
     dropupAuto: false,
     noneSelectedText: __('Nothing selected'),
-    ...options || {},
+    ...(options || {}),
   });
   $('.bootstrap-select > button[title]').not('.selectpicker').tooltip({ container: 'none' });
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFieldApi, useFormApi } from '@@ddf';
-import { Button, TextInput } from 'carbon-components-react';
+import { Button, TextInput } from "@carbon/react";
 import { TrashCan32 } from '@carbon/icons-react';
 
 /** component used as a mapper to include the key value pairs ofr extra vars */
@@ -33,7 +33,7 @@ const KeyValueListComponent = (props) => {
       <br />
       {input.value && input.value.map((pair, index) => (
         // eslint-disable-next-line react/no-array-index-key
-        <div key={index} className="key-value-list-pair">
+        (<div key={index} className="key-value-list-pair">
           <TextInput
             id={`${input.name}.${index}.key`}
             labelText={keyLabel}
@@ -54,7 +54,7 @@ const KeyValueListComponent = (props) => {
             iconDescription="Delete Key-Value Pair"
             onClick={() => deletePair(index)}
           />
-        </div>
+        </div>)
       ))}
       <Button kind="secondary" onClick={addPair}>{__('Add Key-Value Pair')}</Button>
     </div>

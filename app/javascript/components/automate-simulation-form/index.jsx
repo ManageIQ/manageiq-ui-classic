@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import MiqFormRenderer, { useFormApi } from '@@ddf';
 import { FormSpy } from '@data-driven-forms/react-form-renderer';
 import PropTypes from 'prop-types';
-import { Loading, Button } from 'carbon-components-react';
+import { Loading, Button } from "@carbon/react";
 import createSchema from './automate-simulation-form.schema';
 import AutomationSimulation from '../AutomationSimulation';
 

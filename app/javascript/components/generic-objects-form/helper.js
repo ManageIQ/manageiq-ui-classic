@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useFieldApi, useFormApi } from '@@ddf';
 import { TrashCan32 } from '@carbon/icons-react';
-import { Button } from 'carbon-components-react';
+import { Button } from "@carbon/react";
 
 const compare = (array, name) => {
   // eslint-disable-next-line prefer-const

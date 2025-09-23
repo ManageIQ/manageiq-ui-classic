@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { StructuredListWrapper, Accordion, AccordionItem } from 'carbon-components-react';
+import { StructuredListWrapper, Accordion, AccordionItem } from "@carbon/react";
 import MiqStructuredListMessage from './miq-structured-list-message';
 import MiqStructuredListHeader from './miq-structured-list-header';
 import MiqStructuredListBody from './miq-structured-list-body/miq-structured-list-body';

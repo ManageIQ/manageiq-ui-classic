@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Grid, Row, ButtonSet, Button,
-} from 'carbon-components-react';
+} from "@carbon/react";
 import Tagging from '../Tagging/Tagging';
 import TaggingPropTypes from '../TaggingPropTypes';
 

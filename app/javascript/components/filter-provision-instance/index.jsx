@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Search32, Close32 } from '@carbon/icons-react';
-import { Button, Checkbox, TextInput } from 'carbon-components-react';
+import { Button, Checkbox, TextInput } from "@carbon/react";
 
 /** Component to filter the images at provisioning instances page. */
 const FilterProvisionInstance = ({

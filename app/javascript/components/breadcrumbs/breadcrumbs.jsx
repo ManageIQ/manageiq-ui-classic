@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Breadcrumb, BreadcrumbItem } from 'carbon-components-react';
+import { Breadcrumb, BreadcrumbItem } from "@carbon/react";
 import { unescape } from 'lodash';
 import { onClickTree, onClick, onClickToExplorer } from './on-click-functions';
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FormSpy } from '@data-driven-forms/react-form-renderer';
-import { Button } from 'carbon-components-react';
+import { Button } from "@carbon/react";
 import MiqFormRenderer, { useFormApi } from '@@ddf';
 import PropTypes from 'prop-types';
 import createSchema from './class-form.schema';

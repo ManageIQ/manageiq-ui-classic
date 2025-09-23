@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'carbon-components-react';
+import { Grid } from "@carbon/react";
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { API } from '../../http_api';
 import createSchema from './vm-server-relationship-form.schema';

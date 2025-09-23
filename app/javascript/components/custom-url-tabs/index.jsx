@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Tab, Tabs, Modal } from 'carbon-components-react';
+import { Tab, Tabs, Modal } from "@carbon/react";
 import { checkForFormChanges } from './helper';
 
 const CustomURLTabs = ({

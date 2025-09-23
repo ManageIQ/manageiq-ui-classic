@@ -6,7 +6,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Modal, ModalBody, Button } from 'carbon-components-react';
+import { Modal, ModalBody, Button } from "@carbon/react";
 import ModalItem from './modal-item';
 
 const SHOW_ABOUT_MODAL = '@@aboutModal/show';

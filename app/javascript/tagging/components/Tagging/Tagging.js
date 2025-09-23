@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Column } from 'carbon-components-react';
+import { Row, Column } from "@carbon/react";
 import TagModifier from '../InnerComponents/TagModifier';
 import TagView from '../InnerComponents/TagView';
 import CategoryModifier from '../InnerComponents/CategoryModifier';

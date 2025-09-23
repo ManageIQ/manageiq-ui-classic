@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Dropdown } from 'carbon-components-react';
+import { Dropdown } from "@carbon/react";
 import TaggingPropTypes from '../TaggingPropTypes';
 
 class TagSelector extends React.Component {

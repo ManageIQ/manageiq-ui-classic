@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Tree, ActionTypes } from 'react-wooden-tree';
 import {
   Modal, FormGroup, TextInput, Button,
-} from 'carbon-components-react';
+} from "@carbon/react";
 import { prepareProps } from '@data-driven-forms/carbon-component-mapper';
 import { useFieldApi, useFormApi } from '@data-driven-forms/react-form-renderer';
 import { TreeViewAlt16, Close16 } from '@carbon/icons-react';

@@ -7,7 +7,7 @@ import {
   SideNavDivider,
   SideNavLink,
   SideNavItems,
-} from 'carbon-components-react';
+} from "@carbon/react";
 import { ToolbarClick } from './ToolbarClick';
 
 const KebabListItem = (item, props) => {

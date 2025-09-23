@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import MiqFormRenderer from '@@ddf';
-import { Loading } from 'carbon-components-react';
+import { Loading } from "@carbon/react";
 import createSchema from './network-security-groups-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import { API } from '../../http_api';

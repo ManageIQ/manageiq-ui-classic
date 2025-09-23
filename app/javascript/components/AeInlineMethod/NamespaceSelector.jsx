@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery } from 'react-query';
-import { Loading } from 'carbon-components-react';
+import { Loading } from "@carbon/react";
 import { debounce } from 'lodash';
 import FilterNamespace from './FilterNamespace';
 import MiqDataTable from '../miq-data-table';

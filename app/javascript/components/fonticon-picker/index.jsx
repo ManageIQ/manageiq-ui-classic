@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from 'carbon-components-react';
+import { Button } from "@carbon/react";
 import { ChevronDown32 } from '@carbon/icons-react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';

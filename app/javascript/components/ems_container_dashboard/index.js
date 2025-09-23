@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Loading } from 'carbon-components-react';
+import { Loading } from "@carbon/react";
 import PfAggregateStatusCard from '../pf_aggregate_status_card';
 import { getProviderInfo, getAggStatusInfo } from './helper';
 

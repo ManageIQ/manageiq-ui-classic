@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Checkbox, Loading, Modal, ModalBody,
-} from 'carbon-components-react';
+} from "@carbon/react";
 import PropTypes from 'prop-types';
 import {
   Document16,

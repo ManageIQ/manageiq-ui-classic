@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Controlled as CodeMirror } from 'react-codemirror2';
-import { Tabs, Tab } from 'carbon-components-react';
+import { Tabs, Tab } from "@carbon/react";
 import NotificationMessage from '../notification-message';
 
 /** The AnsiblePlaybookWorkflow is used to render the payload received from the  Ansible Playbook's show page */

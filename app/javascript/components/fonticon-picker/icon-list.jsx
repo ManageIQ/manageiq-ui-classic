@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Grid, Row, Column } from 'carbon-components-react';
+import { Grid, Row, Column } from "@carbon/react";
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 

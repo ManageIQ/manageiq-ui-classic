@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'carbon-components-react';
+import { Button } from "@carbon/react";
 import IconOrImage from './icon_or_image';
 
 const filterValue = (val) => (val == null ? '' : String(val));
@@ -12,12 +12,12 @@ const renderMultivalue = function renderMultivalue(values, onClick) {
         {
           values.map((item, i) => (
             // eslint-disable-next-line react/no-array-index-key
-            <tr onClick={(e) => onClick(item, e)} key={i} className={item.link ? '' : 'no-hover'} title={item.title}>
+            (<tr onClick={(e) => onClick(item, e)} key={i} className={item.link ? '' : 'no-hover'} title={item.title}>
               <td style={{ border: 0, margin: 0, padding: 0 }}>
                 <IconOrImage icon={item.icon} image={item.image} title={item.title} />
                 {filterValue(item.value)}
               </td>
-            </tr>
+            </tr>)
           ))
         }
       </tbody>

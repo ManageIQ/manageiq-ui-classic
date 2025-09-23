@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ClassNames from 'classnames';
-import { Button } from 'carbon-components-react';
+import { Button } from "@carbon/react";
 
 function MiqButton(props) {
   let { title } = props;

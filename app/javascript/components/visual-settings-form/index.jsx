@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Loading } from 'carbon-components-react';
+import { Loading } from "@carbon/react";
 import MiqFormRenderer from '@@ddf';
 import createSchema from './visual-settings-form.schema';
 

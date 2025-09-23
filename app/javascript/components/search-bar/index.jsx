@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button, TextInput, Form,
-} from 'carbon-components-react';
+} from "@carbon/react";
 import {
   ChevronDown32, Search32, ProgressBarRound32, Close32,
 } from '@carbon/icons-react';
