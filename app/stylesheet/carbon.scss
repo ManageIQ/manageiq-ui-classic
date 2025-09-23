@@ -19,7 +19,7 @@ $carbon--theme: $carbon--theme--white;
 @include carbon--theme();
 
 @import '~@carbon/charts/styles.css';
-@import '~carbon-components/scss/globals/scss/styles.scss';
+@use '@carbon/react';
 
 // ignored by patternfly, but sets the right base for carbon rem units
 html {

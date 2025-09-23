@@ -73,6 +73,7 @@ module.exports = [
           sassOptions: {
             sourceMap: true,
             includePaths: [
+              ["node_modules"],
               `${nodeModules}/bootstrap-sass/assets/stylesheets`,
               `${nodeModules}/bootstrap/scss`,
               `${nodeModules}/patternfly/dist/sass/patternfly`,
