@@ -1348,7 +1348,7 @@ exports[`Service component - Order Service should render the Service component f
                                 invalid={true}
                                 invalidText=""
                                 labelText={
-                                  <UNDEFINED
+                                  <Memo
                                     field={
                                       Object {
                                         "auto_refresh": false,
@@ -1683,7 +1683,7 @@ exports[`Service component - Order Service should render the Service component f
                                 invalid={true}
                                 invalidText=""
                                 labelText={
-                                  <UNDEFINED
+                                  <Memo
                                     field={
                                       Object {
                                         "auto_refresh": false,
@@ -2022,7 +2022,7 @@ exports[`Service component - Order Service should render the Service component f
                                   id="check_box_1-DialogFieldCheckBox-7544"
                                   indeterminate={false}
                                   labelText={
-                                    <UNDEFINED
+                                    <Memo
                                       field={
                                         Object {
                                           "auto_refresh": false,
@@ -2447,7 +2447,7 @@ exports[`Service component - Order Service should render the Service component f
                                   readOnly={false}
                                   selectedItem="16"
                                   titleText={
-                                    <UNDEFINED
+                                    <Memo
                                       field={
                                         Object {
                                           "auto_refresh": false,
@@ -3109,7 +3109,7 @@ exports[`Service component - Order Service should render the Service component f
                                   selectionFeedback="top-after-reopen"
                                   sortItems={[Function]}
                                   titleText={
-                                    <UNDEFINED
+                                    <Memo
                                       field={
                                         Object {
                                           "auto_refresh": false,
@@ -3616,7 +3616,7 @@ exports[`Service component - Order Service should render the Service component f
                                   invalidText=""
                                   labelPosition="right"
                                   legendText={
-                                    <UNDEFINED
+                                    <Memo
                                       field={
                                         Object {
                                           "auto_refresh": false,
@@ -4122,7 +4122,7 @@ exports[`Service component - Order Service should render the Service component f
                                   locale="en"
                                   onChange={[Function]}
                                   short={false}
-                                  value="7/15/2024"
+                                  value="9/23/2025"
                                 >
                                   <div
                                     className="bx--form-item"
@@ -4649,7 +4649,7 @@ exports[`Service component - Order Service should render the Service component f
                                   selectionFeedback="top-after-reopen"
                                   sortItems={[Function]}
                                   titleText={
-                                    <UNDEFINED
+                                    <Memo
                                       field={
                                         Object {
                                           "auto_refresh": false,

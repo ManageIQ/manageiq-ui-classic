@@ -1335,7 +1335,7 @@ exports[`Service component - Dialog Summary should render the Service component 
                                 invalid={false}
                                 invalidText=""
                                 labelText={
-                                  <UNDEFINED
+                                  <Memo
                                     field={
                                       Object {
                                         "auto_refresh": false,
@@ -1624,7 +1624,7 @@ exports[`Service component - Dialog Summary should render the Service component 
                                 invalid={false}
                                 invalidText=""
                                 labelText={
-                                  <UNDEFINED
+                                  <Memo
                                     field={
                                       Object {
                                         "auto_refresh": false,
@@ -1918,7 +1918,7 @@ exports[`Service component - Dialog Summary should render the Service component 
                                   id="check_box_1-DialogFieldCheckBox-7544"
                                   indeterminate={false}
                                   labelText={
-                                    <UNDEFINED
+                                    <Memo
                                       field={
                                         Object {
                                           "auto_refresh": false,
@@ -2327,7 +2327,7 @@ exports[`Service component - Dialog Summary should render the Service component 
                                   readOnly={false}
                                   selectedItem="16"
                                   titleText={
-                                    <UNDEFINED
+                                    <Memo
                                       field={
                                         Object {
                                           "auto_refresh": false,
@@ -2946,7 +2946,7 @@ exports[`Service component - Dialog Summary should render the Service component 
                                   selectionFeedback="top-after-reopen"
                                   sortItems={[Function]}
                                   titleText={
-                                    <UNDEFINED
+                                    <Memo
                                       field={
                                         Object {
                                           "auto_refresh": false,
@@ -3397,7 +3397,7 @@ exports[`Service component - Dialog Summary should render the Service component 
                                   invalidText=""
                                   labelPosition="right"
                                   legendText={
-                                    <UNDEFINED
+                                    <Memo
                                       field={
                                         Object {
                                           "auto_refresh": false,
@@ -3895,7 +3895,7 @@ exports[`Service component - Dialog Summary should render the Service component 
                                   locale="en"
                                   onChange={[Function]}
                                   short={false}
-                                  value="7/15/2024"
+                                  value="9/23/2025"
                                 >
                                   <div
                                     className="bx--form-item"
@@ -4422,7 +4422,7 @@ exports[`Service component - Dialog Summary should render the Service component 
                                   selectionFeedback="top-after-reopen"
                                   sortItems={[Function]}
                                   titleText={
-                                    <UNDEFINED
+                                    <Memo
                                       field={
                                         Object {
                                           "auto_refresh": false,
