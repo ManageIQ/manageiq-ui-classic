@@ -386,7 +386,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-proposal-nullish-coalescing-operator@npm:^7.18.6, @babel/plugin-proposal-nullish-coalescing-operator@npm:^7.8.3":
+"@babel/plugin-proposal-nullish-coalescing-operator@npm:^7.8.3":
   version: 7.18.6
   resolution: "@babel/plugin-proposal-nullish-coalescing-operator@npm:7.18.6"
   dependencies:
@@ -944,18 +944,6 @@ __metadata:
   peerDependencies:
     "@babel/core": ^7.0.0-0
   checksum: 10/46b819cb9a6cd3cfefe42d07875fee414f18d5e66040366ae856116db560ad4e16f3899a0a7fddd6773e0d1458444f94b208b67c0e3b6977a27ea17a5c13dbf6
-  languageName: node
-  linkType: hard
-
-"@babel/plugin-transform-optional-chaining@npm:^7.27.1":
-  version: 7.27.1
-  resolution: "@babel/plugin-transform-optional-chaining@npm:7.27.1"
-  dependencies:
-    "@babel/helper-plugin-utils": "npm:^7.27.1"
-    "@babel/helper-skip-transparent-expression-wrappers": "npm:^7.27.1"
-  peerDependencies:
-    "@babel/core": ^7.0.0-0
-  checksum: 10/34b0f96400c259a2722740d17a001fe45f78d8ff052c40e29db2e79173be72c1cfe8d9681067e3f5da3989e4a557402df5c982c024c18257587a41e022f95640
   languageName: node
   linkType: hard
 
@@ -13239,10 +13227,8 @@ __metadata:
     "@babel/plugin-proposal-class-properties": "npm:~7.8.3"
     "@babel/plugin-proposal-export-default-from": "npm:~7.8.3"
     "@babel/plugin-proposal-export-namespace-from": "npm:~7.8.3"
-    "@babel/plugin-proposal-nullish-coalescing-operator": "npm:^7.18.6"
     "@babel/plugin-proposal-object-rest-spread": "npm:~7.9.0"
     "@babel/plugin-transform-object-assign": "npm:~7.8.3"
-    "@babel/plugin-transform-optional-chaining": "npm:^7.27.1"
     "@babel/preset-env": "npm:~7.9.0"
     "@babel/preset-react": "npm:~7.9.1"
     "@babel/register": "npm:~7.9.0"

@@ -18,7 +18,5 @@ module.exports = {
   ],
   plugins: [
     require('@babel/plugin-proposal-class-properties').default,
-    require('@babel/plugin-proposal-nullish-coalescing-operator').default,
-    require('@babel/plugin-transform-optional-chaining').default,
   ],
 };
