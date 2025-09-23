@@ -71,9 +71,10 @@ const setRequestIntercepted = (value) =>
 /**
  * Gets the current value of the request interception flag from Cypress environment.
  * This flag indicates whether a request matching an intercept pattern was detected.
- * @returns {boolean} The current value of the request interception flag
+ * @returns {boolean} The current value of the request interception flag, by default returns false
  */
-const getRequestIntercepted = () => Cypress.env('wasRequestIntercepted');
+const getRequestIntercepted = () =>
+  Cypress.env('wasRequestIntercepted') || false;
 
 /**
  * Custom command to intercept API calls and wait for them to complete.
