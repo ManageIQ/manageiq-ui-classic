@@ -71,9 +71,10 @@ const setRequestIntercepted = (value) =>
 /**
  * Gets the current value of the request interception flag from Cypress environment.
  * This flag indicates whether a request matching an intercept pattern was detected.
- * @returns {boolean} The current value of the request interception flag
+ * @returns {boolean} The current value of the request interception flag, by default returns false
  */
-const getRequestIntercepted = () => Cypress.env('wasRequestIntercepted');
+const getRequestIntercepted = () =>
+  Cypress.env('wasRequestIntercepted') || false;
 
 /**
  * Custom command to intercept API calls and wait for them to complete.
@@ -84,9 +85,22 @@ const getRequestIntercepted = () => Cypress.env('wasRequestIntercepted');
  *
  * @param {Object} options - The options for the intercept
  * @param {string} options.alias - Unique alias for this interception
- * @param {string} options.method - HTTP method (default: 'POST')
+ * @param {string} [options.method] - HTTP method (default: 'POST')
  * @param {string|RegExp} options.urlPattern - URL pattern to intercept
- * @param {Function} options.triggerFn - Function that triggers the API call
+ * @param {boolean} [options.waitOnlyIfRequestIntercepted] - When set to true(default: false), the command will only wait for the response
+ * if the request was actually intercepted. This is useful for conditional API calls that may or may not happen like in tree navigations.
+ * If false (default), the command will always wait for the intercepted request, where a request is always expected (e.g., button events).
+ * @param {Function} options.triggerFn - Function that triggers the API call. e.g. { triggerFn: () => { cy.get('button').click(); } }
+ * @param {Function} [options.responseInterceptor] - Optional function that can modify the response before it's returned to the application.
+ * This function receives the request object and can handle the response in different ways:
+ * 1. req.reply({body: {...}}) - Immediately respond with a stubbed response (request never goes to origin)
+ * 2. req.continue() - Let the request go to the origin server without modification
+ * 3. req.continue((res) => { res.send({...}) }) - Let the request go to origin, then modify the response
+ * Examples:
+ * - Stub response: { responseInterceptor: (req) => req.reply({ body: { customData: 'value' } }) }
+ * - Using fixture to stub response: { responseInterceptor: (req) => req.reply({ fixture: 'users.json' }) }
+ * - Pass through to origin: { responseInterceptor: (req) => req.continue() }
+ * - Modify origin response: { responseInterceptor: (req) => req.continue((res) => { res.send(200, { modified: true }) }) }
  * @param {Function} [options.onApiResponse] - Optional callback function that receives the interception object after the API call completes.
  * Use this to perform assertions on the response, extract data, or perform additional actions based on the API result.
  * Default is a no-op function. e.g. { onApiResponse: (interception) => { expect(interception.response.statusCode).to.equal(200); } }
@@ -97,8 +111,12 @@ Cypress.Commands.add(
     alias,
     method = 'POST',
     urlPattern,
+    waitOnlyIfRequestIntercepted = false,
     triggerFn,
     onApiResponse = () => {
+      /* default implementation */
+    },
+    responseInterceptor = () => {
       /* default implementation */
     },
   }) => {
@@ -114,12 +132,17 @@ Cypress.Commands.add(
       // Check if this request is already registered
       const isAlreadyRegistered = !!interceptedAliasesMap[aliasObjectKey];
       // Setting wasRequestIntercepted flag to false initially
-      setRequestIntercepted(false);
+      if (waitOnlyIfRequestIntercepted) {
+        setRequestIntercepted(false);
+      }
       // Register the intercept if not already done
       if (!isAlreadyRegistered) {
-        cy.intercept(method, urlPattern, () => {
+        cy.intercept(method, urlPattern, (req) => {
           // Setting wasRequestIntercepted flag to true after request is intercepted
-          setRequestIntercepted(true);
+          if (waitOnlyIfRequestIntercepted) {
+            setRequestIntercepted(true);
+          }
+          responseInterceptor(req);
         }).as(alias);
         cy.setInterceptedApiAlias(aliasObjectKey, alias);
       }
@@ -129,8 +152,16 @@ Cypress.Commands.add(
 
       // Wait for the intercepted request to complete
       cy.then(() => {
-        const isRequestIntercepted = getRequestIntercepted();
-        if (isRequestIntercepted) {
+        // If waitOnlyIfRequestIntercepted is true, check if the request was intercepted
+        // and then wait for the response
+        if (waitOnlyIfRequestIntercepted) {
+          const isRequestIntercepted = getRequestIntercepted();
+          if (isRequestIntercepted) {
+            cy.wait(`@${alias}`).then(onApiResponse);
+          }
+        }
+        // If waitOnlyIfRequestIntercepted is not required then directly wait for the response
+        else {
           cy.wait(`@${alias}`).then(onApiResponse);
         }
       });
