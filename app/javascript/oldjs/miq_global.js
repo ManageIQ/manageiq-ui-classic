@@ -1,20 +1,19 @@
 // global variables
 if (!window.ManageIQ) {
   window.ManageIQ = {
-    actionUrl: null, // action URL used in JS function miqGridSort
     afterOnload: null, // JS code to be evaluated after onload
     angular: {
       app: null, // angular application
       eventNotificationsData: null, // used by the notification drawer
-      rxSubject: null,  // an observable
-      scope: null,  // a scope which will have .angularForm after loading, for miqCheckForChanges
+      rxSubject: null, // an observable
+      scope: null, // a scope which will have .angularForm after loading, for miqCheckForChanges
     },
     asynchronous_notifications: false, // disabled by default, server overrides it in application.html.haml
     browser: null, // browser name
     calendar: { // TODO about to be removed
       calDateFrom: null, // to limit calendar starting
       calDateTo: null, // to limit calendar ending
-      calSkipDays: null,  // to disable specific days of week
+      calSkipDays: null, // to disable specific days of week
     },
     changes: null, // indicate if there are unsaved changes
     charts: {
@@ -49,13 +48,13 @@ if (!window.ManageIQ) {
     i18n: {
       mark_translated_strings: false,
     },
-    logoutInProgress: false,  // prevent redirectLogin *during* logout and group change
+    logoutInProgress: false, // prevent redirectLogin *during* logout and group change
     menu: [],
     mouse: {
       x: null, // mouse X coordinate for popup menu
       y: null, // mouse Y coordinate for popup menu
     },
-    move: { //methods to move elements between Arrays or in an Array
+    move: { // methods to move elements between Arrays or in an Array
     },
     noCollapseEvent: false, // enable/disable events fired after collapsing an accordion
     observe: { // keeping track of data-miq_observe requests

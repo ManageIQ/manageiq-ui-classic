@@ -1332,16 +1332,9 @@ class ApplicationController < ActionController::Base
       if layout_uses_listnav?
         page.replace(:listnav_div, :partial => "layouts/listnav") # Replace accordion, if list_nav_div is there
       end
-      if @grid_hash
-        page.replace_html("list_grid", :partial => "layouts/list_grid", :locals => {:options => grid_options, :js_options => js_options})
-        # Reset the center buttons
-        page << "miqGridOnCheck();"
-      else
-        # No grid, replace the gtl div
-        # Replace the main div area contents
-        page.replace_html("main_div", :partial => "layouts/gtl")
-        page << "$('#adv_div').slideUp(0.3);" if params[:entry]
-      end
+      # Replace the main div area contents
+      page.replace_html("main_div", :partial => "layouts/gtl")
+      page << "$('#adv_div').slideUp(0.3);" if params[:entry]
     end
   end
 
