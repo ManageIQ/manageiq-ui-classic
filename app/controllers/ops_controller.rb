@@ -515,7 +515,7 @@ class OpsController < ApplicationController
       elsif @sb[:active_tab] == "settings_tags" && @sb[:active_subtab] == "settings_my_company_categories" && @in_a_form
         action_url = "category_edit"
         record_id = @category.try(:id)
-      elsif @sb[:active_tab] == "settings_tags" && @sb[:active_subtab] == "settings_label_tag_mapping" && @in_a_form
+      elsif @sb[:active_tab] == "settings_tags" && @sb[:active_subtab] == "settings_map_tags" && @in_a_form
         action_url = "label_tag_mapping_edit"
         record_id = @lt_map.try(:id)
       else
@@ -606,7 +606,7 @@ class OpsController < ApplicationController
     presenter.scroll_top if @flash_array.present?
     presenter.update(:breadcrumbs, r[:partial => 'layouts/breadcrumbs']) unless %w[change_tab].include?(action_name)
 
-    render :json => presenter.for_render
+    render :json => presenter.for_render unless options[:skip_render]
   end
 
   def x_active_tree_replace_cell(nodetype, presenter)
@@ -659,7 +659,7 @@ class OpsController < ApplicationController
                          end
     when "ltme" # label tag mapping edit
       # when editing/adding label tag mapping in settings tree
-      presenter.update(:settings_label_tag_mapping, r[:partial => "label_tag_mapping_form"])
+      presenter.update(:map_tags, r[:partial => "label_tag_mapping_form"])
       @right_cell_text = if !@lt_map
                            _("Adding a new Mapping")
                          else
