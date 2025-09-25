@@ -29,21 +29,26 @@ end
 # Only load the jasmine tasks if we are within this repo, otherwise, the bundle
 # won't contain the jasmine gem (i.e., from manageiq)
 if ENV["BUNDLE_GEMFILE"].nil? || ENV["BUNDLE_GEMFILE"] == File.expand_path("../Gemfile", __FILE__)
-  require 'jasmine'
-  load 'jasmine/tasks/jasmine.rake'
+  begin
+    require 'jasmine'
+    load 'jasmine/tasks/jasmine.rake'
 
-  # running jasmine outside ci ignores the `random: false` in `jasmine.yml` - needs a message
-  task :jasmine_url do
-    puts
-    puts "Please open http://localhost:#{Jasmine.config.port(:server)}/?random=false"
-    puts
+    task :jasmine_url do
+      puts
+      puts "Please open http://localhost:#{Jasmine.config.port(:server)}/?random=false"
+      puts
+    end
+
+    Rake::Task['jasmine'].prerequisites.unshift 'jasmine_url'
+  rescue LoadError
+    # Jasmine not installed, skip JS test tasks
   end
-
-  Rake::Task['jasmine'].prerequisites.unshift 'jasmine_url'
 end
+
 
 namespace :spec do
   desc "Run all routing specs"
+  require "rspec/core/rake_task"
   RSpec::Core::RakeTask.new(:routes => 'app:test:initialize') do |t|
     spec_dir = File.expand_path("spec", __dir__)
     EvmTestHelper.init_rspec_task(t, ['--require', File.join(spec_dir, 'spec_helper')])
