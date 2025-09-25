@@ -48,6 +48,7 @@ import './commands/gtl.js';
 import './commands/login.js';
 import './commands/menu.js';
 import './commands/select.js';
+import('./commands/service_reconfigure.js');
 import './commands/stub_notifications.js';
 import './commands/tabs.js';
 import './commands/throttle_response.js';
