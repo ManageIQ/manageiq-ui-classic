@@ -1,72 +1,105 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Loading } from 'carbon-components-react';
-import MiqFormRenderer from '@@ddf';
-import createSchema from './visual-settings-form.schema';
+// import React, { useState, useEffect } from 'react';
+// import PropTypes from 'prop-types';
+// import { Loading } from 'carbon-components-react';
+// import MiqFormRenderer from '@@ddf';
+// import createSchema from './visual-settings-form.schema';
 
-const VisualSettingsForm = ({ recordId }) => {
-  const [{
-    initialValues, shortcuts, timezoneOptions, isLoading,
-  }, setState] = useState({ isLoading: true });
+// const VisualSettingsForm = ({ recordId }) => {
+//   const [{
+//     initialValues, shortcuts, timezoneOptions, isLoading,
+//   }, setState] = useState({ isLoading: true });
 
-  useEffect(() => {
-    API.get('/api/shortcuts?expand=resources&attributes=description,url').then(({ resources }) => {
-      const shortcuts = [];
+//   useEffect(() => {
+//     API.get('/api/shortcuts?expand=resources&attributes=description,url').then(({ resources }) => {
+//       const shortcuts = [];
 
-      resources.forEach((shortcut) => {
-        shortcuts.push({ value: shortcut.url, label: shortcut.description });
-      });
+//       resources.forEach((shortcut) => {
+//         shortcuts.push({ value: shortcut.url, label: shortcut.description });
+//       });
 
-      return shortcuts;
-    }).then((shortcuts) => {
-      API.get('/api').then(({ timezones }) => {
-        const timezoneOptions = [];
+//       return shortcuts;
+//     }).then((shortcuts) => {
+//       API.get('/api').then(({ timezones }) => {
+//         const timezoneOptions = [];
 
-        timezones.forEach((timezone) => {
-          timezoneOptions.push({ value: timezone.name, label: timezone.description });
-        });
+//         timezones.forEach((timezone) => {
+//           timezoneOptions.push({ value: timezone.name, label: timezone.description });
+//         });
 
-        return timezoneOptions;
-      }).then((timezoneOptions) => {
-        API.get(`/api/users/${recordId}?attributes=settings`).then(({ settings }) => setState({
-          initialValues: settings,
-          shortcuts,
-          timezoneOptions,
-          isLoading: false,
-        }));
-      });
-    });
-  }, [recordId]);
+//         return timezoneOptions;
+//       }).then((timezoneOptions) => {
+//         API.get(`/api/users/${recordId}?attributes=settings`).then(({ settings }) => setState({
+//           initialValues: settings,
+//           shortcuts,
+//           timezoneOptions,
+//           isLoading: false,
+//         }));
+//       });
+//     });
+//   }, [recordId]);
 
-  const onSubmit = (settings) => {
-    settings.perpage.list = parseInt(settings.perpage.list, 10);
-    settings.perpage.reports = parseInt(settings.perpage.reports, 10);
-    miqSparkleOn();
-    API.patch(`/api/users/${recordId}`, { settings }).then(() => {
-      window.location.reload();
-      add_flash(__('User Interface settings saved'), 'success');
-    }).catch(miqSparkleOff);
-  };
+//   const onSubmit = (settings) => {
+//     settings.perpage.list = parseInt(settings.perpage.list, 10);
+//     settings.perpage.reports = parseInt(settings.perpage.reports, 10);
+//     miqSparkleOn();
+//     API.patch(`/api/users/${recordId}`, { settings }).then(() => {
+//       window.location.reload();
+//       add_flash(__('User Interface settings saved'), 'success');
+//     }).catch(miqSparkleOff);
+//   };
 
-  if (isLoading) {
+//   if (isLoading) {
+//     return (
+//       <div className="loadSettings">
+//         <Loading active small withOverlay={false} className="loading" />
+//       </div>
+//     );
+//   }
+//   return (
+//     <MiqFormRenderer
+//       schema={createSchema(shortcuts, timezoneOptions)}
+//       initialValues={initialValues}
+//       onSubmit={onSubmit}
+//       canReset
+//     />
+//   );
+// };
+
+// VisualSettingsForm.propTypes = {
+//   recordId: PropTypes.string.isRequired,
+// };
+
+// export default VisualSettingsForm;
+
+import React from 'react';
+import { IntlProvider } from 'react-intl';
+import { connect } from 'react-redux';
+import { CommonCanvas, CanvasController } from '@elyra/canvas'; // eslint-disable-line import/no-unresolved
+import AllTypesCanvas from './allTypesCanvas.json';
+import ModelerPalette from './modelerPalette.json';
+// Note use "@elyra/canvas" instead of "common-canvas" here, if you are importing from the NPM module.
+// This library is only needed if you want to use hot loading during development.
+
+class VisualSettingsForm extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.canvasController = new CanvasController();
+    this.canvasController.setPipelineFlow(AllTypesCanvas);
+    this.canvasController.setPipelineFlowPalette(ModelerPalette);
+  }
+
+  render() {
     return (
-      <div className="loadSettings">
-        <Loading active small withOverlay={false} className="loading" />
+      <div id="harness-app-container">
+        <IntlProvider locale="en">
+          <CommonCanvas
+            canvasController={this.canvasController}
+          />
+        </IntlProvider>
       </div>
     );
   }
-  return (
-    <MiqFormRenderer
-      schema={createSchema(shortcuts, timezoneOptions)}
-      initialValues={initialValues}
-      onSubmit={onSubmit}
-      canReset
-    />
-  );
-};
+}
 
-VisualSettingsForm.propTypes = {
-  recordId: PropTypes.string.isRequired,
-};
-
-export default VisualSettingsForm;
+export default connect()(VisualSettingsForm);
