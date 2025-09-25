@@ -3,6 +3,9 @@ name: Cypress
 on:
   pull_request:
   push:
+    branches-ignore:
+    - renovate/*
+    - dependabot/*
   workflow_dispatch:
   schedule:
   - cron: 0 0 * * 0
