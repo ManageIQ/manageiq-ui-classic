@@ -3549,10 +3549,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"angular-mocks@npm:~1.6.9":
-  version: 1.6.10
-  resolution: "angular-mocks@npm:1.6.10"
-  checksum: 10/589024c6fa5ce51ab82aa55ca8f1f7a311461fc341f76c2c51c3fd1cad037fa301a19374faa52dda82bc51cbff442c197c0f8542d4966fb9774b957830b84369
+"angular-mocks@npm:~1.8.0":
+  version: 1.8.3
+  resolution: "angular-mocks@npm:1.8.3"
+  checksum: 10/eab00bccdb709c804c9e901f9c19e0e6570349e6db6b1c6a932106c02e3669a801b324346d6895460df086ade2b2ee6c381b11ef3aae313d3040b5dafe945759
   languageName: node
   linkType: hard
 
@@ -12840,7 +12840,7 @@ __metadata:
     angular-bootstrap-switch: "npm:~0.5.2"
     angular-dragdrop: "npm:~1.0.13"
     angular-gettext: "npm:^2.4.1"
-    angular-mocks: "npm:~1.6.9"
+    angular-mocks: "npm:~1.8.0"
     angular-patternfly: "npm:~3.26.0"
     angular-sanitize: "npm:~1.8.3"
     angular-ui-bootstrap: "npm:~2.5.6"
