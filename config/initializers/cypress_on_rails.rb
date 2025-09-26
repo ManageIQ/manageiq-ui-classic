@@ -1,7 +1,13 @@
-if defined?(CypressOnRails)
+# This is identical to the generated file[1] with the exceptions below:
+# [1] https://github.com/shakacode/cypress-playwright-on-rails/blob/ac5d69f9ea951c7545e5141db2abb2cb1350e740/lib/generators/cypress_on_rails/templates/config/initializers/cypress_on_rails.rb.erb
+#   * install_folder  (uses our rails engine path)
+#   * require ENV['CYPRESS'] to be set
+if defined?(CypressOnRails) && ENV['CYPRESS'].present?
   CypressOnRails.configure do |c|
     c.api_prefix = ""
-    c.install_folder = File.expand_path("#{__dir__}/../../e2e/cypress")
+
+    # Currently, the only change from the template:
+    c.install_folder = ManageIQ::UI::Classic::Engine.root.join("cypress/e2e")
     # WARNING!! CypressOnRails can execute arbitrary ruby code
     # please use with extra caution if enabling on hosted servers or starting your local server on 0.0.0.0
     c.use_middleware = !Rails.env.production?
