@@ -23,6 +23,7 @@ cols:
 - name
 - description
 - repository
+- payload_valid
 - created_at
 - updated_at
 
@@ -37,6 +38,7 @@ col_order:
 - name
 - description
 - configuration_script_source.name
+- payload_valid
 - created_at
 - updated_at
 
@@ -45,11 +47,13 @@ headers:
 - Name
 - Description
 - Repository
+- Valid
 - Created On
 - Updated On
 
 
 col_formats:
+-
 -
 -
 -
