@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
   s.add_dependency "uglifier", "~>4.2.0"
   s.add_dependency "webpacker", "~>2.0.0"
 
+  s.add_development_dependency "cypress-on-rails", "~> 1.0"
   s.add_development_dependency "debride"
   s.add_development_dependency "guard-rspec", '~> 4.7.3'
   s.add_development_dependency "manageiq-style"
