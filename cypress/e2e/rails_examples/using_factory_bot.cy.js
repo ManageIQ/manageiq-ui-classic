@@ -3,29 +3,19 @@ describe('Rails using factory bot examples', function() {
     cy.app('clean') // have a look at e2e/app_commands/clean.rb
   })
 
-  it('using single factory bot', function() {
-    cy.appFactories([
-      ['create', 'post', {title: 'Good bye Mars'} ]
-    ])
-    cy.visit('/')
-    cy.get('table').find('tbody').should(($tbody) => {
-      // clean should of removed these from other tests
-      expect($tbody).not.to.contain('Hello World')
-
-      expect($tbody).to.contain('Good bye Mars')
-    })
+  afterEach(() => {
+    cy.app('clean')
   })
 
-  it('using multiple factory bot', function() {
+  it('using single factory bot', function() {
     cy.appFactories([
-      ['create_list', 'post', 10],
-      ['create', 'post', {title: 'Hello World'} ]
+      ['create', 'vm_vmware', {name: 'test_vm'} ]
     ])
-    cy.visit('/')
-    cy.get('table').find('tbody').should(($tbody) => {
-      // clean should of removed these from other tests
-      expect($tbody).to.contain('Hello World')
-      expect($tbody).not.to.contain('Good bye Mars')
-    })
+    cy.login();
+    cy.menu('Compute', 'Infrastructure', 'Virtual Machines');
+    let main_div = cy.get('div#main_div')
+    // clean should of removed these from other tests
+    main_div.should('not.contain', 'test_host');
+    main_div.contains('test_vm');
   })
 })
