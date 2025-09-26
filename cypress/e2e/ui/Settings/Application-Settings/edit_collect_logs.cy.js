@@ -206,9 +206,9 @@ describe('Automate Collect logs Edit form operations', () => {
 
     after(() => {
       cy.url()
-        ?.then((url) => {
+        .then((url) => {
           // Ensures navigation to Settings -> Application-Settings in the UI
-          if (!url?.includes(COMPONENT_ROUTE_URL)) {
+          if (!url.includes(COMPONENT_ROUTE_URL)) {
             // Navigate to Settings -> Application-Settings before cleanup
             cy.menu(SETTINGS_MENU_OPTION, APP_SETTINGS_MENU_OPTION);
           }
@@ -247,9 +247,9 @@ describe('Automate Collect logs Edit form operations', () => {
 
     after(() => {
       cy.url()
-        ?.then((url) => {
+        .then((url) => {
           // Ensures navigation to Settings -> Application-Settings in the UI
-          if (!url?.includes(COMPONENT_ROUTE_URL)) {
+          if (!url.includes(COMPONENT_ROUTE_URL)) {
             // Navigate to Settings -> Application-Settings before cleanup
             cy.menu(SETTINGS_MENU_OPTION, APP_SETTINGS_MENU_OPTION);
           }
