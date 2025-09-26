@@ -51,7 +51,8 @@ describe VmHelper::TextualSummary do
     ems
     cluster
     host
-    resource_pool
+    resource_pool_cloud
+    resource_pool_infra
     storage
     service
     parent_vm

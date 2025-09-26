@@ -19,7 +19,7 @@ module EmsCloudHelper::TextualSummary
       _("Relationships"),
       %i[
         ems_infra network_manager availability_zones host_aggregates cloud_tenants flavors
-        security_groups placement_groups instances images cloud_volumes orchestration_stacks storage_managers cloud_databases
+        security_groups placement_groups resource_pools instances images cloud_volumes orchestration_stacks storage_managers cloud_databases
         custom_button_events tenant
       ]
     )
@@ -127,6 +127,16 @@ module EmsCloudHelper::TextualSummary
     if num.positive?
       h[:title] = _("Show all Placement Groups")
       h[:link] = ems_cloud_path(@record.id, :display => 'placement_groups')
+    end
+    h
+  end
+
+  def textual_resource_pools
+    num   = @record.try(:resource_pools) ? @record.number_of(:resource_pools) : 0
+    h     = {:label => _('Resource Pools'), :icon => "pficon pficon-resource-pool", :value => num}
+    if num.positive? && role_allows?(:feature => "resource_pool_cloud_show_list")
+      h[:title] = _("Show all Resource Pools")
+      h[:link] = ems_cloud_path(@record.id, :display => 'resource_pools_cloud')
     end
     h
   end
