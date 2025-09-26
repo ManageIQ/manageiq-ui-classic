@@ -121,6 +121,7 @@
     "@babel/preset-react": "~7.9.1",
     "@babel/register": "~7.9.0",
     "@babel/runtime-corejs3": "~7.9.0",
+    "@cypress/webpack-preprocessor": "~2.0.1",
     "angular-mocks": "~1.6.9",
     "autoprefixer": "~9.8.0",
     "babel-eslint": "~10.1.0",
