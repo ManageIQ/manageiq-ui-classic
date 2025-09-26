@@ -18,6 +18,11 @@ if (env.WEBPACK_VERBOSE) {
 }
 
 module.exports = [
+  {    
+    test: /\.mjs$/,
+    include: /node_modules/,
+    type: "javascript/auto"
+  },
   {
     test: /\.(js|jsx)$/,
     use: [{

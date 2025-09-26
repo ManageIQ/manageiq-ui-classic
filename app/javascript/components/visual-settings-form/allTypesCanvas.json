@@ -1,0 +1,532 @@
+{
+  "doc_type": "pipeline",
+  "version": "3.0",
+  "json_schema": "https://api.dataplatform.ibm.com/schemas/common-pipeline/pipeline-flow/pipeline-flow-v3-schema.json",
+  "id": "153651d6-9b88-423c-b01b-861f12d01489-5555",
+  "primary_pipeline": "`~!@#$%^&*()_+=-{}][|:;<,>.9?/",
+  "parameters": {
+    "props": [
+      {
+        "field1": "flow-param-val1"
+      },
+      {
+        "field2": "flow-param-val2"
+      }
+    ]
+  },
+  "pipelines": [
+    {
+      "id": "`~!@#$%^&*()_+=-{}][|:;<,>.9?/",
+      "name": "My pipeline",
+      "nodes": [
+        {
+          "id": "id8I6RH2V91XW",
+          "type": "binding",
+          "op": "variablefile",
+          "app_data": {
+            "my_data": {
+              "value": "Binding node - data value"
+            },
+            "ui_data": {
+              "label": "Binding (entry) node",
+              "x_pos": 89,
+              "y_pos": 99.5,
+              "description": "Imports data from a comma-delimited file"
+            }
+          },
+          "outputs": [
+            {
+              "id": "outPort",
+              "schema_ref": "TQRecT",
+              "app_data": {
+                "my_data": {
+                  "my_field": "Binding node -> Outputs -> My data -> My field -> My value"
+                },
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              },
+              "parameters": {
+                "props": [
+                  {
+                    "field1": "binding-node-port-param-val1"
+                  },
+                  {
+                    "field2": "binding-node-port-param-val2"
+                  }
+                ]
+              }
+            }
+          ],
+          "parameters": {
+            "props": [
+              {
+                "field1": "binding-node-param-val1"
+              },
+              {
+                "field2": "binding-node-param-val2"
+              }
+            ]
+          },
+          "connection": {
+            "name": "connection1",
+            "app_data": {
+              "my_data": {
+                "field1": "value1"
+              }
+            },
+            "ref": "value1",
+            "catalog_ref": "value2",
+            "project_ref": "value3",
+            "properties": {
+              "field1": "value1",
+              "field2": "value2"
+            }
+          },
+          "data_asset": {
+            "ref": "value1",
+            "catalog_ref": "yyyyyyyyy",
+            "project_ref": "zzz",
+            "properties": {
+              "attachment_ref": "aaaa",
+              "name": "bbbb",
+              "no_write_schema": true,
+              "no_write_status": true
+            }
+          }
+        },
+        {
+          "id": "|:;<,>.9?/`~!@#$%^&*()_+=-{}][",
+          "type": "execution_node",
+          "op": "dummy_operator",
+          "app_data": {
+            "my_data": {
+              "value": "Execution node - data value"
+            },
+            "ui_data": {
+              "label": "Execution node",
+              "x_pos": 297,
+              "y_pos": 138.5,
+              "description": "Sorts the data"
+            }
+          },
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "my_data": {
+                  "my_field": "Execution node -> Inputs -> My data -> My field -> My value"
+                },
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": 1
+                  },
+                  "label": "Input Port"
+                }
+              },
+              "links": [
+                {
+                  "id": "ba2a3402-c34d-4d7e-a8fa-fea0ac34b5fb",
+                  "node_id_ref": "id8I6RH2V91XW",
+                  "port_id_ref": "outPort",
+                  "app_data": {
+                    "ui_data": {
+                      "class_name": "d3-data-link"
+                    }
+                  },
+                  "type_attr": "Primary",
+                  "description": "A test description for a link"
+                }
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "my_data": {
+                  "my_field": "Execution node -> Outputs -> My data -> My field -> My value"
+                },
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              },
+              "parameters": {
+                "props": [
+                  {
+                    "field1": "execution-node-port-param-val1"
+                  },
+                  {
+                    "field2": "execution-node-port-param-val2"
+                  }
+                ]
+              }
+            }
+          ],
+          "parameters": {
+            "props": [
+              {
+                "field1": "execution-node-param-val1"
+              },
+              {
+                "field2": "execution-node-param-val2"
+              }
+            ]
+          }
+        },
+        {
+          "id": "nodeIDSuperNodePE",
+          "type": "super_node",
+          "open_with_tool": "canvas",
+          "subflow_ref": {
+            "pipeline_id_ref": "modeler-sub-pipeline"
+          },
+          "app_data": {
+            "my_data": {
+              "value": "Super node - data value"
+            },
+            "ui_data": {
+              "label": "Super node",
+              "image": "useDefaultIcon",
+              "x_pos": 500,
+              "y_pos": 170,
+              "class_name": "canvas-node",
+              "description": "nodeIDSuperNodePE",
+              "is_expanded": false,
+              "expanded_width": 200,
+              "expanded_height": 200
+            }
+          },
+          "inputs": [
+            {
+              "id": "input1SuperNodePE",
+              "subflow_node_ref": "entryID1SE",
+              "schema_ref": "schema3",
+              "app_data": {
+                "my_data": {
+                  "my_field": "Super node -> Inputs -> My data -> My field -> My value"
+                },
+                "ui_data": {
+                  "label": "input1SuperNodePE"
+                }
+              }
+            },
+            {
+              "id": "input2SuperNodePE",
+              "subflow_node_ref": "entryID2SE",
+              "schema_ref": "schema2",
+              "app_data": {
+                "ui_data": {
+                  "label": "input2SuperNodePE"
+                }
+              },
+              "links": [
+                {
+                  "id": "a81684aa-9b09-4620-aa59-54035a5de913",
+                  "node_id_ref": "|:;<,>.9?/`~!@#$%^&*()_+=-{}][",
+                  "app_data": {
+                    "ui_data": {
+                      "class_name": "d3-data-link"
+                    }
+                  }
+                }
+              ],
+              "parameters": {
+                "props": [
+                  {
+                    "field1": "super-node-port2-param-val1"
+                  },
+                  {
+                    "field2": "super-node-port2-param-val2"
+                  }
+                ]
+              }
+            }
+          ],
+          "outputs": [
+            {
+              "id": "output1SuperNodePE",
+              "subflow_node_ref": "exitID1SE",
+              "schema_ref": "schema2",
+              "app_data": {
+                "my_data": {
+                  "my_field": "Execution node -> Outputs -> My data -> My field -> My value"
+                },
+                "ui_data": {
+                  "label": "output1SuperNodePE"
+                }
+              }
+            }
+          ],
+          "parameters": {
+            "props": [
+              {
+                "field1": "super-node-param-val1"
+              },
+              {
+                "field2": "super-node-param-val2"
+              }
+            ]
+          }
+        },
+        {
+          "id": "id125TTEEIK7V",
+          "type": "model_node",
+          "model_ref": "my-model",
+          "app_data": {
+            "my_data": {
+              "value": "Model node - data value"
+            },
+            "ui_data": {
+              "label": "Model Node",
+              "x_pos": 760,
+              "y_pos": 230.99999237060547,
+              "class_name": "canvas-node"
+            }
+          },
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "my_data": {
+                  "my_field": "Model node -> Inputs -> My data -> My field -> My value"
+                },
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": 1
+                  },
+                  "label": "Input Port"
+                }
+              },
+              "links": [
+                {
+                  "id": "2a640b77-76f7-4601-a794-7e71fc7ee241",
+                  "node_id_ref": "nodeIDSuperNodePE",
+                  "port_id_ref": "output1SuperNodePE",
+                  "app_data": {
+                    "ui_data": {
+                      "class_name": "d3-data-link"
+                    }
+                  }
+                }
+              ],
+              "parameters": {
+                "props": [
+                  {
+                    "field1": "model-node-port-param-val1"
+                  },
+                  {
+                    "field2": "model-node-port-param-val2"
+                  }
+                ]
+              }
+            }
+          ],
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "my_data": {
+                  "my_field": "Model node -> Outputs -> My data -> My field -> My value"
+                },
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ],
+          "parameters": {
+            "props": [
+              {
+                "field1": "model-node-param-val1"
+              },
+              {
+                "field2": "model-node-param-val2"
+              }
+            ]
+          }
+        },
+        {
+          "id": "id5KIRGGJ3FYT",
+          "type": "binding",
+          "app_data": {
+            "ui_data": {
+              "label": "Binding (exit) node",
+              "x_pos": 642,
+              "y_pos": 375.99999237060547,
+              "class_name": "canvas-node",
+              "associations": [
+                {
+                  "id": "id5KIRGGJ3FYT.id125TTEEIK7V",
+                  "node_ref": "id125TTEEIK7V",
+                  "class_name": "canvas-object-link"
+                }
+              ]
+            }
+          },
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": 1
+                  },
+                  "label": "Input Port"
+                }
+              },
+              "links": [
+                {
+                  "id": "d5bef845-9d69-4cca-95ec-27d481b4e776",
+                  "node_id_ref": "nodeIDSuperNodePE",
+                  "port_id_ref": "output1SuperNodePE",
+                  "app_data": {
+                    "ui_data": {
+                      "class_name": "d3-data-link"
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          "connection": {
+            "name": "connection2",
+            "app_data": {
+              "my_data": {
+                "field1": "value1"
+              }
+            },
+            "ref": "ref2",
+            "catalog_ref": "value2",
+            "project_ref": "value3",
+            "properties": {
+              "field1": "value1",
+              "field2": "value2"
+            }
+          },
+          "data_asset": {
+            "ref": "value1",
+            "catalog_ref": "yyyyyyyyy",
+            "project_ref": "zzz",
+            "properties": {
+              "attachment_ref": "aaaa",
+              "name": "bbbb",
+              "no_write_schema": true,
+              "no_write_status": true
+            }
+          }
+        }
+      ],
+      "app_data": {
+        "ui_data": {
+          "zoom": {
+            "x": 0,
+            "y": 0,
+            "k": 1
+          },
+          "comments": [
+            {
+              "id": "id42ESQA3VPXB",
+              "x_pos": 20,
+              "y_pos": 20,
+              "width": 246,
+              "height": 64,
+              "class_name": "canvas-comment",
+              "content": "This canvas shows the 4 different node types and three link types: node links, association links and comments links.",
+              "associated_id_refs": []
+            },
+            {
+              "id": ">.9?/`~!@#$%^&*()_+=-{}][|:;<,",
+              "x_pos": 400,
+              "y_pos": 50,
+              "width": 200,
+              "height": 37,
+              "class_name": "canvas-comment",
+              "content": "The 4 different node types",
+              "associated_id_refs": [
+                {
+                  "id": "3b54f984-ab32-4da0-8a5a-41e3dba5dde3",
+                  "node_ref": "id8I6RH2V91XW",
+                  "class_name": "canvas-comment-link"
+                },
+                {
+                  "id": "eaa87bbf-0a30-47df-bda1-da154c566dfb",
+                  "node_ref": "|:;<,>.9?/`~!@#$%^&*()_+=-{}][",
+                  "class_name": "canvas-comment-link"
+                },
+                {
+                  "id": "307b36cc-4058-41b5-9840-7ed01740023c",
+                  "node_ref": "nodeIDSuperNodePE",
+                  "class_name": "canvas-comment-link"
+                },
+                {
+                  "id": "bbf2f832-b096-471d-a6a1-9072619f1747",
+                  "node_ref": "id125TTEEIK7V",
+                  "class_name": "canvas-comment-link"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "runtime_ref": "test_runtime",
+      "parameters": {
+        "props": [
+          {
+            "field1": "pipeline-param-val1"
+          },
+          {
+            "field2": "pipeline-param-val2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "modeler-sub-pipeline",
+      "nodes": [],
+      "app_data": {
+        "ui_data": {
+          "comments": []
+        }
+      },
+      "runtime_ref": "test_runtime"
+    }
+  ],
+  "schemas": [
+    {
+      "id": "TQRecT",
+      "fields": [
+        {
+          "name": "ticker",
+          "type": "rstring"
+        }
+      ]
+    }
+  ],
+  "runtimes": [
+    {
+      "id": "test_runtime",
+      "name": "test_runtime"
+    }
+  ],
+  "app_data": {
+    "my_data": {
+      "value": "Pipeline Flow - data value"
+    }
+  }
+}

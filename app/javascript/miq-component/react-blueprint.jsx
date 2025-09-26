@@ -28,4 +28,4 @@ export default (ReactElement, mapPropsToInteract = () => undefined) => {
 
     component: ReactElement,
   };
-}
+};
