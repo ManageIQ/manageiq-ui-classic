@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { flashClassMap } from '../../../../support/assertions/assertion_constants';
+import { flashClassMap } from '@cypress-support/assertions/assertion_constants.js';
 
 const textConstants = {
   // List items
@@ -195,7 +195,7 @@ function interceptGetScheduleDetailsApi(scheduleName = initialScheduleName) {
 function invokeCleanupDeletion() {
   // Iterate and clean up any leftover schedules created during the test
   cy.get('li.list-group-item').each(($el) => {
-    const text = $el?.text()?.trim();
+    const text = $el.text().trim();
     if (text === initialScheduleName) {
       deleteSchedule();
       return false;
@@ -466,9 +466,9 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
   });
 
   afterEach(() => {
-    cy?.url()?.then((url) => {
+    cy.url().then((url) => {
       // Ensures navigation to Settings -> Application-Settings in the UI
-      if (url?.includes('/ops/explorer')) {
+      if (url.includes('/ops/explorer')) {
         invokeCleanupDeletion();
       } else {
         // Navigate to Settings -> Application-Settings before looking out for Schedules created during test
