@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { flashClassMap } from './assertion_constants';
+import { flashClassMap } from '@cypress-dir/support/assertions/assertion_constants.js';
 
 /**
  * Custom Cypress command to validate flash messages.
