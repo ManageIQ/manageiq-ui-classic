@@ -44,23 +44,11 @@ Cypress.Commands.add('appFixtures', function (options) {
 });
 // CypressOnRails: end
 
-// The next is optional
-// beforeEach(() => {
-//  cy.app('clean') // have a look at cypress/app_commands/clean.rb
-// });
-
-// comment this out if you do not want to attempt to log additional info on test fail
-Cypress.on('fail', (err, runnable) => {
-  // allow app to generate additional logging data
-  Cypress.$.ajax({
-    url: '/__e2e__/command',
-    data: JSON.stringify({name: 'log_fail', options: {error_message: err.message, runnable_full_title: runnable.fullTitle() }}),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    async: false,
-    method: 'POST'
-  });
-
-  throw err;
+// capture the database table state before all tests
+before(() => {
+  cy.appDbState('capture');
 });
+
+// TODO: Consider adding the log_fail entrypoint below.  It was removed after the generator because it hooks the Cypress.on('fail') event, which some tests rely on.
+// 1: https://github.com/shakacode/cypress-playwright-on-rails/blob/master/lib/generators/cypress_on_rails/templates/spec/cypress/support/on-rails.js
+// 2: https://github.com/shakacode/cypress-playwright-on-rails/blob/master/lib/generators/cypress_on_rails/templates/spec/e2e/app_commands/log_fail.rb
