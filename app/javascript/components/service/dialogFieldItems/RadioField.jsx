@@ -15,9 +15,13 @@ const RadioField = ({ field }) => {
 
   /** Function to handle the RadioButton's onChange event. */
   const onChange = (selectedValue) => {
-    if (data.isOrderServiceForm) {
+    if (data.isOrderServiceForm || data.isServiceReconfigure) {
       const { valid, value } = ServiceValidator.validateField({ value: selectedValue, field });
-      data.dialogFields[field.name] = { ...data.dialogFields[field.name], value, valid };
+      data.dialogFields[field.name] = {
+        ...data.dialogFields[field.name],
+        value,
+        valid,
+      };
       setData({
         ...data,
         dialogFields: { ...data.dialogFields },
