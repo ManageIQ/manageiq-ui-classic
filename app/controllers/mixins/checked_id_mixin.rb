@@ -30,11 +30,7 @@ module Mixins
 
       # If id is present use id, unless when nested list exists, example on summary pages
       if params[:id].present? && params[nested_list_item_key] != "on" && has_no_check
-        if params[:id].kind_of?(Array)
-          params[:id]
-        else
-          [params[:id]]
-        end
+        Array.wrap(params[:id])
       elsif params[:miq_grid_checks].present?
         params[:miq_grid_checks].split(",").collect(&:to_i)
       else
