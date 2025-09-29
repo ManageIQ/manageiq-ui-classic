@@ -71,3 +71,115 @@ Cypress.Commands.add('validateFormLabels', (labelConfigs) => {
     }
   });
 });
+
+/**
+ * Validates form input fields based on provided configurations
+ *
+ * @param {Array} fieldConfigs - Array of field configuration objects
+ * @param {string} fieldConfigs[].id - The ID of the form field
+ * @param {string} [fieldConfigs[].fieldType='input'] - The type of field ('input', 'select', 'textarea')
+ * @param {string} [fieldConfigs[].inputFieldType='text'] - The type of input field ('text', 'password', 'number')
+ * @param {boolean} [fieldConfigs[].shouldBeDisabled=false] - Whether the field should be disabled
+ * @param {string} [fieldConfigs[].expectedValue] - The expected value of the field
+ *
+ * Example:
+ *   cy.validateFormFields([
+ *     { [FIELD_CONFIG_KEYS.ID]: 'name', [FIELD_CONFIG_KEYS.SHOULD_BE_DISABLED]: true },
+ *     { [FIELD_CONFIG_KEYS.ID]: 'email', [FIELD_CONFIG_KEYS.INPUT_FIELD_TYPE]: 'email' },
+ *     {
+ *       [FIELD_CONFIG_KEYS.ID]: 'role',
+ *       [FIELD_CONFIG_KEYS.FIELD_TYPE]: FIELD_TYPES.SELECT,
+ *       [FIELD_CONFIG_KEYS.EXPECTED_VALUE]: 'admin'
+ *     }
+ *   ]);
+ *
+ * Or using regular object keys:
+ *   cy.validateFormFields([
+ *     { id: 'name', shouldBeDisabled: true },
+ *     { id: 'email' },
+ *     { id: 'role', fieldType: 'select', expectedValue: 'admin' }
+ *   ]);
+ *
+ * Both approaches work but using config-keys object(FIELD_CONFIG_KEYS) is recommended to avoid typos and unknown keys
+ */
+Cypress.Commands.add('validateFormFields', (fieldConfigs) => {
+  if (!Array.isArray(fieldConfigs)) {
+    cy.logAndThrowError('fieldConfigs must be an array');
+  }
+
+  if (!fieldConfigs.length) {
+    cy.logAndThrowError('fieldConfigs array cannot be empty');
+  }
+
+  fieldConfigs.forEach((config) => {
+    validateConfigKeys(config, FIELD_CONFIG_KEYS, 'field');
+
+    const id = config[FIELD_CONFIG_KEYS.ID];
+    const fieldType = config[FIELD_CONFIG_KEYS.FIELD_TYPE] || FIELD_TYPES.INPUT;
+    const inputFieldType = config[FIELD_CONFIG_KEYS.INPUT_FIELD_TYPE] || 'text';
+    const shouldBeDisabled =
+      config[FIELD_CONFIG_KEYS.SHOULD_BE_DISABLED] || false;
+    const expectedValue = config[FIELD_CONFIG_KEYS.EXPECTED_VALUE];
+
+    if (!id) {
+      cy.logAndThrowError(
+        `${FIELD_CONFIG_KEYS.ID} is required for each field config`
+      );
+    }
+
+    // Check field based on type
+    switch (fieldType) {
+      case FIELD_TYPES.INPUT:
+        cy.getFormInputFieldByIdAndType({
+          inputId: id,
+          inputType: inputFieldType,
+        })
+          .should('be.visible')
+          .then((field) => {
+            if (shouldBeDisabled) {
+              expect(field).to.be.disabled;
+            } else {
+              expect(field).to.not.be.disabled;
+            }
+
+            if (expectedValue) {
+              cy.wrap(field).should('have.value', expectedValue);
+            }
+          });
+        break;
+      case FIELD_TYPES.SELECT:
+        cy.getFormSelectFieldById({ selectId: id })
+          .should('be.visible')
+          .then((field) => {
+            if (shouldBeDisabled) {
+              expect(field).to.be.disabled;
+            } else {
+              expect(field).to.not.be.disabled;
+            }
+
+            if (expectedValue) {
+              cy.wrap(field).should('have.value', expectedValue);
+            }
+          });
+        break;
+      case FIELD_TYPES.TEXTAREA:
+        cy.getFormTextareaById({ textareaId: id })
+          .should('be.visible')
+          .then((field) => {
+            if (shouldBeDisabled) {
+              expect(field).to.be.disabled;
+            } else {
+              expect(field).to.not.be.disabled;
+            }
+
+            if (expectedValue) {
+              cy.wrap(field).should('have.value', expectedValue);
+            }
+          });
+        break;
+
+      default:
+        cy.logAndThrowError(`Unsupported field type: ${fieldType}`);
+    }
+  });
+});
