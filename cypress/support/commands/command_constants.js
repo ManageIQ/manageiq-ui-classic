@@ -25,4 +25,11 @@ export const FIELD_TYPES = {
   TEXTAREA: 'textarea',
 };
 
+// Form button configuration keys
+export const BUTTON_CONFIG_KEYS = {
+  BUTTON_TEXT: 'buttonText',
+  BUTTON_TYPE: 'buttonType',
+  SHOULD_BE_DISABLED: 'shouldBeDisabled',
+};
+
 /* ========================================================== */
