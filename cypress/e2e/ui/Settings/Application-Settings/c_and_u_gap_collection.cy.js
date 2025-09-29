@@ -1,5 +1,11 @@
 /* eslint-disable no-undef */
+// TODO: Use aliased import(@cypress-dir) once #9631 is merged
 import { flashClassMap } from '../../../../support/assertions/assertion_constants';
+import {
+  LABEL_CONFIG_KEYS,
+  FIELD_CONFIG_KEYS,
+  BUTTON_CONFIG_KEYS,
+} from '../../../../support/commands/constants/command_constants';
 
 // Menu options
 const SETTINGS_MENU_OPTION = 'Settings';
@@ -74,34 +80,39 @@ describe('Automate C & U Gap Collection form operations: Settings > Application 
     cy.contains('#main-content .bx--form h3', FORM_SUBHEADER_SNIPPET).should(
       'be.visible'
     );
-    // Assert timezone label & field is visible and enabled
-    cy.getFormLabelByForAttribute({ forValue: 'timezone' })
-      .should('be.visible')
-      .and('contain.text', TIMEZONE_FIELD_LABEL);
-    cy.getFormInputFieldByIdAndType({ inputId: 'timezone' })
-      .should('be.visible')
-      .and('be.enabled');
-    // Assert start date label & field is visible and enabled
-    cy.getFormLabelByForAttribute({ forValue: 'startDate' })
-      .should('be.visible')
-      .and('contain.text', START_DATE_FIELD_LABEL);
-    cy.getFormInputFieldByIdAndType({ inputId: 'startDate' })
-      .should('be.visible')
-      .and('be.enabled');
-    // Assert end date label & field is visible and enabled
-    cy.getFormLabelByForAttribute({ forValue: 'endDate' })
-      .should('be.visible')
-      .and('contain.text', END_DATE_FIELD_LABEL);
-    cy.getFormInputFieldByIdAndType({ inputId: 'endDate' })
-      .should('be.visible')
-      .and('be.enabled');
-    // Assert save button is visible and disabled
-    cy.getFormFooterButtonByTypeWithText({
-      buttonText: 'Save',
-      buttonType: 'submit',
-    })
-      .should('be.visible')
-      .and('be.disabled');
+
+    // Validate form labels
+    cy.validateFormLabels([
+      {
+        [LABEL_CONFIG_KEYS.FOR_VALUE]: 'timezone',
+        [LABEL_CONFIG_KEYS.EXPECTED_TEXT]: TIMEZONE_FIELD_LABEL,
+      },
+      {
+        [LABEL_CONFIG_KEYS.FOR_VALUE]: 'startDate',
+        [LABEL_CONFIG_KEYS.EXPECTED_TEXT]: START_DATE_FIELD_LABEL,
+      },
+      {
+        [LABEL_CONFIG_KEYS.FOR_VALUE]: 'endDate',
+        [LABEL_CONFIG_KEYS.EXPECTED_TEXT]: END_DATE_FIELD_LABEL,
+      },
+    ]);
+    // Validate form fields
+    cy.validateFormFields([
+      {
+        [FIELD_CONFIG_KEYS.ID]: 'timezone',
+        [FIELD_CONFIG_KEYS.EXPECTED_VALUE]: '(GMT+00:00) UTC',
+      },
+      { [FIELD_CONFIG_KEYS.ID]: 'startDate' },
+      { [FIELD_CONFIG_KEYS.ID]: 'endDate' },
+    ]);
+    // Validate form footer buttons
+    cy.validateFormFooterButtons([
+      {
+        [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: 'Save',
+        [BUTTON_CONFIG_KEYS.BUTTON_TYPE]: 'submit',
+        [BUTTON_CONFIG_KEYS.SHOULD_BE_DISABLED]: true,
+      },
+    ]);
   });
 
   it('Should fail if start date is greater than end date', () => {
