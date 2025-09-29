@@ -15,9 +15,14 @@ const TextAreaField = ({ field }) => {
 
   /** Function to handle the TextArea's onChange event. */
   const onChange = (event) => {
-    if (data.isOrderServiceForm) {
+    if (data.isOrderServiceForm || data.isServiceReconfigure) {
       const { valid, value, message } = ServiceValidator.validateField({ value: event.target.value, field });
-      data.dialogFields[field.name] = { ...data.dialogFields[field.name], value, valid, message };
+      data.dialogFields[field.name] = {
+        ...data.dialogFields[field.name],
+        value,
+        valid,
+        message,
+      };
       setData({
         ...data,
         dialogFields: { ...data.dialogFields },

@@ -16,10 +16,14 @@ const DateField = ({ field }) => {
 
   /** DatePicker's onChange event handler */
   const onChange = (selectedItem) => {
-    if (data.isOrderServiceForm) {
+    if (data.isOrderServiceForm || data.isServiceReconfigure) {
       const extractedDate = extractDate(selectedItem[0]);
       const { valid, value } = ServiceValidator.validateField({ field, value: extractedDate });
-      data.dialogFields[field.name] = { ...data.dialogFields[field.name], value, valid };
+      data.dialogFields[field.name] = {
+        ...data.dialogFields[field.name],
+        value,
+        valid,
+      };
       setData({
         ...data,
         dialogFields: { ...data.dialogFields },

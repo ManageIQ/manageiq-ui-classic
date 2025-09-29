@@ -16,8 +16,12 @@ const SimpleDropDownField = ({ field, options }) => {
   /** Dropdown onChange event handler */
   const onChange = ({ selectedItem }) => {
     const { valid, value } = ServiceValidator.validateField({ value: selectedItem, field });
-    data.dialogFields[field.name] = { ...data.dialogFields[field.name], value, valid };
-    if (data.isOrderServiceForm) {
+    data.dialogFields[field.name] = {
+      ...data.dialogFields[field.name],
+      value,
+      valid,
+    };
+    if (data.isOrderServiceForm || data.isServiceReconfigure) {
       setData({
         ...data,
         dialogFields: { ...data.dialogFields },

@@ -15,9 +15,13 @@ const MultiDropDownField = ({ field, options }) => {
 
   /** FilterableMultiSelect onChange event handler */
   const onChange = ({ selectedItems }) => {
-    if (data.isOrderServiceForm) {
+    if (data.isOrderServiceForm || data.isServiceReconfigure) {
       const { valid, value } = ServiceValidator.validateField({ value: selectedItems, field });
-      data.dialogFields[field.name] = { ...data.dialogFields[field.name], value, valid };
+      data.dialogFields[field.name] = {
+        ...data.dialogFields[field.name],
+        value,
+        valid,
+      };
       setData({
         ...data,
         dialogFields: { ...data.dialogFields },

@@ -26,7 +26,7 @@ const DateTimeField = ({ field }) => {
 
   /** Function to handle the hour's onChange event. */
   const onHourChange = ({ selectedItem }) => {
-    if (data.isOrderServiceForm) {
+    if (data.isOrderServiceForm || data.isServiceReconfigure) {
       fieldData.value.hour = selectedItem.id;
       updateDateTime({ ...fieldData });
     }
@@ -34,7 +34,7 @@ const DateTimeField = ({ field }) => {
 
   /** Function to handle the minute's onChange event. */
   const onMinuteChange = ({ selectedItem }) => {
-    if (data.isOrderServiceForm) {
+    if (data.isOrderServiceForm || data.isServiceReconfigure) {
       fieldData.value.minute = selectedItem.id;
       updateDateTime({ ...fieldData });
     }
@@ -42,7 +42,7 @@ const DateTimeField = ({ field }) => {
 
   /** Function to handle the AM/PM onChange event. */
   const onMeridiemChange = ({ selectedItem }) => {
-    if (data.isOrderServiceForm) {
+    if (data.isOrderServiceForm || data.isServiceReconfigure) {
       fieldData.value.meridiem = selectedItem.id;
       updateDateTime({ ...fieldData });
     }
@@ -50,7 +50,7 @@ const DateTimeField = ({ field }) => {
 
   /** Function to handle the date's onChange event. */
   const onDateChange = (selectedItem) => {
-    if (data.isOrderServiceForm) {
+    if (data.isOrderServiceForm || data.isServiceReconfigure) {
       const extractedDateTime = extractDateTime(selectedItem[0], selectedDateTime);
       const { valid, value } = ServiceValidator.validateField({ field, value: extractedDateTime });
       updateDateTime({ value, valid, type: field.type });
