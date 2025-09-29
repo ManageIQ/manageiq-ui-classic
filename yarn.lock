@@ -4586,6 +4586,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bootstrap-switch@npm:3.4.0":
+  version: 3.4.0
+  resolution: "bootstrap-switch@npm:3.4.0"
+  peerDependencies:
+    bootstrap: ^4.3.1
+    jquery: ">=1.12.4"
+  checksum: 10/551387442c991669ca9d5e59c00ce95d3534279dfc4420ed54587edf7e1d4247b73b2fcc6c23fa4ce648cda5b05f6f4a50b5e63fcdfadf4e0a82539728293683
+  languageName: node
+  linkType: hard
+
 "bootstrap-touchspin@npm:~3.1.1":
   version: 3.1.1
   resolution: "bootstrap-touchspin@npm:3.1.1"
@@ -12826,7 +12836,7 @@ __metadata:
     babel-loader: "npm:~8.2.0"
     bootstrap-filestyle: "npm:~1.2.1"
     bootstrap-select: "npm:^1.13.18"
-    bootstrap-switch: "npm:3.3.4"
+    bootstrap-switch: "npm:3.4.0"
     carbon-components: "npm:~10.58.15"
     carbon-components-react: "npm:~7.59.24"
     carbon-icons: "npm:~7.0.7"
