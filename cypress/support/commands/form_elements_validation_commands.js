@@ -1,5 +1,10 @@
 // TODO: Use aliased import(@cypress-dir) once #9631 is merged
-import { LABEL_CONFIG_KEYS } from './constants/command_constants.js';
+import {
+  LABEL_CONFIG_KEYS,
+  FIELD_CONFIG_KEYS,
+  FIELD_TYPES,
+  BUTTON_CONFIG_KEYS,
+} from './constants/command_constants.js';
 
 /**
  * Helper function to validate that config objects only contain valid keys
@@ -10,11 +15,13 @@ import { LABEL_CONFIG_KEYS } from './constants/command_constants.js';
  */
 const validateConfigKeys = (config, validKeysObject, configType) => {
   const validKeys = Object.values(validKeysObject);
-  
-  Object.keys(config).forEach(key => {
+
+  Object.keys(config).forEach((key) => {
     if (!validKeys.includes(key)) {
       cy.logAndThrowError(
-        `Unknown key "${key}" in ${configType} config. Valid keys are: ${validKeys.join(', ')}`
+        `Unknown key "${key}" in ${configType} config. Valid keys are: ${validKeys.join(
+          ', '
+        )}`
       );
     }
   });
@@ -180,6 +187,68 @@ Cypress.Commands.add('validateFormFields', (fieldConfigs) => {
 
       default:
         cy.logAndThrowError(`Unsupported field type: ${fieldType}`);
+    }
+  });
+});
+
+/**
+ * Validates form buttons based on provided configurations
+ *
+ * @param {Array} buttonConfigs - Array of button configuration objects
+ * @param {string} buttonConfigs[].buttonText - The text of the button
+ * @param {string} [buttonConfigs[].buttonType='button'] - The type of button (e.g., 'submit', 'reset')
+ * @param {boolean} [buttonConfigs[].shouldBeDisabled=false] - Whether the button should be disabled
+ *
+ * Example:
+ *   cy.validateFormFooterButtons([
+ *     { [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: 'Cancel' },
+ *     { [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: 'Reset', [BUTTON_CONFIG_KEYS.SHOULD_BE_DISABLED]: true },
+ *     { [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: 'Submit', [BUTTON_CONFIG_KEYS.BUTTON_TYPE]: 'submit' }
+ *   ]);
+ *
+ * Or using regular object keys:
+ *   cy.validateFormFooterButtons([
+ *     { buttonText: 'Cancel' },
+ *     { buttonText: 'Reset', shouldBeDisabled: true },
+ *     { buttonText: 'Submit', buttonType: 'submit' }
+ *   ]);
+ *
+ * Both approaches work but using config-keys object(BUTTON_CONFIG_KEYS) is recommended to avoid typos and unknown keys
+ */
+Cypress.Commands.add('validateFormFooterButtons', (buttonConfigs) => {
+  if (!Array.isArray(buttonConfigs)) {
+    cy.logAndThrowError('buttonConfigs must be an array');
+  }
+
+  if (!buttonConfigs.length) {
+    cy.logAndThrowError('buttonConfigs array cannot be empty');
+  }
+
+  buttonConfigs.forEach((config) => {
+    validateConfigKeys(config, BUTTON_CONFIG_KEYS, 'button');
+
+    const buttonText = config[BUTTON_CONFIG_KEYS.BUTTON_TEXT];
+    const buttonType = config[BUTTON_CONFIG_KEYS.BUTTON_TYPE] || 'button';
+    const shouldBeDisabled =
+      config[BUTTON_CONFIG_KEYS.SHOULD_BE_DISABLED] || false;
+
+    if (!buttonText) {
+      cy.logAndThrowError(
+        `${BUTTON_CONFIG_KEYS.BUTTON_TEXT} is required for each button config`
+      );
+    }
+
+    const buttonCheck = cy
+      .getFormFooterButtonByTypeWithText({
+        buttonText,
+        buttonType,
+      })
+      .should('be.visible');
+
+    if (shouldBeDisabled) {
+      buttonCheck.and('be.disabled');
+    } else {
+      buttonCheck.and('be.enabled');
     }
   });
 });
