@@ -4175,18 +4175,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-loader@npm:~8.2.0":
-  version: 8.2.5
-  resolution: "babel-loader@npm:8.2.5"
+"babel-loader@npm:~8.4.0":
+  version: 8.4.1
+  resolution: "babel-loader@npm:8.4.1"
   dependencies:
     find-cache-dir: "npm:^3.3.1"
-    loader-utils: "npm:^2.0.0"
+    loader-utils: "npm:^2.0.4"
     make-dir: "npm:^3.1.0"
     schema-utils: "npm:^2.6.5"
   peerDependencies:
     "@babel/core": ^7.0.0
     webpack: ">=2"
-  checksum: 10/2b40b410cb452f2a31e733f4493008aed42151d8787d2b5891cb0e58e795f97f9288f7274319eaa2d0b84c3d0d478dbdc0c2cd17c9bc3489e45ef504171e0e18
+  checksum: 10/b54ae3796a351e5b5186cd7a8d53a902b679a33a187424c2858e385850142139a4343524c9fddd0eb4356250e51e67e47a9efeef79d01e132976c406212cba1d
   languageName: node
   linkType: hard
 
@@ -12535,7 +12535,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"loader-utils@npm:^2.0.0":
+"loader-utils@npm:^2.0.0, loader-utils@npm:^2.0.4":
   version: 2.0.4
   resolution: "loader-utils@npm:2.0.4"
   dependencies:
@@ -12823,7 +12823,7 @@ __metadata:
     autoprefixer: "npm:~9.8.0"
     awesome-debounce-promise: "npm:^2.1.0"
     babel-jest: "npm:~25.5.1"
-    babel-loader: "npm:~8.2.0"
+    babel-loader: "npm:~8.4.0"
     bootstrap-filestyle: "npm:~1.2.1"
     bootstrap-select: "npm:^1.13.18"
     bootstrap-switch: "npm:3.3.4"
