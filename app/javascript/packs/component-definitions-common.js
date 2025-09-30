@@ -162,6 +162,7 @@ import VmFloatingIPsForm from '../components/vm-floating-ips/vm-floating-ips-for
 import VmResizeForm from '../components/vm-resize-form/vm-resize-form';
 import VmServerRelationshipForm from '../components/vm-server-relationship-form';
 import VmSnapshotForm from '../components/vm-snapshot-form/vm-snapshot-form';
+import VmSnapshotTreeSelect from '../components/vm-snapshot-tree-select';
 import VolumeMappingForm from '../components/volume-mapping-form';
 import WidgetChart from '../components/dashboard-widgets/widget-chart';
 import WidgetError from '../components/dashboard-widgets/widget-error';
@@ -350,6 +351,7 @@ ManageIQ.component.addReact('VmFloatingIPsForm', VmFloatingIPsForm);
 ManageIQ.component.addReact('VmResizeForm', VmResizeForm);
 ManageIQ.component.addReact('VmServerRelationshipForm', VmServerRelationshipForm);
 ManageIQ.component.addReact('VmSnapshotForm', VmSnapshotForm);
+ManageIQ.component.addReact('VmSnapshotTreeSelect', VmSnapshotTreeSelect);
 ManageIQ.component.addReact('VolumeMappingForm', VolumeMappingForm);
 ManageIQ.component.addReact('WidgetChart', WidgetChart);
 ManageIQ.component.addReact('WidgetError', WidgetError);

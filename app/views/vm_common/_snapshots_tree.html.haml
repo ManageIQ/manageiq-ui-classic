@@ -1,5 +1,0 @@
-#snapshots_tree_div
-  - if @record.snapshots.count > 0
-    %fieldset
-      %h3= _('Available Snapshots')
-      = render(:partial => 'shared/tree', :locals => {:tree => @snapshot_tree, :name => @snapshot_tree.name})
