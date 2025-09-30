@@ -1,11 +1,11 @@
 describe('Rails using factory bot examples', function() {
   beforeEach(() => {
-    cy.app('clean') // have a look at e2e/app_commands/clean.rb
-  })
+    cy.app('start');
+  });
 
   afterEach(() => {
-    cy.app('clean')
-  })
+    cy.app('clean');
+  });
 
   it('using single factory bot', function() {
     cy.appFactories([

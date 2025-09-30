@@ -5,9 +5,9 @@ module DatabaseCleaner
     # SeededDeletion is a strategy that deletes all records from tables except those that existed before it was instantiated
     # This is useful for tests that need the seeded data to be present.
     class SeededDeletion < Deletion
-      def initialize(opts = {})
-        super
-        cache_max_seeded_ids
+      def start
+        Rails.logger.info "XXX SeededDeletion strategy setup"
+        self.class.table_max_id_cache = table_max_id_hash
       end
 
       def self.table_max_id_cache
@@ -17,10 +17,6 @@ module DatabaseCleaner
       # Memoize the maximum ID for each class table with non-zero number of rows
       def self.table_max_id_cache=(table_id_hash)
         @table_max_id_cache ||= table_id_hash
-      end
-
-      def cache_max_seeded_ids
-        self.class.table_max_id_cache = table_max_id_hash
       end
 
       delegate :table_max_id_cache, to: :class

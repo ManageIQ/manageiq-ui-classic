@@ -1,7 +1,4 @@
 if defined?(DatabaseCleaner)
-  # cleaning the database using database_cleaner
-  require 'extensions/database_cleaner-activerecord-seeded_deletion'
-  DatabaseCleaner[:active_record].strategy = DatabaseCleaner::ActiveRecord::SeededDeletion.new(:pre_count => true, :except => %w[audit_events sessions])
   DatabaseCleaner.clean
 else
   msg = "add database_cleaner or update cypress/app_commands/clean.rb"

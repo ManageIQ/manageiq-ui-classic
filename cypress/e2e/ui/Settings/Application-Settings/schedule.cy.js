@@ -533,6 +533,10 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SCHEDULE_QUEUED);
   });
 
+  beforeEach(() => {
+    cy.app('start');
+  });
+
   afterEach(() => {
     cy.app('clean');
   });
