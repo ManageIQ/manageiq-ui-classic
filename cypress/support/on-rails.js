@@ -27,6 +27,10 @@ Cypress.Commands.add('app', function (name, command_options) {
   });
 });
 
+Cypress.Commands.add('appDbState', function (options) {
+  return cy.app('db_state', options)
+});
+
 Cypress.Commands.add('appEval', function (code) {
   return cy.app('eval', code)
 });

@@ -6,7 +6,7 @@ module DatabaseCleaner
     # This is useful for tests that need the seeded data to be present.
     class SeededDeletion < Deletion
       def start
-        Rails.logger.info "XXX SeededDeletion strategy setup"
+        Rails.logger.info "SeededDeletion strategy start"
         self.class.table_max_id_cache = table_max_id_hash
       end
 
