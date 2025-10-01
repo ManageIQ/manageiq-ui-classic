@@ -41,5 +41,5 @@ if defined?(CypressOnRails) && ENV['CYPRESS'].present?
   #  end
   # end
   require 'extensions/database_cleaner-activerecord-seeded_deletion'
-  DatabaseCleaner[:active_record].strategy = DatabaseCleaner::ActiveRecord::SeededDeletion.new(:pre_count => true, :except => %w[audit_events sessions])
+  DatabaseCleaner[:active_record].strategy = DatabaseCleaner::ActiveRecord::SeededDeletion.new(:pre_count => true, :except => %w[audit_events notifications notification_recipients sessions])
 end
