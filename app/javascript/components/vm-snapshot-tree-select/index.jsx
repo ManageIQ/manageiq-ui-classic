@@ -16,7 +16,7 @@ const VMSnapshotTreeSelect = ({
           <div className="snapshot-detail-title">
             <p>
               <b>
-                Description
+                {__('Description')}
               </b>
             </p>
           </div>
@@ -28,7 +28,7 @@ const VMSnapshotTreeSelect = ({
           <div className="snapshot-detail-title" id="size-title">
             <p>
               <b>
-                Size
+                {__('Size')}
               </b>
             </p>
           </div>
@@ -40,7 +40,7 @@ const VMSnapshotTreeSelect = ({
           <div className="snapshot-detail-title" id="created-title">
             <p>
               <b>
-                Created
+                {__('Created')}
               </b>
             </p>
           </div>
