@@ -69,7 +69,7 @@ describe ResourcePoolController do
         allow(controller).to receive(:drop_breadcrumb)
         allow(controller).to receive(:performed?)
         allow(controller).to receive(:render)
-        controller.params = {:miq_grid_checks => vm.id.to_s, :pressed => 'vm_check_compliance', :id => resource_pool.id.to_s, :controller => 'resource_pool'}
+        controller.params = {:miq_grid_checks => vm.id.to_s, "select-row-#{vm.id.to_s}" => "on", :pressed => 'vm_check_compliance', :id => resource_pool.id.to_s, :controller => 'resource_pool'}
       end
 
       it 'does not initiate Check Compliance because of missing Compliance policies' do

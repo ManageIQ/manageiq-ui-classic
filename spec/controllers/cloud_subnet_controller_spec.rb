@@ -334,7 +334,7 @@ describe CloudSubnetController do
     end
 
     context 'Check Compliance of Instances displayed in a nested list' do
-      let(:params) { {:miq_grid_checks => vm_instance.id.to_s, :pressed => 'instance_check_compliance', :id => cloud_subnet.id.to_s, :controller => 'cloud_subnet'} }
+      let(:params) { {:miq_grid_checks => vm_instance.id.to_s, "select-row-#{vm_instance.id.to_s}" => "on", :pressed => 'instance_check_compliance', :id => cloud_subnet.id.to_s, :controller => 'cloud_subnet'} }
       let(:vm_instance) { FactoryBot.create(:vm_or_template) }
 
       before { allow(controller).to receive(:performed?).and_return(true) }

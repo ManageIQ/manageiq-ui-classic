@@ -374,7 +374,7 @@ describe SecurityGroupController do
     end
 
     context 'Check Compliance of Instances displayed in a nested list' do
-      let(:params) { {:miq_grid_checks => vm_instance.id.to_s, :pressed => 'instance_check_compliance', :id => security_group.id.to_s, :controller => 'security_group'} }
+      let(:params) { {:miq_grid_checks => vm_instance.id.to_s, "select-row-#{vm_instance.id.to_s}" => "on", :pressed => 'instance_check_compliance', :id => security_group.id.to_s, :controller => 'security_group'} }
       let(:vm_instance) { FactoryBot.create(:vm_or_template) }
 
       before { allow(controller).to receive(:performed?).and_return(true) }
