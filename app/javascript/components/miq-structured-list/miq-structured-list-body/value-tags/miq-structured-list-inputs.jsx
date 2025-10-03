@@ -45,7 +45,6 @@ const MiqStructuredListInputs = ({ value, action }) => {
         lineNumbers: true,
         matchBrackets: true,
         theme: 'eclipse',
-        readOnly: 'nocursor',
         viewportMargin: Infinity,
       }}
       value={payload}
