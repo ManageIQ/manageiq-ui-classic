@@ -20,13 +20,7 @@ module Mixins
         nested_list_item_key = "select-row-#{nested_list_item}"
       end
 
-      params.each do |var, val|
-        if var.starts_with?("check_")
-          has_no_check = false
-        else
-          next
-        end
-      end
+      has_no_check = params.each_key.none? { |var| var.start_with?("check_") }
 
       # If id is present use id, unless when nested list exists, example on summary pages
       if params[:id].present? && params[nested_list_item_key] != "on" && has_no_check
