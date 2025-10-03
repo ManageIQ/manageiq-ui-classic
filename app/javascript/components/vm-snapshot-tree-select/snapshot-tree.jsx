@@ -171,7 +171,4 @@ SnapshotTree.propTypes = {
   setSnapshot: PropTypes.func.isRequired,
 };
 
-SnapshotTree.defaultProps = {
-};
-
 export default SnapshotTree;
