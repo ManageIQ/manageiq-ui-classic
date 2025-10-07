@@ -27,16 +27,15 @@ const InlineFlashMessage = ({ message, onCloseClick, showCloseButton }) => {
 
 InlineFlashMessage.propTypes = {
   message: PropTypes.shape({
-    kind: PropTypes.oneOf(['success', 'error', 'info', 'warning']),
+    kind: PropTypes.oneOf(['success', 'error', 'info', 'warning']).isRequired,
     title: PropTypes.string,
     subtitle: PropTypes.string,
-  }),
+  }).isRequired,
   onCloseClick: PropTypes.func,
   showCloseButton: PropTypes.bool,
 };
 
 InlineFlashMessage.defaultProps = {
-  message: null,
   onCloseClick: () => {},
   showCloseButton: true,
 };
