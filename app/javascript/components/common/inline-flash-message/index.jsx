@@ -7,10 +7,10 @@ import { InlineNotification } from 'carbon-components-react';
  *
  * @param {Object} message - The notification details to display (kind, title, subtitle).
  *   If `null` or `undefined`, no notification is shown.
- * @param {Function} setMessage - Callback for handling close button clicks.
+ * @param {Function} onCloseClick - Callback for handling close button clicks.
  * @param {boolean} showCloseButton - Whether to display the close button.
  */
-const InlineFlashMessage = ({ message, setMessage, showCloseButton }) => {
+const InlineFlashMessage = ({ message, onCloseClick, showCloseButton }) => {
   if (!message) return null;
 
   return (
@@ -20,7 +20,7 @@ const InlineFlashMessage = ({ message, setMessage, showCloseButton }) => {
       subtitle={message.subtitle || ''}
       lowContrast
       hideCloseButton={!showCloseButton}
-      onCloseButtonClick={setMessage}
+      onCloseButtonClick={onCloseClick}
     />
   );
 };
@@ -31,13 +31,13 @@ InlineFlashMessage.propTypes = {
     title: PropTypes.string,
     subtitle: PropTypes.string,
   }),
-  setMessage: PropTypes.func,
+  onCloseClick: PropTypes.func,
   showCloseButton: PropTypes.bool,
 };
 
 InlineFlashMessage.defaultProps = {
   message: null,
-  setMessage: () => {},
+  onCloseClick: () => {},
   showCloseButton: true,
 };
 
