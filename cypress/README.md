@@ -80,6 +80,28 @@ ManageIQ implements the following cypress extensions:
 * `cy.getFormSelectFieldById({ selectId })` - retrieves a form select field by its ID. `selectId` is the ID of the select field. e.g. `cy.getFormSelectFieldById({selectId: 'select-scan-limit'});`
 * `cy.getFormTextareaById({ textareaId })` - retrieves a form textarea field by its ID. `textareaId` is the ID of the textarea field. e.g. `cy.getFormTextareaById({textareaId: 'default.auth_key'});`
 
+##### provider_helper_commands
+
+* `cy.fillCommonFormFields(providerConfig, nameValue)` - fills common form fields that are present in all provider forms. `providerConfig` is the provider configuration object. `nameValue` is the name to use for the provider.
+* `cy.fillFormFields(fields, values)` - fills form fields based on field definitions and values. `fields` is an array of field definition objects. `values` is an object containing field values.
+* `cy.fillProviderForm(providerConfig, nameValue, hostValue)` - fills a provider form based on provider configuration. `providerConfig` is the provider configuration object. `nameValue` is the name to use for the provider. `hostValue` is the hostname to use for the provider.
+* `cy.validateCommonFormFields(providerType, isEdit)` - validates common form fields that are present in all provider forms. `providerType` is the type of provider to be validated. `isEdit` is whether the form is in edit mode.
+* `cy.validateFormFields(fields, isEdit)` - validates form fields based on field definitions. `fields` is an array of field definition objects. `isEdit` is whether the form is in edit mode.
+* `cy.validateFormButtons(providerType, isEdit)` - validates form buttons (validate, add/save, reset, cancel). `providerType` is the type of provider to be validated. `isEdit` is whether the form is in edit mode.
+* `cy.validateProviderForm(providerConfig, isEdit)` - validates a provider form based on provider configuration. `providerConfig` is the provider configuration object. `isEdit` is whether the form is in edit mode.
+* `cy.updateProviderFieldsForEdit(providerConfig)` - updates provider fields for edit validation tests based on provider type. `providerConfig` is the provider configuration object.
+* `cy.selectCreatedProvider(providerName)` - selects a created provider from the data table. `providerName` is the name of the provider to select.
+* `cy.addProviderAndOpenEditForm(providerConfig, nameValue, hostValue)` - adds a provider and opens the edit form. `providerConfig` is the provider configuration object. `nameValue` is the name to use for the provider. `hostValue` is the hostname to use for the provider.
+* `cy.interceptAddAzureStackProviderApi()` - intercepts the API call when adding an Azure Stack provider and forces a successful response.
+* `cy.addAzureStackProviderAndOpenEditForm(providerConfig, nameValue, hostValue)` - special handling for Azure Stack provider which requires additional API interception. `providerConfig` is the provider configuration object. `nameValue` is the name to use for the provider. `hostValue` is the hostname to use for the provider.
+* `cy.assertValidationFailureMessage()` - asserts validation failure message.
+* `cy.assertValidationSuccessMessage()` - asserts validation success message.
+* `cy.assertNameAlreadyExistsError()` - asserts name already exists error.
+* `cy.validate({ stubErrorResponse, errorMessage })` - performs validation with optional error response stubbing. `stubErrorResponse` is whether to stub an error response. `errorMessage` is the error message to show.
+* `cy.selectProviderAndDeleteWithOptionalFlashMessage({ createdProviderName, assertDeleteFlashMessage })` - deletes a provider with optional flash message check. `createdProviderName` is the name of the provider to delete. `assertDeleteFlashMessage` is whether to assert the delete flash message.
+* `cy.cleanUp({ createdProviderName })` - cleans up a provider by deleting it. `createdProviderName` is the name of the provider to clean up.
+* `generateProviderTests(providerConfig)` - generates all test suites for a provider. `providerConfig` is the provider configuration object.
+
 #### Assertions
 
 * `cy.expect_explorer_title(title)` - check that the title on an explorer screen matches the provided title. `title`: String for the title.
