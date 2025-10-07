@@ -72,4 +72,7 @@ jobs:
       if: "${{ github.ref == 'refs/heads/master' && matrix.ruby-version == '3.3' &&
         matrix.test-suite == 'spec' }}"
       continue-on-error: true
-      uses: paambaati/codeclimate-action@v9
+      uses: qltysh/qlty-action/coverage@v2
+      with:
+        token: "${{ secrets.QLTY_COVERAGE_TOKEN }}"
+        files: coverage/.resultset.json
