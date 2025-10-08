@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { flashClassMap } from '../../../../support/assertions/assertion_constants';
+import { flashClassMap } from '@cypress-dir/support/assertions/assertion_constants.js';
 
 // Menu options
 const SETTINGS_MENU_OPTION = 'Settings';

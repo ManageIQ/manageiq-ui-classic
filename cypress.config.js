@@ -1,6 +1,21 @@
 /* eslint-disable no-undef */
 const { defineConfig } = require('cypress');
 const fs = require('fs');
+const { resolve } = require('path');
+// TODO: Upgrade @cypress/webpack-preprocessor to latest once Webpack is upgraded
+const webpackPreprocessor = require('@cypress/webpack-preprocessor');
+// TODO: Use webpack-configs from shared.js once Webpack is upgraded
+// const webpackConfigOptions = require('./config/webpack/shared.js');
+
+// TODO: Relocate the aliases to webpack-config and reference its options directly from shared.js.
+const webpackConfigOptions = {
+  resolve: {
+    alias: {
+      '@cypress-dir': resolve(__dirname, 'cypress'),
+    },
+    extensions: ['.js'],
+  },
+};
 
 module.exports = defineConfig({
   e2e: {
@@ -44,6 +59,12 @@ module.exports = defineConfig({
         console.log('Actual args:', launchOptions.args);
         return launchOptions;
       });
+      on(
+        'file:preprocessor',
+        webpackPreprocessor({
+          webpackOptions: webpackConfigOptions,
+        })
+      );
     },
   },
 });
