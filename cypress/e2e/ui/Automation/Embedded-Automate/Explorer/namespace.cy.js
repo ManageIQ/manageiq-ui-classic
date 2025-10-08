@@ -122,20 +122,21 @@ function createNamespaceAndOpenEditForm() {
 
 describe('Automate operations on Namespaces: Automation -> Embedded Automate -> Explorer -> {Any-created-domain} -> Namespace form', () => {
   beforeEach(() => {
+    cy.appFactories([
+      ['create', 'miq_ae_domain', {name: DOMAIN_NAME}],
+    ]);
+
     cy.login();
     cy.menu(
       AUTOMATION_MENU_OPTION,
       EMBEDDED_AUTOMATION_MENU_OPTION,
       EXPLORER_MENU_OPTION
     );
-    cy.accordion(DATA_STORE_ACCORDION_LABEL);
-    /* TODO: DATA_SETUP - Refactor to use API for domain data setup */
-    cy.toolbar(TOOLBAR_CONFIGURATION, TOOLBAR_ADD_NEW_DOMAIN);
-    addDomainOrNamespace({
-      nameFieldValue: DOMAIN_NAME,
-    });
-    cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_ADD_SUCCESS);
     cy.selectAccordionItem([DATA_STORE_ACCORDION_LABEL, DOMAIN_NAME]);
+  });
+
+  afterEach(() => {
+    cy.appDbState('restore');
   });
 
   it('Validate Add Namespace form fields', () => {
@@ -244,35 +245,5 @@ describe('Automate operations on Namespaces: Automation -> Embedded Automate -> 
       buttonText: CANCEL_BUTTON_TEXT,
     }).click();
     cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_CANCELLED);
-  });
-
-  afterEach(() => {
-    cy.url()
-      .then((url) => {
-        // Ensures navigation to Automation -> Embedded Automate -> Explorer in the UI
-        if (!url.endsWith(COMPONENT_ROUTE_URL)) {
-          cy.visit(COMPONENT_ROUTE_URL);
-        }
-        cy.accordion(DATA_STORE_ACCORDION_LABEL);
-      })
-      .then(() => {
-        cy.get('div.panel-collapse.collapse.in li.list-group-item').each(
-          (item) => {
-            const text = item.text().trim();
-            if (text === DOMAIN_NAME) {
-              if (!item.hasClass('node-selected')) {
-                cy.wrap(item).click();
-              }
-              cy.expect_browser_confirm_with_text({
-                confirmTriggerFn: () =>
-                  cy.toolbar(TOOLBAR_CONFIGURATION, TOOLBAR_REMOVE_DOMAIN),
-                containsText: BROWSER_CONFIRM_REMOVE_MESSAGE,
-              });
-              return false; // exit iteration
-            }
-            return null; // has no impact, just to get rid of eslint warning
-          }
-        );
-      });
   });
 });
