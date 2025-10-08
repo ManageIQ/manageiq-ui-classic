@@ -2,6 +2,7 @@
 # [1] https://github.com/shakacode/cypress-playwright-on-rails/blob/ac5d69f9ea951c7545e5141db2abb2cb1350e740/lib/generators/cypress_on_rails/templates/config/initializers/cypress_on_rails.rb.erb
 #   * install_folder  (uses our rails engine path)
 #   * require ENV['CYPRESS'] to be set
+#   * requires and instantiates the seeded_deletion strategy
 if defined?(CypressOnRails) && ENV['CYPRESS'].present?
   CypressOnRails.configure do |c|
     c.api_prefix = ""
@@ -51,4 +52,6 @@ if defined?(CypressOnRails) && ENV['CYPRESS'].present?
   #    config.assets.unknown_asset_fallback = false
   #  end
   # end
+  require 'extensions/database_cleaner-activerecord-seeded_deletion'
+  DatabaseCleaner[:active_record].strategy = DatabaseCleaner::ActiveRecord::SeededDeletion.new(:pre_count => true)
 end

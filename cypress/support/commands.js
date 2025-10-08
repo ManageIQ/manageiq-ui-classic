@@ -45,3 +45,12 @@
 //     cy.stub(win, 'fetch', fetch);
 //   });
 // });
+
+Cypress.Commands.add('appDbState', function (options) {
+  return cy.app('db_state', options)
+});
+
+// capture the database table state before all tests
+before(() => {
+  cy.appDbState('capture');
+});

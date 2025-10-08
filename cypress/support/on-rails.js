@@ -27,10 +27,6 @@ Cypress.Commands.add('app', function (name, command_options) {
   });
 });
 
-Cypress.Commands.add('appScenario', function (name, options = {}) {
-  return cy.app('scenarios/' + name, options)
-});
-
 Cypress.Commands.add('appEval', function (code) {
   return cy.app('eval', code)
 });
@@ -42,13 +38,13 @@ Cypress.Commands.add('appFactories', function (options) {
 Cypress.Commands.add('appFixtures', function (options) {
   cy.app('activerecord_fixtures', options)
 });
-// CypressOnRails: end
 
-// capture the database table state before all tests
-before(() => {
-  cy.appDbState('capture');
+Cypress.Commands.add('appScenario', function (name, options = {}) {
+  return cy.app('scenarios/' + name, options)
 });
 
-// TODO: Consider adding the log_fail entrypoint below.  It was removed after the generator because it hooks the Cypress.on('fail') event, which some tests rely on.
+// CypressOnRails: end
+
+// TODO: Consider adding the log_fail entrypoint below.  It was from the generator and removed because it hooks the Cypress.on('fail') event, which some tests rely on.
 // 1: https://github.com/shakacode/cypress-playwright-on-rails/blob/master/lib/generators/cypress_on_rails/templates/spec/cypress/support/on-rails.js
 // 2: https://github.com/shakacode/cypress-playwright-on-rails/blob/master/lib/generators/cypress_on_rails/templates/spec/e2e/app_commands/log_fail.rb
