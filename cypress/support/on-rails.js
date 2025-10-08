@@ -27,8 +27,8 @@ Cypress.Commands.add('app', function (name, command_options) {
   });
 });
 
-Cypress.Commands.add('appScenario', function (name, options = {}) {
-  return cy.app('scenarios/' + name, options)
+Cypress.Commands.add('appDbState', function (options) {
+  return cy.app('db_state', options)
 });
 
 Cypress.Commands.add('appEval', function (code) {
@@ -42,6 +42,11 @@ Cypress.Commands.add('appFactories', function (options) {
 Cypress.Commands.add('appFixtures', function (options) {
   cy.app('activerecord_fixtures', options)
 });
+
+Cypress.Commands.add('appScenario', function (name, options = {}) {
+  return cy.app('scenarios/' + name, options)
+});
+
 // CypressOnRails: end
 
 // capture the database table state before all tests

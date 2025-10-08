@@ -91,7 +91,7 @@ beforeEach(() => {
   // Global hook run once before each test
   // cy.throttle_response(500, 56);
   // cy.stub_notifications();
-  
+
   // Reset the intercepted aliases tracking object
   cy.resetInterceptedApiAliases();
 })
