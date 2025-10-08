@@ -172,7 +172,7 @@ module ApplicationController::Tags
 
     @tagitems = @tagging.constantize.where(:id => @object_ids).sort_by { |t| t.name.try(:downcase).to_s }
 
-    @view = get_db_view(@tagging, :clickable => false) # Instantiate the MIQ Report view object
+    @view = get_db_view(@tagging, :clickable => false, :no_checkboxes => true) # Instantiate the MIQ Report view object
 
     @edit[:new][:assignments] = assignments = @tagitems.map do |tagitem|
       Classification.find_assigned_entries(tagitem).reject { |e| e.parent.read_only? }
