@@ -404,24 +404,6 @@ window.DoNav = function(theUrl) {
   document.location.href = theUrl;
 };
 
-// Routines to get the size of the window
-// window.miqResetSizeTimer = function() {
-//   const height = window.innerHeight;
-//   const offset = 427;
-//   let h = height - offset;
-
-//   if (h < 200) {
-//     h = 200;
-//   }
-
-//   // Adjust certain elements, if present
-//   if (miqDomElementExists('list_grid')) {
-//     $('#list_grid').css({ height: `${h}px` });
-//   } else if (miqDomElementExists('logview')) {
-//     $('#logview').css({ height: `${h}px` });
-//   }
-// };
-
 // Pass fields to server given a URL and fields in name/value pairs
 window.miqPassFields = function(url, args) {
   return `${url}?${$.param(args)}`;
@@ -1426,7 +1408,6 @@ $(() => {
 
   $(window).on('resize', miqInitAccordions);
   $(window).on('resize', miqInitMainContent);
-  // $(window).on('resize', _.debounce(miqResetSizeTimer, 1000));
 
   check_for_ellipsis();
 });
