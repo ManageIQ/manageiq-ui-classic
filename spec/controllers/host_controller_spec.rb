@@ -182,7 +182,7 @@ describe HostController do
         allow(controller).to receive(:performed?)
         allow(controller).to receive(:render)
         controller.instance_variable_set(:@display, 'vms')
-        controller.params = {:miq_grid_checks => vm.id.to_s, :pressed => 'vm_check_compliance', :id => h1.id.to_s, :controller => 'host'}
+        controller.params = {:miq_grid_checks => vm.id.to_s, "select-row-#{vm.id.to_s}" => "on", :pressed => 'vm_check_compliance', :id => h1.id.to_s, :controller => 'host'}
       end
 
       it 'does not initiate Check Compliance because of missing Compliance policies' do
