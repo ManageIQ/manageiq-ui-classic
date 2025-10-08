@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal } from 'carbon-components-react';
+import { Modal } from "@carbon/react";
 
 export const modalCallbackTypes = {
   CLOSE: 'close',

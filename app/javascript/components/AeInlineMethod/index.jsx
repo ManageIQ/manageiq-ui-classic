@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import PropTypes from 'prop-types';
 import {
   Modal, Button, ModalBody, Accordion, AccordionItem,
-} from 'carbon-components-react';
+} from "@carbon/react";
 import { AddAlt16 } from '@carbon/icons-react';
 import NotificationMessage from '../notification-message';
 import MiqDataTable from '../miq-data-table';

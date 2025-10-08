@@ -1,6 +1,6 @@
 import { useFieldApi, useFormApi } from '@@ddf';
 import React from 'react';
-import { Checkbox } from 'carbon-components-react';
+import { Checkbox } from "@carbon/react";
 import PropTypes from 'prop-types';
 import { TreeViewRedux } from '../tree-view';
 

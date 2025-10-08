@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Dropdown, MultiSelect } from 'carbon-components-react';
+import { Dropdown, MultiSelect } from "@carbon/react";
 import TaggingPropTypes from '../TaggingPropTypes';
 
 class ValueSelector extends React.Component {

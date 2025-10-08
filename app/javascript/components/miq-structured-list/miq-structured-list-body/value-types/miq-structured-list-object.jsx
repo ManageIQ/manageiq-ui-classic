@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { StructuredListCell } from 'carbon-components-react';
+import { StructuredListCell } from "@carbon/react";
 import MiqStructuredListConditionalTag from '../value-tags/miq-structured-list-conditional-tag';
 
 /** Usage eg: Automation / Embedded Automate / Generic Objects / item

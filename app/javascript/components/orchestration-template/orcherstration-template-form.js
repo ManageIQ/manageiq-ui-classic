@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'carbon-components-react';
+import { Grid } from "@carbon/react";
 import { API } from '../../http_api';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import miqRedirectBack from '../../helpers/miq-redirect-back';

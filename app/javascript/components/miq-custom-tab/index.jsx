@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Tabs, Tab } from 'carbon-components-react';
+import { Tabs, Tab } from "@carbon/react";
 import { useDispatch } from 'react-redux';
 import { miqCustomTabActions } from '../../miq-redux/actions/miq-custom-tab-actions';
 import { labelConfig, tabText } from './helper';

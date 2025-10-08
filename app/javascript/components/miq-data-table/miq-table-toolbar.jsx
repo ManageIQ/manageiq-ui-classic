@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {
   Dropdown, TableToolbar, TableToolbarContent, TableToolbarSearch,
-} from 'carbon-components-react';
+} from "@carbon/react";
 
 const MiqTableToolbar = ({
   toolbarMenu, onMenuSelect, onToolBarSearch, clearFilter,
