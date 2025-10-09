@@ -507,7 +507,7 @@ export const getCurrentTimeAndPeriod = () => {
   let hours = now.getHours();
   const minutes = now.getMinutes().toString().padStart(2, '0');
   const currentPeriod = hours >= 12 ? 'PM' : 'AM';
-  hours = hours % 12 || 12; // Convert 0 hours to 12 in 12-hour format
+  hours = (hours % 12 || 12).toString().padStart(2, '0'); // Convert 0 hours to 12 in 12-hour format
   return { time: `${hours}:${minutes}`, period: currentPeriod };
 };
 
