@@ -24,6 +24,15 @@ module ManageIQ
         # from which the @import is called over the order set in the SASS load path.
         config.assets.paths << root.join('vendor', 'assets', 'stylesheets').to_s
 
+        config.before_configuration do
+          # The rails app Gemfile doesn't require these files so we need to do this very early from this Engine.
+          if ENV['CYPRESS'].present?
+            require "cypress-on-rails"
+            require "database_cleaner"
+            require "factory_bot_rails"
+          end
+        end
+
         if Rails.env.production? || Rails.env.test?
           config.assets.configure do |env|
             # Workaround rails 7 + es6 syntax in some js causing uglifier errors by running harmony mode
