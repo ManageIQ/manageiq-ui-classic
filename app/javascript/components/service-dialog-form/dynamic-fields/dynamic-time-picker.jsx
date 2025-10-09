@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   DatePicker, DatePickerInput, TimePicker, TimePickerSelect, SelectItem, FormLabel,
@@ -20,7 +20,7 @@ const DynamicTimePicker = ({ dynamicFieldData: { section, field, fieldPosition }
   const editActionType = SD_ACTIONS.field.edit;
 
   // Initialize with default values
-  const [date, setDate] = useState(getCurrentDate);
+  const [date, setDate] = useState(() => getCurrentDate());
   const [time, setTime] = useState(() => getCurrentTimeAndPeriod().time);
   const [isValid, setIsValid] = useState(true);
   const [period, setPeriod] = useState(() => getCurrentTimeAndPeriod().period);
@@ -36,11 +36,6 @@ const DynamicTimePicker = ({ dynamicFieldData: { section, field, fieldPosition }
       .filter((field) => field.showRefresh)
       .map((field) => ({ value: field.label, label: field.label })),
   });
-
-  const combinedDateTime = () => {
-    const dateTime = `${date} ${time} ${period}`;
-    return dateTime;
-  };
 
   // Use useEffect to parse date and time from field value if available
   useEffect(() => {
@@ -61,7 +56,7 @@ const DynamicTimePicker = ({ dynamicFieldData: { section, field, fieldPosition }
           const hours = dateObj.getHours();
           const minutes = dateObj.getMinutes().toString().padStart(2, '0');
           const newPeriod = hours >= 12 ? 'PM' : 'AM';
-          const hour12 = hours % 12 || 12; // Convert 0 to 12 for 12-hour format
+          const hour12 = (hours % 12 || 12).toString().padStart(2, '0'); // Convert 0 to 12 for 12-hour format
           const formattedTime = `${hour12}:${minutes}`;
           
           // Update state variables
@@ -84,33 +79,44 @@ const DynamicTimePicker = ({ dynamicFieldData: { section, field, fieldPosition }
   }, [fieldValues.value]);
 
   const handleDateChange = (selectedDates) => {
-    if (selectedDates.length > 0) {
+    if (selectedDates && selectedDates.length) {
       const formattedDate = new Intl.DateTimeFormat('en-US', {
         month: '2-digit',
         day: '2-digit',
         year: 'numeric',
       }).format(selectedDates[0]);
       setDate(formattedDate);
-      setFieldState((prevState) => ({ ...prevState, value: combinedDateTime() }));
+      setFieldState(prev => ({
+        ...prev,
+        value: `${formattedDate} ${time} ${period}`,
+      }));
     }
   };
 
   // Function to validate the time input
   const validateTime = (value) => {
     const timeRegex = /^(0[1-9]|1[0-2]):[0-5][0-9]$/; // Matches 12-hour format hh:mm
-    setIsValid(timeRegex.test(value));
+    return timeRegex.test(value)
   };
 
   const handleTimeChange = (event) => {
     const newTime = event.target.value;
     setTime(newTime);
-    validateTime(newTime);
-    setFieldState((prevState) => ({ ...prevState, value: combinedDateTime() }));
+    const isValidTime = validateTime(newTime);
+    setIsValid(isValidTime)
+    setFieldState(prev => ({
+      ...prev,
+      value: `${date} ${newTime} ${period}`,
+    }));
   };
 
   const handlePeriodChange = (event) => {
-    setPeriod(event.target.value);
-    setFieldState((prevState) => ({ ...prevState, value: combinedDateTime() }));
+    const newPeriod = event.target.value;
+    setPeriod(newPeriod);
+    setFieldState(prev => ({
+      ...prev,
+      value: `${date} ${time} ${newPeriod}`,
+    }));
   };
 
   const handleFieldUpdate = (event, updatedFields) => {
@@ -214,6 +220,7 @@ const DynamicTimePicker = ({ dynamicFieldData: { section, field, fieldPosition }
               id="time-picker-select-1"
               onChange={handlePeriodChange}
               labelText={__('Select Period')}
+              value={period}
             >
               <SelectItem value="AM" text="AM" />
               <SelectItem value="PM" text="PM" />
