@@ -3,7 +3,7 @@
 #   * install_folder  (uses our rails engine path)
 #   * require ENV['CYPRESS'] to be set
 #   * requires and instantiates the seeded_deletion strategy
-if defined?(CypressOnRails) && ENV['CYPRESS'].present?
+if ENV['CYPRESS'].present?
   CypressOnRails.configure do |c|
     c.api_prefix = ""
 
