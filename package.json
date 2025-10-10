@@ -175,7 +175,7 @@
   "resolutions": {
     "ansi-regex": "~5.0.1", 
     "@babel/traverse": "~7.26.7",
-    "bootstrap": "~3.4.1",
+    "bootstrap": "~4.0.0",
     "bootstrap-select": "~1.13.18",
     "cross-spawn": "~7.0.5",
     "decode-uri-component": "~0.2.1",
