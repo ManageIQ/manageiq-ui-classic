@@ -298,15 +298,14 @@ module VmCommon
     @active = @snap_selected.current? if @snap_selected
     @center_toolbar = 'x_vm_snapshot'
     @explorer = true
-    render :update do |page|
-      page << javascript_prologue
-      page << javascript_reload_toolbars
-
-      page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-      page << "miqScrollTop();" if @flash_array.present?
-      page.replace("desc_content", :partial => "/vm_common/snapshots_desc",
-                                   :locals  => {:selected => params[:id]})
+    formatted_time = format_timezone(@snap_selected[:create_time].to_time, Time.zone, "view")
+    number_to_human_size(@snap_selected[:total_size], :precision => 2)
+    if @snap_selected[:total_size] == nil || @snap_selected[:total_size] == 0 
+      formatted_size = ''
+    else
+      formatted_size = _("%{number} bytes") % {:number => number_with_delimiter(@snap_selected[:total_size], :delimiter => ",", :separator => ".")} 
     end
+    render :json => {:data => {:data => @snap_selected, :size => formatted_size, :time => formatted_time}}, :status => 200
   end
 
   def disks

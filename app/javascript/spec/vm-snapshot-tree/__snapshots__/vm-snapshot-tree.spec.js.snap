@@ -1,0 +1,3588 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VM Snaspthot Tree Select should render snapshot tree 1`] = `
+<div>
+  <div
+    className="checkbox"
+  >
+    <ForwardRef
+      aria-label="Single select"
+      data={
+        Array [
+          Object {
+            "children": Array [
+              "root",
+            ],
+            "id": 0,
+            "metadata": undefined,
+            "name": "",
+            "parent": null,
+          },
+          Object {
+            "children": Array [
+              "sn-1",
+            ],
+            "id": "root",
+            "metadata": Object {
+              "icon": "pficon pficon-folder-close",
+              "selectable": false,
+              "tooltip": "test-root",
+            },
+            "name": "test-root",
+            "parent": 0,
+          },
+          Object {
+            "children": Array [
+              "sn-1_sn-2",
+            ],
+            "id": "sn-1",
+            "metadata": Object {
+              "icon": "fa fa-camera",
+              "selectable": true,
+              "tooltip": "test-child-1",
+            },
+            "name": "test-child-1",
+            "parent": "root",
+          },
+          Object {
+            "children": Array [],
+            "id": "sn-1_sn-2",
+            "metadata": Object {
+              "icon": "fa fa-camera",
+              "selectable": true,
+              "tooltip": "test-child-2",
+            },
+            "name": "test-child-2",
+            "parent": "sn-1",
+          },
+        ]
+      }
+      defaultExpandedIds={
+        Array [
+          0,
+          "root",
+          "sn-1",
+          "sn-1_sn-2",
+        ]
+      }
+      multiSelect={false}
+      nodeAction="check"
+      nodeRenderer={[Function]}
+      onExpand={[Function]}
+      propagateSelectUpwards={true}
+      togglableSelect={true}
+    />
+  </div>
+</div>
+`;
+
+exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
+<Provider
+  store={
+    Object {
+      "asyncReducers": Object {
+        "FormButtons": [Function],
+        "miqCustomTabReducer": [Function],
+        "notificationReducer": [Function],
+      },
+      "dispatch": [Function],
+      "getState": [Function],
+      "injectReducers": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <SnapshotTree
+    nodes={
+      Array [
+        Object {
+          "class": "no-cursor",
+          "icon": "pficon pficon-folder-close",
+          "key": "root",
+          "nodes": Array [
+            Object {
+              "icon": "fa fa-camera",
+              "key": "sn-1",
+              "nodes": Array [
+                Object {
+                  "icon": "fa fa-camera",
+                  "key": "sn-1_sn-2",
+                  "selectable": true,
+                  "state": Object {
+                    "expanded": true,
+                  },
+                  "text": "test-child-2",
+                  "tooltip": "test-child-2",
+                },
+              ],
+              "selectable": true,
+              "state": Object {
+                "expanded": true,
+              },
+              "text": "test-child-1",
+              "tooltip": "test-child-1",
+            },
+          ],
+          "selectable": false,
+          "state": Object {
+            "expanded": true,
+          },
+          "text": "test-root",
+          "tooltip": "test-root",
+        },
+      ]
+    }
+    setSnapshot={[Function]}
+  >
+    <div>
+      <div
+        className="checkbox"
+      >
+        <ForwardRef
+          aria-label="Single select"
+          data={
+            Array [
+              Object {
+                "children": Array [
+                  "root",
+                ],
+                "id": 0,
+                "metadata": undefined,
+                "name": "",
+                "parent": null,
+              },
+              Object {
+                "children": Array [
+                  "sn-1",
+                ],
+                "id": "root",
+                "metadata": Object {
+                  "icon": "pficon pficon-folder-close",
+                  "selectable": false,
+                  "tooltip": "test-root",
+                },
+                "name": "test-root",
+                "parent": 0,
+              },
+              Object {
+                "children": Array [
+                  "sn-1_sn-2",
+                ],
+                "id": "sn-1",
+                "metadata": Object {
+                  "icon": "fa fa-camera",
+                  "selectable": true,
+                  "tooltip": "test-child-1",
+                },
+                "name": "test-child-1",
+                "parent": "root",
+              },
+              Object {
+                "children": Array [],
+                "id": "sn-1_sn-2",
+                "metadata": Object {
+                  "icon": "fa fa-camera",
+                  "selectable": true,
+                  "tooltip": "test-child-2",
+                },
+                "name": "test-child-2",
+                "parent": "sn-1",
+              },
+            ]
+          }
+          defaultExpandedIds={
+            Array [
+              0,
+              "root",
+              "sn-1",
+              "sn-1_sn-2",
+            ]
+          }
+          multiSelect={false}
+          nodeAction="check"
+          nodeRenderer={[Function]}
+          onExpand={[Function]}
+          propagateSelectUpwards={true}
+          togglableSelect={true}
+        >
+          <ul
+            aria-label="Single select"
+            className="tree"
+            onBlur={[Function]}
+            onKeyDown={[Function]}
+            role="tree"
+          >
+            <ie
+              baseClassNames={
+                Object {
+                  "branch": "tree-node__branch",
+                  "branchWrapper": "tree-branch-wrapper",
+                  "leaf": "tree-node__leaf",
+                  "leafListItem": "tree-leaf-list-item",
+                  "node": "tree-node",
+                  "nodeGroup": "tree-node-group",
+                  "root": "tree",
+                }
+              }
+              clickAction="SELECT"
+              controlledIds={Set {}}
+              data={
+                Array [
+                  Object {
+                    "children": Array [
+                      "root",
+                    ],
+                    "id": 0,
+                    "metadata": undefined,
+                    "name": "",
+                    "parent": null,
+                  },
+                  Object {
+                    "children": Array [
+                      "sn-1",
+                    ],
+                    "id": "root",
+                    "metadata": Object {
+                      "icon": "pficon pficon-folder-close",
+                      "selectable": false,
+                      "tooltip": "test-root",
+                    },
+                    "name": "test-root",
+                    "parent": 0,
+                  },
+                  Object {
+                    "children": Array [
+                      "sn-1_sn-2",
+                    ],
+                    "id": "sn-1",
+                    "metadata": Object {
+                      "icon": "fa fa-camera",
+                      "selectable": true,
+                      "tooltip": "test-child-1",
+                    },
+                    "name": "test-child-1",
+                    "parent": "root",
+                  },
+                  Object {
+                    "children": Array [],
+                    "id": "sn-1_sn-2",
+                    "metadata": Object {
+                      "icon": "fa fa-camera",
+                      "selectable": true,
+                      "tooltip": "test-child-2",
+                    },
+                    "name": "test-child-2",
+                    "parent": "sn-1",
+                  },
+                ]
+              }
+              disabledIds={Set {}}
+              dispatch={[Function]}
+              element={
+                Object {
+                  "children": Array [
+                    "sn-1",
+                  ],
+                  "id": "root",
+                  "metadata": Object {
+                    "icon": "pficon pficon-folder-close",
+                    "selectable": false,
+                    "tooltip": "test-root",
+                  },
+                  "name": "test-root",
+                  "parent": 0,
+                }
+              }
+              expandedIds={
+                Set {
+                  0,
+                  "root",
+                  "sn-1",
+                  "sn-1_sn-2",
+                }
+              }
+              halfSelectedIds={Set {}}
+              isFocused={false}
+              key="root-string"
+              lastInteractedWith={null}
+              lastManuallyToggled={null}
+              lastUserSelect="root"
+              leafRefs={
+                Object {
+                  "current": Object {
+                    "root": <div
+                      class="tree-node tree-node--expanded tree-node__branch"
+                      style="padding-left: 0px;"
+                    >
+                      <div
+                        class="arrow-div"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          fill="currentColor"
+                          focusable="false"
+                          height="16"
+                          preserveAspectRatio="xMidYMid meet"
+                          viewBox="0 0 16 16"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="node-icon-div"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          fill="currentColor"
+                          focusable="false"
+                          height="16"
+                          preserveAspectRatio="xMidYMid meet"
+                          viewBox="0 0 32 32"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                          />
+                          <path
+                            d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                          />
+                        </svg>
+                      </div>
+                      <span
+                        class="name"
+                        id="root"
+                        role="button"
+                        tabindex="0"
+                      >
+                        test-root
+                      </span>
+                    </div>,
+                    "sn-1": <div
+                      class="tree-node tree-node--expanded tree-node__branch"
+                      style="padding-left: 40px;"
+                    >
+                      <div
+                        class="arrow-div"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          fill="currentColor"
+                          focusable="false"
+                          height="16"
+                          preserveAspectRatio="xMidYMid meet"
+                          viewBox="0 0 16 16"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="node-icon-div"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          fill="currentColor"
+                          focusable="false"
+                          height="16"
+                          preserveAspectRatio="xMidYMid meet"
+                          viewBox="0 0 32 32"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                          />
+                          <path
+                            d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                          />
+                        </svg>
+                      </div>
+                      <span
+                        class="name"
+                        id="sn-1"
+                        role="button"
+                        tabindex="0"
+                      >
+                        test-child-1
+                      </span>
+                    </div>,
+                    "sn-1_sn-2": <div
+                      aria-disabled="false"
+                      aria-level="3"
+                      aria-posinset="1"
+                      aria-setsize="1"
+                      class="tree-node tree-node--expanded tree-node__leaf"
+                      role="treeitem"
+                      style="padding-left: 80px;"
+                      tabindex="-1"
+                    >
+                      <div
+                        class="node-icon-div"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          fill="currentColor"
+                          focusable="false"
+                          height="16"
+                          preserveAspectRatio="xMidYMid meet"
+                          viewBox="0 0 32 32"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                          />
+                          <path
+                            d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                          />
+                        </svg>
+                      </div>
+                      <span
+                        class="name"
+                        id="sn-1_sn-2"
+                        role="button"
+                        tabindex="0"
+                      >
+                        test-child-2
+                      </span>
+                    </div>,
+                  },
+                }
+              }
+              level={1}
+              multiSelect={false}
+              nodeAction="check"
+              nodeRefs={
+                Object {
+                  "current": Object {
+                    "root": <li
+                      aria-disabled="false"
+                      aria-expanded="true"
+                      aria-level="1"
+                      aria-posinset="1"
+                      aria-setsize="1"
+                      class="tree-branch-wrapper"
+                      role="treeitem"
+                      tabindex="0"
+                    >
+                      <div
+                        class="tree-node tree-node--expanded tree-node__branch"
+                        style="padding-left: 0px;"
+                      >
+                        <div
+                          class="arrow-div"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            fill="currentColor"
+                            focusable="false"
+                            height="16"
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                            />
+                          </svg>
+                        </div>
+                        <div
+                          class="node-icon-div"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            fill="currentColor"
+                            focusable="false"
+                            height="16"
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 32 32"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                            />
+                            <path
+                              d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                            />
+                          </svg>
+                        </div>
+                        <span
+                          class="name"
+                          id="root"
+                          role="button"
+                          tabindex="0"
+                        >
+                          test-root
+                        </span>
+                      </div>
+                      <ul
+                        class="tree-node-group tree-node-group--expanded"
+                        role="group"
+                      >
+                        <li
+                          aria-disabled="false"
+                          aria-expanded="true"
+                          aria-level="2"
+                          aria-posinset="1"
+                          aria-setsize="1"
+                          class="tree-branch-wrapper"
+                          role="treeitem"
+                          tabindex="-1"
+                        >
+                          <div
+                            class="tree-node tree-node--expanded tree-node__branch"
+                            style="padding-left: 40px;"
+                          >
+                            <div
+                              class="arrow-div"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                fill="currentColor"
+                                focusable="false"
+                                height="16"
+                                preserveAspectRatio="xMidYMid meet"
+                                viewBox="0 0 16 16"
+                                width="16"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                />
+                              </svg>
+                            </div>
+                            <div
+                              class="node-icon-div"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                fill="currentColor"
+                                focusable="false"
+                                height="16"
+                                preserveAspectRatio="xMidYMid meet"
+                                viewBox="0 0 32 32"
+                                width="16"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                />
+                                <path
+                                  d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                />
+                              </svg>
+                            </div>
+                            <span
+                              class="name"
+                              id="sn-1"
+                              role="button"
+                              tabindex="0"
+                            >
+                              test-child-1
+                            </span>
+                          </div>
+                          <ul
+                            class="tree-node-group tree-node-group--expanded"
+                            role="group"
+                          >
+                            <li
+                              class="tree-leaf-list-item tree-leaf-list-item--expanded"
+                              role="none"
+                            >
+                              <div
+                                aria-disabled="false"
+                                aria-level="3"
+                                aria-posinset="1"
+                                aria-setsize="1"
+                                class="tree-node tree-node--expanded tree-node__leaf"
+                                role="treeitem"
+                                style="padding-left: 80px;"
+                                tabindex="-1"
+                              >
+                                <div
+                                  class="node-icon-div"
+                                >
+                                  <svg
+                                    aria-hidden="true"
+                                    fill="currentColor"
+                                    focusable="false"
+                                    height="16"
+                                    preserveAspectRatio="xMidYMid meet"
+                                    viewBox="0 0 32 32"
+                                    width="16"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                    />
+                                    <path
+                                      d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                    />
+                                  </svg>
+                                </div>
+                                <span
+                                  class="name"
+                                  id="sn-1_sn-2"
+                                  role="button"
+                                  tabindex="0"
+                                >
+                                  test-child-2
+                                </span>
+                              </div>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>,
+                    "sn-1": <li
+                      aria-disabled="false"
+                      aria-expanded="true"
+                      aria-level="2"
+                      aria-posinset="1"
+                      aria-setsize="1"
+                      class="tree-branch-wrapper"
+                      role="treeitem"
+                      tabindex="-1"
+                    >
+                      <div
+                        class="tree-node tree-node--expanded tree-node__branch"
+                        style="padding-left: 40px;"
+                      >
+                        <div
+                          class="arrow-div"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            fill="currentColor"
+                            focusable="false"
+                            height="16"
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                            />
+                          </svg>
+                        </div>
+                        <div
+                          class="node-icon-div"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            fill="currentColor"
+                            focusable="false"
+                            height="16"
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 32 32"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                            />
+                            <path
+                              d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                            />
+                          </svg>
+                        </div>
+                        <span
+                          class="name"
+                          id="sn-1"
+                          role="button"
+                          tabindex="0"
+                        >
+                          test-child-1
+                        </span>
+                      </div>
+                      <ul
+                        class="tree-node-group tree-node-group--expanded"
+                        role="group"
+                      >
+                        <li
+                          class="tree-leaf-list-item tree-leaf-list-item--expanded"
+                          role="none"
+                        >
+                          <div
+                            aria-disabled="false"
+                            aria-level="3"
+                            aria-posinset="1"
+                            aria-setsize="1"
+                            class="tree-node tree-node--expanded tree-node__leaf"
+                            role="treeitem"
+                            style="padding-left: 80px;"
+                            tabindex="-1"
+                          >
+                            <div
+                              class="node-icon-div"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                fill="currentColor"
+                                focusable="false"
+                                height="16"
+                                preserveAspectRatio="xMidYMid meet"
+                                viewBox="0 0 32 32"
+                                width="16"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                />
+                                <path
+                                  d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                />
+                              </svg>
+                            </div>
+                            <span
+                              class="name"
+                              id="sn-1_sn-2"
+                              role="button"
+                              tabindex="0"
+                            >
+                              test-child-2
+                            </span>
+                          </div>
+                        </li>
+                      </ul>
+                    </li>,
+                    "sn-1_sn-2": <div
+                      aria-disabled="false"
+                      aria-level="3"
+                      aria-posinset="1"
+                      aria-setsize="1"
+                      class="tree-node tree-node--expanded tree-node__leaf"
+                      role="treeitem"
+                      style="padding-left: 80px;"
+                      tabindex="-1"
+                    >
+                      <div
+                        class="node-icon-div"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          fill="currentColor"
+                          focusable="false"
+                          height="16"
+                          preserveAspectRatio="xMidYMid meet"
+                          viewBox="0 0 32 32"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                          />
+                          <path
+                            d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                          />
+                        </svg>
+                      </div>
+                      <span
+                        class="name"
+                        id="sn-1_sn-2"
+                        role="button"
+                        tabindex="0"
+                      >
+                        test-child-2
+                      </span>
+                    </div>,
+                  },
+                }
+              }
+              nodeRenderer={[Function]}
+              posinset={1}
+              propagateCollapse={false}
+              propagateSelect={false}
+              propagateSelectUpwards={true}
+              selectedIds={Set {}}
+              setsize={1}
+              state={
+                Object {
+                  "controlledIds": Set {},
+                  "disabledIds": Set {},
+                  "expandedIds": Set {
+                    0,
+                    "root",
+                    "sn-1",
+                    "sn-1_sn-2",
+                  },
+                  "halfSelectedIds": Set {},
+                  "isFocused": false,
+                  "lastInteractedWith": null,
+                  "lastManuallyToggled": null,
+                  "lastUserSelect": "root",
+                  "selectedIds": Set {},
+                  "tabbableId": "root",
+                }
+              }
+              tabbableId="root"
+              togglableSelect={true}
+            >
+              <li
+                aria-disabled={false}
+                aria-expanded={true}
+                aria-level={1}
+                aria-posinset={1}
+                aria-setsize={1}
+                className="tree-branch-wrapper"
+                role="treeitem"
+                tabIndex={0}
+              >
+                <div
+                  className="tree-node tree-node--expanded tree-node__branch"
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "paddingLeft": 0,
+                    }
+                  }
+                >
+                  <ArrowIcon
+                    isOpen={true}
+                  >
+                    <div
+                      className="arrow-div"
+                    >
+                      <ForwardRef(ChevronDown16)>
+                        <Icon
+                          fill="currentColor"
+                          height={16}
+                          preserveAspectRatio="xMidYMid meet"
+                          viewBox="0 0 16 16"
+                          width={16}
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <svg
+                            aria-hidden={true}
+                            fill="currentColor"
+                            focusable="false"
+                            height={16}
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 16 16"
+                            width={16}
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                            />
+                          </svg>
+                        </Icon>
+                      </ForwardRef(ChevronDown16)>
+                    </div>
+                  </ArrowIcon>
+                  <div
+                    className="node-icon-div"
+                  >
+                    <NodeIcon
+                      icon="pficon pficon-folder-close"
+                    >
+                      <ForwardRef(Camera16)>
+                        <Icon
+                          fill="currentColor"
+                          height={16}
+                          preserveAspectRatio="xMidYMid meet"
+                          viewBox="0 0 32 32"
+                          width={16}
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <svg
+                            aria-hidden={true}
+                            fill="currentColor"
+                            focusable="false"
+                            height={16}
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 32 32"
+                            width={16}
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                            />
+                            <path
+                              d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                            />
+                          </svg>
+                        </Icon>
+                      </ForwardRef(Camera16)>
+                    </NodeIcon>
+                  </div>
+                  <span
+                    className="name"
+                    id="root"
+                    key="root"
+                    onClick={[Function]}
+                    onKeyDown={[Function]}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    test-root
+                  </span>
+                </div>
+                <se
+                  baseClassNames={
+                    Object {
+                      "branch": "tree-node__branch",
+                      "branchWrapper": "tree-branch-wrapper",
+                      "leaf": "tree-node__leaf",
+                      "leafListItem": "tree-leaf-list-item",
+                      "node": "tree-node",
+                      "nodeGroup": "tree-node-group",
+                      "root": "tree",
+                    }
+                  }
+                  clickAction="SELECT"
+                  controlledIds={Set {}}
+                  data={
+                    Array [
+                      Object {
+                        "children": Array [
+                          "root",
+                        ],
+                        "id": 0,
+                        "metadata": undefined,
+                        "name": "",
+                        "parent": null,
+                      },
+                      Object {
+                        "children": Array [
+                          "sn-1",
+                        ],
+                        "id": "root",
+                        "metadata": Object {
+                          "icon": "pficon pficon-folder-close",
+                          "selectable": false,
+                          "tooltip": "test-root",
+                        },
+                        "name": "test-root",
+                        "parent": 0,
+                      },
+                      Object {
+                        "children": Array [
+                          "sn-1_sn-2",
+                        ],
+                        "id": "sn-1",
+                        "metadata": Object {
+                          "icon": "fa fa-camera",
+                          "selectable": true,
+                          "tooltip": "test-child-1",
+                        },
+                        "name": "test-child-1",
+                        "parent": "root",
+                      },
+                      Object {
+                        "children": Array [],
+                        "id": "sn-1_sn-2",
+                        "metadata": Object {
+                          "icon": "fa fa-camera",
+                          "selectable": true,
+                          "tooltip": "test-child-2",
+                        },
+                        "name": "test-child-2",
+                        "parent": "sn-1",
+                      },
+                    ]
+                  }
+                  disabledIds={Set {}}
+                  dispatch={[Function]}
+                  element={
+                    Object {
+                      "children": Array [
+                        "sn-1",
+                      ],
+                      "id": "root",
+                      "metadata": Object {
+                        "icon": "pficon pficon-folder-close",
+                        "selectable": false,
+                        "tooltip": "test-root",
+                      },
+                      "name": "test-root",
+                      "parent": 0,
+                    }
+                  }
+                  expandedIds={
+                    Set {
+                      0,
+                      "root",
+                      "sn-1",
+                      "sn-1_sn-2",
+                    }
+                  }
+                  getClasses={[Function]}
+                  halfSelectedIds={Set {}}
+                  isFocused={false}
+                  lastInteractedWith={null}
+                  lastManuallyToggled={null}
+                  lastUserSelect="root"
+                  leafRefs={
+                    Object {
+                      "current": Object {
+                        "root": <div
+                          class="tree-node tree-node--expanded tree-node__branch"
+                          style="padding-left: 0px;"
+                        >
+                          <div
+                            class="arrow-div"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              fill="currentColor"
+                              focusable="false"
+                              height="16"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 16 16"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                              />
+                            </svg>
+                          </div>
+                          <div
+                            class="node-icon-div"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              fill="currentColor"
+                              focusable="false"
+                              height="16"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 32 32"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                              />
+                              <path
+                                d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                              />
+                            </svg>
+                          </div>
+                          <span
+                            class="name"
+                            id="root"
+                            role="button"
+                            tabindex="0"
+                          >
+                            test-root
+                          </span>
+                        </div>,
+                        "sn-1": <div
+                          class="tree-node tree-node--expanded tree-node__branch"
+                          style="padding-left: 40px;"
+                        >
+                          <div
+                            class="arrow-div"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              fill="currentColor"
+                              focusable="false"
+                              height="16"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 16 16"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                              />
+                            </svg>
+                          </div>
+                          <div
+                            class="node-icon-div"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              fill="currentColor"
+                              focusable="false"
+                              height="16"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 32 32"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                              />
+                              <path
+                                d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                              />
+                            </svg>
+                          </div>
+                          <span
+                            class="name"
+                            id="sn-1"
+                            role="button"
+                            tabindex="0"
+                          >
+                            test-child-1
+                          </span>
+                        </div>,
+                        "sn-1_sn-2": <div
+                          aria-disabled="false"
+                          aria-level="3"
+                          aria-posinset="1"
+                          aria-setsize="1"
+                          class="tree-node tree-node--expanded tree-node__leaf"
+                          role="treeitem"
+                          style="padding-left: 80px;"
+                          tabindex="-1"
+                        >
+                          <div
+                            class="node-icon-div"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              fill="currentColor"
+                              focusable="false"
+                              height="16"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 32 32"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                              />
+                              <path
+                                d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                              />
+                            </svg>
+                          </div>
+                          <span
+                            class="name"
+                            id="sn-1_sn-2"
+                            role="button"
+                            tabindex="0"
+                          >
+                            test-child-2
+                          </span>
+                        </div>,
+                      },
+                    }
+                  }
+                  level={1}
+                  multiSelect={false}
+                  nodeAction="check"
+                  nodeRefs={
+                    Object {
+                      "current": Object {
+                        "root": <li
+                          aria-disabled="false"
+                          aria-expanded="true"
+                          aria-level="1"
+                          aria-posinset="1"
+                          aria-setsize="1"
+                          class="tree-branch-wrapper"
+                          role="treeitem"
+                          tabindex="0"
+                        >
+                          <div
+                            class="tree-node tree-node--expanded tree-node__branch"
+                            style="padding-left: 0px;"
+                          >
+                            <div
+                              class="arrow-div"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                fill="currentColor"
+                                focusable="false"
+                                height="16"
+                                preserveAspectRatio="xMidYMid meet"
+                                viewBox="0 0 16 16"
+                                width="16"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                />
+                              </svg>
+                            </div>
+                            <div
+                              class="node-icon-div"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                fill="currentColor"
+                                focusable="false"
+                                height="16"
+                                preserveAspectRatio="xMidYMid meet"
+                                viewBox="0 0 32 32"
+                                width="16"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                />
+                                <path
+                                  d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                />
+                              </svg>
+                            </div>
+                            <span
+                              class="name"
+                              id="root"
+                              role="button"
+                              tabindex="0"
+                            >
+                              test-root
+                            </span>
+                          </div>
+                          <ul
+                            class="tree-node-group tree-node-group--expanded"
+                            role="group"
+                          >
+                            <li
+                              aria-disabled="false"
+                              aria-expanded="true"
+                              aria-level="2"
+                              aria-posinset="1"
+                              aria-setsize="1"
+                              class="tree-branch-wrapper"
+                              role="treeitem"
+                              tabindex="-1"
+                            >
+                              <div
+                                class="tree-node tree-node--expanded tree-node__branch"
+                                style="padding-left: 40px;"
+                              >
+                                <div
+                                  class="arrow-div"
+                                >
+                                  <svg
+                                    aria-hidden="true"
+                                    fill="currentColor"
+                                    focusable="false"
+                                    height="16"
+                                    preserveAspectRatio="xMidYMid meet"
+                                    viewBox="0 0 16 16"
+                                    width="16"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                    />
+                                  </svg>
+                                </div>
+                                <div
+                                  class="node-icon-div"
+                                >
+                                  <svg
+                                    aria-hidden="true"
+                                    fill="currentColor"
+                                    focusable="false"
+                                    height="16"
+                                    preserveAspectRatio="xMidYMid meet"
+                                    viewBox="0 0 32 32"
+                                    width="16"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                    />
+                                    <path
+                                      d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                    />
+                                  </svg>
+                                </div>
+                                <span
+                                  class="name"
+                                  id="sn-1"
+                                  role="button"
+                                  tabindex="0"
+                                >
+                                  test-child-1
+                                </span>
+                              </div>
+                              <ul
+                                class="tree-node-group tree-node-group--expanded"
+                                role="group"
+                              >
+                                <li
+                                  class="tree-leaf-list-item tree-leaf-list-item--expanded"
+                                  role="none"
+                                >
+                                  <div
+                                    aria-disabled="false"
+                                    aria-level="3"
+                                    aria-posinset="1"
+                                    aria-setsize="1"
+                                    class="tree-node tree-node--expanded tree-node__leaf"
+                                    role="treeitem"
+                                    style="padding-left: 80px;"
+                                    tabindex="-1"
+                                  >
+                                    <div
+                                      class="node-icon-div"
+                                    >
+                                      <svg
+                                        aria-hidden="true"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height="16"
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 32 32"
+                                        width="16"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                        />
+                                        <path
+                                          d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                        />
+                                      </svg>
+                                    </div>
+                                    <span
+                                      class="name"
+                                      id="sn-1_sn-2"
+                                      role="button"
+                                      tabindex="0"
+                                    >
+                                      test-child-2
+                                    </span>
+                                  </div>
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>,
+                        "sn-1": <li
+                          aria-disabled="false"
+                          aria-expanded="true"
+                          aria-level="2"
+                          aria-posinset="1"
+                          aria-setsize="1"
+                          class="tree-branch-wrapper"
+                          role="treeitem"
+                          tabindex="-1"
+                        >
+                          <div
+                            class="tree-node tree-node--expanded tree-node__branch"
+                            style="padding-left: 40px;"
+                          >
+                            <div
+                              class="arrow-div"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                fill="currentColor"
+                                focusable="false"
+                                height="16"
+                                preserveAspectRatio="xMidYMid meet"
+                                viewBox="0 0 16 16"
+                                width="16"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                />
+                              </svg>
+                            </div>
+                            <div
+                              class="node-icon-div"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                fill="currentColor"
+                                focusable="false"
+                                height="16"
+                                preserveAspectRatio="xMidYMid meet"
+                                viewBox="0 0 32 32"
+                                width="16"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                />
+                                <path
+                                  d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                />
+                              </svg>
+                            </div>
+                            <span
+                              class="name"
+                              id="sn-1"
+                              role="button"
+                              tabindex="0"
+                            >
+                              test-child-1
+                            </span>
+                          </div>
+                          <ul
+                            class="tree-node-group tree-node-group--expanded"
+                            role="group"
+                          >
+                            <li
+                              class="tree-leaf-list-item tree-leaf-list-item--expanded"
+                              role="none"
+                            >
+                              <div
+                                aria-disabled="false"
+                                aria-level="3"
+                                aria-posinset="1"
+                                aria-setsize="1"
+                                class="tree-node tree-node--expanded tree-node__leaf"
+                                role="treeitem"
+                                style="padding-left: 80px;"
+                                tabindex="-1"
+                              >
+                                <div
+                                  class="node-icon-div"
+                                >
+                                  <svg
+                                    aria-hidden="true"
+                                    fill="currentColor"
+                                    focusable="false"
+                                    height="16"
+                                    preserveAspectRatio="xMidYMid meet"
+                                    viewBox="0 0 32 32"
+                                    width="16"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                    />
+                                    <path
+                                      d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                    />
+                                  </svg>
+                                </div>
+                                <span
+                                  class="name"
+                                  id="sn-1_sn-2"
+                                  role="button"
+                                  tabindex="0"
+                                >
+                                  test-child-2
+                                </span>
+                              </div>
+                            </li>
+                          </ul>
+                        </li>,
+                        "sn-1_sn-2": <div
+                          aria-disabled="false"
+                          aria-level="3"
+                          aria-posinset="1"
+                          aria-setsize="1"
+                          class="tree-node tree-node--expanded tree-node__leaf"
+                          role="treeitem"
+                          style="padding-left: 80px;"
+                          tabindex="-1"
+                        >
+                          <div
+                            class="node-icon-div"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              fill="currentColor"
+                              focusable="false"
+                              height="16"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 32 32"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                              />
+                              <path
+                                d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                              />
+                            </svg>
+                          </div>
+                          <span
+                            class="name"
+                            id="sn-1_sn-2"
+                            role="button"
+                            tabindex="0"
+                          >
+                            test-child-2
+                          </span>
+                        </div>,
+                      },
+                    }
+                  }
+                  nodeRenderer={[Function]}
+                  propagateCollapse={false}
+                  propagateSelect={false}
+                  propagateSelectUpwards={true}
+                  selectedIds={Set {}}
+                  state={
+                    Object {
+                      "controlledIds": Set {},
+                      "disabledIds": Set {},
+                      "expandedIds": Set {
+                        0,
+                        "root",
+                        "sn-1",
+                        "sn-1_sn-2",
+                      },
+                      "halfSelectedIds": Set {},
+                      "isFocused": false,
+                      "lastInteractedWith": null,
+                      "lastManuallyToggled": null,
+                      "lastUserSelect": "root",
+                      "selectedIds": Set {},
+                      "tabbableId": "root",
+                    }
+                  }
+                  tabbableId="root"
+                  togglableSelect={true}
+                >
+                  <ul
+                    className="tree-node-group tree-node-group--expanded"
+                    role="group"
+                  >
+                    <ie
+                      baseClassNames={
+                        Object {
+                          "branch": "tree-node__branch",
+                          "branchWrapper": "tree-branch-wrapper",
+                          "leaf": "tree-node__leaf",
+                          "leafListItem": "tree-leaf-list-item",
+                          "node": "tree-node",
+                          "nodeGroup": "tree-node-group",
+                          "root": "tree",
+                        }
+                      }
+                      clickAction="SELECT"
+                      controlledIds={Set {}}
+                      data={
+                        Array [
+                          Object {
+                            "children": Array [
+                              "root",
+                            ],
+                            "id": 0,
+                            "metadata": undefined,
+                            "name": "",
+                            "parent": null,
+                          },
+                          Object {
+                            "children": Array [
+                              "sn-1",
+                            ],
+                            "id": "root",
+                            "metadata": Object {
+                              "icon": "pficon pficon-folder-close",
+                              "selectable": false,
+                              "tooltip": "test-root",
+                            },
+                            "name": "test-root",
+                            "parent": 0,
+                          },
+                          Object {
+                            "children": Array [
+                              "sn-1_sn-2",
+                            ],
+                            "id": "sn-1",
+                            "metadata": Object {
+                              "icon": "fa fa-camera",
+                              "selectable": true,
+                              "tooltip": "test-child-1",
+                            },
+                            "name": "test-child-1",
+                            "parent": "root",
+                          },
+                          Object {
+                            "children": Array [],
+                            "id": "sn-1_sn-2",
+                            "metadata": Object {
+                              "icon": "fa fa-camera",
+                              "selectable": true,
+                              "tooltip": "test-child-2",
+                            },
+                            "name": "test-child-2",
+                            "parent": "sn-1",
+                          },
+                        ]
+                      }
+                      disabledIds={Set {}}
+                      dispatch={[Function]}
+                      element={
+                        Object {
+                          "children": Array [
+                            "sn-1_sn-2",
+                          ],
+                          "id": "sn-1",
+                          "metadata": Object {
+                            "icon": "fa fa-camera",
+                            "selectable": true,
+                            "tooltip": "test-child-1",
+                          },
+                          "name": "test-child-1",
+                          "parent": "root",
+                        }
+                      }
+                      expandedIds={
+                        Set {
+                          0,
+                          "root",
+                          "sn-1",
+                          "sn-1_sn-2",
+                        }
+                      }
+                      halfSelectedIds={Set {}}
+                      isFocused={false}
+                      key="sn-1-string"
+                      lastInteractedWith={null}
+                      lastManuallyToggled={null}
+                      lastUserSelect="root"
+                      leafRefs={
+                        Object {
+                          "current": Object {
+                            "root": <div
+                              class="tree-node tree-node--expanded tree-node__branch"
+                              style="padding-left: 0px;"
+                            >
+                              <div
+                                class="arrow-div"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  fill="currentColor"
+                                  focusable="false"
+                                  height="16"
+                                  preserveAspectRatio="xMidYMid meet"
+                                  viewBox="0 0 16 16"
+                                  width="16"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                  />
+                                </svg>
+                              </div>
+                              <div
+                                class="node-icon-div"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  fill="currentColor"
+                                  focusable="false"
+                                  height="16"
+                                  preserveAspectRatio="xMidYMid meet"
+                                  viewBox="0 0 32 32"
+                                  width="16"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                  />
+                                  <path
+                                    d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                  />
+                                </svg>
+                              </div>
+                              <span
+                                class="name"
+                                id="root"
+                                role="button"
+                                tabindex="0"
+                              >
+                                test-root
+                              </span>
+                            </div>,
+                            "sn-1": <div
+                              class="tree-node tree-node--expanded tree-node__branch"
+                              style="padding-left: 40px;"
+                            >
+                              <div
+                                class="arrow-div"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  fill="currentColor"
+                                  focusable="false"
+                                  height="16"
+                                  preserveAspectRatio="xMidYMid meet"
+                                  viewBox="0 0 16 16"
+                                  width="16"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                  />
+                                </svg>
+                              </div>
+                              <div
+                                class="node-icon-div"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  fill="currentColor"
+                                  focusable="false"
+                                  height="16"
+                                  preserveAspectRatio="xMidYMid meet"
+                                  viewBox="0 0 32 32"
+                                  width="16"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                  />
+                                  <path
+                                    d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                  />
+                                </svg>
+                              </div>
+                              <span
+                                class="name"
+                                id="sn-1"
+                                role="button"
+                                tabindex="0"
+                              >
+                                test-child-1
+                              </span>
+                            </div>,
+                            "sn-1_sn-2": <div
+                              aria-disabled="false"
+                              aria-level="3"
+                              aria-posinset="1"
+                              aria-setsize="1"
+                              class="tree-node tree-node--expanded tree-node__leaf"
+                              role="treeitem"
+                              style="padding-left: 80px;"
+                              tabindex="-1"
+                            >
+                              <div
+                                class="node-icon-div"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  fill="currentColor"
+                                  focusable="false"
+                                  height="16"
+                                  preserveAspectRatio="xMidYMid meet"
+                                  viewBox="0 0 32 32"
+                                  width="16"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                  />
+                                  <path
+                                    d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                  />
+                                </svg>
+                              </div>
+                              <span
+                                class="name"
+                                id="sn-1_sn-2"
+                                role="button"
+                                tabindex="0"
+                              >
+                                test-child-2
+                              </span>
+                            </div>,
+                          },
+                        }
+                      }
+                      level={2}
+                      multiSelect={false}
+                      nodeAction="check"
+                      nodeRefs={
+                        Object {
+                          "current": Object {
+                            "root": <li
+                              aria-disabled="false"
+                              aria-expanded="true"
+                              aria-level="1"
+                              aria-posinset="1"
+                              aria-setsize="1"
+                              class="tree-branch-wrapper"
+                              role="treeitem"
+                              tabindex="0"
+                            >
+                              <div
+                                class="tree-node tree-node--expanded tree-node__branch"
+                                style="padding-left: 0px;"
+                              >
+                                <div
+                                  class="arrow-div"
+                                >
+                                  <svg
+                                    aria-hidden="true"
+                                    fill="currentColor"
+                                    focusable="false"
+                                    height="16"
+                                    preserveAspectRatio="xMidYMid meet"
+                                    viewBox="0 0 16 16"
+                                    width="16"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                    />
+                                  </svg>
+                                </div>
+                                <div
+                                  class="node-icon-div"
+                                >
+                                  <svg
+                                    aria-hidden="true"
+                                    fill="currentColor"
+                                    focusable="false"
+                                    height="16"
+                                    preserveAspectRatio="xMidYMid meet"
+                                    viewBox="0 0 32 32"
+                                    width="16"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                    />
+                                    <path
+                                      d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                    />
+                                  </svg>
+                                </div>
+                                <span
+                                  class="name"
+                                  id="root"
+                                  role="button"
+                                  tabindex="0"
+                                >
+                                  test-root
+                                </span>
+                              </div>
+                              <ul
+                                class="tree-node-group tree-node-group--expanded"
+                                role="group"
+                              >
+                                <li
+                                  aria-disabled="false"
+                                  aria-expanded="true"
+                                  aria-level="2"
+                                  aria-posinset="1"
+                                  aria-setsize="1"
+                                  class="tree-branch-wrapper"
+                                  role="treeitem"
+                                  tabindex="-1"
+                                >
+                                  <div
+                                    class="tree-node tree-node--expanded tree-node__branch"
+                                    style="padding-left: 40px;"
+                                  >
+                                    <div
+                                      class="arrow-div"
+                                    >
+                                      <svg
+                                        aria-hidden="true"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height="16"
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 16 16"
+                                        width="16"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                        />
+                                      </svg>
+                                    </div>
+                                    <div
+                                      class="node-icon-div"
+                                    >
+                                      <svg
+                                        aria-hidden="true"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height="16"
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 32 32"
+                                        width="16"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                        />
+                                        <path
+                                          d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                        />
+                                      </svg>
+                                    </div>
+                                    <span
+                                      class="name"
+                                      id="sn-1"
+                                      role="button"
+                                      tabindex="0"
+                                    >
+                                      test-child-1
+                                    </span>
+                                  </div>
+                                  <ul
+                                    class="tree-node-group tree-node-group--expanded"
+                                    role="group"
+                                  >
+                                    <li
+                                      class="tree-leaf-list-item tree-leaf-list-item--expanded"
+                                      role="none"
+                                    >
+                                      <div
+                                        aria-disabled="false"
+                                        aria-level="3"
+                                        aria-posinset="1"
+                                        aria-setsize="1"
+                                        class="tree-node tree-node--expanded tree-node__leaf"
+                                        role="treeitem"
+                                        style="padding-left: 80px;"
+                                        tabindex="-1"
+                                      >
+                                        <div
+                                          class="node-icon-div"
+                                        >
+                                          <svg
+                                            aria-hidden="true"
+                                            fill="currentColor"
+                                            focusable="false"
+                                            height="16"
+                                            preserveAspectRatio="xMidYMid meet"
+                                            viewBox="0 0 32 32"
+                                            width="16"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                            />
+                                            <path
+                                              d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                            />
+                                          </svg>
+                                        </div>
+                                        <span
+                                          class="name"
+                                          id="sn-1_sn-2"
+                                          role="button"
+                                          tabindex="0"
+                                        >
+                                          test-child-2
+                                        </span>
+                                      </div>
+                                    </li>
+                                  </ul>
+                                </li>
+                              </ul>
+                            </li>,
+                            "sn-1": <li
+                              aria-disabled="false"
+                              aria-expanded="true"
+                              aria-level="2"
+                              aria-posinset="1"
+                              aria-setsize="1"
+                              class="tree-branch-wrapper"
+                              role="treeitem"
+                              tabindex="-1"
+                            >
+                              <div
+                                class="tree-node tree-node--expanded tree-node__branch"
+                                style="padding-left: 40px;"
+                              >
+                                <div
+                                  class="arrow-div"
+                                >
+                                  <svg
+                                    aria-hidden="true"
+                                    fill="currentColor"
+                                    focusable="false"
+                                    height="16"
+                                    preserveAspectRatio="xMidYMid meet"
+                                    viewBox="0 0 16 16"
+                                    width="16"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                    />
+                                  </svg>
+                                </div>
+                                <div
+                                  class="node-icon-div"
+                                >
+                                  <svg
+                                    aria-hidden="true"
+                                    fill="currentColor"
+                                    focusable="false"
+                                    height="16"
+                                    preserveAspectRatio="xMidYMid meet"
+                                    viewBox="0 0 32 32"
+                                    width="16"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                    />
+                                    <path
+                                      d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                    />
+                                  </svg>
+                                </div>
+                                <span
+                                  class="name"
+                                  id="sn-1"
+                                  role="button"
+                                  tabindex="0"
+                                >
+                                  test-child-1
+                                </span>
+                              </div>
+                              <ul
+                                class="tree-node-group tree-node-group--expanded"
+                                role="group"
+                              >
+                                <li
+                                  class="tree-leaf-list-item tree-leaf-list-item--expanded"
+                                  role="none"
+                                >
+                                  <div
+                                    aria-disabled="false"
+                                    aria-level="3"
+                                    aria-posinset="1"
+                                    aria-setsize="1"
+                                    class="tree-node tree-node--expanded tree-node__leaf"
+                                    role="treeitem"
+                                    style="padding-left: 80px;"
+                                    tabindex="-1"
+                                  >
+                                    <div
+                                      class="node-icon-div"
+                                    >
+                                      <svg
+                                        aria-hidden="true"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height="16"
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 32 32"
+                                        width="16"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                        />
+                                        <path
+                                          d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                        />
+                                      </svg>
+                                    </div>
+                                    <span
+                                      class="name"
+                                      id="sn-1_sn-2"
+                                      role="button"
+                                      tabindex="0"
+                                    >
+                                      test-child-2
+                                    </span>
+                                  </div>
+                                </li>
+                              </ul>
+                            </li>,
+                            "sn-1_sn-2": <div
+                              aria-disabled="false"
+                              aria-level="3"
+                              aria-posinset="1"
+                              aria-setsize="1"
+                              class="tree-node tree-node--expanded tree-node__leaf"
+                              role="treeitem"
+                              style="padding-left: 80px;"
+                              tabindex="-1"
+                            >
+                              <div
+                                class="node-icon-div"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  fill="currentColor"
+                                  focusable="false"
+                                  height="16"
+                                  preserveAspectRatio="xMidYMid meet"
+                                  viewBox="0 0 32 32"
+                                  width="16"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                  />
+                                  <path
+                                    d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                  />
+                                </svg>
+                              </div>
+                              <span
+                                class="name"
+                                id="sn-1_sn-2"
+                                role="button"
+                                tabindex="0"
+                              >
+                                test-child-2
+                              </span>
+                            </div>,
+                          },
+                        }
+                      }
+                      nodeRenderer={[Function]}
+                      posinset={1}
+                      propagateCollapse={false}
+                      propagateSelect={false}
+                      propagateSelectUpwards={true}
+                      selectedIds={Set {}}
+                      setsize={1}
+                      state={
+                        Object {
+                          "controlledIds": Set {},
+                          "disabledIds": Set {},
+                          "expandedIds": Set {
+                            0,
+                            "root",
+                            "sn-1",
+                            "sn-1_sn-2",
+                          },
+                          "halfSelectedIds": Set {},
+                          "isFocused": false,
+                          "lastInteractedWith": null,
+                          "lastManuallyToggled": null,
+                          "lastUserSelect": "root",
+                          "selectedIds": Set {},
+                          "tabbableId": "root",
+                        }
+                      }
+                      tabbableId="root"
+                      togglableSelect={true}
+                    >
+                      <li
+                        aria-disabled={false}
+                        aria-expanded={true}
+                        aria-level={2}
+                        aria-posinset={1}
+                        aria-setsize={1}
+                        className="tree-branch-wrapper"
+                        role="treeitem"
+                        tabIndex={-1}
+                      >
+                        <div
+                          className="tree-node tree-node--expanded tree-node__branch"
+                          onClick={[Function]}
+                          style={
+                            Object {
+                              "paddingLeft": 40,
+                            }
+                          }
+                        >
+                          <ArrowIcon
+                            isOpen={true}
+                          >
+                            <div
+                              className="arrow-div"
+                            >
+                              <ForwardRef(ChevronDown16)>
+                                <Icon
+                                  fill="currentColor"
+                                  height={16}
+                                  preserveAspectRatio="xMidYMid meet"
+                                  viewBox="0 0 16 16"
+                                  width={16}
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <svg
+                                    aria-hidden={true}
+                                    fill="currentColor"
+                                    focusable="false"
+                                    height={16}
+                                    preserveAspectRatio="xMidYMid meet"
+                                    viewBox="0 0 16 16"
+                                    width={16}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                    />
+                                  </svg>
+                                </Icon>
+                              </ForwardRef(ChevronDown16)>
+                            </div>
+                          </ArrowIcon>
+                          <div
+                            className="node-icon-div"
+                          >
+                            <NodeIcon
+                              icon="fa fa-camera"
+                            >
+                              <ForwardRef(Camera16)>
+                                <Icon
+                                  fill="currentColor"
+                                  height={16}
+                                  preserveAspectRatio="xMidYMid meet"
+                                  viewBox="0 0 32 32"
+                                  width={16}
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <svg
+                                    aria-hidden={true}
+                                    fill="currentColor"
+                                    focusable="false"
+                                    height={16}
+                                    preserveAspectRatio="xMidYMid meet"
+                                    viewBox="0 0 32 32"
+                                    width={16}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                    />
+                                    <path
+                                      d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                    />
+                                  </svg>
+                                </Icon>
+                              </ForwardRef(Camera16)>
+                            </NodeIcon>
+                          </div>
+                          <span
+                            className="name"
+                            id="sn-1"
+                            key="sn-1"
+                            onClick={[Function]}
+                            onKeyDown={[Function]}
+                            role="button"
+                            tabIndex={0}
+                          >
+                            test-child-1
+                          </span>
+                        </div>
+                        <se
+                          baseClassNames={
+                            Object {
+                              "branch": "tree-node__branch",
+                              "branchWrapper": "tree-branch-wrapper",
+                              "leaf": "tree-node__leaf",
+                              "leafListItem": "tree-leaf-list-item",
+                              "node": "tree-node",
+                              "nodeGroup": "tree-node-group",
+                              "root": "tree",
+                            }
+                          }
+                          clickAction="SELECT"
+                          controlledIds={Set {}}
+                          data={
+                            Array [
+                              Object {
+                                "children": Array [
+                                  "root",
+                                ],
+                                "id": 0,
+                                "metadata": undefined,
+                                "name": "",
+                                "parent": null,
+                              },
+                              Object {
+                                "children": Array [
+                                  "sn-1",
+                                ],
+                                "id": "root",
+                                "metadata": Object {
+                                  "icon": "pficon pficon-folder-close",
+                                  "selectable": false,
+                                  "tooltip": "test-root",
+                                },
+                                "name": "test-root",
+                                "parent": 0,
+                              },
+                              Object {
+                                "children": Array [
+                                  "sn-1_sn-2",
+                                ],
+                                "id": "sn-1",
+                                "metadata": Object {
+                                  "icon": "fa fa-camera",
+                                  "selectable": true,
+                                  "tooltip": "test-child-1",
+                                },
+                                "name": "test-child-1",
+                                "parent": "root",
+                              },
+                              Object {
+                                "children": Array [],
+                                "id": "sn-1_sn-2",
+                                "metadata": Object {
+                                  "icon": "fa fa-camera",
+                                  "selectable": true,
+                                  "tooltip": "test-child-2",
+                                },
+                                "name": "test-child-2",
+                                "parent": "sn-1",
+                              },
+                            ]
+                          }
+                          disabledIds={Set {}}
+                          dispatch={[Function]}
+                          element={
+                            Object {
+                              "children": Array [
+                                "sn-1_sn-2",
+                              ],
+                              "id": "sn-1",
+                              "metadata": Object {
+                                "icon": "fa fa-camera",
+                                "selectable": true,
+                                "tooltip": "test-child-1",
+                              },
+                              "name": "test-child-1",
+                              "parent": "root",
+                            }
+                          }
+                          expandedIds={
+                            Set {
+                              0,
+                              "root",
+                              "sn-1",
+                              "sn-1_sn-2",
+                            }
+                          }
+                          getClasses={[Function]}
+                          halfSelectedIds={Set {}}
+                          isFocused={false}
+                          lastInteractedWith={null}
+                          lastManuallyToggled={null}
+                          lastUserSelect="root"
+                          leafRefs={
+                            Object {
+                              "current": Object {
+                                "root": <div
+                                  class="tree-node tree-node--expanded tree-node__branch"
+                                  style="padding-left: 0px;"
+                                >
+                                  <div
+                                    class="arrow-div"
+                                  >
+                                    <svg
+                                      aria-hidden="true"
+                                      fill="currentColor"
+                                      focusable="false"
+                                      height="16"
+                                      preserveAspectRatio="xMidYMid meet"
+                                      viewBox="0 0 16 16"
+                                      width="16"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                      />
+                                    </svg>
+                                  </div>
+                                  <div
+                                    class="node-icon-div"
+                                  >
+                                    <svg
+                                      aria-hidden="true"
+                                      fill="currentColor"
+                                      focusable="false"
+                                      height="16"
+                                      preserveAspectRatio="xMidYMid meet"
+                                      viewBox="0 0 32 32"
+                                      width="16"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                      />
+                                      <path
+                                        d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                      />
+                                    </svg>
+                                  </div>
+                                  <span
+                                    class="name"
+                                    id="root"
+                                    role="button"
+                                    tabindex="0"
+                                  >
+                                    test-root
+                                  </span>
+                                </div>,
+                                "sn-1": <div
+                                  class="tree-node tree-node--expanded tree-node__branch"
+                                  style="padding-left: 40px;"
+                                >
+                                  <div
+                                    class="arrow-div"
+                                  >
+                                    <svg
+                                      aria-hidden="true"
+                                      fill="currentColor"
+                                      focusable="false"
+                                      height="16"
+                                      preserveAspectRatio="xMidYMid meet"
+                                      viewBox="0 0 16 16"
+                                      width="16"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                      />
+                                    </svg>
+                                  </div>
+                                  <div
+                                    class="node-icon-div"
+                                  >
+                                    <svg
+                                      aria-hidden="true"
+                                      fill="currentColor"
+                                      focusable="false"
+                                      height="16"
+                                      preserveAspectRatio="xMidYMid meet"
+                                      viewBox="0 0 32 32"
+                                      width="16"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                      />
+                                      <path
+                                        d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                      />
+                                    </svg>
+                                  </div>
+                                  <span
+                                    class="name"
+                                    id="sn-1"
+                                    role="button"
+                                    tabindex="0"
+                                  >
+                                    test-child-1
+                                  </span>
+                                </div>,
+                                "sn-1_sn-2": <div
+                                  aria-disabled="false"
+                                  aria-level="3"
+                                  aria-posinset="1"
+                                  aria-setsize="1"
+                                  class="tree-node tree-node--expanded tree-node__leaf"
+                                  role="treeitem"
+                                  style="padding-left: 80px;"
+                                  tabindex="-1"
+                                >
+                                  <div
+                                    class="node-icon-div"
+                                  >
+                                    <svg
+                                      aria-hidden="true"
+                                      fill="currentColor"
+                                      focusable="false"
+                                      height="16"
+                                      preserveAspectRatio="xMidYMid meet"
+                                      viewBox="0 0 32 32"
+                                      width="16"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                      />
+                                      <path
+                                        d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                      />
+                                    </svg>
+                                  </div>
+                                  <span
+                                    class="name"
+                                    id="sn-1_sn-2"
+                                    role="button"
+                                    tabindex="0"
+                                  >
+                                    test-child-2
+                                  </span>
+                                </div>,
+                              },
+                            }
+                          }
+                          level={2}
+                          multiSelect={false}
+                          nodeAction="check"
+                          nodeRefs={
+                            Object {
+                              "current": Object {
+                                "root": <li
+                                  aria-disabled="false"
+                                  aria-expanded="true"
+                                  aria-level="1"
+                                  aria-posinset="1"
+                                  aria-setsize="1"
+                                  class="tree-branch-wrapper"
+                                  role="treeitem"
+                                  tabindex="0"
+                                >
+                                  <div
+                                    class="tree-node tree-node--expanded tree-node__branch"
+                                    style="padding-left: 0px;"
+                                  >
+                                    <div
+                                      class="arrow-div"
+                                    >
+                                      <svg
+                                        aria-hidden="true"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height="16"
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 16 16"
+                                        width="16"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                        />
+                                      </svg>
+                                    </div>
+                                    <div
+                                      class="node-icon-div"
+                                    >
+                                      <svg
+                                        aria-hidden="true"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height="16"
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 32 32"
+                                        width="16"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                        />
+                                        <path
+                                          d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                        />
+                                      </svg>
+                                    </div>
+                                    <span
+                                      class="name"
+                                      id="root"
+                                      role="button"
+                                      tabindex="0"
+                                    >
+                                      test-root
+                                    </span>
+                                  </div>
+                                  <ul
+                                    class="tree-node-group tree-node-group--expanded"
+                                    role="group"
+                                  >
+                                    <li
+                                      aria-disabled="false"
+                                      aria-expanded="true"
+                                      aria-level="2"
+                                      aria-posinset="1"
+                                      aria-setsize="1"
+                                      class="tree-branch-wrapper"
+                                      role="treeitem"
+                                      tabindex="-1"
+                                    >
+                                      <div
+                                        class="tree-node tree-node--expanded tree-node__branch"
+                                        style="padding-left: 40px;"
+                                      >
+                                        <div
+                                          class="arrow-div"
+                                        >
+                                          <svg
+                                            aria-hidden="true"
+                                            fill="currentColor"
+                                            focusable="false"
+                                            height="16"
+                                            preserveAspectRatio="xMidYMid meet"
+                                            viewBox="0 0 16 16"
+                                            width="16"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                            />
+                                          </svg>
+                                        </div>
+                                        <div
+                                          class="node-icon-div"
+                                        >
+                                          <svg
+                                            aria-hidden="true"
+                                            fill="currentColor"
+                                            focusable="false"
+                                            height="16"
+                                            preserveAspectRatio="xMidYMid meet"
+                                            viewBox="0 0 32 32"
+                                            width="16"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                            />
+                                            <path
+                                              d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                            />
+                                          </svg>
+                                        </div>
+                                        <span
+                                          class="name"
+                                          id="sn-1"
+                                          role="button"
+                                          tabindex="0"
+                                        >
+                                          test-child-1
+                                        </span>
+                                      </div>
+                                      <ul
+                                        class="tree-node-group tree-node-group--expanded"
+                                        role="group"
+                                      >
+                                        <li
+                                          class="tree-leaf-list-item tree-leaf-list-item--expanded"
+                                          role="none"
+                                        >
+                                          <div
+                                            aria-disabled="false"
+                                            aria-level="3"
+                                            aria-posinset="1"
+                                            aria-setsize="1"
+                                            class="tree-node tree-node--expanded tree-node__leaf"
+                                            role="treeitem"
+                                            style="padding-left: 80px;"
+                                            tabindex="-1"
+                                          >
+                                            <div
+                                              class="node-icon-div"
+                                            >
+                                              <svg
+                                                aria-hidden="true"
+                                                fill="currentColor"
+                                                focusable="false"
+                                                height="16"
+                                                preserveAspectRatio="xMidYMid meet"
+                                                viewBox="0 0 32 32"
+                                                width="16"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                              >
+                                                <path
+                                                  d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                                />
+                                                <path
+                                                  d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                                />
+                                              </svg>
+                                            </div>
+                                            <span
+                                              class="name"
+                                              id="sn-1_sn-2"
+                                              role="button"
+                                              tabindex="0"
+                                            >
+                                              test-child-2
+                                            </span>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </li>
+                                  </ul>
+                                </li>,
+                                "sn-1": <li
+                                  aria-disabled="false"
+                                  aria-expanded="true"
+                                  aria-level="2"
+                                  aria-posinset="1"
+                                  aria-setsize="1"
+                                  class="tree-branch-wrapper"
+                                  role="treeitem"
+                                  tabindex="-1"
+                                >
+                                  <div
+                                    class="tree-node tree-node--expanded tree-node__branch"
+                                    style="padding-left: 40px;"
+                                  >
+                                    <div
+                                      class="arrow-div"
+                                    >
+                                      <svg
+                                        aria-hidden="true"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height="16"
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 16 16"
+                                        width="16"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                        />
+                                      </svg>
+                                    </div>
+                                    <div
+                                      class="node-icon-div"
+                                    >
+                                      <svg
+                                        aria-hidden="true"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height="16"
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 32 32"
+                                        width="16"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                        />
+                                        <path
+                                          d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                        />
+                                      </svg>
+                                    </div>
+                                    <span
+                                      class="name"
+                                      id="sn-1"
+                                      role="button"
+                                      tabindex="0"
+                                    >
+                                      test-child-1
+                                    </span>
+                                  </div>
+                                  <ul
+                                    class="tree-node-group tree-node-group--expanded"
+                                    role="group"
+                                  >
+                                    <li
+                                      class="tree-leaf-list-item tree-leaf-list-item--expanded"
+                                      role="none"
+                                    >
+                                      <div
+                                        aria-disabled="false"
+                                        aria-level="3"
+                                        aria-posinset="1"
+                                        aria-setsize="1"
+                                        class="tree-node tree-node--expanded tree-node__leaf"
+                                        role="treeitem"
+                                        style="padding-left: 80px;"
+                                        tabindex="-1"
+                                      >
+                                        <div
+                                          class="node-icon-div"
+                                        >
+                                          <svg
+                                            aria-hidden="true"
+                                            fill="currentColor"
+                                            focusable="false"
+                                            height="16"
+                                            preserveAspectRatio="xMidYMid meet"
+                                            viewBox="0 0 32 32"
+                                            width="16"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                            />
+                                            <path
+                                              d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                            />
+                                          </svg>
+                                        </div>
+                                        <span
+                                          class="name"
+                                          id="sn-1_sn-2"
+                                          role="button"
+                                          tabindex="0"
+                                        >
+                                          test-child-2
+                                        </span>
+                                      </div>
+                                    </li>
+                                  </ul>
+                                </li>,
+                                "sn-1_sn-2": <div
+                                  aria-disabled="false"
+                                  aria-level="3"
+                                  aria-posinset="1"
+                                  aria-setsize="1"
+                                  class="tree-node tree-node--expanded tree-node__leaf"
+                                  role="treeitem"
+                                  style="padding-left: 80px;"
+                                  tabindex="-1"
+                                >
+                                  <div
+                                    class="node-icon-div"
+                                  >
+                                    <svg
+                                      aria-hidden="true"
+                                      fill="currentColor"
+                                      focusable="false"
+                                      height="16"
+                                      preserveAspectRatio="xMidYMid meet"
+                                      viewBox="0 0 32 32"
+                                      width="16"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                      />
+                                      <path
+                                        d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                      />
+                                    </svg>
+                                  </div>
+                                  <span
+                                    class="name"
+                                    id="sn-1_sn-2"
+                                    role="button"
+                                    tabindex="0"
+                                  >
+                                    test-child-2
+                                  </span>
+                                </div>,
+                              },
+                            }
+                          }
+                          nodeRenderer={[Function]}
+                          propagateCollapse={false}
+                          propagateSelect={false}
+                          propagateSelectUpwards={true}
+                          selectedIds={Set {}}
+                          state={
+                            Object {
+                              "controlledIds": Set {},
+                              "disabledIds": Set {},
+                              "expandedIds": Set {
+                                0,
+                                "root",
+                                "sn-1",
+                                "sn-1_sn-2",
+                              },
+                              "halfSelectedIds": Set {},
+                              "isFocused": false,
+                              "lastInteractedWith": null,
+                              "lastManuallyToggled": null,
+                              "lastUserSelect": "root",
+                              "selectedIds": Set {},
+                              "tabbableId": "root",
+                            }
+                          }
+                          tabbableId="root"
+                          togglableSelect={true}
+                        >
+                          <ul
+                            className="tree-node-group tree-node-group--expanded"
+                            role="group"
+                          >
+                            <ie
+                              baseClassNames={
+                                Object {
+                                  "branch": "tree-node__branch",
+                                  "branchWrapper": "tree-branch-wrapper",
+                                  "leaf": "tree-node__leaf",
+                                  "leafListItem": "tree-leaf-list-item",
+                                  "node": "tree-node",
+                                  "nodeGroup": "tree-node-group",
+                                  "root": "tree",
+                                }
+                              }
+                              clickAction="SELECT"
+                              controlledIds={Set {}}
+                              data={
+                                Array [
+                                  Object {
+                                    "children": Array [
+                                      "root",
+                                    ],
+                                    "id": 0,
+                                    "metadata": undefined,
+                                    "name": "",
+                                    "parent": null,
+                                  },
+                                  Object {
+                                    "children": Array [
+                                      "sn-1",
+                                    ],
+                                    "id": "root",
+                                    "metadata": Object {
+                                      "icon": "pficon pficon-folder-close",
+                                      "selectable": false,
+                                      "tooltip": "test-root",
+                                    },
+                                    "name": "test-root",
+                                    "parent": 0,
+                                  },
+                                  Object {
+                                    "children": Array [
+                                      "sn-1_sn-2",
+                                    ],
+                                    "id": "sn-1",
+                                    "metadata": Object {
+                                      "icon": "fa fa-camera",
+                                      "selectable": true,
+                                      "tooltip": "test-child-1",
+                                    },
+                                    "name": "test-child-1",
+                                    "parent": "root",
+                                  },
+                                  Object {
+                                    "children": Array [],
+                                    "id": "sn-1_sn-2",
+                                    "metadata": Object {
+                                      "icon": "fa fa-camera",
+                                      "selectable": true,
+                                      "tooltip": "test-child-2",
+                                    },
+                                    "name": "test-child-2",
+                                    "parent": "sn-1",
+                                  },
+                                ]
+                              }
+                              disabledIds={Set {}}
+                              dispatch={[Function]}
+                              element={
+                                Object {
+                                  "children": Array [],
+                                  "id": "sn-1_sn-2",
+                                  "metadata": Object {
+                                    "icon": "fa fa-camera",
+                                    "selectable": true,
+                                    "tooltip": "test-child-2",
+                                  },
+                                  "name": "test-child-2",
+                                  "parent": "sn-1",
+                                }
+                              }
+                              expandedIds={
+                                Set {
+                                  0,
+                                  "root",
+                                  "sn-1",
+                                  "sn-1_sn-2",
+                                }
+                              }
+                              halfSelectedIds={Set {}}
+                              isFocused={false}
+                              key="sn-1_sn-2-string"
+                              lastInteractedWith={null}
+                              lastManuallyToggled={null}
+                              lastUserSelect="root"
+                              leafRefs={
+                                Object {
+                                  "current": Object {
+                                    "root": <div
+                                      class="tree-node tree-node--expanded tree-node__branch"
+                                      style="padding-left: 0px;"
+                                    >
+                                      <div
+                                        class="arrow-div"
+                                      >
+                                        <svg
+                                          aria-hidden="true"
+                                          fill="currentColor"
+                                          focusable="false"
+                                          height="16"
+                                          preserveAspectRatio="xMidYMid meet"
+                                          viewBox="0 0 16 16"
+                                          width="16"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <path
+                                            d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                          />
+                                        </svg>
+                                      </div>
+                                      <div
+                                        class="node-icon-div"
+                                      >
+                                        <svg
+                                          aria-hidden="true"
+                                          fill="currentColor"
+                                          focusable="false"
+                                          height="16"
+                                          preserveAspectRatio="xMidYMid meet"
+                                          viewBox="0 0 32 32"
+                                          width="16"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <path
+                                            d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                          />
+                                          <path
+                                            d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                          />
+                                        </svg>
+                                      </div>
+                                      <span
+                                        class="name"
+                                        id="root"
+                                        role="button"
+                                        tabindex="0"
+                                      >
+                                        test-root
+                                      </span>
+                                    </div>,
+                                    "sn-1": <div
+                                      class="tree-node tree-node--expanded tree-node__branch"
+                                      style="padding-left: 40px;"
+                                    >
+                                      <div
+                                        class="arrow-div"
+                                      >
+                                        <svg
+                                          aria-hidden="true"
+                                          fill="currentColor"
+                                          focusable="false"
+                                          height="16"
+                                          preserveAspectRatio="xMidYMid meet"
+                                          viewBox="0 0 16 16"
+                                          width="16"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <path
+                                            d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                          />
+                                        </svg>
+                                      </div>
+                                      <div
+                                        class="node-icon-div"
+                                      >
+                                        <svg
+                                          aria-hidden="true"
+                                          fill="currentColor"
+                                          focusable="false"
+                                          height="16"
+                                          preserveAspectRatio="xMidYMid meet"
+                                          viewBox="0 0 32 32"
+                                          width="16"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <path
+                                            d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                          />
+                                          <path
+                                            d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                          />
+                                        </svg>
+                                      </div>
+                                      <span
+                                        class="name"
+                                        id="sn-1"
+                                        role="button"
+                                        tabindex="0"
+                                      >
+                                        test-child-1
+                                      </span>
+                                    </div>,
+                                    "sn-1_sn-2": <div
+                                      aria-disabled="false"
+                                      aria-level="3"
+                                      aria-posinset="1"
+                                      aria-setsize="1"
+                                      class="tree-node tree-node--expanded tree-node__leaf"
+                                      role="treeitem"
+                                      style="padding-left: 80px;"
+                                      tabindex="-1"
+                                    >
+                                      <div
+                                        class="node-icon-div"
+                                      >
+                                        <svg
+                                          aria-hidden="true"
+                                          fill="currentColor"
+                                          focusable="false"
+                                          height="16"
+                                          preserveAspectRatio="xMidYMid meet"
+                                          viewBox="0 0 32 32"
+                                          width="16"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <path
+                                            d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                          />
+                                          <path
+                                            d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                          />
+                                        </svg>
+                                      </div>
+                                      <span
+                                        class="name"
+                                        id="sn-1_sn-2"
+                                        role="button"
+                                        tabindex="0"
+                                      >
+                                        test-child-2
+                                      </span>
+                                    </div>,
+                                  },
+                                }
+                              }
+                              level={3}
+                              multiSelect={false}
+                              nodeAction="check"
+                              nodeRefs={
+                                Object {
+                                  "current": Object {
+                                    "root": <li
+                                      aria-disabled="false"
+                                      aria-expanded="true"
+                                      aria-level="1"
+                                      aria-posinset="1"
+                                      aria-setsize="1"
+                                      class="tree-branch-wrapper"
+                                      role="treeitem"
+                                      tabindex="0"
+                                    >
+                                      <div
+                                        class="tree-node tree-node--expanded tree-node__branch"
+                                        style="padding-left: 0px;"
+                                      >
+                                        <div
+                                          class="arrow-div"
+                                        >
+                                          <svg
+                                            aria-hidden="true"
+                                            fill="currentColor"
+                                            focusable="false"
+                                            height="16"
+                                            preserveAspectRatio="xMidYMid meet"
+                                            viewBox="0 0 16 16"
+                                            width="16"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                            />
+                                          </svg>
+                                        </div>
+                                        <div
+                                          class="node-icon-div"
+                                        >
+                                          <svg
+                                            aria-hidden="true"
+                                            fill="currentColor"
+                                            focusable="false"
+                                            height="16"
+                                            preserveAspectRatio="xMidYMid meet"
+                                            viewBox="0 0 32 32"
+                                            width="16"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                            />
+                                            <path
+                                              d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                            />
+                                          </svg>
+                                        </div>
+                                        <span
+                                          class="name"
+                                          id="root"
+                                          role="button"
+                                          tabindex="0"
+                                        >
+                                          test-root
+                                        </span>
+                                      </div>
+                                      <ul
+                                        class="tree-node-group tree-node-group--expanded"
+                                        role="group"
+                                      >
+                                        <li
+                                          aria-disabled="false"
+                                          aria-expanded="true"
+                                          aria-level="2"
+                                          aria-posinset="1"
+                                          aria-setsize="1"
+                                          class="tree-branch-wrapper"
+                                          role="treeitem"
+                                          tabindex="-1"
+                                        >
+                                          <div
+                                            class="tree-node tree-node--expanded tree-node__branch"
+                                            style="padding-left: 40px;"
+                                          >
+                                            <div
+                                              class="arrow-div"
+                                            >
+                                              <svg
+                                                aria-hidden="true"
+                                                fill="currentColor"
+                                                focusable="false"
+                                                height="16"
+                                                preserveAspectRatio="xMidYMid meet"
+                                                viewBox="0 0 16 16"
+                                                width="16"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                              >
+                                                <path
+                                                  d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                />
+                                              </svg>
+                                            </div>
+                                            <div
+                                              class="node-icon-div"
+                                            >
+                                              <svg
+                                                aria-hidden="true"
+                                                fill="currentColor"
+                                                focusable="false"
+                                                height="16"
+                                                preserveAspectRatio="xMidYMid meet"
+                                                viewBox="0 0 32 32"
+                                                width="16"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                              >
+                                                <path
+                                                  d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                                />
+                                                <path
+                                                  d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                                />
+                                              </svg>
+                                            </div>
+                                            <span
+                                              class="name"
+                                              id="sn-1"
+                                              role="button"
+                                              tabindex="0"
+                                            >
+                                              test-child-1
+                                            </span>
+                                          </div>
+                                          <ul
+                                            class="tree-node-group tree-node-group--expanded"
+                                            role="group"
+                                          >
+                                            <li
+                                              class="tree-leaf-list-item tree-leaf-list-item--expanded"
+                                              role="none"
+                                            >
+                                              <div
+                                                aria-disabled="false"
+                                                aria-level="3"
+                                                aria-posinset="1"
+                                                aria-setsize="1"
+                                                class="tree-node tree-node--expanded tree-node__leaf"
+                                                role="treeitem"
+                                                style="padding-left: 80px;"
+                                                tabindex="-1"
+                                              >
+                                                <div
+                                                  class="node-icon-div"
+                                                >
+                                                  <svg
+                                                    aria-hidden="true"
+                                                    fill="currentColor"
+                                                    focusable="false"
+                                                    height="16"
+                                                    preserveAspectRatio="xMidYMid meet"
+                                                    viewBox="0 0 32 32"
+                                                    width="16"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                  >
+                                                    <path
+                                                      d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                                    />
+                                                    <path
+                                                      d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                                    />
+                                                  </svg>
+                                                </div>
+                                                <span
+                                                  class="name"
+                                                  id="sn-1_sn-2"
+                                                  role="button"
+                                                  tabindex="0"
+                                                >
+                                                  test-child-2
+                                                </span>
+                                              </div>
+                                            </li>
+                                          </ul>
+                                        </li>
+                                      </ul>
+                                    </li>,
+                                    "sn-1": <li
+                                      aria-disabled="false"
+                                      aria-expanded="true"
+                                      aria-level="2"
+                                      aria-posinset="1"
+                                      aria-setsize="1"
+                                      class="tree-branch-wrapper"
+                                      role="treeitem"
+                                      tabindex="-1"
+                                    >
+                                      <div
+                                        class="tree-node tree-node--expanded tree-node__branch"
+                                        style="padding-left: 40px;"
+                                      >
+                                        <div
+                                          class="arrow-div"
+                                        >
+                                          <svg
+                                            aria-hidden="true"
+                                            fill="currentColor"
+                                            focusable="false"
+                                            height="16"
+                                            preserveAspectRatio="xMidYMid meet"
+                                            viewBox="0 0 16 16"
+                                            width="16"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                            />
+                                          </svg>
+                                        </div>
+                                        <div
+                                          class="node-icon-div"
+                                        >
+                                          <svg
+                                            aria-hidden="true"
+                                            fill="currentColor"
+                                            focusable="false"
+                                            height="16"
+                                            preserveAspectRatio="xMidYMid meet"
+                                            viewBox="0 0 32 32"
+                                            width="16"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                            />
+                                            <path
+                                              d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                            />
+                                          </svg>
+                                        </div>
+                                        <span
+                                          class="name"
+                                          id="sn-1"
+                                          role="button"
+                                          tabindex="0"
+                                        >
+                                          test-child-1
+                                        </span>
+                                      </div>
+                                      <ul
+                                        class="tree-node-group tree-node-group--expanded"
+                                        role="group"
+                                      >
+                                        <li
+                                          class="tree-leaf-list-item tree-leaf-list-item--expanded"
+                                          role="none"
+                                        >
+                                          <div
+                                            aria-disabled="false"
+                                            aria-level="3"
+                                            aria-posinset="1"
+                                            aria-setsize="1"
+                                            class="tree-node tree-node--expanded tree-node__leaf"
+                                            role="treeitem"
+                                            style="padding-left: 80px;"
+                                            tabindex="-1"
+                                          >
+                                            <div
+                                              class="node-icon-div"
+                                            >
+                                              <svg
+                                                aria-hidden="true"
+                                                fill="currentColor"
+                                                focusable="false"
+                                                height="16"
+                                                preserveAspectRatio="xMidYMid meet"
+                                                viewBox="0 0 32 32"
+                                                width="16"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                              >
+                                                <path
+                                                  d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                                />
+                                                <path
+                                                  d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                                />
+                                              </svg>
+                                            </div>
+                                            <span
+                                              class="name"
+                                              id="sn-1_sn-2"
+                                              role="button"
+                                              tabindex="0"
+                                            >
+                                              test-child-2
+                                            </span>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </li>,
+                                    "sn-1_sn-2": <div
+                                      aria-disabled="false"
+                                      aria-level="3"
+                                      aria-posinset="1"
+                                      aria-setsize="1"
+                                      class="tree-node tree-node--expanded tree-node__leaf"
+                                      role="treeitem"
+                                      style="padding-left: 80px;"
+                                      tabindex="-1"
+                                    >
+                                      <div
+                                        class="node-icon-div"
+                                      >
+                                        <svg
+                                          aria-hidden="true"
+                                          fill="currentColor"
+                                          focusable="false"
+                                          height="16"
+                                          preserveAspectRatio="xMidYMid meet"
+                                          viewBox="0 0 32 32"
+                                          width="16"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <path
+                                            d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                          />
+                                          <path
+                                            d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                          />
+                                        </svg>
+                                      </div>
+                                      <span
+                                        class="name"
+                                        id="sn-1_sn-2"
+                                        role="button"
+                                        tabindex="0"
+                                      >
+                                        test-child-2
+                                      </span>
+                                    </div>,
+                                  },
+                                }
+                              }
+                              nodeRenderer={[Function]}
+                              posinset={1}
+                              propagateCollapse={false}
+                              propagateSelect={false}
+                              propagateSelectUpwards={true}
+                              selectedIds={Set {}}
+                              setsize={1}
+                              state={
+                                Object {
+                                  "controlledIds": Set {},
+                                  "disabledIds": Set {},
+                                  "expandedIds": Set {
+                                    0,
+                                    "root",
+                                    "sn-1",
+                                    "sn-1_sn-2",
+                                  },
+                                  "halfSelectedIds": Set {},
+                                  "isFocused": false,
+                                  "lastInteractedWith": null,
+                                  "lastManuallyToggled": null,
+                                  "lastUserSelect": "root",
+                                  "selectedIds": Set {},
+                                  "tabbableId": "root",
+                                }
+                              }
+                              tabbableId="root"
+                              togglableSelect={true}
+                            >
+                              <li
+                                className="tree-leaf-list-item tree-leaf-list-item--expanded"
+                                role="none"
+                              >
+                                <div
+                                  aria-disabled={false}
+                                  aria-level={3}
+                                  aria-posinset={1}
+                                  aria-setsize={1}
+                                  className="tree-node tree-node--expanded tree-node__leaf"
+                                  disabled={false}
+                                  onClick={[Function]}
+                                  role="treeitem"
+                                  style={
+                                    Object {
+                                      "paddingLeft": 80,
+                                    }
+                                  }
+                                  tabIndex={-1}
+                                >
+                                  <div
+                                    className="node-icon-div"
+                                  >
+                                    <NodeIcon
+                                      icon="fa fa-camera"
+                                    >
+                                      <ForwardRef(Camera16)>
+                                        <Icon
+                                          fill="currentColor"
+                                          height={16}
+                                          preserveAspectRatio="xMidYMid meet"
+                                          viewBox="0 0 32 32"
+                                          width={16}
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <svg
+                                            aria-hidden={true}
+                                            fill="currentColor"
+                                            focusable="false"
+                                            height={16}
+                                            preserveAspectRatio="xMidYMid meet"
+                                            viewBox="0 0 32 32"
+                                            width={16}
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M29,26H3a1,1,0,0,1-1-1V8A1,1,0,0,1,3,7H9.46l1.71-2.55A1,1,0,0,1,12,4h8a1,1,0,0,1,.83.45L22.54,7H29a1,1,0,0,1,1,1V25A1,1,0,0,1,29,26ZM4,24H28V9H22a1,1,0,0,1-.83-.45L19.46,6H12.54L10.83,8.55A1,1,0,0,1,10,9H4Z"
+                                            />
+                                            <path
+                                              d="M16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Zm0-10a4,4,0,1,0,4,4A4,4,0,0,0,16,12Z"
+                                            />
+                                          </svg>
+                                        </Icon>
+                                      </ForwardRef(Camera16)>
+                                    </NodeIcon>
+                                  </div>
+                                  <span
+                                    className="name"
+                                    id="sn-1_sn-2"
+                                    key="sn-1_sn-2"
+                                    onClick={[Function]}
+                                    onKeyDown={[Function]}
+                                    role="button"
+                                    tabIndex={0}
+                                  >
+                                    test-child-2
+                                  </span>
+                                </div>
+                              </li>
+                            </ie>
+                          </ul>
+                        </se>
+                      </li>
+                    </ie>
+                  </ul>
+                </se>
+              </li>
+            </ie>
+          </ul>
+        </ForwardRef>
+      </div>
+    </div>
+  </SnapshotTree>
+</Provider>
+`;
