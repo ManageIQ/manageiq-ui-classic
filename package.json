@@ -178,7 +178,6 @@
     "bootstrap": "~3.4.1",
     "bootstrap-select": "~1.13.18",
     "cross-spawn": "~7.0.5",
-    "@cypress/request": "~3.0.0",
     "decode-uri-component": "~0.2.1",
     "form-data": "~3.0.4",
     "got": "~11.8.0",
@@ -191,6 +190,7 @@
     "moment": "^2.29.4",
     "moment-timezone": "~0.5.40",
     "path-to-regexp": "~1.9.0",
+    "request": "npm:@cypress/request@^3.0.9",
     "semver-regex": "~4.0.3",
     "tar": "~6.2.1",
     "tough-cookie": "~4.1.3"
