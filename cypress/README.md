@@ -52,6 +52,10 @@ ManageIQ implements the following cypress extensions:
 * `cy.menu('primaryMenu', 'secondaryMenu', 'tertiaryMenu')` - navigates the side bar menu items. `primaryMenu`: String for the outer menu item on the side bar. `secondaryMenu`: String for the secondary menu when a side bar menu item is clicked. `tertiaryMenu`: String (optional) for the tertiary menu when a side bar secondary item is clicked. (e.g. `cy.menu('Overview', 'Dashboard')` will navigate to the Overview > Dashboard page while `cy.menu('Overview', 'Chargeback', 'Rates')` will navigate to the Overview > Chargeback > Rates page).
 * `cy.menuItems()` - returns an Array of `{ title: String, items: Array of { title: String, href: String, items: Array of { title: String, href: String } }}` for the menu items on the side bar. `title`: String for the menu item title. `href`: String for the url to navigate to, included when the menu item has no children. `items`: Array of the same object with `title` and `href`/`items`, this is included when the menu item has children menu items.
 
+##### miq_data_table_commands
+
+* `cy.selectTableRowsByText({ textArray })` - selects table rows that contain any of the specified text values. Iterates through each text in the array and finds the corresponding row. If any text is not found in the table, it throws an error immediately. `textArray` is an array of text values to match against table rows. e.g. `cy.selectTableRowsByText({ textArray: ['Option 1', 'Option 2'] });`
+
 ##### tabs
 
 * `cy.tabs({ tabLabel })` - finds a tab element within a tablist that contains the specified label text and automatically clicks it to navigate to the tab. It requires a `tabLabel` parameter and will throw an error if none is provided. `tabLabel` is the text content of the tab to select. Returns a Cypress chainable element representing the selected tab. e.g. `cy.tabs({ tabLabel: 'Collect Logs' });`,  `cy.tabs({ tabLabel: 'Settings' }).then(() => { cy.get('input#name').should('be.visible'); });`
