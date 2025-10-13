@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   DatePicker,
   DatePickerInput,
@@ -9,9 +10,7 @@ import {
 } from 'carbon-components-react';
 import { getCurrentDate, getCurrentTimeAndPeriod } from '../service-dialog-form/helper';
 
-const CustomDateTimePicker = (field) => {
-  const { initialData, onChange } = field;
-
+const CustomDateTimePicker = ({ label, onChange, initialData }) => {
   const [date, setDate] = useState(() => initialData.date || getCurrentDate());
   const [time, setTime] = useState(() => initialData.time || getCurrentTimeAndPeriod().time);
   const [isValid, setIsValid] = useState(true);
@@ -51,7 +50,7 @@ const CustomDateTimePicker = (field) => {
 
   return (
     <div>
-      <FormLabel>{field.label}</FormLabel>
+      <FormLabel>{label}</FormLabel>
       <DatePicker
         datePickerType="single"
         onChange={handleDateChange}
@@ -89,4 +88,22 @@ const CustomDateTimePicker = (field) => {
   );
 };
 
+CustomDateTimePicker.propTypes = {
+  initialData: PropTypes.shape({
+    date: PropTypes.string,
+    time: PropTypes.string,
+    period: PropTypes.string,
+  }),
+  onChange: PropTypes.func,
+  label: PropTypes.string,
+};
+
+CustomDateTimePicker.defaultProps = {
+  initialData: { date: '', time: '', period: '' },
+  onChange: () => {},
+  label: '',
+};
+
 export default CustomDateTimePicker;
+
+// Made with Bob
