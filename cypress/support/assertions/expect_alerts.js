@@ -78,3 +78,75 @@ Cypress.Commands.add(
     });
   }
 );
+
+/**
+ * Custom Cypress command to validate and interact with modal dialogs.
+ * This command verifies the modal content and clicks a specified button in the modal footer.
+ *
+ * @param {Object} options - Options for the command.
+ * @param {string} [options.modalHeaderText] - Optional text to verify in the modal header.
+ * @param {string[]} [options.modalContentExpectedTexts] - Optional array of text strings that should be present in the modal content.
+ * @param {string} options.targetFooterButtonText - Text of the button in the modal footer to click (required).
+ *
+ * @example
+ * // Verify a confirmation modal and click "Confirm"
+ * cy.expect_modal({
+ *   modalHeaderText: 'Confirmation',
+ *   modalContentExpectedTexts: ['Are you sure you want to proceed?'],
+ *   targetFooterButtonText: 'Confirm'
+ * });
+ *
+ * @example
+ * // Verify a modal with multiple content texts and click "Cancel"
+ * cy.expect_modal({
+ *   modalHeaderText: 'Warning',
+ *   modalContentExpectedTexts: [
+ *     'action cannot be undone',
+ *     'data will be permanently deleted'
+ *   ],
+ *   targetFooterButtonText: 'Cancel'
+ * });
+ *
+ * @example
+ * // Just click "OK" in a modal without verifying content
+ * cy.expect_modal({
+ *   targetFooterButtonText: 'OK'
+ * });
+ */
+Cypress.Commands.add(
+  'expect_modal',
+  ({
+    modalHeaderText,
+    modalContentExpectedTexts = [],
+    targetFooterButtonText,
+  }) => {
+    if (!targetFooterButtonText) {
+      cy.logAndThrowError(
+        'targetFooterButtonText must be provided to identify the button that dismisses the modal'
+      );
+    }
+
+    if (modalHeaderText) {
+      cy.get('.bx--modal-container .bx--modal-header').should((header) => {
+        const headerText = header.text().toLowerCase();
+        expect(headerText).to.include(modalHeaderText.toLowerCase());
+      });
+    }
+
+    if (modalContentExpectedTexts && modalContentExpectedTexts.length) {
+      modalContentExpectedTexts.forEach((text) => {
+        cy.get('.bx--modal-container .bx--modal-content').should((content) => {
+          const contentText = content.text().toLowerCase();
+          expect(contentText).to.include(text.toLowerCase());
+        });
+      });
+    }
+
+    return cy
+      .contains(
+        '.bx--modal-container .bx--modal-footer button',
+        targetFooterButtonText
+      )
+      .click();
+  }
+);
