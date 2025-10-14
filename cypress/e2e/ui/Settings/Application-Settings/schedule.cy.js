@@ -534,36 +534,6 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
   });
 
   afterEach(() => {
-    cy.url()
-      .then((url) => {
-        // Ensures navigation to Settings -> Application-Settings in the UI
-        if (!url.endsWith(COMPONENT_ROUTE_URL)) {
-          cy.visit(COMPONENT_ROUTE_URL);
-        }
-        cy.accordion(SETTINGS_OPTION);
-      })
-      .then(() => {
-        // Iterate and clean up any leftover schedules created during the test
-        cy.get('div.panel-collapse.collapse.in li.list-group-item').each(
-          (item) => {
-            const text = item.text().trim();
-            if (
-              text === INITIAL_SCHEDULE_NAME ||
-              text === EDITED_SCHEDULE_NAME
-            ) {
-              if (!item.hasClass('node-selected')) {
-                cy.wrap(item).click();
-              }
-              cy.expect_browser_confirm_with_text({
-                confirmTriggerFn: () =>
-                  selectConfigMenu(DELETE_SCHEDULE_CONFIG_OPTION),
-                containsText: BROWSER_ALERT_DELETE_CONFIRM_TEXT,
-              });
-              return false; // exit iteration
-            }
-            return null; // has no impact, just to get rid of eslint warning
-          }
-        );
-      });
+    cy.appDbState('restore');
   });
 });

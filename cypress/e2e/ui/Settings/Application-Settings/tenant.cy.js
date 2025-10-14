@@ -261,28 +261,6 @@ function editQuotasTable(quotaName = ALLOCATED_STORAGE_QUOTA, quotaValue) {
   });
 }
 
-function rollbackQuotas() {
-  cy.toolbar(CONFIG_TOOLBAR_BUTTON, MANAGE_QUOTAS_CONFIG_OPTION);
-  let quotaDisabled = false;
-  cy.get('#rbac_details .miq-data-table table tbody tr').each((row) => {
-    const quotaValueInputWrapper = row.find('div.bx--text-input-wrapper');
-    const isEnabled = !quotaValueInputWrapper.hasClass(
-      'bx--text-input-wrapper--readonly'
-    );
-    if (isEnabled) {
-      quotaDisabled = true;
-      cy.wrap(row).find('span.bx--toggle__switch').click();
-    }
-  });
-  // Save the form only if any quotas are reverted to disabled.
-  cy.then(() => {
-    if (quotaDisabled) {
-      // Saving the form
-      saveFormWithOptionalFlashCheck({ assertFlashMessage: false });
-    }
-  });
-}
-
 describe('Automate Tenant form operations: Settings > Application Settings > Access Control > Tenants', () => {
   beforeEach(() => {
     cy.login();
@@ -337,7 +315,7 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
       });
 
       afterEach(() => {
-        confirmUiNavigation(() => deleteAccordionItems([PROJECT_NAME_VALUE]));
+        cy.appDbState('restore');
       });
     });
 
@@ -362,7 +340,7 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
       });
 
       afterEach(() => {
-        confirmUiNavigation(() => rollbackQuotas());
+        cy.appDbState('restore');
       });
     });
   });
@@ -417,9 +395,7 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
       });
 
       afterEach(() => {
-        confirmUiNavigation(() =>
-          deleteAccordionItems([INITIAL_CHILD_TENANT_NAME])
-        );
+        cy.appDbState('restore');
       });
     });
 
@@ -456,10 +432,7 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
       });
 
       afterEach(() => {
-        deleteAccordionItems([
-          INITIAL_CHILD_TENANT_NAME,
-          EDITED_TENANT_NAME_VALUE,
-        ]);
+        cy.appDbState('restore');
       });
     });
 
@@ -479,10 +452,7 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
       });
 
       afterEach(() => {
-        confirmUiNavigation(() => {
-          deleteAccordionItems([PROJECT_NAME_VALUE]);
-          deleteAccordionItems([INITIAL_CHILD_TENANT_NAME]);
-        });
+        cy.appDbState('restore');
       });
     });
 
@@ -508,9 +478,7 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
       });
 
       afterEach(() => {
-        confirmUiNavigation(() => {
-          deleteAccordionItems([INITIAL_CHILD_TENANT_NAME]);
-        });
+        cy.appDbState('restore');
       });
     });
   });
