@@ -202,7 +202,6 @@ function resetParentTenantForm() {
   );
 }
 
-// TODO: Aside from test that validates deletion, replace with a more reliable cleanup mechanism when ready
 function deleteAccordionItems(accordionsToDelete) {
   cy.get(`#${ACCESS_CONTROL_ACCORDION_ITEM_ID} li.list-group-item`).each(
     (item) => {
@@ -274,9 +273,17 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
   });
 
   describe('Validate Parent Tenant operations: Edit, Add Project, Manage Quotas', () => {
+    afterEach(() => {
+      cy.appDbState('restore');
+    });
+
     describe('Validate Edit parent tenant', () => {
       beforeEach(() => {
         cy.toolbar(CONFIG_TOOLBAR_BUTTON, EDIT_TENANT_CONFIG_OPTION);
+      });
+
+      afterEach(() => {
+        confirmUiNavigation(() => resetParentTenantForm());
       });
 
       it('Validate Edit tenant form elements', () => {
@@ -303,19 +310,11 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
         );
         saveFormWithOptionalFlashCheck({ apiMethod: 'PUT' });
       });
-
-      afterEach(() => {
-        confirmUiNavigation(() => resetParentTenantForm());
-      });
     });
 
     describe('Validate Add Project to parent tenant', () => {
       it('Validate Add Project function', () => {
         addProjectToTenant();
-      });
-
-      afterEach(() => {
-        cy.appDbState('restore');
       });
     });
 
@@ -338,14 +337,14 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
         editQuotasTable(ALLOCATED_STORAGE_QUOTA, '10');
         saveFormWithOptionalFlashCheck();
       });
-
-      afterEach(() => {
-        cy.appDbState('restore');
-      });
     });
   });
 
   describe('Validate Child Tenant operations: Add, Edit, Add Project, Manage Quotas', () => {
+    afterEach(() => {
+      cy.appDbState('restore');
+    });
+
     describe('Validate Add child tenant function', () => {
       beforeEach(() => {
         cy.toolbar(CONFIG_TOOLBAR_BUTTON, ADD_CHILD_TENANT_CONFIG_OPTION);
@@ -393,10 +392,6 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
         );
         cancelFormWithOptionalFlashCheck(false);
       });
-
-      afterEach(() => {
-        cy.appDbState('restore');
-      });
     });
 
     describe('Validate Edit child tenant', () => {
@@ -430,10 +425,6 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
         );
         saveFormWithOptionalFlashCheck({ apiMethod: 'PUT' });
       });
-
-      afterEach(() => {
-        cy.appDbState('restore');
-      });
     });
 
     describe('Validate Add Project to child tenant', () => {
@@ -449,10 +440,6 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
         addProjectToTenant();
         deleteAccordionItems([INITIAL_CHILD_TENANT_NAME]);
         cy.expect_flash(flashClassMap.error, FLASH_MESSAGE_CANT_DELETE);
-      });
-
-      afterEach(() => {
-        cy.appDbState('restore');
       });
     });
 
@@ -475,10 +462,6 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
       it('Validate Manage Quotas function', () => {
         editQuotasTable(ALLOCATED_VM_QUOTA, '10');
         saveFormWithOptionalFlashCheck();
-      });
-
-      afterEach(() => {
-        cy.appDbState('restore');
       });
     });
   });
