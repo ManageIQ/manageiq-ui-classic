@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { flashClassMap } from '../../../../../support/assertions/assertion_constants';
+import { flashClassMap } from '@cypress-dir/support/assertions/assertion_constants.js';
 
 // Component route url
 const COMPONENT_ROUTE_URL = 'miq_ae_class/explorer#/';
