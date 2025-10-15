@@ -273,10 +273,6 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
   });
 
   describe('Validate Parent Tenant operations: Edit, Add Project, Manage Quotas', () => {
-    afterEach(() => {
-      cy.appDbState('restore');
-    });
-
     describe('Validate Edit parent tenant', () => {
       beforeEach(() => {
         cy.toolbar(CONFIG_TOOLBAR_BUTTON, EDIT_TENANT_CONFIG_OPTION);
@@ -313,6 +309,10 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
     });
 
     describe('Validate Add Project to parent tenant', () => {
+      afterEach(() => {
+        cy.appDbState('restore');
+      });
+
       it('Validate Add Project function', () => {
         addProjectToTenant();
       });
@@ -321,6 +321,10 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
     describe('Validate Manage Quotas in parent tenant', () => {
       beforeEach(() => {
         cy.toolbar(CONFIG_TOOLBAR_BUTTON, MANAGE_QUOTAS_CONFIG_OPTION);
+      });
+
+      afterEach(() => {
+        cy.appDbState('restore');
       });
 
       it('Validate Reset & Cancel buttons in Manage Quotas form', () => {
@@ -341,13 +345,13 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
   });
 
   describe('Validate Child Tenant operations: Add, Edit, Add Project, Manage Quotas', () => {
-    afterEach(() => {
-      cy.appDbState('restore');
-    });
-
     describe('Validate Add child tenant function', () => {
       beforeEach(() => {
         cy.toolbar(CONFIG_TOOLBAR_BUTTON, ADD_CHILD_TENANT_CONFIG_OPTION);
+      });
+
+      afterEach(() => {
+        cy.appDbState('restore');
       });
 
       it('Validate Add child tenant form elements', () => {
@@ -400,6 +404,10 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
         cy.toolbar(CONFIG_TOOLBAR_BUTTON, EDIT_TENANT_CONFIG_OPTION);
       });
 
+      afterEach(() => {
+        cy.appDbState('restore');
+      });
+
       it('Validate Edit child tenant form elements', () => {
         validateFormElements();
         cancelFormWithOptionalFlashCheck();
@@ -432,6 +440,10 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
         createAndSelectChildTenant();
       });
 
+      afterEach(() => {
+        cy.appDbState('restore');
+      });
+
       it('Validate Add Project function', () => {
         addProjectToTenant();
       });
@@ -447,6 +459,10 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
       beforeEach(() => {
         createAndSelectChildTenant();
         cy.toolbar(CONFIG_TOOLBAR_BUTTON, MANAGE_QUOTAS_CONFIG_OPTION);
+      });
+
+      afterEach(() => {
+        cy.appDbState('restore');
       });
 
       it('Validate Reset & Cancel buttons in Manage Quotas form', () => {
