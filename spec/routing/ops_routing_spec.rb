@@ -42,10 +42,6 @@ describe "routing for OpsController" do
     diagnostics_server_list
     diagnostics_tree_select
     explorer
-    forest_accept
-    forest_delete
-    forest_form_field_changed
-    forest_select
     label_tag_mapping_delete
     label_tag_mapping_edit
     label_tag_mapping_update
