@@ -125,7 +125,7 @@
     "angular-mocks": "~1.8.0",
     "autoprefixer": "~9.8.0",
     "babel-jest": "~25.5.1",
-    "babel-loader": "~8.2.0",
+    "babel-loader": "~8.4.0",
     "compression-webpack-plugin": "^6.1.1",
     "core-js": "~3.6.4",
     "core-js-compat": "~3.2.1",
