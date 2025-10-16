@@ -1,5 +1,11 @@
 /* eslint-disable no-undef */
 import { flashClassMap } from '../../../../support/assertions/assertion_constants';
+import {
+  LABEL_CONFIG_KEYS,
+  FIELD_CONFIG_KEYS,
+  FIELD_TYPES,
+  BUTTON_CONFIG_KEYS,
+} from '../../../../support/commands/constants/command_constants.js';
 
 // Component route url
 const COMPONENT_ROUTE_URL = '/ops/explorer#/';
@@ -78,51 +84,63 @@ function addZone() {
 function validateFormElements(isEditForm = false) {
   cy.expect_explorer_title(FORM_HEADER_FRAGMENT);
   cy.get('#main-content .bx--form h3').contains(INFO_SUB_HEADER);
-  cy.getFormLabelByForAttribute({ forValue: 'name' })
-    .should('be.visible')
-    .and('contain.text', NAME_FIELD_LABEL);
-  cy.getFormInputFieldByIdAndType({ inputId: 'name' })
-    .should('be.visible')
-    .then((nameField) => {
-      if (isEditForm) {
-        expect(nameField).to.be.disabled;
-      } else {
-        expect(nameField).to.not.be.disabled;
-      }
-    });
-  cy.getFormLabelByForAttribute({ forValue: 'description' })
-    .should('be.visible')
-    .and('contain.text', DESCRIPTION_FIELD_LABEL);
-  cy.getFormInputFieldByIdAndType({ inputId: 'description' })
-    .should('be.visible')
-    .and('be.enabled');
-  cy.getFormLabelByForAttribute({ forValue: 'settings.proxy_server_ip' })
-    .should('be.visible')
-    .and('contain.text', SERVER_IP_FIELD_LABEL);
-  cy.getFormInputFieldByIdAndType({ inputId: 'settings.proxy_server_ip' })
-    .should('be.visible')
-    .and('be.enabled');
-  cy.get('#main-content .bx--form h3').contains(SETTINGS_SUB_HEADER);
-  cy.getFormLabelByForAttribute({ forValue: 'settings.concurrent_vm_scans' })
-    .should('be.visible')
-    .and('contain.text', MAX_SCAN_FIELD_LABEL);
-  cy.getFormSelectFieldById({ selectId: 'settings.concurrent_vm_scans' })
-    .should('be.visible')
-    .and('be.enabled');
-  cy.getFormFooterButtonByTypeWithText({ buttonText: CANCEL_BUTTON_TEXT })
-    .should('be.visible')
-    .and('be.enabled');
-  if (isEditForm) {
-    cy.getFormFooterButtonByTypeWithText({ buttonText: RESET_BUTTON_TEXT })
-      .should('be.visible')
-      .and('be.disabled');
-  }
-  cy.getFormFooterButtonByTypeWithText({
-    buttonText: isEditForm ? SAVE_BUTTON_TEXT : ADD_BUTTON_TEXT,
-    buttonType: 'submit',
-  })
-    .should('be.visible')
-    .and('be.disabled');
+  // Validate form labels
+  cy.validateFormLabels([
+    {
+      [LABEL_CONFIG_KEYS.FOR_VALUE]: 'name',
+      [LABEL_CONFIG_KEYS.EXPECTED_TEXT]: NAME_FIELD_LABEL,
+    },
+    {
+      [LABEL_CONFIG_KEYS.FOR_VALUE]: 'description',
+      [LABEL_CONFIG_KEYS.EXPECTED_TEXT]: DESCRIPTION_FIELD_LABEL,
+    },
+    {
+      [LABEL_CONFIG_KEYS.FOR_VALUE]: 'settings.proxy_server_ip',
+      [LABEL_CONFIG_KEYS.EXPECTED_TEXT]: SERVER_IP_FIELD_LABEL,
+    },
+    {
+      [LABEL_CONFIG_KEYS.FOR_VALUE]: 'settings.concurrent_vm_scans',
+      [LABEL_CONFIG_KEYS.EXPECTED_TEXT]: MAX_SCAN_FIELD_LABEL,
+    },
+  ]);
+  // Validate form fields
+  cy.validateFormFields([
+    {
+      [FIELD_CONFIG_KEYS.ID]: 'name',
+      [FIELD_CONFIG_KEYS.SHOULD_BE_DISABLED]: isEditForm,
+    },
+    {
+      [FIELD_CONFIG_KEYS.ID]: 'description',
+    },
+    {
+      [FIELD_CONFIG_KEYS.ID]: 'settings.proxy_server_ip',
+    },
+    {
+      [FIELD_CONFIG_KEYS.ID]: 'settings.concurrent_vm_scans',
+      [FIELD_CONFIG_KEYS.FIELD_TYPE]: FIELD_TYPES.SELECT,
+    },
+  ]);
+  // Validate form footer buttons
+  cy.validateFormFooterButtons([
+    {
+      [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: CANCEL_BUTTON_TEXT,
+    },
+    {
+      [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: isEditForm
+        ? SAVE_BUTTON_TEXT
+        : ADD_BUTTON_TEXT,
+      [BUTTON_CONFIG_KEYS.BUTTON_TYPE]: 'submit',
+      [BUTTON_CONFIG_KEYS.SHOULD_BE_DISABLED]: true,
+    },
+    ...(isEditForm
+      ? [
+          {
+            [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: RESET_BUTTON_TEXT,
+            [BUTTON_CONFIG_KEYS.SHOULD_BE_DISABLED]: true,
+          },
+        ]
+      : []),
+  ]);
 }
 
 function cleanUp() {
