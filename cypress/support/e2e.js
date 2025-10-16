@@ -41,6 +41,8 @@
 
 // Commands
 import './commands/api_commands.js';
+import './commands/common.js'
+import './commands/customization/service-dialogs.js'
 import './commands/custom_logging_commands.js';
 import './commands/element_selectors.js';
 import './commands/explorer.js';
