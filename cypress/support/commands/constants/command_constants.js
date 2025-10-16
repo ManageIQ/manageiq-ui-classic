@@ -33,3 +33,13 @@ export const BUTTON_CONFIG_KEYS = {
 };
 
 /* ========================================================== */
+
+/**
+ * Constant for dual-list component action types
+ */
+export const DUAL_LIST_ACTION_TYPE = {
+  ADD: 'add',
+  REMOVE: 'remove',
+  ADD_ALL: 'add-all',
+  REMOVE_ALL: 'remove-all',
+};
