@@ -1,12 +1,18 @@
 require 'database_cleaner-active_record'
+require 'thread'
 
 module DatabaseCleaner
   module ActiveRecord
     # SeededDeletion is a strategy that deletes all records from tables except those that existed before it was instantiated
     # This is useful for tests that need the seeded data to be present.
     class SeededDeletion < Deletion
+      # Class level mutex for thread safety around start/clean actions.
+      @mutex = Mutex.new
+
       def clean
-        connection.transaction(:requires_new => true) do
+        # Use a transaction isolation to prevent other threads
+        # from modifying the tables during deletion
+        connection.transaction(:requires_new => true, :isolation => :read_committed) do
           super
         end
       end
@@ -17,12 +23,14 @@ module DatabaseCleaner
       end
 
       def self.table_max_id_cache
-        @table_max_id_cache ||= {}
+        # wrap the cache initialization in a mutex to ensure thread safety
+        @mutex.synchronize { @table_max_id_cache ||= {} }
       end
 
-      # Memoize the maximum ID for each class table with non-zero number of rows
       def self.table_max_id_cache=(table_id_hash)
-        @table_max_id_cache ||= table_id_hash
+        @mutex.synchronize do
+          @table_max_id_cache = table_id_hash
+        end
       end
 
       delegate :table_max_id_cache, to: :class
