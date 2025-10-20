@@ -42,6 +42,7 @@
 // Commands
 import './commands/api_commands.js';
 import './commands/custom_logging_commands.js';
+import './commands/dual_list_commands.js';
 import './commands/element_selectors.js';
 import './commands/explorer.js';
 import './commands/form_elements_validation_commands.js';

@@ -76,6 +76,10 @@ ManageIQ implements the following cypress extensions:
 
 * `cy.logAndThrowError(messageToLog, messageToThrow)` - Logs a custom error message to Cypress log and then throws an error. `messageToLog` is the message to display in the Cypress command log. `messageToThrow` is the optional error message to throw, defaults to `messageToLog`. e.g. `cy.logAndThrowError('This is the logged message', 'This is the thrown error message');`, `cy.logAndThrowError('This is the message that gets logged and thrown');`
 
+##### dual_list_commands
+
+* `cy.dualListAction({ actionType, optionsToSelect })` - performs actions on a dual-list component (components with two lists where items can be moved between them). `actionType` is the type of action to perform, use values from DUAL_LIST_ACTION_TYPE: 'add' (move selected items from left to right), 'remove' (move selected items from right to left), 'add-all' (move all items from left to right), or 'remove-all' (move all items from right to left). `optionsToSelect` is an array of option texts to select (required for 'add' and 'remove' actions, not needed for 'add-all' and 'remove-all'). e.g. `cy.dualListAction({ actionType: DUAL_LIST_ACTION_TYPE.ADD, optionsToSelect: ['Option 1', 'Option 2'] });`, `cy.dualListAction({ actionType: DUAL_LIST_ACTION_TYPE.REMOVE, optionsToSelect: ['Option 3'] });`, `cy.dualListAction({ actionType: DUAL_LIST_ACTION_TYPE.ADD_ALL });`, `cy.dualListAction({ actionType: DUAL_LIST_ACTION_TYPE.REMOVE_ALL });`
+
 ##### element_selectors
 
 * `cy.getFormFooterButtonByTypeWithText({ buttonType, buttonText })` - retrieves form footer button by its name and type. `buttonText` is the name or text content of the button. `buttonType` is the HTML button type (e.g., 'button', 'submit', 'reset'). Defaults to 'button'. e.g. `cy.getFormFooterButtonByType({buttonType: 'Reset', buttonText: 'reset'});`, `cy.getFormFooterButtonByTypeWithText({buttonText: 'Cancel'});`
