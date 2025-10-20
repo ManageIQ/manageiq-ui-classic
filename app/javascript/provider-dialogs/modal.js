@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {
   ComposedModal, ModalHeader, ModalFooter, ModalBody,
-} from 'carbon-components-react';
+} from "@carbon/react";
 import { Provider } from 'react-redux';
 import FormButtonsRedux from '../forms/form-buttons-redux';
 

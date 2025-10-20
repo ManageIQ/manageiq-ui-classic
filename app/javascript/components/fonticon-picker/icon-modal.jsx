@@ -5,7 +5,7 @@ import {
   Tabs,
   Tab,
   Modal, ModalBody,
-} from 'carbon-components-react';
+} from "@carbon/react";
 import IconList from './icon-list';
 
 const IconModal = ({

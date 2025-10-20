@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { OverflowMenu, OverflowMenuItem } from 'carbon-components-react';
+import { OverflowMenu, OverflowMenuItem } from "@carbon/react";
 import { ChevronDown20 } from '@carbon/icons-react';
 
 const addClick = (item) =>

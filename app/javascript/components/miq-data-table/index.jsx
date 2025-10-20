@@ -9,7 +9,7 @@ import {
   TableBody,
   TableSelectAll,
   TableSelectRow,
-} from 'carbon-components-react';
+} from "@carbon/react";
 import classNames from 'classnames';
 import MiqPagination from '../miq-pagination';
 import {

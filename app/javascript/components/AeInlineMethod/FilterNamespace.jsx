@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Select, SelectItem, Search,
-} from 'carbon-components-react';
+} from "@carbon/react";
 import { noSelect } from './helper';
 
 const FilterNamespace = ({ domains, onSearch }) => {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import {
   Tag, Loading, Link,
-} from 'carbon-components-react';
+} from "@carbon/react";
 import PropTypes from 'prop-types';
 import { workflowStatusData, workflowStateTypes } from './data';
 import MiqDataTable from '../miq-data-table';

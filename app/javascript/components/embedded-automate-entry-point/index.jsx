@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button, TextInput } from 'carbon-components-react';
+import { Button, TextInput } from "@carbon/react";
 import { Close16, TreeViewAlt16 } from '@carbon/icons-react';
 import { useFieldApi } from '@@ddf';
 import AutomateEntryPoints from '../automate-entry-points';

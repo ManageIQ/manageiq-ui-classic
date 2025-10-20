@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Tree, ActionTypes } from 'react-wooden-tree';
-import { FormGroup } from 'carbon-components-react';
+import { FormGroup } from "@carbon/react";
 import { prepareProps } from '@data-driven-forms/carbon-component-mapper';
 import { useFieldApi, useFormApi } from '@data-driven-forms/react-form-renderer';
 

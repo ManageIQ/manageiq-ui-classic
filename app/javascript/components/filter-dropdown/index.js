@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Select, SelectItem, SelectItemGroup, Button,
-} from 'carbon-components-react';
+} from "@carbon/react";
 
 const FilterDropdown = ({
   defSearches, mySearches, filterSelected, defaultSelected, selectedFilter,

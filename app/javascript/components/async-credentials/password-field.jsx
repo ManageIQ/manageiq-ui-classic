@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup, TextInput, Button } from 'carbon-components-react';
+import { FormGroup, TextInput, Button } from "@carbon/react";
 import { Edit16 } from '@carbon/icons-react';
 
 import { componentTypes, useFormApi } from '@@ddf';
@@ -25,7 +25,7 @@ const PasswordField = ({
     helperText,
     ...rest,
     component: edit ? 'edit-password-field' : componentClass,
-    ...(edit) && { componentClass },
+    ...(edit && { componentClass }),
   };
 
   const newProps = { ...secretField };

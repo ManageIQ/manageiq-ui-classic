@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { ToastNotification, Link } from 'carbon-components-react';
+import { ToastNotification, Link } from "@carbon/react";
 import { useDispatch } from 'react-redux';
 import { markNotificationRead, MARK_NOTIFICATION_READ } from '../../miq-redux/actions/notifications-actions';
 

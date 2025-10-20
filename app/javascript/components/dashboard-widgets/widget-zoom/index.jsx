@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'carbon-components-react';
+import { Button } from "@carbon/react";
 import { Close16 } from '@carbon/icons-react';
 
 const WidgetZoom = ({

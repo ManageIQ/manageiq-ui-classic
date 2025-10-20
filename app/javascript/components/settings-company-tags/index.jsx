@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Accordion, AccordionItem } from 'carbon-components-react';
+import { Button, Accordion, AccordionItem } from "@carbon/react";
 import { AddAlt16 } from '@carbon/icons-react';
 import MiqDataTable from '../miq-data-table';
 import MiqStructuredList from '../miq-structured-list';

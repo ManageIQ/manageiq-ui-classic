@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { FormLabel, Button } from 'carbon-components-react';
+import { FormLabel, Button } from "@carbon/react";
 import { Close16 } from '@carbon/icons-react';
 import TaggingPropTypes from '../TaggingPropTypes';
 
