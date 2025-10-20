@@ -20,8 +20,6 @@ jobs:
         ruby-version:
         - '3.1'
         - '3.3'
-        node-version:
-        - 20
         test-suite:
         - spec
         - spec:compile
@@ -61,7 +59,7 @@ jobs:
         || matrix.test-suite == 'spec:jest' }}"
       uses: actions/setup-node@v5
       with:
-        node-version: "${{ matrix.node-version }}"
+        node-version-file: package.json
         cache: yarn
         registry-url: https://npm.manageiq.org/
     - name: Prepare tests
