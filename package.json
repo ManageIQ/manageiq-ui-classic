@@ -65,7 +65,7 @@
     "carbon-icons": "~7.0.7",
     "classnames": "~2.5.0",
     "codemirror": "~5.58.2",
-    "connected-react-router": "~6.7.0",
+    "connected-react-router": "~6.9.0",
     "create-react-context": "~0.3.0",
     "d3": "^7.8.2",
     "dompurify": "^3.2.4",
