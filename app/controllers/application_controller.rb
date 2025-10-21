@@ -294,7 +294,7 @@ class ApplicationController < ActionController::Base
     end
 
     options[:parent] = options[:parent] || @parent
-    options[:association] = HAS_ASSOCATION[params[:model_name]] if HAS_ASSOCATION.include?(params[:model_name])
+    options[:association] = HAS_ASSOCIATION[params[:model_name]] if HAS_ASSOCIATION.include?(params[:model_name])
     options[:selected_ids] = params[:records]
     options
   end
