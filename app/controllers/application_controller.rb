@@ -85,7 +85,7 @@ class ApplicationController < ActionController::Base
 
   TIMELINES_FOLDER = Rails.root.join("product", "timelines")
 
-  ONE_MILLION = 1_000_000 # Setting high number incase we don't want to display paging controls on list views
+  ONE_MILLION = 1_000_000 # Setting high number in case we don't want to display paging controls on list views
 
   PERPAGE_TYPES = %w[list reports].each_with_object({}) { |value, acc| acc[value] = value.to_sym }.freeze
 
@@ -457,10 +457,10 @@ class ApplicationController < ActionController::Base
 
     begin
       if pfx == "pxe"
-        msg = _('PXE Credentials successfuly validated')
+        msg = _('PXE Credentials successfully validated')
         PxeServer.verify_depot_settings(settings)
       else
-        msg = _('Depot Settings successfuly validated')
+        msg = _('Depot Settings successfully validated')
         MiqSchedule.new.verify_file_depot(settings)
       end
     rescue StandardError => bang
@@ -1024,7 +1024,7 @@ class ApplicationController < ActionController::Base
 
     # Don't apply sub_filter when viewing sub-list view of a CI.
     # This applies when search is active and you go Vm -->
-    # {Processes,Users,...} in that case, search shoult NOT be applied.
+    # {Processes,Users,...} in that case, search should NOT be applied.
     # If loading a form such as provisioning, don't filter records
     # FIXME: This needs to be changed to apply search in some explicit way.
     return nil if @display || @in_a_form
@@ -1973,7 +1973,7 @@ class ApplicationController < ActionController::Base
     @flash_array = nil if params[:button] != "reset"
   end
 
-  # Build all trees and accordions accoding to features available to the current user.
+  # Build all trees and accordions according to features available to the current user.
 
   def build_accordions_and_trees_only
     # Build the Explorer screen from scratch
