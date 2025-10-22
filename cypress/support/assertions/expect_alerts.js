@@ -150,3 +150,19 @@ Cypress.Commands.add(
       .click();
   }
 );
+
+/**
+ * Custom Cypress command to validate inline field error messages.
+ * @param {Object} options - Options for the command.
+ * @param {string} options.containsText - Text that the error message should contain. This parameter is required.
+ * @returns {Cypress.Chainable} - The error message element if found, or an assertion failure.
+ * @example
+ * cy.expect_inline_field_errors({ containsText: 'blank' });
+ * cy.expect_inline_field_errors({ containsText: 'taken' });
+ */
+Cypress.Commands.add('expect_inline_field_errors', ({ containsText }) => {
+  if (!containsText) {
+    cy.logAndThrowError('containsText is required');
+  }
+  return cy.contains('#name-error-msg', containsText);
+});
