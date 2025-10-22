@@ -12,7 +12,6 @@ const EditFieldModal = ({
 }) => {
   const component = dynamicComponents.find((item) => item.id === componentId);
 
-  debugger
   const [formValues, setFormValues] = useState(initialData);
   const [inlineFlashMessage, setInlineFlashMessage] = useState(() => {
     if (component.title === 'Tag Control') {
@@ -72,7 +71,6 @@ const EditFieldModal = ({
 
   const handleSubmit = (submittedValues, e) => {
     const finalValues = { ...formValues, ...submittedValues };
-    debugger
     onSave(e, finalValues);
   };
 
@@ -133,6 +131,13 @@ EditFieldModal.propTypes = {
   onSave: PropTypes.func.isRequired,
   onDynamicSwitchToggle: PropTypes.func.isRequired,
   onCategorySelect: PropTypes.func.isRequired,
+  onTimePickerChange: PropTypes.func,
+  onAutomationTypeChange: PropTypes.func,
+};
+
+EditFieldModal.defaultProps = {
+  onTimePickerChange: () => {},
+  onAutomationTypeChange: () => {},
 };
 
 export default EditFieldModal;
