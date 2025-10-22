@@ -573,7 +573,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
       });
     } else {
       // Create new dialog
-      saveServiceDialog(data, navigateToExplorer);
+      saveServiceDialog(data);
     }
   };
 
