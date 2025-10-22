@@ -97,7 +97,6 @@ const EmbeddedAutomateEntryPoint = (props) => {
               iconDescription={sprintf(__('Remove this %s'), label)}
               hasIconOnly
               onClick={() => {
-                debugger
                 setSelectedValue(null);
                 setTextValue('');
                 // Ensure the input change is triggered to update form state
