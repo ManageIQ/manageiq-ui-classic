@@ -30,30 +30,30 @@ const DynamicField = ({ fieldData, onFieldAction }) => {
   };
 
   const fieldSelector = (fieldData) => {
-    // Determine component ID with cleaner fallback logic
+    // Determine component ID
     const { field } = fieldData;
     const componentId = field.componentId || getComponentIdFromType(field.type || '');
 
-    switch (componentId) {
-      case 1:
-        return <DynamicTextInput dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
-      case 2:
-        return <DynamicTextArea dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
-      case 3:
-        return <DynamicCheckbox dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
-      case 4:
-        return <DynamicDropdown dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
-      case 5:
-        return <DynamicRadioButton dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
-      case 6:
-        return <DynamicDatepicker dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
-      case 7:
-        return <DynamicTimepicker dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
-      case 8:
-        return <DynamicTagControl dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
-      default:
-        return <DynamicTextInput dynamicFieldData={fieldData} onFieldAction={(newFieldData) => onFieldAction(newFieldData)} />;
-    }
+    // Map component IDs to their respective React components
+    const componentMap = {
+      1: DynamicTextInput,
+      2: DynamicTextArea,
+      3: DynamicCheckbox,
+      4: DynamicDropdown,
+      5: DynamicRadioButton,
+      6: DynamicDatepicker,
+      7: DynamicTimepicker,
+      8: DynamicTagControl,
+    };
+    
+    // Get the component based on componentId or default to DynamicTextInput
+    const Component = componentMap[componentId] || DynamicTextInput;
+    
+    // Return the component with common props
+    return <Component
+      dynamicFieldData={fieldData}
+      onFieldAction={onFieldAction}
+    />;
   };
 
   return (
