@@ -25,10 +25,6 @@ const DynamicFieldActions = ({
     dynamicToggleAction(isDynamic);
   };
 
-  const onCategorySelect = (cat, subCat) => {
-    setCategoryData(cat, subCat);
-  };
-
   const onTimePickerChange = (dateTime) => {
     setState((prevState) => ({ ...prevState, value: dateTime }));
     onValueChange(dateTime);
@@ -61,6 +57,11 @@ const DynamicFieldActions = ({
     />
   );
 
+  const onModalSave = (e, updatedFields) => {
+    updateFieldProps(e, updatedFields);
+    toggleModal(false);
+  };
+
   const renderEditFieldModal = () => (
     showModal && (
       <EditFieldModal
@@ -70,12 +71,9 @@ const DynamicFieldActions = ({
         onModalHide={() => toggleModal(false)}
         onModalApply={onModalApply}
         initialData={fieldProps}
-        onSave={(e, updatedFields) => {
-          updateFieldProps(e, updatedFields);
-          toggleModal(false);
-        }}
+        onSave={onModalSave}
         onDynamicSwitchToggle={onDynamicSwitchToggle}
-        onCategorySelect={onCategorySelect}
+        onCategorySelect={setCategoryData}
         onTimePickerChange={onTimePickerChange}
         onAutomationTypeChange={onAutomationTypeChange}
       />

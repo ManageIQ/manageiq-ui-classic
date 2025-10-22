@@ -14,32 +14,25 @@ const DynamicField = ({ fieldData, onFieldAction }) => {
 
   // Helper function to determine componentId from field type
   const getComponentIdFromType = (type) => {
-    switch (type) {
-      case 'DialogFieldTextBox':
-        return 1;
-      case 'DialogFieldTextAreaBox':
-        return 2;
-      case 'DialogFieldCheckBox':
-        return 3;
-      case 'DialogFieldDropDownList':
-        return 4;
-      case 'DialogFieldRadioButton':
-        return 5;
-      case 'DialogFieldDateControl':
-        return 6;
-      case 'DialogFieldDateTimeControl':
-        return 7;
-      case 'DialogFieldTagControl':
-        return 8;
-      default:
-        return 1; // Default to text box
-    }
+    const componentMap = {
+      'DialogFieldTextBox': 1,
+      'DialogFieldTextAreaBox': 2,
+      'DialogFieldCheckBox': 3,
+      'DialogFieldDropDownList': 4,
+      'DialogFieldRadioButton': 5,
+      'DialogFieldDateControl': 6,
+      'DialogFieldDateTimeControl': 7,
+      'DialogFieldTagControl': 8,
+    };
+    
+    // Return the mapped component ID or default to text box (1)
+    return componentMap[type] || 1;
   };
 
   const fieldSelector = (fieldData) => {
-    const componentId = fieldData.field.componentId
-                       || (fieldData.field.type && getComponentIdFromType(fieldData.field.type))
-                       || 1; // Default to text box
+    // Determine component ID with cleaner fallback logic
+    const { field } = fieldData;
+    const componentId = field.componentId || getComponentIdFromType(field.type || '');
 
     switch (componentId) {
       case 1:
