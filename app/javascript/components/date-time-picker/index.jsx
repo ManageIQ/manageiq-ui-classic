@@ -105,5 +105,3 @@ CustomDateTimePicker.defaultProps = {
 };
 
 export default CustomDateTimePicker;
-
-// Made with Bob
