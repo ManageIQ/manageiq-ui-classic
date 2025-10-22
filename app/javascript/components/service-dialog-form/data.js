@@ -23,7 +23,7 @@ export const dynamicComponents = [
   { id: 8, title: 'Tag Control', icon: <Tag32 /> },
 ];
 
-/** Function which returens the default data for a section under a tab. */
+/** Function which returns the default data for a section under a tab. */
 export const defaultSectionContents = (tabId, sectionId) => ({
   tabId,
   sectionId,
@@ -58,18 +58,13 @@ export const tagControlCategories = async() => {
 };
 
 // data has formfields and list (as of now); no dialog related general info - this is needed
-export const saveServiceDialog = (data, onSuccess) => {
+export const saveServiceDialog = (data) => {
   const payload = formattedCatalogPayload(data);
 
   API.post('/api/service_dialogs', payload, {
     skipErrors: [400],
   }).then(() => {
-    // Redirect to the service dialogs explorer page after successful save
-    if (typeof onSuccess === 'function') {
-      onSuccess();
-    } else {
-      window.location.href = '/miq_ae_customization/explorer';
-    }
+    window.location.href = '/miq_ae_customization/explorer';
   }).catch((error) => {
     console.error('Error saving dialog:', error);
   });
