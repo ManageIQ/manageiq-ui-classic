@@ -9,13 +9,14 @@ import EditFieldModal from './edit-field-modal';
 const DynamicFieldActions = ({
   componentId, fieldProps, updateFieldProps, dynamicFieldAction, fieldConfiguration, dynamicToggleAction, setCategoryData, onValueChange,
 }) => {
-  const [{ showModal, ...editedFields }, setState] = useState({ showModal: false });
+  const [state, setState] = useState({ showModal: false });
+  const { showModal } = state;
 
-  const onModalHide = () => setState((state) => ({ ...state, showModal: false }));
-  const onModalShow = () => setState((state) => ({ ...state, showModal: true }));
+  const toggleModal = (show = false) => setState((state) => ({ ...state, showModal: show }));
   // const onModalApply = () => setState((state) => ({ ...state, showModal: false }));
   const onModalApply = (formValues, event) => {
-    setState((prevState) => ({ ...prevState, showModal: false, ...formValues }));
+    setState((prevState) => ({ ...prevState, ...formValues }));
+    toggleModal(false);
     dynamicFieldAction(event, formValues);
   };
 
@@ -43,7 +44,7 @@ const DynamicFieldActions = ({
       renderIcon={Edit16}
       kind="ghost"
       iconDescription={__('Edit')}
-      onClick={onModalShow}
+      onClick={() => toggleModal(true)}
       onKeyPress={(event) => dynamicFieldAction(SD_ACTIONS.field.edit, event)}
       title={__('Edit field')}
     />
@@ -66,12 +67,12 @@ const DynamicFieldActions = ({
         componentId={componentId}
         fieldConfiguration={fieldConfiguration}
         showModal={showModal}
-        onModalHide={onModalHide}
+        onModalHide={() => toggleModal(false)}
         onModalApply={onModalApply}
         initialData={fieldProps}
         onSave={(e, updatedFields) => {
           updateFieldProps(e, updatedFields);
-          setState((state) => ({ ...state, showModal: false }));
+          toggleModal(false);
         }}
         onDynamicSwitchToggle={onDynamicSwitchToggle}
         onCategorySelect={onCategorySelect}
