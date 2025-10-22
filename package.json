@@ -61,7 +61,7 @@
     "bootstrap-select": "^1.13.18",
     "bootstrap-switch": "3.4.0",
     "carbon-components": "~10.58.15",
-    "carbon-components-react": "~7.59.24",
+    "carbon-components-react": "~7.60.0",
     "carbon-icons": "~7.0.7",
     "classnames": "~2.5.0",
     "codemirror": "~5.58.2",
