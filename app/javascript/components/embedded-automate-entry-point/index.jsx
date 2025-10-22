@@ -36,16 +36,30 @@ const EmbeddedAutomateEntryPoint = (props) => {
   }, [selectedValue, includeDomainPrefix]);
 
   useEffect(() => {
-    if (selectedValue && selectedValue.name && selectedValue.name.text) {
-      selectedValue.name.text = textValue;
-      input.onChange(selectedValue);
-    } else if (!selectedValue || Object.keys(selectedValue).length === 0) {
-      // When selectedValue is empty or undefined, pass null to trigger validation
-      input.onChange(null);
-    } else {
-      input.onChange(selectedValue);
+  if (selectedValue && selectedValue.name && selectedValue.name.text) {
+    if (selectedValue.name.text !== textValue) {
+      const updatedValue = {
+        ...selectedValue,
+        name: {
+          ...selectedValue.name,
+          text: textValue
+        }
+      };
+      
+      // Update the form without triggering another effect run
+      input.onChange(updatedValue);
+      
+      // Update the state
+      setSelectedValue(updatedValue);
     }
-  }, [textValue, selectedValue]);
+  } else if (!selectedValue || Object.keys(selectedValue || {}).length === 0) {
+    // When selectedValue is empty or undefined, pass null to trigger validation
+    input.onChange(null);
+  } else {
+    input.onChange(selectedValue);
+  }
+}, [textValue]);
+
 
   return (
     <div>
@@ -61,7 +75,12 @@ const EmbeddedAutomateEntryPoint = (props) => {
       />
       <div className="entry-point-wrapper">
         <div className="entry-point-text-input">
-          <TextInput id={id} type="text" labelText={__(label)} onChange={(value) => setTextValue(value.target.value)} value={textValue} readOnly />
+          <TextInput 
+            id={id}
+            type="text"
+            labelText={__(label)}
+            value={textValue}
+            readOnly />
         </div>
         <div className="entry-point-buttons">
           <div className="entry-point-open">
@@ -78,10 +97,15 @@ const EmbeddedAutomateEntryPoint = (props) => {
               iconDescription={sprintf(__('Remove this %s'), label)}
               hasIconOnly
               onClick={() => {
-                setSelectedValue({});
+                debugger
+                setSelectedValue(null);
                 setTextValue('');
                 // Ensure the input change is triggered to update form state
-                input.onChange(null);
+                // input.onChange(null);
+                input.onChange({
+                  automateEntryPoint: null,
+                  value: null  // Also clear any associated value
+                });
               }}
             />
           </div>

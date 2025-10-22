@@ -40,7 +40,7 @@ const AutomateEntryPoints = ({
   };
 
   useEffect(() => {
-    if (selectedValue.element) {
+    if (selectedValue && selectedValue.element) {
       data.forEach((node) => {
         if (node.id === selectedValue.element.id) {
           document.getElementById(node.id).classList.add('currently-selected');

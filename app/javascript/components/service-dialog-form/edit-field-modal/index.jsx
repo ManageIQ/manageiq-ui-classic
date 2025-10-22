@@ -12,6 +12,7 @@ const EditFieldModal = ({
 }) => {
   const component = dynamicComponents.find((item) => item.id === componentId);
 
+  debugger
   const [formValues, setFormValues] = useState(initialData);
   const [inlineFlashMessage, setInlineFlashMessage] = useState(() => {
     if (component.title === 'Tag Control') {
@@ -71,6 +72,7 @@ const EditFieldModal = ({
 
   const handleSubmit = (submittedValues, e) => {
     const finalValues = { ...formValues, ...submittedValues };
+    debugger
     onSave(e, finalValues);
   };
 
@@ -99,7 +101,7 @@ const EditFieldModal = ({
   return (
     <Modal
       open
-      modalHeading={__(`Edit this ${component.title}`)}
+      modalHeading={__('Edit Field Details')}
       onRequestClose={onModalHide}
       passiveModal // Required to hide the save and cancel buttons on the Modal
       className="edit-field-modal"
