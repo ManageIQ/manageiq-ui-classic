@@ -70,8 +70,6 @@ if (!window.ManageIQ) {
       debounced: {}, // running debounces
     },
     record: {
-      parentClass: null, // parent record ID for JS function miqGridSort to build URL
-      parentId: null, // parent record ID for JS function miqGridSort to build URL
       recordId: null, // record being displayed or edited
     },
     redux: { // Redux API - app/javascript/miq-redux
