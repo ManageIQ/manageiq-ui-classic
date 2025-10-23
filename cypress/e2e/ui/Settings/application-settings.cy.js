@@ -18,14 +18,7 @@ describe('Settings > Application Settings Tests', () => {
       it('Correctly loads admin user', () => {
         // Navigate to user list and click on Administrator user in table
         cy.get('[title="View Users"] > .content_value').click({force: true});
-        cy.get('.clickable-row').then((rows) => {
-          const nums = [...Array(rows.length).keys()];
-          nums.forEach((index) => {
-            if (rows[index].children[1].textContent === 'Administrator') {
-              cy.get(rows[index].children[1]).click({ force: true });
-            }
-          });
-        });
+        cy.selectAccordionItem(['Users', 'Administrator']);
 
         // Check Administrator user values on summary page
         cy.get('#accordion-item-15 > .bx--structured-list > .bx--structured-list-tbody > :nth-child(1) > .label_header').contains('ID');
@@ -78,14 +71,7 @@ describe('Settings > Application Settings Tests', () => {
       it('Edit admin user', () => {
         // Navigate to user list and click on Administrator user in table
         cy.get('[title="View Users"] > .content_value').click({force: true});
-        cy.get('.clickable-row').then((rows) => {
-          const nums = [...Array(rows.length).keys()];
-          nums.forEach((index) => {
-            if (rows[index].children[1].textContent === 'Administrator') {
-              cy.get(rows[index].children[1]).click({ force: true });
-            }
-          });
-        });
+        cy.selectAccordionItem(['Users', 'Administrator']);
 
         // Click edit button
         cy.get('#user_vmdb_choice').click();
@@ -135,15 +121,7 @@ describe('Settings > Application Settings Tests', () => {
         });
         cy.get('.bx--btn-set > .bx--btn--primary').click(); // Click the add button
 
-        // Find the new user in the table and click it
-        cy.get('.clickable-row').then((rows) => {
-          const nums = [...Array(rows.length).keys()];
-          nums.forEach((index) => {
-            if (rows[index].children[1].textContent === 'Cypress Test Add') {
-              cy.get(rows[index].children[1]).click({ force: true });
-            }
-          });
-        });
+        cy.selectAccordionItem(['Users', 'Cypress Test Add']);
 
         // Verify that the new user was created with the correct values on the summary page
         cy.get(':nth-child(1) > .label_header').contains('ID');
@@ -180,15 +158,7 @@ describe('Settings > Application Settings Tests', () => {
         cy.wait('@accordion'); // Wait for explorer screen to load
         cy.get('[title="View Users"] > .content_value').click({force: true});
 
-        // Find the new user in the table and click on that row
-        cy.get('.clickable-row').then((rows) => {
-          const nums = [...Array(rows.length).keys()];
-          nums.forEach((index) => {
-            if (rows[index].children[1].textContent === 'Cypress Test Add') {
-              cy.get(rows[index].children[1]).click({ force: true });
-            }
-          });
-        });
+        cy.selectAccordionItem(['Users', 'Cypress Test Add']);
 
         // Click the edit user button
         cy.get('#user_vmdb_choice').click();
@@ -256,15 +226,7 @@ describe('Settings > Application Settings Tests', () => {
         cy.wait('@accordion'); // Wait for explorer screen to load
         cy.get('[title="View Users"] > .content_value').click({force: true});
 
-        // Find the editted user in the table and click it
-        cy.get('.clickable-row').then((rows) => {
-          const nums = [...Array(rows.length).keys()];
-          nums.forEach((index) => {
-            if (rows[index].children[1].textContent === 'Cypress Test Edit') {
-              cy.get(rows[index].children[1]).click({ force: true });
-            }
-          });
-        });
+        cy.selectAccordionItem(['Users', 'Cypress Test Edit']);
 
         // Click the delete user button
         cy.get('#user_vmdb_choice').click();
@@ -312,15 +274,7 @@ describe('Settings > Application Settings Tests', () => {
         });
         cy.get('.bx--btn-set > .bx--btn--primary').click(); // Click the add button
 
-        // Find the new user in the table and click it
-        cy.get('.clickable-row').then((rows) => {
-          const nums = [...Array(rows.length).keys()];
-          nums.forEach((index) => {
-            if (rows[index].children[1].textContent === 'Cypress Test Add 2') {
-              cy.get(rows[index].children[1]).click({ force: true });
-            }
-          });
-        });
+        cy.selectAccordionItem(['Users', 'Cypress Test Add 2']);
 
         // Click copy user button
         cy.get('#user_vmdb_choice').click();
@@ -410,15 +364,7 @@ describe('Settings > Application Settings Tests', () => {
         cy.wait('@accordion'); // Wait for explorer screen to load
         cy.get('[title="View Users"] > .content_value').click({force: true});
 
-        // Find the copied user in the table and click it
-        cy.get('.clickable-row').then((rows) => {
-          const nums = [...Array(rows.length).keys()];
-          nums.forEach((index) => {
-            if (rows[index].children[1].textContent === 'Cypress Test Copy') {
-              cy.get(rows[index].children[1]).click({ force: true });
-            }
-          });
-        });
+        cy.selectAccordionItem(['Users', 'Cypress Test Copy']);
 
         // Verify that the copied user was created with the correct values on the summary page
         cy.get(':nth-child(1) > .label_header').contains('ID');
@@ -443,15 +389,7 @@ describe('Settings > Application Settings Tests', () => {
         cy.get('#user_vmdb_choice').click();
         cy.get(':nth-child(3) > .bx--overflow-menu-options__btn').click();
 
-        // Find the new user in the table and click it
-        cy.get('.clickable-row').then((rows) => {
-          const nums = [...Array(rows.length).keys()];
-          nums.forEach((index) => {
-            if (rows[index].children[1].textContent === 'Cypress Test Add 2') {
-              cy.get(rows[index].children[1]).click({ force: true });
-            }
-          });
-        });
+        cy.selectAccordionItem(['Users', 'Cypress Test Add 2']);
 
         // Verify that the new user was created with the correct values on the summary page
         cy.get(':nth-child(1) > .label_header').contains('ID');
@@ -529,15 +467,7 @@ describe('Settings > Application Settings Tests', () => {
         cy.get('.bx--btn-set > .bx--btn--primary').should('be.enabled');
         cy.get('.bx--btn-set > .bx--btn--primary').click();
 
-        // Find the new user in the table and click it
-        cy.get('.clickable-row').then((rows) => {
-          const nums = [...Array(rows.length).keys()];
-          nums.forEach((index) => {
-            if (rows[index].children[1].textContent === 'Cypress Test Validation') {
-              cy.get(rows[index].children[1]).click({ force: true });
-            }
-          });
-        });
+        cy.selectAccordionItem(['Users', 'Cypress Test Validation']);
 
         // Verify that the new user was created with the correct values on the summary page
         cy.get(':nth-child(1) > .label_header').contains('ID');
@@ -576,15 +506,7 @@ describe('Settings > Application Settings Tests', () => {
         cy.wait('@accordion'); // Wait for explorer screen to load
         cy.get('[title="View Users"] > .content_value').click({force: true});
 
-        // Find the new user in the table and click on that row
-        cy.get('.clickable-row').then((rows) => {
-          const nums = [...Array(rows.length).keys()];
-          nums.forEach((index) => {
-            if (rows[index].children[1].textContent === 'Cypress Test Validation') {
-              cy.get(rows[index].children[1]).click({ force: true });
-            }
-          });
-        });
+        cy.selectAccordionItem(['Users', 'Cypress Test Validation']);
 
         // Click the edit user button
         cy.get('#user_vmdb_choice').click();
@@ -656,15 +578,7 @@ describe('Settings > Application Settings Tests', () => {
         cy.wait('@accordion'); // Wait for explorer screen to load
         cy.get('[title="View Users"] > .content_value').click({force: true});
 
-        // Find the editted user in the table and click it
-        cy.get('.clickable-row').then((rows) => {
-          const nums = [...Array(rows.length).keys()];
-          nums.forEach((index) => {
-            if (rows[index].children[1].textContent === 'Cypress Test Validation Edit') {
-              cy.get(rows[index].children[1]).click({ force: true });
-            }
-          });
-        });
+        cy.selectAccordionItem(['Users', 'Cypress Test Validation Edit']);
 
         // Click the edit user button
         cy.get('#user_vmdb_choice').click();
@@ -716,15 +630,7 @@ describe('Settings > Application Settings Tests', () => {
         cy.wait('@accordion'); // Wait for explorer screen to load
         cy.get('[title="View Users"] > .content_value').click({force: true});
 
-        // Find the editted user in the table and click it
-        cy.get('.clickable-row').then((rows) => {
-          const nums = [...Array(rows.length).keys()];
-          nums.forEach((index) => {
-            if (rows[index].children[1].textContent === 'Cypress Test Validation Edit') {
-              cy.get(rows[index].children[1]).click({ force: true });
-            }
-          });
-        });
+        cy.selectAccordionItem(['Users', 'Cypress Test Validation Edit']);
 
         // Click the delete user button
         cy.get('#user_vmdb_choice').click();
