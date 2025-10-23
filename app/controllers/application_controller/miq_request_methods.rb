@@ -32,6 +32,8 @@ module ApplicationController::MiqRequestMethods
       @record =
         if @edit[:new][:src_configured_system_ids].present?
           PhysicalServer.where(:id => @edit[:new][:src_configured_system_ids].first).first
+        elsif @edit[:new][:src_configuration_script_id].present?
+          ConfigurationScript.where(:id => Array(@edit[:new][:src_configuration_script_id]).first)
         else
           MiqTemplate.where(:id => Array(@edit[:new][:src_vm_id]).first)
         end
@@ -380,6 +382,15 @@ module ApplicationController::MiqRequestMethods
     @configured_systems = _build_whatever_grid('configured_system', configured_systems, headers, sort_order, sort_by)
   end
 
+  def build_configuration_script_grid(configuration_scripts, sort_order = nil, sort_by = nil)
+    sort_by ||= "name"
+    sort_order ||= "ASC"
+
+    headers = {"name" => _("Name"), "description" => _("Description")}
+
+    @configuration_scripts = _build_whatever_grid("configuration_script", configuration_scripts, headers, sort_order, sort_by)
+  end
+
   def build_pxe_img_grid(pxe_imgs, sort_order = nil, sort_by = nil)
     sort_by ||= "name"
     sort_order ||= "ASC"
@@ -516,6 +527,13 @@ module ApplicationController::MiqRequestMethods
     case @edit[:wf]
     when MiqProvisionConfiguredSystemWorkflow
       build_dialog_page_miq_provision_configured_system_workflow
+    when MiqProvisionConfigurationScriptWorkflow
+      case @edit[:new][:current_tab_key]
+      when :purpose
+        build_tags_for_provisioning(@edit[:wf], @edit.fetch_path(:new, tag_symbol_for_workflow), true)
+      when :service
+        build_configuration_script_grid(@edit[:wf].get_field(:src_configuration_script_id, :service)[:values], @edit[:configuration_script_sortdir], @edit[:configuration_script_sortcol])
+      end
     when MiqProvisionVirtWorkflow
       if @edit[:new][:current_tab_key] == :service
         if @edit[:new][:st_prov_type]
@@ -580,6 +598,7 @@ module ApplicationController::MiqRequestMethods
     when ManageIQ::Providers::Foreman::ConfigurationManager::ProvisionWorkflow then "prov_configured_system_foreman_dialog"
     when VmMigrateWorkflow then "prov_vm_migrate_dialog"
     when PhysicalServerProvisionWorkflow then "prov_physical_server_dialog"
+    when MiqProvisionConfigurationScriptWorkflow then "prov_configuration_script_dialog"
     end
   end
 
@@ -933,7 +952,8 @@ module ApplicationController::MiqRequestMethods
       end
 
       if @edit[:wf].kind_of?(ManageIQ::Providers::Foreman::ConfigurationManager::ProvisionWorkflow) ||
-         @edit[:wf].kind_of?(PhysicalServerProvisionWorkflow)
+         @edit[:wf].kind_of?(PhysicalServerProvisionWorkflow) ||
+         @edit[:wf].kind_of?(MiqProvisionConfigurationScriptWorkflow)
         # BD TODO
       else
         @edit[:ds_sortdir] ||= "DESC"
