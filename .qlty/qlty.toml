@@ -84,7 +84,7 @@ default = true
 
 [[plugin]]
 name = "eslint"
-version = "8.57.0"
+version = "7.11.0"
 package_file = "package.json"
 package_filters = ["eslint", "jest"]
 
