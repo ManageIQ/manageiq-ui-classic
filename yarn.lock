@@ -3671,10 +3671,10 @@ bootstrap-touchspin@~3.1.1:
   resolved "https://registry.yarnpkg.com/bootstrap-touchspin/-/bootstrap-touchspin-3.1.1.tgz#9779deac72aaf577e5e762b8512c747c871d9597"
   integrity sha1-l3nerHKq9Xfl52K4USx0fIcdlZc=
 
-bootstrap@>=2.3.2, bootstrap@^3.3, bootstrap@^3.4.1, bootstrap@~3.3.7, bootstrap@~3.4.1, bootstrap@~4.0.0:
-  version "4.0.0"
-  resolved "https://npm.manageiq.org/bootstrap/-/bootstrap-4.0.0.tgz#ceb03842c145fcc1b9b4e15da2a05656ba68469a"
-  integrity sha512-gulJE5dGFo6Q61V/whS6VM4WIyrlydXfCgkE+Gxe5hjrJ8rXLLZlALq7zq2RPhOc45PSwQpJkrTnc2KgD6cvmA==
+bootstrap@>=2.3.2, bootstrap@^3.3, bootstrap@^3.4.1, bootstrap@~3.3.7, bootstrap@~3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.4.1.tgz#c3a347d419e289ad11f4033e3c4132b87c081d72"
+  integrity sha512-yN5oZVmRCwe5aKwzRj6736nSmKDX7pLYwsXiCj/EYmo16hODaBiT4En5btW/jhBF/seV+XMx3aYwukYC3A49DA==
 
 bottleneck@^2.18.1:
   version "2.19.5"
