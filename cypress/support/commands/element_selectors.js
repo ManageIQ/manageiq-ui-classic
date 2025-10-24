@@ -44,7 +44,7 @@ Cypress.Commands.add(
       cy.logAndThrowError('inputId is required');
     }
     return cy.get(
-      `#main-content .bx--form input[id="${inputId}"][type="${inputType}"]`
+      `#main-content form input[id="${inputId}"][type="${inputType}"]`
     );
   }
 );
@@ -64,7 +64,7 @@ Cypress.Commands.add('getFormLabelByForAttribute', ({ forValue }) => {
   if (!forValue) {
     cy.logAndThrowError('forValue is required');
   }
-  return cy.get(`#main-content .bx--form label[for="${forValue}"]`);
+  return cy.get(`#main-content form label[for="${forValue}"]`);
 });
 
 /**
@@ -82,7 +82,7 @@ Cypress.Commands.add('getFormSelectFieldById', ({ selectId }) => {
   if (!selectId) {
     cy.logAndThrowError('selectId is required');
   }
-  return cy.get(`#main-content .bx--form select[id="${selectId}"]`);
+  return cy.get(`#main-content form select[id="${selectId}"]`);
 });
 
 /**
@@ -100,5 +100,5 @@ Cypress.Commands.add('getFormTextareaById', ({ textareaId }) => {
   if (!textareaId) {
     cy.logAndThrowError('textareaId is required');
   }
-  return cy.get(`#main-content .bx--form textarea[id="${textareaId}"]`);
+  return cy.get(`#main-content form textarea[id="${textareaId}"]`);
 });
