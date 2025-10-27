@@ -63,27 +63,11 @@ function cleanUp(catalogItemToDelete) {
         textArray: [catalogItemToDelete],
       });
       cy.toolbar(CONFIG_TOOLBAR_BUTTON, DELETE_CATALOG_ITEMS_CONFIG_OPTION);
-      // TODO: Replace with expect_modal once #9653 is merged
-      cy.contains(
-        '.bx--modal-container .bx--modal-header',
-        REMOVE_CATALOG_MODAL_HEADER_TEXT
-      );
-      cy.contains(
-        '.bx--modal-container .bx--modal-content',
-        catalogItemToDelete
-      );
-      cy.contains(
-        '.bx--modal-container .bx--modal-footer button',
-        DELETE_BUTTON_TEXT
-      ).click();
-      // cy.expect_modal({
-      //   modalHeaderText: REMOVE_CATALOG_MODAL_HEADER_TEXT,
-      //   modalContentExpectedTexts: [
-      //     'delete',
-      //     catalogItemToDelete,
-      //   ],
-      //   targetFooterButtonText: DELETE_BUTTON_TEXT,
-      // });
+      cy.expect_modal({
+        modalHeaderText: REMOVE_CATALOG_MODAL_HEADER_TEXT,
+        modalContentExpectedTexts: ['delete', catalogItemToDelete],
+        targetFooterButtonText: DELETE_BUTTON_TEXT,
+      });
     });
 }
 
@@ -158,36 +142,32 @@ describe('Automate Catalog form operations: Services > Catalogs > Catalogs > Con
     it('Validate error messages for blank or already-used names', () => {
       // Blank name
       cy.getFormInputFieldByIdAndType({ inputId: 'name' }).clear();
-      // TODO: Replace with expect_inline_field_errors once #9653 is merged
-      cy.contains('#name-error-msg', 'blank');
-      //   cy.expect_inline_field_errors({ containsText: 'blank' });
+      cy.expect_inline_field_errors({ containsText: 'blank' });
       // Duplicate name
       cy.getFormInputFieldByIdAndType({ inputId: 'name' })
         .clear()
         .type(CATALOG_ITEM_NAME);
-      // TODO: Replace with expect_inline_field_errors once #9653 is merged
-      cy.contains('#name-error-msg', 'taken');
-      //   cy.expect_inline_field_errors({ containsText: 'taken' });
+      cy.expect_inline_field_errors({ containsText: 'taken' });
     });
   });
 
-    describe('Validate copy functionality', () => {
-      it('Verify add operation from copy catalog form', () => {
-        cy.getFormLabelByForAttribute({
-          forValue: 'copy_tags',
-        }).click();
-        cy.getFormFooterButtonByTypeWithText({
-          buttonText: ADD_BUTTON_TEXT,
-          buttonType: 'submit',
-        }).click();
-        cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SAVED);
-      });
-
-      afterEach(() => {
-        // TODO: Replace with better cleanup approach
-        cleanUp(COPIED_CATALOG_ITEM_NAME);
-      });
+  describe('Validate copy functionality', () => {
+    it('Verify add operation from copy catalog form', () => {
+      cy.getFormLabelByForAttribute({
+        forValue: 'copy_tags',
+      }).click();
+      cy.getFormFooterButtonByTypeWithText({
+        buttonText: ADD_BUTTON_TEXT,
+        buttonType: 'submit',
+      }).click();
+      cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SAVED);
     });
+
+    afterEach(() => {
+      // TODO: Replace with better cleanup approach
+      cleanUp(COPIED_CATALOG_ITEM_NAME);
+    });
+  });
 
   afterEach(() => {
     // TODO: Replace with better cleanup approach
