@@ -9,16 +9,19 @@ import {
 
 /** Component to render a Field. */
 const DynamicCheckbox = ({ dynamicFieldData: { section, field, fieldPosition }, onFieldAction }) => {
-  const { tabId, sectionId } = section;
+  const { tabId, sectionId, fields } = section;
 
   const [inputValues, setInputValues] = useState({});
 
   const inputId = `tab-${tabId}-section-${sectionId}-field-${fieldPosition}-checkbox`;
   const editActionType = SD_ACTIONS.field.edit;
 
-  const refreshEnabledFields = section.fields
-    .filter((field) => field.showRefresh)
-    .map((field) => ({ value: field.label, label: field.label }));
+  const refreshEnabledFields = fields.reduce((result, field) => {
+    if (field.showRefresh) {
+      result.push({ value: field.label, label: field.label });
+    }
+    return result;
+  }, []);
 
   // Initialize field state with values from the helper function
   const fieldValues = getFieldValues(field);
