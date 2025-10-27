@@ -305,9 +305,10 @@ export const getFieldValues = (field) => {
       };
       
     case 'DialogFieldCheckBox':
+      debugger
       return {
         ...commonProps,
-        checked: field.default_value || field.value || false,
+        checked: field.checked || false,
       };
       
     case 'DialogFieldDropDownList':
