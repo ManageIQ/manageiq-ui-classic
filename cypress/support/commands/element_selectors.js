@@ -68,6 +68,25 @@ Cypress.Commands.add('getFormLabelByForAttribute', ({ forValue }) => {
 });
 
 /**
+ * Retrieves a form legend element by its text content.
+ *
+ * @param {Object} options - The options object.
+ * @param {string} options.legendText - The text content of the legend element (required).
+ * @returns {Element} The matched legend element.
+ * @throws {Error} If legendText is not provided.
+ *
+ * Example:
+ *   cy.getFormLegendByText({ legendText: 'Personal Information' });
+ *   cy.getFormLegendByText({ legendText: 'Payment Details' });
+ */
+Cypress.Commands.add('getFormLegendByText', ({ legendText }) => {
+  if (!legendText) {
+    cy.logAndThrowError('legendText is required');
+  }
+  return cy.contains('#main-content form legend.bx--label', legendText);
+});
+
+/**
  * Retrieves a form select field by its ID using an object parameter.
  *
  * @param {Object} options - The options object.
