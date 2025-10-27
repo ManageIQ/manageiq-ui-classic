@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox } from 'carbon-components-react';
 import { dynamicFieldDataProps, SD_ACTIONS, getFieldValues } from '../helper';
@@ -7,24 +7,38 @@ import {
   fieldInformation, advanced, overridableOptions, fieldTab, dynamicFields,
 } from './dynamic-field-configuration';
 
-/** Component to render a Field. */
-const DynamicCheckbox = ({ dynamicFieldData: { section, field, fieldPosition }, onFieldAction }) => {
+/**
+ * DynamicCheckbox - A component to render a checkbox field with dynamic configuration options
+ * 
+ * @param {Object} props - Component props
+ * @param {Object} props.dynamicFieldData - Data for the dynamic field
+ * @param {Function} props.onFieldAction - Callback for field actions
+ */
+const DynamicCheckbox = ({ dynamicFieldData, onFieldAction }) => {
+  const { section, field, fieldPosition } = dynamicFieldData;
   const { tabId, sectionId, fields } = section;
-
-  const [inputValues, setInputValues] = useState({});
-
-  const inputId = `tab-${tabId}-section-${sectionId}-field-${fieldPosition}-checkbox`;
   const editActionType = SD_ACTIONS.field.edit;
 
-  const refreshEnabledFields = fields.reduce((result, field) => {
-    if (field.showRefresh) {
-      result.push({ value: field.label, label: field.label });
-    }
-    return result;
-  }, []);
+  // Generate unique ID for the checkbox
+  const inputId = useMemo(() => 
+    `tab-${tabId}-section-${sectionId}-field-${fieldPosition}-checkbox`, 
+    [tabId, sectionId, fieldPosition]
+  );
+
+  // Get fields that have refresh enabled
+  const refreshEnabledFields = useMemo(() => 
+    fields.reduce((result, fieldItem) => {
+      if (fieldItem.showRefresh) {
+        result.push({ value: fieldItem.label, label: fieldItem.label });
+      }
+      return result;
+    }, []),
+    [fields]
+  );
 
   // Initialize field state with values from the helper function
-  const fieldValues = getFieldValues(field);
+  const fieldValues = useMemo(() => getFieldValues(field), [field]);
+  
   const [fieldState, setFieldState] = useState({
     ...fieldValues,
     position: fieldPosition,
@@ -32,18 +46,36 @@ const DynamicCheckbox = ({ dynamicFieldData: { section, field, fieldPosition }, 
     fieldsToRefresh: refreshEnabledFields,
   });
 
-  const handleFieldUpdate = (event, updatedFields) => {
-    setFieldState((prevState) => ({ ...prevState, ...updatedFields }));
-    onFieldAction({ event, type: editActionType, fieldPosition, inputProps: { ...fieldState, ...updatedFields } });
-  };
-
-  const fieldActions = (event, inputProps) => {
-    const type = (event === SD_ACTIONS.field.delete) ? SD_ACTIONS.field.delete : editActionType;
-
-    setInputValues({
-      ...inputValues,
-      ...inputProps,
+  /**
+   * Updates field state and notifies parent component
+   * @param {Event|string} event - Event object or action string
+   * @param {Object} updatedFields - Fields to update
+   */
+  const handleFieldUpdate = useCallback((event, updatedFields) => {
+    setFieldState((prevState) => {
+      const newState = { ...prevState, ...updatedFields };
+      
+      // Notify parent component about the change
+      onFieldAction({ 
+        event, 
+        type: editActionType, 
+        fieldPosition, 
+        inputProps: newState 
+      });
+      
+      return newState;
     });
+  }, [editActionType, fieldPosition, onFieldAction]);
+
+  /**
+   * Handles field actions like delete
+   * @param {string} event - Action type
+   * @param {Object} inputProps - Field properties
+   */
+  const handleFieldActions = useCallback((event, inputProps) => {
+    const type = (event === SD_ACTIONS.field.delete) 
+      ? SD_ACTIONS.field.delete 
+      : editActionType;
 
     onFieldAction({
       event,
@@ -51,45 +83,66 @@ const DynamicCheckbox = ({ dynamicFieldData: { section, field, fieldPosition }, 
       type,
       inputProps,
     });
-  };
+  }, [editActionType, fieldPosition, onFieldAction]);
 
-  // To reset tabs in Edit Modal based on 'dynamic' switch
-  const resetEditModalTabs = (isDynamic) => {
+  /**
+   * Updates field state when dynamic property changes
+   * @param {boolean} isDynamic - Whether the field is dynamic
+   */
+  const handleDynamicToggle = useCallback((isDynamic) => {
     setFieldState((prevState) => ({ ...prevState, dynamic: isDynamic }));
-  };
+  }, []);
 
-  const ordinaryCheckboxOptions = () => ([
-    dynamicFields.defaultCheckboxValue,
-    dynamicFields.required,
-    dynamicFields.readOnly,
-    dynamicFields.visible,
-    dynamicFields.fieldsToRefresh,
-  ]);
+  /**
+   * Handles checkbox change event
+   * @param {boolean} isChecked - New checkbox state
+   */
+  const handleCheckboxChange = useCallback((isChecked) => {
+    handleFieldUpdate('change', { checked: isChecked });
+  }, [handleFieldUpdate]);
 
-  const dynamicCheckboxOptions = () => ([
-    dynamicFields.automateEntryPoint,
-    dynamicFields.showRefresh,
-    dynamicFields.loadOnInit,
-    dynamicFields.required,
-    dynamicFields.fieldsToRefresh,
-  ]);
+  // Define checkbox options based on whether it's dynamic or not
+  const checkboxEditFields = useMemo(() => {
+    const ordinaryOptions = [
+      dynamicFields.defaultCheckboxValue,
+      dynamicFields.required,
+      dynamicFields.readOnly,
+      dynamicFields.visible,
+      dynamicFields.fieldsToRefresh,
+    ];
 
-  const checkboxOptions = () => ({
-    name: fieldTab.options,
-    fields: fieldState.dynamic ? dynamicCheckboxOptions() : ordinaryCheckboxOptions(),
-  });
+    const dynamicOptions = [
+      dynamicFields.automateEntryPoint,
+      dynamicFields.showRefresh,
+      dynamicFields.loadOnInit,
+      dynamicFields.required,
+      dynamicFields.fieldsToRefresh,
+    ];
 
-  const checkboxEditFields = () => {
     const tabs = [
       fieldInformation(),
-      checkboxOptions(),
+      {
+        name: fieldTab.options,
+        fields: fieldState.dynamic ? dynamicOptions : ordinaryOptions,
+      },
       advanced(),
     ];
+
     if (fieldState.dynamic) {
       tabs.push(overridableOptions('checkBox'));
     }
+
     return tabs;
-  };
+  }, [fieldState.dynamic]);
+
+  // // Render error message if required props are missing
+  // if (!field || !section) {
+  //   return (
+  //     <div className="dynamic-form-field-error">
+  //       Error: Missing required field data
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="dynamic-form-field">
@@ -97,19 +150,21 @@ const DynamicCheckbox = ({ dynamicFieldData: { section, field, fieldPosition }, 
         <Checkbox
           id={inputId}
           name={fieldState.name}
-          labelText={fieldState.label}
+          labelText={fieldState.label || __('Checkbox')}
           required={fieldState.required}
           checked={fieldState.checked}
-          onChange={(e) => handleFieldUpdate(e, { checked: e })}
+          onChange={handleCheckboxChange}
+          disabled={fieldState.readOnly}
+          aria-label={fieldState.label || 'Checkbox field'}
         />
       </div>
       <DynamicFieldActions
         componentId={field.componentId}
         fieldProps={fieldState}
         updateFieldProps={handleFieldUpdate}
-        dynamicFieldAction={(event, inputProps) => fieldActions(event, inputProps)}
-        fieldConfiguration={checkboxEditFields()}
-        dynamicToggleAction={(isDynamic) => resetEditModalTabs(isDynamic)}
+        dynamicFieldAction={handleFieldActions}
+        fieldConfiguration={checkboxEditFields}
+        dynamicToggleAction={handleDynamicToggle}
       />
     </div>
   );
@@ -121,3 +176,4 @@ DynamicCheckbox.propTypes = {
 };
 
 export default DynamicCheckbox;
+
