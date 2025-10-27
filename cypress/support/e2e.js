@@ -58,6 +58,7 @@ import './commands/toolbar.js';
 
 // Assertions
 import './assertions/expect_alerts.js';
+import './assertions/expect_dual_list.js';
 import './assertions/expect_rates_table.js';
 import './assertions/expect_search_box.js';
 import './assertions/expect_text.js';
