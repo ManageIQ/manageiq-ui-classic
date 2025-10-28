@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox } from 'carbon-components-react';
-import { dynamicFieldDataProps, SD_ACTIONS, getFieldValues } from '../helper';
+import { dynamicFieldDataProps, SD_ACTIONS, getFieldValues, getRefreshEnabledFields } from '../helper';
 import DynamicFieldActions from '../dynamic-field-actions';
 import {
   fieldInformation, advanced, overridableOptions, fieldTab, dynamicFields,
@@ -27,12 +27,7 @@ const DynamicCheckbox = ({ dynamicFieldData, onFieldAction }) => {
 
   // Get fields that have refresh enabled
   const refreshEnabledFields = useMemo(() => 
-    fields.reduce((result, fieldItem) => {
-      if (fieldItem.showRefresh) {
-        result.push({ value: fieldItem.label, label: fieldItem.label });
-      }
-      return result;
-    }, []),
+    getRefreshEnabledFields(fields),
     [fields]
   );
 
@@ -146,7 +141,7 @@ const DynamicCheckbox = ({ dynamicFieldData, onFieldAction }) => {
           checked={fieldState.checked}
           onChange={handleCheckboxChange}
           disabled={fieldState.readOnly}
-          aria-label={fieldState.label || 'Checkbox field'}
+          aria-label={fieldState.label || __('Checkbox field')}
         />
       </div>
       <DynamicFieldActions
@@ -167,4 +162,3 @@ DynamicCheckbox.propTypes = {
 };
 
 export default DynamicCheckbox;
-

@@ -36,6 +36,24 @@ export const SD_ACTIONS = {
   onDragStartTab: 'onDragStartTab',
 };
 
+/**
+ * Get fields that have refresh enabled for the refresh dropdown
+ * @param {Array} fields - Array of field objects
+ * @returns {Array} Array of objects with value and label properties
+ */
+export const getRefreshEnabledFields = (fields) => {
+  if (!fields || !Array.isArray(fields)) {
+    return [];
+  }
+  
+  return fields.reduce((result, fieldItem) => {
+    if (fieldItem.showRefresh) {
+      result.push({ value: fieldItem.label, label: fieldItem.label });
+    }
+    return result;
+  }, []);
+};
+
 /** Function to drop a field after its been dragged within a section */
 export const dropField = (section, { sectionId, fieldPosition }, dragEnterItem) => {
   if (section.sectionId === sectionId) {
