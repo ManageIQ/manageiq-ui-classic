@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { DatePicker, DatePickerInput } from 'carbon-components-react';
-import { dynamicFieldDataProps, SD_ACTIONS, getFieldValues } from '../helper';
+import { dynamicFieldDataProps, SD_ACTIONS, getFieldValues, getRefreshEnabledFields } from '../helper';
 import DynamicFieldActions from '../dynamic-field-actions';
 import {
   fieldInformation, advanced, overridableOptions, fieldTab, dynamicFields,
@@ -27,12 +27,7 @@ const DynamicDatePicker = ({ dynamicFieldData, onFieldAction }) => {
   
   // Get fields that have refresh enabled for the refresh dropdown
   const refreshEnabledFields = useMemo(() => 
-    fields.reduce((result, fieldItem) => {
-      if (fieldItem.showRefresh) {
-        result.push({ value: fieldItem.label, label: fieldItem.label });
-      }
-      return result;
-    }, []),
+    getRefreshEnabledFields(fields),
     [fields]
   );
 
@@ -138,6 +133,7 @@ const DynamicDatePicker = ({ dynamicFieldData, onFieldAction }) => {
   }, [fieldState.dynamic]);
 
   // Calculate minDate based on showPastDates setting
+  // Must use undefined (not empty string) when showing past dates
   const minDate = useMemo(() => {
     if (fieldState.showPastDates) {
       return undefined;
