@@ -4,10 +4,6 @@ Cypress.Commands.add('gtl_error', () => {
   return cy.get('#miq-gtl-view > #flash_msg_div').should('be.visible');
 });
 
-Cypress.Commands.add('gtl_no_record', () => {
-  return cy.get('#miq-gtl-view > div.no-record').should('be.visible');
-});
-
 Cypress.Commands.add('gtlGetTable', () => {
   return cy.get('#miq-gtl-view > .miq-data-table > .miq-data-table > .bx--data-table-content > table');
 });
