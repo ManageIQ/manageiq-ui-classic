@@ -12,9 +12,9 @@
   ],
   "scripts": {
     "cypress:open": "cypress open",
-    "cypress:run:chrome": "cypress run --headless --browser chrome",
-    "cypress:run:edge": "cypress run --headless --browser edge",
-    "cypress:run:firefox": "cypress run --headless --browser firefox",
+    "cypress:run:chrome": "cypress run --headless --browser chrome ${SPEC:+--spec \"$SPEC\"}",
+    "cypress:run:edge": "cypress run --headless --browser edge ${SPEC:+--spec \"$SPEC\"}",
+    "cypress:run:firefox": "cypress run --headless --browser firefox ${SPEC:+--spec \"$SPEC\"}",
     "test": "jest",
     "test:watch": "jest --watchAll",
     "test:current": "jest --watch",
