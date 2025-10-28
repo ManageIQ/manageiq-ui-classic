@@ -152,6 +152,16 @@ Cypress.Commands.add('validateFormFields', (fieldConfigs) => {
             if (expectedValue) {
               cy.wrap(field).should('have.value', expectedValue);
             }
+
+            if (inputFieldType === 'checkbox') {
+              const shouldBeChecked =
+                config[FIELD_CONFIG_KEYS.SHOULD_BE_CHECKED] || false;
+              if (shouldBeChecked) {
+                expect(field).to.be.checked;
+              } else {
+                expect(field).to.not.be.checked;
+              }
+            }
           });
         break;
       case FIELD_TYPES.SELECT:
