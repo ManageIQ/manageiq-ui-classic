@@ -30,6 +30,7 @@ export const BUTTON_CONFIG_KEYS = {
   BUTTON_TEXT: 'buttonText',
   BUTTON_TYPE: 'buttonType',
   SHOULD_BE_DISABLED: 'shouldBeDisabled',
+  BUTTON_WRAPPER_CLASS: 'buttonWrapperClass',
 };
 
 /* ========================================================== */
