@@ -135,15 +135,6 @@ const DynamicCheckbox = ({ dynamicFieldData, onFieldAction }) => {
     return tabs;
   }, [fieldState.dynamic]);
 
-  // // Render error message if required props are missing
-  // if (!field || !section) {
-  //   return (
-  //     <div className="dynamic-form-field-error">
-  //       Error: Missing required field data
-  //     </div>
-  //   );
-  // }
-
   return (
     <div className="dynamic-form-field">
       <div className="dynamic-form-field-item">

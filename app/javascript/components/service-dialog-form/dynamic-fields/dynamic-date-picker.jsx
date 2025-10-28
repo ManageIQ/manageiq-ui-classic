@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { DatePicker, DatePickerInput } from 'carbon-components-react';
 import { dynamicFieldDataProps, SD_ACTIONS, getFieldValues } from '../helper';
@@ -7,20 +7,38 @@ import {
   fieldInformation, advanced, overridableOptions, fieldTab, dynamicFields,
 } from './dynamic-field-configuration';
 
-/** Component to render a Field. */
-const DynamicDatePicker = ({ dynamicFieldData: { section, field, fieldPosition }, onFieldAction }) => {
-  const { tabId, sectionId } = section;
-
-  const [inputValues, setInputValues] = useState({});
-  const inputId = `tab-${tabId}-section-${sectionId}-field-${fieldPosition}-date-picker`;
+/**
+ * DynamicDatePicker - A component to render a date picker field with dynamic configuration options
+ * 
+ * @param {Object} props - Component props
+ * @param {Object} props.dynamicFieldData - Data for the dynamic field
+ * @param {Function} props.onFieldAction - Callback for field actions
+ * @returns {React.ReactElement} - Rendered component
+ */
+const DynamicDatePicker = ({ dynamicFieldData, onFieldAction }) => {
+  const { section, field, fieldPosition } = dynamicFieldData;
+  const { tabId, sectionId, fields } = section;
   const editActionType = SD_ACTIONS.field.edit;
 
-  const refreshEnabledFields = section.fields
-    .filter((field) => field.showRefresh)
-    .map((field) => ({ value: field.label, label: field.label }));
+  // Generate a unique ID for the input field
+  const inputId = useMemo(() => (
+    `tab-${tabId}-section-${sectionId}-field-${fieldPosition}-date-picker`
+  ), [tabId, sectionId, fieldPosition]);
+  
+  // Get fields that have refresh enabled for the refresh dropdown
+  const refreshEnabledFields = useMemo(() => 
+    fields.reduce((result, fieldItem) => {
+      if (fieldItem.showRefresh) {
+        result.push({ value: fieldItem.label, label: fieldItem.label });
+      }
+      return result;
+    }, []),
+    [fields]
+  );
 
   // Initialize field state with values from the helper function
-  const fieldValues = getFieldValues(field);
+  const fieldValues = useMemo(() => getFieldValues(field), [field]);
+  
   const [fieldState, setFieldState] = useState({
     ...fieldValues,
     position: fieldPosition,
@@ -28,35 +46,36 @@ const DynamicDatePicker = ({ dynamicFieldData: { section, field, fieldPosition }
     fieldsToRefresh: refreshEnabledFields,
   });
 
-  // To reset tabs in Edit Modal based on 'dynamic' switch
-  const resetEditModalTabs = (isDynamic) => {
-    setFieldState((prevState) => ({ ...prevState, dynamic: isDynamic }));
-  };
-
-  const ordinaryDatePickerOptions = () => ([
-    dynamicFields.required,
-    dynamicFields.defaultDatePickerValue,
-    dynamicFields.readOnly,
-    dynamicFields.visible,
-    dynamicFields.showPastDates,
-    dynamicFields.fieldsToRefresh,
-  ]);
-
-  const dynamicDatePickerOptions = () => ([
-    dynamicFields.automateEntryPoint,
-    dynamicFields.showRefresh,
-    dynamicFields.showPastDates,
-    dynamicFields.fieldsToRefresh,
-    dynamicFields.required,
-  ]);
-
-  const fieldActions = (event, inputProps) => {
-    const type = (event === SD_ACTIONS.field.delete) ? SD_ACTIONS.field.delete : editActionType;
-
-    setInputValues({
-      ...inputValues,
-      ...inputProps,
+  /**
+   * Updates field state and notifies parent component
+   * @param {Event|string} event - Event object or action string
+   * @param {Object} updatedFields - Fields to update
+   */
+  const handleFieldUpdate = useCallback((event, updatedFields) => {
+    setFieldState((prevState) => {
+      const newState = { ...prevState, ...updatedFields };
+      
+      // Notify parent component about the change
+      onFieldAction({ 
+        event, 
+        type: editActionType, 
+        fieldPosition, 
+        inputProps: newState 
+      });
+      
+      return newState;
     });
+  }, [editActionType, fieldPosition, onFieldAction]);
+
+  /**
+   * Handles field actions like delete
+   * @param {string} event - Action type
+   * @param {Object} inputProps - Field properties
+   */
+  const handleFieldActions = useCallback((event, inputProps) => {
+    const type = (event === SD_ACTIONS.field.delete) 
+      ? SD_ACTIONS.field.delete 
+      : editActionType;
 
     onFieldAction({
       event,
@@ -64,33 +83,72 @@ const DynamicDatePicker = ({ dynamicFieldData: { section, field, fieldPosition }
       type,
       inputProps,
     });
-  };
+  }, [editActionType, fieldPosition, onFieldAction]);
 
-  const handleFieldUpdate = (event, updatedFields) => {
-    setFieldState((prevState) => ({ ...prevState, ...updatedFields }));
-    onFieldAction({ event, type: editActionType, fieldPosition, inputProps: { ...fieldState, ...updatedFields } });
-  };
+  /**
+   * Updates field state when dynamic property changes
+   * @param {boolean} isDynamic - Whether the field is dynamic
+   */
+  const handleDynamicToggle = useCallback((isDynamic) => {
+    setFieldState((prevState) => ({ ...prevState, dynamic: isDynamic }));
+  }, []);
 
-  const handleOnChange = (updatedFields) => {
-    setFieldState((prevState) => ({ ...prevState, ...updatedFields }));
-  };
+  /**
+   * Handles date picker value changes
+   * @param {Array} selectedDates - Array of selected dates
+   * @param {string} dateStr - Date string representation
+   */
+  const handleDateChange = useCallback((_selectedDates, dateStr) => {
+    handleFieldUpdate('change', { value: dateStr });
+  }, [handleFieldUpdate]);
 
-  const datePickerOptions = () => ({
-    name: fieldTab.options,
-    fields: fieldState.dynamic ? dynamicDatePickerOptions() : ordinaryDatePickerOptions(),
-  });
+  // Define date picker options and edit fields configuration
+  const datePickerEditFields = useMemo(() => {
+    const ordinaryOptions = [
+      dynamicFields.required,
+      dynamicFields.defaultDatePickerValue,
+      dynamicFields.readOnly,
+      dynamicFields.visible,
+      dynamicFields.showPastDates,
+      dynamicFields.fieldsToRefresh,
+    ];
 
-  const datePickerEditFields = () => {
+    const dynamicOptions = [
+      dynamicFields.automateEntryPoint,
+      dynamicFields.showRefresh,
+      dynamicFields.showPastDates,
+      dynamicFields.fieldsToRefresh,
+      dynamicFields.required,
+    ];
+
     const tabs = [
       fieldInformation(),
-      datePickerOptions(),
+      {
+        name: fieldTab.options,
+        fields: fieldState.dynamic ? dynamicOptions : ordinaryOptions,
+      },
       advanced(),
     ];
+    
     if (fieldState.dynamic) {
       tabs.push(overridableOptions('datePicker'));
     }
+    
     return tabs;
-  };
+  }, [fieldState.dynamic]);
+
+  // Calculate minDate based on showPastDates setting
+  const minDate = useMemo(() => {
+    if (fieldState.showPastDates) {
+      return undefined;
+    }
+    try {
+      return new Date().toLocaleDateString();
+    } catch (error) {
+      console.error(__('Error formatting date:'), error);
+      return undefined;
+    }
+  }, [fieldState.showPastDates]);
 
   return (
     <div className="dynamic-form-field">
@@ -98,15 +156,20 @@ const DynamicDatePicker = ({ dynamicFieldData: { section, field, fieldPosition }
         <DatePicker
           datePickerType="single"
           dateFormat="m/d/Y"
-          minDate={fieldState.showPastDates ? undefined : new Date().toLocaleDateString()}
-          onChange={(selectedDates, dateStr) => handleOnChange({ value: dateStr })}
+          minDate={minDate}
+          onChange={handleDateChange}
+          disabled={fieldState.readOnly}
         >
           <DatePickerInput
             datePickerType="single"
             id={inputId}
-            labelText={fieldState.label}
-            value={fieldState.value}
-            placeholder="mm/dd/yyyy"
+            labelText={fieldState.label || __('Date')}
+            value={fieldState.value || ''}
+            placeholder={__('mm/dd/yyyy')}
+            disabled={fieldState.readOnly}
+            invalid={fieldState.required && !fieldState.value}
+            invalidText={fieldState.required && !fieldState.value ? __('This field is required') : ''}
+            aria-label={fieldState.label || __('Date picker field')}
           />
         </DatePicker>
       </div>
@@ -114,9 +177,9 @@ const DynamicDatePicker = ({ dynamicFieldData: { section, field, fieldPosition }
         componentId={field.componentId}
         fieldProps={fieldState}
         updateFieldProps={handleFieldUpdate}
-        dynamicFieldAction={(event, inputProps) => fieldActions(event, inputProps)}
-        fieldConfiguration={datePickerEditFields()}
-        dynamicToggleAction={(isDynamic) => resetEditModalTabs(isDynamic)}
+        dynamicFieldAction={handleFieldActions}
+        fieldConfiguration={datePickerEditFields}
+        dynamicToggleAction={handleDynamicToggle}
       />
     </div>
   );
