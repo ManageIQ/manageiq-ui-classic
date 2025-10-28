@@ -53,3 +53,23 @@ Cypress.Commands.add('selectTableRowsByText', ({ textArray = [] }) => {
     });
   });
 });
+
+/**
+ * Command to click on a table row that contains the specified text.
+ * If columnIndex is provided, it will only look for the text in that specific column.
+ *
+ * @param {Object} params - Parameters for the command
+ * @param {string} params.text - Text to find in the table row
+ * @param {number} [params.columnIndex] - Optional index of the column to search in (0-based)
+ */
+Cypress.Commands.add('clickTableRowByText', ({ text, columnIndex }) => {
+  if (!text) {
+    cy.logAndThrowError('text parameter is required');
+  }
+
+  if (columnIndex || columnIndex === 0) {
+    cy.contains(`.miq-data-table table tbody tr td:nth-child(${columnIndex + 1})`, text).click();
+  } else {
+    cy.contains('.miq-data-table table tbody tr td', text).click();
+  }
+});
