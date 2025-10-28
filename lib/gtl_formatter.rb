@@ -12,6 +12,9 @@ class GtlFormatter
   COLUMN_WITH_ICON = {
     'authentication_status'  => 'authentication_status_image',
     'last_compliance_status' => 'last_compliance_status_image',
+  }.freeze
+
+  COLUMN_WITH_ICON_NO_TEXT = {
     'payload_valid'          => 'payload_valid_image',
   }.freeze
 
@@ -134,6 +137,11 @@ class GtlFormatter
         item = {:title => text,
                 :icon  => icon,
                 :text  => text}.compact
+      elsif COLUMN_WITH_ICON_NO_TEXT.key?(col)
+        icon = send(COLUMN_WITH_ICON_NO_TEXT[col], record)
+        text = format_col_for_display(view, row, col)
+        item = {:title => text,
+                :icon  => icon}.compact
       elsif COLUMN_WITH_TIME.include?(col)
         celltext = format_time_for_display(row, col)
       elsif COLUMN_WITH_OS_TEXT.include?(col)
