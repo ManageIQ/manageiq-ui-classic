@@ -15,6 +15,7 @@ export const FIELD_CONFIG_KEYS = {
   FIELD_TYPE: 'fieldType',
   INPUT_FIELD_TYPE: 'inputFieldType',
   SHOULD_BE_DISABLED: 'shouldBeDisabled',
+  SHOULD_BE_CHECKED: 'shouldBeChecked',
   EXPECTED_VALUE: 'expectedValue',
 };
 
