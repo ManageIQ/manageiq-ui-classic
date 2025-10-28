@@ -12,6 +12,7 @@ class GtlFormatter
   COLUMN_WITH_ICON = {
     'authentication_status'  => 'authentication_status_image',
     'last_compliance_status' => 'last_compliance_status_image',
+    'payload_valid'          => 'payload_valid_image',
   }.freeze
 
   COLUMN_WITH_BACKGROUND_ICON = {
@@ -215,6 +216,15 @@ class GtlFormatter
       "pficon pficon-unknown"
     else
       "pficon pficon-warning-triangle-o"
+    end
+  end
+
+  def self.payload_valid_image(item)
+    case item.payload_valid
+    when true
+      "pficon pficon-ok"
+    else
+      "pficon pficon-error-circle-o"
     end
   end
 
