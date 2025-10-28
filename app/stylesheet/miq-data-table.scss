@@ -418,3 +418,10 @@ table.miq_preview {
     color: var(--red);
   }
 }
+
+#workflows_table {
+  td.no_text {
+    width: 50px;
+    padding-left: 24px;
+  }
+}
