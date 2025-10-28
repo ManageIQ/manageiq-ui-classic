@@ -55,6 +55,7 @@ ManageIQ implements the following cypress extensions:
 ##### miq_data_table_commands
 
 * `cy.selectTableRowsByText({ textArray })` - selects table rows that contain any of the specified text values. Iterates through each text in the array and finds the corresponding row. If any text is not found in the table, it throws an error immediately. `textArray` is an array of text values to match against table rows. e.g. `cy.selectTableRowsByText({ textArray: ['Option 1', 'Option 2'] });`
+* `cy.clickTableRowByText({ text, columnIndex })` - clicks on a table row that contains the specified text. If columnIndex is provided, it will only look for the text in that specific column. `text` is the text to find in the table row. `columnIndex` is an optional 0-based index of the column to search in. e.g. `cy.clickTableRowByText({ text: 'My Service' });`, `cy.clickTableRowByText({ text: 'Active', columnIndex: 2 });`
 
 ##### tabs
 
