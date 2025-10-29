@@ -75,6 +75,9 @@ function addZone() {
         })
         .should('be.enabled')
         .click(),
+    onApiResponse: (interception) => {
+      expect(interception.response.statusCode).to.equal(200);
+    },
   });
   return cy.then(() => {
     return `Zone: ${INITIAL_ZONE_DESCRIPTION}`;
