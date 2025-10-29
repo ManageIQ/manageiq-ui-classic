@@ -164,5 +164,8 @@ Cypress.Commands.add('expect_inline_field_errors', ({ containsText }) => {
   if (!containsText) {
     cy.logAndThrowError('containsText is required');
   }
-  return cy.contains('#name-error-msg', containsText);
+  return cy
+    .contains('#name-error-msg', containsText)
+    .scrollIntoView()
+    .should('be.visible');
 });
