@@ -1,7 +1,6 @@
 require "manageiq/ui/classic/engine"
 require "manageiq/ui/classic/version"
 require "extensions/ac_nested_params"
-require "extensions/ac_subscription_adapter_postgresql"
 
 module ManageIQ
   module UI
