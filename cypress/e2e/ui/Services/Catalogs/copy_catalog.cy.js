@@ -6,9 +6,6 @@ import {
   BUTTON_CONFIG_KEYS,
 } from '../../../../support/commands/constants/command_constants';
 
-// Component route url
-const COMPONENT_ROUTE_URL = '/catalog/explorer';
-
 // Menu options
 const SERVICES_MENU_OPTION = 'Services';
 const CATALOGS_MENU_OPTION = 'Catalogs';
@@ -22,13 +19,11 @@ const UNASSIGNED_ACCORDION_ITEM = 'Unassigned';
 const CONFIG_TOOLBAR_BUTTON = 'Configuration';
 const ADD_CATALOG_ITEM_CONFIG_OPTION = 'Add a New Catalog Item';
 const COPY_CONFIG_OPTION = 'Copy Selected Item';
-const DELETE_CATALOG_ITEMS_CONFIG_OPTION = 'Delete Catalog Items';
 
 // Field labels
 const FORM_HEADER = 'Catalog';
 const NAME_FIELD_LABEL = 'Name';
 const COPY_TAGS_FIELD_LABEL = 'Copy Tags';
-const REMOVE_CATALOG_MODAL_HEADER_TEXT = 'Delete';
 
 // Field values
 const CATALOG_ITEM_NAME = 'Test-Catalog-Item';
@@ -43,33 +38,6 @@ const FLASH_MESSAGE_SAVED = 'saved';
 // Buttons
 const ADD_BUTTON_TEXT = 'Add';
 const CANCEL_BUTTON_TEXT = 'Cancel';
-const DELETE_BUTTON_TEXT = 'Delete';
-
-function cleanUp(catalogItemToDelete) {
-  cy.url()
-    .then((url) => {
-      // Ensures navigation to Services -> Catalogs in the UI
-      if (!url.endsWith(COMPONENT_ROUTE_URL)) {
-        cy.visit(COMPONENT_ROUTE_URL);
-      }
-      cy.accordion(CATALOG_ITEMS_ACCORDION_ITEM);
-    })
-    .then(() => {
-      cy.selectAccordionItem([
-        ALL_CATALOG_ITEMS_ACCORDION_ITEM,
-        UNASSIGNED_ACCORDION_ITEM,
-      ]);
-      cy.selectTableRowsByText({
-        textArray: [catalogItemToDelete],
-      });
-      cy.toolbar(CONFIG_TOOLBAR_BUTTON, DELETE_CATALOG_ITEMS_CONFIG_OPTION);
-      cy.expect_modal({
-        modalHeaderText: REMOVE_CATALOG_MODAL_HEADER_TEXT,
-        modalContentExpectedTexts: ['delete', catalogItemToDelete],
-        targetFooterButtonText: DELETE_BUTTON_TEXT,
-      });
-    });
-}
 
 describe('Automate Catalog form operations: Services > Catalogs > Catalogs > Configuration > Add a New Catalog', () => {
   beforeEach(() => {
@@ -96,6 +64,10 @@ describe('Automate Catalog form operations: Services > Catalogs > Catalogs > Con
       CATALOG_ITEM_NAME,
     ]);
     cy.toolbar(CONFIG_TOOLBAR_BUTTON, COPY_CONFIG_OPTION);
+  });
+
+  afterEach(() => {
+    cy.appDbState('restore');
   });
 
   describe('Verify form elements, validate cancel button and validate name related error messages', () => {
@@ -162,15 +134,5 @@ describe('Automate Catalog form operations: Services > Catalogs > Catalogs > Con
       }).click();
       cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SAVED);
     });
-
-    afterEach(() => {
-      // TODO: Replace with better cleanup approach
-      cleanUp(COPIED_CATALOG_ITEM_NAME);
-    });
-  });
-
-  afterEach(() => {
-    // TODO: Replace with better cleanup approach
-    cleanUp(CATALOG_ITEM_NAME);
   });
 });

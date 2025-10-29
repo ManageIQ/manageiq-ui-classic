@@ -7,9 +7,6 @@ import {
   DUAL_LIST_ACTION_TYPE,
 } from '../../../../support/commands/constants/command_constants.js';
 
-// Component route url
-const COMPONENT_ROUTE_URL = '/catalog/explorer';
-
 // Menu options
 const SERVICES_MENU_OPTION = 'Services';
 const CATALOGS_MENU_OPTION = 'Catalogs';
@@ -21,7 +18,6 @@ const DESCRIPTION_FIELD_LABEL = 'Description';
 const CATALOG_ITEMS_HEADER = 'Catalog Items';
 const DUAL_LIST_AVAILABLE_ITEMS_HEADER = 'Unassigned';
 const DUAL_LIST_SELECTED_ITEMS_HEADER = 'Selected';
-const REMOVE_CATALOG_MODAL_HEADER_TEXT = 'Delete';
 
 // Field values
 const CATALOG_ITEM_NAME_1 = 'Test-Catalog-Item-1';
@@ -35,14 +31,12 @@ const ADD_CATALOG_ITEM_CONFIG_OPTION = 'Add a New Catalog Item';
 const ADD_CATALOG_CONFIG_OPTION = 'Add a New Catalog';
 const EDIT_CATALOG_CONFIG_OPTION = 'Edit this Item';
 const REMOVE_CATALOG_CONFIG_OPTION = 'Remove Catalog';
-const DELETE_CATALOG_ITEMS_CONFIG_OPTION = 'Delete Catalog Items';
 
 // Buttons
 const ADD_BUTTON_TEXT = 'Add';
 const SAVE_BUTTON_TEXT = 'Save';
 const CANCEL_BUTTON_TEXT = 'Cancel';
 const RESET_BUTTON_TEXT = 'Reset';
-const DELETE_BUTTON_TEXT = 'Delete';
 
 // Flash message text snippets
 const FLASH_MESSAGE_ADDED = 'added';
@@ -147,6 +141,10 @@ describe('Automate Catalog form operations: Services > Catalogs > Catalogs > Con
 
     cy.accordion(CATALOGS_ACCORDION_ITEM);
     cy.selectAccordionItem([ALL_CATALOGS_ACCORDION_ITEM]);
+  });
+
+  afterEach(() => {
+    cy.appDbState('restore');
   });
 
   describe('Validate add form fields and verify add, edit, and delete operations', () => {
@@ -254,59 +252,5 @@ describe('Automate Catalog form operations: Services > Catalogs > Catalogs > Con
       );
       cy.expect_inline_field_errors({ containsText: 'taken' });
     });
-
-    afterEach(() => {
-      // TODO: Replace with better cleanup approach
-      cy.url()
-        .then((url) => {
-          // Ensures navigation to Services -> Catalogs in the UI
-          if (!url.endsWith(COMPONENT_ROUTE_URL)) {
-            cy.visit(COMPONENT_ROUTE_URL);
-          }
-          cy.accordion(CATALOGS_ACCORDION_ITEM);
-        })
-        .then(() => {
-          cy.selectAccordionItem([
-            ALL_CATALOGS_ACCORDION_ITEM,
-            TEST_CATALOG_NAME,
-          ]);
-          cy.expect_browser_confirm_with_text({
-            confirmTriggerFn: () =>
-              cy.toolbar(CONFIG_TOOLBAR_BUTTON, REMOVE_CATALOG_CONFIG_OPTION),
-            containsText: BROWSER_ALERT_REMOVE_CONFIRM_TEXT,
-          });
-        });
-    });
-  });
-
-  afterEach(() => {
-    // TODO: Replace with better cleanup approach
-    cy.url()
-      .then((url) => {
-        // Ensures navigation to Services -> Catalogs in the UI
-        if (!url.endsWith(COMPONENT_ROUTE_URL)) {
-          cy.visit(COMPONENT_ROUTE_URL);
-        }
-        cy.accordion(CATALOG_ITEMS_ACCORDION_ITEM);
-      })
-      .then(() => {
-        cy.selectAccordionItem([
-          ALL_CATALOG_ITEMS_ACCORDION_ITEM,
-          UNASSIGNED_ACCORDION_ITEM,
-        ]);
-        cy.selectTableRowsByText({
-          textArray: [CATALOG_ITEM_NAME_1, CATALOG_ITEM_NAME_2],
-        });
-        cy.toolbar(CONFIG_TOOLBAR_BUTTON, DELETE_CATALOG_ITEMS_CONFIG_OPTION);
-        cy.expect_modal({
-          modalHeaderText: REMOVE_CATALOG_MODAL_HEADER_TEXT,
-          modalContentExpectedTexts: [
-            'delete',
-            CATALOG_ITEM_NAME_1,
-            CATALOG_ITEM_NAME_2,
-          ],
-          targetFooterButtonText: DELETE_BUTTON_TEXT,
-        });
-      });
   });
 });
