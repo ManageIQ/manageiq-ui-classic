@@ -7,9 +7,6 @@ import {
   BUTTON_CONFIG_KEYS,
 } from '../../../../support/commands/constants/command_constants';
 
-// Component route url
-const COMPONENT_ROUTE_URL = '/miq_request/show_list';
-
 // Menu options
 const SERVICES_MENU_OPTION = 'Services';
 const REQUESTS_MENU_OPTION = 'Requests';
@@ -30,8 +27,6 @@ const ALL_CATALOG_ITEMS_ACCORDION_ITEM = 'All Catalog Items';
 const TOOLBAR_CONFIGURATION = 'Configuration';
 const TOOLBAR_ADD_NEW_DIALOG = 'Add a new Dialog';
 const TOOLBAR_ADD_CATALOG_ITEM = 'Add a New Catalog Item';
-const TOOLBAR_REMOVE_SELECTED_DIALOGS = 'Remove selected Dialogs';
-const TOOLBAR_DELETE_CATALOG_ITEMS = 'Delete Catalog Items';
 
 // Field labels
 const FORM_HEADER = 'Requests';
@@ -60,14 +55,11 @@ const SAVE_BUTTON_TEXT = 'Save';
 const ADD_BUTTON_TEXT = 'Add';
 const ORDER_BUTTON_TEXT = 'Order';
 const SUBMIT_BUTTON_TEXT = 'Submit';
-const DELETE_BUTTON_TEXT = 'Delete';
 
 // Flash message text snippets
 const FLASH_MESSAGE_ADD_SUCCESS = 'added';
 const FLASH_MESSAGE_SAVE_SUCCESS = 'saved';
 const FLASH_MESSAGE_SUBMITTED = 'submitted';
-const ALERT_MESSAGE_DELETE = 'delete';
-const BROWSER_CONFIRM_REMOVE_MESSAGE = 'remove';
 
 function dataSetup() {
   // Adding a dialog
@@ -154,82 +146,6 @@ function dataSetup() {
       expect(interception.response.statusCode).to.equal(200),
   });
   cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SUBMITTED);
-}
-
-function cleanUp() {
-  cy.url()
-    .then((url) => {
-      // Ensures navigation to Services -> Catalogs in the UI
-      if (!url.endsWith(COMPONENT_ROUTE_URL)) {
-        cy.visit(COMPONENT_ROUTE_URL);
-      }
-    })
-    .then(() => {
-      // Delete the request
-      // TODO: Replace with clickTableRowByText once #9691 is merged
-      cy.contains(
-        '.miq-data-table table tbody tr td',
-        CATALOG_ITEM_NAME
-      ).click();
-      // cy.clickTableRowByText({ text: CATALOG_ITEM_NAME, columnIndex: 6 });
-      cy.interceptApi({
-        urlPattern: /\/miq_request\/button\/\d+\?pressed=miq_request_delete/,
-        alias: 'deleteRequestApi',
-        triggerFn: () =>
-          cy.expect_browser_confirm_with_text({
-            confirmTriggerFn: () => cy.get('button#miq_request_delete').click(),
-            containsText: ALERT_MESSAGE_DELETE,
-          }),
-        onApiResponse: (interception) =>
-          expect(interception.response.statusCode).to.equal(200),
-      });
-      // Delete catalog item
-      cy.menu(SERVICES_MENU_OPTION, CATALOGS_MENU_OPTION);
-      cy.accordion(CATALOG_ITEMS_ACCORDION_ITEM);
-      cy.selectAccordionItem([ALL_CATALOG_ITEMS_ACCORDION_ITEM]);
-      cy.selectTableRowsByText({
-        textArray: [CATALOG_ITEM_NAME],
-      });
-      cy.toolbar(TOOLBAR_CONFIGURATION, TOOLBAR_DELETE_CATALOG_ITEMS);
-      cy.interceptApi({
-        urlPattern: /\/api\/service_templates\/\d+$/,
-        alias: 'deleteCatalogItemApi',
-        triggerFn: () =>
-          cy.expect_modal({
-            modalContentExpectedTexts: ['delete', CATALOG_ITEM_NAME],
-            targetFooterButtonText: DELETE_BUTTON_TEXT,
-          }),
-        onApiResponse: (interception) =>
-          expect(interception.response.statusCode).to.equal(200),
-      });
-      // Delete service dialog
-      cy.menu(
-        AUTOMATION_MENU_OPTION,
-        EMBEDDED_AUTOMATION_MENU_OPTION,
-        CUSTOMIZATION_MENU_OPTION
-      );
-      cy.accordion(SERVICE_DIALOGS_ACCORDION);
-      cy.selectAccordionItem([ALL_DIALOGS_ACCORDION_ITEM]);
-      cy.selectTableRowsByText({
-        textArray: [TEST_DIALOG_NAME],
-      });
-      cy.interceptApi({
-        urlPattern: '/miq_ae_customization/x_button?pressed=dialog_delete',
-        alias: 'deleteDialogApi',
-        triggerFn: () =>
-          cy.expect_browser_confirm_with_text({
-            confirmTriggerFn: () =>
-              cy.toolbar(
-                TOOLBAR_CONFIGURATION,
-                TOOLBAR_REMOVE_SELECTED_DIALOGS
-              ),
-            containsText: BROWSER_CONFIRM_REMOVE_MESSAGE,
-          }),
-        onApiResponse: (interception) =>
-          expect(interception.response.statusCode).to.equal(200),
-      });
-      cy.expect_flash(flashClassMap.success, ALERT_MESSAGE_DELETE);
-    });
 }
 
 describe('Automate Service Requests form operations: Services > Requests', () => {
@@ -512,8 +428,7 @@ describe('Automate Service Requests form operations: Services > Requests', () =>
     });
 
     afterEach(() => {
-      // TODO: Replace with better cleanup approach
-      cleanUp();
+      cy.appDbState('restore');
     });
   });
 });
