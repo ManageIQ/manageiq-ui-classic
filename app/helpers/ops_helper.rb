@@ -22,9 +22,9 @@ module OpsHelper
   end
 
   def database_details
-    @database_details = ActiveRecord::Base.configurations[Rails.env]
+    @database_details = ActiveRecord::Base.configurations.configs_for(:env_name => Rails.env).first.configuration_hash
     @database_display_name =
-      if @database_details["host"].in?([nil, "", "localhost", "127.0.0.1"])
+      if @database_details[:host].in?([nil, "", "localhost", "127.0.0.1"])
         _("Internal Database")
       else
         _("External Database")
@@ -32,9 +32,9 @@ module OpsHelper
       @data = {:title => _('Basic Information')}
       @data[:rows] = [
         row_data(_('Name'), @database_display_name),
-        row_data(_('Hostname'), @database_details["host"]),
-        row_data(_('Database name'), @database_details["database"]),
-        row_data(_('Username'), @database_details["username"])
+        row_data(_('Hostname'), @database_details[:host]),
+        row_data(_('Database name'), @database_details[:database]),
+        row_data(_('Username'), @database_details[:username])
       ]
   end
 
