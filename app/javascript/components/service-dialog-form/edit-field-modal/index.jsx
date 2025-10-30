@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import MiqFormRenderer from '@@ddf';
-import { Modal, ModalBody } from 'carbon-components-react';
+import MiqFormRenderer, { useFormApi } from '@@ddf';
+import { Modal, ModalBody, Button } from 'carbon-components-react';
 import { dynamicComponents } from '../data';
 import { createSchema } from './edit-field-modal.schema';
 import InlineFlashMessage from '../../common/inline-flash-message';
@@ -74,6 +74,14 @@ const EditFieldModal = ({
     onSave(e, finalValues);
   };
 
+  const handleReset = () => {
+    setFormValues(initialData);
+    setInlineFlashMessage({
+      kind: 'warning',
+      subtitle: __('All changes have been reset'),
+    });
+  };
+
   const onChange = (data) => {
     if (!data) return;
 
@@ -96,6 +104,48 @@ const EditFieldModal = ({
     }
   };
 
+  // Custom form template
+  const FormTemplate = ({ formFields }) => {
+    const { handleSubmit, onReset, getState } = useFormApi();
+    const { valid, pristine } = getState();
+    
+    return (
+      <form onSubmit={handleSubmit}>
+        {formFields}
+        <div className="custom-button-wrapper">
+          <Button
+            kind="primary"
+            className="btnRight"
+            type="submit"
+            disabled={!valid}
+          >
+            {__('Save')}
+          </Button>
+          <Button
+            kind="secondary"
+            className="btnRight"
+            type="button"
+            onClick={onReset}
+          >
+            {__('Reset')}
+          </Button>
+          <Button
+            kind="secondary"
+            className="btnRight"
+            type="button"
+            onClick={onCancel}
+          >
+            {__('Cancel')}
+          </Button>
+        </div>
+      </form>
+    );
+  };
+
+  FormTemplate.propTypes = {
+    formFields: PropTypes.arrayOf(PropTypes.any).isRequired,
+  };
+
   return (
     <Modal
       open
@@ -112,6 +162,8 @@ const EditFieldModal = ({
           initialValues={formValues}
           onSubmit={handleSubmit}
           onCancel={onCancel}
+          onReset={handleReset}
+          FormTemplate={FormTemplate}
         />
       </ModalBody>
     </Modal>
@@ -141,3 +193,4 @@ EditFieldModal.defaultProps = {
 };
 
 export default EditFieldModal;
+
