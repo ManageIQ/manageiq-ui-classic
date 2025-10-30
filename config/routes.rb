@@ -2226,6 +2226,7 @@ Rails.application.routes.draw do
         retrieve_email
         show_list
         sort_configured_system_grid
+        sort_configuration_script_grid
         sort_ds_grid
         sort_host_grid
         sort_iso_img_grid

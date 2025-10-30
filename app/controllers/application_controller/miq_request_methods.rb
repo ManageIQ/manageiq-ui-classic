@@ -313,6 +313,14 @@ module ApplicationController::MiqRequestMethods
   end
 
   # get the sort column that was clicked on, else use the current one
+  def sort_configuration_script_grid
+    assert_privileges("miq_request_edit")
+    return unless load_edit("prov_edit__#{params[:id]}", "show_list")
+
+    sort_grid('configuration_script', @edit[:wf].get_field(:src_configuration_script_id, :service)[:values])
+  end
+
+  # get the sort column that was clicked on, else use the current one
   def sort_pxe_img_grid
     assert_privileges("miq_request_edit")
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
@@ -824,6 +832,8 @@ module ApplicationController::MiqRequestMethods
               elsif v.id.to_i == val.to_i
                 @edit[:new][f.to_sym] = [val, v.name] # Save [value, description]
               end
+            elsif evm_object_class == :ConfigurationScriptBase
+              @edit[:new][f.to_sym] = [val, v.name] # Save [value, name]
             elsif v[1].to_i == val.to_i
               @edit[:new][f.to_sym] = [val, v[0]] # Save [value, description]
             end

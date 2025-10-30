@@ -3,7 +3,7 @@ module RequestInfoHelper
 
   PROV_FIELD_TYPES = [:vm, :host, :ds, :template, :vc, :pxe_img, :iso_img, :window_image].freeze
 
-  PROV_FIELDS = [:src_vm_id, :placement_host_name, :placement_ds_name, :attached_ds, :sysprep_custom_spec, :customization_template_id, :pxe_image_id, :iso_image_id, :windows_image_id].freeze
+  PROV_FIELDS = [:src_vm_id, :placement_host_name, :placement_ds_name, :attached_ds, :sysprep_custom_spec, :customization_template_id, :pxe_image_id, :iso_image_id, :windows_image_id, :src_configuration_script_id].freeze
 
   def provision_tab_configuration(workflow)
     prov_tab_labels = workflow.provisioning_tab_list.pluck(:name)
@@ -54,6 +54,8 @@ module RequestInfoHelper
              {:type => :iso_img, :iso_img => @iso_imgs}
            when :windows_image_id
              {:type => :window_image, :window_images => @windows_images}
+           when :src_configuration_script_id
+             {:type => :configuration_script, :configuration_scripts => @configuration_scripts}
            else
              {}
            end
@@ -91,6 +93,23 @@ module RequestInfoHelper
       rows.push({:id => data[:vm].id.to_s, :clickable => true, :cells => prov_vm_grid_cells(data[:vm], edit)})
     end
     {:headers => headers, :rows => rows, :selected => :src_vm_id, :none_index => data[:none_index]}
+  end
+
+  def prov_configuration_script_data(data)
+    edit = data[:edit]
+    headers = prov_grid_configuration_script_header(edit, data[:configuration_scripts], data[:type])
+    rows = []
+    if data[:configuration_scripts]
+      rows += [prov_row_item(data[:none_index], none_cells(edit[:configuration_script_headers].length - 1))]
+      if data[:configuration_scripts]
+        rows += data[:configuration_scripts].map do |configuration_script|
+          prov_row_item(configuration_script.id.to_s, prov_configuration_script_grid_cells(configuration_script))
+        end
+      end
+    else
+      rows.push({:id => data[:script].id.to_s, :clickable => true, :cells => prov_configuration_script_grid_cells(data[:script])})
+    end
+    {:headers => headers, :rows => rows, :selected => :src_configuration_script_id, :none_index => data[:none_index]}
   end
 
   def prov_host_data(data)
@@ -200,6 +219,20 @@ module RequestInfoHelper
     headers
   end
 
+  def prov_grid_configuration_script_header(edit, configuration_scripts, type)
+    header_keys = prov_header_keys(type.to_s)
+    headers = []
+    edit[header_keys[:columns]].each_with_index do |h, index|
+      item = prov_grid_header_item(edit[header_keys[:headers]][h])
+      if configuration_scripts
+        item[:sort_choice] = h
+        item[:sort_data] = prov_sort_data(edit, index, header_keys)
+      end
+      headers.push(item)
+    end
+    headers
+  end
+
   def prov_grid_host_header(edit, options, type)
     header_keys = prov_header_keys(type.to_s)
     headers = []
@@ -270,6 +303,13 @@ module RequestInfoHelper
       cells.push(prov_cell_data(data.cloud_tenant ? data.cloud_tenant.name : _('None')))
     end
     cells
+  end
+
+  def prov_configuration_script_grid_cells(data)
+    [
+      prov_cell_data(data.name),
+      prov_cell_data(data.description),
+    ]
   end
 
   def prov_host_grid_cells(data, options)
