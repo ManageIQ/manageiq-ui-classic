@@ -193,4 +193,3 @@ EditFieldModal.defaultProps = {
 };
 
 export default EditFieldModal;
-
