@@ -41,22 +41,23 @@ const CANCEL_BUTTON_TEXT = 'Cancel';
 
 describe('Automate Catalog form operations: Services > Catalogs > Catalogs > Configuration > Add a New Catalog', () => {
   beforeEach(() => {
+    cy.appFactories([
+      ['create', 'service_template', {name: CATALOG_ITEM_NAME, generic_subtype: 'custom', prov_type: 'generic', display: true}],
+    ]).then((results) => {
+      cy.appFactories([
+        ['create', 'resource_action', {action: 'Provision', resource_id: results[0].id, resource_type: 'ServiceTemplate'}],
+        ['create', 'resource_action', {action: 'Retirement', resource_id: results[0].id, resource_type: 'ServiceTemplate'}]
+      ])
+    });
+
     cy.login();
     cy.menu(SERVICES_MENU_OPTION, CATALOGS_MENU_OPTION);
 
-    // TODO: replace with better data setup approach
-    // Adding a catalog item
     cy.accordion(CATALOG_ITEMS_ACCORDION_ITEM);
     cy.selectAccordionItem([
       ALL_CATALOG_ITEMS_ACCORDION_ITEM,
       UNASSIGNED_ACCORDION_ITEM,
     ]);
-    cy.toolbar(CONFIG_TOOLBAR_BUTTON, ADD_CATALOG_ITEM_CONFIG_OPTION);
-    cy.contains('button[data-id="st_prov_type"]', 'Choose').click();
-    cy.contains('.form-group ul.dropdown-menu li a', 'Generic').click();
-    cy.get('input#name').type(CATALOG_ITEM_NAME);
-    cy.contains('#form_buttons_div button', ADD_BUTTON_TEXT).click();
-    cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_ADDED);
 
     cy.selectAccordionItem([
       ALL_CATALOG_ITEMS_ACCORDION_ITEM,
