@@ -226,24 +226,17 @@ describe('Automate Service Requests form operations: Services > Requests', () =>
           [FIELD_CONFIG_KEYS.ID]: 'reasonText',
         },
       ]);
-      // TODO: Replace with validateFormFooterButtons once #9689 is merged
-      cy.contains(`#main-content button[type="submit"]`, APPLY_BUTTON_TEXT)
-        .should('be.visible')
-        .and('be.enabled');
-      cy.contains(`#main-content button[type="button"]`, RESET_BUTTON_TEXT)
-        .should('be.visible')
-        .and('be.enabled');
-      // cy.validateFormFooterButtons([
-      //   {
-      //     [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: APPLY_BUTTON_TEXT,
-      //     [BUTTON_CONFIG_KEYS.BUTTON_TYPE]: 'submit',
-      //     [BUTTON_CONFIG_KEYS.BUTTON_WRAPPER_CLASS]: 'custom-button-wrapper',
-      //   },
-      //   {
-      //     [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: RESET_BUTTON_TEXT,
-      //     [BUTTON_CONFIG_KEYS.BUTTON_WRAPPER_CLASS]: 'custom-button-wrapper',
-      //   },
-      // ]);
+      cy.validateFormFooterButtons([
+        {
+          [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: APPLY_BUTTON_TEXT,
+          [BUTTON_CONFIG_KEYS.BUTTON_TYPE]: 'submit',
+          [BUTTON_CONFIG_KEYS.BUTTON_WRAPPER_CLASS]: 'custom-button-wrapper',
+        },
+        {
+          [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: RESET_BUTTON_TEXT,
+          [BUTTON_CONFIG_KEYS.BUTTON_WRAPPER_CLASS]: 'custom-button-wrapper',
+        },
+      ]);
       // TODO: Replace with verify_gtl_no_records_text once #9691 is merged
       cy.contains('#miq-gtl-view .no-records-found', 'No records found');
       // cy.verify_gtl_no_records_text();
@@ -291,15 +284,10 @@ describe('Automate Service Requests form operations: Services > Requests', () =>
       cy.getFormInputFieldByIdAndType({ inputId: 'reasonText' }).type(
         'Testing'
       );
-      // TODO: Replace with getFormFooterButtonByTypeWithText once #9689 is merged
-      cy.contains(
-        `#main-content button[type="button"]`,
-        RESET_BUTTON_TEXT
-      ).click();
-      // cy.getFormFooterButtonByTypeWithText({
-      //   buttonText: RESET_BUTTON_TEXT,
-      //   buttonWrapperClass: 'custom-button-wrapper',
-      // }).click();
+      cy.getFormFooterButtonByTypeWithText({
+        buttonText: RESET_BUTTON_TEXT,
+        buttonWrapperClass: 'custom-button-wrapper',
+      }).click();
       cy.getFormSelectFieldById({ selectId: 'selectedUser' }).should(
         'have.value',
         SELECT_OPTION_ALL
@@ -344,28 +332,18 @@ describe('Automate Service Requests form operations: Services > Requests', () =>
         inputId: 'approvalStates-approved',
         inputType: 'checkbox',
       }).should('not.be.checked');
-      // TODO: Replace with getFormFooterButtonByTypeWithText once #9689 is merged
-      cy.contains(
-        `#main-content button[type="submit"]`,
-        APPLY_BUTTON_TEXT
-      ).click();
-      // cy.getFormFooterButtonByTypeWithText({
-      //   buttonText: APPLY_BUTTON_TEXT,
-      //   buttonWrapperClass: 'custom-button-wrapper',
-      //   buttonType: 'submit',
-      // }).click();
+      cy.getFormFooterButtonByTypeWithText({
+        buttonText: APPLY_BUTTON_TEXT,
+        buttonWrapperClass: 'custom-button-wrapper',
+        buttonType: 'submit',
+      }).click();
       // TODO: Replace with verify_gtl_no_records_text once #9691 is merged
       cy.contains('#miq-gtl-view .no-records-found', 'No records found');
       // cy.verify_gtl_no_records_text();
-      // TODO: Replace with getFormFooterButtonByTypeWithText once #9689 is merged
-      cy.contains(
-        `#main-content button[type="button"]`,
-        RESET_BUTTON_TEXT
-      ).click();
-      // cy.getFormFooterButtonByTypeWithText({
-      //   buttonText: RESET_BUTTON_TEXT,
-      //   buttonWrapperClass: 'custom-button-wrapper',
-      // }).click();
+      cy.getFormFooterButtonByTypeWithText({
+        buttonText: RESET_BUTTON_TEXT,
+        buttonWrapperClass: 'custom-button-wrapper',
+      }).click();
       cy.gtlGetRows([0]).then((data) => {
         expect(data.length).to.equal(1);
       });
@@ -373,55 +351,35 @@ describe('Automate Service Requests form operations: Services > Requests', () =>
       cy.getFormSelectFieldById({ selectId: 'types' }).select(
         TYPE_VM_PROVISION
       );
-      // TODO: Replace with getFormFooterButtonByTypeWithText once #9689 is merged
-      cy.contains(
-        `#main-content button[type="submit"]`,
-        APPLY_BUTTON_TEXT
-      ).click();
-      // cy.getFormFooterButtonByTypeWithText({
-      //   buttonText: APPLY_BUTTON_TEXT,
-      //   buttonWrapperClass: 'custom-button-wrapper',
-      //   buttonType: 'submit',
-      // }).click();
+      cy.getFormFooterButtonByTypeWithText({
+        buttonText: APPLY_BUTTON_TEXT,
+        buttonWrapperClass: 'custom-button-wrapper',
+        buttonType: 'submit',
+      }).click();
       // TODO: Replace with verify_gtl_no_records_text once #9691 is merged
       cy.contains('#miq-gtl-view .no-records-found', 'No records found');
       // cy.verify_gtl_no_records_text();
-      // TODO: Replace with getFormFooterButtonByTypeWithText once #9689 is merged
-      cy.contains(
-        `#main-content button[type="button"]`,
-        RESET_BUTTON_TEXT
-      ).click();
-      // cy.getFormFooterButtonByTypeWithText({
-      //   buttonText: RESET_BUTTON_TEXT,
-      //   buttonWrapperClass: 'custom-button-wrapper',
-      // }).click();
+      cy.getFormFooterButtonByTypeWithText({
+        buttonText: RESET_BUTTON_TEXT,
+        buttonWrapperClass: 'custom-button-wrapper',
+      }).click();
       cy.gtlGetRows([0]).then((data) => {
         expect(data.length).to.equal(1);
       });
       // Filter data with
       cy.getFormInputFieldByIdAndType({ inputId: 'reasonText' }).type('r@ndOm');
-      // TODO: Replace with getFormFooterButtonByTypeWithText once #9689 is merged
-      cy.contains(
-        `#main-content button[type="submit"]`,
-        APPLY_BUTTON_TEXT
-      ).click();
-      // cy.getFormFooterButtonByTypeWithText({
-      //   buttonText: APPLY_BUTTON_TEXT,
-      //   buttonWrapperClass: 'custom-button-wrapper',
-      //   buttonType: 'submit',
-      // }).click();
+      cy.getFormFooterButtonByTypeWithText({
+        buttonText: APPLY_BUTTON_TEXT,
+        buttonWrapperClass: 'custom-button-wrapper',
+        buttonType: 'submit',
+      }).click();
       // TODO: Replace with verify_gtl_no_records_text once #9691 is merged
       cy.contains('#miq-gtl-view .no-records-found', 'No records found');
       // cy.verify_gtl_no_records_text();
-      // TODO: Replace with getFormFooterButtonByTypeWithText once #9689 is merged
-      cy.contains(
-        `#main-content button[type="button"]`,
-        RESET_BUTTON_TEXT
-      ).click();
-      // cy.getFormFooterButtonByTypeWithText({
-      //   buttonText: RESET_BUTTON_TEXT,
-      //   buttonWrapperClass: 'custom-button-wrapper',
-      // }).click();
+      cy.getFormFooterButtonByTypeWithText({
+        buttonText: RESET_BUTTON_TEXT,
+        buttonWrapperClass: 'custom-button-wrapper',
+      }).click();
       cy.gtlGetRows([0]).then((data) => {
         expect(data.length).to.equal(1);
       });
