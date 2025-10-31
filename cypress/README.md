@@ -98,6 +98,7 @@ ManageIQ implements the following cypress extensions:
 #### Assertions
 
 * `cy.expect_explorer_title(title)` - check that the title on an explorer screen matches the provided title. `title`: String for the title.
+* `cy.expect_gtl_no_records_with_text({ containsText })` - verifies that the GTL view displays a "no records" message. Checks that the specified text is visible within the GTL view container. `containsText` is the optional text to verify in the no records message (defaults to 'No records'). e.g. `cy.expect_gtl_no_records_with_text();`, `cy.expect_gtl_no_records_with_text({ containsText: 'No items found' });`
 * `cy.expect_no_search_box()` - check if no searchbox is present on the screen.
 * `cy.expect_rates_table(headers, rows)` - check the values in a chargeback rate table. `headers`: Array of strings representing the headers of the table. `rows`: Array of type `[String, [...String], [...String], [...String], [...String], String]` where each index of the array represents a column in the table. The arrays within the `rows` array can be any length and represent the values in each given column, e.g. an array of `[0.0, 100.0]` in the index for the `Range Start` column would verify that the column contains two range starts with values `0.0` and `100.0`.
 * `cy.expect_show_list_title(title)` - check the title on a show\_list screen matches the provided title. `title`: String for the title.
