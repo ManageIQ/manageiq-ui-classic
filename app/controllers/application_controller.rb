@@ -427,6 +427,7 @@ class ApplicationController < ActionController::Base
 
   # moved this method here so it can be accessed from pxe_server controller as well
   # this is a terrible name, it doesn't validate log_depots
+  # TODO: I think we can move this back to the pxe_server_controller and eliminate all non-pxe code paths
   def log_depot_validate
     @schedule = nil # setting to nil, since we are using same view for both db_back and log_depot edit
     # if zone is selected in tree replace tab#3

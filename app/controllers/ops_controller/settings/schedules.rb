@@ -267,6 +267,9 @@ module OpsController::Settings::Schedules
     schedule_toggle(false)
   end
 
+  # TODO: I think we can drop this now that log collection is dropped, however, PXE needs FileDepot validation, and
+  # I'm not sure if this method is also used by PXE validation. Note that application_controller has a log_depot_validate
+  # as well, which might be the one used for PXE. By extension, build_uri_settings can probably also be dropped.
   def log_depot_validate
     assert_privileges("schedule_admin")
 

@@ -42,26 +42,6 @@ module OpsHelper
     miq_structured_list(@data)
   end
 
-  def collect_logs_tab
-    record = @selected_server
-    log_depot_uri = (record.log_file_depot.try(:uri) || "N/A").to_s
-    last_time = record.last_log_sync_on
-    last_collection_time = last_time.blank? ? _("Never") : format_timezone(last_time.to_time, Time.zone, "gtl")
-    data = {:title => _('Basic Information'), :mode => "miq_summary"}
-    data[:rows] = [
-      row_data(_('Log Depot URI'), log_depot_uri),
-      row_data(_('Last Log Collection'), last_collection_time)
-    ]
-    if record.respond_to?(:last_log_sync_message)
-      data[:rows] = [
-        row_data(_('Log Depot URI'), log_depot_uri),
-        row_data(_('Last Log Collection'), last_collection_time),
-        row_data(_('Last Message'), record.last_log_sync_message)
-      ]
-    end
-    miq_structured_list(data)
-  end
-
   def hide_button(button, opt)
     if opt == "on"
       button ? '' : 'display:none'
