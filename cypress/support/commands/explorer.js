@@ -62,7 +62,17 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
         // Use either string match or regex match based on the type of accordionLabel
         let isMatch = false;
         if (typeof accordionLabel === 'string') {
+          Cypress.log({
+            name: 'selectAccordionItem',
+            message: `${accordionLabel} typeof string`,
+          });
+
           isMatch = liText === accordionLabel;
+
+          Cypress.log({
+            name: 'selectAccordionItem',
+            message: `${liText} === ${accordionLabel} isMatch: ${isMatch}`,
+          });
         } else if (accordionLabel instanceof RegExp) {
           isMatch = accordionLabel.test(liText);
         }
