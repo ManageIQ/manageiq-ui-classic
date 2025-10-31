@@ -38,7 +38,6 @@ ManageIQ implements the following cypress extensions:
 ##### gtl
 
 * `cy.gtl_error()` - check that error message is present.
-* `cy.gtl_no_record()` - check that `No Record` message is present.
 * `cy.gtlGetTable()` - returns GTL table.
 * `cy.gtlGetRows(columns)` - return GTL table row data in an array. `columns`: Array of 0-based indexes of the columns to read (e.g. [1, 2, 3] will return all row data from columns 1, 2, and 3).
 * `cy.gtlClickRow(columns)` - click on a row in a GTL table. `columns`: Array of `{ title: String, number: Integer }`. `title` is the string you want to find in the table to click on, `number` is the column that string is found in. (e.g. `[{title: 'Default', number: 1}, {title: 'Compute', number: 2}]` will click on a row in the GTL table with `Default` in column 1 and `Compute` in column 2. Using just `[{title: 'Default', number: 1}]` will click on the first row found in the GTL table with `Default` in column 1).
@@ -55,6 +54,7 @@ ManageIQ implements the following cypress extensions:
 ##### miq_data_table_commands
 
 * `cy.selectTableRowsByText({ textArray })` - selects table rows that contain any of the specified text values. Iterates through each text in the array and finds the corresponding row. If any text is not found in the table, it throws an error immediately. `textArray` is an array of text values to match against table rows. e.g. `cy.selectTableRowsByText({ textArray: ['Option 1', 'Option 2'] });`
+* `cy.clickTableRowByText({ text, columnIndex })` - clicks on a table row that contains the specified text. If columnIndex is provided, it will only look for the text in that specific column. `text` is the text to find in the table row. `columnIndex` is an optional 0-based index of the column to search in. e.g. `cy.clickTableRowByText({ text: 'My Service' });`, `cy.clickTableRowByText({ text: 'Active', columnIndex: 2 });`
 
 ##### tabs
 
@@ -98,6 +98,7 @@ ManageIQ implements the following cypress extensions:
 #### Assertions
 
 * `cy.expect_explorer_title(title)` - check that the title on an explorer screen matches the provided title. `title`: String for the title.
+* `cy.expect_gtl_no_records_with_text({ containsText })` - verifies that the GTL view displays a "no records" message. Checks that the specified text is visible within the GTL view container. `containsText` is the optional text to verify in the no records message (defaults to 'No records'). e.g. `cy.expect_gtl_no_records_with_text();`, `cy.expect_gtl_no_records_with_text({ containsText: 'No items found' });`
 * `cy.expect_no_search_box()` - check if no searchbox is present on the screen.
 * `cy.expect_rates_table(headers, rows)` - check the values in a chargeback rate table. `headers`: Array of strings representing the headers of the table. `rows`: Array of type `[String, [...String], [...String], [...String], [...String], String]` where each index of the array represents a column in the table. The arrays within the `rows` array can be any length and represent the values in each given column, e.g. an array of `[0.0, 100.0]` in the index for the `Range Start` column would verify that the column contains two range starts with values `0.0` and `100.0`.
 * `cy.expect_show_list_title(title)` - check the title on a show\_list screen matches the provided title. `title`: String for the title.
