@@ -308,6 +308,7 @@ module RequestInfoHelper
     [
       prov_cell_data(data.name),
       prov_cell_data(data.description),
+      prov_cell_data(data.manager_name)
     ]
   end
 
