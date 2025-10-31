@@ -208,10 +208,9 @@ Cypress.Commands.add('validateFormFields', (fieldConfigs) => {
  * @param {string} buttonConfigs[].buttonText - The text of the button
  * @param {string} [buttonConfigs[].buttonType='button'] - The type of button (e.g., 'submit', 'reset')
  * @param {boolean} [buttonConfigs[].shouldBeDisabled=false] - Whether the button should be disabled
- * @param {string} [buttonConfigs[].buttonWrapperClass='bx--btn-set'] - The CSS class of the wrapper element containing the buttons
  *
  * Example:
- *   cy.validateFormFooterButtons([
+ *   cy.validateFormButtons([
  *     { [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: 'Cancel' },
  *     { [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: 'Reset', [BUTTON_CONFIG_KEYS.SHOULD_BE_DISABLED]: true },
  *     { [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: 'Submit', [BUTTON_CONFIG_KEYS.BUTTON_TYPE]: 'submit' },
@@ -219,16 +218,15 @@ Cypress.Commands.add('validateFormFields', (fieldConfigs) => {
  *   ]);
  *
  * Or using regular object keys:
- *   cy.validateFormFooterButtons([
+ *   cy.validateFormButtons([
  *     { buttonText: 'Cancel' },
  *     { buttonText: 'Reset', shouldBeDisabled: true },
  *     { buttonText: 'Submit', buttonType: 'submit' },
- *     { buttonText: 'Save', buttonWrapperClass: 'custom-wrapper' }
  *   ]);
  *
  * Both approaches work but using config-keys object(BUTTON_CONFIG_KEYS) is recommended to avoid typos and unknown keys
  */
-Cypress.Commands.add('validateFormFooterButtons', (buttonConfigs) => {
+Cypress.Commands.add('validateFormButtons', (buttonConfigs) => {
   if (!Array.isArray(buttonConfigs)) {
     cy.logAndThrowError('buttonConfigs must be an array');
   }
@@ -244,7 +242,6 @@ Cypress.Commands.add('validateFormFooterButtons', (buttonConfigs) => {
     const buttonType = config[BUTTON_CONFIG_KEYS.BUTTON_TYPE] || 'button';
     const shouldBeDisabled =
       config[BUTTON_CONFIG_KEYS.SHOULD_BE_DISABLED] || false;
-    const buttonWrapperClass = config[BUTTON_CONFIG_KEYS.BUTTON_WRAPPER_CLASS];
 
     if (!buttonText) {
       cy.logAndThrowError(
@@ -253,10 +250,9 @@ Cypress.Commands.add('validateFormFooterButtons', (buttonConfigs) => {
     }
 
     const buttonCheck = cy
-      .getFormFooterButtonByTypeWithText({
+      .getFormButtonByTypeWithText({
         buttonText,
         buttonType,
-        buttonWrapperClass,
       })
       .should('be.visible');
 

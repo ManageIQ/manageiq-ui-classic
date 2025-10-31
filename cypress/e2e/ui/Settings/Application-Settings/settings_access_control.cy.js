@@ -37,7 +37,7 @@ describe('Settings > Application Settings > Access Control', () => {
     cy.getFormInputFieldByIdAndType({ inputId: 'description' }).type(
       INITIAL_TENANT_DESCRIPTION
     );
-    cy.getFormFooterButtonByTypeWithText({
+    cy.getFormButtonByTypeWithText({
       buttonText: 'Add',
       buttonType: 'submit',
     }).click();

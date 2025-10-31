@@ -87,7 +87,7 @@ function validateElements({ isEditForm }) {
     },
   ]);
   // Validate form footer buttons
-  cy.validateFormFooterButtons([
+  cy.validateFormButtons([
     {
       [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: isEditForm
         ? SAVE_BUTTON_TEXT
@@ -156,7 +156,7 @@ describe('Automate Catalog form operations: Services > Catalogs > Catalogs > Con
       // Validate elements
       validateElements({ isEditForm: false });
       // Cancel
-      cy.getFormFooterButtonByTypeWithText({
+      cy.getFormButtonByTypeWithText({
         buttonText: CANCEL_BUTTON_TEXT,
       }).click();
       cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_CANCELLED);
@@ -174,7 +174,7 @@ describe('Automate Catalog form operations: Services > Catalogs > Catalogs > Con
         actionType: DUAL_LIST_ACTION_TYPE.ADD,
         optionsToSelect: [CATALOG_ITEM_NAME_1],
       });
-      cy.getFormFooterButtonByTypeWithText({
+      cy.getFormButtonByTypeWithText({
         buttonText: ADD_BUTTON_TEXT,
         buttonType: 'submit',
       }).click();
@@ -185,7 +185,7 @@ describe('Automate Catalog form operations: Services > Catalogs > Catalogs > Con
       cy.getFormInputFieldByIdAndType({ inputId: 'description' }).type(
         '-Updated'
       );
-      cy.getFormFooterButtonByTypeWithText({
+      cy.getFormButtonByTypeWithText({
         buttonText: SAVE_BUTTON_TEXT,
         buttonType: 'submit',
       }).click();
@@ -214,7 +214,7 @@ describe('Automate Catalog form operations: Services > Catalogs > Catalogs > Con
         actionType: DUAL_LIST_ACTION_TYPE.ADD,
         optionsToSelect: [CATALOG_ITEM_NAME_1],
       });
-      cy.getFormFooterButtonByTypeWithText({
+      cy.getFormButtonByTypeWithText({
         buttonText: ADD_BUTTON_TEXT,
         buttonType: 'submit',
       }).click();
@@ -230,7 +230,7 @@ describe('Automate Catalog form operations: Services > Catalogs > Catalogs > Con
       cy.getFormInputFieldByIdAndType({ inputId: 'description' }).type(
         '-Updated'
       );
-      cy.getFormFooterButtonByTypeWithText({
+      cy.getFormButtonByTypeWithText({
         buttonText: RESET_BUTTON_TEXT,
       }).click();
       cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_RESET);
@@ -239,7 +239,7 @@ describe('Automate Catalog form operations: Services > Catalogs > Catalogs > Con
         TEST_DESCRIPTION
       );
       // Cancel
-      cy.getFormFooterButtonByTypeWithText({
+      cy.getFormButtonByTypeWithText({
         buttonText: CANCEL_BUTTON_TEXT,
       }).click();
       cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_CANCELLED);

@@ -92,7 +92,7 @@ function selectConfigMenu(menuOption) {
 
 function addSchedule() {
   selectConfigMenu(ADD_SCHEDULE_CONFIG_OPTION);
-  cy.getFormFooterButtonByTypeWithText({
+  cy.getFormButtonByTypeWithText({
     buttonText: SAVE_BUTTON_TEXT,
     buttonType: 'submit',
   }).should('be.disabled');
@@ -126,7 +126,7 @@ function addSchedule() {
     urlPattern: '/ops/schedule_edit/new?button=save',
     triggerFn: () =>
       cy
-        .getFormFooterButtonByTypeWithText({
+        .getFormButtonByTypeWithText({
           buttonText: SAVE_BUTTON_TEXT,
           buttonType: 'submit',
         })
@@ -432,20 +432,20 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.getFormInputFieldByIdAndType({ inputId: 'start_time' })
       .should('be.visible')
       .and('be.enabled');
-    cy.getFormFooterButtonByTypeWithText({
+    cy.getFormButtonByTypeWithText({
       buttonText: SAVE_BUTTON_TEXT,
       buttonType: 'submit',
     })
       .should('be.visible')
       .and('be.disabled');
-    cy.getFormFooterButtonByTypeWithText({ buttonText: CANCEL_BUTTON_TEXT })
+    cy.getFormButtonByTypeWithText({ buttonText: CANCEL_BUTTON_TEXT })
       .should('be.visible')
       .and('be.enabled');
   });
 
   it('Checking whether Cancel button works on the Add form', () => {
     selectConfigMenu(ADD_SCHEDULE_CONFIG_OPTION);
-    cy.getFormFooterButtonByTypeWithText({
+    cy.getFormButtonByTypeWithText({
       buttonText: CANCEL_BUTTON_TEXT,
     }).click();
     cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_OPERATION_CANCELED);
@@ -465,7 +465,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.getFormInputFieldByIdAndType({ inputId: 'description' })
       .clear()
       .type(EDITED_DESCRIPTION);
-    cy.getFormFooterButtonByTypeWithText({
+    cy.getFormButtonByTypeWithText({
       buttonText: SAVE_BUTTON_TEXT,
       buttonType: 'submit',
     })
@@ -490,7 +490,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.getFormInputFieldByIdAndType({ inputId: 'start_date' })
       .clear()
       .type(EDITED_START_DATE);
-    cy.getFormFooterButtonByTypeWithText({ buttonText: RESET_BUTTON_TEXT })
+    cy.getFormButtonByTypeWithText({ buttonText: RESET_BUTTON_TEXT })
       .should('be.enabled')
       .click();
     cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_RESET_SCHEDULE);
@@ -504,7 +504,7 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     );
 
     /* ===== Checking whether Cancel button works ===== */
-    cy.getFormFooterButtonByTypeWithText({
+    cy.getFormButtonByTypeWithText({
       buttonText: CANCEL_BUTTON_TEXT,
     }).click();
     cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_OPERATION_CANCELED);

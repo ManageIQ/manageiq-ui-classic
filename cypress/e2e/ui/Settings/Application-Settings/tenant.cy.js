@@ -69,7 +69,7 @@ function confirmUiNavigation(callback) {
 }
 
 function cancelFormWithOptionalFlashCheck(assertFlashMessage = true) {
-  cy.getFormFooterButtonByTypeWithText({
+  cy.getFormButtonByTypeWithText({
     buttonText: CANCEL_BUTTON_TEXT,
   }).click();
   if (assertFlashMessage) {
@@ -78,7 +78,7 @@ function cancelFormWithOptionalFlashCheck(assertFlashMessage = true) {
 }
 
 function resetFormAndAssertFlashMessage(buttonType = 'reset') {
-  cy.getFormFooterButtonByTypeWithText({
+  cy.getFormButtonByTypeWithText({
     buttonText: RESET_BUTTON_TEXT,
     buttonType,
   })
@@ -101,7 +101,7 @@ function saveFormWithOptionalFlashCheck({
     urlPattern: /\/api\/tenants.*/,
     triggerFn: () =>
       cy
-        .getFormFooterButtonByTypeWithText({
+        .getFormButtonByTypeWithText({
           buttonText: button,
           buttonType: 'submit',
         })
@@ -145,15 +145,15 @@ function validateFormElements(isEditForm = true) {
   cy.getFormInputFieldByIdAndType({ inputId: 'description' })
     .should('be.visible')
     .and('be.enabled');
-  cy.getFormFooterButtonByTypeWithText({ buttonText: CANCEL_BUTTON_TEXT })
+  cy.getFormButtonByTypeWithText({ buttonText: CANCEL_BUTTON_TEXT })
     .should('be.visible')
     .and('be.enabled');
   if (isEditForm) {
-    cy.getFormFooterButtonByTypeWithText({ buttonText: RESET_BUTTON_TEXT })
+    cy.getFormButtonByTypeWithText({ buttonText: RESET_BUTTON_TEXT })
       .should('be.visible')
       .and('be.disabled');
   }
-  cy.getFormFooterButtonByTypeWithText({
+  cy.getFormButtonByTypeWithText({
     buttonText: isEditForm ? SAVE_BUTTON_TEXT : ADD_BUTTON_TEXT,
     buttonType: 'submit',
   })
@@ -328,7 +328,7 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
       });
 
       it('Validate Reset & Cancel buttons in Manage Quotas form', () => {
-        cy.getFormFooterButtonByTypeWithText({
+        cy.getFormButtonByTypeWithText({
           buttonText: RESET_BUTTON_TEXT,
           buttonType: 'reset',
         }).should('be.disabled');
@@ -466,7 +466,7 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
       });
 
       it('Validate Reset & Cancel buttons in Manage Quotas form', () => {
-        cy.getFormFooterButtonByTypeWithText({
+        cy.getFormButtonByTypeWithText({
           buttonText: RESET_BUTTON_TEXT,
           buttonType: 'reset',
         }).should('be.disabled');

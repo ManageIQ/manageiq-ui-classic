@@ -71,7 +71,7 @@ function resetProtocolDropdown({ selectServerListItem = true } = {}) {
       // If the value is not default one(BLANK_VALUE), then setting it to blank
       if (currentValue !== DROPDOWN_BLANK_VALUE) {
         cy.wrap(selectField).select(DROPDOWN_BLANK_VALUE);
-        cy.getFormFooterButtonByTypeWithText({
+        cy.getFormButtonByTypeWithText({
           buttonText: SAVE_BUTTON_TEXT,
           buttonType: 'submit',
         }).click();
@@ -105,20 +105,20 @@ function validateFormElements() {
     .should('be.visible')
     .and('be.enabled');
   // Assert cancel button is visible and enabled
-  cy.getFormFooterButtonByTypeWithText({
+  cy.getFormButtonByTypeWithText({
     buttonText: CANCEL_BUTTON_TEXT,
   })
     .should('be.visible')
     .and('be.enabled');
   // Assert save button is visible and disabled
-  cy.getFormFooterButtonByTypeWithText({
+  cy.getFormButtonByTypeWithText({
     buttonText: SAVE_BUTTON_TEXT,
     buttonType: 'submit',
   })
     .should('be.visible')
     .and('be.disabled');
   // Assert reset button is visible and disabled
-  cy.getFormFooterButtonByTypeWithText({
+  cy.getFormButtonByTypeWithText({
     buttonText: RESET_BUTTON_TEXT,
   })
     .should('be.visible')
@@ -127,7 +127,7 @@ function validateFormElements() {
 
 function cancelButtonValidation() {
   // Click cancel button in the form
-  cy.getFormFooterButtonByTypeWithText({
+  cy.getFormButtonByTypeWithText({
     buttonText: CANCEL_BUTTON_TEXT,
   }).click();
   // Validating confirmation flash message
@@ -140,7 +140,7 @@ function resetButtonValidation() {
     SAMBA_DROPDOWN_VALUE
   );
   // Confirm Reset button is enabled once dropdown value is changed and then click on Reset
-  cy.getFormFooterButtonByTypeWithText({
+  cy.getFormButtonByTypeWithText({
     buttonText: RESET_BUTTON_TEXT,
   })
     .should('be.enabled')
@@ -158,7 +158,7 @@ function saveButtonValidation() {
     SAMBA_DROPDOWN_VALUE
   );
   // Confirm Save button is enabled once dropdown value is changed and then click on Save
-  cy.getFormFooterButtonByTypeWithText({
+  cy.getFormButtonByTypeWithText({
     buttonText: SAVE_BUTTON_TEXT,
     buttonType: 'submit',
   })
