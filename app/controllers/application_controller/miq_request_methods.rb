@@ -394,7 +394,7 @@ module ApplicationController::MiqRequestMethods
     sort_by ||= "name"
     sort_order ||= "ASC"
 
-    headers = {"name" => _("Name"), "description" => _("Description")}
+    headers = {"name" => _("Name"), "description" => _("Description"), "manager_name" => _("Provider Name")}
 
     @configuration_scripts = _build_whatever_grid("configuration_script", configuration_scripts, headers, sort_order, sort_by)
   end
