@@ -100,7 +100,6 @@ module RequestInfoHelper
     headers = prov_grid_configuration_script_header(edit, data[:configuration_scripts], data[:type])
     rows = []
     if data[:configuration_scripts]
-      rows += [prov_row_item(data[:none_index], none_cells(edit[:configuration_script_headers].length - 1))]
       if data[:configuration_scripts]
         rows += data[:configuration_scripts].map do |configuration_script|
           prov_row_item(configuration_script.id.to_s, prov_configuration_script_grid_cells(configuration_script))
