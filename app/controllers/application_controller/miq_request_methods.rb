@@ -833,7 +833,9 @@ module ApplicationController::MiqRequestMethods
                 @edit[:new][f.to_sym] = [val, v.name] # Save [value, description]
               end
             elsif evm_object_class == :ConfigurationScriptBase
-              @edit[:new][f.to_sym] = [val, v.name] # Save [value, name]
+              if v.id.to_i == val.id.to_i
+                @edit[:new][f.to_sym] = [val, v.name] # Save [value, name]
+              end
             elsif v[1].to_i == val.to_i
               @edit[:new][f.to_sym] = [val, v[0]] # Save [value, description]
             end
