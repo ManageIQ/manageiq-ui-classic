@@ -63,6 +63,7 @@ import './assertions/expect_rates_table.js';
 import './assertions/expect_search_box.js';
 import './assertions/expect_text.js';
 import './assertions/expect_title.js';
+import './assertions/miq_data_table_assertions.js'
 
 // cypress on rails setup:
 // ***********************************************************
