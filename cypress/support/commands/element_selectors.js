@@ -4,23 +4,21 @@
  * @param {Object} options - The options object.
  * @param {string} options.buttonText - The text content of the button (required).
  * @param {string} [options.buttonType='button'] - The HTML button type (e.g., 'button', 'submit', 'reset'). Defaults to 'button'.
- * @param {string} [options.buttonWrapperClass='bx--btn-set'] - The CSS class of the wrapper element containing the buttons. Defaults to 'bx--btn-set'.
  * @returns {Element} The matched button element.
  * @throws {Error} If buttonText is not provided.
  *
  * Example:
  *   cy.getFormButtonByTypeWithText({ buttonText: 'Save Changes' });
  *   cy.getFormButtonByTypeWithText({ buttonText: 'Submit', buttonType: 'submit' });
- *   cy.getFormButtonByTypeWithText({ buttonText: 'Cancel', buttonWrapperClass: 'custom-wrapper' });
  */
 Cypress.Commands.add(
   'getFormButtonByTypeWithText',
-  ({ buttonType = 'button', buttonText, buttonWrapperClass = 'bx--btn-set' } = {}) => {
+  ({ buttonType = 'button', buttonText } = {}) => {
     if (!buttonText) {
       cy.logAndThrowError('buttonText is required');
     }
     return cy.contains(
-      `#main-content .${buttonWrapperClass} button[type="${buttonType}"]`,
+      `#main-content button[type="${buttonType}"]`,
       buttonText
     );
   }
