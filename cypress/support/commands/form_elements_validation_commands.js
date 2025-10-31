@@ -208,7 +208,6 @@ Cypress.Commands.add('validateFormFields', (fieldConfigs) => {
  * @param {string} buttonConfigs[].buttonText - The text of the button
  * @param {string} [buttonConfigs[].buttonType='button'] - The type of button (e.g., 'submit', 'reset')
  * @param {boolean} [buttonConfigs[].shouldBeDisabled=false] - Whether the button should be disabled
- * @param {string} [buttonConfigs[].buttonWrapperClass='bx--btn-set'] - The CSS class of the wrapper element containing the buttons
  *
  * Example:
  *   cy.validateFormFooterButtons([
@@ -223,7 +222,6 @@ Cypress.Commands.add('validateFormFields', (fieldConfigs) => {
  *     { buttonText: 'Cancel' },
  *     { buttonText: 'Reset', shouldBeDisabled: true },
  *     { buttonText: 'Submit', buttonType: 'submit' },
- *     { buttonText: 'Save', buttonWrapperClass: 'custom-wrapper' }
  *   ]);
  *
  * Both approaches work but using config-keys object(BUTTON_CONFIG_KEYS) is recommended to avoid typos and unknown keys
@@ -244,7 +242,6 @@ Cypress.Commands.add('validateFormFooterButtons', (buttonConfigs) => {
     const buttonType = config[BUTTON_CONFIG_KEYS.BUTTON_TYPE] || 'button';
     const shouldBeDisabled =
       config[BUTTON_CONFIG_KEYS.SHOULD_BE_DISABLED] || false;
-    const buttonWrapperClass = config[BUTTON_CONFIG_KEYS.BUTTON_WRAPPER_CLASS];
 
     if (!buttonText) {
       cy.logAndThrowError(
@@ -256,7 +253,6 @@ Cypress.Commands.add('validateFormFooterButtons', (buttonConfigs) => {
       .getFormButtonByTypeWithText({
         buttonText,
         buttonType,
-        buttonWrapperClass,
       })
       .should('be.visible');
 
