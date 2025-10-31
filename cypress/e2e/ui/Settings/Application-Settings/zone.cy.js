@@ -69,7 +69,7 @@ function addZone() {
     urlPattern: '/api/zones',
     triggerFn: () =>
       cy
-        .getFormFooterButtonByTypeWithText({
+        .getFormButtonByTypeWithText({
           buttonText: ADD_BUTTON_TEXT,
           buttonType: 'submit',
         })
@@ -186,7 +186,7 @@ describe('Automate Zone form operations: Settings > Application Settings > Setti
 
   it('Checking whether cancel button works on the add form', () => {
     cy.toolbar(CONFIG_TOOLBAR_BUTTON, ADD_ZONE_CONFIG_OPTION);
-    cy.getFormFooterButtonByTypeWithText({
+    cy.getFormButtonByTypeWithText({
       buttonText: CANCEL_BUTTON_TEXT,
     }).click();
     cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_OPERATION_CANCELED);
@@ -208,7 +208,7 @@ describe('Automate Zone form operations: Settings > Application Settings > Setti
     cy.getFormSelectFieldById({
       selectId: 'settings.concurrent_vm_scans',
     }).select(UPDATED_MAX_SCAN_LIMIT);
-    cy.getFormFooterButtonByTypeWithText({
+    cy.getFormButtonByTypeWithText({
       buttonText: SAVE_BUTTON_TEXT,
       buttonType: 'submit',
     })
@@ -232,7 +232,7 @@ describe('Automate Zone form operations: Settings > Application Settings > Setti
     });
     cy.toolbar(CONFIG_TOOLBAR_BUTTON, EDIT_ZONE_CONFIG_OPTION);
     validateFormElements(true);
-    cy.getFormFooterButtonByTypeWithText({
+    cy.getFormButtonByTypeWithText({
       buttonText: CANCEL_BUTTON_TEXT,
     }).click();
   });
@@ -251,7 +251,7 @@ describe('Automate Zone form operations: Settings > Application Settings > Setti
     cy.getFormInputFieldByIdAndType({ inputId: 'settings.proxy_server_ip' })
       .clear()
       .type(UPDATED_SERVER_IP);
-    cy.getFormFooterButtonByTypeWithText({ buttonText: RESET_BUTTON_TEXT })
+    cy.getFormButtonByTypeWithText({ buttonText: RESET_BUTTON_TEXT })
       .should('be.enabled')
       .click();
     cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_OPERATION_RESET);
@@ -263,7 +263,7 @@ describe('Automate Zone form operations: Settings > Application Settings > Setti
       inputId: 'settings.proxy_server_ip',
     }).should('have.value', INITIAL_SERVER_IP);
     /* ===== Cancel ===== */
-    cy.getFormFooterButtonByTypeWithText({
+    cy.getFormButtonByTypeWithText({
       buttonText: CANCEL_BUTTON_TEXT,
     }).click();
     cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_OPERATION_CANCELED);

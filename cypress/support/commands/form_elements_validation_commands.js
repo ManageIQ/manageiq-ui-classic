@@ -253,7 +253,7 @@ Cypress.Commands.add('validateFormFooterButtons', (buttonConfigs) => {
     }
 
     const buttonCheck = cy
-      .getFormFooterButtonByTypeWithText({
+      .getFormButtonByTypeWithText({
         buttonText,
         buttonType,
         buttonWrapperClass,

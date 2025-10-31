@@ -52,7 +52,7 @@ function saveFormAndAssertFlashMessage(flashMessageType, flashMessage) {
     urlPattern: '/ops/cu_repair?button=submit',
     triggerFn: () =>
       cy
-        .getFormFooterButtonByTypeWithText({
+        .getFormButtonByTypeWithText({
           buttonText: 'Save',
           buttonType: 'submit',
         })

@@ -105,7 +105,7 @@ describe('Automate Catalog form operations: Services > Catalogs > Catalogs > Con
         },
       ]);
       // Cancel
-      cy.getFormFooterButtonByTypeWithText({
+      cy.getFormButtonByTypeWithText({
         buttonText: CANCEL_BUTTON_TEXT,
       }).click();
       cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_CANCELLED);
@@ -128,7 +128,7 @@ describe('Automate Catalog form operations: Services > Catalogs > Catalogs > Con
       cy.getFormLabelByForAttribute({
         forValue: 'copy_tags',
       }).click();
-      cy.getFormFooterButtonByTypeWithText({
+      cy.getFormButtonByTypeWithText({
         buttonText: ADD_BUTTON_TEXT,
         buttonType: 'submit',
       }).click();

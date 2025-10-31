@@ -9,12 +9,12 @@
  * @throws {Error} If buttonText is not provided.
  *
  * Example:
- *   cy.getFormFooterButtonByTypeWithText({ buttonText: 'Save Changes' });
- *   cy.getFormFooterButtonByTypeWithText({ buttonText: 'Submit', buttonType: 'submit' });
- *   cy.getFormFooterButtonByTypeWithText({ buttonText: 'Cancel', buttonWrapperClass: 'custom-wrapper' });
+ *   cy.getFormButtonByTypeWithText({ buttonText: 'Save Changes' });
+ *   cy.getFormButtonByTypeWithText({ buttonText: 'Submit', buttonType: 'submit' });
+ *   cy.getFormButtonByTypeWithText({ buttonText: 'Cancel', buttonWrapperClass: 'custom-wrapper' });
  */
 Cypress.Commands.add(
-  'getFormFooterButtonByTypeWithText',
+  'getFormButtonByTypeWithText',
   ({ buttonType = 'button', buttonText, buttonWrapperClass = 'bx--btn-set' } = {}) => {
     if (!buttonText) {
       cy.logAndThrowError('buttonText is required');
