@@ -237,7 +237,6 @@ const provisionTabSchema = (
   return schema;
 };
 
-
 const createSchema = ({
   data,
   setData,
