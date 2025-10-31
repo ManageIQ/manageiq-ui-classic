@@ -281,36 +281,6 @@ describe OpsController do
     end
   end
 
-  context "Toolbar buttons render" do
-    before do
-      _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
-      allow(controller).to receive(:check_privileges).and_return(true)
-      allow(controller).to receive(:assert_privileges).and_return(true)
-      seed_session_trees('ops', :diagnostics_tree, "z-#{@zone.id}")
-      post :change_tab, :params => {:tab_id => "diagnostics_collect_logs"}
-    end
-
-    it "does not render toolbar buttons when edit is clicked" do
-      post :x_button, :params => {:id => @miq_server.id, :pressed => 'log_depot_edit', :format => :js}
-      expect(response.status).to eq(200)
-      expect(JSON.parse(response.body)['reloadToolbars']).to match([nil, nil])
-    end
-
-    it "renders toolbar buttons when cancel is clicked" do
-      allow(controller).to receive(:diagnostics_set_form_vars)
-      post :x_button, :params => {:id => @miq_server.id, :pressed => 'log_depot_edit', :button => "cancel", :format => :js}
-      expect(response.status).to eq(200)
-      expect(JSON.parse(response.body)['reloadToolbars'].length).to eq(2)
-    end
-
-    it "renders toolbar buttons when save is clicked" do
-      allow(controller).to receive(:diagnostics_set_form_vars)
-      post :x_button, :params => {:id => @miq_server.id, :pressed => 'log_depot_edit', :button => "save", :format => :js}
-      expect(response.status).to eq(200)
-      expect(JSON.parse(response.body)['reloadToolbars'].length).to eq(2)
-    end
-  end
-
   context "Import Tags and Import forms" do
     %w(settings_import settings_import_tags).each do |tab|
       render_views

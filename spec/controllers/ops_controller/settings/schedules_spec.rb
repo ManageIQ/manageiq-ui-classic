@@ -81,6 +81,7 @@ describe OpsController do
       end
     end
   end
+
   context "#build_uri_settings" do
     let(:mocked_filedepot) { double(FileDepotSmb) }
     it "uses params[:log_password] for validation if one exists" do

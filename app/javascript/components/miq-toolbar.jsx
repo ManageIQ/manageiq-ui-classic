@@ -11,21 +11,6 @@ import { sendDataWithRx } from '../miq_observable';
 /* global miqJqueryRequest, miqSerializeForm */
 /* eslint no-restricted-globals: ["off", "miqJqueryRequest", "miqSerializeForm"] */
 
-/* eslint no-alert: "off" */
-const miqSupportCasePrompt = (tbUrl) => {
-  const supportCase = prompt(__('Enter Support Case:'), '');
-  if (supportCase === null) {
-    return false;
-  }
-
-  if (supportCase.trim() === '') {
-    alert(__('Support Case must be provided to collect logs'));
-    return false;
-  }
-
-  return `${tbUrl}&support_case=${encodeURIComponent(supportCase)}`;
-};
-
 const getParams = (urlParms, sendChecked) => {
   const params = [];
 
@@ -102,13 +87,6 @@ const onClick = (button) => {
       `/${ManageIQ.controller}/${button.explorer ? 'x_button' : 'button'}`,
       ManageIQ.record.recordId !== null ? `/${ManageIQ.record.recordId}` : '',
       `?pressed=${button.id.split('__').pop()}`].join('');
-  }
-
-  if (button.prompt) {
-    buttonUrl = miqSupportCasePrompt(buttonUrl);
-    if (!buttonUrl) {
-      return;
-    }
   }
 
   // put url_parms into params var, if defined

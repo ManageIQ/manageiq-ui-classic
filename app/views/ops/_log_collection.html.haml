@@ -1,9 +1,0 @@
-- record, options, prefixes = @record, @supported_depots_for_select, @uri_prefixes
-- log_type = Dictionary.gettext(record.class.name, :type => :model, :notfound => :titleize)
-
-= react('DiagnosticsCollectLogForm', {:initialData => {:recordId => record.id || "new",
-                                                       :options => options,
-                                                       :prefixes => prefixes,
-                                                       :controller => controller_name,
-                                                       :logType => log_type,
-                                                       :displayName => record.display_name}})
