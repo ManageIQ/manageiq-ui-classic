@@ -210,7 +210,7 @@ Cypress.Commands.add('validateFormFields', (fieldConfigs) => {
  * @param {boolean} [buttonConfigs[].shouldBeDisabled=false] - Whether the button should be disabled
  *
  * Example:
- *   cy.validateFormFooterButtons([
+ *   cy.validateFormButtons([
  *     { [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: 'Cancel' },
  *     { [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: 'Reset', [BUTTON_CONFIG_KEYS.SHOULD_BE_DISABLED]: true },
  *     { [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: 'Submit', [BUTTON_CONFIG_KEYS.BUTTON_TYPE]: 'submit' },
@@ -218,7 +218,7 @@ Cypress.Commands.add('validateFormFields', (fieldConfigs) => {
  *   ]);
  *
  * Or using regular object keys:
- *   cy.validateFormFooterButtons([
+ *   cy.validateFormButtons([
  *     { buttonText: 'Cancel' },
  *     { buttonText: 'Reset', shouldBeDisabled: true },
  *     { buttonText: 'Submit', buttonType: 'submit' },
@@ -226,7 +226,7 @@ Cypress.Commands.add('validateFormFields', (fieldConfigs) => {
  *
  * Both approaches work but using config-keys object(BUTTON_CONFIG_KEYS) is recommended to avoid typos and unknown keys
  */
-Cypress.Commands.add('validateFormFooterButtons', (buttonConfigs) => {
+Cypress.Commands.add('validateFormButtons', (buttonConfigs) => {
   if (!Array.isArray(buttonConfigs)) {
     cy.logAndThrowError('buttonConfigs must be an array');
   }

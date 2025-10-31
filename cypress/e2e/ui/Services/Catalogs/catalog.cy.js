@@ -87,7 +87,7 @@ function validateElements({ isEditForm }) {
     },
   ]);
   // Validate form footer buttons
-  cy.validateFormFooterButtons([
+  cy.validateFormButtons([
     {
       [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: isEditForm
         ? SAVE_BUTTON_TEXT

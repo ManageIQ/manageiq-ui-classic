@@ -106,7 +106,7 @@ describe('Automate C & U Gap Collection form operations: Settings > Application 
       { [FIELD_CONFIG_KEYS.ID]: 'endDate' },
     ]);
     // Validate form footer buttons
-    cy.validateFormFooterButtons([
+    cy.validateFormButtons([
       {
         [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: 'Save',
         [BUTTON_CONFIG_KEYS.BUTTON_TYPE]: 'submit',

@@ -124,7 +124,7 @@ function validateFormElements(isEditForm = false) {
     },
   ]);
   // Validate form footer buttons
-  cy.validateFormFooterButtons([
+  cy.validateFormButtons([
     {
       [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: CANCEL_BUTTON_TEXT,
     },

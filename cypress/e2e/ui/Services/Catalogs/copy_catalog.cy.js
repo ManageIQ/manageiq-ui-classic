@@ -95,7 +95,7 @@ describe('Automate Catalog form operations: Services > Catalogs > Catalogs > Con
           [FIELD_CONFIG_KEYS.INPUT_FIELD_TYPE]: 'checkbox',
         },
       ]);
-      cy.validateFormFooterButtons([
+      cy.validateFormButtons([
         {
           [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: ADD_BUTTON_TEXT,
           [BUTTON_CONFIG_KEYS.BUTTON_TYPE]: 'submit',
