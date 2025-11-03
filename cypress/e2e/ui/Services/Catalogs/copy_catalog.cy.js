@@ -52,10 +52,6 @@ describe('Automate Catalog form operations: Services > Catalogs > Catalogs > Con
     cy.menu(SERVICES_MENU_OPTION, CATALOGS_MENU_OPTION);
 
     cy.accordion(CATALOG_ITEMS_ACCORDION_ITEM);
-    cy.selectAccordionItem([
-      ALL_CATALOG_ITEMS_ACCORDION_ITEM,
-      UNASSIGNED_ACCORDION_ITEM,
-    ]);
 
     cy.selectAccordionItem([
       ALL_CATALOG_ITEMS_ACCORDION_ITEM,
