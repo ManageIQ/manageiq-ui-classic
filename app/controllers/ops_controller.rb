@@ -59,15 +59,12 @@ class OpsController < ApplicationController
   end
 
   OPS_X_BUTTON_ALLOWED_ACTIONS = {
-    'collect_logs'              => :logs_collect,
-    'collect_current_logs'      => :collect_current_logs,
     'custom_button'             => :custom_buttons,
     'delete_server'             => :delete_server,
     'demote_server'             => :demote_server,
     'fetch_audit_log'           => :fetch_audit_log,
     'fetch_log'                 => :fetch_log,
     'fetch_production_log'      => :fetch_production_log,
-    'log_depot_edit'            => :log_depot_edit,
     'promote_server'            => :promote_server,
     'rbac_group_add'            => :rbac_group_add,
     'rbac_group_edit'           => :rbac_group_edit,
@@ -104,11 +101,8 @@ class OpsController < ApplicationController
     'ap_host_edit'              => :ap_host_edit,
     'ap_vm_edit'                => :ap_vm_edit,
     'ap_copy'                   => :ap_copy,
-    'zone_collect_logs'         => :logs_collect,
-    'zone_collect_current_logs' => :collect_current_logs,
     'zone_delete_server'        => :delete_server,
     'zone_demote_server'        => :demote_server,
-    'zone_log_depot_edit'       => :log_depot_edit,
     'zone_promote_server'       => :promote_server,
     'zone_role_start'           => :role_start,
     'zone_role_suspend'         => :role_suspend,
@@ -123,11 +117,6 @@ class OpsController < ApplicationController
     'schedule_disable'          => :schedule_disable,
     'schedule_run_now'          => :schedule_run_now
   }.freeze
-
-  def collect_current_logs
-    assert_privileges("#{x_node.split('-').first == "z" ? "zone_" : ""}collect_current_logs")
-    logs_collect(:only_current => true)
-  end
 
   # handle buttons pressed on the center buttons toolbar
   def x_button
@@ -471,9 +460,6 @@ class OpsController < ApplicationController
         locals[:submit_text] = _("Select Start date and End date to Collect C & U Data")
         locals[:no_reset] = true
         locals[:no_cancel] = true
-      elsif @sb[:active_tab] == "diagnostics_collect_logs"
-        action_url = "log_depot_edit"
-        record_id = @record && @record.id ? @record.id : "new"
       else
         action_url = "old_dialogs_update"
         record_id = my_server.id
@@ -592,7 +578,6 @@ class OpsController < ApplicationController
     tree_selected_model if @tree_selected_model.nil?
 
     locals = set_form_locals if @in_a_form
-    build_supported_depots_for_select
 
     presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
 
@@ -626,9 +611,6 @@ class OpsController < ApplicationController
     if %w[accordion_select change_tab explorer tree_select].include?(params[:action]) ||
        %w[diagnostics_roles_servers diagnostics_servers_roles].include?(@sb[:active_tab])
       presenter.replace(:ops_tabs, r[:partial => "all_tabs"])
-    elsif nodetype == "log_depot_edit"
-      @right_cell_text = _("Editing Log Depot settings")
-      presenter.update(:diagnostics_collect_logs, r[:partial => "ops/log_collection"])
     else
       presenter.update(@sb[:active_tab], r[:partial => "#{@sb[:active_tab]}_tab"])
     end
@@ -791,7 +773,7 @@ class OpsController < ApplicationController
       if @pages
         presenter.hide(:form_buttons_div)
       elsif @in_a_form
-        if ["log_depot_edit", "ze"].include?(nodetype)
+        if ["ze"].include?(nodetype)
           presenter.hide(:form_buttons_div)
         else
           presenter.update(:form_buttons_div, r[:partial => "layouts/x_edit_buttons", :locals => locals])
