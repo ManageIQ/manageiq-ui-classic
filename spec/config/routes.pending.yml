@@ -835,6 +835,7 @@ MiqRequestController:
 - retrieve_email
 - show
 - show_list
+- sort_configuration_script_grid
 - sort_configured_system_grid
 - sort_ds_grid
 - sort_host_grid
