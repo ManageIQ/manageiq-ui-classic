@@ -3,7 +3,7 @@
 /**
  * Custom command to get the intercepted API aliases stored in Cypress environment variables.
  * This command returns the object containing all registered API interception aliases.
- * 
+ *
  * @returns {Object} An object where keys are in format method-alias(e.g. post-myApiAlias) and values are typically the same alias names
  * @example
  * cy.getInterceptedApiAliases().then((aliases) => {
@@ -127,14 +127,12 @@ Cypress.Commands.add(
     /* ======================================================= */
 
     // Check if this request is already registered
-    cy.getInterceptedApiAliases().then((interceptedAliasesMap) => {
+    return cy.getInterceptedApiAliases().then((interceptedAliasesMap) => {
       const aliasObjectKey = `${method.toLowerCase()}-${alias}`;
       // Check if this request is already registered
       const isAlreadyRegistered = !!interceptedAliasesMap[aliasObjectKey];
       // Setting wasRequestIntercepted flag to false initially
-      if (waitOnlyIfRequestIntercepted) {
-        setRequestIntercepted(false);
-      }
+      setRequestIntercepted(false);
       // Register the intercept if not already done
       if (!isAlreadyRegistered) {
         cy.intercept(method, urlPattern, (req) => {

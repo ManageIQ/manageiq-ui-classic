@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 /* eslint-disable no-undef */
 
 // title: String of the accordion title for the accordian panel to open.
@@ -35,10 +36,18 @@ Cypress.Commands.add('accordionItem', (name) => {
  * If the path is not found, it will throw an error.
  */
 Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
-  cy.get('div.panel-collapse.collapse.in').then((expandedAccordion) => {
+  cy.get('div.panel-collapse.collapse.in').then((accordionJqueryObject) => {
+    /**
+     * This variable stores the expanded accordion jquery object. This will be reassigned to the latest,
+     * if the DOM updates after a node expansion(tree_autoload)
+     */
+    let expandedAccordion = accordionJqueryObject;
     // Converting the list-items jQuery collection to an array for easier manipulation
-    const listItems = [...expandedAccordion.find('li.list-group-item')];
-
+    /**
+     * This variable stores the list items of the expanded accordion. This will be reassigned,
+     * if the DOM updates after a node expansion(tree_autoload)
+     */
+    let listItems = [...expandedAccordion.find('li.list-group-item')];
     /**
      * Function to recursively expand the accordion and click the target item.
      * @param {number} accordionPathIndex: The current index in the accordionPath array.
@@ -47,6 +56,12 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
      * @returns {void}
      */
     const expandAndClickPath = (accordionPathIndex, searchStartIndex) => {
+      /* TODO: Remove logger once the command is confirmed to be stable */
+      Cypress.log({
+        name: 'selectAccordionItem',
+        message: `Found ${listItems.length} list items, searching from index ${searchStartIndex}`,
+      });
+
       const accordionLabel = accordionPath[accordionPathIndex];
       const isClickableNode = accordionPathIndex === accordionPath.length - 1;
 
@@ -89,21 +104,47 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
             return;
           }
 
-          const isExpandable =
-            currentLiElement.find('span.fa-angle-right').length > 0;
+          const expandButton = currentLiElement.find('span.fa-angle-right');
+          const isExpandable = expandButton.length > 0;
 
           // If it's not the last label in the path, either expand the node
           // or move to the next label in the given path
           if (isExpandable) {
             // Expand the node
-            cy.wrap(currentLiElement)
-              .find('span.fa-angle-right')
-              .click()
-              .then(() => {
-                // Recurse to the next label in the given path array and
-                // start iteration from the current index
-                expandAndClickPath(accordionPathIndex + 1, i + 1);
-              });
+            /* TODO: Remove logger once the command is confirmed to be stable */
+            Cypress.log({
+              name: 'selectAccordionItem',
+              message: `Expanding node "${liText}"`,
+            });
+            cy.interceptApi({
+              alias: 'treeAutoLoadApi',
+              urlPattern: '/*/tree_autoload',
+              triggerFn: () => cy.wrap(expandButton).click(),
+              waitOnlyIfRequestIntercepted: true,
+              onApiResponse: (interception) => {
+                expect(interception.response.statusCode).to.equal(200);
+                cy.get('div.panel-collapse.collapse.in').then(
+                  (latestAccordionJqueryObject) => {
+                    // Update the expanded accordion reference to the latest one
+                    expandedAccordion = latestAccordionJqueryObject;
+                    const updatedListItems = [
+                      ...expandedAccordion.find('li.list-group-item'),
+                    ];
+                    /* TODO: Remove logger once the command is confirmed to be stable */
+                    Cypress.log({
+                      name: 'selectAccordionItem',
+                      message: `Re-queried accordion - new list items count: ${updatedListItems.length}`,
+                    });
+                    // Update list items
+                    listItems = [...updatedListItems];
+                  }
+                );
+              },
+            }).then(() => {
+              // Recurse to the next label in the given path array and
+              // start iteration from the current index
+              expandAndClickPath(accordionPathIndex + 1, i + 1);
+            });
           } else {
             // If it's already expanded, continue to the next label
             // start iteration from the current index
