@@ -59,7 +59,7 @@ function addDomainOrNamespace({ nameFieldValue }) {
     urlPattern: '/miq_ae_class/create_namespace/new?button=add',
     triggerFn: () =>
       cy
-        .getFormFooterButtonByTypeWithText({
+        .getFormButtonByTypeWithText({
           buttonText: ADD_BUTTON_TEXT,
           buttonType: 'submit',
         })
@@ -92,17 +92,17 @@ function validateNamespaceFormFields(isEditForm = false) {
   cy.getFormInputFieldByIdAndType({ inputId: 'description' })
     .should('be.visible')
     .and('be.enabled');
-  cy.getFormFooterButtonByTypeWithText({ buttonText: CANCEL_BUTTON_TEXT })
+  cy.getFormButtonByTypeWithText({ buttonText: CANCEL_BUTTON_TEXT })
     .should('be.visible')
     .and('be.enabled');
-  cy.getFormFooterButtonByTypeWithText({
+  cy.getFormButtonByTypeWithText({
     buttonText: isEditForm ? SAVE_BUTTON_TEXT : ADD_BUTTON_TEXT,
     buttonType: 'submit',
   })
     .should('be.visible')
     .and('be.disabled');
   if (isEditForm) {
-    cy.getFormFooterButtonByTypeWithText({ buttonText: RESET_BUTTON_TEXT })
+    cy.getFormButtonByTypeWithText({ buttonText: RESET_BUTTON_TEXT })
       .should('be.visible')
       .and('be.disabled');
   }
@@ -142,14 +142,14 @@ describe('Automate operations on Namespaces: Automation -> Embedded Automate -> 
   it('Validate Add Namespace form fields', () => {
     cy.toolbar(TOOLBAR_CONFIGURATION, TOOLBAR_ADD_NEW_NAMESPACE);
     validateNamespaceFormFields();
-    cy.getFormFooterButtonByTypeWithText({
+    cy.getFormButtonByTypeWithText({
       buttonText: CANCEL_BUTTON_TEXT,
     }).click();
   });
 
   it('Validate Cancel button', () => {
     cy.toolbar(TOOLBAR_CONFIGURATION, TOOLBAR_ADD_NEW_NAMESPACE);
-    cy.getFormFooterButtonByTypeWithText({ buttonText: CANCEL_BUTTON_TEXT })
+    cy.getFormButtonByTypeWithText({ buttonText: CANCEL_BUTTON_TEXT })
       .should('be.enabled')
       .click();
     cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_CANCELLED);
@@ -159,7 +159,7 @@ describe('Automate operations on Namespaces: Automation -> Embedded Automate -> 
     cy.toolbar(TOOLBAR_CONFIGURATION, TOOLBAR_ADD_NEW_NAMESPACE);
     addDomainOrNamespace({ nameFieldValue: INVALID_NAMESPACE_NAME });
     cy.expect_flash(flashClassMap.error, FLASH_MESSAGE_INVALID_NAMESPACE);
-    cy.getFormFooterButtonByTypeWithText({
+    cy.getFormButtonByTypeWithText({
       buttonText: CANCEL_BUTTON_TEXT,
     }).click();
   });
@@ -167,7 +167,7 @@ describe('Automate operations on Namespaces: Automation -> Embedded Automate -> 
   it('Validate Edit Namespace form fields', () => {
     createNamespaceAndOpenEditForm();
     validateNamespaceFormFields(true);
-    cy.getFormFooterButtonByTypeWithText({
+    cy.getFormButtonByTypeWithText({
       buttonText: CANCEL_BUTTON_TEXT,
     }).click();
   });
@@ -182,14 +182,14 @@ describe('Automate operations on Namespaces: Automation -> Embedded Automate -> 
       NAMESPACE_NAME,
     ]);
     cy.toolbar(TOOLBAR_CONFIGURATION, TOOLBAR_EDIT_NAMESPACE);
-    cy.getFormFooterButtonByTypeWithText({
+    cy.getFormButtonByTypeWithText({
       buttonText: SAVE_BUTTON_TEXT,
       buttonType: 'submit',
     }).should('be.disabled');
     cy.getFormInputFieldByIdAndType({ inputId: 'description' })
       .clear()
       .type(EDITED_DESCRIPTION);
-    cy.getFormFooterButtonByTypeWithText({
+    cy.getFormButtonByTypeWithText({
       buttonText: SAVE_BUTTON_TEXT,
       buttonType: 'submit',
     })
@@ -211,7 +211,7 @@ describe('Automate operations on Namespaces: Automation -> Embedded Automate -> 
     cy.toolbar(TOOLBAR_CONFIGURATION, TOOLBAR_ADD_NEW_NAMESPACE);
     addDomainOrNamespace({ nameFieldValue: NAMESPACE_NAME });
     cy.expect_flash(flashClassMap.error, FLASH_MESSAGE_NAME_ALREADY_EXISTS);
-    cy.getFormFooterButtonByTypeWithText({
+    cy.getFormButtonByTypeWithText({
       buttonText: CANCEL_BUTTON_TEXT,
     }).click();
   });
@@ -219,7 +219,7 @@ describe('Automate operations on Namespaces: Automation -> Embedded Automate -> 
   it('Checking whether Cancel & Reset buttons work fine in the Edit form', () => {
     createNamespaceAndOpenEditForm();
     /* Validating Reset button */
-    cy.getFormFooterButtonByTypeWithText({
+    cy.getFormButtonByTypeWithText({
       buttonText: RESET_BUTTON_TEXT,
     }).should('be.disabled');
     cy.getFormInputFieldByIdAndType({ inputId: 'name' })
@@ -228,7 +228,7 @@ describe('Automate operations on Namespaces: Automation -> Embedded Automate -> 
     cy.getFormInputFieldByIdAndType({ inputId: 'description' })
       .clear()
       .type(EDITED_DESCRIPTION);
-    cy.getFormFooterButtonByTypeWithText({ buttonText: RESET_BUTTON_TEXT })
+    cy.getFormButtonByTypeWithText({ buttonText: RESET_BUTTON_TEXT })
       .should('be.enabled')
       .click();
     cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_RESET_NAMESPACE);
@@ -241,7 +241,7 @@ describe('Automate operations on Namespaces: Automation -> Embedded Automate -> 
       DESCRIPTION
     );
     /* Validating Cancel button */
-    cy.getFormFooterButtonByTypeWithText({
+    cy.getFormButtonByTypeWithText({
       buttonText: CANCEL_BUTTON_TEXT,
     }).click();
     cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_CANCELLED);
