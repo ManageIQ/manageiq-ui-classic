@@ -27,12 +27,6 @@ describe PxeController do
     end
   end
 
-  describe "#log_depot_validate" do
-    it "routes with POST" do
-      expect(post("/pxe/log_depot_validate")).to route_to("pxe#log_depot_validate")
-    end
-  end
-
   describe "#pxe_image_edit" do
     it "routes with POST" do
       expect(post("/pxe/pxe_image_edit")).to route_to("pxe#pxe_image_edit")
