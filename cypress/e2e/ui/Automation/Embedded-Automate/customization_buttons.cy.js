@@ -66,6 +66,8 @@ describe('Automation > Embedded Automate > Customization > Buttons', () => {
       });
 
       // Click Add button
+      // TODO: cy.getFormButtonByTypeWithText expects this in the main_content div, but it's in the form_buttons_div
+      // within the full_content div - enhance the cy.getFormButtonByTypeWithText to accept a div id or normalize the location of the button
       cy.get('#buttons_on > .btn-primary').click();
 
       // Verify flash message that button was added
