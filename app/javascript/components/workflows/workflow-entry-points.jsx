@@ -23,31 +23,27 @@ const WorkflowEntryPoints = ({
 
   const sortFunction = (selectedHeader, itemA, itemB) => {
     if (selectedHeader.key === 'name') {
-      if (itemA.name.text < itemB.name.text) {
-        return -1;
-      } if (itemA.name.text > itemB.name.text) {
-        return 1;
-      } if (itemA.name.text === itemB.name.text) {
+      if (itemA.name.text === itemB.name.text) {
         return itemA.id - itemB.id;
       }
+      return itemA.name.text.localeCompare(itemB.name.text, undefined, { sensitivity: 'base' });
     }
     if (itemA['configuration_script_source.name'] === undefined) {
       itemA['configuration_script_source.name'] = { text: '' };
     } else if (itemB['configuration_script_source.name'] === undefined) {
       itemB['configuration_script_source.name'] = { text: '' };
     }
-    if (itemA['configuration_script_source.name'].text < itemB['configuration_script_source.name'].text) {
-      return -1;
-    } if (itemA['configuration_script_source.name'].text > itemB['configuration_script_source.name'].text) {
-      return 1;
-    }
-    return 0;
+    return itemA['configuration_script_source.name'].text.localeCompare(
+      itemB['configuration_script_source.name'].text, undefined, { semsitivity: 'base' }
+    );
   };
 
   const onSort = (itemKey) => {
     const selectedHeader = data.list.headers.find((item) => item === itemKey);
     if (selectedHeader) {
       const sortedList = data.list;
+      // FIXME: Try to only have 1 sort.
+      // Need this sort or else you have to click the column names twice to resort when changing columns
       sortedList.rows.sort((a, b) => sortFunction(selectedHeader, a, b));
       if (prevSelectedHeader === selectedHeader.key) {
         if (selectedHeader.key === 'name') {
