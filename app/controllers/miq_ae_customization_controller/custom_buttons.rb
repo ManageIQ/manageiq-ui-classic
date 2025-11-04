@@ -76,9 +76,8 @@ module MiqAeCustomizationController::CustomButtons
       end
       @sb[:user_roles] = []
       if @custom_button.visibility && @custom_button.visibility[:roles] && @custom_button.visibility[:roles][0] != "_ALL_"
-        MiqUserRole.all.sort_by(&:name).each do |r|
-          @sb[:user_roles].push(r.name) if @custom_button.visibility[:roles].include?(r.name)
-        end
+        role_ids = @custom_button.visibility[:roles]
+        @sb[:user_roles] = MiqUserRole.where(:id => role_ids).order(:name).pluck(:name)
       end
       dialog_id = @custom_button.resource_action.dialog_id
       @sb[:dialog_label] = dialog_id ? Dialog.find(dialog_id).label : ""
