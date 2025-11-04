@@ -104,6 +104,50 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
             return;
           }
 
+          // TODO: Once interceptApi is enhanced to handle mutiple aliases, instead of
+          // depending on the spinner or angle-down spans, wait for tree_autoload to complete
+          /* ===================================================================================== */
+          const isStillLoading =
+            currentLiElement.find('span.fa-spinner').length > 0;
+          if (isStillLoading) {
+            Cypress.log({
+              name: '⚠️ selectAccordionItem',
+              message: `Node "${liText}" is still loading - waiting for fa-angle-down to appear`,
+            });
+
+            // Wait for fa-angle-down to appear (indicates loading is complete)
+            cy.wrap(currentLiElement)
+              .find('span.fa-angle-down')
+              .should('exist')
+              .then(() => {
+                Cypress.log({
+                  name: '🟢 selectAccordionItem',
+                  message: `Node "${liText}" loading completed (fa-angle-down found)`,
+                });
+                cy.get('div.panel-collapse.collapse.in')
+                  .then((latestAccordionJqueryObject) => {
+                    // Update the expanded accordion reference to the latest one
+                    expandedAccordion = latestAccordionJqueryObject;
+                    const updatedListItems = [
+                      ...expandedAccordion.find('li.list-group-item'),
+                    ];
+                    Cypress.log({
+                      name: '🟢 selectAccordionItem',
+                      message: `Re-queried accordion - new list items count: ${updatedListItems.length}`,
+                    });
+                    // Update list items
+                    listItems = [...updatedListItems];
+                  })
+                  .then(() => {
+                    // Recurse to the next label in the given path array and
+                    // start iteration from the current index
+                    expandAndClickPath(accordionPathIndex + 1, i + 1);
+                  });
+              });
+            return;
+          }
+          /* ===================================================================================== */
+
           const expandButton = currentLiElement.find('span.fa-angle-right');
           const isExpandable = expandButton.length > 0;
 
