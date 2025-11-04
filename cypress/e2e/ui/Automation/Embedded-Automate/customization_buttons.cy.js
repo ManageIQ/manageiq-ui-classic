@@ -42,6 +42,29 @@ describe('Automation > Embedded Automate > Customization > Buttons', () => {
       cy.get('#object_request').scrollIntoView();
       cy.get('#object_request').type('test_request');
 
+      // Scroll to role access section and select "<By Role>" from dropdown
+      cy.get('#form_role_visibility button[data-id="visibility_typ"]').scrollIntoView();
+      cy.get('#form_role_visibility button[data-id="visibility_typ"]').click();
+      cy.get('#form_role_visibility .dropdown-menu [data-original-index="1"] > a').click();
+
+      // Scroll to User Roles section to make roles visible
+      cy.contains('User Roles').scrollIntoView();
+
+      // Check EvmRole-auditor and EvmRole-desktop
+      cy.interceptApi({
+        alias: 'checkAuditorRole',
+        urlPattern: '/miq_ae_customization/automate_button_field_changed',
+        triggerFn: () => cy.get('#form_role_visibility').contains('EvmRole-auditor').closest('td').find('input[type="checkbox"]').check(),
+        waitOnlyIfRequestIntercepted: true,
+      });
+
+      cy.interceptApi({
+        alias: 'checkDesktopRole',
+        urlPattern: '/miq_ae_customization/automate_button_field_changed',
+        triggerFn: () => cy.get('#form_role_visibility').contains('EvmRole-desktop').closest('td').find('input[type="checkbox"]').check(),
+        waitOnlyIfRequestIntercepted: true,
+      });
+
       // Click Add button
       cy.get('#buttons_on > .btn-primary').click();
 
@@ -51,10 +74,12 @@ describe('Automation > Embedded Automate > Customization > Buttons', () => {
       // Verify the button was added successfully by clicking it in the accordion
       cy.get('.clickable-row').contains('Test Availability Zone Button').click();
 
-      // Verify the name, description, and request are displayed correctly in the main div
+      // Verify the name, description, request, and roles are displayed correctly in the main div
       cy.get('#main_div').contains('Test Availability Zone Button');
       cy.get('#main_div').contains('Test button for availability zone');
       cy.get('#main_div').contains('test_request');
+      cy.get('.visibility').contains('EvmRole-auditor');
+      cy.get('.visibility').contains('EvmRole-desktop');
     });
   });
 });
