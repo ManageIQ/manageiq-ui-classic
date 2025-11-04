@@ -9,8 +9,11 @@ const WorkflowEntryPoints = ({
   field, selected, type, setShowModal, setSelectedValue,
 }) => {
   const [data, setData] = useState({
-    isLoading: true, list: {}, selectedItemId: selected,
+    isLoading: true, list: {}, selectedItemId: selected, key: 'workflow-entry-points',
   });
+  const [prevSelectedHeader, setPrevSelectedHeader] = useState('');
+  const [sortDirectionRepository, setSortDirectionRepository] = useState('DESC');
+  const [sortDirectionName, setSortDirectionName] = useState('DESC');
 
   const workflowTypes = {
     provision: __('Provision'),
@@ -18,10 +21,64 @@ const WorkflowEntryPoints = ({
     retire: __('Retirement'),
   };
 
+  const sortFunction = (selectedHeader, itemA, itemB) => {
+    if (selectedHeader.key === 'name') {
+      if (itemA.name.text === itemB.name.text) {
+        return itemA.id - itemB.id;
+      }
+      return itemA.name.text.localeCompare(itemB.name.text, undefined, { sensitivity: 'base' });
+    }
+    if (itemA['configuration_script_source.name'] === undefined) {
+      itemA['configuration_script_source.name'] = { text: '' };
+    } else if (itemB['configuration_script_source.name'] === undefined) {
+      itemB['configuration_script_source.name'] = { text: '' };
+    }
+    return itemA['configuration_script_source.name'].text.localeCompare(
+      itemB['configuration_script_source.name'].text, undefined, { semsitivity: 'base' }
+    );
+  };
+
+  const onSort = (itemKey) => {
+    const selectedHeader = data.list.headers.find((item) => item === itemKey);
+    if (selectedHeader) {
+      const sortedList = data.list;
+      // FIXME: Try to only have 1 sort.
+      // Need this sort or else you have to click the column names twice to resort when changing columns
+      sortedList.rows.sort((a, b) => sortFunction(selectedHeader, a, b));
+      if (prevSelectedHeader === selectedHeader.key) {
+        if (selectedHeader.key === 'name') {
+          if (sortDirectionName === 'ASC') {
+            sortedList.rows.sort((a, b) => sortFunction(selectedHeader, a, b));
+          } else {
+            sortedList.rows.sort((a, b) => sortFunction(selectedHeader, b, a));
+          }
+          setSortDirectionName(sortDirectionName === 'ASC' ? 'DESC' : 'ASC');
+        } else {
+          if (sortDirectionRepository === 'ASC') {
+            sortedList.rows.sort((a, b) => sortFunction(selectedHeader, a, b));
+          } else {
+            sortedList.rows.sort((a, b) => sortFunction(selectedHeader, b, a));
+          }
+          setSortDirectionRepository(sortDirectionRepository === 'ASC' ? 'DESC' : 'ASC');
+        }
+      } else {
+        setSortDirectionName('DESC');
+        setSortDirectionRepository('DESC');
+      }
+      const tempKey = `${data.key}-${sortedList.rows[0].id}`;
+      setPrevSelectedHeader(selectedHeader.key);
+      setData({
+        ...data, isLoading: false, list: sortedList, key: tempKey,
+      });
+    }
+  };
+
   useEffect(() => {
     http.post(`/catalog/ae_tree_select_toggle?typ=${type}`, {}, { headers: {}, skipJsonParsing: true })
       .then((_data) => {
-        API.get('/api/configuration_script_payloads?expand=resources')
+        const url = '/api/configuration_script_payloads/?expand=resources&attributes=configuration_script_source.name&'
+        + 'collection_class=ManageIQ::Providers::Workflows::AutomationManager::Workflow';
+        API.get(url)
           .then((response) => {
             setData({
               ...data,
@@ -81,6 +138,7 @@ const WorkflowEntryPoints = ({
       open
       modalHeading={sprintf(__('Select Embedded Workflow - %s Entry Point'), workflowTypes[type])}
       primaryButtonText={__('Apply')}
+      primaryButtonDisabled={!data.selectedItemId}
       secondaryButtonText={__('Cancel')}
       onRequestSubmit={onApply}
       onRequestClose={onCloseModal}
@@ -90,6 +148,9 @@ const WorkflowEntryPoints = ({
         <MiqDataTable
           headers={data.list.headers}
           rows={data.list.rows}
+          sortable
+          onSort={onSort}
+          key={data.key}
           onCellClick={(selectedRow) => onSelect(selectedRow.id)}
           showPagination={false}
           truncateText={false}

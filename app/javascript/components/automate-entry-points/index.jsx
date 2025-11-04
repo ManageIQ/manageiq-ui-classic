@@ -177,6 +177,7 @@ const AutomateEntryPoints = ({
 
   return !isLoading && (
     <Modal
+      modalHeading={__('Select Entry Point Instance')}
       open={showModal}
       primaryButtonText={__('OK')}
       secondaryButtonText={__('Cancel')}
