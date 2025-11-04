@@ -124,9 +124,7 @@ function dataSetup() {
   // Order
   cy.accordion(SERVICE_CATALOGS_ACCORDION);
   cy.selectAccordionItem([ALL_SERVICES_ACCORDION_ITEM]);
-  // TODO: Replace with clickTableRowByText once #9691 is merged
-  cy.contains('.miq-data-table table tbody tr td', CATALOG_ITEM_NAME).click();
-  // cy.clickTableRowByText({ text: CATALOG_ITEM_NAME, columnIndex: 1 });
+  cy.clickTableRowByText({ text: CATALOG_ITEM_NAME, columnIndex: 0 });
   cy.interceptApi({
     urlPattern: /\/catalog\/x_button\/\d+\?pressed=svc_catalog_provision/,
     alias: 'orderApi',
@@ -230,16 +228,12 @@ describe('Automate Service Requests form operations: Services > Requests', () =>
         {
           [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: APPLY_BUTTON_TEXT,
           [BUTTON_CONFIG_KEYS.BUTTON_TYPE]: 'submit',
-          [BUTTON_CONFIG_KEYS.BUTTON_WRAPPER_CLASS]: 'custom-button-wrapper',
         },
         {
           [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: RESET_BUTTON_TEXT,
-          [BUTTON_CONFIG_KEYS.BUTTON_WRAPPER_CLASS]: 'custom-button-wrapper',
         },
       ]);
-      // TODO: Replace with verify_gtl_no_records_text once #9691 is merged
-      cy.contains('#miq-gtl-view .no-records-found', 'No records found');
-      // cy.verify_gtl_no_records_text();
+      cy.expect_gtl_no_records_with_text();
     });
   });
 
@@ -335,9 +329,7 @@ describe('Automate Service Requests form operations: Services > Requests', () =>
         buttonText: APPLY_BUTTON_TEXT,
         buttonType: 'submit',
       }).click();
-      // TODO: Replace with verify_gtl_no_records_text once #9691 is merged
-      cy.contains('#miq-gtl-view .no-records-found', 'No records found');
-      // cy.verify_gtl_no_records_text();
+      cy.expect_gtl_no_records_with_text();
       cy.getFormButtonByTypeWithText({
         buttonText: RESET_BUTTON_TEXT,
       }).click();
@@ -352,9 +344,7 @@ describe('Automate Service Requests form operations: Services > Requests', () =>
         buttonText: APPLY_BUTTON_TEXT,
         buttonType: 'submit',
       }).click();
-      // TODO: Replace with verify_gtl_no_records_text once #9691 is merged
-      cy.contains('#miq-gtl-view .no-records-found', 'No records found');
-      // cy.verify_gtl_no_records_text();
+      cy.expect_gtl_no_records_with_text();
       cy.getFormButtonByTypeWithText({
         buttonText: RESET_BUTTON_TEXT,
       }).click();
@@ -367,9 +357,7 @@ describe('Automate Service Requests form operations: Services > Requests', () =>
         buttonText: APPLY_BUTTON_TEXT,
         buttonType: 'submit',
       }).click();
-      // TODO: Replace with verify_gtl_no_records_text once #9691 is merged
-      cy.contains('#miq-gtl-view .no-records-found', 'No records found');
-      // cy.verify_gtl_no_records_text();
+      cy.expect_gtl_no_records_with_text();
       cy.getFormButtonByTypeWithText({
         buttonText: RESET_BUTTON_TEXT,
       }).click();
