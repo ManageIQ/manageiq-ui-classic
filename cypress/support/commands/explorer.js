@@ -58,7 +58,7 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
     const expandAndClickPath = (accordionPathIndex, searchStartIndex) => {
       /* TODO: Remove logger once the command is confirmed to be stable */
       Cypress.log({
-        name: 'selectAccordionItem',
+        name: '🟢 selectAccordionItem',
         message: `Found ${listItems.length} list items, searching from index ${searchStartIndex}`,
       });
 
@@ -68,7 +68,7 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
       for (let i = searchStartIndex; i < listItems.length; i++) {
         /* TODO: Remove logger once the command is confirmed to be stable */
         Cypress.log({
-          name: 'selectAccordionItem',
+          name: '🟢 selectAccordionItem',
           message: `Loop index: ${i} & Searching for label: ${accordionLabel}`,
         });
 
@@ -85,7 +85,7 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
         if (isMatch) {
           /* TODO: Remove logger once the command is confirmed to be stable */
           Cypress.log({
-            name: 'selectAccordionItem',
+            name: '🟢 selectAccordionItem',
             message: `Matched "${liText}" at index ${i}`,
           });
 
@@ -113,7 +113,7 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
             // Expand the node
             /* TODO: Remove logger once the command is confirmed to be stable */
             Cypress.log({
-              name: 'selectAccordionItem',
+              name: '🟢 selectAccordionItem',
               message: `Expanding node "${liText}"`,
             });
             cy.interceptApi({
@@ -132,7 +132,7 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
                     ];
                     /* TODO: Remove logger once the command is confirmed to be stable */
                     Cypress.log({
-                      name: 'selectAccordionItem',
+                      name: '🟢 selectAccordionItem',
                       message: `Re-queried accordion - new list items count: ${updatedListItems.length}`,
                     });
                     // Update list items
