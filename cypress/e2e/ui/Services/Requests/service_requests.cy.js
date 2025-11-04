@@ -226,7 +226,7 @@ describe('Automate Service Requests form operations: Services > Requests', () =>
           [FIELD_CONFIG_KEYS.ID]: 'reasonText',
         },
       ]);
-      cy.validateFormFooterButtons([
+      cy.validateFormButtons([
         {
           [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: APPLY_BUTTON_TEXT,
           [BUTTON_CONFIG_KEYS.BUTTON_TYPE]: 'submit',
@@ -284,9 +284,8 @@ describe('Automate Service Requests form operations: Services > Requests', () =>
       cy.getFormInputFieldByIdAndType({ inputId: 'reasonText' }).type(
         'Testing'
       );
-      cy.getFormFooterButtonByTypeWithText({
+      cy.getFormButtonByTypeWithText({
         buttonText: RESET_BUTTON_TEXT,
-        buttonWrapperClass: 'custom-button-wrapper',
       }).click();
       cy.getFormSelectFieldById({ selectId: 'selectedUser' }).should(
         'have.value',
@@ -332,17 +331,15 @@ describe('Automate Service Requests form operations: Services > Requests', () =>
         inputId: 'approvalStates-approved',
         inputType: 'checkbox',
       }).should('not.be.checked');
-      cy.getFormFooterButtonByTypeWithText({
+      cy.getFormButtonByTypeWithText({
         buttonText: APPLY_BUTTON_TEXT,
-        buttonWrapperClass: 'custom-button-wrapper',
         buttonType: 'submit',
       }).click();
       // TODO: Replace with verify_gtl_no_records_text once #9691 is merged
       cy.contains('#miq-gtl-view .no-records-found', 'No records found');
       // cy.verify_gtl_no_records_text();
-      cy.getFormFooterButtonByTypeWithText({
+      cy.getFormButtonByTypeWithText({
         buttonText: RESET_BUTTON_TEXT,
-        buttonWrapperClass: 'custom-button-wrapper',
       }).click();
       cy.gtlGetRows([0]).then((data) => {
         expect(data.length).to.equal(1);
@@ -351,34 +348,30 @@ describe('Automate Service Requests form operations: Services > Requests', () =>
       cy.getFormSelectFieldById({ selectId: 'types' }).select(
         TYPE_VM_PROVISION
       );
-      cy.getFormFooterButtonByTypeWithText({
+      cy.getFormButtonByTypeWithText({
         buttonText: APPLY_BUTTON_TEXT,
-        buttonWrapperClass: 'custom-button-wrapper',
         buttonType: 'submit',
       }).click();
       // TODO: Replace with verify_gtl_no_records_text once #9691 is merged
       cy.contains('#miq-gtl-view .no-records-found', 'No records found');
       // cy.verify_gtl_no_records_text();
-      cy.getFormFooterButtonByTypeWithText({
+      cy.getFormButtonByTypeWithText({
         buttonText: RESET_BUTTON_TEXT,
-        buttonWrapperClass: 'custom-button-wrapper',
       }).click();
       cy.gtlGetRows([0]).then((data) => {
         expect(data.length).to.equal(1);
       });
       // Filter data with
       cy.getFormInputFieldByIdAndType({ inputId: 'reasonText' }).type('r@ndOm');
-      cy.getFormFooterButtonByTypeWithText({
+      cy.getFormButtonByTypeWithText({
         buttonText: APPLY_BUTTON_TEXT,
-        buttonWrapperClass: 'custom-button-wrapper',
         buttonType: 'submit',
       }).click();
       // TODO: Replace with verify_gtl_no_records_text once #9691 is merged
       cy.contains('#miq-gtl-view .no-records-found', 'No records found');
       // cy.verify_gtl_no_records_text();
-      cy.getFormFooterButtonByTypeWithText({
+      cy.getFormButtonByTypeWithText({
         buttonText: RESET_BUTTON_TEXT,
-        buttonWrapperClass: 'custom-button-wrapper',
       }).click();
       cy.gtlGetRows([0]).then((data) => {
         expect(data.length).to.equal(1);
