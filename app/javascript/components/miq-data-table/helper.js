@@ -133,7 +133,7 @@ export const rowData = (headerKeys, rows, hasCheckbox) => {
   const rowItems = [];
   const mergedStatus = [];
   rows.forEach(({
-    cells, id, clickable, clickId,
+    cells, id, clickable, clickId, disabled,
   }) => {
     const requiredCells = hasCheckbox ? (cells.filter((c) => !c.is_checkbox)) : cells;
     const { mergedCells, merged } = mergeIcons(requiredCells);
@@ -143,6 +143,7 @@ export const rowData = (headerKeys, rows, hasCheckbox) => {
       result.id = id;
       if (clickId) result.clickId = clickId;
       result.clickable = clickable;
+      if (disabled !== undefined) result.disabled = disabled;
       return result;
     }, {});
     rowItems.push(reducedItems);

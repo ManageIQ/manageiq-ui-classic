@@ -128,7 +128,8 @@ const MiqDataTable = ({
   /** Function to identify if the row is clickable or not and the returns a class name */
   const classNameRow = (item) => {
     if (item) {
-      const { clickable, id } = item;
+      const { clickable, id, disabled } = item;
+      if (disabled) return 'disabled-row';
       if (clickable === false) return 'simple-row';
       if (clickable === true || clickable === null) {
         return (gridChecks.includes(id)
