@@ -64,24 +64,25 @@ function addZone() {
   cy.getFormSelectFieldById({
     selectId: 'settings.concurrent_vm_scans',
   }).select(INITIAL_MAX_SCAN_LIMIT);
-  cy.interceptApi({
-    alias: 'createZoneApi',
-    urlPattern: '/api/zones',
-    triggerFn: () =>
-      cy
-        .getFormButtonByTypeWithText({
-          buttonText: ADD_BUTTON_TEXT,
-          buttonType: 'submit',
-        })
-        .should('be.enabled')
-        .click(),
-    onApiResponse: (interception) => {
-      expect(interception.response.statusCode).to.equal(200);
-    },
-  });
-  return cy.then(() => {
-    return `Zone: ${INITIAL_ZONE_DESCRIPTION}`;
-  });
+  return cy
+    .interceptApi({
+      alias: 'createZoneApi',
+      urlPattern: '/api/zones',
+      triggerFn: () =>
+        cy
+          .getFormButtonByTypeWithText({
+            buttonText: ADD_BUTTON_TEXT,
+            buttonType: 'submit',
+          })
+          .should('be.enabled')
+          .click(),
+      onApiResponse: (interception) => {
+        expect(interception.response.statusCode).to.equal(200);
+      },
+    })
+    .then(() => {
+      return `Zone: ${INITIAL_ZONE_DESCRIPTION}`;
+    });
 }
 
 function validateFormElements(isEditForm = false) {
