@@ -1,14 +1,15 @@
 - if session[:snap_selected].nil? && @record.snapshots.count > 0
-  - selected_id = @record.snapshots.first
+  - snapshot = @record.snapshots.first
 - else
   - unless session[:snap_selected].nil?
-    - selected_id = Snapshot.find(session[:snap_selected])
+    - snapshot = Snapshot.find(session[:snap_selected])
 
-- time = format_timezone(selected_id[:create_time].to_time, Time.zone, "view")
-- if selected_id[:total_size] == nil || selected_id[:total_size] == 0
+- time = format_timezone(snapshot[:create_time].to_time, Time.zone, "view")
+- if snapshot[:total_size].to_i == 0
   - size = ''
 - else
-  = number_to_human_size(selected_id[:total_size], :precision => 2)
-  - size = _("%{number} bytes") % {:number => number_with_delimiter(selected_id[:total_size], :delimiter => ",", :separator => ".")}
+  - formatted_bytes = number_to_human_size(snapshot[:total_size], :precision => 2)
+  - total_bytes = _("%{number} bytes") % {:number => number_with_delimiter(snapshot[:total_size], :delimiter => ",", :separator => ".")}
+  - size = "%{formatted_number} (%{total})" % {:formatted_number => formatted_bytes, :total => total_bytes}
 
-= react('VmSnapshotTreeSelect', {tree: @snapshot_tree, selected: selected_id, size: size, time: time})
+= react('VmSnapshotTreeSelect', {tree: @snapshot_tree, snapshot: snapshot, size: size, time: time})

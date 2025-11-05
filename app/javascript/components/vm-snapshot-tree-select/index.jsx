@@ -4,9 +4,9 @@ import './styles.css';
 import SnapshotTree from './snapshot-tree';
 
 const VMSnapshotTreeSelect = ({
-  tree, selected, size, time,
+  tree, snapshot, size, time,
 }) => {
-  const [snapshot, setSnapshot] = useState({ ...selected, size, time });
+  const [currentSnapshot, setCurrentSnapshot] = useState({ ...snapshot, size, time });
 
   // eslint-disable-next-line react/prop-types
   return (
@@ -21,7 +21,7 @@ const VMSnapshotTreeSelect = ({
             </p>
           </div>
           <div className="snapshot-detail-value">
-            {snapshot.data ? snapshot.data.description : snapshot.description || ''}
+            {currentSnapshot.data ? currentSnapshot.data.description : currentSnapshot.description || ''}
           </div>
         </div>
         <div className="snapshot-details">
@@ -33,7 +33,7 @@ const VMSnapshotTreeSelect = ({
             </p>
           </div>
           <div className="snapshot-detail-value">
-            {snapshot.size || ''}
+            {currentSnapshot.size || ''}
           </div>
         </div>
         <div className="snapshot-details">
@@ -45,24 +45,27 @@ const VMSnapshotTreeSelect = ({
             </p>
           </div>
           <div className="snapshot-detail-value">
-            {snapshot.time || ''}
+            {currentSnapshot.time || ''}
           </div>
         </div>
       </div>
-      <SnapshotTree nodes={tree.tree_nodes} setSnapshot={setSnapshot} />
+      <div className="snapshot-tree-title">
+        {__('Available Snapshots')}
+      </div>
+      <SnapshotTree nodes={tree.tree_nodes} setCurrentSnapshot={setCurrentSnapshot} />
     </div>
   );
 };
 
 VMSnapshotTreeSelect.propTypes = {
   tree: PropTypes.objectOf(PropTypes.any).isRequired,
-  selected: PropTypes.objectOf(PropTypes.any),
+  snapshot: PropTypes.objectOf(PropTypes.any),
   size: PropTypes.string,
   time: PropTypes.string,
 };
 
 VMSnapshotTreeSelect.defaultProps = {
-  selected: {},
+  snapshot: {},
   size: '',
   time: '',
 };

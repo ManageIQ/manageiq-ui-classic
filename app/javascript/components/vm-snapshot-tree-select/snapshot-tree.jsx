@@ -27,7 +27,7 @@ const convertData = (node) => {
   return treeData;
 };
 
-const SnapshotTree = ({ nodes, setSnapshot }) => {
+const SnapshotTree = ({ nodes, setCurrentSnapshot }) => {
   const [selectedNode, setSelectedNode] = useState('');
 
   const data = {
@@ -65,7 +65,7 @@ const SnapshotTree = ({ nodes, setSnapshot }) => {
         const tempData = response.data;
         tempData.size = response.data.size;
         tempData.time = response.data.time;
-        setSnapshot(tempData);
+        setCurrentSnapshot(tempData);
       }
       miqSparkleOff();
     });
@@ -168,7 +168,7 @@ const SnapshotTree = ({ nodes, setSnapshot }) => {
 
 SnapshotTree.propTypes = {
   nodes: PropTypes.arrayOf(PropTypes.any).isRequired,
-  setSnapshot: PropTypes.func.isRequired,
+  setCurrentSnapshot: PropTypes.func.isRequired,
 };
 
 export default SnapshotTree;

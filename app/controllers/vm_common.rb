@@ -299,11 +299,12 @@ module VmCommon
     @center_toolbar = 'x_vm_snapshot'
     @explorer = true
     formatted_time = format_timezone(@snap_selected[:create_time].to_time, Time.zone, "view")
-    number_to_human_size(@snap_selected[:total_size], :precision => 2)
-    if @snap_selected[:total_size] == nil || @snap_selected[:total_size] == 0 
+    if @snap_selected[:total_size].to_i == 0
       formatted_size = ''
     else
-      formatted_size = _("%{number} bytes") % {:number => number_with_delimiter(@snap_selected[:total_size], :delimiter => ",", :separator => ".")} 
+      formatted_bytes = number_to_human_size(@snap_selected[:total_size], :precision => 2)
+      total_bytes = _("%{number} bytes") % {:number => number_with_delimiter(@snap_selected[:total_size], :delimiter => ",", :separator => ".")}
+      formatted_size = "%{formatted_number} (%{total})" % {:formatted_number => formatted_bytes, :total => total_bytes}
     end
     render :json => {:data => {:data => @snap_selected, :size => formatted_size, :time => formatted_time}}, :status => 200
   end
