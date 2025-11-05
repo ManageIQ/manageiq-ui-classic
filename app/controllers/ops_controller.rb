@@ -583,7 +583,9 @@ class OpsController < ApplicationController
 
     replace_explorer_trees(replace_trees, presenter)
     rebuild_toolbars(presenter)
-    handle_bottom_cell(nodetype, presenter, locals)
+    unless @hide_bottom_bar
+      handle_bottom_cell(nodetype, presenter, locals)
+    end
     x_active_tree_replace_cell(nodetype, presenter)
     extra_js_commands(presenter)
 
