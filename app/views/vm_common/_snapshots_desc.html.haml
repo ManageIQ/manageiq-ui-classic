@@ -12,4 +12,4 @@
   - total_bytes = _("%{number} bytes") % {:number => number_with_delimiter(snapshot[:total_size], :delimiter => ",", :separator => ".")}
   - size = "%{formatted_number} (%{total})" % {:formatted_number => formatted_bytes, :total => total_bytes}
 
-= react('VmSnapshotTreeSelect', {tree: @snapshot_tree, snapshot: snapshot, size: size, time: time})
+= react('VmSnapshotTreeSelect', {tree: @snapshot_tree, snapshot: snapshot, size: size, time: time, name: @record.name})

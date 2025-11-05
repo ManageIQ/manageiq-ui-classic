@@ -4,7 +4,7 @@ import './styles.css';
 import SnapshotTree from './snapshot-tree';
 
 const VMSnapshotTreeSelect = ({
-  tree, snapshot, size, time,
+  tree, snapshot, size, time, name,
 }) => {
   const [currentSnapshot, setCurrentSnapshot] = useState({ ...snapshot, size, time });
 
@@ -52,7 +52,13 @@ const VMSnapshotTreeSelect = ({
       <div className="snapshot-tree-title">
         {__('Available Snapshots')}
       </div>
-      <SnapshotTree nodes={tree.tree_nodes} setCurrentSnapshot={setCurrentSnapshot} />
+      {tree.nodes && tree.nodes.length > 1
+        ? <SnapshotTree nodes={tree.tree_nodes} setCurrentSnapshot={setCurrentSnapshot} />
+        : (
+          <div className="no-snapshots-message">
+            {sprintf(__('%s has no snapshots'), name)}
+          </div>
+        )}
     </div>
   );
 };
@@ -62,12 +68,14 @@ VMSnapshotTreeSelect.propTypes = {
   snapshot: PropTypes.objectOf(PropTypes.any),
   size: PropTypes.string,
   time: PropTypes.string,
+  name: PropTypes.string,
 };
 
 VMSnapshotTreeSelect.defaultProps = {
   snapshot: {},
   size: '',
   time: '',
+  name: '',
 };
 
 export default VMSnapshotTreeSelect;
