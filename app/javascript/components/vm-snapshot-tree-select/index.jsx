@@ -52,7 +52,7 @@ const VMSnapshotTreeSelect = ({
       <div className="snapshot-tree-title">
         {__('Available Snapshots')}
       </div>
-      {tree.nodes && tree.nodes.length > 1
+      {tree.tree_nodes[0] && tree.tree_nodes[0].nodes.length > 0
         ? <SnapshotTree nodes={tree.tree_nodes} setCurrentSnapshot={setCurrentSnapshot} />
         : (
           <div className="no-snapshots-message">
