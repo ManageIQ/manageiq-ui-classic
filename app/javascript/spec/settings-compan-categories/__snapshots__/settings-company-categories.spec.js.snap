@@ -2458,7 +2458,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   </span>
                                   <span
                                     className="bx--front-line"
-                                    title="Delete"
+                                    title="Category cannot be deleted"
                                   >
                                     Delete
                                   </span>
@@ -3617,7 +3617,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   </span>
                                   <span
                                     className="bx--front-line"
-                                    title="Delete"
+                                    title="Click to delete this category"
                                   >
                                     Delete
                                   </span>
@@ -4776,7 +4776,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   </span>
                                   <span
                                     className="bx--front-line"
-                                    title="Delete"
+                                    title="Click to delete this category"
                                   >
                                     Delete
                                   </span>
@@ -5935,7 +5935,7 @@ exports[`SettingsCompanyCategories component should render a SettingsCompanyCate
                                   </span>
                                   <span
                                     className="bx--front-line"
-                                    title="Delete"
+                                    title="Click to delete this category"
                                   >
                                     Delete
                                   </span>
