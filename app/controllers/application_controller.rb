@@ -425,55 +425,6 @@ class ApplicationController < ActionController::Base
     render 'shared/show_report', :layout => 'report_only'
   end
 
-  # moved this method here so it can be accessed from pxe_server controller as well
-  # this is a terrible name, it doesn't validate log_depots
-  # TODO: I think we can move this back to the pxe_server_controller and eliminate all non-pxe code paths
-  def log_depot_validate
-    @schedule = nil # setting to nil, since we are using same view for both db_back and log_depot edit
-    # if zone is selected in tree replace tab#3
-    pfx = if x_active_tree == :diagnostics_tree
-            if @sb[:active_tab] == "diagnostics_database"
-              # coming from diagnostics/database tab
-              "dbbackup"
-            end
-          elsif session[:edit]&.key?(:pxe_id)
-            # add/edit pxe server
-            "pxe"
-          else
-            # add/edit dbbackup schedule
-            "schedule"
-          end
-
-    id = params[:id] || "new"
-    if pfx == "pxe"
-      return unless load_edit("#{pfx}_edit__#{id}")
-
-      settings = {:username => @edit[:new][:log_userid], :password => @edit[:new][:log_password]}
-      settings[:uri] = @edit[:new][:uri_prefix] + "://" + @edit[:new][:uri]
-    else
-      settings = {:username => params[:log_userid], :password => params[:log_password]}
-      settings[:uri] = "#{params[:uri_prefix]}://#{params[:uri]}"
-      settings[:uri_prefix] = params[:uri_prefix]
-    end
-
-    begin
-      if pfx == "pxe"
-        msg = _('PXE Credentials successfully validated')
-        PxeServer.verify_depot_settings(settings)
-      else
-        msg = _('Depot Settings successfully validated')
-        MiqSchedule.new.verify_file_depot(settings)
-      end
-    rescue StandardError => bang
-      add_flash(_("Error during 'Validate': %{error_message}") % {:error_message => bang.message}, :error)
-    else
-      add_flash(msg)
-    end
-
-    @changed = (@edit[:new] != @edit[:current]) if pfx == "pxe"
-    javascript_flash
-  end
-
   # to reload currently displayed summary screen in explorer
   def reload
     @_params[:id] = x_node
