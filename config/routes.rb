@@ -2472,7 +2472,6 @@ Rails.application.routes.draw do
         rbac_tenants_list
         rbac_tenant_manage_quotas
         rbac_user_edit
-        rbac_user_field_changed
         rbac_users_list
         region_edit
         restart_server
