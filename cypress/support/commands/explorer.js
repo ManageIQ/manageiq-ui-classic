@@ -210,8 +210,32 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
       cy.logAndThrowError(errorMessage);
     };
 
-    // Start the recursive call from the first label in the given path
+    // If no list items are found initially - wait for them to load and
+    // then start the recursive call from the first label in the given path
     // and from the beginning of the accordion items in the panel
-    expandAndClickPath(0, 0);
+    if (listItems.length) {
+      expandAndClickPath(0, 0);
+    } else {
+      Cypress.log({
+        name: '⚠️ selectAccordionItem',
+        message: 'No list items found initially - waiting for them to load',
+      });
+
+      cy.get('div.panel-collapse.collapse.in').then((freshAccordion) => {
+        cy.wrap(freshAccordion)
+          .find('li.list-group-item')
+          .should('have.length.greaterThan', 0)
+          .then((loadedListItems) => {
+            // Update references with the loaded data
+            expandedAccordion = freshAccordion;
+            listItems = [...loadedListItems];
+            Cypress.log({
+              name: '🟢 selectAccordionItem',
+              message: `List items loaded - found ${listItems.length} items`,
+            });
+            expandAndClickPath(0, 0);
+          });
+      });
+    }
   });
 });
