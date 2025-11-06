@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-import { flashClassMap } from '../../../../support/assertions/assertion_constants';
 import {
   LABEL_CONFIG_KEYS,
   FIELD_CONFIG_KEYS,
@@ -10,23 +9,6 @@ import {
 // Menu options
 const SERVICES_MENU_OPTION = 'Services';
 const REQUESTS_MENU_OPTION = 'Requests';
-const CATALOGS_MENU_OPTION = 'Catalogs';
-const AUTOMATION_MENU_OPTION = 'Automation';
-const EMBEDDED_AUTOMATION_MENU_OPTION = 'Embedded Automate';
-const CUSTOMIZATION_MENU_OPTION = 'Customization';
-
-// Accordion items
-const SERVICE_DIALOGS_ACCORDION = 'Service Dialogs';
-const ALL_DIALOGS_ACCORDION_ITEM = 'All Dialogs';
-const SERVICE_CATALOGS_ACCORDION = 'Service Catalogs';
-const ALL_SERVICES_ACCORDION_ITEM = 'All Services';
-const CATALOG_ITEMS_ACCORDION_ITEM = 'Catalog Items';
-const ALL_CATALOG_ITEMS_ACCORDION_ITEM = 'All Catalog Items';
-
-// Toolbar options
-const TOOLBAR_CONFIGURATION = 'Configuration';
-const TOOLBAR_ADD_NEW_DIALOG = 'Add a new Dialog';
-const TOOLBAR_ADD_CATALOG_ITEM = 'Add a New Catalog Item';
 
 // Field labels
 const FORM_HEADER = 'Requests';
@@ -37,10 +19,8 @@ const REQUEST_DATE_LABEL = 'Request Date';
 const REASON_LABEL = 'Reason';
 
 // Field values
-const TEST_DIALOG_NAME = 'Test-Dialog-Name';
-const CATALOG_ITEM_NAME = 'Test-Catalog-Item';
 const SELECT_OPTION_ALL = 'all';
-const TYPE_VM_PROVISION = 'VM Provision';
+const TYPE_VM_RECONFIGURE = 'vm_reconfigure';
 const REQUEST_DATE_LAST_7_DAYS = '7';
 
 // Checkbox labels
@@ -51,99 +31,24 @@ const DENIED_LABEL = 'Denied';
 // Button texts
 const APPLY_BUTTON_TEXT = 'Apply';
 const RESET_BUTTON_TEXT = 'Reset';
-const SAVE_BUTTON_TEXT = 'Save';
-const ADD_BUTTON_TEXT = 'Add';
-const ORDER_BUTTON_TEXT = 'Order';
-const SUBMIT_BUTTON_TEXT = 'Submit';
 
-// Flash message text snippets
-const FLASH_MESSAGE_ADD_SUCCESS = 'added';
-const FLASH_MESSAGE_SAVE_SUCCESS = 'saved';
-const FLASH_MESSAGE_SUBMITTED = 'submitted';
+/**
+ * Converts a JavaScript Date object to a database-compatible timestamp string.
+ * @param {Date} [dateObject=new Date()] - The date to convert. Defaults to current date/time.
+ * @returns {string} Formatted timestamp string in format: "YYYY-MM-DD HH:MM:SS.mmmmmm" like "2025-11-06 05:30:45.123000"
+ */
+function getDateStringInDbFormat(dateObject = new Date()) {
+  const year = dateObject.getFullYear();
+  const month = String(dateObject.getMonth() + 1).padStart(2, '0');
+  const day = String(dateObject.getDate()).padStart(2, '0');
+  const hours = String(dateObject.getHours()).padStart(2, '0');
+  const minutes = String(dateObject.getMinutes()).padStart(2, '0');
+  const seconds = String(dateObject.getSeconds()).padStart(2, '0');
+  const millis = String(dateObject.getMilliseconds()).padStart(3, '0');
+  // JS only gives milliseconds (3 digits) so converting it to 6 digits like ".812169"
+  const micros = millis + '000';
 
-function dataSetup() {
-  // Adding a dialog
-  cy.menu(
-    AUTOMATION_MENU_OPTION,
-    EMBEDDED_AUTOMATION_MENU_OPTION,
-    CUSTOMIZATION_MENU_OPTION
-  );
-  cy.accordion(SERVICE_DIALOGS_ACCORDION);
-  cy.selectAccordionItem([ALL_DIALOGS_ACCORDION_ITEM]);
-  cy.toolbar(TOOLBAR_CONFIGURATION, TOOLBAR_ADD_NEW_DIALOG);
-  cy.contains('ul.static-field-list li.static-field-item', 'Text Box').trigger(
-    'mousedown',
-    { which: 1 }
-  );
-  cy.get('.well-lg').trigger('mousemove').trigger('mouseup', { force: true });
-  cy.getFormInputFieldByIdAndType({ inputId: 'name' }).type(TEST_DIALOG_NAME);
-  cy.interceptApi({
-    urlPattern: '/api/service_dialogs',
-    alias: 'addDialogApi',
-    triggerFn: () =>
-      cy
-        .contains('.pull-right button', SAVE_BUTTON_TEXT)
-        .should('be.enabled')
-        .click(),
-    onApiResponse: (interception) =>
-      expect(interception.response.statusCode).to.equal(200),
-  });
-  cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SAVE_SUCCESS);
-  // Adding a catalog item
-  cy.menu(SERVICES_MENU_OPTION, CATALOGS_MENU_OPTION);
-  cy.accordion(CATALOG_ITEMS_ACCORDION_ITEM);
-  cy.selectAccordionItem([ALL_CATALOG_ITEMS_ACCORDION_ITEM]);
-  cy.toolbar(TOOLBAR_CONFIGURATION, TOOLBAR_ADD_CATALOG_ITEM);
-  cy.contains('.form-group button[data-id="st_prov_type"]', 'Choose').click();
-  cy.interceptApi({
-    urlPattern: '/catalog/atomic_form_field_changed/new?st_prov_type=generic',
-    alias: 'getGenericCatalogItemTypeDetailsApi',
-    triggerFn: () =>
-      cy.contains('.form-group ul.dropdown-menu li a', 'Generic').click(),
-    onApiResponse: (interception) =>
-      expect(interception.response.statusCode).to.equal(200),
-  });
-  cy.get('input#name').type(CATALOG_ITEM_NAME);
-  cy.contains('.form-group button[data-id="catalog_id"]', 'Unassigned').click();
-  cy.contains(
-    '.form-group ul.dropdown-menu li a',
-    'My Company/My Catalog'
-  ).click();
-  cy.contains('.form-group button[data-id="dialog_id"]', 'No Dialog').click();
-  cy.contains(' .form-group ul.dropdown-menu li a', TEST_DIALOG_NAME).click();
-  cy.get('input#display').check();
-  cy.interceptApi({
-    urlPattern: '/catalog/servicetemplate_edit?button=add',
-    alias: 'addCatalogItemApi',
-    triggerFn: () =>
-      cy.contains('#form_buttons_div button', ADD_BUTTON_TEXT).click(),
-    onApiResponse: (interception) =>
-      expect(interception.response.statusCode).to.equal(200),
-  });
-  cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_ADD_SUCCESS);
-  // Order
-  cy.accordion(SERVICE_CATALOGS_ACCORDION);
-  cy.selectAccordionItem([ALL_SERVICES_ACCORDION_ITEM]);
-  cy.clickTableRowByText({ text: CATALOG_ITEM_NAME, columnIndex: 0 });
-  cy.interceptApi({
-    urlPattern: /\/catalog\/x_button\/\d+\?pressed=svc_catalog_provision/,
-    alias: 'orderApi',
-    triggerFn: () =>
-      cy
-        .contains(`#main-content button[type="button"]`, ORDER_BUTTON_TEXT)
-        .click(),
-    onApiResponse: (interception) =>
-      expect(interception.response.statusCode).to.equal(200),
-  });
-  cy.interceptApi({
-    urlPattern: /\/api\/service_catalogs\/\d+\/service_templates\/\d+$/,
-    alias: 'submitOrderApi',
-    triggerFn: () =>
-      cy.contains('.pull-right button', SUBMIT_BUTTON_TEXT).click(),
-    onApiResponse: (interception) =>
-      expect(interception.response.statusCode).to.equal(200),
-  });
-  cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SUBMITTED);
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${micros}`;
 }
 
 describe('Automate Service Requests form operations: Services > Requests', () => {
@@ -239,8 +144,71 @@ describe('Automate Service Requests form operations: Services > Requests', () =>
 
   describe('Validate button click actions', () => {
     beforeEach(() => {
-      // TODO: Replace with better setup approach
-      dataSetup();
+      const tenDaysAgo = new Date(
+        new Date().getTime() - 10 * 24 * 60 * 60 * 1000
+      );
+
+      cy.appFactories([
+        [
+          'create',
+          'service_template_provision_request',
+          {
+            description: 'Cypress mock data for approval state: Approved',
+            approval_state: 'approved',
+            type: 'ServiceTemplateProvisionRequest',
+            fulfilled_on: getDateStringInDbFormat(),
+            request_type: 'clone_to_service',
+            request_state: 'finished',
+            message: 'Cypress mock data for approval state: Approved',
+            status: 'Ok',
+          },
+        ],
+        [
+          'create',
+          'service_template_provision_request',
+          {
+            description: 'Cypress mock data for approval state: Denied',
+            approval_state: 'denied',
+            type: 'ServiceTemplateProvisionRequest',
+            fulfilled_on: getDateStringInDbFormat(),
+            request_type: 'clone_to_service',
+            request_state: 'finished',
+            message: 'Cypress mock data for approval state: Denied',
+            status: 'Ok',
+          },
+        ],
+        [
+          'create',
+          'vm_reconfigure_request',
+          {
+            description:
+              'Cypress mock data for approval state: Pending-Approval',
+            approval_state: 'pending_approval',
+            type: 'VmReconfigureRequest',
+            request_type: TYPE_VM_RECONFIGURE,
+            request_state: 'pending',
+            message: 'Cypress mock data for approval state: Pending-Approval',
+            status: 'Ok',
+          },
+        ],
+        // This record is used to filter data for requests made in the last 30 days
+        [
+          'create',
+          'service_template_provision_request',
+          {
+            description:
+              'Cypress mock data for request made in the last 30 days',
+            approval_state: 'approved',
+            type: 'ServiceTemplateProvisionRequest',
+            created_on: getDateStringInDbFormat(tenDaysAgo),
+            fulfilled_on: getDateStringInDbFormat(),
+            request_type: 'clone_to_service',
+            request_state: 'finished',
+            message: 'Cypress mock data for request made in the last 30 days',
+            status: 'Ok',
+          },
+        ],
+      ]);
     });
 
     it('Validate reset & apply buttons', () => {
