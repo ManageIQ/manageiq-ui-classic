@@ -22,6 +22,7 @@ const REASON_LABEL = 'Reason';
 const SELECT_OPTION_ALL = 'all';
 const TYPE_VM_RECONFIGURE = 'vm_reconfigure';
 const REQUEST_DATE_LAST_7_DAYS = '7';
+const REQUEST_DATE_LAST_30_DAYS = '30';
 
 // Checkbox labels
 const PENDING_APPROVAL_LABEL = 'Pending Approval';
@@ -57,11 +58,8 @@ describe('Automate Service Requests form operations: Services > Requests', () =>
   });
 
   describe('Verify form fields', () => {
-    beforeEach(() => {
-      cy.menu(SERVICES_MENU_OPTION, REQUESTS_MENU_OPTION);
-    });
-
     it('Verify form’s initial UI state', () => {
+      cy.menu(SERVICES_MENU_OPTION, REQUESTS_MENU_OPTION);
       cy.contains('#main-content h1', FORM_HEADER);
       cy.getFormLegendByText({ legendText: APPROVAL_STATE_HEADER });
       cy.validateFormLabels([
@@ -212,9 +210,10 @@ describe('Automate Service Requests form operations: Services > Requests', () =>
     });
 
     it('Validate reset & apply buttons', () => {
+      cy.menu(SERVICES_MENU_OPTION, REQUESTS_MENU_OPTION);
       /* Reset */
       cy.getFormSelectFieldById({ selectId: 'selectedUser' }).select(
-        'Administrator'
+        'Test User 1'
       );
       cy.getFormLabelByForAttribute({
         forValue: 'approvalStates-pending_approval',
@@ -238,7 +237,7 @@ describe('Automate Service Requests form operations: Services > Requests', () =>
         inputType: 'checkbox',
       }).should('not.be.checked');
       cy.getFormSelectFieldById({ selectId: 'types' }).select(
-        TYPE_VM_PROVISION
+        TYPE_VM_RECONFIGURE
       );
       cy.getFormSelectFieldById({ selectId: 'selectedPeriod' }).select(
         'Last 30 Days'
@@ -278,7 +277,7 @@ describe('Automate Service Requests form operations: Services > Requests', () =>
         ''
       );
       /* Apply */
-      // Filter data with approval state
+      // Filter data with approval state: Denied
       cy.getFormLabelByForAttribute({
         forValue: 'approvalStates-pending_approval',
       }).click();
@@ -297,29 +296,105 @@ describe('Automate Service Requests form operations: Services > Requests', () =>
         buttonText: APPLY_BUTTON_TEXT,
         buttonType: 'submit',
       }).click();
-      cy.expect_gtl_no_records_with_text();
+      cy.gtlGetRows([7]).then((data) => {
+        expect(data.length).to.equal(1);
+        expect(data[0][0]).to.equal(DENIED_LABEL);
+      });
       cy.getFormButtonByTypeWithText({
         buttonText: RESET_BUTTON_TEXT,
       }).click();
       cy.gtlGetRows([0]).then((data) => {
-        expect(data.length).to.equal(1);
+        expect(data.length).to.equal(3);
       });
-      // Filter data with type
+      // Filter data with approval state: Approved
+      cy.getFormLabelByForAttribute({
+        forValue: 'approvalStates-pending_approval',
+      }).click();
+      cy.getFormInputFieldByIdAndType({
+        inputId: 'approvalStates-pending_approval',
+        inputType: 'checkbox',
+      }).should('not.be.checked');
+      cy.getFormLabelByForAttribute({
+        forValue: 'approvalStates-denied',
+      }).click();
+      cy.getFormInputFieldByIdAndType({
+        inputId: 'approvalStates-denied',
+        inputType: 'checkbox',
+      }).should('not.be.checked');
+      cy.getFormButtonByTypeWithText({
+        buttonText: APPLY_BUTTON_TEXT,
+        buttonType: 'submit',
+      }).click();
+      cy.gtlGetRows([7]).then((data) => {
+        expect(data.length).to.equal(1);
+        expect(data[0][0]).to.equal(APPROVED_LABEL);
+      });
+      cy.getFormButtonByTypeWithText({
+        buttonText: RESET_BUTTON_TEXT,
+      }).click();
+      cy.gtlGetRows([0]).then((data) => {
+        expect(data.length).to.equal(3);
+      });
+      // Filter data with approval state: Pending approval
+      cy.getFormLabelByForAttribute({
+        forValue: 'approvalStates-approved',
+      }).click();
+      cy.getFormInputFieldByIdAndType({
+        inputId: 'approvalStates-approved',
+        inputType: 'checkbox',
+      }).should('not.be.checked');
+      cy.getFormLabelByForAttribute({
+        forValue: 'approvalStates-denied',
+      }).click();
+      cy.getFormInputFieldByIdAndType({
+        inputId: 'approvalStates-denied',
+        inputType: 'checkbox',
+      }).should('not.be.checked');
+      cy.getFormButtonByTypeWithText({
+        buttonText: APPLY_BUTTON_TEXT,
+        buttonType: 'submit',
+      }).click();
+      cy.gtlGetRows([7]).then((data) => {
+        expect(data.length).to.equal(1);
+        expect(data[0][0]).to.equal(PENDING_APPROVAL_LABEL);
+      });
+      cy.getFormButtonByTypeWithText({
+        buttonText: RESET_BUTTON_TEXT,
+      }).click();
+      cy.gtlGetRows([0]).then((data) => {
+        expect(data.length).to.equal(3);
+      });
+      // Filter data with type: VM Reconfigure
       cy.getFormSelectFieldById({ selectId: 'types' }).select(
-        TYPE_VM_PROVISION
+        TYPE_VM_RECONFIGURE
       );
       cy.getFormButtonByTypeWithText({
         buttonText: APPLY_BUTTON_TEXT,
         buttonType: 'submit',
       }).click();
-      cy.expect_gtl_no_records_with_text();
+      cy.gtlGetRows([4]).then((data) => {
+        expect(data.length).to.equal(1);
+        expect(data[0][0]).to.equal('VM Reconfigure');
+      });
       cy.getFormButtonByTypeWithText({
         buttonText: RESET_BUTTON_TEXT,
       }).click();
       cy.gtlGetRows([0]).then((data) => {
-        expect(data.length).to.equal(1);
+        expect(data.length).to.equal(3);
       });
-      // Filter data with
+      // Filter data with request date: last 30 days
+      cy.getFormSelectFieldById({ selectId: 'selectedPeriod' }).select(
+        REQUEST_DATE_LAST_30_DAYS
+      );
+      cy.getFormButtonByTypeWithText({
+        buttonText: APPLY_BUTTON_TEXT,
+        buttonType: 'submit',
+      }).click();
+      cy.gtlGetRows([6]).then((data) => {
+        expect(data.length).to.equal(4);
+        expect(data[0][0]).to.include('request made in the last 30 days');
+      });
+      // Filter data with reason text
       cy.getFormInputFieldByIdAndType({ inputId: 'reasonText' }).type('r@ndOm');
       cy.getFormButtonByTypeWithText({
         buttonText: APPLY_BUTTON_TEXT,
@@ -330,7 +405,7 @@ describe('Automate Service Requests form operations: Services > Requests', () =>
         buttonText: RESET_BUTTON_TEXT,
       }).click();
       cy.gtlGetRows([0]).then((data) => {
-        expect(data.length).to.equal(1);
+        expect(data.length).to.equal(3);
       });
     });
 
