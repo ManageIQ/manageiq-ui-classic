@@ -1,5 +1,5 @@
 /**
- * Retrieves a form footer button by its text content and type using an object parameter.
+ * Retrieves a form button, often found in form footers, by its name and type using an object parameter.
  *
  * @param {Object} options - The options object.
  * @param {string} options.buttonText - The text content of the button (required).
