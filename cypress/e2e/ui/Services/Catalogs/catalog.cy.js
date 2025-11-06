@@ -27,7 +27,6 @@ const TEST_DESCRIPTION = 'Test-Description';
 
 // Config options
 const CONFIG_TOOLBAR_BUTTON = 'Configuration';
-const ADD_CATALOG_ITEM_CONFIG_OPTION = 'Add a New Catalog Item';
 const ADD_CATALOG_CONFIG_OPTION = 'Add a New Catalog';
 const EDIT_CATALOG_CONFIG_OPTION = 'Edit this Item';
 const REMOVE_CATALOG_CONFIG_OPTION = 'Remove Catalog';
@@ -39,7 +38,6 @@ const CANCEL_BUTTON_TEXT = 'Cancel';
 const RESET_BUTTON_TEXT = 'Reset';
 
 // Flash message text snippets
-const FLASH_MESSAGE_ADDED = 'added';
 const FLASH_MESSAGE_SAVED = 'saved';
 const FLASH_MESSAGE_CANCELLED = 'cancelled';
 const FLASH_MESSAGE_DELETED = 'delete';
@@ -50,19 +48,7 @@ const BROWSER_ALERT_REMOVE_CONFIRM_TEXT = 'removed';
 
 // Accordion items
 const CATALOGS_ACCORDION_ITEM = 'Catalogs';
-const CATALOG_ITEMS_ACCORDION_ITEM = 'Catalog Items';
 const ALL_CATALOGS_ACCORDION_ITEM = 'All Catalogs';
-const ALL_CATALOG_ITEMS_ACCORDION_ITEM = 'All Catalog Items';
-const UNASSIGNED_ACCORDION_ITEM = 'Unassigned';
-
-function addCatalogItem(catalogItemName) {
-  cy.toolbar(CONFIG_TOOLBAR_BUTTON, ADD_CATALOG_ITEM_CONFIG_OPTION);
-  cy.contains('button[data-id="st_prov_type"]', 'Choose').click();
-  cy.contains('.form-group ul.dropdown-menu li a', 'Generic').click();
-  cy.get('input#name').type(catalogItemName);
-  cy.contains('#form_buttons_div button', ADD_BUTTON_TEXT).click();
-  cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_ADDED);
-}
 
 function validateElements({ isEditForm }) {
   cy.expect_explorer_title(FORM_HEADER);
@@ -126,18 +112,26 @@ function validateElements({ isEditForm }) {
 
 describe('Automate Catalog form operations: Services > Catalogs > Catalogs > Configuration > Add a New Catalog', () => {
   beforeEach(() => {
+    cy.appFactories([
+      ['create', 'service_template', {name: CATALOG_ITEM_NAME_1, generic_subtype: 'custom', prov_type: 'generic', display: true}],
+    ]).then((results) => {
+      cy.appFactories([
+        ['create', 'resource_action', {action: 'Provision', resource_id: results[0].id, resource_type: 'ServiceTemplate'}],
+        ['create', 'resource_action', {action: 'Retirement', resource_id: results[0].id, resource_type: 'ServiceTemplate'}]
+      ])
+    });
+
+    cy.appFactories([
+      ['create', 'service_template', {name: CATALOG_ITEM_NAME_2, generic_subtype: 'custom', prov_type: 'generic', display: true}],
+    ]).then((results) => {
+      cy.appFactories([
+        ['create', 'resource_action', {action: 'Provision', resource_id: results[0].id, resource_type: 'ServiceTemplate'}],
+        ['create', 'resource_action', {action: 'Retirement', resource_id: results[0].id, resource_type: 'ServiceTemplate'}]
+      ])
+    });
+
     cy.login();
     cy.menu(SERVICES_MENU_OPTION, CATALOGS_MENU_OPTION);
-
-    // TODO: replace with better data setup approach
-    // Adding 2 catalog items first before validating Catalog form
-    cy.accordion(CATALOG_ITEMS_ACCORDION_ITEM);
-    cy.selectAccordionItem([
-      ALL_CATALOG_ITEMS_ACCORDION_ITEM,
-      UNASSIGNED_ACCORDION_ITEM,
-    ]);
-    addCatalogItem(CATALOG_ITEM_NAME_1);
-    addCatalogItem(CATALOG_ITEM_NAME_2);
 
     cy.accordion(CATALOGS_ACCORDION_ITEM);
     cy.selectAccordionItem([ALL_CATALOGS_ACCORDION_ITEM]);
