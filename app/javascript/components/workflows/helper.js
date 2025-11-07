@@ -7,17 +7,30 @@ const entryPointsHeaderInfo = () => [
 ];
 
 /** Function to return the cell data for a row item. */
-const cellInfo = (workflow) => [
-  { text: workflow.configuration_script_source ? workflow.configuration_script_source.name : '' },
-  { text: workflow.name },
-];
+const cellInfo = (workflow) => {
+  const isValid = workflow.payload_valid;
+  const workflowNameTitle = !isValid ? `${workflow.name} (${__('Invalid Workflow')})` : workflow.name;
+
+  return [
+    { text: workflow.configuration_script_source ? workflow.configuration_script_source.name : '' },
+    { text: workflow.name, title: workflowNameTitle },
+  ];
+};
 
 /** Function to return the row information for the list */
 const rowInfo = (headers, response) => {
   const headerKeys = headers.map((item) => item.key);
-  const rows = response.resources.filter((item) => item.payload).map((workflow) => ({
-    id: workflow.id.toString(), cells: cellInfo(workflow), clickable: true,
-  }));
+  const rows = response.resources.map((workflow) => {
+    const isValid = workflow.payload_valid;
+    return {
+      id: workflow.id.toString(),
+      name: workflow.name,
+      cells: cellInfo(workflow),
+      clickable: isValid,
+      disabled: !isValid,
+    };
+  });
+
   const miqRows = rowData(headerKeys, rows, false);
   return miqRows.rowItems;
 };

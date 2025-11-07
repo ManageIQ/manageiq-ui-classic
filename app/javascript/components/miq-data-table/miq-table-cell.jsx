@@ -25,8 +25,9 @@ const MiqTableCell = ({
   const alignClass = longText ? 'vertical_align_top' : '';
   const longerTextClass = veryLongText ? 'truncate_longer_text' : '';
 
+  const cellTitle = cell.data.title ? cell.data.title : cell.value;
   const truncateText = (
-    <span title={cell.value} className={classNames('bx--front-line', wrapClass, longerTextClass)}>
+    <span title={cellTitle} className={classNames('bx--front-line', wrapClass, longerTextClass)}>
       {cell.value}
     </span>
   );

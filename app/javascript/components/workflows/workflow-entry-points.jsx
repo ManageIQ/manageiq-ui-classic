@@ -91,6 +91,14 @@ const WorkflowEntryPoints = ({
 
   /** Function to handle a row's click event. */
   const onSelect = (selectedItemId) => {
+    // Find the row to check if it's disabled
+    const selectedRow = data.list.rows.find((row) => row.id === selectedItemId);
+
+    // Don't allow selection of disabled rows
+    if (selectedRow && selectedRow.disabled) {
+      return;
+    }
+
     setData({
       ...data,
       selectedItemId: (data.selectedItemId === selectedItemId) ? undefined : selectedItemId,
@@ -110,6 +118,15 @@ const WorkflowEntryPoints = ({
       http.post('/catalog/ae_tree_select_toggle?button=cancel', {}, { headers: {}, skipJsonParsing: true });
     }
   };
+  /** Function to check if a valid workflow is selected */
+  const isValidSelection = () => {
+    if (!data.selectedItemId) {
+      return false;
+    }
+    const selectedRow = data.list.rows.find((row) => row.id === data.selectedItemId);
+    return selectedRow && !selectedRow.disabled;
+  };
+
   /** Function to handle the modal box apply button click event. */
   const onApply = () => {
     const seletedItem = data.list.rows.find((item) => item.id === data.selectedItemId);
@@ -138,7 +155,7 @@ const WorkflowEntryPoints = ({
       open
       modalHeading={sprintf(__('Select Embedded Workflow - %s Entry Point'), workflowTypes[type])}
       primaryButtonText={__('Apply')}
-      primaryButtonDisabled={!data.selectedItemId}
+      primaryButtonDisabled={!isValidSelection()}
       secondaryButtonText={__('Cancel')}
       onRequestSubmit={onApply}
       onRequestClose={onCloseModal}
