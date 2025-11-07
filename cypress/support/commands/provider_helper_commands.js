@@ -642,26 +642,6 @@ function selectProviderAndDeleteWithOptionalFlashMessage({
 }
 
 /**
- * Cleans up a provider by deleting it
- * @param {string} createdProviderName - The name of the provider to clean up
- */
-function cleanUp({ createdProviderName }) {
-  cy.url()
-    .then((url) => {
-      // Navigate to cloud providers table view
-      if (!url.endsWith('/ems_cloud/show_list#/')) {
-        cy.visit('/ems_cloud/show_list#/');
-      }
-    })
-    .then(() => {
-      cy.selectProviderAndDeleteWithOptionalFlashMessage({
-        createdProviderName,
-        assertDeleteFlashMessage: false,
-      });
-    });
-}
-
-/**
  * Provider Test Generator helpers - Generates test cases for cloud providers
  * These utilities make it easy to create test cases for different provider types
  */
@@ -696,7 +676,7 @@ function generateAddFormValidationTests(providerConfig, isAzureStack = false) {
 
     it('Verify successful validate + add/refresh/delete operations', () => {
       /**
-       * The provider name is set in this variable to identify it for deletion
+       * The provider's unique name is set in nameValue variable
        */
       const uniqueId = generateUniqueIdentifier();
       const nameValue = `${providerConfig.nameValue} - verify-validate-add-refresh-and-delete-operations - ${uniqueId}`;
@@ -743,8 +723,7 @@ function generateAddFormValidationTests(providerConfig, isAzureStack = false) {
 function generateEditFormValidationTests(providerConfig, isAzureStack = false) {
   describe(`Validate ${providerConfig.type} edit form`, () => {
     /**
-     * The provider name is set in this variable at the start of each test,
-     * allowing afterEach to identify it for deletion.
+     * The provider's unique name is set in this variable at the start of each test
      */
     let nameFieldValue;
     let hostValue;
@@ -841,8 +820,7 @@ function generateEditFormValidationTests(providerConfig, isAzureStack = false) {
     });
 
     afterEach(() => {
-      // TODO: Replace with better data clean-up approach
-      cleanUp({ createdProviderName: nameFieldValue });
+      cy.appDbState('restore');
     });
   });
 }
@@ -855,7 +833,7 @@ function generateEditFormValidationTests(providerConfig, isAzureStack = false) {
 function generateNameUniquenessTests(providerConfig, isAzureStack = false) {
   describe(`${providerConfig.type} provider name uniqueness validation`, () => {
     /**
-     * The provider name is set in this variable at the start of the test, allowing afterEach to identify it for deletion.
+     * The provider's unique name is set in this variable at the start of the test
      */
     let nameFieldValue;
     let hostValue;
@@ -881,8 +859,7 @@ function generateNameUniquenessTests(providerConfig, isAzureStack = false) {
     });
 
     afterEach(() => {
-      // TODO: Replace with better data clean-up approach
-      cleanUp({ createdProviderName: nameFieldValue });
+      cy.appDbState('restore');
     });
   });
 }
