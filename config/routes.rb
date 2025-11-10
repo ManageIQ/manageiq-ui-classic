@@ -2481,6 +2481,7 @@ Rails.application.routes.draw do
         schedules_list
         settings_form_field_changed
         settings_update
+        settings_update_amazon_verify
         settings_update_help_menu
         show
         smartproxy_affinity_field_changed
