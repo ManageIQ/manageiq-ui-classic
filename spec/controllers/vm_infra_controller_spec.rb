@@ -96,7 +96,6 @@ describe VmInfraController do
     post :show, :params => {:id => vm_vmware.id, :display => 'snapshot_info'}, :xhr => true
     expect(response.status).to eq(200)
     expect(response).to render_template('vm_common/_snapshots_desc')
-    expect(response).to render_template('vm_common/_snapshots_tree')
   end
 
   it 'can open the right size tab' do

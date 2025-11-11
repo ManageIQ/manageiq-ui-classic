@@ -183,7 +183,7 @@ module PxeController::PxeServers
       render :json => {:status => 'error', :message => _("Error during 'Validate': %{error_message}") % {:error_message => bang.message}}
     end
 
-    render :json => {:status => 'success', :message => _('PXE Credentials successfuly validated')}
+    render :json => {:status => 'success', :message => _('PXE Credentials successfully validated')}
   end
 
   private #######################

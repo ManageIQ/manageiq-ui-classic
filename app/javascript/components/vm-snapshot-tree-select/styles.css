@@ -1,0 +1,110 @@
+  .snapshot-details-div {
+    .snapshot-details {
+      margin-left: 30px;
+      margin-bottom: 20px;
+    }
+    
+    .snapshot-detail-title {
+      width: 80px;
+      justify-content: right;
+      display: inline-flex;
+      margin-right: 30px;
+    }
+
+    .snapshot-detail-value {
+      display: inline-flex;
+    }
+  }
+
+  .snapshot-tree-title {
+    font-size: 20px;
+    padding-left: 20px;
+    padding-top: 40px;
+  }
+
+  .no-snapshots-message {
+    padding-left: 20px;
+  }
+
+  .checkbox {
+    font-size: 16px;
+    user-select: none;
+    min-height: 320px;
+    padding: 20px;
+    box-sizing: content-box;
+  }
+  
+  .selected-snapshot {
+    background-color: #0f62fe;
+    color: white;
+    width: 100%;
+    margin-left: 0px;
+    pointer-events: none;
+
+    .arrow-div {
+      pointer-events: all;
+    }
+
+    span {
+      pointer-events: all;
+    }
+  }
+
+  .arrow-div {
+    display: inline-flex;
+    margin-right: 5px;
+  }
+
+  .node-icon-div {
+    margin-right: 5px;
+    display: inline-flex;
+  }
+
+  .checkbox .tree,
+  .checkbox .tree-node,
+  .checkbox .tree-node-group {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .checkbox .tree-branch-wrapper,
+  .checkbox .tree-node__leaf {
+    outline: none;
+  }
+  
+  .checkbox .tree-node {
+    cursor: pointer;
+  }
+  
+  .checkbox .tree-node .name:hover {
+    background: rgba(0, 0, 0, 0.1);
+  }
+  
+  .checkbox .tree-node--focused .name {
+    background: rgba(0, 0, 0, 0.2);
+  }
+  
+  .checkbox .tree-node {
+    display: inline-block;
+  }
+  
+  .checkbox .checkbox-icon {
+    margin: 0 5px;
+    vertical-align: middle;
+  }
+  
+  .checkbox button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+  }
+  
+  .checkbox .arrow {
+    margin-left: 5px;
+    vertical-align: middle;
+  }
+  
+  .checkbox .arrow--open {
+    transform: rotate(90deg);
+  }

@@ -1373,7 +1373,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   </span>
                                   <span
                                     className="bx--front-line"
-                                    title="Delete"
+                                    title="Click to delete this mapping"
                                   >
                                     Delete
                                   </span>
@@ -1887,7 +1887,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   </span>
                                   <span
                                     className="bx--front-line"
-                                    title="Delete"
+                                    title="Click to delete this mapping"
                                   >
                                     Delete
                                   </span>
@@ -2401,7 +2401,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   </span>
                                   <span
                                     className="bx--front-line"
-                                    title="Delete"
+                                    title="Click to delete this mapping"
                                   >
                                     Delete
                                   </span>
@@ -2915,7 +2915,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   </span>
                                   <span
                                     className="bx--front-line"
-                                    title="Delete"
+                                    title="Click to delete this mapping"
                                   >
                                     Delete
                                   </span>
@@ -4292,7 +4292,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   </span>
                                   <span
                                     className="bx--front-line"
-                                    title="Delete"
+                                    title="Click to delete this mapping"
                                   >
                                     Delete
                                   </span>
@@ -4806,7 +4806,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   </span>
                                   <span
                                     className="bx--front-line"
-                                    title="Delete"
+                                    title="Click to delete this mapping"
                                   >
                                     Delete
                                   </span>
@@ -5320,7 +5320,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   </span>
                                   <span
                                     className="bx--front-line"
-                                    title="Delete"
+                                    title="Click to delete this mapping"
                                   >
                                     Delete
                                   </span>
@@ -5834,7 +5834,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   </span>
                                   <span
                                     className="bx--front-line"
-                                    title="Delete"
+                                    title="Click to delete this mapping"
                                   >
                                     Delete
                                   </span>

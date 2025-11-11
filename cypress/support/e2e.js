@@ -42,21 +42,40 @@
 // Commands
 import './commands/api_commands.js';
 import './commands/custom_logging_commands.js';
+import './commands/dual_list_commands.js';
 import './commands/element_selectors.js';
 import './commands/explorer.js';
+import './commands/form_elements_validation_commands.js';
 import './commands/gtl.js';
 import './commands/login.js';
 import './commands/menu.js';
+import './commands/miq_data_table_commands.js';
+import './commands/select.js';
 import './commands/stub_notifications.js';
+import './commands/tabs.js';
 import './commands/throttle_response.js';
 import './commands/toolbar.js';
 
 // Assertions
 import './assertions/expect_alerts.js';
+import './assertions/expect_dual_list.js';
 import './assertions/expect_rates_table.js';
 import './assertions/expect_search_box.js';
 import './assertions/expect_text.js';
 import './assertions/expect_title.js';
+import './assertions/miq_data_table_assertions.js'
+
+// cypress on rails setup:
+// ***********************************************************
+
+// Import commands.js using ES2015 syntax:
+// import 'cypress-on-rails/support/index'
+import './commands'
+import './on-rails'
+
+// Alternatively you can use CommonJS syntax:
+// require('./commands')
+// end of cypress on rails setup
 
 // This is needed to prevent Cypress tests from failing due to uncaught errors:
 // Undefined errors are occuring on every initial page load of Manage IQ
@@ -77,7 +96,7 @@ beforeEach(() => {
   // Global hook run once before each test
   // cy.throttle_response(500, 56);
   // cy.stub_notifications();
-  
+
   // Reset the intercepted aliases tracking object
   cy.resetInterceptedApiAliases();
 })

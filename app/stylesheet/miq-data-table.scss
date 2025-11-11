@@ -393,6 +393,21 @@ table.miq_preview {
   .workflows-entry-point-modal-body {
     .miq-data-table {
       margin-top: 0px;
+
+      tbody tr.disabled-row {
+        opacity: 0.5 !important;
+        cursor: not-allowed !important;
+        color: #8d8d8d !important;
+        background-color: #f4f4f4 !important;
+
+        &:hover {
+          background-color: #f4f4f4 !important;
+        }
+
+        td {
+          color: #8d8d8d !important;
+        }
+      }
     }
   }
 }
@@ -416,5 +431,12 @@ table.miq_preview {
 
   .carbon--RetryFailed {
     color: var(--red);
+  }
+}
+
+#workflows_table {
+  td.no_text {
+    width: 50px;
+    padding-left: 24px;
   }
 }

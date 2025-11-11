@@ -14,6 +14,10 @@ class GtlFormatter
     'last_compliance_status' => 'last_compliance_status_image',
   }.freeze
 
+  COLUMN_WITH_ICON_NO_TEXT = {
+    'payload_valid'          => 'payload_valid_image',
+  }.freeze
+
   COLUMN_WITH_BACKGROUND_ICON = {
     'normalized_state' => 'normalized_state_image'
   }.freeze
@@ -133,6 +137,11 @@ class GtlFormatter
         item = {:title => text,
                 :icon  => icon,
                 :text  => text}.compact
+      elsif COLUMN_WITH_ICON_NO_TEXT.key?(col)
+        icon = send(COLUMN_WITH_ICON_NO_TEXT[col], record)
+        text = format_col_for_display(view, row, col)
+        item = {:title => text,
+                :icon  => icon}.compact
       elsif COLUMN_WITH_TIME.include?(col)
         celltext = format_time_for_display(row, col)
       elsif COLUMN_WITH_OS_TEXT.include?(col)
@@ -215,6 +224,15 @@ class GtlFormatter
       "pficon pficon-unknown"
     else
       "pficon pficon-warning-triangle-o"
+    end
+  end
+
+  def self.payload_valid_image(item)
+    case item.payload_valid
+    when true
+      "pficon pficon-ok"
+    else
+      "pficon pficon-error-circle-o"
     end
   end
 

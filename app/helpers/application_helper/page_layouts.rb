@@ -240,7 +240,7 @@ module ApplicationHelper::PageLayouts
 
   attr_reader :big_iframe
 
-  # a layout which gives full control over the center, but always provides the navbars and menus - to be overriden per-controller, used by v2v
+  # a layout which gives full control over the center, but always provides the navbars and menus - to be overridden per-controller, used by v2v
   def layout_full_center
     nil
   end

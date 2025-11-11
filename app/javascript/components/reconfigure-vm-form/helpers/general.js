@@ -50,4 +50,8 @@ export const formsData = {
 /** Function to get the value in MB
  * converts the value to GB to MB based on the passed unit
  */
-export const sizeInMB = (value, unit) => (unit === __('GB') ? value * 1024 : value);
+export const sizeInMB = (value, unit) => {
+  // Check if unit is GB or a localized version of GB (like "Go" in French)
+  const isGigabyte = unit === 'GB' || unit === __('GB');
+  return isGigabyte ? value * 1024 : value;
+};

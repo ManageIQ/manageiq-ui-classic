@@ -85,7 +85,7 @@ class ApplicationController < ActionController::Base
 
   TIMELINES_FOLDER = Rails.root.join("product", "timelines")
 
-  ONE_MILLION = 1_000_000 # Setting high number incase we don't want to display paging controls on list views
+  ONE_MILLION = 1_000_000 # Setting high number in case we don't want to display paging controls on list views
 
   PERPAGE_TYPES = %w[list reports].each_with_object({}) { |value, acc| acc[value] = value.to_sym }.freeze
 
@@ -294,7 +294,7 @@ class ApplicationController < ActionController::Base
     end
 
     options[:parent] = options[:parent] || @parent
-    options[:association] = HAS_ASSOCATION[params[:model_name]] if HAS_ASSOCATION.include?(params[:model_name])
+    options[:association] = HAS_ASSOCIATION[params[:model_name]] if HAS_ASSOCIATION.include?(params[:model_name])
     options[:selected_ids] = params[:records]
     options
   end
@@ -423,54 +423,6 @@ class ApplicationController < ActionController::Base
     @render_chart = (@ght_type == 'hybrid')
     # Indicate stand alone report for views
     render 'shared/show_report', :layout => 'report_only'
-  end
-
-  # moved this method here so it can be accessed from pxe_server controller as well
-  # this is a terrible name, it doesn't validate log_depots
-  def log_depot_validate
-    @schedule = nil # setting to nil, since we are using same view for both db_back and log_depot edit
-    # if zone is selected in tree replace tab#3
-    pfx = if x_active_tree == :diagnostics_tree
-            if @sb[:active_tab] == "diagnostics_database"
-              # coming from diagnostics/database tab
-              "dbbackup"
-            end
-          elsif session[:edit]&.key?(:pxe_id)
-            # add/edit pxe server
-            "pxe"
-          else
-            # add/edit dbbackup schedule
-            "schedule"
-          end
-
-    id = params[:id] || "new"
-    if pfx == "pxe"
-      return unless load_edit("#{pfx}_edit__#{id}")
-
-      settings = {:username => @edit[:new][:log_userid], :password => @edit[:new][:log_password]}
-      settings[:uri] = @edit[:new][:uri_prefix] + "://" + @edit[:new][:uri]
-    else
-      settings = {:username => params[:log_userid], :password => params[:log_password]}
-      settings[:uri] = "#{params[:uri_prefix]}://#{params[:uri]}"
-      settings[:uri_prefix] = params[:uri_prefix]
-    end
-
-    begin
-      if pfx == "pxe"
-        msg = _('PXE Credentials successfuly validated')
-        PxeServer.verify_depot_settings(settings)
-      else
-        msg = _('Depot Settings successfuly validated')
-        MiqSchedule.new.verify_file_depot(settings)
-      end
-    rescue StandardError => bang
-      add_flash(_("Error during 'Validate': %{error_message}") % {:error_message => bang.message}, :error)
-    else
-      add_flash(msg)
-    end
-
-    @changed = (@edit[:new] != @edit[:current]) if pfx == "pxe"
-    javascript_flash
   end
 
   # to reload currently displayed summary screen in explorer
@@ -1024,7 +976,7 @@ class ApplicationController < ActionController::Base
 
     # Don't apply sub_filter when viewing sub-list view of a CI.
     # This applies when search is active and you go Vm -->
-    # {Processes,Users,...} in that case, search shoult NOT be applied.
+    # {Processes,Users,...} in that case, search should NOT be applied.
     # If loading a form such as provisioning, don't filter records
     # FIXME: This needs to be changed to apply search in some explicit way.
     return nil if @display || @in_a_form
@@ -1973,7 +1925,7 @@ class ApplicationController < ActionController::Base
     @flash_array = nil if params[:button] != "reset"
   end
 
-  # Build all trees and accordions accoding to features available to the current user.
+  # Build all trees and accordions according to features available to the current user.
 
   def build_accordions_and_trees_only
     # Build the Explorer screen from scratch

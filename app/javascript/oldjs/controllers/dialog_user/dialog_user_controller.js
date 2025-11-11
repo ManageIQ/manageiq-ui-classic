@@ -22,6 +22,14 @@ ManageIQ.angular.app.controller('dialogUserController', ['API', 'dialogFieldRefr
       _.forEach(tab.dialog_groups, function(group) {
         _.forEach(group.dialog_fields, function(field) {
           const replaceField = dialogReplaceData ? JSON.parse(dialogReplaceData).find(function (replace) { return replace.name === field.name }) : false;
+
+          // Handles multi-select dropdowns with integer values
+          if (field.type === 'DialogFieldDropDownList' && field.data_type === 'integer' && replaceField.value && Array.isArray(replaceField.value)) {
+            replaceField.value = replaceField.value.map(function (value) {
+              return parseInt(value, 10);
+            });
+          }
+
           if (replaceField) {
             field.default_value = replaceField.value;
           }

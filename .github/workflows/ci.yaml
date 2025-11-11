@@ -1,11 +1,17 @@
 ---
 name: CI
 on:
-  push:
   pull_request:
-  workflow_dispatch:
+  push:
+    branches-ignore:
+    - renovate/*
+    - dependabot/*
   schedule:
   - cron: 0 0 * * *
+  workflow_dispatch:
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
 jobs:
   ci:
     runs-on: ubuntu-latest
@@ -13,8 +19,6 @@ jobs:
       matrix:
         ruby-version:
         - '3.3'
-        node-version:
-        - 20
         test-suite:
         - spec
         - spec:compile
@@ -40,7 +44,7 @@ jobs:
       PGPASSWORD: smartvm
       CC_TEST_REPORTER_ID: "${{ secrets.CC_TEST_REPORTER_ID }}"
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Set up system
       run: bin/before_install
     - name: Set up Ruby
@@ -52,9 +56,9 @@ jobs:
     - name: Set up Node
       if: "${{ matrix.test-suite == 'spec:compile' || matrix.test-suite == 'spec:javascript'
         || matrix.test-suite == 'spec:jest' }}"
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v5
       with:
-        node-version: "${{ matrix.node-version }}"
+        node-version-file: package.json
         cache: yarn
         registry-url: https://npm.manageiq.org/
     - name: Prepare tests
@@ -65,4 +69,7 @@ jobs:
       if: "${{ github.ref == 'refs/heads/master' && matrix.ruby-version == '3.3' &&
         matrix.test-suite == 'spec' }}"
       continue-on-error: true
-      uses: paambaati/codeclimate-action@v5
+      uses: qltysh/qlty-action/coverage@v2
+      with:
+        token: "${{ secrets.QLTY_COVERAGE_TOKEN }}"
+        files: coverage/.resultset.json

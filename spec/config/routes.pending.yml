@@ -835,6 +835,7 @@ MiqRequestController:
 - retrieve_email
 - show
 - show_list
+- sort_configuration_script_grid
 - sort_configured_system_grid
 - sort_ds_grid
 - sort_host_grid
@@ -903,8 +904,6 @@ OpsController:
 - dynamic_text_box_refresh
 - index
 - label_tag_mapping_update
-- log_collection_form_fields
-- log_depot_edit
 - open_url_after_dialog
 - report_data
 - show
@@ -1041,7 +1040,6 @@ PlacementGroupController:
 - sections_field_changed
 PxeController:
 - accordion_select
-- log_depot_validate
 - pxe_server_async_cred_validation
 - reload
 - report_data

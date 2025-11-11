@@ -2226,6 +2226,7 @@ Rails.application.routes.draw do
         retrieve_email
         show_list
         sort_configured_system_grid
+        sort_configuration_script_grid
         sort_ds_grid
         sort_host_grid
         sort_iso_img_grid
@@ -2415,7 +2416,6 @@ Rails.application.routes.draw do
         fetch_audit_log
         fetch_log
         fetch_production_log
-        log_collection_form_fields
         pglogical_subscriptions_form_fields
         schedule_form_fields
       ],
@@ -2455,8 +2455,6 @@ Rails.application.routes.draw do
         label_tag_mapping_edit
         label_tag_mapping_update
         label_tag_mapping_field_changed
-        log_depot_edit
-        log_depot_validate
         perf_chart_chooser
         pglogical_save_subscriptions
         pglogical_validate_subscription
@@ -2668,7 +2666,6 @@ Rails.application.routes.draw do
         explorer
         iso_datastore_list
         iso_image_edit
-        log_depot_validate
         pxe_image_edit
         pxe_image_type_edit
         pxe_image_type_list

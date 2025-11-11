@@ -31,9 +31,16 @@ describe('Settings > Application Settings > Access Control', () => {
     ]);
 
     cy.toolbar(TOOLBAR_MENU, 'Add child Tenant to this Tenant');
-    cy.getFormInputFieldById('name').type(INITIAL_TENANT_NAME);
-    cy.getFormInputFieldById('description').type(INITIAL_TENANT_DESCRIPTION);
-    cy.getFormFooterButtonByType('Add', 'submit').click();
+    cy.getFormInputFieldByIdAndType({ inputId: 'name' }).type(
+      INITIAL_TENANT_NAME
+    );
+    cy.getFormInputFieldByIdAndType({ inputId: 'description' }).type(
+      INITIAL_TENANT_DESCRIPTION
+    );
+    cy.getFormButtonByTypeWithText({
+      buttonText: 'Add',
+      buttonType: 'submit',
+    }).click();
     cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_OPERATION_ADDED);
     cy.selectAccordionItem([
        /^ManageIQ Region/,

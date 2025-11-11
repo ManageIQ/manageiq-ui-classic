@@ -163,7 +163,7 @@ module ApplicationHelper
     "ServiceCatalog"                         => ServiceTemplate
   }.freeze
 
-  HAS_ASSOCATION = {
+  HAS_ASSOCIATION = {
     "groups"           => "groups",
     "users"            => "users",
     "event_logs"       => "event_logs",
