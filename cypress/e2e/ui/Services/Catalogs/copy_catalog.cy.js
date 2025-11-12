@@ -37,7 +37,7 @@ const FLASH_MESSAGE_SAVED = 'saved';
 const ADD_BUTTON_TEXT = 'Add';
 const CANCEL_BUTTON_TEXT = 'Cancel';
 
-describe('Automate Catalog form operations: Services > Catalogs > Catalogs > Configuration > Add a New Catalog', () => {
+describe('Automate Copy Catalog Item form operations: Services > Catalogs > Catalog Items > {Any-created-catalog-item} > Configuration > Copy Selected Item', () => {
   beforeEach(() => {
     cy.appFactories([
       ['create', 'service_template', {name: CATALOG_ITEM_NAME, generic_subtype: 'custom', prov_type: 'generic', display: true}],
