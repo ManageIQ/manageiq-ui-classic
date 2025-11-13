@@ -31,7 +31,7 @@
       = h(field.value.blank? ? _("<None>") : field.value.to_s.gsub("\x1F", ", "))
 
     - when 'DialogFieldTagControl'
-      - value = wf.value(field.name) || '' # it returns in format Clasification::id
+      = value = wf.value(field.name) || '' # it returns in format Clasification::id
       - classifications = value.split(',').map do |c|
         - classification = Classification.find_by(id: c.split('::').second)
         - classification.description if classification
