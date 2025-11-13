@@ -62,7 +62,7 @@ jobs:
         bundler-cache: 'true'
       timeout-minutes: 30
     - name: Set up Node
-      uses: actions/setup-node@v5
+      uses: actions/setup-node@v6
       if: ${{ env.RUN_CYPRESS == 'true' }}
       with:
         node-version-file: package.json
