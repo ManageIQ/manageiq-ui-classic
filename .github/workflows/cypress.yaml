@@ -79,7 +79,7 @@ jobs:
       if: ${{ env.RUN_CYPRESS == 'true' }}
       continue-on-error: ${{ matrix.cypress-browser != 'chrome' }}
     - name: Save artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       if: ${{ failure() && env.RUN_CYPRESS == 'true' }}
       with:
         name: cypress-${{ matrix.cypress-browser }}
