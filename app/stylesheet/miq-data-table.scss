@@ -104,6 +104,14 @@
         justify-content: flex-start;
         margin-top: -2px;
 
+        &.carbon-icons-style {
+          width: 20px;
+          height: 20px;
+          min-width: 20px;
+          max-height: 20px;
+          margin: 2px 8px 2px 0;
+        }
+
         &.styled_icon {
           min-width: 20px;
           height: 20px;
