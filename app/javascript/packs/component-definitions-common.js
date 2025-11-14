@@ -154,6 +154,7 @@ import TimeProfileReportsTable from '../components/data-tables/time-profile-repo
 import TimeProfileTable from '../components/data-tables/time-profile-table';
 import ToastList from '../components/toast-list/toast-list';
 import UsageTrendChart from '../components/provider-dashboard-charts/usage-network-image-charts';
+import UserForm from '../components/user-form';
 import UtilizationChartGraph from '../components/provider-dashboard-charts/provider-dashboard-utilization-chart';
 import VisualSettingsForm from '../components/visual-settings-form';
 import VmCommonRenameForm from '../components/vm-common-rename-form';
@@ -343,6 +344,7 @@ ManageIQ.component.addReact('ToastList', ToastList);
 ManageIQ.component.addReact('Toolbar', Toolbar);
 ManageIQ.component.addReact('TreeViewRedux', TreeViewRedux);
 ManageIQ.component.addReact('UsageTrendChart', UsageTrendChart);
+ManageIQ.component.addReact('UserForm', UserForm);
 ManageIQ.component.addReact('UtilizationChartGraph', UtilizationChartGraph);
 ManageIQ.component.addReact('VisualSettingsForm', VisualSettingsForm);
 ManageIQ.component.addReact('VmCommonRenameForm', VmCommonRenameForm);
