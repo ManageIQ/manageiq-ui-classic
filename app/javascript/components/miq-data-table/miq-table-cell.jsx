@@ -77,7 +77,6 @@ const MiqTableCell = ({
   };
 
   const returnIcon = (icon, style, styledIconClass, longerTextClass, index = undefined) => {
-    icon = 'carbon--Migrate';
     const extraProps = {};
     if (index !== undefined) {
       extraProps.key = index.toString();
