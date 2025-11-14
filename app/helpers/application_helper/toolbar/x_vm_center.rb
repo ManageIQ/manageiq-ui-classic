@@ -43,6 +43,12 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           'pficon pficon-edit fa-lg',
           t = N_('Edit this VM'),
           t),
+          button(
+            :vm_edit_description,
+            'pficon pficon-edit fa-lg',
+            t = N_('Edit this VM Description'),
+            t,
+            :options => {:feature => :set_description}),
         button(
           :vm_rename,
           'pficon pficon-edit fa-lg',
