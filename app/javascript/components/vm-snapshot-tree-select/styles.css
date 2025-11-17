@@ -1,110 +1,108 @@
-  .snapshot-details-div {
-    .snapshot-details {
-      margin-left: 30px;
-      margin-bottom: 20px;
-    }
-    
-    .snapshot-detail-title {
-      width: 80px;
-      justify-content: right;
-      display: inline-flex;
-      margin-right: 30px;
-    }
+.snapshot-details-div .snapshot-details {
+  margin-left: 30px;
+  margin-bottom: 20px;
+}
 
-    .snapshot-detail-value {
-      display: inline-flex;
-    }
-  }
+.snapshot-details-div .snapshot-detail-title {
+  width: 80px;
+  justify-content: right;
+  display: inline-flex;
+  margin-right: 30px;
+}
 
-  .snapshot-tree-title {
-    font-size: 20px;
-    padding-left: 20px;
-    padding-top: 40px;
-  }
+.snapshot-details-div .snapshot-detail-value {
+  display: inline-flex;
+}
 
-  .no-snapshots-message {
-    padding-left: 20px;
-  }
+.snapshot-tree-title {
+  font-size: 20px;
+  padding-left: 20px;
+  padding-top: 40px;
+}
 
-  .checkbox {
-    font-size: 16px;
-    user-select: none;
-    min-height: 320px;
-    padding: 20px;
-    box-sizing: content-box;
-  }
-  
-  .selected-snapshot {
-    background-color: #0f62fe;
-    color: white;
-    width: 100%;
-    margin-left: 0px;
-    pointer-events: none;
+.no-snapshots-message {
+  padding-left: 20px;
+}
 
-    .arrow-div {
-      pointer-events: all;
-    }
+.vm-snapshot-tree {
+  font-size: 16px;
+  user-select: none;
+  min-height: 320px;
+  padding: 20px;
+  box-sizing: content-box;
+}
 
-    span {
-      pointer-events: all;
-    }
-  }
+.selected-snapshot {
+  background-color: #0f62fe;
+  color: white;
+  width: 100%;
+  margin-left: 0px;
+  pointer-events: none;
+}
 
-  .arrow-div {
-    display: inline-flex;
-    margin-right: 5px;
-  }
+.selected-snapshot .arrow-div {
+  pointer-events: all;
+}
 
-  .node-icon-div {
-    margin-right: 5px;
-    display: inline-flex;
-  }
+.selected-snapshot span {
+  pointer-events: all;
+}
 
-  .checkbox .tree,
-  .checkbox .tree-node,
-  .checkbox .tree-node-group {
+.arrow-div {
+  display: inline-flex;
+  margin-right: 5px;
+}
+
+.node-icon-div {
+  margin-right: 5px;
+  display: inline-flex;
+}
+
+  .vm-snapshot-tree .tree,
+  .vm-snapshot-tree .tree-node,
+  .vm-snapshot-tree .tree-node-group {
     list-style: none;
     margin: 0;
     padding: 0;
   }
   
-  .checkbox .tree-branch-wrapper,
-  .checkbox .tree-node__leaf {
+  .vm-snapshot-tree .tree-branch-wrapper,
+  .vm-snapshot-tree .tree-node__leaf {
     outline: none;
   }
   
-  .checkbox .tree-node {
+  .vm-snapshot-tree .tree-node {
     cursor: pointer;
   }
   
-  .checkbox .tree-node .name:hover {
+  .vm-snapshot-tree .tree-node .name:hover {
     background: rgba(0, 0, 0, 0.1);
   }
   
-  .checkbox .tree-node--focused .name {
+  .vm-snapshot-tree .tree-node--focused .name {
     background: rgba(0, 0, 0, 0.2);
   }
   
-  .checkbox .tree-node {
+  .vm-snapshot-tree .tree-node {
     display: inline-block;
   }
   
-  .checkbox .checkbox-icon {
+  .vm-snapshot-tree .checkbox-icon {
     margin: 0 5px;
     vertical-align: middle;
   }
   
-  .checkbox button {
+  .vm-snapshot-tree button {
     border: none;
     background: transparent;
     cursor: pointer;
   }
   
-  .checkbox .arrow {
+  .vm-snapshot-tree .arrow {
     margin-left: 5px;
     vertical-align: middle;
   }
   
-  .checkbox .arrow--open {
+  .vm-snapshot-tree .arrow--open {
     transform: rotate(90deg);
   }
