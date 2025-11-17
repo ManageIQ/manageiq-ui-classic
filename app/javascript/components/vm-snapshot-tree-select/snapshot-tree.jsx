@@ -119,7 +119,7 @@ const SnapshotTree = ({ nodes, setCurrentSnapshot }) => {
 
   return (
     <div>
-      <div className="checkbox">
+      <div className="vm-snapshot-tree">
         <TreeView
           data={treeData}
           aria-label="Single select"
