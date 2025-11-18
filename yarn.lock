@@ -6171,10 +6171,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:~3.6.4":
-  version: 3.6.5
-  resolution: "core-js@npm:3.6.5"
-  checksum: 10/c1c51c2c791d5e5964db95776b47c7467649d40cbe8a695cd8902912517e7be64bd75dc1f0cfd9879a14b11ff5414d2199f3ea61fbaf8771f956e4514d28b7f8
+"core-js@npm:~3.47.0":
+  version: 3.47.0
+  resolution: "core-js@npm:3.47.0"
+  checksum: 10/c02dc6a091c7e6799e3527dc06a428c44bbcff7f8f6ee700ff818b90aa2ebaf1f17b0234146e692811da97cda5a39a6095ecadec9fd1a74b1135103eb0e96cb1
   languageName: node
   linkType: hard
 
@@ -12190,19 +12190,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-yaml@npm:^3.13.1":
-  version: 3.14.2
-  resolution: "js-yaml@npm:3.14.2"
-  dependencies:
-    argparse: "npm:^1.0.7"
-    esprima: "npm:^4.0.0"
-  bin:
-    js-yaml: bin/js-yaml.js
-  checksum: 10/172e0b6007b0bf0fc8d2469c94424f7dd765c64a047d2b790831fecef2204a4054eabf4d911eb73ab8c9a3256ab8ba1ee8d655b789bf24bf059c772acc2075a1
-  languageName: node
-  linkType: hard
-
-"js-yaml@npm:~3.14.0":
+"js-yaml@npm:^3.13.1, js-yaml@npm:~3.14.0":
   version: 3.14.2
   resolution: "js-yaml@npm:3.14.2"
   dependencies:
@@ -13109,7 +13097,7 @@ __metadata:
     codemirror: "npm:~5.58.2"
     compression-webpack-plugin: "npm:^6.1.1"
     connected-react-router: "npm:~6.9.0"
-    core-js: "npm:~3.6.4"
+    core-js: "npm:~3.47.0"
     core-js-compat: "npm:~3.2.1"
     create-react-context: "npm:~0.3.0"
     css-loader: "npm:~3.4.2"
