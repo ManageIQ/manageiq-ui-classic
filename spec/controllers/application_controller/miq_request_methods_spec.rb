@@ -55,6 +55,47 @@ describe MiqRequestController do
     end
   end
 
+  describe '#prov_get_form_vars' do
+    before { stub_user(:features => %w[miq_request_edit]) }
+
+    context "with an AutomationManager Provision Workflow" do
+      let(:dialog)        { FactoryBot.create(:miq_provision_configuration_script_dialog) }
+      let(:wf)            { MiqProvisionConfigurationScriptWorkflow.new({:provision_dialog_name => dialog.name}, User.current_user.userid) }
+      let(:ems)           { FactoryBot.create(:automation_manager, :url => "http://automation.localdomain") }
+      let(:config_script) { FactoryBot.create(:configuration_script, :manager => ems) }
+
+      it "sets the src_configuration_script_id" do
+        wf.instance_variable_set(
+          :@dialogs,
+          {
+            :dialogs => {
+              :service => {
+                :fields => {
+                  :src_configuration_script_id => {
+                    :description => "Configuration Script",
+                    :required    => true,
+                    :display     => :edit,
+                    :data_type   => :integer,
+                    :values      => [
+                      OpenStruct.new(:id => config_script.id, :evm_object_class => :ConfigurationScriptBase, :name => config_script.name, :manager_name => ems.name)
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        )
+
+        controller.params = {"service__src_configuration_script_id" => config_script.id.to_s, "id" => "new", "controller" => "miq_request", "action" => "prov_field_changed"}
+        controller.instance_variable_set(:@edit, :wf => wf, :new => {})
+        controller.send(:prov_get_form_vars)
+
+        edit = controller.instance_variable_get(:@edit)
+        expect(edit.dig(:new, :src_configuration_script_id)).to eq([config_script.id, config_script.name])
+      end
+    end
+  end
+
   describe '#prov_edit' do
     it 'redirects to the last link in breadcrumbs' do
       allow_any_instance_of(described_class).to receive(:set_user_time_zone)
