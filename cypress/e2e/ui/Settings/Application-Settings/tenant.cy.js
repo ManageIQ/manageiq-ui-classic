@@ -68,6 +68,31 @@ function confirmUiNavigation(callback) {
     });
 }
 
+function openTenantFormAndWaitForValidation(configOption) {
+  cy.interceptApi({
+    method: 'GET',
+    alias: 'tenantValidationApi',
+    urlPattern: /\/api\/tenants\?filter\[\]=name=.*&expand=resources/,
+    triggerFn: () => cy.toolbar(CONFIG_TOOLBAR_BUTTON, configOption),
+  });
+}
+
+function openEditTenantFormAndWaitForLoad(configOption) {
+  // Tenant edit form triggers two API calls in sequence:
+  // 1. Load existing tenant data (happens first in useEffect, in ops-tenant-form.jsx)
+  // 2. Form validation API (happens after load completes and form renders with validateOnMount: true)
+  // The form doesn't render until isLoading=false, so validation always happens after the form loads.
+  cy.intercept('GET', /\/api\/tenants\/\d+\?expand=resources&attributes=/).as('tenantLoadApi');
+  cy.intercept('GET', /\/api\/tenants\?filter\[\]=name=.*&expand=resources/).as('tenantValidationApi');
+
+  cy.toolbar(CONFIG_TOOLBAR_BUTTON, configOption);
+
+  // Wait for both API calls to complete in order
+  // Load API must complete first (component logic ensures this)
+  cy.wait('@tenantLoadApi');
+  cy.wait('@tenantValidationApi');
+}
+
 function cancelFormWithOptionalFlashCheck(assertFlashMessage = true) {
   cy.getFormButtonByTypeWithText({
     buttonText: CANCEL_BUTTON_TEXT,
@@ -162,7 +187,7 @@ function validateFormElements(isEditForm = true) {
 }
 
 function createAndSelectChildTenant() {
-  cy.toolbar(CONFIG_TOOLBAR_BUTTON, ADD_CHILD_TENANT_CONFIG_OPTION);
+  openTenantFormAndWaitForValidation(ADD_CHILD_TENANT_CONFIG_OPTION);
   updateNameAndDescription(
     INITIAL_CHILD_TENANT_NAME,
     INITIAL_CHILD_TENANT_DESCRIPTION
@@ -186,7 +211,7 @@ function resetParentTenantForm() {
       // Check if the text matches the edited parent tenant name, if yes reset
       if (text === EDITED_TENANT_NAME_VALUE) {
         cy.wrap(item).click();
-        cy.toolbar(CONFIG_TOOLBAR_BUTTON, EDIT_TENANT_CONFIG_OPTION);
+        openEditTenantFormAndWaitForLoad(EDIT_TENANT_CONFIG_OPTION);
         updateNameAndDescription(
           INITIAL_PARENT_TENANT_NAME,
           INITIAL_PARENT_TENANT_DESCRIPTION
@@ -229,7 +254,7 @@ function deleteAccordionItems(accordionsToDelete) {
 }
 
 function addProjectToTenant() {
-  cy.toolbar(CONFIG_TOOLBAR_BUTTON, ADD_PROJECT_CONFIG_OPTION);
+  openTenantFormAndWaitForValidation(ADD_PROJECT_CONFIG_OPTION);
   updateNameAndDescription(PROJECT_NAME_VALUE, EDITED_DESCRIPTION_VALUE);
   saveFormWithOptionalFlashCheck({
     button: ADD_BUTTON_TEXT,
@@ -275,7 +300,7 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
   describe('Validate Parent Tenant operations: Edit, Add Project, Manage Quotas', () => {
     describe('Validate Edit parent tenant', () => {
       beforeEach(() => {
-        cy.toolbar(CONFIG_TOOLBAR_BUTTON, EDIT_TENANT_CONFIG_OPTION);
+        openEditTenantFormAndWaitForLoad(EDIT_TENANT_CONFIG_OPTION);
       });
 
       afterEach(() => {
@@ -347,7 +372,7 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
   describe('Validate Child Tenant operations: Add, Edit, Add Project, Manage Quotas', () => {
     describe('Validate Add child tenant function', () => {
       beforeEach(() => {
-        cy.toolbar(CONFIG_TOOLBAR_BUTTON, ADD_CHILD_TENANT_CONFIG_OPTION);
+        openTenantFormAndWaitForValidation(ADD_CHILD_TENANT_CONFIG_OPTION);
       });
 
       afterEach(() => {
@@ -364,7 +389,7 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
           INITIAL_CHILD_TENANT_DESCRIPTION
         );
         cancelFormWithOptionalFlashCheck();
-        cy.toolbar(CONFIG_TOOLBAR_BUTTON, ADD_CHILD_TENANT_CONFIG_OPTION);
+        openTenantFormAndWaitForValidation(ADD_CHILD_TENANT_CONFIG_OPTION);
         updateNameAndDescription(
           INITIAL_CHILD_TENANT_NAME,
           INITIAL_CHILD_TENANT_DESCRIPTION
@@ -387,7 +412,7 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
           button: ADD_BUTTON_TEXT,
           flashMessageSnippet: FLASH_MESSAGE_ADDED,
         });
-        cy.toolbar(CONFIG_TOOLBAR_BUTTON, ADD_CHILD_TENANT_CONFIG_OPTION);
+        openTenantFormAndWaitForValidation(ADD_CHILD_TENANT_CONFIG_OPTION);
         cy.getFormInputFieldByIdAndType({ inputId: 'name' }).type(
           INITIAL_CHILD_TENANT_NAME
         );
@@ -401,7 +426,7 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
     describe('Validate Edit child tenant', () => {
       beforeEach(() => {
         createAndSelectChildTenant();
-        cy.toolbar(CONFIG_TOOLBAR_BUTTON, EDIT_TENANT_CONFIG_OPTION);
+        openEditTenantFormAndWaitForLoad(EDIT_TENANT_CONFIG_OPTION);
       });
 
       afterEach(() => {
