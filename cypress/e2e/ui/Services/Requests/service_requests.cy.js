@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import moment from 'moment';
 import {
   LABEL_CONFIG_KEYS,
   FIELD_CONFIG_KEYS,
@@ -34,26 +35,7 @@ const APPLY_BUTTON_TEXT = 'Apply';
 const RESET_BUTTON_TEXT = 'Reset';
 
 /**
- * Converts a JavaScript Date object to a database-compatible timestamp string.
- * @param {Date} [dateObject=new Date()] - The date to convert. Defaults to current date/time.
- * @returns {string} Formatted timestamp string in format: "YYYY-MM-DD HH:MM:SS.mmmmmm" like "2025-11-06 05:30:45.123000"
- */
-function getDateStringInDbFormat(dateObject = new Date()) {
-  const year = dateObject.getFullYear();
-  const month = String(dateObject.getMonth() + 1).padStart(2, '0');
-  const day = String(dateObject.getDate()).padStart(2, '0');
-  const hours = String(dateObject.getHours()).padStart(2, '0');
-  const minutes = String(dateObject.getMinutes()).padStart(2, '0');
-  const seconds = String(dateObject.getSeconds()).padStart(2, '0');
-  const millis = String(dateObject.getMilliseconds()).padStart(3, '0');
-  // JS only gives milliseconds (3 digits) so converting it to 6 digits like ".812169"
-  const micros = millis + '000';
-
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${micros}`;
-}
-
-/**
- * Function to do assertions on table data 
+ * Function to do assertions on table data
  */
 function assertGtlData({ columnIndex, expectedRowCount, rowContainsText }) {
   cy.gtlGetRows([columnIndex]).then((data) => {
@@ -154,9 +136,7 @@ describe('Automate Service Requests form operations: Services > Requests', () =>
 
   describe('Validate button click actions', () => {
     beforeEach(() => {
-      const tenDaysAgo = new Date(
-        new Date().getTime() - 10 * 24 * 60 * 60 * 1000
-      );
+      const today = moment().format();
 
       cy.appFactories([
         [
@@ -166,7 +146,7 @@ describe('Automate Service Requests form operations: Services > Requests', () =>
             description: 'Cypress mock data for approval state: Approved',
             approval_state: 'approved',
             type: 'ServiceTemplateProvisionRequest',
-            fulfilled_on: getDateStringInDbFormat(),
+            fulfilled_on: today,
             request_type: 'clone_to_service',
             request_state: 'finished',
             message: 'Cypress mock data for approval state: Approved',
@@ -180,7 +160,7 @@ describe('Automate Service Requests form operations: Services > Requests', () =>
             description: 'Cypress mock data for approval state: Denied',
             approval_state: 'denied',
             type: 'ServiceTemplateProvisionRequest',
-            fulfilled_on: getDateStringInDbFormat(),
+            fulfilled_on: today,
             request_type: 'clone_to_service',
             request_state: 'finished',
             message: 'Cypress mock data for approval state: Denied',
@@ -210,8 +190,8 @@ describe('Automate Service Requests form operations: Services > Requests', () =>
               'Cypress mock data for request made in the last 30 days',
             approval_state: 'approved',
             type: 'ServiceTemplateProvisionRequest',
-            created_on: getDateStringInDbFormat(tenDaysAgo),
-            fulfilled_on: getDateStringInDbFormat(),
+            created_on: moment().subtract(10, 'days'),
+            fulfilled_on: today,
             request_type: 'clone_to_service',
             request_state: 'finished',
             message: 'Cypress mock data for request made in the last 30 days',
