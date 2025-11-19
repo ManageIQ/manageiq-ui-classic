@@ -1,0 +1,373 @@
+{
+  "version": "3.0",
+  "categories": [
+    {
+      "label": "Copy",
+      "description": "Copies things from somewhere to elsewhere.",
+      "image": "/images/palette-categories/sources_open.svg",
+      "id": "import",
+      "node_types": [
+        {
+          "id": "",
+          "type": "binding",
+          "op": "dataassetimport",
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ],
+          "parameters": {},
+          "app_data": {
+            "ui_data": {
+              "label": "Copy data asset",
+              "description": "Copies a data asset to a useful place to do great things.",
+              "image": "images/custom-canvases/flows/palette/icons/dataassetimport.svg",
+              "x_pos": 0,
+              "y_pos": 0
+            }
+          }
+        },
+        {
+          "id": "",
+          "type": "binding",
+          "op": "userinput",
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ],
+          "parameters": {},
+          "app_data": {
+            "ui_data": {
+              "label": "Copy file",
+              "description": "Copies a file to a folder.",
+              "image": "images/custom-canvases/flows/palette/icons/userinput.svg",
+              "x_pos": 0,
+              "y_pos": 0
+            }
+          }
+        },
+        {
+          "id": "",
+          "type": "binding",
+          "op": "simgen",
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ],
+          "parameters": {},
+          "app_data": {
+            "ui_data": {
+              "label": "Copy Database table",
+              "description": "Copies a table in a relational data base.",
+              "image": "images/custom-canvases/flows/palette/icons/simgen.svg",
+              "x_pos": 0,
+              "y_pos": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "Run",
+      "description": "Runs things.",
+      "image": "/images/palette-categories/operations_open.svg",
+      "id": "recordOp",
+      "node_types": [
+        {
+          "id": "",
+          "type": "execution_node",
+          "op": "select",
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": 2
+                  },
+                  "label": "Input Port"
+                }
+              }
+            }
+          ],
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ],
+          "parameters": {},
+          "app_data": {
+            "ui_data": {
+              "label": "Auto experiment",
+              "description": "Run an experiment to se what we get.",
+              "image": "images/custom-canvases/flows/palette/icons/select.svg",
+              "x_pos": 0,
+              "y_pos": 0
+            }
+          }
+        },
+        {
+          "id": "",
+          "type": "execution_node",
+          "op": "sample",
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": 1
+                  },
+                  "label": "Input Port"
+                }
+              }
+            }
+          ],
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ],
+          "parameters": {},
+          "app_data": {
+            "ui_data": {
+              "label": "Python",
+              "description": "Run a python program to change to snake case.",
+              "image": "images/custom-canvases/flows/palette/icons/sample.svg",
+              "x_pos": 0,
+              "y_pos": 0
+            }
+          }
+        },
+        {
+          "id": "",
+          "type": "execution_node",
+          "op": "sort",
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": 1
+                  },
+                  "label": "Input Port"
+                }
+              }
+            }
+          ],
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ],
+          "parameters": {},
+          "app_data": {
+            "ui_data": {
+              "label": "Java script",
+              "description": "Run a JavaScript program.",
+              "image": "images/custom-canvases/flows/palette/icons/sort.svg",
+              "x_pos": 0,
+              "y_pos": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "Create",
+      "image": "/images/palette-categories/sources_open.svg",
+      "id": "fieldOp",
+      "node_types": [
+        {
+          "id": "",
+          "type": "execution_node",
+          "op": "autodataprep",
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": 1
+                  },
+                  "label": "Input Port"
+                }
+              }
+            }
+          ],
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ],
+          "parameters": {},
+          "app_data": {
+            "ui_data": {
+              "label": "Create Deployment",
+              "description": "Create a deployment to deploy the thing we created.",
+              "image": "images/custom-canvases/flows/palette/icons/autodataprep.svg",
+              "x_pos": 0,
+              "y_pos": 0
+            }
+          }
+        },
+        {
+          "id": "",
+          "type": "execution_node",
+          "op": "type",
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": 1
+                  },
+                  "label": "Input Port"
+                }
+              }
+            }
+          ],
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ],
+          "parameters": {},
+          "app_data": {
+            "ui_data": {
+              "label": "Create database table",
+              "description": "Create database table for our output.",
+              "image": "images/custom-canvases/flows/palette/icons/type.svg",
+              "x_pos": 0,
+              "y_pos": 0
+            }
+          }
+        },
+        {
+          "id": "",
+          "type": "execution_node",
+          "op": "filter",
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": 1
+                  },
+                  "label": "Input Port"
+                }
+              }
+            }
+          ],
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ],
+          "parameters": {},
+          "app_data": {
+            "ui_data": {
+              "label": "Create CSV file",
+              "description": "Create CSV file for spreadsheet output.",
+              "image": "images/custom-canvases/flows/palette/icons/filter.svg",
+              "x_pos": 0,
+              "y_pos": 0
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

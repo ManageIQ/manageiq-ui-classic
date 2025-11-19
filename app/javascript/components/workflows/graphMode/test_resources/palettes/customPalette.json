@@ -1,0 +1,361 @@
+{
+	"version": "3.0",
+	"categories": [
+		{
+			"label": "Providers",
+			"comment": "Providers",
+			"description": "This category list providers",
+			"image": "/images/palette-categories/sources_open.svg",
+			"id": "providers",
+			"node_types": [
+				{
+					"id": "1",
+					"type": "Task",
+					"inputs": [
+						{
+							"id": "inPort",
+							"app_data": {
+								"ui_data": {
+									"cardinality": {
+										"min": 1,
+										"max": 1
+									},
+									"label": "Input Port"
+								}
+							}
+						}
+					],
+					"outputs": [
+						{
+							"id": "outPort",
+							"app_data": {
+								"ui_data": {
+									"cardinality": {
+										"min": 1,
+										"max": 1
+									},
+									"label": "Output Port"
+								}
+							}
+						}
+					],
+					"parameters": {
+						"API_URL.$": "$$.Execution._manageiq_api_url",
+						"VERIFY_SSL.$": "$.dialog.dialog_verify_ssl",
+						"PROVIDER_TYPE": "ManageIQ::Providers::Vmware::InfraManager"
+					},
+					"app_data": {
+						"ListProviders": {
+							"Type": "Task",
+							"Resource": "docker://docker.io/manageiq/workflows-examples-provision-vm-service-list-providers:latest",
+							"Credentials": {
+								"api_user.$": "$.api_user",
+								"api_password.$": "$.api_password",
+								"api_token.$": "$.api_token",
+								"api_bearer_token.$": "$.api_bearer_token"
+							}
+						},
+						"ui_data": {
+							"label": "List Providers",
+							"description": "list providers",
+							"image": "/images/custom-canvases/flows/palette/icons/dataassetimport.svg",
+							"x_pos": 0,
+							"y_pos": 0
+						}
+					}
+				}
+			]
+		},
+		{
+			"label": "Templates",
+			"comment": "Templates.",
+			"description": "This category list templates",
+			"image": "/images/palette-categories/models_open.svg",
+			"id": "templates",
+			"node_types": [
+				{
+					"id": "2",
+					"type": "Wait",
+					"": "vm template",
+					"inputs": [
+						{
+							"id": "inPort",
+							"app_data": {
+								"ui_data": {
+									"cardinality": {
+										"min": 1,
+										"max": 1
+									},
+									"label": "Input Port"
+								}
+							}
+						}
+					],
+					"outputs": [
+						{
+							"id": "outPort",
+							"app_data": {
+								"ui_data": {
+									"cardinality": {
+										"min": 1,
+										"max": 1
+									},
+									"label": "Output Port"
+								}
+							}
+						}
+					],
+					"parameters": {
+						"API_URL.$": "$$.Execution._manageiq_api_url",
+						"VERIFY_SSL.$": "$.dialog.dialog_verify_ssl",
+						"PROVIDER_ID.$": "$.dialog.dialog_provider"
+					},
+					"app_data": {
+						"ListTemplates": {
+							"Type": "Task",
+							"Resource": "docker://docker.io/manageiq/workflows-examples-provision-vm-service-list-templates:latest",
+							"Credentials": {
+								"api_user.$": "$.api_user",
+								"api_password.$": "$.api_password",
+								"api_token.$": "$.api_token",
+								"api_bearer_token.$": "$.api_bearer_token"
+							}
+						},
+						"ui_data": {
+							"label": "List Template ",
+							"description": "Template to deploy vmware vm",
+							"image": "/images/custom-canvases/flows/palette/icons/histogram.svg",
+							"x_pos": 0,
+							"y_pos": 0
+						}
+					}
+				},
+				{
+					"id": "3",
+					"type": "Task",
+					"": "clone template",
+					"inputs": [
+						{
+							"id": "inPort",
+							"app_data": {
+								"ui_data": {
+									"cardinality": {
+										"min": 1,
+										"max": 1
+									},
+									"label": "Input Port"
+								}
+							}
+						}
+					],
+					"outputs": [
+						{
+							"id": "outPort",
+							"app_data": {
+								"ui_data": {
+									"cardinality": {
+										"min": 1,
+										"max": 1
+									},
+									"label": "Output Port"
+								}
+							}
+						}
+					],
+					"parameters": {
+						"API_URL.$": "$$.Execution._manageiq_api_url",
+						"VERIFY_SSL.$": "$.dialog.dialog_verify_ssl",
+						"PROVIDER_ID.$": "$.dialog.dialog_provider",
+						"TEMPLATE.$": "$.dialog.dialog_source_template",
+						"NAME.$": "$.dialog.dialog_vm_name"
+					},
+					"app_data": {
+						"CloneTemplate": {
+							"Type": "Task",
+							"Resource": "docker://docker.io/manageiq/workflows-examples-provision-vm-service-clone-template:latest",
+							"Credentials": {
+								"api_user.$": "$.api_user",
+								"api_password.$": "$.api_password",
+								"api_token.$": "$.api_token",
+								"api_bearer_token.$": "$.api_bearer_token",
+								"vcenter_user.$": "$.vcenter_user",
+								"vcenter_password.$": "$.vcenter_password"
+							}
+						},
+						"ui_data": {
+							"label": "Clone Template ",
+							"description": "Clone template",
+							"image": "/images/custom-canvases/flows/palette/icons/ensemble.svg",
+							"x_pos": 0,
+							"y_pos": 0
+						}
+					}
+				}
+			]
+		},
+		{
+			"label": "VM Tasks ",
+			"comment": "Tasks.",
+			"description": "This category perform simple tasks",
+			"image": "/images/palette-categories/operations_open.svg",
+			"id": "tasks",
+			"node_types": [
+				{
+					"id": "4",
+					"type": "Choice",
+					"": "check completion",
+					"inputs": [
+						{
+							"id": "inPort",
+							"app_data": {
+								"ui_data": {
+									"cardinality": {
+										"min": 1,
+										"max": 1
+									},
+									"label": "Input Port"
+								}
+							}
+						}
+					],
+					"outputs": [
+						{
+							"id": "outPort",
+							"app_data": {
+								"ui_data": {
+									"cardinality": {
+										"min": 2,
+										"max": 2
+									},
+									"label": "Output Port"
+								}
+							}
+						}
+					],
+					"parameters": {
+						"VCENTER_HOST.$": "$.vcenter_host",
+						"TASK.$": "$.task"
+					},
+					"app_data": {
+						"CheckTaskComplete": {
+							"Type": "Task",
+							"Resource": "docker://docker.io/manageiq/workflows-examples-provision-vm-service-check-task-complete:latest",
+							"Next": "PollTaskComplete",
+							"Credentials": {
+								"vcenter_user.$": "$.vcenter_user",
+								"vcenter_password.$": "$.vcenter_password"
+							}
+						},
+						"ui_data": {
+							"label": "Check Completion ",
+							"description": "Check completion",
+							"image": "/images/custom-canvases/flows/palette/icons/aggregate.svg",
+							"x_pos": 0,
+							"y_pos": 0
+						}
+					}
+				},
+				{
+					"id": "5",
+					"type": "Task",
+					"": "power on vm ",
+					"inputs": [
+						{
+							"id": "inPort",
+							"app_data": {
+								"ui_data": {
+									"cardinality": {
+										"min": 1,
+										"max": 1
+									},
+									"label": "Input Port"
+								}
+							}
+						}
+					],
+					"outputs": [
+						{
+							"id": "outPort",
+							"app_data": {
+								"ui_data": {
+									"cardinality": {
+										"min": 0,
+										"max": 1
+									},
+									"label": "Output Port"
+								}
+							}
+						}
+					],
+					"parameters": {
+						"VCENTER_HOST.$": "$.vcenter_host",
+						"VM.$": "$.vm"
+					},
+					"app_data": {
+						"PowerOnVM": {
+							"Type": "Task",
+							"Resource": "docker://docker.io/manageiq/workflows-examples-provision-vm-service-power-on-vm:latest",
+							"Next": "SuccessState",
+							"Credentials": {
+								"vcenter_user.$": "$.vcenter_user",
+								"vcenter_password.$": "$.vcenter_password"
+							}
+						},
+						"ui_data": {
+							"label": "Power On VM ",
+							"description": "Power on vm",
+							"image": "/images/custom-canvases/flows/palette/icons/plot.svg",
+							"x_pos": 0,
+							"y_pos": 0
+						}
+					}
+				}
+			]
+		},
+		{
+			"label": "Email ",
+			"comment": "Send email",
+			"description": "This category has email sections ",
+			"image": "/images/palette-animations/index-dev.gif",
+			"id": "email",
+			"node_types": [
+				{
+					"id": "6",
+					"type": "Succeed",
+					"inputs": [
+						{
+							"id": "inPort",
+							"app_data": {
+								"ui_data": {
+									"cardinality": {
+										"min": 1,
+										"max": 1
+									},
+									"label": "Input Port"
+								}
+							}
+						}
+					],
+					"parameters": {
+						"To": "user@example.com",
+						"Subject": "Your provisioning has completed",
+						"Body": "Your provisioning request has completed"
+					},
+					"app_data": {
+						"SendEmail": {
+							"Type": "Task",
+							"Resource": "manageiq://email"
+						},
+						"ui_data": {
+							"label": "Send Email ",
+							"description": "Send email",
+							"image": "/images/palette-animations/index-dev.gif",
+							"x_pos": 0,
+							"y_pos": 0
+						}
+					}
+				}
+			]
+		}
+	]
+}
