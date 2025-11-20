@@ -6,6 +6,7 @@ import {
 import AWSSfnGraph from '@tshepomgaga/aws-sfn-graph';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import '@tshepomgaga/aws-sfn-graph/index.css';
+import App from "./graphMode/components/Application"
 
 const WorkflowPayload = ({ recordId }) => {
   const tabLabels = [
@@ -83,6 +84,8 @@ const WorkflowPayload = ({ recordId }) => {
       onError={(error) => console.log('error information', error)}
     />
   );
+  // for enabling App in the ui view 
+  // <App></App>
 
   /** Function to render various tab contents based on selected tab. */
   const renderTabContents = () => {

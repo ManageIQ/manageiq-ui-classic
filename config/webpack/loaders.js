@@ -51,6 +51,7 @@ module.exports = [
     }],
   },
 
+
   {
     test: /\.(scss|sass|css)$/i,
     use: [
@@ -78,6 +79,7 @@ module.exports = [
               `${nodeModules}/patternfly/dist/sass/patternfly`,
               `${nodeModules}/font-awesome/scss`,
               `${nodeModules}/@manageiq/font-fabulous/assets/stylesheets`,
+              ".", "node_modules"
             ],
             implementation: require('sass').default,
           },
