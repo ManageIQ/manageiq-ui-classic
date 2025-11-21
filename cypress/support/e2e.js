@@ -50,6 +50,7 @@ import './commands/gtl.js';
 import './commands/login.js';
 import './commands/menu.js';
 import './commands/miq_data_table_commands.js';
+import './commands/provider_helper_commands.js';
 import './commands/select.js';
 import './commands/stub_notifications.js';
 import './commands/tabs.js';
