@@ -90,11 +90,11 @@
     "patternfly": "~3.59.5",
     "prop-types": "^15.6.0",
     "proxy-polyfill": "^0.1.7",
-    "react": "~16.13.1",
+    "react": "~16.14.0",
     "react-accessible-treeview": "^2.10.0",
     "react-bootstrap": "~0.33.0",
     "react-codemirror2": "^8.0.0",
-    "react-dom": "~16.13.1",
+    "react-dom": "~16.14.0",
     "react-markdown": "~6.0.3",
     "react-query": "^3.39.3",
     "react-redux": "^7.1.1",
@@ -137,6 +137,7 @@
     "core-js": "~3.6.4",
     "core-js-compat": "~3.2.1",
     "css-loader": "~3.4.2",
+<<<<<<< HEAD
     "copy-webpack-plugin": "^13.0.0",
     "html-webpack-plugin": "^5.6.3",
     "js-file-download": "^0.4.12",
@@ -146,6 +147,9 @@
     "react-intl": "6.6.3",
     "url-loader": "^4.1.1",
     "cypress": "~15.0.0",
+=======
+    "cypress": "~15.7.0",
+>>>>>>> upstream/master
     "duplicate-package-checker-webpack-plugin": "~3.0.0",
     "enhanced-resolve": "~4.0.0",
     "enzyme": "^3.9.0",
