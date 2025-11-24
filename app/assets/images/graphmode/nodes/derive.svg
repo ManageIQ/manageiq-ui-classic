@@ -1,0 +1,23 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="-0.9 -1.4 46.5 41.8" style="enable-background:new -0.9 -1.4 46.5 41.8;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#1D3649;}
+	.st1{fill:none;stroke:#152935;stroke-width:2;stroke-miterlimit:10;}
+	.st2{fill:none;stroke:#F9F9FB;stroke-width:3;stroke-miterlimit:10;}
+	.st3{fill:#F9F9FB;}
+	.st4{fill:#41D6C3;}
+</style>
+<g>
+	<g>
+		<polygon class="st0" points="11.1,37 0.4,18.5 11.1,0 32.6,0 43.4,18.5 32.6,37 		"/>
+		<polygon class="st1" points="11.1,37 0.4,18.5 11.1,0 32.6,0 43.4,18.5 32.6,37 		"/>
+	</g>
+</g>
+<line class="st2" x1="10" y1="8.5" x2="25" y2="8.5"/>
+<polygon class="st3" points="29,11.6 29,10 25,10 25,7 29,7 29,4.9 34.8,8.2 "/>
+<line class="st2" x1="10" y1="18.5" x2="25" y2="18.5"/>
+<polygon class="st3" points="29,21.6 29,20 25,20 25,17 29,17 29,14.9 34.8,18.2 "/>
+<polygon class="st3" points="29,31.6 29,30 25,30 25,27 29,27 29,24.9 34.8,28.2 "/>
+<rect x="15.2" y="24.5" class="st4" width="1.9" height="7.7"/>
+<rect x="12.3" y="27.3" class="st4" width="7.7" height="1.9"/>
+</svg>

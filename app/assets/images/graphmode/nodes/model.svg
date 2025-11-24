@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="13.5 -16.7 49.8 45.7" style="enable-background:new 13.5 -16.7 49.8 45.7;" xml:space="preserve">
+<style type="text/css">
+	.model-st0{fill:#E8C018;}
+	.model-st1{fill:#FDD600;}
+	.model-st2{fill:#FCDD5E;}
+	.model-st3{fill:#D1AF24;}
+	.model-st4{fill:#1D3649;}
+	.model-st5{fill:none;stroke:#152935;stroke-width:2;stroke-miterlimit:10;}
+	.model-st6{fill:none;stroke:#F9F9FB;stroke-miterlimit:10;}
+	.model-st7{fill:#41D6C3;}
+</style>
+<polyline class="model-st0" points="39.3,27.1 47.3,5.2 31,5.3 "/>
+<polyline class="model-st1" points="39.5,-15.4 31,5 48,5 "/>
+<polyline class="model-st0" points="39.1,-15.4 47.1,5.9 61.4,-2.7 "/>
+<polyline class="model-st2" points="39.4,-15.4 31.4,5.9 17.1,-2.7 "/>
+<polyline class="model-st1" points="17.2,-2.8 31.6,5.6 39.3,27.1 "/>
+<g>
+
+	<g>
+		<polyline class="model-st3" points="61.3,-2.8 46.9,5.6 39.2,27.1 		"/>
+	</g>
+</g>
+<g>
+	<g>
+		<polygon class="model-st4" points="23.9,25 21.1,16.1 28.4,10.7 35.7,16.2 32.9,25 		"/>
+		<polygon class="model-st5" points="23.9,25 21.1,16.1 28.4,10.7 35.7,16.2 32.9,25 		"/>
+	</g>
+</g>
+<line class="model-st6" x1="29" y1="14.2" x2="32.4" y2="16.9"/>
+<line class="model-st6" x1="32.4" y1="17.5" x2="31.1" y2="21.3"/>
+<line class="model-st6" x1="32.2" y1="17.3" x2="28.8" y2="18.3"/>
+<line class="model-st6" x1="28" y1="14.2" x2="24.3" y2="16.8"/>
+<line class="model-st6" x1="28.9" y1="18.9" x2="30.5" y2="21.6"/>
+<line class="model-st6" x1="28.3" y1="18.9" x2="26.4" y2="21.6"/>
+<line class="model-st6" x1="25.8" y1="21.4" x2="24.3" y2="17.6"/>
+<line class="model-st6" x1="27" y1="21.5" x2="31" y2="21.5"/>
+<line class="model-st6" x1="28.6" y1="17.9" x2="28.6" y2="14.4"/>
+<circle class="model-st7" cx="28.5" cy="14" r="0.8"/>
+<circle class="model-st7" cx="32.6" cy="17.1" r="0.8"/>
+<circle class="model-st7" cx="30.9" cy="22.2" r="0.8"/>
+<circle class="model-st7" cx="26.2" cy="22.2" r="0.8"/>
+<circle class="model-st7" cx="28.5" cy="18.4" r="0.8"/>
+<circle class="model-st7" cx="24.1" cy="17.1" r="0.8"/>
+</svg>
