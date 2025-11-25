@@ -12,9 +12,8 @@ import NotificationMessage from '../notification-message';
 
 /** Component to render a section. */
 const DynamicSection = ({ section, sectionAction }) => {
-  const [sectionData, setSectionData] = useState({ maximize: true });
-
   const { sectionId, tabId, title } = section;
+  const [sectionData, setSectionData] = useState({ maximize: true });
 
   const onSectionWindow = () => {
     setSectionData({
@@ -111,11 +110,16 @@ const DynamicSection = ({ section, sectionAction }) => {
     </div>
   );
 
+  const handleDragStart = (event) => {
+    event.preventDefault();
+    onSectionAction(SD_ACTIONS.onDragStartSection, event);
+  };
+
   return (
     <div
       className="dynamic-section"
       draggable
-      onDragStart={(event) => onSectionAction(SD_ACTIONS.onDragStartSection, event)}
+      onDragStart={handleDragStart}
       onDragEnter={(event) => onSectionAction(SD_ACTIONS.onDragEnterSection, event)}
       onDrop={(event) => onSectionAction(SD_ACTIONS.onDrop, event)}
       onDragOver={(event) => onSectionAction(SD_ACTIONS.onDragOverListener, event)}
