@@ -74,7 +74,11 @@ const EditFieldModal = ({
     onSave(e, finalValues);
   };
 
-  const handleReset = () => {
+  const handleReset = (formReset) => {
+    // Call the form's reset function to reset form state
+    if (formReset) {
+      formReset();
+    }
     setFormValues(initialData);
     setInlineFlashMessage({
       kind: 'warning',
@@ -108,7 +112,7 @@ const EditFieldModal = ({
   const FormTemplate = ({ formFields }) => {
     const { handleSubmit, onReset, getState } = useFormApi();
     const { valid, pristine } = getState();
-    
+
     return (
       <form onSubmit={handleSubmit}>
         {formFields}
@@ -125,7 +129,8 @@ const EditFieldModal = ({
             kind="secondary"
             className="btnRight"
             type="button"
-            onClick={onReset}
+            onClick={() => handleReset(onReset)}
+            disabled={pristine}
           >
             {__('Reset')}
           </Button>
