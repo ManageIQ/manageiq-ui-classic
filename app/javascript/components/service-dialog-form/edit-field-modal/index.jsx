@@ -121,7 +121,7 @@ const EditFieldModal = ({
             kind="primary"
             className="btnRight"
             type="submit"
-            disabled={!valid}
+            disabled={!valid || pristine}
           >
             {__('Save')}
           </Button>
