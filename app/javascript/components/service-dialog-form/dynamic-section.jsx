@@ -115,6 +115,8 @@ const DynamicSection = ({ section, sectionAction }) => {
     onSectionAction(SD_ACTIONS.onDragStartSection, event);
   };
 
+  const sectionKey = `dynamic-tab-${tabId}-section-${sectionId}`;
+
   return (
     <div
       className="dynamic-section"
@@ -125,8 +127,8 @@ const DynamicSection = ({ section, sectionAction }) => {
       onDragOver={(event) => onSectionAction(SD_ACTIONS.onDragOverListener, event)}
       tab={tabId}
       section={sectionId}
-      id={`dynamic-tab-${tabId}-section-${sectionId.toString()}`}
-      key={`dynamic-tab-${tabId}-section-${sectionId.toString()}`}
+      id={sectionKey}
+      key={sectionKey}
     >
       {renderSectionTitle()}
       {sectionData.maximize && renderSectionContents()}

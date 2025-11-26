@@ -46,6 +46,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
   const dragEnterItem = useRef(null); /** Stores the information of component where the dragged item is being hovered before release. */
   const draggedItem = useRef(null); /** Stores the information of component being dragged. */
   const hoverItem = useRef(null); /** Stores the tab and section position during the drop event. */
+  const nextSectionId = useRef(1); /** Counter for generating unique section IDs */
 
   // State to store the dialog data
   const [data, setData] = useState({
@@ -108,6 +109,13 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
               // Add the "Create new tab" option
               formattedTabs.push(createNewTab());
 
+              // Update nextSectionId to be higher than any existing sectionId
+              const maxSectionId = formattedTabs.reduce((max, tab) => {
+                const tabMax = tab.sections ? Math.max(...tab.sections.map((s) => s.sectionId), 0) : 0;
+                return Math.max(max, tabMax);
+              }, 0);
+              nextSectionId.current = maxSectionId + 1;
+
               // Update the state with the fetched data
               setData({
                 list: dynamicComponents,
@@ -147,6 +155,13 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
 
       // Add the "Create new tab" option
       formattedTabs.push(createNewTab());
+
+      // Update nextSectionId to be higher than any existing sectionId
+      const maxSectionId = formattedTabs.reduce((max, tab) => {
+        const tabMax = tab.sections ? Math.max(...tab.sections.map((s) => s.sectionId), 0) : 0;
+        return Math.max(max, tabMax);
+      }, 0);
+      nextSectionId.current = maxSectionId + 1;
 
       setData({
         list: dynamicComponents,
@@ -289,7 +304,8 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
   /** Function to add a section */
   const addSection = (tabPosition) => {
     const { sections } = selectedTab(data.formFields, tabPosition);
-    sections.push(defaultSectionContents(tabPosition, sections.length));
+    const newSectionId = nextSectionId.current++;
+    sections.push(defaultSectionContents(tabPosition, newSectionId));
     setData({
       ...data,
       formFields: [...data.formFields],
