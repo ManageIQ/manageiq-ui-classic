@@ -48,6 +48,12 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
   const hoverItem = useRef(null); /** Stores the tab and section position during the drop event. */
   const nextSectionId = useRef(1); /** Counter for generating unique section IDs */
 
+  // Helper function to calculate the maximum section ID across all tabs
+  const getMaxSectionId = (tabs) => tabs.reduce((max, tab) => {
+    const tabMax = tab.sections ? Math.max(...tab.sections.map((s) => s.sectionId), 0) : 0;
+    return Math.max(max, tabMax);
+  }, 0);
+
   // State to store the dialog data
   const [data, setData] = useState({
     list: dynamicComponents,
@@ -110,11 +116,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
               formattedTabs.push(createNewTab());
 
               // Update nextSectionId to be higher than any existing sectionId
-              const maxSectionId = formattedTabs.reduce((max, tab) => {
-                const tabMax = tab.sections ? Math.max(...tab.sections.map((s) => s.sectionId), 0) : 0;
-                return Math.max(max, tabMax);
-              }, 0);
-              nextSectionId.current = maxSectionId + 1;
+              nextSectionId.current = getMaxSectionId(formattedTabs) + 1;
 
               // Update the state with the fetched data
               setData({
@@ -157,11 +159,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
       formattedTabs.push(createNewTab());
 
       // Update nextSectionId to be higher than any existing sectionId
-      const maxSectionId = formattedTabs.reduce((max, tab) => {
-        const tabMax = tab.sections ? Math.max(...tab.sections.map((s) => s.sectionId), 0) : 0;
-        return Math.max(max, tabMax);
-      }, 0);
-      nextSectionId.current = maxSectionId + 1;
+      nextSectionId.current = getMaxSectionId(formattedTabs) + 1;
 
       setData({
         list: dynamicComponents,
