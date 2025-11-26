@@ -5,7 +5,7 @@
         "label": "States",
         "comment": "States",
         "description": "This category show stated",
-        "image": "/images/palette-categories/sources_open.svg",
+        "image": "/images/graphmode/palette-categories/sources_open.svg",
         "id": "states",
         "node_types": [
             
@@ -46,7 +46,7 @@
                     "ui_data": {
                         "label": "Choices",
                         "description": "If then else logic",
-                        "image": "/images/choices.svg",
+                        "image": "/images/graphmode/choices.svg",
                         "x_pos": 0,
                         "y_pos": 0
                     }
@@ -89,7 +89,7 @@
                     "ui_data": {
                         "label": "Wait",
                         "description": "Wait for delay",
-                        "image": "/images/wait_time.svg",
+                        "image": "/images/graphmode/wait_time.svg",
                         "x_pos": 0,
                         "y_pos": 0
                     }
@@ -132,7 +132,7 @@
                     "ui_data": {
                         "label": "Success",
                         "description": "Success",
-                        "image": "/images/success_filled.svg",
+                        "image": "/images/graphmode/success_filled.svg",
                         "x_pos": 0,
                         "y_pos": 0
                     }
@@ -175,7 +175,7 @@
                     "ui_data": {
                         "label": "Fail",
                         "description": "Fail ",
-                        "image": "/images/failure_filled.svg",
+                        "image": "/images/graphmode/failure_filled.svg",
                         "x_pos": 0,
                         "y_pos": 0
                     }
@@ -218,7 +218,7 @@
                     "ui_data": {
                         "label": "Pass",
                         "description": "Pass  ",
-                        "image": "/images/pass.svg",
+                        "image": "/images/graphmode/pass.svg",
                         "x_pos": 0,
                         "y_pos": 0
                     }
@@ -262,7 +262,7 @@
                     "ui_data": {
                         "label": "Parallel",
                         "description": "Parallel  ",
-                        "image": "/images/parallel.svg",
+                        "image": "/images/graphmode/parallel.svg",
                         "x_pos": 0,
                         "y_pos": 0
                     }
@@ -308,7 +308,7 @@
                     "ui_data": {
                         "label": "Map",
                         "description": "Map  ",
-                        "image": "/images/map_new.svg",
+                        "image": "/images/graphmode/map_new.svg",
                         "x_pos": 0,
                         "y_pos": 0
                     }
@@ -330,7 +330,7 @@
         "label": "Actions",
         "comment": "Actions",
         "description": "This category list action types",
-        "image": "/images/palette-categories/sources_open.svg",
+        "image": "/images/graphmode/palette-categories/sources_open.svg",
         "id": "actions",
         "node_types": [
             {
@@ -370,7 +370,7 @@
                 "ui_data": {
                     "label": "Task",
                     "description": "Run Task ",
-                    "image": "/images/task.svg",
+                    "image": "/images/graphmode/task.svg",
                     "x_pos": 0,
                     "y_pos": 0
                 }
