@@ -5,9 +5,8 @@ class ApplicationHelper::Button::EmsCaptureMetrics < ApplicationHelper::Button::
       check_credentials
       check_refresh
       check_endpoint
+      check_role
     end
-    check_role
-
     @error_message.present?
   end
 
@@ -26,7 +25,7 @@ class ApplicationHelper::Button::EmsCaptureMetrics < ApplicationHelper::Button::
   def check_role
     metrics_collection =
       ManageIQ::Providers::Kubernetes::ContainerManager.method_defined?(:queue_metrics_capture) &&
-        (@record ? @record.zone.role_active?("ems_metrics_coordinator") : MiqServer.my_server.zone.role_active?("ems_metrics_coordinator"))
+        @record.zone.role_active?("ems_metrics_coordinator")
 
     @error_message ||= _("Capacity & Utilization Coordinator role is off") unless metrics_collection
   end
