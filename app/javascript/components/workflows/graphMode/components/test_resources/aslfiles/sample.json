@@ -1,0 +1,5 @@
+{
+    "Comment": "A simple minimal example of the States language",
+    "StartAt": "Hello World",
+    "States": {}
+} 

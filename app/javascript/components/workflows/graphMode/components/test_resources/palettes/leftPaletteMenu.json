@@ -1,0 +1,383 @@
+{
+	"version": "3.0",
+    "categories": [
+    {
+        "label": "States",
+        "comment": "States",
+        "description": "This category show stated",
+        "image": "/images/graphmode/palette-categories/sources_open.svg",
+        "id": "states",
+        "node_types": [
+            
+               
+            {
+                "id": "4",
+                "type": "Choice",
+                "op": "choice",
+                "inputs": [
+                    {
+                        "id": "inPort",
+                        "app_data": {
+                            "ui_data": {
+                                "cardinality": {
+                                    "min": 1,
+                                    "max": 1
+                                },
+                                "label": "Input Port"
+                            }
+                        }
+                    }
+                ],
+                "outputs": [
+                    {
+                        "id": "outPort",
+                        "app_data": {
+                            "ui_data": {
+                                "cardinality": {
+                                    "min": 2,
+                                    "max": 100
+                                },
+                                "label": "Output Port"
+                            }
+                        }
+                    }
+                ],
+                "app_data": {
+                    "ui_data": {
+                        "label": "Choices",
+                        "description": "If then else logic",
+                        "image": "/images/graphmode/choices.svg",
+                        "x_pos": 0,
+                        "y_pos": 0
+                    }
+                }
+            },
+
+            {
+                "id": "11",
+                "type": "Wait",
+                "op": "wait",
+                "inputs": [
+                    {
+                        "id": "inPort",
+                        "app_data": {
+                            "ui_data": {
+                                "cardinality": {
+                                    "min": 1,
+                                    "max": 1
+                                },
+                                "label": "Input Port"
+                            }
+                        }
+                    }
+                ],
+                "outputs": [
+                    {
+                        "id": "outPort",
+                        "app_data": {
+                            "ui_data": {
+                                "cardinality": {
+                                    "min": 1,
+                                    "max": 1
+                                },
+                                "label": "Output Port"
+                            }
+                        }
+                    }
+                ],
+                "app_data": {
+                    "ui_data": {
+                        "label": "Wait",
+                        "description": "Wait for delay",
+                        "image": "/images/graphmode/wait_time.svg",
+                        "x_pos": 0,
+                        "y_pos": 0
+                    }
+                }
+            },
+
+            {
+                "id": "2",
+                "type": "Succeed",
+                "op": "succeed",
+                "inputs": [
+                    {
+                        "id": "inPort",
+                        "app_data": {
+                            "ui_data": {
+                                "cardinality": {
+                                    "min": 1,
+                                    "max": 1
+                                },
+                                "label": "Input Port"
+                            }
+                        }
+                    }
+                ],
+                "outputs": [
+                    {
+                        "id": "outPort",
+                        "app_data": {
+                            "ui_data": {
+                                "cardinality": {
+                                    "min": 0,
+                                    "max": 0
+                                },
+                                "label": "Output Port"
+                            }
+                        }
+                    }
+                ],
+                "app_data": {
+                    "ui_data": {
+                        "label": "Success",
+                        "description": "Success",
+                        "image": "/images/graphmode/success_filled.svg",
+                        "x_pos": 0,
+                        "y_pos": 0
+                    }
+                }
+            }, 
+
+            {
+                "id": "3",
+                "type": "Fail",
+                "op":"fail",
+                "inputs": [
+                    {
+                        "id": "inPort",
+                        "app_data": {
+                            "ui_data": {
+                                "cardinality": {
+                                    "min": 1,
+                                    "max": 1
+                                },
+                                "label": "Input Port"
+                            }
+                        }
+                    }
+                ],
+                "outputs": [
+                    {
+                        "id": "outPort",
+                        "app_data": {
+                            "ui_data": {
+                                "cardinality": {
+                                    "min": 0,
+                                    "max": 0
+                                },
+                                "label": "Output Port"
+                            }
+                        }
+                    }
+                ],
+                "app_data": {
+                    "ui_data": {
+                        "label": "Fail",
+                        "description": "Fail ",
+                        "image": "/images/graphmode/failure_filled.svg",
+                        "x_pos": 0,
+                        "y_pos": 0
+                    }
+                }
+            }, 
+
+            {
+                "id": "5",
+                "type": "Pass",
+                "op":"pass",
+                "inputs": [
+                    {
+                        "id": "inPort",
+                        "app_data": {
+                            "ui_data": {
+                                "cardinality": {
+                                    "min": 1,
+                                    "max": 1
+                                },
+                                "label": "Input Port"
+                            }
+                        }
+                    }
+                ],
+                "outputs": [
+                    {
+                        "id": "outPort",
+                        "app_data": {
+                            "ui_data": {
+                                "cardinality": {
+                                    "min": 1,
+                                    "max": 1
+                                },
+                                "label": "Output Port"
+                            }
+                        }
+                    }
+                ],
+                "app_data": {
+                    "ui_data": {
+                        "label": "Pass",
+                        "description": "Pass  ",
+                        "image": "/images/graphmode/pass.svg",
+                        "x_pos": 0,
+                        "y_pos": 0
+                    }
+                }
+            } , 
+
+            {
+                "id": "6",
+                "type": "Parallel",
+                "op": "parallel",
+                "branches" : [],
+                "inputs": [
+                    {
+                        "id": "inPort",
+                        "app_data": {
+                            "ui_data": {
+                                "cardinality": {
+                                    "min": 1,
+                                    "max": 1
+                                },
+                                "label": "Input Port"
+                            }
+                        }
+                    }
+                ],
+                "outputs": [
+                    {
+                        "id": "outPort",
+                        "app_data": {
+                            "ui_data": {
+                                "cardinality": {
+                                    "min": 2,
+                                    "max": 100
+                                },
+                                "label": "Output Port"
+                            }
+                        }
+                    }
+                ],
+                "app_data": {
+                    "ui_data": {
+                        "label": "Parallel",
+                        "description": "Parallel  ",
+                        "image": "/images/graphmode/parallel.svg",
+                        "x_pos": 0,
+                        "y_pos": 0
+                    }
+                }
+            }, 
+
+             {
+                "id": "7",
+                "type": "super_node",
+                "op":"map",
+                "inputs": [
+                    {
+                        "id": "inPort",
+                        "app_data": {
+                            "ui_data": {
+                                "cardinality": {
+                                    "min": 1,
+                                    "max": 1
+                                },
+                                "label": "Input Port"
+                            }
+                        }
+                    }
+                ],
+                "outputs": [
+                    {
+                        "id": "outPort",
+                        "app_data": {
+                            "ui_data": {
+                                "cardinality": {
+                                    "min": 1,
+                                    "max": 2
+                                },
+                                "label": "Output Port"
+                            }
+                        }
+                    }
+                ],
+                "app_data": {
+                    "node_asl_data": {
+                        "type" : "Map"
+                    },
+                    "ui_data": {
+                        "label": "Map",
+                        "description": "Map  ",
+                        "image": "/images/graphmode/map_new.svg",
+                        "x_pos": 0,
+                        "y_pos": 0
+                    }
+                }
+            }
+        
+
+        
+
+        
+
+
+        ]
+
+    },
+
+
+    {
+        "label": "Actions",
+        "comment": "Actions",
+        "description": "This category list action types",
+        "image": "/images/graphmode/palette-categories/sources_open.svg",
+        "id": "actions",
+        "node_types": [
+            {
+            "id": "1",
+            "op": "task",
+            "type": "Task",
+            "inputs": [
+                {
+                    "id": "inPort",
+                    "app_data": {
+                        "ui_data": {
+                            "cardinality": {
+                                "min": 1,
+                                "max": 1
+                            },
+                            "label": "Input Port"
+                        }
+                    }
+                }
+            ],
+            "outputs": [
+                {
+                    "id": "outPort",
+                    "app_data": {
+                        "ui_data": {
+                            "cardinality": {
+                                "min": 1,
+                                "max": 1
+                            },
+                            "label": "Output Port"
+                        }
+                    }
+                }
+            ],
+            "parameters" : {},
+            "app_data": {
+                "ui_data": {
+                    "label": "Task",
+                    "description": "Run Task ",
+                    "image": "/images/graphmode/task.svg",
+                    "x_pos": 0,
+                    "y_pos": 0
+                }
+            }
+        }
+
+        ]
+    }
+]
+}
