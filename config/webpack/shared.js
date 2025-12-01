@@ -6,7 +6,7 @@
 const webpack = require('webpack');
 const { basename, dirname, join, resolve } = require('path');
 const { sync } = require('glob');
-const ManifestPlugin = require('webpack-manifest-plugin');
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const extname = require('path-complete-extname');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const { SplitChunksPlugin } = require('webpack').optimize;
@@ -62,7 +62,7 @@ let plugins = [
     'process.env.CYPRESS': JSON.stringify(env.CYPRESS),
   }),
 
-  new ManifestPlugin({
+  new WebpackManifestPlugin({
     publicPath: output.publicPath,
     writeToFileEmit: true,
   }),
