@@ -385,7 +385,7 @@ window.miqSetToolbarCount = function(count) {
 window.miqSetButtons = function(count, button_div) {
   if (button_div.match('_tb$') && count === 0) {
     // FIXME: this should be happening regardless of `count === 0`
-    // ..but that needs more refactoring around miqUpdateAllCheckboxes, miqUpdateButtons, etc.
+    // ..but that needs more refactoring around miqUpdateButtons, etc.
     miqSetToolbarCount(count);
     return;
   }
