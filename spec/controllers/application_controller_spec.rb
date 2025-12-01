@@ -289,21 +289,6 @@ describe ApplicationController do
       end
     end
 
-    describe "#get_view" do
-      it 'calculates grid hash condition' do
-        controller.instance_variable_set(:@force_no_grid_xml, false)
-
-        view = OpenStruct.new
-        view.db = "MiqProvision"
-        expect(controller.send(:grid_hash_conditions, view)).to eq(false)
-        view.db = "Build"
-        expect(controller.send(:grid_hash_conditions, view)).to eq(false)
-        view.db = "ContainerBuild"
-        expect(controller.send(:grid_hash_conditions, view)).to eq(true)
-        controller.instance_variable_set(:@force_no_grid_xml, true)
-        expect(controller.send(:grid_hash_conditions, view)).to eq(false)
-      end
-    end
   end
 
   describe "#get_view" do
