@@ -67,7 +67,7 @@ describe ReportController do
       @edit_hash[:new][:visibility_typ] = 'role'
       @edit_hash[:new][:roles] = [role.id.to_s]
       controller.send(:widget_set_record_vars, @widget)
-      expect(@widget.visibility[:roles]).to eq([role.name])
+      expect(@widget.visibility[:roles]).to eq([role.id.to_s])
     end
 
     it "sets group visibility for widget" do
