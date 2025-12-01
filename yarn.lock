@@ -4115,7 +4115,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"array-includes@npm:^3.0.2, array-includes@npm:^3.1.1, array-includes@npm:^3.1.6":
+"array-includes@npm:^3.0.2, array-includes@npm:^3.1.1, array-includes@npm:^3.1.6, array-includes@npm:^3.1.9":
   version: 3.1.9
   resolution: "array-includes@npm:3.1.9"
   dependencies:
@@ -8025,7 +8025,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"es6-shim@npm:^0.35.3, es6-shim@npm:~0.35.3":
+"es6-shim@npm:^0.35.3, es6-shim@npm:~0.35.8":
   version: 0.35.8
   resolution: "es6-shim@npm:0.35.8"
   checksum: 10/302468205593dae682bd918de9e101d5e0aa1febe578cdf80b7e1b618165ef9ea94457216397052255d567372e31408e6bf89cd40df1dbfc0ecbcd7218392439
@@ -13031,7 +13031,7 @@ __metadata:
     angular-ui-codemirror: "npm:~0.3.0"
     angular-ui-sortable: "npm:~0.19.0"
     angular.validators: "npm:~4.4.3"
-    array-includes: "npm:^3.1.6"
+    array-includes: "npm:^3.1.9"
     autoprefixer: "npm:~9.8.0"
     awesome-debounce-promise: "npm:^2.1.0"
     babel-jest: "npm:~25.5.1"
@@ -13059,7 +13059,7 @@ __metadata:
     enzyme-adapter-react-16: "npm:^1.13.0"
     enzyme-to-json: "npm:^3.3.4"
     eonasdan-bootstrap-datetimepicker: "npm:~4.17.49"
-    es6-shim: "npm:~0.35.3"
+    es6-shim: "npm:~0.35.8"
     eslint: "npm:~7.11.0"
     eslint-config-airbnb: "npm:~18.2.0"
     eslint-config-angular: "npm:~0.5.0"
@@ -13114,7 +13114,7 @@ __metadata:
     redux-mock-store: "npm:^1.5.3"
     redux-promise-middleware: "npm:^5.1.1"
     redux-thunk: "npm:^2.3.0"
-    regenerator-runtime: "npm:~0.13.5"
+    regenerator-runtime: "npm:~0.14.1"
     resolve-url-loader: "npm:~3.1.5"
     rxjs: "npm:~5.6.0-forward-compat.2"
     sass: "npm:~1.58.0"
@@ -13134,7 +13134,7 @@ __metadata:
     webpack-manifest-plugin: "npm:~4.1.1"
     webpack-merge: "npm:~6.0.1"
     webpack-stats-plugin: "npm:^1.1.3"
-    whatwg-fetch: "npm:~2.0.4"
+    whatwg-fetch: "npm:~3.6.20"
     xml_display: "npm:~0.1.1"
   languageName: unknown
   linkType: soft
@@ -16452,10 +16452,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"regenerator-runtime@npm:~0.13.5":
-  version: 0.13.11
-  resolution: "regenerator-runtime@npm:0.13.11"
-  checksum: 10/d493e9e118abef5b099c78170834f18540c4933cedf9bfabc32d3af94abfb59a7907bd7950259cbab0a929ebca7db77301e8024e5121e6482a82f78283dfd20c
+"regenerator-runtime@npm:~0.14.1":
+  version: 0.14.1
+  resolution: "regenerator-runtime@npm:0.14.1"
+  checksum: 10/5db3161abb311eef8c45bcf6565f4f378f785900ed3945acf740a9888c792f75b98ecb77f0775f3bf95502ff423529d23e94f41d80c8256e8fa05ed4b07cf471
   languageName: node
   linkType: hard
 
@@ -19919,10 +19919,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"whatwg-fetch@npm:~2.0.4":
-  version: 2.0.4
-  resolution: "whatwg-fetch@npm:2.0.4"
-  checksum: 10/407d11d1761b3c2d15e3a92adcdeec73313fa0c0019aac59fdfac674d97f1a7014a8d7f4c9d3061d4a58ccb1c31d06a72e473d1716098007d356d94b01954a80
+"whatwg-fetch@npm:~3.6.20":
+  version: 3.6.20
+  resolution: "whatwg-fetch@npm:3.6.20"
+  checksum: 10/2b4ed92acd6a7ad4f626a6cb18b14ec982bbcaf1093e6fe903b131a9c6decd14d7f9c9ca3532663c2759d1bdf01d004c77a0adfb2716a5105465c20755a8c57c
   languageName: node
   linkType: hard
 
