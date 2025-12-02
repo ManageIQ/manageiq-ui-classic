@@ -25,7 +25,7 @@ const CustomURLTabs = ({
   };
 
   const fixTabStyling = () => {
-    document.getElementsByClassName(activeTabClassName).forEach((element) => {
+    [...document.getElementsByClassName(activeTabClassName)].forEach((element) => {
       element.classList.remove(activeTabClassName);
     });
     document.getElementsByClassName('selected')[0].classList.add(activeTabClassName);

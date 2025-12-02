@@ -52,7 +52,7 @@ Cypress.Commands.add('menuItems', () => {
           if ($li[0].className === 'bx--side-nav__item') {
             const parent = $li.children().children()[0].innerText;
             cy.get($li).click().then(() => {
-              $li.children()[1].children.forEach((child) => {
+              [...$li.children()[1].children].forEach((child) => {
                 subChildren.push({ title: child.innerText, href: child.children[0].href });
               });
               children.push({title: parent, items: subChildren });

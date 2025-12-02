@@ -1,4 +1,4 @@
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 
 const { env, publicPath } = require('./configuration.js');
 const babelrc = require('../../.babelrc.js');
