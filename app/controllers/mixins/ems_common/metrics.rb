@@ -72,13 +72,7 @@ module Mixins
         if task == "refresh_ems"
           model.refresh_ems(emss, true)
         elsif task == "capture_ems"
-          emss.each do |ems|
-            unless ems.zone.role_active?("ems_metrics_coordinator")
-              add_flash(_("Capacity & Utilization Coordinator role is off for %{name}") % {:name => ems.name}, :error)
-            else
-              ems.queue_metrics_capture
-            end
-          end
+          emss.each(&:queue_metrics_capture)
         end
 
         add_task_flash(emss, action_name)
