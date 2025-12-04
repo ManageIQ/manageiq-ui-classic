@@ -17,6 +17,6 @@ module.exports = {
     require('@babel/preset-react').default,
   ],
   plugins: [
-    require('@babel/plugin-proposal-class-properties').default,
+    require('@babel/plugin-transform-class-properties').default,
   ],
 };
