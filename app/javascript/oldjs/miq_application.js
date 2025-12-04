@@ -1,4 +1,4 @@
-/* global add_flash getChartColumnDataValues getChartFormatedValue miqBrowserDetect miqExpressionPrefill miqFlashLater miqFlashSaved miqGridCheckAll miqGridGetCheckedRows miqMenu miqTreeObject miqValueStylePrefill recalculateChartYAxisLabels */
+/* global add_flash getChartColumnDataValues getChartFormatedValue miqBrowserDetect miqExpressionPrefill miqFlashLater miqFlashSaved miqMenu miqTreeObject miqValueStylePrefill recalculateChartYAxisLabels */
 
 // MIQ specific JS functions
 
@@ -351,40 +351,6 @@ window.miqValidateButtons = function(h_or_s, prefix) {
   }
 };
 
-// update all checkboxes on a form when the masterToggle checkbox is changed
-// parms: button_div=<id of div with buttons to update>
-window.miqUpdateAllCheckboxes = function(button_div) {
-  if (!miqDomElementExists('masterToggle')) {
-    return;
-  }
-
-  const state = $('#masterToggle').prop('checked');
-
-  if (ManageIQ.grids.gtl_list_grid) {
-    miqGridCheckAll(state);
-    const crows = miqGridGetCheckedRows();
-
-    ManageIQ.gridChecks = crows;
-    miqSetButtons(crows.length, button_div);
-  } else if ($('input.listcheckbox').length) {
-    // No list_grid on the screen
-    const cbs = $('input.listcheckbox')
-      .prop('checked', state)
-      .trigger('change');
-
-    miqUpdateButtons(cbs[0], button_div);
-  } else if ($("input[id^='storage_cb']").length) {
-    // to handle check/uncheck all for C&U collection
-    $("input[id^='storage_cb']")
-      .prop('checked', state)
-      .trigger('change');
-    miqJqueryRequest(miqPassFields(
-      '/configuration/form_field_changed',
-      { storage_cb_all: state }
-    ));
-  }
-};
-
 // Update buttons based on number of checkboxes that are checked
 // parms: obj=<checkbox element>, button_div=<id of div with buttons to update>
 window.miqUpdateButtons = function(obj, button_div) {
@@ -419,7 +385,7 @@ window.miqSetToolbarCount = function(count) {
 window.miqSetButtons = function(count, button_div) {
   if (button_div.match('_tb$') && count === 0) {
     // FIXME: this should be happening regardless of `count === 0`
-    // ..but that needs more refactoring around miqUpdateAllCheckboxes, miqUpdateButtons, etc.
+    // ..but that needs more refactoring around miqUpdateButtons, etc.
     miqSetToolbarCount(count);
     return;
   }
@@ -436,24 +402,6 @@ window.miqSetButtons = function(count, button_div) {
 // go to the specified URL when a table cell is clicked
 window.DoNav = function(theUrl) {
   document.location.href = theUrl;
-};
-
-// Routines to get the size of the window
-window.miqResetSizeTimer = function() {
-  const height = window.innerHeight;
-  const offset = 427;
-  let h = height - offset;
-
-  if (h < 200) {
-    h = 200;
-  }
-
-  // Adjust certain elements, if present
-  if (miqDomElementExists('list_grid')) {
-    $('#list_grid').css({ height: `${h}px` });
-  } else if (miqDomElementExists('logview')) {
-    $('#logview').css({ height: `${h}px` });
-  }
 };
 
 // Pass fields to server given a URL and fields in name/value pairs
@@ -1460,7 +1408,6 @@ $(() => {
 
   $(window).on('resize', miqInitAccordions);
   $(window).on('resize', miqInitMainContent);
-  $(window).on('resize', _.debounce(miqResetSizeTimer, 1000));
 
   check_for_ellipsis();
 });
@@ -1492,4 +1439,17 @@ window.redirectLogin = function(msg) {
 
   add_flash(msg, 'warning');
   window.document.location.href = '/dashboard/login?timeout=true';
+};
+
+// Needed for optimization page queue report button
+window.miqQueueReport = function(id) {
+  const url = `/optimization/queue_report/${id}`;
+  window.miqSparkleOn();
+  http
+    .post(url, {})
+    .then((data) => {
+      window.add_flash(data.flash, 'success');
+      window.miqSparkleOff();
+    })
+    .catch(() => window.miqSparkleOff());
 };

@@ -1171,18 +1171,7 @@ class ApplicationController < ActionController::Base
     view.extras[:auth_count]  = attrs[:auth_count]   if attrs[:auth_count]
     @targets_hash             = attrs[:targets_hash] if attrs[:targets_hash]
 
-    # Set up the grid variables for list view, with exception models below
-    if grid_hash_conditions(view) && fetch_data
-      @grid_hash = view_to_hash(view, fetch_data)
-    end
-
     [view, get_view_pages(dbname, view)]
-  end
-
-  def grid_hash_conditions(view)
-    !%w[Job MiqProvision MiqReportResult MiqTask].include?(view.db) &&
-      !(view.db.ends_with?("Build") && view.db != "ContainerBuild") &&
-      !@force_no_grid_xml
   end
 
   def get_chart_where_clause(sb_controller = nil)
@@ -1282,47 +1271,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def replace_list_grid
-    view = @view
-    button_div = 'center_tb'
-    action_url = if @lastaction == "scan_history"
-                   "scan_history"
-                 elsif %w[all_jobs jobs ui_jobs all_ui_jobs].include?(@lastaction)
-                   "jobs"
-                 elsif @lastaction == "get_node_info"
-                   nil
-                 elsif !@lastaction.nil?
-                   @lastaction
-                 else
-                   "show_list"
-                 end
-
-    ajax_url = !%w[SecurityGroup CloudVolume].include?(view.db)
-    ajax_url = false if request.parameters[:controller] == "service" && view.db == "Vm"
-    ajax_url = false unless @explorer
-
-    url = @showlinks == false ? nil : view_to_url(view, @parent)
-    grid_options = {:grid_id    => "list_grid",
-                    :grid_name  => "gtl_list_grid",
-                    :grid_hash  => @grid_hash,
-                    :button_div => button_div,
-                    :action_url => action_url}
-    js_options = {:sortcol      => @sortcol || nil,
-                  :sortdir      => @sortdir ? @sortdir[0..2] : nil,
-                  :row_url      => url,
-                  :row_url_ajax => ajax_url}
-
-    [grid_options, js_options]
-  end
-
   # RJS code to show tag box effects and replace the main list view area
   def replace_gtl_main_div(_options = {})
     return if params[:action] == "button" && @lastaction == "show"
-
-    if @grid_hash
-      # need to call this outside render :update
-      grid_options, js_options = replace_list_grid
-    end
 
     render :update do |page|
       page << javascript_prologue
@@ -1332,16 +1283,9 @@ class ApplicationController < ActionController::Base
       if layout_uses_listnav?
         page.replace(:listnav_div, :partial => "layouts/listnav") # Replace accordion, if list_nav_div is there
       end
-      if @grid_hash
-        page.replace_html("list_grid", :partial => "layouts/list_grid", :locals => {:options => grid_options, :js_options => js_options})
-        # Reset the center buttons
-        page << "miqGridOnCheck();"
-      else
-        # No grid, replace the gtl div
-        # Replace the main div area contents
-        page.replace_html("main_div", :partial => "layouts/gtl")
-        page << "$('#adv_div').slideUp(0.3);" if params[:entry]
-      end
+      # Replace the main div area contents
+      page.replace_html("main_div", :partial => "layouts/gtl")
+      page << "$('#adv_div').slideUp(0.3);" if params[:entry]
     end
   end
 
