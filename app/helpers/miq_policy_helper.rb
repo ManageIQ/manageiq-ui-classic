@@ -10,9 +10,11 @@ module MiqPolicyHelper
     rows = []
     data = {:title => _('Basic Information'), :mode => "miq_policy_basic_information"}
     rows.push({:cells => {:label => _('Active'), :value => record.active ? _("Yes") : _("No")}})
-    rows.push({:cells => {:label => _('Created'), :value => _("By Username %{username} %{created_on}") % {:username => record.created_by || _("N/A"), :created_on => format_timezone(record.created_on, session[:user_tz], "gtl")}}})
+    rows.push({:cells => {:label => _('Created By'), :value => record.created_by || _("N/A")}})
+    rows.push({:cells => {:label => _('Created On'), :value => format_timezone(record.created_on, session[:user_tz], "gtl")}})
     if @record.created_on != @record.updated_on
-      rows.push({:cells => {:label => _("Last Updated"), :value => _("By Username %{username} %{updated_on}") % {:username => record.updated_by || _("N/A"), :updated_on => format_timezone(record.updated_on, session[:user_tz], "gtl")}}})
+      rows.push({:cells => {:label => _("Last Updated By"), :value => record.updated_by || _("N/A")}})
+      rows.push({:cells => {:label => _("Last Updated On"), :value => format_timezone(record.updated_on, session[:user_tz], "gtl")}})
     end
     data[:rows] = rows
     miq_structured_list(data)
