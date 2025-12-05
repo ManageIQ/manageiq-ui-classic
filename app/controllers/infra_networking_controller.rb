@@ -330,7 +330,6 @@ class InfraNetworkingController < ApplicationController
       partial_locals = {:controller =>'infra_networking'}
       if partial == 'layouts/x_gtl'
         partial_locals[:action_url] = @lastaction
-        presenter[:parent_class] = params[:controller] # Set parent class for URL also
       end
       presenter.update(:main_div, r[:partial => partial, :locals => partial_locals])
     else
