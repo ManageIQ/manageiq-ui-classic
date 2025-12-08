@@ -27,8 +27,7 @@ class ApplicationHelper::Toolbar::MiqActionCenter < ApplicationHelper::Toolbar::
                                          :controller     => 'provider_dialogs',
                                          :display_field  => 'description',
                                          :modal_text     => N_("Are you sure you want to delete this Action?"),
-                                         :modal_title    => N_("Delete Action"),
-                                         :ajax_reload    => true}}),
+                                         :modal_title    => N_("Delete Action")}}),
       ]
     ),
   ])
