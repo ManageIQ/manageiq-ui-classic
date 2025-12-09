@@ -2,8 +2,6 @@
 
 [![Gem Version](https://badge.fury.io/rb/manageiq-ui-classic.svg)](http://badge.fury.io/rb/manageiq-ui-classic)
 [![CI](https://github.com/ManageIQ/manageiq-ui-classic/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/ManageIQ/manageiq-ui-classic/actions/workflows/ci.yaml)
-[![Maintainability](https://qlty.sh/gh/ManageIQ/projects/manageiq-ui-classic/maintainability.svg)](https://qlty.sh/gh/ManageIQ/projects/manageiq-ui-classic)
-[![Code Coverage](https://qlty.sh/gh/ManageIQ/projects/manageiq-ui-classic/coverage.svg)](https://qlty.sh/gh/ManageIQ/projects/manageiq-ui-classic)
 
 [![Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ManageIQ/manageiq/ui?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 

@@ -1,7 +1,9 @@
-name: "Locale PO to JSON"
-
+name: Locale PO to JSON
 on:
   workflow_dispatch:
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
@@ -15,7 +17,7 @@ jobs:
           POSTGRESQL_USER: root
           POSTGRESQL_PASSWORD: smartvm
           POSTGRESQL_DATABASE: vmdb_i18n
-        options: --health-cmd pg_isready --health-interval 2s --health-timeout 5s --health-retries 5
+        options: "--health-cmd pg_isready --health-interval 2s --health-timeout 5s --health-retries 5"
         ports:
         - 5432:5432
     env:
@@ -30,7 +32,7 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: "3.1"
+        ruby-version: '3.3'
         bundler-cache: true
       timeout-minutes: 30
     - name: Prepare dependencies
@@ -42,8 +44,7 @@ jobs:
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v7
       with:
-        add-paths: |
-          app/javascript/oldjs/locale
+        add-paths: app/javascript/oldjs/locale
         commit-message: Update UI json translation files
         branch: update_ui_json_translation_files
         author: ManageIQ Bot <bot@manageiq.org>
@@ -53,4 +54,4 @@ jobs:
         push-to-fork: miq-bot/manageiq-ui-classic
         title: Update UI json translation files
         body: Update UI json translation files
-        token: ${{ secrets.PR_TOKEN }}
+        token: "${{ secrets.PR_TOKEN }}"
