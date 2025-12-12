@@ -50,7 +50,7 @@ const MiqCustomTab = ({
     if (!container) {
       return [];
     }
-    return container.getElementsByClassName('tab_content');
+    return [...container.getElementsByClassName('tab_content')];
   };
 
   /** Function to clear all tabs content so that, the react component will render a fresh instance */
@@ -105,7 +105,7 @@ const MiqCustomTab = ({
 
   useEffect(() => {
     if (activeTab) {
-      let elements = document.getElementsByClassName('bx--tabs--scrollable__nav-item');
+      let elements = [...document.getElementsByClassName('bx--tabs--scrollable__nav-item')];
       elements.forEach((element) => {
         element.classList.remove(activeTabClassName);
         element.classList.remove(selectedClassName);
@@ -116,7 +116,7 @@ const MiqCustomTab = ({
       }
       elements[activeTab].classList.add(activeTabClassName);
 
-      elements = document.getElementsByClassName('bx--tabs--scrollable__nav-item');
+      elements = [...document.getElementsByClassName('bx--tabs--scrollable__nav-item')];
     }
   }, [data.loading]);
 

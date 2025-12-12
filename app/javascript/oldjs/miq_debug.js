@@ -20,7 +20,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const { send } = XMLHttpRequest.prototype;
     XMLHttpRequest.prototype.send = function() {
       this.addEventListener('load', () => {
-        const elms = document.getElementsByTagName('*'); let i; let len; const ids = {}; const idsDom = {};
+        const elms = [...document.getElementsByTagName('*')]; let i; let len; const ids = {}; const idsDom = {};
         let id;
         for (i = 0, len = elms.length; i < len; i += 1) {
           id = elms[i].id || null;

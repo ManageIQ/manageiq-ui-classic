@@ -40,7 +40,7 @@ const WidgetWrapper = ({
     if (document.getElementById('main-content')) {
       document.getElementById('main-content').addEventListener('scroll', () => {
         if (document.getElementById(`${widgetId}-menu`).getAttribute('aria-expanded') === 'true') {
-          const temp = document.getElementsByClassName('bx--overflow-menu-options');
+          const temp = [...document.getElementsByClassName('bx--overflow-menu-options')];
           temp.forEach((element) => {
             element.classList.remove('bx--overflow-menu-options--open');
           });
