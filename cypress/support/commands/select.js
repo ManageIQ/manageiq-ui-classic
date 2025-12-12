@@ -5,7 +5,7 @@
 Cypress.Commands.add('changeSelect', (selectId, optionToSelect) => {
   // First, get the select element and store its text
   let selectElementText = '';
-  cy.get(`#${selectId}`).then((selectElement) => {
+  cy.get(`[id="${selectId}"]`).then((selectElement) => {
     // Get the currently displayed text in the select element
     selectElementText = selectElement.text().trim();
     // Click to open the dropdown
