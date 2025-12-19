@@ -23,15 +23,29 @@ module ApplicationController::WaitForTask
     end
   end
 
-  def browser_refresh_task(task_id, async_interval, should_flash: false)
+  def browser_refresh_task(task_id, async_interval, should_flash: false, response_type: nil)
+    response_type ||= :script
+
     async_interval = 1000 if async_interval.to_i < 1000 # if it is not an integer, assign to 1 second
     async_interval += 250 if async_interval.to_i < 5000 # Slowly move up to 5 second retries
-    render :update do |page|
-      page << javascript_prologue
-      ajax_call = remote_function(:url => {:action => 'wait_for_task', :task_id => task_id, :async_interval => async_interval})
-      page << "setTimeout(\"#{ajax_call}\", #{async_interval});"
-      page.replace("flash_msg_div", :partial => "layouts/flash_msg") if should_flash
-      page << "miqScrollTop();" if @flash_array.present?
+
+    case response_type
+    when :script
+      render :update do |page|
+        page << javascript_prologue
+        ajax_call = remote_function(:url => {:action => 'wait_for_task', :task_id => task_id, :async_interval => async_interval})
+        page << "setTimeout(\"#{ajax_call}\", #{async_interval});"
+        page.replace("flash_msg_div", :partial => "layouts/flash_msg") if should_flash
+        page << "miqScrollTop();" if @flash_array.present?
+      end
+    when :json
+      render :json => {
+        :async_interval => async_interval,
+        :task_id        => task_id,
+        :should_flash   => should_flash
+      }
+    else
+      raise "Invalid response type: #{response_type}"
     end
   end
   private :browser_refresh_task
@@ -65,7 +79,7 @@ module ApplicationController::WaitForTask
     task.context_data = (task.context_data || {}).merge(:async_params => async_params)
     task.save!
 
-    browser_refresh_task(task_id, async_interval, :should_flash => !!options[:flash])
+    browser_refresh_task(task_id, async_interval, :should_flash => !!options[:flash], :response_type => options[:response_type])
   end
   private :initiate_wait_for_task
 

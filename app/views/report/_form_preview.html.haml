@@ -1,4 +1,4 @@
-#form_preview
+#form_preview{"data-controller" => "reloadable", "data-reloadable-url-value" => url_for(:action => "show_preview", :id => "#{@edit[:rpt_id] || 'new'}"), "data-reloadable-target" => "content"}
   - if @html
     - unless @edit[:chart_data].nil?
       %fieldset
@@ -15,10 +15,8 @@
       = _('Generate Report Preview')
       - t = _("Generate Report preview")
       &nbsp;
-      = link_to({:action => "show_preview",  :id => "#{@edit[:rpt_id] || 'new'}"},
-        :alt                  => t,
-        "data-miq_sparkle_on" => true,
-        :remote               => true,
-        "data-method"         => :post,
-        :title                => t) do
+      = link_to("#",
+        :alt          => t,
+        :title        => t,
+        "data-action" => "click->reloadable#reload") do
         %i.fa.fa-refresh
