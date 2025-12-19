@@ -3,3 +3,6 @@
 // ./bin/rails generate stimulus controllerName
 
 import { application } from "./application"
+
+import ReloadableController from "./reloadable_controller"
+application.register("reloadable", ReloadableController)
