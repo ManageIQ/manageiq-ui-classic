@@ -22,13 +22,13 @@ module ReportController::Reports
 
   def show_preview
     assert_privileges(session.fetch_path(:edit, :rpt_id) ? "miq_report_edit" : "miq_report_new")
-
     unless params[:task_id]                       # First time thru, kick off the report generate task
       @rpt = create_report_object                 # Build a report object from the latest edit fields
       initiate_wait_for_task(:task_id => @rpt.async_generate_table(:userid     => session[:userid],
                                                                    :session_id => request.session_options[:id],
                                                                    :limit      => 50,
-                                                                   :mode       => "adhoc"))
+                                                                   :mode       => "adhoc"),
+                             :response_type => :json)
       return
     end
     miq_task = MiqTask.find(params[:task_id])     # Not first time, read the task record
@@ -49,11 +49,7 @@ module ReportController::Reports
       end
     end
     miq_task.destroy
-    render :update do |page|
-      page << javascript_prologue
-      page.replace_html("form_preview", :partial => "form_preview")
-      page << "miqSparkle(false);"
-    end
+    render :partial => "form_preview", :layout => false
   end
 
   def miq_report_delete
