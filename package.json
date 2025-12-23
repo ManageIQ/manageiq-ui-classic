@@ -115,7 +115,7 @@
     "@babel/eslint-parser": "~7.28.0",
     "@babel/plugin-transform-class-properties": "~7.27.1",
     "@babel/preset-env": "~7.28.0",
-    "@babel/preset-react": "~7.27.0",
+    "@babel/preset-react": "~7.28.0",
     "@babel/register": "~7.28.0",
     "@babel/runtime-corejs3": "~7.28.0",
     "angular-mocks": "~1.8.0",
