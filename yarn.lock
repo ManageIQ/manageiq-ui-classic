@@ -6289,25 +6289,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-loader@npm:~3.4.2":
-  version: 3.4.2
-  resolution: "css-loader@npm:3.4.2"
+"css-loader@npm:~3.6.0":
+  version: 3.6.0
+  resolution: "css-loader@npm:3.6.0"
   dependencies:
     camelcase: "npm:^5.3.1"
     cssesc: "npm:^3.0.0"
     icss-utils: "npm:^4.1.1"
     loader-utils: "npm:^1.2.3"
     normalize-path: "npm:^3.0.0"
-    postcss: "npm:^7.0.23"
+    postcss: "npm:^7.0.32"
     postcss-modules-extract-imports: "npm:^2.0.0"
     postcss-modules-local-by-default: "npm:^3.0.2"
-    postcss-modules-scope: "npm:^2.1.1"
+    postcss-modules-scope: "npm:^2.2.0"
     postcss-modules-values: "npm:^3.0.0"
-    postcss-value-parser: "npm:^4.0.2"
-    schema-utils: "npm:^2.6.0"
+    postcss-value-parser: "npm:^4.1.0"
+    schema-utils: "npm:^2.7.0"
+    semver: "npm:^6.3.0"
   peerDependencies:
     webpack: ^4.0.0 || ^5.0.0
-  checksum: 10/ff827b33f69cef51fbabc551a0f4865dfca202632490699d39729d14c67233f6670a4d6ef13e8ffa98d1a6a213d3ebaf1cff406467c7665cf73838cc2d76557d
+  checksum: 10/7de2ac05bc77ed1486e7113a38e4e61bd2fc0264fdaece0b2235e33488f3f53ecd95fc80b689959ea55dbc6982a38a4b6662a7d718f5127735f2477fa433edad
   languageName: node
   linkType: hard
 
@@ -12924,7 +12925,7 @@ __metadata:
     core-js: "npm:~3.47.0"
     core-js-compat: "npm:~3.2.1"
     create-react-context: "npm:~0.3.0"
-    css-loader: "npm:~3.4.2"
+    css-loader: "npm:~3.6.0"
     cypress: "npm:~15.7.0"
     d3: "npm:^7.8.2"
     dompurify: "npm:^3.2.4"
@@ -15117,7 +15118,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-modules-scope@npm:^2.1.1":
+"postcss-modules-scope@npm:^2.2.0":
   version: 2.2.0
   resolution: "postcss-modules-scope@npm:2.2.0"
   dependencies:
@@ -15325,7 +15326,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-value-parser@npm:^4.0.0, postcss-value-parser@npm:^4.0.2, postcss-value-parser@npm:^4.1.0, postcss-value-parser@npm:^4.2.0":
+"postcss-value-parser@npm:^4.0.0, postcss-value-parser@npm:^4.1.0, postcss-value-parser@npm:^4.2.0":
   version: 4.2.0
   resolution: "postcss-value-parser@npm:4.2.0"
   checksum: 10/e4e4486f33b3163a606a6ed94f9c196ab49a37a7a7163abfcd469e5f113210120d70b8dd5e33d64636f41ad52316a3725655421eb9a1094f1bcab1db2f555c62
@@ -15377,7 +15378,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^7.0.0, postcss@npm:^7.0.14, postcss@npm:^7.0.17, postcss@npm:^7.0.2, postcss@npm:^7.0.23, postcss@npm:^7.0.32, postcss@npm:^7.0.5, postcss@npm:^7.0.6":
+"postcss@npm:^7.0.0, postcss@npm:^7.0.14, postcss@npm:^7.0.17, postcss@npm:^7.0.2, postcss@npm:^7.0.32, postcss@npm:^7.0.5, postcss@npm:^7.0.6":
   version: 7.0.39
   resolution: "postcss@npm:7.0.39"
   dependencies:
@@ -16967,7 +16968,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"schema-utils@npm:^2.6.0, schema-utils@npm:^2.6.1, schema-utils@npm:^2.6.5":
+"schema-utils@npm:^2.6.1, schema-utils@npm:^2.6.5, schema-utils@npm:^2.7.0":
   version: 2.7.1
   resolution: "schema-utils@npm:2.7.1"
   dependencies:
