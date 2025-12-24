@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 export const dynamicFieldDataProps = PropTypes.shape({
   section: PropTypes.shape({
@@ -522,12 +523,11 @@ export const getCurrentDate = () => {
 
 // Get the current time and period
 export const getCurrentTimeAndPeriod = () => {
-  const now = new Date();
-  let hours = now.getHours();
-  const minutes = now.getMinutes().toString().padStart(2, '0');
-  const currentPeriod = hours >= 12 ? 'PM' : 'AM';
-  hours = (hours % 12 || 12).toString().padStart(2, '0'); // Convert 0 hours to 12 in 12-hour format
-  return { time: `${hours}:${minutes}`, period: currentPeriod };
+  const now = moment();
+  return {
+    time: now.format('hh:mm'),
+    period: now.format('A'),
+  };
 };
 
 export const uniqueNameValidator = (usedNames, currentName) => (value) => {
