@@ -484,18 +484,21 @@ const getSectionsInfo = (sections) => sections.map((section) => ({
   dialog_fields: getFieldsInfo(section.fields),
 }));
 
-const getTabsInfo = (tabs) =>
-  tabs.reduce((acc, tab) => {
+const getTabsInfo = (tabs) => {
+  let position = 0;
+  return tabs.reduce((acc, tab) => {
     const dialogGroups = getSectionsInfo(tab.sections);
     if (dialogGroups.length > 0) {
       acc.push({
         label: tab.name,
-        position: tab.tabId,
+        position,
         dialog_groups: dialogGroups,
       });
+      position += 1;
     }
     return acc;
   }, []);
+};
 
 const getDialogInfo = (data) => ({
   label: data.label,
