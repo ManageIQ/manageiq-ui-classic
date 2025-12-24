@@ -129,6 +129,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -154,6 +155,13 @@ exports[`Pxe Customization Template Form Component should render adding a new px
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -258,6 +266,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -284,6 +293,13 @@ exports[`Pxe Customization Template Form Component should render adding a new px
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }
@@ -2761,6 +2777,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -2786,6 +2803,13 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -2899,6 +2923,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -2925,6 +2950,13 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }
@@ -5429,6 +5461,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -5454,6 +5487,13 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -5567,6 +5607,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -5593,6 +5634,13 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }

@@ -128,6 +128,7 @@ exports[`Cloud Database form component should render "Edit" form 1`] = `
                 componentMapper={
                   Object {
                     "checkbox": [Function],
+                    "checkbox-tree": [Function],
                     "code-editor": [Function],
                     "date-picker": [Function],
                     "dual-list-select": [Function],
@@ -153,6 +154,13 @@ exports[`Cloud Database form component should render "Edit" form 1`] = `
                     "time-picker": [Function],
                     "tree-selector": [Function],
                     "tree-view": [Function],
+                    "tree-view-redux": Object {
+                      "$$typeof": Symbol(react.memo),
+                      "WrappedComponent": [Function],
+                      "compare": null,
+                      "displayName": "Connect(TreeView)",
+                      "type": [Function],
+                    },
                     "validate-credentials": [Function],
                     "wizard": [Function],
                   }
@@ -213,6 +221,7 @@ exports[`Cloud Database form component should render "Edit" form 1`] = `
                   componentMapper={
                     Object {
                       "checkbox": [Function],
+                      "checkbox-tree": [Function],
                       "code-editor": [Function],
                       "date-picker": [Function],
                       "dual-list-select": [Function],
@@ -239,6 +248,13 @@ exports[`Cloud Database form component should render "Edit" form 1`] = `
                       "time-picker": [Function],
                       "tree-selector": [Function],
                       "tree-view": [Function],
+                      "tree-view-redux": Object {
+                        "$$typeof": Symbol(react.memo),
+                        "WrappedComponent": [Function],
+                        "compare": null,
+                        "displayName": "Connect(TreeView)",
+                        "type": [Function],
+                      },
                       "validate-credentials": [Function],
                       "wizard": [Function],
                     }

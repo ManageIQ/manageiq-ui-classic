@@ -6936,12 +6936,12 @@ __metadata:
   linkType: hard
 
 "datatables.net-bs@npm:>=1.10.9":
-  version: 2.3.5
-  resolution: "datatables.net-bs@npm:2.3.5"
+  version: 2.3.6
+  resolution: "datatables.net-bs@npm:2.3.6"
   dependencies:
-    datatables.net: "npm:2.3.5"
+    datatables.net: "npm:2.3.6"
     jquery: "npm:>=1.7"
-  checksum: 10/4b97da1720dbad3be7a4f7179c25998703567c25943d4f305c4074bd1e57def524cff1c305884008fd1a5bc1a715a9f5cce39b974b9552e85fc6173096236188
+  checksum: 10/da83d40a24a3133e1ffbc275de6755b0875d2d3cecb9a7766a0f8b21d44c61e2d8f6345f963fd66f1a1c0d99547f65054e7b1a18cf3ebf765987a90f976d821a
   languageName: node
   linkType: hard
 
@@ -6986,12 +6986,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"datatables.net@npm:2.3.5, datatables.net@npm:^2":
-  version: 2.3.5
-  resolution: "datatables.net@npm:2.3.5"
+"datatables.net@npm:2.3.6, datatables.net@npm:^2":
+  version: 2.3.6
+  resolution: "datatables.net@npm:2.3.6"
   dependencies:
     jquery: "npm:>=1.7"
-  checksum: 10/86890fc433fc726f5f0ed86a63cdbcb579d3a11570d00bff44de26f3dace8f5a58d3cf9e35bd266966300e1bebe1bf9f5565b032a4f11990c80e21f029fe7ec5
+  checksum: 10/2fee5f0f52fe9a276bd2d7417ab50cc747679a92ffcc70aa7f9e076feca0e7f8ff98a3ed6a8dc1f2e560178f2eed23b0b214f0c3c43556f742d438cc4f32c0a6
   languageName: node
   linkType: hard
 
@@ -8668,11 +8668,11 @@ __metadata:
   linkType: hard
 
 "fastq@npm:^1.6.0":
-  version: 1.19.1
-  resolution: "fastq@npm:1.19.1"
+  version: 1.20.1
+  resolution: "fastq@npm:1.20.1"
   dependencies:
     reusify: "npm:^1.0.4"
-  checksum: 10/75679dc226316341c4f2a6b618571f51eac96779906faecd8921b984e844d6ae42fabb2df69b1071327d398d5716693ea9c9c8941f64ac9e89ec2032ce59d730
+  checksum: 10/ab2fe3a7a108112e7752cfe7fc11683c21e595913a6a593ad0b4415f31dddbfc283775ab66f2c8ccea6ab7cfc116157cbddcfae9798d9de98d08fe0a2c3e97b2
   languageName: node
   linkType: hard
 
@@ -12967,6 +12967,7 @@ __metadata:
     react: "npm:~16.14.0"
     react-accessible-treeview: "npm:^2.10.0"
     react-bootstrap: "npm:~0.33.0"
+    react-checkbox-tree: "npm:^1.8.0"
     react-codemirror2: "npm:^8.0.0"
     react-dom: "npm:~16.14.0"
     react-markdown: "npm:~6.0.3"
@@ -13621,7 +13622,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^3.3.11":
+"nanoid@npm:^3.0.0, nanoid@npm:^3.3.11":
   version: 3.3.11
   resolution: "nanoid@npm:3.3.11"
   bin:
@@ -15782,6 +15783,20 @@ __metadata:
     react: ">=16.3.0"
     react-dom: ">=16.3.0"
   checksum: 10/74df0f7ddee25e55c0b015ca989b6138684540a4fb9f625df62ee787545ee9f385ed59d3daa6fb8cfbfa280f4134d0053e4b1611eed61c707c7540fff8367d11
+  languageName: node
+  linkType: hard
+
+"react-checkbox-tree@npm:^1.8.0":
+  version: 1.8.0
+  resolution: "react-checkbox-tree@npm:1.8.0"
+  dependencies:
+    classnames: "npm:^2.2.5"
+    lodash: "npm:^4.17.10"
+    nanoid: "npm:^3.0.0"
+    prop-types: "npm:^15.5.8"
+  peerDependencies:
+    react: ^15.3.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 10/700e87c0d6b1c7a15e104d0ef01ac1c15b8eb74905cd2a3b1e087a1c6fa596e4a58894ef553d5f8651782d7012c07eab87f9646f44def3569163a89c1cbb0f71
   languageName: node
   linkType: hard
 
@@ -18273,11 +18288,11 @@ __metadata:
   linkType: hard
 
 "systeminformation@npm:^5.27.14":
-  version: 5.27.16
-  resolution: "systeminformation@npm:5.27.16"
+  version: 5.27.17
+  resolution: "systeminformation@npm:5.27.17"
   bin:
     systeminformation: lib/cli.js
-  checksum: 10/0c1a6c14525ba43f4f1fa57fde3beedf59132a121f262461eae4fdea3c62d06d93d2af4c8dc0f79fddc48325ff331a415b171ba024a2bbc2e3ce74871a6261be
+  checksum: 10/ce905987193da071c4c5a77d9bc101449c0ff799998661f9da74097a040415d77ce912b7ec30e01459677aab37049df53ed22ecd337763456b4c5c0e65a7260a
   conditions: (os=darwin | os=linux | os=win32 | os=freebsd | os=openbsd | os=netbsd | os=sunos | os=android)
   languageName: node
   linkType: hard

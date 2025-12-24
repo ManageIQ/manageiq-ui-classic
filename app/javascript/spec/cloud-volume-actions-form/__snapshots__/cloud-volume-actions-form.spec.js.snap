@@ -92,6 +92,7 @@ exports[`Cloud Volume Backup Create form component should render the cloud volum
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -117,6 +118,13 @@ exports[`Cloud Volume Backup Create form component should render the cloud volum
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -187,6 +195,7 @@ exports[`Cloud Volume Backup Create form component should render the cloud volum
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -213,6 +222,13 @@ exports[`Cloud Volume Backup Create form component should render the cloud volum
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }
@@ -1636,6 +1652,7 @@ exports[`Cloud Volume Backup Create form component when adding a new backup of c
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -1661,6 +1678,13 @@ exports[`Cloud Volume Backup Create form component when adding a new backup of c
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -1731,6 +1755,7 @@ exports[`Cloud Volume Backup Create form component when adding a new backup of c
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -1757,6 +1782,13 @@ exports[`Cloud Volume Backup Create form component when adding a new backup of c
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }
@@ -3160,6 +3192,7 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -3185,6 +3218,13 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -3235,6 +3275,7 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -3261,6 +3302,13 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }
@@ -4257,6 +4305,7 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -4282,6 +4331,13 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -4332,6 +4388,7 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -4358,6 +4415,13 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }
@@ -5346,6 +5410,7 @@ exports[`Cloud Volume Snapshot Create form component should render the cloud vol
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -5371,6 +5436,13 @@ exports[`Cloud Volume Snapshot Create form component should render the cloud vol
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -5413,6 +5485,7 @@ exports[`Cloud Volume Snapshot Create form component should render the cloud vol
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -5439,6 +5512,13 @@ exports[`Cloud Volume Snapshot Create form component should render the cloud vol
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }
@@ -6201,6 +6281,7 @@ exports[`Cloud Volume Snapshot Create form component when adding a new snapshot 
         componentMapper={
           Object {
             "checkbox": [Function],
+            "checkbox-tree": [Function],
             "code-editor": [Function],
             "date-picker": [Function],
             "dual-list-select": [Function],
@@ -6226,6 +6307,13 @@ exports[`Cloud Volume Snapshot Create form component when adding a new snapshot 
             "time-picker": [Function],
             "tree-selector": [Function],
             "tree-view": [Function],
+            "tree-view-redux": Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(TreeView)",
+              "type": [Function],
+            },
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -6268,6 +6356,7 @@ exports[`Cloud Volume Snapshot Create form component when adding a new snapshot 
           componentMapper={
             Object {
               "checkbox": [Function],
+              "checkbox-tree": [Function],
               "code-editor": [Function],
               "date-picker": [Function],
               "dual-list-select": [Function],
@@ -6294,6 +6383,13 @@ exports[`Cloud Volume Snapshot Create form component when adding a new snapshot 
               "time-picker": [Function],
               "tree-selector": [Function],
               "tree-view": [Function],
+              "tree-view-redux": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(TreeView)",
+                "type": [Function],
+              },
               "validate-credentials": [Function],
               "wizard": [Function],
             }
