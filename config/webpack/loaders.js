@@ -24,7 +24,8 @@ module.exports = [
       loader: 'babel-loader',
       options: babelOptions,
     }],
-    exclude: /node_modules/,
+    // Explicitly include @carbon packages and its nested es-toolkit package to be transpiled
+    exclude: /node_modules\/(?!(@carbon|es-toolkit))/,
   },
 
   {
