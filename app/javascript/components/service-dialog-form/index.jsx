@@ -305,10 +305,9 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
     const newTabId = nextTabId.current;
     nextTabId.current += 1;
     data.formFields.splice(-1, 0, defaultTabContents(newTabId));
-    const newFormFields = data.formFields.sort((t1, t2) => t1.tabId - t2.tabId);
     setData({
       ...data,
-      formFields: [...newFormFields],
+      formFields: [...data.formFields],
     });
   };
 
@@ -602,17 +601,20 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
       dialog_fields: formatDialogFields(section.fields),
     }));
 
-  const formatDialogTabs = (tabs) =>
-    tabs.reduce((acc, tab, _index) => {
+  const formatDialogTabs = (tabs) => {
+    let position = 0;
+    return tabs.reduce((acc, tab) => {
       if (tab.tabId !== 'new') {
         acc.push({
           label: tab.name,
-          position: acc.length,
+          position,
           dialog_groups: formatDialogGroups(tab.sections),
         });
+        position += 1;
       }
       return acc;
     }, []);
+  };
 
   const prepareDialogFormData = () => ({
     label: data.label,
