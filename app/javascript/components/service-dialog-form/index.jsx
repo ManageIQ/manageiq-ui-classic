@@ -466,9 +466,35 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
   const renderTabs = () => data.formFields.map((tab, tabPosition) => (
     <Tab
       key={`tab${tabPosition.toString()}`}
-      draggable
-      onDragStart={(event) => onSectionAction({ event, type: SD_ACTIONS.onDragStartTab, tab, tabPosition })}
-      // onDragEnter={(event) => onSectionAction({ event, type: SD_ACTIONS.onDragEnterTab, tab, tabPosition })}
+      draggable={tab.tabId !== 'new'}
+      onDragStart={(event) => {
+        if (tab.tabId !== 'new') {
+          onSectionAction({ event, type: SD_ACTIONS.onDragStartTab, tab, tabPosition });
+        }
+      }}
+      onDragEnter={(event) => {
+        if (tab.tabId !== 'new' && draggedItem.current && draggedItem.current.type === dragItems.TAB) {
+          event.preventDefault();
+          onSectionAction({ event, type: SD_ACTIONS.onDragEnterTab, tab, tabPosition });
+        }
+      }}
+      onDragOver={(event) => {
+        if (tab.tabId !== 'new' && draggedItem.current && draggedItem.current.type === dragItems.TAB) {
+          event.preventDefault();
+        }
+      }}
+      onDrop={(event) => {
+        if (tab.tabId !== 'new' && draggedItem.current && draggedItem.current.type === dragItems.TAB) {
+          event.preventDefault();
+          const formFields = [...data.formFields];
+          dropTab(formFields, draggedItem.current, dragEnterItem.current);
+          setData({
+            ...data,
+            formFields,
+          });
+          resetDragRefs();
+        }
+      }}
       label={tab.name}
       onClick={() => onTabSelect(tab.tabId)}
     >
