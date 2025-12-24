@@ -591,43 +591,52 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
     };
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    
-    // Prepare the dialog data in the format expected by the backend
-    const dialogFormData = {
-      label: data.label,
-      description: data.description,
-      dialog_tabs: data.formFields
-        .filter((tab) => tab.tabId !== 'new') // Filter out the "Create new tab" option
-        .map((tab, index) => ({
-          label: tab.name,
-          position: index,
-          dialog_groups: tab.sections.map((section, sectionIndex) => ({
-            label: section.title,
-            description: section.description || '',
-            position: sectionIndex,
-            dialog_fields: section.fields.map((field, fieldIndex) => cleanupField({
-              ...field,
-              position: fieldIndex
-            }))
-          }))
-        }))
-    };
+  const formatDialogFields = (fields) =>
+    fields.map((field, fieldIndex) => cleanupField({ ...field, position: fieldIndex }));
 
-    // If dialogData contains an id and dialogAction.action is 'edit', we're updating an existing dialog
-    if (dialogData && dialogData.id && dialogAction && dialogAction.action === 'edit') {
-      // Update existing dialog using the API endpoint
-      API.post(`/api/service_dialogs/${dialogData.id}`, {
-        action: 'edit',
-        resource: dialogFormData
-      }).then(() => {
-        navigateToExplorer();
-      }).catch((error) => {
+  const formatDialogGroups = (sections) =>
+    sections.map((section, sectionIndex) => ({
+      label: section.title,
+      description: section.description || '',
+      position: sectionIndex,
+      dialog_fields: formatDialogFields(section.fields),
+    }));
+
+  const formatDialogTabs = (tabs) =>
+    tabs
+      .filter((tab) => tab.tabId !== 'new')
+      .map((tab, index) => ({
+        label: tab.name,
+        position: index,
+        dialog_groups: formatDialogGroups(tab.sections),
+      }));
+
+  const prepareDialogFormData = () => ({
+    label: data.label,
+    description: data.description,
+    dialog_tabs: formatDialogTabs(data.formFields),
+  });
+
+  const isEditMode = () =>
+    dialogData && dialogData.id && dialogAction && dialogAction.action === 'edit';
+
+  const updateDialog = (dialogFormData) =>
+    API.post(`/api/service_dialogs/${dialogData.id}`, {
+      action: 'edit',
+      resource: dialogFormData,
+    })
+      .then(navigateToExplorer)
+      .catch((error) => {
         console.error('Error updating dialog:', error);
       });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const dialogFormData = prepareDialogFormData();
+
+    if (isEditMode()) {
+      updateDialog(dialogFormData);
     } else {
-      // Create new dialog
       saveServiceDialog(data);
     }
   };
