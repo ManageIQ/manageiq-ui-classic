@@ -603,13 +603,16 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
     }));
 
   const formatDialogTabs = (tabs) =>
-    tabs
-      .filter((tab) => tab.tabId !== 'new')
-      .map((tab, index) => ({
-        label: tab.name,
-        position: index,
-        dialog_groups: formatDialogGroups(tab.sections),
-      }));
+    tabs.reduce((acc, tab, _index) => {
+      if (tab.tabId !== 'new') {
+        acc.push({
+          label: tab.name,
+          position: acc.length,
+          dialog_groups: formatDialogGroups(tab.sections),
+        });
+      }
+      return acc;
+    }, []);
 
   const prepareDialogFormData = () => ({
     label: data.label,
