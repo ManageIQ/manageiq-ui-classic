@@ -1,13 +1,14 @@
-#main-menu {
-  @import '~@carbon/themes/scss/themes';
-  $carbon--theme: $carbon--theme--g90;
+@use '@carbon/react/scss/themes' as *;
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
 
-  @include carbon--theme();
+#main-menu {
+  @include theme.theme($g90);
 
   @import './menu-colors.scss';
 
   *:focus {
-    outline-color: $focus;
+    outline-color: $focus-outline;
   }
 
   list-style: none;
@@ -92,7 +93,7 @@
 
   .menu-user,
   .menu-group li {
-    @include carbon--type-style('helper-text-01');
+    @include type-style('helper-text-01');
   }
 
   .vertical-center {
@@ -164,8 +165,8 @@
       }
 
       .bx--assistive-text {
-        background-color: $inverse-01;
-        color: $text-04;
+        background-color: $menu-tooltip-border;
+        color: $menu-tooltip-assistive-text-font-color;
       }
     }
   }

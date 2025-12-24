@@ -1,3 +1,5 @@
+@use '@carbon/styles/scss/components/button';
+
 #code-section {
   .bx--form-item {
     margin-bottom: 15px;
@@ -184,20 +186,20 @@
     }
 
     .file-button:hover {
-      background-color: $hover-primary;
-      border-color: $hover-primary;
+      background-color: button.$button-primary-hover;
+      border-color: button.$button-primary-hover;
 
       .file-button-label {
-        background-color: $hover-primary;
+        background-color: button.$button-primary-hover;
       }
     }
 
     .file-button:active {
-      background-color: $active-primary;
-      border-color: $active-primary;
+      background-color: button.$button-primary-active;
+      border-color: button.$button-primary-active;
 
       .file-button-label {
-        background-color: $active-primary;
+        background-color: button.$button-primary-active;
       }
     }
 

@@ -1,3 +1,5 @@
+@use '@carbon/react/scss/theme' as *;
+
 .utilization-trend-chart-pf {
   margin-bottom: 50px;
 
@@ -129,7 +131,7 @@
   }
 
   .trend-footer-pf {
-    border-top: 1px solid $selected-ui;
+    border-top: 1px solid $layer-selected-01;
     border-bottom: 1px solid #d1d1d1;
     margin: 0 -20px -20px;
     padding: 20px;
