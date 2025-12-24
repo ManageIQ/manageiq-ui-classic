@@ -1763,51 +1763,48 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-driven-forms/carbon-component-mapper@npm:~3.18.8":
-  version: 3.18.11
-  resolution: "@data-driven-forms/carbon-component-mapper@npm:3.18.11"
+"@data-driven-forms/carbon-component-mapper@npm:~4.1.2":
+  version: 4.1.4
+  resolution: "@data-driven-forms/carbon-component-mapper@npm:4.1.4"
   dependencies:
-    "@data-driven-forms/common": "npm:^3.18.11"
+    "@data-driven-forms/common": "npm:*"
     clsx: "npm:^1.1.1"
     lodash: "npm:^4.17.21"
-    prop-types: "npm:>=15.7.2"
     react-jss: "npm:^10.5.0"
   peerDependencies:
-    react: ^16.13.1 || ^17.0.2 || ^18.0.0
-    react-dom: ^16.13.1 || ^17.0.2 || ^18.0.0
-  checksum: 10/d8d2e54d7d7bff5b4755341f6903cc0ea7aa36d68fbd89089d958fc40fc3ec86dc2fb94a5f8712093b37c198e4cd10c4fe8a7de620063fbead6eb8e63147a104
+    react: ^17.0.2 || ^18.0.0 || ^19.0.0
+    react-dom: ^17.0.2 || ^18.0.0 || ^19.0.0
+  checksum: 10/f352f9315e495c8d0569f9647e68af13ad16643e5466595c08fd1f61fd9a61a012f7fcaa3b456d058b42e7827798a101ae354119804eaa62104a26e6e451abf0
   languageName: node
   linkType: hard
 
-"@data-driven-forms/common@npm:^3.18.11":
-  version: 3.23.5
-  resolution: "@data-driven-forms/common@npm:3.23.5"
+"@data-driven-forms/common@npm:*":
+  version: 4.1.4
+  resolution: "@data-driven-forms/common@npm:4.1.4"
   dependencies:
     clsx: "npm:^1.0.4"
     lodash: "npm:^4.17.15"
-    prop-types: "npm:^15.7.2"
   peerDependencies:
-    react: ^16.13.1 || ^17.0.2 || ^18.0.0
-    react-dom: ^16.13.1 || ^17.0.2 || ^18.0.0
-  checksum: 10/7cf3c334a60bee18a481d7245d1fe67b5789dcb685de9192a99b06ab0adfcd4aa8536b3e48253ad837f5edafda70eb2a155a88ed5ed4136e96aada274138e223
+    react: ^17.0.2 || ^18.0.0 || ^19.0.0
+    react-dom: ^17.0.2 || ^18.0.0 || ^19.0.0
+  checksum: 10/261b826efa1f2ca3030fb08f0bcaf0ebfd5403b0f5b92e1609273f2687cef3347a3fa45085dfbb8ef3dba3f5f4177660cd53aa72a81b062baafdb0d32c62cf8b
   languageName: node
   linkType: hard
 
-"@data-driven-forms/react-form-renderer@npm:~3.18.8":
-  version: 3.18.11
-  resolution: "@data-driven-forms/react-form-renderer@npm:3.18.11"
+"@data-driven-forms/react-form-renderer@npm:~4.1.2":
+  version: 4.1.4
+  resolution: "@data-driven-forms/react-form-renderer@npm:4.1.4"
   dependencies:
     final-form: "npm:^4.20.4"
     final-form-arrays: "npm:^3.0.2"
     final-form-focus: "npm:^1.1.2"
     lodash: "npm:^4.17.15"
-    prop-types: "npm:^15.7.2"
     react-final-form: "npm:^6.5.0"
     react-final-form-arrays: "npm:^3.1.1"
   peerDependencies:
-    react: ^16.13.1 || ^17.0.2 || ^18.0.0
-    react-dom: ^16.13.1 || ^17.0.2 || ^18.0.0
-  checksum: 10/157e43769e1436d34e43adf1ca4bf0e65ed5176f4fa4743646413f595b91ca6cec28f47ad99ac15d069451e49e6af99a3af8f366f9a725523504ce6e9ed5be0d
+    react: ^17.0.2 || ^18.0.0 || ^19.0.0
+    react-dom: ^17.0.2 || ^18.0.0 || ^19.0.0
+  checksum: 10/4b6a19b80f5ed722eedb46acb0ca340e7f6906f9e9549435d141a336aac7e9d0fc21e9aae72b1473a5aa8c6e960ad5cbf03a6b6ff161131ed610fd5ff7777d26
   languageName: node
   linkType: hard
 
@@ -13752,8 +13749,8 @@ __metadata:
     "@carbon/icons-react": "npm:~10.49.5"
     "@carbon/react": "npm:~1.99.0"
     "@carbon/themes": "npm:~11.64.0"
-    "@data-driven-forms/carbon-component-mapper": "npm:~3.18.8"
-    "@data-driven-forms/react-form-renderer": "npm:~3.18.8"
+    "@data-driven-forms/carbon-component-mapper": "npm:~4.1.2"
+    "@data-driven-forms/react-form-renderer": "npm:~4.1.2"
     "@manageiq/font-fabulous": "npm:~1.0.5"
     "@manageiq/ui-components": "npm:~1.6.1"
     "@novnc/novnc": "npm:~1.2.0"
@@ -16398,7 +16395,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:>=15.7.2, prop-types@npm:^15.5.10, prop-types@npm:^15.5.8, prop-types@npm:^15.6.0, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.5.10, prop-types@npm:^15.5.8, prop-types@npm:^15.6.0, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
