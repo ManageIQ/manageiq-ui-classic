@@ -485,13 +485,17 @@ const getSectionsInfo = (sections) => sections.map((section) => ({
 }));
 
 const getTabsInfo = (tabs) =>
-  tabs
-    .map((tab) => ({
-      label: tab.name,
-      position: tab.tabId,
-      dialog_groups: getSectionsInfo(tab.sections),
-    }))
-    .filter((tabInfo) => tabInfo.dialog_groups.length > 0);
+  tabs.reduce((acc, tab) => {
+    const dialogGroups = getSectionsInfo(tab.sections);
+    if (dialogGroups.length > 0) {
+      acc.push({
+        label: tab.name,
+        position: tab.tabId,
+        dialog_groups: dialogGroups,
+      });
+    }
+    return acc;
+  }, []);
 
 const getDialogInfo = (data) => ({
   label: data.label,
@@ -500,14 +504,9 @@ const getDialogInfo = (data) => ({
   dialog_tabs: getTabsInfo(data.formFields),
 });
 
-// get payload for create
-const payloadForSave = (data) => ({
-  action: 'create',
-  resource: getDialogInfo(data),
-});
-
 export const formattedCatalogPayload = (data) => {
-  const payload = payloadForSave(data);
+  // payload for create
+  const payload = { action: 'create', resource: getDialogInfo(data) };
   return payload;
 };
 
@@ -533,12 +532,12 @@ export const getCurrentTimeAndPeriod = () => {
 export const uniqueNameValidator = (usedNames, currentName) => (value) => {
   if (!value) return undefined;
 
-  const trimmed = value.trim().toLowerCase();
+  const trimmedValue = value.trim().toLowerCase();
+  const currentNameLower = currentName.toLowerCase();
 
-  const isDuplicate = usedNames
-    .filter((name) => name.toLowerCase() !== currentName.toLowerCase())
-    .map((name) => name.toLowerCase())
-    .includes(trimmed);
+  const isDuplicate = usedNames.some(
+    (name) => name.toLowerCase() === trimmedValue && name.toLowerCase() !== currentNameLower
+  );
 
   return isDuplicate ? __('Name must be unique.') : undefined;
 };
