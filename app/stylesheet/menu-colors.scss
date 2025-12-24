@@ -1,24 +1,31 @@
-$rail-primary-bg: $ui-background; // carbon--gray-90
-$rail-secondary-bg: $ui-01; // carbon--gray-80
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/styles/scss/components/button';
+$rail-primary-bg: $background; // carbon--gray-90
+$rail-secondary-bg: $layer-01; // carbon--gray-80
 
-$row-active-primary-bg: $hover-row; // carbon--gray-80
-$row-active-secondary-bg: $hover-secondary; // carbon--gray-60
+$row-active-primary-bg: $layer-hover-01; // carbon--gray-80
+$row-active-secondary-bg: $layer-03; // carbon--gray-60
 
-$row-fg-text: $text-01; // carbon--gray-10
-$row-fg-icon: $icon-01; // carbon--gray-10
+$row-fg-text: $text-primary; // carbon--gray-10
+$row-fg-icon: $icon-primary; // carbon--gray-10
 
-$user-fg: $text-05; // $carbon--gray-50
+$user-fg: $text-helper; // $carbon--gray-50
 
-$divider-fg: $disabled-02; // $carbon--gray-60;
+$divider-fg: $text-placeholder; // $carbon--gray-60;
 
-$find-bg: $carbon--gray-80;
-$find-placeholder-fg: $carbon--gray-50;
+$find-bg: $layer-01;
+$find-placeholder-fg: $text-helper;
 
-$clear-btn-outline: $interactive-03;
-$clear-btn-fill: $ui-05;
-$clear-btn-background: $ui-01;
-$clear-btn-hover-background: $hover-ui;
-$clear-btn-active: $ui-02;
+$clear-btn-outline: button.$button-tertiary;
+$clear-btn-fill: $layer-selected-inverse;
+$clear-btn-background: $layer-01;
+$clear-btn-hover-background: $background-hover;
+$clear-btn-active: $layer-02;
+
+$focus-outline: $focus;
+
+$menu-tooltip-border: $icon-inverse;
+$menu-tooltip-assistive-text-font-color: $text-on-color;
 
 // unused, theme default
 // $row-selected-border: $carbon--blue-60;

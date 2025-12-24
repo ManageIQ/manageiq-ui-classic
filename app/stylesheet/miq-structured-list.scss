@@ -1,8 +1,9 @@
-.miq-structured-list {
-  @import '~@carbon/themes/scss/themes';
-  $carbon--theme: $carbon--theme--white;
+@use '@carbon/react/scss/themes' as *;
+@use '@carbon/react/scss/theme';
+@use '@carbon/styles/scss/components/button';
 
-  @include carbon--theme();
+.miq-structured-list {
+  @include theme.theme($white);
 
   margin-bottom: 0;
 
@@ -21,7 +22,7 @@
     cursor: pointer;
 
     &:hover {
-      background: $ui-01;
+      background: theme.$layer-01;
     }
   }
 
@@ -78,17 +79,17 @@
       align-items: flex-start;
 
       &.color_black {
-        color: $text-primary;
+        color: theme.$text-primary;
       }
 
       &.color_red {
-        color: $button-danger-primary;
+        color: button.$button-danger-primary;
       }
     }
 
     .cell_link {
       display: flex;
-      color: $link-01;
+      color: theme.$link-primary;
       cursor: pointer;
       text-decoration: none;
     }
@@ -162,10 +163,10 @@
   }
 
   &.bordered-list {
-    border: 1px solid $selected-ui;
+    border: 1px solid theme.$layer-selected-01;
 
     .bx--structured-list-row {
-      border-bottom: 1px solid $selected-ui;
+      border-bottom: 1px solid theme.$layer-selected-01;
 
       .label_header {
         padding-left: 0.3rem;
@@ -213,12 +214,12 @@
 }
 
 .miq-structured-list-accordion {
-  border: 1px solid $selected-ui;
+  border: 1px solid theme.$layer-selected-01;
   margin-bottom: 15px;
 
   li {
-    button.bx--accordion__heading{
-      background: $selected-ui;
+    button.bx--accordion__heading {
+      background: theme.$layer-selected-01;
     }
 
     .bx--accordion__content {
