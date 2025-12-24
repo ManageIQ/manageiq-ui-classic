@@ -8079,10 +8079,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-angular@npm:~4.0.1":
-  version: 4.0.1
-  resolution: "eslint-plugin-angular@npm:4.0.1"
-  checksum: 10/13af3130e14e500284aac17548452afaca357ccdea040d3f91aee7323a26cd4c0918dcf75ecfe9f56833d2145f8566cdbb5c8a52a1ee170d5af51a7a45d80a2c
+"eslint-plugin-angular@npm:~4.1.0":
+  version: 4.1.0
+  resolution: "eslint-plugin-angular@npm:4.1.0"
+  checksum: 10/3da31d3e37255352103429f9665e2c20bac1a842f52136b0b7785efbab11a8e711d708eb6609beb94601bd1561dd690e848f82d1cf6ba0445feb5d2580971331
   languageName: node
   linkType: hard
 
@@ -12929,7 +12929,7 @@ __metadata:
     eslint: "npm:~7.11.0"
     eslint-config-airbnb: "npm:~18.2.0"
     eslint-config-angular: "npm:~0.5.0"
-    eslint-plugin-angular: "npm:~4.0.1"
+    eslint-plugin-angular: "npm:~4.1.0"
     eslint-plugin-import: "npm:~2.22.1"
     eslint-plugin-jest: "npm:~24.1.0"
     eslint-plugin-jsx-a11y: "npm:~6.4.1"
