@@ -47,11 +47,20 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
   const draggedItem = useRef(null); /** Stores the information of component being dragged. */
   const hoverItem = useRef(null); /** Stores the tab and section position during the drop event. */
   const nextSectionId = useRef(1); /** Counter for generating unique section IDs */
+  const nextTabId = useRef(1); /** Counter for generating unique tab IDs */
 
   // Helper function to calculate the maximum section ID across all tabs
   const getMaxSectionId = (tabs) => tabs.reduce((max, tab) => {
     const tabMax = tab.sections ? Math.max(...tab.sections.map((s) => s.sectionId), 0) : 0;
     return Math.max(max, tabMax);
+  }, 0);
+
+  // Helper function to calculate the maximum tab ID
+  const getMaxTabId = (tabs) => tabs.reduce((max, tab) => {
+    if (tab.tabId !== 'new' && typeof tab.tabId === 'number') {
+      return Math.max(max, tab.tabId);
+    }
+    return max;
   }, 0);
 
   // State to store the dialog data
@@ -117,6 +126,8 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
 
               // Update nextSectionId to be higher than any existing sectionId
               nextSectionId.current = getMaxSectionId(formattedTabs) + 1;
+              // Update nextTabId to be higher than any existing tabId
+              nextTabId.current = getMaxTabId(formattedTabs) + 1;
 
               // Update the state with the fetched data
               setData({
@@ -160,6 +171,8 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
 
       // Update nextSectionId to be higher than any existing sectionId
       nextSectionId.current = getMaxSectionId(formattedTabs) + 1;
+      // Update nextTabId to be higher than any existing tabId
+      nextTabId.current = getMaxTabId(formattedTabs) + 1;
 
       setData({
         list: dynamicComponents,
@@ -289,7 +302,9 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
    * Last item will always be 'Create new tab'.
    */
   const addTab = () => {
-    data.formFields.splice(-1, 0, defaultTabContents(data.formFields.length - 1));
+    const newTabId = nextTabId.current;
+    nextTabId.current += 1;
+    data.formFields.splice(-1, 0, defaultTabContents(newTabId));
     const newFormFields = data.formFields.sort((t1, t2) => t1.tabId - t2.tabId);
     setData({
       ...data,
@@ -465,7 +480,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
   /** Function to render the tabs from the tabLabels props */
   const renderTabs = () => data.formFields.map((tab, tabPosition) => (
     <Tab
-      key={`tab${tabPosition.toString()}`}
+      key={`tab${tab.tabId.toString()}`}
       draggable={tab.tabId !== 'new'}
       onDragStart={(event) => {
         if (tab.tabId !== 'new') {
