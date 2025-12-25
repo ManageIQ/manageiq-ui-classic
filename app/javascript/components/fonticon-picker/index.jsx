@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Button } from 'carbon-components-react';
-import { ChevronDown32 } from '@carbon/icons-react';
+import { Button } from '@carbon/react';
+import { ChevronDown } from '@carbon/react/icons';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -28,18 +28,28 @@ const FontIconPicker = ({ iconTypes, selected, onChangeURL }) => {
 
   return (
     <div className="fonticon-picker">
-      <Button onClick={show} kind="tertiary" renderIcon={ChevronDown32} className="icon-button">
-        { selectedIcon ? (<i id="selected-icon" className={classNames('fa-lg', selectedIcon)} />) : __('No icon') }
+      <Button
+        onClick={show}
+        kind="tertiary"
+        renderIcon={(props) => <ChevronDown size={32} {...props} />}
+        className="icon-button"
+      >
+        {selectedIcon ? (
+          <i id="selected-icon" className={classNames('fa-lg', selectedIcon)} />
+        ) : (
+          __('No icon')
+        )}
       </Button>
-      <IconModal
-        showModal={showModal}
-        hide={hide}
-        selectedIcon={selectedIcon}
-        activeIcon={activeIcon}
-        iconTypes={iconTypes}
-        onModalApply={onModalApply}
-        setState={setState}
-      />
+      {showModal && (
+        <IconModal
+          hide={hide}
+          selectedIcon={selectedIcon}
+          activeIcon={activeIcon}
+          iconTypes={iconTypes}
+          onModalApply={onModalApply}
+          setState={setState}
+        />
+      )}
     </div>
   );
 };
