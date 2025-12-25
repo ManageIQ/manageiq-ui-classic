@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { StructuredListCell } from 'carbon-components-react';
+import { StructuredListCell } from '@carbon/react';
 import { isObject, isArray } from '../../helpers';
 import MiqStructuredListText from '../value-tags/miq-structured-list-text';
 import MiqStructuredListContent from '../miq-structured-list-content';

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Checkbox, TextArea, Dropdown } from 'carbon-components-react';
+import { Checkbox, TextArea, Dropdown } from '@carbon/react';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import { DynamicReactComponents, InputTypes } from '../../helpers';
 import MiqMarkdown from '../../../MiqMarkdown';
@@ -33,6 +33,7 @@ const MiqStructuredListInputs = ({ value, action }) => {
       selectedItem={selectedItem}
       onChange={(changedItem) => action(changedItem)}
       items={items}
+      titleText={label}
     />
   );
 
