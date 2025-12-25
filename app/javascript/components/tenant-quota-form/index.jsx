@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import { Button } from 'carbon-components-react';
+import { Button } from '@carbon/react';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import MiqDataTable from '../miq-data-table';
 import { createRows, setupForm, prepareData } from './helper';
@@ -76,7 +76,7 @@ const TenantQuotaForm = ({ recordId }) => {
         rows={createRows(initialValues, enforced, setEnforced, values, setValues, setDisabled, setChanged, invalid, setInvalid)}
         onCellClick={() => {}}
       />
-      <div className="bx--btn-set">
+      <div className="cds--btn-set">
         <Button kind="primary" tabIndex={0} disabled={disabled} type="submit" onClick={onSubmit}>
           {submitLabel}
         </Button>
