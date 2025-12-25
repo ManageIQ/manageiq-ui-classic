@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from 'carbon-components-react';
+import { Button } from '@carbon/react';
 import { TOGGLE_DRAWER_VISIBILITY } from '../../miq-redux/actions/notifications-actions';
 import MiqIcon from '../../menu/icon';
 import NotificationDrawer from '../notification-drawer/notification-drawer';
@@ -37,7 +37,6 @@ export const NotificationsToggle = ({ jsRequest }) => {
         size="sm"
       >
         {__('Notifications')}
-        {' '}
         <MiqIcon icon={unreadCount ? 'carbon--NotificationNew' : 'carbon--Notification'} />
       </Button>
       <NotificationDrawer jsRequest={jsRequest} />
