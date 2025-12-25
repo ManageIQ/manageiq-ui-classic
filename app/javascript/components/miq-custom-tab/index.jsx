@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Tabs, Tab } from 'carbon-components-react';
+import { Tabs, TabList, Tab } from '@carbon/react';
 import { useDispatch } from 'react-redux';
 import { miqCustomTabActions } from '../../miq-redux/actions/miq-custom-tab-actions';
 import { labelConfig, tabText } from './helper';
@@ -10,8 +10,8 @@ const MiqCustomTab = ({
 }) => {
   const dispatch = useDispatch();
   const [data, setData] = useState({ loading: false });
-  const activeTabClassName = 'bx--tabs--scrollable__nav-item--selected';
-  const selectedClassName = 'bx--tabs__nav-item--selected';
+  const activeTabClassName = 'cds--tabs__nav-item--selected';
+  const tabListButtonClassName = 'cds--tabs__nav-item';
 
   /** Labels used for a Tab found from the 'type'. */
   const selectedLabels = labelConfig(type);
@@ -100,15 +100,16 @@ const MiqCustomTab = ({
 
   /** Function to render the tabs from the tabLabels props */
   const renderTabs = () => tabLabels.map((label) => (
-    <Tab key={`tab${label}`} label={`${tabText(selectedLabels, label)}`} onClick={() => onTabSelect(label)} />
+    <Tab key={`tab${label}`} onClick={() => onTabSelect(label)}>
+      {tabText(selectedLabels, label)}
+    </Tab>
   ));
 
   useEffect(() => {
     if (activeTab) {
-      let elements = [...document.getElementsByClassName('bx--tabs--scrollable__nav-item')];
+      let elements = [...document.getElementsByClassName(tabListButtonClassName)];
       elements.forEach((element) => {
         element.classList.remove(activeTabClassName);
-        element.classList.remove(selectedClassName);
       });
       if (subtab !== undefined && subtab !== -1) {
         elements[tabLength].classList.remove(activeTabClassName);
@@ -116,13 +117,15 @@ const MiqCustomTab = ({
       }
       elements[activeTab].classList.add(activeTabClassName);
 
-      elements = [...document.getElementsByClassName('bx--tabs--scrollable__nav-item')];
+      elements = [...document.getElementsByClassName(tabListButtonClassName)];
     }
   }, [data.loading]);
 
   return (
-    <Tabs className="miq_custom_tabs" id={tabIdentifier('')}>
-      {renderTabs()}
+    <Tabs selectedIndex={activeTab}>
+      <TabList aria-label="Custom tabs" id={tabIdentifier('')} className="miq_custom_tabs">
+        {renderTabs()}
+      </TabList>
     </Tabs>
   );
 };
