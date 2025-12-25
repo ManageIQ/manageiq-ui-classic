@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Camera16, ChevronRight16, ChevronDown16, VirtualMachine16,
-} from '@carbon/icons-react';
+  Camera, ChevronRight, ChevronDown, VirtualMachine,
+} from '@carbon/react/icons';
 import TreeView, { flattenTree } from 'react-accessible-treeview';
 import './styles.css';
 import PropTypes from 'prop-types';
@@ -100,18 +100,18 @@ const SnapshotTree = ({ nodes, setCurrentSnapshot }) => {
   }, []);
 
   const ArrowIcon = (isOpen) => {
-    let icon = <ChevronRight16 />;
+    let icon = <ChevronRight size={16} />;
     if (isOpen && isOpen.isOpen) {
-      icon = <ChevronDown16 />;
+      icon = <ChevronDown size={16} />;
     }
     return <div className="arrow-div">{icon}</div>;
   };
 
   const NodeIcon = (icon) => {
     if (icon === 'pficon pficon-virtual-machine') {
-      return <VirtualMachine16 />;
+      return <VirtualMachine size={16} />;
     }
-    return <Camera16 />;
+    return <Camera size={16} />;
   };
 
   // First pull in node data and go through flattened tree to add metadata like icons and selectable
