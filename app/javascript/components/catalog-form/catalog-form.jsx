@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'carbon-components-react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import createSchema from './catalog-form.schema';
 import { API } from '../../http_api';
@@ -122,18 +121,16 @@ class CatalogForm extends Component {
     if (!isLoaded) return null;
 
     return (
-      <Grid>
-        <MiqFormRenderer
-          initialValues={initialValues}
-          schema={schema}
-          onSubmit={this.submitValues}
-          onCancel={() => miqAjaxButton(cancelUrl)}
-          canReset={!!catalogId}
-          buttonsLabels={{
-            submitLabel: catalogId ? __('Save') : __('Add'),
-          }}
-        />
-      </Grid>
+      <MiqFormRenderer
+        initialValues={initialValues}
+        schema={schema}
+        onSubmit={this.submitValues}
+        onCancel={() => miqAjaxButton(cancelUrl)}
+        canReset={!!catalogId}
+        buttonsLabels={{
+          submitLabel: catalogId ? __('Save') : __('Add'),
+        }}
+      />
     );
   }
 }

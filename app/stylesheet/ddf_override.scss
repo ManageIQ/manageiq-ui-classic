@@ -81,6 +81,23 @@
   }
 }
 
+// Overriding grid with flex here because long labels break the layout and the
+// checkmark SVG ends up between the text so we’re switching to flex with min-width
+// TODO: c-11: A better approach would be to fix this at the DDF library level
+.miq-dual-list-common-grid-container {
+  .cds--structured-list {
+    .cds--structured-list-row {
+      .cds--subgrid--condensed {
+        display: flex;
+        width: 100%;
+        .cds--sm\:col-span-3 {
+          min-width: 70%;
+        }
+      }
+    }
+  }
+}
+
 .form-react {
   .cds--css-grid.miq-pwd-field-grid {
     padding-left: 0;
@@ -325,21 +342,21 @@
 }
 
 .ddorg__carbon-dual-list-body {
-  .bx--structured-list-td {
+  .cds--structured-list-td {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
   }
 }
 
 .buttonWrapper-0-2-7 {
-  .bx--btn--primary {
+  .cds--btn--primary {
     width: 150px;
     padding-right: 20px;
   }
 }
 
 .dualListBody-0-2-6 {
-  .bx--structured-list-td {
+  .cds--structured-list-td {
     padding-top: 12px;
     padding-bottom: 12px;
   }

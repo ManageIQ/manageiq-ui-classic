@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'carbon-components-react';
+import { Grid, Column } from '@carbon/react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import createSchema from './copy-catalog-form.schema';
 import { http } from '../../http_api';
@@ -46,16 +46,18 @@ class CopyCatalogForm extends Component {
 
     return (
       <Grid>
-        <MiqFormRenderer
-          initialValues={initialValues}
-          schema={schema}
-          onSubmit={this.submitValues}
-          onCancel={() => miqAjaxButton(cancelUrl)}
-          buttonsLabels={{
-            submitLabel: __('Add'),
-          }}
-          disableSubmit={['invalid']}
-        />
+        <Column sm={4} md={8} lg={16}>
+          <MiqFormRenderer
+            initialValues={initialValues}
+            schema={schema}
+            onSubmit={this.submitValues}
+            onCancel={() => miqAjaxButton(cancelUrl)}
+            buttonsLabels={{
+              submitLabel: __('Add'),
+            }}
+            disableSubmit={['invalid']}
+          />
+        </Column>
       </Grid>
     );
   }
