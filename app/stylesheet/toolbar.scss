@@ -22,13 +22,13 @@
 .miq-toolbar-actions {
   margin-top: -10px;
   margin-left: -20px;  /* this compensates for toolbar-pf-filter not being in the first position */
-  .bx--overflow-menu {
+  .cds--overflow-menu {
     width: 100%;
     padding: 0 3rem 0 1rem;
     max-width: 30rem;
     font-size: 14px;
 
-    .toolbar-overflow {
+    .toolbar-overflow, .toolbar-dashboard {
       span {
         font-size: 0.875rem;
         font-weight: 400;
@@ -44,6 +44,11 @@
         right: 15px;
         position: absolute;
         top: 10px;
+      }
+
+      i {
+        color: #161616;
+        padding-right: 4px;
       }
     }
   }
@@ -94,7 +99,7 @@
   color: #9c9c9c !important;
 }
 
-.bx--overflow-menu-options {
+.cds--overflow-menu-options {
   position: absolute;
   top: 100%;
   left: 0;
@@ -102,14 +107,12 @@
   float: left;
   min-width: 160px;
   padding: 5px 0;
-  margin: 2px 0 0;
   font-size: 12px;
   text-align: left;
   list-style: none;
   width: auto;
   background-color: #fff;
   background-clip: padding-box;
-  border: 1px solid #bbb;
   border-radius: 1px;
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
@@ -118,11 +121,11 @@
     top: unset;
   }
 
-  .bx--overflow-menu-options__option {
+  .cds--overflow-menu-options__option {
     height: unset;
   }
 
-  .bx--overflow-menu-options__btn {
+  .cds--overflow-menu-options__btn {
     display: block;
     clear: both;
     font-weight: 400;
@@ -136,25 +139,25 @@
     max-width: unset;
   }
 
-  .bx--overflow-menu-options__option--disabled .bx--overflow-menu-options__btn {
+  .cds--overflow-menu-options__option--disabled .cds--overflow-menu-options__btn {
     color: #c6c6c6;
     pointer-events: inherit;
   }
 
-  .bx--side-nav__menu-item {
+  .cds--side-nav__menu-item {
     list-style: none;
   }
 
-  .bx--side-nav__menu {
+  .cds--side-nav__menu {
     padding-left: 0;
   }
 
-  .bx--side-nav__item.bx--side-nav__item--icon a.bx--side-nav__link {
+  .cds--side-nav__item.cds--side-nav__item--icon a.cds--side-nav__link {
     padding-left: 2rem;
   }
 }
 
-.bx--overflow-menu-options[data-floating-menu-direction=bottom]::after {
+.cds--overflow-menu-options[data-floating-menu-direction=bottom]::after {
   top: unset;
   width: unset;
 }
@@ -203,18 +206,18 @@
   max-height: 610px !important;
 }
 
-.bx--overflow-menu--divider {
+.cds--overflow-menu--divider {
   .scrollable-menu {
     display: none;
   }
 }
 
 .btn-toolbar {
-  .bx--btn-set {
+  .cds--btn-set {
     margin-right: 400px;
   }
 
-  .bx--btn {
+  .cds--btn {
     margin-left: 10px;
   }
 }
