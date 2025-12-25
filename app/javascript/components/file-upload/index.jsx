@@ -8,7 +8,7 @@ const FileUploadComponent = (props) => {
 
   return (
     <div className='file-upload'>
-      <label className='bx--label'>{label}</label>
+      <label className='cds--label'>{label}</label>
       <br />
       <label className='file-upload-label' disabled>{input.value ? input.value : __('No File Chosen')}</label>
       <span className='file-button' tabIndex='0'>
