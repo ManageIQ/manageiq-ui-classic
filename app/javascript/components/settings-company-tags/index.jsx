@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Accordion, AccordionItem } from 'carbon-components-react';
-import { AddAlt16 } from '@carbon/icons-react';
+import { Button, Accordion, AccordionItem } from '@carbon/react';
+import { AddAlt } from '@carbon/react/icons';
 import MiqDataTable from '../miq-data-table';
 import MiqStructuredList from '../miq-structured-list';
 import SettingsCompanyTagsEntryForm from '../settings-company-tags-entry-form';
@@ -142,8 +142,8 @@ const SettingsCompanyTags = ({ pageTitle, categoryId }) => {
     <div className="custom-accordion-buttons">
       <Button
         onClick={() => onSelect('new')}
-        onKeyPress={() => onSelect('new')}
-        renderIcon={AddAlt16}
+        onKeyDown={() => onSelect('new')}
+        renderIcon={(props) => <AddAlt size={16} {...props} />}
         size="sm"
         title={__('Click to add a new entry')}
       >
@@ -168,7 +168,6 @@ const SettingsCompanyTags = ({ pageTitle, categoryId }) => {
   /** Function to render a confirmation-modal-box. */
   const renderConfirmModal = () => {
     const modalData = {
-      open: data.confirm,
       confirm: __('Are you sure you want to delete this entry?'),
       callback: (actionType) => deleteEntry(actionType),
     };

@@ -11,17 +11,17 @@
   }
 }
 
-.bx--list-box__wrapper {
+.cds--list-box__wrapper {
   margin-bottom: 2rem;
 }
 
 .evacuate_form, .schedule_form, .live_migrate_form{
-  div:has(.bx--checkbox-wrapper){
+  div:has(.cds--checkbox-wrapper){
     margin-bottom: 2rem;
   }
 }
 
-.bx--form-item.bx--checkbox-wrapper{
+.cds--form-item.cds--checkbox-wrapper{
   margin-bottom: 0.25rem !important;
 }
 
@@ -46,6 +46,6 @@
   }
 }
 
-.bx--front-line {
+.cds--front-line {
   margin-left: 10px;
 }
