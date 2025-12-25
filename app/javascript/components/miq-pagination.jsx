@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Pagination } from 'carbon-components-react';
+import { Pagination } from '@carbon/react';
 
 const getItemRangeText = (min, max, totalItems) => sprintf(n__(`%d-%d of %d item`, `%d-%d of %d items`, totalItems), min, max, totalItems);
 
