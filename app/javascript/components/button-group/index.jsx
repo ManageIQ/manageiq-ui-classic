@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MiqFormRenderer, { useFormApi } from '@@ddf';
-import { Button, Loading } from 'carbon-components-react';
+import { Button, Loading } from '@carbon/react';
 import PropTypes from 'prop-types';
 import { FormSpy } from '@data-driven-forms/react-form-renderer';
 import createSchema from './group-form.schema';
@@ -160,7 +160,6 @@ const FormTemplate = ({
               kind="primary"
               className="btnRight"
               type="submit"
-              variant="contained"
             >
               {submitLabel}
             </Button>
@@ -171,7 +170,6 @@ const FormTemplate = ({
                   disabled={(!valid || !modified) && pristine}
                   kind="secondary"
                   className="btnRight"
-                  variant="contained"
                   onClick={onReset}
                   type="button"
                 >
@@ -179,7 +177,7 @@ const FormTemplate = ({
                 </Button>
               ) : null}
 
-            <Button variant="contained" type="button" onClick={onCancel} kind="secondary">
+            <Button type="button" onClick={onCancel} kind="secondary">
               { __('Cancel')}
             </Button>
           </div>

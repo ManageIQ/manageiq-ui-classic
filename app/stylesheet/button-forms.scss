@@ -8,7 +8,7 @@
     align-items: center;
     justify-content: center;
 
-    .bx--text-input-wrapper {
+    .cds--text-input-wrapper {
       display: flex;
       flex-grow: 1;
       margin-right: 10px;
@@ -26,16 +26,14 @@
     border: 1px solid #d3d3d3;
   }
 
-  fieldset.bx--fieldset {
-    legend.bx--label {
-      font-size: 0.75rem;
-    }
+  fieldset.cds--fieldset {
+    margin-bottom: 32px;
 
-    .bx--grid .bx--row {
-      [class*="buttonWrapper"] {
-        display: flex !important;
-        justify-content: center !important;
-        margin-top: 24px;
+    .miq-dual-list-common-grid-container.cds--css-grid {
+      [class*='buttonWrapper'] {
+        display: flex;
+        justify-content: center;
+        margin-top: 12px;
 
         button {
           width: 100%;
@@ -44,7 +42,7 @@
     }
   }
 
-  .bx--multi-select__wrapper {
+  .cds--multi-select__wrapper {
     padding-top: 20px;
   }
 
