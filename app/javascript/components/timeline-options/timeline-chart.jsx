@@ -28,7 +28,7 @@ const TimelineChart = ({ data, title, buildTableData }) => {
   );
 
   const LengthWarning = (
-    <label className="bx--label">
+    <label className="cds--label">
       {__('*Only 5000 events shown. Limit date range to avoid \"missing\" events.')}
     </label>
   );

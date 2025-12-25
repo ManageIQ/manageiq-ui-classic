@@ -52,7 +52,7 @@ const TimelineTable = ({ data }) => {
    */
 
   const renderTimeStampLabel = () => (
-    <label className="bx--label">
+    <label className="cds--label">
       {
         sprintf(__('This is a group of events that happened on %s.'), Date(data[0].timestamp))
       }
