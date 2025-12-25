@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { useFieldApi, useFormApi } from '@@ddf';
-import { TrashCan32 } from '@carbon/icons-react';
-import { Button } from 'carbon-components-react';
+import { TrashCan } from '@carbon/react/icons';
+import { Button } from '@carbon/react';
 
 const compare = (array, name) => {
   // eslint-disable-next-line prefer-const
@@ -33,11 +33,19 @@ export const FileEditComponent = (props) => {
 
   return (
     <div>
-      <label className="bx--label" htmlFor={input.name}>{label}</label>
+      <label className="cds--label" htmlFor={input.name}>{label}</label>
       <br />
       <div className="edit-div">
         <img className="edit-image" alt={__('Uploaded Image')} id="imageDisplay" src={src} />
-        <Button className="edit-button" renderIcon={TrashCan32} iconDescription={description} hasIconOnly onClick={deleteFile} {...input} />
+        <Button
+          className="edit-button"
+          renderIcon={(props) => <TrashCan size={16} {...props} />}
+          iconDescription={description}
+          hasIconOnly
+          onClick={deleteFile}
+          {...input}
+          tooltipPosition="bottom"
+        />
       </div>
     </div>
   );
