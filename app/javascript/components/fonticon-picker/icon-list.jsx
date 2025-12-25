@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Grid, Row, Column } from 'carbon-components-react';
+import { Grid, Column } from '@carbon/react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -26,16 +26,21 @@ const IconList = ({
   const icons = useMemo(() => findIcons(type), [type]);
 
   return (
-    <Grid>
-      <Row>
-        { icons.map((icon) => (
-          <Column key={`${icon}-${Math.random()}`} className="fonticon" onClick={() => setState((state) => ({ ...state, activeIcon: icon }))}>
-            <span className={classNames({ active: icon === activeIcon })}>
-              <i className={icon} title={icon.replace(' ', '.')} />
-            </span>
-          </Column>
-        )) }
-      </Row>
+    <Grid className="fonticon-grid">
+      {icons.map((icon) => (
+        <Column
+          key={`${icon}-${Math.random()}`}
+          sm={2}
+          md={2}
+          lg={2}
+          className="fonticon"
+          onClick={() => setState((state) => ({ ...state, activeIcon: icon }))}
+        >
+          <span className={classNames({ active: icon === activeIcon })}>
+            <i className={icon} title={icon.replace(' ', '.')} />
+          </span>
+        </Column>
+      ))}
     </Grid>
   );
 };
