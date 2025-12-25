@@ -43,10 +43,31 @@
 
   .entry-point-buttons {
     display: inline-flex;
-    margin-top: 20px;
+    margin-top: 24px;
 
     .entry-point-open {
       margin-right: 10px;
+    }
+  }
+}
+// Removing footer button styles inherited from the form-override because the modal is also nested within the form
+form .cds--modal .cds--modal-footer {
+  margin-bottom: 0;
+  .cds--btn--secondary {
+    margin-left: 0;
+  }
+  .cds--btn--primary {
+    margin-right: 0;
+  }
+}
+
+.miq-workflow-payload-graph-tab-panel {
+  .workflowgraph {
+    .graph-buttons-container {
+      left: 0.7rem;
+    }
+    .nodes .node-container .node .label tspan {
+      font-size: 13px;
     }
   }
 }

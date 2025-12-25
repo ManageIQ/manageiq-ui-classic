@@ -70,12 +70,12 @@
   transform: rotate(270deg);
 }
 
-.bx--modal-content {
+.cds--modal-content {
   margin-bottom: 1rem;
-}
 
-.bx--btn--primary {
-  margin-right: 10px;
+  &:focus {
+    outline: none;
+  }
 }
 
 .checkboxDiv {

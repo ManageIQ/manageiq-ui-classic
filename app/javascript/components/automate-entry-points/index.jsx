@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import {
   Checkbox, Loading, Modal, ModalBody,
-} from 'carbon-components-react';
+} from '@carbon/react';
 import PropTypes from 'prop-types';
 import {
-  Document16,
-  Folder16,
-  FolderOpen16,
-} from '@carbon/icons-react';
+  Document,
+  Folder,
+  FolderOpen,
+} from '@carbon/react/icons';
 import TreeView from 'react-accessible-treeview';
 import './styles.css';
 
@@ -161,9 +161,9 @@ const AutomateEntryPoints = ({
 
   const FolderIcon = ({ isOpen }) =>
     (isOpen ? (
-      <FolderOpen16 className="icon" />
+      <FolderOpen size={16} className="icon" />
     ) : (
-      <Folder16 className="icon" />
+      <Folder size={16} className="icon" />
     ));
 
   FolderIcon.propTypes = {
@@ -173,12 +173,12 @@ const AutomateEntryPoints = ({
     isOpen: false,
   };
 
-  const FileIcon = () => <Document16 className="icon" />;
+  const FileIcon = () => <Document size={16} className="icon" />;
 
-  return !isLoading && (
+  return (!isLoading && showModal) && (
     <Modal
       modalHeading={__('Select Entry Point Instance')}
-      open={showModal}
+      open
       primaryButtonText={__('OK')}
       secondaryButtonText={__('Cancel')}
       onRequestSubmit={() => {
@@ -186,9 +186,6 @@ const AutomateEntryPoints = ({
         setShowModal(false);
       }}
       onRequestClose={() => {
-        setShowModal(false);
-      }}
-      onSecondarySubmit={() => {
         setShowModal(false);
       }}
       primaryButtonDisabled={disableSubmit}
@@ -246,7 +243,7 @@ const AutomateEntryPoints = ({
                   id="includeDomainPrefix"
                   labelText={__('Include Domain prefix in the path')}
                   checked={includeDomainPrefix}
-                  onChange={(checked) => setIncludeDomainPrefix(checked)}
+                  onChange={(_event, { checked }) => setIncludeDomainPrefix(checked)}
                 />
               </div>
             ) : null}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button, TextInput } from 'carbon-components-react';
-import { Close16, TreeViewAlt16 } from '@carbon/icons-react';
+import { Button, TextInput } from '@carbon/react';
+import { Close, TreeViewAlt } from '@carbon/react/icons';
 import { useFieldApi } from '@@ddf';
 import AutomateEntryPoints from '../automate-entry-points';
 
@@ -61,7 +61,8 @@ const EmbeddedAutomateEntryPoint = (props) => {
         <div className="entry-point-buttons">
           <div className="entry-point-open">
             <Button
-              renderIcon={TreeViewAlt16}
+              renderIcon={(props) => <TreeViewAlt size={16} {...props} />}
+              size="md"
               iconDescription={sprintf(__('Click to select %s'), label)}
               hasIconOnly
               onClick={() => setShowModal(true)}
@@ -69,7 +70,8 @@ const EmbeddedAutomateEntryPoint = (props) => {
           </div>
           <div className="entry-point-remove">
             <Button
-              renderIcon={Close16}
+              renderIcon={(props) => <Close size={16} {...props} />}
+              size="md"
               iconDescription={sprintf(__('Remove this %s'), label)}
               hasIconOnly
               onClick={() => {
