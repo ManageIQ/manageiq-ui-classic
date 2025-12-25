@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ChevronLeft20, ChevronRight20 } from '@carbon/icons-react';
-import { SideNavItems, SideNavItem } from 'carbon-components-react/es/components/UIShell';
+import { ChevronLeft, ChevronRight } from '@carbon/react/icons';
+import { SideNavItems, SideNavItem } from '@carbon/react';
 
 const MenuCollapse = ({
   expanded, toggle, onFocus, open,
@@ -14,14 +14,14 @@ const MenuCollapse = ({
           tabIndex="0"
           className="menu-collapse-button"
           onClick={toggle}
-          onKeyPress={toggle}
+          onKeyDown={toggle}
           onFocus={onFocus}
           aria-expanded={expanded}
           aria-controls="main-menu-primary"
           aria-haspopup="true"
-          title={(expanded && !open) ? __('Expand') : __('Collapse')}
+          title={(expanded && !open) ? __('Collapse') : __('Expand')}
         >
-          {(expanded && !open) ? <ChevronLeft20 /> : <ChevronRight20 />}
+          {(expanded && !open) ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
         </div>
       </SideNavItem>
     </SideNavItems>
