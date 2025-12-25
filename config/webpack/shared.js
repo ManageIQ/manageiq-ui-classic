@@ -23,7 +23,6 @@ const moduleDir = engines['manageiq-ui-classic'].node_modules;
 const gettextDir = i18n;
 
 const sharedPackages = [
-  '@carbon/icons-react',
   'angular',
   'carbon-components-react',
   'connected-react-router',
