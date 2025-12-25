@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SideNavHeader } from 'carbon-components-react/es/components/UIShell';
+import { SideNavHeader } from '@carbon/react';
 
 const MiqLogo = ({
   alt,

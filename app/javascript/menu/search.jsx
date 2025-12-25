@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Search from 'carbon-components-react/es/components/Search';
-import { Search20 } from '@carbon/icons-react';
-import { SideNavItems, SideNavItem } from 'carbon-components-react/es/components/UIShell';
-import TooltipIcon from 'carbon-components-react/es/components/TooltipIcon';
+import { Search as SearchIcon } from '@carbon/react/icons';
+import {
+  Search,
+  SideNavItems,
+  SideNavItem,
+  Button,
+} from '@carbon/react';
 
 export const flatten = (menuItems = []) => {
   const flat = [];
@@ -32,25 +35,27 @@ const MenuSearch = ({
 }) => {
   if (!expanded) {
     return (
-      <div className="menu-search">
+      <div className="menu-search miq-search-menu-option-collapsed">
         <SideNavItems>
           <SideNavItem className="padded vertical-center">
             <fieldset className="miq-fieldset">
-              <legend className="miq-fieldset-legend legend-search">{expanded ? __('Choose a Filter') : undefined}</legend>
               <div className="miq-fieldset-content">
                 <div
                   tabIndex="0"
                   className="search_div"
                   role="button"
                   onClick={toggle}
-                  onKeyPress={toggle}
+                  onKeyDown={toggle}
                 >
-                  <TooltipIcon
-                    direction="right"
-                    tooltipText={__('Find')}
-                  >
-                    <Search20 />
-                  </TooltipIcon>
+                  <Button
+                    kind="ghost"
+                    size="sm"
+                    hasIconOnly
+                    iconDescription={__('Find')}
+                    renderIcon={(props) => <SearchIcon size={20} {...props} />}
+                    tooltipAlignment="center"
+                    tooltipPosition="right"
+                  />
                 </div>
               </div>
             </fieldset>
@@ -89,8 +94,7 @@ const MenuSearch = ({
       <SideNavItems>
         <SideNavItem className="padded">
           <fieldset className="miq-fieldset">
-            <legend className="miq-fieldset-legend legend-search">{__('Choose a Filter')}</legend>
-            <div className="miq-fieldset-content">
+            <div className="miq-fieldset-content menu-search-field-wrapper">
               <Search
                 size="sm"
                 placeholder={__('Find')}

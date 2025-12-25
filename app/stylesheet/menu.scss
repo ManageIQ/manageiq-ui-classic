@@ -18,49 +18,109 @@
     padding: 0;
   }
 
-  .bx--side-nav__navigation.bx--side-nav.bx--side-nav--expanded.secondary {
+  .cds--side-nav__navigation.cds--side-nav.cds--side-nav--expanded.secondary {
     width: fit-content;
     max-width: 30rem;
     min-width: 16rem;
   }
 
+  .cds--side-nav__navigation.primary {
+    .cds--side-nav__header.menu-logo {
+      display: flex;
+      border-bottom: 1px solid $row-active-primary-bg;
+    }
+    .menu-search
+      .cds--side-nav__items
+      .cds--side-nav__item
+      .miq-fieldset-content.menu-search-field-wrapper {
+      margin-top: 0;
+    }
+
+    .menu-search.miq-search-menu-option-collapsed .cds--side-nav__items {
+      padding: 0;
+      .cds--side-nav__item.vertical-center {
+        &:hover {
+          background-color: $row-active-primary-bg;
+        }
+        padding: 0;
+        .miq-fieldset {
+          width: 100%;
+          .miq-fieldset-content {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            .search_div {
+              padding: 0;
+              display: flex;
+              justify-content: center;
+            }
+          }
+        }
+      }
+    }
+
+    .cds--side-nav__items {
+      .cds--side-nav__item {
+        // TODO: c-11: Related issue - https://github.com/carbon-design-system/carbon/issues/18562
+        cursor: pointer;
+      }
+      .cds--side-nav__link .cds--side-nav__link-text {
+        display: flex;
+        width: 100%;
+      }
+      .cds--side-nav__link.miq-main-menu-collapsed-nav-link {
+        padding: 0;
+        .cds--side-nav__link-text {
+          display: flex;
+          justify-content: center;
+          .cds--side-nav__icon.cds--side-nav__icon--small {
+            margin: 0;
+            .cds--btn--icon-only:hover {
+              background-color: inherit;
+            }
+          }
+        }
+      }
+    }
+  }
+
   // sizing
-  .bx--side-nav.secondary {
+  .cds--side-nav.secondary {
     left: 16rem;
 
-    .bx--side-nav__link-text {
+    .cds--side-nav__link-text {
       font-weight: 400;
     }
 
     // ensure secondary overflow auto has the right height to work with
-    .bx--side-nav__items {
+    .cds--side-nav__items {
       height: 100vh;
     }
   }
 
-  .bx--side-nav__header.padded,
-  .bx--side-nav__item.padded {
+  .cds--side-nav__header.padded,
+  .cds--side-nav__item.padded {
     padding: 0 1rem;
   }
 
-  .bx--side-nav__header,
-  .bx--side-nav__link,
-  .bx--side-nav__submenu,
+  .cds--side-nav__header,
+  .cds--side-nav__link,
+  .cds--side-nav__submenu,
   .menu-collapse,
   .menu-collapse-button {
     height: 48px;
   }
 
-  .bx--side-nav__submenu:hover {
+  .cds--side-nav__submenu:hover {
     background-color: #666666;
   }
 
-  .bx--side-nav__hr {
+  .cds--side-nav__hr {
     margin: 16px 0 0 0;
   }
 
-  .bx--side-nav--expanded {
-    .bx--side-nav__hr {
+  .cds--side-nav--expanded {
+    .cds--side-nav__hr {
       margin: 16px 16px 0 16px;
     }
   }
@@ -79,16 +139,21 @@
     }
   }
 
-  .menu-search-title {
-    font-size: small;
-    margin-bottom: 0;
-    margin-top: 5px;
-  }
+  // 
+  .cds--side-nav__menu-item.miq-menu-search-result-item .cds--side-nav__link-text {
+    display: flex;
+    flex-direction: column;
 
-  .menu-search-parent {
-    font-size: smaller;
-    font-weight: 400;
-    margin-bottom: 5px;
+    .menu-search-title {
+      font-size: small;
+      margin-bottom: 0;
+      margin-top: 5px;
+      font-weight: 600;
+    }
+    .menu-search-parent{
+      font-size: smaller;
+      margin-bottom: 5px;
+    }
   }
 
   .menu-user,
@@ -96,46 +161,56 @@
     @include type-style('helper-text-01');
   }
 
-  .vertical-center {
-    display: flex;
-    align-items: center;
-    padding: 0 !important;
-
-    &:hover {
-      background-color: $row-active-primary-bg;
-    }
-
-    .search_div {
-      height: 32px;
-      width: 48px;
-      padding: 0 1rem;
-      padding-top: 6px;
-    }
-  }
-
   .menu-user,
   .menu-user > li {
     height: 40px;
   }
 
+  .menu-user.miq-menu-user-collapsed {
+    height: 38px;
+    .cds--side-nav__items {
+      display: flex;
+      padding: 0;
+      height: 100%;
+      .cds--side-nav__item {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+
   .menu-group {
     height: 32px;
-    margin-bottom: 8px;
 
-    .bx--list-box--expanded .bx--list-box__menu {
+    .cds--list-box--expanded .cds--list-box__menu {
       position: fixed;
       width: 224px;
       margin-left: 16px;
       margin-top: 1px;
     }
 
-    & .bx--dropdown,
+    & .cds--dropdown,
     & > li {
       height: 32px;
     }
 
-    & .bx--dropdown__wrapper {
+    & .cds--dropdown__wrapper {
       padding: 0 1rem;
+    }
+  }
+
+  .menu-group.miq-menu-group-switcher-collapsed {
+    margin-bottom: 0;
+    .cds--side-nav__items {
+      height: 100%;
+      padding: 0;
+      display: flex;
+      .cds--side-nav__item {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
     }
   }
 
@@ -148,25 +223,21 @@
     align-items: center;
   }
 
-  .bx--side-nav__item {
-    .bx--tooltip__trigger {
+  .cds--side-nav__item {
+    .cds--popover-container {
       position: fixed;
-
-      &::before {
-        border-color: transparent $inverse-01 transparent transparent !important;
-      }
-
-      .pficon {
-        color: #f4f4f4;
-      }
 
       svg {
         fill: #f4f4f4;
       }
 
-      .bx--assistive-text {
+      .cds--popover-content {
         background-color: $menu-tooltip-border;
         color: $menu-tooltip-assistive-text-font-color;
+      }
+      // The caret uses ::after pseudo-element with border to create the arrow
+      .cds--popover-caret::after {
+        background-color: $menu-tooltip-border;
       }
     }
   }

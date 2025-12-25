@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { SideNavItems, SideNavMenuItem } from 'carbon-components-react/es/components/UIShell';
+import { SideNavItems, SideNavMenuItem } from '@carbon/react';
 import { itemId, linkProps } from './item-type';
 
 const ResultItem = ({ item, titles }) => {
   const tLength = titles.length;
   return (
-    <SideNavMenuItem id={itemId(item.id)} isActive={item.active} {...linkProps(item)}>
+    <SideNavMenuItem className="miq-menu-search-result-item" id={itemId(item.id)} isActive={item.active} {...linkProps(item)}>
       <p className="menu-search-title">
         {titles[tLength - 1]}
       </p>
