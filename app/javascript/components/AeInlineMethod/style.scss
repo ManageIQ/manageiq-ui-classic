@@ -1,5 +1,5 @@
 .ae-inline-method-modal {
-  .bx--modal-content {
+  .cds--modal-content {
     margin-bottom: 0;
   }
 
@@ -30,10 +30,10 @@
       .miq-inline-method-list {
         margin-top: 0;
   
-        .bx--data-table-content {
+        .cds--data-table-content {
           margin-bottom: 0;
   
-          .bx--data-table--sticky-header {
+          .cds--data-table--sticky-header {
             max-height: 25rem;
           }
         }
@@ -51,14 +51,14 @@
 {
   border: 1px solid #e0e0e0;
 
-  li button.bx--accordion__heading {
+  li button.cds--accordion__heading {
     background: #e0e0e0;
   }
-  .bx--accordion__item:last-child{
+  .cds--accordion__item:last-child{
     border: 0;
   }
 
-  .bx--accordion__content {
+  .cds--accordion__content {
     padding: 20px;
     margin: 0;
 
