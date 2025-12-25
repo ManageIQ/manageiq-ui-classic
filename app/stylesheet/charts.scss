@@ -45,6 +45,12 @@
       overflow: visible !important;
     }
   }
+  // TODO: c-11: Can be removed after the @carbon/charts-react package is upgraded
+  .cds--modal .cds--modal-container .cds--modal-header .cds--modal-close {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
 }
 
 .bx--cc--pie {
@@ -52,7 +58,7 @@
 }
 
 .bx--cc--toolbar {
-  .bx--overflow-menu-options {
+  .cds--overflow-menu-options {
     top: 10%;
   }
 }

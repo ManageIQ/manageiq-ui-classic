@@ -8,4 +8,9 @@
   overflow-y: auto;
   max-width: 50%;
   min-width: 30%;
+
+  .row .toast-pf.alert {
+    font-size: 13px;
+    line-height: 1.5;
+  }
 }
