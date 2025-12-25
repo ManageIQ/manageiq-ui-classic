@@ -79,6 +79,8 @@ module.exports = [
               `${nodeModules}/patternfly/dist/sass/patternfly`,
               `${nodeModules}/font-awesome/scss`,
               `${nodeModules}/@manageiq/font-fabulous/assets/stylesheets`,
+              // Configuring Sass to lookup from node_modules folder(for Carbon and other modern Sass packages)
+              'node_modules',
             ],
             implementation: require('sass').default,
           },
