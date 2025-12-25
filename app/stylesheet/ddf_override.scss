@@ -82,9 +82,14 @@
 }
 
 .form-react {
-  .bx--grid {
-    padding-left: 1rem;
-    padding-right: 1rem;
+  .cds--css-grid.miq-password-field-grid {
+    padding-left: 0;
+    .cds--css-grid-column.miq-password-field-grid-column {
+      padding-right: 1rem;
+    }
+    .cds--css-grid-column.miq-password-field-edit-icon-grid-column {
+      padding-left: 1rem;
+    }
   }
 
   .bx--form-item {
