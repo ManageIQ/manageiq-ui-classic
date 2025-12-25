@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Select, SelectItem, Search,
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { noSelect } from './helper';
 
 const FilterNamespace = ({ domains, onSearch }) => {
   /** Function to render the search text. */
   const renderSearchText = () => (
     <div className="search-wrapper">
-      <label className="bx--label" htmlFor="Search">{__('Type to search')}</label>
+      <label className="cds--label" htmlFor="Search">{__('Type to search')}</label>
       <Search
         id="search-method"
         labelText={__('Search')}
