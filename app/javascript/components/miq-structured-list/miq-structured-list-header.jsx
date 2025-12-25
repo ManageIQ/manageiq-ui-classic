@@ -4,7 +4,7 @@ import {
   StructuredListHead,
   StructuredListRow,
   StructuredListCell,
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { isObject } from './helpers';
 
 const MiqStructuredListHeader = ({ headers }) => {
