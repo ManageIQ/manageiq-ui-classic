@@ -82,9 +82,14 @@
 }
 
 .form-react {
-  .bx--grid {
-    padding-left: 1rem;
-    padding-right: 1rem;
+  .cds--css-grid.miq-pwd-field-grid {
+    padding-left: 0;
+    .cds--css-grid-column.miq-pwd-field-grid-col {
+      padding-right: 1rem;
+    }
+    .cds--css-grid-column.miq-pwd-field-edit-icon-grid-col {
+      padding-left: 1rem;
+    }
   }
 
   .bx--form-item {
