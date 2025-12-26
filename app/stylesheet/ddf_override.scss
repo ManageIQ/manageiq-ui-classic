@@ -143,6 +143,17 @@ form .miq-validation-button {
   }
 }
 
+.miq-common-tree-view-selector {
+  .cds--css-grid.miq-tree-view-selector-grid {
+    padding-left: 0;
+    padding-right: 0;
+
+    .cds--css-grid-column.miq-tree-view-selector-input-grid-column {
+      padding-right: 1rem;
+    }
+  }
+}
+
 #CheckboxDays,
 #CheckboxHours {
   margin-bottom: 0;
