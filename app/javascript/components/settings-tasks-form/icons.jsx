@@ -5,7 +5,7 @@ import { carbonizeIcon } from '../../menu/icon';
 const Icon = ({
   text, icon, color, size,
 }) => {
-  const IconElement = carbonizeIcon(icon, size);
+  const IconElement = carbonizeIcon(icon, { size });
   return (
     <div id="icon">
       <IconElement aria-label={text} className="my-custom-class" color={color} />
