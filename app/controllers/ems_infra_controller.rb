@@ -211,7 +211,7 @@ class EmsInfraController < ApplicationController
   end
 
   def launch_console
-    open_console('ems_native_console')
+    open_console('ems_management_console')
   end
 
   def download_data
