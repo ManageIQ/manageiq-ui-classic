@@ -1,28 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { MultiSelect } from 'carbon-components-react';
-import { dynamicFieldDataProps, SD_ACTIONS, getFieldValues } from '../helper';
+import { dynamicFieldDataProps, SD_ACTIONS, getFieldValues, getRefreshEnabledFields } from '../helper';
 import DynamicFieldActions from '../dynamic-field-actions';
-import { defaultDropdownOptions } from '../edit-field-modal/fields.schema';
 import {
   fieldInformation, advanced, overridableOptionsWithSort, fieldTab, dynamicFields,
 } from './dynamic-field-configuration';
 
-/** Component to render a Field. */
-const DynamicDropdown = ({ dynamicFieldData: { section, field, fieldPosition }, onFieldAction }) => {
-  const { tabId, sectionId } = section;
-
-  const [inputValues, setInputValues] = useState({});
-
-  const inputId = `tab-${tabId}-section-${sectionId}-field-${fieldPosition}-dropdown`;
+/**
+ * DynamicDropdown - A component to render a dropdown/multiselect field with dynamic configuration options
+ *
+ * @param {Object} props - Component props
+ * @param {Object} props.dynamicFieldData - Data for the dynamic field
+ * @param {Function} props.onFieldAction - Callback for field actions
+ */
+const DynamicDropdown = ({ dynamicFieldData, onFieldAction }) => {
+  const { section, field, fieldPosition } = dynamicFieldData;
+  const { tabId, sectionId, fields } = section;
   const editActionType = SD_ACTIONS.field.edit;
 
-  const refreshEnabledFields = section.fields
-    .filter((field) => field.showRefresh)
-    .map((field) => ({ value: field.label, label: field.label }));
+  // Generate unique ID for the dropdown
+  const inputId = useMemo(() =>
+    `tab-${tabId}-section-${sectionId}-field-${fieldPosition}-dropdown`,
+    [tabId, sectionId, fieldPosition]
+  );
+
+  // Get fields that have refresh enabled
+  const refreshEnabledFields = useMemo(() =>
+    getRefreshEnabledFields(fields),
+    [fields]
+  );
 
   // Initialize field state with values from the helper function
-  const fieldValues = getFieldValues(field);
+  const fieldValues = useMemo(() => getFieldValues(field), [field]);
+  
   const [fieldState, setFieldState] = useState({
     ...fieldValues,
     position: fieldPosition,
@@ -31,20 +42,36 @@ const DynamicDropdown = ({ dynamicFieldData: { section, field, fieldPosition }, 
     automationType: 'embedded_automate',
   });
 
-  const handleFieldUpdate = (event, updatedFields) => {
-    setFieldState((prevState) => ({ ...prevState, ...updatedFields }));
-    onFieldAction({
-      event, type: editActionType, fieldPosition, inputProps: { ...fieldState, ...updatedFields }
+  /**
+   * Updates field state and notifies parent component
+   * @param {Event|string} event - Event object or action string
+   * @param {Object} updatedFields - Fields to update
+   */
+  const handleFieldUpdate = useCallback((event, updatedFields) => {
+    setFieldState((prevState) => {
+      const newState = { ...prevState, ...updatedFields };
+      
+      // Notify parent component about the change
+      onFieldAction({
+        event,
+        type: editActionType,
+        fieldPosition,
+        inputProps: newState
+      });
+      
+      return newState;
     });
-  };
+  }, [editActionType, fieldPosition, onFieldAction]);
 
-  const fieldActions = (event, inputProps) => {
-    const type = (event === SD_ACTIONS.field.delete) ? SD_ACTIONS.field.delete : editActionType;
-
-    setInputValues({
-      ...inputValues,
-      ...inputProps,
-    });
+  /**
+   * Handles field actions like delete
+   * @param {string} event - Action type
+   * @param {Object} inputProps - Field properties
+   */
+  const handleFieldActions = useCallback((event, inputProps) => {
+    const type = (event === SD_ACTIONS.field.delete)
+      ? SD_ACTIONS.field.delete
+      : editActionType;
 
     onFieldAction({
       event,
@@ -52,33 +79,83 @@ const DynamicDropdown = ({ dynamicFieldData: { section, field, fieldPosition }, 
       type,
       inputProps,
     });
-  };
+  }, [editActionType, fieldPosition, onFieldAction]);
 
-  // To reset tabs in Edit Modal based on 'dynamic' switch
-  const resetEditModalTabs = (isDynamic) => {
+  /**
+   * Updates field state when dynamic property changes
+   * @param {boolean} isDynamic - Whether the field is dynamic
+   */
+  const handleDynamicToggle = useCallback((isDynamic) => {
     setFieldState((prevState) => ({ ...prevState, dynamic: isDynamic }));
-  };
+  }, []);
 
-  const updateAutomationType = (value) => {
+  /**
+   * Updates the automation type (embedded_automate or embedded_workflow)
+   * @param {string} value - New automation type
+   */
+  const handleAutomationTypeChange = useCallback((value) => {
     setFieldState((prevState) => ({ ...prevState, automationType: value }));
-  };
+  }, []);
 
-  const ordinaryDropdownOptions = () => ([
-    dynamicFields.readOnly,
-    dynamicFields.visible,
-    dynamicFields.required,
-    dynamicFields.multiselect,
-    dynamicFields.defaultDropdownValue,
-    dynamicFields.valueType,
-    dynamicFields.sortBy,
-    dynamicFields.sortOrder,
-    dynamicFields.entries,
-    dynamicFields.fieldsToRefresh,
-  ]);
+  /**
+   * Handles dropdown selection change
+   * @param {Object} params - Selection parameters
+   * @param {Array} params.selectedItems - Selected items
+   */
+  const handleSelectionChange = useCallback(({ selectedItems }) => {
+    const items = selectedItems.map((item) => item.value);
+    handleFieldUpdate('change', { value: items });
+  }, [handleFieldUpdate]);
 
-  const dynamicDropdownOptions = () => {
+  /**
+   * Validates if the current selection is invalid
+   * @returns {boolean} True if selection is invalid
+   */
+  const isSelectionInvalid = useMemo(() => {
+    // If single-select mode, only one item should be selected
+    if (!fieldState.multiselect) {
+      return fieldState.value && fieldState.value.length > 1;
+    }
+    return false;
+  }, [fieldState.multiselect, fieldState.value]);
+
+  /**
+   * Returns sorted items based on sortBy and sortOrder
+   * @returns {Array} Sorted items array
+   */
+  const sortedItems = useMemo(() => {
+    const { sortBy = 'description', sortOrder = 'ascending', items = [] } = fieldState;
+    
+    return [...items].sort((a, b) => {
+      const valueA = a[sortBy] ? a[sortBy].toString() : '';
+      const valueB = b[sortBy] ? b[sortBy].toString() : '';
+      
+      // Alphanumeric comparison using localeCompare
+      return sortOrder === 'ascending'
+        ? valueA.localeCompare(valueB, undefined, { numeric: true, sensitivity: 'base' })
+        : valueB.localeCompare(valueA, undefined, { numeric: true, sensitivity: 'base' });
+    });
+  }, [fieldState.items, fieldState.sortBy, fieldState.sortOrder]);
+
+  /**
+   * Define dropdown edit fields configuration based on whether it's dynamic or not
+   */
+  const dropdownEditFields = useMemo(() => {
+    const ordinaryOptions = [
+      dynamicFields.readOnly,
+      dynamicFields.visible,
+      dynamicFields.required,
+      dynamicFields.multiselect,
+      dynamicFields.defaultDropdownValue,
+      dynamicFields.valueType,
+      dynamicFields.sortBy,
+      dynamicFields.sortOrder,
+      dynamicFields.entries,
+      dynamicFields.fieldsToRefresh,
+    ];
+
     const currentAutomationType = fieldState.automationType || 'embedded_automate';
-    return [
+    const dynamicOptions = [
       dynamicFields.automationType,
       currentAutomationType === 'embedded_workflow'
         ? dynamicFields.workflowEntryPoint
@@ -90,54 +167,22 @@ const DynamicDropdown = ({ dynamicFieldData: { section, field, fieldPosition }, 
       dynamicFields.valueType,
       dynamicFields.fieldsToRefresh,
     ];
-  };
 
-  const DropdownOptions = () => ({
-    name: fieldTab.options,
-    fields: fieldState.dynamic ? dynamicDropdownOptions() : ordinaryDropdownOptions(),
-  });
-
-  const DropdownEditFields = () => {
     const tabs = [
       fieldInformation(),
-      DropdownOptions(),
+      {
+        name: fieldTab.options,
+        fields: fieldState.dynamic ? dynamicOptions : ordinaryOptions,
+      },
       advanced(),
     ];
+
     if (fieldState.dynamic) {
       tabs.push(overridableOptionsWithSort());
     }
+
     return tabs;
-  };
-
-  const isSelectionInvalid = () => {
-    // If single-select mode
-    if (!fieldState.multiselect) {
-      return fieldState.value.length > 1;
-    }
-    // If multi-select mode
-    return false;
-  };
-
-  const sortedItems = () => {
-    const { sortBy, sortOrder } = fieldState;
-    const sortedArray = [...fieldState.items].sort((a, b) => {
-      const valueA = a[sortBy] ? a[sortBy].toString() : '';
-      const valueB = b[sortBy] ? b[sortBy].toString() : '';
-      // Alphanumeric comparison using localeCompare
-      return sortOrder === 'ascending'
-        ? valueA.localeCompare(valueB, undefined, { numeric: true, sensitivity: 'base' })
-        : valueB.localeCompare(valueA, undefined, { numeric: true, sensitivity: 'base' });
-    });
-    return sortedArray;
-  };
-
-  const handleSelectionChange = ({ selectedItems }) => {
-    const items = selectedItems.map((item) => item.value);
-    setFieldState((prevState) => ({
-      ...prevState,
-      value: items,
-    }));
-  };
+  }, [fieldState.dynamic, fieldState.automationType]);
 
   return (
     <div className="dynamic-form-field">
@@ -147,24 +192,25 @@ const DynamicDropdown = ({ dynamicFieldData: { section, field, fieldPosition }, 
           name={fieldState.name}
           label={fieldState.label}
           helperText={__('This is helper text')}
-          items={sortedItems()}
+          items={sortedItems}
           sortItems={(items) => items}
           itemToString={(item) => (item ? item.description : '')}
-          value={fieldState.value}
           selectionFeedback="top-after-reopen"
-          invalid={isSelectionInvalid()}
+          invalid={isSelectionInvalid}
           invalidText={__('Please select only one item.')}
           onChange={handleSelectionChange}
+          disabled={fieldState.readOnly}
+          aria-label={fieldState.label || __('Dropdown field')}
         />
       </div>
       <DynamicFieldActions
         componentId={field.componentId}
         fieldProps={fieldState}
         updateFieldProps={handleFieldUpdate}
-        dynamicFieldAction={(event, inputProps) => fieldActions(event, inputProps)}
-        fieldConfiguration={DropdownEditFields()}
-        dynamicToggleAction={(isDynamic) => resetEditModalTabs(isDynamic)}
-        onValueChange={(value) => updateAutomationType(value)}
+        dynamicFieldAction={handleFieldActions}
+        fieldConfiguration={dropdownEditFields}
+        dynamicToggleAction={handleDynamicToggle}
+        onValueChange={handleAutomationTypeChange}
       />
     </div>
   );
