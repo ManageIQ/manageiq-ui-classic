@@ -1,7 +1,13 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { MultiSelect } from 'carbon-components-react';
-import { dynamicFieldDataProps, SD_ACTIONS, getFieldValues, getRefreshEnabledFields } from '../helper';
+import {
+  dynamicFieldDataProps,
+  SD_ACTIONS,
+  getFieldValues,
+  getRefreshEnabledFields,
+  sortItems,
+} from '../helper';
 import DynamicFieldActions from '../dynamic-field-actions';
 import {
   fieldInformation, advanced, overridableOptionsWithSort, fieldTab, dynamicFields,
@@ -123,19 +129,10 @@ const DynamicDropdown = ({ dynamicFieldData, onFieldAction }) => {
    * Returns sorted items based on sortBy and sortOrder
    * @returns {Array} Sorted items array
    */
-  const sortedItems = useMemo(() => {
-    const { sortBy = 'description', sortOrder = 'ascending', items = [] } = fieldState;
-    
-    return [...items].sort((a, b) => {
-      const valueA = a[sortBy] ? a[sortBy].toString() : '';
-      const valueB = b[sortBy] ? b[sortBy].toString() : '';
-      
-      // Alphanumeric comparison using localeCompare
-      return sortOrder === 'ascending'
-        ? valueA.localeCompare(valueB, undefined, { numeric: true, sensitivity: 'base' })
-        : valueB.localeCompare(valueA, undefined, { numeric: true, sensitivity: 'base' });
-    });
-  }, [fieldState.items, fieldState.sortBy, fieldState.sortOrder]);
+  const sortedItems = useMemo(() =>
+    sortItems(fieldState.items, fieldState.sortBy, fieldState.sortOrder),
+    [fieldState.items, fieldState.sortBy, fieldState.sortOrder]
+  );
 
   /**
    * Define dropdown edit fields configuration based on whether it's dynamic or not

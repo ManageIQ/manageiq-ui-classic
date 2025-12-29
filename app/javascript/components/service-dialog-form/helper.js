@@ -1,6 +1,27 @@
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
+/**
+ * Sorts an array of items based on a specified field and order
+ * @param {Array} items - Array of items to sort
+ * @param {string} sortBy - Field name to sort by (e.g., 'description', 'value')
+ * @param {string} sortOrder - Sort order ('ascending' or 'descending')
+ * @returns {Array} Sorted array of items
+ */
+export const sortItems = (items = [], sortBy = 'description', sortOrder = 'ascending') => {
+  if (!items || items.length === 0) return [];
+
+  return [...items].sort((a, b) => {
+    const valueA = a[sortBy] ? a[sortBy].toString() : '';
+    const valueB = b[sortBy] ? b[sortBy].toString() : '';
+
+    // Alphanumeric comparison using localeCompare
+    return sortOrder === 'ascending'
+      ? valueA.localeCompare(valueB, undefined, { numeric: true, sensitivity: 'base' })
+      : valueB.localeCompare(valueA, undefined, { numeric: true, sensitivity: 'base' });
+  });
+};
+
 export const dynamicFieldDataProps = PropTypes.shape({
   section: PropTypes.shape({
     tabId: PropTypes.number.isRequired,
