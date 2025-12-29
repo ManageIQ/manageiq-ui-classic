@@ -52,6 +52,7 @@ import './commands/menu.js';
 import './commands/miq_data_table_commands.js';
 import './commands/provider_helper_commands.js';
 import './commands/select.js';
+// import('./commands/service_reconfigure.js');
 import './commands/stub_notifications.js';
 import './commands/tabs.js';
 import './commands/throttle_response.js';
