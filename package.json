@@ -34,7 +34,6 @@
   "dependencies": {
     "@carbon/charts": "^0.58.2",
     "@carbon/charts-react": "^0.58.2",
-    "@carbon/icons-react": "~10.49.5",
     "@carbon/react": "~1.100.0",
     "@carbon/themes": "~11.64.0",
     "@data-driven-forms/carbon-component-mapper": "~4.1.2",
