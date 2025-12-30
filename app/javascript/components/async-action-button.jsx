@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   isEqual, flatMap, get, set,
 } from 'lodash';
-import { Button, InlineLoading } from 'carbon-components-react';
+import { Button, InlineLoading } from '@carbon/react';
 
 import {
   useFormApi, useFieldApi, validatorTypes, FormSpy,
@@ -114,7 +114,7 @@ const AsyncAction = ({
                 <HelperTextBlock
                   helperText={helperText}
                 />
-                <Button size="small" kind="tertiary" onClick={onClick} disabled={!depsValid || performing}>
+                <Button size="sm" kind="tertiary" onClick={onClick} disabled={!depsValid || performing} className="miq-async-action-button">
                   {performing && <InlineLoading /> }
                   {performing ? actionProgressLabel : actionLabel}
                 </Button>
