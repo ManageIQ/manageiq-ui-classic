@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Column } from 'carbon-components-react';
+import { Grid, Column } from '@carbon/react';
 import TagCategory from './TagCategory';
 import TaggingPropTypes from '../TaggingPropTypes';
 import NotificationMessage from '../../../components/notification-message';
@@ -30,15 +30,17 @@ class TagView extends React.Component {
       <div id="assignments_div">
         { !hideHeader
           && (
-            <Row className="tag-modifier-header">
-              <Column lg={12}>
+            <Grid className="tag-modifier-header">
+              <Column sm={4} md={8} lg={16}>
                 <h4>{header}</h4>
               </Column>
-            </Row>
+            </Grid>
           )}
-        <Row className="tag-modifier-form assigned-tags">
-          { view }
-        </Row>
+        <Grid className="tag-modifier-form assigned-tags" condensed>
+          <Column sm={4} md={8} lg={16}>
+            { view }
+          </Column>
+        </Grid>
       </div>
     );
   }

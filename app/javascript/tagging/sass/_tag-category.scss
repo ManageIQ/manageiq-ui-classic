@@ -1,8 +1,9 @@
+@use '@carbon/react/scss/theme';
 @import '~patternfly/dist/sass/patternfly/variables';
 
 .tag-category.list-inline {
-  background-color: $color-pf-blue-500;
-  padding: 3px 10px 3px 15px !important;
+  background-color: theme.$background-brand;
+  padding: 3px 10px 10px 15px !important;
   color: $color-pf-white;
   margin-left: 5px;
   margin-right: 10px;

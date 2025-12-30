@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { FormLabel, Button } from 'carbon-components-react';
-import { Close16 } from '@carbon/icons-react';
+import { FormLabel, Button } from '@carbon/react';
+import { Close } from '@carbon/react/icons';
 import TaggingPropTypes from '../TaggingPropTypes';
 
 const Tag = ({
@@ -23,7 +23,7 @@ const Tag = ({
             <Button
               size="sm"
               className="tagButton"
-              renderIcon={Close16}
+              renderIcon={(props) => <Close size={16} {...props} />}
               iconDescription={__('Close Icon')}
               hasIconOnly
               onClick={onTagDeleteClick ? () => onTagDeleteClick(tagCategory, tagValue) : undefined}
