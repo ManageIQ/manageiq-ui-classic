@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Dropdown, MultiSelect } from 'carbon-components-react';
+import { Dropdown, MultiSelect } from '@carbon/react';
 import TaggingPropTypes from '../TaggingPropTypes';
 
 class ValueSelector extends React.Component {
@@ -115,6 +115,7 @@ class ValueSelector extends React.Component {
         className="tag-select"
         id="dropdown-tag-select"
         label={label}
+        titleText=""
         defaultValue="placeholder"
         // eslint-disable-next-line react/destructuring-assignment
         key={selectedOption.length === 0 ? -1 : this.props.values[0].id}

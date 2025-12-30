@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Grid, Row, ButtonSet, Button,
-} from 'carbon-components-react';
+  Grid, Column, ButtonSet, Button,
+} from '@carbon/react';
 import Tagging from '../Tagging/Tagging';
 import TaggingPropTypes from '../TaggingPropTypes';
 
@@ -26,47 +26,51 @@ class TaggingWithButtons extends React.Component {
     } = this.props;
     return (
       <Grid className="tagging-container">
-        <Tagging
-          selectedTagCategory={selectedTagCategory}
-          tags={tags}
-          assignedTags={assignedTags}
-          onTagDeleteClick={onTagDeleteClick}
-          onTagCategoryChange={onTagCategoryChange}
-          onTagValueChange={onTagValueChange}
-          onSingleTagValueChange={onSingleTagValueChange}
-          options={options}
-        />
-        <Row className="tagging-row-wrapper tagging-toolbar pull-right">
-          <div role="toolbar" className="btn-toolbar">
-            <ButtonSet>
-              <Button
-                onClick={() => saveButton.onClick(assignedTags)}
-                disabled={saveButton.disabled}
-                type={saveButton.type}
-              >
-                {saveButton.description}
-              </Button>
-              {showReset
-                && (
-                  <Button
-                    onClick={resetButton.onClick}
-                    disabled={resetButton.disabled}
-                    type={resetButton.type}
-                  >
-                    {resetButton.description}
-                  </Button>
-                )}
-              <Button
-                onClick={cancelButton.onClick}
-                disabled={cancelButton.disabled}
-                type={cancelButton.type}
-                kind="secondary"
-              >
-                {cancelButton.description}
-              </Button>
-            </ButtonSet>
+        <Column sm={4} md={8} lg={16} className="add-or-assign-tags-section-grid-column">
+          <Tagging
+            selectedTagCategory={selectedTagCategory}
+            tags={tags}
+            assignedTags={assignedTags}
+            onTagDeleteClick={onTagDeleteClick}
+            onTagCategoryChange={onTagCategoryChange}
+            onTagValueChange={onTagValueChange}
+            onSingleTagValueChange={onSingleTagValueChange}
+            options={options}
+          />
+        </Column>
+        <Column sm={4} md={8} lg={16} className="buttons-section-grid-column">
+          <div className="tagging-row-wrapper tagging-toolbar pull-right">
+            <div role="toolbar" className="btn-toolbar">
+              <ButtonSet>
+                <Button
+                  onClick={() => saveButton.onClick(assignedTags)}
+                  disabled={saveButton.disabled}
+                  type={saveButton.type}
+                >
+                  {saveButton.description}
+                </Button>
+                {showReset
+                  && (
+                    <Button
+                      onClick={resetButton.onClick}
+                      disabled={resetButton.disabled}
+                      type={resetButton.type}
+                    >
+                      {resetButton.description}
+                    </Button>
+                  )}
+                <Button
+                  onClick={cancelButton.onClick}
+                  disabled={cancelButton.disabled}
+                  type={cancelButton.type}
+                  kind="secondary"
+                >
+                  {cancelButton.description}
+                </Button>
+              </ButtonSet>
+            </div>
           </div>
-        </Row>
+        </Column>
       </Grid>
     );
   }

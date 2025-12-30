@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Dropdown } from 'carbon-components-react';
+import { Dropdown } from '@carbon/react';
 import TaggingPropTypes from '../TaggingPropTypes';
 
 class TagSelector extends React.Component {
@@ -10,65 +10,60 @@ class TagSelector extends React.Component {
     const selectedOption = val.selectedItem;
     if (selectedOption) {
       onTagCategoryChange({
-        id: selectedOption.value,
-        description: tagCategories.find((category) => category.id === selectedOption.value).description,
+        id: selectedOption.id,
+        description: tagCategories.find((category) => category.id === selectedOption.id).description,
       });
     }
   };
 
-  labelWithIcon = (description, infoText) => (
-    <div>
-      <span
-        style={{
-          display: 'inline-block',
-          width: 'calc(100% - 18px)',
-        }}
-      >
-        {description}
-      </span>
-      <span
-        className="pull-right pficon pficon-info tag-icon"
-        title={infoText}
-        aria-hidden="true"
-      />
-      <span className="sr-only">{infoText}</span>
-    </div>
-  );
+  itemToElement = (item) => {
+    if (!item) return null;
 
-  // eslint-disable-next-line react/destructuring-assignment
-  tagCategories = this.props.tagCategories.map((category) => ({
-    keyWord: category.description.toLowerCase(),
-    value: category.id,
-    label: category.singleValue
-      // eslint-disable-next-line react/destructuring-assignment
-      ? this.labelWithIcon(category.description, this.props.infoText)
-      : category.description,
-  }));
+    if (item.singleValue) {
+      const { infoText } = this.props;
+      return (
+        <div>
+          <span
+            style={{
+              display: 'inline-block',
+              width: 'calc(100% - 18px)',
+            }}
+          >
+            {item.description}
+          </span>
+          <span
+            className="pull-right pficon pficon-info tag-icon"
+            title={infoText}
+            aria-hidden="true"
+          />
+          <span className="sr-only">{infoText}</span>
+        </div>
+      );
+    }
 
-  getOptions = (values) => {
-    const options = [];
-    values.forEach((item) => (
-      options.push(
-        { key: item.value, value: item.value, label: item.label }
-      )
-    ));
-    return options;
-  }
+    return item.description;
+  };
+
+  itemToString = (item) => item?.description || '';
 
   render() {
-    const { selectedOption, isDisabled } = this.props;
-    let value = selectedOption.id ? { label: selectedOption.description, value: selectedOption.id } : null;
-    if (value === null) {
-      value = { value: -1 };
-    }
+    const { selectedOption, isDisabled, tagCategories } = this.props;
+    const selectedItem = selectedOption.id
+      ? tagCategories.find((cat) => cat.id === selectedOption.id)
+      : null;
+
     return (
       <Dropdown
         className="tag-select"
         id="dropdown-tag-select"
-        label={`${__('Select tag category')}`}
+        label={__('Select tag category')}
+        titleText=""
         disabled={isDisabled}
-        onChange={(val) => this.handleChange(val)}
-        items={this.getOptions(this.tagCategories)}
+        onChange={this.handleChange}
+        items={tagCategories}
+        itemToString={this.itemToString}
+        itemToElement={this.itemToElement}
+        selectedItem={selectedItem}
       />
     );
   }
