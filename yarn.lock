@@ -7613,7 +7613,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"enhanced-resolve@npm:^4.5.0":
+"enhanced-resolve@npm:^4.5.0, enhanced-resolve@npm:~4.5.0":
   version: 4.5.0
   resolution: "enhanced-resolve@npm:4.5.0"
   dependencies:
@@ -7621,17 +7621,6 @@ __metadata:
     memory-fs: "npm:^0.5.0"
     tapable: "npm:^1.0.0"
   checksum: 10/ae19d36c0faf6b3f66033f9e639a4358ff28c0dbb28438b1c5ab2ba04b7158fba27f4adbc4ae4116a2683b3f7063586ba8d9af2e7625fd5184ecdc83a2a0723a
-  languageName: node
-  linkType: hard
-
-"enhanced-resolve@npm:~4.0.0":
-  version: 4.0.0
-  resolution: "enhanced-resolve@npm:4.0.0"
-  dependencies:
-    graceful-fs: "npm:^4.1.2"
-    memory-fs: "npm:^0.4.0"
-    tapable: "npm:^1.0.0"
-  checksum: 10/fc82b0e0084987068993a9606642abc4fd8502144c97cc7e803ae81f441f40d3cc9708537184dce76aa9fdcb505062f0317a00eab25eb7713e7cae284b320cfb
   languageName: node
   linkType: hard
 
@@ -12948,7 +12937,7 @@ __metadata:
     d3: "npm:^7.8.2"
     dompurify: "npm:^3.2.4"
     duplicate-package-checker-webpack-plugin: "npm:~3.0.0"
-    enhanced-resolve: "npm:~4.0.0"
+    enhanced-resolve: "npm:~4.5.0"
     enzyme: "npm:^3.9.0"
     enzyme-adapter-react-16: "npm:^1.13.0"
     enzyme-to-json: "npm:^3.3.4"
@@ -13171,7 +13160,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"memory-fs@npm:^0.4.0, memory-fs@npm:^0.4.1":
+"memory-fs@npm:^0.4.1":
   version: 0.4.1
   resolution: "memory-fs@npm:0.4.1"
   dependencies:
