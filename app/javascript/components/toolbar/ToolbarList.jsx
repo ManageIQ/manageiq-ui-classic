@@ -6,6 +6,7 @@ import { MenuIcon } from './MenuIcon';
 import { isEnabled } from './utility';
 import { ToolbarClick } from './ToolbarClick';
 import CountContext from './ToolbarContext';
+import { carbonizeIcon } from '../../menu/icon';
 
 export const ToolbarList = (props) => {
   const count = useContext(CountContext);
@@ -58,7 +59,7 @@ export const ToolbarList = (props) => {
       onClose={closeFunc}
       renderIcon={() => (
         <div className="toolbar-overflow">
-          { props.icon && <i className={props.icon} style={{ color: props.color }} /> }
+          { props.icon && carbonizeIcon(props.icon, { color: props.color }) }
           <ChevronDown20 />
           {' '}
           <span>{ props.text ? props.text : (props.title && props.title)}</span>
