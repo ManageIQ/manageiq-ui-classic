@@ -96,21 +96,51 @@ module OpsController::OpsRbac
 
   def rbac_role_add
     assert_privileges("rbac_role_add")
+    @hide_bottom_bar = true
     rbac_edit_reset('new', 'role', MiqUserRole)
   end
 
   def rbac_role_copy
     assert_privileges("rbac_role_copy")
+    @hide_bottom_bar = true
     rbac_edit_reset('copy', 'role', MiqUserRole)
   end
 
   def rbac_role_edit
     assert_privileges("rbac_role_edit")
+    @hide_bottom_bar = true
     case params[:button]
     when 'cancel'      then rbac_edit_cancel('role')
     when 'save', 'add' then rbac_edit_save_or_add('role', 'miq_user_role')
     when 'reset', nil  then rbac_edit_reset(params[:typ], 'role', MiqUserRole) # Reset or form load
     end
+  end
+
+  def rbac_role_save
+    @hide_bottom_bar = true
+    if params[:id] != 'new'
+      assert_privileges("rbac_role_edit")
+      rbac_edit_reset_react('edit', 'role', MiqUserRole)
+    else
+      assert_privileges("rbac_role_add")
+      rbac_edit_reset_react('new', 'role', MiqUserRole)
+    end
+  end
+
+  def rbac_role_get_values
+    assert_privileges("rbac_role_edit")
+    unless params[:id]
+      obj = find_checked_items
+      @_params[:id] = obj[0]
+    end
+    @hide_bottom_bar = true
+    role = MiqUserRole.find_by(:id => params[:id])
+    render :json => {
+      :name                         => role.name,
+      :vm_restriction               => role[:settings] && role[:settings][:restrictions][:vms],
+      :service_template_restriction => role[:settings] && role[:settings][:restrictions][:service_templates],
+      :miqProductFeatures           => role.miq_product_features,
+    }
   end
 
   def rbac_tenant_add
@@ -652,24 +682,56 @@ module OpsController::OpsRbac
     replace_right_cell(:nodetype => x_node)
   end
 
+  def rbac_edit_reset_react(operation, what, klass)
+    key = what.to_sym
+    if operation != "new"
+      record = MiqUserRole.find_by(:id => params[:id])
+    end
+
+    case operation
+    when "new"
+      # create new record
+      @record = klass.new
+      if key == :role
+        @record.miq_product_features = [MiqProductFeature.find_by(:identifier => MiqProductFeature.feature_root)]
+      end
+    when "copy"
+      # copy existing record
+      @record = record.clone
+      @record.miq_product_features = record.miq_product_features
+      @record.read_only = false
+    else
+      # use existing record
+      @record = record
+    end
+    @sb[:typ] = operation
+
+    rbac_role_set_form_vars
+    rbac_role_get_form_vars
+
+    rbac_edit_save_or_add('role', 'miq_user_role')
+  end
+
   def rbac_edit_save_or_add(what, rbac_suffix = what)
     key         = what.to_sym
     id          = params[:id] || "new"
     add_pressed = params[:button] == "add"
 
-    return unless load_edit("rbac_#{what}_edit__#{id}", "replace_cell__explorer")
-
     case key
     when :user
+      return unless load_edit("rbac_#{what}_edit__#{id}", "replace_cell__explorer")
+
       record = @edit[:user_id] ? User.find_by(:id => @edit[:user_id]) : User.new
       validated = rbac_user_validate?
       rbac_user_set_record_vars(record)
-    when :group then
+    when :group
+      return unless load_edit("rbac_#{what}_edit__#{id}", "replace_cell__explorer")
+
       record = @edit[:group_id] ? MiqGroup.find_by(:id => @edit[:group_id]) : MiqGroup.new
       validated = rbac_group_validate?
       rbac_group_set_record_description_role(record) # Set new Description, Role and Tenant for a new Group
       rbac_group_set_record_vars(record) if validated
-    when :role  then
+    when :role
       record = @edit[:role_id] ? MiqUserRole.find_by(:id => @edit[:role_id]) : MiqUserRole.new
       validated = rbac_role_validate?
       rbac_role_set_record_vars(record)
@@ -1305,54 +1367,11 @@ module OpsController::OpsRbac
     end
   end
 
-  # Yield all features for given tree node a section or feature
-  #
-  # a. special case _tab_all_vm_rules
-  # b. section node /^_tab_/
-  #   return all features below this section and
-  #   recursively below any nested sections
-  #   and nested features recursively
-  # c. feature node
-  #   return nested features recursively
-  #
-  def recurse_sections_and_features(node)
-    if /_tab_all_vm_rules$/.match?(node)
-      MiqProductFeature.feature_children('all_vm_rules').each do |feature|
-        kids = MiqProductFeature.feature_all_children(feature)
-        yield feature, [feature] + kids
-      end
-    elsif /^_tab_/.match?(node)
-      section_id = node.split('_tab_').last.to_sym
-      Menu::Manager.section(section_id).features_recursive.each do |f|
-        kids = MiqProductFeature.feature_all_children(f)
-        yield f, [f] + kids
-      end
-    else
-      kids = MiqProductFeature.feature_all_children(node)
-      yield node, [node] + kids
-    end
-  end
-
   def rbac_role_get_form_vars
     @edit[:new][:name] = params[:name] if params[:name]
     @edit[:new][:vm_restriction] = params[:vm_restriction].to_sym if params[:vm_restriction]
     @edit[:new][:service_template_restriction] = params[:service_template_restriction].to_sym if params[:service_template_restriction]
-
-    # Add/removed features based on the node that was checked
-    if params[:check]
-      node = params[:id].split("__").last # Get the feature of the checked node
-      if params[:check] == "0" # Unchecked
-        recurse_sections_and_features(node) do |feature, all|
-          @edit[:new][:features] -= all # remove the feature + children
-          rbac_role_remove_parent(feature) # remove all parents above the unchecked tab feature
-        end
-      else # Checked
-        recurse_sections_and_features(node) do |feature, all|
-          @edit[:new][:features] += all # remove the feature + children
-          rbac_role_add_parent(feature) # remove all parents above the unchecked tab feature
-        end
-      end
-    end
+    @edit[:new][:features] = params[:features] if params[:features]
     @edit[:new][:features].uniq!
     @edit[:new][:features].sort!
   end
@@ -1378,25 +1397,25 @@ module OpsController::OpsRbac
 
   # Set role record variables to new values
   def rbac_role_set_record_vars(role)
-    role.name = @edit[:new][:name]
+    role.name = params[:name]
     role.settings ||= {}
     role.settings[:restrictions] ||= {}
-    if @edit[:new][:vm_restriction] == :none
+    if params[:vm_restriction] == :none
       role.settings[:restrictions].delete(:vms)
     else
-      role.settings[:restrictions][:vms] = @edit[:new][:vm_restriction]
+      role.settings[:restrictions][:vms] = params[:vm_restriction]
     end
-    if @edit[:new][:service_template_restriction] == :none
+    if params[:service_template_restriction] == :none
       role.settings[:restrictions].delete(:service_templates)
     else
-      role.settings[:restrictions][:service_templates] = @edit[:new][:service_template_restriction]
+      role.settings[:restrictions][:service_templates] = params[:service_template_restriction]
     end
     role.settings = nil if role.settings[:restrictions].blank?
   end
 
   def populate_role_features(role)
     role.miq_product_features =
-      MiqProductFeature.find_all_by_identifier(rbac_compact_features(@edit[:new][:features]))
+      MiqProductFeature.find_all_by_identifier(rbac_compact_features(params[:features]))
     User.current_user.reload
   end
 
