@@ -37,7 +37,7 @@
     "@carbon/icons-react": "~10.49.5",
     "@carbon/themes": "~10.55.5",
     "@data-driven-forms/carbon-component-mapper": "~3.18.8",
-    "@data-driven-forms/react-form-renderer": "~3.18.8",
+    "@data-driven-forms/react-form-renderer": "~3.23.0",
     "@manageiq/font-fabulous": "~1.0.5",
     "@manageiq/ui-components": "~1.6.1",
     "@novnc/novnc": "~1.2.0",
