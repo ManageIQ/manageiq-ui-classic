@@ -5,23 +5,23 @@
 }
 
 .about-modal {
-  .bx--modal-container {
+  .cds--modal-container {
     background-color: $modal-about-pf-bg-color;
 
     /* 'About' modal background image */
     background-image: url($modal-about-pf-bg-img);
     background-size: 100% 100%;
 
-    .bx--modal-header {
+    .cds--modal-header {
       padding-left: 5rem;
       padding-top: 3rem;
 
-      .bx--modal-header__heading {
+      .cds--modal-header__heading {
         color: #fff;
       }
 
-      .bx--modal-close {
-        .bx--modal-close__icon {
+      .cds--modal-close {
+        .cds--modal-close__icon {
           fill: #fff;
         }
       }
