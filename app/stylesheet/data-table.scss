@@ -31,7 +31,11 @@
 .select_filter {
   display: inline-flex;
 
-  .bx--select-input {
-    height: 3rem;
+  .miq-fieldset .miq-fieldset-content {
+    margin-top: 0;
+  }
+  .cds--btn.default_button {
+    display: flex;
+    align-items: center;
   }
 }
