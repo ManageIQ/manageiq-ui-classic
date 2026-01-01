@@ -5,30 +5,36 @@
 }
 
 .about-modal {
-  .bx--modal-container {
+  .cds--modal-container {
     background-color: $modal-about-pf-bg-color;
 
     /* 'About' modal background image */
     background-image: url($modal-about-pf-bg-img);
     background-size: 100% 100%;
 
-    .bx--modal-header {
+    .cds--modal-header {
       padding-left: 5rem;
       padding-top: 3rem;
 
-      .bx--modal-header__heading {
+      .cds--modal-header__heading {
         color: #fff;
       }
 
-      .bx--modal-close {
-        .bx--modal-close__icon {
+      .cds--modal-close {
+        .cds--modal-close__icon {
           fill: #fff;
         }
       }
     }
 
+    .cds--modal-content {
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
     .about-modal-body {
       padding-left: 4rem;
+      padding-bottom: 0;
 
       .about-visible-scrollbar {
         height: 200px;
@@ -63,14 +69,24 @@
         outline: none;
         color: #fff;
         font-size: 12px;
+
+        strong {
+          display: flex;
+          align-items: center;
+        }
       }
 
-      .logo {
-        position: fixed;
-        z-index: -1;
-        scale: 0.8;
-        right: 1rem;
-        bottom: 1rem;
+      .miq-product-info-and-logo-wrapper {
+        display: flex;
+        justify-content: space-between;
+
+        p {
+          display: flex;
+          align-items: center;
+        }
+        .logo {
+          scale: 0.8;
+        }
       }
     }
   }

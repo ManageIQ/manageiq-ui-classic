@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ClassNames from 'classnames';
-import { Button } from 'carbon-components-react';
+import { Button } from '@carbon/react';
 
 function MiqButton(props) {
   let { title } = props;
@@ -35,7 +35,7 @@ function MiqButton(props) {
       <Button
         className={title}
         onClick={buttonClicked}
-        onKeyPress={buttonClicked}
+        onKeyDown={buttonClicked}
         title={title}
       >
         {__(props.name)}
@@ -46,7 +46,7 @@ function MiqButton(props) {
     <Button
       className={klass}
       onClick={buttonClicked}
-      onKeyPress={buttonClicked}
+      onKeyDown={buttonClicked}
       title={title}
     >
       {__(props.name)}

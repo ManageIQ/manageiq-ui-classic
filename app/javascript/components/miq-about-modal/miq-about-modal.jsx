@@ -6,7 +6,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Modal, ModalBody, Button } from 'carbon-components-react';
+import { Modal, ModalBody, Button } from '@carbon/react';
 import ModalItem from './modal-item';
 import { detectBrowser } from './helper';
 
@@ -66,9 +66,8 @@ class MiqAboutModal extends React.Component {
 
   render() {
     const {
-      data, dialogClassName, hideModal,
+      data, dialogClassName, hideModal, show,
     } = this.props;
-    const { show } = this.props;
     const { expand } = this.state;
     let className = 'about-modal';
     if (dialogClassName === 'whitelabel') {
@@ -87,75 +86,81 @@ class MiqAboutModal extends React.Component {
     });
 
     return (
-      <Modal
-        aria-label="About Modal"
-        modalHeading={`${data.product_info.name_full} ${data.server_info.release}`}
-        open={show}
-        onRequestClose={() => { hideModal(); }}
-        passiveModal
-        className={className}
-      >
-        <ModalBody className="about-modal-body">
-          <ModalItem
-            label={`${__('Version')}`}
-            value={`${data.server_info.version}.${data.server_info.build}`}
-          />
-          <ModalItem
-            label={`${__('Server Name')}`}
-            value={data.server_info.appliance || ''}
-          />
-          <ModalItem
-            label={`${__('Region')}`}
-            value={data.region.region.toString()}
-          />
-          <ModalItem
-            label={`${__('Zone')} `}
-            value={data.zone.name || ''}
-          />
-          <ModalItem
-            label={`${__('User Name')} `}
-            value={data.identity.name}
-          />
-          <ModalItem
-            label={`${__('User Role')} `}
-            value={data.identity.role}
-          />
-          <ModalItem
-            label={`${__('Browser')} `}
-            value={browser.browser}
-          />
-          <ModalItem
-            label={`${__('Browser Version')} `}
-            value={browser.version.toString()}
-          />
-          <ModalItem
-            label={`${__('Browser OS')} `}
-            value={browser.OS}
-          />
-          <Button
-            kind="ghost"
-            className="plugins-button"
-            onClick={(event) => {
-              this.setState({ expand: !expand });
-              event.preventDefault();
+      <>
+        {show && (
+          <Modal
+            aria-label="About Modal"
+            modalHeading={`${data.product_info.name_full} ${data.server_info.release}`}
+            open
+            onRequestClose={() => {
+              hideModal();
             }}
+            passiveModal
+            className={className}
           >
-            <strong>
-              <i className={expand ? 'fa fa-angle-down' : 'fa fa-angle-right'} />
-              Plugins
-            </strong>
-          </Button>
-          <div className={expand ? 'about-visible-scrollbar' : 'hidden'}>
-            {plugins}
-          </div>
-          <br />
-          <br />
-          <p className="ModalItem">
-            {data.product_info.copyright}
-          </p>
-          <img src={data.product_info.branding_info.logo} alt="logo" className="logo" />
-        </ModalBody>
-      </Modal>
+            <ModalBody className="about-modal-body">
+              <ModalItem
+                label={`${__('Version')}`}
+                value={`${data.server_info.version}.${data.server_info.build}`}
+              />
+              <ModalItem
+                label={`${__('Server Name')}`}
+                value={data.server_info.appliance || ''}
+              />
+              <ModalItem
+                label={`${__('Region')}`}
+                value={data.region.region.toString()}
+              />
+              <ModalItem
+                label={`${__('Zone')} `}
+                value={data.zone.name || ''}
+              />
+              <ModalItem
+                label={`${__('User Name')} `}
+                value={data.identity.name}
+              />
+              <ModalItem
+                label={`${__('User Role')} `}
+                value={data.identity.role}
+              />
+              <ModalItem label={`${__('Browser')} `} value={browser.browser} />
+              <ModalItem
+                label={`${__('Browser Version')} `}
+                value={browser.version.toString()}
+              />
+              <ModalItem label={`${__('Browser OS')} `} value={browser.OS} />
+              <Button
+                kind="ghost"
+                className="plugins-button"
+                onClick={(event) => {
+                  this.setState({ expand: !expand });
+                  event.preventDefault();
+                }}
+              >
+                <strong>
+                  <i
+                    className={
+                      expand ? 'fa fa-angle-down' : 'fa fa-angle-right'
+                    }
+                  />
+                  Plugins
+                </strong>
+              </Button>
+              <div className={expand ? 'about-visible-scrollbar' : 'hidden'}>
+                {plugins}
+              </div>
+              <div className="miq-product-info-and-logo-wrapper">
+                <p className="ModalItem">{data.product_info.copyright}</p>
+                <img
+                  src={data.product_info.branding_info.logo}
+                  alt="logo"
+                  className="logo"
+                />
+              </div>
+            </ModalBody>
+          </Modal>
+        )}
+      </>
     );
   }
 }
