@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Select, SelectItem, SelectItemGroup, Button,
-} from 'carbon-components-react';
+} from '@carbon/react';
 
 const FilterDropdown = ({
   defSearches, mySearches, filterSelected, defaultSelected, selectedFilter,
@@ -30,7 +30,6 @@ const FilterDropdown = ({
   return (
     <div className="select_filter">
       <fieldset className="miq-fieldset">
-        <legend className="miq-fieldset-legend legend-filter-dropdown">{__('Choose a Filter')}</legend>
         <div className="miq-fieldset-content">
           <Select id="select_filter_dropdown" aria-label={__('Choose a Filter')} onChange={selectFilter} defaultValue={selectPlaceHolder} noLabel>
             <SelectItem
