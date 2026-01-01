@@ -115,6 +115,12 @@ form .miq-validation-button, .miq-async-action-button {
     }
   }
 }
+// For dual-list compoenent in action, alert-set, policy-profile, vm-edit forms
+.miq-common-dual-list-buttons-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .form-react {
   .cds--css-grid.miq-pwd-field-grid {
@@ -272,8 +278,7 @@ form .miq-validation-button, .miq-async-action-button {
   #move-left {
     white-space: nowrap;
     text-align: center;
-    box-sizing: content-box;
-    width: 50%;
+    width: 80%;
   }
 }
 

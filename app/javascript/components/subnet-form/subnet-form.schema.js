@@ -61,10 +61,10 @@ const createSchema = (edit, fields = [], loadSchema, emptySchema) => ({
           remove: __('Remove'),
         },
         AddButtonProps: {
-          size: 'small',
+          size: 'sm',
         },
         RemoveButtonProps: {
-          size: 'small',
+          size: 'sm',
         },
         fields: [{ // TODO: pattern for validating IPv4 or IPv6
           component: componentTypes.TEXT_FIELD,
