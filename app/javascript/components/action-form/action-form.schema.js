@@ -94,17 +94,20 @@ function createSchema(recordId, promise, inheritTags, evaluateAlert, tags, ansib
           noOptionsTitle: __('No available options'),
           filterOptionsTitle: __('Filter options'),
           filterValuesTitle: __('Filter values'),
+          ButtonColumnProps: {
+            className: 'miq-common-dual-list-buttons-column',
+          },
           AddButtonProps: {
-            size: 'small',
+            size: 'sm',
           },
           AddAllButtonProps: {
-            size: 'small',
+            size: 'sm',
           },
           RemoveButtonProps: {
-            size: 'small',
+            size: 'sm',
           },
           RemoveAllButtonProps: {
-            size: 'small',
+            size: 'sm',
           },
           options: buildAlertOptions(evaluateAlert),
         },
@@ -183,10 +186,10 @@ function createSchema(recordId, promise, inheritTags, evaluateAlert, tags, ansib
           id: 'options.ae_hash',
           fieldKey: 'field_array',
           AddButtonProps: {
-            size: 'small',
+            size: 'sm',
           },
           RemoveButtonProps: {
-            size: 'small',
+            size: 'sm',
           },
           fields: [
             {
@@ -408,10 +411,10 @@ function createSchema(recordId, promise, inheritTags, evaluateAlert, tags, ansib
           fieldKey: 'field_array',
           id: 'options.variables',
           AddButtonProps: {
-            size: 'small',
+            size: 'sm',
           },
           RemoveButtonProps: {
-            size: 'small',
+            size: 'sm',
           },
           fields: [
             {
