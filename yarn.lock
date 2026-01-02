@@ -8154,14 +8154,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jest@npm:~24.1.0":
-  version: 24.1.10
-  resolution: "eslint-plugin-jest@npm:24.1.10"
+"eslint-plugin-jest@npm:~24.7.0":
+  version: 24.7.0
+  resolution: "eslint-plugin-jest@npm:24.7.0"
   dependencies:
     "@typescript-eslint/experimental-utils": "npm:^4.0.1"
   peerDependencies:
+    "@typescript-eslint/eslint-plugin": ">= 4"
     eslint: ">=5"
-  checksum: 10/df2d54a467242cf5c973503c3a5a9f91ea98983d69c4aade8f9821e892fc9c6aba2364ed2e2d24f1f97aff9c377f9890d12e4f5a385407798606edbb2d0b996e
+  peerDependenciesMeta:
+    "@typescript-eslint/eslint-plugin":
+      optional: true
+  checksum: 10/e8d2ca1d8eed602d5cce36c2359c81870c65c6d639f100b13a749a293da7f932aac99f570d0538ccb6c99a865bbcb58e79de98c89fe6066df01e78ddae354b9e
   languageName: node
   linkType: hard
 
@@ -12928,7 +12932,7 @@ __metadata:
     eslint-config-angular: "npm:~0.5.0"
     eslint-plugin-angular: "npm:~4.1.0"
     eslint-plugin-import: "npm:~2.32.0"
-    eslint-plugin-jest: "npm:~24.1.0"
+    eslint-plugin-jest: "npm:~24.7.0"
     eslint-plugin-jsx-a11y: "npm:~6.4.1"
     eslint-plugin-react: "npm:~7.21.4"
     fetch-mock: "npm:^7.2.5"
