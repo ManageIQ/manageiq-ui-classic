@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'carbon-components-react';
+import { Grid, Column } from '@carbon/react';
 import MiqFormRenderer from '@@ddf';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import createSchema from './cloud-tenant-form.schema';
@@ -42,16 +42,18 @@ const CloudTenantForm = ({ recordId }) => {
 
   return !isLoading && (
     <Grid>
-      <MiqFormRenderer
-        initialValues={initialValues}
-        schema={createSchema(recordId, emsId, setState)}
-        onSubmit={onSubmit}
-        onCancel={onCancel}
-        canReset={!!recordId}
-        buttonsLabels={{
-          submitLabel: recordId ? __('Save') : __('Add'),
-        }}
-      />
+      <Column sm={4} md={8} lg={16}>
+        <MiqFormRenderer
+          initialValues={initialValues}
+          schema={createSchema(recordId, emsId, setState)}
+          onSubmit={onSubmit}
+          onCancel={onCancel}
+          canReset={!!recordId}
+          buttonsLabels={{
+            submitLabel: recordId ? __('Save') : __('Add'),
+          }}
+        />
+      </Column>
     </Grid>
   );
 };
