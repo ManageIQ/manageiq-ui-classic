@@ -587,7 +587,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
       required: cleanField.required || false,
       required_method: cleanField.requiredMethod || null,
       required_method_options: cleanField.requiredMethodOptions || {},
-      default_value: cleanField.value || '',
+      default_value: cleanField.default_value || cleanField.value || '',
       values: cleanField.values || null,
       values_method: cleanField.valuesMethod || null,
       values_method_options: cleanField.valuesMethodOptions || {},
