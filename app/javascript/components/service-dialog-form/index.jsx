@@ -184,6 +184,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
   }, [dialogData, dialogAction]);
 
   const [isSubmitButtonEnabled, setIsSubmitButtonEnabled] = useState(false);
+  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 
   const evaluateSubmitButton = () => {
     // checks if any of the sections in any tabs has fields added
@@ -345,9 +346,11 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
   };
 
   /** Function to handle the tab click event. */
-  const onTabSelect = (tabId) => {
+  const onTabSelect = (tabId, tabIndex) => {
     if (tabId === 'new') {
       addTab();
+    } else {
+      setSelectedTabIndex(tabIndex);
     }
   };
 
@@ -365,10 +368,26 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
 
   /** Function to delete a tab */
   const deleteTab = (tab) => {
+    const deletedTabIndex = data.formFields.findIndex((item) => item.tabId === tab.tabId);
+    
+    // Remove the tab
+    const newFormFields = [...data.formFields].filter((item) => item.tabId !== tab.tabId);
+    
+    // Always select the tab before the deleted one
+    // If deleting the first tab, select the new first tab (index 0)
+    let newSelectedIndex;
+    if (deletedTabIndex > 0) {
+      newSelectedIndex = deletedTabIndex - 1;
+    } else {
+      newSelectedIndex = 0;
+    }
+    
     setData({
       ...data,
-      formFields: [...data.formFields].filter((item) => item.tabId !== tab.tabId),
+      formFields: newFormFields,
     });
+    
+    setSelectedTabIndex(newSelectedIndex);
   };
 
   /** Function to handle the tab Actions from menu. */
@@ -510,7 +529,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
         }
       }}
       label={tab.name}
-      onClick={() => onTabSelect(tab.tabId)}
+      onClick={() => onTabSelect(tab.tabId, tabPosition)}
     >
       {tab.tabId !== 'new'
       && (
@@ -528,7 +547,12 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
     <div
       className="dynamic-tabs-wrapper"
     >
-      <Tabs className="miq_custom_tabs" id="dynamic-tabs">
+      <Tabs
+        className="miq_custom_tabs"
+        id="dynamic-tabs"
+        selected={selectedTabIndex}
+        onSelectionChange={setSelectedTabIndex}
+      >
         {renderTabs()}
       </Tabs>
     </div>
