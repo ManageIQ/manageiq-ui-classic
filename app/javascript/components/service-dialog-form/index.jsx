@@ -658,6 +658,8 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
     return API.post(`/api/service_dialogs/${dialogData.id}`, {
       action: 'edit',
       resource: dialogFormData,
+    }, {
+      skipErrors: true,
     })
       .then(() => {
         setIsSubmitting(false);
@@ -741,6 +743,16 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
 
   return (
     <form onSubmit={handleSubmit}>
+      {/* Error notification */}
+      {submitError && (
+        <InlineNotification
+          kind="error"
+          title="Error"
+          subtitle={submitError}
+          onCloseButtonClick={() => setSubmitError(null)}
+          style={{ marginBottom: '1rem' }}
+        />
+      )}
       <div className="service-dialog-main-wrapper">
         <h2>{__('General')}</h2>
         <div className="service-dialog-info">
@@ -776,16 +788,6 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
             renderTabContents()
           }
         </div>
-        {/* Error notification */}
-        {submitError && (
-          <InlineNotification
-            kind="error"
-            title="Error"
-            subtitle={submitError}
-            onCloseButtonClick={() => setSubmitError(null)}
-            style={{ marginTop: '1rem', marginBottom: '1rem' }}
-          />
-        )}
         {/* Form submit/cancel buttons */}
         <div className="custom-button-wrapper">
           <Button
