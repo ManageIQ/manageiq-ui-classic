@@ -10,7 +10,7 @@ import { useFieldApi, componentTypes } from '@@ddf';
 
 const EditPasswordField = ({ componentClass, ...props }) => {
   const {
-    labelText, validateOnMount, isDisabled, editMode, setEditMode, buttonLabel, input, meta, ...rest
+    labelText, validateOnMount, isDisabled, editMode, setEditMode, buttonLabel, input, meta, icon, kind, ...rest
   } = useFieldApi(prepareProps(props));
 
   const invalid = (meta.touched || validateOnMount) && meta.error;
@@ -58,7 +58,14 @@ const EditPasswordField = ({ componentClass, ...props }) => {
             { field }
           </div>
           <div className="bx--col-sm-1 bx--col-md-1 bx--col-lg-1">
-            <Button hasIconOnly kind="secondary" size="field" onClick={setEditMode} iconDescription={buttonLabel} renderIcon={EditOff16} />
+            <Button
+              hasIconOnly
+              kind={kind || 'secondary'}
+              size="field"
+              onClick={setEditMode}
+              iconDescription={buttonLabel}
+              renderIcon={icon || EditOff16}
+            />
           </div>
         </div>
       </div>
