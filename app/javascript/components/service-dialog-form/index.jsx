@@ -1,7 +1,7 @@
 /* eslint-disable radix */
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
-  Tabs, Tab, Button, TextInput, TextArea, InlineNotification,
+  Tabs, Tab, Button, TextInput, TextArea,
 } from 'carbon-components-react';
 import { AddAlt16 } from '@carbon/icons-react';
 import {
@@ -9,6 +9,7 @@ import {
 } from './data';
 import TabOptionsMenu from './tab-options-menu';
 import DynamicComponentChooser from './dynamic-component-chooser';
+import InlineFlashMessage from '../common/inline-flash-message';
 import './style.scss';
 import DynamicSection from './dynamic-section';
 import {
@@ -744,15 +745,15 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
   return (
     <form onSubmit={handleSubmit}>
       {/* Error notification */}
-      {submitError && (
-        <InlineNotification
-          kind="error"
-          title="Error"
-          subtitle={submitError}
-          onCloseButtonClick={() => setSubmitError(null)}
-          style={{ marginBottom: '1rem' }}
-        />
-      )}
+      <InlineFlashMessage
+        message={submitError ? {
+          kind: 'error',
+          title: 'Error',
+          subtitle: submitError,
+        } : null}
+        onCloseClick={() => setSubmitError(null)}
+        showCloseButton
+      />
       <div className="service-dialog-main-wrapper">
         <h2>{__('General')}</h2>
         <div className="service-dialog-info">
