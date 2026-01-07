@@ -1,7 +1,7 @@
 /* eslint-disable radix */
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
-  Tabs, Tab, Button, TextInput, TextArea,
+  Tabs, Tab, Button, TextInput, TextArea, InlineNotification,
 } from 'carbon-components-react';
 import { AddAlt16 } from '@carbon/icons-react';
 import {
@@ -185,6 +185,8 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
 
   const [isSubmitButtonEnabled, setIsSubmitButtonEnabled] = useState(false);
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+  const [submitError, setSubmitError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const evaluateSubmitButton = () => {
     // checks if any of the sections in any tabs has fields added
@@ -649,24 +651,50 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
   const isEditMode = () =>
     dialogData && dialogData.id && dialogAction && dialogAction.action === 'edit';
 
-  const updateDialog = (dialogFormData) =>
-    API.post(`/api/service_dialogs/${dialogData.id}`, {
+  const updateDialog = (dialogFormData) => {
+    setIsSubmitting(true);
+    setSubmitError(null);
+    
+    return API.post(`/api/service_dialogs/${dialogData.id}`, {
       action: 'edit',
       resource: dialogFormData,
     })
-      .then(navigateToExplorer)
+      .then(() => {
+        setIsSubmitting(false);
+        navigateToExplorer();
+      })
       .catch((error) => {
+        setIsSubmitting(false);
+        const errorMessage = (error.data && error.data.error && error.data.error.message)
+          || error.message
+          || 'Failed to update dialog. Please try again.';
+        setSubmitError(errorMessage);
         console.error('Error updating dialog:', error);
       });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setSubmitError(null);
+    setIsSubmitting(true);
+    
     const dialogFormData = prepareDialogFormData();
 
     if (isEditMode()) {
       updateDialog(dialogFormData);
     } else {
-      saveServiceDialog(data);
+      saveServiceDialog(data)
+        .then(() => {
+          setIsSubmitting(false);
+        })
+        .catch((error) => {
+          setIsSubmitting(false);
+          const errorMessage = (error.data && error.data.error && error.data.error.message)
+            || error.message
+            || 'Failed to create dialog. Please try again.';
+          setSubmitError(errorMessage);
+          console.error('Error creating dialog:', error);
+        });
     }
   };
 
@@ -748,16 +776,26 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
             renderTabContents()
           }
         </div>
+        {/* Error notification */}
+        {submitError && (
+          <InlineNotification
+            kind="error"
+            title="Error"
+            subtitle={submitError}
+            onCloseButtonClick={() => setSubmitError(null)}
+            style={{ marginTop: '1rem', marginBottom: '1rem' }}
+          />
+        )}
         {/* Form submit/cancel buttons */}
         <div className="custom-button-wrapper">
           <Button
-            disabled={!isSubmitButtonEnabled}
+            disabled={!isSubmitButtonEnabled || isSubmitting}
             kind="primary"
             className="btnRight"
             type="submit"
             variant="contained"
           >
-            { __('Submit')}
+            {isSubmitting ? __('Saving...') : __('Submit')}
           </Button>
           <Button
             variant="contained"
