@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Controlled as CodeMirror } from 'react-codemirror2';
-import { FormGroup, RadioButtonGroup, RadioButton } from 'carbon-components-react';
+import { FormGroup, RadioButtonGroup, RadioButton } from '@carbon/react';
 import { prepareProps } from '@data-driven-forms/carbon-component-mapper';
 
 import { useFieldApi } from '@@ddf';
@@ -67,7 +67,7 @@ const CodeEditor = (props) => {
         onBeforeChange={(editor, _data, value) => {
           onChange(value);
         }}
-        onChange={(editor, _data, value) => {
+        onChange={(_editor, _data, value) => {
           onChange(value);
         }}
         editorDidMount={(editor) => {

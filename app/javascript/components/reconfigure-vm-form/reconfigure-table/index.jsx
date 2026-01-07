@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'carbon-components-react';
+import { Button } from '@carbon/react';
 import classNames from 'classnames';
 import MiqDataTable from '../../miq-data-table';
 
@@ -10,9 +10,7 @@ const ReconfigureTable = ({
   const renderAddButton = () => addButtonLabel && (
     <Button
       kind="primary"
-      className={`${formType}-add bx--btn bx--btn--primary pull-right reconfigure-add-button`}
-      type="button"
-      variant="contained"
+      className={`${formType}-add pull-right reconfigure-add-button`}
       onClick={() => buttonClick('new', formType, 'add')}
     >
       {addButtonLabel}
