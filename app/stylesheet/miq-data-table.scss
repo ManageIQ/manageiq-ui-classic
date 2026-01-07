@@ -337,7 +337,6 @@ table.miq_preview {
         flex-grow: 1;
       }
       .reconfigure-add-button {
-        padding: 0 10px;
         min-width: 170px;
       }
     }
@@ -346,8 +345,13 @@ table.miq_preview {
         margin-top: -5px;
         margin-bottom: 0;
       }
-      .cds--toggle__switch {
-        margin-top: 3px;
+      .cds--toggle .cds--toggle__label {
+        span.cds--toggle__label-text {
+          display: none;
+        }
+        .cds--toggle__switch {
+          margin-top: 3px;
+        }
       }
       .cds--btn--ghost {
         outline: 0;
