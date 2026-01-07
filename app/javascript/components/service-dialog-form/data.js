@@ -62,7 +62,7 @@ export const saveServiceDialog = (data) => {
   const payload = formattedCatalogPayload(data);
 
   return API.post('/api/service_dialogs', payload, {
-    skipErrors: [400],
+    skipErrors: true,
   }).then(() => {
     window.location.href = '/miq_ae_customization/explorer';
   });
