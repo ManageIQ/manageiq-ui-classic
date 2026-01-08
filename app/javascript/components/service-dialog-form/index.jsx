@@ -531,7 +531,12 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
           resetDragRefs();
         }
       }}
-      label={tab.name}
+      label={tab.tabId === 'new' ? (
+        <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <AddAlt16 />
+          {tab.name}
+        </span>
+      ) : tab.name}
       onClick={() => onTabSelect(tab.tabId, tabPosition)}
     >
       {tab.tabId !== 'new'
