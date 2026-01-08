@@ -8869,15 +8869,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"file-loader@npm:~6.0.0":
-  version: 6.0.0
-  resolution: "file-loader@npm:6.0.0"
+"file-loader@npm:~6.2.0":
+  version: 6.2.0
+  resolution: "file-loader@npm:6.2.0"
   dependencies:
     loader-utils: "npm:^2.0.0"
-    schema-utils: "npm:^2.6.5"
+    schema-utils: "npm:^3.0.0"
   peerDependencies:
     webpack: ^4.0.0 || ^5.0.0
-  checksum: 10/9f74d9a3f19f56e8cfd092be0bdd31474575691588cdd883f027915c78cab39639e95cb656f5c4691cda1972b5d8d97d406af9f0a77dc0d0b8da5bc982a2ee68
+  checksum: 10/3a854be3a7501bdb0fd8a1c0d45c156c0dc8f0afced07cbdac0b13a79c2f2a03f7770d68cb555ff30b5ea7c20719df34e1b2bd896c93e3138ee31f0bdc560310
   languageName: node
   linkType: hard
 
@@ -13008,7 +13008,7 @@ __metadata:
     eslint-plugin-jsx-a11y: "npm:~6.4.1"
     eslint-plugin-react: "npm:~7.37.0"
     fetch-mock: "npm:^7.2.5"
-    file-loader: "npm:~6.0.0"
+    file-loader: "npm:~6.2.0"
     glob: "npm:~7.1.1"
     history: "npm:^4.7.2"
     identity-obj-proxy: "npm:^3.0.0"
