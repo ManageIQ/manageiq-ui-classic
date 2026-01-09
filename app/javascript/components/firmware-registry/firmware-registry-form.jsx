@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from 'carbon-components-react';
+import { Grid, Column } from '@carbon/react';
 import schema from './firmware-registry-form.schema';
 import MiqFormRenderer from '../../forms/data-driven-form';
 
@@ -36,15 +36,17 @@ const FirmwareRegistryForm = () => {
 
   return (
     <Grid>
-      <MiqFormRenderer
-        initialValues={{ type: TYPES.rest_api_depot.value }}
-        schema={schema(TYPES)}
-        onSubmit={submitValues}
-        buttonsLabels={{ submitLabel: __('Create') }}
-        className=""
-        showFormControls={false}
-        initialize={initialize}
-      />
+      <Column sm={4} md={8} lg={16}>
+        <MiqFormRenderer
+          initialValues={{ type: TYPES.rest_api_depot.value }}
+          schema={schema(TYPES)}
+          onSubmit={submitValues}
+          buttonsLabels={{ submitLabel: __('Create') }}
+          className=""
+          showFormControls={false}
+          initialize={initialize}
+        />
+      </Column>
     </Grid>
   );
 };

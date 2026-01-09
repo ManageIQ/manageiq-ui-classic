@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import MiqFormRenderer, { useFormApi } from '@@ddf';
 import { FormSpy } from '@data-driven-forms/react-form-renderer';
-import { Button } from 'carbon-components-react';
+import { Button } from '@carbon/react';
 import createSchema from './attach-detach-cloud-volume.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
@@ -133,7 +133,6 @@ const FormTemplate = ({
               className="btnRight"
               type="submit"
               id="submit"
-              variant="contained"
             >
               {submitLabel}
             </Button>
@@ -142,7 +141,6 @@ const FormTemplate = ({
               disabled={!valid && pristine}
               kind="secondary"
               className="btnRight"
-              variant="contained"
               onClick={onReset}
               type="button"
               id="reset"
@@ -150,7 +148,7 @@ const FormTemplate = ({
               { __('Reset')}
             </Button>
 
-            <Button variant="contained" type="button" onClick={onCancel} kind="secondary">
+            <Button type="button" onClick={onCancel} kind="secondary">
               { __('Cancel')}
             </Button>
           </div>
