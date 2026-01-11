@@ -43,7 +43,7 @@ class EmsCloudController < ApplicationController
   end
 
   def launch_console
-    open_console('ems_native_console')
+    open_console('ems_management_console')
   end
 
   menu_section :clo
