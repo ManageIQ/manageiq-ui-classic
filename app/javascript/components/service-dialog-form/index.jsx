@@ -44,11 +44,28 @@ const getComponentIdFromType = (type) => {
 
 
 const ServiceDialogForm = ({ dialogData, dialogAction }) => {
+  // Refs
   const dragEnterItem = useRef(null); /** Stores the information of component where the dragged item is being hovered before release. */
   const draggedItem = useRef(null); /** Stores the information of component being dragged. */
   const hoverItem = useRef(null); /** Stores the tab and section position during the drop event. */
   const nextSectionId = useRef(1); /** Counter for generating unique section IDs */
   const nextTabId = useRef(1); /** Counter for generating unique tab IDs */
+
+  // State
+  const [data, setData] = useState({
+    list: dynamicComponents,
+    formFields: [defaultTabContents(0), createNewTab()],
+    label: dialogData ? dialogData.label || '' : '',
+    description: dialogData ? dialogData.description || '' : '',
+  });
+  const [isSubmitButtonEnabled, setIsSubmitButtonEnabled] = useState(false);
+  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+  const [submitError, setSubmitError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showTabEditModal, setTabEditModal] = useState(false);
+  const [selTab, setSelTab] = useState(null);
+  const [showSectionEditModal, setSectionEditModal] = useState(false);
+  const [selSection, setSelSection] = useState(null);
 
   // Helper function to calculate the maximum section ID across all tabs
   const getMaxSectionId = (tabs) => tabs.reduce((max, tab) => {
@@ -63,19 +80,6 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
     }
     return max;
   }, 0);
-
-  // State to store the dialog data
-  const [data, setData] = useState({
-    list: dynamicComponents,
-    formFields: [defaultTabContents(0), createNewTab()],
-    label: dialogData ? dialogData.label || '' : '',
-    description: dialogData ? dialogData.description || '' : '',
-  });
-
-  const [isSubmitButtonEnabled, setIsSubmitButtonEnabled] = useState(false);
-  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
-  const [submitError, setSubmitError] = useState(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Effect to fetch dialog data when editing
   useEffect(() => {
@@ -355,13 +359,6 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
     }
   };
 
-  const [showTabEditModal, setTabEditModal] = useState(false);
-  const [selTab, setSelTab] = useState(null);
-
-  const [showSectionEditModal, setSectionEditModal] = useState(false);
-  const [selSection, setSelSection] = useState(null);
-
-  
   const onModalHide = () => setTabEditModal(false);
   const onModalShow = () => {
     setTabEditModal(true);
