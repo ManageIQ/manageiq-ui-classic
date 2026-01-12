@@ -49,6 +49,12 @@
     flex-direction: column;
     flex-grow: 1;
 
+    .create-tab-label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
     .dynamic-sections-wrapper {
       display: flex;
       flex-direction: column;
