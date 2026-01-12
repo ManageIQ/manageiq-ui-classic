@@ -67,8 +67,6 @@ const EditFieldModal = ({
     }
   };
 
-  const onCancel = () => onModalHide();
-
   const handleSubmit = (submittedValues, e) => {
     const finalValues = { ...formValues, ...submittedValues };
     onSave(e, finalValues);
@@ -138,7 +136,7 @@ const EditFieldModal = ({
             kind="secondary"
             className="btnRight"
             type="button"
-            onClick={onCancel}
+            onClick={onModalHide}
           >
             {__('Cancel')}
           </Button>
@@ -166,7 +164,7 @@ const EditFieldModal = ({
           schema={createSchema(fieldConfiguration, formValues, onChange)}
           initialValues={formValues}
           onSubmit={handleSubmit}
-          onCancel={onCancel}
+          onCancel={onModalHide}
           onReset={handleReset}
           FormTemplate={FormTemplate}
         />
