@@ -90,6 +90,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
                 const formattedTab = {
                   tabId: index,
                   name: tab.label,
+                  description: tab.description || '',
                   sections: (tab.dialog_groups || []).map((group, groupIndex) => {
                     const fields = (group.dialog_fields || []).map(field => {
                       const componentId = getComponentIdFromType(field.type);
@@ -148,6 +149,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
       const formattedTabs = dialogData.dialog_tabs.map((tab, index) => ({
         tabId: index,
         name: tab.label,
+        description: tab.description || '',
         sections: (tab.dialog_groups || []).map((group, groupIndex) => ({
           tabId: index,
           sectionId: groupIndex,
@@ -639,6 +641,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
       if (tab.tabId !== 'new') {
         acc.push({
           label: tab.name,
+          description: tab.description || '',
           position,
           dialog_groups: formatDialogGroups(tab.sections),
         });
@@ -710,7 +713,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
     setData((prevData) => {
       const updatedFormFields = prevData.formFields.map((tab) => {
         if (tab.tabId === tabId) {
-          return { ...tab, name: data.tab_name };
+          return { ...tab, name: data.tab_name, description: data.tab_description };
         }
         return tab;
       });
