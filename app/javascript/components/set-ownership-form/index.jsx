@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { groupBy } from 'lodash';
-import { Grid } from 'carbon-components-react';
+import { Grid, Column } from '@carbon/react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { API } from '../../http_api';
 import createSchema from './ownership-form.schema';
@@ -119,13 +119,15 @@ function SetOwnershipForm({ ownershipItems }) {
 
   return (
     <Grid id="set-ownership-form">
-      <MiqFormRenderer
-        initialValues={initialValues}
-        schema={createSchema(userOptions, groupOptions)}
-        onSubmit={(values) => handleSubmit(values, submitUrl)}
-        onCancel={() => miqAjaxButton(cancelUrl)}
-        canReset
-      />
+      <Column sm={4} md={8} lg={16}>
+        <MiqFormRenderer
+          initialValues={initialValues}
+          schema={createSchema(userOptions, groupOptions)}
+          onSubmit={(values) => handleSubmit(values, submitUrl)}
+          onCancel={() => miqAjaxButton(cancelUrl)}
+          canReset
+        />
+      </Column>
     </Grid>
   );
 }
