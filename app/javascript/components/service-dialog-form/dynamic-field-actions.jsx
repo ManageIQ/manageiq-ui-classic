@@ -12,7 +12,10 @@ const DynamicFieldActions = ({
   const [state, setState] = useState({ showModal: false });
   const { showModal } = state;
 
-  const toggleModal = (show = false) => setState((state) => ({ ...state, showModal: show }));
+  const toggleModal = (show = false) => {
+    setState((state) => ({ ...state, showModal: show }));
+  };
+
   // const onModalApply = () => setState((state) => ({ ...state, showModal: false }));
   const onModalApply = (formValues, event) => {
     setState((prevState) => ({ ...prevState, ...formValues }));
@@ -81,11 +84,13 @@ const DynamicFieldActions = ({
   );
 
   return (
-    <div className="dynamic-form-field-actions">
-      {renderEditButton()}
-      {renderRemoveButton()}
+    <>
+      <div className="dynamic-form-field-actions">
+        {renderEditButton()}
+        {renderRemoveButton()}
+      </div>
       {renderEditFieldModal()}
-    </div>
+    </>
   );
 };
 
