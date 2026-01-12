@@ -206,10 +206,6 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
     evaluateSubmitButton();
   }, [data]);
 
-  const onTabAction = (type, event) => tabAction({
-    event, type,
-  });
-
   const onDragEnterSection = ({ section }) => {
     if (draggedItem.current.type === dragItems.SECTION) {
       dragEnterItem.current = { section };
