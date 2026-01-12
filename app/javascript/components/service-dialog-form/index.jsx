@@ -532,7 +532,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
         }
       }}
       label={tab.tabId === 'new' ? (
-        <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+        <span className="create-tab-label">
           <AddAlt16 />
           {tab.name}
         </span>
