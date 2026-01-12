@@ -359,11 +359,6 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
     }
   };
 
-  const onModalHide = () => setTabEditModal(false);
-  const onModalShow = () => {
-    setTabEditModal(true);
-  };
-
   /** Function to delete a tab */
   const deleteTab = (tab) => {
     const deletedTabIndex = data.formFields.findIndex((item) => item.tabId === tab.tabId);
