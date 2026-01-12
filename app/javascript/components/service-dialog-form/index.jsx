@@ -1,5 +1,5 @@
 /* eslint-disable radix */
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Tabs, Tab, Button, TextInput, TextArea,
 } from 'carbon-components-react';
@@ -72,6 +72,11 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
     description: dialogData ? dialogData.description || '' : '',
   });
 
+  const [isSubmitButtonEnabled, setIsSubmitButtonEnabled] = useState(false);
+  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+  const [submitError, setSubmitError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   // Effect to fetch dialog data when editing
   useEffect(() => {
     // If we're editing an existing dialog, fetch its complete structure
@@ -141,7 +146,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
             }
           }
         })
-        .catch((error) => {
+        .catch((_error) => {
         });
     } else if (dialogData && dialogData.dialog_tabs && dialogData.dialog_tabs.length > 0) {
       // If dialog_tabs is already available in the passed data, use it
@@ -185,11 +190,6 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
       });
     }
   }, [dialogData, dialogAction]);
-
-  const [isSubmitButtonEnabled, setIsSubmitButtonEnabled] = useState(false);
-  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
-  const [submitError, setSubmitError] = useState(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const evaluateSubmitButton = () => {
     // checks if any of the sections in any tabs has fields added
