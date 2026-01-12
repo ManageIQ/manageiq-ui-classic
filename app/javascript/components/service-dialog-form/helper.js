@@ -492,16 +492,11 @@ const parseFieldsInfo = (fields) => {
   return result;
 };
 
-const getFieldsInfo = (fields) => {
-  const formattedFields = parseFieldsInfo(fields);
-  return formattedFields;
-};
-
 // get details on Sections
 const getSectionsInfo = (sections) => sections.map((section) => ({
   label: section.title,
   position: section.order,
-  dialog_fields: getFieldsInfo(section.fields),
+  dialog_fields: parseFieldsInfo(section.fields),
 }));
 
 const getTabsInfo = (tabs) => {
