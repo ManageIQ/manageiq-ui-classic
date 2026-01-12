@@ -191,3 +191,29 @@
   gap: 10px;
   padding: 10px;
 }
+
+// Prevent drag cursor on modal and its contents
+.edit-field-modal,
+.edit-field-modal * {
+  cursor: default !important;
+}
+
+// Ensure modal has higher z-index and prevents interaction with draggable elements
+.bx--modal.edit-field-modal {
+  z-index: 9999;
+  pointer-events: auto;
+}
+
+// Disable pointer events on draggable elements when modal is open
+body:has(.bx--modal.is-visible) {
+  .dynamic-section,
+  .dynamic-form-field-wrapper,
+  .component-item-wrapper {
+    pointer-events: none;
+  }
+  
+  // But keep pointer events on the modal itself
+  .bx--modal {
+    pointer-events: auto;
+  }
+}
