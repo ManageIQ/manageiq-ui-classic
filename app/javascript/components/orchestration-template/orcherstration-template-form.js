@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'carbon-components-react';
+import { Grid, Column } from '@carbon/react';
 import { API } from '../../http_api';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
@@ -92,16 +92,18 @@ const OrcherstrationTemplateForm = ({ isStack, otId, copy }) => {
 
   return (
     <Grid>
-      <MiqFormRenderer
-        schema={schema}
-        onSubmit={onSubmit}
-        initialValues={initialValues}
-        onCancel={onCancel}
-        canReset={!!otId && !copy}
-        buttonsLabels={{
-          submitLabel: otId && !copy ? __('Save') : __('Add'),
-        }}
-      />
+      <Column sm={4} md={8} lg={16}>
+        <MiqFormRenderer
+          schema={schema}
+          onSubmit={onSubmit}
+          initialValues={initialValues}
+          onCancel={onCancel}
+          canReset={!!otId && !copy}
+          buttonsLabels={{
+            submitLabel: otId && !copy ? __('Save') : __('Add'),
+          }}
+        />
+      </Column>
     </Grid>
   );
 };
