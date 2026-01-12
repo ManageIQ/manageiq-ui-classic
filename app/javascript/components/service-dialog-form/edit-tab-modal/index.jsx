@@ -7,8 +7,6 @@ import { createSchema } from './tab.schema';
 const EditTabModal = ({
   tabInfo, usedTabNames, showModal, onSave, onModalHide,
 }) => {
-  const onCancel = () => onModalHide();
-
   const handleSubmit = (formValues, e) => {
     onSave(e, formValues);
   };
@@ -28,7 +26,7 @@ const EditTabModal = ({
           tab_description: tabInfo.description,
         }}
         onSubmit={handleSubmit}
-        onCancel={onCancel}
+        onCancel={onModalHide}
       />
     </Modal>
   );

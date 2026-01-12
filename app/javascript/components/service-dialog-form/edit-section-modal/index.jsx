@@ -7,8 +7,6 @@ import { createSchema } from './section.schema';
 const EditSectionModal = ({
   sectionInfo, usedSectionNames, showModal, onSave, onModalHide,
 }) => {
-  const onCancel = () => onModalHide();
-
   const handleSubmit = (formValues, e) => {
     onSave(e, formValues);
   };
@@ -28,7 +26,7 @@ const EditSectionModal = ({
           section_description: sectionInfo.description,
         }}
         onSubmit={handleSubmit}
-        onCancel={onCancel}
+        onCancel={onModalHide}
       />
     </Modal>
   );

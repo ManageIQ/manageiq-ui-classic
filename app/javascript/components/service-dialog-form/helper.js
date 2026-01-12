@@ -345,7 +345,6 @@ export const getFieldValues = (field) => {
       };
       
     case 'DialogFieldCheckBox':
-      debugger
       return {
         ...commonProps,
         checked: field.checked || false,
