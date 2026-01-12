@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MiqFormRenderer from '@@ddf';
-import { Loading } from 'carbon-components-react';
+import { Loading } from '@carbon/react';
 import PropTypes from 'prop-types';
 import createSchema from './settings-time-profile-form.schema';
 import { API } from '../../http_api';
