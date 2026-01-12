@@ -7,7 +7,7 @@ import { createSchema } from './edit-field-modal.schema';
 import InlineFlashMessage from '../../common/inline-flash-message';
 
 const EditFieldModal = ({
-  componentId, fieldConfiguration, showModal, onModalHide, onModalApply, initialData,
+  componentId, fieldConfiguration, onModalHide, initialData,
   onSave, onDynamicSwitchToggle, onCategorySelect, onTimePickerChange, onAutomationTypeChange,
 }) => {
   const component = dynamicComponents.find((item) => item.id === componentId);
@@ -181,9 +181,7 @@ EditFieldModal.propTypes = {
     name: PropTypes.string,
     fields: PropTypes.arrayOf(PropTypes.any),
   })).isRequired,
-  showModal: PropTypes.bool.isRequired,
   onModalHide: PropTypes.func.isRequired,
-  onModalApply: PropTypes.func.isRequired,
   initialData: PropTypes.objectOf(PropTypes.any).isRequired,
   onSave: PropTypes.func.isRequired,
   onDynamicSwitchToggle: PropTypes.func.isRequired,

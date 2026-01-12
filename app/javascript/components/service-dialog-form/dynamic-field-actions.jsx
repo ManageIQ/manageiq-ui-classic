@@ -16,13 +16,6 @@ const DynamicFieldActions = ({
     setState((state) => ({ ...state, showModal: show }));
   };
 
-  // const onModalApply = () => setState((state) => ({ ...state, showModal: false }));
-  const onModalApply = (formValues, event) => {
-    setState((prevState) => ({ ...prevState, ...formValues }));
-    toggleModal(false);
-    dynamicFieldAction(event, formValues);
-  };
-
   const onDynamicSwitchToggle = (isDynamic) => {
     setState((prevState) => ({ ...prevState, dynamic: isDynamic }));
     dynamicToggleAction(isDynamic);
@@ -70,9 +63,7 @@ const DynamicFieldActions = ({
       <EditFieldModal
         componentId={componentId}
         fieldConfiguration={fieldConfiguration}
-        showModal={showModal}
         onModalHide={() => toggleModal(false)}
-        onModalApply={onModalApply}
         initialData={fieldProps}
         onSave={onModalSave}
         onDynamicSwitchToggle={onDynamicSwitchToggle}
