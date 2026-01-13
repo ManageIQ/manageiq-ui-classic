@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Controlled as CodeMirror } from 'react-codemirror2';
 import { Tabs, Tab } from 'carbon-components-react';
+import CodeMirror, { EditorView } from '@uiw/react-codemirror';
+import { lintGutter, linter } from '@codemirror/lint';
+import parser from 'js-yaml';
+import * as yamlMode from '@codemirror/legacy-modes/mode/yaml';
+import { StreamLanguage } from '@codemirror/language';
+import { eclipse } from '@uiw/codemirror-theme-eclipse';
 import NotificationMessage from '../notification-message';
 
 /** The AnsiblePlaybookWorkflow is used to render the payload received from the  Ansible Playbook's show page */
@@ -10,22 +15,45 @@ const AnsiblePlaybookWorkflow = ({ payload, payloadType }) => {
   const renderMessage = () => <NotificationMessage type="info" message={__('Payload is not available.')} />;
 
   /** Function to render the payload using  CodeMirror. */
-  const renderCodeMirror = () => (
-    <CodeMirror
-      className="miq-codemirror ansible-playbook-workflow-payload"
-      options={{
-        mode: payloadType,
-        theme: 'eclipse',
-        lint: true,
-        lineNumbers: true,
-        lineWrapping: true,
-        autoCloseBrackets: true,
-        styleActiveLine: true,
-        gutters: ['CodeMirror-lint-markers'],
-      }}
-      value={payload}
-    />
-  );
+  const renderCodeMirror = () => {
+    const yaml = StreamLanguage.define(yamlMode.yaml);
+    const yamlLinter = linter((view) => {
+      const diagnostics = [];
+
+      try {
+        parser.load(view.state.doc);
+      } catch (e) {
+        const loc = e.mark;
+        const from = loc ? loc.position : 0;
+        const to = from;
+        const severity = 'error';
+
+        diagnostics.push({
+          from,
+          to,
+          message: e.message,
+          severity,
+        });
+      }
+
+      return diagnostics;
+    });
+
+    const extensions = [EditorView.lineWrapping, lintGutter()];
+    if (payloadType === 'yaml') {
+      extensions.push(yaml, yamlLinter);
+    }
+
+    return (
+      <CodeMirror
+        value={payload}
+        theme={eclipse}
+        editable={false}
+        basicSetup={{ highlightActiveLine: false, highlightActiveLineGutter: false }}
+        extensions={extensions}
+      />
+    );
+  };
 
   /** Function to render the tab contents. Only one tab named 'Text' is required for ansible. */
   const renderTabContents = () => (
