@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'carbon-components-react';
+import { Grid, Column } from '@carbon/react';
 import createSchema from './edit-service-form.schema';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
@@ -32,16 +32,18 @@ const EditServiceForm = ({ maxNameLen, maxDescLen, recordId }) => {
 
   return !isLoading && (
     <Grid style={{ paddingTop: 20 }}>
-      <MiqFormRenderer
-        initialValues={initialValues}
-        schema={createSchema(maxNameLen, maxDescLen)}
-        onSubmit={onSubmit}
-        onCancel={onCancel}
-        canReset
-        buttonsLabels={{
-          submitLabel: __('Save'),
-        }}
-      />
+      <Column sm={4} md={8} lg={16}>
+        <MiqFormRenderer
+          initialValues={initialValues}
+          schema={createSchema(maxNameLen, maxDescLen)}
+          onSubmit={onSubmit}
+          onCancel={onCancel}
+          canReset
+          buttonsLabels={{
+            submitLabel: __('Save'),
+          }}
+        />
+      </Column>
     </Grid>
   );
 };
