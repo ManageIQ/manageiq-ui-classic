@@ -75,12 +75,13 @@ const EmbeddedAutomateEntryPoint = (props) => {
       />
       <div className="entry-point-wrapper">
         <div className="entry-point-text-input">
-          <TextInput 
+          <TextInput
             id={id}
             type="text"
             labelText={__(label)}
             value={textValue}
-            readOnly />
+            readOnly
+          />
         </div>
         <div className="entry-point-buttons">
           <div className="entry-point-open">
@@ -101,11 +102,9 @@ const EmbeddedAutomateEntryPoint = (props) => {
               onClick={() => {
                 setSelectedValue(null);
                 setTextValue('');
-                // Ensure the input change is triggered to update form state
-                // input.onChange(null);
                 input.onChange({
                   automateEntryPoint: null,
-                  value: null  // Also clear any associated value
+                  value: null, // Also clear any associated value
                 });
               }}
             />
