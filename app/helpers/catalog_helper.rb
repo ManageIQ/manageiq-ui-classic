@@ -3,6 +3,7 @@ module CatalogHelper
   include RequestInfoHelper
   include Mixins::AutomationMixin
   include OrchestrationTemplateHelper
+  include OrderServiceHelper
 
   def miq_catalog_resource(resources)
     headers = ["", _("Name"), _("Description"), _("Action Order"), _("Provision Order"), _("Action Start"), _("Action Stop"), _("Delay (mins) Start"), _("Delay (mins) Stop")]
