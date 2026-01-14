@@ -13,6 +13,7 @@ import FontIconPickerDdf from '../../components/fonticon-picker/font-icon-picker
 import KeyValueListComponent from '../../components/key-value-list';
 import EmbeddedAutomateEntryPoint from '../../components/embedded-automate-entry-point';
 import EmbeddedWorkflowEntryPoint from '../../components/embedded-workflow-entry-point';
+import CustomDateTimePicker from '../../components/date-time-picker';
 
 const mapper = {
   ...componentMapper,
@@ -30,6 +31,7 @@ const mapper = {
   'multi-select': MultiSelectWithSelectAll,
   'font-icon-picker': FontIconPicker,
   'font-icon-picker-ddf': FontIconPickerDdf, // used for react form pages
+  'date-time-picker': CustomDateTimePicker,
 };
 
 export default mapper;
