@@ -6655,9 +6655,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:~15.8.0":
-  version: 15.8.2
-  resolution: "cypress@npm:15.8.2"
+"cypress@npm:~15.9.0":
+  version: 15.9.0
+  resolution: "cypress@npm:15.9.0"
   dependencies:
     "@cypress/request": "npm:^3.0.10"
     "@cypress/xvfb": "npm:^1.2.4"
@@ -6703,7 +6703,7 @@ __metadata:
     yauzl: "npm:^2.10.0"
   bin:
     cypress: bin/cypress
-  checksum: 10/7d8859ed3d16da7b99840b053bb24e71f22da1ec0ef81799e7bc5786d02ce89a7b227f17c9270225dbf8e9dec9a21accfbea0d37fc7aae5aabbea54990c78150
+  checksum: 10/f561e7f9f8956e26a1eeb1dc98614b83abb63c1f83d008ffd26a03d96c15c25037980868f57e07f9821be4c41ace6886f8edf4de6d86a3b5de5f3c059b586ecd
   languageName: node
   linkType: hard
 
@@ -13129,7 +13129,7 @@ __metadata:
     core-js-compat: "npm:~3.47.0"
     create-react-context: "npm:~0.3.0"
     css-loader: "npm:~3.6.0"
-    cypress: "npm:~15.8.0"
+    cypress: "npm:~15.9.0"
     d3: "npm:^7.8.2"
     dompurify: "npm:^3.2.4"
     duplicate-package-checker-webpack-plugin: "npm:~3.0.0"
