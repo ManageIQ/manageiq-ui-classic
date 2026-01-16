@@ -1864,6 +1864,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hotwired/stimulus@npm:^3.2.2":
+  version: 3.2.2
+  resolution: "@hotwired/stimulus@npm:3.2.2"
+  checksum: 10/31b9dc3a36a73b87a30570d6e73d27b387a8f6c3caf934aedc4dc96e5b40dde8fc36d530e16056b3d590b1d31b8a13bc1fca002e83df838f1bf5148b188046de
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.5.0":
   version: 0.5.0
   resolution: "@humanwhocodes/config-array@npm:0.5.0"
@@ -13092,6 +13099,7 @@ __metadata:
     "@carbon/themes": "npm:~10.55.5"
     "@data-driven-forms/carbon-component-mapper": "npm:~3.18.8"
     "@data-driven-forms/react-form-renderer": "npm:~3.18.8"
+    "@hotwired/stimulus": "npm:^3.2.2"
     "@manageiq/font-fabulous": "npm:~1.0.5"
     "@manageiq/ui-components": "npm:~1.6.1"
     "@novnc/novnc": "npm:~1.2.0"
