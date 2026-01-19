@@ -12343,12 +12343,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jquery-ui@npm:~1.13.2":
-  version: 1.13.3
-  resolution: "jquery-ui@npm:1.13.3"
+"jquery-ui@npm:~1.14.0":
+  version: 1.14.1
+  resolution: "jquery-ui@npm:1.14.1"
   dependencies:
-    jquery: "npm:>=1.8.0 <4.0.0"
-  checksum: 10/96db237438e5fb1b9f49d18c086134de9dcdff970d6385679b8fa16fbb5c95be861c84be2d07f0efca57a534a50b31bebc497f0314cf85e6f64d8553264d4983
+    jquery: "npm:>=1.12.0 <5.0.0"
+  checksum: 10/ce648ba36042ee47935c7835c1e9b512e4fb65d13ee591af5bf7b13cd596a44584567f08ec3a3e0051c932bd8299ac63e8d0f0236748ca89213e220c0122bbf8
   languageName: node
   linkType: hard
 
@@ -12379,6 +12379,13 @@ __metadata:
   version: 3.7.1
   resolution: "jquery@npm:3.7.1"
   checksum: 10/17be9929f5fa37697d9848284f0d108c543318ef79ec794e130cd0c49f6c050d60c803a69e8cfa16fa19f5ff7cdb814a6905cceab0831186560c65ed113cd579
+  languageName: node
+  linkType: hard
+
+"jquery@npm:>=1.12.0 <5.0.0":
+  version: 4.0.0
+  resolution: "jquery@npm:4.0.0"
+  checksum: 10/722be14779518f27f50463d9aaa8d6b42782673a23f65335c4ff9e2ad124cb4d5267696dfc7bc4f40ecf04e852cbb05b1630b50daacf2821737d5d3b480fbf19
   languageName: node
   linkType: hard
 
@@ -13318,7 +13325,7 @@ __metadata:
     jest: "npm:~26.6.3"
     jest-cli: "npm:~24.9.0"
     jquery: "npm:~2.2.4"
-    jquery-ui: "npm:~1.13.2"
+    jquery-ui: "npm:~1.14.0"
     jquery-ujs: "npm:~1.2.2"
     jquery.hotkeys: "npm:~0.1.0"
     jquery.observe_field: "npm:~0.1.0"
