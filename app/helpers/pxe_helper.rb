@@ -13,6 +13,8 @@ module PxeHelper
                         })
   end
 
+  private
+
   def row_data(label, value)
     {:cells => {:label => label, :value => value}}
   end
