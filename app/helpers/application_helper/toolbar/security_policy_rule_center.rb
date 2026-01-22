@@ -9,7 +9,7 @@ class ApplicationHelper::Toolbar::SecurityPolicyRuleCenter < ApplicationHelper::
         t,
         :items => [
           button(
-            :security_security_rule_new,
+            :security_policy_rule_new,
             'pficon pficon-add-circle-o fa-lg',
             t = N_('Add a new Security Policy Rule'),
             t,
