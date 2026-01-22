@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'carbon-components-react';
+import { Grid, Column } from '@carbon/react';
 import createSchema from './region-form.schema';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { API } from '../../http_api';
@@ -43,18 +43,20 @@ const RegionForm = ({ id, maxDescLen }) => {
 
   return (
     <Grid style={{ paddingTop: 20 }}>
-      <MiqFormRenderer
-        initialValues={{ description }}
-        schema={createSchema(maxDescLen)}
-        onSubmit={onSubmit}
-        onCancel={onCancel}
-        canReset
-        buttonsLabels={{
-          submitLabel: __('Save'),
-          resetLabel: __('Reset'),
-          cancelLabel: __('Cancel'),
-        }}
-      />
+      <Column sm={4} md={8} lg={16}>
+        <MiqFormRenderer
+          initialValues={{ description }}
+          schema={createSchema(maxDescLen)}
+          onSubmit={onSubmit}
+          onCancel={onCancel}
+          canReset
+          buttonsLabels={{
+            submitLabel: __('Save'),
+            resetLabel: __('Reset'),
+            cancelLabel: __('Cancel'),
+          }}
+        />
+      </Column>
     </Grid>
   );
 };

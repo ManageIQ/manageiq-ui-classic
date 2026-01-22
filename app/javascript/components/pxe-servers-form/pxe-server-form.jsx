@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'carbon-components-react';
+import { Grid, Column } from '@carbon/react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import createSchema from './pxe-server-form.schema';
 import { API } from '../../http_api';
@@ -77,7 +77,9 @@ const PxeServersForm = ({ id }) => {
 
   return (
     <Grid>
-      <MiqFormRenderer initialValues={initialValues} canReset={!!id} onSubmit={onSubmit} onCancel={onCancel} schema={createSchema(!!id)} />
+      <Column sm={4} md={8} lg={16}>
+        <MiqFormRenderer initialValues={initialValues} canReset={!!id} onSubmit={onSubmit} onCancel={onCancel} schema={createSchema(!!id)} />
+      </Column>
     </Grid>
   );
 };
