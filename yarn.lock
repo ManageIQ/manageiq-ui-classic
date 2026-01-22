@@ -6376,10 +6376,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:~3.47.0":
-  version: 3.47.0
-  resolution: "core-js@npm:3.47.0"
-  checksum: 10/c02dc6a091c7e6799e3527dc06a428c44bbcff7f8f6ee700ff818b90aa2ebaf1f17b0234146e692811da97cda5a39a6095ecadec9fd1a74b1135103eb0e96cb1
+"core-js@npm:~3.48.0":
+  version: 3.48.0
+  resolution: "core-js@npm:3.48.0"
+  checksum: 10/08bb3cc9b3225b905e72370c18257a14bb5563946d9eb7496799e0ee4f13231768b980ffe98434df7dbd0f8209bd2c19519938a2fa94846b2c82c2d5aa804037
   languageName: node
   linkType: hard
 
@@ -13158,7 +13158,7 @@ __metadata:
     codemirror: "npm:~5.65.0"
     compression-webpack-plugin: "npm:^6.1.1"
     connected-react-router: "npm:~6.9.0"
-    core-js: "npm:~3.47.0"
+    core-js: "npm:~3.48.0"
     core-js-compat: "npm:~3.47.0"
     create-react-context: "npm:~0.3.0"
     css-loader: "npm:~3.6.0"
