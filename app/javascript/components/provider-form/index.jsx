@@ -60,15 +60,18 @@ const ProviderForm = ({
   ];
 
   const loadProviderFields = (type) => API.options(`/api/providers?type=${type}`).then(
-    ({ data: { provider_form_schema } }) => ([ // eslint-disable-line camelcase
-      ...commonFields,
-      {
-        component: componentTypes.SUB_FORM,
-        id: type,
-        name: type,
-        ...provider_form_schema, // eslint-disable-line camelcase
-      },
-    ]),
+    ({ data: { provider_form_schema } }) => { // eslint-disable-line camelcase
+      console.log(provider_form_schema);
+      return [
+        ...commonFields,
+        {
+          component: componentTypes.SUB_FORM,
+          id: type,
+          name: type,
+          ...provider_form_schema, // eslint-disable-line camelcase
+        },
+      ];
+    }
   );
 
   const typeSelectField = (edit, filter, setState, providers) => ({
@@ -195,6 +198,7 @@ const ProviderForm = ({
     'detect-button': DetectButton,
   };
 
+  console.log(initialValues);
   return (
     <div>
       { fields && (

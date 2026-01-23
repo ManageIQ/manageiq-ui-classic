@@ -526,3 +526,30 @@
     margin-right: 5%;
   }
 }
+
+.authentication-form {
+  margin-bottom: 2rem;
+
+  .bx--btn--secondary {
+    margin-left: 1rem;
+  }
+
+  #session_timeout {
+    .bx--form-item {
+      display: inline-flex;
+      margin-right: 2rem;
+    }
+  }
+
+  #amazon_subform {
+    .bx--form-item {
+      margin-bottom: 1rem;
+    }
+  }
+
+  #httpd_subform {
+    .bx--checkbox-wrapper {
+      padding-bottom: 1rem;
+    }
+  }
+}
