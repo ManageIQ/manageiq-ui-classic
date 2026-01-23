@@ -1,5 +1,5 @@
 window.$ = window.jQuery = require('jquery');
-require('@novnc/novnc');
+const RFB = require('@novnc/novnc').default;
 require('../oldjs/i18n.js');
 require('../oldjs/remote_console.js');
 
@@ -11,30 +11,28 @@ $(function() {
     port = window.location.port;
   }
 
-  // noVNC requires an empty canvas item
-  var canvas = document.createElement('canvas');
-  $('#remote-console').append(canvas);
+  var scheme = encrypt ? 'wss' : 'ws';
 
-  var vnc = new RFB({
-    target: canvas,
-    encrypt: encrypt,
-    true_color: true,
-    local_cursor: true,
+  var urlParams = new URLSearchParams(window.location.search);
+  var secret = urlParams.get('secret');
+  var dataUrl = urlParams.get('url');
+  var url = new URL(dataUrl, `${scheme}://${host}:${port}`).href;
+
+  var vnc = new RFB(document.getElementById('remote-console'), url, {
     shared: true,
-    view_only: false,
-    onUpdateState: function(_a, state, _b, msg) {
-      if (['normal', 'loaded'].indexOf(state) >= 0) {
-        $('#connection-status').removeClass('label-danger label-warning').addClass('label-success');
-        $('#connection-status').text(__('Connected'));
-      } else if (state === 'disconnected') {
-        $('#connection-status').removeClass('label-success label-warning').addClass('label-danger');
-        $('#connection-status').text(__('Disconnected'));
-        console.error('VNC', msg);
-      }
-    },
+    credentials: { password: secret }
   });
 
-  vnc.connect(host, port, $('#remote-console').attr('data-secret'), $('#remote-console').attr('data-url'));
+  vnc.addEventListener('connect', function() {
+    $('#connection-status').removeClass('label-danger label-warning').addClass('label-success');
+    $('#connection-status').text(__('Connected'));
+  });
+
+  vnc.addEventListener('disconnect', function(e) {
+    $('#connection-status').removeClass('label-success label-warning').addClass('label-danger');
+    $('#connection-status').text(__('Disconnected'));
+    console.error('VNC disconnect:', e.detail.clean ? 'Clean' : 'Unclean');
+  });
 
   $('#ctrlaltdel').on('click', function() {
     vnc.sendCtrlAltDel();
