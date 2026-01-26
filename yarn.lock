@@ -7972,7 +7972,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eonasdan-bootstrap-datetimepicker@npm:^4.17.47, eonasdan-bootstrap-datetimepicker@npm:~4.17.49":
+"eonasdan-bootstrap-datetimepicker@npm:^4.17.47":
   version: 4.17.49
   resolution: "eonasdan-bootstrap-datetimepicker@npm:4.17.49"
   dependencies:
@@ -13170,7 +13170,6 @@ __metadata:
     enzyme: "npm:^3.9.0"
     enzyme-adapter-react-16: "npm:^1.13.0"
     enzyme-to-json: "npm:^3.3.4"
-    eonasdan-bootstrap-datetimepicker: "npm:~4.17.49"
     es6-shim: "npm:~0.35.8"
     eslint: "npm:~7.32.0"
     eslint-config-airbnb: "npm:~18.2.0"

@@ -20,16 +20,5 @@ module ApplicationHelper
       }
       text_field_tag(name, value, options.merge!(datepicker_options))
     end
-
-    def datetimepicker_input_tag(name, value = nil, options = {})
-      datepicker_options = {
-        "datetimepicker"  => true,
-        "datetime-locale" => FastGettext.locale,
-        # FIXME: in the future, this should honor l10n preferences. Here we need
-        # to supply a format that moment.js understands.
-        "datetime-format" => 'MM/DD/YYYY HH:mm'
-      }
-      text_field_tag(name, value, options.merge!(datepicker_options))
-    end
   end
 end
