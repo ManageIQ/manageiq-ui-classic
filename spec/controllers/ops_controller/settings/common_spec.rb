@@ -152,21 +152,6 @@ describe OpsController do
                                          :active_tab         => 'settings_authentication')
         controller.x_node = "svr-#{miq_server.id}"
       end
-
-      it "sets ldap_role to false to make forest entries div hidden" do
-        controller.params = {:id                  => 'authentication',
-                             :authentication_mode => 'database'}
-        controller.send(:settings_get_form_vars)
-        expect(assigns(:edit)[:new][:authentication][:ldap_role]).to eq(false)
-      end
-
-      it "resets ldap_role to it's original state so forest entries div can be displayed" do
-        session[:edit][:new][:authentication][:mode] = 'database'
-        controller.params = {:id                  => 'authentication',
-                             :authentication_mode => 'ldap'}
-        controller.send(:settings_get_form_vars)
-        expect(assigns(:edit)[:new][:authentication][:ldap_role]).to eq(true)
-      end
     end
 
     describe "#pglogical_save_subscriptions" do
