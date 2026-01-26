@@ -10,7 +10,6 @@ require('bootstrap-filestyle');
 require('@pf3/select');
 require('bootstrap-switch');
 require('bootstrap-touchspin');
-require('eonasdan-bootstrap-datetimepicker');
 require('jquery-ui');
 require('jquery-ui/ui/widgets/draggable');
 require('jquery-ui/ui/widgets/droppable');
