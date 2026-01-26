@@ -1,4 +1,4 @@
-import ActionCable from 'actioncable';
+import * as ActionCable from '@rails/actioncable';
 
 import { API } from '../http_api';
 import { addNotification, initNotifications } from '../miq-redux/actions/notifications-actions';
