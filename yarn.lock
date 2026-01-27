@@ -13208,7 +13208,7 @@ __metadata:
     postcss-loader: "npm:~3.0.0"
     precss: "npm:~4.0.0"
     prop-types: "npm:^15.6.0"
-    proxy-polyfill: "npm:^0.1.7"
+    proxy-polyfill: "npm:^0.3.0"
     react: "npm:~16.14.0"
     react-accessible-treeview: "npm:^2.10.0"
     react-bootstrap: "npm:~0.33.0"
@@ -15791,10 +15791,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"proxy-polyfill@npm:^0.1.7":
-  version: 0.1.7
-  resolution: "proxy-polyfill@npm:0.1.7"
-  checksum: 10/d1fbc6ff39cb34518129b5eb7185692c8563681cf5ac75d8acdeb8b015b4fd9a3cd02c464ed10039e702bccd2e7f14a3e15769c247815f463824d0c3ebe908cd
+"proxy-polyfill@npm:^0.3.0":
+  version: 0.3.2
+  resolution: "proxy-polyfill@npm:0.3.2"
+  checksum: 10/0e43c8ba9cc14d3ce12d029f5647b8c03120fb0b912a176bcb8fb2c560f8fb94e49f89707b6e2df0443e3514d0bb63cc1960d671b39904b479bb09e4ae7e09a4
   languageName: node
   linkType: hard
 
