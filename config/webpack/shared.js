@@ -25,6 +25,7 @@ const gettextDir = i18n;
 const sharedPackages = [
   // manageiq-providers-lenovo & manageiq-providers-nxst need this to resolve the Carbon package
   '@carbon/react',
+  'carbon-components-react',
   'angular',
   'connected-react-router',
   'jquery',
