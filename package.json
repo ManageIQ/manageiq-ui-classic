@@ -151,7 +151,7 @@
     "ng-annotate-loader": "~0.7.0",
     "node-fetch": "~2.6.1",
     "path-complete-extname": "~0.1.0",
-    "postcss-import": "~14.0.2",
+    "postcss-import": "~14.1.0",
     "postcss-loader": "~3.0.0",
     "precss": "~4.0.0",
     "react-test-renderer": "~16.8.0",
