@@ -2,167 +2,179 @@
 
 exports[`Cloud Network form component should render edit variant 1`] = `
 <Grid>
-  <Connect(MiqFormRenderer)
-    buttonsLabels={
-      Object {
-        "submitLabel": "Save",
+  <ForwardRef
+    lg={16}
+    md={8}
+    sm={4}
+  >
+    <Connect(MiqFormRenderer)
+      buttonsLabels={
+        Object {
+          "submitLabel": "Save",
+        }
       }
-    }
-    canReset={true}
-    initialValues={
-      Object {
-        "cidr": null,
-        "cloud_tenant": "2",
-        "cloud_tenant_id": "2",
-        "ems_id": "8",
-        "ems_ref": "121455-asad5516a-145dsa6-d1453ad",
-        "enabled": true,
-        "ext_management_system": Object {
-          "name": "OpenStack Network Manager",
-        },
-        "external_facing": true,
-        "extra_attributes": Object {
-          "maximum_transmission_unit": 1496,
-          "port_security_enabled": true,
-          "qos_policy_id": null,
-        },
-        "href": "http://localhost:3000/api/cloud_networks/50",
-        "id": "50",
-        "name": "ext",
-        "orchestration_stack_id": null,
-        "provider_network_type": "vlan",
-        "provider_physical_network": "datacentre",
-        "provider_segmentation_id": "17",
-        "shared": true,
-        "status": "active",
-        "type": "Type",
-        "vlan_transparent": null,
-      }
-    }
-    onCancel={[Function]}
-    onSubmit={[Function]}
-    schema={
-      Object {
-        "fields": Array [
-          Object {
-            "component": "sub-form",
-            "fields": Array [
-              Object {
-                "component": "select",
-                "id": "ems_id",
-                "isDisabled": true,
-                "isRequired": true,
-                "label": "Network Manager",
-                "name": "ems_id",
-                "onChange": [Function],
-                "options": Array [
-                  Object {
-                    "label": "OpenStack Network Manager",
-                    "value": "8",
-                  },
-                ],
-                "placeholder": "<Choose>",
-                "validate": Array [
-                  Object {
-                    "message": "Required",
-                    "type": "required",
-                  },
-                ],
-                "validateOnMount": true,
-              },
-            ],
-            "id": "network-provider",
-            "name": "network-provider",
-            "title": "Network Provider",
+      canReset={true}
+      initialValues={
+        Object {
+          "cidr": null,
+          "cloud_tenant": "2",
+          "cloud_tenant_id": "2",
+          "ems_id": "8",
+          "ems_ref": "121455-asad5516a-145dsa6-d1453ad",
+          "enabled": true,
+          "ext_management_system": Object {
+            "name": "OpenStack Network Manager",
           },
-        ],
+          "external_facing": true,
+          "extra_attributes": Object {
+            "maximum_transmission_unit": 1496,
+            "port_security_enabled": true,
+            "qos_policy_id": null,
+          },
+          "href": "http://localhost:3000/api/cloud_networks/50",
+          "id": "50",
+          "name": "ext",
+          "orchestration_stack_id": null,
+          "provider_network_type": "vlan",
+          "provider_physical_network": "datacentre",
+          "provider_segmentation_id": "17",
+          "shared": true,
+          "status": "active",
+          "type": "Type",
+          "vlan_transparent": null,
+        }
       }
-    }
-    validate={[Function]}
-  />
+      onCancel={[Function]}
+      onSubmit={[Function]}
+      schema={
+        Object {
+          "fields": Array [
+            Object {
+              "component": "sub-form",
+              "fields": Array [
+                Object {
+                  "component": "select",
+                  "id": "ems_id",
+                  "isDisabled": true,
+                  "isRequired": true,
+                  "label": "Network Manager",
+                  "name": "ems_id",
+                  "onChange": [Function],
+                  "options": Array [
+                    Object {
+                      "label": "OpenStack Network Manager",
+                      "value": "8",
+                    },
+                  ],
+                  "placeholder": "<Choose>",
+                  "validate": Array [
+                    Object {
+                      "message": "Required",
+                      "type": "required",
+                    },
+                  ],
+                  "validateOnMount": true,
+                },
+              ],
+              "id": "network-provider",
+              "name": "network-provider",
+              "title": "Network Provider",
+            },
+          ],
+        }
+      }
+      validate={[Function]}
+    />
+  </ForwardRef>
 </Grid>
 `;
 
 exports[`Cloud Network form component should render form 1`] = `
 <Grid>
-  <Connect(MiqFormRenderer)
-    buttonsLabels={
-      Object {
-        "submitLabel": "Add",
+  <ForwardRef
+    lg={16}
+    md={8}
+    sm={4}
+  >
+    <Connect(MiqFormRenderer)
+      buttonsLabels={
+        Object {
+          "submitLabel": "Add",
+        }
       }
-    }
-    canReset={false}
-    initialValues={
-      Object {
-        "enabled": true,
-        "external_facing": false,
-        "shared": false,
+      canReset={false}
+      initialValues={
+        Object {
+          "enabled": true,
+          "external_facing": false,
+          "shared": false,
+        }
       }
-    }
-    onCancel={[Function]}
-    onSubmit={[Function]}
-    schema={
-      Object {
-        "fields": Array [
-          Object {
-            "component": "sub-form",
-            "fields": Array [
-              Object {
-                "component": "select",
-                "id": "ems_id",
-                "isDisabled": false,
-                "isRequired": true,
-                "label": "Network Manager",
-                "name": "ems_id",
-                "onChange": [Function],
-                "options": Array [
-                  Object {
-                    "label": "<Choose>",
-                    "value": "-1",
-                  },
-                  Object {
-                    "label": "Provider 4",
-                    "value": "4",
-                  },
-                  Object {
-                    "label": "Provider 31",
-                    "value": "31",
-                  },
-                  Object {
-                    "label": "Provider 8",
-                    "value": "8",
-                  },
-                  Object {
-                    "label": "Provider 50",
-                    "value": "50",
-                  },
-                  Object {
-                    "label": "Provider 18",
-                    "value": "18",
-                  },
-                  Object {
-                    "label": "Provider 39",
-                    "value": "39",
-                  },
-                ],
-                "placeholder": "<Choose>",
-                "validate": Array [
-                  Object {
-                    "message": "Required",
-                    "type": "required",
-                  },
-                ],
-                "validateOnMount": true,
-              },
-            ],
-            "id": "network-provider",
-            "name": "network-provider",
-            "title": "Network Provider",
-          },
-        ],
+      onCancel={[Function]}
+      onSubmit={[Function]}
+      schema={
+        Object {
+          "fields": Array [
+            Object {
+              "component": "sub-form",
+              "fields": Array [
+                Object {
+                  "component": "select",
+                  "id": "ems_id",
+                  "isDisabled": false,
+                  "isRequired": true,
+                  "label": "Network Manager",
+                  "name": "ems_id",
+                  "onChange": [Function],
+                  "options": Array [
+                    Object {
+                      "label": "<Choose>",
+                      "value": "-1",
+                    },
+                    Object {
+                      "label": "Provider 4",
+                      "value": "4",
+                    },
+                    Object {
+                      "label": "Provider 31",
+                      "value": "31",
+                    },
+                    Object {
+                      "label": "Provider 8",
+                      "value": "8",
+                    },
+                    Object {
+                      "label": "Provider 50",
+                      "value": "50",
+                    },
+                    Object {
+                      "label": "Provider 18",
+                      "value": "18",
+                    },
+                    Object {
+                      "label": "Provider 39",
+                      "value": "39",
+                    },
+                  ],
+                  "placeholder": "<Choose>",
+                  "validate": Array [
+                    Object {
+                      "message": "Required",
+                      "type": "required",
+                    },
+                  ],
+                  "validateOnMount": true,
+                },
+              ],
+              "id": "network-provider",
+              "name": "network-provider",
+              "title": "Network Provider",
+            },
+          ],
+        }
       }
-    }
-    validate={[Function]}
-  />
+      validate={[Function]}
+    />
+  </ForwardRef>
 </Grid>
 `;
