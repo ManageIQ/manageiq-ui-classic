@@ -5279,7 +5279,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"browserslist@npm:^4.12.0, browserslist@npm:^4.24.0, browserslist@npm:^4.28.0, browserslist@npm:^4.6.4":
+"browserslist@npm:^4.12.0, browserslist@npm:^4.24.0, browserslist@npm:^4.28.0, browserslist@npm:^4.28.1, browserslist@npm:^4.6.4":
   version: 4.28.1
   resolution: "browserslist@npm:4.28.1"
   dependencies:
@@ -6353,12 +6353,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js-compat@npm:^3.43.0, core-js-compat@npm:~3.47.0":
+"core-js-compat@npm:^3.43.0":
   version: 3.47.0
   resolution: "core-js-compat@npm:3.47.0"
   dependencies:
     browserslist: "npm:^4.28.0"
   checksum: 10/8555ac0aede2e61e3b37c50d31a9d63bb59e96ef76194bea0521d2778b24d8b20b45bed7bf2fce9df9856872a1c31e03fec1da101507b4dbaba669693dc95f94
+  languageName: node
+  linkType: hard
+
+"core-js-compat@npm:~3.48.0":
+  version: 3.48.0
+  resolution: "core-js-compat@npm:3.48.0"
+  dependencies:
+    browserslist: "npm:^4.28.1"
+  checksum: 10/83c326dcfef5e174fd3f8f33c892c66e06d567ce27f323a1197a6c280c0178fe18d3e9c5fb95b00c18b98d6c53fba5c646def5fedaa77310a4297d16dfbe2029
   languageName: node
   linkType: hard
 
@@ -13159,7 +13168,7 @@ __metadata:
     compression-webpack-plugin: "npm:^6.1.1"
     connected-react-router: "npm:~6.9.0"
     core-js: "npm:~3.48.0"
-    core-js-compat: "npm:~3.47.0"
+    core-js-compat: "npm:~3.48.0"
     create-react-context: "npm:~0.3.0"
     css-loader: "npm:~3.6.0"
     cypress: "npm:~15.9.0"
