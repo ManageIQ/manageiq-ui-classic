@@ -50,13 +50,13 @@ describe('Host Initiator Group Form', () => {
     expect(fetchMock.called('/api/providers/2?attributes=type,physical_storages')).toBe(false);
 
     await act(async() => {
-      wrapper.find(`select[name="ems_id"]`).simulate('change', { target: { value: '2' } });
+      wrapper.find(`select[name="ems_id"]`).props().onChange('2');
     });
     wrapper.update();
     expect(fetchMock.called('/api/providers/2?attributes=type,physical_storages')).toBe(true);
 
     await act(async() => {
-      wrapper.find(`select[name="physical_storage_id"]`).simulate('change', { target: { value: '1' } });
+      wrapper.find(`select[name="physical_storage_id"]`).props().onChange('1');
       wrapper.find(`input[name="name"]`).simulate('change', { target: { value: 'my_group' } });
     });
     wrapper.update();
