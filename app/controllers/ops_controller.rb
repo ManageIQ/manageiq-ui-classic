@@ -188,6 +188,7 @@ class OpsController < ApplicationController
     @ldap_group = @edit[:ldap_group] if params[:cls_id] && params[:cls_id].split('_')[0] == "lg"
     @x_edit_buttons_locals = set_form_locals if @in_a_form
     if @edit && (@sb[:active_tab] == 'settings_help_menu' || (@sb[:active_tab] == 'settings_tags' && !%w[settings_import settings_import_tags].include?(@sb[:active_subtab])))
+      @hide_bottom_bar = true
       edit_changed?
     end
     # do not show buttons, when settings_workers - it uses react form buttons
@@ -482,6 +483,7 @@ class OpsController < ApplicationController
         record_id = @sb[:active_tab].split("settings_").last
         locals[:no_cancel] = true
       elsif @sb[:active_tab] == "settings_help_menu"
+        @hide_bottom_bar = true
         action_url = "settings_update_help_menu"
         locals[:submit_button] = true
         locals[:no_cancel] = true
@@ -785,6 +787,9 @@ class OpsController < ApplicationController
       presenter.hide(:paging_div).hide(:form_buttons_div)
     end
     if ["settings_workers", "diagnostics_cu_repair"].include?(@sb[:active_tab])
+      presenter.hide(:form_buttons_div)
+    end
+    if @hide_bottom_bar
       presenter.hide(:form_buttons_div)
     end
   end

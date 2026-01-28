@@ -1,0 +1,289 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SettingsHelpMenu should submit a help menu change 1`] = `
+<div
+  className="main-div"
+>
+  <div
+    className="title"
+  >
+    Customize Help Menu
+  </div>
+  <div
+    className="info-box"
+  >
+    <span
+      className="info-icon"
+    >
+      i
+    </span>
+    Any change to the help menu will take effect upon a full page reload.
+  </div>
+  <hr
+    className="divider"
+  />
+  <div
+    className="settings-help-menu-tab"
+  >
+    <Connect(MiqFormRenderer)
+      onSubmit={[Function]}
+      schema={
+        Object {
+          "fields": Array [
+            Object {
+              "className": "col1",
+              "component": "sub-form",
+              "fields": Array [
+                Object {
+                  "className": "menu-item-label",
+                  "component": "plain-text",
+                  "id": "menu_item_label",
+                  "label": "Menu item label",
+                  "name": "menu_item_label",
+                  "style": Object {
+                    "fontSize": "16px",
+                  },
+                },
+                Object {
+                  "className": "left-divider",
+                  "component": "plain-text",
+                  "id": "divider_2",
+                  "label": "",
+                  "name": "divider_2",
+                },
+                Object {
+                  "className": "item-label",
+                  "component": "text-field",
+                  "id": "item_label_1",
+                  "initialValue": "title1",
+                  "isRequired": true,
+                  "maxLength": 128,
+                  "name": "item_label_1",
+                  "placeholder": "Documentation",
+                },
+                Object {
+                  "className": "left-divider",
+                  "component": "plain-text",
+                  "id": "divider_3",
+                  "label": "",
+                  "name": "divider_3",
+                },
+                Object {
+                  "className": "item-label",
+                  "component": "text-field",
+                  "id": "item_label_2",
+                  "initialValue": "title2",
+                  "isRequired": true,
+                  "maxLength": 128,
+                  "name": "item_label_2",
+                  "placeholder": "ManageIQ.org",
+                },
+                Object {
+                  "className": "left-divider",
+                  "component": "plain-text",
+                  "id": "divider_4",
+                  "label": "",
+                  "name": "divider_4",
+                },
+                Object {
+                  "className": "item-label",
+                  "component": "text-field",
+                  "id": "item_label_3",
+                  "initialValue": "title3",
+                  "isRequired": true,
+                  "maxLength": 128,
+                  "name": "item_label_3",
+                  "placeholder": "About",
+                },
+              ],
+              "id": "col1",
+              "name": "col1",
+            },
+            Object {
+              "className": "col2",
+              "component": "sub-form",
+              "fields": Array [
+                Object {
+                  "className": "url-label",
+                  "component": "plain-text",
+                  "id": "url_label",
+                  "label": "URL",
+                  "name": "url_label",
+                  "style": Object {
+                    "fontSize": "16px",
+                  },
+                },
+                Object {
+                  "className": "middle-divider",
+                  "component": "plain-text",
+                  "id": "divider_5",
+                  "label": "",
+                  "name": "divider_5",
+                },
+                Object {
+                  "className": "url",
+                  "component": "text-field",
+                  "id": "url_1",
+                  "initialValue": "href1",
+                  "isDisabled": false,
+                  "maxLength": 128,
+                  "name": "url_1",
+                  "placeholder": "https://www.manageiq.org/docs/",
+                },
+                Object {
+                  "className": "middle-divider",
+                  "component": "plain-text",
+                  "id": "divider_6",
+                  "label": "",
+                  "name": "divider_6",
+                },
+                Object {
+                  "className": "url",
+                  "component": "text-field",
+                  "id": "url_2",
+                  "initialValue": "href1",
+                  "isDisabled": false,
+                  "maxLength": 128,
+                  "name": "url_2",
+                  "placeholder": "https://www.manageiq.org",
+                },
+                Object {
+                  "className": "middle-divider",
+                  "component": "plain-text",
+                  "id": "divider_7",
+                  "label": "",
+                  "name": "divider_7",
+                },
+                Object {
+                  "className": "url",
+                  "component": "text-field",
+                  "id": "url_3",
+                  "initialValue": "href1",
+                  "isDisabled": false,
+                  "maxLength": 128,
+                  "name": "url_3",
+                },
+              ],
+              "id": "col2",
+              "name": "col2",
+            },
+            Object {
+              "className": "col3",
+              "component": "sub-form",
+              "fields": Array [
+                Object {
+                  "className": "open-label",
+                  "component": "plain-text",
+                  "id": "open_label",
+                  "label": "Open in",
+                  "name": "open_label",
+                  "style": Object {
+                    "fontSize": "16px",
+                  },
+                },
+                Object {
+                  "className": "right-divider",
+                  "component": "plain-text",
+                  "id": "divider_8",
+                  "label": "",
+                  "name": "divider_8",
+                },
+                Object {
+                  "className": "dropdown",
+                  "component": "select",
+                  "hideLabel": true,
+                  "id": "select_dropdown_1",
+                  "initialValue": "type1",
+                  "isRequired": true,
+                  "maxLength": 128,
+                  "name": "select_dropdown_1",
+                  "onChange": [Function],
+                  "options": Array [
+                    Object {
+                      "label": "Current Window",
+                      "value": "default",
+                    },
+                    Object {
+                      "label": "New Window",
+                      "value": "new_window",
+                    },
+                    Object {
+                      "label": "About Modal",
+                      "value": "modal",
+                    },
+                  ],
+                },
+                Object {
+                  "className": "right-divider",
+                  "component": "plain-text",
+                  "id": "divider_9",
+                  "label": "",
+                  "name": "divider_9",
+                },
+                Object {
+                  "className": "dropdown",
+                  "component": "select",
+                  "hideLabel": true,
+                  "id": "select_dropdown_2",
+                  "initialValue": "type2",
+                  "maxLength": 128,
+                  "name": "select_dropdown_2",
+                  "onChange": [Function],
+                  "options": Array [
+                    Object {
+                      "label": "Current Window",
+                      "value": "default",
+                    },
+                    Object {
+                      "label": "New Window",
+                      "value": "new_window",
+                    },
+                    Object {
+                      "label": "About Modal",
+                      "value": "modal",
+                    },
+                  ],
+                },
+                Object {
+                  "className": "right-divider",
+                  "component": "plain-text",
+                  "id": "divider_10",
+                  "label": "",
+                  "name": "divider_10",
+                },
+                Object {
+                  "className": "dropdown",
+                  "component": "select",
+                  "hideLabel": true,
+                  "id": "select_dropdown_3",
+                  "initialValue": "type3",
+                  "maxLength": 128,
+                  "name": "select_dropdown_3",
+                  "onChange": [Function],
+                  "options": Array [
+                    Object {
+                      "label": "Current Window",
+                      "value": "default",
+                    },
+                    Object {
+                      "label": "New Window",
+                      "value": "new_window",
+                    },
+                    Object {
+                      "label": "About Modal",
+                      "value": "modal",
+                    },
+                  ],
+                },
+              ],
+              "id": "col3",
+              "name": "col3",
+            },
+          ],
+        }
+      }
+      validate={[Function]}
+    />
+  </div>
+</div>
+`;
