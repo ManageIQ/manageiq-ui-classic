@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Modal, ModalBody, Button } from 'carbon-components-react';
 import ModalItem from './modal-item';
+import { detectBrowser } from './helper';
 
 const SHOW_ABOUT_MODAL = '@@aboutModal/show';
 const HIDE_ABOUT_MODAL = '@@aboutModal/hide';
@@ -77,7 +78,7 @@ class MiqAboutModal extends React.Component {
       return null;
     }
 
-    const browser = window.miqBrowserDetect();
+    const browser = detectBrowser();
     const plugins = Object.keys(data.server_info.plugins).map((key) => {
       const val = data.server_info.plugins[key];
       return (
