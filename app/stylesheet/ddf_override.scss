@@ -526,3 +526,11 @@
     margin-right: 5%;
   }
 }
+
+#listnav_div {
+  .list-group {
+    .list-group-item {
+      white-space: pre;
+    }
+  }
+}
