@@ -79,7 +79,7 @@ describe('OpstTenantForm', () => {
       wrapper = mount(<OpsTenantForm {...initialProps} />);
     });
 
-    wrapper.find('button.bx--btn--secondary').first().simulate('click');
+    wrapper.find('button.cds--btn--secondary').first().simulate('click');
     expect(miqRedirectBack).toHaveBeenCalledWith('Creation of new Project was canceled by the user.', 'warning', '/foo/bar');
     done();
   });

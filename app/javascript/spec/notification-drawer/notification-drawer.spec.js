@@ -14,10 +14,8 @@ import notifications from '../fixtures/notifications.json';
 import resources from '../fixtures/resources.json';
 import {
   CLEAR_ALL,
-  CLEAR_NOTIFICATION,
   INIT_NOTIFICATIONS,
   MARK_ALL_READ,
-  MARK_NOTIFICATION_READ,
   TOGGLE_DRAWER_VISIBILITY,
   TOGGLE_MAX_NOTIFICATIONS,
 } from '../../miq-redux/actions/notifications-actions';
@@ -71,7 +69,9 @@ describe('Notification drawer tests', () => {
         <NotificationDrawer />
       </Provider>,
     );
-    wrapper.find('Button[iconDescription="Close"]').simulate('click');
+    act(() => {
+      wrapper.find('Button[iconDescription="Close"]').props().onClick();
+    });
     const expectedPayload = { type: TOGGLE_DRAWER_VISIBILITY };
     expect(store.getActions()).toEqual([expectedPayload]);
   });
@@ -84,7 +84,10 @@ describe('Notification drawer tests', () => {
       </Provider>,
     );
     expect(wrapper.find('.notification-drawer-expanded')).toHaveLength(0);
-    wrapper.find('Button[iconDescription="collapsed"]').simulate('click');
+    act(() => {
+      wrapper.find('Button[iconDescription="collapsed"]').props().onClick();
+    });
+    wrapper.update();
     expect(wrapper.find('.notification-drawer-expanded')).toHaveLength(1);
   });
 
