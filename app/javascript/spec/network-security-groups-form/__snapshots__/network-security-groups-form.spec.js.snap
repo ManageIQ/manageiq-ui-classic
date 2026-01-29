@@ -49,9 +49,7 @@ exports[`Network Router Interfaces Form Component should add security group 1`] 
 
 exports[`Network Router Interfaces Form Component should edit security group 1`] = `
 <Loading
-  active={true}
   className="export-spinner"
-  description="Active loading indicator"
   small={true}
   withOverlay={false}
 />
@@ -59,9 +57,7 @@ exports[`Network Router Interfaces Form Component should edit security group 1`]
 
 exports[`Network Router Interfaces Form Component should edit security group firewall rules 1`] = `
 <Loading
-  active={true}
   className="export-spinner"
-  description="Active loading indicator"
   small={true}
   withOverlay={false}
 />
@@ -116,9 +112,7 @@ exports[`Network Router Interfaces Form Component should render add security gro
 
 exports[`Network Router Interfaces Form Component should render edit security group form 1`] = `
 <Loading
-  active={true}
   className="export-spinner"
-  description="Active loading indicator"
   small={true}
   withOverlay={false}
 />
