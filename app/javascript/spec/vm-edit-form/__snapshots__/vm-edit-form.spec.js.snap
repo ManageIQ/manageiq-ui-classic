@@ -25,41 +25,33 @@ exports[`VM Edit form component should edit template with a parent and children 
     recordId="2686"
   >
     <Loading
-      active={true}
       className="export-spinner"
-      description="Active loading indicator"
       small={true}
       withOverlay={false}
     >
       <div
         aria-atomic="true"
         aria-live="assertive"
-        className="export-spinner bx--loading bx--loading--small"
+        className="export-spinner cds--loading cds--loading--small"
       >
-        <label
-          className="bx--visually-hidden"
-          id="loading-id-4"
-        >
-          Active loading indicator
-        </label>
         <svg
-          className="bx--loading__svg"
+          className="cds--loading__svg"
           viewBox="0 0 100 100"
         >
           <title>
-            Active loading indicator
+            loading
           </title>
           <circle
-            className="bx--loading__background"
+            className="cds--loading__background"
             cx="50%"
             cy="50%"
-            r="44"
+            r="42"
           />
           <circle
-            className="bx--loading__stroke"
+            className="cds--loading__stroke"
             cx="50%"
             cy="50%"
-            r="44"
+            r="42"
           />
         </svg>
       </div>
@@ -93,41 +85,33 @@ exports[`VM Edit form component should edit template with no parent and children
     recordId="2686"
   >
     <Loading
-      active={true}
       className="export-spinner"
-      description="Active loading indicator"
       small={true}
       withOverlay={false}
     >
       <div
         aria-atomic="true"
         aria-live="assertive"
-        className="export-spinner bx--loading bx--loading--small"
+        className="export-spinner cds--loading cds--loading--small"
       >
-        <label
-          className="bx--visually-hidden"
-          id="loading-id-5"
-        >
-          Active loading indicator
-        </label>
         <svg
-          className="bx--loading__svg"
+          className="cds--loading__svg"
           viewBox="0 0 100 100"
         >
           <title>
-            Active loading indicator
+            loading
           </title>
           <circle
-            className="bx--loading__background"
+            className="cds--loading__background"
             cx="50%"
             cy="50%"
-            r="44"
+            r="42"
           />
           <circle
-            className="bx--loading__stroke"
+            className="cds--loading__stroke"
             cx="50%"
             cy="50%"
-            r="44"
+            r="42"
           />
         </svg>
       </div>
@@ -161,41 +145,33 @@ exports[`VM Edit form component should edit vm with a parent and children 1`] = 
     recordId="4671"
   >
     <Loading
-      active={true}
       className="export-spinner"
-      description="Active loading indicator"
       small={true}
       withOverlay={false}
     >
       <div
         aria-atomic="true"
         aria-live="assertive"
-        className="export-spinner bx--loading bx--loading--small"
+        className="export-spinner cds--loading cds--loading--small"
       >
-        <label
-          className="bx--visually-hidden"
-          id="loading-id-2"
-        >
-          Active loading indicator
-        </label>
         <svg
-          className="bx--loading__svg"
+          className="cds--loading__svg"
           viewBox="0 0 100 100"
         >
           <title>
-            Active loading indicator
+            loading
           </title>
           <circle
-            className="bx--loading__background"
+            className="cds--loading__background"
             cx="50%"
             cy="50%"
-            r="44"
+            r="42"
           />
           <circle
-            className="bx--loading__stroke"
+            className="cds--loading__stroke"
             cx="50%"
             cy="50%"
-            r="44"
+            r="42"
           />
         </svg>
       </div>
@@ -229,41 +205,33 @@ exports[`VM Edit form component should edit vm with no parent or children 1`] = 
     recordId="4671"
   >
     <Loading
-      active={true}
       className="export-spinner"
-      description="Active loading indicator"
       small={true}
       withOverlay={false}
     >
       <div
         aria-atomic="true"
         aria-live="assertive"
-        className="export-spinner bx--loading bx--loading--small"
+        className="export-spinner cds--loading cds--loading--small"
       >
-        <label
-          className="bx--visually-hidden"
-          id="loading-id-3"
-        >
-          Active loading indicator
-        </label>
         <svg
-          className="bx--loading__svg"
+          className="cds--loading__svg"
           viewBox="0 0 100 100"
         >
           <title>
-            Active loading indicator
+            loading
           </title>
           <circle
-            className="bx--loading__background"
+            className="cds--loading__background"
             cx="50%"
             cy="50%"
-            r="44"
+            r="42"
           />
           <circle
-            className="bx--loading__stroke"
+            className="cds--loading__stroke"
             cx="50%"
             cy="50%"
-            r="44"
+            r="42"
           />
         </svg>
       </div>
@@ -297,41 +265,33 @@ exports[`VM Edit form component should render vm edit form 1`] = `
     recordId="4671"
   >
     <Loading
-      active={true}
       className="export-spinner"
-      description="Active loading indicator"
       small={true}
       withOverlay={false}
     >
       <div
         aria-atomic="true"
         aria-live="assertive"
-        className="export-spinner bx--loading bx--loading--small"
+        className="export-spinner cds--loading cds--loading--small"
       >
-        <label
-          className="bx--visually-hidden"
-          id="loading-id-1"
-        >
-          Active loading indicator
-        </label>
         <svg
-          className="bx--loading__svg"
+          className="cds--loading__svg"
           viewBox="0 0 100 100"
         >
           <title>
-            Active loading indicator
+            loading
           </title>
           <circle
-            className="bx--loading__background"
+            className="cds--loading__background"
             cx="50%"
             cy="50%"
-            r="44"
+            r="42"
           />
           <circle
-            className="bx--loading__stroke"
+            className="cds--loading__stroke"
             cx="50%"
             cy="50%"
-            r="44"
+            r="42"
           />
         </svg>
       </div>
