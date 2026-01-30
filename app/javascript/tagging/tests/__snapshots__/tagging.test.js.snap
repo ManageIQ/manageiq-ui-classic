@@ -1,11 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Tagging component without redux mapping match snapshot 1`] = `
-<Row
+<Grid
   className="tagging-row-wrapper tagging-form"
+  condensed={true}
 >
-  <Column
+  <ForwardRef
     className="tagging-block-outer"
+    lg={8}
+    md={4}
+    sm={4}
   >
     <TagModifier
       header="Add/Modify tag"
@@ -84,9 +88,12 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
         }
       />
     </TagModifier>
-  </Column>
-  <Column
+  </ForwardRef>
+  <ForwardRef
     className="tagging-block-outer"
+    lg={8}
+    md={4}
+    sm={4}
   >
     <TagView
       assignedTags={
@@ -108,16 +115,20 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
       onTagDeleteClick={[Function]}
       showCloseButton={true}
     />
-  </Column>
-</Row>
+  </ForwardRef>
+</Grid>
 `;
 
 exports[`Tagging component without redux mapping should call methods - singleValue is false 1`] = `
-<Row
+<Grid
   className="tagging-row-wrapper tagging-form"
+  condensed={true}
 >
-  <Column
+  <ForwardRef
     className="tagging-block-outer"
+    lg={8}
+    md={4}
+    sm={4}
   >
     <TagModifier
       header="Add/Modify tag"
@@ -193,9 +204,12 @@ exports[`Tagging component without redux mapping should call methods - singleVal
         }
       />
     </TagModifier>
-  </Column>
-  <Column
+  </ForwardRef>
+  <ForwardRef
     className="tagging-block-outer"
+    lg={8}
+    md={4}
+    sm={4}
   >
     <TagView
       assignedTags={
@@ -217,16 +231,20 @@ exports[`Tagging component without redux mapping should call methods - singleVal
       onTagDeleteClick={[Function]}
       showCloseButton={true}
     />
-  </Column>
-</Row>
+  </ForwardRef>
+</Grid>
 `;
 
 exports[`Tagging component without redux mapping should call methods - singleValue is true 1`] = `
-<Row
+<Grid
   className="tagging-row-wrapper tagging-form"
+  condensed={true}
 >
-  <Column
+  <ForwardRef
     className="tagging-block-outer"
+    lg={8}
+    md={4}
+    sm={4}
   >
     <TagModifier
       header="Add/Modify tag"
@@ -298,9 +316,12 @@ exports[`Tagging component without redux mapping should call methods - singleVal
         }
       />
     </TagModifier>
-  </Column>
-  <Column
+  </ForwardRef>
+  <ForwardRef
     className="tagging-block-outer"
+    lg={8}
+    md={4}
+    sm={4}
   >
     <TagView
       assignedTags={
@@ -322,6 +343,6 @@ exports[`Tagging component without redux mapping should call methods - singleVal
       onTagDeleteClick={[Function]}
       showCloseButton={true}
     />
-  </Column>
-</Row>
+  </ForwardRef>
+</Grid>
 `;
