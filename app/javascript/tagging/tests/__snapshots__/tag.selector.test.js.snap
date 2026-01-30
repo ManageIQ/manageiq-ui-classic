@@ -3,30 +3,30 @@
 exports[`Tagging modifier match snapshot 1`] = `
 <Dropdown
   className="tag-select"
-  direction="bottom"
   disabled={false}
-  helperText=""
   id="dropdown-tag-select"
-  itemToElement={null}
+  itemToElement={[Function]}
   itemToString={[Function]}
   items={
     Array [
       Object {
-        "key": 1,
-        "label": "Name",
-        "value": 1,
+        "description": "Name",
+        "id": 1,
       },
       Object {
-        "key": 2,
-        "label": "Number",
-        "value": 2,
+        "description": "Number",
+        "id": 2,
       },
     ]
   }
   label="Select tag category"
-  light={false}
   onChange={[Function]}
+  selectedItem={
+    Object {
+      "description": "Name",
+      "id": 1,
+    }
+  }
   titleText=""
-  type="default"
 />
 `;
