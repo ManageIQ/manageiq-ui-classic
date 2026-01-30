@@ -13,6 +13,7 @@ import FontIconPickerDdf from '../../components/fonticon-picker/font-icon-picker
 import KeyValueListComponent from '../../components/key-value-list';
 import EmbeddedAutomateEntryPoint from '../../components/embedded-automate-entry-point';
 import EmbeddedWorkflowEntryPoint from '../../components/embedded-workflow-entry-point';
+import SelectedGroupsList from '../../components/selected-groups-list';
 
 const mapper = {
   ...componentMapper,
@@ -24,6 +25,7 @@ const mapper = {
   'key-value-list': KeyValueListComponent,
   'password-field': PasswordField,
   'validate-credentials': AsyncCredentials,
+  'selected-groups-list': SelectedGroupsList,
   'tree-view': TreeViewField,
   'tree-selector': TreeViewSelector,
   [componentTypes.SELECT]: Select,

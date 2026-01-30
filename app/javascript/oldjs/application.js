@@ -16,7 +16,6 @@ require('./services/');
 require('./miq_browser_detect.js');
 require('./miq_application.js');
 require('./miq_flash.js');
-require('./miq_change_stored_password.js');
 require('./miq_qe.js');
 require('./git_import.js');
 require('./import.js');

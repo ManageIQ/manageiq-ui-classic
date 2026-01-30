@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`User Form Component should render add User form correctly 1`] = `
+<Loading
+  active={true}
+  className="export-spinner"
+  description="Active loading indicator"
+  small={true}
+  withOverlay={false}
+/>
+`;
+
+exports[`User Form Component should render copy User form correclty 1`] = `
+<Loading
+  active={true}
+  className="export-spinner"
+  description="Active loading indicator"
+  small={true}
+  withOverlay={false}
+/>
+`;
+
+exports[`User Form Component should render edit Admin User form correclty 1`] = `
+<Loading
+  active={true}
+  className="export-spinner"
+  description="Active loading indicator"
+  small={true}
+  withOverlay={false}
+/>
+`;
+
+exports[`User Form Component should render edit User form correclty 1`] = `
+<Loading
+  active={true}
+  className="export-spinner"
+  description="Active loading indicator"
+  small={true}
+  withOverlay={false}
+/>
+`;

@@ -51,13 +51,15 @@ module OpsController::OpsRbac
 
   def rbac_user_add
     assert_privileges("rbac_user_add")
+    @hide_bottom_bar = true
     rbac_edit_reset('new', 'user', User)
   end
 
   def rbac_user_copy
     # get users id either from gtl check or detail id
     user_id = params[:miq_grid_checks].presence || params[:id]
-    user = User.find(user_id)
+    user = User.find(user_id)    
+
     # check if it is allowed to copy the user
     if rbac_user_copy_restriction?(user)
       rbac_restricted_user_copy_flash(user)
@@ -66,17 +68,17 @@ module OpsController::OpsRbac
       javascript_flash
       return
     end
+
+    @copy_user_id = user_id
     assert_privileges("rbac_user_copy")
+    @hide_bottom_bar = true
     rbac_edit_reset('copy', 'user', User)
   end
 
   def rbac_user_edit
     assert_privileges("rbac_user_edit")
-    case params[:button]
-    when 'cancel'      then rbac_edit_cancel('user')
-    when 'save', 'add' then rbac_edit_save_or_add('user')
-    when 'reset', nil  then rbac_edit_reset(params[:typ], 'user', User) # Reset or first time in
-    end
+    @hide_bottom_bar = true
+    rbac_edit_reset(params[:typ], 'user', User)
   end
 
   def rbac_group_add
@@ -183,13 +185,6 @@ module OpsController::OpsRbac
     when "reset", nil # Reset or first time in
       rbac_edit_tags_reset('Tenant')
     end
-  end
-
-  # AJAX driven routines to check for changes in ANY field on the form
-  def rbac_user_field_changed
-    assert_privileges(params[:id] == "new" ? "rbac_user_add" : "rbac_user_edit")
-
-    rbac_field_changed("user")
   end
 
   def rbac_group_field_changed
@@ -660,10 +655,6 @@ module OpsController::OpsRbac
     return unless load_edit("rbac_#{what}_edit__#{id}", "replace_cell__explorer")
 
     case key
-    when :user
-      record = @edit[:user_id] ? User.find_by(:id => @edit[:user_id]) : User.new
-      validated = rbac_user_validate?
-      rbac_user_set_record_vars(record)
     when :group then
       record = @edit[:group_id] ? MiqGroup.find_by(:id => @edit[:group_id]) : MiqGroup.new
       validated = rbac_group_validate?
@@ -676,7 +667,6 @@ module OpsController::OpsRbac
     end
 
     if record.valid? && validated && record.save!
-      record.update!(:miq_groups => Rbac.filtered(MiqGroup.where(:id => rbac_user_get_group_ids))) if key == :user # only set miq_groups if everything is valid
       populate_role_features(record) if what == "role"
       self.current_user = record if what == 'user' && @edit[:current][:userid] == current_userid
       AuditEvent.success(build_saved_audit(record, @edit))
@@ -746,12 +736,9 @@ module OpsController::OpsRbac
     return unless load_edit("rbac_#{rec_type}_edit__#{id}", "replace_cell__explorer")
 
     case rec_type
-    when "user"  then rbac_user_get_form_vars
     when "group" then rbac_group_get_form_vars
     when "role"  then rbac_role_get_form_vars
     end
-
-    @edit[:new][:group] = rbac_user_get_group_ids if rec_type == "user"
 
     session[:changed] = changed = @edit[:new] != @edit[:current]
 
@@ -764,11 +751,6 @@ module OpsController::OpsRbac
           page.replace(@refresh_div, :partial => @refresh_partial)
         end
       else
-        # only do following for user (adding/editing a user)
-        if x_node.split("-").first == "u" || x_node == "xx-u"
-          page.replace("group_selected",
-                       :partial => "ops/rbac_group_selected")
-        end
         # only do following for groups
         if @refresh_div
           page.replace(@refresh_div,
@@ -966,80 +948,14 @@ module OpsController::OpsRbac
   # Set form variables for user edit
   def rbac_user_set_form_vars
     copy = @sb[:typ] == "copy"
-    # save a shadow copy of the record if record is being copied
-    @user = copy ? @record.dup : @record
-    @user.miq_groups = @record.miq_groups if copy
     @edit = {:new => {}, :current => {}}
     @edit[:user_id] = @record.id unless copy
-    @edit[:key] = "rbac_user_edit__#{@edit[:user_id] || "new"}"
-    # prefill form fields for edit and copy action
-    @edit[:new].merge!(:name  => @user.name,
-                       :email => @user.email,
-                       :group => @user.miq_groups ? @user.miq_groups.map(&:id).sort : nil)
-    unless copy
-      @edit[:new].merge!(:userid   => @user.userid,
-                         :password => @user.password,
-                         :verify   => @user.password)
-    end
-    # load all user groups, filter available for tenant
-    @edit[:groups] = Rbac.filtered(MiqGroup.non_tenant_groups_in_my_region).sort_by { |g| g.description.downcase }.collect { |g| [g.description, g.id] }
-    # store current state of the new users information
-    @edit[:current] = copy_hash(@edit[:new])
+    @edit[:new][:userid] = @record.userid
     @right_cell_text = if @edit[:user_id]
                          _("Editing User \"%{name}\"") % {:name => @record.name}
                        else
                          _('Adding a new User')
                        end
-  end
-
-  # Get variables from user edit form
-  def rbac_user_get_form_vars
-    copy_params_if_present(@edit[:new], params, %i[name password verify])
-
-    @edit[:new][:userid] = params[:userid].strip.presence if params[:userid]
-    @edit[:new][:email] = params[:email].strip.presence if params[:email]
-    @edit[:new][:group] = params[:chosen_group] if params[:chosen_group]
-  end
-
-  # Set user record variables to new values
-  def rbac_user_set_record_vars(user)
-    user.name       = @edit[:new][:name]
-    user.userid     = @edit[:new][:userid]
-    user.email      = @edit[:new][:email]
-    user.password   = @edit[:new][:password] if @edit[:new][:password]
-  end
-
-  # Get array of group ids
-  def rbac_user_get_group_ids
-    case @edit[:new][:group]
-    when 'null', nil
-      []
-    when String
-      @edit[:new][:group].split(',').delete_if(&:blank?).map(&:to_i).sort
-    when Array
-      @edit[:new][:group].map(&:to_i).sort
-    end
-  end
-
-  # Validate some of the user fields
-  def rbac_user_validate?
-    valid = true
-    if @edit[:new][:password] != @edit[:new][:verify]
-      add_flash(_("Password/Verify Password do not match"), :error)
-      valid = false
-    end
-
-    new_group_ids = rbac_user_get_group_ids
-    new_groups = new_group_ids.present? && MiqGroup.find(new_group_ids).present? ? MiqGroup.find(new_group_ids) : []
-
-    if new_group_ids.blank?
-      add_flash(_("A User must be assigned to a Group"), :error)
-      valid = false
-    elsif Rbac.filtered(new_groups).count != new_group_ids.count
-      add_flash(_("A User must be assigned to an allowed Group"), :error)
-      valid = false
-    end
-    valid
   end
 
   def valid_tenant?(tenant_id)
