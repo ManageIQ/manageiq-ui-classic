@@ -23,9 +23,10 @@ const moduleDir = engines['manageiq-ui-classic'].node_modules;
 const gettextDir = i18n;
 
 const sharedPackages = [
-  '@carbon/icons-react',
-  'angular',
+  // manageiq-providers-lenovo & manageiq-providers-nxst need this to resolve the Carbon package
+  '@carbon/react',
   'carbon-components-react',
+  'angular',
   'connected-react-router',
   'jquery',
   'lodash',

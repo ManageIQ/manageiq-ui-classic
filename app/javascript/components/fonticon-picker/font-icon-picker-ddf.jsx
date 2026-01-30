@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import {
   FormGroup, Button,
-} from 'carbon-components-react';
+} from '@carbon/react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { prepareProps } from '@data-driven-forms/carbon-component-mapper';
 import { useFieldApi } from '@@ddf';
-import { ChevronDown32 } from '@carbon/icons-react';
+import { ChevronDown } from '@carbon/react/icons';
 import IconModal from './icon-modal';
 
 const FontIconPickerDdf = (props) => {
@@ -38,25 +38,39 @@ const FontIconPickerDdf = (props) => {
   const show = () => setState((state) => ({ ...state, showModal: true }));
 
   return (
-    <FormGroup legendText={labelText} {...FormGroupProps}>
+    <FormGroup
+      legendText={labelText}
+      {...FormGroupProps}
+    >
       <div className="fonticon-picker">
-        <Button onClick={show} kind="tertiary" renderIcon={ChevronDown32} className="icon-button">
-          { selectedIcon ? (<i id="selected-icon" className={classNames('fa-lg', selectedIcon)} />) : __('No icon') }
+        <Button
+          onClick={show}
+          kind="tertiary"
+          renderIcon={(props) => <ChevronDown size={32} {...props} />}
+          className="icon-button"
+        >
+          {selectedIcon ? (
+            <i
+              id="selected-icon"
+              className={classNames('fa-lg', selectedIcon)}
+            />
+          ) : (
+            __('No icon')
+          )}
         </Button>
-        <IconModal
-          showModal={showModal}
-          hide={hide}
-          activeTab={activeTab}
-          selectedIcon={selectedIcon}
-          activeIcon={activeIcon}
-          iconTypes={iconTypes}
-          onModalApply={onModalApply}
-          setState={setState}
-        />
+        {showModal && (
+          <IconModal
+            hide={hide}
+            activeTab={activeTab}
+            selectedIcon={selectedIcon}
+            activeIcon={activeIcon}
+            iconTypes={iconTypes}
+            onModalApply={onModalApply}
+            setState={setState}
+          />
+        )}
       </div>
-
     </FormGroup>
-
   );
 };
 

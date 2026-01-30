@@ -9,8 +9,8 @@ exports[`MiqAlertSetStructuredList should render alert set alerts structured lis
     open={true}
     title="Alerts"
   >
-    <FeatureToggle(StructuredListWrapper)
-      ariaLabel="Structured list"
+    <StructuredListWrapper
+      aria-label="Structured list"
       className="miq-structured-list miq_alert_set"
     >
       <MiqStructuredListBody
@@ -33,7 +33,7 @@ exports[`MiqAlertSetStructuredList should render alert set alerts structured lis
           ]
         }
       />
-    </FeatureToggle(StructuredListWrapper)>
+    </StructuredListWrapper>
   </AccordionItem>
 </Accordion>
 `;
@@ -47,8 +47,8 @@ exports[`MiqAlertSetStructuredList should render alert set assigned structured l
     open={true}
     title="Assigned To"
   >
-    <FeatureToggle(StructuredListWrapper)
-      ariaLabel="Structured list"
+    <StructuredListWrapper
+      aria-label="Structured list"
       className="miq-structured-list miq_alert_set_assigned"
     >
       <MiqStructuredListBody
@@ -76,7 +76,7 @@ exports[`MiqAlertSetStructuredList should render alert set assigned structured l
           ]
         }
       />
-    </FeatureToggle(StructuredListWrapper)>
+    </StructuredListWrapper>
   </AccordionItem>
 </Accordion>
 `;
@@ -90,8 +90,8 @@ exports[`MiqAlertSetStructuredList should render alert set info structured list 
     open={true}
     title="Basic Information"
   >
-    <FeatureToggle(StructuredListWrapper)
-      ariaLabel="Structured list"
+    <StructuredListWrapper
+      aria-label="Structured list"
       className="miq-structured-list miq_alert_set_info"
     >
       <MiqStructuredListBody
@@ -110,7 +110,7 @@ exports[`MiqAlertSetStructuredList should render alert set info structured list 
           ]
         }
       />
-    </FeatureToggle(StructuredListWrapper)>
+    </StructuredListWrapper>
   </AccordionItem>
 </Accordion>
 `;
@@ -124,8 +124,8 @@ exports[`MiqAlertSetStructuredList should render alert set notes structured list
     open={true}
     title="Notes"
   >
-    <FeatureToggle(StructuredListWrapper)
-      ariaLabel="Structured list"
+    <StructuredListWrapper
+      aria-label="Structured list"
       className="miq-structured-list miq_alert_set_notes"
     >
       <MiqStructuredListBody
@@ -144,7 +144,7 @@ exports[`MiqAlertSetStructuredList should render alert set notes structured list
           ]
         }
       />
-    </FeatureToggle(StructuredListWrapper)>
+    </StructuredListWrapper>
   </AccordionItem>
 </Accordion>
 `;

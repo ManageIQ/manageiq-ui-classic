@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {
   Dropdown, TableToolbar, TableToolbarContent, TableToolbarSearch,
-} from 'carbon-components-react';
+} from '@carbon/react';
 
 const MiqTableToolbar = ({
   toolbarMenu, onMenuSelect, onToolBarSearch, clearFilter,
@@ -23,6 +23,7 @@ const MiqTableToolbar = ({
       hideLabel
       id="toolbar-menu"
       label=""
+      titleText=""
       items={toolbarMenu}
       selectedItem={selectedMenu || toolbarMenu[0]}
       itemToString={(item) => (item ? item.text : '')}
@@ -36,7 +37,7 @@ const MiqTableToolbar = ({
         {renderMenu()}
         <TableToolbarSearch
           onChange={onChange}
-          onKeyPress={onPress}
+          onKeyDown={onPress}
           onClear={clearFilter}
         />
       </TableToolbarContent>

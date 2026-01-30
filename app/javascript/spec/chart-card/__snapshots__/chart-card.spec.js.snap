@@ -92,9 +92,7 @@ exports[`Chart Card component should render the loading card 1`] = `
     className="card-pf-body"
   >
     <Loading
-      active={true}
       className="export-spinner"
-      description="Active loading indicator"
       small={true}
       withOverlay={false}
     />

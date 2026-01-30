@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { OverflowMenu } from 'carbon-components-react';
+import { OverflowMenu } from '@carbon/react';
 import debouncePromise from '../../../helpers/promise-debounce';
 import { getOverflowButtons, getWidget } from './helper';
 import WidgetRemoveModal from '../widget-remove-modal';
@@ -40,9 +40,9 @@ const WidgetWrapper = ({
     if (document.getElementById('main-content')) {
       document.getElementById('main-content').addEventListener('scroll', () => {
         if (document.getElementById(`${widgetId}-menu`).getAttribute('aria-expanded') === 'true') {
-          const temp = [...document.getElementsByClassName('bx--overflow-menu-options')];
+          const temp = [...document.getElementsByClassName('cds--overflow-menu-options')];
           temp.forEach((element) => {
-            element.classList.remove('bx--overflow-menu-options--open');
+            element.classList.remove('cds--overflow-menu-options--open');
           });
         }
       });
@@ -73,7 +73,7 @@ const WidgetWrapper = ({
       const overflowMenuHeight = rowHeight * JSON.parse(widgetButtons).length;
       const visibleMenuHeight = dimensions.bottom + overflowMenuHeight;
       if (visibleMenuHeight > window.innerHeight) {
-        const overflowMenu = document.getElementsByClassName('bx--overflow-menu-options--open')[0];
+        const overflowMenu = document.getElementsByClassName('cds--overflow-menu-options--open')[0];
         if (overflowMenu) {
           overflowMenu.style.top = `${dimensions.top - overflowMenuHeight}px`;
         }
@@ -100,7 +100,7 @@ const WidgetWrapper = ({
         </div>
       </div>
       {getWidget(widgetId, isLoading, widgetModel, widgetType, widgetLastRun, widgetNextRun, error)}
-      <WidgetRemoveModal showConfirm={showConfirm} setState={setState} widgetTitle={widgetTitle} href={href} />
+      {showConfirm && <WidgetRemoveModal showConfirm={showConfirm} setState={setState} widgetTitle={widgetTitle} href={href} />}
     </div>
   );
 };

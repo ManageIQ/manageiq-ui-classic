@@ -3,46 +3,51 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Tabs,
+  TabList,
   Tab,
-  Modal, ModalBody,
-} from 'carbon-components-react';
+  TabPanels,
+  TabPanel,
+  Modal,
+  ModalBody,
+} from '@carbon/react';
 import IconList from './icon-list';
 
 const IconModal = ({
-  showModal, hide, activeIcon, iconTypes, onModalApply, setState,
-}) =>
-
-  (
-    <Modal
-      open={showModal}
-      modalHeading={__('Select an icon')}
-      primaryButtonText={__('Apply')}
-      secondaryButtonText={__('Cancel')}
-      onRequestSubmit={onModalApply}
-      onRequestClose={hide}
-      className="font-icon-list-modal"
-    >
-      <ModalBody className="font-icon-list-modal-body">
-        <div className="fonticon-picker-modal">
-          <Tabs
-            id="font-icon-tabs"
-          >
-            { Object.keys(iconTypes).map((type) => (
-              <Tab key={type} label={iconTypes[type]}>
+  hide, activeIcon, iconTypes, onModalApply, setState,
+}) => (
+  <Modal
+    open
+    modalHeading={__('Select an icon')}
+    primaryButtonText={__('Apply')}
+    secondaryButtonText={__('Cancel')}
+    onRequestSubmit={onModalApply}
+    onRequestClose={hide}
+    className="font-icon-list-modal"
+  >
+    <ModalBody className="font-icon-list-modal-body">
+      <div className="fonticon-picker-modal">
+        <Tabs>
+          <TabList aria-label="Icon type tabs">
+            {Object.keys(iconTypes).map((type) => (
+              <Tab key={type}>{iconTypes[type]}</Tab>
+            ))}
+          </TabList>
+          <TabPanels>
+            {Object.keys(iconTypes).map((type) => (
+              <TabPanel key={type}>
                 <IconList
-                  {...{
-                    type,
-                    activeIcon,
-                    setState,
-                  }}
+                  type={type}
+                  activeIcon={activeIcon}
+                  setState={setState}
                 />
-              </Tab>
-            )) }
-          </Tabs>
-        </div>
-      </ModalBody>
-    </Modal>
-  );
+              </TabPanel>
+            ))}
+          </TabPanels>
+        </Tabs>
+      </div>
+    </ModalBody>
+  </Modal>
+);
 IconModal.propTypes = {
   setState: PropTypes.func.isRequired,
 };

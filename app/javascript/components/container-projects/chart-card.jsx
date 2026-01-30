@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { MeterChart } from '@carbon/charts-react';
-import { Loading } from 'carbon-components-react';
+import { Loading } from '@carbon/react';
 import EmptyCard from './empty-card';
 import BarChartCard from './bar-chart-card';
 import TrendChartCard from './trend-chart-card';

@@ -1,57 +1,64 @@
-$rail-primary-bg: $ui-background; // carbon--gray-90
-$rail-secondary-bg: $ui-01; // carbon--gray-80
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/styles/scss/components/button';
+$rail-primary-bg: $background; // carbon--gray-90
+$rail-secondary-bg: $layer-01; // carbon--gray-80
 
-$row-active-primary-bg: $hover-row; // carbon--gray-80
-$row-active-secondary-bg: $hover-secondary; // carbon--gray-60
+$row-active-primary-bg: $layer-hover-01; // carbon--gray-80
+$row-active-secondary-bg: $layer-03; // carbon--gray-60
 
-$row-fg-text: $text-01; // carbon--gray-10
-$row-fg-icon: $icon-01; // carbon--gray-10
+$row-fg-text: $text-primary; // carbon--gray-10
+$row-fg-icon: $icon-primary; // carbon--gray-10
 
-$user-fg: $text-05; // $carbon--gray-50
+$user-fg: $text-helper; // $carbon--gray-50
 
-$divider-fg: $disabled-02; // $carbon--gray-60;
+$divider-fg: $text-placeholder; // $carbon--gray-60;
 
-$find-bg: $carbon--gray-80;
-$find-placeholder-fg: $carbon--gray-50;
+$find-bg: $layer-01;
+$find-placeholder-fg: $text-helper;
 
-$clear-btn-outline: $interactive-03;
-$clear-btn-fill: $ui-05;
-$clear-btn-background: $ui-01;
-$clear-btn-hover-background: $hover-ui;
-$clear-btn-active: $ui-02;
+$clear-btn-outline: button.$button-tertiary;
+$clear-btn-fill: $layer-selected-inverse;
+$clear-btn-background: $layer-01;
+$clear-btn-hover-background: $background-hover;
+$clear-btn-active: $layer-02;
+
+$focus-outline: $focus;
+
+$menu-tooltip-border: $icon-inverse;
+$menu-tooltip-assistive-text-font-color: $text-on-color;
 
 // unused, theme default
 // $row-selected-border: $carbon--blue-60;
 
-.bx--side-nav {
+.cds--side-nav {
   background-color: $rail-primary-bg;
 
-  .bx--side-nav__link.force-hover,
-  .bx--side-nav__link:hover,
-  .bx--side-nav__link.bx--side-nav__link--current {
+  .cds--side-nav__link.force-hover,
+  .cds--side-nav__link:hover,
+  .cds--side-nav__link.cds--side-nav__link--current {
     background-color: $row-active-primary-bg;
   }
 }
 
-.bx--side-nav.secondary {
+.cds--side-nav.secondary {
   background-color: $rail-secondary-bg;
 
-  .bx--side-nav__item--active > .bx--side-nav__submenu,
-  .bx--side-nav__link.bx--side-nav__link--current,
-  .bx--side-nav__link.force-hover,
-  .bx--side-nav__link:hover,
-  .bx--side-nav__submenu[aria-expanded=false]:hover {
+  .cds--side-nav__item--active > .cds--side-nav__submenu,
+  .cds--side-nav__link.cds--side-nav__link--current,
+  .cds--side-nav__link.force-hover,
+  .cds--side-nav__link:hover,
+  .cds--side-nav__submenu[aria-expanded=false]:hover {
     background-color: $row-active-secondary-bg;
   }
 }
 
-.bx--side-nav__link-text,
-.bx--side-nav__submenu-title,
+.cds--side-nav__link-text,
+.cds--side-nav__submenu-title,
 li.menu-group {
   color: $row-fg-text;
 }
 
-.bx--side-nav__icon > svg,
+.cds--side-nav__icon > svg,
 .menu-collapse-button > svg,
 .menu-group svg,
 .menu-search > svg,
@@ -59,11 +66,11 @@ li.menu-group {
   fill: $row-fg-icon;
 }
 
-.bx--side-nav__icon > i {
+.cds--side-nav__icon > i {
   color: $row-fg-icon;
 }
 
-.bx--side-nav__hr {
+.cds--side-nav__hr {
   color: $divider-fg;
 }
 
@@ -72,17 +79,17 @@ li.menu-group {
 }
 
 .menu-search {
-  .bx--search-input {
+  .cds--search-input {
     background-color: $find-bg;
     color: $row-fg-text;
 
-    &:focus ~ .bx--search-close:hover {
+    &:focus ~ .cds--search-close:hover {
       outline: 2px solid $clear-btn-outline;
       outline-offset: -2px;
     }
   }
 
-  button.bx--search-close {
+  button.cds--search-close {
     fill: $clear-btn-fill;
 
     &::before {
@@ -109,7 +116,7 @@ li.menu-group {
     }
   }
 
-  .bx--label {
+  .cds--label {
     color: $find-placeholder-fg;
   }
 }

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button, TableCell, TextInput, Toggle, Link,
-} from 'carbon-components-react';
+} from '@carbon/react';
 import classNames from 'classnames';
 import MiqConfirmActionModal, { modalCallbackTypes } from '../miq-confirm-action-modal';
 import {
@@ -27,7 +27,7 @@ const MiqTableCell = ({
 
   const cellTitle = cell.data.title ? cell.data.title : cell.value;
   const truncateText = (
-    <span title={cellTitle} className={classNames('bx--front-line', wrapClass, longerTextClass)}>
+    <span title={cellTitle} className={classNames('cds--front-line', wrapClass, longerTextClass)}>
       {cell.value}
     </span>
   );
@@ -142,7 +142,6 @@ const MiqTableCell = ({
   /** Function to render a confirmation-modal-box. */
   const renderConfirmModal = (item) => {
     const modalData = {
-      open: confirm,
       confirm: item.onclick.confirm,
       callback: (actionType) => confirmModalAction(actionType, item),
     };
@@ -157,7 +156,7 @@ const MiqTableCell = ({
         <Button
           onClick={(e) => cellButtonEvent(item, e)}
           disabled={item.disabled}
-          onKeyPress={(e) => cellButtonEvent(item, e)}
+          onKeyDown={(e) => cellButtonEvent(item, e)}
           tabIndex={0}
           size={item.size ? item.size : 'sm'}
           title={item.title ? item.title : truncateText}

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { OverflowMenu, OverflowMenuItem } from 'carbon-components-react';
-import { ChevronDown20 } from '@carbon/icons-react';
+import { OverflowMenu, OverflowMenuItem } from '@carbon/react';
+import { ChevronDown } from '@carbon/react/icons';
 import { MenuIcon } from './MenuIcon';
 import { isEnabled } from './utility';
 import { ToolbarClick } from './ToolbarClick';
@@ -9,7 +9,7 @@ import CountContext from './ToolbarContext';
 
 export const ToolbarList = (props) => {
   const count = useContext(CountContext);
-  const { items, title, id } = props;
+  const { items, title, id, text, icon, color, onClick } = props;
   // Set this true for overflowmenu keydown event
   const [overflowTab, setOverflowTab] = useState(false);
 
@@ -41,27 +41,28 @@ export const ToolbarList = (props) => {
 
   const closeFunc = () => {
     if (overflowTab === true) {
-      document.getElementById(props.id).focus();
+      document.getElementById(id).focus();
       setOverflowTab(false);
     }
   };
 
+  const iconText = text ?? title;
+
   return (
     <OverflowMenu
-      ariaLabel={title}
+      aria-label={title}
       id={id}
       floatingmenu="true"
       title={title}
-      iconDescription=""
+      iconDescription={iconText}
       className={!isToolbarEnabled ? 'overflow-menu-disabled' : ''}
       disabled={!isToolbarEnabled}
       onClose={closeFunc}
-      renderIcon={() => (
+      renderIcon={(iconProps) => (
         <div className="toolbar-overflow">
-          { props.icon && <i className={props.icon} style={{ color: props.color }} /> }
-          <ChevronDown20 />
-          {' '}
-          <span>{ props.text ? props.text : (props.title && props.title)}</span>
+          { icon && <i className={icon} style={{ color }} /> }
+          <ChevronDown size={20} {...iconProps} />
+          <span>{iconText}</span>
         </div>
       )}
     >
@@ -76,7 +77,7 @@ export const ToolbarList = (props) => {
           onKeyDown={keydownFunc}
           title={item.title}
           requireTitle
-          onClick={props.onClick && item.enabled ? (() => props.onClick(item)) : null}
+          onClick={onClick && item.enabled ? (() => onClick(item)) : null}
         >
           <ToolbarClick {...props} />
         </OverflowMenuItem>

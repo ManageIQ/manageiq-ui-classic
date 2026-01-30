@@ -58,6 +58,8 @@ const createSchema = (options, catalogId) => ({
           noOptionsTitle: __('No available options'),
           filterOptionsTitle: __('Filter options'),
           filterValuesTitle: __('Filter values'),
+          // Class to override grid layout with flex
+          GridProps: { className: 'miq-dual-list-common-grid-container' },
           options,
         },
       ],

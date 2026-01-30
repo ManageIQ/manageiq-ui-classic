@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { SideNavItems, SideNavLink } from 'carbon-components-react/es/components/UIShell';
+import { SideNavItems, SideNavLink } from '@carbon/react';
 import SideNavMenuLink from './side-nav-menu-link';
 import { carbonizeIcon } from './icon';
 import { itemId, linkProps } from './item-type';

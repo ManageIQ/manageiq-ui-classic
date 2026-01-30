@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Loading } from 'carbon-components-react';
+import { Loading } from '@carbon/react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { createSchema } from './schedule-form.schema';
 import { API } from '../../http_api';

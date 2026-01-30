@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import MiqFormRenderer, { useFormApi } from '@@ddf';
 import PropTypes from 'prop-types';
 import { FormSpy } from '@data-driven-forms/react-form-renderer';
+import { Button } from '@carbon/react';
 import createSchema from './service-request-default.schema';
 
 // NOTE: parameters to be used as filters
@@ -139,25 +140,25 @@ const FormTemplate = ({ formFields }) => {
       <FormSpy>
         {({ values }) => (
           <div className="custom-button-wrapper">
-            <button
+            <Button
               disabled={verifyCheckboxes(values)}
-              className="bx--btn bx--btn--primary btnRight"
+              className="btnRight"
               id="submit"
               type="submit"
-              variant="contained"
+              kind="primary"
             >
               {__('Apply')}
-            </button>
-            <button
+            </Button>
+            <Button
               disabled={!valid && pristine}
-              className="bx--btn bx--btn--secondary btnRight"
-              variant="contained"
+              className="btnRight"
+              kind="secondary"
               id="reset"
               onClick={onReset}
               type="button"
             >
               {__('Reset')}
-            </button>
+            </Button>
           </div>
         )}
       </FormSpy>

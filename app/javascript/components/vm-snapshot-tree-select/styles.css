@@ -8,10 +8,16 @@
   justify-content: right;
   display: inline-flex;
   margin-right: 30px;
+  font-size: 12px;
+  p {
+    font-weight: 600;
+  }
 }
 
 .snapshot-details-div .snapshot-detail-value {
   display: inline-flex;
+  font-size: 12px;
+  font-weight: 400;
 }
 
 .snapshot-tree-title {

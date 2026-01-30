@@ -3,10 +3,10 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button, TextInput, Form,
-} from 'carbon-components-react';
+} from '@carbon/react';
 import {
-  ChevronDown32, Search32, ProgressBarRound32, Close32,
-} from '@carbon/icons-react';
+  ChevronDown, Search, ProgressBarRound, Close,
+} from '@carbon/react/icons';
 
 const SearchBar = ({ searchText, advancedSearch, action }) => {
   const formToken = () => {
@@ -53,7 +53,8 @@ const SearchBar = ({ searchText, advancedSearch, action }) => {
     <Button
       kind="secondary"
       disabled={data.loading}
-      renderIcon={Close32}
+      size="md"
+      renderIcon={(props) => <Close size={16} {...props} />}
       iconDescription={__('Clear')}
       hasIconOnly
       tooltipPosition="bottom"
@@ -65,7 +66,8 @@ const SearchBar = ({ searchText, advancedSearch, action }) => {
   /** Function to render the Lens button. */
   const renderLens = () => (
     <Button
-      renderIcon={data.loading ? ProgressBarRound32 : Search32}
+      renderIcon={(props) => (data.loading ? <ProgressBarRound size={16} {...props} /> : <Search size={16} {...props} />)}
+      size="md"
       disabled={data.loading}
       iconDescription={__('Search')}
       hasIconOnly
@@ -78,7 +80,8 @@ const SearchBar = ({ searchText, advancedSearch, action }) => {
   /** Function to render the Settings button. */
   const renderSettings = () => (
     <Button
-      renderIcon={ChevronDown32}
+      renderIcon={(props) => <ChevronDown size={16} {...props} />}
+      size="md"
       iconDescription={__('Advanced Search')}
       hasIconOnly
       data-toggle="modal"

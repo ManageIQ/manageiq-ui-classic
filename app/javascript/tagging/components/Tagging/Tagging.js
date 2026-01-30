@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Column } from 'carbon-components-react';
+import { Grid, Column } from '@carbon/react';
 import TagModifier from '../InnerComponents/TagModifier';
 import TagView from '../InnerComponents/TagView';
 import CategoryModifier from '../InnerComponents/CategoryModifier';
@@ -66,8 +66,8 @@ class Tagging extends React.Component {
     } = this.props;
     const isDisabled = options && options.isDisabled;
     return (
-      <Row className="tagging-row-wrapper tagging-form">
-        <Column className="tagging-block-outer">
+      <Grid className="tagging-row-wrapper tagging-form" condensed>
+        <Column sm={4} md={4} lg={8} className="tagging-block-outer">
           <TagModifier hideHeader={options && options.hideHeaders}>
             <CategoryModifier
               selectedTagCategory={selectedTagCategory}
@@ -85,7 +85,7 @@ class Tagging extends React.Component {
             />
           </TagModifier>
         </Column>
-        <Column className="tagging-block-outer">
+        <Column sm={4} md={4} lg={8} className="tagging-block-outer">
           <TagView
             hideHeader={options && options.hideHeaders}
             assignedTags={assignedTags}
@@ -93,7 +93,7 @@ class Tagging extends React.Component {
             showCloseButton={!isDisabled}
           />
         </Column>
-      </Row>
+      </Grid>
     );
   }
 }

@@ -1,5 +1,8 @@
-.treeview > .list-group {
-  .list-group-item {
+.treeview {
+  > .list-group .list-group-item {
+    font-size: 13px;
+    margin-bottom: 4px;
+    
     &.strikethrough {
       text-decoration: line-through;
     }
@@ -15,6 +18,15 @@
     &.no-cursor {
       cursor: default !important;
     }
+  }
+
+  .list-group-item.node-selected {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+
+  .react-tree-view ul li {
+    margin-bottom: 8px;
   }
 }
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Loading } from 'carbon-components-react';
+import { Loading } from '@carbon/react';
 import componentMapper from '../../forms/mappers/componentMapper';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import { createSchema } from './reconfigure-form.schema';

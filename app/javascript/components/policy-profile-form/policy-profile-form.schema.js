@@ -11,7 +11,7 @@ const createSchema = (options) => ({
       isRequired: true,
     },
     {
-      component: 'dual-list-select',
+      component: componentTypes.DUAL_LIST_SELECT,
       id: 'policies',
       name: 'policies',
       label: __('Policy Selection'),
@@ -22,6 +22,9 @@ const createSchema = (options) => ({
       filterOptionsTitle: __('Filter options'),
       filterValuesTitle: __('Filter values'),
       allToRight: false,
+      ButtonColumnProps: {
+        className: 'miq-common-dual-list-buttons-column',
+      },
       moveLeftTitle: __('Remove'),
       moveAllLeftTitle: __('Remove All'),
       moveRightTitle: __('Add'),

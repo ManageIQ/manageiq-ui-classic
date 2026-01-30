@@ -9,23 +9,26 @@
     margin-bottom: 32px;
   }
 
-  .bx--btn-set {
+  .cds--btn-set {
     margin-bottom: 48px;
   }
 
-  .bx--data-table thead tr :first-child{
+  .cds--data-table thead tr :first-child{
     padding-right: 2rem;
   }
+  .cds--toggle__label span.cds--toggle__label-text {
+    display: none;
+  }
 
-  .bx--form-item {
-    .bx--front-line, .bx--label, .bx--toggle-input {
+  .cds--form-item {
+    .cds--front-line, .cds--label {
       display: none;
     }
 
-    .bx--toggle-input__label {
+    .cds--toggle__label {
       margin-bottom: 0px;
 
-      .bx--toggle__switch {
+      .cds--toggle__switch {
         margin-top: 0px;
       }
     }
@@ -41,17 +44,14 @@
   margin-top: 20px;
   margin-bottom: 20px;
 
-  .bx--data-table-content {
-    overflow-x: visible;
-  }
 
   thead tr th {
-    &.bx--table-column-checkbox {
+    &.cds--table-column-checkbox {
       min-width: 45px;
       vertical-align: middle;
     }
 
-    .bx--table-header-label {
+    .cds--table-header-label {
       line-height: 20px;
       white-space: nowrap;
     }
@@ -159,7 +159,7 @@
       width: 50px;
     }
 
-    td .bx--front-line {
+    td .cds--front-line {
       width: 100%;
       display: inline-block;
       overflow: hidden;
@@ -186,7 +186,7 @@
 
 .credential-mapper-data-table {
   tbody tr td {
-    .bx--front-line {
+    .cds--front-line {
       margin-top: 0%;
     }
 
@@ -237,13 +237,13 @@
 
 .requests-table {
   .miq-data-table {
-    .bx--data-table--sticky-header thead, .bx--data-table--sticky-header tbody, .bx--data-table--sticky-header tr, .bx--data-table--sticky-header th, .bx--data-table--sticky-header td {
+    .cds--data-table--sticky-header thead, .cds--data-table--sticky-header tbody, .cds--data-table--sticky-header tr, .cds--data-table--sticky-header th, .cds--data-table--sticky-header td {
       display: revert;
     }
 
     .clickable-row {
       td:nth-child(3) {
-        .bx--front-line {
+        .cds--front-line {
           white-space: pre;
         }
       }
@@ -257,7 +257,7 @@
     thead tr th {  
       vertical-align: middle;
 
-      .bx--table-header-label {
+      .cds--table-header-label {
         min-width: fit-content;
       }
     }
@@ -337,19 +337,23 @@ table.miq_preview {
         flex-grow: 1;
       }
       .reconfigure-add-button {
-        padding: 0 10px;
         min-width: 170px;
       }
     }
     .miq-data-table .cell {
-      .bx--form-item {
+      .cds--form-item {
         margin-top: -5px;
         margin-bottom: 0;
       }
-      .bx--toggle__switch {
-        margin-top: 3px;
+      .cds--toggle .cds--toggle__label {
+        span.cds--toggle__label-text {
+          display: none;
+        }
+        .cds--toggle__switch {
+          margin-top: 3px;
+        }
       }
-      .bx--btn--ghost {
+      .cds--btn--ghost {
         outline: 0;
         min-height: auto;
         margin-top: 3px;

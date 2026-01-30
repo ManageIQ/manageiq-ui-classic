@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Tabs, Tab } from 'carbon-components-react';
+import {
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+} from '@carbon/react';
 import NotificationMessage from '../notification-message';
 import MiqStructuredList from '../miq-structured-list';
 
@@ -8,7 +14,7 @@ import MiqStructuredList from '../miq-structured-list';
 const AutomationSimulation = ({ data }) => {
   const [tabConfig, setTabConfig] = useState([]);
   useEffect(() => {
-    if (Object.keys(data).length > 1) {
+    if (data && Object.keys(data).length > 1) {
       const config = Object.keys(data).map((name) => ({ name, text: data[name].text }));
       setTabConfig(config);
     }
@@ -23,22 +29,24 @@ const AutomationSimulation = ({ data }) => {
   };
 
   /** Function to render the tab and its contents */
-  const renderTabs = () =>
-    (
-      <Tabs className="automation_simulation_tab">
-        {
-          tabConfig.map(({ name, text }) => (
-            <Tab key={`tab${name}`} label={`${text}`}>
-              {
-                renderTabContent(name)
-              }
-            </Tab>
-          ))
-        }
-      </Tabs>
-    );
+  const renderTabs = () => (
+    <Tabs>
+      <TabList aria-label="Automation Simulation Tabs" className="automation_simulation_tab">
+        {tabConfig.map(({ name, text }) => (
+          <Tab key={`tab${name}`}>{text}</Tab>
+        ))}
+      </TabList>
+      <TabPanels>
+        {tabConfig.map(({ name }) => (
+          <TabPanel key={`panel${name}`}>
+            {renderTabContent(name)}
+          </TabPanel>
+        ))}
+      </TabPanels>
+    </Tabs>
+  );
 
-  return Object.keys(data).length <= 1
+  return data && Object.keys(data).length <= 1
     ? <NotificationMessage type="info" message={data.notice} />
     : renderTabs();
 };

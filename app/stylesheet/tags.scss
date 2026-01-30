@@ -4,10 +4,15 @@
   flex-direction: column;
   gap: 20px;
 
+  .add-or-assign-tags-section-grid-column, .buttons-section-grid-column {
+    margin: 0;
+  }
+
   .tagging-row-wrapper {
     margin: 0;
-    display: flex;
     gap: 20px;
+    padding-left: 0;
+    padding-right: 0;
 
     .tagging-form {
       display: flex;
@@ -70,7 +75,7 @@
       .btn-toolbar {
         width: 100%;
 
-        .bx--btn-set {
+        .cds--btn-set {
           margin-right: 0;
           width: 100%;
           display: flex;

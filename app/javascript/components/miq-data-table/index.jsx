@@ -9,7 +9,7 @@ import {
   TableBody,
   TableSelectAll,
   TableSelectRow,
-} from 'carbon-components-react';
+} from '@carbon/react';
 import classNames from 'classnames';
 import MiqPagination from '../miq-pagination';
 import {
@@ -133,7 +133,7 @@ const MiqDataTable = ({
       if (clickable === false) return 'simple-row';
       if (clickable === true || clickable === null) {
         return (gridChecks.includes(id)
-          ? 'clickable-row bx--data-table--selected'
+          ? 'clickable-row cds--data-table--selected'
           : 'clickable-row');
       }
     }
@@ -171,7 +171,7 @@ const MiqDataTable = ({
                     title={(item && item.clickable) ? __('Click to view details') : ''}
                     className={classNameRow(item)}
                     tabIndex={(item && item.clickable === false) ? '' : index.toString()}
-                    onKeyPress={(event) => onCellClick(row, CellAction.itemClick, event)}
+                    onKeyDown={(event) => onCellClick(row, CellAction.itemClick, event)}
                   >
                     {rowCheckBox && renderRowCheckBox(getSelectionProps, row)}
                     {renderCells(row)}

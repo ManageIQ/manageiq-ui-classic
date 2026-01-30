@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal } from 'carbon-components-react';
+import { Modal } from '@carbon/react';
 
 export const modalCallbackTypes = {
   CLOSE: 'close',
@@ -11,7 +11,7 @@ export const modalCallbackTypes = {
 /** Component to render a confirmation-modal-box */
 const MiqConfirmActionModal = ({ modalData }) => (
   <Modal
-    open={modalData.open}
+    open
     modalHeading={modalData.label || __('Confirm')}
     primaryButtonText={__('Ok')}
     secondaryButtonText={__('Cancel')}
@@ -27,7 +27,6 @@ export default MiqConfirmActionModal;
 
 MiqConfirmActionModal.propTypes = {
   modalData: PropTypes.shape({
-    open: PropTypes.bool.isRequired,
     callback: PropTypes.func.isRequired,
     label: PropTypes.string,
     confirm: PropTypes.string.isRequired,

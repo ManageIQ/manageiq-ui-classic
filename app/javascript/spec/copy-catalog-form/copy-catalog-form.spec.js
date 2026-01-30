@@ -34,7 +34,7 @@ describe('Copy catalog form', () => {
     await act(async() => {
       await new Promise((resolve) => setImmediate(resolve));
       wrapper.update();
-      wrapper.find('button.bx--btn--secondary').first().simulate('click');
+      wrapper.find('button.cds--btn--secondary').first().simulate('click');
     });
 
     expect(spyMiqAjaxButton).toHaveBeenCalledWith(cancelUrl);

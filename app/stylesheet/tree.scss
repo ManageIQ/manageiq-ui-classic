@@ -1,6 +1,12 @@
+@use '@carbon/styles/scss/components/button';
+
 .react-tree-view {
   ul {
     padding-left: 0;
+
+    li {
+      font-size: 12px;
+    }
   }
 
   .dirty {
@@ -32,7 +38,7 @@
       min-height: 25px;
 
       &.selected{
-        background-color: $button-primary;
+        background-color: button.$button-primary;
       }
     }
 

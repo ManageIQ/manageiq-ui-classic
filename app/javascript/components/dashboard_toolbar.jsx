@@ -1,8 +1,8 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { OverflowMenu, OverflowMenuItem } from 'carbon-components-react';
-import { ChevronDown20 } from '@carbon/icons-react';
+import { OverflowMenu, OverflowMenuItem } from '@carbon/react';
+import { ChevronDown } from '@carbon/react/icons';
 
 const addClick = (item) =>
   window.miqJqueryRequest(`/dashboard/widget_add?widget=${item.id}`, { beforeSend: true, complete: true });
@@ -55,17 +55,17 @@ const addMenu = (items, locked) => {
 
   return (
     <OverflowMenu
-      ariaLabel={title}
+      aria-label={title}
       id="dropdown-custom-2"
       floatingmenu="true"
       disabled={locked}
       title={title}
       onClose={closeFunc}
       menuOptionsClass="scrollable-options"
-      renderIcon={() => (
+      renderIcon={(props) => (
         <div className="toolbar-dashboard">
           <span>{buttonName}</span>
-          <ChevronDown20 />
+          <ChevronDown size={20} {...props} />
         </div>
       )}
     >

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'carbon-components-react';
+import { Grid, Column } from '@carbon/react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import createSchema from './copy-dashboard-form.schema';
 import { http, API } from '../../http_api';
@@ -58,16 +58,18 @@ const CopyDashboardForm = ({ dashboardId }) => {
   if (isLoading) return null;
   return (
     <Grid>
-      <MiqFormRenderer
-        initialValues={initialValues}
-        schema={schema}
-        onSubmit={submitValues}
-        onCancel={cancelClicked}
-        canReset
-        buttonsLabels={{
-          submitLabel: __('Save'),
-        }}
-      />
+      <Column sm={4} md={8} lg={16}>
+        <MiqFormRenderer
+          initialValues={initialValues}
+          schema={schema}
+          onSubmit={submitValues}
+          onCancel={cancelClicked}
+          canReset
+          buttonsLabels={{
+            submitLabel: __('Save'),
+          }}
+        />
+      </Column>
     </Grid>
   );
 };

@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SideNavItems, SideNavItem } from 'carbon-components-react/es/components/UIShell';
-import { UserAvatar20 } from '@carbon/icons-react';
+import { SideNavItems, SideNavItem, Button } from '@carbon/react';
+import { UserAvatar } from '@carbon/react/icons';
 
 const Username = ({ applianceName, currentUser, expanded }) => {
   const title = `${currentUser.name} | ${currentUser.userid} | ${applianceName}`;
 
   return (
-    <div className="menu-user" data-userid={currentUser.userid} title={title}>
-      { expanded && (
+    <div className={`menu-user${!expanded ? ' miq-menu-user-collapsed' : ''}`} data-userid={currentUser.userid} title={title}>
+      {expanded && (
         <SideNavItems>
           <SideNavItem className="padded collapse_icon">
             <span>
@@ -17,10 +17,21 @@ const Username = ({ applianceName, currentUser, expanded }) => {
           </SideNavItem>
         </SideNavItems>
       )}
-      { expanded || (
+      {expanded || (
         <SideNavItems>
           <SideNavItem className="padded collapse_icon">
-            <UserAvatar20 />
+            <Button
+              kind="ghost"
+              size="sm"
+              hasIconOnly
+              iconDescription={sprintf(
+                __('User: %s'),
+                currentUser.name
+              )}
+              renderIcon={(props) => <UserAvatar size={20} {...props} />}
+              tooltipAlignment="center"
+              tooltipPosition="right"
+            />
           </SideNavItem>
         </SideNavItems>
       )}

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'carbon-components-react';
+import { Grid, Column } from '@carbon/react';
 
 import MiqFormRenderer from '../../forms/data-driven-form';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
@@ -25,12 +25,14 @@ const ServiceDialogFromOt = ({
 
   return (
     <Grid>
-      <MiqFormRenderer
-        schema={serviceDialogFromOtSchema}
-        onSubmit={onSubmit}
-        onCancel={() => miqRedirectBack(__('Creation of a new Service Dialog was cancelled by the user'), 'success', miqRedirectBackAdress)}
-        buttonsLabels={{ submitLabel: __('Save') }}
-      />
+      <Column sm={4} md={8} lg={16}>
+        <MiqFormRenderer
+          schema={serviceDialogFromOtSchema}
+          onSubmit={onSubmit}
+          onCancel={() => miqRedirectBack(__('Creation of a new Service Dialog was cancelled by the user'), 'success', miqRedirectBackAdress)}
+          buttonsLabels={{ submitLabel: __('Save') }}
+        />
+      </Column>
     </Grid>
   );
 };

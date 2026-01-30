@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { SideNav } from 'carbon-components-react/es/components/UIShell';
+import { SideNav } from '@carbon/react';
 
 import FirstLevel from './first-level';
 import GroupSwitcher from './group-switcher';
@@ -38,7 +38,7 @@ export const MainMenu = ({
 
   const appearExpanded = expanded || !!activeSection || !!searchResults;
   const hideSecondary = () => setSection(null);
-  const hideSecondaryEscape = e => e.keyCode === 27 && hideSecondary();
+  const hideSecondaryEscape = (e) => e.keyCode === 27 && hideSecondary();
 
   const secondLevelFirst = useRef(undefined);
   const firstLevelNext = useRef(undefined);
@@ -182,7 +182,7 @@ export const MainMenu = ({
             toggle={() => setExpanded(!expanded)}
           />
 
-          <hr className="bx--side-nav__hr" />
+          <hr className="cds--side-nav__hr" />
 
           {searchResults && <SearchResults results={searchResults} />}
           {!searchResults && (

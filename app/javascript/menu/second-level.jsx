@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { SideNavItems, SideNavMenu, SideNavMenuItem } from 'carbon-components-react/es/components/UIShell';
+import { SideNavItems, SideNavMenu, SideNavMenuItem } from '@carbon/react';
 import { itemId, linkProps } from './item-type';
 
 const mapItems = (items, hideSecondary, ref) => items.map((item, key) => {

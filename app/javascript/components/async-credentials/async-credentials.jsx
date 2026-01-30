@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   isEqual, flatMap, get, set,
 } from 'lodash';
-import { Button, InlineLoading } from 'carbon-components-react';
+import { Button, InlineLoading } from '@carbon/react';
 
 import {
   useFormApi, useFieldApi, validatorTypes, FormSpy,
@@ -106,7 +106,7 @@ const AsyncCredentials = ({
 
             return (
               <>
-                <Button size="small" kind="tertiary" onClick={onClick} disabled={isValid || !depsValid || validating}>
+                <Button size="sm" kind="tertiary" onClick={onClick} disabled={isValid || !depsValid || validating} className="miq-validation-button">
                   {validating && <InlineLoading /> }
                   {validating ? validationProgressLabel : validateLabel}
                 </Button>

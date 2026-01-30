@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'carbon-components-react';
+import { Button } from '@carbon/react';
 import MiqDataTable from '../miq-data-table';
 import { rowData } from '../miq-data-table/helper';
 
@@ -18,7 +18,7 @@ const SettingsCompanyCategories = ({ initialData }) => {
       <div className="tab-content-header-actions">
         <Button
           onClick={() => onSelect('')}
-          onKeyPress={() => onSelect('')}
+          onKeyDown={() => onSelect('')}
           title={__('Click to add a new category')}
         >
           {__('Add Category')}

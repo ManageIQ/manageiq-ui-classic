@@ -65,6 +65,32 @@ Object.defineProperty(Array.prototype, 'flat', {
  */
 jest.mock('../app/javascript/helpers/miq-redirect-back', () => jest.fn());
 
+// Mock ResizeObserver for Carbon v11 components
+Object.defineProperty(window, 'ResizeObserver', {
+  writable: true,
+  configurable: true,
+  value: class ResizeObserver {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  },
+});
+
+// Mock matchMedia for Carbon v11 components
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(), // deprecated
+    removeListener: jest.fn(), // deprecated
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+});
+
 // Loading the API global to the test context
 import { API } from '../app/javascript/http_api';
 window.API = API;

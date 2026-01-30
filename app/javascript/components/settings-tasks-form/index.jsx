@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import MiqFormRenderer, { useFormApi } from '@@ddf';
 import PropTypes from 'prop-types';
 import { FormSpy } from '@data-driven-forms/react-form-renderer';
+import { Button } from '@carbon/react';
 import createSchema from './settings-tasks-form.schema';
 import loadTable from './load-table-helper';
 
@@ -63,25 +64,25 @@ const FormTemplate = ({
       <FormSpy>
         {({ values }) => (
           <div className="custom-button-wrapper">
-            <button
+            <Button
               disabled={values.taskStatus.length === 0 || !valid || (pristine && !dirtySinceLastSubmit)}
-              className="bx--btn bx--btn--primary btnRight"
+              className="btnRight"
               id="submit"
               type="submit"
-              variant="contained"
+              kind="primary"
             >
               {__('Apply')}
-            </button>
-            <button
+            </Button>
+            <Button
               disabled={!valid || (pristine && !dirtySinceLastSubmit)}
-              className="bx--btn bx--btn--secondary btnRight"
-              variant="contained"
+              className="btnRight"
+              kind="secondary"
               id="reset"
               onClick={onReset}
               type="button"
             >
               {__('Reset')}
-            </button>
+            </Button>
           </div>
         )}
       </FormSpy>

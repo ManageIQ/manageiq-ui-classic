@@ -8,9 +8,8 @@
     cursor: move;
     display: block;
   }
-  
-  .bx--overflow-menu {
-    display: inline-block;
+
+  .cds--overflow-menu__wrapper {
     float: right;
     margin-top: -10px;
   }
@@ -19,7 +18,7 @@
 .card-pf {
   .loadingSpinner {
     padding-bottom: 2rem;
-  } 
+  }
 }
 
 .empty-widget {
@@ -34,7 +33,7 @@
   padding-bottom: 20px;
 }
 
-.closeButton {
+#lightbox_div #zoomed_chart_div .card-pf-heading .cds--popover-container {
   float: right;
   margin-top: -20px;
 }

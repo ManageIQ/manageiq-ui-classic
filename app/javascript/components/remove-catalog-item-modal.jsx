@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Loading, ModalBody } from 'carbon-components-react';
+import { Loading, ModalBody } from '@carbon/react';
 import { API } from '../http_api';
 
 const parseApiError = (error) => {
