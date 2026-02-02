@@ -4,7 +4,6 @@ require('./detect_spaces.js');
 require('./form_changed.js');
 require('./greater_or_zero.js');
 require('./greater_than_zero.js');
-require('./hostname_validation.js');
 require('./miq_form.js');
 require('./miqrequired.js');
 require('./reconfigure/validateMultiple.js');
