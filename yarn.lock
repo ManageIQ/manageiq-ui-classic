@@ -13538,7 +13538,7 @@ __metadata:
     react-redux: "npm:^7.1.1"
     react-router: "npm:~6.30.3"
     react-router-dom: "npm:~6.30.3"
-    react-test-renderer: "npm:~16.8.0"
+    react-test-renderer: "npm:~16.14.0"
     react-wooden-tree: "npm:^2.2.0"
     redux: "npm:^4.0.0"
     redux-mock-store: "npm:^1.5.3"
@@ -16573,7 +16573,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-test-renderer@npm:^16.0.0-0":
+"react-test-renderer@npm:^16.0.0-0, react-test-renderer@npm:~16.14.0":
   version: 16.14.0
   resolution: "react-test-renderer@npm:16.14.0"
   dependencies:
@@ -16584,20 +16584,6 @@ __metadata:
   peerDependencies:
     react: ^16.14.0
   checksum: 10/1a064a65c6073bb72376e8539e979836c52cd6629207163594078005e7bf68a4b35d9397a0ac04aa2a534a9f8f9eb2c2c3a5ff9d2dc8b67bafd6be7451dd1527
-  languageName: node
-  linkType: hard
-
-"react-test-renderer@npm:~16.8.0":
-  version: 16.8.6
-  resolution: "react-test-renderer@npm:16.8.6"
-  dependencies:
-    object-assign: "npm:^4.1.1"
-    prop-types: "npm:^15.6.2"
-    react-is: "npm:^16.8.6"
-    scheduler: "npm:^0.13.6"
-  peerDependencies:
-    react: ^16.0.0
-  checksum: 10/8dfba848c14432bea9bc05565e2f5817b2d2e27a231992238c17bba72b43ec3a23623b6baa1c3199f219f69962462ddc7cb8bbc7bfa9ed2bc820846f7a4943c3
   languageName: node
   linkType: hard
 
@@ -17510,16 +17496,6 @@ __metadata:
   dependencies:
     xmlchars: "npm:^2.2.0"
   checksum: 10/148b5f98fdd45df25fa1abef35d72cdf6457ac5aef3b7d59d60f770af09d8cf6e7e3a074197071222441d68670fd3198590aba9985e37c4738af2df2f44d0686
-  languageName: node
-  linkType: hard
-
-"scheduler@npm:^0.13.6":
-  version: 0.13.6
-  resolution: "scheduler@npm:0.13.6"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-    object-assign: "npm:^4.1.1"
-  checksum: 10/582493c7254d52af1c057b2830ecb021a47c65eb7870ab459a7a55ae4a75d323b0577692a63c8c261837d3e9cc3066f127cfde5f2b73be298bc1ad2fc1d45e8f
   languageName: node
   linkType: hard
 

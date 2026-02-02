@@ -154,7 +154,7 @@
     "postcss-import": "~14.1.0",
     "postcss-loader": "~3.0.0",
     "precss": "~4.0.0",
-    "react-test-renderer": "~16.8.0",
+    "react-test-renderer": "~16.14.0",
     "regenerator-runtime": "~0.14.1",
     "resolve-url-loader": "~3.1.5",
     "sass": "~1.97.0",
