@@ -1,4 +1,3 @@
-require('./ansible_credentials/adjust_on_reset.js');
 require('./autofocus.js');
 require('./checkchange.js');
 require('./detect_spaces.js');
