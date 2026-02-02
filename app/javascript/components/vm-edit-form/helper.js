@@ -76,6 +76,11 @@ export const getNoEmsInitialValues = (recordId, isTemplate, setState) => {
   });
 };
 
+export const descriptionData = (values) => ({
+  action: 'edit',
+  resource: { description: values.description ? values.description : '' },
+});
+
 export const getSubmitData = (values) => {
   let customIdentifier = '';
   let description = '';
