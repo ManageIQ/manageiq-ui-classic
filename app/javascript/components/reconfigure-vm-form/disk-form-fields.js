@@ -92,7 +92,7 @@ const dependentField = (data, roles) => ({
   offText: __('No'),
   hideField: !roles.isVmwareInfra,
   disabled: data.form.action === TYPES.RESIZE,
-  initialValue: data.form.action === TYPES.RESIZE ? getSwitchData(data.editingRow, 'dependent') : '',
+  initialValue: data.form.action === TYPES.RESIZE ? getSwitchData(data.editingRow, 'dependent') : 'Yes',
 });
 
 const bootableField = (data, roles) => ({

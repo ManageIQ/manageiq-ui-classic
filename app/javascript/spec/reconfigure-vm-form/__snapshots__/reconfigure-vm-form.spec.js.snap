@@ -17596,7 +17596,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                     "disabled": false,
                     "hideField": false,
                     "id": "dependent",
-                    "initialValue": "",
+                    "initialValue": "Yes",
                     "label": "Dependent",
                     "name": "dependent",
                     "offText": "No",
@@ -17823,7 +17823,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                       "disabled": false,
                       "hideField": false,
                       "id": "dependent",
-                      "initialValue": "",
+                      "initialValue": "Yes",
                       "label": "Dependent",
                       "name": "dependent",
                       "offText": "No",
@@ -18043,7 +18043,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                         "disabled": false,
                         "hideField": false,
                         "id": "dependent",
-                        "initialValue": "",
+                        "initialValue": "Yes",
                         "label": "Dependent",
                         "name": "dependent",
                         "offText": "No",
@@ -18259,7 +18259,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                             "disabled": false,
                             "hideField": false,
                             "id": "dependent",
-                            "initialValue": "",
+                            "initialValue": "Yes",
                             "label": "Dependent",
                             "name": "dependent",
                             "offText": "No",
@@ -18422,7 +18422,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                             "disabled": false,
                             "hideField": false,
                             "id": "dependent",
-                            "initialValue": "",
+                            "initialValue": "Yes",
                             "label": "Dependent",
                             "name": "dependent",
                             "offText": "No",
@@ -18589,7 +18589,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                               "disabled": false,
                               "hideField": false,
                               "id": "dependent",
-                              "initialValue": "",
+                              "initialValue": "Yes",
                               "label": "Dependent",
                               "name": "dependent",
                               "offText": "No",
@@ -18753,7 +18753,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                               "disabled": false,
                               "hideField": false,
                               "id": "dependent",
-                              "initialValue": "",
+                              "initialValue": "Yes",
                               "label": "Dependent",
                               "name": "dependent",
                               "offText": "No",
@@ -18920,7 +18920,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                             "disabled": false,
                             "hideField": false,
                             "id": "dependent",
-                            "initialValue": "",
+                            "initialValue": "Yes",
                             "label": "Dependent",
                             "name": "dependent",
                             "offText": "No",
@@ -19077,7 +19077,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                 "disabled": false,
                                 "hideField": false,
                                 "id": "dependent",
-                                "initialValue": "",
+                                "initialValue": "Yes",
                                 "label": "Dependent",
                                 "name": "dependent",
                                 "offText": "No",
@@ -19238,7 +19238,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                   "disabled": false,
                                   "hideField": false,
                                   "id": "dependent",
-                                  "initialValue": "",
+                                  "initialValue": "Yes",
                                   "label": "Dependent",
                                   "name": "dependent",
                                   "offText": "No",
@@ -20823,7 +20823,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                               disabled={false}
                               hideField={false}
                               id="dependent"
-                              initialValue=""
+                              initialValue="Yes"
                               key="dependent"
                               label="Dependent"
                               name="dependent"
@@ -20836,7 +20836,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                     "component": "switch",
                                     "disabled": false,
                                     "id": "dependent",
-                                    "initialValue": "",
+                                    "initialValue": "Yes",
                                     "label": "Dependent",
                                     "name": "dependent",
                                     "offText": "No",
@@ -20851,7 +20851,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                     component="switch"
                                     disabled={false}
                                     id="dependent"
-                                    initialValue=""
+                                    initialValue="Yes"
                                     label="Dependent"
                                     name="dependent"
                                     offText="No"
@@ -20869,7 +20869,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                         onBlur={[Function]}
                                         onChange={[Function]}
                                         onFocus={[Function]}
-                                        toggled={false}
+                                        toggled={true}
                                         type="checkbox"
                                       >
                                         <Toggle
@@ -20885,7 +20885,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                           onChange={[Function]}
                                           onFocus={[Function]}
                                           onToggle={[Function]}
-                                          toggled={false}
+                                          toggled={true}
                                           type="checkbox"
                                         >
                                           <div
@@ -20893,7 +20893,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                           >
                                             <input
                                               aria-label={null}
-                                              checked={false}
+                                              checked={true}
                                               className="bx--toggle-input"
                                               disabled={false}
                                               id="dependent"
