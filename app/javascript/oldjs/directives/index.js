@@ -2,7 +2,6 @@ require('./ansible_credentials/adjust_on_reset.js');
 require('./autofocus.js');
 require('./checkchange.js');
 require('./detect_spaces.js');
-require('./form_changed.js');
 require('./greater_or_zero.js');
 require('./greater_than_zero.js');
 require('./hostname_validation.js');
