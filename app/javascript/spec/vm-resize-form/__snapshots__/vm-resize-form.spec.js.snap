@@ -23,234 +23,98 @@ exports[`vm resize form component should render a resize form 1`] = `
     vmCloudResizeFormId="53"
   >
     <Grid>
-      <FlexGrid>
+      <ForwardRef>
         <GridSettings
-          mode="flexbox"
-          subgrid={false}
+          mode="css-grid"
+          subgrid={true}
         >
           <div
-            className="bx--grid"
+            className="cds--css-grid"
           >
-            <Connect(MiqFormRenderer)
-              onCancel={[Function]}
-              onSubmit={[Function]}
-              schema={
-                Object {
-                  "fields": Array [
-                    Array [
-                      Object {
-                        "component": "text-field",
-                        "id": "memory",
-                        "initialValue": 2,
-                        "isRequired": true,
-                        "label": "Memory (GiB)",
-                        "name": "memory",
-                        "validate": Array [
-                          Object {
-                            "type": "required",
-                          },
-                        ],
-                      },
-                    ],
-                  ],
-                }
-              }
+            <ForwardRef
+              lg={16}
+              md={8}
+              sm={4}
             >
-              <MiqFormRenderer
-                buttonsLabels={Object {}}
-                canReset={false}
-                className="form-react"
-                componentMapper={
-                  Object {
-                    "checkbox": [Function],
-                    "code-editor": [Function],
-                    "date-picker": [Function],
-                    "dual-list-select": [Function],
-                    "edit-password-field": [Function],
-                    "embedded-automate-entry-point": [Function],
-                    "embedded-workflow-entry-point": [Function],
-                    "field-array": [Function],
-                    "file-upload": [Function],
-                    "font-icon-picker": [Function],
-                    "font-icon-picker-ddf": [Function],
-                    "key-value-list": [Function],
-                    "multi-select": [Function],
-                    "password-field": [Function],
-                    "plain-text": [Function],
-                    "radio": [Function],
-                    "select": [Function],
-                    "slider": [Function],
-                    "sub-form": [Function],
-                    "switch": [Function],
-                    "tabs": [Function],
-                    "text-field": [Function],
-                    "textarea": [Function],
-                    "time-picker": [Function],
-                    "tree-selector": [Function],
-                    "tree-view": [Function],
-                    "validate-credentials": [Function],
-                    "wizard": [Function],
-                  }
-                }
-                disableSubmit={
-                  Array [
-                    "pristine",
-                    "invalid",
-                  ]
-                }
-                dispatch={[Function]}
-                onCancel={[Function]}
-                onSubmit={[Function]}
-                schema={
-                  Object {
-                    "fields": Array [
-                      Array [
-                        Object {
-                          "component": "text-field",
-                          "id": "memory",
-                          "initialValue": 2,
-                          "isRequired": true,
-                          "label": "Memory (GiB)",
-                          "name": "memory",
-                          "validate": Array [
+              <ForwardRef
+                as="div"
+                lg={16}
+                md={8}
+                sm={4}
+              >
+                <div
+                  className="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+                >
+                  <Connect(MiqFormRenderer)
+                    onCancel={[Function]}
+                    onSubmit={[Function]}
+                    schema={
+                      Object {
+                        "fields": Array [
+                          Array [
                             Object {
-                              "type": "required",
+                              "component": "text-field",
+                              "id": "memory",
+                              "initialValue": 2,
+                              "isRequired": true,
+                              "label": "Memory (GiB)",
+                              "name": "memory",
+                              "validate": Array [
+                                Object {
+                                  "type": "required",
+                                },
+                              ],
                             },
                           ],
-                        },
-                      ],
-                    ],
-                  }
-                }
-                showFormControls={true}
-              >
-                <FormRenderer
-                  FormTemplate={[Function]}
-                  clearOnUnmount={false}
-                  componentMapper={
-                    Object {
-                      "checkbox": [Function],
-                      "code-editor": [Function],
-                      "date-picker": [Function],
-                      "dual-list-select": [Function],
-                      "edit-password-field": [Function],
-                      "embedded-automate-entry-point": [Function],
-                      "embedded-workflow-entry-point": [Function],
-                      "field-array": [Function],
-                      "file-upload": [Function],
-                      "font-icon-picker": [Function],
-                      "font-icon-picker-ddf": [Function],
-                      "key-value-list": [Function],
-                      "multi-select": [Function],
-                      "password-field": [Function],
-                      "plain-text": [Function],
-                      "radio": [Function],
-                      "select": [Function],
-                      "slider": [Function],
-                      "spy-field": [Function],
-                      "sub-form": [Function],
-                      "switch": [Function],
-                      "tabs": [Function],
-                      "text-field": [Function],
-                      "textarea": [Function],
-                      "time-picker": [Function],
-                      "tree-selector": [Function],
-                      "tree-view": [Function],
-                      "validate-credentials": [Function],
-                      "wizard": [Function],
-                    }
-                  }
-                  dispatch={[Function]}
-                  initialValues={Object {}}
-                  onCancel={[Function]}
-                  onReset={[Function]}
-                  onSubmit={[Function]}
-                  schema={
-                    Object {
-                      "fields": Array [
-                        Array [
-                          Object {
-                            "component": "text-field",
-                            "id": "memory",
-                            "initialValue": 2,
-                            "isRequired": true,
-                            "label": "Memory (GiB)",
-                            "name": "memory",
-                            "validate": Array [
-                              Object {
-                                "type": "required",
-                              },
-                            ],
-                          },
                         ],
-                        Object {
-                          "component": "spy-field",
-                          "initialize": undefined,
-                          "name": "spy-field",
-                        },
-                      ],
-                    }
-                  }
-                >
-                  <ReactFinalForm
-                    decorators={
-                      Array [
-                        [Function],
-                      ]
-                    }
-                    dispatch={[Function]}
-                    initialValues={Object {}}
-                    mutators={
-                      Object {
-                        "concat": [Function],
-                        "insert": [Function],
-                        "move": [Function],
-                        "pop": [Function],
-                        "push": [Function],
-                        "remove": [Function],
-                        "removeBatch": [Function],
-                        "shift": [Function],
-                        "swap": [Function],
-                        "unshift": [Function],
-                        "update": [Function],
-                      }
-                    }
-                    onSubmit={[Function]}
-                    render={[Function]}
-                    subscription={
-                      Object {
-                        "pristine": true,
-                        "submitting": true,
-                        "valid": true,
                       }
                     }
                   >
-                    <Component
-                      formFields={
+                    <MiqFormRenderer
+                      buttonsLabels={Object {}}
+                      canReset={false}
+                      className="form-react"
+                      componentMapper={
+                        Object {
+                          "checkbox": [Function],
+                          "code-editor": [Function],
+                          "date-picker": [Function],
+                          "dual-list-select": [Function],
+                          "edit-password-field": [Function],
+                          "embedded-automate-entry-point": [Function],
+                          "embedded-workflow-entry-point": [Function],
+                          "field-array": [Function],
+                          "file-upload": [Function],
+                          "font-icon-picker": [Function],
+                          "font-icon-picker-ddf": [Function],
+                          "key-value-list": [Function],
+                          "multi-select": [Function],
+                          "password-field": [Function],
+                          "plain-text": [Function],
+                          "radio": [Function],
+                          "select": [Function],
+                          "slider": [Function],
+                          "sub-form": [Function],
+                          "switch": [Function],
+                          "tabs": [Function],
+                          "text-field": [Function],
+                          "textarea": [Function],
+                          "time-picker": [Function],
+                          "tree-selector": [Function],
+                          "tree-view": [Function],
+                          "validate-credentials": [Function],
+                          "wizard": [Function],
+                        }
+                      }
+                      disableSubmit={
                         Array [
-                          Array [
-                            <SingleField
-                              component="text-field"
-                              id="memory"
-                              initialValue={2}
-                              isRequired={true}
-                              label="Memory (GiB)"
-                              name="memory"
-                              validate={
-                                Array [
-                                  Object {
-                                    "type": "required",
-                                  },
-                                ]
-                              }
-                            />,
-                          ],
-                          <SingleField
-                            component="spy-field"
-                            name="spy-field"
-                          />,
+                          "pristine",
+                          "invalid",
                         ]
                       }
+                      dispatch={[Function]}
+                      onCancel={[Function]}
+                      onSubmit={[Function]}
                       schema={
                         Object {
                           "fields": Array [
@@ -269,55 +133,50 @@ exports[`vm resize form component should render a resize form 1`] = `
                                 ],
                               },
                             ],
-                            Object {
-                              "component": "spy-field",
-                              "initialize": undefined,
-                              "name": "spy-field",
-                            },
                           ],
                         }
                       }
+                      showFormControls={true}
                     >
-                      <WrappedFormTemplate
-                        canReset={false}
-                        cancelLabel="Cancel"
-                        disableSubmit={
-                          Array [
-                            "pristine",
-                            "invalid",
-                          ]
-                        }
-                        formFields={
-                          Array [
-                            Array [
-                              <SingleField
-                                component="text-field"
-                                id="memory"
-                                initialValue={2}
-                                isRequired={true}
-                                label="Memory (GiB)"
-                                name="memory"
-                                validate={
-                                  Array [
-                                    Object {
-                                      "type": "required",
-                                    },
-                                  ]
-                                }
-                              />,
-                            ],
-                            <SingleField
-                              component="spy-field"
-                              name="spy-field"
-                            />,
-                          ]
-                        }
-                        formWrapperProps={
+                      <FormRenderer
+                        FormTemplate={[Function]}
+                        componentMapper={
                           Object {
-                            "className": "form-react",
+                            "checkbox": [Function],
+                            "code-editor": [Function],
+                            "date-picker": [Function],
+                            "dual-list-select": [Function],
+                            "edit-password-field": [Function],
+                            "embedded-automate-entry-point": [Function],
+                            "embedded-workflow-entry-point": [Function],
+                            "field-array": [Function],
+                            "file-upload": [Function],
+                            "font-icon-picker": [Function],
+                            "font-icon-picker-ddf": [Function],
+                            "key-value-list": [Function],
+                            "multi-select": [Function],
+                            "password-field": [Function],
+                            "plain-text": [Function],
+                            "radio": [Function],
+                            "select": [Function],
+                            "slider": [Function],
+                            "spy-field": [Function],
+                            "sub-form": [Function],
+                            "switch": [Function],
+                            "tabs": [Function],
+                            "text-field": [Function],
+                            "textarea": [Function],
+                            "time-picker": [Function],
+                            "tree-selector": [Function],
+                            "tree-view": [Function],
+                            "validate-credentials": [Function],
+                            "wizard": [Function],
                           }
                         }
-                        resetLabel="Reset"
+                        dispatch={[Function]}
+                        onCancel={[Function]}
+                        onReset={[Function]}
+                        onSubmit={[Function]}
                         schema={
                           Object {
                             "fields": Array [
@@ -344,124 +203,137 @@ exports[`vm resize form component should render a resize form 1`] = `
                             ],
                           }
                         }
-                        showFormControls={true}
-                        submitLabel="Save"
                       >
-                        <FormTemplate
-                          Button={[Function]}
-                          ButtonGroup={[Function]}
-                          Description={[Function]}
-                          FormWrapper={[Function]}
-                          Header={[Function]}
-                          Title={[Function]}
-                          buttonOrder={
+                        <ReactFinalForm
+                          decorators={
                             Array [
-                              "submit",
-                              "reset",
-                              "cancel",
+                              [Function],
                             ]
                           }
-                          canReset={false}
-                          cancelLabel="Cancel"
-                          disableSubmit={
-                            Array [
-                              "pristine",
-                              "invalid",
-                            ]
-                          }
-                          formFields={
-                            Array [
-                              Array [
-                                <SingleField
-                                  component="text-field"
-                                  id="memory"
-                                  initialValue={2}
-                                  isRequired={true}
-                                  label="Memory (GiB)"
-                                  name="memory"
-                                  validate={
-                                    Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ]
-                                  }
-                                />,
-                              ],
-                              <SingleField
-                                component="spy-field"
-                                name="spy-field"
-                              />,
-                            ]
-                          }
-                          formWrapperProps={
+                          dispatch={[Function]}
+                          initialValues={Object {}}
+                          mutators={
                             Object {
-                              "className": "form-react",
+                              "concat": [Function],
+                              "insert": [Function],
+                              "move": [Function],
+                              "pop": [Function],
+                              "push": [Function],
+                              "remove": [Function],
+                              "removeBatch": [Function],
+                              "shift": [Function],
+                              "swap": [Function],
+                              "unshift": [Function],
+                              "update": [Function],
                             }
                           }
-                          resetLabel="Reset"
-                          schema={
+                          onSubmit={[Function]}
+                          render={[Function]}
+                          subscription={
                             Object {
-                              "fields": Array [
+                              "pristine": true,
+                              "submitting": true,
+                              "valid": true,
+                            }
+                          }
+                        >
+                          <Component
+                            formFields={
+                              Array [
                                 Array [
+                                  <SingleField
+                                    component="text-field"
+                                    id="memory"
+                                    initialValue={2}
+                                    isRequired={true}
+                                    label="Memory (GiB)"
+                                    name="memory"
+                                    validate={
+                                      Array [
+                                        Object {
+                                          "type": "required",
+                                        },
+                                      ]
+                                    }
+                                  />,
+                                ],
+                                <SingleField
+                                  component="spy-field"
+                                  name="spy-field"
+                                />,
+                              ]
+                            }
+                            schema={
+                              Object {
+                                "fields": Array [
+                                  Array [
+                                    Object {
+                                      "component": "text-field",
+                                      "id": "memory",
+                                      "initialValue": 2,
+                                      "isRequired": true,
+                                      "label": "Memory (GiB)",
+                                      "name": "memory",
+                                      "validate": Array [
+                                        Object {
+                                          "type": "required",
+                                        },
+                                      ],
+                                    },
+                                  ],
                                   Object {
-                                    "component": "text-field",
-                                    "id": "memory",
-                                    "initialValue": 2,
-                                    "isRequired": true,
-                                    "label": "Memory (GiB)",
-                                    "name": "memory",
-                                    "validate": Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ],
+                                    "component": "spy-field",
+                                    "initialize": undefined,
+                                    "name": "spy-field",
                                   },
                                 ],
-                                Object {
-                                  "component": "spy-field",
-                                  "initialize": undefined,
-                                  "name": "spy-field",
-                                },
-                              ],
+                              }
                             }
-                          }
-                          showFormControls={true}
-                          submitLabel="Save"
-                        >
-                          <Form
-                            className="form-react"
-                            onSubmit={[Function]}
                           >
-                            <Form
-                              className="form-0-2-3 form-react"
-                              noValidate={true}
-                              onSubmit={[Function]}
-                            >
-                              <form
-                                className="bx--form form-0-2-3 form-react"
-                                noValidate={true}
-                                onSubmit={[Function]}
-                              >
-                                 
-                                <SingleField
-                                  component="text-field"
-                                  id="memory"
-                                  initialValue={2}
-                                  isRequired={true}
-                                  key="memory"
-                                  label="Memory (GiB)"
-                                  name="memory"
-                                  validate={
+                            <WrappedFormTemplate
+                              canReset={false}
+                              cancelLabel="Cancel"
+                              disableSubmit={
+                                Array [
+                                  "pristine",
+                                  "invalid",
+                                ]
+                              }
+                              formFields={
+                                Array [
+                                  Array [
+                                    <SingleField
+                                      component="text-field"
+                                      id="memory"
+                                      initialValue={2}
+                                      isRequired={true}
+                                      label="Memory (GiB)"
+                                      name="memory"
+                                      validate={
+                                        Array [
+                                          Object {
+                                            "type": "required",
+                                          },
+                                        ]
+                                      }
+                                    />,
+                                  ],
+                                  <SingleField
+                                    component="spy-field"
+                                    name="spy-field"
+                                  />,
+                                ]
+                              }
+                              formWrapperProps={
+                                Object {
+                                  "className": "form-react",
+                                }
+                              }
+                              resetLabel="Reset"
+                              schema={
+                                Object {
+                                  "fields": Array [
                                     Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ]
-                                  }
-                                >
-                                  <FormConditionWrapper
-                                    field={
                                       Object {
                                         "component": "text-field",
                                         "id": "memory",
@@ -474,13 +346,45 @@ exports[`vm resize form component should render a resize form 1`] = `
                                             "type": "required",
                                           },
                                         ],
-                                      }
-                                    }
-                                  >
-                                    <FormFieldHideWrapper
-                                      hideField={false}
-                                    >
-                                      <TextField
+                                      },
+                                    ],
+                                    Object {
+                                      "component": "spy-field",
+                                      "initialize": undefined,
+                                      "name": "spy-field",
+                                    },
+                                  ],
+                                }
+                              }
+                              showFormControls={true}
+                              submitLabel="Save"
+                            >
+                              <FormTemplate
+                                Button={[Function]}
+                                ButtonGroup={[Function]}
+                                Description={[Function]}
+                                FormWrapper={[Function]}
+                                Header={[Function]}
+                                Title={[Function]}
+                                buttonOrder={
+                                  Array [
+                                    "submit",
+                                    "reset",
+                                    "cancel",
+                                  ]
+                                }
+                                canReset={false}
+                                cancelLabel="Cancel"
+                                disableSubmit={
+                                  Array [
+                                    "pristine",
+                                    "invalid",
+                                  ]
+                                }
+                                formFields={
+                                  Array [
+                                    Array [
+                                      <SingleField
                                         component="text-field"
                                         id="memory"
                                         initialValue={2}
@@ -494,224 +398,82 @@ exports[`vm resize form component should render a resize form 1`] = `
                                             },
                                           ]
                                         }
-                                      >
-                                        <TextInput
-                                          id="memory"
-                                          invalid={false}
-                                          invalidText=""
-                                          key="memory"
-                                          labelText={
-                                            <IsRequired>
-                                              Memory (GiB)
-                                            </IsRequired>
-                                          }
-                                          name="memory"
-                                          onBlur={[Function]}
-                                          onChange={[Function]}
-                                          onFocus={[Function]}
-                                          value={2}
-                                          warn={false}
-                                          warnText=""
-                                        >
-                                          <div
-                                            className="bx--form-item bx--text-input-wrapper"
-                                          >
-                                            <label
-                                              className="bx--label"
-                                              htmlFor="memory"
-                                            >
-                                              <IsRequired>
-                                                <span
-                                                  aria-hidden="true"
-                                                  className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
-                                                >
-                                                  *
-                                                </span>
-                                                Memory (GiB)
-                                              </IsRequired>
-                                            </label>
-                                            <div
-                                              className="bx--text-input__field-outer-wrapper"
-                                            >
-                                              <div
-                                                className="bx--text-input__field-wrapper"
-                                                data-invalid={null}
-                                              >
-                                                <input
-                                                  className="bx--text-input bx--text-input--md"
-                                                  disabled={false}
-                                                  id="memory"
-                                                  name="memory"
-                                                  onBlur={[Function]}
-                                                  onChange={[Function]}
-                                                  onClick={[Function]}
-                                                  onFocus={[Function]}
-                                                  type="text"
-                                                  value={2}
-                                                />
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </TextInput>
-                                      </TextField>
-                                    </FormFieldHideWrapper>
-                                  </FormConditionWrapper>
-                                </SingleField>
-                                <SingleField
-                                  component="spy-field"
-                                  key="spy-field"
-                                  name="spy-field"
-                                >
-                                  <FormConditionWrapper
-                                    field={
+                                      />,
+                                    ],
+                                    <SingleField
+                                      component="spy-field"
+                                      name="spy-field"
+                                    />,
+                                  ]
+                                }
+                                formWrapperProps={
+                                  Object {
+                                    "className": "form-react",
+                                  }
+                                }
+                                resetLabel="Reset"
+                                schema={
+                                  Object {
+                                    "fields": Array [
+                                      Array [
+                                        Object {
+                                          "component": "text-field",
+                                          "id": "memory",
+                                          "initialValue": 2,
+                                          "isRequired": true,
+                                          "label": "Memory (GiB)",
+                                          "name": "memory",
+                                          "validate": Array [
+                                            Object {
+                                              "type": "required",
+                                            },
+                                          ],
+                                        },
+                                      ],
                                       Object {
                                         "component": "spy-field",
                                         "initialize": undefined,
                                         "name": "spy-field",
-                                      }
-                                    }
+                                      },
+                                    ],
+                                  }
+                                }
+                                showFormControls={true}
+                                submitLabel="Save"
+                              >
+                                <Form
+                                  className="form-react"
+                                  onSubmit={[Function]}
+                                >
+                                  <Form
+                                    className="form-0-2-3 form-react"
+                                    noValidate={true}
+                                    onSubmit={[Function]}
                                   >
-                                    <FormFieldHideWrapper
-                                      hideField={false}
+                                    <form
+                                      className="cds--form form-0-2-3 form-react"
+                                      noValidate={true}
+                                      onSubmit={[Function]}
                                     >
-                                      <SpyField
-                                        component="spy-field"
-                                        name="spy-field"
-                                      >
-                                        <FormSpy
-                                          onChange={[Function]}
-                                          subscription={
-                                            Object {
-                                              "pristine": true,
-                                              "valid": true,
-                                            }
-                                          }
-                                        />
-                                      </SpyField>
-                                    </FormFieldHideWrapper>
-                                  </FormConditionWrapper>
-                                </SingleField>
-                                <FormSpy>
-                                  <FormControls
-                                    Button={[Function]}
-                                    ButtonGroup={[Function]}
-                                    FormSpy={[Function]}
-                                    buttonOrder={
-                                      Array [
-                                        "submit",
-                                        "reset",
-                                        "cancel",
-                                      ]
-                                    }
-                                    canReset={false}
-                                    cancelLabel="Cancel"
-                                    disableSubmit={true}
-                                    formFields={
-                                      Array [
-                                        Array [
-                                          <SingleField
-                                            component="text-field"
-                                            id="memory"
-                                            initialValue={2}
-                                            isRequired={true}
-                                            label="Memory (GiB)"
-                                            name="memory"
-                                            validate={
-                                              Array [
-                                                Object {
-                                                  "type": "required",
-                                                },
-                                              ]
-                                            }
-                                          />,
-                                        ],
-                                        <SingleField
-                                          component="spy-field"
-                                          name="spy-field"
-                                        />,
-                                      ]
-                                    }
-                                    formSpyProps={
-                                      Object {
-                                        "active": undefined,
-                                        "dirty": false,
-                                        "dirtyFields": Object {},
-                                        "dirtyFieldsSinceLastSubmit": Object {
-                                          "memory": true,
-                                        },
-                                        "dirtySinceLastSubmit": false,
-                                        "error": undefined,
-                                        "errors": Object {},
-                                        "form": Object {
-                                          "batch": [Function],
-                                          "blur": [Function],
-                                          "change": [Function],
-                                          "destroyOnUnregister": false,
-                                          "focus": [Function],
-                                          "getFieldState": [Function],
-                                          "getRegisteredFields": [Function],
-                                          "getState": [Function],
-                                          "initialize": [Function],
-                                          "isValidationPaused": [Function],
-                                          "mutators": Object {
-                                            "concat": [Function],
-                                            "insert": [Function],
-                                            "move": [Function],
-                                            "pop": [Function],
-                                            "push": [Function],
-                                            "remove": [Function],
-                                            "removeBatch": [Function],
-                                            "shift": [Function],
-                                            "swap": [Function],
-                                            "unshift": [Function],
-                                            "update": [Function],
-                                          },
-                                          "pauseValidation": [Function],
-                                          "registerField": [Function],
-                                          "reset": [Function],
-                                          "resetFieldState": [Function],
-                                          "restart": [Function],
-                                          "resumeValidation": [Function],
-                                          "setConfig": [Function],
-                                          "submit": [Function],
-                                          "subscribe": [Function],
-                                        },
-                                        "hasSubmitErrors": false,
-                                        "hasValidationErrors": false,
-                                        "initialValues": Object {
-                                          "memory": 2,
-                                        },
-                                        "invalid": false,
-                                        "modified": Object {
-                                          "memory": false,
-                                        },
-                                        "modifiedSinceLastSubmit": false,
-                                        "pristine": true,
-                                        "submitError": undefined,
-                                        "submitErrors": undefined,
-                                        "submitFailed": false,
-                                        "submitSucceeded": false,
-                                        "submitting": false,
-                                        "touched": Object {
-                                          "memory": false,
-                                        },
-                                        "valid": true,
-                                        "validating": false,
-                                        "values": Object {
-                                          "memory": 2,
-                                        },
-                                        "visited": Object {
-                                          "memory": false,
-                                        },
-                                      }
-                                    }
-                                    onCancel={[Function]}
-                                    onReset={[Function]}
-                                    resetLabel="Reset"
-                                    schema={
-                                      Object {
-                                        "fields": Array [
+                                      <SingleField
+                                        component="text-field"
+                                        id="memory"
+                                        initialValue={2}
+                                        isRequired={true}
+                                        key="memory"
+                                        label="Memory (GiB)"
+                                        name="memory"
+                                        validate={
                                           Array [
+                                            Object {
+                                              "type": "required",
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        <FormConditionWrapper
+                                          conditionMapper={Object {}}
+                                          field={
                                             Object {
                                               "component": "text-field",
                                               "id": "memory",
@@ -724,105 +486,369 @@ exports[`vm resize form component should render a resize form 1`] = `
                                                   "type": "required",
                                                 },
                                               ],
-                                            },
-                                          ],
-                                          Object {
-                                            "component": "spy-field",
-                                            "initialize": undefined,
-                                            "name": "spy-field",
-                                          },
-                                        ],
-                                      }
-                                    }
-                                    submitLabel="Save"
-                                  >
-                                    <ButtonGroup>
-                                      <ButtonSet
-                                        className=""
-                                      >
-                                        <div
-                                          className="bx--btn-set"
+                                            }
+                                          }
                                         >
-                                          <Button
-                                            buttonType="submit"
-                                            disabled={true}
-                                            key="form-submit"
-                                            label="Save"
-                                            type="submit"
-                                            variant="primary"
-                                          >
-                                            <Button
-                                              disabled={true}
-                                              kind="primary"
-                                              type="submit"
-                                              variant="primary"
+                                          <FormFieldHideWrapper>
+                                            <TextField
+                                              component="text-field"
+                                              id="memory"
+                                              initialValue={2}
+                                              isRequired={true}
+                                              label="Memory (GiB)"
+                                              name="memory"
+                                              validate={
+                                                Array [
+                                                  Object {
+                                                    "type": "required",
+                                                  },
+                                                ]
+                                              }
                                             >
-                                              <button
-                                                aria-describedby={null}
-                                                aria-pressed={null}
-                                                className="bx--btn bx--btn--primary bx--btn--disabled"
-                                                disabled={true}
+                                              <TextInput
+                                                id="memory"
+                                                invalid={false}
+                                                invalidText=""
+                                                key="memory"
+                                                labelText={
+                                                  <IsRequired>
+                                                    Memory (GiB)
+                                                  </IsRequired>
+                                                }
+                                                name="memory"
                                                 onBlur={[Function]}
-                                                onClick={[Function]}
+                                                onChange={[Function]}
                                                 onFocus={[Function]}
-                                                onMouseEnter={[Function]}
-                                                onMouseLeave={[Function]}
-                                                tabIndex={0}
-                                                type="submit"
-                                                variant="primary"
+                                                value={2}
+                                                warn={false}
+                                                warnText=""
                                               >
-                                                Save
-                                              </button>
-                                            </Button>
-                                          </Button>
-                                          <Button
-                                            buttonType="cancel"
-                                            key="form-cancel"
-                                            label="Cancel"
-                                            onClick={[Function]}
-                                            type="button"
-                                          >
-                                            <Button
-                                              kind="secondary"
-                                              onClick={[Function]}
-                                              type="button"
+                                                <div
+                                                  className="cds--form-item cds--text-input-wrapper"
+                                                >
+                                                  <div
+                                                    className="cds--text-input__label-wrapper"
+                                                  >
+                                                    <ForwardRef
+                                                      as="label"
+                                                      className="cds--label"
+                                                      htmlFor="memory"
+                                                    >
+                                                      <label
+                                                        className="cds--label"
+                                                        dir="auto"
+                                                        htmlFor="memory"
+                                                      >
+                                                        <IsRequired>
+                                                          <span
+                                                            aria-hidden="true"
+                                                            className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+                                                          >
+                                                            *
+                                                          </span>
+                                                          Memory (GiB)
+                                                        </IsRequired>
+                                                      </label>
+                                                    </ForwardRef>
+                                                  </div>
+                                                  <div
+                                                    className="cds--text-input__field-outer-wrapper"
+                                                  >
+                                                    <div
+                                                      className="cds--text-input__field-wrapper"
+                                                      data-invalid={null}
+                                                    >
+                                                      <input
+                                                        className="cds--text-input"
+                                                        disabled={false}
+                                                        id="memory"
+                                                        name="memory"
+                                                        onBlur={[Function]}
+                                                        onChange={[Function]}
+                                                        onClick={[Function]}
+                                                        onFocus={[Function]}
+                                                        type="text"
+                                                        value={2}
+                                                      />
+                                                      <span
+                                                        aria-atomic="true"
+                                                        aria-live="assertive"
+                                                        className="cds--text-input__counter-alert"
+                                                        role="alert"
+                                                      />
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </TextInput>
+                                            </TextField>
+                                          </FormFieldHideWrapper>
+                                        </FormConditionWrapper>
+                                      </SingleField>
+                                      <SingleField
+                                        component="spy-field"
+                                        key="spy-field"
+                                        name="spy-field"
+                                      >
+                                        <FormConditionWrapper
+                                          conditionMapper={Object {}}
+                                          field={
+                                            Object {
+                                              "component": "spy-field",
+                                              "initialize": undefined,
+                                              "name": "spy-field",
+                                            }
+                                          }
+                                        >
+                                          <FormFieldHideWrapper>
+                                            <SpyField
+                                              component="spy-field"
+                                              name="spy-field"
                                             >
-                                              <button
-                                                aria-describedby={null}
-                                                aria-pressed={null}
-                                                className="bx--btn bx--btn--secondary"
-                                                disabled={false}
-                                                onBlur={[Function]}
-                                                onClick={[Function]}
-                                                onFocus={[Function]}
-                                                onMouseEnter={[Function]}
-                                                onMouseLeave={[Function]}
-                                                tabIndex={0}
-                                                type="button"
+                                              <FormSpy
+                                                onChange={[Function]}
+                                                subscription={
+                                                  Object {
+                                                    "pristine": true,
+                                                    "valid": true,
+                                                  }
+                                                }
+                                              />
+                                            </SpyField>
+                                          </FormFieldHideWrapper>
+                                        </FormConditionWrapper>
+                                      </SingleField>
+                                      <FormSpy>
+                                        <FormControls
+                                          Button={[Function]}
+                                          ButtonGroup={[Function]}
+                                          FormSpy={[Function]}
+                                          buttonOrder={
+                                            Array [
+                                              "submit",
+                                              "reset",
+                                              "cancel",
+                                            ]
+                                          }
+                                          canReset={false}
+                                          cancelLabel="Cancel"
+                                          disableSubmit={true}
+                                          formFields={
+                                            Array [
+                                              Array [
+                                                <SingleField
+                                                  component="text-field"
+                                                  id="memory"
+                                                  initialValue={2}
+                                                  isRequired={true}
+                                                  label="Memory (GiB)"
+                                                  name="memory"
+                                                  validate={
+                                                    Array [
+                                                      Object {
+                                                        "type": "required",
+                                                      },
+                                                    ]
+                                                  }
+                                                />,
+                                              ],
+                                              <SingleField
+                                                component="spy-field"
+                                                name="spy-field"
+                                              />,
+                                            ]
+                                          }
+                                          formSpyProps={
+                                            Object {
+                                              "active": undefined,
+                                              "dirty": false,
+                                              "dirtyFields": Object {},
+                                              "dirtyFieldsSinceLastSubmit": Object {
+                                                "memory": true,
+                                              },
+                                              "dirtySinceLastSubmit": false,
+                                              "error": undefined,
+                                              "errors": Object {},
+                                              "form": Object {
+                                                "batch": [Function],
+                                                "blur": [Function],
+                                                "change": [Function],
+                                                "destroyOnUnregister": false,
+                                                "focus": [Function],
+                                                "getFieldState": [Function],
+                                                "getRegisteredFields": [Function],
+                                                "getState": [Function],
+                                                "initialize": [Function],
+                                                "isValidationPaused": [Function],
+                                                "mutators": Object {
+                                                  "concat": [Function],
+                                                  "insert": [Function],
+                                                  "move": [Function],
+                                                  "pop": [Function],
+                                                  "push": [Function],
+                                                  "remove": [Function],
+                                                  "removeBatch": [Function],
+                                                  "shift": [Function],
+                                                  "swap": [Function],
+                                                  "unshift": [Function],
+                                                  "update": [Function],
+                                                },
+                                                "pauseValidation": [Function],
+                                                "registerField": [Function],
+                                                "reset": [Function],
+                                                "resetFieldState": [Function],
+                                                "restart": [Function],
+                                                "resumeValidation": [Function],
+                                                "setConfig": [Function],
+                                                "submit": [Function],
+                                                "subscribe": [Function],
+                                              },
+                                              "hasSubmitErrors": false,
+                                              "hasValidationErrors": false,
+                                              "initialValues": Object {
+                                                "memory": 2,
+                                              },
+                                              "invalid": false,
+                                              "modified": Object {
+                                                "memory": false,
+                                              },
+                                              "modifiedSinceLastSubmit": false,
+                                              "pristine": true,
+                                              "submitError": undefined,
+                                              "submitErrors": undefined,
+                                              "submitFailed": false,
+                                              "submitSucceeded": false,
+                                              "submitting": false,
+                                              "touched": Object {
+                                                "memory": false,
+                                              },
+                                              "valid": true,
+                                              "validating": false,
+                                              "values": Object {
+                                                "memory": 2,
+                                              },
+                                              "visited": Object {
+                                                "memory": false,
+                                              },
+                                            }
+                                          }
+                                          onCancel={[Function]}
+                                          onReset={[Function]}
+                                          resetLabel="Reset"
+                                          schema={
+                                            Object {
+                                              "fields": Array [
+                                                Array [
+                                                  Object {
+                                                    "component": "text-field",
+                                                    "id": "memory",
+                                                    "initialValue": 2,
+                                                    "isRequired": true,
+                                                    "label": "Memory (GiB)",
+                                                    "name": "memory",
+                                                    "validate": Array [
+                                                      Object {
+                                                        "type": "required",
+                                                      },
+                                                    ],
+                                                  },
+                                                ],
+                                                Object {
+                                                  "component": "spy-field",
+                                                  "initialize": undefined,
+                                                  "name": "spy-field",
+                                                },
+                                              ],
+                                            }
+                                          }
+                                          submitLabel="Save"
+                                        >
+                                          <ButtonGroup>
+                                            <ButtonSet
+                                              className=""
+                                            >
+                                              <div
+                                                className="cds--btn-set"
                                               >
-                                                Cancel
-                                              </button>
-                                            </Button>
-                                          </Button>
-                                        </div>
-                                      </ButtonSet>
-                                    </ButtonGroup>
-                                  </FormControls>
-                                </FormSpy>
-                                 
-                              </form>
-                            </Form>
-                          </Form>
-                        </FormTemplate>
-                      </WrappedFormTemplate>
-                    </Component>
-                  </ReactFinalForm>
-                </FormRenderer>
-              </MiqFormRenderer>
-            </Connect(MiqFormRenderer)>
+                                                <Button
+                                                  buttonType="submit"
+                                                  disabled={true}
+                                                  key="form-submit"
+                                                  label="Save"
+                                                  type="submit"
+                                                  variant="primary"
+                                                >
+                                                  <Button
+                                                    disabled={true}
+                                                    kind="primary"
+                                                    type="submit"
+                                                    variant="primary"
+                                                  >
+                                                    <ForwardRef(ButtonBase)
+                                                      disabled={true}
+                                                      kind="primary"
+                                                      type="submit"
+                                                      variant="primary"
+                                                    >
+                                                      <button
+                                                        className="cds--btn cds--btn--primary cds--btn--disabled"
+                                                        disabled={true}
+                                                        type="submit"
+                                                        variant="primary"
+                                                      >
+                                                        Save
+                                                      </button>
+                                                    </ForwardRef(ButtonBase)>
+                                                  </Button>
+                                                </Button>
+                                                <Button
+                                                  buttonType="cancel"
+                                                  key="form-cancel"
+                                                  label="Cancel"
+                                                  onClick={[Function]}
+                                                  type="button"
+                                                >
+                                                  <Button
+                                                    kind="secondary"
+                                                    onClick={[Function]}
+                                                    type="button"
+                                                  >
+                                                    <ForwardRef(ButtonBase)
+                                                      kind="secondary"
+                                                      onClick={[Function]}
+                                                      type="button"
+                                                    >
+                                                      <button
+                                                        className="cds--btn cds--btn--secondary"
+                                                        disabled={false}
+                                                        onClick={[Function]}
+                                                        type="button"
+                                                      >
+                                                        Cancel
+                                                      </button>
+                                                    </ForwardRef(ButtonBase)>
+                                                  </Button>
+                                                </Button>
+                                              </div>
+                                            </ButtonSet>
+                                          </ButtonGroup>
+                                        </FormControls>
+                                      </FormSpy>
+                                    </form>
+                                  </Form>
+                                </Form>
+                              </FormTemplate>
+                            </WrappedFormTemplate>
+                          </Component>
+                        </ReactFinalForm>
+                      </FormRenderer>
+                    </MiqFormRenderer>
+                  </Connect(MiqFormRenderer)>
+                </div>
+              </ForwardRef>
+            </ForwardRef>
           </div>
         </GridSettings>
-      </FlexGrid>
+      </ForwardRef>
     </Grid>
   </VmResizeForm>
 </Provider>

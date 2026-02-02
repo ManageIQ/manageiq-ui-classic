@@ -7,7 +7,6 @@ exports[`visual settings form matches the snapshot 1`] = `
   <Loading
     active={true}
     className="loading"
-    description="Active loading indicator"
     small={true}
     withOverlay={false}
   />
