@@ -22,7 +22,6 @@ exports[`Select component should match the snapshot 1`] = `
   <Select
     component="select"
     label="Choose"
-    loadingMessage="Loading..."
     name="selectField"
     options={
       Array [
@@ -96,14 +95,10 @@ exports[`Select component should match the snapshot 1`] = `
       >
         <Select
           className=""
-          disabled={false}
-          helperText=""
           id="selectField"
-          inline={false}
           invalid={false}
           invalidText=""
           labelText="Choose"
-          light={false}
           name="selectField"
           onBlur={[Function]}
           onChange={[Function]}
@@ -111,40 +106,50 @@ exports[`Select component should match the snapshot 1`] = `
           value=""
         >
           <div
-            className="bx--form-item"
+            className="cds--form-item"
           >
             <div
-              className="bx--select"
+              className="cds--select"
             >
-              <label
-                className="bx--label"
+              <ForwardRef
+                as="label"
+                className="cds--label"
                 htmlFor="selectField"
               >
-                Choose
-              </label>
+                <label
+                  className="cds--label"
+                  dir="auto"
+                  htmlFor="selectField"
+                >
+                  Choose
+                </label>
+              </ForwardRef>
               <div
-                className="bx--select-input__wrapper"
+                className="cds--select-input__wrapper"
                 data-invalid={null}
+                onBlur={[Function]}
+                onFocus={[Function]}
               >
                 <select
-                  className="bx--select-input"
+                  className="cds--select-input"
                   id="selectField"
                   name="selectField"
                   onBlur={[Function]}
                   onChange={[Function]}
                   onFocus={[Function]}
+                  onKeyDown={[Function]}
+                  onMouseDown={[Function]}
+                  title="Dogs"
                   value=""
                 >
                   <SelectItem
-                    disabled={false}
-                    hidden={false}
                     key="1"
                     label="Dogs"
                     text="Dogs"
                     value="1"
                   >
                     <option
-                      className="bx--select-option"
+                      className="cds--select-option"
                       disabled={false}
                       hidden={false}
                       label="Dogs"
@@ -154,15 +159,13 @@ exports[`Select component should match the snapshot 1`] = `
                     </option>
                   </SelectItem>
                   <SelectItem
-                    disabled={false}
-                    hidden={false}
                     key="2"
                     label="Cats"
                     text="Cats"
                     value="2"
                   >
                     <option
-                      className="bx--select-option"
+                      className="cds--select-option"
                       disabled={false}
                       hidden={false}
                       label="Cats"
@@ -172,21 +175,20 @@ exports[`Select component should match the snapshot 1`] = `
                     </option>
                   </SelectItem>
                 </select>
-                <ForwardRef(ChevronDown16)
-                  className="bx--select__arrow"
+                <ForwardRef(ChevronDown)
+                  className="cds--select__arrow"
                 >
                   <Icon
-                    className="bx--select__arrow"
+                    className="cds--select__arrow"
                     fill="currentColor"
                     height={16}
-                    preserveAspectRatio="xMidYMid meet"
                     viewBox="0 0 16 16"
                     width={16}
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <svg
                       aria-hidden={true}
-                      className="bx--select__arrow"
+                      className="cds--select__arrow"
                       fill="currentColor"
                       focusable="false"
                       height={16}
@@ -196,11 +198,11 @@ exports[`Select component should match the snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                        d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                       />
                     </svg>
                   </Icon>
-                </ForwardRef(ChevronDown16)>
+                </ForwardRef(ChevronDown)>
               </div>
             </div>
           </div>

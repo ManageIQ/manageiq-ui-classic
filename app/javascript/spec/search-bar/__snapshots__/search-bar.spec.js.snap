@@ -30,12 +30,8 @@ exports[`Search Bar component should render the search bar component 1`] = `
       hasIconOnly={true}
       iconDescription="Search"
       onClick={[Function]}
-      renderIcon={
-        Object {
-          "$$typeof": Symbol(react.forward_ref),
-          "render": [Function],
-        }
-      }
+      renderIcon={[Function]}
+      size="md"
       tooltipPosition="bottom"
     />
   </Form>
@@ -47,12 +43,8 @@ exports[`Search Bar component should render the search bar component 1`] = `
     iconDescription="Advanced Search"
     id="adv_search"
     onClick={[Function]}
-    renderIcon={
-      Object {
-        "$$typeof": Symbol(react.forward_ref),
-        "render": [Function],
-      }
-    }
+    renderIcon={[Function]}
+    size="md"
     title={"Advanced Search"}
     tooltipAlignment="end"
     tooltipPosition="bottom"
@@ -91,12 +83,8 @@ exports[`Search Bar component should render the search bar component with advanc
       hasIconOnly={true}
       iconDescription="Search"
       onClick={[Function]}
-      renderIcon={
-        Object {
-          "$$typeof": Symbol(react.forward_ref),
-          "render": [Function],
-        }
-      }
+      renderIcon={[Function]}
+      size="md"
       tooltipPosition="bottom"
     />
   </Form>
@@ -108,12 +96,8 @@ exports[`Search Bar component should render the search bar component with advanc
     iconDescription="Advanced Search"
     id="adv_search"
     onClick={[Function]}
-    renderIcon={
-      Object {
-        "$$typeof": Symbol(react.forward_ref),
-        "render": [Function],
-      }
-    }
+    renderIcon={[Function]}
+    size="md"
     title={"Advanced Search"}
     tooltipAlignment="end"
     tooltipPosition="bottom"
@@ -152,12 +136,8 @@ exports[`Search Bar component should render the search bar component with search
       iconDescription="Clear"
       kind="secondary"
       onClick={[Function]}
-      renderIcon={
-        Object {
-          "$$typeof": Symbol(react.forward_ref),
-          "render": [Function],
-        }
-      }
+      renderIcon={[Function]}
+      size="md"
       tooltipPosition="bottom"
       type="reset"
     />
@@ -167,12 +147,8 @@ exports[`Search Bar component should render the search bar component with search
       hasIconOnly={true}
       iconDescription="Search"
       onClick={[Function]}
-      renderIcon={
-        Object {
-          "$$typeof": Symbol(react.forward_ref),
-          "render": [Function],
-        }
-      }
+      renderIcon={[Function]}
+      size="md"
       tooltipPosition="bottom"
     />
   </Form>
@@ -184,12 +160,8 @@ exports[`Search Bar component should render the search bar component with search
     iconDescription="Advanced Search"
     id="adv_search"
     onClick={[Function]}
-    renderIcon={
-      Object {
-        "$$typeof": Symbol(react.forward_ref),
-        "render": [Function],
-      }
-    }
+    renderIcon={[Function]}
+    size="md"
     title={"Advanced Search"}
     tooltipAlignment="end"
     tooltipPosition="bottom"
