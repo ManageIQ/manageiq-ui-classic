@@ -2,202 +2,208 @@
 
 exports[`Flavor form component matches the snapshot 1`] = `
 <Grid>
-  <Connect(MiqFormRenderer)
-    buttonsLabels={
-      Object {
-        "submitLabel": "Add",
+  <ForwardRef
+    lg={16}
+    md={8}
+    sm={4}
+  >
+    <Connect(MiqFormRenderer)
+      buttonsLabels={
+        Object {
+          "submitLabel": "Add",
+        }
       }
-    }
-    onCancel={[Function]}
-    onSubmit={[Function]}
-    schema={
-      Object {
-        "fields": Array [
-          Object {
-            "component": "select",
-            "id": "emsId",
-            "isRequired": true,
-            "isSearchable": true,
-            "labelText": "Provider",
-            "loadOptions": [Function],
-            "name": "emsId",
-            "onChange": [Function],
-            "simpleValue": true,
-            "validate": Array [
-              Object {
-                "type": "required",
-              },
-            ],
-          },
-          Object {
-            "component": "text-field",
-            "id": "name",
-            "isRequired": true,
-            "label": "Name",
-            "name": "name",
-            "validate": Array [
-              Object {
-                "type": "required",
-              },
-            ],
-          },
-          Object {
-            "component": "text-field",
-            "dataType": "integer",
-            "id": "ram",
-            "isRequired": true,
-            "label": "RAM size (in MB)",
-            "name": "ram",
-            "type": "number",
-            "validate": Array [
-              Object {
-                "type": "required",
-              },
-              Object {
-                "message": "Must be an integer",
-                "pattern": "^[-+]?[0-9]\\\\d*$",
-                "type": "pattern",
-              },
-              Object {
-                "message": "Must be greater than or equal to 1",
-                "type": "min-number-value",
-                "value": 1,
-              },
-            ],
-          },
-          Object {
-            "component": "text-field",
-            "dataType": "integer",
-            "id": "vcpus",
-            "isRequired": true,
-            "label": "VCPUs",
-            "name": "vcpus",
-            "type": "number",
-            "validate": Array [
-              Object {
-                "type": "required",
-              },
-              Object {
-                "message": "Must be an integer",
-                "pattern": "^[-+]?[0-9]\\\\d*$",
-                "type": "pattern",
-              },
-              Object {
-                "message": "Must be greater than or equal to 1",
-                "type": "min-number-value",
-                "value": 1,
-              },
-            ],
-          },
-          Object {
-            "component": "text-field",
-            "dataType": "integer",
-            "id": "disk",
-            "isRequired": true,
-            "label": "Disk size in GB",
-            "name": "disk",
-            "type": "number",
-            "validate": Array [
-              Object {
-                "type": "required",
-              },
-              Object {
-                "message": "Must be an integer",
-                "pattern": "^[-+]?[0-9]\\\\d*$",
-                "type": "pattern",
-              },
-              Object {
-                "message": "Must be greater than or equal to 1",
-                "type": "min-number-value",
-                "value": 1,
-              },
-            ],
-          },
-          Object {
-            "component": "text-field",
-            "dataType": "integer",
-            "id": "swap",
-            "isRequired": true,
-            "label": "Swap size (in MB)",
-            "name": "swap",
-            "type": "number",
-            "validate": Array [
-              Object {
-                "type": "required",
-              },
-              Object {
-                "message": "Must be an integer",
-                "pattern": "^[-+]?[0-9]\\\\d*$",
-                "type": "pattern",
-              },
-              Object {
-                "message": "Must be greater than or equal to 0",
-                "type": "min-number-value",
-                "value": 1,
-              },
-            ],
-          },
-          Object {
-            "component": "text-field",
-            "id": "rxtx_factor",
-            "initialValue": 1,
-            "isRequired": true,
-            "label": "RXTX factor",
-            "name": "rxtx_factor",
-            "type": "number",
-            "validate": Array [
-              Object {
-                "type": "required",
-              },
-              Object {
-                "message": "Must be an integer",
-                "pattern": "^[-+]?[0-9]\\\\d*$",
-                "type": "pattern",
-              },
-              Object {
-                "message": "Must be greater than or equal to 0",
-                "type": "min-number-value",
-                "value": 1,
-              },
-            ],
-          },
-          Object {
-            "component": "switch",
-            "id": "is_public",
-            "initialValue": true,
-            "label": "Public",
-            "name": "is_public",
-            "offText": "No",
-            "onText": "Yes",
-          },
-          Object {
-            "component": "select",
-            "condition": Object {
-              "and": Array [
+      onCancel={[Function]}
+      onSubmit={[Function]}
+      schema={
+        Object {
+          "fields": Array [
+            Object {
+              "component": "select",
+              "id": "emsId",
+              "isRequired": true,
+              "isSearchable": true,
+              "labelText": "Provider",
+              "loadOptions": [Function],
+              "name": "emsId",
+              "onChange": [Function],
+              "simpleValue": true,
+              "validate": Array [
                 Object {
-                  "is": false,
-                  "when": "is_public",
-                },
-                Object {
-                  "isNotEmpty": true,
-                  "when": "emsId",
+                  "type": "required",
                 },
               ],
             },
-            "id": "cloud_tenant_refs",
-            "isClearable": true,
-            "isMulti": true,
-            "isSearchable": true,
-            "key": "cloud_tenant_refs-undefined",
-            "label": "Cloud Tenants",
-            "loadOptions": [Function],
-            "name": "cloud_tenant_refs",
-            "placeholder": "Nothing selected",
-            "simpleValue": true,
-          },
-        ],
+            Object {
+              "component": "text-field",
+              "id": "name",
+              "isRequired": true,
+              "label": "Name",
+              "name": "name",
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+              ],
+            },
+            Object {
+              "component": "text-field",
+              "dataType": "integer",
+              "id": "ram",
+              "isRequired": true,
+              "label": "RAM size (in MB)",
+              "name": "ram",
+              "type": "number",
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+                Object {
+                  "message": "Must be an integer",
+                  "pattern": "^[-+]?[0-9]\\\\d*$",
+                  "type": "pattern",
+                },
+                Object {
+                  "message": "Must be greater than or equal to 1",
+                  "type": "min-number-value",
+                  "value": 1,
+                },
+              ],
+            },
+            Object {
+              "component": "text-field",
+              "dataType": "integer",
+              "id": "vcpus",
+              "isRequired": true,
+              "label": "VCPUs",
+              "name": "vcpus",
+              "type": "number",
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+                Object {
+                  "message": "Must be an integer",
+                  "pattern": "^[-+]?[0-9]\\\\d*$",
+                  "type": "pattern",
+                },
+                Object {
+                  "message": "Must be greater than or equal to 1",
+                  "type": "min-number-value",
+                  "value": 1,
+                },
+              ],
+            },
+            Object {
+              "component": "text-field",
+              "dataType": "integer",
+              "id": "disk",
+              "isRequired": true,
+              "label": "Disk size in GB",
+              "name": "disk",
+              "type": "number",
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+                Object {
+                  "message": "Must be an integer",
+                  "pattern": "^[-+]?[0-9]\\\\d*$",
+                  "type": "pattern",
+                },
+                Object {
+                  "message": "Must be greater than or equal to 1",
+                  "type": "min-number-value",
+                  "value": 1,
+                },
+              ],
+            },
+            Object {
+              "component": "text-field",
+              "dataType": "integer",
+              "id": "swap",
+              "isRequired": true,
+              "label": "Swap size (in MB)",
+              "name": "swap",
+              "type": "number",
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+                Object {
+                  "message": "Must be an integer",
+                  "pattern": "^[-+]?[0-9]\\\\d*$",
+                  "type": "pattern",
+                },
+                Object {
+                  "message": "Must be greater than or equal to 0",
+                  "type": "min-number-value",
+                  "value": 1,
+                },
+              ],
+            },
+            Object {
+              "component": "text-field",
+              "id": "rxtx_factor",
+              "initialValue": 1,
+              "isRequired": true,
+              "label": "RXTX factor",
+              "name": "rxtx_factor",
+              "type": "number",
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+                Object {
+                  "message": "Must be an integer",
+                  "pattern": "^[-+]?[0-9]\\\\d*$",
+                  "type": "pattern",
+                },
+                Object {
+                  "message": "Must be greater than or equal to 0",
+                  "type": "min-number-value",
+                  "value": 1,
+                },
+              ],
+            },
+            Object {
+              "component": "switch",
+              "id": "is_public",
+              "initialValue": true,
+              "label": "Public",
+              "name": "is_public",
+              "offText": "No",
+              "onText": "Yes",
+            },
+            Object {
+              "component": "select",
+              "condition": Object {
+                "and": Array [
+                  Object {
+                    "is": false,
+                    "when": "is_public",
+                  },
+                  Object {
+                    "isNotEmpty": true,
+                    "when": "emsId",
+                  },
+                ],
+              },
+              "id": "cloud_tenant_refs",
+              "isClearable": true,
+              "isMulti": true,
+              "isSearchable": true,
+              "key": "cloud_tenant_refs-undefined",
+              "label": "Cloud Tenants",
+              "loadOptions": [Function],
+              "name": "cloud_tenant_refs",
+              "placeholder": "Nothing selected",
+              "simpleValue": true,
+            },
+          ],
+        }
       }
-    }
-  />
+    />
+  </ForwardRef>
 </Grid>
 `;
