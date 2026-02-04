@@ -81,7 +81,7 @@ describe('<ServiceDialogFromOt />', () => {
       await new Promise((resolve) => setTimeout(resolve, 500));
 
       wrapper.update();
-      expect(wrapper.find('button.bx--btn--primary').props().disabled).toEqual(true);
+      expect(wrapper.find('button.cds--btn--primary').props().disabled).toEqual(true);
     });
   });
 });

@@ -7,7 +7,7 @@ import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import ToastList from '../../components/toast-list/toast-list';
-import { MARK_NOTIFICATION_READ, REMOVE_TOAST_NOTIFICATION } from '../../miq-redux/actions/notifications-actions';
+import { MARK_NOTIFICATION_READ } from '../../miq-redux/actions/notifications-actions';
 import notifications from '../fixtures/notifications.json';
 
 describe('Toast list tests', () => {
@@ -49,7 +49,7 @@ describe('Toast list tests', () => {
   it('should dispatch markNotificationRead after click on close button', async(done) => {
     fetchMock.postOnce('/api/notifications/', {
       action: 'mark_all_seen',
-      resources: [{ id: '10000000003625' }],
+      resources: [{ id: '10000000003624' }],
     });
     const store = mockStore(initialState);
     const wrapper = mount(
@@ -58,10 +58,10 @@ describe('Toast list tests', () => {
       </Provider>,
     );
     await act(async() => {
-      wrapper.find('svg.bx--toast-notification__close-icon').first().simulate('click');
+      wrapper.find('svg.cds--toast-notification__close-icon').first().simulate('click');
     });
     const expectedPayload = {
-      payload: '10000000003625',
+      payload: '10000000003624',
       type: MARK_NOTIFICATION_READ,
     };
     expect(store.getActions()).toEqual([expectedPayload]);
