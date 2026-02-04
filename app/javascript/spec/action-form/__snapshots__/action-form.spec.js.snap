@@ -274,16 +274,19 @@ exports[`Action Form Component should render adding a new action 1`] = `
                   "fields": Array [
                     Object {
                       "AddAllButtonProps": Object {
-                        "size": "small",
+                        "size": "sm",
                       },
                       "AddButtonProps": Object {
-                        "size": "small",
+                        "size": "sm",
+                      },
+                      "ButtonColumnProps": Object {
+                        "className": "miq-common-dual-list-buttons-column",
                       },
                       "RemoveAllButtonProps": Object {
-                        "size": "small",
+                        "size": "sm",
                       },
                       "RemoveButtonProps": Object {
-                        "size": "small",
+                        "size": "sm",
                       },
                       "allToRight": false,
                       "component": "dual-list-select",
@@ -396,10 +399,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                   "fields": Array [
                     Object {
                       "AddButtonProps": Object {
-                        "size": "small",
+                        "size": "sm",
                       },
                       "RemoveButtonProps": Object {
-                        "size": "small",
+                        "size": "sm",
                       },
                       "component": "field-array",
                       "fieldKey": "field_array",
@@ -678,10 +681,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                   "fields": Array [
                     Object {
                       "AddButtonProps": Object {
-                        "size": "small",
+                        "size": "sm",
                       },
                       "RemoveButtonProps": Object {
-                        "size": "small",
+                        "size": "sm",
                       },
                       "component": "field-array",
                       "fieldKey": "field_array",
@@ -992,16 +995,19 @@ exports[`Action Form Component should render adding a new action 1`] = `
                     "fields": Array [
                       Object {
                         "AddAllButtonProps": Object {
-                          "size": "small",
+                          "size": "sm",
                         },
                         "AddButtonProps": Object {
-                          "size": "small",
+                          "size": "sm",
+                        },
+                        "ButtonColumnProps": Object {
+                          "className": "miq-common-dual-list-buttons-column",
                         },
                         "RemoveAllButtonProps": Object {
-                          "size": "small",
+                          "size": "sm",
                         },
                         "RemoveButtonProps": Object {
-                          "size": "small",
+                          "size": "sm",
                         },
                         "allToRight": false,
                         "component": "dual-list-select",
@@ -1114,10 +1120,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                     "fields": Array [
                       Object {
                         "AddButtonProps": Object {
-                          "size": "small",
+                          "size": "sm",
                         },
                         "RemoveButtonProps": Object {
-                          "size": "small",
+                          "size": "sm",
                         },
                         "component": "field-array",
                         "fieldKey": "field_array",
@@ -1396,10 +1402,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                     "fields": Array [
                       Object {
                         "AddButtonProps": Object {
-                          "size": "small",
+                          "size": "sm",
                         },
                         "RemoveButtonProps": Object {
-                          "size": "small",
+                          "size": "sm",
                         },
                         "component": "field-array",
                         "fieldKey": "field_array",
@@ -1526,7 +1532,6 @@ exports[`Action Form Component should render adding a new action 1`] = `
       >
         <FormRenderer
           FormTemplate={[Function]}
-          clearOnUnmount={false}
           componentMapper={
             Object {
               "checkbox": [Function],
@@ -1561,7 +1566,6 @@ exports[`Action Form Component should render adding a new action 1`] = `
             }
           }
           dispatch={[Function]}
-          initialValues={Object {}}
           onCancel={[Function]}
           onReset={[Function]}
           onSubmit={[Function]}
@@ -1703,16 +1707,19 @@ exports[`Action Form Component should render adding a new action 1`] = `
                       "fields": Array [
                         Object {
                           "AddAllButtonProps": Object {
-                            "size": "small",
+                            "size": "sm",
                           },
                           "AddButtonProps": Object {
-                            "size": "small",
+                            "size": "sm",
+                          },
+                          "ButtonColumnProps": Object {
+                            "className": "miq-common-dual-list-buttons-column",
                           },
                           "RemoveAllButtonProps": Object {
-                            "size": "small",
+                            "size": "sm",
                           },
                           "RemoveButtonProps": Object {
-                            "size": "small",
+                            "size": "sm",
                           },
                           "allToRight": false,
                           "component": "dual-list-select",
@@ -1825,10 +1832,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                       "fields": Array [
                         Object {
                           "AddButtonProps": Object {
-                            "size": "small",
+                            "size": "sm",
                           },
                           "RemoveButtonProps": Object {
-                            "size": "small",
+                            "size": "sm",
                           },
                           "component": "field-array",
                           "fieldKey": "field_array",
@@ -2107,10 +2114,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                       "fields": Array [
                         Object {
                           "AddButtonProps": Object {
-                            "size": "small",
+                            "size": "sm",
                           },
                           "RemoveButtonProps": Object {
-                            "size": "small",
+                            "size": "sm",
                           },
                           "component": "field-array",
                           "fieldKey": "field_array",
@@ -2411,16 +2418,19 @@ exports[`Action Form Component should render adding a new action 1`] = `
                           "fields": Array [
                             Object {
                               "AddAllButtonProps": Object {
-                                "size": "small",
+                                "size": "sm",
                               },
                               "AddButtonProps": Object {
-                                "size": "small",
+                                "size": "sm",
+                              },
+                              "ButtonColumnProps": Object {
+                                "className": "miq-common-dual-list-buttons-column",
                               },
                               "RemoveAllButtonProps": Object {
-                                "size": "small",
+                                "size": "sm",
                               },
                               "RemoveButtonProps": Object {
-                                "size": "small",
+                                "size": "sm",
                               },
                               "allToRight": false,
                               "component": "dual-list-select",
@@ -2533,10 +2543,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                           "fields": Array [
                             Object {
                               "AddButtonProps": Object {
-                                "size": "small",
+                                "size": "sm",
                               },
                               "RemoveButtonProps": Object {
-                                "size": "small",
+                                "size": "sm",
                               },
                               "component": "field-array",
                               "fieldKey": "field_array",
@@ -2815,10 +2825,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                           "fields": Array [
                             Object {
                               "AddButtonProps": Object {
-                                "size": "small",
+                                "size": "sm",
                               },
                               "RemoveButtonProps": Object {
-                                "size": "small",
+                                "size": "sm",
                               },
                               "component": "field-array",
                               "fieldKey": "field_array",
@@ -3083,16 +3093,19 @@ exports[`Action Form Component should render adding a new action 1`] = `
                           "fields": Array [
                             Object {
                               "AddAllButtonProps": Object {
-                                "size": "small",
+                                "size": "sm",
                               },
                               "AddButtonProps": Object {
-                                "size": "small",
+                                "size": "sm",
+                              },
+                              "ButtonColumnProps": Object {
+                                "className": "miq-common-dual-list-buttons-column",
                               },
                               "RemoveAllButtonProps": Object {
-                                "size": "small",
+                                "size": "sm",
                               },
                               "RemoveButtonProps": Object {
-                                "size": "small",
+                                "size": "sm",
                               },
                               "allToRight": false,
                               "component": "dual-list-select",
@@ -3205,10 +3218,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                           "fields": Array [
                             Object {
                               "AddButtonProps": Object {
-                                "size": "small",
+                                "size": "sm",
                               },
                               "RemoveButtonProps": Object {
-                                "size": "small",
+                                "size": "sm",
                               },
                               "component": "field-array",
                               "fieldKey": "field_array",
@@ -3487,10 +3500,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                           "fields": Array [
                             Object {
                               "AddButtonProps": Object {
-                                "size": "small",
+                                "size": "sm",
                               },
                               "RemoveButtonProps": Object {
-                                "size": "small",
+                                "size": "sm",
                               },
                               "component": "field-array",
                               "fieldKey": "field_array",
@@ -3766,16 +3779,19 @@ exports[`Action Form Component should render adding a new action 1`] = `
                             "fields": Array [
                               Object {
                                 "AddAllButtonProps": Object {
-                                  "size": "small",
+                                  "size": "sm",
                                 },
                                 "AddButtonProps": Object {
-                                  "size": "small",
+                                  "size": "sm",
+                                },
+                                "ButtonColumnProps": Object {
+                                  "className": "miq-common-dual-list-buttons-column",
                                 },
                                 "RemoveAllButtonProps": Object {
-                                  "size": "small",
+                                  "size": "sm",
                                 },
                                 "RemoveButtonProps": Object {
-                                  "size": "small",
+                                  "size": "sm",
                                 },
                                 "allToRight": false,
                                 "component": "dual-list-select",
@@ -3888,10 +3904,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                             "fields": Array [
                               Object {
                                 "AddButtonProps": Object {
-                                  "size": "small",
+                                  "size": "sm",
                                 },
                                 "RemoveButtonProps": Object {
-                                  "size": "small",
+                                  "size": "sm",
                                 },
                                 "component": "field-array",
                                 "fieldKey": "field_array",
@@ -4170,10 +4186,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                             "fields": Array [
                               Object {
                                 "AddButtonProps": Object {
-                                  "size": "small",
+                                  "size": "sm",
                                 },
                                 "RemoveButtonProps": Object {
-                                  "size": "small",
+                                  "size": "sm",
                                 },
                                 "component": "field-array",
                                 "fieldKey": "field_array",
@@ -4444,16 +4460,19 @@ exports[`Action Form Component should render adding a new action 1`] = `
                             "fields": Array [
                               Object {
                                 "AddAllButtonProps": Object {
-                                  "size": "small",
+                                  "size": "sm",
                                 },
                                 "AddButtonProps": Object {
-                                  "size": "small",
+                                  "size": "sm",
+                                },
+                                "ButtonColumnProps": Object {
+                                  "className": "miq-common-dual-list-buttons-column",
                                 },
                                 "RemoveAllButtonProps": Object {
-                                  "size": "small",
+                                  "size": "sm",
                                 },
                                 "RemoveButtonProps": Object {
-                                  "size": "small",
+                                  "size": "sm",
                                 },
                                 "allToRight": false,
                                 "component": "dual-list-select",
@@ -4566,10 +4585,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                             "fields": Array [
                               Object {
                                 "AddButtonProps": Object {
-                                  "size": "small",
+                                  "size": "sm",
                                 },
                                 "RemoveButtonProps": Object {
-                                  "size": "small",
+                                  "size": "sm",
                                 },
                                 "component": "field-array",
                                 "fieldKey": "field_array",
@@ -4848,10 +4867,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                             "fields": Array [
                               Object {
                                 "AddButtonProps": Object {
-                                  "size": "small",
+                                  "size": "sm",
                                 },
                                 "RemoveButtonProps": Object {
-                                  "size": "small",
+                                  "size": "sm",
                                 },
                                 "component": "field-array",
                                 "fieldKey": "field_array",
@@ -5142,16 +5161,19 @@ exports[`Action Form Component should render adding a new action 1`] = `
                               "fields": Array [
                                 Object {
                                   "AddAllButtonProps": Object {
-                                    "size": "small",
+                                    "size": "sm",
                                   },
                                   "AddButtonProps": Object {
-                                    "size": "small",
+                                    "size": "sm",
+                                  },
+                                  "ButtonColumnProps": Object {
+                                    "className": "miq-common-dual-list-buttons-column",
                                   },
                                   "RemoveAllButtonProps": Object {
-                                    "size": "small",
+                                    "size": "sm",
                                   },
                                   "RemoveButtonProps": Object {
-                                    "size": "small",
+                                    "size": "sm",
                                   },
                                   "allToRight": false,
                                   "component": "dual-list-select",
@@ -5264,10 +5286,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                               "fields": Array [
                                 Object {
                                   "AddButtonProps": Object {
-                                    "size": "small",
+                                    "size": "sm",
                                   },
                                   "RemoveButtonProps": Object {
-                                    "size": "small",
+                                    "size": "sm",
                                   },
                                   "component": "field-array",
                                   "fieldKey": "field_array",
@@ -5546,10 +5568,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                               "fields": Array [
                                 Object {
                                   "AddButtonProps": Object {
-                                    "size": "small",
+                                    "size": "sm",
                                   },
                                   "RemoveButtonProps": Object {
-                                    "size": "small",
+                                    "size": "sm",
                                   },
                                   "component": "field-array",
                                   "fieldKey": "field_array",
@@ -5820,16 +5842,19 @@ exports[`Action Form Component should render adding a new action 1`] = `
                               "fields": Array [
                                 Object {
                                   "AddAllButtonProps": Object {
-                                    "size": "small",
+                                    "size": "sm",
                                   },
                                   "AddButtonProps": Object {
-                                    "size": "small",
+                                    "size": "sm",
+                                  },
+                                  "ButtonColumnProps": Object {
+                                    "className": "miq-common-dual-list-buttons-column",
                                   },
                                   "RemoveAllButtonProps": Object {
-                                    "size": "small",
+                                    "size": "sm",
                                   },
                                   "RemoveButtonProps": Object {
-                                    "size": "small",
+                                    "size": "sm",
                                   },
                                   "allToRight": false,
                                   "component": "dual-list-select",
@@ -5942,10 +5967,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                               "fields": Array [
                                 Object {
                                   "AddButtonProps": Object {
-                                    "size": "small",
+                                    "size": "sm",
                                   },
                                   "RemoveButtonProps": Object {
-                                    "size": "small",
+                                    "size": "sm",
                                   },
                                   "component": "field-array",
                                   "fieldKey": "field_array",
@@ -6224,10 +6249,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                               "fields": Array [
                                 Object {
                                   "AddButtonProps": Object {
-                                    "size": "small",
+                                    "size": "sm",
                                   },
                                   "RemoveButtonProps": Object {
-                                    "size": "small",
+                                    "size": "sm",
                                   },
                                   "component": "field-array",
                                   "fieldKey": "field_array",
@@ -6368,11 +6393,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                       onSubmit={[Function]}
                     >
                       <form
-                        className="bx--form form-0-2-3 form-react"
+                        className="cds--form form-0-2-3 form-react"
                         noValidate={true}
                         onSubmit={[Function]}
                       >
-                         
                         <SingleField
                           component="sub-form"
                           fields={
@@ -6509,16 +6533,19 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                 "fields": Array [
                                   Object {
                                     "AddAllButtonProps": Object {
-                                      "size": "small",
+                                      "size": "sm",
                                     },
                                     "AddButtonProps": Object {
-                                      "size": "small",
+                                      "size": "sm",
+                                    },
+                                    "ButtonColumnProps": Object {
+                                      "className": "miq-common-dual-list-buttons-column",
                                     },
                                     "RemoveAllButtonProps": Object {
-                                      "size": "small",
+                                      "size": "sm",
                                     },
                                     "RemoveButtonProps": Object {
-                                      "size": "small",
+                                      "size": "sm",
                                     },
                                     "allToRight": false,
                                     "component": "dual-list-select",
@@ -6631,10 +6658,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                 "fields": Array [
                                   Object {
                                     "AddButtonProps": Object {
-                                      "size": "small",
+                                      "size": "sm",
                                     },
                                     "RemoveButtonProps": Object {
-                                      "size": "small",
+                                      "size": "sm",
                                     },
                                     "component": "field-array",
                                     "fieldKey": "field_array",
@@ -6913,10 +6940,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                 "fields": Array [
                                   Object {
                                     "AddButtonProps": Object {
-                                      "size": "small",
+                                      "size": "sm",
                                     },
                                     "RemoveButtonProps": Object {
-                                      "size": "small",
+                                      "size": "sm",
                                     },
                                     "component": "field-array",
                                     "fieldKey": "field_array",
@@ -7039,6 +7066,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                           title="Basic Information"
                         >
                           <FormConditionWrapper
+                            conditionMapper={Object {}}
                             field={
                               Object {
                                 "component": "sub-form",
@@ -7175,16 +7203,19 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                     "fields": Array [
                                       Object {
                                         "AddAllButtonProps": Object {
-                                          "size": "small",
+                                          "size": "sm",
                                         },
                                         "AddButtonProps": Object {
-                                          "size": "small",
+                                          "size": "sm",
+                                        },
+                                        "ButtonColumnProps": Object {
+                                          "className": "miq-common-dual-list-buttons-column",
                                         },
                                         "RemoveAllButtonProps": Object {
-                                          "size": "small",
+                                          "size": "sm",
                                         },
                                         "RemoveButtonProps": Object {
-                                          "size": "small",
+                                          "size": "sm",
                                         },
                                         "allToRight": false,
                                         "component": "dual-list-select",
@@ -7297,10 +7328,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                     "fields": Array [
                                       Object {
                                         "AddButtonProps": Object {
-                                          "size": "small",
+                                          "size": "sm",
                                         },
                                         "RemoveButtonProps": Object {
-                                          "size": "small",
+                                          "size": "sm",
                                         },
                                         "component": "field-array",
                                         "fieldKey": "field_array",
@@ -7579,10 +7610,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                     "fields": Array [
                                       Object {
                                         "AddButtonProps": Object {
-                                          "size": "small",
+                                          "size": "sm",
                                         },
                                         "RemoveButtonProps": Object {
-                                          "size": "small",
+                                          "size": "sm",
                                         },
                                         "component": "field-array",
                                         "fieldKey": "field_array",
@@ -7704,12 +7735,8 @@ exports[`Action Form Component should render adding a new action 1`] = `
                               }
                             }
                           >
-                            <FormFieldHideWrapper
-                              hideField={false}
-                            >
+                            <FormFieldHideWrapper>
                               <SubForm
-                                DescriptionElement="p"
-                                TitleElement="h3"
                                 component="sub-form"
                                 fields={
                                   Array [
@@ -7845,16 +7872,19 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       "fields": Array [
                                         Object {
                                           "AddAllButtonProps": Object {
-                                            "size": "small",
+                                            "size": "sm",
                                           },
                                           "AddButtonProps": Object {
-                                            "size": "small",
+                                            "size": "sm",
+                                          },
+                                          "ButtonColumnProps": Object {
+                                            "className": "miq-common-dual-list-buttons-column",
                                           },
                                           "RemoveAllButtonProps": Object {
-                                            "size": "small",
+                                            "size": "sm",
                                           },
                                           "RemoveButtonProps": Object {
-                                            "size": "small",
+                                            "size": "sm",
                                           },
                                           "allToRight": false,
                                           "component": "dual-list-select",
@@ -7967,10 +7997,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       "fields": Array [
                                         Object {
                                           "AddButtonProps": Object {
-                                            "size": "small",
+                                            "size": "sm",
                                           },
                                           "RemoveButtonProps": Object {
-                                            "size": "small",
+                                            "size": "sm",
                                           },
                                           "component": "field-array",
                                           "fieldKey": "field_array",
@@ -8249,10 +8279,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       "fields": Array [
                                         Object {
                                           "AddButtonProps": Object {
-                                            "size": "small",
+                                            "size": "sm",
                                           },
                                           "RemoveButtonProps": Object {
-                                            "size": "small",
+                                            "size": "sm",
                                           },
                                           "component": "field-array",
                                           "fieldKey": "field_array",
@@ -8400,6 +8430,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                     }
                                   >
                                     <FormConditionWrapper
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "component": "text-field",
@@ -8416,9 +8447,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         }
                                       }
                                     >
-                                      <FormFieldHideWrapper
-                                        hideField={false}
-                                      >
+                                      <FormFieldHideWrapper>
                                         <TextField
                                           component="text-field"
                                           id="description"
@@ -8454,31 +8483,42 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             warnText=""
                                           >
                                             <div
-                                              className="bx--form-item bx--text-input-wrapper"
+                                              className="cds--form-item cds--text-input-wrapper"
                                             >
-                                              <label
-                                                className="bx--label"
-                                                htmlFor="description"
-                                              >
-                                                <IsRequired>
-                                                  <span
-                                                    aria-hidden="true"
-                                                    className="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
-                                                  >
-                                                    *
-                                                  </span>
-                                                  Description
-                                                </IsRequired>
-                                              </label>
                                               <div
-                                                className="bx--text-input__field-outer-wrapper"
+                                                className="cds--text-input__label-wrapper"
+                                              >
+                                                <ForwardRef
+                                                  as="label"
+                                                  className="cds--label"
+                                                  htmlFor="description"
+                                                >
+                                                  <label
+                                                    className="cds--label"
+                                                    dir="auto"
+                                                    htmlFor="description"
+                                                  >
+                                                    <IsRequired>
+                                                      <span
+                                                        aria-hidden="true"
+                                                        className="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+                                                      >
+                                                        *
+                                                      </span>
+                                                      Description
+                                                    </IsRequired>
+                                                  </label>
+                                                </ForwardRef>
+                                              </div>
+                                              <div
+                                                className="cds--text-input__field-outer-wrapper"
                                               >
                                                 <div
-                                                  className="bx--text-input__field-wrapper"
+                                                  className="cds--text-input__field-wrapper"
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input bx--text-input--md"
+                                                    className="cds--text-input"
                                                     disabled={false}
                                                     id="description"
                                                     maxLength={50}
@@ -8489,6 +8529,12 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                     onFocus={[Function]}
                                                     type="text"
                                                     value=""
+                                                  />
+                                                  <span
+                                                    aria-atomic="true"
+                                                    aria-live="assertive"
+                                                    className="cds--text-input__counter-alert"
+                                                    role="alert"
                                                   />
                                                 </div>
                                               </div>
@@ -8517,6 +8563,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                     }
                                   >
                                     <FormConditionWrapper
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "component": "select",
@@ -8535,9 +8582,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         }
                                       }
                                     >
-                                      <FormFieldHideWrapper
-                                        hideField={false}
-                                      >
+                                      <FormFieldHideWrapper>
                                         <SelectWithOnChange
                                           component="select"
                                           id="action_type"
@@ -8561,7 +8606,6 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             isRequired={true}
                                             label="Action Type"
                                             loadOptions={[Function]}
-                                            loadingMessage="Loading..."
                                             name="action_type"
                                             placeholder="<Choose>"
                                             validate={
@@ -8616,10 +8660,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 value=""
                                               >
                                                 <Select
-                                                  disabled={false}
-                                                  helperText=""
                                                   id="action_type"
-                                                  inline={false}
                                                   invalid={false}
                                                   invalidText=""
                                                   labelText={
@@ -8627,7 +8668,6 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                       Action Type
                                                     </IsRequired>
                                                   }
-                                                  light={false}
                                                   loadingMessage="Loading..."
                                                   name="action_type"
                                                   onBlur={[Function]}
@@ -8636,47 +8676,57 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                   value=""
                                                 >
                                                   <div
-                                                    className="bx--form-item"
+                                                    className="cds--form-item"
                                                   >
                                                     <div
-                                                      className="bx--select"
+                                                      className="cds--select"
                                                     >
-                                                      <label
-                                                        className="bx--label"
+                                                      <ForwardRef
+                                                        as="label"
+                                                        className="cds--label"
                                                         htmlFor="action_type"
                                                       >
-                                                        <IsRequired>
-                                                          <span
-                                                            aria-hidden="true"
-                                                            className="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
-                                                          >
-                                                            *
-                                                          </span>
-                                                          Action Type
-                                                        </IsRequired>
-                                                      </label>
+                                                        <label
+                                                          className="cds--label"
+                                                          dir="auto"
+                                                          htmlFor="action_type"
+                                                        >
+                                                          <IsRequired>
+                                                            <span
+                                                              aria-hidden="true"
+                                                              className="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+                                                            >
+                                                              *
+                                                            </span>
+                                                            Action Type
+                                                          </IsRequired>
+                                                        </label>
+                                                      </ForwardRef>
                                                       <div
-                                                        className="bx--select-input__wrapper"
+                                                        className="cds--select-input__wrapper"
                                                         data-invalid={null}
+                                                        onBlur={[Function]}
+                                                        onFocus={[Function]}
                                                       >
                                                         <select
-                                                          className="bx--select-input"
+                                                          className="cds--select-input"
                                                           id="action_type"
                                                           loadingMessage="Loading..."
                                                           name="action_type"
                                                           onBlur={[Function]}
                                                           onChange={[Function]}
                                                           onFocus={[Function]}
+                                                          onKeyDown={[Function]}
+                                                          onMouseDown={[Function]}
+                                                          title=""
                                                           value=""
                                                         >
                                                           <SelectItem
-                                                            disabled={false}
-                                                            hidden={false}
                                                             text="<Choose>"
                                                             value=""
                                                           >
                                                             <option
-                                                              className="bx--select-option"
+                                                              className="cds--select-option"
                                                               disabled={false}
                                                               hidden={false}
                                                               value=""
@@ -8685,21 +8735,20 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                             </option>
                                                           </SelectItem>
                                                         </select>
-                                                        <ForwardRef(ChevronDown16)
-                                                          className="bx--select__arrow"
+                                                        <ForwardRef(ChevronDown)
+                                                          className="cds--select__arrow"
                                                         >
                                                           <Icon
-                                                            className="bx--select__arrow"
+                                                            className="cds--select__arrow"
                                                             fill="currentColor"
                                                             height={16}
-                                                            preserveAspectRatio="xMidYMid meet"
                                                             viewBox="0 0 16 16"
                                                             width={16}
                                                             xmlns="http://www.w3.org/2000/svg"
                                                           >
                                                             <svg
                                                               aria-hidden={true}
-                                                              className="bx--select__arrow"
+                                                              className="cds--select__arrow"
                                                               fill="currentColor"
                                                               focusable="false"
                                                               height={16}
@@ -8709,11 +8758,11 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                               xmlns="http://www.w3.org/2000/svg"
                                                             >
                                                               <path
-                                                                d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                                d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                                               />
                                                             </svg>
                                                           </Icon>
-                                                        </ForwardRef(ChevronDown16)>
+                                                        </ForwardRef(ChevronDown)>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -8779,6 +8828,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           "when": "action_type",
                                         }
                                       }
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "component": "sub-form",
@@ -8877,6 +8927,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           name="action_type"
                                           subscription={
                                             Object {
+                                              "initial": true,
                                               "value": true,
                                             }
                                           }
@@ -8988,7 +9039,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 }
                                               }
                                             >
-                                              <Component
+                                              <Condition
                                                 condition={
                                                   Object {
                                                     "is": "assign_scan_profile",
@@ -9078,6 +9129,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           "when": "action_type",
                                         }
                                       }
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "component": "sub-form",
@@ -9130,6 +9182,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           name="action_type"
                                           subscription={
                                             Object {
+                                              "initial": true,
                                               "value": true,
                                             }
                                           }
@@ -9195,7 +9248,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 }
                                               }
                                             >
-                                              <Component
+                                              <Condition
                                                 condition={
                                                   Object {
                                                     "is": "create_snapshot",
@@ -9277,6 +9330,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           "when": "action_type",
                                         }
                                       }
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "component": "sub-form",
@@ -9359,6 +9413,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           name="action_type"
                                           subscription={
                                             Object {
+                                              "initial": true,
                                               "value": true,
                                             }
                                           }
@@ -9454,7 +9509,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 }
                                               }
                                             >
-                                              <Component
+                                              <Condition
                                                 condition={
                                                   Object {
                                                     "is": "delete_snapshots_by_age",
@@ -9517,16 +9572,19 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       Array [
                                         Object {
                                           "AddAllButtonProps": Object {
-                                            "size": "small",
+                                            "size": "sm",
                                           },
                                           "AddButtonProps": Object {
-                                            "size": "small",
+                                            "size": "sm",
+                                          },
+                                          "ButtonColumnProps": Object {
+                                            "className": "miq-common-dual-list-buttons-column",
                                           },
                                           "RemoveAllButtonProps": Object {
-                                            "size": "small",
+                                            "size": "sm",
                                           },
                                           "RemoveButtonProps": Object {
-                                            "size": "small",
+                                            "size": "sm",
                                           },
                                           "allToRight": false,
                                           "component": "dual-list-select",
@@ -9568,22 +9626,26 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           "when": "action_type",
                                         }
                                       }
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "component": "sub-form",
                                           "fields": Array [
                                             Object {
                                               "AddAllButtonProps": Object {
-                                                "size": "small",
+                                                "size": "sm",
                                               },
                                               "AddButtonProps": Object {
-                                                "size": "small",
+                                                "size": "sm",
+                                              },
+                                              "ButtonColumnProps": Object {
+                                                "className": "miq-common-dual-list-buttons-column",
                                               },
                                               "RemoveAllButtonProps": Object {
-                                                "size": "small",
+                                                "size": "sm",
                                               },
                                               "RemoveButtonProps": Object {
-                                                "size": "small",
+                                                "size": "sm",
                                               },
                                               "allToRight": false,
                                               "component": "dual-list-select",
@@ -9631,16 +9693,19 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             "fields": Array [
                                               Object {
                                                 "AddAllButtonProps": Object {
-                                                  "size": "small",
+                                                  "size": "sm",
                                                 },
                                                 "AddButtonProps": Object {
-                                                  "size": "small",
+                                                  "size": "sm",
+                                                },
+                                                "ButtonColumnProps": Object {
+                                                  "className": "miq-common-dual-list-buttons-column",
                                                 },
                                                 "RemoveAllButtonProps": Object {
-                                                  "size": "small",
+                                                  "size": "sm",
                                                 },
                                                 "RemoveButtonProps": Object {
-                                                  "size": "small",
+                                                  "size": "sm",
                                                 },
                                                 "allToRight": false,
                                                 "component": "dual-list-select",
@@ -9684,6 +9749,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           name="action_type"
                                           subscription={
                                             Object {
+                                              "initial": true,
                                               "value": true,
                                             }
                                           }
@@ -9701,16 +9767,19 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 "fields": Array [
                                                   Object {
                                                     "AddAllButtonProps": Object {
-                                                      "size": "small",
+                                                      "size": "sm",
                                                     },
                                                     "AddButtonProps": Object {
-                                                      "size": "small",
+                                                      "size": "sm",
+                                                    },
+                                                    "ButtonColumnProps": Object {
+                                                      "className": "miq-common-dual-list-buttons-column",
                                                     },
                                                     "RemoveAllButtonProps": Object {
-                                                      "size": "small",
+                                                      "size": "sm",
                                                     },
                                                     "RemoveButtonProps": Object {
-                                                      "size": "small",
+                                                      "size": "sm",
                                                     },
                                                     "allToRight": false,
                                                     "component": "dual-list-select",
@@ -9764,16 +9833,19 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                   "fields": Array [
                                                     Object {
                                                       "AddAllButtonProps": Object {
-                                                        "size": "small",
+                                                        "size": "sm",
                                                       },
                                                       "AddButtonProps": Object {
-                                                        "size": "small",
+                                                        "size": "sm",
+                                                      },
+                                                      "ButtonColumnProps": Object {
+                                                        "className": "miq-common-dual-list-buttons-column",
                                                       },
                                                       "RemoveAllButtonProps": Object {
-                                                        "size": "small",
+                                                        "size": "sm",
                                                       },
                                                       "RemoveButtonProps": Object {
-                                                        "size": "small",
+                                                        "size": "sm",
                                                       },
                                                       "allToRight": false,
                                                       "component": "dual-list-select",
@@ -9813,7 +9885,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 }
                                               }
                                             >
-                                              <Component
+                                              <Condition
                                                 condition={
                                                   Object {
                                                     "is": "evaluate_alerts",
@@ -9826,16 +9898,19 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                     "fields": Array [
                                                       Object {
                                                         "AddAllButtonProps": Object {
-                                                          "size": "small",
+                                                          "size": "sm",
                                                         },
                                                         "AddButtonProps": Object {
-                                                          "size": "small",
+                                                          "size": "sm",
+                                                        },
+                                                        "ButtonColumnProps": Object {
+                                                          "className": "miq-common-dual-list-buttons-column",
                                                         },
                                                         "RemoveAllButtonProps": Object {
-                                                          "size": "small",
+                                                          "size": "sm",
                                                         },
                                                         "RemoveButtonProps": Object {
-                                                          "size": "small",
+                                                          "size": "sm",
                                                         },
                                                         "allToRight": false,
                                                         "component": "dual-list-select",
@@ -9937,6 +10012,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           "when": "action_type",
                                         }
                                       }
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "component": "sub-form",
@@ -10039,6 +10115,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           name="action_type"
                                           subscription={
                                             Object {
+                                              "initial": true,
                                               "value": true,
                                             }
                                           }
@@ -10154,7 +10231,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 }
                                               }
                                             >
-                                              <Component
+                                              <Condition
                                                 condition={
                                                   Object {
                                                     "is": "inherit_parent_tags",
@@ -10253,6 +10330,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           "when": "action_type",
                                         }
                                       }
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "component": "sub-form",
@@ -10319,6 +10397,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           name="action_type"
                                           subscription={
                                             Object {
+                                              "initial": true,
                                               "value": true,
                                             }
                                           }
@@ -10398,7 +10477,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 }
                                               }
                                             >
-                                              <Component
+                                              <Condition
                                                 condition={
                                                   Object {
                                                     "is": "custom_automation",
@@ -10454,10 +10533,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       Array [
                                         Object {
                                           "AddButtonProps": Object {
-                                            "size": "small",
+                                            "size": "sm",
                                           },
                                           "RemoveButtonProps": Object {
-                                            "size": "small",
+                                            "size": "sm",
                                           },
                                           "component": "field-array",
                                           "fieldKey": "field_array",
@@ -10506,6 +10585,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           "when": "action_type",
                                         }
                                       }
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "className": "attribute_value_pair_wrapper",
@@ -10513,10 +10593,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           "fields": Array [
                                             Object {
                                               "AddButtonProps": Object {
-                                                "size": "small",
+                                                "size": "sm",
                                               },
                                               "RemoveButtonProps": Object {
-                                                "size": "small",
+                                                "size": "sm",
                                               },
                                               "component": "field-array",
                                               "fieldKey": "field_array",
@@ -10572,10 +10652,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             "fields": Array [
                                               Object {
                                                 "AddButtonProps": Object {
-                                                  "size": "small",
+                                                  "size": "sm",
                                                 },
                                                 "RemoveButtonProps": Object {
-                                                  "size": "small",
+                                                  "size": "sm",
                                                 },
                                                 "component": "field-array",
                                                 "fieldKey": "field_array",
@@ -10626,6 +10706,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           name="action_type"
                                           subscription={
                                             Object {
+                                              "initial": true,
                                               "value": true,
                                             }
                                           }
@@ -10644,10 +10725,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 "fields": Array [
                                                   Object {
                                                     "AddButtonProps": Object {
-                                                      "size": "small",
+                                                      "size": "sm",
                                                     },
                                                     "RemoveButtonProps": Object {
-                                                      "size": "small",
+                                                      "size": "sm",
                                                     },
                                                     "component": "field-array",
                                                     "fieldKey": "field_array",
@@ -10709,10 +10790,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                   "fields": Array [
                                                     Object {
                                                       "AddButtonProps": Object {
-                                                        "size": "small",
+                                                        "size": "sm",
                                                       },
                                                       "RemoveButtonProps": Object {
-                                                        "size": "small",
+                                                        "size": "sm",
                                                       },
                                                       "component": "field-array",
                                                       "fieldKey": "field_array",
@@ -10759,7 +10840,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 }
                                               }
                                             >
-                                              <Component
+                                              <Condition
                                                 condition={
                                                   Object {
                                                     "is": "custom_automation",
@@ -10773,10 +10854,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                     "fields": Array [
                                                       Object {
                                                         "AddButtonProps": Object {
-                                                          "size": "small",
+                                                          "size": "sm",
                                                         },
                                                         "RemoveButtonProps": Object {
-                                                          "size": "small",
+                                                          "size": "sm",
                                                         },
                                                         "component": "field-array",
                                                         "fieldKey": "field_array",
@@ -10874,6 +10955,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           "when": "action_type",
                                         }
                                       }
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "component": "sub-form",
@@ -10954,6 +11036,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           name="action_type"
                                           subscription={
                                             Object {
+                                              "initial": true,
                                               "value": true,
                                             }
                                           }
@@ -11047,7 +11130,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 }
                                               }
                                             >
-                                              <Component
+                                              <Condition
                                                 condition={
                                                   Object {
                                                     "is": "reconfigure_cpus",
@@ -11129,6 +11212,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           "when": "action_type",
                                         }
                                       }
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "component": "sub-form",
@@ -11183,6 +11267,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           name="action_type"
                                           subscription={
                                             Object {
+                                              "initial": true,
                                               "value": true,
                                             }
                                           }
@@ -11250,7 +11335,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 }
                                               }
                                             >
-                                              <Component
+                                              <Condition
                                                 condition={
                                                   Object {
                                                     "is": "reconfigure_memory",
@@ -11329,6 +11414,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           "when": "action_type",
                                         }
                                       }
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "component": "sub-form",
@@ -11403,6 +11489,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           name="action_type"
                                           subscription={
                                             Object {
+                                              "initial": true,
                                               "value": true,
                                             }
                                           }
@@ -11490,7 +11577,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 }
                                               }
                                             >
-                                              <Component
+                                              <Condition
                                                 condition={
                                                   Object {
                                                     "is": "remove_tags",
@@ -11600,6 +11687,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           "when": "action_type",
                                         }
                                       }
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "component": "sub-form",
@@ -11716,6 +11804,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           name="action_type"
                                           subscription={
                                             Object {
+                                              "initial": true,
                                               "value": true,
                                             }
                                           }
@@ -11845,7 +11934,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 }
                                               }
                                             >
-                                              <Component
+                                              <Condition
                                                 condition={
                                                   Object {
                                                     "is": "run_ansible_playbook",
@@ -11959,6 +12048,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           ],
                                         }
                                       }
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "component": "sub-form",
@@ -12018,6 +12108,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           name="options.inventory_type"
                                           subscription={
                                             Object {
+                                              "initial": true,
                                               "value": true,
                                             }
                                           }
@@ -12070,6 +12161,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               name="action_type"
                                               subscription={
                                                 Object {
+                                                  "initial": true,
                                                   "value": true,
                                                 }
                                               }
@@ -12155,7 +12247,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                     }
                                                   }
                                                 >
-                                                  <Component
+                                                  <Condition
                                                     condition={
                                                       Object {
                                                         "and": Array [
@@ -12242,6 +12334,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           "when": "action_type",
                                         }
                                       }
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "component": "sub-form",
@@ -12310,6 +12403,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           name="action_type"
                                           subscription={
                                             Object {
+                                              "initial": true,
                                               "value": true,
                                             }
                                           }
@@ -12391,7 +12485,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 }
                                               }
                                             >
-                                              <Component
+                                              <Condition
                                                 condition={
                                                   Object {
                                                     "is": "email",
@@ -12490,6 +12584,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           "when": "action_type",
                                         }
                                       }
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "component": "sub-form",
@@ -12590,6 +12685,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           name="action_type"
                                           subscription={
                                             Object {
+                                              "initial": true,
                                               "value": true,
                                             }
                                           }
@@ -12703,7 +12799,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 }
                                               }
                                             >
-                                              <Component
+                                              <Condition
                                                 condition={
                                                   Object {
                                                     "is": "snmp_trap",
@@ -12775,10 +12871,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       Array [
                                         Object {
                                           "AddButtonProps": Object {
-                                            "size": "small",
+                                            "size": "sm",
                                           },
                                           "RemoveButtonProps": Object {
-                                            "size": "small",
+                                            "size": "sm",
                                           },
                                           "component": "field-array",
                                           "fieldKey": "field_array",
@@ -12821,16 +12917,17 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           "when": "action_type",
                                         }
                                       }
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "component": "sub-form",
                                           "fields": Array [
                                             Object {
                                               "AddButtonProps": Object {
-                                                "size": "small",
+                                                "size": "sm",
                                               },
                                               "RemoveButtonProps": Object {
-                                                "size": "small",
+                                                "size": "sm",
                                               },
                                               "component": "field-array",
                                               "fieldKey": "field_array",
@@ -12879,10 +12976,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             "fields": Array [
                                               Object {
                                                 "AddButtonProps": Object {
-                                                  "size": "small",
+                                                  "size": "sm",
                                                 },
                                                 "RemoveButtonProps": Object {
-                                                  "size": "small",
+                                                  "size": "sm",
                                                 },
                                                 "component": "field-array",
                                                 "fieldKey": "field_array",
@@ -12927,6 +13024,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           name="action_type"
                                           subscription={
                                             Object {
+                                              "initial": true,
                                               "value": true,
                                             }
                                           }
@@ -12944,10 +13042,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 "fields": Array [
                                                   Object {
                                                     "AddButtonProps": Object {
-                                                      "size": "small",
+                                                      "size": "sm",
                                                     },
                                                     "RemoveButtonProps": Object {
-                                                      "size": "small",
+                                                      "size": "sm",
                                                     },
                                                     "component": "field-array",
                                                     "fieldKey": "field_array",
@@ -13002,10 +13100,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                   "fields": Array [
                                                     Object {
                                                       "AddButtonProps": Object {
-                                                        "size": "small",
+                                                        "size": "sm",
                                                       },
                                                       "RemoveButtonProps": Object {
-                                                        "size": "small",
+                                                        "size": "sm",
                                                       },
                                                       "component": "field-array",
                                                       "fieldKey": "field_array",
@@ -13046,7 +13144,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 }
                                               }
                                             >
-                                              <Component
+                                              <Condition
                                                 condition={
                                                   Object {
                                                     "is": "snmp_trap",
@@ -13059,10 +13157,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                     "fields": Array [
                                                       Object {
                                                         "AddButtonProps": Object {
-                                                          "size": "small",
+                                                          "size": "sm",
                                                         },
                                                         "RemoveButtonProps": Object {
-                                                          "size": "small",
+                                                          "size": "sm",
                                                         },
                                                         "component": "field-array",
                                                         "fieldKey": "field_array",
@@ -13147,6 +13245,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           "when": "action_type",
                                         }
                                       }
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "component": "sub-form",
@@ -13213,6 +13312,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           name="action_type"
                                           subscription={
                                             Object {
+                                              "initial": true,
                                               "value": true,
                                             }
                                           }
@@ -13292,7 +13392,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 }
                                               }
                                             >
-                                              <Component
+                                              <Condition
                                                 condition={
                                                   Object {
                                                     "is": "set_custom_attribute",
@@ -13402,6 +13502,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           "when": "action_type",
                                         }
                                       }
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "component": "sub-form",
@@ -13526,6 +13627,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           name="action_type"
                                           subscription={
                                             Object {
+                                              "initial": true,
                                               "value": true,
                                             }
                                           }
@@ -13663,7 +13765,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 }
                                               }
                                             >
-                                              <Component
+                                              <Condition
                                                 condition={
                                                   Object {
                                                     "is": "tag",
@@ -13746,6 +13848,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                           name="spy-field"
                         >
                           <FormConditionWrapper
+                            conditionMapper={Object {}}
                             field={
                               Object {
                                 "component": "spy-field",
@@ -13754,9 +13857,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                               }
                             }
                           >
-                            <FormFieldHideWrapper
-                              hideField={false}
-                            >
+                            <FormFieldHideWrapper>
                               <SpyField
                                 component="spy-field"
                                 name="spy-field"
@@ -13927,16 +14028,19 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         "fields": Array [
                                           Object {
                                             "AddAllButtonProps": Object {
-                                              "size": "small",
+                                              "size": "sm",
                                             },
                                             "AddButtonProps": Object {
-                                              "size": "small",
+                                              "size": "sm",
+                                            },
+                                            "ButtonColumnProps": Object {
+                                              "className": "miq-common-dual-list-buttons-column",
                                             },
                                             "RemoveAllButtonProps": Object {
-                                              "size": "small",
+                                              "size": "sm",
                                             },
                                             "RemoveButtonProps": Object {
-                                              "size": "small",
+                                              "size": "sm",
                                             },
                                             "allToRight": false,
                                             "component": "dual-list-select",
@@ -14049,10 +14153,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         "fields": Array [
                                           Object {
                                             "AddButtonProps": Object {
-                                              "size": "small",
+                                              "size": "sm",
                                             },
                                             "RemoveButtonProps": Object {
-                                              "size": "small",
+                                              "size": "sm",
                                             },
                                             "component": "field-array",
                                             "fieldKey": "field_array",
@@ -14331,10 +14435,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         "fields": Array [
                                           Object {
                                             "AddButtonProps": Object {
-                                              "size": "small",
+                                              "size": "sm",
                                             },
                                             "RemoveButtonProps": Object {
-                                              "size": "small",
+                                              "size": "sm",
                                             },
                                             "component": "field-array",
                                             "fieldKey": "field_array",
@@ -14679,16 +14783,19 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         "fields": Array [
                                           Object {
                                             "AddAllButtonProps": Object {
-                                              "size": "small",
+                                              "size": "sm",
                                             },
                                             "AddButtonProps": Object {
-                                              "size": "small",
+                                              "size": "sm",
+                                            },
+                                            "ButtonColumnProps": Object {
+                                              "className": "miq-common-dual-list-buttons-column",
                                             },
                                             "RemoveAllButtonProps": Object {
-                                              "size": "small",
+                                              "size": "sm",
                                             },
                                             "RemoveButtonProps": Object {
-                                              "size": "small",
+                                              "size": "sm",
                                             },
                                             "allToRight": false,
                                             "component": "dual-list-select",
@@ -14801,10 +14908,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         "fields": Array [
                                           Object {
                                             "AddButtonProps": Object {
-                                              "size": "small",
+                                              "size": "sm",
                                             },
                                             "RemoveButtonProps": Object {
-                                              "size": "small",
+                                              "size": "sm",
                                             },
                                             "component": "field-array",
                                             "fieldKey": "field_array",
@@ -15083,10 +15190,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         "fields": Array [
                                           Object {
                                             "AddButtonProps": Object {
-                                              "size": "small",
+                                              "size": "sm",
                                             },
                                             "RemoveButtonProps": Object {
-                                              "size": "small",
+                                              "size": "sm",
                                             },
                                             "component": "field-array",
                                             "fieldKey": "field_array",
@@ -15221,7 +15328,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                 className=""
                               >
                                 <div
-                                  className="bx--btn-set"
+                                  className="cds--btn-set"
                                 >
                                   <Button
                                     buttonType="submit"
@@ -15237,22 +15344,21 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       type="submit"
                                       variant="primary"
                                     >
-                                      <button
-                                        aria-describedby={null}
-                                        aria-pressed={null}
-                                        className="bx--btn bx--btn--primary bx--btn--disabled"
+                                      <ForwardRef(ButtonBase)
                                         disabled={true}
-                                        onBlur={[Function]}
-                                        onClick={[Function]}
-                                        onFocus={[Function]}
-                                        onMouseEnter={[Function]}
-                                        onMouseLeave={[Function]}
-                                        tabIndex={0}
+                                        kind="primary"
                                         type="submit"
                                         variant="primary"
                                       >
-                                        Add
-                                      </button>
+                                        <button
+                                          className="cds--btn cds--btn--primary cds--btn--disabled"
+                                          disabled={true}
+                                          type="submit"
+                                          variant="primary"
+                                        >
+                                          Add
+                                        </button>
+                                      </ForwardRef(ButtonBase)>
                                     </Button>
                                   </Button>
                                   <Button
@@ -15267,21 +15373,20 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       onClick={[Function]}
                                       type="button"
                                     >
-                                      <button
-                                        aria-describedby={null}
-                                        aria-pressed={null}
-                                        className="bx--btn bx--btn--secondary"
-                                        disabled={false}
-                                        onBlur={[Function]}
+                                      <ForwardRef(ButtonBase)
+                                        kind="secondary"
                                         onClick={[Function]}
-                                        onFocus={[Function]}
-                                        onMouseEnter={[Function]}
-                                        onMouseLeave={[Function]}
-                                        tabIndex={0}
                                         type="button"
                                       >
-                                        Cancel
-                                      </button>
+                                        <button
+                                          className="cds--btn cds--btn--secondary"
+                                          disabled={false}
+                                          onClick={[Function]}
+                                          type="button"
+                                        >
+                                          Cancel
+                                        </button>
+                                      </ForwardRef(ButtonBase)>
                                     </Button>
                                   </Button>
                                 </div>
@@ -15289,7 +15394,6 @@ exports[`Action Form Component should render adding a new action 1`] = `
                             </ButtonGroup>
                           </FormControls>
                         </FormSpy>
-                         
                       </form>
                     </Form>
                   </Form>
@@ -15452,16 +15556,19 @@ exports[`Action Form Component should render correctly 1`] = `
               "fields": Array [
                 Object {
                   "AddAllButtonProps": Object {
-                    "size": "small",
+                    "size": "sm",
                   },
                   "AddButtonProps": Object {
-                    "size": "small",
+                    "size": "sm",
+                  },
+                  "ButtonColumnProps": Object {
+                    "className": "miq-common-dual-list-buttons-column",
                   },
                   "RemoveAllButtonProps": Object {
-                    "size": "small",
+                    "size": "sm",
                   },
                   "RemoveButtonProps": Object {
-                    "size": "small",
+                    "size": "sm",
                   },
                   "allToRight": false,
                   "component": "dual-list-select",
@@ -15574,10 +15681,10 @@ exports[`Action Form Component should render correctly 1`] = `
               "fields": Array [
                 Object {
                   "AddButtonProps": Object {
-                    "size": "small",
+                    "size": "sm",
                   },
                   "RemoveButtonProps": Object {
-                    "size": "small",
+                    "size": "sm",
                   },
                   "component": "field-array",
                   "fieldKey": "field_array",
@@ -15856,10 +15963,10 @@ exports[`Action Form Component should render correctly 1`] = `
               "fields": Array [
                 Object {
                   "AddButtonProps": Object {
-                    "size": "small",
+                    "size": "sm",
                   },
                   "RemoveButtonProps": Object {
-                    "size": "small",
+                    "size": "sm",
                   },
                   "component": "field-array",
                   "fieldKey": "field_array",
