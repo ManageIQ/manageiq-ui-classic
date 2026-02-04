@@ -24,41 +24,33 @@ exports[`Add/remove security groups form component should add security group 1`]
     redirectURL="/vm_cloud/explorer"
   >
     <Loading
-      active={true}
       className="export-spinner"
-      description="Active loading indicator"
       small={true}
       withOverlay={false}
     >
       <div
         aria-atomic="true"
         aria-live="assertive"
-        className="export-spinner bx--loading bx--loading--small"
+        className="export-spinner cds--loading cds--loading--small"
       >
-        <label
-          className="bx--visually-hidden"
-          id="loading-id-3"
-        >
-          Active loading indicator
-        </label>
         <svg
-          className="bx--loading__svg"
+          className="cds--loading__svg"
           viewBox="0 0 100 100"
         >
           <title>
-            Active loading indicator
+            loading
           </title>
           <circle
-            className="bx--loading__background"
+            className="cds--loading__background"
             cx="50%"
             cy="50%"
-            r="44"
+            r="42"
           />
           <circle
-            className="bx--loading__stroke"
+            className="cds--loading__stroke"
             cx="50%"
             cy="50%"
-            r="44"
+            r="42"
           />
         </svg>
       </div>
@@ -192,7 +184,6 @@ exports[`Add/remove security groups form component should remove security group 
       >
         <FormRenderer
           FormTemplate={[Function]}
-          clearOnUnmount={false}
           componentMapper={
             Object {
               "checkbox": [Function],
@@ -227,7 +218,6 @@ exports[`Add/remove security groups form component should remove security group 
             }
           }
           dispatch={[Function]}
-          initialValues={Object {}}
           onCancel={[Function]}
           onReset={[Function]}
           onSubmit={[Function]}
@@ -498,11 +488,10 @@ exports[`Add/remove security groups form component should remove security group 
                       onSubmit={[Function]}
                     >
                       <form
-                        className="bx--form form-0-2-3 form-react"
+                        className="cds--form form-0-2-3 form-react"
                         noValidate={true}
                         onSubmit={[Function]}
                       >
-                         
                         <SingleField
                           component="select"
                           id="security_group"
@@ -521,6 +510,7 @@ exports[`Add/remove security groups form component should remove security group 
                           placeholder="<Choose>"
                         >
                           <FormConditionWrapper
+                            conditionMapper={Object {}}
                             field={
                               Object {
                                 "component": "select",
@@ -538,9 +528,7 @@ exports[`Add/remove security groups form component should remove security group 
                               }
                             }
                           >
-                            <FormFieldHideWrapper
-                              hideField={false}
-                            >
+                            <FormFieldHideWrapper>
                               <SelectWithOnChange
                                 component="select"
                                 id="security_group"
@@ -561,7 +549,6 @@ exports[`Add/remove security groups form component should remove security group 
                                   component="select"
                                   id="security_group"
                                   label="Security Group"
-                                  loadingMessage="Loading..."
                                   name="security_group"
                                   options={
                                     Array [
@@ -637,14 +624,10 @@ exports[`Add/remove security groups form component should remove security group 
                                     >
                                       <Select
                                         className=""
-                                        disabled={false}
-                                        helperText=""
                                         id="security_group"
-                                        inline={false}
                                         invalid={false}
                                         invalidText=""
                                         labelText="Security Group"
-                                        light={false}
                                         name="security_group"
                                         onBlur={[Function]}
                                         onChange={[Function]}
@@ -652,40 +635,49 @@ exports[`Add/remove security groups form component should remove security group 
                                         value=""
                                       >
                                         <div
-                                          className="bx--form-item"
+                                          className="cds--form-item"
                                         >
                                           <div
-                                            className="bx--select"
+                                            className="cds--select"
                                           >
-                                            <label
-                                              className="bx--label"
+                                            <ForwardRef
+                                              as="label"
+                                              className="cds--label"
                                               htmlFor="security_group"
                                             >
-                                              Security Group
-                                            </label>
+                                              <label
+                                                className="cds--label"
+                                                dir="auto"
+                                                htmlFor="security_group"
+                                              >
+                                                Security Group
+                                              </label>
+                                            </ForwardRef>
                                             <div
-                                              className="bx--select-input__wrapper"
+                                              className="cds--select-input__wrapper"
                                               data-invalid={null}
+                                              onBlur={[Function]}
+                                              onFocus={[Function]}
                                             >
                                               <select
-                                                className="bx--select-input"
+                                                className="cds--select-input"
                                                 id="security_group"
                                                 name="security_group"
                                                 onBlur={[Function]}
                                                 onChange={[Function]}
                                                 onFocus={[Function]}
+                                                onKeyDown={[Function]}
+                                                onMouseDown={[Function]}
+                                                title="<Choose>"
                                                 value=""
                                               >
                                                 <SelectItem
-                                                  disabled={false}
-                                                  hidden={false}
                                                   key="0"
                                                   label="<Choose>"
                                                   text="<Choose>"
-                                                  value=""
                                                 >
                                                   <option
-                                                    className="bx--select-option"
+                                                    className="cds--select-option"
                                                     disabled={false}
                                                     hidden={false}
                                                     label="<Choose>"
@@ -695,15 +687,13 @@ exports[`Add/remove security groups form component should remove security group 
                                                   </option>
                                                 </SelectItem>
                                                 <SelectItem
-                                                  disabled={false}
-                                                  hidden={false}
                                                   key="default"
                                                   label="default"
                                                   text="default"
                                                   value="default"
                                                 >
                                                   <option
-                                                    className="bx--select-option"
+                                                    className="cds--select-option"
                                                     disabled={false}
                                                     hidden={false}
                                                     label="default"
@@ -713,21 +703,20 @@ exports[`Add/remove security groups form component should remove security group 
                                                   </option>
                                                 </SelectItem>
                                               </select>
-                                              <ForwardRef(ChevronDown16)
-                                                className="bx--select__arrow"
+                                              <ForwardRef(ChevronDown)
+                                                className="cds--select__arrow"
                                               >
                                                 <Icon
-                                                  className="bx--select__arrow"
+                                                  className="cds--select__arrow"
                                                   fill="currentColor"
                                                   height={16}
-                                                  preserveAspectRatio="xMidYMid meet"
                                                   viewBox="0 0 16 16"
                                                   width={16}
                                                   xmlns="http://www.w3.org/2000/svg"
                                                 >
                                                   <svg
                                                     aria-hidden={true}
-                                                    className="bx--select__arrow"
+                                                    className="cds--select__arrow"
                                                     fill="currentColor"
                                                     focusable="false"
                                                     height={16}
@@ -737,11 +726,11 @@ exports[`Add/remove security groups form component should remove security group 
                                                     xmlns="http://www.w3.org/2000/svg"
                                                   >
                                                     <path
-                                                      d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                      d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                                     />
                                                   </svg>
                                                 </Icon>
-                                              </ForwardRef(ChevronDown16)>
+                                              </ForwardRef(ChevronDown)>
                                             </div>
                                           </div>
                                         </div>
@@ -759,6 +748,7 @@ exports[`Add/remove security groups form component should remove security group 
                           name="spy-field"
                         >
                           <FormConditionWrapper
+                            conditionMapper={Object {}}
                             field={
                               Object {
                                 "component": "spy-field",
@@ -767,9 +757,7 @@ exports[`Add/remove security groups form component should remove security group 
                               }
                             }
                           >
-                            <FormFieldHideWrapper
-                              hideField={false}
-                            >
+                            <FormFieldHideWrapper>
                               <SpyField
                                 component="spy-field"
                                 name="spy-field"
@@ -923,7 +911,7 @@ exports[`Add/remove security groups form component should remove security group 
                                 className=""
                               >
                                 <div
-                                  className="bx--btn-set"
+                                  className="cds--btn-set"
                                 >
                                   <Button
                                     buttonType="submit"
@@ -939,22 +927,21 @@ exports[`Add/remove security groups form component should remove security group 
                                       type="submit"
                                       variant="primary"
                                     >
-                                      <button
-                                        aria-describedby={null}
-                                        aria-pressed={null}
-                                        className="bx--btn bx--btn--primary bx--btn--disabled"
+                                      <ForwardRef(ButtonBase)
                                         disabled={true}
-                                        onBlur={[Function]}
-                                        onClick={[Function]}
-                                        onFocus={[Function]}
-                                        onMouseEnter={[Function]}
-                                        onMouseLeave={[Function]}
-                                        tabIndex={0}
+                                        kind="primary"
                                         type="submit"
                                         variant="primary"
                                       >
-                                        Save
-                                      </button>
+                                        <button
+                                          className="cds--btn cds--btn--primary cds--btn--disabled"
+                                          disabled={true}
+                                          type="submit"
+                                          variant="primary"
+                                        >
+                                          Save
+                                        </button>
+                                      </ForwardRef(ButtonBase)>
                                     </Button>
                                   </Button>
                                   <Button
@@ -969,21 +956,20 @@ exports[`Add/remove security groups form component should remove security group 
                                       onClick={[Function]}
                                       type="button"
                                     >
-                                      <button
-                                        aria-describedby={null}
-                                        aria-pressed={null}
-                                        className="bx--btn bx--btn--secondary"
-                                        disabled={false}
-                                        onBlur={[Function]}
+                                      <ForwardRef(ButtonBase)
+                                        kind="secondary"
                                         onClick={[Function]}
-                                        onFocus={[Function]}
-                                        onMouseEnter={[Function]}
-                                        onMouseLeave={[Function]}
-                                        tabIndex={0}
                                         type="button"
                                       >
-                                        Cancel
-                                      </button>
+                                        <button
+                                          className="cds--btn cds--btn--secondary"
+                                          disabled={false}
+                                          onClick={[Function]}
+                                          type="button"
+                                        >
+                                          Cancel
+                                        </button>
+                                      </ForwardRef(ButtonBase)>
                                     </Button>
                                   </Button>
                                 </div>
@@ -991,7 +977,6 @@ exports[`Add/remove security groups form component should remove security group 
                             </ButtonGroup>
                           </FormControls>
                         </FormSpy>
-                         
                       </form>
                     </Form>
                   </Form>
@@ -1030,41 +1015,33 @@ exports[`Add/remove security groups form component should render add security gr
     redirectURL="/vm_cloud/explorer"
   >
     <Loading
-      active={true}
       className="export-spinner"
-      description="Active loading indicator"
       small={true}
       withOverlay={false}
     >
       <div
         aria-atomic="true"
         aria-live="assertive"
-        className="export-spinner bx--loading bx--loading--small"
+        className="export-spinner cds--loading cds--loading--small"
       >
-        <label
-          className="bx--visually-hidden"
-          id="loading-id-1"
-        >
-          Active loading indicator
-        </label>
         <svg
-          className="bx--loading__svg"
+          className="cds--loading__svg"
           viewBox="0 0 100 100"
         >
           <title>
-            Active loading indicator
+            loading
           </title>
           <circle
-            className="bx--loading__background"
+            className="cds--loading__background"
             cx="50%"
             cy="50%"
-            r="44"
+            r="42"
           />
           <circle
-            className="bx--loading__stroke"
+            className="cds--loading__stroke"
             cx="50%"
             cy="50%"
-            r="44"
+            r="42"
           />
         </svg>
       </div>
@@ -1097,41 +1074,33 @@ exports[`Add/remove security groups form component should render remove security
     redirectURL="/vm_cloud/explorer"
   >
     <Loading
-      active={true}
       className="export-spinner"
-      description="Active loading indicator"
       small={true}
       withOverlay={false}
     >
       <div
         aria-atomic="true"
         aria-live="assertive"
-        className="export-spinner bx--loading bx--loading--small"
+        className="export-spinner cds--loading cds--loading--small"
       >
-        <label
-          className="bx--visually-hidden"
-          id="loading-id-2"
-        >
-          Active loading indicator
-        </label>
         <svg
-          className="bx--loading__svg"
+          className="cds--loading__svg"
           viewBox="0 0 100 100"
         >
           <title>
-            Active loading indicator
+            loading
           </title>
           <circle
-            className="bx--loading__background"
+            className="cds--loading__background"
             cx="50%"
             cy="50%"
-            r="44"
+            r="42"
           />
           <circle
-            className="bx--loading__stroke"
+            className="cds--loading__stroke"
             cx="50%"
             cy="50%"
-            r="44"
+            r="42"
           />
         </svg>
       </div>
