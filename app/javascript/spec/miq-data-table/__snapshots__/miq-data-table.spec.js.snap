@@ -5,17 +5,12 @@ exports[`Data table component should render a data table with cells which have m
   className="miq-data-table chargeback-rate"
 >
   <DataTable
-    filterRows={[Function]}
     headers={Array []}
     isSortable={false}
-    locale="en"
-    overflowMenuOnHover={true}
     rows={Array []}
     size="lg"
     sortDirection="ASC"
-    sortRow={[Function]}
     stickyHeader={false}
-    translateWithId={[Function]}
   >
     <Component />
   </DataTable>
@@ -27,7 +22,6 @@ exports[`Data table component should render a simple data tabe with pagination a
   className="miq-data-table list"
 >
   <DataTable
-    filterRows={[Function]}
     headers={
       Array [
         Object {
@@ -41,8 +35,6 @@ exports[`Data table component should render a simple data tabe with pagination a
       ]
     }
     isSortable={true}
-    locale="en"
-    overflowMenuOnHover={true}
     rows={
       Array [
         Object {
@@ -64,9 +56,7 @@ exports[`Data table component should render a simple data tabe with pagination a
     }
     size="lg"
     sortDirection="ASC"
-    sortRow={[Function]}
     stickyHeader={false}
-    translateWithId={[Function]}
   >
     <Component />
   </DataTable>
@@ -97,17 +87,12 @@ exports[`Data table component should render a simple data table 1`] = `
   className="miq-data-table list"
 >
   <DataTable
-    filterRows={[Function]}
     headers={Array []}
     isSortable={false}
-    locale="en"
-    overflowMenuOnHover={true}
     rows={Array []}
     size="lg"
     sortDirection="ASC"
-    sortRow={[Function]}
     stickyHeader={false}
-    translateWithId={[Function]}
   >
     <Component />
   </DataTable>
@@ -119,7 +104,6 @@ exports[`Data table component should render a simple non-clickable data table 1`
   className="miq-data-table list"
 >
   <DataTable
-    filterRows={[Function]}
     headers={
       Array [
         Object {
@@ -133,8 +117,6 @@ exports[`Data table component should render a simple non-clickable data table 1`
       ]
     }
     isSortable={false}
-    locale="en"
-    overflowMenuOnHover={true}
     rows={
       Array [
         Object {
@@ -165,9 +147,7 @@ exports[`Data table component should render a simple non-clickable data table 1`
     }
     size="lg"
     sortDirection="ASC"
-    sortRow={[Function]}
     stickyHeader={false}
-    translateWithId={[Function]}
   >
     <Component />
   </DataTable>
@@ -179,11 +159,8 @@ exports[`Data table component should render a static-gtl-view data table with ch
   className="miq-data-table static-gtl-view"
 >
   <DataTable
-    filterRows={[Function]}
     headers={Array []}
     isSortable={true}
-    locale="en"
-    overflowMenuOnHover={true}
     rows={
       Array [
         Object {
@@ -365,9 +342,7 @@ exports[`Data table component should render a static-gtl-view data table with ch
     }
     size="lg"
     sortDirection="ASC"
-    sortRow={[Function]}
     stickyHeader={false}
-    translateWithId={[Function]}
   >
     <Component />
   </DataTable>
@@ -398,11 +373,8 @@ exports[`Data table component should render a static-gtl-view data table with ch
   className="miq-data-table static-gtl-view"
 >
   <DataTable
-    filterRows={[Function]}
     headers={Array []}
     isSortable={true}
-    locale="en"
-    overflowMenuOnHover={true}
     rows={
       Array [
         Object {
@@ -1193,9 +1165,7 @@ exports[`Data table component should render a static-gtl-view data table with ch
     }
     size="lg"
     sortDirection="ASC"
-    sortRow={[Function]}
     stickyHeader={false}
-    translateWithId={[Function]}
   >
     <Component />
   </DataTable>
@@ -1226,11 +1196,8 @@ exports[`Data table component should render a static-gtl-view data table with ic
   className="miq-data-table static-gtl-view"
 >
   <DataTable
-    filterRows={[Function]}
     headers={Array []}
     isSortable={true}
-    locale="en"
-    overflowMenuOnHover={true}
     rows={
       Array [
         Object {
@@ -1697,9 +1664,7 @@ exports[`Data table component should render a static-gtl-view data table with ic
     }
     size="lg"
     sortDirection="ASC"
-    sortRow={[Function]}
     stickyHeader={false}
-    translateWithId={[Function]}
   >
     <Component />
   </DataTable>
@@ -1730,17 +1695,12 @@ exports[`Data table component should render strings without double escaping stri
   className="miq-data-table list"
 >
   <DataTable
-    filterRows={[Function]}
     headers={Array []}
     isSortable={false}
-    locale="en"
-    overflowMenuOnHover={true}
     rows={Array []}
     size="lg"
     sortDirection="ASC"
-    sortRow={[Function]}
     stickyHeader={false}
-    translateWithId={[Function]}
   >
     <Component />
   </DataTable>
