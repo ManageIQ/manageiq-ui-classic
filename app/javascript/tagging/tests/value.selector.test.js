@@ -1,7 +1,7 @@
 import React from 'react';
-import ValueSelector from '../components/InnerComponents/ValueSelector';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import ValueSelector from '../components/InnerComponents/ValueSelector';
 
 const tagValues = [
   { description: 'Asterix', id: 1 },

@@ -4,12 +4,8 @@ exports[`match snapshot 1`] = `
 <Dropdown
   className="tag-select"
   defaultValue="placeholder"
-  direction="bottom"
   disabled={false}
-  helperText=""
   id="dropdown-tag-select"
-  itemToElement={null}
-  itemToString={[Function]}
   items={
     Array [
       Object {
@@ -26,10 +22,8 @@ exports[`match snapshot 1`] = `
   }
   key="1"
   label="Obelix"
-  light={false}
   onChange={[Function]}
   titleText=""
-  type="default"
 />
 `;
 
@@ -37,12 +31,8 @@ exports[`match snapshot without multiple values 1`] = `
 <Dropdown
   className="tag-select"
   defaultValue="placeholder"
-  direction="bottom"
   disabled={false}
-  helperText=""
   id="dropdown-tag-select"
-  itemToElement={null}
-  itemToString={[Function]}
   items={
     Array [
       Object {
@@ -59,9 +49,7 @@ exports[`match snapshot without multiple values 1`] = `
   }
   key="1"
   label="Obelix"
-  light={false}
   onChange={[Function]}
   titleText=""
-  type="default"
 />
 `;
