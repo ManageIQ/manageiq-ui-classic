@@ -325,7 +325,7 @@ describe ApplicationController do
                 :object_request => 'request',
                 :open_url       => true,
                 :visibility_typ => 'role',
-                :roles          => [role.id.to_s],
+                :roles          => [role.id],
                 :display_for    => :list}
       }
     }
@@ -340,13 +340,13 @@ describe ApplicationController do
 
     it "sets new role visibility for custom button" do
       controller.send(:button_set_record_vars, custom_button)
-      expect(custom_button.visibility[:roles]).to eq([role.name])
+      expect(custom_button.visibility[:roles]).to eq([role.id])
     end
 
     it "sets new role and preserves old role for custom button" do
       edit[:new][:roles] = [old_role.id, role.id.to_s] # old roles are represented by int and new ones by string
       controller.send(:button_set_record_vars, custom_button)
-      expect(custom_button.visibility[:roles]).to eq([old_role.name, role.name])
+      expect(custom_button.visibility[:roles]).to eq([old_role.id, role.id.to_s])
     end
   end
 
