@@ -62,75 +62,72 @@ exports[`Simple Table renders multi-value just fine... 1`] = `
                 kind="ghost"
                 size="sm"
               >
-                <button
-                  aria-describedby={null}
-                  aria-pressed={null}
-                  className="bx--btn bx--btn--sm bx--btn--ghost"
-                  disabled={false}
-                  onBlur={[Function]}
-                  onClick={[Function]}
-                  onFocus={[Function]}
-                  onMouseEnter={[Function]}
-                  onMouseLeave={[Function]}
-                  tabIndex={0}
-                  type="button"
+                <ForwardRef(ButtonBase)
+                  kind="ghost"
+                  size="sm"
                 >
-                  <table
-                    cellPadding="0"
-                    cellSpacing="0"
+                  <button
+                    className="cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost"
+                    disabled={false}
+                    type="button"
                   >
-                    <tbody>
-                      <tr
-                        className="no-hover"
-                        key="0"
-                        onClick={[Function]}
-                        title="Amazon East Network Manager"
-                      >
-                        <td
-                          style={
-                            Object {
-                              "border": 0,
-                              "margin": 0,
-                              "padding": 0,
-                            }
-                          }
+                    <table
+                      cellPadding="0"
+                      cellSpacing="0"
+                    >
+                      <tbody>
+                        <tr
+                          className="no-hover"
+                          key="0"
+                          onClick={[Function]}
+                          title="Amazon East Network Manager"
                         >
-                          <IconOrImage
-                            background={null}
-                            icon={null}
-                            image={null}
-                            title="Amazon East Network Manager"
-                          />
-                          foobar
-                        </td>
-                      </tr>
-                      <tr
-                        className="no-hover"
-                        key="1"
-                        onClick={[Function]}
-                        title="Amazon West Network Manager"
-                      >
-                        <td
-                          style={
-                            Object {
-                              "border": 0,
-                              "margin": 0,
-                              "padding": 0,
+                          <td
+                            style={
+                              Object {
+                                "border": 0,
+                                "margin": 0,
+                                "padding": 0,
+                              }
                             }
-                          }
+                          >
+                            <IconOrImage
+                              background={null}
+                              icon={null}
+                              image={null}
+                              title="Amazon East Network Manager"
+                            />
+                            foobar
+                          </td>
+                        </tr>
+                        <tr
+                          className="no-hover"
+                          key="1"
+                          onClick={[Function]}
+                          title="Amazon West Network Manager"
                         >
-                          <IconOrImage
-                            background={null}
-                            icon={null}
-                            image={null}
-                            title="Amazon West Network Manager"
-                          />
-                          boofar
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </button>
+                          <td
+                            style={
+                              Object {
+                                "border": 0,
+                                "margin": 0,
+                                "padding": 0,
+                              }
+                            }
+                          >
+                            <IconOrImage
+                              background={null}
+                              icon={null}
+                              image={null}
+                              title="Amazon West Network Manager"
+                            />
+                            boofar
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </button>
+                </ForwardRef(ButtonBase)>
               </Button>
             </a>
           </div>
@@ -192,24 +189,20 @@ exports[`Simple Table renders simple value just fine... 1`] = `
                 kind="ghost"
                 size="sm"
               >
-                <button
-                  aria-describedby={null}
-                  aria-pressed={null}
-                  className="bx--btn bx--btn--sm bx--btn--ghost"
-                  disabled={false}
-                  onBlur={[Function]}
-                  onClick={[Function]}
-                  onFocus={[Function]}
-                  onMouseEnter={[Function]}
-                  onMouseLeave={[Function]}
-                  tabIndex={0}
-                  type="button"
+                <ForwardRef(ButtonBase)
+                  kind="ghost"
+                  size="sm"
                 >
-                  <span>
-                     
-                    Amazon East Network Manager
-                  </span>
-                </button>
+                  <button
+                    className="cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost"
+                    disabled={false}
+                    type="button"
+                  >
+                    <span>
+                      Amazon East Network Manager
+                    </span>
+                  </button>
+                </ForwardRef(ButtonBase)>
               </Button>
             </a>
           </div>
