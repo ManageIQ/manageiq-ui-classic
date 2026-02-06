@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MiqPolicySetStructuredList should render policy set info structured list 1`] = `
-<FeatureToggle(StructuredListWrapper)
-  ariaLabel="Structured list"
+<StructuredListWrapper
+  aria-label="Structured list"
   className="miq-structured-list miq_policy_set_info"
 >
   <MiqStructuredListBody
@@ -17,12 +17,12 @@ exports[`MiqPolicySetStructuredList should render policy set info structured lis
       ]
     }
   />
-</FeatureToggle(StructuredListWrapper)>
+</StructuredListWrapper>
 `;
 
 exports[`MiqPolicySetStructuredList should render policy set notes structured list 1`] = `
-<FeatureToggle(StructuredListWrapper)
-  ariaLabel="Structured list"
+<StructuredListWrapper
+  aria-label="Structured list"
   className="miq-structured-list miq_policy_set_notes"
 >
   <MiqStructuredListBody
@@ -41,12 +41,12 @@ exports[`MiqPolicySetStructuredList should render policy set notes structured li
       ]
     }
   />
-</FeatureToggle(StructuredListWrapper)>
+</StructuredListWrapper>
 `;
 
 exports[`MiqPolicySetStructuredList should render policy set structured list 1`] = `
-<FeatureToggle(StructuredListWrapper)
-  ariaLabel="Structured list"
+<StructuredListWrapper
+  aria-label="Structured list"
   className="miq-structured-list miq_policy_set"
 >
   <MiqStructuredListBody
@@ -127,5 +127,5 @@ exports[`MiqPolicySetStructuredList should render policy set structured list 1`]
       ]
     }
   />
-</FeatureToggle(StructuredListWrapper)>
+</StructuredListWrapper>
 `;
