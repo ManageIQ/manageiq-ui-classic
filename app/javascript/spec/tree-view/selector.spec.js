@@ -58,12 +58,12 @@ describe('TreeSelector component', () => {
 
     await act(async() => {
       wrapper.update();
-      wrapper.find('Modal').find('li span').simulate('click');
+      wrapper.find('.cds--modal-content .react-tree-view').find('li span').simulate('click');
     });
 
     await act(async() => {
       wrapper.update();
-      wrapper.find('Modal').find('.bx--modal-footer button.bx--btn--primary').simulate('click');
+      wrapper.find('.cds--modal-footer button.cds--btn--primary').simulate('click');
     });
 
     wrapper.update();
