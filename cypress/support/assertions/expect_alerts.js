@@ -30,7 +30,7 @@ Cypress.Commands.add(
 
     // If an invalid flash type is passed, throw an error
     cy.logAndThrowError(
-      `Invalid flash type: "${flashType}". Valid flash types are: ${Object.values(
+      `cy.expect_flash: Invalid flash type: "${flashType}". Valid flash types are: ${Object.values(
         flashClassMap
       ).join(
         ', '
@@ -122,12 +122,12 @@ Cypress.Commands.add(
   }) => {
     if (!targetFooterButtonText) {
       cy.logAndThrowError(
-        'targetFooterButtonText must be provided to identify the button that dismisses the modal'
+        'cy.expect_modal: targetFooterButtonText must be provided to identify the button that dismisses the modal'
       );
     }
 
     if (modalHeaderText) {
-      cy.get('.bx--modal-container .bx--modal-header').should((header) => {
+      cy.get('.cds--modal-container .cds--modal-header').should((header) => {
         const headerText = header.text().toLowerCase();
         expect(headerText).to.include(modalHeaderText.toLowerCase());
       });
@@ -135,7 +135,7 @@ Cypress.Commands.add(
 
     if (modalContentExpectedTexts && modalContentExpectedTexts.length) {
       modalContentExpectedTexts.forEach((text) => {
-        cy.get('.bx--modal-container .bx--modal-content').should((content) => {
+        cy.get('.cds--modal-container .cds--modal-content').should((content) => {
           const contentText = content.text().toLowerCase();
           expect(contentText).to.include(text.toLowerCase());
         });
@@ -144,7 +144,7 @@ Cypress.Commands.add(
 
     return cy
       .contains(
-        '.bx--modal-container .bx--modal-footer button',
+        '.cds--modal-container .cds--modal-footer button',
         targetFooterButtonText
       )
       .click();
@@ -162,7 +162,7 @@ Cypress.Commands.add(
  */
 Cypress.Commands.add('expect_inline_field_errors', ({ containsText }) => {
   if (!containsText) {
-    cy.logAndThrowError('containsText is required');
+    cy.logAndThrowError('cy.expect_inline_field_errors: required object key missing - containsText');
   }
   return cy
     .contains('#name-error-msg', containsText)
