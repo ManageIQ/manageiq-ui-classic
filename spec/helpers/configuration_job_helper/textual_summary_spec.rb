@@ -2,7 +2,7 @@ describe ConfigurationJobHelper::TextualSummary do
   include ApplicationHelper
 
   let(:zone) { EvmSpecHelper.local_miq_server.zone }
-  let(:automation_provider) { FactoryBot.create(:provider_ansible_tower, :name => "ansibletest", :url => "test", :zone => zone) }
+  let(:automation_provider) { FactoryBot.create(:provider_ansible_tower, :name => "ansibletest", :url => "https://test", :zone => zone) }
 
   it "#textual_provider" do
     manager = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider.id)
