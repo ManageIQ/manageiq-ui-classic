@@ -15,10 +15,10 @@ Cypress.Commands.add(
   'getFormButtonByTypeWithText',
   ({ buttonType = 'button', buttonText } = {}) => {
     if (!buttonText) {
-      cy.logAndThrowError('buttonText is required');
+      cy.logAndThrowError('cy.getFormButtonByTypeWithText: required object key missing - buttonText');
     }
     return cy.contains(
-      `#main-content button[type="${buttonType}"]`,
+      `button[type="${buttonType}"]`,
       buttonText
     );
   }
@@ -41,10 +41,10 @@ Cypress.Commands.add(
   'getFormInputFieldByIdAndType',
   ({ inputId, inputType = 'text' }) => {
     if (!inputId) {
-      cy.logAndThrowError('inputId is required');
+      cy.logAndThrowError('cy.getFormInputFieldByIdAndType: required object key missing - inputId');
     }
     return cy.get(
-      `#main-content form input[id="${inputId}"][type="${inputType}"]`
+      `form input[id="${inputId}"][type="${inputType}"]`
     );
   }
 );
@@ -62,9 +62,9 @@ Cypress.Commands.add(
  */
 Cypress.Commands.add('getFormLabelByForAttribute', ({ forValue }) => {
   if (!forValue) {
-    cy.logAndThrowError('forValue is required');
+    cy.logAndThrowError('cy.getFormLabelByForAttribute: required object key missing - forValue');
   }
-  return cy.get(`#main-content form label[for="${forValue}"]`);
+  return cy.get(`form label[for="${forValue}"]`);
 });
 
 /**
@@ -81,9 +81,9 @@ Cypress.Commands.add('getFormLabelByForAttribute', ({ forValue }) => {
  */
 Cypress.Commands.add('getFormLegendByText', ({ legendText }) => {
   if (!legendText) {
-    cy.logAndThrowError('legendText is required');
+    cy.logAndThrowError('cy.getFormLegendByText: required object key missing - legendText');
   }
-  return cy.contains('#main-content form legend.bx--label', legendText);
+  return cy.contains('form legend.cds--label', legendText);
 });
 
 /**
@@ -99,9 +99,9 @@ Cypress.Commands.add('getFormLegendByText', ({ legendText }) => {
  */
 Cypress.Commands.add('getFormSelectFieldById', ({ selectId }) => {
   if (!selectId) {
-    cy.logAndThrowError('selectId is required');
+    cy.logAndThrowError('cy.getFormSelectFieldById: required object key missing - selectId');
   }
-  return cy.get(`#main-content form select[id="${selectId}"]`);
+  return cy.get(`form select[id="${selectId}"]`);
 });
 
 /**
@@ -117,7 +117,7 @@ Cypress.Commands.add('getFormSelectFieldById', ({ selectId }) => {
  */
 Cypress.Commands.add('getFormTextareaById', ({ textareaId }) => {
   if (!textareaId) {
-    cy.logAndThrowError('textareaId is required');
+    cy.logAndThrowError('cy.getFormTextareaById: required object key missing - textareaId');
   }
-  return cy.get(`#main-content form textarea[id="${textareaId}"]`);
+  return cy.get(`form textarea[id="${textareaId}"]`);
 });

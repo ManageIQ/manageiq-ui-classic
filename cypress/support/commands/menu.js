@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 
 const primary = '#main-menu nav.primary';
-const secondary = 'div[role="presentation"] > .bx--side-nav__items';
+const secondary = 'div[role="presentation"] > .cds--side-nav__items';
 
 // items: Strings with at least 2 to a maximum of 3. These are the strings for the side bar menu names to click.
 Cypress.Commands.add('menu', (...items) => {
@@ -17,7 +17,7 @@ Cypress.Commands.add('menu', (...items) => {
   }
 
   if (items.length === 3) {
-    cy.get('div[role="presentation"] > .bx--side-nav__items').then((a) => {
+    cy.get('div[role="presentation"] > .cds--side-nav__items').then((a) => {
       const subMenuIndices = [...Array(a.children().length).keys()];
       subMenuIndices.forEach((index) => { // Loop through second layer menu items
         if (a.children()[index].children[0].innerText === items[1]) { // Check if current second layer menu item is the one we want
@@ -25,7 +25,7 @@ Cypress.Commands.add('menu', (...items) => {
             cy.get(a.children()[index]).contains('a > span', items[2]).click();
           } else { // If third layer menu is not already open then we need to open it
             ret = cy.get(`${secondary} > li`)
-              .contains('.bx--side-nav__submenu', items[1])
+              .contains('.cds--side-nav__submenu', items[1])
               .click()
               .parent()
               .contains('a > span', items[2])
@@ -49,7 +49,7 @@ Cypress.Commands.add('menuItems', () => {
     if ($li.text() !== 'Logout') {
       cy.get($li).click().then(() => {
         cy.get(`${secondary} > li`).each(($li) => {
-          if ($li[0].className === 'bx--side-nav__item') {
+          if ($li[0].className === 'cds--side-nav__item') {
             const parent = $li.children().children()[0].innerText;
             cy.get($li).click().then(() => {
               [...$li.children()[1].children].forEach((child) => {
