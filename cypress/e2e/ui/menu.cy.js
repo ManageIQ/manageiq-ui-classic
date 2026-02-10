@@ -156,11 +156,11 @@ describe('Menu', () => {
 
       cy.menu('Settings', 'Application Settings').get('#control_settings_accord > .panel-title');
       cy.get('#explorer').contains('Settings Server');
-      cy.menu('Settings', 'Tasks').get('.bx--tabs--scrollable__nav > li').contains('My Tasks');
+      cy.menu('Settings', 'Tasks').get('.cds--tab--list > button').contains('My Tasks');
 
       // About
       cy.menu('Settings', 'About').then(() => {
-        cy.get('.bx--modal-container', {timeout: 10000});
+        cy.get('.cds--modal-container', {timeout: 10000});
       });
     });
 
@@ -168,7 +168,7 @@ describe('Menu', () => {
     // the page back to how it was before.
     it('Documentation', () => {
       const primary = '#main-menu nav.primary';
-      const secondary = 'div[role="presentation"] > .bx--side-nav__items';
+      const secondary = 'div[role="presentation"] > .cds--side-nav__items';
 
       cy.get(`${primary} > ul > li`)
         .contains('a > span', 'Settings')
@@ -181,7 +181,7 @@ describe('Menu', () => {
 
     it('ManageIQ.org', () => {
       const primary = '#main-menu nav.primary';
-      const secondary = 'div[role="presentation"] > .bx--side-nav__items';
+      const secondary = 'div[role="presentation"] > .cds--side-nav__items';
 
       cy.get(`${primary} > ul > li`)
         .contains('a > span', 'Settings')

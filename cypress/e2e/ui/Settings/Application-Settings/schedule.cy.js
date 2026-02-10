@@ -1,9 +1,6 @@
 /* eslint-disable no-undef */
 import { flashClassMap } from '../../../../support/assertions/assertion_constants';
 
-// Component route url
-const COMPONENT_ROUTE_URL = '/ops/explorer';
-
 // List items
 const SCHEDULES_ACCORDION_ITEM = 'Schedules';
 const MANAGEIQ_REGION_ACCORDION_ITEM = /^ManageIQ Region:/;
@@ -51,9 +48,8 @@ const TIMER_TYPE_WEEKLY = 'Weekly';
 const TIMER_TYPE_MONTHLY = 'Monthly';
 const FREQUENCY_TYPE_HOUR = '1 Hour';
 const TIME_ZONE_TYPE_HAWAII = '(GMT-10:00) Hawaii';
-const INITIAL_START_DATE = '06/30/2025';
-const EDITED_START_DATE = '07/21/2025';
-const START_TIME = '11:23';
+const INITIAL_START_TIME = '11:23';
+const EDITED_START_TIME = '09:35';
 
 // Buttons
 const SAVE_BUTTON_TEXT = 'Save';
@@ -115,12 +111,11 @@ function addSchedule() {
   cy.getFormSelectFieldById({ selectId: 'timer_value' }).select(
     FREQUENCY_TYPE_HOUR
   );
-  cy.getFormInputFieldByIdAndType({ inputId: 'time_zone' }).click();
-  cy.contains('[role="option"]', TIME_ZONE_TYPE_HAWAII).click();
-  cy.getFormInputFieldByIdAndType({ inputId: 'start_date' }).type(
-    INITIAL_START_DATE
-  );
-  cy.getFormInputFieldByIdAndType({ inputId: 'start_time' }).type(START_TIME);
+  cy.changeSelect('time_zone', TIME_ZONE_TYPE_HAWAII);
+  // TODO: Add a support command for calendar date selection
+  cy.getFormInputFieldByIdAndType({ inputId: 'start_date' }).click();
+  cy.get('.flatpickr-calendar.open .cds--date-picker__day').eq(10).click();
+  cy.getFormInputFieldByIdAndType({ inputId: 'start_time' }).type(INITIAL_START_TIME);
   cy.interceptApi({
     alias: 'addScheduleApi',
     urlPattern: '/ops/schedule_edit/new?button=save',
@@ -144,15 +139,6 @@ function clickScheduleItem(scheduleName) {
     SCHEDULES_ACCORDION_ITEM,
     scheduleName,
   ]);
-}
-
-function deleteSchedule(scheduleName) {
-  clickScheduleItem(scheduleName);
-  cy.expect_browser_confirm_with_text({
-    confirmTriggerFn: () => selectConfigMenu(DELETE_SCHEDULE_CONFIG_OPTION),
-    containsText: BROWSER_ALERT_DELETE_CONFIRM_TEXT,
-  });
-  cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SCHEDULE_DELETED);
 }
 
 describe('Automate Schedule form operations: Settings > Application Settings > Settings > Schedules > Configuration > Add a new schedule', () => {
@@ -473,7 +459,11 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
       .click();
     cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SCHEDULE_SAVED);
 
-    /* ===== Delete is already handled from afterEach hook ===== */
+    cy.expect_browser_confirm_with_text({
+      confirmTriggerFn: () => selectConfigMenu(DELETE_SCHEDULE_CONFIG_OPTION),
+      containsText: BROWSER_ALERT_DELETE_CONFIRM_TEXT,
+    });
+    cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SCHEDULE_DELETED);
   });
 
   it('Checking whether Cancel & Reset buttons work fine in the Edit form', () => {
@@ -487,9 +477,9 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
     cy.getFormInputFieldByIdAndType({ inputId: 'description' })
       .clear()
       .type(EDITED_DESCRIPTION);
-    cy.getFormInputFieldByIdAndType({ inputId: 'start_date' })
+    cy.getFormInputFieldByIdAndType({ inputId: 'start_time' })
       .clear()
-      .type(EDITED_START_DATE);
+      .type(EDITED_START_TIME);
     cy.getFormButtonByTypeWithText({ buttonText: RESET_BUTTON_TEXT })
       .should('be.enabled')
       .click();
@@ -498,9 +488,9 @@ describe('Automate Schedule form operations: Settings > Application Settings > S
       'have.value',
       INITIAL_DESCRIPTION
     );
-    cy.getFormInputFieldByIdAndType({ inputId: 'start_date' }).should(
+    cy.getFormInputFieldByIdAndType({ inputId: 'start_time' }).should(
       'have.value',
-      INITIAL_START_DATE
+      INITIAL_START_TIME
     );
 
     /* ===== Checking whether Cancel button works ===== */
