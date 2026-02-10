@@ -24,7 +24,7 @@
  */
 Cypress.Commands.add('tabs', ({ tabLabel = '' }) => {
   if (!tabLabel) {
-    cy.logAndThrowError(`tabLabel is required`);
+    cy.logAndThrowError(`cy.tabs: required object key missing - tabLabel`);
   }
-  return cy.contains(`ul[role="tablist"] [role="tab"]`, tabLabel).click();
+  return cy.contains(`[role="tablist"] [role="tab"]`, tabLabel).click();
 });

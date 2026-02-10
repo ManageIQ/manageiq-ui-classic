@@ -254,6 +254,7 @@ Cypress.Commands.add('validateFormButtons', (buttonConfigs) => {
         buttonText,
         buttonType,
       })
+      .scrollIntoView()
       .should('be.visible');
 
     if (shouldBeDisabled) {

@@ -422,7 +422,7 @@ function updateProviderFieldsForEdit(providerType) {
 function selectCreatedProvider(providerName) {
   // Set pagination to 200 items per page to include the target provider despite pending deletions
   cy.get(
-    '.miq-fieldset-content .miq-pagination select#bx-pagination-select-1'
+    '.miq-fieldset-content .miq-pagination .cds--pagination__left select'
   ).select('200');
   cy.selectTableRowsByText({ textArray: [providerName] });
 }
@@ -573,7 +573,7 @@ function assertValidationFailureMessage() {
  * Asserts validation success message
  */
 function assertValidationSuccessMessage() {
-  return cy.contains('.bx--form__helper-text', VALIDATION_MESSAGES.SUCCESSFUL);
+  return cy.contains('.cds--form__helper-text', VALIDATION_MESSAGES.SUCCESSFUL);
 }
 
 /**
