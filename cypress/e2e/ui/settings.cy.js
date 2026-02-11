@@ -20,7 +20,7 @@ describe('Settings > My Settings', () => {
     cy.wait('@settingsUpdate').its('response.statusCode').should('eq', 200);
 
     // Wait for page to load before clicking log out to prevent errors
-    cy.get('[name="general-subform"] > :nth-child(2) > .bx--select');
+    cy.get('[name="general-subform"] > :nth-child(2) > .cds--select');
     cy.menu('Logout');
     cy.login();
     cy.url().should('include', '/dashboard');
@@ -38,7 +38,7 @@ describe('Settings > My Settings', () => {
     }).click();
     cy.wait('@settingsUpdate').its('response.statusCode').should('eq', 200);
 
-    cy.get('[name="general-subform"] > :nth-child(2) > .bx--select');
+    cy.get('[name="general-subform"] > :nth-child(2) > .cds--select');
     cy.menu('Logout');
     cy.login();
     cy.url().should('include', '/utilization');

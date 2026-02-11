@@ -87,7 +87,7 @@ function addZone() {
 
 function validateFormElements(isEditForm = false) {
   cy.expect_explorer_title(FORM_HEADER_FRAGMENT);
-  cy.get('#main-content .bx--form h3').contains(INFO_SUB_HEADER);
+  cy.get('#main-content .cds--form h3').contains(INFO_SUB_HEADER);
   // Validate form labels
   cy.validateFormLabels([
     {

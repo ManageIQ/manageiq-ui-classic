@@ -78,12 +78,9 @@ function fillFormFields(fields, values) {
       case 'textarea':
         cy.getFormTextareaById({ textareaId: field.id }).type(values[field.id]);
         break;
-      case 'checkbox':
+      case 'toggle_button':
         if (values[field.id]) {
-          cy.getFormInputFieldByIdAndType({
-            inputId: field.id,
-            inputType: 'checkbox',
-          }).check();
+          cy.getFormToggleButtonById({ toggleId: field.id }).click();
         }
         break;
       default:
@@ -230,13 +227,9 @@ function validateFormFields(fields, isEdit) {
             .and('be.enabled');
         }
         break;
-      case 'checkbox':
-        cy.getFormInputFieldByIdAndType({
-          inputId: field.id,
-          inputType: 'checkbox',
-        })
-          .should('be.visible')
-          .and('be.enabled');
+      case 'toggle_button':
+        cy.getFormToggleButtonById({ toggleId: field.id })
+          .should('be.enabled');
         break;
       default:
         break;

@@ -697,7 +697,7 @@ function getIBMPowerVCProviderConfig() {
         {
           label: FIELD_LABELS.TENANT_MAPPING_ENABLED,
           id: 'tenant_mapping_enabled',
-          type: 'checkbox',
+          type: 'toggle_button',
           required: false,
         },
         {
@@ -830,7 +830,7 @@ function getIBMCICProviderConfig() {
         {
           label: FIELD_LABELS.TENANT_MAPPING_ENABLED,
           id: 'tenant_mapping_enabled',
-          type: 'checkbox',
+          type: 'toggle_button',
           required: false,
         },
         {
@@ -971,7 +971,7 @@ function getOpenStackProviderConfig() {
         {
           label: FIELD_LABELS.TENANT_MAPPING_ENABLED,
           id: 'tenant_mapping_enabled',
-          type: 'checkbox',
+          type: 'toggle_button',
           required: false,
         },
         {
