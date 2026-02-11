@@ -50,9 +50,9 @@ describe('Overview > Dashboard Tests', () => {
         if (cards[index].firstChild.innerText === newCard) {
           cy.get(cards[index]).then((card) => {
             cy.get(card.children()[0].children[0].children[0]).click().then(() => {
-              cy.get('.bx--overflow-menu-options').then((menuItems) => {
+              cy.get('.cds--overflow-menu-options').then((menuItems) => {
                 cy.get(menuItems.children()[0]).click().then(() => {
-                  cy.get('.is-visible > .bx--modal-container > .bx--modal-footer > .bx--btn--primary').click().then(() => {
+                  cy.expect_modal({ modalContentExpectedTexts: ['want to remove'], targetFooterButtonText: 'OK' }).then(() => {
                     cy.get('.card-pf').its('length').should('eq', defaultCards.length);
                     cy.get('.card-pf').then((cards) => {
                       const nums = [...Array(cards.length).keys()];
@@ -74,7 +74,7 @@ describe('Overview > Dashboard Tests', () => {
     cy.get('.card-pf').then((cards) => {
       cy.get(cards[0]).then((card) => {
         cy.get(card.children()[0].children[0].children[0]).click().then(() => {
-          cy.get('.bx--overflow-menu-options').then((menuItems) => {
+          cy.get('.cds--overflow-menu-options').then((menuItems) => {
             cy.get(menuItems.children()[1]).click().then(() => {
               expect(card.children()[1].style.display).to.equal('none');
             });
@@ -87,7 +87,7 @@ describe('Overview > Dashboard Tests', () => {
   // cy.get('.card-pf').then((cards) => {
   //   cy.get(cards[0]).then((card) => {
   //     cy.get(card.children()[0].children[0].children[0]).click().then(() => {
-  //       cy.get('.bx--overflow-menu-options').then((menuItems) => {
+  //       cy.get('.cds--overflow-menu-options').then((menuItems) => {
   //         cy.get(menuItems.children()[1]).click().then(() => {
   //           expect(card.children()[1].style.display).to.equal('block');
   //         });
@@ -101,7 +101,7 @@ describe('Overview > Dashboard Tests', () => {
     cy.get('.card-pf').then((cards) => {
       cy.get(cards[0]).then((card) => {
         cy.get(card.children()[0].children[0].children[0]).click().then(() => {
-          cy.get('.bx--overflow-menu-options').then((menuItems) => {
+          cy.get('.cds--overflow-menu-options').then((menuItems) => {
             cy.get(menuItems.children()[4]).click().then(() => {
               cy.get('#zoomed_chart_div').contains(defaultCards[0]);
               cy.get('#lightbox-panel').then((div) => {
@@ -120,7 +120,7 @@ describe('Overview > Dashboard Tests', () => {
         const newId = cards[0].children[1].id.split('_')[1].replace('w', '');
         cy.intercept('GET', `/dashboard/widget_chart_data/${newId}`).as('get');
         cy.get(card.children()[0].children[0].children[0]).click().then(() => {
-          cy.get('.bx--overflow-menu-options').then((menuItems) => {
+          cy.get('.cds--overflow-menu-options').then((menuItems) => {
             cy.get(menuItems.children()[5]).click().then(() => {
               cy.wait('@get').then((getCall) => {
                 expect(getCall.state).to.equal('Complete');
