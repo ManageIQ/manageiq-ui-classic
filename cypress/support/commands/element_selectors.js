@@ -121,3 +121,21 @@ Cypress.Commands.add('getFormTextareaById', ({ textareaId }) => {
   }
   return cy.get(`form textarea[id="${textareaId}"]`);
 });
+
+/**
+ * Retrieves a form toggle button element by its ID.
+ *
+ * @param {Object} options - The options object.
+ * @param {string} options.toggleId - The ID of the toggle button (required).
+ * @returns {Element} The matched toggle button element.
+ * @throws {Error} If toggleId is not provided.
+ *
+ * Example:
+ *   cy.getFormToggleButtonById({ toggleId: 'tenant_mapping_enabled' });
+ */
+Cypress.Commands.add('getFormToggleButtonById', ({ toggleId }) => {
+  if (!toggleId) {
+    cy.logAndThrowError('cy.getFormToggleButtonById: required object key missing - toggleId');
+  }
+  return cy.get(`form button#${toggleId}.cds--toggle__button`);
+});
