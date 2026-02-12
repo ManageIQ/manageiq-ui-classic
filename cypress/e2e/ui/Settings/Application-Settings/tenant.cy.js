@@ -186,22 +186,49 @@ function validateFormElements(isEditForm = true) {
     .and('be.disabled');
 }
 
-function createAndSelectChildTenant() {
-  openTenantFormAndWaitForValidation(ADD_CHILD_TENANT_CONFIG_OPTION);
-  updateNameAndDescription(
-    INITIAL_CHILD_TENANT_NAME,
-    INITIAL_CHILD_TENANT_DESCRIPTION
-  );
-  saveFormWithOptionalFlashCheck({
-    button: ADD_BUTTON_TEXT,
-    flashMessageSnippet: FLASH_MESSAGE_ADDED,
-  });
+function navigateToChildTenant() {
+  cy.menu(SETTINGS_MENU_OPTION, APP_SETTINGS_MENU_OPTION);
+  cy.accordion(ACCESS_CONTROL_ACCORDION_ITEM);
   cy.selectAccordionItem([
     MANAGEIQ_REGION_ACCORDION_ITEM,
     TENANTS_ACCORDION_ITEM,
     INITIAL_PARENT_TENANT_NAME,
     INITIAL_CHILD_TENANT_NAME,
   ]);
+}
+
+function createAndNavigateToChildTenant({ createProject = false } = {}) {
+  cy.appFactories([
+    [
+      'create',
+      'tenant',
+      {
+        name: INITIAL_CHILD_TENANT_NAME,
+        description: INITIAL_CHILD_TENANT_DESCRIPTION,
+      },
+    ],
+  ]).then((createdChildTenantData) => {
+    expect(createdChildTenantData.length).to.equal(1);
+    if (createProject) {
+      cy.appFactories([
+        [
+          'create',
+          'tenant_project',
+          {
+            name: PROJECT_NAME_VALUE,
+            description: EDITED_DESCRIPTION_VALUE,
+            // Map the project to the created child tenant
+            ancestry: `1/${createdChildTenantData[0].id}`,
+          },
+        ],
+      ]).then((createdProjectData) => {
+        expect(createdProjectData.length).to.equal(1);
+        navigateToChildTenant();
+      });
+    } else {
+      navigateToChildTenant();
+    }
+  });
 }
 
 function resetParentTenantForm() {
@@ -227,30 +254,17 @@ function resetParentTenantForm() {
   );
 }
 
-function deleteAccordionItems(accordionsToDelete) {
-  cy.get(`#${ACCESS_CONTROL_ACCORDION_ITEM_ID} li.list-group-item`).each(
-    (item) => {
-      const text = item.text().trim();
-      // Check if the text matches the project name created during test, if yes delete
-      if (accordionsToDelete.includes(text)) {
-        cy.wrap(item).click({ force: true });
-        cy.interceptApi({
-          alias: 'deleteAccordionApi',
-          urlPattern: /\/ops\/x_button\/[^/]+\?pressed=rbac_tenant_delete/,
-          triggerFn: () =>
-            cy.expect_browser_confirm_with_text({
-              confirmTriggerFn: () =>
-                cy.toolbar(CONFIG_TOOLBAR_BUTTON, DELETE_ITEM_CONFIG_OPTION),
-              containsText: BROWSER_ALERT_DELETE_CONFIRM_TEXT,
-            }),
-        });
-        // Break the loop
-        return false;
-      }
-      // Returning null to get rid of eslint warning, has no impact
-      return null;
-    }
-  );
+function deleteChildTenant() {
+  cy.interceptApi({
+    alias: 'deleteAccordionApi',
+    urlPattern: /\/ops\/x_button\/[^/]+\?pressed=rbac_tenant_delete/,
+    triggerFn: () =>
+      cy.expect_browser_confirm_with_text({
+        confirmTriggerFn: () =>
+          cy.toolbar(CONFIG_TOOLBAR_BUTTON, DELETE_ITEM_CONFIG_OPTION),
+        containsText: BROWSER_ALERT_DELETE_CONFIRM_TEXT,
+      }),
+  });
 }
 
 function addProjectToTenant() {
@@ -266,14 +280,14 @@ function editQuotasTable(quotaName = ALLOCATED_STORAGE_QUOTA, quotaValue) {
   cy.get('#rbac_details .miq-data-table table tbody tr').each((row) => {
     if (
       row
-        .find('td span.bx--front-line')
+        .find('td span.cds--front-line')
         .filter((_ind, el) => el.innerText.trim() === quotaName).length
     ) {
-      cy.wrap(row).find('span.bx--toggle__switch').click();
+      cy.wrap(row).find('div.cds--toggle__switch').click();
 
       if (quotaValue) {
         cy.wrap(row)
-          .find('div.bx--text-input-wrapper input')
+          .find('div.cds--text-input-wrapper input')
           .clear()
           .type(quotaValue);
       }
@@ -288,16 +302,19 @@ function editQuotasTable(quotaName = ALLOCATED_STORAGE_QUOTA, quotaValue) {
 describe('Automate Tenant form operations: Settings > Application Settings > Access Control > Tenants', () => {
   beforeEach(() => {
     cy.login();
-    cy.menu(SETTINGS_MENU_OPTION, APP_SETTINGS_MENU_OPTION);
-    cy.accordion(ACCESS_CONTROL_ACCORDION_ITEM);
-    cy.selectAccordionItem([
-      MANAGEIQ_REGION_ACCORDION_ITEM,
-      TENANTS_ACCORDION_ITEM,
-      INITIAL_PARENT_TENANT_NAME,
-    ]);
   });
 
   describe('Validate Parent Tenant operations: Edit, Add Project, Manage Quotas', () => {
+    beforeEach(() => {
+      cy.menu(SETTINGS_MENU_OPTION, APP_SETTINGS_MENU_OPTION);
+      cy.accordion(ACCESS_CONTROL_ACCORDION_ITEM);
+      cy.selectAccordionItem([
+        MANAGEIQ_REGION_ACCORDION_ITEM,
+        TENANTS_ACCORDION_ITEM,
+        INITIAL_PARENT_TENANT_NAME,
+      ]);
+    });
+
     describe('Validate Edit parent tenant', () => {
       beforeEach(() => {
         openEditTenantFormAndWaitForLoad(EDIT_TENANT_CONFIG_OPTION);
@@ -369,9 +386,16 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
     });
   });
 
-  describe('Validate Child Tenant operations: Add, Edit, Add Project, Manage Quotas', () => {
+  describe('Validate Child Tenant operations: Add, Edit, Delete, Add Project, Manage Quotas', () => {
     describe('Validate Add child tenant function', () => {
       beforeEach(() => {
+        cy.menu(SETTINGS_MENU_OPTION, APP_SETTINGS_MENU_OPTION);
+        cy.accordion(ACCESS_CONTROL_ACCORDION_ITEM);
+        cy.selectAccordionItem([
+          MANAGEIQ_REGION_ACCORDION_ITEM,
+          TENANTS_ACCORDION_ITEM,
+          INITIAL_PARENT_TENANT_NAME,
+        ]);
         openTenantFormAndWaitForValidation(ADD_CHILD_TENANT_CONFIG_OPTION);
       });
 
@@ -386,46 +410,54 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
       it('Validate Cancel, Add & Delete of child tenant', () => {
         updateNameAndDescription(
           INITIAL_CHILD_TENANT_NAME,
-          INITIAL_CHILD_TENANT_DESCRIPTION
+          INITIAL_CHILD_TENANT_DESCRIPTION,
         );
         cancelFormWithOptionalFlashCheck();
         openTenantFormAndWaitForValidation(ADD_CHILD_TENANT_CONFIG_OPTION);
         updateNameAndDescription(
           INITIAL_CHILD_TENANT_NAME,
-          INITIAL_CHILD_TENANT_DESCRIPTION
+          INITIAL_CHILD_TENANT_DESCRIPTION,
         );
         saveFormWithOptionalFlashCheck({
           button: ADD_BUTTON_TEXT,
           flashMessageSnippet: FLASH_MESSAGE_ADDED,
         });
-        deleteAccordionItems([INITIAL_CHILD_TENANT_NAME]);
+
+        cy.selectAccordionItem([
+          MANAGEIQ_REGION_ACCORDION_ITEM,
+          TENANTS_ACCORDION_ITEM,
+          INITIAL_PARENT_TENANT_NAME,
+          INITIAL_CHILD_TENANT_NAME,
+        ]);
+        deleteChildTenant();
         cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_DELETE_SUCCESSFUL);
       });
 
       it('Validate Adding a duplicate child tenant is restricted', () => {
-        updateNameAndDescription(
-          INITIAL_CHILD_TENANT_NAME,
-          INITIAL_CHILD_TENANT_DESCRIPTION
-        );
-        saveFormWithOptionalFlashCheck({
-          assertFlashMessage: false,
-          button: ADD_BUTTON_TEXT,
-          flashMessageSnippet: FLASH_MESSAGE_ADDED,
+        cy.appFactories([
+          [
+            'create',
+            'tenant',
+            {
+              name: INITIAL_CHILD_TENANT_NAME,
+              description: INITIAL_CHILD_TENANT_DESCRIPTION,
+            },
+          ],
+        ]).then((createdChildTenantData) => {
+          expect(createdChildTenantData.length).to.equal(1);
         });
-        openTenantFormAndWaitForValidation(ADD_CHILD_TENANT_CONFIG_OPTION);
         cy.getFormInputFieldByIdAndType({ inputId: 'name' }).type(
-          INITIAL_CHILD_TENANT_NAME
+          INITIAL_CHILD_TENANT_NAME,
         );
         cy.get('#rbac_details #name-error-msg').contains(
-          NAME_ALREADY_TAKEN_ERROR
+          NAME_ALREADY_TAKEN_ERROR,
         );
-        cancelFormWithOptionalFlashCheck(false);
       });
     });
 
     describe('Validate Edit child tenant', () => {
       beforeEach(() => {
-        createAndSelectChildTenant();
+        createAndNavigateToChildTenant();
         openEditTenantFormAndWaitForLoad(EDIT_TENANT_CONFIG_OPTION);
       });
 
@@ -462,7 +494,7 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
 
     describe('Validate Add Project to child tenant', () => {
       beforeEach(() => {
-        createAndSelectChildTenant();
+        createAndNavigateToChildTenant();
       });
 
       afterEach(() => {
@@ -472,17 +504,26 @@ describe('Automate Tenant form operations: Settings > Application Settings > Acc
       it('Validate Add Project function', () => {
         addProjectToTenant();
       });
+    });
 
-      it('Validate Removing a child tenant with a project is restricted', () => {
-        addProjectToTenant();
-        deleteAccordionItems([INITIAL_CHILD_TENANT_NAME]);
+    describe('Validate removing a child tenant with a project', () => {
+      beforeEach(() => {
+        createAndNavigateToChildTenant({ createProject: true });
+      });
+
+      afterEach(() => {
+        cy.appDbState('restore');
+      });
+
+      it('Validate removing a child tenant with a project throws error', () => {
+        deleteChildTenant();
         cy.expect_flash(flashClassMap.error, FLASH_MESSAGE_CANT_DELETE);
       });
     });
 
     describe('Validate Manage Quotas in child tenant', () => {
       beforeEach(() => {
-        createAndSelectChildTenant();
+        createAndNavigateToChildTenant();
         cy.toolbar(CONFIG_TOOLBAR_BUTTON, MANAGE_QUOTAS_CONFIG_OPTION);
       });
 

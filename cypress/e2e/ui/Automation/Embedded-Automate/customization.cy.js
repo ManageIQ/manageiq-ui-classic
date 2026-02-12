@@ -1,22 +1,22 @@
 /* eslint-disable no-undef */
+import { flashClassMap } from "../../../../support/assertions/assertion_constants";
 
 describe('Automation > Embedded Automate > Customization', () => {
   beforeEach(() => {
     cy.login();
     cy.menu('Automation', 'Embedded Automate', 'Customization');
-    cy.get('#explorer_title_text');
+    cy.expect_explorer_title('All Dialogs');
   });
 
   describe('Dialog Form', () => {
     it('Clicks the cancel button', () => {
-      cy.get('[title="Configuration"]').click({force: true});
-      cy.get('[title="Add a new Dialog"]').click({force: true});
-      cy.get('[class="bx--btn bx--btn--secondary"]').contains('Cancel').click({force: true});
-      cy.get('[id="explorer_title_text"]').contains('All Dialogs');
+      cy.toolbar('Configuration', 'Add a new Dialog');
+      cy.getFormButtonByTypeWithText({ buttonText: 'Cancel' }).click();
+      cy.expect_explorer_title('All Dialogs');
     });
 
     it('Clicks on a sample dialog', () => {
-      cy.get('[title="Sample Configuration Management Provisioning Dialog"]').click({force: true});
+      cy.selectAccordionItem(['All Dialogs', 'Configured System Provision', 'Sample Configuration Management Provisioning Dialog']);
       cy.get('.miq_ae_customization_summary').contains('miq_provision_configured_system_foreman_dialogs');
       cy.get('.miq_ae_customization_summary').contains('Sample Configuration Management Provisioning Dialog');
       cy.get('[class="CodeMirror-code"]').contains('---');
@@ -25,163 +25,125 @@ describe('Automation > Embedded Automate > Customization', () => {
 
     it('Resets a dialog being edited', () => {
       // creates a dialog
-      cy.get('[title="Configuration"]').click({force: true});
-      cy.get('[title="Add a new Dialog"]').click({force: true});
-      cy.get('[name="name"]').type('Test User', {force: true});
-      cy.get('[name="description"').type('Test Description');
-      cy.get('[name="dialog_type"]').select('Configured System Provision');
-      cy.get('[class="CodeMirror-lines"]').type(':Buttons:');
-      cy.get('[class="btnRight bx--btn bx--btn--primary"]').click({force: true});
-      cy.get('.miq_ae_customization_summary').contains('Test Description');
+      cy.toolbar('Configuration', 'Add a new Dialog');
+      cy.getFormInputFieldByIdAndType({ inputId: 'name' }).type('Test User');
+      cy.getFormInputFieldByIdAndType({ inputId: 'description' }).type('Test Description');
+      cy.getFormSelectFieldById({ selectId: 'dialog_type' }).select('Configured System Provision');
+      cy.get('[class="CodeMirror-lines"]').type(':Buttons');
+      cy.getFormButtonByTypeWithText({ buttonText: 'Add', buttonType: 'submit' }).click();
 
       // check correct data is displaying
-      cy.contains('Test Description').click({force: true});
+      cy.selectAccordionItem(['All Dialogs', 'Configured System Provision', 'Test Description']);
       cy.get('.miq_ae_customization_summary').contains('Test User');
       cy.get('.miq_ae_customization_summary').contains('Test Description');
       cy.get('[class="CodeMirror-code"]').contains('---');
-      cy.get('[class="CodeMirror-code"]').contains(':Buttons:');
+      cy.get('[class="CodeMirror-code"]').contains(':Buttons');
 
       // edits a dialog
-      cy.get('[title="Configuration"]').click({force: true});
-      cy.get('[title="Edit this Dialog"]').click({force: true});
-      cy.get('[name="name"]').clear({force: true});
-      cy.get('[name="name"]').clear({force: true}); // need to clear twice
-      cy.get('[name="name"]').type('Edited Test User', {force: true});
-      cy.get('[name="description"').clear({force: true});
-      cy.get('[name="description"').type('Edited Test Description');
-      cy.get('[name="dialog_type"]').select('Physical Server Provision');
+      cy.toolbar('Configuration', 'Edit this Dialog');
+      cy.getFormInputFieldByIdAndType({ inputId: 'name' }).clear().type('Edited Test User');
+      cy.getFormInputFieldByIdAndType({ inputId: 'description' }).clear().type('Edited Test Description');
+      cy.getFormSelectFieldById({ selectId: 'dialog_type' }).select('Physical Server Provision');
       cy.get('[class="CodeMirror-lines"]').type('\n :submit:\n:cancel:');
-      cy.get('[class="btnRight bx--btn bx--btn--secondary"]').contains('Reset').click({force: true});
+      cy.getFormButtonByTypeWithText({ buttonText: 'Reset' }).click();
 
       // check it was reset
-      cy.get('[name="name"]').should('have.value', 'Test User');
-      cy.get('[name="description"]').should('have.value', 'Test Description');
+      cy.getFormInputFieldByIdAndType({ inputId: 'name' }).should('have.value', 'Test User');
+      cy.getFormInputFieldByIdAndType({ inputId: 'description' }).should('have.value', 'Test Description');
       cy.get('[class="CodeMirror-code"]').contains('---');
-      cy.get('[class="CodeMirror-code"]').contains(':Buttons:');
-      cy.get('[class="bx--btn bx--btn--secondary"]').contains('Cancel').click({force: true});
+      cy.get('[class="CodeMirror-code"]').contains(':Buttons');
+      cy.getFormButtonByTypeWithText({ buttonText: 'Cancel' }).click();
 
       // clean up
-      cy.get('[title="Configuration"]').click({force: true});
-      cy.get('[title="Remove this Dialog"]').click({force: true});
-
-      cy.get('[class="list-group"]').should('not.contain', 'Test Description');
+      cy.toolbar('Configuration', 'Remove Dialog');
+      cy.expect_flash(flashClassMap.success, 'delete');
     });
 
     it('Creates, edits, deletes a dialog', () => {
       // creates a dialog
-      cy.get('[title="Configuration"]').click({force: true});
-      cy.get('[title="Add a new Dialog"]').click({force: true});
-      cy.get('[name="name"]').type('Test User', {force: true});
-      cy.get('[name="description"').type('Test Description', {force: true});
-      cy.get('[name="dialog_type"]').select('Configured System Provision');
-      cy.get('[class="CodeMirror-lines"]').type(':Buttons:');
-      cy.get('[class="btnRight bx--btn bx--btn--primary"]').click({force: true});
+      cy.toolbar('Configuration', 'Add a new Dialog');
+      cy.getFormInputFieldByIdAndType({ inputId: 'name' }).type('Test User');
+      cy.getFormInputFieldByIdAndType({ inputId: 'description' }).type('Test Description');
+      cy.getFormSelectFieldById({ selectId: 'dialog_type' }).select('Configured System Provision');
+      cy.get('[class="CodeMirror-lines"]').type('\nreturn null;');
+      cy.getFormButtonByTypeWithText({ buttonText: 'Add', buttonType: 'submit' }).click();
 
       // check correct data is displaying
-      // cy.get('[id="main_div"]').contains('Test Description');
-      cy.contains('Test Description').click({force: true});
+      cy.selectAccordionItem(['All Dialogs', 'Configured System Provision', 'Test Description']);
       cy.get('.miq_ae_customization_summary').contains('Test User');
       cy.get('.miq_ae_customization_summary').contains('Test Description');
       cy.get('[class="CodeMirror-code"]').contains('---');
-      cy.get('[class="CodeMirror-code"]').contains(':Buttons:');
+      cy.get('[class="CodeMirror-code"]').contains('return null');
 
       // edits a dialog
-      cy.get('[title="Configuration"]').click({force: true});
-      cy.get('[title="Edit this Dialog"]').click({force: true});
-      cy.get('[name="name"]').clear({force: true});
-      cy.get('[name="name"]').clear({force: true}); // need to clear twice
-      cy.get('[name="name"]').type('Edited Test User', {force: true});
-      cy.get('[name="description"').clear({force: true});
-      cy.get('[name="description"').type('Edited Test Description');
-      cy.get('[name="dialog_type"]').select('Physical Server Provision');
-      cy.get('[class="CodeMirror-lines"]').type('\n :submit:\n:cancel:');
-      cy.get('[class="btnRight bx--btn bx--btn--primary"]').click({force: true});
-      cy.get('[class="col-md-12"]').contains('Edited Test Description');
+      cy.toolbar('Configuration', 'Edit this Dialog');
+      cy.getFormInputFieldByIdAndType({ inputId: 'name' }).clear().type('Edited Test User');
+      cy.getFormInputFieldByIdAndType({ inputId: 'description' }).clear().type('Edited Test Description');
+      cy.getFormSelectFieldById({ selectId: 'dialog_type' }).select('Physical Server Provision');
+      cy.get('[class="CodeMirror-lines"]').type('\nreturn 1;');
+
+      cy.getFormButtonByTypeWithText({ buttonText: 'Save', buttonType: 'submit' }).click();
 
       // check correct data after editing
-      cy.contains('Edited Test Description').click({force: true});
       cy.get('.miq_ae_customization_summary').contains('Edited Test User');
       cy.get('.miq_ae_customization_summary').contains('Edited Test Description');
       cy.get('[class="CodeMirror-code"]').contains('---');
-      cy.get('[class="CodeMirror-code"]').contains(':Buttons:');
-      cy.get('[class="CodeMirror-code"]').contains(':submit:');
-      cy.get('[class="CodeMirror-code"]').contains(':cancel:');
+      cy.get('[class="CodeMirror-code"]').contains('return null');
+      cy.get('[class="CodeMirror-code"]').contains('return 1');
 
-      // check correct data after copying
-      cy.contains('Edited Test Description').click({force: true});
-      cy.get('.miq_ae_customization_summary').contains('Edited Test Description');
-      cy.get('[class="CodeMirror-code"]').contains('---');
-      cy.get('[class="CodeMirror-code"]').contains(':Buttons:');
-      cy.get('[class="CodeMirror-code"]').contains(':submit:');
-      cy.get('[class="CodeMirror-code"]').contains(':cancel:');
-
-      cy.contains('Edited Test Description').click({force: true});
-      cy.get('[title="Configuration"]').click({force: true});
-      cy.get('[title="Remove this Dialog"]').click({force: true});
-
-      cy.get('[class="list-group"]').should('not.contain', 'Test Description');
+      // clean up
+      cy.toolbar('Configuration', 'Remove Dialog');
+      cy.expect_flash(flashClassMap.success, 'delete');
     });
 
     it('Creates, copies, and deletes a dialog', () => {
       // creates a dialog
-      cy.get('[title="Configuration"]').click({force: true});
-      cy.get('[title="Add a new Dialog"]').click({force: true});
-      cy.get('[name="name"]').type('Test User', {force: true});
-      cy.get('[name="description"').type('Test Description');
-      cy.get('[name="dialog_type"]').select('Configured System Provision');
-      cy.get('[class="CodeMirror-lines"]').type(':Buttons:');
-      cy.get('[class="btnRight bx--btn bx--btn--primary"]').click({force: true});
-      cy.get('[class="col-md-12"]').contains('Test Description');
+      cy.toolbar('Configuration', 'Add a new Dialog');
+      cy.getFormInputFieldByIdAndType({ inputId: 'name' }).type('Test User');
+      cy.getFormInputFieldByIdAndType({ inputId: 'description' }).type('Test Description');
+      cy.getFormSelectFieldById({ selectId: 'dialog_type' }).select('Configured System Provision');
+      cy.get('[class="CodeMirror-lines"]').type('\nreturn null;');
+      cy.getFormButtonByTypeWithText({ buttonText: 'Add', buttonType: 'submit' }).click();
 
       // check correct data is displaying
-      cy.contains('Test Description').click({force: true});
       cy.get('.miq_ae_customization_summary').contains('Test User');
       cy.get('.miq_ae_customization_summary').contains('Test Description');
       cy.get('[class="CodeMirror-code"]').contains('---');
-      cy.get('[class="CodeMirror-code"]').contains(':Buttons:');
+      cy.get('[class="CodeMirror-code"]').contains('return null');
 
       // copies a dialog
-      cy.get('[title="Configuration"]').click({force: true});
-      cy.get('[title="Copy this Dialog"]').click({force: true});
-      cy.get('[class="btnRight bx--btn bx--btn--primary"]').click({force: true});
-      cy.get('[class="col-md-12"]').contains('Test Description');
-
-      cy.contains('Test Description').click({force: true});
+      cy.toolbar('Configuration', 'Copy this Dialog');
+      cy.getFormButtonByTypeWithText({ buttonText: 'Add', buttonType: 'submit' }).click();
+      cy.expect_explorer_title('Test Description');
+      cy.get('.miq_ae_customization_summary').contains('Copy of Test User');
 
       // clean up
-      cy.get('[title="Configuration"]').click({force: true});
-      cy.get('[title="Remove this Dialog"]').click({force: true});
+      cy.toolbar('Configuration', 'Remove Dialog');
+      cy.expect_flash(flashClassMap.success, 'delete');
 
-      cy.get('[id="explorer_title_text"]').contains('Configured System Provision Dialogs');
-      cy.get('[class="list-group"]').contains('Test Description').should('be.visible').click({force: true});
-      cy.get('[id="main_div"]').contains('Test Description');
-      cy.get('[title="Configuration"]').click({force: true});
-      cy.get('[title="Remove this Dialog"]').click({force: true});
-
-      cy.get('[class="list-group"]').should('not.contain', 'Test Description');
+      cy.expect_explorer_title('Configured System Provision Dialogs');
+      cy.selectAccordionItem(['All Dialogs', 'Configured System Provision', 'Test Description']);
+      cy.get('.miq_ae_customization_summary').contains('Test User');
+      cy.toolbar('Configuration', 'Remove Dialog');
+      cy.expect_flash(flashClassMap.success, 'delete');
     });
   });
 
   describe('Button Form', () => {
     beforeEach(() => {
-      cy.intercept('POST', '/miq_ae_customization/accordion_select?id=ab_accord').as('accordion');
-      cy.get('#control_ab_accord > .panel-title > .collapsed').click();
-      cy.wait('@accordion');
-      cy.wait(5000);
+      cy.accordion('Buttons');
     });
 
     it('Validates the save button correctly', () => {
-      cy.get('.clickable-row').contains('Availability Zone').click({force: true});
-      cy.get('.clickable-row').contains('Unassigned Buttons').click({force: true});
-      cy.get('[title="Configuration"]').click({force: true});
-      cy.get('[title="Add a new Button"]').click({force: true});
-      cy.get('#explorer_title_text').contains('Adding a new Button');
+      cy.selectAccordionItem(['Object Types', 'Availability Zone', /Unassigned Buttons/]);
+      cy.toolbar('Configuration', 'Add a new Button');
+      cy.expect_explorer_title('Adding a new Button');
 
       cy.get('#name').type('Test Button');
       cy.get('#description').type('Test Description');
       cy.get('.icon-button').click();
       cy.get(':nth-child(1) > span > .ff').click();
-      cy.get('.bx--modal-footer > .bx--btn--primary').click();
+      cy.get('.cds--modal-footer > .cds--btn--primary').click();
 
       cy.get('#ab_advanced_tab_tab > a').click();
       cy.get('#object_request').type('Test Request');
@@ -204,8 +166,7 @@ describe('Automation > Embedded Automate > Customization', () => {
       cy.get('.attribute_value_pair').contains('2-attribute, 2-value');
       cy.get('.visibility').contains('EvmRole-administrator, EvmRole-approver, EvmRole-physical_storages_administrator, EvmRole-super_administrator');
 
-      cy.get('[title="Configuration"]').click();
-      cy.get('[title="Edit this Button"]').click();
+      cy.toolbar('Configuration', 'Edit this Button');
 
       cy.get('#buttons_off > .btn-primary');
       cy.get('#ab_advanced_tab_tab > a').click();
@@ -217,8 +178,7 @@ describe('Automation > Embedded Automate > Customization', () => {
       cy.get('.attribute_value_pair').contains('1-attribute, 1-value');
       cy.get('.attribute_value_pair').should('not.contain', '2-attribute, 2-value');
 
-      cy.get('[title="Configuration"]').click();
-      cy.get('[title="Edit this Button"]').click();
+      cy.toolbar('Configuration', 'Edit this Button');
 
       cy.get('#buttons_off > .btn-primary');
       cy.get('#ab_advanced_tab_tab > a').click();
@@ -231,12 +191,9 @@ describe('Automation > Embedded Automate > Customization', () => {
       cy.get('.visibility').contains('EvmRole-approver, EvmRole-super_administrator');
       cy.get('.visibility').should('not.contain', 'EvmRole-administrator, EvmRole-physical_storages_administrator');
 
-      cy.get('[title="Configuration"]').click();
-      cy.get('[title="Remove this Button"]').click();
-      cy.get('h4 > strong').contains('Test Button');
-      cy.get('.Delete').click({ force: true });
-
-      cy.get('.alert').contains('The item "Test Button" has been successfully deleted');
+      cy.toolbar('Configuration', 'Remove this Button');
+      cy.expect_modal({ modalHeaderText: 'Delete Button', modalContentExpectedTexts: ['Test Button'], targetFooterButtonText: 'Delete' });
+      cy.expect_flash(flashClassMap.success, 'deleted');
     });
   });
 });
