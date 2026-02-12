@@ -1650,11 +1650,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-driven-forms/carbon-component-mapper@npm:~3.18.8":
-  version: 3.18.11
-  resolution: "@data-driven-forms/carbon-component-mapper@npm:3.18.11"
+"@data-driven-forms/carbon-component-mapper@npm:~3.23.0":
+  version: 3.23.5
+  resolution: "@data-driven-forms/carbon-component-mapper@npm:3.23.5"
   dependencies:
-    "@data-driven-forms/common": "npm:^3.18.11"
+    "@data-driven-forms/common": "npm:^3.23.5"
     clsx: "npm:^1.1.1"
     lodash: "npm:^4.17.21"
     prop-types: "npm:>=15.7.2"
@@ -1662,11 +1662,11 @@ __metadata:
   peerDependencies:
     react: ^16.13.1 || ^17.0.2 || ^18.0.0
     react-dom: ^16.13.1 || ^17.0.2 || ^18.0.0
-  checksum: 10/d8d2e54d7d7bff5b4755341f6903cc0ea7aa36d68fbd89089d958fc40fc3ec86dc2fb94a5f8712093b37c198e4cd10c4fe8a7de620063fbead6eb8e63147a104
+  checksum: 10/51ef90edffd2946f2c5476d3c4c66700dab396d7e35e2bacdbd81ea594fb8e5871f5f760420de0fc4508f573d2468a3ec028a5a3bd812825512fe2ed49d225bb
   languageName: node
   linkType: hard
 
-"@data-driven-forms/common@npm:^3.18.11":
+"@data-driven-forms/common@npm:^3.23.5":
   version: 3.23.5
   resolution: "@data-driven-forms/common@npm:3.23.5"
   dependencies:
@@ -13465,7 +13465,7 @@ __metadata:
     "@carbon/charts-react": "npm:^0.58.2"
     "@carbon/icons-react": "npm:~10.49.5"
     "@carbon/themes": "npm:~10.55.5"
-    "@data-driven-forms/carbon-component-mapper": "npm:~3.18.8"
+    "@data-driven-forms/carbon-component-mapper": "npm:~3.23.0"
     "@data-driven-forms/react-form-renderer": "npm:~3.18.8"
     "@manageiq/font-fabulous": "npm:~1.0.5"
     "@manageiq/ui-components": "npm:~1.6.1"
