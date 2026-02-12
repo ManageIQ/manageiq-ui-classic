@@ -1680,9 +1680,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@data-driven-forms/react-form-renderer@npm:~3.18.8":
-  version: 3.18.11
-  resolution: "@data-driven-forms/react-form-renderer@npm:3.18.11"
+"@data-driven-forms/react-form-renderer@npm:~3.23.0":
+  version: 3.23.5
+  resolution: "@data-driven-forms/react-form-renderer@npm:3.23.5"
   dependencies:
     final-form: "npm:^4.20.4"
     final-form-arrays: "npm:^3.0.2"
@@ -1694,7 +1694,7 @@ __metadata:
   peerDependencies:
     react: ^16.13.1 || ^17.0.2 || ^18.0.0
     react-dom: ^16.13.1 || ^17.0.2 || ^18.0.0
-  checksum: 10/157e43769e1436d34e43adf1ca4bf0e65ed5176f4fa4743646413f595b91ca6cec28f47ad99ac15d069451e49e6af99a3af8f366f9a725523504ce6e9ed5be0d
+  checksum: 10/6e7c11c51315d5e211ced6f610cb13c53911a6f521d0320f982c86656fdfd9504c6fc3910dee1781cc31a8c30beebafee6de478b65f160b7771c2eed874059be
   languageName: node
   linkType: hard
 
@@ -13466,7 +13466,7 @@ __metadata:
     "@carbon/icons-react": "npm:~10.49.5"
     "@carbon/themes": "npm:~10.55.5"
     "@data-driven-forms/carbon-component-mapper": "npm:~3.18.8"
-    "@data-driven-forms/react-form-renderer": "npm:~3.18.8"
+    "@data-driven-forms/react-form-renderer": "npm:~3.23.0"
     "@manageiq/font-fabulous": "npm:~1.0.5"
     "@manageiq/ui-components": "npm:~1.6.1"
     "@novnc/novnc": "npm:~1.2.0"
