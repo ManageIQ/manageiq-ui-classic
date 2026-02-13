@@ -1,7 +1,6 @@
 import React from 'react';
 import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
-import { shallow } from 'enzyme';
 
 import { act } from 'react-dom/test-utils';
 import { mount } from '../helpers/mountForm';

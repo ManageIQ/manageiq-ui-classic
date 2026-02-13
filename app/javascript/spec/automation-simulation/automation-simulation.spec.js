@@ -42,10 +42,11 @@ describe('AutomationSimulation Component', () => {
       </Provider>
     );
     expect(wrapper.find('.automation_simulation_tab').exists()).toBe(true);
-    expect(wrapper.find('.automation_simulation_tab').find('Tab').length).toBe(3);
-    expect(wrapper.find('.automation_simulation_tab').find('Tab').at(0).prop('label')).toBe(__('Tree View'));
-    expect(wrapper.find('.automation_simulation_tab').find('Tab').at(1).prop('label')).toBe(__('Object Info'));
-    expect(wrapper.find('.automation_simulation_tab').find('Tab').at(2).prop('label')).toBe(__('Xml View'));
+    const tabs = wrapper.find('TabList').find('button[role="tab"]');
+    expect(tabs.length).toBe(3);
+    expect(tabs.at(0).text()).toBe(__('Tree View'));
+    expect(tabs.at(1).text()).toBe(__('Object Info'));
+    expect(tabs.at(2).text()).toBe(__('Xml View'));
   });
 
   it('renders tab contents correctly based on data', () => {

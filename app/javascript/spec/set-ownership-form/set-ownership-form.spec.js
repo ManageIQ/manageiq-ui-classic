@@ -1,7 +1,6 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import fetchMock from 'fetch-mock';
-import FormRenderer from '@data-driven-forms/react-form-renderer';
 import SetOwnershipForm from '../../components/set-ownership-form';
 import createSchema from '../../components/set-ownership-form/ownership-form.schema';
 import '../helpers/miqAjaxButton';
@@ -106,7 +105,7 @@ describe('Set ownership form component', () => {
 
   it('should send correct data on cancel', () => {
     const wrapper = mount(<SetOwnershipForm {...initialProps} />);
-    wrapper.find('button.bx--btn--secondary').last().simulate('click');
+    wrapper.find('button.cds--btn--secondary').last().simulate('click');
     expect(submitSpy).toHaveBeenCalledWith('/vms/ownership_update/?button=cancel&objectIds=123456');
   });
 });

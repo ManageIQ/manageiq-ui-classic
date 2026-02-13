@@ -1,43 +1,45 @@
 /* eslint-disable no-undef */
+import { flashClassMap } from "../../../../support/assertions/assertion_constants";
 
 describe('Settings > Application Settings > Details', () => {
   beforeEach(() => {
     cy.login();
-    cy.intercept('POST', '/ops/accordion_select?id=rbac_accord').as('accordion');
     cy.menu('Settings', 'Application Settings');
-    cy.get('[data-nodeid="0.0"].node-treeview-settings_tree').contains('ManageIQ Region').click();
-    cy.get('#explorer_title_text');
+    cy.accordion('Settings');
+    cy.selectAccordionItem([/^ManageIQ Region:/]);
+    cy.expect_explorer_title('ManageIQ Region');
   });
 
   describe('Settings Details Tab', () => {
     it('Click row and reroute', () => {
-      cy.get('.bx--front-line').contains('Region 0').click({force: true});
-      cy.get('.bx--label').contains('Description').should('exist');
-      cy.get('[data-nodeid="0.0"].node-treeview-settings_tree').contains('ManageIQ Region').click();
+      cy.get('.cds--front-line').contains('Region 0').click();
+      cy.getFormLabelByForAttribute({ forValue: 'description' }).should('be.visible');
 
-      cy.get('.bx--front-line').contains('Analysis Profiles').click({force: true});
-      cy.get('#explorer_title_text').contains('Settings Analysis Profiles').should('exist');
-      cy.get('[data-nodeid="0.0"].node-treeview-settings_tree').contains('ManageIQ Region').click();
+      cy.get('.cds--front-line').contains('Analysis Profiles').click();
+      cy.expect_explorer_title('Settings Analysis Profiles');
+      cy.selectAccordionItem([/^ManageIQ Region:/]);
 
-      cy.get('.bx--front-line').contains('Zones').click({force: true});
-      cy.get('#explorer_title_text').contains('Settings Zones').should('exist');
-      cy.get('[data-nodeid="0.0"].node-treeview-settings_tree').contains('ManageIQ Region').click();
+      cy.get('.cds--front-line').contains('Zones').click();
+      cy.expect_explorer_title('Settings Zones');
+      cy.selectAccordionItem([/^ManageIQ Region:/]);
 
-      cy.get('.bx--front-line').contains('Schedules').click({force: true});
-      cy.get('#explorer_title_text').contains('Settings Schedules').should('exist');
+      cy.get('.cds--front-line').contains('Schedules').click();
+      cy.expect_explorer_title('Settings Schedules');
     });
 
     it('Updates region name when changed', () => {
-      cy.get('.bx--front-line').contains('Region 0').click({force: true});
-      cy.get('#description').clear().type('Region 1');
-      cy.get('button.bx--btn.bx--btn--primary').contains('Save').should('not.be.disabled').click();
-      cy.get('.bx--front-line').contains('Region 1').should('exist');
+      cy.get('.cds--front-line').contains('Region 0').click();
+      cy.getFormInputFieldByIdAndType({ inputId: 'description' }).clear().type('Region 1');
+      cy.getFormButtonByTypeWithText({ buttonText: 'Save', buttonType: 'submit' }).should('be.enabled').click();
+      cy.expect_flash(flashClassMap.success, 'saved');
+      cy.get('.cds--front-line').contains('Region 1').should('be.visible');
 
       // Clean up
-      cy.get('.bx--front-line').contains('Region 1').click({force: true});
-      cy.get('#description').clear().type('Region 0');
-      cy.get('button.bx--btn.bx--btn--primary').contains('Save').should('not.be.disabled').click();
-      cy.get('.bx--front-line').contains('Region 0').should('exist');
+      cy.get('.cds--front-line').contains('Region 1').click();
+      cy.getFormInputFieldByIdAndType({ inputId: 'description' }).clear().type('Region 0');
+      cy.getFormButtonByTypeWithText({ buttonText: 'Save', buttonType: 'submit' }).should('be.enabled').click();
+      cy.expect_flash(flashClassMap.success, 'saved');
+      cy.get('.cds--front-line').contains('Region 0').should('be.visible');
     });
   });
 });

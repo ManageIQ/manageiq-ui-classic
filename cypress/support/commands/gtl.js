@@ -5,7 +5,7 @@ Cypress.Commands.add('gtl_error', () => {
 });
 
 Cypress.Commands.add('gtlGetTable', () => {
-  return cy.get('#miq-gtl-view > .miq-data-table > .miq-data-table > .bx--data-table-content > table');
+  return cy.get('#miq-gtl-view > .miq-data-table > .miq-data-table > .cds--data-table-content > table');
 });
 
 // columns: Array of 0-based indexes of the columns to read (e.g. [1, 2, 3] will return all row data from columns 1, 2, and 3).

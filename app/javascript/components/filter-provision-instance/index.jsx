@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Search32, Close32 } from '@carbon/icons-react';
-import { Button, Checkbox, TextInput } from 'carbon-components-react';
+import { Search, Close } from '@carbon/react/icons';
+import { Button, Checkbox, TextInput } from '@carbon/react';
 
 /** Component to filter the images at provisioning instances page. */
 const FilterProvisionInstance = ({
@@ -30,7 +30,8 @@ const FilterProvisionInstance = ({
     <Button
       kind="secondary"
       disabled={data.loading}
-      renderIcon={Close32}
+      renderIcon={(props) => <Close size={16} {...props} />}
+      size="md"
       iconDescription={__('Clear')}
       hasIconOnly
       tooltipPosition="bottom"
@@ -42,7 +43,8 @@ const FilterProvisionInstance = ({
   /** Function to render the Lens button. */
   const renderLens = () => (
     <Button
-      renderIcon={Search32}
+      renderIcon={(props) => <Search size={16} {...props} />}
+      size="md"
       disabled={data.loading}
       iconDescription={__('Search')}
       hasIconOnly

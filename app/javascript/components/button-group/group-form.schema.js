@@ -50,7 +50,7 @@ const createSchema = (buttonIcon, options, url, setState) => ({
       name: 'set_data.button_color',
       label: __('Icon color'),
       type: 'color',
-      className: 'form-control',
+      className: 'form-control-color-select',
     },
     options && {
       component: componentTypes.DUAL_LIST_SELECT,
@@ -67,6 +67,8 @@ const createSchema = (buttonIcon, options, url, setState) => ({
       noOptionsTitle: __('No available options'),
       filterOptionsTitle: __('Filter options'),
       filterValuesTitle: __('Filter values'),
+      // Class to override grid layout with flex
+      GridProps: { className: 'miq-dual-list-common-grid-container' },
       options,
     },
 

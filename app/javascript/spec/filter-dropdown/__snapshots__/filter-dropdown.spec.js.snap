@@ -54,44 +54,37 @@ exports[`Filter Dropdown form should handle cancel 1`] = `
       <fieldset
         className="miq-fieldset"
       >
-        <legend
-          className="miq-fieldset-legend legend-filter-dropdown"
-        >
-          Choose a Filter
-        </legend>
         <div
           className="miq-fieldset-content"
         >
           <Select
             aria-label="Choose a Filter"
             defaultValue="placeholder-item"
-            disabled={false}
-            helperText=""
             id="select_filter_dropdown"
-            inline={false}
-            invalid={false}
-            invalidText=""
-            labelText="Select"
-            light={false}
             noLabel={true}
             onChange={[Function]}
           >
             <div
-              className="bx--form-item"
+              className="cds--form-item"
             >
               <div
-                className="bx--select"
+                className="cds--select"
               >
                 <div
-                  className="bx--select-input__wrapper"
+                  className="cds--select-input__wrapper"
                   data-invalid={null}
+                  onBlur={[Function]}
+                  onFocus={[Function]}
                 >
                   <select
                     aria-label="Choose a Filter"
-                    className="bx--select-input"
+                    className="cds--select-input"
                     defaultValue="placeholder-item"
                     id="select_filter_dropdown"
                     onChange={[Function]}
+                    onKeyDown={[Function]}
+                    onMouseDown={[Function]}
+                    title="Choose a Filter"
                   >
                     <SelectItem
                       disabled={true}
@@ -100,7 +93,7 @@ exports[`Filter Dropdown form should handle cancel 1`] = `
                       value="placeholder-item"
                     >
                       <option
-                        className="bx--select-option"
+                        className="cds--select-option"
                         disabled={true}
                         hidden={true}
                         value="placeholder-item"
@@ -109,23 +102,20 @@ exports[`Filter Dropdown form should handle cancel 1`] = `
                       </option>
                     </SelectItem>
                     <SelectItemGroup
-                      disabled={false}
                       label="Global Filters"
                     >
                       <optgroup
-                        className="bx--select-optgroup"
+                        className="cds--select-optgroup"
                         disabled={false}
                         label="Global Filters"
                       >
                         <SelectItem
-                          disabled={false}
-                          hidden={false}
                           key="0"
                           text="ALL (Default)"
                           value={0}
                         >
                           <option
-                            className="bx--select-option"
+                            className="cds--select-option"
                             disabled={false}
                             hidden={false}
                             value={0}
@@ -134,14 +124,12 @@ exports[`Filter Dropdown form should handle cancel 1`] = `
                           </option>
                         </SelectItem>
                         <SelectItem
-                          disabled={false}
-                          hidden={false}
                           key="1"
                           text="ALL (Default)"
                           value={1}
                         >
                           <option
-                            className="bx--select-option"
+                            className="cds--select-option"
                             disabled={false}
                             hidden={false}
                             value={1}
@@ -150,14 +138,12 @@ exports[`Filter Dropdown form should handle cancel 1`] = `
                           </option>
                         </SelectItem>
                         <SelectItem
-                          disabled={false}
-                          hidden={false}
                           key="2"
                           text="ALL (Default)"
                           value={2}
                         >
                           <option
-                            className="bx--select-option"
+                            className="cds--select-option"
                             disabled={false}
                             hidden={false}
                             value={2}
@@ -168,21 +154,20 @@ exports[`Filter Dropdown form should handle cancel 1`] = `
                       </optgroup>
                     </SelectItemGroup>
                   </select>
-                  <ForwardRef(ChevronDown16)
-                    className="bx--select__arrow"
+                  <ForwardRef(ChevronDown)
+                    className="cds--select__arrow"
                   >
                     <Icon
-                      className="bx--select__arrow"
+                      className="cds--select__arrow"
                       fill="currentColor"
                       height={16}
-                      preserveAspectRatio="xMidYMid meet"
                       viewBox="0 0 16 16"
                       width={16}
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <svg
                         aria-hidden={true}
-                        className="bx--select__arrow"
+                        className="cds--select__arrow"
                         fill="currentColor"
                         focusable="false"
                         height={16}
@@ -192,11 +177,11 @@ exports[`Filter Dropdown form should handle cancel 1`] = `
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
-                          d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                          d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                         />
                       </svg>
                     </Icon>
-                  </ForwardRef(ChevronDown16)>
+                  </ForwardRef(ChevronDown)>
                 </div>
               </div>
             </div>
@@ -209,23 +194,25 @@ exports[`Filter Dropdown form should handle cancel 1`] = `
             title={"Select a filter to set it as my default"}
             type="submit"
           >
-            <button
-              aria-describedby={null}
-              aria-pressed={null}
-              className="default_button bx--btn bx--btn--sm bx--btn--primary"
-              disabled={false}
+            <ForwardRef(ButtonBase)
+              className="default_button"
               id="set_default"
-              onBlur={[Function]}
               onClick={[Function]}
-              onFocus={[Function]}
-              onMouseEnter={[Function]}
-              onMouseLeave={[Function]}
-              tabIndex={0}
+              size="sm"
               title={"Select a filter to set it as my default"}
               type="submit"
             >
-              Set Default
-            </button>
+              <button
+                className="default_button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary"
+                disabled={false}
+                id="set_default"
+                onClick={[Function]}
+                title={"Select a filter to set it as my default"}
+                type="submit"
+              >
+                Set Default
+              </button>
+            </ForwardRef(ButtonBase)>
           </Button>
         </div>
       </fieldset>

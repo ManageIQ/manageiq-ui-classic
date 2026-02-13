@@ -78,12 +78,9 @@ function fillFormFields(fields, values) {
       case 'textarea':
         cy.getFormTextareaById({ textareaId: field.id }).type(values[field.id]);
         break;
-      case 'checkbox':
+      case 'toggle_button':
         if (values[field.id]) {
-          cy.getFormInputFieldByIdAndType({
-            inputId: field.id,
-            inputType: 'checkbox',
-          }).check();
+          cy.getFormToggleButtonById({ toggleId: field.id }).click();
         }
         break;
       default:
@@ -230,13 +227,9 @@ function validateFormFields(fields, isEdit) {
             .and('be.enabled');
         }
         break;
-      case 'checkbox':
-        cy.getFormInputFieldByIdAndType({
-          inputId: field.id,
-          inputType: 'checkbox',
-        })
-          .should('be.visible')
-          .and('be.enabled');
+      case 'toggle_button':
+        cy.getFormToggleButtonById({ toggleId: field.id })
+          .should('be.enabled');
         break;
       default:
         break;
@@ -422,7 +415,7 @@ function updateProviderFieldsForEdit(providerType) {
 function selectCreatedProvider(providerName) {
   // Set pagination to 200 items per page to include the target provider despite pending deletions
   cy.get(
-    '.miq-fieldset-content .miq-pagination select#bx-pagination-select-1'
+    '.miq-fieldset-content .miq-pagination .cds--pagination__left select'
   ).select('200');
   cy.selectTableRowsByText({ textArray: [providerName] });
 }
@@ -573,7 +566,7 @@ function assertValidationFailureMessage() {
  * Asserts validation success message
  */
 function assertValidationSuccessMessage() {
-  return cy.contains('.bx--form__helper-text', VALIDATION_MESSAGES.SUCCESSFUL);
+  return cy.contains('.cds--form__helper-text', VALIDATION_MESSAGES.SUCCESSFUL);
 }
 
 /**

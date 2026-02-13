@@ -7,38 +7,34 @@ exports[`AnsiblePlaybookWorkflow component should render the AnsiblePlaybookWork
   <div
     className="col-md-12 col-lg-6"
   >
-    <Tabs
-      className="miq_custom_tabs"
-      scrollDebounceWait={150}
-      scrollIntoView={true}
-      selected={0}
-      selectionMode="automatic"
-      type="default"
-    >
-      <Tab
-        key="tab_text"
-        label="Text"
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        selected={false}
+    <Tabs>
+      <TabList
+        aria-label="Ansible Playbook Tabs"
+        className="miq_custom_tabs"
       >
-        <Controlled
-          className="miq-codemirror ansible-playbook-workflow-payload"
-          options={
-            Object {
-              "autoCloseBrackets": true,
-              "gutters": Array [
-                "CodeMirror-lint-markers",
-              ],
-              "lineNumbers": true,
-              "lineWrapping": true,
-              "lint": true,
-              "mode": "yaml",
-              "styleActiveLine": true,
-              "theme": "eclipse",
+        <ForwardRef>
+          Text
+        </ForwardRef>
+      </TabList>
+      <TabPanels>
+        <ForwardRef>
+          <Controlled
+            className="miq-codemirror ansible-playbook-workflow-payload"
+            options={
+              Object {
+                "autoCloseBrackets": true,
+                "gutters": Array [
+                  "CodeMirror-lint-markers",
+                ],
+                "lineNumbers": true,
+                "lineWrapping": true,
+                "lint": true,
+                "mode": "yaml",
+                "styleActiveLine": true,
+                "theme": "eclipse",
+              }
             }
-          }
-          value="
+            value="
   ---
   - name: Provision instances
     hosts: localhost
@@ -69,8 +65,9 @@ exports[`AnsiblePlaybookWorkflow component should render the AnsiblePlaybookWork
         timeout: 320
         state: started
         with_items: \\"{{ ec2.instances }}\\""
-        />
-      </Tab>
+          />
+        </ForwardRef>
+      </TabPanels>
     </Tabs>
   </div>
 </div>

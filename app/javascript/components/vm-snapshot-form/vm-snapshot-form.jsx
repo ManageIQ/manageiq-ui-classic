@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'carbon-components-react';
+import { Grid, Column } from '@carbon/react';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
 import MiqFormRenderer from '../../forms/data-driven-form';
@@ -21,14 +21,16 @@ const VmSnapshotForm = ({ url, redirect }) => {
 
   return !isLoading && (
     <Grid>
-      <MiqFormRenderer
-        schema={schema}
-        onSubmit={onSubmit}
-        onCancel={() => miqRedirectBack(_('Snapshot of VM or Instance was cancelled by the user'), 'warning', redirect)}
-        buttonsLabels={{
-          submitLabel: __('Create'),
-        }}
-      />
+      <Column sm={4} md={8} lg={16}>
+        <MiqFormRenderer
+          schema={schema}
+          onSubmit={onSubmit}
+          onCancel={() => miqRedirectBack(_('Snapshot of VM or Instance was cancelled by the user'), 'warning', redirect)}
+          buttonsLabels={{
+            submitLabel: __('Create'),
+          }}
+        />
+      </Column>
     </Grid>
   );
 };

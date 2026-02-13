@@ -12,7 +12,7 @@ Cypress.Commands.add('changeSelect', (selectId, optionToSelect) => {
     cy.wrap(selectElement).click();
   }).then(() => {
     // Now find the options and try to select the requested one
-    cy.get('.bx--list-box__menu-item__option').then((options) => {
+    cy.get('.cds--list-box__menu-item__option').then((options) => {
       const optionArray = Cypress.$.makeArray(options);
       const match = optionArray.find((el) => el.innerText.trim() === optionToSelect);
 
@@ -21,7 +21,7 @@ Cypress.Commands.add('changeSelect', (selectId, optionToSelect) => {
       } else {
         // Include both the requested option and the select element's text in the error
         cy.logAndThrowError(
-          `Could not find "${optionToSelect}" in select element with text "${selectElementText}"`
+          `cy.changeSelect: Could not find "${optionToSelect}" in select element with text "${selectElementText}"`
         );
       }
     });

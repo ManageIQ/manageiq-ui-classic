@@ -1,13 +1,12 @@
 import React from 'react';
 import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
-import { shallow } from 'enzyme';
 
 import CatalogForm from '../../components/catalog-form/catalog-form';
 import '../helpers/miqSparkle';
 import '../helpers/miqAjaxButton';
 import '../helpers/addFlash';
-import { mount } from '../helpers/mountForm';
+import { mount, shallow } from '../helpers/mountForm';
 
 describe('Catalog form component', () => {
   let submitSpyMiqSparkleOn;

@@ -94,17 +94,17 @@ describe('Ansible playbook edit catalog Form Component', () => {
     fetchMock.get(`/api/authentications/151`, getSpecificCloudTypeMockData)
     fetchMock.get('/api/configuration_script_sources/18/configuration_script_payloads?expand=resources&filter[]=region_number=0&sort_by=name&sort_order=ascending', playBookOptionsMockData);
     fetchMock.get('/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::OpenstackCredential&expand=resources&attributes=id,name&sort_by=name&sort_order=ascending', cloudCredentailOptions);
-  
+
     let wrapper = mount(<AnsiblePlayBookEditCatalogForm initialData={initalDataForFirstTestCase} />);
+
+    // Wait for the component to finish rendering
+    await new Promise(resolve => setTimeout(resolve, 0));
+    wrapper.update();
   
-    await act(async() => {
-      // Wait for the component to finish rendering
-      await new Promise(resolve => setTimeout(resolve, 0));
-      wrapper.update();
-  
-      // Find the select element and simulate a change event
-      const select = wrapper.find('select[name="config_info.retirement.repository_id"]');
-      select.simulate('change', { target: { value: "18" } });
+    // Find the select element and trigger change event
+    const select = wrapper.find('select[name="config_info.retirement.repository_id"]');
+    act(() => {
+      select.props().onChange('18');
     });
   
     // Wait for all the fetch requests to complete

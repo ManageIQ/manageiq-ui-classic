@@ -4,24 +4,12 @@
   margin-left: 5px;
 }
 
-.tag-category.list-inline {
-  background-color: #0f62fe;
-}
-
 .tag {
   font-size: 0.8em;
   display: table-cell !important;
   vertical-align: middle;
   border-radius: 1px;
   border-color: #4c4c4c;
-
-  span {
-    background-color: #78a9ff;
-  }
-}
-
-.tag-select {
-  width: 23rem;
 }
 
 .tagColor {
@@ -31,7 +19,7 @@
 
 .category-label {
   padding-top: 0.5rem;
-  padding-bottom: 1 rem;
+  cursor: default;
 }
 
 .value-label {
@@ -48,9 +36,10 @@
     align-items: center;
     vertical-align: middle;
     line-height: 24px;
+    background-color: #78a9ff;
   }
 
-  .bx--btn--sm.bx--btn--icon-only {
+  .cds--btn--sm.cds--btn--icon-only {
     padding-right: 0;
     padding-left: 0;
   }
@@ -58,6 +47,7 @@
   .tagButton {
     background-color: #78a9ff;
     min-height: 26px;
+    height: 100%;
   }
 
   .tagButton:hover {

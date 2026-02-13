@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { StructuredListBody, StructuredListRow } from 'carbon-components-react';
+import { StructuredListBody, StructuredListRow } from '@carbon/react';
 import { rowClickEvent } from '../helpers';
 import MiqStructuredListBodyLabel from './miq-structured-list-body-label';
 import MiqStructuredListBodyValue from './miq-structured-list-body-value';
@@ -18,7 +18,7 @@ const MiqStructuredListBody = ({
         tabIndex={index}
         key={index}
         onClick={() => canClick && rowClickEvent(rows, index, mode)}
-        className={classNames(canClick ? 'clickable' : '')}
+        className={classNames(canClick ? 'clickable' : 'not-clickable')}
         title={canClick ? rows[index].title : ''}
       >
         {

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Tab, Tabs, Modal } from 'carbon-components-react';
+import { Tabs, TabList, Tab, Modal } from '@carbon/react';
 import { checkForFormChanges } from './helper';
 
 const CustomURLTabs = ({
   tabs, path, currentTab, checkForChanges,
 }) => {
   const [{ selectedTab, showConfirm, url }, setState] = useState({ selectedTab: 0, showConfirm: false });
-  const activeTabClassName = 'bx--tabs--scrollable__nav-item--selected';
+  const activeTabClassName = 'cds--tabs__nav-item--selected';
 
   const onTabClick = (id) => {
     if (currentTab !== id) {
@@ -51,37 +51,44 @@ const CustomURLTabs = ({
 
   return (
     <div className="custom-url-tabs">
-      <Modal
-        open={showConfirm}
-        primaryButtonText={__('OK')}
-        secondaryButtonText={__('Cancel')}
-        onRequestClose={() => {
-          setState((state) => ({
-            ...state,
-            showConfirm: false,
-          }));
-        }}
-        onRequestSubmit={() => window.location.replace(url)}
-        onSecondarySubmit={() => {
-          setState((state) => ({
-            ...state,
-            showConfirm: false,
-          }));
-          fixTabStyling();
-        }}
-      >
-        {__('Abandon changes?')}
-      </Modal>
-      <Tabs selected={selectedTab}>
-        {tabs.map((tab) => (
-          <Tab
-            key={tab[0]}
-            id={tab[0]}
-            className={`${tab[0]}` === currentTab ? 'selected' : 'not-selected'}
-            label={__(tab[1])}
-            onClick={() => onTabClick(tab[0])}
-          />
-        ))}
+      {showConfirm && (
+        <Modal
+          open
+          primaryButtonText={__('OK')}
+          secondaryButtonText={__('Cancel')}
+          onRequestClose={() => {
+            setState((state) => ({
+              ...state,
+              showConfirm: false,
+            }));
+          }}
+          onRequestSubmit={() => window.location.replace(url)}
+          onSecondarySubmit={() => {
+            setState((state) => ({
+              ...state,
+              showConfirm: false,
+            }));
+            fixTabStyling();
+          }}
+        >
+          {__('Abandon changes?')}
+        </Modal>
+      )}
+      <Tabs selectedIndex={selectedTab}>
+        <TabList aria-label="Custom URL tabs" activation="manual">
+          {tabs.map((tab) => (
+            <Tab
+              key={tab[0]}
+              id={tab[0]}
+              className={
+                `${tab[0]}` === currentTab ? 'selected' : 'not-selected'
+              }
+              onClick={() => onTabClick(tab[0])}
+            >
+              {__(tab[1])}
+            </Tab>
+          ))}
+        </TabList>
       </Tabs>
     </div>
   );

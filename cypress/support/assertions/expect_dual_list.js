@@ -11,9 +11,9 @@ import { DUAL_LIST_ACTION_TYPE } from '../commands/constants/command_constants';
 
 // CSS selectors for dual-list component elements
 const DUAL_LIST_BODY_SELECTOR =
-  'fieldset.bx--fieldset .bx--structured-list-tbody';
-const DUAL_LIST_ROW_SELECTOR = '.bx--structured-list-row';
-const SEARCH_INPUT_FIELD_SELECTOR = 'fieldset.bx--fieldset .bx--search-input';
+  'fieldset.cds--fieldset .cds--structured-list-tbody';
+const DUAL_LIST_ROW_SELECTOR = '.cds--structured-list-row';
+const SEARCH_INPUT_FIELD_SELECTOR = 'fieldset.cds--fieldset .cds--search-input';
 
 /**
  * Selects and moves a single item between lists
@@ -197,7 +197,7 @@ Cypress.Commands.add(
   }) => {
     if (availableItems.length < 1 && selectedItems.length < 1) {
       cy.logAndThrowError(
-        'availableItems or selectedItems should have at least 1 item'
+        'cy.expect_dual_list: availableItems or selectedItems should have at least 1 item'
       );
     }
 

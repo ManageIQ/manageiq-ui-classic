@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'carbon-components-react';
+import { Grid, Column } from '@carbon/react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import createSchema from './cloud-network-form.schema';
 import { networkProviders } from '../../helpers/network-providers';
@@ -101,17 +101,19 @@ class CloudNetworkForm extends Component {
 
     return (
       <Grid>
-        <MiqFormRenderer
-          initialValues={initialValues}
-          schema={createSchema(ems, cloudNetworkId, this.loadSchema, this.emptySchema, fields)}
-          onSubmit={this.saveClicked}
-          validate={validation}
-          onCancel={this.cancelClicked}
-          canReset={!!cloudNetworkId}
-          buttonsLabels={{
-            submitLabel: cloudNetworkId ? __('Save') : __('Add'),
-          }}
-        />
+        <Column sm={4} md={8} lg={16}>
+          <MiqFormRenderer
+            initialValues={initialValues}
+            schema={createSchema(ems, cloudNetworkId, this.loadSchema, this.emptySchema, fields)}
+            onSubmit={this.saveClicked}
+            validate={validation}
+            onCancel={this.cancelClicked}
+            canReset={!!cloudNetworkId}
+            buttonsLabels={{
+              submitLabel: cloudNetworkId ? __('Save') : __('Add'),
+            }}
+          />
+        </Column>
       </Grid>
     );
   }

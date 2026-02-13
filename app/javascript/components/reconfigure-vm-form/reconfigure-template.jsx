@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useFormApi } from '@data-driven-forms/react-form-renderer';
+import { Button, ButtonSet } from '@carbon/react';
 
 const ReconfigureTemplate = ({
   formFields, canSubmit,
@@ -19,11 +20,11 @@ const ReconfigureTemplate = ({
     <form onSubmit={handleSubmit} className="form-react reconfigure-form">
       {formContent}
 
-      <div className="bx--btn-set">
-        <button alt="Save" className="bx--btn bx--btn--primary" disabled={submitValue || !valid} type="submit">{__('Save')}</button>
-        <button alt="Reset" className="bx--btn bx--btn--secondary" disabled={submitValue} onClick={onReset} type="button">{__('Reset')}</button>
-        <button alt="Cancel" className="bx--btn bx--btn--secondary" type="button" onClick={onCancel}>{__('Cancel')}</button>
-      </div>
+      <ButtonSet>
+        <Button kind="primary" disabled={submitValue || !valid} type="submit">{__('Save')}</Button>
+        <Button kind="secondary" disabled={submitValue} onClick={onReset} type="button">{__('Reset')}</Button>
+        <Button kind="secondary" type="button" onClick={onCancel}>{__('Cancel')}</Button>
+      </ButtonSet>
     </form>
   );
 };

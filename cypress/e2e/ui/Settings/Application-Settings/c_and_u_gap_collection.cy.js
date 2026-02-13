@@ -23,25 +23,29 @@ const END_DATE_FIELD_LABEL = 'End Date';
 const FORM_HEADER = 'Diagnostics Zone';
 const FORM_SUBHEADER_SNIPPET = 'Collection Options';
 const TIMEZONE_TYPE_HAWAII = '(GMT-10:00) Hawaii';
-const START_DATE = '06/25/2026';
-const END_DATE = '06/28/2026';
+const START_DATE_INDEX = '10';
+const END_DATE_INDEX = '15';
 
 // Flash message text snippets
 const FLASH_MESSAGE_GAP_COLLECTION_INITIATED = 'initiated';
 const FLASH_MESSAGE_DATE_RANGE_INVALID = 'cannot';
 
-function fillGapCollectionForm(startDateValue, endDateValue) {
+// TODO: Add a support command for calendar date selection
+function selectDate(inputId, dateIndex) {
+  cy.getFormInputFieldByIdAndType({ inputId }).click();
+  cy.get('.flatpickr-calendar.open .cds--date-picker__day').eq(dateIndex).click();
+}
+
+function fillGapCollectionForm(startDateIndex, endDateIndex) {
   // Select "Hawaii" from timezone dropdown
   cy.getFormLabelByForAttribute({ forValue: 'timezone' }).click();
   cy.contains('[role="option"]', TIMEZONE_TYPE_HAWAII).click();
   // Add start date
-  cy.getFormInputFieldByIdAndType({ inputId: 'startDate' }).type(
-    startDateValue
-  );
+  selectDate('startDate', startDateIndex);
   // Click elsewhere to close the start date calendar popup
   cy.get('h3').contains(FORM_SUBHEADER_SNIPPET).click();
   // Add end date
-  cy.getFormInputFieldByIdAndType({ inputId: 'endDate' }).type(endDateValue);
+  selectDate('endDate', endDateIndex);
   // Click elsewhere to close the end date calendar popup
   cy.get('h3').contains(FORM_SUBHEADER_SNIPPET).click();
 }
@@ -77,7 +81,7 @@ describe('Automate C & U Gap Collection form operations: Settings > Application 
     // Assert form header is visible
     cy.expect_explorer_title(FORM_HEADER).should('be.visible');
     // Assert form sub-header is visible
-    cy.contains('#main-content .bx--form h3', FORM_SUBHEADER_SNIPPET).should(
+    cy.contains('#main-content .cds--form h3', FORM_SUBHEADER_SNIPPET).should(
       'be.visible'
     );
 
@@ -117,7 +121,7 @@ describe('Automate C & U Gap Collection form operations: Settings > Application 
 
   it('Should fail if start date is greater than end date', () => {
     // Fill the form with end date less than start date
-    fillGapCollectionForm(END_DATE, START_DATE);
+    fillGapCollectionForm(END_DATE_INDEX, START_DATE_INDEX);
     // Save form and assert flash error message
     saveFormAndAssertFlashMessage(
       flashClassMap.error,
@@ -127,7 +131,7 @@ describe('Automate C & U Gap Collection form operations: Settings > Application 
 
   it('Validate gap collection initiation', () => {
     // Fill the form
-    fillGapCollectionForm(START_DATE, END_DATE);
+    fillGapCollectionForm(START_DATE_INDEX, END_DATE_INDEX);
     // Save form and assert flash success message
     saveFormAndAssertFlashMessage(
       flashClassMap.success,

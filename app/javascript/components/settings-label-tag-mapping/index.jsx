@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'carbon-components-react';
+import { Button } from '@carbon/react';
 import MiqDataTable from '../miq-data-table';
 import { rowData } from '../miq-data-table/helper';
 import NotificationMessage from '../notification-message';
@@ -40,7 +40,7 @@ const SettingsLabelTagMapping = ({ initialData }) => {
       <div className="tab-content-header-actions">
         <Button
           onClick={() => onSelect('')}
-          onKeyPress={() => onSelect('')}
+          onKeyDown={() => onSelect('')}
           title={__('Click on this row to create a new mapping rule')}
         >
           {__('Add Mapping Rule')}

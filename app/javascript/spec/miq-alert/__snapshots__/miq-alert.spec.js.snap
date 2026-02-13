@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MiqAlertStructuredList should render alert expression structured list 1`] = `
-<FeatureToggle(StructuredListWrapper)
-  ariaLabel="Structured list"
+<StructuredListWrapper
+  aria-label="Structured list"
   className="miq-structured-list miq_alert_expression"
 >
   <MiqStructuredListBody
@@ -31,12 +31,12 @@ exports[`MiqAlertStructuredList should render alert expression structured list 1
       ]
     }
   />
-</FeatureToggle(StructuredListWrapper)>
+</StructuredListWrapper>
 `;
 
 exports[`MiqAlertStructuredList should render alert info structured list 1`] = `
-<FeatureToggle(StructuredListWrapper)
-  ariaLabel="Structured list"
+<StructuredListWrapper
+  aria-label="Structured list"
   className="miq-structured-list miq_alert_info"
 >
   <MiqStructuredListBody
@@ -79,12 +79,12 @@ exports[`MiqAlertStructuredList should render alert info structured list 1`] = `
       ]
     }
   />
-</FeatureToggle(StructuredListWrapper)>
+</StructuredListWrapper>
 `;
 
 exports[`MiqAlertStructuredList should render alert management event structured list 1`] = `
-<FeatureToggle(StructuredListWrapper)
-  ariaLabel="Structured list"
+<StructuredListWrapper
+  aria-label="Structured list"
   className="miq-structured-list miq_alert_management_event"
 >
   <MiqStructuredListBody
@@ -99,12 +99,12 @@ exports[`MiqAlertStructuredList should render alert management event structured 
       ]
     }
   />
-</FeatureToggle(StructuredListWrapper)>
+</StructuredListWrapper>
 `;
 
 exports[`MiqAlertStructuredList should render alert parameter structured list 1`] = `
-<FeatureToggle(StructuredListWrapper)
-  ariaLabel="Structured list"
+<StructuredListWrapper
+  aria-label="Structured list"
   className="miq-structured-list miq_alert_parameters"
 >
   <MiqStructuredListBody
@@ -137,12 +137,12 @@ exports[`MiqAlertStructuredList should render alert parameter structured list 1`
       ]
     }
   />
-</FeatureToggle(StructuredListWrapper)>
+</StructuredListWrapper>
 `;
 
 exports[`MiqAlertStructuredList should render alert profile structured list 1`] = `
-<FeatureToggle(StructuredListWrapper)
-  ariaLabel="Structured list"
+<StructuredListWrapper
+  aria-label="Structured list"
   className="miq-structured-list miq_alert_profiles"
 >
   <MiqStructuredListBody
@@ -190,12 +190,12 @@ exports[`MiqAlertStructuredList should render alert profile structured list 1`] 
       ]
     }
   />
-</FeatureToggle(StructuredListWrapper)>
+</StructuredListWrapper>
 `;
 
 exports[`MiqAlertStructuredList should render alert referenced structured list 1`] = `
-<FeatureToggle(StructuredListWrapper)
-  ariaLabel="Structured list"
+<StructuredListWrapper
+  aria-label="Structured list"
   className="miq-structured-list miq_alert_referenced"
 >
   <MiqStructuredListBody
@@ -243,12 +243,12 @@ exports[`MiqAlertStructuredList should render alert referenced structured list 1
       ]
     }
   />
-</FeatureToggle(StructuredListWrapper)>
+</StructuredListWrapper>
 `;
 
 exports[`MiqAlertStructuredList should render alert sms structured list 1`] = `
-<FeatureToggle(StructuredListWrapper)
-  ariaLabel="Structured list"
+<StructuredListWrapper
+  aria-label="Structured list"
   className="miq-structured-list miq_alert_send_sms"
 >
   <MiqStructuredListBody
@@ -285,12 +285,12 @@ exports[`MiqAlertStructuredList should render alert sms structured list 1`] = `
       ]
     }
   />
-</FeatureToggle(StructuredListWrapper)>
+</StructuredListWrapper>
 `;
 
 exports[`MiqAlertStructuredList should render alert timeline event structured list 1`] = `
-<FeatureToggle(StructuredListWrapper)
-  ariaLabel="Structured list"
+<StructuredListWrapper
+  aria-label="Structured list"
   className="miq-structured-list miq_alert_timeline_event"
 >
   <MiqStructuredListBody
@@ -305,12 +305,12 @@ exports[`MiqAlertStructuredList should render alert timeline event structured li
       ]
     }
   />
-</FeatureToggle(StructuredListWrapper)>
+</StructuredListWrapper>
 `;
 
 exports[`MiqAlertStructuredList should render alert variable structured list 1`] = `
-<FeatureToggle(StructuredListWrapper)
-  ariaLabel="Structured list"
+<StructuredListWrapper
+  aria-label="Structured list"
   className="miq-structured-list miq_alert_variable"
 >
   <MiqStructuredListBody
@@ -336,5 +336,5 @@ exports[`MiqAlertStructuredList should render alert variable structured list 1`]
       ]
     }
   />
-</FeatureToggle(StructuredListWrapper)>
+</StructuredListWrapper>
 `;

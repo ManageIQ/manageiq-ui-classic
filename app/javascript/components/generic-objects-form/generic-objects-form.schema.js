@@ -79,10 +79,10 @@ const createSchema = (initialValues = {}, edit, promise, classOptions) => {
               remove: __('Remove'),
             },
             AddButtonProps: {
-              size: 'small',
+              size: 'sm',
             },
             RemoveButtonProps: {
-              size: 'small',
+              size: 'sm',
             },
             fields: [
               {
@@ -125,10 +125,10 @@ const createSchema = (initialValues = {}, edit, promise, classOptions) => {
               remove: __('Remove'),
             },
             AddButtonProps: {
-              size: 'small',
+              size: 'sm',
             },
             RemoveButtonProps: {
-              size: 'small',
+              size: 'sm',
             },
             fields: [
               {
@@ -170,10 +170,10 @@ const createSchema = (initialValues = {}, edit, promise, classOptions) => {
               remove: __('Remove'),
             },
             AddButtonProps: {
-              size: 'small',
+              size: 'sm',
             },
             RemoveButtonProps: {
-              size: 'small',
+              size: 'sm',
             },
             fields: [
               {

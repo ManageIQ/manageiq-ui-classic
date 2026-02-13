@@ -1,6 +1,6 @@
 import { useFieldApi, useFormApi } from '@@ddf';
 import React from 'react';
-import { Checkbox } from 'carbon-components-react';
+import { Checkbox } from '@carbon/react';
 import PropTypes from 'prop-types';
 import { TreeViewRedux } from '../tree-view';
 
@@ -140,7 +140,7 @@ export const TreeViewReduxWrapper = (props) => {
   if (props.roleAllows) {
     return (
       <div>
-        <label htmlFor={propsData.input.name} className="bx--label">{propsData.label}</label>
+        <label htmlFor={propsData.input.name} className="cds--label">{propsData.label}</label>
         <br />
         <TreeViewRedux {...propsData} />
       </div>

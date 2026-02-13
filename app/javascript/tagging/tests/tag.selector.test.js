@@ -31,7 +31,7 @@ describe('Tagging modifier', () => {
         selectedOption={selectedTagValue}
       />
     );
-    wrapper.instance().handleChange({ selectedItem: { label: 'Name', value: 1 } });
+    wrapper.instance().handleChange({ selectedItem: { description: 'Name', id: 1 } });
     expect(onTagCategoryChange.mock.calls).toHaveLength(1);
   });
 });

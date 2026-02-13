@@ -2,13 +2,9 @@
 
 exports[`TagCategory Component match snapshot 1`] = `
 <FormGroup
-  hasMargin={true}
-  invalid={false}
   legendText="Category"
-  message={false}
-  messageText=""
 >
-  <Column
+  <ForwardRef
     className="tag-modifier-form-row category-modifier"
   >
     <TagSelector
@@ -42,6 +38,6 @@ exports[`TagCategory Component match snapshot 1`] = `
         ]
       }
     />
-  </Column>
+  </ForwardRef>
 </FormGroup>
 `;

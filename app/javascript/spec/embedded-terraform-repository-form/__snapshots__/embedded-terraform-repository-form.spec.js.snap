@@ -2,9 +2,7 @@
 
 exports[`Embedded Terraform Repository form component should render add form 1`] = `
 <Loading
-  active={true}
   className="export-spinner"
-  description="Active loading indicator"
   small={true}
   withOverlay={false}
 />
@@ -12,9 +10,7 @@ exports[`Embedded Terraform Repository form component should render add form 1`]
 
 exports[`Embedded Terraform Repository form component should render edit variant 1`] = `
 <Loading
-  active={true}
   className="export-spinner"
-  description="Active loading indicator"
   small={true}
   withOverlay={false}
 />
@@ -22,9 +18,7 @@ exports[`Embedded Terraform Repository form component should render edit variant
 
 exports[`Embedded Terraform Repository form component should submit add form 1`] = `
 <Loading
-  active={true}
   className="export-spinner"
-  description="Active loading indicator"
   small={true}
   withOverlay={false}
 />
@@ -32,9 +26,7 @@ exports[`Embedded Terraform Repository form component should submit add form 1`]
 
 exports[`Embedded Terraform Repository form component should submit edit form 1`] = `
 <Loading
-  active={true}
   className="export-spinner"
-  description="Active loading indicator"
   small={true}
   withOverlay={false}
 />

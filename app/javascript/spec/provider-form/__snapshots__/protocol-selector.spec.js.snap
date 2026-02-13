@@ -44,7 +44,6 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
     <Select
       component="protocol-selector"
       label="Type"
-      loadingMessage="Loading..."
       name="type"
       options={
         Array [
@@ -124,14 +123,10 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
         >
           <Select
             className=""
-            disabled={false}
-            helperText=""
             id="type"
-            inline={false}
             invalid={false}
             invalidText=""
             labelText="Type"
-            light={false}
             name="type"
             onBlur={[Function]}
             onChange={[Function]}
@@ -139,33 +134,43 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
             value=""
           >
             <div
-              className="bx--form-item"
+              className="cds--form-item"
             >
               <div
-                className="bx--select"
+                className="cds--select"
               >
-                <label
-                  className="bx--label"
+                <ForwardRef
+                  as="label"
+                  className="cds--label"
                   htmlFor="type"
                 >
-                  Type
-                </label>
+                  <label
+                    className="cds--label"
+                    dir="auto"
+                    htmlFor="type"
+                  >
+                    Type
+                  </label>
+                </ForwardRef>
                 <div
-                  className="bx--select-input__wrapper"
+                  className="cds--select-input__wrapper"
                   data-invalid={null}
+                  onBlur={[Function]}
+                  onFocus={[Function]}
                 >
                   <select
-                    className="bx--select-input"
+                    className="cds--select-input"
                     id="type"
                     name="type"
                     onBlur={[Function]}
                     onChange={[Function]}
                     onFocus={[Function]}
+                    onKeyDown={[Function]}
+                    onMouseDown={[Function]}
+                    title="STF"
                     value=""
                   >
                     <SelectItem
-                      disabled={false}
-                      hidden={false}
                       key="stf"
                       label="STF"
                       pivot="endpoints.stf.host"
@@ -173,7 +178,7 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
                       value="stf"
                     >
                       <option
-                        className="bx--select-option"
+                        className="cds--select-option"
                         disabled={false}
                         hidden={false}
                         label="STF"
@@ -184,8 +189,6 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
                       </option>
                     </SelectItem>
                     <SelectItem
-                      disabled={false}
-                      hidden={false}
                       key="amqp"
                       label="AMQP"
                       pivot="endponts.amqp.host"
@@ -193,7 +196,7 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
                       value="amqp"
                     >
                       <option
-                        className="bx--select-option"
+                        className="cds--select-option"
                         disabled={false}
                         hidden={false}
                         label="AMQP"
@@ -204,21 +207,20 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
                       </option>
                     </SelectItem>
                   </select>
-                  <ForwardRef(ChevronDown16)
-                    className="bx--select__arrow"
+                  <ForwardRef(ChevronDown)
+                    className="cds--select__arrow"
                   >
                     <Icon
-                      className="bx--select__arrow"
+                      className="cds--select__arrow"
                       fill="currentColor"
                       height={16}
-                      preserveAspectRatio="xMidYMid meet"
                       viewBox="0 0 16 16"
                       width={16}
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <svg
                         aria-hidden={true}
-                        className="bx--select__arrow"
+                        className="cds--select__arrow"
                         fill="currentColor"
                         focusable="false"
                         height={16}
@@ -228,11 +230,11 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
-                          d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                          d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                         />
                       </svg>
                     </Icon>
-                  </ForwardRef(ChevronDown16)>
+                  </ForwardRef(ChevronDown)>
                 </div>
               </div>
             </div>

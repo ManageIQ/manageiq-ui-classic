@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'carbon-components-react';
+import { Grid, Column } from '@carbon/react';
 import MiqFormRenderer from '@@ddf';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import createSchema from './vm-resize.schema';
@@ -50,11 +50,13 @@ const VmResizeForm = ({ recordId, vmCloudResizeFormId }) => {
 
   return !isLoading && (
     <Grid>
-      <MiqFormRenderer
-        schema={createSchema(fields)}
-        onSubmit={onSubmit}
-        onCancel={onCancel}
-      />
+      <Column sm={4} md={8} lg={16}>
+        <MiqFormRenderer
+          schema={createSchema(fields)}
+          onSubmit={onSubmit}
+          onCancel={onCancel}
+        />
+      </Column>
     </Grid>
   );
 };

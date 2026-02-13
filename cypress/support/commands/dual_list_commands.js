@@ -9,8 +9,8 @@ import { DUAL_LIST_ACTION_TYPE } from './constants/command_constants';
 
 // CSS selectors for dual-list component elements
 const DUAL_LIST_BODY_SELECTOR =
-  'fieldset.bx--fieldset .bx--structured-list-tbody';
-const DUAL_LIST_OPTION_ROW_SELECTOR = '.bx--structured-list-row';
+  'fieldset.cds--fieldset .cds--structured-list-tbody';
+const DUAL_LIST_OPTION_ROW_SELECTOR = '.cds--structured-list-row';
 
 /**
  * Command to perform actions on a dual list component.
@@ -57,13 +57,13 @@ const DUAL_LIST_OPTION_ROW_SELECTOR = '.bx--structured-list-row';
  */
 Cypress.Commands.add('dualListAction', ({ actionType, optionsToSelect }) => {
   if (!actionType) {
-    cy.logAndThrowError('actionType is required');
+    cy.logAndThrowError('cy.dualListAction: required object key missing - actionType');
   }
 
   const validActionTypes = Object.values(DUAL_LIST_ACTION_TYPE);
   if (!validActionTypes.includes(actionType)) {
     cy.logAndThrowError(
-      `Action type "${actionType}" not supported. Valid action types are: ${validActionTypes.join(
+      `cy.dualListAction: Action type "${actionType}" not supported. Valid action types are: ${validActionTypes.join(
         ', '
       )}`
     );
@@ -82,7 +82,7 @@ Cypress.Commands.add('dualListAction', ({ actionType, optionsToSelect }) => {
   if (isActionTypeAdd || actionType === DUAL_LIST_ACTION_TYPE.REMOVE) {
     if (!optionsToSelect || !optionsToSelect.length) {
       cy.logAndThrowError(
-        'optionsToSelect array is required for add and remove actions'
+        'cy.dualListAction: optionsToSelect array is required for add and remove actions'
       );
     }
 

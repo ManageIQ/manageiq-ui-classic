@@ -1,21 +1,23 @@
-.miq-custom-accordion
- {
-   border: 1px solid #e0e0e0;
+.miq-custom-accordion {
+  border: 1px solid #e0e0e0;
 
-   li button.bx--accordion__heading {
-     background: #e0e0e0;
-   }
-   .bx--accordion__item:last-child{
-     border: 0;
-   }
+  li button.cds--accordion__heading {
+    background: #e0e0e0;
+  }
+  .cds--accordion__item:last-child {
+    border: 0;
+  }
 
-   .bx--accordion__content {
-     padding: 20px;
-     margin: 0;
+  .cds--accordion__wrapper {
+    padding: 0;
+    .cds--accordion__content {
+      padding: 20px;
+      margin: 0;
 
-     .custom-accordion-buttons {
-       display: flex;
-       justify-content: flex-end;
-     }
-   }
- }
+      .custom-accordion-buttons {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  }
+}

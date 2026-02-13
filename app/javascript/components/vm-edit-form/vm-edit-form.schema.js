@@ -44,7 +44,7 @@ function createSchema(emsId, parentOptions) {
       name: 'ChildVMSelection',
       fields: [
         {
-          component: 'dual-list-select',
+          component: componentTypes.DUAL_LIST_SELECT,
           id: 'child_vms',
           name: 'child_vms',
           key: `alerts-${emsId}`,
@@ -60,24 +60,27 @@ function createSchema(emsId, parentOptions) {
           noOptionsTitle: __('No available options'),
           filterOptionsTitle: __('Filter options'),
           filterValuesTitle: __('Filter values'),
+          ButtonColumnProps: {
+            className: 'miq-common-dual-list-buttons-column',
+          },
           AddButtonProps: {
             id: 'addButtonProps',
             className: 'addButtonProps',
-            size: 'small',
+            size: 'sm',
             iconDescription: "Add Selected",
           },
           AddAllButtonProps: {
-            size: 'small',
+            size: 'sm',
             iconDescription: "Add All",
           },
           RemoveButtonProps: {
             id: 'removeButtonProps',
             className: 'removeButtonProps',
-            size: 'small',
+            size: 'sm',
             iconDescription: "Remove Selected",
           },
           RemoveAllButtonProps: {
-            size: 'small',
+            size: 'sm',
             iconDescription: "Remove All",
           },
           options: parentOptions,

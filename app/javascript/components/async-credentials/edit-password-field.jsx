@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  FormGroup, TextInput, TextArea, Button,
-} from 'carbon-components-react';
+  FormGroup, TextInput, TextArea, Button, Column, Grid,
+} from '@carbon/react';
 import { prepareProps } from '@data-driven-forms/carbon-component-mapper';
-import { EditOff16 } from '@carbon/icons-react';
+import { EditOff } from '@carbon/react/icons';
 
 import { useFieldApi, componentTypes } from '@@ddf';
 
@@ -52,16 +52,31 @@ const EditPasswordField = ({ componentClass, ...props }) => {
 
   return (
     <FormGroup legendText={labelText}>
-      <div className="bx--grid" style={{ paddingLeft: 0, marginLeft: 0 }}>
-        <div className="bx--row">
-          <div className="bx--col-lg-15 bx--col-md-7 bx--col-sm-3">
-            { field }
-          </div>
-          <div className="bx--col-sm-1 bx--col-md-1 bx--col-lg-1">
-            <Button hasIconOnly kind="secondary" size="field" onClick={setEditMode} iconDescription={buttonLabel} renderIcon={EditOff16} />
-          </div>
-        </div>
-      </div>
+      <Grid condensed className="miq-pwd-field-grid">
+        <Column
+          sm={3}
+          md={7}
+          lg={15}
+          className="miq-pwd-field-grid-col"
+        >
+          {field}
+        </Column>
+        <Column
+          sm={1}
+          md={1}
+          lg={1}
+          className="miq-pwd-field-edit-icon-grid-col"
+        >
+          <Button
+            hasIconOnly
+            kind="secondary"
+            size="md"
+            onClick={setEditMode}
+            iconDescription={buttonLabel}
+            renderIcon={(props) => <EditOff size={16} {...props} />}
+          />
+        </Column>
+      </Grid>
     </FormGroup>
   );
 };

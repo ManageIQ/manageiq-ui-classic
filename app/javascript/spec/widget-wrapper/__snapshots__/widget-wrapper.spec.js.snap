@@ -37,95 +37,174 @@ exports[`Widget wrapper component should render a widget wrapper with a chart 1`
         >
           <OverflowMenu
             aria-labelledby="widget-title-1"
-            ariaLabel="Open and close list of options"
             className="widget-overflow-menu"
-            direction="bottom"
             flipped={true}
-            focusTrap={true}
-            iconDescription="Open and close list of options"
             id="1-menu"
-            light={false}
-            menuOffset={[Function]}
-            menuOffsetFlip={[Function]}
-            onClick={[Function]}
-            onClose={[Function]}
-            onKeyDown={[Function]}
             onOpen={[Function]}
-            open={false}
-            renderIcon={
-              Object {
-                "$$typeof": Symbol(react.forward_ref),
-                "render": [Function],
-              }
-            }
-            selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
           >
-            <ClickListener
-              onClickOutside={[Function]}
+            <ForwardRef
+              aria-labelledby="widget-title-1"
+              className="widget-overflow-menu"
+              flipped={true}
+              id="1-menu"
+              onOpen={[Function]}
             >
-              <button
-                aria-controls={null}
-                aria-expanded={false}
-                aria-haspopup={true}
-                aria-label="Open and close list of options"
-                aria-labelledby="widget-title-1"
-                className="widget-overflow-menu bx--overflow-menu bx--overflow-menu--md"
-                id="1-menu"
-                onClick={[Function]}
-                onClose={[Function]}
-                onKeyDown={[Function]}
-                open={false}
-                type="button"
+              <span
+                className="cds--overflow-menu__wrapper"
               >
-                <ForwardRef(OverflowMenuVertical16)
-                  aria-label="Open and close list of options"
-                  className="bx--overflow-menu__icon"
+                <ForwardRef
+                  aria-expanded={false}
+                  aria-haspopup={true}
+                  aria-labelledby="widget-title-1"
+                  className="widget-overflow-menu cds--overflow-menu cds--overflow-menu--md"
+                  id="1-menu"
+                  kind="ghost"
+                  label="Options"
+                  onClick={[Function]}
+                  size="md"
+                  type="button"
                 >
-                  <Icon
-                    aria-label="Open and close list of options"
-                    className="bx--overflow-menu__icon"
-                    fill="currentColor"
-                    height={16}
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 32 32"
-                    width={16}
-                    xmlns="http://www.w3.org/2000/svg"
+                  <ForwardRef
+                    autoAlign={false}
+                    className="cds--icon-tooltip"
+                    closeOnActivation={true}
+                    defaultOpen={false}
+                    dropShadow={false}
+                    enterDelayMs={100}
+                    highContrast={true}
+                    label="Options"
+                    leaveDelayMs={100}
                   >
-                    <svg
-                      aria-label="Open and close list of options"
-                      className="bx--overflow-menu__icon"
-                      fill="currentColor"
-                      focusable="false"
-                      height={16}
-                      preserveAspectRatio="xMidYMid meet"
-                      role="img"
-                      viewBox="0 0 32 32"
-                      width={16}
-                      xmlns="http://www.w3.org/2000/svg"
+                    <Popover
+                      align="top"
+                      autoAlign={false}
+                      className="cds--tooltip cds--icon-tooltip"
+                      dropShadow={false}
+                      highContrast={true}
+                      onKeyDown={[Function]}
+                      onMouseLeave={[Function]}
+                      open={false}
                     >
-                      <circle
-                        cx="16"
-                        cy="8"
-                        r="2"
-                      />
-                      <circle
-                        cx="16"
-                        cy="16"
-                        r="2"
-                      />
-                      <circle
-                        cx="16"
-                        cy="24"
-                        r="2"
-                      />
-                      <title>
-                        Open and close list of options
-                      </title>
-                    </svg>
-                  </Icon>
-                </ForwardRef(OverflowMenuVertical16)>
-              </button>
-            </ClickListener>
+                      <span
+                        className="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+                        onKeyDown={[Function]}
+                        onMouseLeave={[Function]}
+                      >
+                        <div
+                          className="cds--tooltip-trigger__wrapper"
+                        >
+                          <ForwardRef(ButtonBase)
+                            aria-expanded={false}
+                            aria-haspopup={true}
+                            aria-labelledby="widget-title-1"
+                            className="widget-overflow-menu cds--overflow-menu cds--overflow-menu--md"
+                            hasIconOnly={true}
+                            id="1-menu"
+                            kind="ghost"
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onMouseDown={[Function]}
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
+                            onMouseMove={[Function]}
+                            onTouchStart={[Function]}
+                            size="md"
+                            type="button"
+                          >
+                            <button
+                              aria-expanded={false}
+                              aria-haspopup={true}
+                              aria-labelledby="widget-title-1"
+                              className="widget-overflow-menu cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+                              disabled={false}
+                              id="1-menu"
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onMouseDown={[Function]}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
+                              onMouseMove={[Function]}
+                              onTouchStart={[Function]}
+                              type="button"
+                            >
+                              <ForwardRef(OverflowMenuVertical)
+                                aria-label="Options"
+                                className="cds--overflow-menu__icon"
+                              >
+                                <Icon
+                                  aria-label="Options"
+                                  className="cds--overflow-menu__icon"
+                                  fill="currentColor"
+                                  height={16}
+                                  viewBox="0 0 32 32"
+                                  width={16}
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <svg
+                                    aria-label="Options"
+                                    className="cds--overflow-menu__icon"
+                                    fill="currentColor"
+                                    focusable="false"
+                                    height={16}
+                                    preserveAspectRatio="xMidYMid meet"
+                                    role="img"
+                                    viewBox="0 0 32 32"
+                                    width={16}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <circle
+                                      cx="16"
+                                      cy="8"
+                                      r="2"
+                                    />
+                                    <circle
+                                      cx="16"
+                                      cy="16"
+                                      r="2"
+                                    />
+                                    <circle
+                                      cx="16"
+                                      cy="24"
+                                      r="2"
+                                    />
+                                  </svg>
+                                </Icon>
+                              </ForwardRef(OverflowMenuVertical)>
+                            </button>
+                          </ForwardRef(ButtonBase)>
+                        </div>
+                        <PopoverContent
+                          aria-hidden="true"
+                          className="cds--tooltip-content"
+                          id="tooltip-8"
+                          onMouseEnter={[Function]}
+                          role="tooltip"
+                        >
+                          <span
+                            aria-hidden="true"
+                            className="cds--popover"
+                            id="tooltip-8"
+                            onMouseEnter={[Function]}
+                            role="tooltip"
+                          >
+                            <span
+                              className="cds--popover-content cds--tooltip-content"
+                            >
+                              Options
+                            </span>
+                            <span
+                              className="cds--popover-caret"
+                            />
+                          </span>
+                        </PopoverContent>
+                      </span>
+                    </Popover>
+                  </ForwardRef>
+                </ForwardRef>
+              </span>
+            </ForwardRef>
           </OverflowMenu>
           <div
             className="card-pf-title sortable-handle ui-sortable-handle"
@@ -145,204 +224,39 @@ exports[`Widget wrapper component should render a widget wrapper with a chart 1`
           className="loadingSpinner"
         >
           <Loading
-            active={true}
             className="export-spinner"
-            description="Active loading indicator"
             small={true}
             withOverlay={false}
           >
             <div
               aria-atomic="true"
               aria-live="assertive"
-              className="export-spinner bx--loading bx--loading--small"
+              className="export-spinner cds--loading cds--loading--small"
             >
-              <label
-                className="bx--visually-hidden"
-                id="loading-id-3"
-              >
-                Active loading indicator
-              </label>
               <svg
-                className="bx--loading__svg"
+                className="cds--loading__svg"
                 viewBox="0 0 100 100"
               >
                 <title>
-                  Active loading indicator
+                  loading
                 </title>
                 <circle
-                  className="bx--loading__background"
+                  className="cds--loading__background"
                   cx="50%"
                   cy="50%"
-                  r="44"
+                  r="42"
                 />
                 <circle
-                  className="bx--loading__stroke"
+                  className="cds--loading__stroke"
                   cx="50%"
                   cy="50%"
-                  r="44"
+                  r="42"
                 />
               </svg>
             </div>
           </Loading>
         </div>
       </div>
-      <WidgetRemoveModal
-        href=""
-        setState={[Function]}
-        showConfirm={false}
-        widgetTitle="Guest OS Information"
-      >
-        <Modal
-          hasScrollingContent={false}
-          modalHeading=""
-          modalLabel=""
-          onKeyDown={[Function]}
-          onRequestClose={[Function]}
-          onRequestSubmit={[Function]}
-          onSecondarySubmit={[Function]}
-          open={false}
-          passiveModal={false}
-          preventCloseOnClickOutside={false}
-          primaryButtonDisabled={false}
-          primaryButtonText="OK"
-          secondaryButtonText="Cancel"
-          selectorPrimaryFocus="[data-modal-primary-focus]"
-        >
-          <div
-            className="bx--modal bx--modal-tall"
-            onBlur={[Function]}
-            onKeyDown={[Function]}
-            onMouseDown={[Function]}
-            role="presentation"
-          >
-            <span
-              className="bx--visually-hidden"
-              role="link"
-              tabIndex="0"
-            >
-              Focus sentinel
-            </span>
-            <div
-              aria-label=""
-              aria-modal="true"
-              className="bx--modal-container"
-              role="dialog"
-              tabIndex="-1"
-            >
-              <div
-                className="bx--modal-header"
-              >
-                <h3
-                  className="bx--modal-header__heading"
-                  id="bx--modal-header__heading--modal-3"
-                />
-                <button
-                  aria-label="close"
-                  className="bx--modal-close"
-                  onClick={[Function]}
-                  type="button"
-                >
-                  <ForwardRef(Close20)
-                    aria-hidden="true"
-                    className="bx--modal-close__icon"
-                    tabIndex="-1"
-                  >
-                    <Icon
-                      aria-hidden="true"
-                      className="bx--modal-close__icon"
-                      fill="currentColor"
-                      height={20}
-                      preserveAspectRatio="xMidYMid meet"
-                      tabIndex="-1"
-                      viewBox="0 0 32 32"
-                      width={20}
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <svg
-                        aria-hidden={true}
-                        className="bx--modal-close__icon"
-                        fill="currentColor"
-                        focusable="false"
-                        height={20}
-                        preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 32 32"
-                        width={20}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
-                        />
-                      </svg>
-                    </Icon>
-                  </ForwardRef(Close20)>
-                </button>
-              </div>
-              <div
-                className="bx--modal-content"
-                id="bx--modal-body--modal-3"
-              >
-                Are you sure you want to remove Guest OS Information from the Dashboard?
-              </div>
-              <ButtonSet
-                className="bx--modal-footer"
-              >
-                <div
-                  className="bx--modal-footer bx--btn-set"
-                >
-                  <Button
-                    kind="secondary"
-                    onClick={[Function]}
-                  >
-                    <button
-                      aria-describedby={null}
-                      aria-pressed={null}
-                      className="bx--btn bx--btn--secondary"
-                      disabled={false}
-                      onBlur={[Function]}
-                      onClick={[Function]}
-                      onFocus={[Function]}
-                      onMouseEnter={[Function]}
-                      onMouseLeave={[Function]}
-                      tabIndex={0}
-                      type="button"
-                    >
-                      Cancel
-                    </button>
-                  </Button>
-                  <Button
-                    disabled={false}
-                    kind="primary"
-                    onClick={[Function]}
-                  >
-                    <button
-                      aria-describedby={null}
-                      aria-pressed={null}
-                      className="bx--btn bx--btn--primary"
-                      disabled={false}
-                      onBlur={[Function]}
-                      onClick={[Function]}
-                      onFocus={[Function]}
-                      onMouseEnter={[Function]}
-                      onMouseLeave={[Function]}
-                      tabIndex={0}
-                      type="button"
-                    >
-                      OK
-                    </button>
-                  </Button>
-                </div>
-              </ButtonSet>
-            </div>
-            <span
-              className="bx--visually-hidden"
-              role="link"
-              tabIndex="0"
-            >
-              Focus sentinel
-            </span>
-          </div>
-        </Modal>
-      </WidgetRemoveModal>
     </div>
   </WidgetWrapper>
 </Provider>
@@ -385,95 +299,174 @@ exports[`Widget wrapper component should render a widget wrapper with a menu 1`]
         >
           <OverflowMenu
             aria-labelledby="widget-title-83"
-            ariaLabel="Open and close list of options"
             className="widget-overflow-menu"
-            direction="bottom"
             flipped={true}
-            focusTrap={true}
-            iconDescription="Open and close list of options"
             id="83-menu"
-            light={false}
-            menuOffset={[Function]}
-            menuOffsetFlip={[Function]}
-            onClick={[Function]}
-            onClose={[Function]}
-            onKeyDown={[Function]}
             onOpen={[Function]}
-            open={false}
-            renderIcon={
-              Object {
-                "$$typeof": Symbol(react.forward_ref),
-                "render": [Function],
-              }
-            }
-            selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
           >
-            <ClickListener
-              onClickOutside={[Function]}
+            <ForwardRef
+              aria-labelledby="widget-title-83"
+              className="widget-overflow-menu"
+              flipped={true}
+              id="83-menu"
+              onOpen={[Function]}
             >
-              <button
-                aria-controls={null}
-                aria-expanded={false}
-                aria-haspopup={true}
-                aria-label="Open and close list of options"
-                aria-labelledby="widget-title-83"
-                className="widget-overflow-menu bx--overflow-menu bx--overflow-menu--md"
-                id="83-menu"
-                onClick={[Function]}
-                onClose={[Function]}
-                onKeyDown={[Function]}
-                open={false}
-                type="button"
+              <span
+                className="cds--overflow-menu__wrapper"
               >
-                <ForwardRef(OverflowMenuVertical16)
-                  aria-label="Open and close list of options"
-                  className="bx--overflow-menu__icon"
+                <ForwardRef
+                  aria-expanded={false}
+                  aria-haspopup={true}
+                  aria-labelledby="widget-title-83"
+                  className="widget-overflow-menu cds--overflow-menu cds--overflow-menu--md"
+                  id="83-menu"
+                  kind="ghost"
+                  label="Options"
+                  onClick={[Function]}
+                  size="md"
+                  type="button"
                 >
-                  <Icon
-                    aria-label="Open and close list of options"
-                    className="bx--overflow-menu__icon"
-                    fill="currentColor"
-                    height={16}
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 32 32"
-                    width={16}
-                    xmlns="http://www.w3.org/2000/svg"
+                  <ForwardRef
+                    autoAlign={false}
+                    className="cds--icon-tooltip"
+                    closeOnActivation={true}
+                    defaultOpen={false}
+                    dropShadow={false}
+                    enterDelayMs={100}
+                    highContrast={true}
+                    label="Options"
+                    leaveDelayMs={100}
                   >
-                    <svg
-                      aria-label="Open and close list of options"
-                      className="bx--overflow-menu__icon"
-                      fill="currentColor"
-                      focusable="false"
-                      height={16}
-                      preserveAspectRatio="xMidYMid meet"
-                      role="img"
-                      viewBox="0 0 32 32"
-                      width={16}
-                      xmlns="http://www.w3.org/2000/svg"
+                    <Popover
+                      align="top"
+                      autoAlign={false}
+                      className="cds--tooltip cds--icon-tooltip"
+                      dropShadow={false}
+                      highContrast={true}
+                      onKeyDown={[Function]}
+                      onMouseLeave={[Function]}
+                      open={false}
                     >
-                      <circle
-                        cx="16"
-                        cy="8"
-                        r="2"
-                      />
-                      <circle
-                        cx="16"
-                        cy="16"
-                        r="2"
-                      />
-                      <circle
-                        cx="16"
-                        cy="24"
-                        r="2"
-                      />
-                      <title>
-                        Open and close list of options
-                      </title>
-                    </svg>
-                  </Icon>
-                </ForwardRef(OverflowMenuVertical16)>
-              </button>
-            </ClickListener>
+                      <span
+                        className="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+                        onKeyDown={[Function]}
+                        onMouseLeave={[Function]}
+                      >
+                        <div
+                          className="cds--tooltip-trigger__wrapper"
+                        >
+                          <ForwardRef(ButtonBase)
+                            aria-expanded={false}
+                            aria-haspopup={true}
+                            aria-labelledby="widget-title-83"
+                            className="widget-overflow-menu cds--overflow-menu cds--overflow-menu--md"
+                            hasIconOnly={true}
+                            id="83-menu"
+                            kind="ghost"
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onMouseDown={[Function]}
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
+                            onMouseMove={[Function]}
+                            onTouchStart={[Function]}
+                            size="md"
+                            type="button"
+                          >
+                            <button
+                              aria-expanded={false}
+                              aria-haspopup={true}
+                              aria-labelledby="widget-title-83"
+                              className="widget-overflow-menu cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+                              disabled={false}
+                              id="83-menu"
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onMouseDown={[Function]}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
+                              onMouseMove={[Function]}
+                              onTouchStart={[Function]}
+                              type="button"
+                            >
+                              <ForwardRef(OverflowMenuVertical)
+                                aria-label="Options"
+                                className="cds--overflow-menu__icon"
+                              >
+                                <Icon
+                                  aria-label="Options"
+                                  className="cds--overflow-menu__icon"
+                                  fill="currentColor"
+                                  height={16}
+                                  viewBox="0 0 32 32"
+                                  width={16}
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <svg
+                                    aria-label="Options"
+                                    className="cds--overflow-menu__icon"
+                                    fill="currentColor"
+                                    focusable="false"
+                                    height={16}
+                                    preserveAspectRatio="xMidYMid meet"
+                                    role="img"
+                                    viewBox="0 0 32 32"
+                                    width={16}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <circle
+                                      cx="16"
+                                      cy="8"
+                                      r="2"
+                                    />
+                                    <circle
+                                      cx="16"
+                                      cy="16"
+                                      r="2"
+                                    />
+                                    <circle
+                                      cx="16"
+                                      cy="24"
+                                      r="2"
+                                    />
+                                  </svg>
+                                </Icon>
+                              </ForwardRef(OverflowMenuVertical)>
+                            </button>
+                          </ForwardRef(ButtonBase)>
+                        </div>
+                        <PopoverContent
+                          aria-hidden="true"
+                          className="cds--tooltip-content"
+                          id="tooltip-5"
+                          onMouseEnter={[Function]}
+                          role="tooltip"
+                        >
+                          <span
+                            aria-hidden="true"
+                            className="cds--popover"
+                            id="tooltip-5"
+                            onMouseEnter={[Function]}
+                            role="tooltip"
+                          >
+                            <span
+                              className="cds--popover-content cds--tooltip-content"
+                            >
+                              Options
+                            </span>
+                            <span
+                              className="cds--popover-caret"
+                            />
+                          </span>
+                        </PopoverContent>
+                      </span>
+                    </Popover>
+                  </ForwardRef>
+                </ForwardRef>
+              </span>
+            </ForwardRef>
           </OverflowMenu>
           <div
             className="card-pf-title sortable-handle ui-sortable-handle"
@@ -493,204 +486,39 @@ exports[`Widget wrapper component should render a widget wrapper with a menu 1`]
           className="loadingSpinner"
         >
           <Loading
-            active={true}
             className="export-spinner"
-            description="Active loading indicator"
             small={true}
             withOverlay={false}
           >
             <div
               aria-atomic="true"
               aria-live="assertive"
-              className="export-spinner bx--loading bx--loading--small"
+              className="export-spinner cds--loading cds--loading--small"
             >
-              <label
-                className="bx--visually-hidden"
-                id="loading-id-2"
-              >
-                Active loading indicator
-              </label>
               <svg
-                className="bx--loading__svg"
+                className="cds--loading__svg"
                 viewBox="0 0 100 100"
               >
                 <title>
-                  Active loading indicator
+                  loading
                 </title>
                 <circle
-                  className="bx--loading__background"
+                  className="cds--loading__background"
                   cx="50%"
                   cy="50%"
-                  r="44"
+                  r="42"
                 />
                 <circle
-                  className="bx--loading__stroke"
+                  className="cds--loading__stroke"
                   cx="50%"
                   cy="50%"
-                  r="44"
+                  r="42"
                 />
               </svg>
             </div>
           </Loading>
         </div>
       </div>
-      <WidgetRemoveModal
-        href=""
-        setState={[Function]}
-        showConfirm={false}
-        widgetTitle="Links"
-      >
-        <Modal
-          hasScrollingContent={false}
-          modalHeading=""
-          modalLabel=""
-          onKeyDown={[Function]}
-          onRequestClose={[Function]}
-          onRequestSubmit={[Function]}
-          onSecondarySubmit={[Function]}
-          open={false}
-          passiveModal={false}
-          preventCloseOnClickOutside={false}
-          primaryButtonDisabled={false}
-          primaryButtonText="OK"
-          secondaryButtonText="Cancel"
-          selectorPrimaryFocus="[data-modal-primary-focus]"
-        >
-          <div
-            className="bx--modal bx--modal-tall"
-            onBlur={[Function]}
-            onKeyDown={[Function]}
-            onMouseDown={[Function]}
-            role="presentation"
-          >
-            <span
-              className="bx--visually-hidden"
-              role="link"
-              tabIndex="0"
-            >
-              Focus sentinel
-            </span>
-            <div
-              aria-label=""
-              aria-modal="true"
-              className="bx--modal-container"
-              role="dialog"
-              tabIndex="-1"
-            >
-              <div
-                className="bx--modal-header"
-              >
-                <h3
-                  className="bx--modal-header__heading"
-                  id="bx--modal-header__heading--modal-2"
-                />
-                <button
-                  aria-label="close"
-                  className="bx--modal-close"
-                  onClick={[Function]}
-                  type="button"
-                >
-                  <ForwardRef(Close20)
-                    aria-hidden="true"
-                    className="bx--modal-close__icon"
-                    tabIndex="-1"
-                  >
-                    <Icon
-                      aria-hidden="true"
-                      className="bx--modal-close__icon"
-                      fill="currentColor"
-                      height={20}
-                      preserveAspectRatio="xMidYMid meet"
-                      tabIndex="-1"
-                      viewBox="0 0 32 32"
-                      width={20}
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <svg
-                        aria-hidden={true}
-                        className="bx--modal-close__icon"
-                        fill="currentColor"
-                        focusable="false"
-                        height={20}
-                        preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 32 32"
-                        width={20}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
-                        />
-                      </svg>
-                    </Icon>
-                  </ForwardRef(Close20)>
-                </button>
-              </div>
-              <div
-                className="bx--modal-content"
-                id="bx--modal-body--modal-2"
-              >
-                Are you sure you want to remove Links from the Dashboard?
-              </div>
-              <ButtonSet
-                className="bx--modal-footer"
-              >
-                <div
-                  className="bx--modal-footer bx--btn-set"
-                >
-                  <Button
-                    kind="secondary"
-                    onClick={[Function]}
-                  >
-                    <button
-                      aria-describedby={null}
-                      aria-pressed={null}
-                      className="bx--btn bx--btn--secondary"
-                      disabled={false}
-                      onBlur={[Function]}
-                      onClick={[Function]}
-                      onFocus={[Function]}
-                      onMouseEnter={[Function]}
-                      onMouseLeave={[Function]}
-                      tabIndex={0}
-                      type="button"
-                    >
-                      Cancel
-                    </button>
-                  </Button>
-                  <Button
-                    disabled={false}
-                    kind="primary"
-                    onClick={[Function]}
-                  >
-                    <button
-                      aria-describedby={null}
-                      aria-pressed={null}
-                      className="bx--btn bx--btn--primary"
-                      disabled={false}
-                      onBlur={[Function]}
-                      onClick={[Function]}
-                      onFocus={[Function]}
-                      onMouseEnter={[Function]}
-                      onMouseLeave={[Function]}
-                      tabIndex={0}
-                      type="button"
-                    >
-                      OK
-                    </button>
-                  </Button>
-                </div>
-              </ButtonSet>
-            </div>
-            <span
-              className="bx--visually-hidden"
-              role="link"
-              tabIndex="0"
-            >
-              Focus sentinel
-            </span>
-          </div>
-        </Modal>
-      </WidgetRemoveModal>
     </div>
   </WidgetWrapper>
 </Provider>
@@ -733,95 +561,174 @@ exports[`Widget wrapper component should render a widget wrapper with a report 1
         >
           <OverflowMenu
             aria-labelledby="widget-title-19"
-            ariaLabel="Open and close list of options"
             className="widget-overflow-menu"
-            direction="bottom"
             flipped={true}
-            focusTrap={true}
-            iconDescription="Open and close list of options"
             id="19-menu"
-            light={false}
-            menuOffset={[Function]}
-            menuOffsetFlip={[Function]}
-            onClick={[Function]}
-            onClose={[Function]}
-            onKeyDown={[Function]}
             onOpen={[Function]}
-            open={false}
-            renderIcon={
-              Object {
-                "$$typeof": Symbol(react.forward_ref),
-                "render": [Function],
-              }
-            }
-            selectorPrimaryFocus="[data-overflow-menu-primary-focus]"
           >
-            <ClickListener
-              onClickOutside={[Function]}
+            <ForwardRef
+              aria-labelledby="widget-title-19"
+              className="widget-overflow-menu"
+              flipped={true}
+              id="19-menu"
+              onOpen={[Function]}
             >
-              <button
-                aria-controls={null}
-                aria-expanded={false}
-                aria-haspopup={true}
-                aria-label="Open and close list of options"
-                aria-labelledby="widget-title-19"
-                className="widget-overflow-menu bx--overflow-menu bx--overflow-menu--md"
-                id="19-menu"
-                onClick={[Function]}
-                onClose={[Function]}
-                onKeyDown={[Function]}
-                open={false}
-                type="button"
+              <span
+                className="cds--overflow-menu__wrapper"
               >
-                <ForwardRef(OverflowMenuVertical16)
-                  aria-label="Open and close list of options"
-                  className="bx--overflow-menu__icon"
+                <ForwardRef
+                  aria-expanded={false}
+                  aria-haspopup={true}
+                  aria-labelledby="widget-title-19"
+                  className="widget-overflow-menu cds--overflow-menu cds--overflow-menu--md"
+                  id="19-menu"
+                  kind="ghost"
+                  label="Options"
+                  onClick={[Function]}
+                  size="md"
+                  type="button"
                 >
-                  <Icon
-                    aria-label="Open and close list of options"
-                    className="bx--overflow-menu__icon"
-                    fill="currentColor"
-                    height={16}
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 32 32"
-                    width={16}
-                    xmlns="http://www.w3.org/2000/svg"
+                  <ForwardRef
+                    autoAlign={false}
+                    className="cds--icon-tooltip"
+                    closeOnActivation={true}
+                    defaultOpen={false}
+                    dropShadow={false}
+                    enterDelayMs={100}
+                    highContrast={true}
+                    label="Options"
+                    leaveDelayMs={100}
                   >
-                    <svg
-                      aria-label="Open and close list of options"
-                      className="bx--overflow-menu__icon"
-                      fill="currentColor"
-                      focusable="false"
-                      height={16}
-                      preserveAspectRatio="xMidYMid meet"
-                      role="img"
-                      viewBox="0 0 32 32"
-                      width={16}
-                      xmlns="http://www.w3.org/2000/svg"
+                    <Popover
+                      align="top"
+                      autoAlign={false}
+                      className="cds--tooltip cds--icon-tooltip"
+                      dropShadow={false}
+                      highContrast={true}
+                      onKeyDown={[Function]}
+                      onMouseLeave={[Function]}
+                      open={false}
                     >
-                      <circle
-                        cx="16"
-                        cy="8"
-                        r="2"
-                      />
-                      <circle
-                        cx="16"
-                        cy="16"
-                        r="2"
-                      />
-                      <circle
-                        cx="16"
-                        cy="24"
-                        r="2"
-                      />
-                      <title>
-                        Open and close list of options
-                      </title>
-                    </svg>
-                  </Icon>
-                </ForwardRef(OverflowMenuVertical16)>
-              </button>
-            </ClickListener>
+                      <span
+                        className="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+                        onKeyDown={[Function]}
+                        onMouseLeave={[Function]}
+                      >
+                        <div
+                          className="cds--tooltip-trigger__wrapper"
+                        >
+                          <ForwardRef(ButtonBase)
+                            aria-expanded={false}
+                            aria-haspopup={true}
+                            aria-labelledby="widget-title-19"
+                            className="widget-overflow-menu cds--overflow-menu cds--overflow-menu--md"
+                            hasIconOnly={true}
+                            id="19-menu"
+                            kind="ghost"
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onMouseDown={[Function]}
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
+                            onMouseMove={[Function]}
+                            onTouchStart={[Function]}
+                            size="md"
+                            type="button"
+                          >
+                            <button
+                              aria-expanded={false}
+                              aria-haspopup={true}
+                              aria-labelledby="widget-title-19"
+                              className="widget-overflow-menu cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+                              disabled={false}
+                              id="19-menu"
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onMouseDown={[Function]}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
+                              onMouseMove={[Function]}
+                              onTouchStart={[Function]}
+                              type="button"
+                            >
+                              <ForwardRef(OverflowMenuVertical)
+                                aria-label="Options"
+                                className="cds--overflow-menu__icon"
+                              >
+                                <Icon
+                                  aria-label="Options"
+                                  className="cds--overflow-menu__icon"
+                                  fill="currentColor"
+                                  height={16}
+                                  viewBox="0 0 32 32"
+                                  width={16}
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <svg
+                                    aria-label="Options"
+                                    className="cds--overflow-menu__icon"
+                                    fill="currentColor"
+                                    focusable="false"
+                                    height={16}
+                                    preserveAspectRatio="xMidYMid meet"
+                                    role="img"
+                                    viewBox="0 0 32 32"
+                                    width={16}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <circle
+                                      cx="16"
+                                      cy="8"
+                                      r="2"
+                                    />
+                                    <circle
+                                      cx="16"
+                                      cy="16"
+                                      r="2"
+                                    />
+                                    <circle
+                                      cx="16"
+                                      cy="24"
+                                      r="2"
+                                    />
+                                  </svg>
+                                </Icon>
+                              </ForwardRef(OverflowMenuVertical)>
+                            </button>
+                          </ForwardRef(ButtonBase)>
+                        </div>
+                        <PopoverContent
+                          aria-hidden="true"
+                          className="cds--tooltip-content"
+                          id="tooltip-2"
+                          onMouseEnter={[Function]}
+                          role="tooltip"
+                        >
+                          <span
+                            aria-hidden="true"
+                            className="cds--popover"
+                            id="tooltip-2"
+                            onMouseEnter={[Function]}
+                            role="tooltip"
+                          >
+                            <span
+                              className="cds--popover-content cds--tooltip-content"
+                            >
+                              Options
+                            </span>
+                            <span
+                              className="cds--popover-caret"
+                            />
+                          </span>
+                        </PopoverContent>
+                      </span>
+                    </Popover>
+                  </ForwardRef>
+                </ForwardRef>
+              </span>
+            </ForwardRef>
           </OverflowMenu>
           <div
             className="card-pf-title sortable-handle ui-sortable-handle"
@@ -841,204 +748,39 @@ exports[`Widget wrapper component should render a widget wrapper with a report 1
           className="loadingSpinner"
         >
           <Loading
-            active={true}
             className="export-spinner"
-            description="Active loading indicator"
             small={true}
             withOverlay={false}
           >
             <div
               aria-atomic="true"
               aria-live="assertive"
-              className="export-spinner bx--loading bx--loading--small"
+              className="export-spinner cds--loading cds--loading--small"
             >
-              <label
-                className="bx--visually-hidden"
-                id="loading-id-1"
-              >
-                Active loading indicator
-              </label>
               <svg
-                className="bx--loading__svg"
+                className="cds--loading__svg"
                 viewBox="0 0 100 100"
               >
                 <title>
-                  Active loading indicator
+                  loading
                 </title>
                 <circle
-                  className="bx--loading__background"
+                  className="cds--loading__background"
                   cx="50%"
                   cy="50%"
-                  r="44"
+                  r="42"
                 />
                 <circle
-                  className="bx--loading__stroke"
+                  className="cds--loading__stroke"
                   cx="50%"
                   cy="50%"
-                  r="44"
+                  r="42"
                 />
               </svg>
             </div>
           </Loading>
         </div>
       </div>
-      <WidgetRemoveModal
-        href=""
-        setState={[Function]}
-        showConfirm={false}
-        widgetTitle="EVM: Recently Discovered Hosts"
-      >
-        <Modal
-          hasScrollingContent={false}
-          modalHeading=""
-          modalLabel=""
-          onKeyDown={[Function]}
-          onRequestClose={[Function]}
-          onRequestSubmit={[Function]}
-          onSecondarySubmit={[Function]}
-          open={false}
-          passiveModal={false}
-          preventCloseOnClickOutside={false}
-          primaryButtonDisabled={false}
-          primaryButtonText="OK"
-          secondaryButtonText="Cancel"
-          selectorPrimaryFocus="[data-modal-primary-focus]"
-        >
-          <div
-            className="bx--modal bx--modal-tall"
-            onBlur={[Function]}
-            onKeyDown={[Function]}
-            onMouseDown={[Function]}
-            role="presentation"
-          >
-            <span
-              className="bx--visually-hidden"
-              role="link"
-              tabIndex="0"
-            >
-              Focus sentinel
-            </span>
-            <div
-              aria-label=""
-              aria-modal="true"
-              className="bx--modal-container"
-              role="dialog"
-              tabIndex="-1"
-            >
-              <div
-                className="bx--modal-header"
-              >
-                <h3
-                  className="bx--modal-header__heading"
-                  id="bx--modal-header__heading--modal-1"
-                />
-                <button
-                  aria-label="close"
-                  className="bx--modal-close"
-                  onClick={[Function]}
-                  type="button"
-                >
-                  <ForwardRef(Close20)
-                    aria-hidden="true"
-                    className="bx--modal-close__icon"
-                    tabIndex="-1"
-                  >
-                    <Icon
-                      aria-hidden="true"
-                      className="bx--modal-close__icon"
-                      fill="currentColor"
-                      height={20}
-                      preserveAspectRatio="xMidYMid meet"
-                      tabIndex="-1"
-                      viewBox="0 0 32 32"
-                      width={20}
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <svg
-                        aria-hidden={true}
-                        className="bx--modal-close__icon"
-                        fill="currentColor"
-                        focusable="false"
-                        height={20}
-                        preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 32 32"
-                        width={20}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
-                        />
-                      </svg>
-                    </Icon>
-                  </ForwardRef(Close20)>
-                </button>
-              </div>
-              <div
-                className="bx--modal-content"
-                id="bx--modal-body--modal-1"
-              >
-                Are you sure you want to remove EVM: Recently Discovered Hosts from the Dashboard?
-              </div>
-              <ButtonSet
-                className="bx--modal-footer"
-              >
-                <div
-                  className="bx--modal-footer bx--btn-set"
-                >
-                  <Button
-                    kind="secondary"
-                    onClick={[Function]}
-                  >
-                    <button
-                      aria-describedby={null}
-                      aria-pressed={null}
-                      className="bx--btn bx--btn--secondary"
-                      disabled={false}
-                      onBlur={[Function]}
-                      onClick={[Function]}
-                      onFocus={[Function]}
-                      onMouseEnter={[Function]}
-                      onMouseLeave={[Function]}
-                      tabIndex={0}
-                      type="button"
-                    >
-                      Cancel
-                    </button>
-                  </Button>
-                  <Button
-                    disabled={false}
-                    kind="primary"
-                    onClick={[Function]}
-                  >
-                    <button
-                      aria-describedby={null}
-                      aria-pressed={null}
-                      className="bx--btn bx--btn--primary"
-                      disabled={false}
-                      onBlur={[Function]}
-                      onClick={[Function]}
-                      onFocus={[Function]}
-                      onMouseEnter={[Function]}
-                      onMouseLeave={[Function]}
-                      tabIndex={0}
-                      type="button"
-                    >
-                      OK
-                    </button>
-                  </Button>
-                </div>
-              </ButtonSet>
-            </div>
-            <span
-              className="bx--visually-hidden"
-              role="link"
-              tabIndex="0"
-            >
-              Focus sentinel
-            </span>
-          </div>
-        </Modal>
-      </WidgetRemoveModal>
     </div>
   </WidgetWrapper>
 </Provider>

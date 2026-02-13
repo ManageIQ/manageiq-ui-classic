@@ -15,7 +15,7 @@
  */
 Cypress.Commands.add('selectTableRowsByText', ({ textArray = [] }) => {
   if (!textArray || !textArray.length) {
-    cy.logAndThrowError('textArray is required');
+    cy.logAndThrowError(`cy.selectTableRowsByText: required object key missing - textArray`);
   }
 
   cy.get('.miq-data-table table tbody tr').then(($rows) => {
@@ -25,7 +25,7 @@ Cypress.Commands.add('selectTableRowsByText', ({ textArray = [] }) => {
         const $row = Cypress.$(row);
 
         // Skip already selected rows
-        if ($row.hasClass('bx--data-table--selected')) {
+        if ($row.hasClass('cds--data-table--selected')) {
           return false;
         }
 
@@ -37,7 +37,7 @@ Cypress.Commands.add('selectTableRowsByText', ({ textArray = [] }) => {
         // If text is found in this row, select it & break the row loop
         if (textFoundInRow) {
           cy.log(`Found text "${textToFind}" (index: ${textItemIndex}) in row ${rowIndex + 1}`);
-          cy.wrap($row).find('.bx--checkbox-label').click();
+          cy.wrap($row).find('.cds--checkbox-label').click();
           return true;
         }
 
@@ -47,7 +47,7 @@ Cypress.Commands.add('selectTableRowsByText', ({ textArray = [] }) => {
       // After checking all rows, if the text wasn't found, throw an error and terminate
       if (!textFoundInTable) {
         cy.logAndThrowError(
-          `Text "${textToFind}" (index: ${textItemIndex}) was not found in the table`
+          `cy.selectTableRowsByText: Text "${textToFind}" (index: ${textItemIndex}) was not found in the table`
         );
       }
     });
@@ -64,7 +64,7 @@ Cypress.Commands.add('selectTableRowsByText', ({ textArray = [] }) => {
  */
 Cypress.Commands.add('clickTableRowByText', ({ text, columnIndex }) => {
   if (!text) {
-    cy.logAndThrowError('text parameter is required');
+    cy.logAndThrowError('cy.clickTableRowByText: text parameter is required');
   }
 
   if (columnIndex || columnIndex === 0) {

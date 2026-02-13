@@ -143,7 +143,6 @@ exports[`Host aggregate form component should render add host form variant (remv
       >
         <FormRenderer
           FormTemplate={[Function]}
-          clearOnUnmount={false}
           componentMapper={
             Object {
               "checkbox": [Function],
@@ -178,7 +177,6 @@ exports[`Host aggregate form component should render add host form variant (remv
             }
           }
           dispatch={[Function]}
-          initialValues={Object {}}
           onCancel={[Function]}
           onReset={[Function]}
           onSubmit={[Function]}
@@ -408,11 +406,10 @@ exports[`Host aggregate form component should render add host form variant (remv
                       onSubmit={[Function]}
                     >
                       <form
-                        className="bx--form form-0-2-3 form-react"
+                        className="cds--form form-0-2-3 form-react"
                         noValidate={true}
                         onSubmit={[Function]}
                       >
-                         
                         <SingleField
                           component="select"
                           id="host_id"
@@ -424,6 +421,7 @@ exports[`Host aggregate form component should render add host form variant (remv
                           options={Array []}
                         >
                           <FormConditionWrapper
+                            conditionMapper={Object {}}
                             field={
                               Object {
                                 "component": "select",
@@ -436,9 +434,7 @@ exports[`Host aggregate form component should render add host form variant (remv
                               }
                             }
                           >
-                            <FormFieldHideWrapper
-                              hideField={false}
-                            >
+                            <FormFieldHideWrapper>
                               <SelectWithOnChange
                                 component="select"
                                 id="host_id"
@@ -454,7 +450,6 @@ exports[`Host aggregate form component should render add host form variant (remv
                                   id="host_id"
                                   isRequired={true}
                                   label="Host"
-                                  loadingMessage="Loading..."
                                   name="host_id"
                                   options={
                                     Array [
@@ -526,10 +521,7 @@ exports[`Host aggregate form component should render add host form variant (remv
                                     >
                                       <Select
                                         className=""
-                                        disabled={false}
-                                        helperText=""
                                         id="host_id"
-                                        inline={false}
                                         invalid={false}
                                         invalidText=""
                                         labelText={
@@ -537,7 +529,6 @@ exports[`Host aggregate form component should render add host form variant (remv
                                             Host
                                           </IsRequired>
                                         }
-                                        light={false}
                                         name="host_id"
                                         onBlur={[Function]}
                                         onChange={[Function]}
@@ -545,48 +536,57 @@ exports[`Host aggregate form component should render add host form variant (remv
                                         value=""
                                       >
                                         <div
-                                          className="bx--form-item"
+                                          className="cds--form-item"
                                         >
                                           <div
-                                            className="bx--select"
+                                            className="cds--select"
                                           >
-                                            <label
-                                              className="bx--label"
+                                            <ForwardRef
+                                              as="label"
+                                              className="cds--label"
                                               htmlFor="host_id"
                                             >
-                                              <IsRequired>
-                                                <span
-                                                  aria-hidden="true"
-                                                  className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
-                                                >
-                                                  *
-                                                </span>
-                                                Host
-                                              </IsRequired>
-                                            </label>
+                                              <label
+                                                className="cds--label"
+                                                dir="auto"
+                                                htmlFor="host_id"
+                                              >
+                                                <IsRequired>
+                                                  <span
+                                                    aria-hidden="true"
+                                                    className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+                                                  >
+                                                    *
+                                                  </span>
+                                                  Host
+                                                </IsRequired>
+                                              </label>
+                                            </ForwardRef>
                                             <div
-                                              className="bx--select-input__wrapper"
+                                              className="cds--select-input__wrapper"
                                               data-invalid={null}
+                                              onBlur={[Function]}
+                                              onFocus={[Function]}
                                             >
                                               <select
-                                                className="bx--select-input"
+                                                className="cds--select-input"
                                                 id="host_id"
                                                 name="host_id"
                                                 onBlur={[Function]}
                                                 onChange={[Function]}
                                                 onFocus={[Function]}
+                                                onKeyDown={[Function]}
+                                                onMouseDown={[Function]}
+                                                title="<Choose>"
                                                 value=""
                                               >
                                                 <SelectItem
-                                                  disabled={false}
-                                                  hidden={false}
                                                   key="0"
                                                   label="<Choose>"
                                                   text="<Choose>"
-                                                  value=""
                                                 >
                                                   <option
-                                                    className="bx--select-option"
+                                                    className="cds--select-option"
                                                     disabled={false}
                                                     hidden={false}
                                                     label="<Choose>"
@@ -596,21 +596,20 @@ exports[`Host aggregate form component should render add host form variant (remv
                                                   </option>
                                                 </SelectItem>
                                               </select>
-                                              <ForwardRef(ChevronDown16)
-                                                className="bx--select__arrow"
+                                              <ForwardRef(ChevronDown)
+                                                className="cds--select__arrow"
                                               >
                                                 <Icon
-                                                  className="bx--select__arrow"
+                                                  className="cds--select__arrow"
                                                   fill="currentColor"
                                                   height={16}
-                                                  preserveAspectRatio="xMidYMid meet"
                                                   viewBox="0 0 16 16"
                                                   width={16}
                                                   xmlns="http://www.w3.org/2000/svg"
                                                 >
                                                   <svg
                                                     aria-hidden={true}
-                                                    className="bx--select__arrow"
+                                                    className="cds--select__arrow"
                                                     fill="currentColor"
                                                     focusable="false"
                                                     height={16}
@@ -620,11 +619,11 @@ exports[`Host aggregate form component should render add host form variant (remv
                                                     xmlns="http://www.w3.org/2000/svg"
                                                   >
                                                     <path
-                                                      d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                      d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                                     />
                                                   </svg>
                                                 </Icon>
-                                              </ForwardRef(ChevronDown16)>
+                                              </ForwardRef(ChevronDown)>
                                             </div>
                                           </div>
                                         </div>
@@ -642,6 +641,7 @@ exports[`Host aggregate form component should render add host form variant (remv
                           name="spy-field"
                         >
                           <FormConditionWrapper
+                            conditionMapper={Object {}}
                             field={
                               Object {
                                 "component": "spy-field",
@@ -650,9 +650,7 @@ exports[`Host aggregate form component should render add host form variant (remv
                               }
                             }
                           >
-                            <FormFieldHideWrapper
-                              hideField={false}
-                            >
+                            <FormFieldHideWrapper>
                               <SpyField
                                 component="spy-field"
                                 name="spy-field"
@@ -794,7 +792,7 @@ exports[`Host aggregate form component should render add host form variant (remv
                                 className=""
                               >
                                 <div
-                                  className="bx--btn-set"
+                                  className="cds--btn-set"
                                 >
                                   <Button
                                     buttonType="submit"
@@ -810,22 +808,21 @@ exports[`Host aggregate form component should render add host form variant (remv
                                       type="submit"
                                       variant="primary"
                                     >
-                                      <button
-                                        aria-describedby={null}
-                                        aria-pressed={null}
-                                        className="bx--btn bx--btn--primary bx--btn--disabled"
+                                      <ForwardRef(ButtonBase)
                                         disabled={true}
-                                        onBlur={[Function]}
-                                        onClick={[Function]}
-                                        onFocus={[Function]}
-                                        onMouseEnter={[Function]}
-                                        onMouseLeave={[Function]}
-                                        tabIndex={0}
+                                        kind="primary"
                                         type="submit"
                                         variant="primary"
                                       >
-                                        Remove
-                                      </button>
+                                        <button
+                                          className="cds--btn cds--btn--primary cds--btn--disabled"
+                                          disabled={true}
+                                          type="submit"
+                                          variant="primary"
+                                        >
+                                          Remove
+                                        </button>
+                                      </ForwardRef(ButtonBase)>
                                     </Button>
                                   </Button>
                                   <Button
@@ -842,21 +839,21 @@ exports[`Host aggregate form component should render add host form variant (remv
                                       onClick={[Function]}
                                       type="button"
                                     >
-                                      <button
-                                        aria-describedby={null}
-                                        aria-pressed={null}
-                                        className="bx--btn bx--btn--secondary bx--btn--disabled"
+                                      <ForwardRef(ButtonBase)
                                         disabled={true}
-                                        onBlur={[Function]}
+                                        kind="secondary"
                                         onClick={[Function]}
-                                        onFocus={[Function]}
-                                        onMouseEnter={[Function]}
-                                        onMouseLeave={[Function]}
-                                        tabIndex={0}
                                         type="button"
                                       >
-                                        Reset
-                                      </button>
+                                        <button
+                                          className="cds--btn cds--btn--secondary cds--btn--disabled"
+                                          disabled={true}
+                                          onClick={[Function]}
+                                          type="button"
+                                        >
+                                          Reset
+                                        </button>
+                                      </ForwardRef(ButtonBase)>
                                     </Button>
                                   </Button>
                                   <Button
@@ -871,21 +868,20 @@ exports[`Host aggregate form component should render add host form variant (remv
                                       onClick={[Function]}
                                       type="button"
                                     >
-                                      <button
-                                        aria-describedby={null}
-                                        aria-pressed={null}
-                                        className="bx--btn bx--btn--secondary"
-                                        disabled={false}
-                                        onBlur={[Function]}
+                                      <ForwardRef(ButtonBase)
+                                        kind="secondary"
                                         onClick={[Function]}
-                                        onFocus={[Function]}
-                                        onMouseEnter={[Function]}
-                                        onMouseLeave={[Function]}
-                                        tabIndex={0}
                                         type="button"
                                       >
-                                        Cancel
-                                      </button>
+                                        <button
+                                          className="cds--btn cds--btn--secondary"
+                                          disabled={false}
+                                          onClick={[Function]}
+                                          type="button"
+                                        >
+                                          Cancel
+                                        </button>
+                                      </ForwardRef(ButtonBase)>
                                     </Button>
                                   </Button>
                                 </div>
@@ -893,7 +889,6 @@ exports[`Host aggregate form component should render add host form variant (remv
                             </ButtonGroup>
                           </FormControls>
                         </FormSpy>
-                         
                       </form>
                     </Form>
                   </Form>

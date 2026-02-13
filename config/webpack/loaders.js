@@ -24,7 +24,8 @@ module.exports = [
       loader: 'babel-loader',
       options: babelOptions,
     }],
-    exclude: /node_modules/,
+    // Explicitly include @carbon packages and its nested es-toolkit package to be transpiled
+    exclude: /node_modules\/(?!(@carbon|es-toolkit))/,
   },
 
   {
@@ -78,6 +79,8 @@ module.exports = [
               `${nodeModules}/patternfly/dist/sass/patternfly`,
               `${nodeModules}/font-awesome/scss`,
               `${nodeModules}/@manageiq/font-fabulous/assets/stylesheets`,
+              // Configuring Sass to lookup from node_modules folder(for Carbon and other modern Sass packages)
+              'node_modules',
             ],
             implementation: require('sass').default,
           },

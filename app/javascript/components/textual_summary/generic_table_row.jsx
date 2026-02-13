@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'carbon-components-react';
+import { Button } from '@carbon/react';
 import IconOrImage from './icon_or_image';
 
 const filterValue = (val) => (val == null ? '' : String(val));
@@ -28,7 +28,6 @@ const renderMultivalue = function renderMultivalue(values, onClick) {
 const renderValue = function renderValue(value, onClick) {
   return Array.isArray(value) ? renderMultivalue(value, onClick) : (
     <span>
-      {' '}
       {filterValue(value)}
     </span>
   );

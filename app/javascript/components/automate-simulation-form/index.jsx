@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import MiqFormRenderer, { useFormApi } from '@@ddf';
 import { FormSpy } from '@data-driven-forms/react-form-renderer';
 import PropTypes from 'prop-types';
-import { Loading, Button } from 'carbon-components-react';
+import { Loading, Button } from '@carbon/react';
 import createSchema from './automate-simulation-form.schema';
 import AutomationSimulation from '../AutomationSimulation';
 
@@ -69,7 +69,7 @@ const AutomateSimulationForm = ({
   };
 
   const onFormReset = () => {
-    const buttons = document.querySelectorAll('.bx--list-box__selection');
+    const buttons = document.querySelectorAll('.cds--list-box__selection');
     buttons.forEach((button) => button.click());
     document.getElementById('object_request').value = '';
     add_flash(__('All changes have been reset'), 'warning');
@@ -127,11 +127,10 @@ const FormTemplate = ({
               kind="primary"
               className="btnRight"
               type="submit"
-              variant="contained"
             >
               {submitLabel}
             </Button>
-            <Button variant="contained" type="button" onClick={onReset} kind="secondary">
+            <Button type="button" onClick={onReset} kind="secondary">
               { __('Reset')}
             </Button>
           </div>

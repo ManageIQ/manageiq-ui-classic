@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { ToastNotification, Link } from 'carbon-components-react';
+import { ToastNotification, ActionableNotification, Link } from '@carbon/react';
 import { useDispatch } from 'react-redux';
 import { markNotificationRead, MARK_NOTIFICATION_READ } from '../../miq-redux/actions/notifications-actions';
 
@@ -24,6 +24,27 @@ const ToastItem = ({ toastNotification }) => {
     return () => clearTimeout(timer);
   }, []);
 
+  // Use ActionableNotification when there's a link, otherwise use ToastNotification
+  if (toastNotification.data.link) {
+    return (
+      <ActionableNotification
+        key={toastNotification.id}
+        kind={toastNotification.type}
+        lowContrast
+        inline={false}
+        title={EMPTY}
+        subtitle={toastNotification.message}
+        onClick={() => dispatch(markNotificationRead(toastNotification))}
+        role="status"
+        className="miq-notification-toast-item-with-link"
+      >
+        <div className="pull-right toast-pf-action miq-notification-toast-details-link-wrap">
+          <Link href={toastNotification.data.link}>{__('View details')}</Link>
+        </div>
+      </ActionableNotification>
+    );
+  }
+
   return (
     <ToastNotification
       key={toastNotification.id}
@@ -33,15 +54,9 @@ const ToastItem = ({ toastNotification }) => {
       caption={EMPTY}
       subtitle={toastNotification.message}
       onClick={() => dispatch(markNotificationRead(toastNotification))}
+      className="miq-notification-toast-item"
       timeout={6000}
-    >
-      {toastNotification.data.link && (
-        <div className="pull-right toast-pf-action">
-          <Link href={toastNotification.data.link}>{__('View details')}</Link>
-        </div>
-      )}
-      <span>{toastNotification.messages}</span>
-    </ToastNotification>
+    />
   );
 };
 

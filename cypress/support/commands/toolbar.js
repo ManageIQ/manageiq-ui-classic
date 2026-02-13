@@ -12,7 +12,7 @@ Cypress.Commands.add('toolbar', (toolbarButton, toolbarOption = '') => {
       );
 
       if (!targetToolbarButton) {
-        cy.logAndThrowError(`Toolbar button: "${toolbarButton}" was not found`);
+        cy.logAndThrowError(`cy.toolbar: Toolbar button: "${toolbarButton}" was not found`);
       }
       return cy.wrap(targetToolbarButton).click();
     });
@@ -21,7 +21,7 @@ Cypress.Commands.add('toolbar', (toolbarButton, toolbarOption = '') => {
   // then look for the given toolbar option
   if (toolbarOption) {
     return clickToolbarButton.then(() => {
-      return cy.get('.bx--overflow-menu-options li button').then((toolbarOptions) => {
+      return cy.get('.cds--overflow-menu-options li button').then((toolbarOptions) => {
         const targetToolbarOption = [...toolbarOptions].find(
           (option) => option.innerText.trim() === toolbarOption
         );
@@ -45,7 +45,7 @@ Cypress.Commands.add('toolbar', (toolbarButton, toolbarOption = '') => {
 Cypress.Commands.add('toolbarItems', (toolbarButton) => {
   cy.toolbar(toolbarButton);
   const dropdownButtons = [];
-  cy.get('.bx--overflow-menu-options').then((tempButtons) => {
+  cy.get('.cds--overflow-menu-options').then((tempButtons) => {
     let buttons = tempButtons.children();
     const nums = [...Array(buttons.length).keys()];
     nums.forEach((index) => {

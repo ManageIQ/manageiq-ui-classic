@@ -1,30 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { InlineNotification } from 'carbon-components-react';
+import { InlineNotification } from '@carbon/react';
 
-const RefreshNotifications = ({
-  status,
-}) => (
+const RefreshNotifications = ({ status }) => (
   <div className="refresh-notifications">
     <InlineNotification
       kind={status.last_refresh.status}
       role="alert"
       className="last-refresh-notification"
-      key="1"
       title={status.last_refresh.label}
-      subtitle={(
-        <div>
-          {status.last_refresh.value.map((error) => (
-            <div key={error.value}><span>{error.value}</span></div>
-          ))}
-
-        </div>
-      )}
       lowContrast
       hideCloseButton
-    />
+    >
+      <div>
+        {status.last_refresh.value.map((item) => (
+          <div key={item.value}>{item.value}</div>
+        ))}
+      </div>
+    </InlineNotification>
   </div>
-
 );
 RefreshNotifications.propTypes = {
   status: PropTypes.objectOf(PropTypes.any).isRequired,

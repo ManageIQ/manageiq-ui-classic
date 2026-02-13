@@ -21,7 +21,7 @@ Cypress.Commands.add('expect_rates_table', (headers, rows) => {
     columns.forEach((column) => {
       if (column === 1 || column === headers.length) {
         // Verify group or units column value
-        cy.expect_text(`:nth-child(${rowCounter}) > :nth-child(${column}) > .cell > .bx--front-line`, row[column - 1]);
+        cy.expect_text(`:nth-child(${rowCounter}) > :nth-child(${column}) > .cell > .cds--front-line`, row[column - 1]);
       } else {
         // Verify remaining column values
         cy.get(`:nth-child(${rowCounter}) > :nth-child(${column}) > .cell > .array_list > .list_row`).then((values) => {

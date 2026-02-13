@@ -204,7 +204,7 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
         .closest('.panel')
         .find('.panel-heading h4.panel-title a')
         .text();
-      const errorMessage = `${
+      const errorMessage = `cy.selectAccordionItem: ${
         isClickableNode ? 'Target' : 'Intermediate'
       } node - "${accordionLabel}" was not found in the expanded "${accordionPanel}" accordion panel.`;
       cy.logAndThrowError(errorMessage);

@@ -45,16 +45,19 @@ exports[`Alert Profile Form Component should render correctly 1`] = `
               "fields": Array [
                 Object {
                   "AddAllButtonProps": Object {
-                    "size": "small",
+                    "size": "sm",
                   },
                   "AddButtonProps": Object {
-                    "size": "small",
+                    "size": "sm",
+                  },
+                  "ButtonColumnProps": Object {
+                    "className": "miq-common-dual-list-buttons-column",
                   },
                   "RemoveAllButtonProps": Object {
-                    "size": "small",
+                    "size": "sm",
                   },
                   "RemoveButtonProps": Object {
-                    "size": "small",
+                    "size": "sm",
                   },
                   "allToRight": false,
                   "component": "dual-list-select",

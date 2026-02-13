@@ -11,7 +11,7 @@ const HelperTextBlock = ({ helperText, errorText, warnText }) => {
   }
 
   if (helperText) {
-    return <div className="bx--form__helper-text">{helperText}</div>;
+    return <div className="cds--form__helper-text">{helperText}</div>;
   }
 
   return null;

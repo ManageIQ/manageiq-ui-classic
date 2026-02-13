@@ -135,26 +135,25 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
     >
       <Button
         onClick={[Function]}
-        onKeyPress={[Function]}
+        onKeyDown={[Function]}
         title="Click on this row to create a new mapping rule"
       >
-        <button
-          aria-describedby={null}
-          aria-pressed={null}
-          className="bx--btn bx--btn--primary"
-          disabled={false}
-          onBlur={[Function]}
+        <ForwardRef(ButtonBase)
           onClick={[Function]}
-          onFocus={[Function]}
-          onKeyPress={[Function]}
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-          tabIndex={0}
+          onKeyDown={[Function]}
           title="Click on this row to create a new mapping rule"
-          type="button"
         >
-          Add Mapping Rule
-        </button>
+          <button
+            className="cds--btn cds--btn--primary"
+            disabled={false}
+            onClick={[Function]}
+            onKeyDown={[Function]}
+            title="Click on this row to create a new mapping rule"
+            type="button"
+          >
+            Add Mapping Rule
+          </button>
+        </ForwardRef(ButtonBase)>
       </Button>
     </div>
   </div>
@@ -319,7 +318,6 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
       className="miq-data-table settings-label-tag-mappings-list"
     >
       <DataTable
-        filterRows={[Function]}
         headers={
           Array [
             Object {
@@ -341,8 +339,6 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
           ]
         }
         isSortable={false}
-        locale="en"
-        overflowMenuOnHover={true}
         rows={
           Array [
             Object {
@@ -437,25 +433,23 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
         }
         size="lg"
         sortDirection="ASC"
-        sortRow={[Function]}
         stickyHeader={false}
-        translateWithId={[Function]}
       >
         <Table
           isSortable={false}
-          overflowMenuOnHover={true}
+          overflowMenuOnHover={false}
           size="lg"
           stickyHeader={false}
         >
           <div
-            className="bx--data-table-content"
+            className="cds--data-table-content"
           >
             <table
-              className="bx--data-table bx--data-table--lg bx--data-table--no-border"
+              className="cds--data-table cds--data-table--lg cds--data-table--visible-overflow-menu"
             >
               <TableHead>
                 <thead>
-                  <TableRow>
+                  <ForwardRef>
                     <tr>
                       <TableHeader
                         className="miq-data-table-header"
@@ -463,54 +457,48 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                         isSortable={true}
                         key="resource_entity"
                         onClick={[Function]}
-                        scope="col"
                         sortDirection="NONE"
-                        translateWithId={[Function]}
                       >
                         <th
                           aria-sort="none"
-                          className="miq-data-table-header"
+                          className="miq-data-table-header cds--table-sort__header"
                           scope="col"
                         >
                           <div
+                            className="cds--table-sort__description"
                             id="table-sort-11"
-                            style={
-                              Object {
-                                "display": "none",
-                              }
-                            }
                           >
                             Click to sort rows by Resource Entity header in ascending order
                           </div>
                           <button
                             aria-describedby="table-sort-11"
-                            className="miq-data-table-header bx--table-sort"
+                            className="miq-data-table-header cds--table-sort"
                             onClick={[Function]}
                             type="button"
                           >
                             <span
-                              className="bx--table-sort__flex"
+                              className="cds--table-sort__flex"
                             >
                               <div
-                                className="bx--table-header-label"
+                                className="cds--table-header-label"
                               >
                                 Resource Entity
                               </div>
-                              <ForwardRef(ArrowUp20)
-                                className="bx--table-sort__icon"
+                              <ForwardRef(ArrowUp)
+                                className="cds--table-sort__icon"
+                                size={20}
                               >
                                 <Icon
-                                  className="bx--table-sort__icon"
+                                  className="cds--table-sort__icon"
                                   fill="currentColor"
                                   height={20}
-                                  preserveAspectRatio="xMidYMid meet"
                                   viewBox="0 0 32 32"
                                   width={20}
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <svg
                                     aria-hidden={true}
-                                    className="bx--table-sort__icon"
+                                    className="cds--table-sort__icon"
                                     fill="currentColor"
                                     focusable="false"
                                     height={20}
@@ -520,26 +508,26 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                     xmlns="http://www.w3.org/2000/svg"
                                   >
                                     <path
-                                      d="M16 4L6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
+                                      d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
                                     />
                                   </svg>
                                 </Icon>
-                              </ForwardRef(ArrowUp20)>
-                              <ForwardRef(ArrowsVertical20)
-                                className="bx--table-sort__icon-unsorted"
+                              </ForwardRef(ArrowUp)>
+                              <ForwardRef(ArrowsVertical)
+                                className="cds--table-sort__icon-unsorted"
+                                size={20}
                               >
                                 <Icon
-                                  className="bx--table-sort__icon-unsorted"
+                                  className="cds--table-sort__icon-unsorted"
                                   fill="currentColor"
                                   height={20}
-                                  preserveAspectRatio="xMidYMid meet"
                                   viewBox="0 0 32 32"
                                   width={20}
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <svg
                                     aria-hidden={true}
-                                    className="bx--table-sort__icon-unsorted"
+                                    className="cds--table-sort__icon-unsorted"
                                     fill="currentColor"
                                     focusable="false"
                                     height={20}
@@ -549,11 +537,17 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                     xmlns="http://www.w3.org/2000/svg"
                                   >
                                     <path
-                                      d="M27.6 20.6L24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22zM9 4L3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
+                                      d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
+                                    />
+                                    <path
+                                      d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                                     />
                                   </svg>
                                 </Icon>
-                              </ForwardRef(ArrowsVertical20)>
+                              </ForwardRef(ArrowsVertical)>
+                              <div
+                                className="cds--table-header-label--decorator-inner"
+                              />
                             </span>
                           </button>
                         </th>
@@ -564,54 +558,48 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                         isSortable={true}
                         key="resource_label"
                         onClick={[Function]}
-                        scope="col"
                         sortDirection="NONE"
-                        translateWithId={[Function]}
                       >
                         <th
                           aria-sort="none"
-                          className="miq-data-table-header"
+                          className="miq-data-table-header cds--table-sort__header"
                           scope="col"
                         >
                           <div
+                            className="cds--table-sort__description"
                             id="table-sort-12"
-                            style={
-                              Object {
-                                "display": "none",
-                              }
-                            }
                           >
                             Click to sort rows by Resource Label header in ascending order
                           </div>
                           <button
                             aria-describedby="table-sort-12"
-                            className="miq-data-table-header bx--table-sort"
+                            className="miq-data-table-header cds--table-sort"
                             onClick={[Function]}
                             type="button"
                           >
                             <span
-                              className="bx--table-sort__flex"
+                              className="cds--table-sort__flex"
                             >
                               <div
-                                className="bx--table-header-label"
+                                className="cds--table-header-label"
                               >
                                 Resource Label
                               </div>
-                              <ForwardRef(ArrowUp20)
-                                className="bx--table-sort__icon"
+                              <ForwardRef(ArrowUp)
+                                className="cds--table-sort__icon"
+                                size={20}
                               >
                                 <Icon
-                                  className="bx--table-sort__icon"
+                                  className="cds--table-sort__icon"
                                   fill="currentColor"
                                   height={20}
-                                  preserveAspectRatio="xMidYMid meet"
                                   viewBox="0 0 32 32"
                                   width={20}
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <svg
                                     aria-hidden={true}
-                                    className="bx--table-sort__icon"
+                                    className="cds--table-sort__icon"
                                     fill="currentColor"
                                     focusable="false"
                                     height={20}
@@ -621,26 +609,26 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                     xmlns="http://www.w3.org/2000/svg"
                                   >
                                     <path
-                                      d="M16 4L6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
+                                      d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
                                     />
                                   </svg>
                                 </Icon>
-                              </ForwardRef(ArrowUp20)>
-                              <ForwardRef(ArrowsVertical20)
-                                className="bx--table-sort__icon-unsorted"
+                              </ForwardRef(ArrowUp)>
+                              <ForwardRef(ArrowsVertical)
+                                className="cds--table-sort__icon-unsorted"
+                                size={20}
                               >
                                 <Icon
-                                  className="bx--table-sort__icon-unsorted"
+                                  className="cds--table-sort__icon-unsorted"
                                   fill="currentColor"
                                   height={20}
-                                  preserveAspectRatio="xMidYMid meet"
                                   viewBox="0 0 32 32"
                                   width={20}
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <svg
                                     aria-hidden={true}
-                                    className="bx--table-sort__icon-unsorted"
+                                    className="cds--table-sort__icon-unsorted"
                                     fill="currentColor"
                                     focusable="false"
                                     height={20}
@@ -650,11 +638,17 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                     xmlns="http://www.w3.org/2000/svg"
                                   >
                                     <path
-                                      d="M27.6 20.6L24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22zM9 4L3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
+                                      d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
+                                    />
+                                    <path
+                                      d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                                     />
                                   </svg>
                                 </Icon>
-                              </ForwardRef(ArrowsVertical20)>
+                              </ForwardRef(ArrowsVertical)>
+                              <div
+                                className="cds--table-header-label--decorator-inner"
+                              />
                             </span>
                           </button>
                         </th>
@@ -665,54 +659,48 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                         isSortable={true}
                         key="tag_category"
                         onClick={[Function]}
-                        scope="col"
                         sortDirection="NONE"
-                        translateWithId={[Function]}
                       >
                         <th
                           aria-sort="none"
-                          className="miq-data-table-header"
+                          className="miq-data-table-header cds--table-sort__header"
                           scope="col"
                         >
                           <div
+                            className="cds--table-sort__description"
                             id="table-sort-13"
-                            style={
-                              Object {
-                                "display": "none",
-                              }
-                            }
                           >
                             Click to sort rows by Tag Category header in ascending order
                           </div>
                           <button
                             aria-describedby="table-sort-13"
-                            className="miq-data-table-header bx--table-sort"
+                            className="miq-data-table-header cds--table-sort"
                             onClick={[Function]}
                             type="button"
                           >
                             <span
-                              className="bx--table-sort__flex"
+                              className="cds--table-sort__flex"
                             >
                               <div
-                                className="bx--table-header-label"
+                                className="cds--table-header-label"
                               >
                                 Tag Category
                               </div>
-                              <ForwardRef(ArrowUp20)
-                                className="bx--table-sort__icon"
+                              <ForwardRef(ArrowUp)
+                                className="cds--table-sort__icon"
+                                size={20}
                               >
                                 <Icon
-                                  className="bx--table-sort__icon"
+                                  className="cds--table-sort__icon"
                                   fill="currentColor"
                                   height={20}
-                                  preserveAspectRatio="xMidYMid meet"
                                   viewBox="0 0 32 32"
                                   width={20}
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <svg
                                     aria-hidden={true}
-                                    className="bx--table-sort__icon"
+                                    className="cds--table-sort__icon"
                                     fill="currentColor"
                                     focusable="false"
                                     height={20}
@@ -722,26 +710,26 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                     xmlns="http://www.w3.org/2000/svg"
                                   >
                                     <path
-                                      d="M16 4L6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
+                                      d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
                                     />
                                   </svg>
                                 </Icon>
-                              </ForwardRef(ArrowUp20)>
-                              <ForwardRef(ArrowsVertical20)
-                                className="bx--table-sort__icon-unsorted"
+                              </ForwardRef(ArrowUp)>
+                              <ForwardRef(ArrowsVertical)
+                                className="cds--table-sort__icon-unsorted"
+                                size={20}
                               >
                                 <Icon
-                                  className="bx--table-sort__icon-unsorted"
+                                  className="cds--table-sort__icon-unsorted"
                                   fill="currentColor"
                                   height={20}
-                                  preserveAspectRatio="xMidYMid meet"
                                   viewBox="0 0 32 32"
                                   width={20}
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <svg
                                     aria-hidden={true}
-                                    className="bx--table-sort__icon-unsorted"
+                                    className="cds--table-sort__icon-unsorted"
                                     fill="currentColor"
                                     focusable="false"
                                     height={20}
@@ -751,11 +739,17 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                     xmlns="http://www.w3.org/2000/svg"
                                   >
                                     <path
-                                      d="M27.6 20.6L24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22zM9 4L3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
+                                      d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
+                                    />
+                                    <path
+                                      d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                                     />
                                   </svg>
                                 </Icon>
-                              </ForwardRef(ArrowsVertical20)>
+                              </ForwardRef(ArrowsVertical)>
+                              <div
+                                className="cds--table-header-label--decorator-inner"
+                              />
                             </span>
                           </button>
                         </th>
@@ -766,54 +760,48 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                         isSortable={true}
                         key="actions"
                         onClick={[Function]}
-                        scope="col"
                         sortDirection="NONE"
-                        translateWithId={[Function]}
                       >
                         <th
                           aria-sort="none"
-                          className="miq-data-table-header"
+                          className="miq-data-table-header cds--table-sort__header"
                           scope="col"
                         >
                           <div
+                            className="cds--table-sort__description"
                             id="table-sort-14"
-                            style={
-                              Object {
-                                "display": "none",
-                              }
-                            }
                           >
                             Click to sort rows by Actions header in ascending order
                           </div>
                           <button
                             aria-describedby="table-sort-14"
-                            className="miq-data-table-header bx--table-sort"
+                            className="miq-data-table-header cds--table-sort"
                             onClick={[Function]}
                             type="button"
                           >
                             <span
-                              className="bx--table-sort__flex"
+                              className="cds--table-sort__flex"
                             >
                               <div
-                                className="bx--table-header-label"
+                                className="cds--table-header-label"
                               >
                                 Actions
                               </div>
-                              <ForwardRef(ArrowUp20)
-                                className="bx--table-sort__icon"
+                              <ForwardRef(ArrowUp)
+                                className="cds--table-sort__icon"
+                                size={20}
                               >
                                 <Icon
-                                  className="bx--table-sort__icon"
+                                  className="cds--table-sort__icon"
                                   fill="currentColor"
                                   height={20}
-                                  preserveAspectRatio="xMidYMid meet"
                                   viewBox="0 0 32 32"
                                   width={20}
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <svg
                                     aria-hidden={true}
-                                    className="bx--table-sort__icon"
+                                    className="cds--table-sort__icon"
                                     fill="currentColor"
                                     focusable="false"
                                     height={20}
@@ -823,26 +811,26 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                     xmlns="http://www.w3.org/2000/svg"
                                   >
                                     <path
-                                      d="M16 4L6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
+                                      d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
                                     />
                                   </svg>
                                 </Icon>
-                              </ForwardRef(ArrowUp20)>
-                              <ForwardRef(ArrowsVertical20)
-                                className="bx--table-sort__icon-unsorted"
+                              </ForwardRef(ArrowUp)>
+                              <ForwardRef(ArrowsVertical)
+                                className="cds--table-sort__icon-unsorted"
+                                size={20}
                               >
                                 <Icon
-                                  className="bx--table-sort__icon-unsorted"
+                                  className="cds--table-sort__icon-unsorted"
                                   fill="currentColor"
                                   height={20}
-                                  preserveAspectRatio="xMidYMid meet"
                                   viewBox="0 0 32 32"
                                   width={20}
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <svg
                                     aria-hidden={true}
-                                    className="bx--table-sort__icon-unsorted"
+                                    className="cds--table-sort__icon-unsorted"
                                     fill="currentColor"
                                     focusable="false"
                                     height={20}
@@ -852,40 +840,47 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                     xmlns="http://www.w3.org/2000/svg"
                                   >
                                     <path
-                                      d="M27.6 20.6L24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22zM9 4L3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
+                                      d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
+                                    />
+                                    <path
+                                      d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                                     />
                                   </svg>
                                 </Icon>
-                              </ForwardRef(ArrowsVertical20)>
+                              </ForwardRef(ArrowsVertical)>
+                              <div
+                                className="cds--table-header-label--decorator-inner"
+                              />
                             </span>
                           </button>
                         </th>
                       </TableHeader>
                     </tr>
-                  </TableRow>
+                  </ForwardRef>
                 </thead>
               </TableHead>
-              <TableBody
-                aria-live="polite"
-              >
+              <TableBody>
                 <tbody
                   aria-live="polite"
                 >
-                  <TableRow
-                    ariaLabel="Expand current row"
+                  <ForwardRef
+                    aria-controls="data-table-2-expanded-row-100"
+                    aria-label="Expand current row"
                     className=""
                     disabled={false}
+                    expandHeader="data-table-2-expand"
                     isExpanded={false}
                     isSelected={false}
                     key="100"
                     onExpand={[Function]}
-                    onKeyPress={[Function]}
+                    onKeyDown={[Function]}
                     tabIndex="0"
                     title=""
                   >
                     <tr
+                      className=""
                       disabled={false}
-                      onKeyPress={[Function]}
+                      onKeyDown={[Function]}
                       tabIndex="0"
                       title=""
                     >
@@ -896,6 +891,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "text": "resource name",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "100:resource_entity",
                             "info": Object {
                               "header": "resource_entity",
@@ -916,6 +912,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -930,6 +927,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -944,6 +942,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -964,6 +963,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -994,7 +994,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               className="cell"
                             >
                               <span
-                                className="bx--front-line"
+                                className="cds--front-line"
                                 title="resource name"
                               >
                                 resource name
@@ -1010,6 +1010,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "text": "resource label",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "100:resource_label",
                             "info": Object {
                               "header": "resource_label",
@@ -1030,6 +1031,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -1044,6 +1046,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -1058,6 +1061,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -1078,6 +1082,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -1108,7 +1113,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               className="cell"
                             >
                               <span
-                                className="bx--front-line"
+                                className="cds--front-line"
                                 title="resource label"
                               >
                                 resource label
@@ -1124,6 +1129,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "text": "category",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "100:tag_category",
                             "info": Object {
                               "header": "tag_category",
@@ -1144,6 +1150,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -1158,6 +1165,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -1172,6 +1180,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -1192,6 +1201,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -1222,7 +1232,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               className="cell"
                             >
                               <span
-                                className="bx--front-line"
+                                className="cds--front-line"
                                 title="category"
                               >
                                 category
@@ -1244,6 +1254,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "title": "Click to delete this mapping",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "100:actions",
                             "info": Object {
                               "header": "actions",
@@ -1264,6 +1275,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -1278,6 +1290,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -1292,6 +1305,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -1312,6 +1326,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -1345,61 +1360,69 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 className="miq-data-table-button"
                                 kind="danger"
                                 onClick={[Function]}
-                                onKeyPress={[Function]}
+                                onKeyDown={[Function]}
                                 size="sm"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
-                                <button
-                                  aria-describedby="danger-description-15"
-                                  aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
-                                  disabled={false}
-                                  onBlur={[Function]}
+                                <ForwardRef(ButtonBase)
+                                  className="miq-data-table-button"
+                                  kind="danger"
                                   onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onKeyPress={[Function]}
-                                  onMouseEnter={[Function]}
-                                  onMouseLeave={[Function]}
+                                  onKeyDown={[Function]}
+                                  size="sm"
                                   tabIndex={0}
                                   title="Click to delete this mapping"
-                                  type="button"
                                 >
-                                  <span
-                                    className="bx--visually-hidden"
-                                    id="danger-description-15"
-                                  >
-                                    danger
-                                  </span>
-                                  <span
-                                    className="bx--front-line"
+                                  <button
+                                    aria-describedby="danger-description-15"
+                                    className="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
+                                    disabled={false}
+                                    onClick={[Function]}
+                                    onKeyDown={[Function]}
+                                    tabIndex={0}
                                     title="Click to delete this mapping"
+                                    type="button"
                                   >
-                                    Delete
-                                  </span>
-                                </button>
+                                    <span
+                                      className="cds--visually-hidden"
+                                      id="danger-description-15"
+                                    >
+                                      danger
+                                    </span>
+                                    <span
+                                      className="cds--front-line"
+                                      title="Click to delete this mapping"
+                                    >
+                                      Delete
+                                    </span>
+                                  </button>
+                                </ForwardRef(ButtonBase)>
                               </Button>
                             </div>
                           </td>
                         </TableCell>
                       </MiqTableCell>
                     </tr>
-                  </TableRow>
-                  <TableRow
-                    ariaLabel="Expand current row"
+                  </ForwardRef>
+                  <ForwardRef
+                    aria-controls="data-table-2-expanded-row-101"
+                    aria-label="Expand current row"
                     className=""
                     disabled={false}
+                    expandHeader="data-table-2-expand"
                     isExpanded={false}
                     isSelected={false}
                     key="101"
                     onExpand={[Function]}
-                    onKeyPress={[Function]}
+                    onKeyDown={[Function]}
                     tabIndex="1"
                     title=""
                   >
                     <tr
+                      className=""
                       disabled={false}
-                      onKeyPress={[Function]}
+                      onKeyDown={[Function]}
                       tabIndex="1"
                       title=""
                     >
@@ -1410,6 +1433,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "text": "resource name",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "101:resource_entity",
                             "info": Object {
                               "header": "resource_entity",
@@ -1430,6 +1454,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -1444,6 +1469,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -1458,6 +1484,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -1478,6 +1505,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -1508,7 +1536,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               className="cell"
                             >
                               <span
-                                className="bx--front-line"
+                                className="cds--front-line"
                                 title="resource name"
                               >
                                 resource name
@@ -1524,6 +1552,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "text": "resource label",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "101:resource_label",
                             "info": Object {
                               "header": "resource_label",
@@ -1544,6 +1573,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -1558,6 +1588,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -1572,6 +1603,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -1592,6 +1624,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -1622,7 +1655,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               className="cell"
                             >
                               <span
-                                className="bx--front-line"
+                                className="cds--front-line"
                                 title="resource label"
                               >
                                 resource label
@@ -1638,6 +1671,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "text": "category",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "101:tag_category",
                             "info": Object {
                               "header": "tag_category",
@@ -1658,6 +1692,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -1672,6 +1707,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -1686,6 +1722,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -1706,6 +1743,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -1736,7 +1774,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               className="cell"
                             >
                               <span
-                                className="bx--front-line"
+                                className="cds--front-line"
                                 title="category"
                               >
                                 category
@@ -1758,6 +1796,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "title": "Click to delete this mapping",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "101:actions",
                             "info": Object {
                               "header": "actions",
@@ -1778,6 +1817,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -1792,6 +1832,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -1806,6 +1847,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -1826,6 +1868,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -1859,61 +1902,69 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 className="miq-data-table-button"
                                 kind="danger"
                                 onClick={[Function]}
-                                onKeyPress={[Function]}
+                                onKeyDown={[Function]}
                                 size="sm"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
-                                <button
-                                  aria-describedby="danger-description-16"
-                                  aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
-                                  disabled={false}
-                                  onBlur={[Function]}
+                                <ForwardRef(ButtonBase)
+                                  className="miq-data-table-button"
+                                  kind="danger"
                                   onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onKeyPress={[Function]}
-                                  onMouseEnter={[Function]}
-                                  onMouseLeave={[Function]}
+                                  onKeyDown={[Function]}
+                                  size="sm"
                                   tabIndex={0}
                                   title="Click to delete this mapping"
-                                  type="button"
                                 >
-                                  <span
-                                    className="bx--visually-hidden"
-                                    id="danger-description-16"
-                                  >
-                                    danger
-                                  </span>
-                                  <span
-                                    className="bx--front-line"
+                                  <button
+                                    aria-describedby="danger-description-16"
+                                    className="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
+                                    disabled={false}
+                                    onClick={[Function]}
+                                    onKeyDown={[Function]}
+                                    tabIndex={0}
                                     title="Click to delete this mapping"
+                                    type="button"
                                   >
-                                    Delete
-                                  </span>
-                                </button>
+                                    <span
+                                      className="cds--visually-hidden"
+                                      id="danger-description-16"
+                                    >
+                                      danger
+                                    </span>
+                                    <span
+                                      className="cds--front-line"
+                                      title="Click to delete this mapping"
+                                    >
+                                      Delete
+                                    </span>
+                                  </button>
+                                </ForwardRef(ButtonBase)>
                               </Button>
                             </div>
                           </td>
                         </TableCell>
                       </MiqTableCell>
                     </tr>
-                  </TableRow>
-                  <TableRow
-                    ariaLabel="Expand current row"
+                  </ForwardRef>
+                  <ForwardRef
+                    aria-controls="data-table-2-expanded-row-102"
+                    aria-label="Expand current row"
                     className=""
                     disabled={false}
+                    expandHeader="data-table-2-expand"
                     isExpanded={false}
                     isSelected={false}
                     key="102"
                     onExpand={[Function]}
-                    onKeyPress={[Function]}
+                    onKeyDown={[Function]}
                     tabIndex="2"
                     title=""
                   >
                     <tr
+                      className=""
                       disabled={false}
-                      onKeyPress={[Function]}
+                      onKeyDown={[Function]}
                       tabIndex="2"
                       title=""
                     >
@@ -1924,6 +1975,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "text": "resource name",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "102:resource_entity",
                             "info": Object {
                               "header": "resource_entity",
@@ -1944,6 +1996,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -1958,6 +2011,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -1972,6 +2026,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -1992,6 +2047,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -2022,7 +2078,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               className="cell"
                             >
                               <span
-                                className="bx--front-line"
+                                className="cds--front-line"
                                 title="resource name"
                               >
                                 resource name
@@ -2038,6 +2094,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "text": "resource label",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "102:resource_label",
                             "info": Object {
                               "header": "resource_label",
@@ -2058,6 +2115,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -2072,6 +2130,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -2086,6 +2145,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -2106,6 +2166,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -2136,7 +2197,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               className="cell"
                             >
                               <span
-                                className="bx--front-line"
+                                className="cds--front-line"
                                 title="resource label"
                               >
                                 resource label
@@ -2152,6 +2213,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "text": "category",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "102:tag_category",
                             "info": Object {
                               "header": "tag_category",
@@ -2172,6 +2234,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -2186,6 +2249,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -2200,6 +2264,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -2220,6 +2285,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -2250,7 +2316,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               className="cell"
                             >
                               <span
-                                className="bx--front-line"
+                                className="cds--front-line"
                                 title="category"
                               >
                                 category
@@ -2272,6 +2338,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "title": "Click to delete this mapping",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "102:actions",
                             "info": Object {
                               "header": "actions",
@@ -2292,6 +2359,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -2306,6 +2374,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -2320,6 +2389,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -2340,6 +2410,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -2373,61 +2444,69 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 className="miq-data-table-button"
                                 kind="danger"
                                 onClick={[Function]}
-                                onKeyPress={[Function]}
+                                onKeyDown={[Function]}
                                 size="sm"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
-                                <button
-                                  aria-describedby="danger-description-17"
-                                  aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
-                                  disabled={false}
-                                  onBlur={[Function]}
+                                <ForwardRef(ButtonBase)
+                                  className="miq-data-table-button"
+                                  kind="danger"
                                   onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onKeyPress={[Function]}
-                                  onMouseEnter={[Function]}
-                                  onMouseLeave={[Function]}
+                                  onKeyDown={[Function]}
+                                  size="sm"
                                   tabIndex={0}
                                   title="Click to delete this mapping"
-                                  type="button"
                                 >
-                                  <span
-                                    className="bx--visually-hidden"
-                                    id="danger-description-17"
-                                  >
-                                    danger
-                                  </span>
-                                  <span
-                                    className="bx--front-line"
+                                  <button
+                                    aria-describedby="danger-description-17"
+                                    className="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
+                                    disabled={false}
+                                    onClick={[Function]}
+                                    onKeyDown={[Function]}
+                                    tabIndex={0}
                                     title="Click to delete this mapping"
+                                    type="button"
                                   >
-                                    Delete
-                                  </span>
-                                </button>
+                                    <span
+                                      className="cds--visually-hidden"
+                                      id="danger-description-17"
+                                    >
+                                      danger
+                                    </span>
+                                    <span
+                                      className="cds--front-line"
+                                      title="Click to delete this mapping"
+                                    >
+                                      Delete
+                                    </span>
+                                  </button>
+                                </ForwardRef(ButtonBase)>
                               </Button>
                             </div>
                           </td>
                         </TableCell>
                       </MiqTableCell>
                     </tr>
-                  </TableRow>
-                  <TableRow
-                    ariaLabel="Expand current row"
+                  </ForwardRef>
+                  <ForwardRef
+                    aria-controls="data-table-2-expanded-row-103"
+                    aria-label="Expand current row"
                     className=""
                     disabled={false}
+                    expandHeader="data-table-2-expand"
                     isExpanded={false}
                     isSelected={false}
                     key="103"
                     onExpand={[Function]}
-                    onKeyPress={[Function]}
+                    onKeyDown={[Function]}
                     tabIndex="3"
                     title=""
                   >
                     <tr
+                      className=""
                       disabled={false}
-                      onKeyPress={[Function]}
+                      onKeyDown={[Function]}
                       tabIndex="3"
                       title=""
                     >
@@ -2438,6 +2517,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "text": "resource name",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "103:resource_entity",
                             "info": Object {
                               "header": "resource_entity",
@@ -2458,6 +2538,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -2472,6 +2553,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -2486,6 +2568,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -2506,6 +2589,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -2536,7 +2620,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               className="cell"
                             >
                               <span
-                                className="bx--front-line"
+                                className="cds--front-line"
                                 title="resource name"
                               >
                                 resource name
@@ -2552,6 +2636,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "text": "resource label",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "103:resource_label",
                             "info": Object {
                               "header": "resource_label",
@@ -2572,6 +2657,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -2586,6 +2672,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -2600,6 +2687,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -2620,6 +2708,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -2650,7 +2739,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               className="cell"
                             >
                               <span
-                                className="bx--front-line"
+                                className="cds--front-line"
                                 title="resource label"
                               >
                                 resource label
@@ -2666,6 +2755,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "text": "category",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "103:tag_category",
                             "info": Object {
                               "header": "tag_category",
@@ -2686,6 +2776,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -2700,6 +2791,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -2714,6 +2806,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -2734,6 +2827,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -2764,7 +2858,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               className="cell"
                             >
                               <span
-                                className="bx--front-line"
+                                className="cds--front-line"
                                 title="category"
                               >
                                 category
@@ -2786,6 +2880,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "title": "Click to delete this mapping",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "103:actions",
                             "info": Object {
                               "header": "actions",
@@ -2806,6 +2901,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -2820,6 +2916,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -2834,6 +2931,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -2854,6 +2952,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -2887,46 +2986,51 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 className="miq-data-table-button"
                                 kind="danger"
                                 onClick={[Function]}
-                                onKeyPress={[Function]}
+                                onKeyDown={[Function]}
                                 size="sm"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
-                                <button
-                                  aria-describedby="danger-description-18"
-                                  aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
-                                  disabled={false}
-                                  onBlur={[Function]}
+                                <ForwardRef(ButtonBase)
+                                  className="miq-data-table-button"
+                                  kind="danger"
                                   onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onKeyPress={[Function]}
-                                  onMouseEnter={[Function]}
-                                  onMouseLeave={[Function]}
+                                  onKeyDown={[Function]}
+                                  size="sm"
                                   tabIndex={0}
                                   title="Click to delete this mapping"
-                                  type="button"
                                 >
-                                  <span
-                                    className="bx--visually-hidden"
-                                    id="danger-description-18"
-                                  >
-                                    danger
-                                  </span>
-                                  <span
-                                    className="bx--front-line"
+                                  <button
+                                    aria-describedby="danger-description-18"
+                                    className="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
+                                    disabled={false}
+                                    onClick={[Function]}
+                                    onKeyDown={[Function]}
+                                    tabIndex={0}
                                     title="Click to delete this mapping"
+                                    type="button"
                                   >
-                                    Delete
-                                  </span>
-                                </button>
+                                    <span
+                                      className="cds--visually-hidden"
+                                      id="danger-description-18"
+                                    >
+                                      danger
+                                    </span>
+                                    <span
+                                      className="cds--front-line"
+                                      title="Click to delete this mapping"
+                                    >
+                                      Delete
+                                    </span>
+                                  </button>
+                                </ForwardRef(ButtonBase)>
                               </Button>
                             </div>
                           </td>
                         </TableCell>
                       </MiqTableCell>
                     </tr>
-                  </TableRow>
+                  </ForwardRef>
                 </tbody>
               </TableBody>
             </table>
@@ -3073,26 +3177,25 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
     >
       <Button
         onClick={[Function]}
-        onKeyPress={[Function]}
+        onKeyDown={[Function]}
         title="Click on this row to create a new mapping rule"
       >
-        <button
-          aria-describedby={null}
-          aria-pressed={null}
-          className="bx--btn bx--btn--primary"
-          disabled={false}
-          onBlur={[Function]}
+        <ForwardRef(ButtonBase)
           onClick={[Function]}
-          onFocus={[Function]}
-          onKeyPress={[Function]}
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-          tabIndex={0}
+          onKeyDown={[Function]}
           title="Click on this row to create a new mapping rule"
-          type="button"
         >
-          Add Mapping Rule
-        </button>
+          <button
+            className="cds--btn cds--btn--primary"
+            disabled={false}
+            onClick={[Function]}
+            onKeyDown={[Function]}
+            title="Click on this row to create a new mapping rule"
+            type="button"
+          >
+            Add Mapping Rule
+          </button>
+        </ForwardRef(ButtonBase)>
       </Button>
     </div>
   </div>
@@ -3238,7 +3341,6 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
       className="miq-data-table settings-label-tag-mappings-list"
     >
       <DataTable
-        filterRows={[Function]}
         headers={
           Array [
             Object {
@@ -3260,8 +3362,6 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
           ]
         }
         isSortable={false}
-        locale="en"
-        overflowMenuOnHover={true}
         rows={
           Array [
             Object {
@@ -3356,25 +3456,23 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
         }
         size="lg"
         sortDirection="ASC"
-        sortRow={[Function]}
         stickyHeader={false}
-        translateWithId={[Function]}
       >
         <Table
           isSortable={false}
-          overflowMenuOnHover={true}
+          overflowMenuOnHover={false}
           size="lg"
           stickyHeader={false}
         >
           <div
-            className="bx--data-table-content"
+            className="cds--data-table-content"
           >
             <table
-              className="bx--data-table bx--data-table--lg bx--data-table--no-border"
+              className="cds--data-table cds--data-table--lg cds--data-table--visible-overflow-menu"
             >
               <TableHead>
                 <thead>
-                  <TableRow>
+                  <ForwardRef>
                     <tr>
                       <TableHeader
                         className="miq-data-table-header"
@@ -3382,54 +3480,48 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                         isSortable={true}
                         key="resource_entity"
                         onClick={[Function]}
-                        scope="col"
                         sortDirection="NONE"
-                        translateWithId={[Function]}
                       >
                         <th
                           aria-sort="none"
-                          className="miq-data-table-header"
+                          className="miq-data-table-header cds--table-sort__header"
                           scope="col"
                         >
                           <div
+                            className="cds--table-sort__description"
                             id="table-sort-2"
-                            style={
-                              Object {
-                                "display": "none",
-                              }
-                            }
                           >
                             Click to sort rows by Resource Entity header in ascending order
                           </div>
                           <button
                             aria-describedby="table-sort-2"
-                            className="miq-data-table-header bx--table-sort"
+                            className="miq-data-table-header cds--table-sort"
                             onClick={[Function]}
                             type="button"
                           >
                             <span
-                              className="bx--table-sort__flex"
+                              className="cds--table-sort__flex"
                             >
                               <div
-                                className="bx--table-header-label"
+                                className="cds--table-header-label"
                               >
                                 Resource Entity
                               </div>
-                              <ForwardRef(ArrowUp20)
-                                className="bx--table-sort__icon"
+                              <ForwardRef(ArrowUp)
+                                className="cds--table-sort__icon"
+                                size={20}
                               >
                                 <Icon
-                                  className="bx--table-sort__icon"
+                                  className="cds--table-sort__icon"
                                   fill="currentColor"
                                   height={20}
-                                  preserveAspectRatio="xMidYMid meet"
                                   viewBox="0 0 32 32"
                                   width={20}
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <svg
                                     aria-hidden={true}
-                                    className="bx--table-sort__icon"
+                                    className="cds--table-sort__icon"
                                     fill="currentColor"
                                     focusable="false"
                                     height={20}
@@ -3439,26 +3531,26 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                     xmlns="http://www.w3.org/2000/svg"
                                   >
                                     <path
-                                      d="M16 4L6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
+                                      d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
                                     />
                                   </svg>
                                 </Icon>
-                              </ForwardRef(ArrowUp20)>
-                              <ForwardRef(ArrowsVertical20)
-                                className="bx--table-sort__icon-unsorted"
+                              </ForwardRef(ArrowUp)>
+                              <ForwardRef(ArrowsVertical)
+                                className="cds--table-sort__icon-unsorted"
+                                size={20}
                               >
                                 <Icon
-                                  className="bx--table-sort__icon-unsorted"
+                                  className="cds--table-sort__icon-unsorted"
                                   fill="currentColor"
                                   height={20}
-                                  preserveAspectRatio="xMidYMid meet"
                                   viewBox="0 0 32 32"
                                   width={20}
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <svg
                                     aria-hidden={true}
-                                    className="bx--table-sort__icon-unsorted"
+                                    className="cds--table-sort__icon-unsorted"
                                     fill="currentColor"
                                     focusable="false"
                                     height={20}
@@ -3468,11 +3560,17 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                     xmlns="http://www.w3.org/2000/svg"
                                   >
                                     <path
-                                      d="M27.6 20.6L24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22zM9 4L3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
+                                      d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
+                                    />
+                                    <path
+                                      d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                                     />
                                   </svg>
                                 </Icon>
-                              </ForwardRef(ArrowsVertical20)>
+                              </ForwardRef(ArrowsVertical)>
+                              <div
+                                className="cds--table-header-label--decorator-inner"
+                              />
                             </span>
                           </button>
                         </th>
@@ -3483,54 +3581,48 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                         isSortable={true}
                         key="resource_label"
                         onClick={[Function]}
-                        scope="col"
                         sortDirection="NONE"
-                        translateWithId={[Function]}
                       >
                         <th
                           aria-sort="none"
-                          className="miq-data-table-header"
+                          className="miq-data-table-header cds--table-sort__header"
                           scope="col"
                         >
                           <div
+                            className="cds--table-sort__description"
                             id="table-sort-3"
-                            style={
-                              Object {
-                                "display": "none",
-                              }
-                            }
                           >
                             Click to sort rows by Resource Label header in ascending order
                           </div>
                           <button
                             aria-describedby="table-sort-3"
-                            className="miq-data-table-header bx--table-sort"
+                            className="miq-data-table-header cds--table-sort"
                             onClick={[Function]}
                             type="button"
                           >
                             <span
-                              className="bx--table-sort__flex"
+                              className="cds--table-sort__flex"
                             >
                               <div
-                                className="bx--table-header-label"
+                                className="cds--table-header-label"
                               >
                                 Resource Label
                               </div>
-                              <ForwardRef(ArrowUp20)
-                                className="bx--table-sort__icon"
+                              <ForwardRef(ArrowUp)
+                                className="cds--table-sort__icon"
+                                size={20}
                               >
                                 <Icon
-                                  className="bx--table-sort__icon"
+                                  className="cds--table-sort__icon"
                                   fill="currentColor"
                                   height={20}
-                                  preserveAspectRatio="xMidYMid meet"
                                   viewBox="0 0 32 32"
                                   width={20}
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <svg
                                     aria-hidden={true}
-                                    className="bx--table-sort__icon"
+                                    className="cds--table-sort__icon"
                                     fill="currentColor"
                                     focusable="false"
                                     height={20}
@@ -3540,26 +3632,26 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                     xmlns="http://www.w3.org/2000/svg"
                                   >
                                     <path
-                                      d="M16 4L6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
+                                      d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
                                     />
                                   </svg>
                                 </Icon>
-                              </ForwardRef(ArrowUp20)>
-                              <ForwardRef(ArrowsVertical20)
-                                className="bx--table-sort__icon-unsorted"
+                              </ForwardRef(ArrowUp)>
+                              <ForwardRef(ArrowsVertical)
+                                className="cds--table-sort__icon-unsorted"
+                                size={20}
                               >
                                 <Icon
-                                  className="bx--table-sort__icon-unsorted"
+                                  className="cds--table-sort__icon-unsorted"
                                   fill="currentColor"
                                   height={20}
-                                  preserveAspectRatio="xMidYMid meet"
                                   viewBox="0 0 32 32"
                                   width={20}
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <svg
                                     aria-hidden={true}
-                                    className="bx--table-sort__icon-unsorted"
+                                    className="cds--table-sort__icon-unsorted"
                                     fill="currentColor"
                                     focusable="false"
                                     height={20}
@@ -3569,11 +3661,17 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                     xmlns="http://www.w3.org/2000/svg"
                                   >
                                     <path
-                                      d="M27.6 20.6L24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22zM9 4L3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
+                                      d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
+                                    />
+                                    <path
+                                      d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                                     />
                                   </svg>
                                 </Icon>
-                              </ForwardRef(ArrowsVertical20)>
+                              </ForwardRef(ArrowsVertical)>
+                              <div
+                                className="cds--table-header-label--decorator-inner"
+                              />
                             </span>
                           </button>
                         </th>
@@ -3584,54 +3682,48 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                         isSortable={true}
                         key="tag_category"
                         onClick={[Function]}
-                        scope="col"
                         sortDirection="NONE"
-                        translateWithId={[Function]}
                       >
                         <th
                           aria-sort="none"
-                          className="miq-data-table-header"
+                          className="miq-data-table-header cds--table-sort__header"
                           scope="col"
                         >
                           <div
+                            className="cds--table-sort__description"
                             id="table-sort-4"
-                            style={
-                              Object {
-                                "display": "none",
-                              }
-                            }
                           >
                             Click to sort rows by Tag Category header in ascending order
                           </div>
                           <button
                             aria-describedby="table-sort-4"
-                            className="miq-data-table-header bx--table-sort"
+                            className="miq-data-table-header cds--table-sort"
                             onClick={[Function]}
                             type="button"
                           >
                             <span
-                              className="bx--table-sort__flex"
+                              className="cds--table-sort__flex"
                             >
                               <div
-                                className="bx--table-header-label"
+                                className="cds--table-header-label"
                               >
                                 Tag Category
                               </div>
-                              <ForwardRef(ArrowUp20)
-                                className="bx--table-sort__icon"
+                              <ForwardRef(ArrowUp)
+                                className="cds--table-sort__icon"
+                                size={20}
                               >
                                 <Icon
-                                  className="bx--table-sort__icon"
+                                  className="cds--table-sort__icon"
                                   fill="currentColor"
                                   height={20}
-                                  preserveAspectRatio="xMidYMid meet"
                                   viewBox="0 0 32 32"
                                   width={20}
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <svg
                                     aria-hidden={true}
-                                    className="bx--table-sort__icon"
+                                    className="cds--table-sort__icon"
                                     fill="currentColor"
                                     focusable="false"
                                     height={20}
@@ -3641,26 +3733,26 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                     xmlns="http://www.w3.org/2000/svg"
                                   >
                                     <path
-                                      d="M16 4L6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
+                                      d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
                                     />
                                   </svg>
                                 </Icon>
-                              </ForwardRef(ArrowUp20)>
-                              <ForwardRef(ArrowsVertical20)
-                                className="bx--table-sort__icon-unsorted"
+                              </ForwardRef(ArrowUp)>
+                              <ForwardRef(ArrowsVertical)
+                                className="cds--table-sort__icon-unsorted"
+                                size={20}
                               >
                                 <Icon
-                                  className="bx--table-sort__icon-unsorted"
+                                  className="cds--table-sort__icon-unsorted"
                                   fill="currentColor"
                                   height={20}
-                                  preserveAspectRatio="xMidYMid meet"
                                   viewBox="0 0 32 32"
                                   width={20}
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <svg
                                     aria-hidden={true}
-                                    className="bx--table-sort__icon-unsorted"
+                                    className="cds--table-sort__icon-unsorted"
                                     fill="currentColor"
                                     focusable="false"
                                     height={20}
@@ -3670,11 +3762,17 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                     xmlns="http://www.w3.org/2000/svg"
                                   >
                                     <path
-                                      d="M27.6 20.6L24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22zM9 4L3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
+                                      d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
+                                    />
+                                    <path
+                                      d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                                     />
                                   </svg>
                                 </Icon>
-                              </ForwardRef(ArrowsVertical20)>
+                              </ForwardRef(ArrowsVertical)>
+                              <div
+                                className="cds--table-header-label--decorator-inner"
+                              />
                             </span>
                           </button>
                         </th>
@@ -3685,54 +3783,48 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                         isSortable={true}
                         key="actions"
                         onClick={[Function]}
-                        scope="col"
                         sortDirection="NONE"
-                        translateWithId={[Function]}
                       >
                         <th
                           aria-sort="none"
-                          className="miq-data-table-header"
+                          className="miq-data-table-header cds--table-sort__header"
                           scope="col"
                         >
                           <div
+                            className="cds--table-sort__description"
                             id="table-sort-5"
-                            style={
-                              Object {
-                                "display": "none",
-                              }
-                            }
                           >
                             Click to sort rows by Actions header in ascending order
                           </div>
                           <button
                             aria-describedby="table-sort-5"
-                            className="miq-data-table-header bx--table-sort"
+                            className="miq-data-table-header cds--table-sort"
                             onClick={[Function]}
                             type="button"
                           >
                             <span
-                              className="bx--table-sort__flex"
+                              className="cds--table-sort__flex"
                             >
                               <div
-                                className="bx--table-header-label"
+                                className="cds--table-header-label"
                               >
                                 Actions
                               </div>
-                              <ForwardRef(ArrowUp20)
-                                className="bx--table-sort__icon"
+                              <ForwardRef(ArrowUp)
+                                className="cds--table-sort__icon"
+                                size={20}
                               >
                                 <Icon
-                                  className="bx--table-sort__icon"
+                                  className="cds--table-sort__icon"
                                   fill="currentColor"
                                   height={20}
-                                  preserveAspectRatio="xMidYMid meet"
                                   viewBox="0 0 32 32"
                                   width={20}
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <svg
                                     aria-hidden={true}
-                                    className="bx--table-sort__icon"
+                                    className="cds--table-sort__icon"
                                     fill="currentColor"
                                     focusable="false"
                                     height={20}
@@ -3742,26 +3834,26 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                     xmlns="http://www.w3.org/2000/svg"
                                   >
                                     <path
-                                      d="M16 4L6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
+                                      d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
                                     />
                                   </svg>
                                 </Icon>
-                              </ForwardRef(ArrowUp20)>
-                              <ForwardRef(ArrowsVertical20)
-                                className="bx--table-sort__icon-unsorted"
+                              </ForwardRef(ArrowUp)>
+                              <ForwardRef(ArrowsVertical)
+                                className="cds--table-sort__icon-unsorted"
+                                size={20}
                               >
                                 <Icon
-                                  className="bx--table-sort__icon-unsorted"
+                                  className="cds--table-sort__icon-unsorted"
                                   fill="currentColor"
                                   height={20}
-                                  preserveAspectRatio="xMidYMid meet"
                                   viewBox="0 0 32 32"
                                   width={20}
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <svg
                                     aria-hidden={true}
-                                    className="bx--table-sort__icon-unsorted"
+                                    className="cds--table-sort__icon-unsorted"
                                     fill="currentColor"
                                     focusable="false"
                                     height={20}
@@ -3771,40 +3863,47 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                     xmlns="http://www.w3.org/2000/svg"
                                   >
                                     <path
-                                      d="M27.6 20.6L24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22zM9 4L3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
+                                      d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
+                                    />
+                                    <path
+                                      d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
                                     />
                                   </svg>
                                 </Icon>
-                              </ForwardRef(ArrowsVertical20)>
+                              </ForwardRef(ArrowsVertical)>
+                              <div
+                                className="cds--table-header-label--decorator-inner"
+                              />
                             </span>
                           </button>
                         </th>
                       </TableHeader>
                     </tr>
-                  </TableRow>
+                  </ForwardRef>
                 </thead>
               </TableHead>
-              <TableBody
-                aria-live="polite"
-              >
+              <TableBody>
                 <tbody
                   aria-live="polite"
                 >
-                  <TableRow
-                    ariaLabel="Expand current row"
+                  <ForwardRef
+                    aria-controls="data-table-1-expanded-row-100"
+                    aria-label="Expand current row"
                     className=""
                     disabled={false}
+                    expandHeader="data-table-1-expand"
                     isExpanded={false}
                     isSelected={false}
                     key="100"
                     onExpand={[Function]}
-                    onKeyPress={[Function]}
+                    onKeyDown={[Function]}
                     tabIndex="0"
                     title=""
                   >
                     <tr
+                      className=""
                       disabled={false}
-                      onKeyPress={[Function]}
+                      onKeyDown={[Function]}
                       tabIndex="0"
                       title=""
                     >
@@ -3815,6 +3914,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "text": "resource name",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "100:resource_entity",
                             "info": Object {
                               "header": "resource_entity",
@@ -3835,6 +3935,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -3849,6 +3950,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -3863,6 +3965,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -3883,6 +3986,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -3913,7 +4017,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               className="cell"
                             >
                               <span
-                                className="bx--front-line"
+                                className="cds--front-line"
                                 title="resource name"
                               >
                                 resource name
@@ -3929,6 +4033,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "text": "resource label",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "100:resource_label",
                             "info": Object {
                               "header": "resource_label",
@@ -3949,6 +4054,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -3963,6 +4069,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -3977,6 +4084,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -3997,6 +4105,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -4027,7 +4136,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               className="cell"
                             >
                               <span
-                                className="bx--front-line"
+                                className="cds--front-line"
                                 title="resource label"
                               >
                                 resource label
@@ -4043,6 +4152,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "text": "category",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "100:tag_category",
                             "info": Object {
                               "header": "tag_category",
@@ -4063,6 +4173,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -4077,6 +4188,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -4091,6 +4203,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -4111,6 +4224,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -4141,7 +4255,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               className="cell"
                             >
                               <span
-                                className="bx--front-line"
+                                className="cds--front-line"
                                 title="category"
                               >
                                 category
@@ -4163,6 +4277,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "title": "Click to delete this mapping",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "100:actions",
                             "info": Object {
                               "header": "actions",
@@ -4183,6 +4298,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -4197,6 +4313,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -4211,6 +4328,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -4231,6 +4349,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "100:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -4264,61 +4383,69 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 className="miq-data-table-button"
                                 kind="danger"
                                 onClick={[Function]}
-                                onKeyPress={[Function]}
+                                onKeyDown={[Function]}
                                 size="sm"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
-                                <button
-                                  aria-describedby="danger-description-6"
-                                  aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
-                                  disabled={false}
-                                  onBlur={[Function]}
+                                <ForwardRef(ButtonBase)
+                                  className="miq-data-table-button"
+                                  kind="danger"
                                   onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onKeyPress={[Function]}
-                                  onMouseEnter={[Function]}
-                                  onMouseLeave={[Function]}
+                                  onKeyDown={[Function]}
+                                  size="sm"
                                   tabIndex={0}
                                   title="Click to delete this mapping"
-                                  type="button"
                                 >
-                                  <span
-                                    className="bx--visually-hidden"
-                                    id="danger-description-6"
-                                  >
-                                    danger
-                                  </span>
-                                  <span
-                                    className="bx--front-line"
+                                  <button
+                                    aria-describedby="danger-description-6"
+                                    className="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
+                                    disabled={false}
+                                    onClick={[Function]}
+                                    onKeyDown={[Function]}
+                                    tabIndex={0}
                                     title="Click to delete this mapping"
+                                    type="button"
                                   >
-                                    Delete
-                                  </span>
-                                </button>
+                                    <span
+                                      className="cds--visually-hidden"
+                                      id="danger-description-6"
+                                    >
+                                      danger
+                                    </span>
+                                    <span
+                                      className="cds--front-line"
+                                      title="Click to delete this mapping"
+                                    >
+                                      Delete
+                                    </span>
+                                  </button>
+                                </ForwardRef(ButtonBase)>
                               </Button>
                             </div>
                           </td>
                         </TableCell>
                       </MiqTableCell>
                     </tr>
-                  </TableRow>
-                  <TableRow
-                    ariaLabel="Expand current row"
+                  </ForwardRef>
+                  <ForwardRef
+                    aria-controls="data-table-1-expanded-row-101"
+                    aria-label="Expand current row"
                     className=""
                     disabled={false}
+                    expandHeader="data-table-1-expand"
                     isExpanded={false}
                     isSelected={false}
                     key="101"
                     onExpand={[Function]}
-                    onKeyPress={[Function]}
+                    onKeyDown={[Function]}
                     tabIndex="1"
                     title=""
                   >
                     <tr
+                      className=""
                       disabled={false}
-                      onKeyPress={[Function]}
+                      onKeyDown={[Function]}
                       tabIndex="1"
                       title=""
                     >
@@ -4329,6 +4456,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "text": "resource name",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "101:resource_entity",
                             "info": Object {
                               "header": "resource_entity",
@@ -4349,6 +4477,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -4363,6 +4492,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -4377,6 +4507,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -4397,6 +4528,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -4427,7 +4559,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               className="cell"
                             >
                               <span
-                                className="bx--front-line"
+                                className="cds--front-line"
                                 title="resource name"
                               >
                                 resource name
@@ -4443,6 +4575,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "text": "resource label",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "101:resource_label",
                             "info": Object {
                               "header": "resource_label",
@@ -4463,6 +4596,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -4477,6 +4611,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -4491,6 +4626,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -4511,6 +4647,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -4541,7 +4678,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               className="cell"
                             >
                               <span
-                                className="bx--front-line"
+                                className="cds--front-line"
                                 title="resource label"
                               >
                                 resource label
@@ -4557,6 +4694,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "text": "category",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "101:tag_category",
                             "info": Object {
                               "header": "tag_category",
@@ -4577,6 +4715,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -4591,6 +4730,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -4605,6 +4745,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -4625,6 +4766,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -4655,7 +4797,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               className="cell"
                             >
                               <span
-                                className="bx--front-line"
+                                className="cds--front-line"
                                 title="category"
                               >
                                 category
@@ -4677,6 +4819,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "title": "Click to delete this mapping",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "101:actions",
                             "info": Object {
                               "header": "actions",
@@ -4697,6 +4840,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -4711,6 +4855,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -4725,6 +4870,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -4745,6 +4891,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "101:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -4778,61 +4925,69 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 className="miq-data-table-button"
                                 kind="danger"
                                 onClick={[Function]}
-                                onKeyPress={[Function]}
+                                onKeyDown={[Function]}
                                 size="sm"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
-                                <button
-                                  aria-describedby="danger-description-7"
-                                  aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
-                                  disabled={false}
-                                  onBlur={[Function]}
+                                <ForwardRef(ButtonBase)
+                                  className="miq-data-table-button"
+                                  kind="danger"
                                   onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onKeyPress={[Function]}
-                                  onMouseEnter={[Function]}
-                                  onMouseLeave={[Function]}
+                                  onKeyDown={[Function]}
+                                  size="sm"
                                   tabIndex={0}
                                   title="Click to delete this mapping"
-                                  type="button"
                                 >
-                                  <span
-                                    className="bx--visually-hidden"
-                                    id="danger-description-7"
-                                  >
-                                    danger
-                                  </span>
-                                  <span
-                                    className="bx--front-line"
+                                  <button
+                                    aria-describedby="danger-description-7"
+                                    className="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
+                                    disabled={false}
+                                    onClick={[Function]}
+                                    onKeyDown={[Function]}
+                                    tabIndex={0}
                                     title="Click to delete this mapping"
+                                    type="button"
                                   >
-                                    Delete
-                                  </span>
-                                </button>
+                                    <span
+                                      className="cds--visually-hidden"
+                                      id="danger-description-7"
+                                    >
+                                      danger
+                                    </span>
+                                    <span
+                                      className="cds--front-line"
+                                      title="Click to delete this mapping"
+                                    >
+                                      Delete
+                                    </span>
+                                  </button>
+                                </ForwardRef(ButtonBase)>
                               </Button>
                             </div>
                           </td>
                         </TableCell>
                       </MiqTableCell>
                     </tr>
-                  </TableRow>
-                  <TableRow
-                    ariaLabel="Expand current row"
+                  </ForwardRef>
+                  <ForwardRef
+                    aria-controls="data-table-1-expanded-row-102"
+                    aria-label="Expand current row"
                     className=""
                     disabled={false}
+                    expandHeader="data-table-1-expand"
                     isExpanded={false}
                     isSelected={false}
                     key="102"
                     onExpand={[Function]}
-                    onKeyPress={[Function]}
+                    onKeyDown={[Function]}
                     tabIndex="2"
                     title=""
                   >
                     <tr
+                      className=""
                       disabled={false}
-                      onKeyPress={[Function]}
+                      onKeyDown={[Function]}
                       tabIndex="2"
                       title=""
                     >
@@ -4843,6 +4998,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "text": "resource name",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "102:resource_entity",
                             "info": Object {
                               "header": "resource_entity",
@@ -4863,6 +5019,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -4877,6 +5034,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -4891,6 +5049,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -4911,6 +5070,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -4941,7 +5101,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               className="cell"
                             >
                               <span
-                                className="bx--front-line"
+                                className="cds--front-line"
                                 title="resource name"
                               >
                                 resource name
@@ -4957,6 +5117,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "text": "resource label",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "102:resource_label",
                             "info": Object {
                               "header": "resource_label",
@@ -4977,6 +5138,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -4991,6 +5153,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -5005,6 +5168,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -5025,6 +5189,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -5055,7 +5220,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               className="cell"
                             >
                               <span
-                                className="bx--front-line"
+                                className="cds--front-line"
                                 title="resource label"
                               >
                                 resource label
@@ -5071,6 +5236,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "text": "category",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "102:tag_category",
                             "info": Object {
                               "header": "tag_category",
@@ -5091,6 +5257,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -5105,6 +5272,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -5119,6 +5287,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -5139,6 +5308,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -5169,7 +5339,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               className="cell"
                             >
                               <span
-                                className="bx--front-line"
+                                className="cds--front-line"
                                 title="category"
                               >
                                 category
@@ -5191,6 +5361,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "title": "Click to delete this mapping",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "102:actions",
                             "info": Object {
                               "header": "actions",
@@ -5211,6 +5382,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -5225,6 +5397,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -5239,6 +5412,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -5259,6 +5433,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "102:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -5292,61 +5467,69 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 className="miq-data-table-button"
                                 kind="danger"
                                 onClick={[Function]}
-                                onKeyPress={[Function]}
+                                onKeyDown={[Function]}
                                 size="sm"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
-                                <button
-                                  aria-describedby="danger-description-8"
-                                  aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
-                                  disabled={false}
-                                  onBlur={[Function]}
+                                <ForwardRef(ButtonBase)
+                                  className="miq-data-table-button"
+                                  kind="danger"
                                   onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onKeyPress={[Function]}
-                                  onMouseEnter={[Function]}
-                                  onMouseLeave={[Function]}
+                                  onKeyDown={[Function]}
+                                  size="sm"
                                   tabIndex={0}
                                   title="Click to delete this mapping"
-                                  type="button"
                                 >
-                                  <span
-                                    className="bx--visually-hidden"
-                                    id="danger-description-8"
-                                  >
-                                    danger
-                                  </span>
-                                  <span
-                                    className="bx--front-line"
+                                  <button
+                                    aria-describedby="danger-description-8"
+                                    className="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
+                                    disabled={false}
+                                    onClick={[Function]}
+                                    onKeyDown={[Function]}
+                                    tabIndex={0}
                                     title="Click to delete this mapping"
+                                    type="button"
                                   >
-                                    Delete
-                                  </span>
-                                </button>
+                                    <span
+                                      className="cds--visually-hidden"
+                                      id="danger-description-8"
+                                    >
+                                      danger
+                                    </span>
+                                    <span
+                                      className="cds--front-line"
+                                      title="Click to delete this mapping"
+                                    >
+                                      Delete
+                                    </span>
+                                  </button>
+                                </ForwardRef(ButtonBase)>
                               </Button>
                             </div>
                           </td>
                         </TableCell>
                       </MiqTableCell>
                     </tr>
-                  </TableRow>
-                  <TableRow
-                    ariaLabel="Expand current row"
+                  </ForwardRef>
+                  <ForwardRef
+                    aria-controls="data-table-1-expanded-row-103"
+                    aria-label="Expand current row"
                     className=""
                     disabled={false}
+                    expandHeader="data-table-1-expand"
                     isExpanded={false}
                     isSelected={false}
                     key="103"
                     onExpand={[Function]}
-                    onKeyPress={[Function]}
+                    onKeyDown={[Function]}
                     tabIndex="3"
                     title=""
                   >
                     <tr
+                      className=""
                       disabled={false}
-                      onKeyPress={[Function]}
+                      onKeyDown={[Function]}
                       tabIndex="3"
                       title=""
                     >
@@ -5357,6 +5540,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "text": "resource name",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "103:resource_entity",
                             "info": Object {
                               "header": "resource_entity",
@@ -5377,6 +5561,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -5391,6 +5576,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -5405,6 +5591,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -5425,6 +5612,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -5455,7 +5643,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               className="cell"
                             >
                               <span
-                                className="bx--front-line"
+                                className="cds--front-line"
                                 title="resource name"
                               >
                                 resource name
@@ -5471,6 +5659,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "text": "resource label",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "103:resource_label",
                             "info": Object {
                               "header": "resource_label",
@@ -5491,6 +5680,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -5505,6 +5695,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -5519,6 +5710,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -5539,6 +5731,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -5569,7 +5762,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               className="cell"
                             >
                               <span
-                                className="bx--front-line"
+                                className="cds--front-line"
                                 title="resource label"
                               >
                                 resource label
@@ -5585,6 +5778,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "text": "category",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "103:tag_category",
                             "info": Object {
                               "header": "tag_category",
@@ -5605,6 +5799,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -5619,6 +5814,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -5633,6 +5829,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -5653,6 +5850,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -5683,7 +5881,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               className="cell"
                             >
                               <span
-                                className="bx--front-line"
+                                className="cds--front-line"
                                 title="category"
                               >
                                 category
@@ -5705,6 +5903,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                               "title": "Click to delete this mapping",
                             },
                             "errors": null,
+                            "hasAILabelHeader": false,
                             "id": "103:actions",
                             "info": Object {
                               "header": "actions",
@@ -5725,6 +5924,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource name",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:resource_entity",
                                 "info": Object {
                                   "header": "resource_entity",
@@ -5739,6 +5939,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "resource label",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:resource_label",
                                 "info": Object {
                                   "header": "resource_label",
@@ -5753,6 +5954,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "text": "category",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:tag_category",
                                 "info": Object {
                                   "header": "tag_category",
@@ -5773,6 +5975,7 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                   "title": "Click to delete this mapping",
                                 },
                                 "errors": null,
+                                "hasAILabelHeader": false,
                                 "id": "103:actions",
                                 "info": Object {
                                   "header": "actions",
@@ -5806,46 +6009,51 @@ exports[`SettingsLabelTagMapping component should render a SettingsLabelTagMappi
                                 className="miq-data-table-button"
                                 kind="danger"
                                 onClick={[Function]}
-                                onKeyPress={[Function]}
+                                onKeyDown={[Function]}
                                 size="sm"
                                 tabIndex={0}
                                 title="Click to delete this mapping"
                               >
-                                <button
-                                  aria-describedby="danger-description-9"
-                                  aria-pressed={null}
-                                  className="miq-data-table-button bx--btn bx--btn--sm bx--btn--danger"
-                                  disabled={false}
-                                  onBlur={[Function]}
+                                <ForwardRef(ButtonBase)
+                                  className="miq-data-table-button"
+                                  kind="danger"
                                   onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onKeyPress={[Function]}
-                                  onMouseEnter={[Function]}
-                                  onMouseLeave={[Function]}
+                                  onKeyDown={[Function]}
+                                  size="sm"
                                   tabIndex={0}
                                   title="Click to delete this mapping"
-                                  type="button"
                                 >
-                                  <span
-                                    className="bx--visually-hidden"
-                                    id="danger-description-9"
-                                  >
-                                    danger
-                                  </span>
-                                  <span
-                                    className="bx--front-line"
+                                  <button
+                                    aria-describedby="danger-description-9"
+                                    className="miq-data-table-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--danger"
+                                    disabled={false}
+                                    onClick={[Function]}
+                                    onKeyDown={[Function]}
+                                    tabIndex={0}
                                     title="Click to delete this mapping"
+                                    type="button"
                                   >
-                                    Delete
-                                  </span>
-                                </button>
+                                    <span
+                                      className="cds--visually-hidden"
+                                      id="danger-description-9"
+                                    >
+                                      danger
+                                    </span>
+                                    <span
+                                      className="cds--front-line"
+                                      title="Click to delete this mapping"
+                                    >
+                                      Delete
+                                    </span>
+                                  </button>
+                                </ForwardRef(ButtonBase)>
                               </Button>
                             </div>
                           </td>
                         </TableCell>
                       </MiqTableCell>
                     </tr>
-                  </TableRow>
+                  </ForwardRef>
                 </tbody>
               </TableBody>
             </table>

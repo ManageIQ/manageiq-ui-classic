@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Tree, ActionTypes } from 'react-wooden-tree';
 import {
-  Modal, FormGroup, TextInput, Button,
-} from 'carbon-components-react';
+  Modal, FormGroup, TextInput, Button, Grid, Column,
+} from '@carbon/react';
 import { prepareProps } from '@data-driven-forms/carbon-component-mapper';
 import { useFieldApi, useFormApi } from '@data-driven-forms/react-form-renderer';
-import { TreeViewAlt16, Close16 } from '@carbon/icons-react';
+import { TreeViewAlt, Close } from '@carbon/react/icons';
 
 import TreeViewBase from './base';
 
@@ -52,64 +52,64 @@ const TreeViewSelector = ({
   };
   const { label } = props;
   return (
-    <FormGroup legendText={labelText}>
-      <div className="bx--grid" style={{ paddingLeft: 0, marginLeft: 0 }}>
-        <div className="bx--row">
-          <div className="bx--col-lg-15 bx--col-md-7 bx--col-sm-3">
-            <TextInput
-              {...input}
-              labelText=""
-              key={input.name}
-              id={input.name}
-              invalid={Boolean(invalid)}
-              invalidText={invalid || ''}
-              warn={Boolean(warn)}
-              warnText={warn || ''}
-              {...rest}
-            />
-          </div>
-          <div className="bx--col-sm-1 bx--col-md-1 bx--col-lg-1">
+    <FormGroup legendText={labelText} className="miq-common-tree-view-selector">
+      <Grid condensed className="miq-tree-view-selector-grid">
+        <Column sm={3} md={6} lg={14} className="miq-tree-view-selector-input-grid-column">
+          <TextInput
+            {...input}
+            labelText=""
+            key={input.name}
+            id={input.name}
+            invalid={Boolean(invalid)}
+            invalidText={invalid || ''}
+            warn={Boolean(warn)}
+            warnText={warn || ''}
+            {...rest}
+          />
+        </Column>
+        <Column sm={1} md={1} lg={1}>
+          <Button
+            className="tree-selector-toggle"
+            hasIconOnly
+            kind="primary"
+            size="md"
+            onClick={() => setState((state) => ({ ...state, show: true }))}
+            iconDescription={modalLabel}
+            renderIcon={(props) => <TreeViewAlt size={16} {...props} />}
+          />
+        </Column>
+        {isClearable && (
+          <Column sm={1} md={1} lg={1}>
             <Button
-              className="tree-selector-toggle"
+              className="tree-selector-clear"
               hasIconOnly
-              kind="primary"
-              size="field"
-              onClick={() => setState((state) => ({ ...state, show: true }))}
-              iconDescription={modalLabel}
-              renderIcon={TreeViewAlt16}
+              size="md"
+              onClick={() => formOptions.change(input.name, undefined)}
+              iconDescription={clearLabel}
+              renderIcon={(props) => <Close size={16} {...props} />}
             />
-            { isClearable && (
-              <Button
-                className="tree-selector-clear"
-                hasIconOnly
-                kind="danger"
-                size="field"
-                onClick={() => formOptions.change(input.name, undefined)}
-                iconDescription={clearLabel}
-                renderIcon={Close16}
-              />
-            )}
-          </div>
-        </div>
-      </div>
-      <Modal
-        open={show}
-        onRequestClose={closeModal}
-        modalHeading={label}
-        primaryButtonText={selectLabel}
-        secondaryButtonText={closeLabel}
-        primaryButtonDisabled={!active}
-        onRequestSubmit={changeValue}
-        onSecondarySubmit={closeModal}
-      >
-        <TreeViewBase
-          loadData={loadData}
-          lazyLoadData={lazyLoadData}
-          actionMapper={actionMapper}
-          select={(node) => identifier(node) === input.value}
-          {...props}
-        />
-      </Modal>
+          </Column>
+        )}
+      </Grid>
+      {show && (
+        <Modal
+          open
+          onRequestClose={closeModal}
+          modalHeading={label}
+          primaryButtonText={selectLabel}
+          secondaryButtonText={closeLabel}
+          primaryButtonDisabled={!active}
+          onRequestSubmit={changeValue}
+        >
+          <TreeViewBase
+            loadData={loadData}
+            lazyLoadData={lazyLoadData}
+            actionMapper={actionMapper}
+            select={(node) => identifier(node) === input.value}
+            {...props}
+          />
+        </Modal>
+      )}
     </FormGroup>
   );
 };

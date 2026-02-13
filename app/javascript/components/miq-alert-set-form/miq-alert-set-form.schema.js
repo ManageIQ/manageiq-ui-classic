@@ -46,7 +46,7 @@ function createSchema(fieldss, recordId, emsId, mode, loadSchema, alertState, al
           name: 'alert-profile',
           fields: [
             {
-              component: 'dual-list-select',
+              component: componentTypes.DUAL_LIST_SELECT,
               id: 'alert_profile_alerts',
               name: 'alert_profile_alerts',
               key: `alerts-${emsId}`,
@@ -62,17 +62,20 @@ function createSchema(fieldss, recordId, emsId, mode, loadSchema, alertState, al
               noOptionsTitle: __('No available options'),
               filterOptionsTitle: __('Filter options'),
               filterValuesTitle: __('Filter values'),
+              ButtonColumnProps: {
+                className: 'miq-common-dual-list-buttons-column',
+              },
               AddButtonProps: {
-                size: 'small',
+                size: 'sm',
               },
               AddAllButtonProps: {
-                size: 'small',
+                size: 'sm',
               },
               RemoveButtonProps: {
-                size: 'small',
+                size: 'sm',
               },
               RemoveAllButtonProps: {
-                size: 'small',
+                size: 'sm',
               },
               resolveProps: (props, { meta, input }) => {
                 if (!meta.pristine && meta.dirty) {

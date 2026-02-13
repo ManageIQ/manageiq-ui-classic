@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import { ChevronLeft16, ChevronRight16, Close16 } from '@carbon/icons-react';
+import { ChevronLeft, ChevronRight, Close } from '@carbon/react/icons';
 import classNames from 'classnames';
 import {
-  Button, Accordion, AccordionItem, InlineNotification, OverflowMenu, OverflowMenuItem,
-} from 'carbon-components-react';
+  Button, Accordion, AccordionItem, ActionableNotification, OverflowMenu, OverflowMenuItem,
+} from '@carbon/react';
 import { getNotficationStatusIconName, newCountText, viewDetails } from './helpers';
 import { maxNotifications as maxNotificationsConstant } from '../../notifications/backend';
 import {
@@ -34,26 +34,24 @@ const NotificationDrawer = ({ jsRequest }) => {
           <div className="panel-header">
             <Button
               hasIconOnly
-              renderIcon={!isDrawerExpanded ? ChevronLeft16 : ChevronRight16}
+              renderIcon={(props) => (!isDrawerExpanded ? <ChevronLeft size={16} {...props} /> : <ChevronRight size={16} {...props} />)}
               className={!isDrawerExpanded ? 'collapsed heading-icon' : 'expanded  heading-icon'}
               iconDescription={!isDrawerExpanded ? 'collapsed' : 'expanded'}
               onClick={() => setDrawerExpanded(!isDrawerExpanded)}
-              onKeyPress={() => setDrawerExpanded(!isDrawerExpanded)}
+              onKeyDown={() => setDrawerExpanded(!isDrawerExpanded)}
             />
             <h3 className="notification-title">{drawerTitle}</h3>
             <Button
               hasIconOnly
-              renderIcon={Close16}
+              renderIcon={(props) => <Close size={16} {...props} />}
               className="heading-icon closeIcon"
-              description={__('Close')}
               iconDescription={__('Close')}
               onClick={() => dispatch(toggleDrawerVisibility())}
-              onKeyPress={() => dispatch(toggleDrawerVisibility())}
+              onKeyDown={() => dispatch(toggleDrawerVisibility())}
             />
           </div>
           <div className="notification-content">
             <div>
-              {' '}
               <Accordion align="start" className="Notification-accordion">
                 <AccordionItem
                   title={(
@@ -66,10 +64,11 @@ const NotificationDrawer = ({ jsRequest }) => {
                   <div className="notification-accordion-content">
                     <div className="notification-content-messages">
                       {notifications.slice(0, maxNotifications).map((notification) => (
-                        <InlineNotification
+                        <ActionableNotification
                           kind={getNotficationStatusIconName(notification)}
                           role="alert"
                           key={notification.id}
+                          inline
                           className={classNames('notification-item-wrapper', !notification.unread ? 'read' : 'unread')}
                           title={notification.message}
                           statusIconDescription={getNotficationStatusIconName(notification)}
@@ -79,11 +78,10 @@ const NotificationDrawer = ({ jsRequest }) => {
                             <div className="subtitle-div">
                               <div className="subtitle-div-notification-menu">
                                 <OverflowMenu
-                                  ariaLabel={__('open and close options')}
-                                  id={notification.id}
+                                  aria-label={__('open and close options')}
+                                  id={`${notification.id}`}
                                   floatingmenu="true"
                                   flipped
-                                  title={__('open and close options')}
                                 >
 
                                   <OverflowMenuItem
@@ -136,9 +134,7 @@ const NotificationDrawer = ({ jsRequest }) => {
 
                             </div>
                           )}
-
                         />
-
                       ))}
                       { maxNotificationsConstant < totalNotificationsCount && (
                         <div className="maxnotifications-text">
@@ -182,11 +178,9 @@ const NotificationDrawer = ({ jsRequest }) => {
                       </Button>
                     </div>
                   </div>
-
                 </AccordionItem>
               </Accordion>
             </div>
-
           </div>
         </div>
       </div>

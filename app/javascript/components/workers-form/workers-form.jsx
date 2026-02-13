@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'carbon-components-react';
+import { Grid, Column } from '@carbon/react';
 import { get } from 'lodash';
 import addSchema from './workers.schema';
 import MiqFormRenderer from '../../forms/data-driven-form';
@@ -178,16 +178,18 @@ const WorkersForm = ({ server: { id, name }, product, zone }) => {
 
   return (
     <Grid style={{ marginBottom: 16 }}>
-      <MiqFormRenderer
-        initialValues={initialValues}
-        schema={schema}
-        onSubmit={onSubmit}
-        buttonsLabels={{
-          submitLabel: __('Save'),
-        }}
-        canReset
-        className=""
-      />
+      <Column sm={4} md={8} lg={16}>
+        <MiqFormRenderer
+          initialValues={initialValues}
+          schema={schema}
+          onSubmit={onSubmit}
+          buttonsLabels={{
+            submitLabel: __('Save'),
+          }}
+          canReset
+          className="miq-workers-form"
+        />
+      </Column>
     </Grid>
   );
 };

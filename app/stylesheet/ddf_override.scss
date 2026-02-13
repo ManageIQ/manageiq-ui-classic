@@ -1,5 +1,47 @@
+@use '@carbon/styles/scss/components/button';
+
+#explorer_title,
+h1 {
+  font-size: 24px;
+}
+// These are mostly for HAML components and can be removed once the React conversions are done
+/* ====================================== */
+h2 {
+  font-size: 22px;
+  font-weight: 100;
+}
+h3 {
+  font-size: 16px;
+  font-weight: 100;
+}
+h4 {
+  font-size: 14px;
+}
+h1, h2, h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.form-group,
+.alert strong {
+  font-size: 13px;
+}
+.form-control-static {
+  font-size: 12px;
+}
+table.table {
+  font-size: 13px;
+}
+/* ====================================== */
+
+form h3 {
+  font-size: 16px;
+}
+form .miq-validation-button, .miq-async-action-button {
+  display: flex;
+  align-items: center;
+}
 #code-section {
-  .bx--form-item {
+  .cds--form-item {
     margin-bottom: 15px;
   }
 }
@@ -14,63 +56,41 @@
   gap: 2%;
   flex-direction: row;
 
-  .bx--multi-select__wrapper.bx--list-box__wrapper {
+  .cds--multi-select__wrapper.cds--list-box__wrapper {
     flex-grow: 1;
   }
 }
 
 #policyEvents {
-  .bx--multi-select__wrapper.bx--list-box__wrapper {
+  .cds--multi-select__wrapper.cds--list-box__wrapper {
     margin-bottom: 2rem;
   }
 }
 
 #dual-list-sub-form-catalog {
   fieldset {
-    .bx--grid .bx--row--condensed {
+    .cds--css-grid.cds--css-grid--condensed {
       .buttonWrapper-0-2-7 {
         display: flex;
         flex-direction: column;
         align-items: center;
       }
 
-      .bx--col-lg-5 {
+      .cds--lg\:col-span-5 {
         border: 1px solid lightgray;
         margin-top: 8px;
-    
         h6 {
           margin: 0;
           padding: 10px 20px;
         }
-    
-        .toolbar-0-2-8 {
-          button {
-            cursor: pointer;
-            width: 50px;
-            display: flex;
-            justify-content: center;
-  
-            svg {
-              margin-top: -20px;
-            }
-          }
-        }
-    
-        .bx--structured-list {
-          .bx--structured-list-row {
-            .bx--col-sm-1 {
-              display: flex;
-              justify-content: flex-end;
-              padding: 0;
-              color: $active-primary;
-            }
-          }
-        }
       }
     }
   }
-  
-  #move-right, #move-all-right, #move-all-left, #move-left {
+
+  #move-right,
+  #move-all-right,
+  #move-all-left,
+  #move-left {
     svg {
       position: unset;
     }
@@ -79,21 +99,63 @@
   }
 }
 
+// Overriding grid with flex here because long labels break the layout and the
+// checkmark SVG ends up between the text so we’re switching to flex with min-width
+// TODO: c-11: A better approach would be to fix this at the DDF library level
+.miq-dual-list-common-grid-container {
+  .cds--structured-list {
+    .cds--structured-list-row {
+      .cds--subgrid--condensed {
+        display: flex;
+        width: 100%;
+        .cds--sm\:col-span-3 {
+          min-width: 70%;
+        }
+      }
+    }
+  }
+}
+// For dual-list compoenent in action, alert-set, policy-profile, vm-edit forms
+.miq-common-dual-list-buttons-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .form-react {
-  .bx--grid {
-    padding-left: 1rem;
-    padding-right: 1rem;
+  .cds--css-grid.miq-pwd-field-grid {
+    padding-left: 0;
+    .cds--css-grid-column.miq-pwd-field-grid-col {
+      padding-right: 1rem;
+    }
+    .cds--css-grid-column.miq-pwd-field-edit-icon-grid-col {
+      padding-left: 1rem;
+    }
   }
 
-  .bx--form-item {
+  .cds--form-item {
     margin-bottom: 2rem;
   }
 
-  .bx--btn-set {
+  .cds--btn-set {
     margin-bottom: 48px;
 
-    .bx--btn--secondary {
+    .cds--btn--secondary {
       margin-left: 10px;
+    }
+    .cds--btn--primary {
+      margin-right: 10px;
+    }
+  }
+}
+
+.miq-common-tree-view-selector {
+  .cds--css-grid.miq-tree-view-selector-grid {
+    padding-left: 0;
+    padding-right: 0;
+
+    .cds--css-grid-column.miq-tree-view-selector-input-grid-column {
+      padding-right: 1rem;
     }
   }
 }
@@ -102,11 +164,11 @@
 #CheckboxHours {
   margin-bottom: 0;
 
-  .bx--fieldset {
+  .cds--fieldset {
     display: inline-flex;
     margin-bottom: 0;
 
-    .bx--checkbox-label-text {
+    .cds--checkbox-label-text {
       padding-left: 2px;
       padding-right: 20px;
     }
@@ -128,8 +190,8 @@
   margin-bottom: 25px;
 }
 
-.bx--fieldset {
-  legend.bx--label {
+.cds--fieldset {
+  legend.cds--label {
     font-size: 16px;
   }
 }
@@ -184,20 +246,20 @@
     }
 
     .file-button:hover {
-      background-color: $hover-primary;
-      border-color: $hover-primary;
+      background-color: button.$button-primary-hover;
+      border-color: button.$button-primary-hover;
 
       .file-button-label {
-        background-color: $hover-primary;
+        background-color: button.$button-primary-hover;
       }
     }
 
     .file-button:active {
-      background-color: $active-primary;
-      border-color: $active-primary;
+      background-color: button.$button-primary-active;
+      border-color: button.$button-primary-active;
 
       .file-button-label {
-        background-color: $active-primary;
+        background-color: button.$button-primary-active;
       }
     }
 
@@ -216,8 +278,7 @@
   #move-left {
     white-space: nowrap;
     text-align: center;
-    box-sizing: content-box;
-    width: 50%;
+    width: 80%;
   }
 }
 
@@ -247,11 +308,11 @@
   #TaskStatus {
     margin-bottom: 0;
 
-    .bx--fieldset {
+    .cds--fieldset {
       display: inline-flex;
 
-      .bx--form-item {
-        .bx--checkbox-label-text {
+      .cds--form-item {
+        .cds--checkbox-label-text {
           #icon {
             span {
               padding-left: 5px;
@@ -286,11 +347,11 @@
   #approval_state {
     margin-bottom: 0;
 
-    .bx--fieldset {
+    .cds--fieldset {
       display: inline-flex;
 
-      .bx--form-item {
-        .bx--checkbox-label-text {
+      .cds--form-item {
+        .cds--checkbox-label-text {
           #icon {
             span {
               padding-left: 5px;
@@ -318,21 +379,21 @@
 }
 
 .ddorg__carbon-dual-list-body {
-  .bx--structured-list-td {
+  .cds--structured-list-td {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
   }
 }
 
 .buttonWrapper-0-2-7 {
-  .bx--btn--primary {
+  .cds--btn--primary {
     width: 150px;
     padding-right: 20px;
   }
 }
 
 .dualListBody-0-2-6 {
-  .bx--structured-list-td {
+  .cds--structured-list-td {
     padding-top: 12px;
     padding-bottom: 12px;
   }
@@ -343,8 +404,8 @@
 }
 
 #provider-modal {
-  .bx--modal-container {
-    .bx--modal-footer {
+  .cds--modal-container {
+    .cds--modal-footer {
       .modal-pull-right {
         display: inline-flex;
 
@@ -362,7 +423,7 @@
 }
 
 #firewall_rules {
-  .bx--form-item {
+  .cds--form-item {
     display: inline-flex;
     margin-right: 2rem;
   }
@@ -375,29 +436,29 @@
 
 #generic-objects-field-array-methods,
 #generic-objects-field-array-attributes {
-  .bx--form-item {
+  .cds--form-item {
     display: inline-flex;
     margin-right: 2rem;
     width: 400px;
   }
 
   .remove-0-2-8 {
-    margin-top: 2.2rem;
+    margin-top: 2.15rem;
   }
 }
 
 #generic-objects-field-array-associations {
-  .bx--list-box__wrapper {
+  .cds--list-box__wrapper {
     width: 400px;
     display: inline-flex;
 
-    .bx--combo-box {
+    .cds--combo-box {
       margin-top: 1.5rem;
       margin-left: -2rem;
     }
   }
 
-  .bx--form-item {
+  .cds--form-item {
     display: inline-flex;
     margin-right: 2rem;
     width: 400px;
@@ -423,12 +484,12 @@
   display: flex;
   gap: 2%;
 
-  .bx--form-item {
+  .cds--form-item {
     flex-basis: 0;
   }
 }
 
-.bx--tabs--scrollable .bx--tabs--scrollable__nav-link {
+.cds--tabs .cds--tabs__nav-link {
   min-width: 10rem;
   width: fit-content;
 }
@@ -448,10 +509,6 @@
     font-weight: 400;
     color: #000;
     background: inherit;
-
-    &.legend-search {
-      color: #FFF;
-    }
   }
 
   .miq-fieldset-content {
@@ -467,9 +524,8 @@
   margin-left: 15rem;
 }
 
-
 .attribute_value_pair_wrapper fieldset {
-  .bx--form-item {
+  .cds--form-item {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -502,18 +558,19 @@
       width: 20%;
     }
 
-    .bx--btn {
+    .cds--btn {
       margin-right: 8px;
       width: 20%;
     }
   }
 
-  .bx--form-item.bx--text-input-wrapper {
+  .cds--form-item.cds--text-input-wrapper {
     margin-bottom: 40px;
   }
 
   #code-section {
     margin-top: 40px;
+    margin-bottom: 30px;
   }
 }
 

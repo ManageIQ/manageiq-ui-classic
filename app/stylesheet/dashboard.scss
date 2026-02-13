@@ -1,7 +1,8 @@
-.row.dashboard {
-  $carbon--theme: $carbon--theme--white;
+@use '@carbon/react/scss/themes' as *;
+@use '@carbon/react/scss/theme';
 
-  @include carbon--theme();
+.row.dashboard {
+  @include theme.theme($white);
 
   .columns {
     padding: 10px;
@@ -22,7 +23,7 @@
       min-height: 40px;
       display: inline-block;
       margin-bottom: 15px;
-      border: 1px solid $selected-ui;
+      border: 1px solid theme.$layer-selected-01;
 
       .chart-holder.fullscreen .spacer {
         margin-top: 2px;
@@ -37,6 +38,10 @@
         .card-pf-body{
           margin: 0;
           padding: 0;
+        }
+
+        .card-pf-footer {
+          font-size: 12px;
         }
 
         div[id^="dd_"] div.widget-report {
@@ -58,7 +63,7 @@
             margin: 10px 0 0 0 !important;
             width: 100%;
             padding: 20px;
-            border-top: 1px solid $selected-ui;
+            border-top: 1px solid theme.$layer-selected-01;
           }
         }
       }

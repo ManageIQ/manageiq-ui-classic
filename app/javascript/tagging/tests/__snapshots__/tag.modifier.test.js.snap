@@ -2,17 +2,19 @@
 
 exports[`Tagging modifier match snapshot 1`] = `
 <Fragment>
-  <Row
+  <Grid
     className="tag-modifier-header"
   >
-    <Column
-      lg={12}
+    <ForwardRef
+      lg={16}
+      md={8}
+      sm={4}
     >
       <h4>
         Add/Modify tag
       </h4>
-    </Column>
-  </Row>
+    </ForwardRef>
+  </Grid>
   <Form
     className="tag-modifier-form"
     horizontal="true"

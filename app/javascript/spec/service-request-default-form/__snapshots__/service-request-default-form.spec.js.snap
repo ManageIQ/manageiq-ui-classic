@@ -520,7 +520,6 @@ exports[`Show Service Request Page should render 1`] = `
         >
           <FormRenderer
             FormTemplate={[Function]}
-            clearOnUnmount={false}
             componentMapper={
               Object {
                 "checkbox": [Function],
@@ -1413,6 +1412,7 @@ exports[`Show Service Request Page should render 1`] = `
                       }
                     >
                       <FormConditionWrapper
+                        conditionMapper={Object {}}
                         field={
                           Object {
                             "component": "select",
@@ -1433,9 +1433,7 @@ exports[`Show Service Request Page should render 1`] = `
                           }
                         }
                       >
-                        <FormFieldHideWrapper
-                          hideField={false}
-                        >
+                        <FormFieldHideWrapper>
                           <SelectWithOnChange
                             component="select"
                             id="selectedUser"
@@ -1461,7 +1459,6 @@ exports[`Show Service Request Page should render 1`] = `
                               id="selectedUser"
                               isRequired={true}
                               label="Requester:"
-                              loadingMessage="Loading..."
                               name="selectedUser"
                               options={
                                 Array [
@@ -1545,10 +1542,7 @@ exports[`Show Service Request Page should render 1`] = `
                                 >
                                   <Select
                                     className=""
-                                    disabled={false}
-                                    helperText=""
                                     id="selectedUser"
-                                    inline={false}
                                     invalid={false}
                                     invalidText=""
                                     labelText={
@@ -1556,7 +1550,6 @@ exports[`Show Service Request Page should render 1`] = `
                                         Requester:
                                       </IsRequired>
                                     }
-                                    light={false}
                                     name="selectedUser"
                                     onBlur={[Function]}
                                     onChange={[Function]}
@@ -1564,48 +1557,58 @@ exports[`Show Service Request Page should render 1`] = `
                                     value=""
                                   >
                                     <div
-                                      className="bx--form-item"
+                                      className="cds--form-item"
                                     >
                                       <div
-                                        className="bx--select"
+                                        className="cds--select"
                                       >
-                                        <label
-                                          className="bx--label"
+                                        <ForwardRef
+                                          as="label"
+                                          className="cds--label"
                                           htmlFor="selectedUser"
                                         >
-                                          <IsRequired>
-                                            <span
-                                              aria-hidden="true"
-                                              className="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
-                                            >
-                                              *
-                                            </span>
-                                            Requester:
-                                          </IsRequired>
-                                        </label>
+                                          <label
+                                            className="cds--label"
+                                            dir="auto"
+                                            htmlFor="selectedUser"
+                                          >
+                                            <IsRequired>
+                                              <span
+                                                aria-hidden="true"
+                                                className="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
+                                              >
+                                                *
+                                              </span>
+                                              Requester:
+                                            </IsRequired>
+                                          </label>
+                                        </ForwardRef>
                                         <div
-                                          className="bx--select-input__wrapper"
+                                          className="cds--select-input__wrapper"
                                           data-invalid={null}
+                                          onBlur={[Function]}
+                                          onFocus={[Function]}
                                         >
                                           <select
-                                            className="bx--select-input"
+                                            className="cds--select-input"
                                             id="selectedUser"
                                             name="selectedUser"
                                             onBlur={[Function]}
                                             onChange={[Function]}
                                             onFocus={[Function]}
+                                            onKeyDown={[Function]}
+                                            onMouseDown={[Function]}
+                                            title="All"
                                             value=""
                                           >
                                             <SelectItem
-                                              disabled={false}
-                                              hidden={false}
                                               key="all"
                                               label="All"
                                               text="All"
                                               value="all"
                                             >
                                               <option
-                                                className="bx--select-option"
+                                                className="cds--select-option"
                                                 disabled={false}
                                                 hidden={false}
                                                 label="All"
@@ -1615,15 +1618,13 @@ exports[`Show Service Request Page should render 1`] = `
                                               </option>
                                             </SelectItem>
                                             <SelectItem
-                                              disabled={false}
-                                              hidden={false}
                                               key="1"
                                               label="Administrator"
                                               text="Administrator"
                                               value={1}
                                             >
                                               <option
-                                                className="bx--select-option"
+                                                className="cds--select-option"
                                                 disabled={false}
                                                 hidden={false}
                                                 label="Administrator"
@@ -1633,21 +1634,20 @@ exports[`Show Service Request Page should render 1`] = `
                                               </option>
                                             </SelectItem>
                                           </select>
-                                          <ForwardRef(ChevronDown16)
-                                            className="bx--select__arrow"
+                                          <ForwardRef(ChevronDown)
+                                            className="cds--select__arrow"
                                           >
                                             <Icon
-                                              className="bx--select__arrow"
+                                              className="cds--select__arrow"
                                               fill="currentColor"
                                               height={16}
-                                              preserveAspectRatio="xMidYMid meet"
                                               viewBox="0 0 16 16"
                                               width={16}
                                               xmlns="http://www.w3.org/2000/svg"
                                             >
                                               <svg
                                                 aria-hidden={true}
-                                                className="bx--select__arrow"
+                                                className="cds--select__arrow"
                                                 fill="currentColor"
                                                 focusable="false"
                                                 height={16}
@@ -1657,11 +1657,11 @@ exports[`Show Service Request Page should render 1`] = `
                                                 xmlns="http://www.w3.org/2000/svg"
                                               >
                                                 <path
-                                                  d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                                 />
                                               </svg>
                                             </Icon>
-                                          </ForwardRef(ChevronDown16)>
+                                          </ForwardRef(ChevronDown)>
                                         </div>
                                       </div>
                                     </div>
@@ -1705,6 +1705,7 @@ exports[`Show Service Request Page should render 1`] = `
                       name="approval_state"
                     >
                       <FormConditionWrapper
+                        conditionMapper={Object {}}
                         field={
                           Object {
                             "component": "sub-form",
@@ -1736,12 +1737,8 @@ exports[`Show Service Request Page should render 1`] = `
                           }
                         }
                       >
-                        <FormFieldHideWrapper
-                          hideField={false}
-                        >
+                        <FormFieldHideWrapper>
                           <SubForm
-                            DescriptionElement="p"
-                            TitleElement="h3"
                             component="sub-form"
                             fields={
                               Array [
@@ -1801,6 +1798,7 @@ exports[`Show Service Request Page should render 1`] = `
                                 }
                               >
                                 <FormConditionWrapper
+                                  conditionMapper={Object {}}
                                   field={
                                     Object {
                                       "component": "checkbox",
@@ -1825,9 +1823,7 @@ exports[`Show Service Request Page should render 1`] = `
                                     }
                                   }
                                 >
-                                  <FormFieldHideWrapper
-                                    hideField={false}
-                                  >
+                                  <FormFieldHideWrapper>
                                     <Checkbox
                                       component="checkbox"
                                       id="approvalStates"
@@ -1915,21 +1911,18 @@ exports[`Show Service Request Page should render 1`] = `
                                           showError={false}
                                         >
                                           <FormGroup
-                                            hasMargin={true}
-                                            invalid={false}
                                             legendText={
                                               <IsRequired>
                                                 Approval State:
                                               </IsRequired>
                                             }
-                                            message={false}
-                                            messageText=""
                                           >
                                             <fieldset
-                                              className="bx--fieldset"
+                                              className="cds--fieldset"
+                                              disabled={false}
                                             >
                                               <legend
-                                                className="bx--label"
+                                                className="cds--label"
                                               >
                                                 <IsRequired>
                                                   <span
@@ -2005,7 +1998,6 @@ exports[`Show Service Request Page should render 1`] = `
                                                     aria-label="Pending Approval"
                                                     checked={true}
                                                     id="approvalStates-pending_approval"
-                                                    indeterminate={false}
                                                     label="Pending Approval"
                                                     labelText="Pending Approval"
                                                     name="approvalStates"
@@ -2016,37 +2008,41 @@ exports[`Show Service Request Page should render 1`] = `
                                                     value="pending_approval"
                                                   >
                                                     <div
-                                                      className="bx--form-item bx--checkbox-wrapper"
+                                                      className="cds--form-item cds--checkbox-wrapper"
                                                     >
                                                       <input
                                                         aria-label="Pending Approval"
                                                         checked={true}
-                                                        className="bx--checkbox"
+                                                        className="cds--checkbox"
                                                         id="approvalStates-pending_approval"
                                                         label="Pending Approval"
                                                         name="approvalStates"
                                                         onBlur={[Function]}
                                                         onChange={[Function]}
+                                                        onClick={[Function]}
                                                         onFocus={[Function]}
                                                         type="checkbox"
                                                         value="pending_approval"
                                                       />
                                                       <label
-                                                        className="bx--checkbox-label"
+                                                        className="cds--checkbox-label"
                                                         htmlFor="approvalStates-pending_approval"
-                                                        title={null}
+                                                        title=""
                                                       >
-                                                        <Text
-                                                          className="bx--checkbox-label-text"
+                                                        <ForwardRef
+                                                          className="cds--checkbox-label-text"
                                                         >
                                                           <span
-                                                            className="bx--checkbox-label-text"
+                                                            className="cds--checkbox-label-text"
                                                             dir="auto"
                                                           >
                                                             Pending Approval
                                                           </span>
-                                                        </Text>
+                                                        </ForwardRef>
                                                       </label>
+                                                      <div
+                                                        className="cds--checkbox__validation-msg"
+                                                      />
                                                     </div>
                                                   </Checkbox>
                                                 </SingleCheckboxInCommon>
@@ -2115,7 +2111,6 @@ exports[`Show Service Request Page should render 1`] = `
                                                     aria-label="Approved"
                                                     checked={true}
                                                     id="approvalStates-approved"
-                                                    indeterminate={false}
                                                     label="Approved"
                                                     labelText="Approved"
                                                     name="approvalStates"
@@ -2126,37 +2121,41 @@ exports[`Show Service Request Page should render 1`] = `
                                                     value="approved"
                                                   >
                                                     <div
-                                                      className="bx--form-item bx--checkbox-wrapper"
+                                                      className="cds--form-item cds--checkbox-wrapper"
                                                     >
                                                       <input
                                                         aria-label="Approved"
                                                         checked={true}
-                                                        className="bx--checkbox"
+                                                        className="cds--checkbox"
                                                         id="approvalStates-approved"
                                                         label="Approved"
                                                         name="approvalStates"
                                                         onBlur={[Function]}
                                                         onChange={[Function]}
+                                                        onClick={[Function]}
                                                         onFocus={[Function]}
                                                         type="checkbox"
                                                         value="approved"
                                                       />
                                                       <label
-                                                        className="bx--checkbox-label"
+                                                        className="cds--checkbox-label"
                                                         htmlFor="approvalStates-approved"
-                                                        title={null}
+                                                        title=""
                                                       >
-                                                        <Text
-                                                          className="bx--checkbox-label-text"
+                                                        <ForwardRef
+                                                          className="cds--checkbox-label-text"
                                                         >
                                                           <span
-                                                            className="bx--checkbox-label-text"
+                                                            className="cds--checkbox-label-text"
                                                             dir="auto"
                                                           >
                                                             Approved
                                                           </span>
-                                                        </Text>
+                                                        </ForwardRef>
                                                       </label>
+                                                      <div
+                                                        className="cds--checkbox__validation-msg"
+                                                      />
                                                     </div>
                                                   </Checkbox>
                                                 </SingleCheckboxInCommon>
@@ -2225,7 +2224,6 @@ exports[`Show Service Request Page should render 1`] = `
                                                     aria-label="Denied"
                                                     checked={true}
                                                     id="approvalStates-denied"
-                                                    indeterminate={false}
                                                     label="Denied"
                                                     labelText="Denied"
                                                     name="approvalStates"
@@ -2236,37 +2234,41 @@ exports[`Show Service Request Page should render 1`] = `
                                                     value="denied"
                                                   >
                                                     <div
-                                                      className="bx--form-item bx--checkbox-wrapper"
+                                                      className="cds--form-item cds--checkbox-wrapper"
                                                     >
                                                       <input
                                                         aria-label="Denied"
                                                         checked={true}
-                                                        className="bx--checkbox"
+                                                        className="cds--checkbox"
                                                         id="approvalStates-denied"
                                                         label="Denied"
                                                         name="approvalStates"
                                                         onBlur={[Function]}
                                                         onChange={[Function]}
+                                                        onClick={[Function]}
                                                         onFocus={[Function]}
                                                         type="checkbox"
                                                         value="denied"
                                                       />
                                                       <label
-                                                        className="bx--checkbox-label"
+                                                        className="cds--checkbox-label"
                                                         htmlFor="approvalStates-denied"
-                                                        title={null}
+                                                        title=""
                                                       >
-                                                        <Text
-                                                          className="bx--checkbox-label-text"
+                                                        <ForwardRef
+                                                          className="cds--checkbox-label-text"
                                                         >
                                                           <span
-                                                            className="bx--checkbox-label-text"
+                                                            className="cds--checkbox-label-text"
                                                             dir="auto"
                                                           >
                                                             Denied
                                                           </span>
-                                                        </Text>
+                                                        </ForwardRef>
                                                       </label>
+                                                      <div
+                                                        className="cds--checkbox__validation-msg"
+                                                      />
                                                     </div>
                                                   </Checkbox>
                                                 </SingleCheckboxInCommon>
@@ -2360,6 +2362,7 @@ exports[`Show Service Request Page should render 1`] = `
                       }
                     >
                       <FormConditionWrapper
+                        conditionMapper={Object {}}
                         field={
                           Object {
                             "component": "select",
@@ -2432,9 +2435,7 @@ exports[`Show Service Request Page should render 1`] = `
                           }
                         }
                       >
-                        <FormFieldHideWrapper
-                          hideField={false}
-                        >
+                        <FormFieldHideWrapper>
                           <SelectWithOnChange
                             component="select"
                             id="types"
@@ -2512,7 +2513,6 @@ exports[`Show Service Request Page should render 1`] = `
                               id="types"
                               isRequired={true}
                               label="Type:"
-                              loadingMessage="Loading..."
                               name="types"
                               options={
                                 Array [
@@ -2752,10 +2752,7 @@ exports[`Show Service Request Page should render 1`] = `
                                 >
                                   <Select
                                     className=""
-                                    disabled={false}
-                                    helperText=""
                                     id="types"
-                                    inline={false}
                                     invalid={false}
                                     invalidText=""
                                     labelText={
@@ -2763,7 +2760,6 @@ exports[`Show Service Request Page should render 1`] = `
                                         Type:
                                       </IsRequired>
                                     }
-                                    light={false}
                                     name="types"
                                     onBlur={[Function]}
                                     onChange={[Function]}
@@ -2771,48 +2767,58 @@ exports[`Show Service Request Page should render 1`] = `
                                     value=""
                                   >
                                     <div
-                                      className="bx--form-item"
+                                      className="cds--form-item"
                                     >
                                       <div
-                                        className="bx--select"
+                                        className="cds--select"
                                       >
-                                        <label
-                                          className="bx--label"
+                                        <ForwardRef
+                                          as="label"
+                                          className="cds--label"
                                           htmlFor="types"
                                         >
-                                          <IsRequired>
-                                            <span
-                                              aria-hidden="true"
-                                              className="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
-                                            >
-                                              *
-                                            </span>
-                                            Type:
-                                          </IsRequired>
-                                        </label>
+                                          <label
+                                            className="cds--label"
+                                            dir="auto"
+                                            htmlFor="types"
+                                          >
+                                            <IsRequired>
+                                              <span
+                                                aria-hidden="true"
+                                                className="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
+                                              >
+                                                *
+                                              </span>
+                                              Type:
+                                            </IsRequired>
+                                          </label>
+                                        </ForwardRef>
                                         <div
-                                          className="bx--select-input__wrapper"
+                                          className="cds--select-input__wrapper"
                                           data-invalid={null}
+                                          onBlur={[Function]}
+                                          onFocus={[Function]}
                                         >
                                           <select
-                                            className="bx--select-input"
+                                            className="cds--select-input"
                                             id="types"
                                             name="types"
                                             onBlur={[Function]}
                                             onChange={[Function]}
                                             onFocus={[Function]}
+                                            onKeyDown={[Function]}
+                                            onMouseDown={[Function]}
+                                            title="All"
                                             value=""
                                           >
                                             <SelectItem
-                                              disabled={false}
-                                              hidden={false}
                                               key="all"
                                               label="All"
                                               text="All"
                                               value="all"
                                             >
                                               <option
-                                                className="bx--select-option"
+                                                className="cds--select-option"
                                                 disabled={false}
                                                 hidden={false}
                                                 label="All"
@@ -2822,15 +2828,13 @@ exports[`Show Service Request Page should render 1`] = `
                                               </option>
                                             </SelectItem>
                                             <SelectItem
-                                              disabled={false}
-                                              hidden={false}
                                               key="provision_via_foreman"
                                               label="Foreman Provision"
                                               text="Foreman Provision"
                                               value="provision_via_foreman"
                                             >
                                               <option
-                                                className="bx--select-option"
+                                                className="cds--select-option"
                                                 disabled={false}
                                                 hidden={false}
                                                 label="Foreman Provision"
@@ -2840,15 +2844,13 @@ exports[`Show Service Request Page should render 1`] = `
                                               </option>
                                             </SelectItem>
                                             <SelectItem
-                                              disabled={false}
-                                              hidden={false}
                                               key="template"
                                               label="VM Provision"
                                               text="VM Provision"
                                               value="template"
                                             >
                                               <option
-                                                className="bx--select-option"
+                                                className="cds--select-option"
                                                 disabled={false}
                                                 hidden={false}
                                                 label="VM Provision"
@@ -2858,15 +2860,13 @@ exports[`Show Service Request Page should render 1`] = `
                                               </option>
                                             </SelectItem>
                                             <SelectItem
-                                              disabled={false}
-                                              hidden={false}
                                               key="clone_to_vm"
                                               label="VM Clone"
                                               text="VM Clone"
                                               value="clone_to_vm"
                                             >
                                               <option
-                                                className="bx--select-option"
+                                                className="cds--select-option"
                                                 disabled={false}
                                                 hidden={false}
                                                 label="VM Clone"
@@ -2876,15 +2876,13 @@ exports[`Show Service Request Page should render 1`] = `
                                               </option>
                                             </SelectItem>
                                             <SelectItem
-                                              disabled={false}
-                                              hidden={false}
                                               key="clone_to_template"
                                               label="VM Publish"
                                               text="VM Publish"
                                               value="clone_to_template"
                                             >
                                               <option
-                                                className="bx--select-option"
+                                                className="cds--select-option"
                                                 disabled={false}
                                                 hidden={false}
                                                 label="VM Publish"
@@ -2894,15 +2892,13 @@ exports[`Show Service Request Page should render 1`] = `
                                               </option>
                                             </SelectItem>
                                             <SelectItem
-                                              disabled={false}
-                                              hidden={false}
                                               key="orchestration_stack_retire"
                                               label="Orchestration Stack Retire"
                                               text="Orchestration Stack Retire"
                                               value="orchestration_stack_retire"
                                             >
                                               <option
-                                                className="bx--select-option"
+                                                className="cds--select-option"
                                                 disabled={false}
                                                 hidden={false}
                                                 label="Orchestration Stack Retire"
@@ -2912,15 +2908,13 @@ exports[`Show Service Request Page should render 1`] = `
                                               </option>
                                             </SelectItem>
                                             <SelectItem
-                                              disabled={false}
-                                              hidden={false}
                                               key="provision_physical_server"
                                               label="Physical Server Provision"
                                               text="Physical Server Provision"
                                               value="provision_physical_server"
                                             >
                                               <option
-                                                className="bx--select-option"
+                                                className="cds--select-option"
                                                 disabled={false}
                                                 hidden={false}
                                                 label="Physical Server Provision"
@@ -2930,15 +2924,13 @@ exports[`Show Service Request Page should render 1`] = `
                                               </option>
                                             </SelectItem>
                                             <SelectItem
-                                              disabled={false}
-                                              hidden={false}
                                               key="physical_server_firmware_update"
                                               label="Physical Server Firmware Update"
                                               text="Physical Server Firmware Update"
                                               value="physical_server_firmware_update"
                                             >
                                               <option
-                                                className="bx--select-option"
+                                                className="cds--select-option"
                                                 disabled={false}
                                                 hidden={false}
                                                 label="Physical Server Firmware Update"
@@ -2948,15 +2940,13 @@ exports[`Show Service Request Page should render 1`] = `
                                               </option>
                                             </SelectItem>
                                             <SelectItem
-                                              disabled={false}
-                                              hidden={false}
                                               key="service_retire"
                                               label="Service Retire"
                                               text="Service Retire"
                                               value="service_retire"
                                             >
                                               <option
-                                                className="bx--select-option"
+                                                className="cds--select-option"
                                                 disabled={false}
                                                 hidden={false}
                                                 label="Service Retire"
@@ -2966,15 +2956,13 @@ exports[`Show Service Request Page should render 1`] = `
                                               </option>
                                             </SelectItem>
                                             <SelectItem
-                                              disabled={false}
-                                              hidden={false}
                                               key="service_reconfigure"
                                               label="Service Reconfigure"
                                               text="Service Reconfigure"
                                               value="service_reconfigure"
                                             >
                                               <option
-                                                className="bx--select-option"
+                                                className="cds--select-option"
                                                 disabled={false}
                                                 hidden={false}
                                                 label="Service Reconfigure"
@@ -2984,15 +2972,13 @@ exports[`Show Service Request Page should render 1`] = `
                                               </option>
                                             </SelectItem>
                                             <SelectItem
-                                              disabled={false}
-                                              hidden={false}
                                               key="clone_to_service"
                                               label="Service Provision"
                                               text="Service Provision"
                                               value="clone_to_service"
                                             >
                                               <option
-                                                className="bx--select-option"
+                                                className="cds--select-option"
                                                 disabled={false}
                                                 hidden={false}
                                                 label="Service Provision"
@@ -3002,15 +2988,13 @@ exports[`Show Service Request Page should render 1`] = `
                                               </option>
                                             </SelectItem>
                                             <SelectItem
-                                              disabled={false}
-                                              hidden={false}
                                               key="vm_cloud_reconfigure"
                                               label="VM Cloud Reconfigure"
                                               text="VM Cloud Reconfigure"
                                               value="vm_cloud_reconfigure"
                                             >
                                               <option
-                                                className="bx--select-option"
+                                                className="cds--select-option"
                                                 disabled={false}
                                                 hidden={false}
                                                 label="VM Cloud Reconfigure"
@@ -3020,15 +3004,13 @@ exports[`Show Service Request Page should render 1`] = `
                                               </option>
                                             </SelectItem>
                                             <SelectItem
-                                              disabled={false}
-                                              hidden={false}
                                               key="vm_migrate"
                                               label="VM Migrate"
                                               text="VM Migrate"
                                               value="vm_migrate"
                                             >
                                               <option
-                                                className="bx--select-option"
+                                                className="cds--select-option"
                                                 disabled={false}
                                                 hidden={false}
                                                 label="VM Migrate"
@@ -3038,15 +3020,13 @@ exports[`Show Service Request Page should render 1`] = `
                                               </option>
                                             </SelectItem>
                                             <SelectItem
-                                              disabled={false}
-                                              hidden={false}
                                               key="vm_reconfigure"
                                               label="VM Reconfigure"
                                               text="VM Reconfigure"
                                               value="vm_reconfigure"
                                             >
                                               <option
-                                                className="bx--select-option"
+                                                className="cds--select-option"
                                                 disabled={false}
                                                 hidden={false}
                                                 label="VM Reconfigure"
@@ -3056,15 +3036,13 @@ exports[`Show Service Request Page should render 1`] = `
                                               </option>
                                             </SelectItem>
                                             <SelectItem
-                                              disabled={false}
-                                              hidden={false}
                                               key="vm_retire"
                                               label="VM Retire"
                                               text="VM Retire"
                                               value="vm_retire"
                                             >
                                               <option
-                                                className="bx--select-option"
+                                                className="cds--select-option"
                                                 disabled={false}
                                                 hidden={false}
                                                 label="VM Retire"
@@ -3074,21 +3052,20 @@ exports[`Show Service Request Page should render 1`] = `
                                               </option>
                                             </SelectItem>
                                           </select>
-                                          <ForwardRef(ChevronDown16)
-                                            className="bx--select__arrow"
+                                          <ForwardRef(ChevronDown)
+                                            className="cds--select__arrow"
                                           >
                                             <Icon
-                                              className="bx--select__arrow"
+                                              className="cds--select__arrow"
                                               fill="currentColor"
                                               height={16}
-                                              preserveAspectRatio="xMidYMid meet"
                                               viewBox="0 0 16 16"
                                               width={16}
                                               xmlns="http://www.w3.org/2000/svg"
                                             >
                                               <svg
                                                 aria-hidden={true}
-                                                className="bx--select__arrow"
+                                                className="cds--select__arrow"
                                                 fill="currentColor"
                                                 focusable="false"
                                                 height={16}
@@ -3098,11 +3075,11 @@ exports[`Show Service Request Page should render 1`] = `
                                                 xmlns="http://www.w3.org/2000/svg"
                                               >
                                                 <path
-                                                  d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                                 />
                                               </svg>
                                             </Icon>
-                                          </ForwardRef(ChevronDown16)>
+                                          </ForwardRef(ChevronDown)>
                                         </div>
                                       </div>
                                     </div>
@@ -3139,6 +3116,7 @@ exports[`Show Service Request Page should render 1`] = `
                       }
                     >
                       <FormConditionWrapper
+                        conditionMapper={Object {}}
                         field={
                           Object {
                             "component": "select",
@@ -3163,9 +3141,7 @@ exports[`Show Service Request Page should render 1`] = `
                           }
                         }
                       >
-                        <FormFieldHideWrapper
-                          hideField={false}
-                        >
+                        <FormFieldHideWrapper>
                           <SelectWithOnChange
                             component="select"
                             id="selectedPeriod"
@@ -3195,7 +3171,6 @@ exports[`Show Service Request Page should render 1`] = `
                               id="selectedPeriod"
                               isRequired={true}
                               label="Request Date:"
-                              loadingMessage="Loading..."
                               name="selectedPeriod"
                               options={
                                 Array [
@@ -3291,10 +3266,7 @@ exports[`Show Service Request Page should render 1`] = `
                                 >
                                   <Select
                                     className=""
-                                    disabled={false}
-                                    helperText=""
                                     id="selectedPeriod"
-                                    inline={false}
                                     invalid={false}
                                     invalidText=""
                                     labelText={
@@ -3302,7 +3274,6 @@ exports[`Show Service Request Page should render 1`] = `
                                         Request Date:
                                       </IsRequired>
                                     }
-                                    light={false}
                                     name="selectedPeriod"
                                     onBlur={[Function]}
                                     onChange={[Function]}
@@ -3310,48 +3281,58 @@ exports[`Show Service Request Page should render 1`] = `
                                     value={7}
                                   >
                                     <div
-                                      className="bx--form-item"
+                                      className="cds--form-item"
                                     >
                                       <div
-                                        className="bx--select"
+                                        className="cds--select"
                                       >
-                                        <label
-                                          className="bx--label"
+                                        <ForwardRef
+                                          as="label"
+                                          className="cds--label"
                                           htmlFor="selectedPeriod"
                                         >
-                                          <IsRequired>
-                                            <span
-                                              aria-hidden="true"
-                                              className="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
-                                            >
-                                              *
-                                            </span>
-                                            Request Date:
-                                          </IsRequired>
-                                        </label>
+                                          <label
+                                            className="cds--label"
+                                            dir="auto"
+                                            htmlFor="selectedPeriod"
+                                          >
+                                            <IsRequired>
+                                              <span
+                                                aria-hidden="true"
+                                                className="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
+                                              >
+                                                *
+                                              </span>
+                                              Request Date:
+                                            </IsRequired>
+                                          </label>
+                                        </ForwardRef>
                                         <div
-                                          className="bx--select-input__wrapper"
+                                          className="cds--select-input__wrapper"
                                           data-invalid={null}
+                                          onBlur={[Function]}
+                                          onFocus={[Function]}
                                         >
                                           <select
-                                            className="bx--select-input"
+                                            className="cds--select-input"
                                             id="selectedPeriod"
                                             name="selectedPeriod"
                                             onBlur={[Function]}
                                             onChange={[Function]}
                                             onFocus={[Function]}
+                                            onKeyDown={[Function]}
+                                            onMouseDown={[Function]}
+                                            title="Last 24 Hours"
                                             value={7}
                                           >
                                             <SelectItem
-                                              disabled={false}
-                                              hidden={false}
                                               key="1"
                                               label="Last 24 Hours"
                                               text="Last 24 Hours"
                                               value={1}
                                             >
                                               <option
-                                                className="bx--select-option"
+                                                className="cds--select-option"
                                                 disabled={false}
                                                 hidden={false}
                                                 label="Last 24 Hours"
@@ -3361,15 +3342,13 @@ exports[`Show Service Request Page should render 1`] = `
                                               </option>
                                             </SelectItem>
                                             <SelectItem
-                                              disabled={false}
-                                              hidden={false}
                                               key="7"
                                               label="Last 7 Days"
                                               text="Last 7 Days"
                                               value={7}
                                             >
                                               <option
-                                                className="bx--select-option"
+                                                className="cds--select-option"
                                                 disabled={false}
                                                 hidden={false}
                                                 label="Last 7 Days"
@@ -3379,15 +3358,13 @@ exports[`Show Service Request Page should render 1`] = `
                                               </option>
                                             </SelectItem>
                                             <SelectItem
-                                              disabled={false}
-                                              hidden={false}
                                               key="365"
                                               label="Last 365 Days"
                                               text="Last 365 Days"
                                               value={365}
                                             >
                                               <option
-                                                className="bx--select-option"
+                                                className="cds--select-option"
                                                 disabled={false}
                                                 hidden={false}
                                                 label="Last 365 Days"
@@ -3397,21 +3374,20 @@ exports[`Show Service Request Page should render 1`] = `
                                               </option>
                                             </SelectItem>
                                           </select>
-                                          <ForwardRef(ChevronDown16)
-                                            className="bx--select__arrow"
+                                          <ForwardRef(ChevronDown)
+                                            className="cds--select__arrow"
                                           >
                                             <Icon
-                                              className="bx--select__arrow"
+                                              className="cds--select__arrow"
                                               fill="currentColor"
                                               height={16}
-                                              preserveAspectRatio="xMidYMid meet"
                                               viewBox="0 0 16 16"
                                               width={16}
                                               xmlns="http://www.w3.org/2000/svg"
                                             >
                                               <svg
                                                 aria-hidden={true}
-                                                className="bx--select__arrow"
+                                                className="cds--select__arrow"
                                                 fill="currentColor"
                                                 focusable="false"
                                                 height={16}
@@ -3421,11 +3397,11 @@ exports[`Show Service Request Page should render 1`] = `
                                                 xmlns="http://www.w3.org/2000/svg"
                                               >
                                                 <path
-                                                  d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                                 />
                                               </svg>
                                             </Icon>
-                                          </ForwardRef(ChevronDown16)>
+                                          </ForwardRef(ChevronDown)>
                                         </div>
                                       </div>
                                     </div>
@@ -3446,6 +3422,7 @@ exports[`Show Service Request Page should render 1`] = `
                       name="reasonText"
                     >
                       <FormConditionWrapper
+                        conditionMapper={Object {}}
                         field={
                           Object {
                             "component": "text-field",
@@ -3456,9 +3433,7 @@ exports[`Show Service Request Page should render 1`] = `
                           }
                         }
                       >
-                        <FormFieldHideWrapper
-                          hideField={false}
-                        >
+                        <FormFieldHideWrapper>
                           <TextField
                             component="text-field"
                             id="reasonText"
@@ -3482,23 +3457,34 @@ exports[`Show Service Request Page should render 1`] = `
                               warnText=""
                             >
                               <div
-                                className="bx--form-item bx--text-input-wrapper"
+                                className="cds--form-item cds--text-input-wrapper"
                               >
-                                <label
-                                  className="bx--label"
-                                  htmlFor="reasonText"
-                                >
-                                  Reason:
-                                </label>
                                 <div
-                                  className="bx--text-input__field-outer-wrapper"
+                                  className="cds--text-input__label-wrapper"
+                                >
+                                  <ForwardRef
+                                    as="label"
+                                    className="cds--label"
+                                    htmlFor="reasonText"
+                                  >
+                                    <label
+                                      className="cds--label"
+                                      dir="auto"
+                                      htmlFor="reasonText"
+                                    >
+                                      Reason:
+                                    </label>
+                                  </ForwardRef>
+                                </div>
+                                <div
+                                  className="cds--text-input__field-outer-wrapper"
                                 >
                                   <div
-                                    className="bx--text-input__field-wrapper"
+                                    className="cds--text-input__field-wrapper"
                                     data-invalid={null}
                                   >
                                     <input
-                                      className="bx--text-input bx--text-input--md"
+                                      className="cds--text-input"
                                       disabled={false}
                                       id="reasonText"
                                       maxLength={128}
@@ -3509,6 +3495,12 @@ exports[`Show Service Request Page should render 1`] = `
                                       onFocus={[Function]}
                                       type="text"
                                       value=""
+                                    />
+                                    <span
+                                      aria-atomic="true"
+                                      aria-live="assertive"
+                                      className="cds--text-input__counter-alert"
+                                      role="alert"
                                     />
                                   </div>
                                 </div>
@@ -3524,6 +3516,7 @@ exports[`Show Service Request Page should render 1`] = `
                       name="spy-field"
                     >
                       <FormConditionWrapper
+                        conditionMapper={Object {}}
                         field={
                           Object {
                             "component": "spy-field",
@@ -3532,9 +3525,7 @@ exports[`Show Service Request Page should render 1`] = `
                           }
                         }
                       >
-                        <FormFieldHideWrapper
-                          hideField={false}
-                        >
+                        <FormFieldHideWrapper>
                           <SpyField
                             component="spy-field"
                             name="spy-field"
@@ -3556,25 +3547,57 @@ exports[`Show Service Request Page should render 1`] = `
                       <div
                         className="custom-button-wrapper"
                       >
-                        <button
-                          className="bx--btn bx--btn--primary btnRight"
+                        <Button
+                          className="btnRight"
                           disabled={false}
                           id="submit"
+                          kind="primary"
                           type="submit"
-                          variant="contained"
                         >
-                          Apply
-                        </button>
-                        <button
-                          className="bx--btn bx--btn--secondary btnRight"
+                          <ForwardRef(ButtonBase)
+                            className="btnRight"
+                            disabled={false}
+                            id="submit"
+                            kind="primary"
+                            type="submit"
+                          >
+                            <button
+                              className="btnRight cds--btn cds--btn--primary"
+                              disabled={false}
+                              id="submit"
+                              type="submit"
+                            >
+                              Apply
+                            </button>
+                          </ForwardRef(ButtonBase)>
+                        </Button>
+                        <Button
+                          className="btnRight"
                           disabled={false}
                           id="reset"
+                          kind="secondary"
                           onClick={[Function]}
                           type="button"
-                          variant="contained"
                         >
-                          Reset
-                        </button>
+                          <ForwardRef(ButtonBase)
+                            className="btnRight"
+                            disabled={false}
+                            id="reset"
+                            kind="secondary"
+                            onClick={[Function]}
+                            type="button"
+                          >
+                            <button
+                              className="btnRight cds--btn cds--btn--secondary"
+                              disabled={false}
+                              id="reset"
+                              onClick={[Function]}
+                              type="button"
+                            >
+                              Reset
+                            </button>
+                          </ForwardRef(ButtonBase)>
+                        </Button>
                       </div>
                     </FormSpy>
                   </form>

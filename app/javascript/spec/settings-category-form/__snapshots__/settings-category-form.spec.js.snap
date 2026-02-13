@@ -262,7 +262,6 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
       >
         <FormRenderer
           FormTemplate={[Function]}
-          clearOnUnmount={false}
           componentMapper={
             Object {
               "checkbox": [Function],
@@ -297,7 +296,6 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
             }
           }
           dispatch={[Function]}
-          initialValues={Object {}}
           onCancel={[Function]}
           onReset={[Function]}
           onSubmit={[Function]}
@@ -1051,11 +1049,10 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                       onSubmit={[Function]}
                     >
                       <form
-                        className="bx--form form-0-2-3 form-react"
+                        className="cds--form form-0-2-3 form-react"
                         noValidate={true}
                         onSubmit={[Function]}
                       >
-                         
                         <SingleField
                           component="sub-form"
                           fields={
@@ -1143,6 +1140,7 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                           title="Category Information"
                         >
                           <FormConditionWrapper
+                            conditionMapper={Object {}}
                             field={
                               Object {
                                 "component": "sub-form",
@@ -1229,12 +1227,8 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                               }
                             }
                           >
-                            <FormFieldHideWrapper
-                              hideField={false}
-                            >
+                            <FormFieldHideWrapper>
                               <SubForm
-                                DescriptionElement="p"
-                                TitleElement="h3"
                                 component="sub-form"
                                 fields={
                                   Array [
@@ -1348,6 +1342,7 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                     }
                                   >
                                     <FormConditionWrapper
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "className": "settings_category_name",
@@ -1366,9 +1361,7 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                         }
                                       }
                                     >
-                                      <FormFieldHideWrapper
-                                        hideField={false}
-                                      >
+                                      <FormFieldHideWrapper>
                                         <TextField
                                           className="settings_category_name"
                                           component="text-field"
@@ -1408,31 +1401,42 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                             warnText=""
                                           >
                                             <div
-                                              className="bx--form-item bx--text-input-wrapper"
+                                              className="cds--form-item settings_category_name cds--text-input-wrapper"
                                             >
-                                              <label
-                                                className="bx--label"
-                                                htmlFor="name"
-                                              >
-                                                <IsRequired>
-                                                  <span
-                                                    aria-hidden="true"
-                                                    className="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
-                                                  >
-                                                    *
-                                                  </span>
-                                                  Name
-                                                </IsRequired>
-                                              </label>
                                               <div
-                                                className="bx--text-input__field-outer-wrapper"
+                                                className="cds--text-input__label-wrapper"
+                                              >
+                                                <ForwardRef
+                                                  as="label"
+                                                  className="cds--label"
+                                                  htmlFor="name"
+                                                >
+                                                  <label
+                                                    className="cds--label"
+                                                    dir="auto"
+                                                    htmlFor="name"
+                                                  >
+                                                    <IsRequired>
+                                                      <span
+                                                        aria-hidden="true"
+                                                        className="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+                                                      >
+                                                        *
+                                                      </span>
+                                                      Name
+                                                    </IsRequired>
+                                                  </label>
+                                                </ForwardRef>
+                                              </div>
+                                              <div
+                                                className="cds--text-input__field-outer-wrapper"
                                               >
                                                 <div
-                                                  className="bx--text-input__field-wrapper"
+                                                  className="cds--text-input__field-wrapper"
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input settings_category_name bx--text-input--md"
+                                                    className="cds--text-input"
                                                     disabled={false}
                                                     id="name"
                                                     maxLength={50}
@@ -1443,6 +1447,12 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                                     onFocus={[Function]}
                                                     type="text"
                                                     value=""
+                                                  />
+                                                  <span
+                                                    aria-atomic="true"
+                                                    aria-live="assertive"
+                                                    className="cds--text-input__counter-alert"
+                                                    role="alert"
                                                   />
                                                 </div>
                                               </div>
@@ -1469,6 +1479,7 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                     }
                                   >
                                     <FormConditionWrapper
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "component": "text-field",
@@ -1485,9 +1496,7 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                         }
                                       }
                                     >
-                                      <FormFieldHideWrapper
-                                        hideField={false}
-                                      >
+                                      <FormFieldHideWrapper>
                                         <TextField
                                           component="text-field"
                                           id="description"
@@ -1523,31 +1532,42 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                             warnText=""
                                           >
                                             <div
-                                              className="bx--form-item bx--text-input-wrapper"
+                                              className="cds--form-item cds--text-input-wrapper"
                                             >
-                                              <label
-                                                className="bx--label"
-                                                htmlFor="description"
-                                              >
-                                                <IsRequired>
-                                                  <span
-                                                    aria-hidden="true"
-                                                    className="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
-                                                  >
-                                                    *
-                                                  </span>
-                                                  Description
-                                                </IsRequired>
-                                              </label>
                                               <div
-                                                className="bx--text-input__field-outer-wrapper"
+                                                className="cds--text-input__label-wrapper"
+                                              >
+                                                <ForwardRef
+                                                  as="label"
+                                                  className="cds--label"
+                                                  htmlFor="description"
+                                                >
+                                                  <label
+                                                    className="cds--label"
+                                                    dir="auto"
+                                                    htmlFor="description"
+                                                  >
+                                                    <IsRequired>
+                                                      <span
+                                                        aria-hidden="true"
+                                                        className="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+                                                      >
+                                                        *
+                                                      </span>
+                                                      Description
+                                                    </IsRequired>
+                                                  </label>
+                                                </ForwardRef>
+                                              </div>
+                                              <div
+                                                className="cds--text-input__field-outer-wrapper"
                                               >
                                                 <div
-                                                  className="bx--text-input__field-wrapper"
+                                                  className="cds--text-input__field-wrapper"
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input bx--text-input--md"
+                                                    className="cds--text-input"
                                                     disabled={false}
                                                     id="description"
                                                     maxLength={150}
@@ -1558,6 +1578,12 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                                     onFocus={[Function]}
                                                     type="text"
                                                     value=""
+                                                  />
+                                                  <span
+                                                    aria-atomic="true"
+                                                    aria-live="assertive"
+                                                    className="cds--text-input__counter-alert"
+                                                    role="alert"
                                                   />
                                                 </div>
                                               </div>
@@ -1584,6 +1610,7 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                     }
                                   >
                                     <FormConditionWrapper
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "component": "text-field",
@@ -1600,9 +1627,7 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                         }
                                       }
                                     >
-                                      <FormFieldHideWrapper
-                                        hideField={false}
-                                      >
+                                      <FormFieldHideWrapper>
                                         <TextField
                                           component="text-field"
                                           id="example_text"
@@ -1638,31 +1663,42 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                             warnText=""
                                           >
                                             <div
-                                              className="bx--form-item bx--text-input-wrapper"
+                                              className="cds--form-item cds--text-input-wrapper"
                                             >
-                                              <label
-                                                className="bx--label"
-                                                htmlFor="example_text"
-                                              >
-                                                <IsRequired>
-                                                  <span
-                                                    aria-hidden="true"
-                                                    className="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
-                                                  >
-                                                    *
-                                                  </span>
-                                                  Long Description
-                                                </IsRequired>
-                                              </label>
                                               <div
-                                                className="bx--text-input__field-outer-wrapper"
+                                                className="cds--text-input__label-wrapper"
+                                              >
+                                                <ForwardRef
+                                                  as="label"
+                                                  className="cds--label"
+                                                  htmlFor="example_text"
+                                                >
+                                                  <label
+                                                    className="cds--label"
+                                                    dir="auto"
+                                                    htmlFor="example_text"
+                                                  >
+                                                    <IsRequired>
+                                                      <span
+                                                        aria-hidden="true"
+                                                        className="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+                                                      >
+                                                        *
+                                                      </span>
+                                                      Long Description
+                                                    </IsRequired>
+                                                  </label>
+                                                </ForwardRef>
+                                              </div>
+                                              <div
+                                                className="cds--text-input__field-outer-wrapper"
                                               >
                                                 <div
-                                                  className="bx--text-input__field-wrapper"
+                                                  className="cds--text-input__field-wrapper"
                                                   data-invalid={null}
                                                 >
                                                   <input
-                                                    className="bx--text-input bx--text-input--md"
+                                                    className="cds--text-input"
                                                     disabled={false}
                                                     id="example_text"
                                                     maxLength={150}
@@ -1673,6 +1709,12 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                                     onFocus={[Function]}
                                                     type="text"
                                                     value=""
+                                                  />
+                                                  <span
+                                                    aria-atomic="true"
+                                                    aria-live="assertive"
+                                                    className="cds--text-input__counter-alert"
+                                                    role="alert"
                                                   />
                                                 </div>
                                               </div>
@@ -1693,6 +1735,7 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                     onText="Yes"
                                   >
                                     <FormConditionWrapper
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "component": "switch",
@@ -1705,9 +1748,7 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                         }
                                       }
                                     >
-                                      <FormFieldHideWrapper
-                                        hideField={false}
-                                      >
+                                      <FormFieldHideWrapper>
                                         <Switch
                                           component="switch"
                                           id="show"
@@ -1718,78 +1759,72 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                           onText="Yes"
                                         >
                                           <div>
-                                            <FeatureToggle(Toggle)
+                                            <Toggle
                                               id="show"
                                               key="show"
                                               labelA="No"
                                               labelB="Yes"
                                               labelText="Show in console"
                                               maxLength={50}
-                                              name="show"
                                               onBlur={[Function]}
-                                              onChange={[Function]}
                                               onFocus={[Function]}
+                                              onToggle={[Function]}
                                               toggled={false}
                                               type="checkbox"
                                             >
-                                              <Toggle
-                                                aria-label="Toggle"
-                                                defaultToggled={false}
-                                                id="show"
-                                                labelA="No"
-                                                labelB="Yes"
-                                                labelText="Show in console"
-                                                maxLength={50}
-                                                name="show"
-                                                onBlur={[Function]}
-                                                onChange={[Function]}
-                                                onFocus={[Function]}
-                                                onToggle={[Function]}
-                                                toggled={false}
-                                                type="checkbox"
+                                              <div
+                                                className="cds--toggle"
                                               >
-                                                <div
-                                                  className="bx--form-item"
+                                                <button
+                                                  aria-checked={false}
+                                                  aria-labelledby="show_label"
+                                                  className="cds--toggle__button"
+                                                  disabled={false}
+                                                  id="show"
+                                                  maxLength={50}
+                                                  onBlur={[Function]}
+                                                  onClick={[Function]}
+                                                  onFocus={[Function]}
+                                                  role="switch"
+                                                  type="button"
+                                                />
+                                                <label
+                                                  className="cds--toggle__label"
+                                                  htmlFor="show"
+                                                  id="show_label"
                                                 >
-                                                  <input
-                                                    aria-label={null}
-                                                    checked={false}
-                                                    className="bx--toggle-input"
-                                                    id="show"
-                                                    maxLength={50}
-                                                    name="show"
-                                                    onBlur={[Function]}
-                                                    onChange={[Function]}
-                                                    onFocus={[Function]}
-                                                    onKeyUp={[Function]}
-                                                    type="checkbox"
-                                                  />
-                                                  <label
-                                                    aria-label={null}
-                                                    className="bx--toggle-input__label"
-                                                    htmlFor="show"
+                                                  <ForwardRef
+                                                    className="cds--toggle__label-text"
                                                   >
-                                                    Show in console
                                                     <span
-                                                      className="bx--toggle__switch"
+                                                      className="cds--toggle__label-text"
+                                                      dir="auto"
+                                                    >
+                                                      Show in console
+                                                    </span>
+                                                  </ForwardRef>
+                                                  <div
+                                                    className="cds--toggle__appearance"
+                                                  >
+                                                    <div
+                                                      className="cds--toggle__switch"
+                                                    />
+                                                    <ForwardRef
+                                                      aria-hidden="true"
+                                                      className="cds--toggle__text"
                                                     >
                                                       <span
                                                         aria-hidden="true"
-                                                        className="bx--toggle__text--off"
+                                                        className="cds--toggle__text"
+                                                        dir="auto"
                                                       >
                                                         No
                                                       </span>
-                                                      <span
-                                                        aria-hidden="true"
-                                                        className="bx--toggle__text--on"
-                                                      >
-                                                        Yes
-                                                      </span>
-                                                    </span>
-                                                  </label>
-                                                </div>
-                                              </Toggle>
-                                            </FeatureToggle(Toggle)>
+                                                    </ForwardRef>
+                                                  </div>
+                                                </label>
+                                              </div>
+                                            </Toggle>
                                             <HelperTextBlock />
                                           </div>
                                         </Switch>
@@ -1809,6 +1844,7 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                     onText="Yes"
                                   >
                                     <FormConditionWrapper
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "className": "settings_category_single_value",
@@ -1823,9 +1859,7 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                         }
                                       }
                                     >
-                                      <FormFieldHideWrapper
-                                        hideField={false}
-                                      >
+                                      <FormFieldHideWrapper>
                                         <Switch
                                           className="settings_category_single_value"
                                           component="switch"
@@ -1838,7 +1872,7 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                           onText="Yes"
                                         >
                                           <div>
-                                            <FeatureToggle(Toggle)
+                                            <Toggle
                                               className="settings_category_single_value"
                                               disabled={false}
                                               id="single_value"
@@ -1847,74 +1881,65 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                               labelB="Yes"
                                               labelText="Single value"
                                               maxLength={50}
-                                              name="single_value"
                                               onBlur={[Function]}
-                                              onChange={[Function]}
                                               onFocus={[Function]}
+                                              onToggle={[Function]}
                                               toggled={false}
                                               type="checkbox"
                                             >
-                                              <Toggle
-                                                aria-label="Toggle"
-                                                className="settings_category_single_value"
-                                                defaultToggled={false}
-                                                disabled={false}
-                                                id="single_value"
-                                                labelA="No"
-                                                labelB="Yes"
-                                                labelText="Single value"
-                                                maxLength={50}
-                                                name="single_value"
-                                                onBlur={[Function]}
-                                                onChange={[Function]}
-                                                onFocus={[Function]}
-                                                onToggle={[Function]}
-                                                toggled={false}
-                                                type="checkbox"
+                                              <div
+                                                className="cds--toggle settings_category_single_value"
                                               >
-                                                <div
-                                                  className="bx--form-item settings_category_single_value"
+                                                <button
+                                                  aria-checked={false}
+                                                  aria-labelledby="single_value_label"
+                                                  className="cds--toggle__button"
+                                                  disabled={false}
+                                                  id="single_value"
+                                                  maxLength={50}
+                                                  onBlur={[Function]}
+                                                  onClick={[Function]}
+                                                  onFocus={[Function]}
+                                                  role="switch"
+                                                  type="button"
+                                                />
+                                                <label
+                                                  className="cds--toggle__label"
+                                                  htmlFor="single_value"
+                                                  id="single_value_label"
                                                 >
-                                                  <input
-                                                    aria-label={null}
-                                                    checked={false}
-                                                    className="bx--toggle-input"
-                                                    disabled={false}
-                                                    id="single_value"
-                                                    maxLength={50}
-                                                    name="single_value"
-                                                    onBlur={[Function]}
-                                                    onChange={[Function]}
-                                                    onFocus={[Function]}
-                                                    onKeyUp={[Function]}
-                                                    type="checkbox"
-                                                  />
-                                                  <label
-                                                    aria-label={null}
-                                                    className="bx--toggle-input__label"
-                                                    htmlFor="single_value"
+                                                  <ForwardRef
+                                                    className="cds--toggle__label-text"
                                                   >
-                                                    Single value
                                                     <span
-                                                      className="bx--toggle__switch"
+                                                      className="cds--toggle__label-text"
+                                                      dir="auto"
+                                                    >
+                                                      Single value
+                                                    </span>
+                                                  </ForwardRef>
+                                                  <div
+                                                    className="cds--toggle__appearance"
+                                                  >
+                                                    <div
+                                                      className="cds--toggle__switch"
+                                                    />
+                                                    <ForwardRef
+                                                      aria-hidden="true"
+                                                      className="cds--toggle__text"
                                                     >
                                                       <span
                                                         aria-hidden="true"
-                                                        className="bx--toggle__text--off"
+                                                        className="cds--toggle__text"
+                                                        dir="auto"
                                                       >
                                                         No
                                                       </span>
-                                                      <span
-                                                        aria-hidden="true"
-                                                        className="bx--toggle__text--on"
-                                                      >
-                                                        Yes
-                                                      </span>
-                                                    </span>
-                                                  </label>
-                                                </div>
-                                              </Toggle>
-                                            </FeatureToggle(Toggle)>
+                                                    </ForwardRef>
+                                                  </div>
+                                                </label>
+                                              </div>
+                                            </Toggle>
                                             <HelperTextBlock />
                                           </div>
                                         </Switch>
@@ -1932,6 +1957,7 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                     onText="Yes"
                                   >
                                     <FormConditionWrapper
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "component": "switch",
@@ -1944,9 +1970,7 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                         }
                                       }
                                     >
-                                      <FormFieldHideWrapper
-                                        hideField={false}
-                                      >
+                                      <FormFieldHideWrapper>
                                         <Switch
                                           component="switch"
                                           id="perf_by_tag"
@@ -1957,78 +1981,72 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                           onText="Yes"
                                         >
                                           <div>
-                                            <FeatureToggle(Toggle)
+                                            <Toggle
                                               id="perf_by_tag"
                                               key="perf_by_tag"
                                               labelA="No"
                                               labelB="Yes"
                                               labelText="Capture C & U Data by Tag"
                                               maxLength={50}
-                                              name="perf_by_tag"
                                               onBlur={[Function]}
-                                              onChange={[Function]}
                                               onFocus={[Function]}
+                                              onToggle={[Function]}
                                               toggled={false}
                                               type="checkbox"
                                             >
-                                              <Toggle
-                                                aria-label="Toggle"
-                                                defaultToggled={false}
-                                                id="perf_by_tag"
-                                                labelA="No"
-                                                labelB="Yes"
-                                                labelText="Capture C & U Data by Tag"
-                                                maxLength={50}
-                                                name="perf_by_tag"
-                                                onBlur={[Function]}
-                                                onChange={[Function]}
-                                                onFocus={[Function]}
-                                                onToggle={[Function]}
-                                                toggled={false}
-                                                type="checkbox"
+                                              <div
+                                                className="cds--toggle"
                                               >
-                                                <div
-                                                  className="bx--form-item"
+                                                <button
+                                                  aria-checked={false}
+                                                  aria-labelledby="perf_by_tag_label"
+                                                  className="cds--toggle__button"
+                                                  disabled={false}
+                                                  id="perf_by_tag"
+                                                  maxLength={50}
+                                                  onBlur={[Function]}
+                                                  onClick={[Function]}
+                                                  onFocus={[Function]}
+                                                  role="switch"
+                                                  type="button"
+                                                />
+                                                <label
+                                                  className="cds--toggle__label"
+                                                  htmlFor="perf_by_tag"
+                                                  id="perf_by_tag_label"
                                                 >
-                                                  <input
-                                                    aria-label={null}
-                                                    checked={false}
-                                                    className="bx--toggle-input"
-                                                    id="perf_by_tag"
-                                                    maxLength={50}
-                                                    name="perf_by_tag"
-                                                    onBlur={[Function]}
-                                                    onChange={[Function]}
-                                                    onFocus={[Function]}
-                                                    onKeyUp={[Function]}
-                                                    type="checkbox"
-                                                  />
-                                                  <label
-                                                    aria-label={null}
-                                                    className="bx--toggle-input__label"
-                                                    htmlFor="perf_by_tag"
+                                                  <ForwardRef
+                                                    className="cds--toggle__label-text"
                                                   >
-                                                    Capture C & U Data by Tag
                                                     <span
-                                                      className="bx--toggle__switch"
+                                                      className="cds--toggle__label-text"
+                                                      dir="auto"
+                                                    >
+                                                      Capture C & U Data by Tag
+                                                    </span>
+                                                  </ForwardRef>
+                                                  <div
+                                                    className="cds--toggle__appearance"
+                                                  >
+                                                    <div
+                                                      className="cds--toggle__switch"
+                                                    />
+                                                    <ForwardRef
+                                                      aria-hidden="true"
+                                                      className="cds--toggle__text"
                                                     >
                                                       <span
                                                         aria-hidden="true"
-                                                        className="bx--toggle__text--off"
+                                                        className="cds--toggle__text"
+                                                        dir="auto"
                                                       >
                                                         No
                                                       </span>
-                                                      <span
-                                                        aria-hidden="true"
-                                                        className="bx--toggle__text--on"
-                                                      >
-                                                        Yes
-                                                      </span>
-                                                    </span>
-                                                  </label>
-                                                </div>
-                                              </Toggle>
-                                            </FeatureToggle(Toggle)>
+                                                    </ForwardRef>
+                                                  </div>
+                                                </label>
+                                              </div>
+                                            </Toggle>
                                             <HelperTextBlock />
                                           </div>
                                         </Switch>
@@ -2042,6 +2060,7 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                     name="plain-text-component"
                                   >
                                     <FormConditionWrapper
+                                      conditionMapper={Object {}}
                                       field={
                                         Object {
                                           "component": "plain-text",
@@ -2050,12 +2069,9 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                         }
                                       }
                                     >
-                                      <FormFieldHideWrapper
-                                        hideField={false}
-                                      >
+                                      <FormFieldHideWrapper>
                                         <PlainText
                                           component="plain-text"
-                                          element="p"
                                           label="* Name and Single Value fields cannot be edited after adding a category."
                                           name="plain-text-component"
                                         >
@@ -2080,6 +2096,7 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                           name="spy-field"
                         >
                           <FormConditionWrapper
+                            conditionMapper={Object {}}
                             field={
                               Object {
                                 "component": "spy-field",
@@ -2088,9 +2105,7 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                               }
                             }
                           >
-                            <FormFieldHideWrapper
-                              hideField={false}
-                            >
+                            <FormFieldHideWrapper>
                               <SpyField
                                 component="spy-field"
                                 name="spy-field"
@@ -2407,7 +2422,7 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                 className=""
                               >
                                 <div
-                                  className="bx--btn-set"
+                                  className="cds--btn-set"
                                 >
                                   <Button
                                     buttonType="submit"
@@ -2423,22 +2438,21 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                       type="submit"
                                       variant="primary"
                                     >
-                                      <button
-                                        aria-describedby={null}
-                                        aria-pressed={null}
-                                        className="bx--btn bx--btn--primary bx--btn--disabled"
+                                      <ForwardRef(ButtonBase)
                                         disabled={true}
-                                        onBlur={[Function]}
-                                        onClick={[Function]}
-                                        onFocus={[Function]}
-                                        onMouseEnter={[Function]}
-                                        onMouseLeave={[Function]}
-                                        tabIndex={0}
+                                        kind="primary"
                                         type="submit"
                                         variant="primary"
                                       >
-                                        Add
-                                      </button>
+                                        <button
+                                          className="cds--btn cds--btn--primary cds--btn--disabled"
+                                          disabled={true}
+                                          type="submit"
+                                          variant="primary"
+                                        >
+                                          Add
+                                        </button>
+                                      </ForwardRef(ButtonBase)>
                                     </Button>
                                   </Button>
                                   <Button
@@ -2453,21 +2467,20 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                                       onClick={[Function]}
                                       type="button"
                                     >
-                                      <button
-                                        aria-describedby={null}
-                                        aria-pressed={null}
-                                        className="bx--btn bx--btn--secondary"
-                                        disabled={false}
-                                        onBlur={[Function]}
+                                      <ForwardRef(ButtonBase)
+                                        kind="secondary"
                                         onClick={[Function]}
-                                        onFocus={[Function]}
-                                        onMouseEnter={[Function]}
-                                        onMouseLeave={[Function]}
-                                        tabIndex={0}
                                         type="button"
                                       >
-                                        Cancel
-                                      </button>
+                                        <button
+                                          className="cds--btn cds--btn--secondary"
+                                          disabled={false}
+                                          onClick={[Function]}
+                                          type="button"
+                                        >
+                                          Cancel
+                                        </button>
+                                      </ForwardRef(ButtonBase)>
                                     </Button>
                                   </Button>
                                 </div>
@@ -2475,7 +2488,6 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                             </ButtonGroup>
                           </FormControls>
                         </FormSpy>
-                         
                       </form>
                     </Form>
                   </Form>

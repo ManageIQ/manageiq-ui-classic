@@ -1,7 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Controlled as CodeMirror } from 'react-codemirror2';
-import { Tabs, Tab } from 'carbon-components-react';
+import {
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+} from '@carbon/react';
 import NotificationMessage from '../notification-message';
 
 /** The AnsiblePlaybookWorkflow is used to render the payload received from the  Ansible Playbook's show page */
@@ -29,10 +35,15 @@ const AnsiblePlaybookWorkflow = ({ payload, payloadType }) => {
 
   /** Function to render the tab contents. Only one tab named 'Text' is required for ansible. */
   const renderTabContents = () => (
-    <Tabs className="miq_custom_tabs">
-      <Tab key="tab_text" label={__('Text')}>
-        { renderCodeMirror() }
-      </Tab>
+    <Tabs>
+      <TabList aria-label="Ansible Playbook Tabs" className="miq_custom_tabs">
+        <Tab>{__('Text')}</Tab>
+      </TabList>
+      <TabPanels>
+        <TabPanel>
+          {renderCodeMirror()}
+        </TabPanel>
+      </TabPanels>
     </Tabs>
   );
 

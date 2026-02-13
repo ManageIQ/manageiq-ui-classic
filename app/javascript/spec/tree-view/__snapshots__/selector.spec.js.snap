@@ -15,436 +15,421 @@ exports[`TreeSelector component should render correctly 1`] = `
   selectLabel="Select"
 >
   <FormGroup
-    hasMargin={true}
-    invalid={false}
+    className="miq-common-tree-view-selector"
     legendText="tree-selector"
-    message={false}
-    messageText=""
   >
     <fieldset
-      className="bx--fieldset"
+      className="cds--fieldset miq-common-tree-view-selector"
+      disabled={false}
     >
       <legend
-        className="bx--label"
+        className="cds--label"
       >
         tree-selector
       </legend>
-      <div
-        className="bx--grid"
-        style={
-          Object {
-            "marginLeft": 0,
-            "paddingLeft": 0,
-          }
-        }
+      <Grid
+        className="miq-tree-view-selector-grid"
+        condensed={true}
       >
-        <div
-          className="bx--row"
+        <ForwardRef
+          className="miq-tree-view-selector-grid"
+          condensed={true}
         >
-          <div
-            className="bx--col-lg-15 bx--col-md-7 bx--col-sm-3"
+          <GridSettings
+            mode="css-grid"
+            subgrid={true}
           >
-            <TextInput
-              id="tree-selector"
-              invalid={false}
-              invalidText=""
-              key="tree-selector"
-              labelText=""
-              name="tree-selector"
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              value=""
-              warn={false}
-              warnText=""
+            <div
+              className="miq-tree-view-selector-grid cds--css-grid cds--css-grid--condensed"
             >
-              <div
-                className="bx--form-item bx--text-input-wrapper"
+              <ForwardRef
+                className="miq-tree-view-selector-input-grid-column"
+                lg={14}
+                md={6}
+                sm={3}
               >
-                <div
-                  className="bx--text-input__field-outer-wrapper"
+                <ForwardRef
+                  as="div"
+                  className="miq-tree-view-selector-input-grid-column"
+                  lg={14}
+                  md={6}
+                  sm={3}
                 >
                   <div
-                    className="bx--text-input__field-wrapper"
-                    data-invalid={null}
+                    className="miq-tree-view-selector-input-grid-column cds--sm:col-span-3 cds--md:col-span-6 cds--lg:col-span-14 cds--css-grid-column"
                   >
-                    <input
-                      className="bx--text-input bx--text-input--md"
-                      disabled={false}
+                    <TextInput
                       id="tree-selector"
+                      invalid={false}
+                      invalidText=""
+                      key="tree-selector"
+                      labelText=""
                       name="tree-selector"
                       onBlur={[Function]}
                       onChange={[Function]}
-                      onClick={[Function]}
                       onFocus={[Function]}
-                      type="text"
                       value=""
-                    />
+                      warn={false}
+                      warnText=""
+                    >
+                      <div
+                        className="cds--form-item cds--text-input-wrapper"
+                      >
+                        <div
+                          className="cds--text-input__label-wrapper"
+                        />
+                        <div
+                          className="cds--text-input__field-outer-wrapper"
+                        >
+                          <div
+                            className="cds--text-input__field-wrapper"
+                            data-invalid={null}
+                          >
+                            <input
+                              className="cds--text-input"
+                              disabled={false}
+                              id="tree-selector"
+                              name="tree-selector"
+                              onBlur={[Function]}
+                              onChange={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              type="text"
+                              value=""
+                            />
+                            <span
+                              aria-atomic="true"
+                              aria-live="assertive"
+                              className="cds--text-input__counter-alert"
+                              role="alert"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </TextInput>
                   </div>
-                </div>
-              </div>
-            </TextInput>
-          </div>
-          <div
-            className="bx--col-sm-1 bx--col-md-1 bx--col-lg-1"
-          >
-            <Button
-              className="tree-selector-toggle"
-              hasIconOnly={true}
-              iconDescription="Toggle"
-              kind="primary"
-              onClick={[Function]}
-              renderIcon={
-                Object {
-                  "$$typeof": Symbol(react.forward_ref),
-                  "render": [Function],
-                }
-              }
-              size="field"
-            >
-              <button
-                aria-describedby={null}
-                aria-pressed={null}
-                className="tree-selector-toggle bx--btn bx--btn--md bx--btn--primary bx--tooltip--hidden bx--btn--icon-only bx--tooltip__trigger bx--tooltip--a11y bx--btn--icon-only--top bx--tooltip--align-center"
-                disabled={false}
-                onBlur={[Function]}
-                onClick={[Function]}
-                onFocus={[Function]}
-                onMouseEnter={[Function]}
-                onMouseLeave={[Function]}
-                tabIndex={0}
-                type="button"
+                </ForwardRef>
+              </ForwardRef>
+              <ForwardRef
+                lg={1}
+                md={1}
+                sm={1}
               >
-                <div
-                  className="bx--assistive-text"
-                  onMouseEnter={[Function]}
-                >
-                  Toggle
-                </div>
-                <ForwardRef(TreeViewAlt16)
-                  aria-hidden="true"
-                  aria-label="Toggle"
-                  className="bx--btn__icon"
-                >
-                  <Icon
-                    aria-hidden="true"
-                    aria-label="Toggle"
-                    className="bx--btn__icon"
-                    fill="currentColor"
-                    height={16}
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 32 32"
-                    width={16}
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="Toggle"
-                      className="bx--btn__icon"
-                      fill="currentColor"
-                      focusable="false"
-                      height={16}
-                      preserveAspectRatio="xMidYMid meet"
-                      role="img"
-                      viewBox="0 0 32 32"
-                      width={16}
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M23,9h6a2,2,0,0,0,2-2V3a2,2,0,0,0-2-2H23a2,2,0,0,0-2,2V4H11V3A2,2,0,0,0,9,1H3A2,2,0,0,0,1,3V7A2,2,0,0,0,3,9H9a2,2,0,0,0,2-2V6h4V26a2.0023,2.0023,0,0,0,2,2h4v1a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V25a2,2,0,0,0-2-2H23a2,2,0,0,0-2,2v1H17V17h4v1a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V14a2,2,0,0,0-2-2H23a2,2,0,0,0-2,2v1H17V6h4V7A2,2,0,0,0,23,9Zm0-6h6V7H23ZM9,7H3V3H9ZM23,25h6v4H23Zm0-11h6v4H23Z"
-                        transform="translate(0 .005)"
-                      />
-                    </svg>
-                  </Icon>
-                </ForwardRef(TreeViewAlt16)>
-              </button>
-            </Button>
-            <Button
-              className="tree-selector-clear"
-              hasIconOnly={true}
-              iconDescription="Clear"
-              kind="danger"
-              onClick={[Function]}
-              renderIcon={
-                Object {
-                  "$$typeof": Symbol(react.forward_ref),
-                  "render": [Function],
-                }
-              }
-              size="field"
-            >
-              <button
-                aria-describedby="danger-description-2"
-                aria-pressed={null}
-                className="tree-selector-clear bx--btn bx--btn--md bx--btn--danger bx--tooltip--hidden bx--btn--icon-only bx--tooltip__trigger bx--tooltip--a11y bx--btn--icon-only--top bx--tooltip--align-center"
-                disabled={false}
-                onBlur={[Function]}
-                onClick={[Function]}
-                onFocus={[Function]}
-                onMouseEnter={[Function]}
-                onMouseLeave={[Function]}
-                tabIndex={0}
-                type="button"
-              >
-                <div
-                  className="bx--assistive-text"
-                  onMouseEnter={[Function]}
-                >
-                  Clear
-                </div>
-                <ForwardRef(Close16)
-                  aria-hidden="true"
-                  aria-label="Clear"
-                  className="bx--btn__icon"
-                >
-                  <Icon
-                    aria-hidden="true"
-                    aria-label="Clear"
-                    className="bx--btn__icon"
-                    fill="currentColor"
-                    height={16}
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 32 32"
-                    width={16}
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="Clear"
-                      className="bx--btn__icon"
-                      fill="currentColor"
-                      focusable="false"
-                      height={16}
-                      preserveAspectRatio="xMidYMid meet"
-                      role="img"
-                      viewBox="0 0 32 32"
-                      width={16}
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
-                      />
-                    </svg>
-                  </Icon>
-                </ForwardRef(Close16)>
-              </button>
-            </Button>
-          </div>
-        </div>
-      </div>
-      <Modal
-        hasScrollingContent={false}
-        modalHeading="tree-selector"
-        modalLabel=""
-        onKeyDown={[Function]}
-        onRequestClose={[Function]}
-        onRequestSubmit={[Function]}
-        onSecondarySubmit={[Function]}
-        passiveModal={false}
-        preventCloseOnClickOutside={false}
-        primaryButtonDisabled={true}
-        primaryButtonText="Select"
-        secondaryButtonText="Close"
-        selectorPrimaryFocus="[data-modal-primary-focus]"
-      >
-        <div
-          className="bx--modal bx--modal-tall"
-          onBlur={[Function]}
-          onKeyDown={[Function]}
-          onMouseDown={[Function]}
-          role="presentation"
-        >
-          <span
-            className="bx--visually-hidden"
-            role="link"
-            tabIndex="0"
-          >
-            Focus sentinel
-          </span>
-          <div
-            aria-label="tree-selector"
-            aria-modal="true"
-            className="bx--modal-container"
-            role="dialog"
-            tabIndex="-1"
-          >
-            <div
-              className="bx--modal-header"
-            >
-              <h3
-                className="bx--modal-header__heading"
-                id="bx--modal-header__heading--modal-1"
-              >
-                tree-selector
-              </h3>
-              <button
-                aria-label="close"
-                className="bx--modal-close"
-                onClick={[Function]}
-                type="button"
-              >
-                <ForwardRef(Close20)
-                  aria-hidden="true"
-                  className="bx--modal-close__icon"
-                  tabIndex="-1"
-                >
-                  <Icon
-                    aria-hidden="true"
-                    className="bx--modal-close__icon"
-                    fill="currentColor"
-                    height={20}
-                    preserveAspectRatio="xMidYMid meet"
-                    tabIndex="-1"
-                    viewBox="0 0 32 32"
-                    width={20}
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <svg
-                      aria-hidden={true}
-                      className="bx--modal-close__icon"
-                      fill="currentColor"
-                      focusable="false"
-                      height={20}
-                      preserveAspectRatio="xMidYMid meet"
-                      viewBox="0 0 32 32"
-                      width={20}
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
-                      />
-                    </svg>
-                  </Icon>
-                </ForwardRef(Close20)>
-              </button>
-            </div>
-            <div
-              className="bx--modal-content"
-              id="bx--modal-body--modal-1"
-            >
-              <TreeViewBase
-                actionMapper={
-                  Object {
-                    "state.selected": [Function],
-                  }
-                }
-                component="tree-selector"
-                isMulti={false}
-                label="tree-selector"
-                lazyLoadData={[Function]}
-                loadData={[Function]}
-                name="tree-selector"
-                select={[Function]}
-              >
-                <t
-                  actionPrefix=""
-                  allowReselect={false}
-                  callbacks={
-                    Object {
-                      "lazyLoad": [Function],
-                      "onDataChange": [Function],
-                    }
-                  }
-                  changedCheckboxClass="changed-checkbox"
-                  checkboxFirst={true}
-                  checkedIcon="fa fa-fw fa-check-square-o"
-                  collapseIcon="fa fa-fw fa-angle-down"
-                  component="tree-selector"
-                  data={Array []}
-                  errorIcon="fa fa-exclamation"
-                  expandIcon="fa fa-fw fa-angle-right"
-                  hierarchicalCheck={false}
-                  label="tree-selector"
-                  loadingIcon="fa fa-fw fa-spinner fa-pulse"
-                  multiSelect={false}
-                  name="tree-selector"
-                  nodeIcon=""
-                  partiallyCheckedIcon="fa fa-fw fa-check-square"
-                  preventDeselect={true}
-                  selectedClass="selected"
-                  selectedIcon=""
-                  showCheckbox={false}
-                  showIcon={true}
-                  showImage={true}
-                  uncheckedIcon="fa fa-fw fa-square-o"
+                <ForwardRef
+                  as="div"
+                  lg={1}
+                  md={1}
+                  sm={1}
                 >
                   <div
-                    className="react-tree-view"
+                    className="cds--sm:col-span-1 cds--md:col-span-1 cds--lg:col-span-1 cds--css-grid-column"
                   >
-                    <ul />
-                    <style>
-                      
-            .react-tree-view .indent-0 {
-                padding-left: calc((1em) * 0);
-            }
-            .react-tree-view .indent-0.no-open-button {
-                padding-left: calc((1em) * 0 + (1em + 4px));
-            }
-            
-                    </style>
+                    <Button
+                      className="tree-selector-toggle"
+                      hasIconOnly={true}
+                      iconDescription="Toggle"
+                      kind="primary"
+                      onClick={[Function]}
+                      renderIcon={[Function]}
+                      size="md"
+                    >
+                      <ForwardRef
+                        align="top"
+                        autoAlign={false}
+                        className="tree-selector-toggle"
+                        dropShadow={false}
+                        highContrast={true}
+                        kind="primary"
+                        label="Toggle"
+                        onClick={[Function]}
+                        renderIcon={null}
+                        size="md"
+                      >
+                        <ForwardRef
+                          align="top"
+                          autoAlign={false}
+                          className="cds--icon-tooltip"
+                          closeOnActivation={true}
+                          defaultOpen={false}
+                          dropShadow={false}
+                          enterDelayMs={100}
+                          highContrast={true}
+                          label="Toggle"
+                          leaveDelayMs={100}
+                        >
+                          <Popover
+                            align="top"
+                            autoAlign={false}
+                            className="cds--tooltip cds--icon-tooltip"
+                            dropShadow={false}
+                            highContrast={true}
+                            onKeyDown={[Function]}
+                            onMouseLeave={[Function]}
+                            open={false}
+                          >
+                            <span
+                              className="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+                              onKeyDown={[Function]}
+                              onMouseLeave={[Function]}
+                            >
+                              <div
+                                className="cds--tooltip-trigger__wrapper"
+                              >
+                                <ForwardRef(ButtonBase)
+                                  aria-labelledby="tooltip-2"
+                                  className="tree-selector-toggle"
+                                  hasIconOnly={true}
+                                  kind="primary"
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onMouseDown={[Function]}
+                                  onMouseEnter={[Function]}
+                                  onMouseLeave={[Function]}
+                                  onMouseMove={[Function]}
+                                  onTouchStart={[Function]}
+                                  renderIcon={null}
+                                  size="md"
+                                >
+                                  <button
+                                    aria-labelledby="tooltip-2"
+                                    className="tree-selector-toggle cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
+                                    disabled={false}
+                                    onBlur={[Function]}
+                                    onClick={[Function]}
+                                    onFocus={[Function]}
+                                    onMouseDown={[Function]}
+                                    onMouseEnter={[Function]}
+                                    onMouseLeave={[Function]}
+                                    onMouseMove={[Function]}
+                                    onTouchStart={[Function]}
+                                    type="button"
+                                  >
+                                    <renderIcon>
+                                      <ForwardRef(TreeViewAlt)
+                                        size={16}
+                                      >
+                                        <Icon
+                                          fill="currentColor"
+                                          height={16}
+                                          viewBox="0 0 32 32"
+                                          width={16}
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <svg
+                                            aria-hidden={true}
+                                            fill="currentColor"
+                                            focusable="false"
+                                            height={16}
+                                            preserveAspectRatio="xMidYMid meet"
+                                            viewBox="0 0 32 32"
+                                            width={16}
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M23,9h6a2,2,0,0,0,2-2V3a2,2,0,0,0-2-2H23a2,2,0,0,0-2,2V4H11V3A2,2,0,0,0,9,1H3A2,2,0,0,0,1,3V7A2,2,0,0,0,3,9H9a2,2,0,0,0,2-2V6h4V26a2.0023,2.0023,0,0,0,2,2h4v1a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V25a2,2,0,0,0-2-2H23a2,2,0,0,0-2,2v1H17V17h4v1a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V14a2,2,0,0,0-2-2H23a2,2,0,0,0-2,2v1H17V6h4V7A2,2,0,0,0,23,9Zm0-6h6V7H23ZM9,7H3V3H9ZM23,25h6v4H23Zm0-11h6v4H23Z"
+                                              transform="translate(0 .005)"
+                                            />
+                                          </svg>
+                                        </Icon>
+                                      </ForwardRef(TreeViewAlt)>
+                                    </renderIcon>
+                                  </button>
+                                </ForwardRef(ButtonBase)>
+                              </div>
+                              <PopoverContent
+                                aria-hidden="true"
+                                className="cds--tooltip-content"
+                                id="tooltip-2"
+                                onMouseEnter={[Function]}
+                                role="tooltip"
+                              >
+                                <span
+                                  aria-hidden="true"
+                                  className="cds--popover"
+                                  id="tooltip-2"
+                                  onMouseEnter={[Function]}
+                                  role="tooltip"
+                                >
+                                  <span
+                                    className="cds--popover-content cds--tooltip-content"
+                                  >
+                                    Toggle
+                                  </span>
+                                  <span
+                                    className="cds--popover-caret"
+                                  />
+                                </span>
+                              </PopoverContent>
+                            </span>
+                          </Popover>
+                        </ForwardRef>
+                      </ForwardRef>
+                    </Button>
                   </div>
-                </t>
-              </TreeViewBase>
-            </div>
-            <ButtonSet
-              className="bx--modal-footer"
-            >
-              <div
-                className="bx--modal-footer bx--btn-set"
+                </ForwardRef>
+              </ForwardRef>
+              <ForwardRef
+                lg={1}
+                md={1}
+                sm={1}
               >
-                <Button
-                  kind="secondary"
-                  onClick={[Function]}
+                <ForwardRef
+                  as="div"
+                  lg={1}
+                  md={1}
+                  sm={1}
                 >
-                  <button
-                    aria-describedby={null}
-                    aria-pressed={null}
-                    className="bx--btn bx--btn--secondary"
-                    disabled={false}
-                    onBlur={[Function]}
-                    onClick={[Function]}
-                    onFocus={[Function]}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
-                    tabIndex={0}
-                    type="button"
+                  <div
+                    className="cds--sm:col-span-1 cds--md:col-span-1 cds--lg:col-span-1 cds--css-grid-column"
                   >
-                    Close
-                  </button>
-                </Button>
-                <Button
-                  disabled={true}
-                  kind="primary"
-                  onClick={[Function]}
-                >
-                  <button
-                    aria-describedby={null}
-                    aria-pressed={null}
-                    className="bx--btn bx--btn--primary bx--btn--disabled"
-                    disabled={true}
-                    onBlur={[Function]}
-                    onClick={[Function]}
-                    onFocus={[Function]}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
-                    tabIndex={0}
-                    type="button"
-                  >
-                    Select
-                  </button>
-                </Button>
-              </div>
-            </ButtonSet>
-          </div>
-          <span
-            className="bx--visually-hidden"
-            role="link"
-            tabIndex="0"
-          >
-            Focus sentinel
-          </span>
-        </div>
-      </Modal>
+                    <Button
+                      className="tree-selector-clear"
+                      hasIconOnly={true}
+                      iconDescription="Clear"
+                      onClick={[Function]}
+                      renderIcon={[Function]}
+                      size="md"
+                    >
+                      <ForwardRef
+                        align="top"
+                        autoAlign={false}
+                        className="tree-selector-clear"
+                        dropShadow={false}
+                        highContrast={true}
+                        kind="primary"
+                        label="Clear"
+                        onClick={[Function]}
+                        renderIcon={null}
+                        size="md"
+                      >
+                        <ForwardRef
+                          align="top"
+                          autoAlign={false}
+                          className="cds--icon-tooltip"
+                          closeOnActivation={true}
+                          defaultOpen={false}
+                          dropShadow={false}
+                          enterDelayMs={100}
+                          highContrast={true}
+                          label="Clear"
+                          leaveDelayMs={100}
+                        >
+                          <Popover
+                            align="top"
+                            autoAlign={false}
+                            className="cds--tooltip cds--icon-tooltip"
+                            dropShadow={false}
+                            highContrast={true}
+                            onKeyDown={[Function]}
+                            onMouseLeave={[Function]}
+                            open={false}
+                          >
+                            <span
+                              className="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+                              onKeyDown={[Function]}
+                              onMouseLeave={[Function]}
+                            >
+                              <div
+                                className="cds--tooltip-trigger__wrapper"
+                              >
+                                <ForwardRef(ButtonBase)
+                                  aria-labelledby="tooltip-5"
+                                  className="tree-selector-clear"
+                                  hasIconOnly={true}
+                                  kind="primary"
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onMouseDown={[Function]}
+                                  onMouseEnter={[Function]}
+                                  onMouseLeave={[Function]}
+                                  onMouseMove={[Function]}
+                                  onTouchStart={[Function]}
+                                  renderIcon={null}
+                                  size="md"
+                                >
+                                  <button
+                                    aria-labelledby="tooltip-5"
+                                    className="tree-selector-clear cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
+                                    disabled={false}
+                                    onBlur={[Function]}
+                                    onClick={[Function]}
+                                    onFocus={[Function]}
+                                    onMouseDown={[Function]}
+                                    onMouseEnter={[Function]}
+                                    onMouseLeave={[Function]}
+                                    onMouseMove={[Function]}
+                                    onTouchStart={[Function]}
+                                    type="button"
+                                  >
+                                    <renderIcon>
+                                      <ForwardRef(Close)
+                                        size={16}
+                                      >
+                                        <Icon
+                                          fill="currentColor"
+                                          height={16}
+                                          viewBox="0 0 32 32"
+                                          width={16}
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <svg
+                                            aria-hidden={true}
+                                            fill="currentColor"
+                                            focusable="false"
+                                            height={16}
+                                            preserveAspectRatio="xMidYMid meet"
+                                            viewBox="0 0 32 32"
+                                            width={16}
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                                            />
+                                          </svg>
+                                        </Icon>
+                                      </ForwardRef(Close)>
+                                    </renderIcon>
+                                  </button>
+                                </ForwardRef(ButtonBase)>
+                              </div>
+                              <PopoverContent
+                                aria-hidden="true"
+                                className="cds--tooltip-content"
+                                id="tooltip-5"
+                                onMouseEnter={[Function]}
+                                role="tooltip"
+                              >
+                                <span
+                                  aria-hidden="true"
+                                  className="cds--popover"
+                                  id="tooltip-5"
+                                  onMouseEnter={[Function]}
+                                  role="tooltip"
+                                >
+                                  <span
+                                    className="cds--popover-content cds--tooltip-content"
+                                  >
+                                    Clear
+                                  </span>
+                                  <span
+                                    className="cds--popover-caret"
+                                  />
+                                </span>
+                              </PopoverContent>
+                            </span>
+                          </Popover>
+                        </ForwardRef>
+                      </ForwardRef>
+                    </Button>
+                  </div>
+                </ForwardRef>
+              </ForwardRef>
+            </div>
+          </GridSettings>
+        </ForwardRef>
+      </Grid>
     </fieldset>
   </FormGroup>
 </TreeViewSelector>

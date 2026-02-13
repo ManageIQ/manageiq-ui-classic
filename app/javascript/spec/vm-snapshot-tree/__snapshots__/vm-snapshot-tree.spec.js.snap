@@ -330,7 +330,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
-                            d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                            d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                           />
                         </svg>
                       </div>
@@ -382,7 +382,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
-                            d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                            d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                           />
                         </svg>
                       </div>
@@ -493,7 +493,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             <path
-                              d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                              d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                             />
                           </svg>
                         </div>
@@ -559,7 +559,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                                 xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path
-                                  d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                 />
                               </svg>
                             </div>
@@ -674,7 +674,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             <path
-                              d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                              d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                             />
                           </svg>
                         </div>
@@ -856,11 +856,12 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                     <div
                       className="arrow-div"
                     >
-                      <ForwardRef(ChevronDown16)>
+                      <ForwardRef(ChevronDown)
+                        size={16}
+                      >
                         <Icon
                           fill="currentColor"
                           height={16}
-                          preserveAspectRatio="xMidYMid meet"
                           viewBox="0 0 16 16"
                           width={16}
                           xmlns="http://www.w3.org/2000/svg"
@@ -876,11 +877,11 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             <path
-                              d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                              d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                             />
                           </svg>
                         </Icon>
-                      </ForwardRef(ChevronDown16)>
+                      </ForwardRef(ChevronDown)>
                     </div>
                   </ArrowIcon>
                   <div
@@ -889,11 +890,12 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                     <NodeIcon
                       icon="pficon pficon-folder-close"
                     >
-                      <ForwardRef(Camera16)>
+                      <ForwardRef(Camera)
+                        size={16}
+                      >
                         <Icon
                           fill="currentColor"
                           height={16}
-                          preserveAspectRatio="xMidYMid meet"
                           viewBox="0 0 32 32"
                           width={16}
                           xmlns="http://www.w3.org/2000/svg"
@@ -916,7 +918,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                             />
                           </svg>
                         </Icon>
-                      </ForwardRef(Camera16)>
+                      </ForwardRef(Camera)>
                     </NodeIcon>
                   </div>
                   <span
@@ -1047,7 +1049,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                               />
                             </svg>
                           </div>
@@ -1099,7 +1101,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                               />
                             </svg>
                           </div>
@@ -1210,7 +1212,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                                 xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path
-                                  d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                 />
                               </svg>
                             </div>
@@ -1276,7 +1278,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                                     xmlns="http://www.w3.org/2000/svg"
                                   >
                                     <path
-                                      d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                      d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                     />
                                   </svg>
                                 </div>
@@ -1391,7 +1393,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                                 xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path
-                                  d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                 />
                               </svg>
                             </div>
@@ -1666,7 +1668,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <path
-                                    d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                    d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                   />
                                 </svg>
                               </div>
@@ -1718,7 +1720,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <path
-                                    d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                    d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                   />
                                 </svg>
                               </div>
@@ -1829,7 +1831,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                                     xmlns="http://www.w3.org/2000/svg"
                                   >
                                     <path
-                                      d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                      d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                     />
                                   </svg>
                                 </div>
@@ -1895,7 +1897,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                                         xmlns="http://www.w3.org/2000/svg"
                                       >
                                         <path
-                                          d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                          d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                         />
                                       </svg>
                                     </div>
@@ -2010,7 +2012,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                                     xmlns="http://www.w3.org/2000/svg"
                                   >
                                     <path
-                                      d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                      d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                     />
                                   </svg>
                                 </div>
@@ -2192,11 +2194,12 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                             <div
                               className="arrow-div"
                             >
-                              <ForwardRef(ChevronDown16)>
+                              <ForwardRef(ChevronDown)
+                                size={16}
+                              >
                                 <Icon
                                   fill="currentColor"
                                   height={16}
-                                  preserveAspectRatio="xMidYMid meet"
                                   viewBox="0 0 16 16"
                                   width={16}
                                   xmlns="http://www.w3.org/2000/svg"
@@ -2212,11 +2215,11 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                                     xmlns="http://www.w3.org/2000/svg"
                                   >
                                     <path
-                                      d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                      d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                     />
                                   </svg>
                                 </Icon>
-                              </ForwardRef(ChevronDown16)>
+                              </ForwardRef(ChevronDown)>
                             </div>
                           </ArrowIcon>
                           <div
@@ -2225,11 +2228,12 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                             <NodeIcon
                               icon="fa fa-camera"
                             >
-                              <ForwardRef(Camera16)>
+                              <ForwardRef(Camera)
+                                size={16}
+                              >
                                 <Icon
                                   fill="currentColor"
                                   height={16}
-                                  preserveAspectRatio="xMidYMid meet"
                                   viewBox="0 0 32 32"
                                   width={16}
                                   xmlns="http://www.w3.org/2000/svg"
@@ -2252,7 +2256,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                                     />
                                   </svg>
                                 </Icon>
-                              </ForwardRef(Camera16)>
+                              </ForwardRef(Camera)>
                             </NodeIcon>
                           </div>
                           <span
@@ -2383,7 +2387,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                                       xmlns="http://www.w3.org/2000/svg"
                                     >
                                       <path
-                                        d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                        d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                       />
                                     </svg>
                                   </div>
@@ -2435,7 +2439,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                                       xmlns="http://www.w3.org/2000/svg"
                                     >
                                       <path
-                                        d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                        d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                       />
                                     </svg>
                                   </div>
@@ -2546,7 +2550,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                                         xmlns="http://www.w3.org/2000/svg"
                                       >
                                         <path
-                                          d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                          d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                         />
                                       </svg>
                                     </div>
@@ -2612,7 +2616,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                                             xmlns="http://www.w3.org/2000/svg"
                                           >
                                             <path
-                                              d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                              d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                             />
                                           </svg>
                                         </div>
@@ -2727,7 +2731,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                                         xmlns="http://www.w3.org/2000/svg"
                                       >
                                         <path
-                                          d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                          d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                         />
                                       </svg>
                                     </div>
@@ -3000,7 +3004,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                                           xmlns="http://www.w3.org/2000/svg"
                                         >
                                           <path
-                                            d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                            d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                           />
                                         </svg>
                                       </div>
@@ -3052,7 +3056,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                                           xmlns="http://www.w3.org/2000/svg"
                                         >
                                           <path
-                                            d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                            d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                           />
                                         </svg>
                                       </div>
@@ -3163,7 +3167,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                                             xmlns="http://www.w3.org/2000/svg"
                                           >
                                             <path
-                                              d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                              d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                             />
                                           </svg>
                                         </div>
@@ -3229,7 +3233,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                                                 xmlns="http://www.w3.org/2000/svg"
                                               >
                                                 <path
-                                                  d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                                 />
                                               </svg>
                                             </div>
@@ -3344,7 +3348,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                                             xmlns="http://www.w3.org/2000/svg"
                                           >
                                             <path
-                                              d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                              d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
                                             />
                                           </svg>
                                         </div>
@@ -3527,11 +3531,12 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                                     <NodeIcon
                                       icon="fa fa-camera"
                                     >
-                                      <ForwardRef(Camera16)>
+                                      <ForwardRef(Camera)
+                                        size={16}
+                                      >
                                         <Icon
                                           fill="currentColor"
                                           height={16}
-                                          preserveAspectRatio="xMidYMid meet"
                                           viewBox="0 0 32 32"
                                           width={16}
                                           xmlns="http://www.w3.org/2000/svg"
@@ -3554,7 +3559,7 @@ exports[`VM Snaspthot Tree Select should submit select API call 1`] = `
                                             />
                                           </svg>
                                         </Icon>
-                                      </ForwardRef(Camera16)>
+                                      </ForwardRef(Camera)>
                                     </NodeIcon>
                                   </div>
                                   <span

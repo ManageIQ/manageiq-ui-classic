@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Row, Column } from 'carbon-components-react';
+import { Form, Grid, Column } from '@carbon/react';
 
 const TagModifier = ({ header, hideHeader, children }) => (
   <>
     { !hideHeader
       && (
-        <Row className="tag-modifier-header">
-          <Column lg={12}>
+        <Grid className="tag-modifier-header">
+          <Column sm={4} md={8} lg={16}>
             <h4>{header}</h4>
           </Column>
-        </Row>
+        </Grid>
       ) }
     <Form horizontal="true" className="tag-modifier-form">{children}</Form>
   </>

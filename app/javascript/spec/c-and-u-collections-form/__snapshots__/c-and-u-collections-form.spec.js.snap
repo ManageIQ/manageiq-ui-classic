@@ -204,7 +204,6 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
       >
         <FormRenderer
           FormTemplate={[Function]}
-          clearOnUnmount={false}
           componentMapper={
             Object {
               "checkbox": [Function],
@@ -239,7 +238,6 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
             }
           }
           dispatch={[Function]}
-          initialValues={Object {}}
           onReset={[Function]}
           onSubmit={[Function]}
           schema={
@@ -853,11 +851,10 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                       onSubmit={[Function]}
                     >
                       <form
-                        className="bx--form form-0-2-3 form-react"
+                        className="cds--form form-0-2-3 form-react"
                         noValidate={true}
                         onSubmit={[Function]}
                       >
-                         
                         <Header>
                           <div
                             className="header-0-2-2"
@@ -911,6 +908,7 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                           }
                         >
                           <FormConditionWrapper
+                            conditionMapper={Object {}}
                             field={
                               Object {
                                 "component": "select",
@@ -950,9 +948,7 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                               }
                             }
                           >
-                            <FormFieldHideWrapper
-                              hideField={false}
-                            >
+                            <FormFieldHideWrapper>
                               <SelectWithOnChange
                                 component="select"
                                 id="timezone"
@@ -1000,7 +996,6 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                                   initialValue="UTC"
                                   isSearchable={true}
                                   label="Timezone"
-                                  loadingMessage="Loading..."
                                   name="timezone"
                                   options={
                                     Array [
@@ -1119,15 +1114,10 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                                       value={Array []}
                                     >
                                       <ComboBox
-                                        ariaLabel="Choose an item"
                                         className=""
-                                        direction="bottom"
-                                        disabled={false}
                                         id="timezone"
                                         invalid={false}
                                         invalidText=""
-                                        itemToElement={null}
-                                        itemToString={[Function]}
                                         items={
                                           Array [
                                             Object {
@@ -1152,171 +1142,141 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                                             },
                                           ]
                                         }
-                                        light={false}
                                         name="timezone"
                                         onBlur={[Function]}
                                         onChange={[Function]}
                                         onFocus={[Function]}
                                         placeholder="<Choose>"
-                                        shouldFilterItem={[Function]}
                                         titleText="Timezone"
-                                        type="default"
                                       >
-                                        <Downshift
-                                          defaultHighlightedIndex={null}
-                                          defaultIsOpen={false}
-                                          environment={[Window]}
-                                          getA11yStatusMessage={[Function]}
-                                          inputId="timezone"
-                                          inputValue=""
-                                          itemToString={[Function]}
-                                          onChange={[Function]}
-                                          onInputValueChange={[Function]}
-                                          onOuterClick={[Function]}
-                                          onSelect={[Function]}
-                                          onStateChange={[Function]}
-                                          onUserAction={[Function]}
-                                          scrollIntoView={[Function]}
-                                          selectedItemChanged={[Function]}
-                                          stateReducer={[Function]}
-                                          suppressRefError={false}
+                                        <div
+                                          className="cds--list-box__wrapper"
                                         >
-                                          <div
-                                            className="bx--list-box__wrapper"
+                                          <ForwardRef
+                                            as="label"
+                                            className="cds--label"
+                                            htmlFor="timezone"
+                                            id="downshift-0-label"
                                           >
-                                            <Text
-                                              as="label"
-                                              className="bx--label"
+                                            <label
+                                              className="cds--label"
+                                              dir="auto"
                                               htmlFor="timezone"
                                               id="downshift-0-label"
                                             >
-                                              <label
-                                                className="bx--label"
-                                                dir="auto"
-                                                htmlFor="timezone"
-                                                id="downshift-0-label"
-                                              >
-                                                Timezone
-                                              </label>
-                                            </Text>
-                                            <ListBox
-                                              className="bx--combo-box"
-                                              disabled={false}
-                                              invalid={false}
-                                              invalidText=""
-                                              isOpen={false}
-                                              light={false}
-                                              type="default"
+                                              Timezone
+                                            </label>
+                                          </ForwardRef>
+                                          <ListBox
+                                            className="cds--combo-box"
+                                            disabled={false}
+                                            invalid={false}
+                                            invalidText=""
+                                            invalidTextId="combobox-invalid-text-id-1"
+                                            isOpen={false}
+                                            onBlur={[Function]}
+                                            onFocus={[Function]}
+                                            warnTextId="combobox-warn-text-id-1"
+                                          >
+                                            <div
+                                              className="cds--combo-box cds--list-box"
+                                              onBlur={[Function]}
+                                              onClick={[Function]}
+                                              onFocus={[Function]}
+                                              onKeyDown={[Function]}
                                             >
                                               <div
-                                                className="bx--combo-box bx--list-box"
-                                                onClick={[Function]}
-                                                onKeyDown={[Function]}
+                                                className="cds--list-box__field"
                                               >
-                                                <div
-                                                  className="bx--list-box__field"
+                                                <input
+                                                  aria-activedescendant=""
+                                                  aria-autocomplete="list"
+                                                  aria-controls="downshift-0-menu"
+                                                  aria-expanded={false}
+                                                  aria-haspopup="listbox"
+                                                  aria-labelledby="downshift-0-label"
+                                                  autoComplete="off"
+                                                  className="cds--text-input cds--text-input--empty"
+                                                  disabled={false}
+                                                  id="timezone"
+                                                  name="timezone"
+                                                  onBlur={[Function]}
+                                                  onChange={[Function]}
+                                                  onClick={[Function]}
+                                                  onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  placeholder="<Choose>"
+                                                  role="combobox"
+                                                  tabIndex={0}
+                                                  title=""
+                                                  type="text"
+                                                  value=""
+                                                />
+                                                <ForwardRef
+                                                  aria-controls="downshift-0-menu"
+                                                  aria-expanded={false}
+                                                  id="downshift-0-toggle-button"
+                                                  isOpen={false}
+                                                  onClick={[Function]}
+                                                  onMouseUp={[Function]}
+                                                  tabIndex={-1}
                                                 >
-                                                  <input
-                                                    aria-activedescendant={null}
-                                                    aria-autocomplete="list"
-                                                    aria-controls={null}
+                                                  <button
+                                                    aria-controls="downshift-0-menu"
                                                     aria-expanded={false}
-                                                    aria-haspopup="listbox"
-                                                    aria-labelledby={null}
-                                                    autoComplete="off"
-                                                    className="bx--text-input bx--text-input--empty"
-                                                    disabled={false}
-                                                    id="timezone"
-                                                    name="timezone"
-                                                    onBlur={[Function]}
-                                                    onChange={[Function]}
+                                                    aria-label="Open"
+                                                    className="cds--list-box__menu-icon"
+                                                    id="downshift-0-toggle-button"
                                                     onClick={[Function]}
-                                                    onFocus={[Function]}
-                                                    onKeyDown={[Function]}
-                                                    placeholder="<Choose>"
-                                                    role="combobox"
-                                                    tabIndex="0"
-                                                    title=""
-                                                    type="text"
-                                                    value=""
-                                                  />
-                                                  <ListBoxTrigger
-                                                    aria-haspopup={true}
-                                                    aria-label="open menu"
-                                                    data-toggle={true}
-                                                    disabled={false}
-                                                    isOpen={false}
-                                                    onBlur={[Function]}
-                                                    onClick={[Function]}
-                                                    onKeyDown={[Function]}
-                                                    onKeyUp={[Function]}
                                                     onMouseUp={[Function]}
-                                                    role="button"
-                                                    translateWithId={[Function]}
+                                                    tabIndex={-1}
+                                                    title="Open"
                                                     type="button"
                                                   >
-                                                    <button
-                                                      aria-haspopup={true}
-                                                      aria-label="Open"
-                                                      className="bx--list-box__menu-icon"
-                                                      data-toggle={true}
-                                                      disabled={false}
-                                                      onBlur={[Function]}
-                                                      onClick={[Function]}
-                                                      onKeyDown={[Function]}
-                                                      onKeyUp={[Function]}
-                                                      onMouseUp={[Function]}
-                                                      role="button"
-                                                      tabIndex="-1"
-                                                      title="Open"
-                                                      type="button"
-                                                    >
-                                                      <ForwardRef(ChevronDown16)>
-                                                        <Icon
+                                                    <ForwardRef(ChevronDown)>
+                                                      <Icon
+                                                        fill="currentColor"
+                                                        height={16}
+                                                        viewBox="0 0 16 16"
+                                                        width={16}
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                      >
+                                                        <svg
+                                                          aria-hidden={true}
                                                           fill="currentColor"
+                                                          focusable="false"
                                                           height={16}
                                                           preserveAspectRatio="xMidYMid meet"
                                                           viewBox="0 0 16 16"
                                                           width={16}
                                                           xmlns="http://www.w3.org/2000/svg"
                                                         >
-                                                          <svg
-                                                            aria-hidden={true}
-                                                            fill="currentColor"
-                                                            focusable="false"
-                                                            height={16}
-                                                            preserveAspectRatio="xMidYMid meet"
-                                                            viewBox="0 0 16 16"
-                                                            width={16}
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                          >
-                                                            <path
-                                                              d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
-                                                            />
-                                                          </svg>
-                                                        </Icon>
-                                                      </ForwardRef(ChevronDown16)>
-                                                    </button>
-                                                  </ListBoxTrigger>
-                                                </div>
-                                                <ListBoxMenu
-                                                  aria-label="Choose an item"
-                                                  aria-labelledby={null}
-                                                  id="downshift-0-menu"
-                                                  role="listbox"
-                                                >
-                                                  <div
-                                                    aria-label="Choose an item"
-                                                    aria-labelledby={null}
-                                                    className="bx--list-box__menu"
-                                                    id="downshift-0-menu"
-                                                    role="listbox"
-                                                  />
-                                                </ListBoxMenu>
+                                                          <path
+                                                            d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                                                          />
+                                                        </svg>
+                                                      </Icon>
+                                                    </ForwardRef(ChevronDown)>
+                                                  </button>
+                                                </ForwardRef>
                                               </div>
-                                            </ListBox>
-                                          </div>
-                                        </Downshift>
+                                              <ListBoxMenu
+                                                aria-labelledby="downshift-0-label"
+                                                id="downshift-0-menu"
+                                                onMouseLeave={[Function]}
+                                                role="listbox"
+                                              >
+                                                <ul
+                                                  aria-labelledby="downshift-0-label"
+                                                  className="cds--list-box__menu"
+                                                  id="downshift-0-menu"
+                                                  onMouseLeave={[Function]}
+                                                  role="listbox"
+                                                />
+                                              </ListBoxMenu>
+                                            </div>
+                                          </ListBox>
+                                        </div>
                                       </ComboBox>
                                     </ClearedSelectSearchable>
                                   </Select>
@@ -1341,6 +1301,7 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                           }
                         >
                           <FormConditionWrapper
+                            conditionMapper={Object {}}
                             field={
                               Object {
                                 "component": "date-picker",
@@ -1356,12 +1317,9 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                               }
                             }
                           >
-                            <FormFieldHideWrapper
-                              hideField={false}
-                            >
+                            <FormFieldHideWrapper>
                               <DatePicker
                                 component="date-picker"
-                                datePickerType="single"
                                 id="startDate"
                                 isRequired={true}
                                 label="Start Date"
@@ -1375,30 +1333,26 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                                 }
                               >
                                 <div>
-                                  <DatePicker
-                                    dateFormat="m/d/Y"
+                                  <ForwardRef
                                     datePickerType="single"
-                                    light={false}
-                                    locale="en"
+                                    invalid={false}
                                     name="startDate"
                                     onBlur={[Function]}
                                     onChange={[Function]}
                                     onFocus={[Function]}
-                                    short={false}
                                     value=""
                                   >
                                     <div
-                                      className="bx--form-item"
+                                      className="cds--form-item"
+                                      name="startDate"
+                                      onBlur={[Function]}
+                                      onFocus={[Function]}
                                     >
                                       <div
-                                        className="bx--date-picker bx--date-picker--single"
-                                        name="startDate"
-                                        onBlur={[Function]}
-                                        onFocus={[Function]}
+                                        className="cds--date-picker cds--date-picker--single"
                                       >
-                                        <DatePickerInput
+                                        <ForwardRef
                                           datePickerType="single"
-                                          disabled={false}
                                           id="startDate"
                                           invalid={false}
                                           invalidText=""
@@ -1408,80 +1362,93 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                                               Start Date
                                             </IsRequired>
                                           }
-                                          onChange={[Function]}
-                                          onClick={[Function]}
-                                          pattern="\\\\d{1,2}\\\\/\\\\d{1,2}\\\\/\\\\d{4}"
-                                          type="text"
+                                          readOnly={false}
                                         >
                                           <div
-                                            className="bx--date-picker-container"
+                                            className="cds--date-picker-container"
                                           >
-                                            <label
-                                              className="bx--label"
+                                            <ForwardRef
+                                              as="label"
+                                              className="cds--label"
                                               htmlFor="startDate"
                                             >
-                                              <IsRequired>
-                                                <span
-                                                  aria-hidden="true"
-                                                  className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
-                                                >
-                                                  *
-                                                </span>
-                                                Start Date
-                                              </IsRequired>
-                                            </label>
-                                            <div
-                                              className="bx--date-picker-input__wrapper"
-                                            >
-                                              <input
-                                                className="bx--date-picker__input"
-                                                disabled={false}
-                                                id="startDate"
-                                                onChange={[Function]}
-                                                onClick={[Function]}
-                                                pattern="\\\\d{1,2}\\\\/\\\\d{1,2}\\\\/\\\\d{4}"
-                                                type="text"
-                                              />
-                                              <ForwardRef(Calendar16)
-                                                aria-hidden="true"
-                                                className="bx--date-picker__icon"
-                                                role="img"
+                                              <label
+                                                className="cds--label"
+                                                dir="auto"
+                                                htmlFor="startDate"
                                               >
-                                                <Icon
-                                                  aria-hidden="true"
-                                                  className="bx--date-picker__icon"
-                                                  fill="currentColor"
-                                                  height={16}
-                                                  preserveAspectRatio="xMidYMid meet"
-                                                  role="img"
-                                                  viewBox="0 0 32 32"
-                                                  width={16}
-                                                  xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                  <svg
-                                                    aria-hidden={true}
-                                                    className="bx--date-picker__icon"
-                                                    fill="currentColor"
-                                                    focusable="false"
-                                                    height={16}
-                                                    preserveAspectRatio="xMidYMid meet"
-                                                    role="img"
-                                                    viewBox="0 0 32 32"
-                                                    width={16}
-                                                    xmlns="http://www.w3.org/2000/svg"
+                                                <IsRequired>
+                                                  <span
+                                                    aria-hidden="true"
+                                                    className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
                                                   >
-                                                    <path
-                                                      d="M26,4h-4V2h-2v2h-8V2h-2v2H6C4.9,4,4,4.9,4,6v20c0,1.1,0.9,2,2,2h20c1.1,0,2-0.9,2-2V6C28,4.9,27.1,4,26,4z M26,26H6V12h20	V26z M26,10H6V6h4v2h2V6h8v2h2V6h4V10z"
-                                                    />
-                                                  </svg>
-                                                </Icon>
-                                              </ForwardRef(Calendar16)>
+                                                    *
+                                                  </span>
+                                                  Start Date
+                                                </IsRequired>
+                                              </label>
+                                            </ForwardRef>
+                                            <div
+                                              className="cds--date-picker-input__wrapper"
+                                            >
+                                              <span>
+                                                <input
+                                                  className="cds--date-picker__input cds--date-picker__input--md"
+                                                  disabled={false}
+                                                  id="startDate"
+                                                  onChange={[Function]}
+                                                  onClick={[Function]}
+                                                  pattern="\\\\d{1,2}\\\\/\\\\d{1,2}\\\\/\\\\d{4}"
+                                                  type="text"
+                                                />
+                                                <DatePickerIcon
+                                                  datePickerType="single"
+                                                  disabled={false}
+                                                  invalid={false}
+                                                  readOnly={false}
+                                                  warn={false}
+                                                >
+                                                  <ForwardRef(Calendar)
+                                                    aria-hidden="true"
+                                                    className="cds--date-picker__icon"
+                                                    role="img"
+                                                  >
+                                                    <Icon
+                                                      aria-hidden="true"
+                                                      className="cds--date-picker__icon"
+                                                      fill="currentColor"
+                                                      height={16}
+                                                      role="img"
+                                                      viewBox="0 0 32 32"
+                                                      width={16}
+                                                      xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                      <svg
+                                                        aria-hidden={true}
+                                                        className="cds--date-picker__icon"
+                                                        fill="currentColor"
+                                                        focusable="false"
+                                                        height={16}
+                                                        preserveAspectRatio="xMidYMid meet"
+                                                        role="img"
+                                                        viewBox="0 0 32 32"
+                                                        width={16}
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                      >
+                                                        <path
+                                                          d="M26,4h-4V2h-2v2h-8V2h-2v2H6C4.9,4,4,4.9,4,6v20c0,1.1,0.9,2,2,2h20c1.1,0,2-0.9,2-2V6C28,4.9,27.1,4,26,4z M26,26H6V12h20 V26z M26,10H6V6h4v2h2V6h8v2h2V6h4V10z"
+                                                        />
+                                                      </svg>
+                                                    </Icon>
+                                                  </ForwardRef(Calendar)>
+                                                </DatePickerIcon>
+                                              </span>
                                             </div>
                                           </div>
-                                        </DatePickerInput>
+                                        </ForwardRef>
                                       </div>
                                     </div>
-                                  </DatePicker>
+                                  </ForwardRef>
                                   <HelperTextBlock />
                                 </div>
                               </DatePicker>
@@ -1504,6 +1471,7 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                           }
                         >
                           <FormConditionWrapper
+                            conditionMapper={Object {}}
                             field={
                               Object {
                                 "component": "date-picker",
@@ -1519,12 +1487,9 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                               }
                             }
                           >
-                            <FormFieldHideWrapper
-                              hideField={false}
-                            >
+                            <FormFieldHideWrapper>
                               <DatePicker
                                 component="date-picker"
-                                datePickerType="single"
                                 id="endDate"
                                 isRequired={true}
                                 label="End Date"
@@ -1538,30 +1503,26 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                                 }
                               >
                                 <div>
-                                  <DatePicker
-                                    dateFormat="m/d/Y"
+                                  <ForwardRef
                                     datePickerType="single"
-                                    light={false}
-                                    locale="en"
+                                    invalid={false}
                                     name="endDate"
                                     onBlur={[Function]}
                                     onChange={[Function]}
                                     onFocus={[Function]}
-                                    short={false}
                                     value=""
                                   >
                                     <div
-                                      className="bx--form-item"
+                                      className="cds--form-item"
+                                      name="endDate"
+                                      onBlur={[Function]}
+                                      onFocus={[Function]}
                                     >
                                       <div
-                                        className="bx--date-picker bx--date-picker--single"
-                                        name="endDate"
-                                        onBlur={[Function]}
-                                        onFocus={[Function]}
+                                        className="cds--date-picker cds--date-picker--single"
                                       >
-                                        <DatePickerInput
+                                        <ForwardRef
                                           datePickerType="single"
-                                          disabled={false}
                                           id="endDate"
                                           invalid={false}
                                           invalidText=""
@@ -1571,80 +1532,93 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                                               End Date
                                             </IsRequired>
                                           }
-                                          onChange={[Function]}
-                                          onClick={[Function]}
-                                          pattern="\\\\d{1,2}\\\\/\\\\d{1,2}\\\\/\\\\d{4}"
-                                          type="text"
+                                          readOnly={false}
                                         >
                                           <div
-                                            className="bx--date-picker-container"
+                                            className="cds--date-picker-container"
                                           >
-                                            <label
-                                              className="bx--label"
+                                            <ForwardRef
+                                              as="label"
+                                              className="cds--label"
                                               htmlFor="endDate"
                                             >
-                                              <IsRequired>
-                                                <span
-                                                  aria-hidden="true"
-                                                  className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
-                                                >
-                                                  *
-                                                </span>
-                                                End Date
-                                              </IsRequired>
-                                            </label>
-                                            <div
-                                              className="bx--date-picker-input__wrapper"
-                                            >
-                                              <input
-                                                className="bx--date-picker__input"
-                                                disabled={false}
-                                                id="endDate"
-                                                onChange={[Function]}
-                                                onClick={[Function]}
-                                                pattern="\\\\d{1,2}\\\\/\\\\d{1,2}\\\\/\\\\d{4}"
-                                                type="text"
-                                              />
-                                              <ForwardRef(Calendar16)
-                                                aria-hidden="true"
-                                                className="bx--date-picker__icon"
-                                                role="img"
+                                              <label
+                                                className="cds--label"
+                                                dir="auto"
+                                                htmlFor="endDate"
                                               >
-                                                <Icon
-                                                  aria-hidden="true"
-                                                  className="bx--date-picker__icon"
-                                                  fill="currentColor"
-                                                  height={16}
-                                                  preserveAspectRatio="xMidYMid meet"
-                                                  role="img"
-                                                  viewBox="0 0 32 32"
-                                                  width={16}
-                                                  xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                  <svg
-                                                    aria-hidden={true}
-                                                    className="bx--date-picker__icon"
-                                                    fill="currentColor"
-                                                    focusable="false"
-                                                    height={16}
-                                                    preserveAspectRatio="xMidYMid meet"
-                                                    role="img"
-                                                    viewBox="0 0 32 32"
-                                                    width={16}
-                                                    xmlns="http://www.w3.org/2000/svg"
+                                                <IsRequired>
+                                                  <span
+                                                    aria-hidden="true"
+                                                    className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
                                                   >
-                                                    <path
-                                                      d="M26,4h-4V2h-2v2h-8V2h-2v2H6C4.9,4,4,4.9,4,6v20c0,1.1,0.9,2,2,2h20c1.1,0,2-0.9,2-2V6C28,4.9,27.1,4,26,4z M26,26H6V12h20	V26z M26,10H6V6h4v2h2V6h8v2h2V6h4V10z"
-                                                    />
-                                                  </svg>
-                                                </Icon>
-                                              </ForwardRef(Calendar16)>
+                                                    *
+                                                  </span>
+                                                  End Date
+                                                </IsRequired>
+                                              </label>
+                                            </ForwardRef>
+                                            <div
+                                              className="cds--date-picker-input__wrapper"
+                                            >
+                                              <span>
+                                                <input
+                                                  className="cds--date-picker__input cds--date-picker__input--md"
+                                                  disabled={false}
+                                                  id="endDate"
+                                                  onChange={[Function]}
+                                                  onClick={[Function]}
+                                                  pattern="\\\\d{1,2}\\\\/\\\\d{1,2}\\\\/\\\\d{4}"
+                                                  type="text"
+                                                />
+                                                <DatePickerIcon
+                                                  datePickerType="single"
+                                                  disabled={false}
+                                                  invalid={false}
+                                                  readOnly={false}
+                                                  warn={false}
+                                                >
+                                                  <ForwardRef(Calendar)
+                                                    aria-hidden="true"
+                                                    className="cds--date-picker__icon"
+                                                    role="img"
+                                                  >
+                                                    <Icon
+                                                      aria-hidden="true"
+                                                      className="cds--date-picker__icon"
+                                                      fill="currentColor"
+                                                      height={16}
+                                                      role="img"
+                                                      viewBox="0 0 32 32"
+                                                      width={16}
+                                                      xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                      <svg
+                                                        aria-hidden={true}
+                                                        className="cds--date-picker__icon"
+                                                        fill="currentColor"
+                                                        focusable="false"
+                                                        height={16}
+                                                        preserveAspectRatio="xMidYMid meet"
+                                                        role="img"
+                                                        viewBox="0 0 32 32"
+                                                        width={16}
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                      >
+                                                        <path
+                                                          d="M26,4h-4V2h-2v2h-8V2h-2v2H6C4.9,4,4,4.9,4,6v20c0,1.1,0.9,2,2,2h20c1.1,0,2-0.9,2-2V6C28,4.9,27.1,4,26,4z M26,26H6V12h20 V26z M26,10H6V6h4v2h2V6h8v2h2V6h4V10z"
+                                                        />
+                                                      </svg>
+                                                    </Icon>
+                                                  </ForwardRef(Calendar)>
+                                                </DatePickerIcon>
+                                              </span>
                                             </div>
                                           </div>
-                                        </DatePickerInput>
+                                        </ForwardRef>
                                       </div>
                                     </div>
-                                  </DatePicker>
+                                  </ForwardRef>
                                   <HelperTextBlock />
                                 </div>
                               </DatePicker>
@@ -1657,6 +1631,7 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                           name="spy-field"
                         >
                           <FormConditionWrapper
+                            conditionMapper={Object {}}
                             field={
                               Object {
                                 "component": "spy-field",
@@ -1665,9 +1640,7 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                               }
                             }
                           >
-                            <FormFieldHideWrapper
-                              hideField={false}
-                            >
+                            <FormFieldHideWrapper>
                               <SpyField
                                 component="spy-field"
                                 name="spy-field"
@@ -1940,7 +1913,7 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                                 className=""
                               >
                                 <div
-                                  className="bx--btn-set"
+                                  className="cds--btn-set"
                                 >
                                   <Button
                                     buttonType="submit"
@@ -1956,22 +1929,21 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                                       type="submit"
                                       variant="primary"
                                     >
-                                      <button
-                                        aria-describedby={null}
-                                        aria-pressed={null}
-                                        className="bx--btn bx--btn--primary bx--btn--disabled"
+                                      <ForwardRef(ButtonBase)
                                         disabled={true}
-                                        onBlur={[Function]}
-                                        onClick={[Function]}
-                                        onFocus={[Function]}
-                                        onMouseEnter={[Function]}
-                                        onMouseLeave={[Function]}
-                                        tabIndex={0}
+                                        kind="primary"
                                         type="submit"
                                         variant="primary"
                                       >
-                                        Save
-                                      </button>
+                                        <button
+                                          className="cds--btn cds--btn--primary cds--btn--disabled"
+                                          disabled={true}
+                                          type="submit"
+                                          variant="primary"
+                                        >
+                                          Save
+                                        </button>
+                                      </ForwardRef(ButtonBase)>
                                     </Button>
                                   </Button>
                                 </div>
@@ -1979,7 +1951,6 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                             </ButtonGroup>
                           </FormControls>
                         </FormSpy>
-                         
                       </form>
                     </Form>
                   </Form>

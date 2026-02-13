@@ -2,11 +2,7 @@
 
 exports[`CodeEditor component should render correctly 1`] = `
 <FormGroup
-  hasMargin={true}
-  invalid={false}
   legendText="foo"
-  message={false}
-  messageText=""
 >
   <Controlled
     className="miq-codemirror "
@@ -39,26 +35,19 @@ exports[`CodeEditor component should render correctly 1`] = `
 
 exports[`CodeEditor component should render mode switches 1`] = `
 <FormGroup
-  hasMargin={true}
-  invalid={false}
   legendText="foo"
-  message={false}
-  messageText=""
 >
   <RadioButtonGroup
-    hideLegend={false}
-    labelPosition="right"
     name="--undefined--mode"
     onChange={[Function]}
-    orientation="horizontal"
     valueSelected="yaml"
   >
-    <ForwardRef(RadioButton)
+    <RadioButton
       key="yaml"
       labelText="yaml"
       value="yaml"
     />
-    <ForwardRef(RadioButton)
+    <RadioButton
       key="json"
       labelText="json"
       value="json"

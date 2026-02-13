@@ -2,7 +2,7 @@ module DataTableHelper
   REPORT_LABELS = {
     :striped_hover => "table table-striped table-bordered table-hover",
     :striped       => "table table-striped table-bordered",
-    :carbon        => "bx--data-table bx--data-table--normal bx--data-table--no-border miq-data-table",
+    :carbon        => "cds--data-table cds--data-table--normal cds--data-table--cds-border miq-data-table",
     :clickable     => "clickable",
     :blank         => "No records found"
   }.freeze

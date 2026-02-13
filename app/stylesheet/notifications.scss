@@ -85,14 +85,14 @@
       cursor: pointer;
       background: none;
       color: #252525;
-      
-      &:focus, &.bx--btn--primary:focus, svg {
+
+      &:focus,
+      &.cds--btn--primary:focus,
+      svg {
         outline: 0 !important;
         border-color: #fafafa;
         box-shadow: none;
-
       }
-
       &:hover {
         background: lightgray;
       }
@@ -105,77 +105,91 @@
       justify-content: center;
       margin: 0;
     }
-    
   }
 
-  .bx--accordion--start .bx--accordion__heading {
+  .cds--accordion--start .cds--accordion__heading {
     background-image: linear-gradient(to bottom, #fafafa 0%, #ededed 100%);
   }
 
-  .bx--accordion__content {
-    margin: 0;
+  .cds--accordion__wrapper {
     padding: 0;
-    flex: 1 1 auto;
-    overflow-y: hidden;
-    flex-direction: column;
-    min-height: 0;
 
-    .bx--inline-notification {
-      margin-top: 0;
-      padding-top: 0;
-      margin-bottom: 0;
-      min-height: 100px;
-      height: auto;
+    .cds--accordion__content {
+      margin: 0;
+      padding: 0;
+      flex: 1 1 auto;
+      overflow-y: hidden;
+      flex-direction: column;
+      min-height: 0;
 
-      .bx--btn--ghost:hover,
-      .bx--btn--ghost:active {
-        background-color: inherit;
-      }
+      .cds--actionable-notification {
+        margin-top: 0;
+        padding-top: 0;
+        margin-bottom: 0;
+        min-height: 100px;
+        height: auto;
+        max-inline-size: none;
 
-      .bx--inline-notification__details {
-        display: flex;
-        flex-grow: 1;
+        .cds--btn--ghost:hover,
+        .cds--btn--ghost:active {
+          background-color: #e5e5e5;
+        }
+       // Target the wrapper div (added in Carbon 1.100.0) that contains __details
+       // This div has no class but is a direct child that wraps the notification content
+        > div:has(> .cds--actionable-notification__details) {
+          width: 100%;
+        }
 
-        .bx--inline-notification__text-wrapper {
-          flex-wrap: unset;
+        .cds--actionable-notification__details {
+          display: flex;
           flex-grow: 1;
-  
-          .notification-time {
-            left: 55px;
-            position: absolute;
-            bottom: 3px;
-          }
-  
-          .bx--inline-notification__title {
-            margin-bottom: 20px;
-            display: flex;
+
+          .cds--actionable-notification__text-wrapper {
+            flex-wrap: unset;
             flex-grow: 1;
-          }
-  
-          .subtitle-div {
-            height: 100%;
-  
-            .subtitle-div-notification-menu {
-              height: 80%;
-            }
-  
-            .subtitle-div-notification-time {
-              height: 20%;
+
+            .cds--actionable-notification__content {
+              flex-wrap: unset;
+              width: 100%;
+
+              .cds--actionable-notification__title {
+                margin-bottom: 20px;
+                display: flex;
+                flex-grow: 1;
+                width: 85%;
+              }
+              .cds--actionable-notification__subtitle {
+                width: 15%;
+                padding-top: 0.4rem
+              }
+
+              .subtitle-div {
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .subtitle-div-notification-time {
+                  .notification-time {
+                    left: 55px;
+                    position: absolute;
+                    bottom: 3px;
+                  }
+                }
+              }
             }
           }
         }
       }
 
-      
-    }
+      .read {
+        .cds--actionable-notification__title {
+          font-weight: 400;
+        }
 
-    .read {
-      .bx--inline-notification__title {
-        font-weight: 400;
-      }
-
-      .bx--inline-notification__subtitle {
-        font-weight: 200;
+        .cds--actionable-notification__subtitle {
+          font-weight: 200;
+        }
       }
     }
   }
@@ -224,10 +238,6 @@
     left: 480px;
     width: inherit;
 
-    .bx--inline-notification {
-      max-width: inherit;
-    }
-
     .notification-footer {
       width: 100%;
       padding-left: 450px;
@@ -246,7 +256,8 @@
   .notification-content-messages {
     position: absolute;
     overflow-y: scroll;
-    height: calc(100% - 115px);
+    height: calc(100% - 90px);
+    width: 100%;
   }
 
   .notification-footer {
@@ -265,6 +276,7 @@
 
 .refresh-notifications {
   display: flex;
+  margin-bottom: 10px;
 
   .last-refresh-notification {
     margin-top: 0;
@@ -273,5 +285,30 @@
 
   .date-notification {
     margin-left: 20px;
+  }
+}
+
+.toast-notification {
+  .miq-notification-toast-item {
+    margin-bottom: .5rem;
+    .cds--toast-notification__details {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0;
+      .cds--toast-notification__subtitle {
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .miq-notification-toast-item-with-link {
+    margin-bottom: .5rem;
+    .cds--actionable-notification__text-wrapper {
+      padding-bottom: 0;
+      .miq-notification-toast-details-link-wrap {
+        margin-top: 5px;
+      }
+    }
   }
 }

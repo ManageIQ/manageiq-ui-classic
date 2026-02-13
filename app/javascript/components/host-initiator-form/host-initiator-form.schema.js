@@ -131,10 +131,10 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
           remove: __('Remove'),
         },
         AddButtonProps: {
-          size: 'small',
+          size: 'sm',
         },
         RemoveButtonProps: {
-          size: 'small',
+          size: 'sm',
         },
         fields: [
           {
@@ -219,10 +219,10 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
           remove: __('Remove'),
         },
         AddButtonProps: {
-          size: 'small',
+          size: 'sm',
         },
         RemoveButtonProps: {
-          size: 'small',
+          size: 'sm',
         },
         fields: [
           {
@@ -249,10 +249,10 @@ const createSchema = (state, setState, ems, initialValues, storageId, setStorage
           remove: __('Remove'),
         },
         AddButtonProps: {
-          size: 'small',
+          size: 'sm',
         },
         RemoveButtonProps: {
-          size: 'small',
+          size: 'sm',
         },
         fields: [
           {

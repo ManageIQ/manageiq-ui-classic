@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { prepareProps } from '@data-driven-forms/carbon-component-mapper';
-import { MultiSelect } from 'carbon-components-react';
+import { FilterableMultiSelect } from '@carbon/react';
 import { useFieldApi } from '@@ddf';
 
 const MultiSelectWithSelectAll = (props) => {
@@ -48,7 +48,7 @@ const MultiSelectWithSelectAll = (props) => {
   // Instead this should be fixed to display All when select all is selected.
 
   return (
-    <MultiSelect.Filterable
+    <FilterableMultiSelect
       id={id}
       titleText={titleText}
       items={options}

@@ -1,3 +1,5 @@
+@use '@carbon/react/scss/theme' as *;
+
 .utilization-trend-chart-pf {
   margin-bottom: 50px;
 
@@ -43,6 +45,12 @@
       overflow: visible !important;
     }
   }
+  // TODO: c-11: Can be removed after the @carbon/charts-react package is upgraded
+  .cds--modal .cds--modal-container .cds--modal-header .cds--modal-close {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
 }
 
 .bx--cc--pie {
@@ -50,7 +58,7 @@
 }
 
 .bx--cc--toolbar {
-  .bx--overflow-menu-options {
+  .cds--overflow-menu-options {
     top: 10%;
   }
 }
@@ -129,7 +137,7 @@
   }
 
   .trend-footer-pf {
-    border-top: 1px solid $selected-ui;
+    border-top: 1px solid $layer-selected-01;
     border-bottom: 1px solid #d1d1d1;
     margin: 0 -20px -20px;
     padding: 20px;
