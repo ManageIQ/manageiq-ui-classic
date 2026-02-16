@@ -1785,17 +1785,17 @@ __metadata:
   linkType: hard
 
 "@data-driven-forms/carbon-component-mapper@npm:~4.1.2":
-  version: 4.1.6
-  resolution: "@data-driven-forms/carbon-component-mapper@npm:4.1.6"
+  version: 4.1.14
+  resolution: "@data-driven-forms/carbon-component-mapper@npm:4.1.14"
   dependencies:
     "@data-driven-forms/common": "npm:*"
     clsx: "npm:^1.1.1"
-    lodash: "npm:^4.17.21"
+    lodash: "npm:^4.17.23"
     react-jss: "npm:^10.5.0"
   peerDependencies:
     react: ^17.0.2 || ^18.0.0 || ^19.0.0
     react-dom: ^17.0.2 || ^18.0.0 || ^19.0.0
-  checksum: 10/d3b36bbf52da5fa4588785ce02a852e5a9487673929700146b5b3691db8b2dce9dc664c6bb5575b5bb9c7d58f2a6948aba7fdf83ead27c7a7fe070ead1cb5cf7
+  checksum: 10/c88198cbc1b0d4fc62b96398c23fbfc81412de3afca647eef2120a17a3d55b9e6c8f9e6e715a4832e1b19946ddb44fb14df0d9684f2b4291388bfb1ba4e46763
   languageName: node
   linkType: hard
 
