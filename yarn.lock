@@ -1813,19 +1813,19 @@ __metadata:
   linkType: hard
 
 "@data-driven-forms/react-form-renderer@npm:~4.1.2":
-  version: 4.1.6
-  resolution: "@data-driven-forms/react-form-renderer@npm:4.1.6"
+  version: 4.1.13
+  resolution: "@data-driven-forms/react-form-renderer@npm:4.1.13"
   dependencies:
-    final-form: "npm:^4.20.4"
+    final-form: "npm:^4.20.10"
     final-form-arrays: "npm:^3.0.2"
     final-form-focus: "npm:^1.1.2"
-    lodash: "npm:^4.17.15"
+    lodash: "npm:^4.17.23"
     react-final-form: "npm:^6.5.0"
     react-final-form-arrays: "npm:^3.1.1"
   peerDependencies:
     react: ^17.0.2 || ^18.0.0 || ^19.0.0
     react-dom: ^17.0.2 || ^18.0.0 || ^19.0.0
-  checksum: 10/d7eb7d13fc054f8e6e9d910ce8188697307c42f6a81f8f6e8f272fc101debf4fc42cd8c92d37a2bb3e8092b39aa1cff2ccf055727dde4c939546b0a7b681380a
+  checksum: 10/646e5a5ce3f2a47ff72b9c1e7996be755f89259386ea7078f554b4156fd5a2d6057200ee1cdb7120d0cd9b20f31cdf1616293737b007496fb15a7f592e8fa0bd
   languageName: node
   linkType: hard
 
@@ -9668,7 +9668,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"final-form@npm:^4.20.4":
+"final-form@npm:^4.20.10":
   version: 4.20.10
   resolution: "final-form@npm:4.20.10"
   dependencies:
