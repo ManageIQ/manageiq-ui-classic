@@ -2996,6 +2996,10 @@ exports[`Reconfigure VM form component should render form with only fields it ha
                                   Object {
                                     "className": "reconfigure-sub-form",
                                     "component": "sub-form",
+                                    "condition": Object {
+                                      "is": true,
+                                      "when": "cb_memory",
+                                    },
                                     "fields": Array [
                                       Object {
                                         "component": "text-field",
@@ -3052,6 +3056,10 @@ exports[`Reconfigure VM form component should render form with only fields it ha
                                     Object {
                                       "className": "reconfigure-sub-form",
                                       "component": "sub-form",
+                                      "condition": Object {
+                                        "is": true,
+                                        "when": "cb_memory",
+                                      },
                                       "fields": Array [
                                         Object {
                                           "component": "text-field",
@@ -3122,6 +3130,10 @@ exports[`Reconfigure VM form component should render form with only fields it ha
                                         Object {
                                           "className": "reconfigure-sub-form",
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": true,
+                                            "when": "cb_memory",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "text-field",
@@ -3184,6 +3196,10 @@ exports[`Reconfigure VM form component should render form with only fields it ha
                                           Object {
                                             "className": "reconfigure-sub-form",
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": true,
+                                              "when": "cb_memory",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "text-field",
@@ -3245,6 +3261,10 @@ exports[`Reconfigure VM form component should render form with only fields it ha
                                             Object {
                                               "className": "reconfigure-sub-form",
                                               "component": "sub-form",
+                                              "condition": Object {
+                                                "is": true,
+                                                "when": "cb_memory",
+                                              },
                                               "fields": Array [
                                                 Object {
                                                   "component": "text-field",
@@ -3826,6 +3846,7 @@ exports[`Reconfigure VM form component should render form with only fields it ha
                                         "key": "action",
                                       },
                                     ],
+                                    "hideField": true,
                                     "label": "CD/DVD Drives",
                                     "name": "drive",
                                     "onCellClick": [Function],
@@ -8551,6 +8572,10 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                   Object {
                                     "className": "reconfigure-sub-form",
                                     "component": "sub-form",
+                                    "condition": Object {
+                                      "is": true,
+                                      "when": "cb_memory",
+                                    },
                                     "fields": Array [
                                       Object {
                                         "component": "text-field",
@@ -8607,6 +8632,10 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                     Object {
                                       "className": "reconfigure-sub-form",
                                       "component": "sub-form",
+                                      "condition": Object {
+                                        "is": true,
+                                        "when": "cb_memory",
+                                      },
                                       "fields": Array [
                                         Object {
                                           "component": "text-field",
@@ -8677,6 +8706,10 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                         Object {
                                           "className": "reconfigure-sub-form",
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": true,
+                                            "when": "cb_memory",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "text-field",
@@ -8739,6 +8772,10 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                           Object {
                                             "className": "reconfigure-sub-form",
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": true,
+                                              "when": "cb_memory",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "text-field",
@@ -8800,6 +8837,10 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                             Object {
                                               "className": "reconfigure-sub-form",
                                               "component": "sub-form",
+                                              "condition": Object {
+                                                "is": true,
+                                                "when": "cb_memory",
+                                              },
                                               "fields": Array [
                                                 Object {
                                                   "component": "text-field",
@@ -9057,6 +9098,10 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                   Object {
                                     "className": "reconfigure-sub-form",
                                     "component": "sub-form",
+                                    "condition": Object {
+                                      "is": true,
+                                      "when": "processor",
+                                    },
                                     "fields": Array [
                                       Object {
                                         "component": "select",
@@ -9148,6 +9193,10 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                     Object {
                                       "className": "reconfigure-sub-form",
                                       "component": "sub-form",
+                                      "condition": Object {
+                                        "is": true,
+                                        "when": "processor",
+                                      },
                                       "fields": Array [
                                         Object {
                                           "component": "select",
@@ -9253,6 +9302,10 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                         Object {
                                           "className": "reconfigure-sub-form",
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": true,
+                                            "when": "processor",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "select",
@@ -9350,6 +9403,10 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                           Object {
                                             "className": "reconfigure-sub-form",
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": true,
+                                              "when": "processor",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "select",
@@ -9446,6 +9503,10 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                             Object {
                                               "className": "reconfigure-sub-form",
                                               "component": "sub-form",
+                                              "condition": Object {
+                                                "is": true,
+                                                "when": "processor",
+                                              },
                                               "fields": Array [
                                                 Object {
                                                   "component": "select",
@@ -14671,6 +14732,7 @@ exports[`Reconfigure VM form component should render reconfigure form and click 
                                         "key": "action",
                                       },
                                     ],
+                                    "hideField": false,
                                     "label": "CD/DVD Drives",
                                     "name": "drive",
                                     "onCellClick": [Function],
@@ -19486,6 +19548,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                 field={
                                   Object {
                                     "component": "text-field",
+                                    "hideField": true,
                                     "id": "name",
                                     "initialValue": "",
                                     "isReadOnly": true,
@@ -20381,6 +20444,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                   Object {
                                     "component": "select",
                                     "disabled": false,
+                                    "hideField": false,
                                     "id": "mode",
                                     "includeEmpty": true,
                                     "initialValue": "",
@@ -20739,6 +20803,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                   Object {
                                     "component": "select",
                                     "disabled": false,
+                                    "hideField": false,
                                     "id": "controller",
                                     "initialValue": "",
                                     "isReadOnly": false,
@@ -21043,6 +21108,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                   Object {
                                     "component": "switch",
                                     "disabled": false,
+                                    "hideField": false,
                                     "id": "dependent",
                                     "initialValue": "Yes",
                                     "label": "Dependent",
@@ -21153,6 +21219,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                 field={
                                   Object {
                                     "component": "switch",
+                                    "hideField": false,
                                     "initialValue": false,
                                     "isReadOnly": false,
                                     "label": "Bootable",
@@ -23317,6 +23384,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                 field={
                                   Object {
                                     "component": "text-field",
+                                    "hideField": false,
                                     "id": "name",
                                     "initialValue": "disk test 2",
                                     "isReadOnly": true,
@@ -24209,6 +24277,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                   Object {
                                     "component": "select",
                                     "disabled": true,
+                                    "hideField": false,
                                     "id": "mode",
                                     "includeEmpty": true,
                                     "initialValue": "persistent",
@@ -24568,6 +24637,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                   Object {
                                     "component": "select",
                                     "disabled": true,
+                                    "hideField": false,
                                     "id": "controller",
                                     "initialValue": "None",
                                     "isReadOnly": true,
@@ -24873,6 +24943,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                   Object {
                                     "component": "switch",
                                     "disabled": true,
+                                    "hideField": false,
                                     "id": "dependent",
                                     "initialValue": false,
                                     "label": "Dependent",
@@ -24983,6 +25054,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                 field={
                                   Object {
                                     "component": "switch",
+                                    "hideField": false,
                                     "initialValue": false,
                                     "isReadOnly": true,
                                     "label": "Bootable",
@@ -27338,6 +27410,10 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                   Object {
                                     "className": "reconfigure-sub-form",
                                     "component": "sub-form",
+                                    "condition": Object {
+                                      "is": true,
+                                      "when": "cb_memory",
+                                    },
                                     "fields": Array [
                                       Object {
                                         "component": "text-field",
@@ -27394,6 +27470,10 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                     Object {
                                       "className": "reconfigure-sub-form",
                                       "component": "sub-form",
+                                      "condition": Object {
+                                        "is": true,
+                                        "when": "cb_memory",
+                                      },
                                       "fields": Array [
                                         Object {
                                           "component": "text-field",
@@ -27464,6 +27544,10 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                         Object {
                                           "className": "reconfigure-sub-form",
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": true,
+                                            "when": "cb_memory",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "text-field",
@@ -27526,6 +27610,10 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                           Object {
                                             "className": "reconfigure-sub-form",
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": true,
+                                              "when": "cb_memory",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "text-field",
@@ -27587,6 +27675,10 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                             Object {
                                               "className": "reconfigure-sub-form",
                                               "component": "sub-form",
+                                              "condition": Object {
+                                                "is": true,
+                                                "when": "cb_memory",
+                                              },
                                               "fields": Array [
                                                 Object {
                                                   "component": "text-field",
@@ -27723,6 +27815,10 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                     field={
                                                       Object {
                                                         "component": "text-field",
+                                                        "condition": Object {
+                                                          "is": true,
+                                                          "when": "cb_memory",
+                                                        },
                                                         "initialValue": 16,
                                                         "isRequired": true,
                                                         "label": "Memory Size",
@@ -27745,6 +27841,10 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                       field={
                                                         Object {
                                                           "component": "text-field",
+                                                          "condition": Object {
+                                                            "is": true,
+                                                            "when": "cb_memory",
+                                                          },
                                                           "initialValue": 16,
                                                           "isRequired": true,
                                                           "label": "Memory Size",
@@ -27781,6 +27881,10 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                           field={
                                                             Object {
                                                               "component": "text-field",
+                                                              "condition": Object {
+                                                                "is": true,
+                                                                "when": "cb_memory",
+                                                              },
                                                               "initialValue": 16,
                                                               "isRequired": true,
                                                               "label": "Memory Size",
@@ -27809,6 +27913,10 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                             field={
                                                               Object {
                                                                 "component": "text-field",
+                                                                "condition": Object {
+                                                                  "is": true,
+                                                                  "when": "cb_memory",
+                                                                },
                                                                 "initialValue": 16,
                                                                 "isRequired": true,
                                                                 "label": "Memory Size",
@@ -27836,6 +27944,10 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                               field={
                                                                 Object {
                                                                   "component": "text-field",
+                                                                  "condition": Object {
+                                                                    "is": true,
+                                                                    "when": "cb_memory",
+                                                                  },
                                                                   "initialValue": 16,
                                                                   "isRequired": true,
                                                                   "label": "Memory Size",
@@ -27990,6 +28102,10 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                     field={
                                                       Object {
                                                         "component": "select",
+                                                        "condition": Object {
+                                                          "is": true,
+                                                          "when": "cb_memory",
+                                                        },
                                                         "helperText": "Between undefinedMB and NaNGB",
                                                         "id": "memoryType",
                                                         "initialValue": "GB",
@@ -28018,6 +28134,10 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                       field={
                                                         Object {
                                                           "component": "select",
+                                                          "condition": Object {
+                                                            "is": true,
+                                                            "when": "cb_memory",
+                                                          },
                                                           "helperText": "Between undefinedMB and NaNGB",
                                                           "id": "memoryType",
                                                           "initialValue": "GB",
@@ -28060,6 +28180,10 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                           field={
                                                             Object {
                                                               "component": "select",
+                                                              "condition": Object {
+                                                                "is": true,
+                                                                "when": "cb_memory",
+                                                              },
                                                               "helperText": "Between undefinedMB and NaNGB",
                                                               "id": "memoryType",
                                                               "initialValue": "GB",
@@ -28094,6 +28218,10 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                             field={
                                                               Object {
                                                                 "component": "select",
+                                                                "condition": Object {
+                                                                  "is": true,
+                                                                  "when": "cb_memory",
+                                                                },
                                                                 "helperText": "Between undefinedMB and NaNGB",
                                                                 "id": "memoryType",
                                                                 "initialValue": "GB",
@@ -28127,6 +28255,10 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                               field={
                                                                 Object {
                                                                   "component": "select",
+                                                                  "condition": Object {
+                                                                    "is": true,
+                                                                    "when": "cb_memory",
+                                                                  },
                                                                   "helperText": "Between undefinedMB and NaNGB",
                                                                   "id": "memoryType",
                                                                   "initialValue": "GB",
@@ -28605,6 +28737,10 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                   Object {
                                     "className": "reconfigure-sub-form",
                                     "component": "sub-form",
+                                    "condition": Object {
+                                      "is": true,
+                                      "when": "processor",
+                                    },
                                     "fields": Array [
                                       Object {
                                         "component": "select",
@@ -28696,6 +28832,10 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                     Object {
                                       "className": "reconfigure-sub-form",
                                       "component": "sub-form",
+                                      "condition": Object {
+                                        "is": true,
+                                        "when": "processor",
+                                      },
                                       "fields": Array [
                                         Object {
                                           "component": "select",
@@ -28801,6 +28941,10 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                         Object {
                                           "className": "reconfigure-sub-form",
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": true,
+                                            "when": "processor",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "select",
@@ -28898,6 +29042,10 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                           Object {
                                             "className": "reconfigure-sub-form",
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": true,
+                                              "when": "processor",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "select",
@@ -28994,6 +29142,10 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                             Object {
                                               "className": "reconfigure-sub-form",
                                               "component": "sub-form",
+                                              "condition": Object {
+                                                "is": true,
+                                                "when": "processor",
+                                              },
                                               "fields": Array [
                                                 Object {
                                                   "component": "select",
@@ -29210,6 +29362,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                     field={
                                                       Object {
                                                         "component": "select",
+                                                        "hideField": false,
                                                         "id": "socket",
                                                         "label": "Sockets",
                                                         "name": "socket_count",
@@ -29584,6 +29737,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                     field={
                                                       Object {
                                                         "component": "select",
+                                                        "hideField": false,
                                                         "id": "cores",
                                                         "label": "Cores Per Socket",
                                                         "name": "cores_per_socket_count",
@@ -31444,6 +31598,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
                                   Object {
                                     "autoFocus": true,
                                     "component": "text-field",
+                                    "hideField": true,
                                     "id": "name",
                                     "initialValue": "",
                                     "isReadOnly": false,
@@ -31580,6 +31735,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
                                 field={
                                   Object {
                                     "component": "select",
+                                    "hideField": false,
                                     "id": "vlan",
                                     "includeEmpty": true,
                                     "initialValue": "",
@@ -31956,6 +32112,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
                                 field={
                                   Object {
                                     "component": "select",
+                                    "hideField": true,
                                     "id": "network",
                                     "includeEmpty": true,
                                     "initialValue": "",
@@ -32213,6 +32370,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
                                 field={
                                   Object {
                                     "component": "text-field",
+                                    "hideField": true,
                                     "id": "mac",
                                     "initialValue": "",
                                     "isReadOnly": false,
@@ -36467,6 +36625,10 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                   Object {
                                     "className": "reconfigure-sub-form",
                                     "component": "sub-form",
+                                    "condition": Object {
+                                      "is": true,
+                                      "when": "cb_memory",
+                                    },
                                     "fields": Array [
                                       Object {
                                         "component": "text-field",
@@ -36523,6 +36685,10 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                     Object {
                                       "className": "reconfigure-sub-form",
                                       "component": "sub-form",
+                                      "condition": Object {
+                                        "is": true,
+                                        "when": "cb_memory",
+                                      },
                                       "fields": Array [
                                         Object {
                                           "component": "text-field",
@@ -36593,6 +36759,10 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                         Object {
                                           "className": "reconfigure-sub-form",
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": true,
+                                            "when": "cb_memory",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "text-field",
@@ -36655,6 +36825,10 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                           Object {
                                             "className": "reconfigure-sub-form",
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": true,
+                                              "when": "cb_memory",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "text-field",
@@ -36716,6 +36890,10 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                             Object {
                                               "className": "reconfigure-sub-form",
                                               "component": "sub-form",
+                                              "condition": Object {
+                                                "is": true,
+                                                "when": "cb_memory",
+                                              },
                                               "fields": Array [
                                                 Object {
                                                   "component": "text-field",
@@ -36973,6 +37151,10 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                   Object {
                                     "className": "reconfigure-sub-form",
                                     "component": "sub-form",
+                                    "condition": Object {
+                                      "is": true,
+                                      "when": "processor",
+                                    },
                                     "fields": Array [
                                       Object {
                                         "component": "select",
@@ -37064,6 +37246,10 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                     Object {
                                       "className": "reconfigure-sub-form",
                                       "component": "sub-form",
+                                      "condition": Object {
+                                        "is": true,
+                                        "when": "processor",
+                                      },
                                       "fields": Array [
                                         Object {
                                           "component": "select",
@@ -37169,6 +37355,10 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                         Object {
                                           "className": "reconfigure-sub-form",
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": true,
+                                            "when": "processor",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "select",
@@ -37266,6 +37456,10 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                           Object {
                                             "className": "reconfigure-sub-form",
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": true,
+                                              "when": "processor",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "select",
@@ -37362,6 +37556,10 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                             Object {
                                               "className": "reconfigure-sub-form",
                                               "component": "sub-form",
+                                              "condition": Object {
+                                                "is": true,
+                                                "when": "processor",
+                                              },
                                               "fields": Array [
                                                 Object {
                                                   "component": "select",
@@ -43458,6 +43656,7 @@ exports[`Reconfigure VM form component should render reconfigure form with datat
                                         "key": "action",
                                       },
                                     ],
+                                    "hideField": true,
                                     "label": "CD/DVD Drives",
                                     "name": "drive",
                                     "onCellClick": [Function],
@@ -46293,6 +46492,10 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                   Object {
                                     "className": "reconfigure-sub-form",
                                     "component": "sub-form",
+                                    "condition": Object {
+                                      "is": true,
+                                      "when": "cb_memory",
+                                    },
                                     "fields": Array [
                                       Object {
                                         "component": "text-field",
@@ -46349,6 +46552,10 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                     Object {
                                       "className": "reconfigure-sub-form",
                                       "component": "sub-form",
+                                      "condition": Object {
+                                        "is": true,
+                                        "when": "cb_memory",
+                                      },
                                       "fields": Array [
                                         Object {
                                           "component": "text-field",
@@ -46419,6 +46626,10 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                         Object {
                                           "className": "reconfigure-sub-form",
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": true,
+                                            "when": "cb_memory",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "text-field",
@@ -46481,6 +46692,10 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                           Object {
                                             "className": "reconfigure-sub-form",
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": true,
+                                              "when": "cb_memory",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "text-field",
@@ -46542,6 +46757,10 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                             Object {
                                               "className": "reconfigure-sub-form",
                                               "component": "sub-form",
+                                              "condition": Object {
+                                                "is": true,
+                                                "when": "cb_memory",
+                                              },
                                               "fields": Array [
                                                 Object {
                                                   "component": "text-field",
@@ -46678,6 +46897,10 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                     field={
                                                       Object {
                                                         "component": "text-field",
+                                                        "condition": Object {
+                                                          "is": true,
+                                                          "when": "cb_memory",
+                                                        },
                                                         "initialValue": 16,
                                                         "isRequired": true,
                                                         "label": "Memory Size",
@@ -46700,6 +46923,10 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                       field={
                                                         Object {
                                                           "component": "text-field",
+                                                          "condition": Object {
+                                                            "is": true,
+                                                            "when": "cb_memory",
+                                                          },
                                                           "initialValue": 16,
                                                           "isRequired": true,
                                                           "label": "Memory Size",
@@ -46736,6 +46963,10 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                           field={
                                                             Object {
                                                               "component": "text-field",
+                                                              "condition": Object {
+                                                                "is": true,
+                                                                "when": "cb_memory",
+                                                              },
                                                               "initialValue": 16,
                                                               "isRequired": true,
                                                               "label": "Memory Size",
@@ -46764,6 +46995,10 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                             field={
                                                               Object {
                                                                 "component": "text-field",
+                                                                "condition": Object {
+                                                                  "is": true,
+                                                                  "when": "cb_memory",
+                                                                },
                                                                 "initialValue": 16,
                                                                 "isRequired": true,
                                                                 "label": "Memory Size",
@@ -46791,6 +47026,10 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                               field={
                                                                 Object {
                                                                   "component": "text-field",
+                                                                  "condition": Object {
+                                                                    "is": true,
+                                                                    "when": "cb_memory",
+                                                                  },
                                                                   "initialValue": 16,
                                                                   "isRequired": true,
                                                                   "label": "Memory Size",
@@ -46945,6 +47184,10 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                     field={
                                                       Object {
                                                         "component": "select",
+                                                        "condition": Object {
+                                                          "is": true,
+                                                          "when": "cb_memory",
+                                                        },
                                                         "helperText": "Between undefinedMB and NaNGB",
                                                         "id": "memoryType",
                                                         "initialValue": "GB",
@@ -46973,6 +47216,10 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                       field={
                                                         Object {
                                                           "component": "select",
+                                                          "condition": Object {
+                                                            "is": true,
+                                                            "when": "cb_memory",
+                                                          },
                                                           "helperText": "Between undefinedMB and NaNGB",
                                                           "id": "memoryType",
                                                           "initialValue": "GB",
@@ -47015,6 +47262,10 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                           field={
                                                             Object {
                                                               "component": "select",
+                                                              "condition": Object {
+                                                                "is": true,
+                                                                "when": "cb_memory",
+                                                              },
                                                               "helperText": "Between undefinedMB and NaNGB",
                                                               "id": "memoryType",
                                                               "initialValue": "GB",
@@ -47049,6 +47300,10 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                             field={
                                                               Object {
                                                                 "component": "select",
+                                                                "condition": Object {
+                                                                  "is": true,
+                                                                  "when": "cb_memory",
+                                                                },
                                                                 "helperText": "Between undefinedMB and NaNGB",
                                                                 "id": "memoryType",
                                                                 "initialValue": "GB",
@@ -47082,6 +47337,10 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                               field={
                                                                 Object {
                                                                   "component": "select",
+                                                                  "condition": Object {
+                                                                    "is": true,
+                                                                    "when": "cb_memory",
+                                                                  },
                                                                   "helperText": "Between undefinedMB and NaNGB",
                                                                   "id": "memoryType",
                                                                   "initialValue": "GB",
@@ -47560,6 +47819,10 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                   Object {
                                     "className": "reconfigure-sub-form",
                                     "component": "sub-form",
+                                    "condition": Object {
+                                      "is": true,
+                                      "when": "processor",
+                                    },
                                     "fields": Array [
                                       Object {
                                         "component": "select",
@@ -47651,6 +47914,10 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                     Object {
                                       "className": "reconfigure-sub-form",
                                       "component": "sub-form",
+                                      "condition": Object {
+                                        "is": true,
+                                        "when": "processor",
+                                      },
                                       "fields": Array [
                                         Object {
                                           "component": "select",
@@ -47756,6 +48023,10 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                         Object {
                                           "className": "reconfigure-sub-form",
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": true,
+                                            "when": "processor",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "select",
@@ -47853,6 +48124,10 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                           Object {
                                             "className": "reconfigure-sub-form",
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": true,
+                                              "when": "processor",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "select",
@@ -47949,6 +48224,10 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                             Object {
                                               "className": "reconfigure-sub-form",
                                               "component": "sub-form",
+                                              "condition": Object {
+                                                "is": true,
+                                                "when": "processor",
+                                              },
                                               "fields": Array [
                                                 Object {
                                                   "component": "select",
@@ -48165,6 +48444,7 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                     field={
                                                       Object {
                                                         "component": "select",
+                                                        "hideField": false,
                                                         "id": "socket",
                                                         "label": "Sockets",
                                                         "name": "socket_count",
@@ -48539,6 +48819,7 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                     field={
                                                       Object {
                                                         "component": "select",
+                                                        "hideField": false,
                                                         "id": "cores",
                                                         "label": "Cores Per Socket",
                                                         "name": "cores_per_socket_count",
@@ -53218,6 +53499,10 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                   Object {
                                     "className": "reconfigure-sub-form",
                                     "component": "sub-form",
+                                    "condition": Object {
+                                      "is": true,
+                                      "when": "cb_memory",
+                                    },
                                     "fields": Array [
                                       Object {
                                         "component": "text-field",
@@ -53274,6 +53559,10 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                     Object {
                                       "className": "reconfigure-sub-form",
                                       "component": "sub-form",
+                                      "condition": Object {
+                                        "is": true,
+                                        "when": "cb_memory",
+                                      },
                                       "fields": Array [
                                         Object {
                                           "component": "text-field",
@@ -53344,6 +53633,10 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                         Object {
                                           "className": "reconfigure-sub-form",
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": true,
+                                            "when": "cb_memory",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "text-field",
@@ -53406,6 +53699,10 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                           Object {
                                             "className": "reconfigure-sub-form",
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": true,
+                                              "when": "cb_memory",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "text-field",
@@ -53467,6 +53764,10 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                             Object {
                                               "className": "reconfigure-sub-form",
                                               "component": "sub-form",
+                                              "condition": Object {
+                                                "is": true,
+                                                "when": "cb_memory",
+                                              },
                                               "fields": Array [
                                                 Object {
                                                   "component": "text-field",
@@ -53724,6 +54025,10 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                   Object {
                                     "className": "reconfigure-sub-form",
                                     "component": "sub-form",
+                                    "condition": Object {
+                                      "is": true,
+                                      "when": "processor",
+                                    },
                                     "fields": Array [
                                       Object {
                                         "component": "select",
@@ -53815,6 +54120,10 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                     Object {
                                       "className": "reconfigure-sub-form",
                                       "component": "sub-form",
+                                      "condition": Object {
+                                        "is": true,
+                                        "when": "processor",
+                                      },
                                       "fields": Array [
                                         Object {
                                           "component": "select",
@@ -53920,6 +54229,10 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                         Object {
                                           "className": "reconfigure-sub-form",
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": true,
+                                            "when": "processor",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "select",
@@ -54017,6 +54330,10 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                           Object {
                                             "className": "reconfigure-sub-form",
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": true,
+                                              "when": "processor",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "select",
@@ -54113,6 +54430,10 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                             Object {
                                               "className": "reconfigure-sub-form",
                                               "component": "sub-form",
+                                              "condition": Object {
+                                                "is": true,
+                                                "when": "processor",
+                                              },
                                               "fields": Array [
                                                 Object {
                                                   "component": "select",
@@ -59319,6 +59640,7 @@ exports[`Reconfigure VM form component should render reconfigure sub form and cl
                                         "key": "action",
                                       },
                                     ],
+                                    "hideField": false,
                                     "label": "CD/DVD Drives",
                                     "name": "drive",
                                     "onCellClick": [Function],

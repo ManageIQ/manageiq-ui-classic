@@ -1211,6 +1211,10 @@ exports[`Host Initiator Group Form Loads data and renders 1`] = `
                               field={
                                 Object {
                                   "component": "select",
+                                  "condition": Object {
+                                    "isNotEmpty": true,
+                                    "when": "ems_id",
+                                  },
                                   "id": "physical_storage_id",
                                   "includeEmpty": true,
                                   "isRequired": true,
@@ -1236,6 +1240,10 @@ exports[`Host Initiator Group Form Loads data and renders 1`] = `
                                 field={
                                   Object {
                                     "component": "select",
+                                    "condition": Object {
+                                      "isNotEmpty": true,
+                                      "when": "ems_id",
+                                    },
                                     "id": "physical_storage_id",
                                     "includeEmpty": true,
                                     "isRequired": true,
@@ -1275,6 +1283,10 @@ exports[`Host Initiator Group Form Loads data and renders 1`] = `
                                     field={
                                       Object {
                                         "component": "select",
+                                        "condition": Object {
+                                          "isNotEmpty": true,
+                                          "when": "ems_id",
+                                        },
                                         "id": "physical_storage_id",
                                         "includeEmpty": true,
                                         "isRequired": true,
@@ -1306,6 +1318,10 @@ exports[`Host Initiator Group Form Loads data and renders 1`] = `
                                       field={
                                         Object {
                                           "component": "select",
+                                          "condition": Object {
+                                            "isNotEmpty": true,
+                                            "when": "ems_id",
+                                          },
                                           "id": "physical_storage_id",
                                           "includeEmpty": true,
                                           "isRequired": true,
@@ -1336,6 +1352,10 @@ exports[`Host Initiator Group Form Loads data and renders 1`] = `
                                         field={
                                           Object {
                                             "component": "select",
+                                            "condition": Object {
+                                              "isNotEmpty": true,
+                                              "when": "ems_id",
+                                            },
                                             "id": "physical_storage_id",
                                             "includeEmpty": true,
                                             "isRequired": true,

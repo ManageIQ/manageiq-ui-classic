@@ -1351,6 +1351,10 @@ exports[`Live Migrate form component should render live migrate form when hosts 
                                       field={
                                         Object {
                                           "component": "select",
+                                          "condition": Object {
+                                            "is": false,
+                                            "when": "auto_select_host",
+                                          },
                                           "id": "destination_host",
                                           "includeEmpty": true,
                                           "isRequired": true,
@@ -1376,6 +1380,10 @@ exports[`Live Migrate form component should render live migrate form when hosts 
                                         field={
                                           Object {
                                             "component": "select",
+                                            "condition": Object {
+                                              "is": false,
+                                              "when": "auto_select_host",
+                                            },
                                             "id": "destination_host",
                                             "includeEmpty": true,
                                             "isRequired": true,
@@ -1415,6 +1423,10 @@ exports[`Live Migrate form component should render live migrate form when hosts 
                                             field={
                                               Object {
                                                 "component": "select",
+                                                "condition": Object {
+                                                  "is": false,
+                                                  "when": "auto_select_host",
+                                                },
                                                 "id": "destination_host",
                                                 "includeEmpty": true,
                                                 "isRequired": true,
@@ -1446,6 +1458,10 @@ exports[`Live Migrate form component should render live migrate form when hosts 
                                               field={
                                                 Object {
                                                   "component": "select",
+                                                  "condition": Object {
+                                                    "is": false,
+                                                    "when": "auto_select_host",
+                                                  },
                                                   "id": "destination_host",
                                                   "includeEmpty": true,
                                                   "isRequired": true,
@@ -1476,6 +1492,10 @@ exports[`Live Migrate form component should render live migrate form when hosts 
                                                 field={
                                                   Object {
                                                     "component": "select",
+                                                    "condition": Object {
+                                                      "is": false,
+                                                      "when": "auto_select_host",
+                                                    },
                                                     "id": "destination_host",
                                                     "includeEmpty": true,
                                                     "isRequired": true,
@@ -3485,6 +3505,10 @@ exports[`Live Migrate form component should render live migrate form with host o
                                       field={
                                         Object {
                                           "component": "select",
+                                          "condition": Object {
+                                            "is": false,
+                                            "when": "auto_select_host",
+                                          },
                                           "id": "destination_host",
                                           "includeEmpty": true,
                                           "isRequired": true,
@@ -3531,6 +3555,10 @@ exports[`Live Migrate form component should render live migrate form with host o
                                         field={
                                           Object {
                                             "component": "select",
+                                            "condition": Object {
+                                              "is": false,
+                                              "when": "auto_select_host",
+                                            },
                                             "id": "destination_host",
                                             "includeEmpty": true,
                                             "isRequired": true,
@@ -3591,6 +3619,10 @@ exports[`Live Migrate form component should render live migrate form with host o
                                             field={
                                               Object {
                                                 "component": "select",
+                                                "condition": Object {
+                                                  "is": false,
+                                                  "when": "auto_select_host",
+                                                },
                                                 "id": "destination_host",
                                                 "includeEmpty": true,
                                                 "isRequired": true,
@@ -3643,6 +3675,10 @@ exports[`Live Migrate form component should render live migrate form with host o
                                               field={
                                                 Object {
                                                   "component": "select",
+                                                  "condition": Object {
+                                                    "is": false,
+                                                    "when": "auto_select_host",
+                                                  },
                                                   "id": "destination_host",
                                                   "includeEmpty": true,
                                                   "isRequired": true,
@@ -3694,6 +3730,10 @@ exports[`Live Migrate form component should render live migrate form with host o
                                                 field={
                                                   Object {
                                                     "component": "select",
+                                                    "condition": Object {
+                                                      "is": false,
+                                                      "when": "auto_select_host",
+                                                    },
                                                     "id": "destination_host",
                                                     "includeEmpty": true,
                                                     "isRequired": true,
@@ -5491,6 +5531,10 @@ exports[`Live Migrate form component should render live migrate form with multip
                                       field={
                                         Object {
                                           "component": "select",
+                                          "condition": Object {
+                                            "is": false,
+                                            "when": "auto_select_host",
+                                          },
                                           "id": "destination_host",
                                           "includeEmpty": true,
                                           "isRequired": true,
@@ -5516,6 +5560,10 @@ exports[`Live Migrate form component should render live migrate form with multip
                                         field={
                                           Object {
                                             "component": "select",
+                                            "condition": Object {
+                                              "is": false,
+                                              "when": "auto_select_host",
+                                            },
                                             "id": "destination_host",
                                             "includeEmpty": true,
                                             "isRequired": true,
@@ -5555,6 +5603,10 @@ exports[`Live Migrate form component should render live migrate form with multip
                                             field={
                                               Object {
                                                 "component": "select",
+                                                "condition": Object {
+                                                  "is": false,
+                                                  "when": "auto_select_host",
+                                                },
                                                 "id": "destination_host",
                                                 "includeEmpty": true,
                                                 "isRequired": true,
@@ -5586,6 +5638,10 @@ exports[`Live Migrate form component should render live migrate form with multip
                                               field={
                                                 Object {
                                                   "component": "select",
+                                                  "condition": Object {
+                                                    "is": false,
+                                                    "when": "auto_select_host",
+                                                  },
                                                   "id": "destination_host",
                                                   "includeEmpty": true,
                                                   "isRequired": true,
@@ -5616,6 +5672,10 @@ exports[`Live Migrate form component should render live migrate form with multip
                                                 field={
                                                   Object {
                                                     "component": "select",
+                                                    "condition": Object {
+                                                      "is": false,
+                                                      "when": "auto_select_host",
+                                                    },
                                                     "id": "destination_host",
                                                     "includeEmpty": true,
                                                     "isRequired": true,

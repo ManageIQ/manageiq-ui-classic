@@ -10773,6 +10773,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
                             field={
                               Object {
                                 "component": "sub-form",
+                                "condition": Object {
+                                  "is": true,
+                                  "when": "image_update",
+                                },
                                 "fields": Array [
                                   Object {
                                     "component": "file-upload",
@@ -10802,6 +10806,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
                               field={
                                 Object {
                                   "component": "sub-form",
+                                  "condition": Object {
+                                    "is": true,
+                                    "when": "image_update",
+                                  },
                                   "fields": Array [
                                     Object {
                                       "component": "file-upload",
@@ -10845,6 +10853,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   field={
                                     Object {
                                       "component": "sub-form",
+                                      "condition": Object {
+                                        "is": true,
+                                        "when": "image_update",
+                                      },
                                       "fields": Array [
                                         Object {
                                           "component": "file-upload",
@@ -10880,6 +10892,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                     field={
                                       Object {
                                         "component": "sub-form",
+                                        "condition": Object {
+                                          "is": true,
+                                          "when": "image_update",
+                                        },
                                         "fields": Array [
                                           Object {
                                             "component": "file-upload",
@@ -10914,6 +10930,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                       field={
                                         Object {
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": true,
+                                            "when": "image_update",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "file-upload",
@@ -10978,6 +10998,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
                             field={
                               Object {
                                 "component": "sub-form",
+                                "condition": Object {
+                                  "is": false,
+                                  "when": "image_update",
+                                },
                                 "fields": Array [
                                   Object {
                                     "component": "file-edit",
@@ -11002,6 +11026,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
                               field={
                                 Object {
                                   "component": "sub-form",
+                                  "condition": Object {
+                                    "is": false,
+                                    "when": "image_update",
+                                  },
                                   "fields": Array [
                                     Object {
                                       "component": "file-edit",
@@ -11040,6 +11068,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   field={
                                     Object {
                                       "component": "sub-form",
+                                      "condition": Object {
+                                        "is": false,
+                                        "when": "image_update",
+                                      },
                                       "fields": Array [
                                         Object {
                                           "component": "file-edit",
@@ -11070,6 +11102,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                     field={
                                       Object {
                                         "component": "sub-form",
+                                        "condition": Object {
+                                          "is": false,
+                                          "when": "image_update",
+                                        },
                                         "fields": Array [
                                           Object {
                                             "component": "file-edit",
@@ -11099,6 +11135,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                       field={
                                         Object {
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": false,
+                                            "when": "image_update",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "file-edit",
@@ -11375,6 +11415,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                             field={
                               Object {
                                 "component": "switch",
+                                "hideField": true,
                                 "name": "image_update",
                               }
                             }
@@ -18452,6 +18493,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
                             field={
                               Object {
                                 "component": "sub-form",
+                                "condition": Object {
+                                  "is": true,
+                                  "when": "image_update",
+                                },
                                 "fields": Array [
                                   Object {
                                     "component": "file-upload",
@@ -18481,6 +18526,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
                               field={
                                 Object {
                                   "component": "sub-form",
+                                  "condition": Object {
+                                    "is": true,
+                                    "when": "image_update",
+                                  },
                                   "fields": Array [
                                     Object {
                                       "component": "file-upload",
@@ -18524,6 +18573,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   field={
                                     Object {
                                       "component": "sub-form",
+                                      "condition": Object {
+                                        "is": true,
+                                        "when": "image_update",
+                                      },
                                       "fields": Array [
                                         Object {
                                           "component": "file-upload",
@@ -18559,6 +18612,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                     field={
                                       Object {
                                         "component": "sub-form",
+                                        "condition": Object {
+                                          "is": true,
+                                          "when": "image_update",
+                                        },
                                         "fields": Array [
                                           Object {
                                             "component": "file-upload",
@@ -18593,6 +18650,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                       field={
                                         Object {
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": true,
+                                            "when": "image_update",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "file-upload",
@@ -18780,6 +18841,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
                             field={
                               Object {
                                 "component": "sub-form",
+                                "condition": Object {
+                                  "is": false,
+                                  "when": "image_update",
+                                },
                                 "fields": Array [
                                   Object {
                                     "component": "file-edit",
@@ -18804,6 +18869,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
                               field={
                                 Object {
                                   "component": "sub-form",
+                                  "condition": Object {
+                                    "is": false,
+                                    "when": "image_update",
+                                  },
                                   "fields": Array [
                                     Object {
                                       "component": "file-edit",
@@ -18842,6 +18911,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                   field={
                                     Object {
                                       "component": "sub-form",
+                                      "condition": Object {
+                                        "is": false,
+                                        "when": "image_update",
+                                      },
                                       "fields": Array [
                                         Object {
                                           "component": "file-edit",
@@ -18872,6 +18945,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                     field={
                                       Object {
                                         "component": "sub-form",
+                                        "condition": Object {
+                                          "is": false,
+                                          "when": "image_update",
+                                        },
                                         "fields": Array [
                                           Object {
                                             "component": "file-edit",
@@ -18901,6 +18978,10 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                       field={
                                         Object {
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": false,
+                                            "when": "image_update",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "file-edit",
@@ -18937,6 +19018,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                             field={
                               Object {
                                 "component": "switch",
+                                "hideField": true,
                                 "name": "image_update",
                               }
                             }

@@ -8832,6 +8832,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       field={
                                         Object {
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": "assign_scan_profile",
+                                            "when": "action_type",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "select",
@@ -8880,6 +8884,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         field={
                                           Object {
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": "assign_scan_profile",
+                                              "when": "action_type",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "select",
@@ -8942,6 +8950,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             field={
                                               Object {
                                                 "component": "sub-form",
+                                                "condition": Object {
+                                                  "is": "assign_scan_profile",
+                                                  "when": "action_type",
+                                                },
                                                 "fields": Array [
                                                   Object {
                                                     "component": "select",
@@ -8996,6 +9008,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               field={
                                                 Object {
                                                   "component": "sub-form",
+                                                  "condition": Object {
+                                                    "is": "assign_scan_profile",
+                                                    "when": "action_type",
+                                                  },
                                                   "fields": Array [
                                                     Object {
                                                       "component": "select",
@@ -9049,6 +9065,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 field={
                                                   Object {
                                                     "component": "sub-form",
+                                                    "condition": Object {
+                                                      "is": "assign_scan_profile",
+                                                      "when": "action_type",
+                                                    },
                                                     "fields": Array [
                                                       Object {
                                                         "component": "select",
@@ -9133,6 +9153,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       field={
                                         Object {
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": "create_snapshot",
+                                            "when": "action_type",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "text-field",
@@ -9158,6 +9182,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         field={
                                           Object {
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": "create_snapshot",
+                                              "when": "action_type",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "text-field",
@@ -9197,6 +9225,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             field={
                                               Object {
                                                 "component": "sub-form",
+                                                "condition": Object {
+                                                  "is": "create_snapshot",
+                                                  "when": "action_type",
+                                                },
                                                 "fields": Array [
                                                   Object {
                                                     "component": "text-field",
@@ -9228,6 +9260,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               field={
                                                 Object {
                                                   "component": "sub-form",
+                                                  "condition": Object {
+                                                    "is": "create_snapshot",
+                                                    "when": "action_type",
+                                                  },
                                                   "fields": Array [
                                                     Object {
                                                       "component": "text-field",
@@ -9258,6 +9294,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 field={
                                                   Object {
                                                     "component": "sub-form",
+                                                    "condition": Object {
+                                                      "is": "create_snapshot",
+                                                      "when": "action_type",
+                                                    },
                                                     "fields": Array [
                                                       Object {
                                                         "component": "text-field",
@@ -9334,6 +9374,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       field={
                                         Object {
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": "delete_snapshots_by_age",
+                                            "when": "action_type",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "select",
@@ -9374,6 +9418,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         field={
                                           Object {
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": "delete_snapshots_by_age",
+                                              "when": "action_type",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "select",
@@ -9428,6 +9476,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             field={
                                               Object {
                                                 "component": "sub-form",
+                                                "condition": Object {
+                                                  "is": "delete_snapshots_by_age",
+                                                  "when": "action_type",
+                                                },
                                                 "fields": Array [
                                                   Object {
                                                     "component": "select",
@@ -9474,6 +9526,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               field={
                                                 Object {
                                                   "component": "sub-form",
+                                                  "condition": Object {
+                                                    "is": "delete_snapshots_by_age",
+                                                    "when": "action_type",
+                                                  },
                                                   "fields": Array [
                                                     Object {
                                                       "component": "select",
@@ -9519,6 +9575,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 field={
                                                   Object {
                                                     "component": "sub-form",
+                                                    "condition": Object {
+                                                      "is": "delete_snapshots_by_age",
+                                                      "when": "action_type",
+                                                    },
                                                     "fields": Array [
                                                       Object {
                                                         "component": "select",
@@ -9630,6 +9690,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       field={
                                         Object {
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": "evaluate_alerts",
+                                            "when": "action_type",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "AddAllButtonProps": Object {
@@ -9690,6 +9754,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         field={
                                           Object {
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": "evaluate_alerts",
+                                              "when": "action_type",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "AddAllButtonProps": Object {
@@ -9764,6 +9832,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             field={
                                               Object {
                                                 "component": "sub-form",
+                                                "condition": Object {
+                                                  "is": "evaluate_alerts",
+                                                  "when": "action_type",
+                                                },
                                                 "fields": Array [
                                                   Object {
                                                     "AddAllButtonProps": Object {
@@ -9830,6 +9902,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               field={
                                                 Object {
                                                   "component": "sub-form",
+                                                  "condition": Object {
+                                                    "is": "evaluate_alerts",
+                                                    "when": "action_type",
+                                                  },
                                                   "fields": Array [
                                                     Object {
                                                       "AddAllButtonProps": Object {
@@ -9895,6 +9971,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 field={
                                                   Object {
                                                     "component": "sub-form",
+                                                    "condition": Object {
+                                                      "is": "evaluate_alerts",
+                                                      "when": "action_type",
+                                                    },
                                                     "fields": Array [
                                                       Object {
                                                         "AddAllButtonProps": Object {
@@ -10016,6 +10096,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       field={
                                         Object {
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": "inherit_parent_tags",
+                                            "when": "action_type",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "select",
@@ -10066,6 +10150,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         field={
                                           Object {
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": "inherit_parent_tags",
+                                              "when": "action_type",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "select",
@@ -10130,6 +10218,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             field={
                                               Object {
                                                 "component": "sub-form",
+                                                "condition": Object {
+                                                  "is": "inherit_parent_tags",
+                                                  "when": "action_type",
+                                                },
                                                 "fields": Array [
                                                   Object {
                                                     "component": "select",
@@ -10186,6 +10278,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               field={
                                                 Object {
                                                   "component": "sub-form",
+                                                  "condition": Object {
+                                                    "is": "inherit_parent_tags",
+                                                    "when": "action_type",
+                                                  },
                                                   "fields": Array [
                                                     Object {
                                                       "component": "select",
@@ -10241,6 +10337,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 field={
                                                   Object {
                                                     "component": "sub-form",
+                                                    "condition": Object {
+                                                      "is": "inherit_parent_tags",
+                                                      "when": "action_type",
+                                                    },
                                                     "fields": Array [
                                                       Object {
                                                         "component": "select",
@@ -10334,6 +10434,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       field={
                                         Object {
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": "custom_automation",
+                                            "when": "action_type",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "text-field",
@@ -10366,6 +10470,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         field={
                                           Object {
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": "custom_automation",
+                                              "when": "action_type",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "text-field",
@@ -10412,6 +10520,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             field={
                                               Object {
                                                 "component": "sub-form",
+                                                "condition": Object {
+                                                  "is": "custom_automation",
+                                                  "when": "action_type",
+                                                },
                                                 "fields": Array [
                                                   Object {
                                                     "component": "text-field",
@@ -10450,6 +10562,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               field={
                                                 Object {
                                                   "component": "sub-form",
+                                                  "condition": Object {
+                                                    "is": "custom_automation",
+                                                    "when": "action_type",
+                                                  },
                                                   "fields": Array [
                                                     Object {
                                                       "component": "text-field",
@@ -10487,6 +10603,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 field={
                                                   Object {
                                                     "component": "sub-form",
+                                                    "condition": Object {
+                                                      "is": "custom_automation",
+                                                      "when": "action_type",
+                                                    },
                                                     "fields": Array [
                                                       Object {
                                                         "component": "text-field",
@@ -10590,6 +10710,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         Object {
                                           "className": "attribute_value_pair_wrapper",
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": "custom_automation",
+                                            "when": "action_type",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "AddButtonProps": Object {
@@ -10649,6 +10773,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                           Object {
                                             "className": "attribute_value_pair_wrapper",
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": "custom_automation",
+                                              "when": "action_type",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "AddButtonProps": Object {
@@ -10722,6 +10850,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               Object {
                                                 "className": "attribute_value_pair_wrapper",
                                                 "component": "sub-form",
+                                                "condition": Object {
+                                                  "is": "custom_automation",
+                                                  "when": "action_type",
+                                                },
                                                 "fields": Array [
                                                   Object {
                                                     "AddButtonProps": Object {
@@ -10787,6 +10919,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 Object {
                                                   "className": "attribute_value_pair_wrapper",
                                                   "component": "sub-form",
+                                                  "condition": Object {
+                                                    "is": "custom_automation",
+                                                    "when": "action_type",
+                                                  },
                                                   "fields": Array [
                                                     Object {
                                                       "AddButtonProps": Object {
@@ -10851,6 +10987,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                   Object {
                                                     "className": "attribute_value_pair_wrapper",
                                                     "component": "sub-form",
+                                                    "condition": Object {
+                                                      "is": "custom_automation",
+                                                      "when": "action_type",
+                                                    },
                                                     "fields": Array [
                                                       Object {
                                                         "AddButtonProps": Object {
@@ -10959,6 +11099,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       field={
                                         Object {
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": "reconfigure_cpus",
+                                            "when": "action_type",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "select",
@@ -10998,6 +11142,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         field={
                                           Object {
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": "reconfigure_cpus",
+                                              "when": "action_type",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "select",
@@ -11051,6 +11199,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             field={
                                               Object {
                                                 "component": "sub-form",
+                                                "condition": Object {
+                                                  "is": "reconfigure_cpus",
+                                                  "when": "action_type",
+                                                },
                                                 "fields": Array [
                                                   Object {
                                                     "component": "select",
@@ -11096,6 +11248,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               field={
                                                 Object {
                                                   "component": "sub-form",
+                                                  "condition": Object {
+                                                    "is": "reconfigure_cpus",
+                                                    "when": "action_type",
+                                                  },
                                                   "fields": Array [
                                                     Object {
                                                       "component": "select",
@@ -11140,6 +11296,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 field={
                                                   Object {
                                                     "component": "sub-form",
+                                                    "condition": Object {
+                                                      "is": "reconfigure_cpus",
+                                                      "when": "action_type",
+                                                    },
                                                     "fields": Array [
                                                       Object {
                                                         "component": "select",
@@ -11216,6 +11376,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       field={
                                         Object {
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": "reconfigure_memory",
+                                            "when": "action_type",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "text-field",
@@ -11242,6 +11406,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         field={
                                           Object {
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": "reconfigure_memory",
+                                              "when": "action_type",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "text-field",
@@ -11282,6 +11450,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             field={
                                               Object {
                                                 "component": "sub-form",
+                                                "condition": Object {
+                                                  "is": "reconfigure_memory",
+                                                  "when": "action_type",
+                                                },
                                                 "fields": Array [
                                                   Object {
                                                     "component": "text-field",
@@ -11314,6 +11486,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               field={
                                                 Object {
                                                   "component": "sub-form",
+                                                  "condition": Object {
+                                                    "is": "reconfigure_memory",
+                                                    "when": "action_type",
+                                                  },
                                                   "fields": Array [
                                                     Object {
                                                       "component": "text-field",
@@ -11345,6 +11521,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 field={
                                                   Object {
                                                     "component": "sub-form",
+                                                    "condition": Object {
+                                                      "is": "reconfigure_memory",
+                                                      "when": "action_type",
+                                                    },
                                                     "fields": Array [
                                                       Object {
                                                         "component": "text-field",
@@ -11418,6 +11598,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       field={
                                         Object {
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": "remove_tags",
+                                            "when": "action_type",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "select",
@@ -11454,6 +11638,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         field={
                                           Object {
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": "remove_tags",
+                                              "when": "action_type",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "select",
@@ -11504,6 +11692,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             field={
                                               Object {
                                                 "component": "sub-form",
+                                                "condition": Object {
+                                                  "is": "remove_tags",
+                                                  "when": "action_type",
+                                                },
                                                 "fields": Array [
                                                   Object {
                                                     "component": "select",
@@ -11546,6 +11738,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               field={
                                                 Object {
                                                   "component": "sub-form",
+                                                  "condition": Object {
+                                                    "is": "remove_tags",
+                                                    "when": "action_type",
+                                                  },
                                                   "fields": Array [
                                                     Object {
                                                       "component": "select",
@@ -11587,6 +11783,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 field={
                                                   Object {
                                                     "component": "sub-form",
+                                                    "condition": Object {
+                                                      "is": "remove_tags",
+                                                      "when": "action_type",
+                                                    },
                                                     "fields": Array [
                                                       Object {
                                                         "component": "select",
@@ -11691,6 +11891,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       field={
                                         Object {
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": "run_ansible_playbook",
+                                            "when": "action_type",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "select",
@@ -11748,6 +11952,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         field={
                                           Object {
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": "run_ansible_playbook",
+                                              "when": "action_type",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "select",
@@ -11819,6 +12027,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             field={
                                               Object {
                                                 "component": "sub-form",
+                                                "condition": Object {
+                                                  "is": "run_ansible_playbook",
+                                                  "when": "action_type",
+                                                },
                                                 "fields": Array [
                                                   Object {
                                                     "component": "select",
@@ -11882,6 +12094,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               field={
                                                 Object {
                                                   "component": "sub-form",
+                                                  "condition": Object {
+                                                    "is": "run_ansible_playbook",
+                                                    "when": "action_type",
+                                                  },
                                                   "fields": Array [
                                                     Object {
                                                       "component": "select",
@@ -11944,6 +12160,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 field={
                                                   Object {
                                                     "component": "sub-form",
+                                                    "condition": Object {
+                                                      "is": "run_ansible_playbook",
+                                                      "when": "action_type",
+                                                    },
                                                     "fields": Array [
                                                       Object {
                                                         "component": "select",
@@ -12052,6 +12272,18 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       field={
                                         Object {
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "and": Array [
+                                              Object {
+                                                "is": "Specific Hosts",
+                                                "when": "options.inventory_type",
+                                              },
+                                              Object {
+                                                "is": "run_ansible_playbook",
+                                                "when": "action_type",
+                                              },
+                                            ],
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "text-field",
@@ -12084,6 +12316,18 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         field={
                                           Object {
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "and": Array [
+                                                Object {
+                                                  "is": "Specific Hosts",
+                                                  "when": "options.inventory_type",
+                                                },
+                                                Object {
+                                                  "is": "run_ansible_playbook",
+                                                  "when": "action_type",
+                                                },
+                                              ],
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "text-field",
@@ -12131,6 +12375,18 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             field={
                                               Object {
                                                 "component": "sub-form",
+                                                "condition": Object {
+                                                  "and": Array [
+                                                    Object {
+                                                      "is": "Specific Hosts",
+                                                      "when": "options.inventory_type",
+                                                    },
+                                                    Object {
+                                                      "is": "run_ansible_playbook",
+                                                      "when": "action_type",
+                                                    },
+                                                  ],
+                                                },
                                                 "fields": Array [
                                                   Object {
                                                     "component": "text-field",
@@ -12184,6 +12440,18 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 field={
                                                   Object {
                                                     "component": "sub-form",
+                                                    "condition": Object {
+                                                      "and": Array [
+                                                        Object {
+                                                          "is": "Specific Hosts",
+                                                          "when": "options.inventory_type",
+                                                        },
+                                                        Object {
+                                                          "is": "run_ansible_playbook",
+                                                          "when": "action_type",
+                                                        },
+                                                      ],
+                                                    },
                                                     "fields": Array [
                                                       Object {
                                                         "component": "text-field",
@@ -12225,6 +12493,18 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                   field={
                                                     Object {
                                                       "component": "sub-form",
+                                                      "condition": Object {
+                                                        "and": Array [
+                                                          Object {
+                                                            "is": "Specific Hosts",
+                                                            "when": "options.inventory_type",
+                                                          },
+                                                          Object {
+                                                            "is": "run_ansible_playbook",
+                                                            "when": "action_type",
+                                                          },
+                                                        ],
+                                                      },
                                                       "fields": Array [
                                                         Object {
                                                           "component": "text-field",
@@ -12265,6 +12545,18 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                     field={
                                                       Object {
                                                         "component": "sub-form",
+                                                        "condition": Object {
+                                                          "and": Array [
+                                                            Object {
+                                                              "is": "Specific Hosts",
+                                                              "when": "options.inventory_type",
+                                                            },
+                                                            Object {
+                                                              "is": "run_ansible_playbook",
+                                                              "when": "action_type",
+                                                            },
+                                                          ],
+                                                        },
                                                         "fields": Array [
                                                           Object {
                                                             "component": "text-field",
@@ -12338,6 +12630,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       field={
                                         Object {
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": "email",
+                                            "when": "action_type",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "text-field",
@@ -12371,6 +12667,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         field={
                                           Object {
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": "email",
+                                              "when": "action_type",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "text-field",
@@ -12418,6 +12718,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             field={
                                               Object {
                                                 "component": "sub-form",
+                                                "condition": Object {
+                                                  "is": "email",
+                                                  "when": "action_type",
+                                                },
                                                 "fields": Array [
                                                   Object {
                                                     "component": "text-field",
@@ -12457,6 +12761,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               field={
                                                 Object {
                                                   "component": "sub-form",
+                                                  "condition": Object {
+                                                    "is": "email",
+                                                    "when": "action_type",
+                                                  },
                                                   "fields": Array [
                                                     Object {
                                                       "component": "text-field",
@@ -12495,6 +12803,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 field={
                                                   Object {
                                                     "component": "sub-form",
+                                                    "condition": Object {
+                                                      "is": "email",
+                                                      "when": "action_type",
+                                                    },
                                                     "fields": Array [
                                                       Object {
                                                         "component": "text-field",
@@ -12588,6 +12900,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       field={
                                         Object {
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": "snmp_trap",
+                                            "when": "action_type",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "text-field",
@@ -12637,6 +12953,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         field={
                                           Object {
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": "snmp_trap",
+                                              "when": "action_type",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "text-field",
@@ -12700,6 +13020,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             field={
                                               Object {
                                                 "component": "sub-form",
+                                                "condition": Object {
+                                                  "is": "snmp_trap",
+                                                  "when": "action_type",
+                                                },
                                                 "fields": Array [
                                                   Object {
                                                     "component": "text-field",
@@ -12755,6 +13079,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               field={
                                                 Object {
                                                   "component": "sub-form",
+                                                  "condition": Object {
+                                                    "is": "snmp_trap",
+                                                    "when": "action_type",
+                                                  },
                                                   "fields": Array [
                                                     Object {
                                                       "component": "text-field",
@@ -12809,6 +13137,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 field={
                                                   Object {
                                                     "component": "sub-form",
+                                                    "condition": Object {
+                                                      "is": "snmp_trap",
+                                                      "when": "action_type",
+                                                    },
                                                     "fields": Array [
                                                       Object {
                                                         "component": "text-field",
@@ -12921,6 +13253,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       field={
                                         Object {
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": "snmp_trap",
+                                            "when": "action_type",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "AddButtonProps": Object {
@@ -12973,6 +13309,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         field={
                                           Object {
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": "snmp_trap",
+                                              "when": "action_type",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "AddButtonProps": Object {
@@ -13039,6 +13379,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             field={
                                               Object {
                                                 "component": "sub-form",
+                                                "condition": Object {
+                                                  "is": "snmp_trap",
+                                                  "when": "action_type",
+                                                },
                                                 "fields": Array [
                                                   Object {
                                                     "AddButtonProps": Object {
@@ -13097,6 +13441,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               field={
                                                 Object {
                                                   "component": "sub-form",
+                                                  "condition": Object {
+                                                    "is": "snmp_trap",
+                                                    "when": "action_type",
+                                                  },
                                                   "fields": Array [
                                                     Object {
                                                       "AddButtonProps": Object {
@@ -13154,6 +13502,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 field={
                                                   Object {
                                                     "component": "sub-form",
+                                                    "condition": Object {
+                                                      "is": "snmp_trap",
+                                                      "when": "action_type",
+                                                    },
                                                     "fields": Array [
                                                       Object {
                                                         "AddButtonProps": Object {
@@ -13249,6 +13601,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       field={
                                         Object {
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": "set_custom_attribute",
+                                            "when": "action_type",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "text-field",
@@ -13281,6 +13637,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         field={
                                           Object {
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": "set_custom_attribute",
+                                              "when": "action_type",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "text-field",
@@ -13327,6 +13687,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             field={
                                               Object {
                                                 "component": "sub-form",
+                                                "condition": Object {
+                                                  "is": "set_custom_attribute",
+                                                  "when": "action_type",
+                                                },
                                                 "fields": Array [
                                                   Object {
                                                     "component": "text-field",
@@ -13365,6 +13729,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               field={
                                                 Object {
                                                   "component": "sub-form",
+                                                  "condition": Object {
+                                                    "is": "set_custom_attribute",
+                                                    "when": "action_type",
+                                                  },
                                                   "fields": Array [
                                                     Object {
                                                       "component": "text-field",
@@ -13402,6 +13770,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 field={
                                                   Object {
                                                     "component": "sub-form",
+                                                    "condition": Object {
+                                                      "is": "set_custom_attribute",
+                                                      "when": "action_type",
+                                                    },
                                                     "fields": Array [
                                                       Object {
                                                         "component": "text-field",
@@ -13506,6 +13878,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                       field={
                                         Object {
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": "tag",
+                                            "when": "action_type",
+                                          },
                                           "fields": Array [
                                             Object {
                                               "component": "select",
@@ -13567,6 +13943,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                         field={
                                           Object {
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": "tag",
+                                              "when": "action_type",
+                                            },
                                             "fields": Array [
                                               Object {
                                                 "component": "select",
@@ -13642,6 +14022,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                             field={
                                               Object {
                                                 "component": "sub-form",
+                                                "condition": Object {
+                                                  "is": "tag",
+                                                  "when": "action_type",
+                                                },
                                                 "fields": Array [
                                                   Object {
                                                     "component": "select",
@@ -13709,6 +14093,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                               field={
                                                 Object {
                                                   "component": "sub-form",
+                                                  "condition": Object {
+                                                    "is": "tag",
+                                                    "when": "action_type",
+                                                  },
                                                   "fields": Array [
                                                     Object {
                                                       "component": "select",
@@ -13775,6 +14163,10 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                 field={
                                                   Object {
                                                     "component": "sub-form",
+                                                    "condition": Object {
+                                                      "is": "tag",
+                                                      "when": "action_type",
+                                                    },
                                                     "fields": Array [
                                                       Object {
                                                         "component": "select",

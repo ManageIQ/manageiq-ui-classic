@@ -7971,6 +7971,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                       field={
                                         Object {
                                           "component": "select",
+                                          "hideField": false,
                                           "id": "filter_type",
                                           "isRequired": true,
                                           "label": "Filter",
@@ -8356,6 +8357,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                       field={
                                         Object {
                                           "component": "select",
+                                          "hideField": true,
                                           "id": "filter_value",
                                           "initialValue": "",
                                           "initializeOnMount": true,
@@ -8568,6 +8570,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                       field={
                                         Object {
                                           "component": "select",
+                                          "hideField": true,
                                           "id": "zone",
                                           "includeEmpty": true,
                                           "isRequired": true,
@@ -9041,6 +9044,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                         Object {
                                           "component": "plain-text",
                                           "element": "h3",
+                                          "hideField": true,
                                           "label": "Object Details",
                                           "name": "object_details",
                                         }
@@ -9094,6 +9098,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                       field={
                                         Object {
                                           "component": "select",
+                                          "hideField": true,
                                           "id": "system",
                                           "includeEmpty": true,
                                           "isRequired": true,
@@ -9355,6 +9360,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                       field={
                                         Object {
                                           "component": "text-field",
+                                          "hideField": true,
                                           "id": "message",
                                           "isRequired": true,
                                           "label": "Message",
@@ -9491,6 +9497,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                       field={
                                         Object {
                                           "component": "text-field",
+                                          "hideField": true,
                                           "id": "request",
                                           "isRequired": true,
                                           "label": "Request",
@@ -9619,6 +9626,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                         Object {
                                           "component": "plain-text",
                                           "element": "h3",
+                                          "hideField": true,
                                           "label": "Object",
                                           "name": "object_attributes",
                                         }
@@ -9676,6 +9684,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                       field={
                                         Object {
                                           "component": "select",
+                                          "hideField": true,
                                           "id": "object_type",
                                           "includeEmpty": true,
                                           "isClearable": true,
@@ -10031,6 +10040,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                       field={
                                         Object {
                                           "component": "select",
+                                          "hideField": true,
                                           "id": "object_item",
                                           "includeEmpty": true,
                                           "isClearable": true,
@@ -10541,6 +10551,10 @@ exports[`Schedule form component should render edit form when filter_type is not
                                         Object {
                                           "className": "attribute-value-fields-subform",
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": "automation_request",
+                                            "when": "action_typ",
+                                          },
                                           "fields": Array [
                                             Array [
                                               Object {
@@ -10715,6 +10729,10 @@ exports[`Schedule form component should render edit form when filter_type is not
                                           Object {
                                             "className": "attribute-value-fields-subform",
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": "automation_request",
+                                              "when": "action_typ",
+                                            },
                                             "fields": Array [
                                               Array [
                                                 Object {
@@ -10903,6 +10921,10 @@ exports[`Schedule form component should render edit form when filter_type is not
                                               Object {
                                                 "className": "attribute-value-fields-subform",
                                                 "component": "sub-form",
+                                                "condition": Object {
+                                                  "is": "automation_request",
+                                                  "when": "action_typ",
+                                                },
                                                 "fields": Array [
                                                   Array [
                                                     Object {
@@ -11083,6 +11105,10 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                 Object {
                                                   "className": "attribute-value-fields-subform",
                                                   "component": "sub-form",
+                                                  "condition": Object {
+                                                    "is": "automation_request",
+                                                    "when": "action_typ",
+                                                  },
                                                   "fields": Array [
                                                     Array [
                                                       Object {
@@ -11262,6 +11288,10 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                   Object {
                                                     "className": "attribute-value-fields-subform",
                                                     "component": "sub-form",
+                                                    "condition": Object {
+                                                      "is": "automation_request",
+                                                      "when": "action_typ",
+                                                    },
                                                     "fields": Array [
                                                       Array [
                                                         Object {
@@ -11889,6 +11919,7 @@ exports[`Schedule form component should render edit form when filter_type is not
                                       field={
                                         Object {
                                           "component": "select",
+                                          "hideField": false,
                                           "id": "timer_value",
                                           "initialValue": 5,
                                           "initializeOnMount": true,
@@ -23639,6 +23670,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                       field={
                                         Object {
                                           "component": "select",
+                                          "hideField": true,
                                           "id": "filter_type",
                                           "isRequired": true,
                                           "label": "Filter",
@@ -23834,6 +23866,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                       field={
                                         Object {
                                           "component": "select",
+                                          "hideField": true,
                                           "id": "filter_value",
                                           "initialValue": "",
                                           "initializeOnMount": true,
@@ -24046,6 +24079,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                       field={
                                         Object {
                                           "component": "select",
+                                          "hideField": false,
                                           "id": "zone",
                                           "includeEmpty": true,
                                           "isRequired": true,
@@ -24515,6 +24549,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                         Object {
                                           "component": "plain-text",
                                           "element": "h3",
+                                          "hideField": false,
                                           "label": "Object Details",
                                           "name": "object_details",
                                         }
@@ -24599,6 +24634,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                       field={
                                         Object {
                                           "component": "select",
+                                          "hideField": false,
                                           "id": "system",
                                           "includeEmpty": true,
                                           "isRequired": true,
@@ -25148,6 +25184,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                       field={
                                         Object {
                                           "component": "text-field",
+                                          "hideField": false,
                                           "id": "message",
                                           "isRequired": true,
                                           "label": "Message",
@@ -25280,6 +25317,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                       field={
                                         Object {
                                           "component": "text-field",
+                                          "hideField": false,
                                           "id": "request",
                                           "isRequired": true,
                                           "label": "Request",
@@ -25404,6 +25442,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                         Object {
                                           "component": "plain-text",
                                           "element": "h3",
+                                          "hideField": false,
                                           "label": "Object",
                                           "name": "object_attributes",
                                         }
@@ -25484,6 +25523,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                       field={
                                         Object {
                                           "component": "select",
+                                          "hideField": false,
                                           "id": "object_type",
                                           "includeEmpty": true,
                                           "isClearable": true,
@@ -26021,6 +26061,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                       field={
                                         Object {
                                           "component": "select",
+                                          "hideField": false,
                                           "id": "object_item",
                                           "includeEmpty": true,
                                           "isClearable": true,
@@ -26699,6 +26740,10 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                         Object {
                                           "className": "attribute-value-fields-subform",
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": "automation_request",
+                                            "when": "action_typ",
+                                          },
                                           "fields": Array [
                                             Array [
                                               Object {
@@ -26873,6 +26918,10 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                           Object {
                                             "className": "attribute-value-fields-subform",
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": "automation_request",
+                                              "when": "action_typ",
+                                            },
                                             "fields": Array [
                                               Array [
                                                 Object {
@@ -27061,6 +27110,10 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                               Object {
                                                 "className": "attribute-value-fields-subform",
                                                 "component": "sub-form",
+                                                "condition": Object {
+                                                  "is": "automation_request",
+                                                  "when": "action_typ",
+                                                },
                                                 "fields": Array [
                                                   Array [
                                                     Object {
@@ -27241,6 +27294,10 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                 Object {
                                                   "className": "attribute-value-fields-subform",
                                                   "component": "sub-form",
+                                                  "condition": Object {
+                                                    "is": "automation_request",
+                                                    "when": "action_typ",
+                                                  },
                                                   "fields": Array [
                                                     Array [
                                                       Object {
@@ -27420,6 +27477,10 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                   Object {
                                                     "className": "attribute-value-fields-subform",
                                                     "component": "sub-form",
+                                                    "condition": Object {
+                                                      "is": "automation_request",
+                                                      "when": "action_typ",
+                                                    },
                                                     "fields": Array [
                                                       Array [
                                                         Object {
@@ -29479,6 +29540,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                           field={
                                                             Object {
                                                               "component": "text-field",
+                                                              "hideField": true,
                                                               "id": "starting_object",
                                                               "label": " ",
                                                               "name": "starting_object",
@@ -30030,6 +30092,7 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                       field={
                                         Object {
                                           "component": "select",
+                                          "hideField": false,
                                           "id": "timer_value",
                                           "initialValue": 5,
                                           "initializeOnMount": true,
@@ -40332,6 +40395,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                       field={
                                         Object {
                                           "component": "select",
+                                          "hideField": false,
                                           "id": "filter_type",
                                           "isRequired": true,
                                           "label": "Filter",
@@ -40717,6 +40781,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                       field={
                                         Object {
                                           "component": "select",
+                                          "hideField": true,
                                           "id": "filter_value",
                                           "initialValue": "",
                                           "initializeOnMount": true,
@@ -40902,6 +40967,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                       field={
                                         Object {
                                           "component": "select",
+                                          "hideField": true,
                                           "id": "zone",
                                           "includeEmpty": true,
                                           "isRequired": true,
@@ -41155,6 +41221,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                         Object {
                                           "component": "plain-text",
                                           "element": "h3",
+                                          "hideField": true,
                                           "label": "Object Details",
                                           "name": "object_details",
                                         }
@@ -41208,6 +41275,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                       field={
                                         Object {
                                           "component": "select",
+                                          "hideField": true,
                                           "id": "system",
                                           "includeEmpty": true,
                                           "isRequired": true,
@@ -41469,6 +41537,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                       field={
                                         Object {
                                           "component": "text-field",
+                                          "hideField": true,
                                           "id": "message",
                                           "isRequired": true,
                                           "label": "Message",
@@ -41605,6 +41674,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                       field={
                                         Object {
                                           "component": "text-field",
+                                          "hideField": true,
                                           "id": "request",
                                           "isRequired": true,
                                           "label": "Request",
@@ -41733,6 +41803,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                         Object {
                                           "component": "plain-text",
                                           "element": "h3",
+                                          "hideField": true,
                                           "label": "Object",
                                           "name": "object_attributes",
                                         }
@@ -41790,6 +41861,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                       field={
                                         Object {
                                           "component": "select",
+                                          "hideField": true,
                                           "id": "object_type",
                                           "includeEmpty": true,
                                           "isClearable": true,
@@ -42145,6 +42217,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                       field={
                                         Object {
                                           "component": "select",
+                                          "hideField": true,
                                           "id": "object_item",
                                           "includeEmpty": true,
                                           "isClearable": true,
@@ -42655,6 +42728,10 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                         Object {
                                           "className": "attribute-value-fields-subform",
                                           "component": "sub-form",
+                                          "condition": Object {
+                                            "is": "automation_request",
+                                            "when": "action_typ",
+                                          },
                                           "fields": Array [
                                             Array [
                                               Object {
@@ -42829,6 +42906,10 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                           Object {
                                             "className": "attribute-value-fields-subform",
                                             "component": "sub-form",
+                                            "condition": Object {
+                                              "is": "automation_request",
+                                              "when": "action_typ",
+                                            },
                                             "fields": Array [
                                               Array [
                                                 Object {
@@ -43017,6 +43098,10 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                               Object {
                                                 "className": "attribute-value-fields-subform",
                                                 "component": "sub-form",
+                                                "condition": Object {
+                                                  "is": "automation_request",
+                                                  "when": "action_typ",
+                                                },
                                                 "fields": Array [
                                                   Array [
                                                     Object {
@@ -43197,6 +43282,10 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                 Object {
                                                   "className": "attribute-value-fields-subform",
                                                   "component": "sub-form",
+                                                  "condition": Object {
+                                                    "is": "automation_request",
+                                                    "when": "action_typ",
+                                                  },
                                                   "fields": Array [
                                                     Array [
                                                       Object {
@@ -43376,6 +43465,10 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                   Object {
                                                     "className": "attribute-value-fields-subform",
                                                     "component": "sub-form",
+                                                    "condition": Object {
+                                                      "is": "automation_request",
+                                                      "when": "action_typ",
+                                                    },
                                                     "fields": Array [
                                                       Array [
                                                         Object {
@@ -43976,6 +44069,7 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                       field={
                                         Object {
                                           "component": "select",
+                                          "hideField": true,
                                           "id": "timer_value",
                                           "initialValue": 1,
                                           "initializeOnMount": true,
