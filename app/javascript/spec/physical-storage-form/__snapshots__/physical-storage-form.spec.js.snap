@@ -3485,6 +3485,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                         field={
                                           Object {
                                             "component": "text-field",
+                                            "hideField": false,
                                             "id": "name",
                                             "isDisabled": true,
                                             "label": "Name:",
@@ -3606,6 +3607,10 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                         field={
                                           Object {
                                             "component": "select",
+                                            "condition": Object {
+                                              "isNotEmpty": true,
+                                              "when": "ems_id",
+                                            },
                                             "id": "physical_storage_family_id",
                                             "includeEmpty": true,
                                             "isDisabled": true,
@@ -3632,6 +3637,10 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                           field={
                                             Object {
                                               "component": "select",
+                                              "condition": Object {
+                                                "isNotEmpty": true,
+                                                "when": "ems_id",
+                                              },
                                               "id": "physical_storage_family_id",
                                               "includeEmpty": true,
                                               "isDisabled": true,
@@ -3672,6 +3681,10 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                               field={
                                                 Object {
                                                   "component": "select",
+                                                  "condition": Object {
+                                                    "isNotEmpty": true,
+                                                    "when": "ems_id",
+                                                  },
                                                   "id": "physical_storage_family_id",
                                                   "includeEmpty": true,
                                                   "isDisabled": true,
@@ -3704,6 +3717,10 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                 field={
                                                   Object {
                                                     "component": "select",
+                                                    "condition": Object {
+                                                      "isNotEmpty": true,
+                                                      "when": "ems_id",
+                                                    },
                                                     "id": "physical_storage_family_id",
                                                     "includeEmpty": true,
                                                     "isDisabled": true,
@@ -3735,6 +3752,10 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                   field={
                                                     Object {
                                                       "component": "select",
+                                                      "condition": Object {
+                                                        "isNotEmpty": true,
+                                                        "when": "ems_id",
+                                                      },
                                                       "id": "physical_storage_family_id",
                                                       "includeEmpty": true,
                                                       "isDisabled": true,
@@ -3806,6 +3827,10 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                         field={
                                           Object {
                                             "component": "radio",
+                                            "condition": Object {
+                                              "isNotEmpty": true,
+                                              "when": "physical_storage_family_id",
+                                            },
                                             "id": "capabilities",
                                             "isDisabled": undefined,
                                             "isRequired": true,
@@ -3839,6 +3864,10 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                           field={
                                             Object {
                                               "component": "radio",
+                                              "condition": Object {
+                                                "isNotEmpty": true,
+                                                "when": "physical_storage_family_id",
+                                              },
                                               "id": "capabilities",
                                               "isDisabled": undefined,
                                               "isRequired": true,
@@ -3886,6 +3915,10 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                               field={
                                                 Object {
                                                   "component": "radio",
+                                                  "condition": Object {
+                                                    "isNotEmpty": true,
+                                                    "when": "physical_storage_family_id",
+                                                  },
                                                   "id": "capabilities",
                                                   "isDisabled": undefined,
                                                   "isRequired": true,
@@ -3925,6 +3958,10 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                 field={
                                                   Object {
                                                     "component": "radio",
+                                                    "condition": Object {
+                                                      "isNotEmpty": true,
+                                                      "when": "physical_storage_family_id",
+                                                    },
                                                     "id": "capabilities",
                                                     "isDisabled": undefined,
                                                     "isRequired": true,
@@ -3963,6 +4000,10 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                   field={
                                                     Object {
                                                       "component": "radio",
+                                                      "condition": Object {
+                                                        "isNotEmpty": true,
+                                                        "when": "physical_storage_family_id",
+                                                      },
                                                       "id": "capabilities",
                                                       "isDisabled": undefined,
                                                       "isRequired": true,
@@ -4034,6 +4075,10 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                         field={
                                           Object {
                                             "component": "select",
+                                            "condition": Object {
+                                              "is": "Custom",
+                                              "when": "capabilities",
+                                            },
                                             "id": "enabled_capability_values",
                                             "includeEmpty": false,
                                             "isDisabled": true,
@@ -4061,6 +4106,10 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                           field={
                                             Object {
                                               "component": "select",
+                                              "condition": Object {
+                                                "is": "Custom",
+                                                "when": "capabilities",
+                                              },
                                               "id": "enabled_capability_values",
                                               "includeEmpty": false,
                                               "isDisabled": true,
@@ -4102,6 +4151,10 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                               field={
                                                 Object {
                                                   "component": "select",
+                                                  "condition": Object {
+                                                    "is": "Custom",
+                                                    "when": "capabilities",
+                                                  },
                                                   "id": "enabled_capability_values",
                                                   "includeEmpty": false,
                                                   "isDisabled": true,
@@ -4135,6 +4188,10 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                 field={
                                                   Object {
                                                     "component": "select",
+                                                    "condition": Object {
+                                                      "is": "Custom",
+                                                      "when": "capabilities",
+                                                    },
                                                     "id": "enabled_capability_values",
                                                     "includeEmpty": false,
                                                     "isDisabled": true,
@@ -4167,6 +4224,10 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                   field={
                                                     Object {
                                                       "component": "select",
+                                                      "condition": Object {
+                                                        "is": "Custom",
+                                                        "when": "capabilities",
+                                                      },
                                                       "id": "enabled_capability_values",
                                                       "includeEmpty": false,
                                                       "isDisabled": true,
@@ -4209,6 +4270,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                         field={
                                           Object {
                                             "component": "text-field",
+                                            "hideField": true,
                                             "id": "edit",
                                             "initialValue": "",
                                             "isDisabled": undefined,
@@ -4323,6 +4385,10 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                         field={
                                           Object {
                                             "component": "checkbox",
+                                            "condition": Object {
+                                              "is": "yes",
+                                              "when": "edit",
+                                            },
                                             "id": "edit_authentication",
                                             "initialValue": false,
                                             "isDisabled": undefined,
@@ -4341,6 +4407,10 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                           field={
                                             Object {
                                               "component": "checkbox",
+                                              "condition": Object {
+                                                "is": "yes",
+                                                "when": "edit",
+                                              },
                                               "id": "edit_authentication",
                                               "initialValue": false,
                                               "isDisabled": undefined,
@@ -4373,6 +4443,10 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                               field={
                                                 Object {
                                                   "component": "checkbox",
+                                                  "condition": Object {
+                                                    "is": "yes",
+                                                    "when": "edit",
+                                                  },
                                                   "id": "edit_authentication",
                                                   "initialValue": false,
                                                   "isDisabled": undefined,
@@ -4397,6 +4471,10 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                 field={
                                                   Object {
                                                     "component": "checkbox",
+                                                    "condition": Object {
+                                                      "is": "yes",
+                                                      "when": "edit",
+                                                    },
                                                     "id": "edit_authentication",
                                                     "initialValue": false,
                                                     "isDisabled": undefined,
@@ -4420,6 +4498,10 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                   field={
                                                     Object {
                                                       "component": "checkbox",
+                                                      "condition": Object {
+                                                        "is": "yes",
+                                                        "when": "edit",
+                                                      },
                                                       "id": "edit_authentication",
                                                       "initialValue": false,
                                                       "isDisabled": undefined,
@@ -4488,6 +4570,18 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                         field={
                                           Object {
                                             "component": "text-field",
+                                            "condition": Object {
+                                              "or": Array [
+                                                Object {
+                                                  "is": true,
+                                                  "when": "edit_authentication",
+                                                },
+                                                Object {
+                                                  "is": "",
+                                                  "when": "edit",
+                                                },
+                                              ],
+                                            },
                                             "id": "management_ip",
                                             "isDisabled": undefined,
                                             "isRequired": true,
@@ -4520,6 +4614,18 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                           field={
                                             Object {
                                               "component": "text-field",
+                                              "condition": Object {
+                                                "or": Array [
+                                                  Object {
+                                                    "is": true,
+                                                    "when": "edit_authentication",
+                                                  },
+                                                  Object {
+                                                    "is": "",
+                                                    "when": "edit",
+                                                  },
+                                                ],
+                                              },
                                               "id": "management_ip",
                                               "isDisabled": undefined,
                                               "isRequired": true,
@@ -4567,6 +4673,18 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                               field={
                                                 Object {
                                                   "component": "text-field",
+                                                  "condition": Object {
+                                                    "or": Array [
+                                                      Object {
+                                                        "is": true,
+                                                        "when": "edit_authentication",
+                                                      },
+                                                      Object {
+                                                        "is": "",
+                                                        "when": "edit",
+                                                      },
+                                                    ],
+                                                  },
                                                   "id": "management_ip",
                                                   "isDisabled": undefined,
                                                   "isRequired": true,
@@ -4618,6 +4736,18 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                   field={
                                                     Object {
                                                       "component": "text-field",
+                                                      "condition": Object {
+                                                        "or": Array [
+                                                          Object {
+                                                            "is": true,
+                                                            "when": "edit_authentication",
+                                                          },
+                                                          Object {
+                                                            "is": "",
+                                                            "when": "edit",
+                                                          },
+                                                        ],
+                                                      },
                                                       "id": "management_ip",
                                                       "isDisabled": undefined,
                                                       "isRequired": true,
@@ -4657,6 +4787,18 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                     field={
                                                       Object {
                                                         "component": "text-field",
+                                                        "condition": Object {
+                                                          "or": Array [
+                                                            Object {
+                                                              "is": true,
+                                                              "when": "edit_authentication",
+                                                            },
+                                                            Object {
+                                                              "is": "",
+                                                              "when": "edit",
+                                                            },
+                                                          ],
+                                                        },
                                                         "id": "management_ip",
                                                         "isDisabled": undefined,
                                                         "isRequired": true,
@@ -4695,6 +4837,18 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                       field={
                                                         Object {
                                                           "component": "text-field",
+                                                          "condition": Object {
+                                                            "or": Array [
+                                                              Object {
+                                                                "is": true,
+                                                                "when": "edit_authentication",
+                                                              },
+                                                              Object {
+                                                                "is": "",
+                                                                "when": "edit",
+                                                              },
+                                                            ],
+                                                          },
                                                           "id": "management_ip",
                                                           "isDisabled": undefined,
                                                           "isRequired": true,
@@ -4867,6 +5021,18 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                         field={
                                           Object {
                                             "component": "text-field",
+                                            "condition": Object {
+                                              "or": Array [
+                                                Object {
+                                                  "is": true,
+                                                  "when": "edit_authentication",
+                                                },
+                                                Object {
+                                                  "is": "",
+                                                  "when": "edit",
+                                                },
+                                              ],
+                                            },
                                             "id": "user",
                                             "isDisabled": undefined,
                                             "isRequired": true,
@@ -4899,6 +5065,18 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                           field={
                                             Object {
                                               "component": "text-field",
+                                              "condition": Object {
+                                                "or": Array [
+                                                  Object {
+                                                    "is": true,
+                                                    "when": "edit_authentication",
+                                                  },
+                                                  Object {
+                                                    "is": "",
+                                                    "when": "edit",
+                                                  },
+                                                ],
+                                              },
                                               "id": "user",
                                               "isDisabled": undefined,
                                               "isRequired": true,
@@ -4946,6 +5124,18 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                               field={
                                                 Object {
                                                   "component": "text-field",
+                                                  "condition": Object {
+                                                    "or": Array [
+                                                      Object {
+                                                        "is": true,
+                                                        "when": "edit_authentication",
+                                                      },
+                                                      Object {
+                                                        "is": "",
+                                                        "when": "edit",
+                                                      },
+                                                    ],
+                                                  },
                                                   "id": "user",
                                                   "isDisabled": undefined,
                                                   "isRequired": true,
@@ -4997,6 +5187,18 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                   field={
                                                     Object {
                                                       "component": "text-field",
+                                                      "condition": Object {
+                                                        "or": Array [
+                                                          Object {
+                                                            "is": true,
+                                                            "when": "edit_authentication",
+                                                          },
+                                                          Object {
+                                                            "is": "",
+                                                            "when": "edit",
+                                                          },
+                                                        ],
+                                                      },
                                                       "id": "user",
                                                       "isDisabled": undefined,
                                                       "isRequired": true,
@@ -5036,6 +5238,18 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                     field={
                                                       Object {
                                                         "component": "text-field",
+                                                        "condition": Object {
+                                                          "or": Array [
+                                                            Object {
+                                                              "is": true,
+                                                              "when": "edit_authentication",
+                                                            },
+                                                            Object {
+                                                              "is": "",
+                                                              "when": "edit",
+                                                            },
+                                                          ],
+                                                        },
                                                         "id": "user",
                                                         "isDisabled": undefined,
                                                         "isRequired": true,
@@ -5074,6 +5288,18 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                       field={
                                                         Object {
                                                           "component": "text-field",
+                                                          "condition": Object {
+                                                            "or": Array [
+                                                              Object {
+                                                                "is": true,
+                                                                "when": "edit_authentication",
+                                                              },
+                                                              Object {
+                                                                "is": "",
+                                                                "when": "edit",
+                                                              },
+                                                            ],
+                                                          },
                                                           "id": "user",
                                                           "isDisabled": undefined,
                                                           "isRequired": true,
@@ -5246,6 +5472,18 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                         field={
                                           Object {
                                             "component": "text-field",
+                                            "condition": Object {
+                                              "or": Array [
+                                                Object {
+                                                  "is": true,
+                                                  "when": "edit_authentication",
+                                                },
+                                                Object {
+                                                  "is": "",
+                                                  "when": "edit",
+                                                },
+                                              ],
+                                            },
                                             "id": "physical_storage_password",
                                             "isDisabled": undefined,
                                             "isRequired": true,
@@ -5278,6 +5516,18 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                           field={
                                             Object {
                                               "component": "text-field",
+                                              "condition": Object {
+                                                "or": Array [
+                                                  Object {
+                                                    "is": true,
+                                                    "when": "edit_authentication",
+                                                  },
+                                                  Object {
+                                                    "is": "",
+                                                    "when": "edit",
+                                                  },
+                                                ],
+                                              },
                                               "id": "physical_storage_password",
                                               "isDisabled": undefined,
                                               "isRequired": true,
@@ -5325,6 +5575,18 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                               field={
                                                 Object {
                                                   "component": "text-field",
+                                                  "condition": Object {
+                                                    "or": Array [
+                                                      Object {
+                                                        "is": true,
+                                                        "when": "edit_authentication",
+                                                      },
+                                                      Object {
+                                                        "is": "",
+                                                        "when": "edit",
+                                                      },
+                                                    ],
+                                                  },
                                                   "id": "physical_storage_password",
                                                   "isDisabled": undefined,
                                                   "isRequired": true,
@@ -5376,6 +5638,18 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                   field={
                                                     Object {
                                                       "component": "text-field",
+                                                      "condition": Object {
+                                                        "or": Array [
+                                                          Object {
+                                                            "is": true,
+                                                            "when": "edit_authentication",
+                                                          },
+                                                          Object {
+                                                            "is": "",
+                                                            "when": "edit",
+                                                          },
+                                                        ],
+                                                      },
                                                       "id": "physical_storage_password",
                                                       "isDisabled": undefined,
                                                       "isRequired": true,
@@ -5415,6 +5689,18 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                     field={
                                                       Object {
                                                         "component": "text-field",
+                                                        "condition": Object {
+                                                          "or": Array [
+                                                            Object {
+                                                              "is": true,
+                                                              "when": "edit_authentication",
+                                                            },
+                                                            Object {
+                                                              "is": "",
+                                                              "when": "edit",
+                                                            },
+                                                          ],
+                                                        },
                                                         "id": "physical_storage_password",
                                                         "isDisabled": undefined,
                                                         "isRequired": true,
@@ -5453,6 +5739,18 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                       field={
                                                         Object {
                                                           "component": "text-field",
+                                                          "condition": Object {
+                                                            "or": Array [
+                                                              Object {
+                                                                "is": true,
+                                                                "when": "edit_authentication",
+                                                              },
+                                                              Object {
+                                                                "is": "",
+                                                                "when": "edit",
+                                                              },
+                                                            ],
+                                                          },
                                                           "id": "physical_storage_password",
                                                           "isDisabled": undefined,
                                                           "isRequired": true,

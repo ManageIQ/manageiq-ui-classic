@@ -5262,6 +5262,10 @@ exports[`VM common form component should render adding form variant add new time
                                         field={
                                           Object {
                                             "component": "checkbox",
+                                            "condition": Object {
+                                              "is": false,
+                                              "when": "DaysSelectAll",
+                                            },
                                             "isRequired": true,
                                             "label": "Days",
                                             "name": "profile.days",
@@ -5313,6 +5317,10 @@ exports[`VM common form component should render adding form variant add new time
                                           field={
                                             Object {
                                               "component": "checkbox",
+                                              "condition": Object {
+                                                "is": false,
+                                                "when": "DaysSelectAll",
+                                              },
                                               "isRequired": true,
                                               "label": "Days",
                                               "name": "profile.days",
@@ -5378,6 +5386,10 @@ exports[`VM common form component should render adding form variant add new time
                                               field={
                                                 Object {
                                                   "component": "checkbox",
+                                                  "condition": Object {
+                                                    "is": false,
+                                                    "when": "DaysSelectAll",
+                                                  },
                                                   "isRequired": true,
                                                   "label": "Days",
                                                   "name": "profile.days",
@@ -5435,6 +5447,10 @@ exports[`VM common form component should render adding form variant add new time
                                                 field={
                                                   Object {
                                                     "component": "checkbox",
+                                                    "condition": Object {
+                                                      "is": false,
+                                                      "when": "DaysSelectAll",
+                                                    },
                                                     "isRequired": true,
                                                     "label": "Days",
                                                     "name": "profile.days",
@@ -5491,6 +5507,10 @@ exports[`VM common form component should render adding form variant add new time
                                                   field={
                                                     Object {
                                                       "component": "checkbox",
+                                                      "condition": Object {
+                                                        "is": false,
+                                                        "when": "DaysSelectAll",
+                                                      },
                                                       "isRequired": true,
                                                       "label": "Days",
                                                       "name": "profile.days",
@@ -6531,6 +6551,10 @@ exports[`VM common form component should render adding form variant add new time
                                         field={
                                           Object {
                                             "component": "checkbox",
+                                            "condition": Object {
+                                              "is": true,
+                                              "when": "DaysSelectAll",
+                                            },
                                             "initialValue": Array [
                                               0,
                                               1,
@@ -6587,6 +6611,10 @@ exports[`VM common form component should render adding form variant add new time
                                           field={
                                             Object {
                                               "component": "checkbox",
+                                              "condition": Object {
+                                                "is": true,
+                                                "when": "DaysSelectAll",
+                                              },
                                               "initialValue": Array [
                                                 0,
                                                 1,
@@ -6657,6 +6685,10 @@ exports[`VM common form component should render adding form variant add new time
                                               field={
                                                 Object {
                                                   "component": "checkbox",
+                                                  "condition": Object {
+                                                    "is": true,
+                                                    "when": "DaysSelectAll",
+                                                  },
                                                   "initialValue": Array [
                                                     0,
                                                     1,
@@ -6719,6 +6751,10 @@ exports[`VM common form component should render adding form variant add new time
                                                 field={
                                                   Object {
                                                     "component": "checkbox",
+                                                    "condition": Object {
+                                                      "is": true,
+                                                      "when": "DaysSelectAll",
+                                                    },
                                                     "initialValue": Array [
                                                       0,
                                                       1,
@@ -6780,6 +6816,10 @@ exports[`VM common form component should render adding form variant add new time
                                                   field={
                                                     Object {
                                                       "component": "checkbox",
+                                                      "condition": Object {
+                                                        "is": true,
+                                                        "when": "DaysSelectAll",
+                                                      },
                                                       "initialValue": Array [
                                                         0,
                                                         1,
@@ -7882,6 +7922,10 @@ exports[`VM common form component should render adding form variant add new time
                                         field={
                                           Object {
                                             "component": "checkbox",
+                                            "condition": Object {
+                                              "is": false,
+                                              "when": "HoursSelectAll",
+                                            },
                                             "isRequired": true,
                                             "label": "Hours (AM)",
                                             "name": "profile.hoursAM",
@@ -7948,6 +7992,10 @@ exports[`VM common form component should render adding form variant add new time
                                           field={
                                             Object {
                                               "component": "checkbox",
+                                              "condition": Object {
+                                                "is": false,
+                                                "when": "HoursSelectAll",
+                                              },
                                               "isRequired": true,
                                               "label": "Hours (AM)",
                                               "name": "profile.hoursAM",
@@ -8028,6 +8076,10 @@ exports[`VM common form component should render adding form variant add new time
                                               field={
                                                 Object {
                                                   "component": "checkbox",
+                                                  "condition": Object {
+                                                    "is": false,
+                                                    "when": "HoursSelectAll",
+                                                  },
                                                   "isRequired": true,
                                                   "label": "Hours (AM)",
                                                   "name": "profile.hoursAM",
@@ -8100,6 +8152,10 @@ exports[`VM common form component should render adding form variant add new time
                                                 field={
                                                   Object {
                                                     "component": "checkbox",
+                                                    "condition": Object {
+                                                      "is": false,
+                                                      "when": "HoursSelectAll",
+                                                    },
                                                     "isRequired": true,
                                                     "label": "Hours (AM)",
                                                     "name": "profile.hoursAM",
@@ -8171,6 +8227,10 @@ exports[`VM common form component should render adding form variant add new time
                                                   field={
                                                     Object {
                                                       "component": "checkbox",
+                                                      "condition": Object {
+                                                        "is": false,
+                                                        "when": "HoursSelectAll",
+                                                      },
                                                       "isRequired": true,
                                                       "label": "Hours (AM)",
                                                       "name": "profile.hoursAM",
@@ -9805,6 +9865,10 @@ exports[`VM common form component should render adding form variant add new time
                                         field={
                                           Object {
                                             "component": "checkbox",
+                                            "condition": Object {
+                                              "is": false,
+                                              "when": "HoursSelectAll",
+                                            },
                                             "isRequired": true,
                                             "label": "Hours (PM)",
                                             "name": "profile.hoursPM",
@@ -9871,6 +9935,10 @@ exports[`VM common form component should render adding form variant add new time
                                           field={
                                             Object {
                                               "component": "checkbox",
+                                              "condition": Object {
+                                                "is": false,
+                                                "when": "HoursSelectAll",
+                                              },
                                               "isRequired": true,
                                               "label": "Hours (PM)",
                                               "name": "profile.hoursPM",
@@ -9951,6 +10019,10 @@ exports[`VM common form component should render adding form variant add new time
                                               field={
                                                 Object {
                                                   "component": "checkbox",
+                                                  "condition": Object {
+                                                    "is": false,
+                                                    "when": "HoursSelectAll",
+                                                  },
                                                   "isRequired": true,
                                                   "label": "Hours (PM)",
                                                   "name": "profile.hoursPM",
@@ -10023,6 +10095,10 @@ exports[`VM common form component should render adding form variant add new time
                                                 field={
                                                   Object {
                                                     "component": "checkbox",
+                                                    "condition": Object {
+                                                      "is": false,
+                                                      "when": "HoursSelectAll",
+                                                    },
                                                     "isRequired": true,
                                                     "label": "Hours (PM)",
                                                     "name": "profile.hoursPM",
@@ -10094,6 +10170,10 @@ exports[`VM common form component should render adding form variant add new time
                                                   field={
                                                     Object {
                                                       "component": "checkbox",
+                                                      "condition": Object {
+                                                        "is": false,
+                                                        "when": "HoursSelectAll",
+                                                      },
                                                       "isRequired": true,
                                                       "label": "Hours (PM)",
                                                       "name": "profile.hoursPM",
@@ -11745,6 +11825,10 @@ exports[`VM common form component should render adding form variant add new time
                                         field={
                                           Object {
                                             "component": "checkbox",
+                                            "condition": Object {
+                                              "is": true,
+                                              "when": "HoursSelectAll",
+                                            },
                                             "initialValue": Array [
                                               0,
                                               1,
@@ -11826,6 +11910,10 @@ exports[`VM common form component should render adding form variant add new time
                                           field={
                                             Object {
                                               "component": "checkbox",
+                                              "condition": Object {
+                                                "is": true,
+                                                "when": "HoursSelectAll",
+                                              },
                                               "initialValue": Array [
                                                 0,
                                                 1,
@@ -11921,6 +12009,10 @@ exports[`VM common form component should render adding form variant add new time
                                               field={
                                                 Object {
                                                   "component": "checkbox",
+                                                  "condition": Object {
+                                                    "is": true,
+                                                    "when": "HoursSelectAll",
+                                                  },
                                                   "initialValue": Array [
                                                     0,
                                                     1,
@@ -12008,6 +12100,10 @@ exports[`VM common form component should render adding form variant add new time
                                                 field={
                                                   Object {
                                                     "component": "checkbox",
+                                                    "condition": Object {
+                                                      "is": true,
+                                                      "when": "HoursSelectAll",
+                                                    },
                                                     "initialValue": Array [
                                                       0,
                                                       1,
@@ -12094,6 +12190,10 @@ exports[`VM common form component should render adding form variant add new time
                                                   field={
                                                     Object {
                                                       "component": "checkbox",
+                                                      "condition": Object {
+                                                        "is": true,
+                                                        "when": "HoursSelectAll",
+                                                      },
                                                       "initialValue": Array [
                                                         0,
                                                         1,
@@ -12269,6 +12369,10 @@ exports[`VM common form component should render adding form variant add new time
                                         field={
                                           Object {
                                             "component": "checkbox",
+                                            "condition": Object {
+                                              "is": true,
+                                              "when": "HoursSelectAll",
+                                            },
                                             "initialValue": Array [
                                               12,
                                               13,
@@ -12350,6 +12454,10 @@ exports[`VM common form component should render adding form variant add new time
                                           field={
                                             Object {
                                               "component": "checkbox",
+                                              "condition": Object {
+                                                "is": true,
+                                                "when": "HoursSelectAll",
+                                              },
                                               "initialValue": Array [
                                                 12,
                                                 13,
@@ -12445,6 +12553,10 @@ exports[`VM common form component should render adding form variant add new time
                                               field={
                                                 Object {
                                                   "component": "checkbox",
+                                                  "condition": Object {
+                                                    "is": true,
+                                                    "when": "HoursSelectAll",
+                                                  },
                                                   "initialValue": Array [
                                                     12,
                                                     13,
@@ -12532,6 +12644,10 @@ exports[`VM common form component should render adding form variant add new time
                                                 field={
                                                   Object {
                                                     "component": "checkbox",
+                                                    "condition": Object {
+                                                      "is": true,
+                                                      "when": "HoursSelectAll",
+                                                    },
                                                     "initialValue": Array [
                                                       12,
                                                       13,
@@ -12618,6 +12734,10 @@ exports[`VM common form component should render adding form variant add new time
                                                   field={
                                                     Object {
                                                       "component": "checkbox",
+                                                      "condition": Object {
+                                                        "is": true,
+                                                        "when": "HoursSelectAll",
+                                                      },
                                                       "initialValue": Array [
                                                         12,
                                                         13,
@@ -12953,6 +13073,10 @@ exports[`VM common form component should render adding form variant add new time
                               field={
                                 Object {
                                   "component": "switch",
+                                  "condition": Object {
+                                    "pattern": /\\[\\^null\\]/,
+                                    "when": "profile.tz",
+                                  },
                                   "id": "rollup_daily_metrics",
                                   "label": "Roll Up Daily Performance",
                                   "name": "rollup_daily_metrics",
@@ -12971,6 +13095,10 @@ exports[`VM common form component should render adding form variant add new time
                                 field={
                                   Object {
                                     "component": "switch",
+                                    "condition": Object {
+                                      "pattern": /\\[\\^null\\]/,
+                                      "when": "profile.tz",
+                                    },
                                     "id": "rollup_daily_metrics",
                                     "label": "Roll Up Daily Performance",
                                     "name": "rollup_daily_metrics",
@@ -13003,6 +13131,10 @@ exports[`VM common form component should render adding form variant add new time
                                     field={
                                       Object {
                                         "component": "switch",
+                                        "condition": Object {
+                                          "pattern": /\\[\\^null\\]/,
+                                          "when": "profile.tz",
+                                        },
                                         "id": "rollup_daily_metrics",
                                         "label": "Roll Up Daily Performance",
                                         "name": "rollup_daily_metrics",
@@ -13029,6 +13161,10 @@ exports[`VM common form component should render adding form variant add new time
                                       field={
                                         Object {
                                           "component": "switch",
+                                          "condition": Object {
+                                            "pattern": /\\[\\^null\\]/,
+                                            "when": "profile.tz",
+                                          },
                                           "id": "rollup_daily_metrics",
                                           "label": "Roll Up Daily Performance",
                                           "name": "rollup_daily_metrics",
@@ -13054,6 +13190,10 @@ exports[`VM common form component should render adding form variant add new time
                                         field={
                                           Object {
                                             "component": "switch",
+                                            "condition": Object {
+                                              "pattern": /\\[\\^null\\]/,
+                                              "when": "profile.tz",
+                                            },
                                             "id": "rollup_daily_metrics",
                                             "label": "Roll Up Daily Performance",
                                             "name": "rollup_daily_metrics",

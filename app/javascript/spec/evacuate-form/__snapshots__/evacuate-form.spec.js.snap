@@ -1250,6 +1250,10 @@ exports[`evacuate form component should render evacuate form when hosts empty 1`
                                       field={
                                         Object {
                                           "component": "password-field",
+                                          "condition": Object {
+                                            "is": false,
+                                            "when": "on_shared_storage",
+                                          },
                                           "id": "admin_password",
                                           "isRequired": true,
                                           "label": "Admin Password",
@@ -1272,6 +1276,10 @@ exports[`evacuate form component should render evacuate form when hosts empty 1`
                                         field={
                                           Object {
                                             "component": "password-field",
+                                            "condition": Object {
+                                              "is": false,
+                                              "when": "on_shared_storage",
+                                            },
                                             "id": "admin_password",
                                             "isRequired": true,
                                             "label": "Admin Password",
@@ -1308,6 +1316,10 @@ exports[`evacuate form component should render evacuate form when hosts empty 1`
                                             field={
                                               Object {
                                                 "component": "password-field",
+                                                "condition": Object {
+                                                  "is": false,
+                                                  "when": "on_shared_storage",
+                                                },
                                                 "id": "admin_password",
                                                 "isRequired": true,
                                                 "label": "Admin Password",
@@ -1336,6 +1348,10 @@ exports[`evacuate form component should render evacuate form when hosts empty 1`
                                               field={
                                                 Object {
                                                   "component": "password-field",
+                                                  "condition": Object {
+                                                    "is": false,
+                                                    "when": "on_shared_storage",
+                                                  },
                                                   "id": "admin_password",
                                                   "isRequired": true,
                                                   "label": "Admin Password",
@@ -1363,6 +1379,10 @@ exports[`evacuate form component should render evacuate form when hosts empty 1`
                                                 field={
                                                   Object {
                                                     "component": "password-field",
+                                                    "condition": Object {
+                                                      "is": false,
+                                                      "when": "on_shared_storage",
+                                                    },
                                                     "id": "admin_password",
                                                     "isRequired": true,
                                                     "label": "Admin Password",
@@ -1421,6 +1441,10 @@ exports[`evacuate form component should render evacuate form when hosts empty 1`
                                       field={
                                         Object {
                                           "component": "select",
+                                          "condition": Object {
+                                            "is": false,
+                                            "when": "auto_select_host",
+                                          },
                                           "id": "destination_host",
                                           "includeEmpty": true,
                                           "isRequired": true,
@@ -1446,6 +1470,10 @@ exports[`evacuate form component should render evacuate form when hosts empty 1`
                                         field={
                                           Object {
                                             "component": "select",
+                                            "condition": Object {
+                                              "is": false,
+                                              "when": "auto_select_host",
+                                            },
                                             "id": "destination_host",
                                             "includeEmpty": true,
                                             "isRequired": true,
@@ -1485,6 +1513,10 @@ exports[`evacuate form component should render evacuate form when hosts empty 1`
                                             field={
                                               Object {
                                                 "component": "select",
+                                                "condition": Object {
+                                                  "is": false,
+                                                  "when": "auto_select_host",
+                                                },
                                                 "id": "destination_host",
                                                 "includeEmpty": true,
                                                 "isRequired": true,
@@ -1516,6 +1548,10 @@ exports[`evacuate form component should render evacuate form when hosts empty 1`
                                               field={
                                                 Object {
                                                   "component": "select",
+                                                  "condition": Object {
+                                                    "is": false,
+                                                    "when": "auto_select_host",
+                                                  },
                                                   "id": "destination_host",
                                                   "includeEmpty": true,
                                                   "isRequired": true,
@@ -1546,6 +1582,10 @@ exports[`evacuate form component should render evacuate form when hosts empty 1`
                                                 field={
                                                   Object {
                                                     "component": "select",
+                                                    "condition": Object {
+                                                      "is": false,
+                                                      "when": "auto_select_host",
+                                                    },
                                                     "id": "destination_host",
                                                     "includeEmpty": true,
                                                     "isRequired": true,
@@ -3416,6 +3456,10 @@ exports[`evacuate form component should render evacuate form with host options 1
                                       field={
                                         Object {
                                           "component": "password-field",
+                                          "condition": Object {
+                                            "is": false,
+                                            "when": "on_shared_storage",
+                                          },
                                           "id": "admin_password",
                                           "isRequired": true,
                                           "label": "Admin Password",
@@ -3438,6 +3482,10 @@ exports[`evacuate form component should render evacuate form with host options 1
                                         field={
                                           Object {
                                             "component": "password-field",
+                                            "condition": Object {
+                                              "is": false,
+                                              "when": "on_shared_storage",
+                                            },
                                             "id": "admin_password",
                                             "isRequired": true,
                                             "label": "Admin Password",
@@ -3474,6 +3522,10 @@ exports[`evacuate form component should render evacuate form with host options 1
                                             field={
                                               Object {
                                                 "component": "password-field",
+                                                "condition": Object {
+                                                  "is": false,
+                                                  "when": "on_shared_storage",
+                                                },
                                                 "id": "admin_password",
                                                 "isRequired": true,
                                                 "label": "Admin Password",
@@ -3502,6 +3554,10 @@ exports[`evacuate form component should render evacuate form with host options 1
                                               field={
                                                 Object {
                                                   "component": "password-field",
+                                                  "condition": Object {
+                                                    "is": false,
+                                                    "when": "on_shared_storage",
+                                                  },
                                                   "id": "admin_password",
                                                   "isRequired": true,
                                                   "label": "Admin Password",
@@ -3529,6 +3585,10 @@ exports[`evacuate form component should render evacuate form with host options 1
                                                 field={
                                                   Object {
                                                     "component": "password-field",
+                                                    "condition": Object {
+                                                      "is": false,
+                                                      "when": "on_shared_storage",
+                                                    },
                                                     "id": "admin_password",
                                                     "isRequired": true,
                                                     "label": "Admin Password",
@@ -3610,6 +3670,10 @@ exports[`evacuate form component should render evacuate form with host options 1
                                       field={
                                         Object {
                                           "component": "select",
+                                          "condition": Object {
+                                            "is": false,
+                                            "when": "auto_select_host",
+                                          },
                                           "id": "destination_host",
                                           "includeEmpty": true,
                                           "isRequired": true,
@@ -3656,6 +3720,10 @@ exports[`evacuate form component should render evacuate form with host options 1
                                         field={
                                           Object {
                                             "component": "select",
+                                            "condition": Object {
+                                              "is": false,
+                                              "when": "auto_select_host",
+                                            },
                                             "id": "destination_host",
                                             "includeEmpty": true,
                                             "isRequired": true,
@@ -3716,6 +3784,10 @@ exports[`evacuate form component should render evacuate form with host options 1
                                             field={
                                               Object {
                                                 "component": "select",
+                                                "condition": Object {
+                                                  "is": false,
+                                                  "when": "auto_select_host",
+                                                },
                                                 "id": "destination_host",
                                                 "includeEmpty": true,
                                                 "isRequired": true,
@@ -3768,6 +3840,10 @@ exports[`evacuate form component should render evacuate form with host options 1
                                               field={
                                                 Object {
                                                   "component": "select",
+                                                  "condition": Object {
+                                                    "is": false,
+                                                    "when": "auto_select_host",
+                                                  },
                                                   "id": "destination_host",
                                                   "includeEmpty": true,
                                                   "isRequired": true,
@@ -3819,6 +3895,10 @@ exports[`evacuate form component should render evacuate form with host options 1
                                                 field={
                                                   Object {
                                                     "component": "select",
+                                                    "condition": Object {
+                                                      "is": false,
+                                                      "when": "auto_select_host",
+                                                    },
                                                     "id": "destination_host",
                                                     "includeEmpty": true,
                                                     "isRequired": true,
@@ -5500,6 +5580,10 @@ exports[`evacuate form component should render evacuate form with multiple insta
                                       field={
                                         Object {
                                           "component": "password-field",
+                                          "condition": Object {
+                                            "is": false,
+                                            "when": "on_shared_storage",
+                                          },
                                           "id": "admin_password",
                                           "isRequired": true,
                                           "label": "Admin Password",
@@ -5522,6 +5606,10 @@ exports[`evacuate form component should render evacuate form with multiple insta
                                         field={
                                           Object {
                                             "component": "password-field",
+                                            "condition": Object {
+                                              "is": false,
+                                              "when": "on_shared_storage",
+                                            },
                                             "id": "admin_password",
                                             "isRequired": true,
                                             "label": "Admin Password",
@@ -5558,6 +5646,10 @@ exports[`evacuate form component should render evacuate form with multiple insta
                                             field={
                                               Object {
                                                 "component": "password-field",
+                                                "condition": Object {
+                                                  "is": false,
+                                                  "when": "on_shared_storage",
+                                                },
                                                 "id": "admin_password",
                                                 "isRequired": true,
                                                 "label": "Admin Password",
@@ -5586,6 +5678,10 @@ exports[`evacuate form component should render evacuate form with multiple insta
                                               field={
                                                 Object {
                                                   "component": "password-field",
+                                                  "condition": Object {
+                                                    "is": false,
+                                                    "when": "on_shared_storage",
+                                                  },
                                                   "id": "admin_password",
                                                   "isRequired": true,
                                                   "label": "Admin Password",
@@ -5613,6 +5709,10 @@ exports[`evacuate form component should render evacuate form with multiple insta
                                                 field={
                                                   Object {
                                                     "component": "password-field",
+                                                    "condition": Object {
+                                                      "is": false,
+                                                      "when": "on_shared_storage",
+                                                    },
                                                     "id": "admin_password",
                                                     "isRequired": true,
                                                     "label": "Admin Password",
@@ -5671,6 +5771,10 @@ exports[`evacuate form component should render evacuate form with multiple insta
                                       field={
                                         Object {
                                           "component": "select",
+                                          "condition": Object {
+                                            "is": false,
+                                            "when": "auto_select_host",
+                                          },
                                           "id": "destination_host",
                                           "includeEmpty": true,
                                           "isRequired": true,
@@ -5696,6 +5800,10 @@ exports[`evacuate form component should render evacuate form with multiple insta
                                         field={
                                           Object {
                                             "component": "select",
+                                            "condition": Object {
+                                              "is": false,
+                                              "when": "auto_select_host",
+                                            },
                                             "id": "destination_host",
                                             "includeEmpty": true,
                                             "isRequired": true,
@@ -5735,6 +5843,10 @@ exports[`evacuate form component should render evacuate form with multiple insta
                                             field={
                                               Object {
                                                 "component": "select",
+                                                "condition": Object {
+                                                  "is": false,
+                                                  "when": "auto_select_host",
+                                                },
                                                 "id": "destination_host",
                                                 "includeEmpty": true,
                                                 "isRequired": true,
@@ -5766,6 +5878,10 @@ exports[`evacuate form component should render evacuate form with multiple insta
                                               field={
                                                 Object {
                                                   "component": "select",
+                                                  "condition": Object {
+                                                    "is": false,
+                                                    "when": "auto_select_host",
+                                                  },
                                                   "id": "destination_host",
                                                   "includeEmpty": true,
                                                   "isRequired": true,
@@ -5796,6 +5912,10 @@ exports[`evacuate form component should render evacuate form with multiple insta
                                                 field={
                                                   Object {
                                                     "component": "select",
+                                                    "condition": Object {
+                                                      "is": false,
+                                                      "when": "auto_select_host",
+                                                    },
                                                     "id": "destination_host",
                                                     "includeEmpty": true,
                                                     "isRequired": true,
