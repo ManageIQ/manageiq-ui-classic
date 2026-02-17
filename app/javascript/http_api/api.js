@@ -1,7 +1,5 @@
 import { miqFetch } from './fetch';
 
-const { miqDeferred } = window;
-
 /*
  * API.get(url, options) - use API.get('/api'), returns a Promise
  * API.delete - (the same)
@@ -63,7 +61,7 @@ API.ws_init = () => API.get('/api/auth?requester_type=ws').then((response) => {
 });
 
 API.wait_for_task = (taskId) => {
-  const deferred = miqDeferred();
+  const deferred = window.miqDeferred();
 
   const retry = () => {
     API.get(`/api/tasks/${taskId}?attributes=task_results`)

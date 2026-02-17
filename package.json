@@ -38,6 +38,7 @@
     "@carbon/themes": "~11.68.0",
     "@data-driven-forms/carbon-component-mapper": "~4.1.13",
     "@data-driven-forms/react-form-renderer": "~4.1.13",
+    "@hotwired/stimulus": "^3.2.2",
     "@manageiq/font-fabulous": "~1.0.5",
     "@manageiq/ui-components": "~1.6.1",
     "@novnc/novnc": "~1.2.0",

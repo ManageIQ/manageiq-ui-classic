@@ -141,3 +141,12 @@ function errorModal(err, skipErrors, backendName) {
     console.error('API: Server returned a non-200 response:', err.status, err.statusText, err);
   }
 }
+
+export function addSearchParams(path, params) {
+  const tempUrl = new URL(path, 'http://dummy')
+  for (const key of Object.keys(params)) {
+    const value = params[key]
+    tempUrl.searchParams.set(key, value)
+  }
+  return tempUrl.pathname + tempUrl.search
+}
