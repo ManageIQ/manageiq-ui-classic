@@ -107,7 +107,6 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
             "font-icon-picker": [Function],
             "font-icon-picker-ddf": [Function],
             "key-value-list": [Function],
-            "multi-select": [Function],
             "password-field": [Function],
             "plain-text": [Function],
             "radio": [Function],
@@ -120,7 +119,6 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
             "textarea": [Function],
             "time-picker": [Function],
             "tree-selector": [Function],
-            "tree-view": [Function],
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -218,7 +216,6 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
               "font-icon-picker": [Function],
               "font-icon-picker-ddf": [Function],
               "key-value-list": [Function],
-              "multi-select": [Function],
               "password-field": [Function],
               "plain-text": [Function],
               "radio": [Function],
@@ -232,7 +229,6 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
               "textarea": [Function],
               "time-picker": [Function],
               "tree-selector": [Function],
-              "tree-view": [Function],
               "validate-credentials": [Function],
               "wizard": [Function],
             }
