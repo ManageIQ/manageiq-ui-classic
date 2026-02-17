@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@carbon/react';
-import { Close16, Edit16 } from '@carbon/icons-react';
+import { Close, Edit } from '@carbon/react/icons';
 import { SD_ACTIONS, SD_PROP_SHAPES } from './helper';
 import EditFieldModal from './edit-field-modal';
 
@@ -33,7 +33,7 @@ const DynamicFieldActions = ({
 
   const renderEditButton = () => (
     <Button
-      renderIcon={Edit16}
+      renderIcon={(props) => <Edit size={16} {...props} />}
       kind="ghost"
       iconDescription={__('Edit')}
       onClick={() => toggleModal(true)}
@@ -44,7 +44,7 @@ const DynamicFieldActions = ({
 
   const renderRemoveButton = () => (
     <Button
-      renderIcon={Close16}
+      renderIcon={(props) => <Close size={16} {...props} />}
       kind="ghost"
       iconDescription={__('Remove')}
       onClick={(event) => dynamicFieldAction(SD_ACTIONS.field.delete, event)}

@@ -4,8 +4,8 @@ import {
   Button,
 } from '@carbon/react';
 import {
-  Close16, Edit16, Minimize16, Maximize16,
-} from '@carbon/icons-react';
+  Close, Edit, Minimize, Maximize,
+} from '@carbon/react/icons';
 import DynamicField from './dynamic-field';
 import { SD_ACTIONS } from './helper';
 import NotificationMessage from '../notification-message';
@@ -34,7 +34,7 @@ const DynamicSection = ({ section, sectionAction }) => {
   
   const renderMinMaxButton = () => (
     <Button
-      renderIcon={sectionData.maximize ? Minimize16 : Maximize16}
+      renderIcon={(props) => (sectionData.maximize ? <Minimize size={16} {...props} /> : <Maximize size={16} {...props} />)}
       kind="ghost"
       iconDescription={__('Edit')}
       onClick={() => onSectionWindow()}
@@ -45,7 +45,7 @@ const DynamicSection = ({ section, sectionAction }) => {
 
   const renderEditButton = () => (
     <Button
-      renderIcon={Edit16}
+      renderIcon={(props) => <Edit size={16} {...props} />}
       kind="ghost"
       iconDescription={__('Edit')}
       onClick={(event) => onSectionAction(SD_ACTIONS.section.edit, event)}
@@ -56,7 +56,7 @@ const DynamicSection = ({ section, sectionAction }) => {
 
   const renderRemoveButton = () => (
     <Button
-      renderIcon={Close16}
+      renderIcon={(props) => <Close size={16} {...props} />}
       kind="ghost"
       iconDescription={__('Remove')}
       onClick={(event) => onSectionAction(SD_ACTIONS.section.delete, event)}

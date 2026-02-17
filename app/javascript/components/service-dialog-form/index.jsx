@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import {
   Tabs, Tab, Button, TextInput, TextArea,
 } from '@carbon/react';
-import { AddAlt16 } from '@carbon/icons-react';
+import { AddAlt } from '@carbon/react/icons';
 import {
   dynamicComponents, defaultTabContents, defaultSectionContents, createNewTab, dragItems, saveServiceDialog
 } from './data';
@@ -475,7 +475,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
   const renderAddSectionButton = (tabPosition) => (
     <div className="add-section-button-wrapper">
       <Button
-        renderIcon={AddAlt16}
+        renderIcon={(props) => <AddAlt size={16} {...props} />}
         kind="primary"
         iconDescription={__('Add Section')}
         className="add-section-button"
@@ -523,7 +523,7 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
       }}
       label={tab.tabId === 'new' ? (
         <span className="create-tab-label">
-          <AddAlt16 />
+          <AddAlt />
           {tab.name}
         </span>
       ) : tab.name}
