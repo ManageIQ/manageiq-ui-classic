@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 
 /**
- * Custom command to get the intercepted API aliases stored in Cypress environment variables.
+ * Custom command to get the intercepted API aliases stored in Cypress exposed data.
  * This command returns the object containing all registered API interception aliases.
  *
  * @returns {Object} An object where keys are in format method-alias(e.g. post-myApiAlias) and values are typically the same alias names
@@ -15,11 +15,11 @@
  * });
  */
 Cypress.Commands.add('getInterceptedApiAliases', () =>
-  Cypress.env('interceptedAliases')
+  Cypress.expose('interceptedAliases') || {}
 );
 
 /**
- * Custom command to set an intercepted API alias in the Cypress environment variables.
+ * Custom command to set an intercepted API alias in the Cypress exposed data.
  * This command adds an alias in the intercepted aliases tracking object.
  *
  * @param {string} aliasKey - The key/name of the alias to set
@@ -34,15 +34,14 @@ Cypress.Commands.add('getInterceptedApiAliases', () =>
 Cypress.Commands.add(
   'setInterceptedApiAlias',
   (aliasKey, aliasValue = aliasKey) => {
-    cy.getInterceptedApiAliases().then((interceptedAliasesMap) => {
-      interceptedAliasesMap[aliasKey] = aliasValue;
-      Cypress.env('interceptedAliases', interceptedAliasesMap);
-    });
+    const interceptedAliasesMap = Cypress.expose('interceptedAliases') || {};
+    interceptedAliasesMap[aliasKey] = aliasValue;
+    Cypress.expose('interceptedAliases', interceptedAliasesMap);
   }
 );
 
 /**
- * Custom command to reset all intercepted API aliases stored in Cypress environment variables.
+ * Custom command to reset all intercepted API aliases stored in Cypress exposed data.
  * This command clears the tracking object by setting it to an empty object.
  * Useful for cleaning up between tests or test suites.
  * @example
@@ -50,11 +49,11 @@ Cypress.Commands.add(
  * cy.resetInterceptedApiAliases();
  */
 Cypress.Commands.add('resetInterceptedApiAliases', () =>
-  Cypress.env('interceptedAliases', {})
+  Cypress.expose('interceptedAliases', {})
 );
 
 /**
- * Sets the request interception flag in Cypress environment.
+ * Sets the request interception flag in Cypress exposed data.
  * This flag is used to track whether a request matching an intercept pattern was detected.
  *
  * @param {boolean} value - The value to set for the flag (true if request was intercepted, false otherwise)
@@ -66,15 +65,15 @@ Cypress.Commands.add('resetInterceptedApiAliases', () =>
  * setRequestIntercepted(false);
  */
 const setRequestIntercepted = (value) =>
-  Cypress.env('wasRequestIntercepted', value);
+  Cypress.expose('wasRequestIntercepted', value);
 
 /**
- * Gets the current value of the request interception flag from Cypress environment.
+ * Gets the current value of the request interception flag from Cypress exposed data.
  * This flag indicates whether a request matching an intercept pattern was detected.
  * @returns {boolean} The current value of the request interception flag, by default returns false
  */
 const getRequestIntercepted = () =>
-  Cypress.env('wasRequestIntercepted') || false;
+  Cypress.expose('wasRequestIntercepted') || false;
 
 /**
  * Custom command to intercept API calls and wait for them to complete.
@@ -121,48 +120,50 @@ Cypress.Commands.add(
     },
   }) => {
     /* ===== TODO: Remove this block once interceptApi command becomes stable ===== */
-    const envVars = Cypress.env();
-    cy.log('Cypress Environment Variables:');
-    cy.log(JSON.stringify(envVars, null, 2));
+    const exposedData = {
+      interceptedAliases: Cypress.expose('interceptedAliases'),
+      wasRequestIntercepted: Cypress.expose('wasRequestIntercepted')
+    };
+    cy.log('Cypress Exposed Data:');
+    cy.log(JSON.stringify(exposedData, null, 2));
     /* ======================================================= */
 
     // Check if this request is already registered
-    return cy.getInterceptedApiAliases().then((interceptedAliasesMap) => {
-      const aliasObjectKey = `${method.toLowerCase()}-${alias}`;
-      // Check if this request is already registered
-      const isAlreadyRegistered = !!interceptedAliasesMap[aliasObjectKey];
-      // Setting wasRequestIntercepted flag to false initially
-      setRequestIntercepted(false);
-      // Register the intercept if not already done
-      if (!isAlreadyRegistered) {
-        cy.intercept(method, urlPattern, (req) => {
-          // Setting wasRequestIntercepted flag to true after request is intercepted
-          if (waitOnlyIfRequestIntercepted) {
-            setRequestIntercepted(true);
-          }
-          responseInterceptor(req);
-        }).as(alias);
-        cy.setInterceptedApiAlias(aliasObjectKey, alias);
-      }
-
-      // Execute the function that triggers the API call
-      triggerFn();
-
-      // Wait for the intercepted request to complete
-      cy.then(() => {
-        // If waitOnlyIfRequestIntercepted is true, check if the request was intercepted
-        // and then wait for the response
+    const interceptedAliasesMap = Cypress.expose('interceptedAliases') || {};
+    const aliasObjectKey = `${method.toLowerCase()}-${alias}`;
+    // Check if this request is already registered
+    const isAlreadyRegistered = !!interceptedAliasesMap[aliasObjectKey];
+    // Setting wasRequestIntercepted flag to false initially
+    setRequestIntercepted(false);
+    // Register the intercept if not already done
+    if (!isAlreadyRegistered) {
+      cy.intercept(method, urlPattern, (req) => {
+        // Setting wasRequestIntercepted flag to true after request is intercepted
         if (waitOnlyIfRequestIntercepted) {
-          const isRequestIntercepted = getRequestIntercepted();
-          if (isRequestIntercepted) {
-            cy.wait(`@${alias}`).then(onApiResponse);
-          }
+          setRequestIntercepted(true);
         }
-        // If waitOnlyIfRequestIntercepted is not required then directly wait for the response
-        else {
+        responseInterceptor(req);
+      }).as(alias);
+      cy.setInterceptedApiAlias(aliasObjectKey, alias);
+    }
+
+    // Execute the function that triggers the API call
+    triggerFn();
+
+    // Wait for the intercepted request to complete
+    cy.then(() => {
+      // If waitOnlyIfRequestIntercepted is true, check if the request was intercepted
+      // and then wait for the response
+      if (waitOnlyIfRequestIntercepted) {
+        const isRequestIntercepted = getRequestIntercepted();
+        if (isRequestIntercepted) {
           cy.wait(`@${alias}`).then(onApiResponse);
         }
-      });
+      }
+      // If waitOnlyIfRequestIntercepted is not required then directly wait for the response
+      else {
+        cy.wait(`@${alias}`).then(onApiResponse);
+      }
     });
   }
 );
