@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import MiqFormRenderer, { useFormApi } from '@@ddf';
-import { Modal, ModalBody, Button } from 'carbon-components-react';
+import { Modal, ModalBody, Button } from '@carbon/react';
 import { dynamicComponents } from '../data';
 import { createSchema } from './edit-field-modal.schema';
 import InlineFlashMessage from '../../common/inline-flash-message';

@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import {
   DatePicker, DatePickerInput, TimePicker, TimePickerSelect, SelectItem, FormLabel,
-} from 'carbon-components-react';
+} from '@carbon/react';
 import {
   dynamicFieldDataProps, SD_ACTIONS, getCurrentDate, getCurrentTimeAndPeriod, getFieldValues, getRefreshEnabledFields,
 } from '../helper';

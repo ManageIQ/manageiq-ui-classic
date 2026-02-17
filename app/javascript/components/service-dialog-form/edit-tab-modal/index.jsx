@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import MiqFormRenderer from '@@ddf';
-import { Modal } from 'carbon-components-react';
+import { Modal } from '@carbon/react';
 import { createSchema } from './tab.schema';
 
 const EditTabModal = ({

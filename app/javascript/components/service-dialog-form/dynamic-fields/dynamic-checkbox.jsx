@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Checkbox } from 'carbon-components-react';
+import { Checkbox } from '@carbon/react';
 import { dynamicFieldDataProps, SD_ACTIONS, getFieldValues, getRefreshEnabledFields } from '../helper';
 import DynamicFieldActions from '../dynamic-field-actions';
 import {

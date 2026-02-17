@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Select, SelectItem } from 'carbon-components-react';
+import { Select, SelectItem } from '@carbon/react';
 import {
   dynamicFieldDataProps,
   SD_ACTIONS,

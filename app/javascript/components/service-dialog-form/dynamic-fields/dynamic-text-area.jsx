@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { TextArea } from 'carbon-components-react';
+import { TextArea } from '@carbon/react';
 import { dynamicFieldDataProps, SD_ACTIONS, getFieldValues, getRefreshEnabledFields } from '../helper';
 import DynamicFieldActions from '../dynamic-field-actions';
 import {

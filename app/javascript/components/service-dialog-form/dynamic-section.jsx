@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
-} from 'carbon-components-react';
+} from '@carbon/react';
 import {
   Close16, Edit16, Minimize16, Maximize16,
 } from '@carbon/icons-react';

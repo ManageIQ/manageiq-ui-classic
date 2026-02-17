@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { RadioButtonGroup, RadioButton } from 'carbon-components-react';
+import { RadioButtonGroup, RadioButton } from '@carbon/react';
 import {
   dynamicFieldDataProps,
   SD_ACTIONS,

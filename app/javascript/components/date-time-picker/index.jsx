@@ -7,7 +7,7 @@ import {
   TimePickerSelect,
   SelectItem,
   FormLabel,
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { getCurrentDate, getCurrentTimeAndPeriod } from '../service-dialog-form/helper';
 
 const CustomDateTimePicker = ({ label, onChange, initialData }) => {

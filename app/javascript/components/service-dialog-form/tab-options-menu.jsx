@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   OverflowMenu, OverflowMenuItem,
-} from 'carbon-components-react';
+} from '@carbon/react';
 import PropTypes from 'prop-types';
 import { SD_ACTIONS } from './helper';
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'carbon-components-react';
+import { Button } from '@carbon/react';
 import { Close16, Edit16 } from '@carbon/icons-react';
 import { SD_ACTIONS, SD_PROP_SHAPES } from './helper';
 import EditFieldModal from './edit-field-modal';

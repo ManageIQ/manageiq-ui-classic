@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
   Tabs, Tab, Button, TextInput, TextArea,
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AddAlt16 } from '@carbon/icons-react';
 import {
   dynamicComponents, defaultTabContents, defaultSectionContents, createNewTab, dragItems, saveServiceDialog
