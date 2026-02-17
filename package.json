@@ -68,7 +68,7 @@
     "dompurify": "^3.2.4",
     "es6-shim": "~0.35.8",
     "history": "^4.7.2",
-    "jquery": "~2.2.4",
+    "jquery": "~3.5.0",
     "jquery-ui": "~1.14.0",
     "jquery-ujs": "~1.2.2",
     "jquery.hotkeys": "~0.1.0",

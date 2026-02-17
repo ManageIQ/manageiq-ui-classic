@@ -12814,7 +12814,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jquery@npm:^2.2.4, jquery@npm:~2.2.4":
+"jquery@npm:^2.2.4":
   version: 2.2.4
   resolution: "jquery@npm:2.2.4"
   checksum: 10/fe1bb90423eda61255b969fed0420dfb09dc055793b83ad380a2fbe5b5ce3bc747029d010e580bf39c95bdd07fb309ef8c0fc22a700ca97015311626881db152
@@ -12825,6 +12825,13 @@ __metadata:
   version: 3.4.1
   resolution: "jquery@npm:3.4.1"
   checksum: 10/c40dcf94f6d1427b8d28b8f6b9d32f368b01e77cc24095c66c02de146faf0e633ef7c7f5d5815c52367b400f32d7c7f9c87e66d372488ffdd3276b4aeb6e0cef
+  languageName: node
+  linkType: hard
+
+"jquery@npm:~3.5.0":
+  version: 3.5.1
+  resolution: "jquery@npm:3.5.1"
+  checksum: 10/b301ef0561057a8f2967bb15c03ac8ed16f902f0fc3c768be90171e4f3ebf5938c4e86ffcca6424eec9ed38ea210c57252cc8777502f064c241ee7dfcb8a4cc7
   languageName: node
   linkType: hard
 
@@ -13726,7 +13733,7 @@ __metadata:
     jasmine-jquery: "npm:~2.1.1"
     jest: "npm:~26.6.3"
     jest-cli: "npm:~24.9.0"
-    jquery: "npm:~2.2.4"
+    jquery: "npm:~3.5.0"
     jquery-ui: "npm:~1.14.0"
     jquery-ujs: "npm:~1.2.2"
     jquery.hotkeys: "npm:~0.1.0"
