@@ -35,7 +35,7 @@
     "@carbon/charts": "^0.58.2",
     "@carbon/charts-react": "^0.58.2",
     "@carbon/react": "~1.100.0",
-    "@carbon/themes": "~11.64.0",
+    "@carbon/themes": "~11.68.0",
     "@data-driven-forms/carbon-component-mapper": "~4.1.13",
     "@data-driven-forms/react-form-renderer": "~4.1.13",
     "@manageiq/font-fabulous": "~1.0.5",
