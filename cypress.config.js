@@ -9,6 +9,7 @@ module.exports = defineConfig({
     viewportWidth: 1800,
     numTestsKeptInMemory: 5,
     videoCompression: false,
+    allowCypressEnv: false,
 
     // See: https://docs.cypress.io/app/references/experiments#Experimental-Flake-Detection-Features
     retries: {
