@@ -2826,10 +2826,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@novnc/novnc@npm:~1.2.0":
-  version: 1.2.0
-  resolution: "@novnc/novnc@npm:1.2.0"
-  checksum: 10/d163fa2b4ad168ca4a93518920bfb8a0e78763cd6f808f56a1f916b7265dde5f4b76df2ebee73cbb3ac37823e12d575d955198646a40f85c60087680faa7554a
+"@novnc/novnc@npm:~1.6.0":
+  version: 1.6.0
+  resolution: "@novnc/novnc@npm:1.6.0"
+  checksum: 10/3141c9b28c5595e50754d697fc9a5a1e12ee3131254473b914ac34f6d9e783286c30a28ceee6c067998aac490f9ad624d538dee5b0c4233e70e9472735506bf0
   languageName: node
   linkType: hard
 
@@ -13668,7 +13668,7 @@ __metadata:
     "@data-driven-forms/react-form-renderer": "npm:~4.1.13"
     "@manageiq/font-fabulous": "npm:~1.0.5"
     "@manageiq/ui-components": "npm:~1.6.1"
-    "@novnc/novnc": "npm:~1.2.0"
+    "@novnc/novnc": "npm:~1.6.0"
     "@pf3/select": "npm:~1.12.6"
     "@rails/actioncable": "npm:^8.0.0"
     "@tshepomgaga/aws-sfn-graph": "npm:0.0.6"
