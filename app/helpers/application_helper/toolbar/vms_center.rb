@@ -108,21 +108,4 @@ class ApplicationHelper::Toolbar::VmsCenter < ApplicationHelper::Toolbar::Basic
       ]
     ),
   ])
-  button_group('vm_lifecycle', [
-    select(
-      :vm_lifecycle_choice,
-      nil,
-      N_('Lifecycle'),
-      :items => [
-        button(
-          :vm_miq_request_new,
-          'pficon pficon-add-circle-o fa-lg',
-          N_('Request to Provision'),
-          N_('Provision'),
-          :url_parms    => "main_div",
-          :send_checked => true,
-          :klass        => ApplicationHelper::Button::ButtonNewDiscover),
-      ]
-    ),
-  ])
 end
