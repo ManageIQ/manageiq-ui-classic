@@ -596,6 +596,7 @@ exports[`Cloud Object Store Container form component should add Amazon cloud obj
                                               onFocus={[Function]}
                                             >
                                               <select
+                                                aria-describedby="storage_manager_id-helper-text"
                                                 className="cds--select-input"
                                                 id="storage_manager_id"
                                                 loadingMessage="Loading..."
@@ -651,6 +652,17 @@ exports[`Cloud Object Store Container form component should add Amazon cloud obj
                                                 </Icon>
                                               </ForwardRef(ChevronDown)>
                                             </div>
+                                            <ForwardRef
+                                              as="div"
+                                              className="cds--form__helper-text"
+                                              id="storage_manager_id-helper-text"
+                                            >
+                                              <div
+                                                className="cds--form__helper-text"
+                                                dir="auto"
+                                                id="storage_manager_id-helper-text"
+                                              />
+                                            </ForwardRef>
                                           </div>
                                         </div>
                                       </Select>
@@ -1515,6 +1527,7 @@ exports[`Cloud Object Store Container form component should add Openstack cloud 
                                               onFocus={[Function]}
                                             >
                                               <select
+                                                aria-describedby="storage_manager_id-helper-text"
                                                 className="cds--select-input"
                                                 id="storage_manager_id"
                                                 name="storage_manager_id"
@@ -1555,6 +1568,17 @@ exports[`Cloud Object Store Container form component should add Openstack cloud 
                                                 </Icon>
                                               </ForwardRef(ChevronDown)>
                                             </div>
+                                            <ForwardRef
+                                              as="div"
+                                              className="cds--form__helper-text"
+                                              id="storage_manager_id-helper-text"
+                                            >
+                                              <div
+                                                className="cds--form__helper-text"
+                                                dir="auto"
+                                                id="storage_manager_id-helper-text"
+                                              />
+                                            </ForwardRef>
                                           </div>
                                         </div>
                                       </Select>
@@ -2410,6 +2434,7 @@ exports[`Cloud Object Store Container form component should render add cloud obj
                                               onFocus={[Function]}
                                             >
                                               <select
+                                                aria-describedby="storage_manager_id-helper-text"
                                                 className="cds--select-input"
                                                 id="storage_manager_id"
                                                 loadingMessage="Loading..."
@@ -2465,6 +2490,17 @@ exports[`Cloud Object Store Container form component should render add cloud obj
                                                 </Icon>
                                               </ForwardRef(ChevronDown)>
                                             </div>
+                                            <ForwardRef
+                                              as="div"
+                                              className="cds--form__helper-text"
+                                              id="storage_manager_id-helper-text"
+                                            >
+                                              <div
+                                                className="cds--form__helper-text"
+                                                dir="auto"
+                                                id="storage_manager_id-helper-text"
+                                              />
+                                            </ForwardRef>
                                           </div>
                                         </div>
                                       </Select>

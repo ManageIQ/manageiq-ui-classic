@@ -3420,6 +3420,7 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                           onFocus={[Function]}
                                                         >
                                                           <select
+                                                            aria-describedby="ems_id-helper-text"
                                                             className="cds--select-input"
                                                             disabled={true}
                                                             id="ems_id"
@@ -3461,6 +3462,17 @@ exports[`Physical storage form component should render editing form variant 1`] 
                                                             </Icon>
                                                           </ForwardRef(ChevronDown)>
                                                         </div>
+                                                        <ForwardRef
+                                                          as="div"
+                                                          className="cds--form__helper-text cds--form__helper-text--disabled"
+                                                          id="ems_id-helper-text"
+                                                        >
+                                                          <div
+                                                            className="cds--form__helper-text cds--form__helper-text--disabled"
+                                                            dir="auto"
+                                                            id="ems_id-helper-text"
+                                                          />
+                                                        </ForwardRef>
                                                       </div>
                                                     </div>
                                                   </Select>

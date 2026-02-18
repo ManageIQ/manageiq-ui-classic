@@ -1590,6 +1590,7 @@ exports[`Show Service Request Page should render 1`] = `
                                           onFocus={[Function]}
                                         >
                                           <select
+                                            aria-describedby="selectedUser-helper-text"
                                             className="cds--select-input"
                                             id="selectedUser"
                                             name="selectedUser"
@@ -1663,6 +1664,17 @@ exports[`Show Service Request Page should render 1`] = `
                                             </Icon>
                                           </ForwardRef(ChevronDown)>
                                         </div>
+                                        <ForwardRef
+                                          as="div"
+                                          className="cds--form__helper-text"
+                                          id="selectedUser-helper-text"
+                                        >
+                                          <div
+                                            className="cds--form__helper-text"
+                                            dir="auto"
+                                            id="selectedUser-helper-text"
+                                          />
+                                        </ForwardRef>
                                       </div>
                                     </div>
                                   </Select>
@@ -2030,14 +2042,15 @@ exports[`Show Service Request Page should render 1`] = `
                                                         title=""
                                                       >
                                                         <ForwardRef
+                                                          as="div"
                                                           className="cds--checkbox-label-text"
                                                         >
-                                                          <span
+                                                          <div
                                                             className="cds--checkbox-label-text"
                                                             dir="auto"
                                                           >
                                                             Pending Approval
-                                                          </span>
+                                                          </div>
                                                         </ForwardRef>
                                                       </label>
                                                       <div
@@ -2143,14 +2156,15 @@ exports[`Show Service Request Page should render 1`] = `
                                                         title=""
                                                       >
                                                         <ForwardRef
+                                                          as="div"
                                                           className="cds--checkbox-label-text"
                                                         >
-                                                          <span
+                                                          <div
                                                             className="cds--checkbox-label-text"
                                                             dir="auto"
                                                           >
                                                             Approved
-                                                          </span>
+                                                          </div>
                                                         </ForwardRef>
                                                       </label>
                                                       <div
@@ -2256,14 +2270,15 @@ exports[`Show Service Request Page should render 1`] = `
                                                         title=""
                                                       >
                                                         <ForwardRef
+                                                          as="div"
                                                           className="cds--checkbox-label-text"
                                                         >
-                                                          <span
+                                                          <div
                                                             className="cds--checkbox-label-text"
                                                             dir="auto"
                                                           >
                                                             Denied
-                                                          </span>
+                                                          </div>
                                                         </ForwardRef>
                                                       </label>
                                                       <div
@@ -2800,6 +2815,7 @@ exports[`Show Service Request Page should render 1`] = `
                                           onFocus={[Function]}
                                         >
                                           <select
+                                            aria-describedby="types-helper-text"
                                             className="cds--select-input"
                                             id="types"
                                             name="types"
@@ -3081,6 +3097,17 @@ exports[`Show Service Request Page should render 1`] = `
                                             </Icon>
                                           </ForwardRef(ChevronDown)>
                                         </div>
+                                        <ForwardRef
+                                          as="div"
+                                          className="cds--form__helper-text"
+                                          id="types-helper-text"
+                                        >
+                                          <div
+                                            className="cds--form__helper-text"
+                                            dir="auto"
+                                            id="types-helper-text"
+                                          />
+                                        </ForwardRef>
                                       </div>
                                     </div>
                                   </Select>
@@ -3314,6 +3341,7 @@ exports[`Show Service Request Page should render 1`] = `
                                           onFocus={[Function]}
                                         >
                                           <select
+                                            aria-describedby="selectedPeriod-helper-text"
                                             className="cds--select-input"
                                             id="selectedPeriod"
                                             name="selectedPeriod"
@@ -3403,6 +3431,17 @@ exports[`Show Service Request Page should render 1`] = `
                                             </Icon>
                                           </ForwardRef(ChevronDown)>
                                         </div>
+                                        <ForwardRef
+                                          as="div"
+                                          className="cds--form__helper-text"
+                                          id="selectedPeriod-helper-text"
+                                        >
+                                          <div
+                                            className="cds--form__helper-text"
+                                            dir="auto"
+                                            id="selectedPeriod-helper-text"
+                                          />
+                                        </ForwardRef>
                                       </div>
                                     </div>
                                   </Select>

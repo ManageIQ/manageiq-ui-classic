@@ -1176,6 +1176,7 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                                             isOpen={false}
                                             onBlur={[Function]}
                                             onFocus={[Function]}
+                                            warn={false}
                                             warnTextId="combobox-warn-text-id-1"
                                           >
                                             <div

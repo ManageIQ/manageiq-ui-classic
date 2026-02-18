@@ -660,6 +660,7 @@ exports[`Add/remove security groups form component should remove security group 
                                               onFocus={[Function]}
                                             >
                                               <select
+                                                aria-describedby="security_group-helper-text"
                                                 className="cds--select-input"
                                                 id="security_group"
                                                 name="security_group"
@@ -732,6 +733,17 @@ exports[`Add/remove security groups form component should remove security group 
                                                 </Icon>
                                               </ForwardRef(ChevronDown)>
                                             </div>
+                                            <ForwardRef
+                                              as="div"
+                                              className="cds--form__helper-text"
+                                              id="security_group-helper-text"
+                                            >
+                                              <div
+                                                className="cds--form__helper-text"
+                                                dir="auto"
+                                                id="security_group-helper-text"
+                                              />
+                                            </ForwardRef>
                                           </div>
                                         </div>
                                       </Select>

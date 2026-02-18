@@ -131,6 +131,7 @@ exports[`Select component should match the snapshot 1`] = `
                 onFocus={[Function]}
               >
                 <select
+                  aria-describedby="selectField-helper-text"
                   className="cds--select-input"
                   id="selectField"
                   name="selectField"
@@ -204,6 +205,17 @@ exports[`Select component should match the snapshot 1`] = `
                   </Icon>
                 </ForwardRef(ChevronDown)>
               </div>
+              <ForwardRef
+                as="div"
+                className="cds--form__helper-text"
+                id="selectField-helper-text"
+              >
+                <div
+                  className="cds--form__helper-text"
+                  dir="auto"
+                  id="selectField-helper-text"
+                />
+              </ForwardRef>
             </div>
           </div>
         </Select>

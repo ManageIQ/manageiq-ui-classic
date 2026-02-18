@@ -927,6 +927,7 @@ exports[`Pxe Iso Datastore Form Component should render adding a new iso datasto
                                                         onFocus={[Function]}
                                                       >
                                                         <select
+                                                          aria-describedby="ems_id-helper-text"
                                                           className="cds--select-input"
                                                           id="ems_id"
                                                           name="ems_id"
@@ -1015,6 +1016,17 @@ exports[`Pxe Iso Datastore Form Component should render adding a new iso datasto
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
+                                                      <ForwardRef
+                                                        as="div"
+                                                        className="cds--form__helper-text"
+                                                        id="ems_id-helper-text"
+                                                      >
+                                                        <div
+                                                          className="cds--form__helper-text"
+                                                          dir="auto"
+                                                          id="ems_id-helper-text"
+                                                        />
+                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>

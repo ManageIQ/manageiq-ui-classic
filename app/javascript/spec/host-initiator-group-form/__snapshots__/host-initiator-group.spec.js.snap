@@ -965,6 +965,7 @@ exports[`Host Initiator Group Form Loads data and renders 1`] = `
                                                 onFocus={[Function]}
                                               >
                                                 <select
+                                                  aria-describedby="ems_id-helper-text"
                                                   className="cds--select-input"
                                                   id="ems_id"
                                                   name="ems_id"
@@ -1037,6 +1038,17 @@ exports[`Host Initiator Group Form Loads data and renders 1`] = `
                                                   </Icon>
                                                 </ForwardRef(ChevronDown)>
                                               </div>
+                                              <ForwardRef
+                                                as="div"
+                                                className="cds--form__helper-text"
+                                                id="ems_id-helper-text"
+                                              >
+                                                <div
+                                                  className="cds--form__helper-text"
+                                                  dir="auto"
+                                                  id="ems_id-helper-text"
+                                                />
+                                              </ForwardRef>
                                             </div>
                                           </div>
                                         </Select>
@@ -1519,6 +1531,7 @@ exports[`Host Initiator Group Form Loads data and renders 1`] = `
                                                           onFocus={[Function]}
                                                         >
                                                           <select
+                                                            aria-describedby="physical_storage_id-helper-text"
                                                             className="cds--select-input"
                                                             id="physical_storage_id"
                                                             name="physical_storage_id"
@@ -1606,6 +1619,17 @@ exports[`Host Initiator Group Form Loads data and renders 1`] = `
                                                             </Icon>
                                                           </ForwardRef(ChevronDown)>
                                                         </div>
+                                                        <ForwardRef
+                                                          as="div"
+                                                          className="cds--form__helper-text"
+                                                          id="physical_storage_id-helper-text"
+                                                        >
+                                                          <div
+                                                            className="cds--form__helper-text"
+                                                            dir="auto"
+                                                            id="physical_storage_id-helper-text"
+                                                          />
+                                                        </ForwardRef>
                                                       </div>
                                                     </div>
                                                   </Select>

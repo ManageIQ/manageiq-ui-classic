@@ -1108,14 +1108,15 @@ exports[`evacuate form component should render evacuate form when hosts empty 1`
                                                     title=""
                                                   >
                                                     <ForwardRef
+                                                      as="div"
                                                       className="cds--checkbox-label-text"
                                                     >
-                                                      <span
+                                                      <div
                                                         className="cds--checkbox-label-text"
                                                         dir="auto"
                                                       >
                                                         Auto-select Host?
-                                                      </span>
+                                                      </div>
                                                     </ForwardRef>
                                                   </label>
                                                   <div
@@ -1196,14 +1197,15 @@ exports[`evacuate form component should render evacuate form when hosts empty 1`
                                                     title=""
                                                   >
                                                     <ForwardRef
+                                                      as="div"
                                                       className="cds--checkbox-label-text"
                                                     >
-                                                      <span
+                                                      <div
                                                         className="cds--checkbox-label-text"
                                                         dir="auto"
                                                       >
                                                         On Shared Storage
-                                                      </span>
+                                                      </div>
                                                     </ForwardRef>
                                                   </label>
                                                   <div
@@ -3314,14 +3316,15 @@ exports[`evacuate form component should render evacuate form with host options 1
                                                     title=""
                                                   >
                                                     <ForwardRef
+                                                      as="div"
                                                       className="cds--checkbox-label-text"
                                                     >
-                                                      <span
+                                                      <div
                                                         className="cds--checkbox-label-text"
                                                         dir="auto"
                                                       >
                                                         Auto-select Host?
-                                                      </span>
+                                                      </div>
                                                     </ForwardRef>
                                                   </label>
                                                   <div
@@ -3402,14 +3405,15 @@ exports[`evacuate form component should render evacuate form with host options 1
                                                     title=""
                                                   >
                                                     <ForwardRef
+                                                      as="div"
                                                       className="cds--checkbox-label-text"
                                                     >
-                                                      <span
+                                                      <div
                                                         className="cds--checkbox-label-text"
                                                         dir="auto"
                                                       >
                                                         On Shared Storage
-                                                      </span>
+                                                      </div>
                                                     </ForwardRef>
                                                   </label>
                                                   <div
@@ -5438,14 +5442,15 @@ exports[`evacuate form component should render evacuate form with multiple insta
                                                     title=""
                                                   >
                                                     <ForwardRef
+                                                      as="div"
                                                       className="cds--checkbox-label-text"
                                                     >
-                                                      <span
+                                                      <div
                                                         className="cds--checkbox-label-text"
                                                         dir="auto"
                                                       >
                                                         Auto-select Host?
-                                                      </span>
+                                                      </div>
                                                     </ForwardRef>
                                                   </label>
                                                   <div
@@ -5526,14 +5531,15 @@ exports[`evacuate form component should render evacuate form with multiple insta
                                                     title=""
                                                   >
                                                     <ForwardRef
+                                                      as="div"
                                                       className="cds--checkbox-label-text"
                                                     >
-                                                      <span
+                                                      <div
                                                         className="cds--checkbox-label-text"
                                                         dir="auto"
                                                       >
                                                         On Shared Storage
-                                                      </span>
+                                                      </div>
                                                     </ForwardRef>
                                                   </label>
                                                   <div
