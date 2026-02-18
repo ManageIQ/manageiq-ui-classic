@@ -1,7 +1,7 @@
 import React from 'react';
 import {
-  CheckboxChecked32, RadioButtonChecked32, Time32, StringText32, TextSmallCaps32, CaretDown32, Tag32, Calendar32,
-} from '@carbon/icons-react';
+  CheckboxChecked, RadioButtonChecked, Time, StringText, TextSmallCaps, CaretDown, Tag, Calendar,
+} from '@carbon/react/icons';
 import { formattedCatalogPayload } from './helper';
 
 export const dragItems = {
@@ -13,14 +13,14 @@ export const dragItems = {
 
 /** Data needed to render the dynamic components on the left hand side of the form. */
 export const dynamicComponents = [
-  { id: 1, title: 'Text Box', icon: <StringText32 /> },
-  { id: 2, title: 'Text Area', icon: <TextSmallCaps32 /> },
-  { id: 3, title: 'Check Box', icon: <CheckboxChecked32 /> },
-  { id: 4, title: 'Dropdown', icon: <CaretDown32 /> },
-  { id: 5, title: 'Radio Button', icon: <RadioButtonChecked32 /> },
-  { id: 6, title: 'Datepicker', icon: <Calendar32 /> },
-  { id: 7, title: 'Timepicker', icon: <Time32 /> },
-  { id: 8, title: 'Tag Control', icon: <Tag32 /> },
+  { id: 1, title: 'Text Box', icon: <StringText size={32} /> },
+  { id: 2, title: 'Text Area', icon: <TextSmallCaps size={32} /> },
+  { id: 3, title: 'Check Box', icon: <CheckboxChecked size={32} /> },
+  { id: 4, title: 'Dropdown', icon: <CaretDown size={32} /> },
+  { id: 5, title: 'Radio Button', icon: <RadioButtonChecked size={32} /> },
+  { id: 6, title: 'Datepicker', icon: <Calendar size={32} /> },
+  { id: 7, title: 'Timepicker', icon: <Time size={32} /> },
+  { id: 8, title: 'Tag Control', icon: <Tag size={32} /> },
 ];
 
 /** Function which returns the default data for a section under a tab. */
