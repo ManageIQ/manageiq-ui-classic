@@ -3836,6 +3836,7 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
                                                         onFocus={[Function]}
                                                       >
                                                         <select
+                                                          aria-describedby="backup_id-helper-text"
                                                           className="cds--select-input"
                                                           id="backup_id"
                                                           name="backup_id"
@@ -3876,6 +3877,17 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
+                                                      <ForwardRef
+                                                        as="div"
+                                                        className="cds--form__helper-text"
+                                                        id="backup_id-helper-text"
+                                                      >
+                                                        <div
+                                                          className="cds--form__helper-text"
+                                                          dir="auto"
+                                                          id="backup_id-helper-text"
+                                                        />
+                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>
@@ -4928,6 +4940,7 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
                                                         onFocus={[Function]}
                                                       >
                                                         <select
+                                                          aria-describedby="backup_id-helper-text"
                                                           className="cds--select-input"
                                                           id="backup_id"
                                                           name="backup_id"
@@ -4968,6 +4981,17 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
+                                                      <ForwardRef
+                                                        as="div"
+                                                        className="cds--form__helper-text"
+                                                        id="backup_id-helper-text"
+                                                      >
+                                                        <div
+                                                          className="cds--form__helper-text"
+                                                          dir="auto"
+                                                          id="backup_id-helper-text"
+                                                        />
+                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>

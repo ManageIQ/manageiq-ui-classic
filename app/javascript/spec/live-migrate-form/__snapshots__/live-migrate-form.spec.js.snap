@@ -1074,14 +1074,15 @@ exports[`Live Migrate form component should render live migrate form when hosts 
                                                     title=""
                                                   >
                                                     <ForwardRef
+                                                      as="div"
                                                       className="cds--checkbox-label-text"
                                                     >
-                                                      <span
+                                                      <div
                                                         className="cds--checkbox-label-text"
                                                         dir="auto"
                                                       >
                                                         Auto-select Host?
-                                                      </span>
+                                                      </div>
                                                     </ForwardRef>
                                                   </label>
                                                   <div
@@ -1184,14 +1185,15 @@ exports[`Live Migrate form component should render live migrate form when hosts 
                                                     title=""
                                                   >
                                                     <ForwardRef
+                                                      as="div"
                                                       className="cds--checkbox-label-text"
                                                     >
-                                                      <span
+                                                      <div
                                                         className="cds--checkbox-label-text"
                                                         dir="auto"
                                                       >
                                                         Block Migration
-                                                      </span>
+                                                      </div>
                                                     </ForwardRef>
                                                   </label>
                                                   <div
@@ -1294,14 +1296,15 @@ exports[`Live Migrate form component should render live migrate form when hosts 
                                                     title=""
                                                   >
                                                     <ForwardRef
+                                                      as="div"
                                                       className="cds--checkbox-label-text"
                                                     >
-                                                      <span
+                                                      <div
                                                         className="cds--checkbox-label-text"
                                                         dir="auto"
                                                       >
                                                         Disk Over Commit
-                                                      </span>
+                                                      </div>
                                                     </ForwardRef>
                                                   </label>
                                                   <div
@@ -3205,14 +3208,15 @@ exports[`Live Migrate form component should render live migrate form with host o
                                                     title=""
                                                   >
                                                     <ForwardRef
+                                                      as="div"
                                                       className="cds--checkbox-label-text"
                                                     >
-                                                      <span
+                                                      <div
                                                         className="cds--checkbox-label-text"
                                                         dir="auto"
                                                       >
                                                         Auto-select Host?
-                                                      </span>
+                                                      </div>
                                                     </ForwardRef>
                                                   </label>
                                                   <div
@@ -3315,14 +3319,15 @@ exports[`Live Migrate form component should render live migrate form with host o
                                                     title=""
                                                   >
                                                     <ForwardRef
+                                                      as="div"
                                                       className="cds--checkbox-label-text"
                                                     >
-                                                      <span
+                                                      <div
                                                         className="cds--checkbox-label-text"
                                                         dir="auto"
                                                       >
                                                         Block Migration
-                                                      </span>
+                                                      </div>
                                                     </ForwardRef>
                                                   </label>
                                                   <div
@@ -3425,14 +3430,15 @@ exports[`Live Migrate form component should render live migrate form with host o
                                                     title=""
                                                   >
                                                     <ForwardRef
+                                                      as="div"
                                                       className="cds--checkbox-label-text"
                                                     >
-                                                      <span
+                                                      <div
                                                         className="cds--checkbox-label-text"
                                                         dir="auto"
                                                       >
                                                         Disk Over Commit
-                                                      </span>
+                                                      </div>
                                                     </ForwardRef>
                                                   </label>
                                                   <div
@@ -5254,14 +5260,15 @@ exports[`Live Migrate form component should render live migrate form with multip
                                                     title=""
                                                   >
                                                     <ForwardRef
+                                                      as="div"
                                                       className="cds--checkbox-label-text"
                                                     >
-                                                      <span
+                                                      <div
                                                         className="cds--checkbox-label-text"
                                                         dir="auto"
                                                       >
                                                         Auto-select Host?
-                                                      </span>
+                                                      </div>
                                                     </ForwardRef>
                                                   </label>
                                                   <div
@@ -5364,14 +5371,15 @@ exports[`Live Migrate form component should render live migrate form with multip
                                                     title=""
                                                   >
                                                     <ForwardRef
+                                                      as="div"
                                                       className="cds--checkbox-label-text"
                                                     >
-                                                      <span
+                                                      <div
                                                         className="cds--checkbox-label-text"
                                                         dir="auto"
                                                       >
                                                         Block Migration
-                                                      </span>
+                                                      </div>
                                                     </ForwardRef>
                                                   </label>
                                                   <div
@@ -5474,14 +5482,15 @@ exports[`Live Migrate form component should render live migrate form with multip
                                                     title=""
                                                   >
                                                     <ForwardRef
+                                                      as="div"
                                                       className="cds--checkbox-label-text"
                                                     >
-                                                      <span
+                                                      <div
                                                         className="cds--checkbox-label-text"
                                                         dir="auto"
                                                       >
                                                         Disk Over Commit
-                                                      </span>
+                                                      </div>
                                                     </ForwardRef>
                                                   </label>
                                                   <div

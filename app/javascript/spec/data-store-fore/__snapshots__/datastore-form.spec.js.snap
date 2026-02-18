@@ -1229,14 +1229,15 @@ exports[`Datastore form component Datastore domain form component should render 
                                                     title=""
                                                   >
                                                     <ForwardRef
+                                                      as="div"
                                                       className="cds--checkbox-label-text"
                                                     >
-                                                      <span
+                                                      <div
                                                         className="cds--checkbox-label-text"
                                                         dir="auto"
                                                       >
                                                         Enabled
-                                                      </span>
+                                                      </div>
                                                     </ForwardRef>
                                                   </label>
                                                   <div

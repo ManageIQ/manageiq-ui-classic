@@ -77,7 +77,19 @@ exports[`TreeSelector component should render correctly 1`] = `
                       >
                         <div
                           className="cds--text-input__label-wrapper"
-                        />
+                        >
+                          <ForwardRef
+                            as="label"
+                            className="cds--label"
+                            htmlFor="tree-selector"
+                          >
+                            <label
+                              className="cds--label"
+                              dir="auto"
+                              htmlFor="tree-selector"
+                            />
+                          </ForwardRef>
+                        </div>
                         <div
                           className="cds--text-input__field-outer-wrapper"
                         >

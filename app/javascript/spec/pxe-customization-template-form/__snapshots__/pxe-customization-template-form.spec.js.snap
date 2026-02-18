@@ -1672,6 +1672,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                                         onFocus={[Function]}
                                                       >
                                                         <select
+                                                          aria-describedby="pxe_image_type_id-helper-text"
                                                           className="cds--select-input"
                                                           id="pxe_image_type_id"
                                                           name="pxe_image_type_id"
@@ -1760,6 +1761,17 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
+                                                      <ForwardRef
+                                                        as="div"
+                                                        className="cds--form__helper-text"
+                                                        id="pxe_image_type_id-helper-text"
+                                                      >
+                                                        <div
+                                                          className="cds--form__helper-text"
+                                                          dir="auto"
+                                                          id="pxe_image_type_id-helper-text"
+                                                        />
+                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>
@@ -2036,6 +2048,7 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                                         onFocus={[Function]}
                                                       >
                                                         <select
+                                                          aria-describedby="type-helper-text"
                                                           className="cds--select-input"
                                                           id="type"
                                                           name="type"
@@ -2140,6 +2153,17 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
+                                                      <ForwardRef
+                                                        as="div"
+                                                        className="cds--form__helper-text"
+                                                        id="type-helper-text"
+                                                      >
+                                                        <div
+                                                          className="cds--form__helper-text"
+                                                          dir="auto"
+                                                          id="type-helper-text"
+                                                        />
+                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>
@@ -4342,6 +4366,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                                         onFocus={[Function]}
                                                       >
                                                         <select
+                                                          aria-describedby="pxe_image_type_id-helper-text"
                                                           className="cds--select-input"
                                                           id="pxe_image_type_id"
                                                           name="pxe_image_type_id"
@@ -4430,6 +4455,17 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
+                                                      <ForwardRef
+                                                        as="div"
+                                                        className="cds--form__helper-text"
+                                                        id="pxe_image_type_id-helper-text"
+                                                      >
+                                                        <div
+                                                          className="cds--form__helper-text"
+                                                          dir="auto"
+                                                          id="pxe_image_type_id-helper-text"
+                                                        />
+                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>
@@ -4706,6 +4742,7 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                                         onFocus={[Function]}
                                                       >
                                                         <select
+                                                          aria-describedby="type-helper-text"
                                                           className="cds--select-input"
                                                           id="type"
                                                           name="type"
@@ -4810,6 +4847,17 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
+                                                      <ForwardRef
+                                                        as="div"
+                                                        className="cds--form__helper-text"
+                                                        id="type-helper-text"
+                                                      >
+                                                        <div
+                                                          className="cds--form__helper-text"
+                                                          dir="auto"
+                                                          id="type-helper-text"
+                                                        />
+                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>
@@ -7022,6 +7070,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                                         onFocus={[Function]}
                                                       >
                                                         <select
+                                                          aria-describedby="pxe_image_type_id-helper-text"
                                                           className="cds--select-input"
                                                           id="pxe_image_type_id"
                                                           name="pxe_image_type_id"
@@ -7110,6 +7159,17 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
+                                                      <ForwardRef
+                                                        as="div"
+                                                        className="cds--form__helper-text"
+                                                        id="pxe_image_type_id-helper-text"
+                                                      >
+                                                        <div
+                                                          className="cds--form__helper-text"
+                                                          dir="auto"
+                                                          id="pxe_image_type_id-helper-text"
+                                                        />
+                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>
@@ -7386,6 +7446,7 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                                         onFocus={[Function]}
                                                       >
                                                         <select
+                                                          aria-describedby="type-helper-text"
                                                           className="cds--select-input"
                                                           id="type"
                                                           name="type"
@@ -7490,6 +7551,17 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
+                                                      <ForwardRef
+                                                        as="div"
+                                                        className="cds--form__helper-text"
+                                                        id="type-helper-text"
+                                                      >
+                                                        <div
+                                                          className="cds--form__helper-text"
+                                                          dir="auto"
+                                                          id="type-helper-text"
+                                                        />
+                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>

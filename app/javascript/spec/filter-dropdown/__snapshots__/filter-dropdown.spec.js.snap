@@ -77,6 +77,7 @@ exports[`Filter Dropdown form should handle cancel 1`] = `
                   onFocus={[Function]}
                 >
                   <select
+                    aria-describedby="select_filter_dropdown-helper-text"
                     aria-label="Choose a Filter"
                     className="cds--select-input"
                     defaultValue="placeholder-item"
@@ -183,6 +184,17 @@ exports[`Filter Dropdown form should handle cancel 1`] = `
                     </Icon>
                   </ForwardRef(ChevronDown)>
                 </div>
+                <ForwardRef
+                  as="div"
+                  className="cds--form__helper-text"
+                  id="select_filter_dropdown-helper-text"
+                >
+                  <div
+                    className="cds--form__helper-text"
+                    dir="auto"
+                    id="select_filter_dropdown-helper-text"
+                  />
+                </ForwardRef>
               </div>
             </div>
           </Select>

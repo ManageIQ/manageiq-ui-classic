@@ -61,7 +61,9 @@ exports[`Toast list tests should render correctly with notifications 1`] = `
             >
               Focus sentinel
             </span>
-            <div>
+            <div
+              className="cds--actionable-notification__focus-wrapper"
+            >
               <div
                 className="cds--actionable-notification__details"
               >
