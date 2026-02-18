@@ -68,7 +68,8 @@ class ApplicationHelper::ToolbarChooser
       when ManageIQ::Providers::InfraManager::Template
         'x_miq_template_center_tb'
       else
-        raise 'FIXME: this would return "x_# {@button_group}_center_tb' # FIXME: remove this branch
+        Rails.logger.warn("An unknown object type [#{@record.class.name}] was found when selecting a toolbar. Continuing without a toolbar selection.")
+        nil
       end
     else
       case x_active_tree
