@@ -1,5 +1,11 @@
 name: Update yarn.lock
 on:
+  push:
+    branches:
+    - master
+    paths:
+    - package.json
+    - yarn.lock
   schedule:
   - cron: 0 0 * * 0
   workflow_dispatch:
