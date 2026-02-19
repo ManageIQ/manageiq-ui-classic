@@ -1,9 +1,7 @@
-@use '@carbon/react/scss/themes' as *;
 @use '@carbon/react/scss/theme';
 @use '@carbon/styles/scss/components/button';
 
 .miq-structured-list {
-  @include theme.theme($white);
 
   margin-bottom: 0;
 
