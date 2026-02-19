@@ -89,7 +89,7 @@ const MiqDataTable = ({
   /** Function to render the header cells. */
   const renderHeaders = (getHeaderProps) => (headers.map((header) => {
     const { sortHeader, sortDirection } = headerSortingData(header);
-    let isSortable = true;
+    let isSortable = sortable;
     if (header.header.split('_')[0] === DefaultKey) {
       isSortable = false;
     }
