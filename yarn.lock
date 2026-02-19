@@ -13778,7 +13778,7 @@ __metadata:
     spice-html5-bower: "npm:~1.7.3"
     spin.js: "npm:~4.1.0"
     sprintf-js: "npm:~1.1.1"
-    style-loader: "npm:~1.1.3"
+    style-loader: "npm:~1.3.0"
     stylelint: "npm:~14.5.1"
     stylelint-config-standard: "npm:~20.0.0"
     stylelint-scss: "npm:^4.0.0"
@@ -18860,15 +18860,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"style-loader@npm:~1.1.3":
-  version: 1.1.4
-  resolution: "style-loader@npm:1.1.4"
+"style-loader@npm:~1.3.0":
+  version: 1.3.0
+  resolution: "style-loader@npm:1.3.0"
   dependencies:
     loader-utils: "npm:^2.0.0"
-    schema-utils: "npm:^2.6.5"
+    schema-utils: "npm:^2.7.0"
   peerDependencies:
     webpack: ^4.0.0 || ^5.0.0
-  checksum: 10/f01c8a44f11edb3617c44b1893e019c459f241656f3d84632ebe5b88528e597cadfa0d638124b0bbc6c32a09dbf81ed0b3f3fcb727b888cf5261b438facbfc1e
+  checksum: 10/04a2742a9b9608419b16e4e4f002c6859a60601c35d13f28483cb85a8ae10b4622fe255c59cf955aaf9297dc1e19e48bbba8f2ab5b02934ce3e93c0479b49325
   languageName: node
   linkType: hard
 
