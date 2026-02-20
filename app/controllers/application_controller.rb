@@ -174,8 +174,6 @@ class ApplicationController < ActionController::Base
             _("Action not implemented")
           when ::AbstractController::ActionNotFound # Prevent Rails showing all known controller actions
             _("Unknown Action")
-          when ::MiqException::RbacPrivilegeException
-            _("The user is not authorized for this task or item")
           else
             e.message
           end
