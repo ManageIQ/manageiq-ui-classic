@@ -133,7 +133,6 @@ exports[`Add/remove security groups form component should remove security group 
             "font-icon-picker": [Function],
             "font-icon-picker-ddf": [Function],
             "key-value-list": [Function],
-            "multi-select": [Function],
             "password-field": [Function],
             "plain-text": [Function],
             "radio": [Function],
@@ -146,7 +145,6 @@ exports[`Add/remove security groups form component should remove security group 
             "textarea": [Function],
             "time-picker": [Function],
             "tree-selector": [Function],
-            "tree-view": [Function],
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -198,7 +196,6 @@ exports[`Add/remove security groups form component should remove security group 
               "font-icon-picker": [Function],
               "font-icon-picker-ddf": [Function],
               "key-value-list": [Function],
-              "multi-select": [Function],
               "password-field": [Function],
               "plain-text": [Function],
               "radio": [Function],
@@ -212,7 +209,6 @@ exports[`Add/remove security groups form component should remove security group 
               "textarea": [Function],
               "time-picker": [Function],
               "tree-selector": [Function],
-              "tree-view": [Function],
               "validate-credentials": [Function],
               "wizard": [Function],
             }

@@ -81,7 +81,6 @@ exports[`Pxe Edit Iso Image Form Component should render editing a iso image 1`]
             "font-icon-picker": [Function],
             "font-icon-picker-ddf": [Function],
             "key-value-list": [Function],
-            "multi-select": [Function],
             "password-field": [Function],
             "plain-text": [Function],
             "radio": [Function],
@@ -94,7 +93,6 @@ exports[`Pxe Edit Iso Image Form Component should render editing a iso image 1`]
             "textarea": [Function],
             "time-picker": [Function],
             "tree-selector": [Function],
-            "tree-view": [Function],
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -154,7 +152,6 @@ exports[`Pxe Edit Iso Image Form Component should render editing a iso image 1`]
               "font-icon-picker": [Function],
               "font-icon-picker-ddf": [Function],
               "key-value-list": [Function],
-              "multi-select": [Function],
               "password-field": [Function],
               "plain-text": [Function],
               "radio": [Function],
@@ -168,7 +165,6 @@ exports[`Pxe Edit Iso Image Form Component should render editing a iso image 1`]
               "textarea": [Function],
               "time-picker": [Function],
               "tree-selector": [Function],
-              "tree-view": [Function],
               "validate-credentials": [Function],
               "wizard": [Function],
             }

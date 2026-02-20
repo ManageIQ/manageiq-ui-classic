@@ -97,7 +97,6 @@ exports[`Host aggregate form component should render add host form variant (remv
             "font-icon-picker": [Function],
             "font-icon-picker-ddf": [Function],
             "key-value-list": [Function],
-            "multi-select": [Function],
             "password-field": [Function],
             "plain-text": [Function],
             "radio": [Function],
@@ -110,7 +109,6 @@ exports[`Host aggregate form component should render add host form variant (remv
             "textarea": [Function],
             "time-picker": [Function],
             "tree-selector": [Function],
-            "tree-view": [Function],
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -157,7 +155,6 @@ exports[`Host aggregate form component should render add host form variant (remv
               "font-icon-picker": [Function],
               "font-icon-picker-ddf": [Function],
               "key-value-list": [Function],
-              "multi-select": [Function],
               "password-field": [Function],
               "plain-text": [Function],
               "radio": [Function],
@@ -171,7 +168,6 @@ exports[`Host aggregate form component should render add host form variant (remv
               "textarea": [Function],
               "time-picker": [Function],
               "tree-selector": [Function],
-              "tree-view": [Function],
               "validate-credentials": [Function],
               "wizard": [Function],
             }
