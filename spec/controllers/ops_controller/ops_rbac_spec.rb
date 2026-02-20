@@ -103,7 +103,7 @@ describe OpsController do
         end
 
         it "raises error when access is not granted" do
-          expect { controller.send(:rbac_tenant_get_details, other_tenant.id) }.to raise_error(ActiveRecord::RecordNotFound, "Can't access selected records")
+          expect { controller.send(:rbac_tenant_get_details, other_tenant.id) }.to raise_error(MiqException::RbacPrivilegeException, "Can't access selected records")
         end
       end
     end

@@ -61,12 +61,18 @@ describe 'Application routes' do
               allow(subject).to receive(:current_user)
               allow(subject).to receive(:params).and_return({})
               allow(subject).to receive(:request).and_return(request)
+              allow(subject).to receive(:response).and_return(response)
               allow(request).to receive(:xml_http_request?).and_return(false)
             end
 
             let(:check_service) { double(PrivilegeCheckerService) }
 
-            let(:request) { double }
+            let(:request) { double(ActionDispatch::Request) }
+            let(:response) do
+              double(ActionDispatch::Response).tap do |response|
+                allow(response).to receive(:status=)
+              end
+            end
 
             it 'is enforced' do
               # Check if the test is not marked as a false positive
