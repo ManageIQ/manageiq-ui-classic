@@ -211,9 +211,13 @@ class ApplicationController < ActionController::Base
         case error
         when ::MiqException::RbacPrivilegeException
           redirect_to(:controller => 'dashboard', :action => "auth_error")
+        when ActionController::BadRequest
+          @layout = "exception"
+          response.status = :bad_request # 400
+          render(:template => "layouts/exception", :locals => {:message => msg})
         else
           @layout = "exception"
-          response.status = 500
+          response.status = :internal_server_error # 500
           render(:template => "layouts/exception", :locals => {:message => msg})
         end
       end
