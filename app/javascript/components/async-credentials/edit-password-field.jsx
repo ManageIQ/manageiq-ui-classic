@@ -31,6 +31,7 @@ const EditPasswordField = ({ componentClass, ...props }) => {
       disabled={editMode || isDisabled}
       type="password"
       autoComplete="new-password"
+      hideLabel
       {...rest}
     />
   ) : (
@@ -46,6 +47,7 @@ const EditPasswordField = ({ componentClass, ...props }) => {
       disabled={editMode || isDisabled}
       type="password"
       autoComplete="new-password"
+      hideLabel
       {...rest}
     />
   );
