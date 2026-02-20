@@ -69,10 +69,10 @@ module Mixins
     #   either sets flash or raises exception
     #
     def find_records_with_rbac(klass, ids, options = {})
-      raise(ActiveRecord::RecordNotFound, _("Can't access records without an id")) if ids.include?(nil) || ids.empty?
+      raise(ActionController::BadRequest, _("Can't access records without an id")) if ids.include?(nil) || ids.empty?
 
       filtered = Rbac.filtered(klass.where(:id => ids), :named_scope => options[:named_scope])
-      raise(ActiveRecord::RecordNotFound, _("Can't access selected records")) unless ids.length == filtered.length
+      raise(::MiqException::RbacPrivilegeException, _("Can't access selected records")) unless ids.length == filtered.length
 
       filtered
     end

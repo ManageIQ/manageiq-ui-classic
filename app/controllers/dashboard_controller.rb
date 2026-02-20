@@ -507,7 +507,9 @@ class DashboardController < ApplicationController
 
   # Put out error msg if user's role is not authorized for an action
   def auth_error
-    add_flash(_("The user is not authorized for this task or item."), :error)
+    response.status = :forbidden # 403
+    msg = @exception ? @exception.message : _("The user is not authorized for this task or item.")
+    add_flash(msg, :error)
     add_flash(_("Press your browser's Back button or click a tab to continue"))
   end
 
