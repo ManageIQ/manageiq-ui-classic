@@ -1556,7 +1556,8 @@ class ApplicationController < ActionController::Base
     session[:miq_compare] = @compare.nil? ? (@keep_compare ? session[:miq_compare] : nil) : Marshal.dump(@compare)
     session[:miq_compressed] = @compressed unless @compressed.nil?
     session[:miq_exists_mode] = @exists_mode unless @exists_mode.nil?
-    session[:last_trans_time] = Time.now
+    # Update user activity time in separate memcache key
+    SessionActivityService.update_last_transaction_time(current_user.id) if current_user
 
     # Set timelines hash, if it is in the session for the running controller
     set_tl_session_data
