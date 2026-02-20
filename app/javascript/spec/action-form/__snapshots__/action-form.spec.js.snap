@@ -8709,6 +8709,7 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                         onFocus={[Function]}
                                                       >
                                                         <select
+                                                          aria-describedby="action_type-helper-text"
                                                           className="cds--select-input"
                                                           id="action_type"
                                                           loadingMessage="Loading..."
@@ -8764,6 +8765,17 @@ exports[`Action Form Component should render adding a new action 1`] = `
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
+                                                      <ForwardRef
+                                                        as="div"
+                                                        className="cds--form__helper-text"
+                                                        id="action_type-helper-text"
+                                                      >
+                                                        <div
+                                                          className="cds--form__helper-text"
+                                                          dir="auto"
+                                                          id="action_type-helper-text"
+                                                        />
+                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>

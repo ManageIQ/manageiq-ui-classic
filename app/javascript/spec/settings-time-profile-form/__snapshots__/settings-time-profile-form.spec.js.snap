@@ -4677,6 +4677,7 @@ exports[`VM common form component should render adding form variant add new time
                                                 onFocus={[Function]}
                                               >
                                                 <select
+                                                  aria-describedby="profile_type-helper-text"
                                                   className="cds--select-input"
                                                   id="profile_type"
                                                   name="profile_type"
@@ -4750,6 +4751,17 @@ exports[`VM common form component should render adding form variant add new time
                                                   </Icon>
                                                 </ForwardRef(ChevronDown)>
                                               </div>
+                                              <ForwardRef
+                                                as="div"
+                                                className="cds--form__helper-text"
+                                                id="profile_type-helper-text"
+                                              >
+                                                <div
+                                                  className="cds--form__helper-text"
+                                                  dir="auto"
+                                                  id="profile_type-helper-text"
+                                                />
+                                              </ForwardRef>
                                             </div>
                                           </div>
                                         </Select>
@@ -5177,14 +5189,15 @@ exports[`VM common form component should render adding form variant add new time
                                                       title=""
                                                     >
                                                       <ForwardRef
+                                                        as="div"
                                                         className="cds--checkbox-label-text"
                                                       >
-                                                        <span
+                                                        <div
                                                           className="cds--checkbox-label-text"
                                                           dir="auto"
                                                         >
                                                           Select All Days
-                                                        </span>
+                                                        </div>
                                                       </ForwardRef>
                                                     </label>
                                                     <div
@@ -5796,14 +5809,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             Sunday
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -5905,14 +5919,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             Monday
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -6014,14 +6029,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             Tuesday
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -6123,14 +6139,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             Wedensday
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -6232,14 +6249,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             Thursday
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -6341,14 +6359,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             Friday
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -6450,14 +6469,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             Saturday
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -7824,14 +7844,15 @@ exports[`VM common form component should render adding form variant add new time
                                                       title=""
                                                     >
                                                       <ForwardRef
+                                                        as="div"
                                                         className="cds--checkbox-label-text"
                                                       >
-                                                        <span
+                                                        <div
                                                           className="cds--checkbox-label-text"
                                                           dir="auto"
                                                         >
                                                           Select All Hours
-                                                        </span>
+                                                        </div>
                                                       </ForwardRef>
                                                     </label>
                                                     <div
@@ -8557,14 +8578,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             12-1
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -8666,14 +8688,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             1-2
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -8775,14 +8798,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             2-3
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -8884,14 +8908,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             3-4
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -8993,14 +9018,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             4-5
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -9102,14 +9128,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             5-6
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -9211,14 +9238,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             6-7
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -9320,14 +9348,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             7-8
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -9429,14 +9458,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             8-9
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -9538,14 +9568,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             9-10
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -9647,14 +9678,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             10-11
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -9756,14 +9788,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             11-12
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -10500,14 +10533,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             12-1
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -10609,14 +10643,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             1-2
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -10718,14 +10753,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             2-3
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -10827,14 +10863,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             3-4
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -10936,14 +10973,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             4-5
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -11045,14 +11083,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             5-6
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -11154,14 +11193,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             6-7
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -11263,14 +11303,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             7-8
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -11372,14 +11413,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             8-9
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -11481,14 +11523,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             9-10
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -11590,14 +11633,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             10-11
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -11699,14 +11743,15 @@ exports[`VM common form component should render adding form variant add new time
                                                                         title=""
                                                                       >
                                                                         <ForwardRef
+                                                                          as="div"
                                                                           className="cds--checkbox-label-text"
                                                                         >
-                                                                          <span
+                                                                          <div
                                                                             className="cds--checkbox-label-text"
                                                                             dir="auto"
                                                                           >
                                                                             11-12
-                                                                          </span>
+                                                                          </div>
                                                                         </ForwardRef>
                                                                       </label>
                                                                       <div
@@ -12980,6 +13025,7 @@ exports[`VM common form component should render adding form variant add new time
                                                 onFocus={[Function]}
                                               >
                                                 <select
+                                                  aria-describedby="profile.tz-helper-text"
                                                   className="cds--select-input"
                                                   id="profile.tz"
                                                   name="profile.tz"
@@ -13037,6 +13083,17 @@ exports[`VM common form component should render adding form variant add new time
                                                   </Icon>
                                                 </ForwardRef(ChevronDown)>
                                               </div>
+                                              <ForwardRef
+                                                as="div"
+                                                className="cds--form__helper-text"
+                                                id="profile.tz-helper-text"
+                                              >
+                                                <div
+                                                  className="cds--form__helper-text"
+                                                  dir="auto"
+                                                  id="profile.tz-helper-text"
+                                                />
+                                              </ForwardRef>
                                             </div>
                                           </div>
                                         </Select>

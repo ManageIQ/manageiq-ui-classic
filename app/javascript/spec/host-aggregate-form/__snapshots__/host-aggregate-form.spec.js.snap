@@ -569,6 +569,7 @@ exports[`Host aggregate form component should render add host form variant (remv
                                               onFocus={[Function]}
                                             >
                                               <select
+                                                aria-describedby="host_id-helper-text"
                                                 className="cds--select-input"
                                                 id="host_id"
                                                 name="host_id"
@@ -625,6 +626,17 @@ exports[`Host aggregate form component should render add host form variant (remv
                                                 </Icon>
                                               </ForwardRef(ChevronDown)>
                                             </div>
+                                            <ForwardRef
+                                              as="div"
+                                              className="cds--form__helper-text"
+                                              id="host_id-helper-text"
+                                            >
+                                              <div
+                                                className="cds--form__helper-text"
+                                                dir="auto"
+                                                id="host_id-helper-text"
+                                              />
+                                            </ForwardRef>
                                           </div>
                                         </div>
                                       </Select>

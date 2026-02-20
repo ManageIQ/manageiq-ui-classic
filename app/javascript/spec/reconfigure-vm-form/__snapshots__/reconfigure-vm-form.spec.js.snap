@@ -17363,6 +17363,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show c
                                                   onFocus={[Function]}
                                                 >
                                                   <select
+                                                    aria-describedby="host_file-helper-text"
                                                     className="cds--select-input"
                                                     id="host_file"
                                                     name="host_file"
@@ -17467,6 +17468,17 @@ exports[`Reconfigure VM form component should render reconfigure form and show c
                                                     </Icon>
                                                   </ForwardRef(ChevronDown)>
                                                 </div>
+                                                <ForwardRef
+                                                  as="div"
+                                                  className="cds--form__helper-text"
+                                                  id="host_file-helper-text"
+                                                >
+                                                  <div
+                                                    className="cds--form__helper-text"
+                                                    dir="auto"
+                                                    id="host_file-helper-text"
+                                                  />
+                                                </ForwardRef>
                                               </div>
                                             </div>
                                           </Select>
@@ -19908,6 +19920,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                                   onFocus={[Function]}
                                                 >
                                                   <select
+                                                    aria-describedby="type-helper-text"
                                                     autoFocus={true}
                                                     className="cds--select-input"
                                                     id="type"
@@ -19997,6 +20010,17 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                                     </Icon>
                                                   </ForwardRef(ChevronDown)>
                                                 </div>
+                                                <ForwardRef
+                                                  as="div"
+                                                  className="cds--form__helper-text"
+                                                  id="type-helper-text"
+                                                >
+                                                  <div
+                                                    className="cds--form__helper-text"
+                                                    dir="auto"
+                                                    id="type-helper-text"
+                                                  />
+                                                </ForwardRef>
                                               </div>
                                             </div>
                                           </Select>
@@ -20321,6 +20345,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                                   onFocus={[Function]}
                                                 >
                                                   <select
+                                                    aria-describedby="unit-helper-text"
                                                     className="cds--select-input"
                                                     id="unit"
                                                     name="unit"
@@ -20394,6 +20419,17 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                                     </Icon>
                                                   </ForwardRef(ChevronDown)>
                                                 </div>
+                                                <ForwardRef
+                                                  as="div"
+                                                  className="cds--form__helper-text"
+                                                  id="unit-helper-text"
+                                                >
+                                                  <div
+                                                    className="cds--form__helper-text"
+                                                    dir="auto"
+                                                    id="unit-helper-text"
+                                                  />
+                                                </ForwardRef>
                                               </div>
                                             </div>
                                           </Select>
@@ -20672,6 +20708,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                                   onFocus={[Function]}
                                                 >
                                                   <select
+                                                    aria-describedby="mode-helper-text"
                                                     className="cds--select-input"
                                                     id="mode"
                                                     name="mode"
@@ -20760,6 +20797,17 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                                     </Icon>
                                                   </ForwardRef(ChevronDown)>
                                                 </div>
+                                                <ForwardRef
+                                                  as="div"
+                                                  className="cds--form__helper-text"
+                                                  id="mode-helper-text"
+                                                >
+                                                  <div
+                                                    className="cds--form__helper-text"
+                                                    dir="auto"
+                                                    id="mode-helper-text"
+                                                  />
+                                                </ForwardRef>
                                               </div>
                                             </div>
                                           </Select>
@@ -20991,6 +21039,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                                   onFocus={[Function]}
                                                 >
                                                   <select
+                                                    aria-describedby="controller-helper-text"
                                                     className="cds--select-input"
                                                     id="controller"
                                                     name="controller"
@@ -21080,6 +21129,17 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                                     </Icon>
                                                   </ForwardRef(ChevronDown)>
                                                 </div>
+                                                <ForwardRef
+                                                  as="div"
+                                                  className="cds--form__helper-text"
+                                                  id="controller-helper-text"
+                                                >
+                                                  <div
+                                                    className="cds--form__helper-text"
+                                                    dir="auto"
+                                                    id="controller-helper-text"
+                                                  />
+                                                </ForwardRef>
                                               </div>
                                             </div>
                                           </Select>
@@ -23740,6 +23800,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                                   onFocus={[Function]}
                                                 >
                                                   <select
+                                                    aria-describedby="type-helper-text"
                                                     aria-readonly={true}
                                                     autoFocus={true}
                                                     className="cds--select-input"
@@ -23830,6 +23891,17 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                                     </Icon>
                                                   </ForwardRef(ChevronDown)>
                                                 </div>
+                                                <ForwardRef
+                                                  as="div"
+                                                  className="cds--form__helper-text"
+                                                  id="type-helper-text"
+                                                >
+                                                  <div
+                                                    className="cds--form__helper-text"
+                                                    dir="auto"
+                                                    id="type-helper-text"
+                                                  />
+                                                </ForwardRef>
                                               </div>
                                             </div>
                                           </Select>
@@ -24154,6 +24226,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                                   onFocus={[Function]}
                                                 >
                                                   <select
+                                                    aria-describedby="unit-helper-text"
                                                     className="cds--select-input"
                                                     id="unit"
                                                     name="unit"
@@ -24227,6 +24300,17 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                                     </Icon>
                                                   </ForwardRef(ChevronDown)>
                                                 </div>
+                                                <ForwardRef
+                                                  as="div"
+                                                  className="cds--form__helper-text"
+                                                  id="unit-helper-text"
+                                                >
+                                                  <div
+                                                    className="cds--form__helper-text"
+                                                    dir="auto"
+                                                    id="unit-helper-text"
+                                                  />
+                                                </ForwardRef>
                                               </div>
                                             </div>
                                           </Select>
@@ -24505,6 +24589,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                                   onFocus={[Function]}
                                                 >
                                                   <select
+                                                    aria-describedby="mode-helper-text"
                                                     aria-readonly={true}
                                                     className="cds--select-input"
                                                     id="mode"
@@ -24594,6 +24679,17 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                                     </Icon>
                                                   </ForwardRef(ChevronDown)>
                                                 </div>
+                                                <ForwardRef
+                                                  as="div"
+                                                  className="cds--form__helper-text"
+                                                  id="mode-helper-text"
+                                                >
+                                                  <div
+                                                    className="cds--form__helper-text"
+                                                    dir="auto"
+                                                    id="mode-helper-text"
+                                                  />
+                                                </ForwardRef>
                                               </div>
                                             </div>
                                           </Select>
@@ -24825,6 +24921,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                                   onFocus={[Function]}
                                                 >
                                                   <select
+                                                    aria-describedby="controller-helper-text"
                                                     aria-readonly={true}
                                                     className="cds--select-input"
                                                     id="controller"
@@ -24915,6 +25012,17 @@ exports[`Reconfigure VM form component should render reconfigure form and show d
                                                     </Icon>
                                                   </ForwardRef(ChevronDown)>
                                                 </div>
+                                                <ForwardRef
+                                                  as="div"
+                                                  className="cds--form__helper-text"
+                                                  id="controller-helper-text"
+                                                >
+                                                  <div
+                                                    className="cds--form__helper-text"
+                                                    dir="auto"
+                                                    id="controller-helper-text"
+                                                  />
+                                                </ForwardRef>
                                               </div>
                                             </div>
                                           </Select>
@@ -29580,6 +29688,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                                       onFocus={[Function]}
                                                                     >
                                                                       <select
+                                                                        aria-describedby="socket_count-helper-text"
                                                                         className="cds--select-input"
                                                                         id="socket_count"
                                                                         name="socket_count"
@@ -29685,6 +29794,17 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                                         </Icon>
                                                                       </ForwardRef(ChevronDown)>
                                                                     </div>
+                                                                    <ForwardRef
+                                                                      as="div"
+                                                                      className="cds--form__helper-text"
+                                                                      id="socket_count-helper-text"
+                                                                    >
+                                                                      <div
+                                                                        className="cds--form__helper-text"
+                                                                        dir="auto"
+                                                                        id="socket_count-helper-text"
+                                                                      />
+                                                                    </ForwardRef>
                                                                   </div>
                                                                 </div>
                                                               </Select>
@@ -29955,6 +30075,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                                       onFocus={[Function]}
                                                                     >
                                                                       <select
+                                                                        aria-describedby="cores_per_socket_count-helper-text"
                                                                         className="cds--select-input"
                                                                         id="cores_per_socket_count"
                                                                         name="cores_per_socket_count"
@@ -30060,6 +30181,17 @@ exports[`Reconfigure VM form component should render reconfigure form and show h
                                                                         </Icon>
                                                                       </ForwardRef(ChevronDown)>
                                                                     </div>
+                                                                    <ForwardRef
+                                                                      as="div"
+                                                                      className="cds--form__helper-text"
+                                                                      id="cores_per_socket_count-helper-text"
+                                                                    >
+                                                                      <div
+                                                                        className="cds--form__helper-text"
+                                                                        dir="auto"
+                                                                        id="cores_per_socket_count-helper-text"
+                                                                      />
+                                                                    </ForwardRef>
                                                                   </div>
                                                                 </div>
                                                               </Select>
@@ -31972,6 +32104,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
                                                   onFocus={[Function]}
                                                 >
                                                   <select
+                                                    aria-describedby="vlan-helper-text"
                                                     className="cds--select-input"
                                                     id="vlan"
                                                     name="vlan"
@@ -32076,6 +32209,17 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
                                                     </Icon>
                                                   </ForwardRef(ChevronDown)>
                                                 </div>
+                                                <ForwardRef
+                                                  as="div"
+                                                  className="cds--form__helper-text"
+                                                  id="vlan-helper-text"
+                                                >
+                                                  <div
+                                                    className="cds--form__helper-text"
+                                                    dir="auto"
+                                                    id="vlan-helper-text"
+                                                  />
+                                                </ForwardRef>
                                               </div>
                                             </div>
                                           </Select>
@@ -32288,6 +32432,7 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
                                                     onFocus={[Function]}
                                                   >
                                                     <select
+                                                      aria-describedby="network-helper-text"
                                                       className="cds--select-input"
                                                       id="network"
                                                       name="network"
@@ -32344,6 +32489,17 @@ exports[`Reconfigure VM form component should render reconfigure form and show n
                                                       </Icon>
                                                     </ForwardRef(ChevronDown)>
                                                   </div>
+                                                  <ForwardRef
+                                                    as="div"
+                                                    className="cds--form__helper-text"
+                                                    id="network-helper-text"
+                                                  >
+                                                    <div
+                                                      className="cds--form__helper-text"
+                                                      dir="auto"
+                                                      id="network-helper-text"
+                                                    />
+                                                  </ForwardRef>
                                                 </div>
                                               </div>
                                             </Select>
@@ -48662,6 +48818,7 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                                       onFocus={[Function]}
                                                                     >
                                                                       <select
+                                                                        aria-describedby="socket_count-helper-text"
                                                                         className="cds--select-input"
                                                                         id="socket_count"
                                                                         name="socket_count"
@@ -48767,6 +48924,17 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                                         </Icon>
                                                                       </ForwardRef(ChevronDown)>
                                                                     </div>
+                                                                    <ForwardRef
+                                                                      as="div"
+                                                                      className="cds--form__helper-text"
+                                                                      id="socket_count-helper-text"
+                                                                    >
+                                                                      <div
+                                                                        className="cds--form__helper-text"
+                                                                        dir="auto"
+                                                                        id="socket_count-helper-text"
+                                                                      />
+                                                                    </ForwardRef>
                                                                   </div>
                                                                 </div>
                                                               </Select>
@@ -49037,6 +49205,7 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                                       onFocus={[Function]}
                                                                     >
                                                                       <select
+                                                                        aria-describedby="cores_per_socket_count-helper-text"
                                                                         className="cds--select-input"
                                                                         id="cores_per_socket_count"
                                                                         name="cores_per_socket_count"
@@ -49142,6 +49311,17 @@ exports[`Reconfigure VM form component should render reconfigure form without da
                                                                         </Icon>
                                                                       </ForwardRef(ChevronDown)>
                                                                     </div>
+                                                                    <ForwardRef
+                                                                      as="div"
+                                                                      className="cds--form__helper-text"
+                                                                      id="cores_per_socket_count-helper-text"
+                                                                    >
+                                                                      <div
+                                                                        className="cds--form__helper-text"
+                                                                        dir="auto"
+                                                                        id="cores_per_socket_count-helper-text"
+                                                                      />
+                                                                    </ForwardRef>
                                                                   </div>
                                                                 </div>
                                                               </Select>

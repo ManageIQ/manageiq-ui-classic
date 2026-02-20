@@ -614,6 +614,7 @@ exports[`Associate / Disassociate form component should render associate form va
                                               onFocus={[Function]}
                                             >
                                               <select
+                                                aria-describedby="floating_ip-helper-text"
                                                 className="cds--select-input"
                                                 id="floating_ip"
                                                 name="floating_ip"
@@ -750,6 +751,17 @@ exports[`Associate / Disassociate form component should render associate form va
                                                 </Icon>
                                               </ForwardRef(ChevronDown)>
                                             </div>
+                                            <ForwardRef
+                                              as="div"
+                                              className="cds--form__helper-text"
+                                              id="floating_ip-helper-text"
+                                            >
+                                              <div
+                                                className="cds--form__helper-text"
+                                                dir="auto"
+                                                id="floating_ip-helper-text"
+                                              />
+                                            </ForwardRef>
                                           </div>
                                         </div>
                                       </Select>
@@ -1631,6 +1643,7 @@ exports[`Associate / Disassociate form component should render disassociate form
                                               onFocus={[Function]}
                                             >
                                               <select
+                                                aria-describedby="floating_ip-helper-text"
                                                 className="cds--select-input"
                                                 id="floating_ip"
                                                 name="floating_ip"
@@ -1767,6 +1780,17 @@ exports[`Associate / Disassociate form component should render disassociate form
                                                 </Icon>
                                               </ForwardRef(ChevronDown)>
                                             </div>
+                                            <ForwardRef
+                                              as="div"
+                                              className="cds--form__helper-text"
+                                              id="floating_ip-helper-text"
+                                            >
+                                              <div
+                                                className="cds--form__helper-text"
+                                                dir="auto"
+                                                id="floating_ip-helper-text"
+                                              />
+                                            </ForwardRef>
                                           </div>
                                         </div>
                                       </Select>
@@ -2647,6 +2671,7 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                                               onFocus={[Function]}
                                             >
                                               <select
+                                                aria-describedby="floating_ip-helper-text"
                                                 className="cds--select-input"
                                                 id="floating_ip"
                                                 loadingMessage="Loading..."
@@ -2702,6 +2727,17 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                                                 </Icon>
                                               </ForwardRef(ChevronDown)>
                                             </div>
+                                            <ForwardRef
+                                              as="div"
+                                              className="cds--form__helper-text"
+                                              id="floating_ip-helper-text"
+                                            >
+                                              <div
+                                                className="cds--form__helper-text"
+                                                dir="auto"
+                                                id="floating_ip-helper-text"
+                                              />
+                                            </ForwardRef>
                                           </div>
                                         </div>
                                       </Select>
@@ -3555,6 +3591,7 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                                               onFocus={[Function]}
                                             >
                                               <select
+                                                aria-describedby="floating_ip-helper-text"
                                                 className="cds--select-input"
                                                 id="floating_ip"
                                                 loadingMessage="Loading..."
@@ -3610,6 +3647,17 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                                                 </Icon>
                                               </ForwardRef(ChevronDown)>
                                             </div>
+                                            <ForwardRef
+                                              as="div"
+                                              className="cds--form__helper-text"
+                                              id="floating_ip-helper-text"
+                                            >
+                                              <div
+                                                className="cds--form__helper-text"
+                                                dir="auto"
+                                                id="floating_ip-helper-text"
+                                              />
+                                            </ForwardRef>
                                           </div>
                                         </div>
                                       </Select>
