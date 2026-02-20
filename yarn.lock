@@ -7228,9 +7228,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:~15.9.0":
-  version: 15.9.0
-  resolution: "cypress@npm:15.9.0"
+"cypress@npm:~15.10.0":
+  version: 15.10.0
+  resolution: "cypress@npm:15.10.0"
   dependencies:
     "@cypress/request": "npm:^3.0.10"
     "@cypress/xvfb": "npm:^1.2.4"
@@ -7260,7 +7260,7 @@ __metadata:
     hasha: "npm:5.2.2"
     is-installed-globally: "npm:~0.4.0"
     listr2: "npm:^3.8.3"
-    lodash: "npm:^4.17.21"
+    lodash: "npm:^4.17.23"
     log-symbols: "npm:^4.0.0"
     minimist: "npm:^1.2.8"
     ospath: "npm:^1.2.2"
@@ -7276,7 +7276,7 @@ __metadata:
     yauzl: "npm:^2.10.0"
   bin:
     cypress: bin/cypress
-  checksum: 10/f561e7f9f8956e26a1eeb1dc98614b83abb63c1f83d008ffd26a03d96c15c25037980868f57e07f9821be4c41ace6886f8edf4de6d86a3b5de5f3c059b586ecd
+  checksum: 10/d32e501737f48580ba28072b680b8ad53fd1da3bcfca101c6c6fffcc8e5692a280bd01b792dffdc4e1e37407883bb1979669ea11bc8f2f49c59c118c72d8acce
   languageName: node
   linkType: hard
 
@@ -13684,7 +13684,7 @@ __metadata:
     core-js-compat: "npm:~3.48.0"
     create-react-context: "npm:~0.3.0"
     css-loader: "npm:~3.6.0"
-    cypress: "npm:~15.9.0"
+    cypress: "npm:~15.10.0"
     d3: "npm:^7.8.2"
     dompurify: "npm:^3.2.4"
     duplicate-package-checker-webpack-plugin: "npm:~3.0.0"
