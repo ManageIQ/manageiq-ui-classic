@@ -3959,6 +3959,7 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
                                                                                         <TextInput
                                                                                           autoComplete="new-password"
                                                                                           disabled={true}
+                                                                                          hideLabel={true}
                                                                                           id="authentications.default.password-password-placeholder"
                                                                                           labelText=""
                                                                                           placeholder="●●●●●●●●"
@@ -3972,11 +3973,11 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
                                                                                             >
                                                                                               <ForwardRef
                                                                                                 as="label"
-                                                                                                className="cds--label cds--label--disabled"
+                                                                                                className="cds--label cds--visually-hidden cds--label--disabled"
                                                                                                 htmlFor="authentications.default.password-password-placeholder"
                                                                                               >
                                                                                                 <label
-                                                                                                  className="cds--label cds--label--disabled"
+                                                                                                  className="cds--label cds--visually-hidden cds--label--disabled"
                                                                                                   dir="auto"
                                                                                                   htmlFor="authentications.default.password-password-placeholder"
                                                                                                 />
@@ -4652,6 +4653,7 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
                                                                                         <TextInput
                                                                                           autoComplete="new-password"
                                                                                           disabled={true}
+                                                                                          hideLabel={true}
                                                                                           id="authentications.remote.password-password-placeholder"
                                                                                           labelText=""
                                                                                           placeholder="●●●●●●●●"
@@ -4665,11 +4667,11 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
                                                                                             >
                                                                                               <ForwardRef
                                                                                                 as="label"
-                                                                                                className="cds--label cds--label--disabled"
+                                                                                                className="cds--label cds--visually-hidden cds--label--disabled"
                                                                                                 htmlFor="authentications.remote.password-password-placeholder"
                                                                                               >
                                                                                                 <label
-                                                                                                  className="cds--label cds--label--disabled"
+                                                                                                  className="cds--label cds--visually-hidden cds--label--disabled"
                                                                                                   dir="auto"
                                                                                                   htmlFor="authentications.remote.password-password-placeholder"
                                                                                                 />
@@ -5345,6 +5347,7 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
                                                                                         <TextInput
                                                                                           autoComplete="new-password"
                                                                                           disabled={true}
+                                                                                          hideLabel={true}
                                                                                           id="authentications.ws.password-password-placeholder"
                                                                                           labelText=""
                                                                                           placeholder="●●●●●●●●"
@@ -5358,11 +5361,11 @@ exports[`Show Edit Host Form Component should render form for *one* host 1`] = `
                                                                                             >
                                                                                               <ForwardRef
                                                                                                 as="label"
-                                                                                                className="cds--label cds--label--disabled"
+                                                                                                className="cds--label cds--visually-hidden cds--label--disabled"
                                                                                                 htmlFor="authentications.ws.password-password-placeholder"
                                                                                               >
                                                                                                 <label
-                                                                                                  className="cds--label cds--label--disabled"
+                                                                                                  className="cds--label cds--visually-hidden cds--label--disabled"
                                                                                                   dir="auto"
                                                                                                   htmlFor="authentications.ws.password-password-placeholder"
                                                                                                 />
