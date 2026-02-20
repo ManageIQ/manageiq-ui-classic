@@ -41,10 +41,6 @@ describe('packs/global.js', function() {
     it('loads angular-ui-bootstrap', function() {
       expect(angular.module('ui.bootstrap')).toBeDefined();
     });
-
-    it('loads codemirror', function() {
-      expect(angular.module('ui.codemirror')).toBeDefined();
-    });
   });
 
   context('codemirror', function() {
