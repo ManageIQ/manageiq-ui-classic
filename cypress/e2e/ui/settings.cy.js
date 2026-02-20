@@ -2,7 +2,12 @@
 describe('Settings > My Settings', () => {
   beforeEach(() => {
     cy.login();
-    cy.menu('Settings', 'My Settings');
+    cy.interceptApi({
+      method: 'GET',
+      alias: 'userSettingsLoad',
+      urlPattern: '/api/users/*',
+      triggerFn: () => cy.menu('Settings', 'My Settings'),
+    });
   });
 
   it('Saves the start page setting', () => {
@@ -25,7 +30,12 @@ describe('Settings > My Settings', () => {
     cy.login();
     cy.url().should('include', '/dashboard');
 
-    cy.menu('Settings', 'My Settings');
+    cy.interceptApi({
+      method: 'GET',
+      alias: 'userSettingsReload',
+      urlPattern: '/api/users/*',
+      triggerFn: () => cy.menu('Settings', 'My Settings'),
+    });
     cy.getFormInputFieldByIdAndType({ inputId: 'display.startpage' }).should(
       'have.value',
       'Overview / Dashboard'
