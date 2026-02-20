@@ -61,6 +61,7 @@ const PasswordField = ({
                 disabled
                 type="password"
                 autoComplete="new-password"
+                hideLabel
               />
             </Column>
             <Column sm={1} md={1} lg={1} className="miq-pwd-field-edit-icon-grid-col">
