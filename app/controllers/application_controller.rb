@@ -208,6 +208,7 @@ class ApplicationController < ActionController::Base
       format.html do # HTML, send error screen
         case error
         when ::MiqException::RbacPrivilegeException
+          @exception = error
           redirect_to(:controller => 'dashboard', :action => "auth_error")
         when ActionController::BadRequest
           @layout = "exception"
