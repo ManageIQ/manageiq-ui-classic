@@ -1,9 +1,6 @@
-@use '@carbon/react/scss/themes' as *;
 @use '@carbon/react/scss/theme';
 
 .row.dashboard {
-  @include theme.theme($white);
-
   .columns {
     padding: 10px;
     position: relative;

@@ -1,9 +1,11 @@
-@use '@carbon/react/scss/themes';
-@use '@carbon/react/scss/theme' with (
-  $theme: themes.$white,
+@use '@carbon/react' with (
+  // don't break patternfly styling
+  $css--default-type: false,
+  $css--reset: false,
+  $css--body: false,
+  // disable IBM fonts
+  $css--font-face: false,
 );
-
-@use '@carbon/react';
 
 // Import Carbon Charts styles (use @import for .css files)
 @import '~@carbon/charts/styles.css';

@@ -1,41 +1,5 @@
 @use '@carbon/styles/scss/components/button';
 
-#explorer_title,
-h1 {
-  font-size: 24px;
-}
-// These are mostly for HAML components and can be removed once the React conversions are done
-/* ====================================== */
-h2 {
-  font-size: 22px;
-  font-weight: 100;
-}
-h3 {
-  font-size: 16px;
-  font-weight: 100;
-}
-h4 {
-  font-size: 14px;
-}
-h1, h2, h3 {
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
-.form-group,
-.alert strong {
-  font-size: 13px;
-}
-.form-control-static {
-  font-size: 12px;
-}
-table.table {
-  font-size: 13px;
-}
-/* ====================================== */
-
-form h3 {
-  font-size: 16px;
-}
 form .miq-validation-button, .miq-async-action-button {
   display: flex;
   align-items: center;
