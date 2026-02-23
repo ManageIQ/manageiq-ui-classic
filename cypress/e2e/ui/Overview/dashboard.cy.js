@@ -108,15 +108,23 @@ describe('Overview > Dashboard Tests', () => {
   it('Zoom a widget', () => {
     cy.get('.card-pf').then((cards) => {
       cy.get(cards[0]).then((card) => {
-        cy.get(card.children()[0].children[0].children[0]).click().then(() => {
-          cy.get('.cds--overflow-menu-options').then((menuItems) => {
-            cy.get(menuItems.children()[4]).click();
-          });
+        const widgetId = cards[0].children[1].id.split('_')[1].replace('w', '');
+        cy.interceptApi({
+          alias: 'zoomChartData',
+          method: 'GET',
+          urlPattern: `/dashboard/widget_chart_data/${widgetId}`,
+          triggerFn: () => {
+            cy.get(card.children()[0].children[0].children[0]).click().then(() => {
+              cy.get('.cds--overflow-menu-options').then((menuItems) => {
+                cy.get(menuItems.children()[4]).click();
+              });
+            });
+          }
         });
       });
     });
     cy.get('#lightbox-panel').should('have.css', 'display', 'block');
-    cy.get('#zoomed_chart_div', { timeout: 10000 }).should('contain', defaultCards[0]);
+    cy.get('#zoomed_chart_div').should('contain', defaultCards[0]);
   });
 
   it('Refresh a widget', () => {
