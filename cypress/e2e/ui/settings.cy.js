@@ -1,13 +1,17 @@
 /* eslint-disable no-undef */
 describe('Settings > My Settings', () => {
-  beforeEach(() => {
-    cy.login();
+  const interceptUserSettingsLoad = (alias = 'userSettingsLoad') => {
     cy.interceptApi({
       method: 'GET',
-      alias: 'userSettingsLoad',
+      alias,
       urlPattern: '/api/users/*',
       triggerFn: () => cy.menu('Settings', 'My Settings'),
     });
+  };
+
+  beforeEach(() => {
+    cy.login();
+    interceptUserSettingsLoad();
   });
 
   it('Saves the start page setting', () => {
@@ -30,12 +34,7 @@ describe('Settings > My Settings', () => {
     cy.login();
     cy.url().should('include', '/dashboard');
 
-    cy.interceptApi({
-      method: 'GET',
-      alias: 'userSettingsReload',
-      urlPattern: '/api/users/*',
-      triggerFn: () => cy.menu('Settings', 'My Settings'),
-    });
+    interceptUserSettingsLoad('userSettingsReload');
     cy.getFormInputFieldByIdAndType({ inputId: 'display.startpage' }).should(
       'have.value',
       'Overview / Dashboard'
