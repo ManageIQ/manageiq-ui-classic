@@ -27,7 +27,8 @@ describe('Overview > Reports Tests', () => {
     });
 
     it('Can add, edit and delete a report', () => {
-      cy.get('#control_reports_accord > .panel-title > .collapsed').click(); // Navigate to reports section of explorer page
+      // Open the reports accordion and wait for it to load
+      cy.accordion('Reports');
 
       // Click add report
       cy.toolbar('Configuration', 'Add a new Report');
@@ -243,7 +244,8 @@ describe('Overview > Reports Tests', () => {
   });
 
   it('Can add, edit and delete a schedule', () => {
-    cy.get('#control_schedules_accord > .panel-title > .collapsed').click({ force: true });
+    // Open the schedules accordion and wait for it to load
+    cy.accordion('Schedules');
 
     // Click add schedule
     cy.toolbar('Configuration', 'Add a new Schedule');
