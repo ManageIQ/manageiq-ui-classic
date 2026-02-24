@@ -8123,6 +8123,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                             onFocus={[Function]}
                                                                           >
                                                                             <select
+                                                                              aria-describedby="attributes[0].type-helper-text"
                                                                               className="cds--select-input"
                                                                               id="attributes[0].type"
                                                                               name="attributes[0].type"
@@ -8211,6 +8212,17 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                               </Icon>
                                                                             </ForwardRef(ChevronDown)>
                                                                           </div>
+                                                                          <ForwardRef
+                                                                            as="div"
+                                                                            className="cds--form__helper-text"
+                                                                            id="attributes[0].type-helper-text"
+                                                                          >
+                                                                            <div
+                                                                              className="cds--form__helper-text"
+                                                                              dir="auto"
+                                                                              id="attributes[0].type-helper-text"
+                                                                            />
+                                                                          </ForwardRef>
                                                                         </div>
                                                                       </div>
                                                                     </Select>
@@ -9215,6 +9227,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                           isOpen={false}
                                                                           onBlur={[Function]}
                                                                           onFocus={[Function]}
+                                                                          warn={false}
                                                                           warnTextId="combobox-warn-text-id-8"
                                                                         >
                                                                           <div
@@ -9852,6 +9865,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                           isOpen={false}
                                                                           onBlur={[Function]}
                                                                           onFocus={[Function]}
+                                                                          warn={false}
                                                                           warnTextId="combobox-warn-text-id-10"
                                                                         >
                                                                           <div
@@ -15843,6 +15857,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                             onFocus={[Function]}
                                                                           >
                                                                             <select
+                                                                              aria-describedby="attributes[0].type-helper-text"
                                                                               className="cds--select-input"
                                                                               id="attributes[0].type"
                                                                               name="attributes[0].type"
@@ -15931,6 +15946,17 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                               </Icon>
                                                                             </ForwardRef(ChevronDown)>
                                                                           </div>
+                                                                          <ForwardRef
+                                                                            as="div"
+                                                                            className="cds--form__helper-text"
+                                                                            id="attributes[0].type-helper-text"
+                                                                          >
+                                                                            <div
+                                                                              className="cds--form__helper-text"
+                                                                              dir="auto"
+                                                                              id="attributes[0].type-helper-text"
+                                                                            />
+                                                                          </ForwardRef>
                                                                         </div>
                                                                       </div>
                                                                     </Select>
@@ -16935,6 +16961,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                           isOpen={false}
                                                                           onBlur={[Function]}
                                                                           onFocus={[Function]}
+                                                                          warn={false}
                                                                           warnTextId="combobox-warn-text-id-23"
                                                                         >
                                                                           <div
@@ -17572,6 +17599,7 @@ exports[`Generic Object Form Component should render editing a generic object wi
                                                                           isOpen={false}
                                                                           onBlur={[Function]}
                                                                           onFocus={[Function]}
+                                                                          warn={false}
                                                                           warnTextId="combobox-warn-text-id-25"
                                                                         >
                                                                           <div

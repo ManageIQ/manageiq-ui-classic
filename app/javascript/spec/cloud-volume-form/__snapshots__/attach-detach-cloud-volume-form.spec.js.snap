@@ -873,6 +873,7 @@ exports[`Attach / Detach form component should render Attach Cloud Volume to the
                                           onFocus={[Function]}
                                         >
                                           <select
+                                            aria-describedby="dropdown_id-helper-text"
                                             className="cds--select-input"
                                             id="dropdown_id"
                                             name="dropdown_id"
@@ -1009,6 +1010,17 @@ exports[`Attach / Detach form component should render Attach Cloud Volume to the
                                             </Icon>
                                           </ForwardRef(ChevronDown)>
                                         </div>
+                                        <ForwardRef
+                                          as="div"
+                                          className="cds--form__helper-text"
+                                          id="dropdown_id-helper-text"
+                                        >
+                                          <div
+                                            className="cds--form__helper-text"
+                                            dir="auto"
+                                            id="dropdown_id-helper-text"
+                                          />
+                                        </ForwardRef>
                                       </div>
                                     </div>
                                   </Select>
@@ -2140,6 +2152,7 @@ exports[`Attach / Detach form component should render Attach Selected Cloud Volu
                                           onFocus={[Function]}
                                         >
                                           <select
+                                            aria-describedby="dropdown_id-helper-text"
                                             className="cds--select-input"
                                             id="dropdown_id"
                                             name="dropdown_id"
@@ -2276,6 +2289,17 @@ exports[`Attach / Detach form component should render Attach Selected Cloud Volu
                                             </Icon>
                                           </ForwardRef(ChevronDown)>
                                         </div>
+                                        <ForwardRef
+                                          as="div"
+                                          className="cds--form__helper-text"
+                                          id="dropdown_id-helper-text"
+                                        >
+                                          <div
+                                            className="cds--form__helper-text"
+                                            dir="auto"
+                                            id="dropdown_id-helper-text"
+                                          />
+                                        </ForwardRef>
                                       </div>
                                     </div>
                                   </Select>
@@ -3297,6 +3321,7 @@ exports[`Attach / Detach form component should render Detach Cloud Volume from t
                                           onFocus={[Function]}
                                         >
                                           <select
+                                            aria-describedby="dropdown_id-helper-text"
                                             className="cds--select-input"
                                             id="dropdown_id"
                                             name="dropdown_id"
@@ -3433,6 +3458,17 @@ exports[`Attach / Detach form component should render Detach Cloud Volume from t
                                             </Icon>
                                           </ForwardRef(ChevronDown)>
                                         </div>
+                                        <ForwardRef
+                                          as="div"
+                                          className="cds--form__helper-text"
+                                          id="dropdown_id-helper-text"
+                                        >
+                                          <div
+                                            className="cds--form__helper-text"
+                                            dir="auto"
+                                            id="dropdown_id-helper-text"
+                                          />
+                                        </ForwardRef>
                                       </div>
                                     </div>
                                   </Select>
@@ -4328,6 +4364,7 @@ exports[`Attach / Detach form component should render Detach Selected Cloud Volu
                                           onFocus={[Function]}
                                         >
                                           <select
+                                            aria-describedby="dropdown_id-helper-text"
                                             className="cds--select-input"
                                             id="dropdown_id"
                                             name="dropdown_id"
@@ -4464,6 +4501,17 @@ exports[`Attach / Detach form component should render Detach Selected Cloud Volu
                                             </Icon>
                                           </ForwardRef(ChevronDown)>
                                         </div>
+                                        <ForwardRef
+                                          as="div"
+                                          className="cds--form__helper-text"
+                                          id="dropdown_id-helper-text"
+                                        >
+                                          <div
+                                            className="cds--form__helper-text"
+                                            dir="auto"
+                                            id="dropdown_id-helper-text"
+                                          />
+                                        </ForwardRef>
                                       </div>
                                     </div>
                                   </Select>
@@ -5471,6 +5519,7 @@ exports[`Attach / Detach form component should submit Attach API call 1`] = `
                                           onFocus={[Function]}
                                         >
                                           <select
+                                            aria-describedby="dropdown_id-helper-text"
                                             className="cds--select-input"
                                             id="dropdown_id"
                                             name="dropdown_id"
@@ -5607,6 +5656,17 @@ exports[`Attach / Detach form component should submit Attach API call 1`] = `
                                             </Icon>
                                           </ForwardRef(ChevronDown)>
                                         </div>
+                                        <ForwardRef
+                                          as="div"
+                                          className="cds--form__helper-text"
+                                          id="dropdown_id-helper-text"
+                                        >
+                                          <div
+                                            className="cds--form__helper-text"
+                                            dir="auto"
+                                            id="dropdown_id-helper-text"
+                                          />
+                                        </ForwardRef>
                                       </div>
                                     </div>
                                   </Select>
@@ -6628,6 +6688,7 @@ exports[`Attach / Detach form component should submit Detach API call 1`] = `
                                           onFocus={[Function]}
                                         >
                                           <select
+                                            aria-describedby="dropdown_id-helper-text"
                                             className="cds--select-input"
                                             id="dropdown_id"
                                             name="dropdown_id"
@@ -6764,6 +6825,17 @@ exports[`Attach / Detach form component should submit Detach API call 1`] = `
                                             </Icon>
                                           </ForwardRef(ChevronDown)>
                                         </div>
+                                        <ForwardRef
+                                          as="div"
+                                          className="cds--form__helper-text"
+                                          id="dropdown_id-helper-text"
+                                        >
+                                          <div
+                                            className="cds--form__helper-text"
+                                            dir="auto"
+                                            id="dropdown_id-helper-text"
+                                          />
+                                        </ForwardRef>
                                       </div>
                                     </div>
                                   </Select>

@@ -681,6 +681,7 @@ exports[`Pxe Edit Iso Image Form Component should render editing a iso image 1`]
                                                         onFocus={[Function]}
                                                       >
                                                         <select
+                                                          aria-describedby="pxe_image_type_id-helper-text"
                                                           className="cds--select-input"
                                                           id="pxe_image_type_id"
                                                           name="pxe_image_type_id"
@@ -769,6 +770,17 @@ exports[`Pxe Edit Iso Image Form Component should render editing a iso image 1`]
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
+                                                      <ForwardRef
+                                                        as="div"
+                                                        className="cds--form__helper-text"
+                                                        id="pxe_image_type_id-helper-text"
+                                                      >
+                                                        <div
+                                                          className="cds--form__helper-text"
+                                                          dir="auto"
+                                                          id="pxe_image_type_id-helper-text"
+                                                        />
+                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>

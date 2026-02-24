@@ -1089,6 +1089,7 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                                         onFocus={[Function]}
                                                       >
                                                         <select
+                                                          aria-describedby="provision_type-helper-text"
                                                           className="cds--select-input"
                                                           id="provision_type"
                                                           name="provision_type"
@@ -1177,6 +1178,17 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
+                                                      <ForwardRef
+                                                        as="div"
+                                                        className="cds--form__helper-text"
+                                                        id="provision_type-helper-text"
+                                                      >
+                                                        <div
+                                                          className="cds--form__helper-text"
+                                                          dir="auto"
+                                                          id="provision_type-helper-text"
+                                                        />
+                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>
@@ -2614,6 +2626,7 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                                         onFocus={[Function]}
                                                       >
                                                         <select
+                                                          aria-describedby="provision_type-helper-text"
                                                           className="cds--select-input"
                                                           id="provision_type"
                                                           name="provision_type"
@@ -2702,6 +2715,17 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
+                                                      <ForwardRef
+                                                        as="div"
+                                                        className="cds--form__helper-text"
+                                                        id="provision_type-helper-text"
+                                                      >
+                                                        <div
+                                                          className="cds--form__helper-text"
+                                                          dir="auto"
+                                                          id="provision_type-helper-text"
+                                                        />
+                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>

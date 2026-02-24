@@ -159,6 +159,7 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
                   onFocus={[Function]}
                 >
                   <select
+                    aria-describedby="type-helper-text"
                     className="cds--select-input"
                     id="type"
                     name="type"
@@ -236,6 +237,17 @@ exports[`ProtocolSelector component should match the snapshot 1`] = `
                     </Icon>
                   </ForwardRef(ChevronDown)>
                 </div>
+                <ForwardRef
+                  as="div"
+                  className="cds--form__helper-text"
+                  id="type-helper-text"
+                >
+                  <div
+                    className="cds--form__helper-text"
+                    dir="auto"
+                    id="type-helper-text"
+                  />
+                </ForwardRef>
               </div>
             </div>
           </Select>
