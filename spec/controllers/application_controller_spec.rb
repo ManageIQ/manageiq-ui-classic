@@ -54,15 +54,19 @@ describe ApplicationController do
       login_as FactoryBot.create(:user, :miq_groups => [group])
     end
 
-    it "Verify Invalid input flash error message when invalid id is passed in" do
-      expect { controller.send(:find_record_with_rbac, ExtManagementSystem, "invalid") }.to raise_error(ActiveRecord::RecordNotFound, "Can't access selected records")
+    it "considers it an bad request when no id is passed in" do
+      expect { controller.send(:find_record_with_rbac, ExtManagementSystem, nil) }.to raise_error(ActionController::BadRequest, "Can't access records without an id")
     end
 
-    it "Verify flash error message when passed in id no longer exists in database" do
-      expect { controller.send(:find_record_with_rbac, ExtManagementSystem, "1") }.to raise_error(ActiveRecord::RecordNotFound, match(/Can't access selected records/))
+    it "considers it an auth error when invalid id is passed in" do
+      expect { controller.send(:find_record_with_rbac, ExtManagementSystem, "invalid") }.to raise_error(MiqException::RbacPrivilegeException, "Can't access selected records")
     end
 
-    it "Verify record gets set when valid id is passed in" do
+    it "considers it an auth error when id no longer exists in database or is RBAC filtered out" do
+      expect { controller.send(:find_record_with_rbac, ExtManagementSystem, "1") }.to raise_error(MiqException::RbacPrivilegeException, "Can't access selected records")
+    end
+
+    it "verify record gets set when valid id is passed in" do
       ems = FactoryBot.create(:ext_management_system)
       expect(controller.send(:find_record_with_rbac, ExtManagementSystem, ems.id)).to eq(ems)
     end
