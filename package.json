@@ -179,7 +179,6 @@
     "angular-animate": "~1.8.3",
     "angular-sanitize": "~1.8.3",
     "ansi-regex": "~5.0.1",
-    "@babel/traverse": "~7.29.0",
     "bootstrap-select": "~1.13.18",
     "cheerio": "1.0.0-rc.12",
     "cross-spawn": "~7.0.5",
