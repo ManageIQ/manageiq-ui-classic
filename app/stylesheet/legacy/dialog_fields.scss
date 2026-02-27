@@ -5,3 +5,19 @@
 .bootstrap-select.btn-group.bs-container .dropdown-menu {
   z-index: 8001;
 }
+
+// TODO: remove this once service-dialog react conversion is done
+#dialog-editor
+  .editable-fields-container
+  .dialog
+  .ui-sortable-handle
+  .panel-body {
+  .ui-sortable-handle {
+    table.ng-valid-time {
+      margin-top: -1.6rem;
+    }
+  }
+  .ui-sortable-handle:has(table.ng-valid-time) {
+    padding-top: 1rem;
+  }
+}

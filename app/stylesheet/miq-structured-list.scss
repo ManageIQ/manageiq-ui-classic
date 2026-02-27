@@ -222,13 +222,18 @@
       background: theme.$layer-selected-01;
     }
 
-    .cds--accordion__content {
-      padding: 0 0 0 0 !important;
-      margin: 0 !important;
+    .cds--accordion__wrapper {
+      padding-block: 0;
+      .cds--accordion__content {
+        padding: 0 0 0 0 !important;
+        margin: 0 !important;
 
-      .miq-structured-list .cds--structured-list-tbody .cds--structured-list-row {
-        &:last-child {
-          border-bottom: 0;
+        .miq-structured-list
+          .cds--structured-list-tbody
+          .cds--structured-list-row {
+          &:last-child {
+            border-bottom: 0;
+          }
         }
       }
     }

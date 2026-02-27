@@ -11,8 +11,10 @@
 }
 
 #notifications-toggle {
-  display: inline-block;
-  // FIXME flex?
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
   width: 140px;
   border-color: #bbb;
   background-color: transparent;

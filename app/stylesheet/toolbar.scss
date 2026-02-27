@@ -99,6 +99,13 @@
   color: #9c9c9c !important;
 }
 
+// This targets the common toolbar and dashboard toolbar options
+.miq-toolbar-option-text-with-icon {
+  i {
+    width: 1.5rem;
+  }
+}
+
 .cds--overflow-menu-options {
   position: absolute;
   top: 100%;

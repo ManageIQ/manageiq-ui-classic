@@ -33,9 +33,16 @@
 
   .miq-fieldset .miq-fieldset-content {
     margin-top: 0;
+    height: 2.5rem;
   }
   .cds--btn.default_button {
     display: flex;
     align-items: center;
+  }
+}
+
+.miq-pagination .cds--pagination__left {
+  .cds--pagination__text {
+    margin-bottom: 2px;
   }
 }

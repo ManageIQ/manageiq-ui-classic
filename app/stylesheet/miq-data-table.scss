@@ -49,6 +49,11 @@
     &.cds--table-column-checkbox {
       min-width: 45px;
       vertical-align: middle;
+      .cds--checkbox--inline {
+        .cds--checkbox-label {
+          margin-bottom: 0;
+        }
+      }
     }
 
     .cds--table-header-label {
@@ -137,7 +142,7 @@
 
       button {
         padding: 0;
-        margin: -5px 0 0 0;
+        margin: -3px 0 0 0;
 
         span {
           display: flex;
@@ -164,7 +169,7 @@
       display: inline-block;
       overflow: hidden;
       white-space: nowrap;
-      margin-top: 3px;
+      margin-top: 5px;
 
       &.white_space_normal {
         white-space: normal !important;

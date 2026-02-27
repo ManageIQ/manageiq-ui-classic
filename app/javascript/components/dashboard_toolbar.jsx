@@ -30,9 +30,8 @@ const closeFunc = () => {
 };
 
 const MenuIcon = (props) => (
-  <div>
+  <div className="miq-toolbar-option-text-with-icon">
     { props.image && <i className={props.image} /> }
-    &nbsp;
     <span>{ props.text }</span>
   </div>
 );
