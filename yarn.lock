@@ -1383,7 +1383,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/traverse@npm:~7.29.0":
+"@babel/traverse@npm:^7.1.0, @babel/traverse@npm:^7.27.1, @babel/traverse@npm:^7.28.5, @babel/traverse@npm:^7.28.6, @babel/traverse@npm:^7.29.0, @babel/traverse@npm:^7.4.3":
   version: 7.29.0
   resolution: "@babel/traverse@npm:7.29.0"
   dependencies:
