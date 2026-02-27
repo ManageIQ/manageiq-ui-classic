@@ -181,7 +181,6 @@
     "ansi-regex": "~5.0.1",
     "bootstrap-select": "~1.13.18",
     "cheerio": "1.0.0-rc.12",
-    "decode-uri-component": "^0.4.0",
     "get-intrinsic": "<=1.3.0",
     "lodash": "~4.17.23",
     "lodash-es": "~4.17.23",
