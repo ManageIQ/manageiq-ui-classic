@@ -20,6 +20,11 @@
   background-color: transparent;
   color: #4d5258;
 
+  svg {
+    margin-bottom: 0 !important; // adding !important since the MiqIcon component has margin defined as an inline style
+    margin-left: 0.3rem;
+  }
+
   &:hover {
     color: #4d5258;
     background-color: transparent;
