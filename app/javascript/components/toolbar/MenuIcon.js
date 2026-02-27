@@ -3,9 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export const MenuIcon = (props) => (
-  <div>
+  <div className="miq-toolbar-option-text-with-icon">
     { props.icon && <i className={props.icon} style={{ color: props.color }} /> }
-    {' '}
     <span>{ props.text }</span>
   </div>
 );
