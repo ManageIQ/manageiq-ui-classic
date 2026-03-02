@@ -7265,9 +7265,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:~15.10.0":
-  version: 15.10.0
-  resolution: "cypress@npm:15.10.0"
+"cypress@npm:~15.11.0":
+  version: 15.11.0
+  resolution: "cypress@npm:15.11.0"
   dependencies:
     "@cypress/request": "npm:^3.0.10"
     "@cypress/xvfb": "npm:^1.2.4"
@@ -7306,14 +7306,15 @@ __metadata:
     proxy-from-env: "npm:1.0.0"
     request-progress: "npm:^3.0.0"
     supports-color: "npm:^8.1.1"
-    systeminformation: "npm:^5.27.14"
+    systeminformation: "npm:^5.31.1"
     tmp: "npm:~0.2.4"
     tree-kill: "npm:1.2.2"
+    tslib: "npm:1.14.1"
     untildify: "npm:^4.0.0"
     yauzl: "npm:^2.10.0"
   bin:
     cypress: bin/cypress
-  checksum: 10/d32e501737f48580ba28072b680b8ad53fd1da3bcfca101c6c6fffcc8e5692a280bd01b792dffdc4e1e37407883bb1979669ea11bc8f2f49c59c118c72d8acce
+  checksum: 10/1d1d4c47b022d381a72e11ab8905e08246cc22ccf6f24426090d9ff6ef2608611dcd1cb69411cd031dce8e107d2b1ae8717ab81bf3b110db734b164e1e1f1ca0
   languageName: node
   linkType: hard
 
@@ -13721,7 +13722,7 @@ __metadata:
     core-js-compat: "npm:~3.48.0"
     create-react-context: "npm:~0.3.0"
     css-loader: "npm:~3.6.0"
-    cypress: "npm:~15.10.0"
+    cypress: "npm:~15.11.0"
     d3: "npm:^7.8.2"
     dompurify: "npm:^3.2.4"
     duplicate-package-checker-webpack-plugin: "npm:~3.0.0"
@@ -19097,12 +19098,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"systeminformation@npm:^5.27.14":
-  version: 5.30.7
-  resolution: "systeminformation@npm:5.30.7"
+"systeminformation@npm:^5.31.1":
+  version: 5.31.1
+  resolution: "systeminformation@npm:5.31.1"
   bin:
     systeminformation: lib/cli.js
-  checksum: 10/d15af2f5593b0daf1b40d0f7908fa3b07f39fa46ff74c263828859c38979a51952ea608f6438cb787b6fc4489efcccc41abf65cc24a44f8c9c9fa1d76a9ae79c
+  checksum: 10/1fff0b2827f7de2ec5379385c9bb12896db92186ee1d721cb08791ae7277a02f39fb8f3060df47312b70fe88c5b91a70726e7265ca8e5bab1f87780fb2acb991
   conditions: (os=darwin | os=linux | os=win32 | os=freebsd | os=openbsd | os=netbsd | os=sunos | os=android)
   languageName: node
   linkType: hard
@@ -19570,7 +19571,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^1.8.1, tslib@npm:^1.9.3":
+"tslib@npm:1.14.1, tslib@npm:^1.8.1, tslib@npm:^1.9.3":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: 10/7dbf34e6f55c6492637adb81b555af5e3b4f9cc6b998fb440dac82d3b42bdc91560a35a5fb75e20e24a076c651438234da6743d139e4feabf0783f3cdfe1dddb
