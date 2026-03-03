@@ -1,4 +1,4 @@
-.automate-simulation-page {
+    .automate-simulation-page {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -13,6 +13,23 @@
         .automate-selection-target, .automate-readonly,
         .automate-simulation-parameters {
             margin-bottom: 5%;
+        }
+
+        // .bx--form-requirement {
+        //     margin-top: -15px;
+        //     margin-bottom: 20px;
+        // }
+
+        // .bx--text-input__invalid-icon {
+        //     margin-top: -10px;
+        // }
+
+        #AttributeValuePairs {
+            margin-top: 5%;
+        }
+
+        .attribute_value_field_wrapper {
+            margin-top: 10px;
         }
 
         .subform {

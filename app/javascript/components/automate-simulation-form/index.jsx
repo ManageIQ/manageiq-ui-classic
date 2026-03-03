@@ -10,16 +10,31 @@ const AutomateSimulationForm = ({
   resolve, maxNameLength, url, attrValuesPairs, maxLength,
 }) => {
   const typeClassesOptions = [
-    { label: `<${__('None')}>`, value: '-1' },
+    { label: `<${__('None')}>`, value: undefined },
     ...Object.entries(resolve.target_classes).map(([key, value]) => ({ label: value, value: key })),
   ];
 
   const [formData, setFormData] = useState({
     isLoading: false,
     tempData: undefined,
-    targetClass: '-1',
+    targetClass: undefined,
     simulationTree: { notice: 'Enter Automation Simulation options on the left and press Submit' },
   });
+
+  const [initialValues, setInitialValues] = useState(resolve.new);
+
+  useEffect(() => {
+    if (resolve.new.attrs) {
+      setInitialValues({
+        ...resolve.new,
+        attrs: resolve.new.attrs
+          .filter((attr) => attr[0] != null && attr[1] != null)
+          .map((attr) => ({ attribute: attr[0], value: attr[1] })),
+      });
+    } else {
+      setInitialValues(resolve.new);
+    }
+  }, []);
 
   useEffect(() => {
     if (formData.isLoading) {
@@ -36,6 +51,7 @@ const AutomateSimulationForm = ({
           });
           add_flash(__('Automation simulation has been run'), 'success');
         })
+        // eslint-disable-next-line no-console
         .catch((error) => console.log('error: ', error));
     }
   }, [formData.isLoading]);
@@ -48,18 +64,16 @@ const AutomateSimulationForm = ({
       object_request: values.object_request,
       target_class: values.target_class,
       readonly: values.readonly,
-      target_id: values.selection_target,
+      target_id: values.target_id,
       button: 'throw',
     };
 
-    const attributes = Array.from({ length: attrValuesPairs.length }, (_, i) => i + 1).flatMap((i) => [`attribute_${i}`, `value_${i}`]);
-    const attrValPairs = Object.fromEntries(
-      attributes.flatMap((key) => (values[key] ? [[key, values[key]]] : []))
-    );
-
-    Object.entries(attrValPairs).forEach(([key, value]) => {
-      data[key] = value;
-    });
+    if (values.attrs && values.attrs.length > 0) {
+      values.attrs.forEach((ae, index) => {
+        data[`attribute_${index + 1}`] = ae.attribute;
+        data[`value_${index + 1}`] = ae.value;
+      });
+    }
 
     setFormData({
       ...formData,
@@ -80,6 +94,7 @@ const AutomateSimulationForm = ({
       <div className="automate-simulation-form-wrapper">
         <MiqFormRenderer
           className="automate-simulation-form"
+          initialValues={initialValues}
           schema={createSchema(
             resolve, maxNameLength, url, attrValuesPairs,
             maxLength, typeClassesOptions, formData, setFormData

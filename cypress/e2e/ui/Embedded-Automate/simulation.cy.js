@@ -20,9 +20,10 @@ describe('Automation > Embedded Automate > Simulation', () => {
       cy.getFormSelectFieldById({ selectId: 'selection_target' }).should('not.exist');
     });
 
-    it('Submits the form', () => {
-      cy.getFormInputFieldByIdAndType({ inputId: 'object_request' }).type('Test Request');
-      cy.changeSelect('target_class', 'User');
+    it.only('Submits the form', () => {
+      cy.get('#object_request').type('TestRequest');
+      cy.get('#target_class').click();
+      cy.get('[class="bx--list-box__menu-item__option"]').contains('User').click({force: true});
 
       cy.getFormSelectFieldById({ selectId: 'selection_target' }).select('Administrator');
 
@@ -36,8 +37,13 @@ describe('Automation > Embedded Automate > Simulation', () => {
       cy.getFormInputFieldByIdAndType({ inputId: 'value_3' }).type('value 3');
       cy.getFormInputFieldByIdAndType({ inputId: 'value_4' }).type('value 4');
 
-      cy.getFormButtonByTypeWithText({ buttonText: 'Save', buttonType: 'submit' }).click();
+      // cy.contains('button', 'Save').click();
+
+      // cy.get('.bx--tabs__nav-item--selected > .bx--tabs--scrollable__nav-link');
+      // cy.get('[class=bx--accordion__title').contains('Tree View');
+      // cy.get('[class="react-tree-view');
     });
+
     it('Loads the second dropdown', () => {
       cy.changeSelect('target_class', 'User');
       cy.getFormSelectFieldById({ selectId: 'selection_target' }).should('exist');

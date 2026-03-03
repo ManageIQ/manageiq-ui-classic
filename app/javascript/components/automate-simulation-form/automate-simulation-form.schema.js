@@ -59,6 +59,8 @@ const createSchema = (
       className: 'automate-object-request',
       label: __('Request'),
       initialValue: resolve.new.object_request,
+      validate: [{ type: validatorTypes.REQUIRED }],
+      isRequired: true,
     },
 
     {
@@ -80,74 +82,31 @@ const createSchema = (
       className: 'automate-target-class',
       isSearchable: true,
       simpleValue: true,
+      isRequired: true,
+      validate: [{ type: validatorTypes.REQUIRED }],
       onChange: (targetClass) => {
         if (formData.targetClass !== targetClass) {
           setFormData((prevData) => ({ ...prevData, targetClass }));
         }
       },
-      validate: [
-        {
-          type: validatorTypes.REQUIRED,
-          condition: {
-            not: {
-              or: [
-                {
-                  when: 'target_class',
-                  is: '-1',
-                },
-                {
-                  when: 'target_class',
-                  isEmpty: true,
-                },
-              ],
-            },
-          },
-        },
-      ],
     },
 
     {
       component: componentTypes.SELECT,
-      id: 'selection_target',
-      name: 'selection_target',
+      id: 'target_id',
+      name: 'target_id',
       label: __('Selection'),
-      key: `selection_target_${formData.targetClass}`,
+      key: `target_${formData.targetClass}`,
       className: 'automate-selection-target',
-      initialValue: resolve.new.target_id,
+      isRequired: true,
+      validate: [{ type: validatorTypes.REQUIRED }],
       loadOptions: () => (loadTargets(formData.targetClass)),
       condition: {
         not: {
-          or: [
-            {
-              when: 'target_class',
-              is: '-1',
-            },
-            {
-              when: 'target_class',
-              isEmpty: true,
-            },
-          ],
+          when: 'target_class',
+          isEmpty: true,
         },
       },
-      validate: [
-        {
-          type: validatorTypes.REQUIRED,
-          condition: {
-            not: {
-              or: [
-                {
-                  when: 'target_class',
-                  is: '-1',
-                },
-                {
-                  when: 'target_class',
-                  isEmpty: true,
-                },
-              ],
-            },
-          },
-        },
-      ],
     },
     {
       id: 'simulationParameters',
@@ -173,61 +132,46 @@ const createSchema = (
       label: __('Attribute/Value Pairs'),
       style: { fontSize: '16px' },
     },
+    {
+      component: componentTypes.FIELD_ARRAY,
+      name: 'attrs',
+      id: 'attrs',
+      fieldKey: 'field_array',
+      maxItems: attrValuesPairs.length,
+      AddButtonProps: {
+        size: 'sm',
+      },
+      RemoveButtonProps: {
+        size: 'sm',
+      },
+      fields: [
+        {
+          component: componentTypes.TEXT_FIELD,
+          className: 'attribute_value_field_wrapper',
+          name: 'attribute',
+          id: 'attribute',
+          label: 'attribute',
+          maxLength,
+          isRequired: true,
+          validate: [{ type: validatorTypes.REQUIRED }],
+        },
+        {
+          component: componentTypes.TEXT_FIELD,
+          className: 'attribute_value_field_wrapper',
+          name: 'value',
+          id: 'value',
+          label: 'value',
+          maxLength,
+          isRequired: true,
+          validate: [{ type: validatorTypes.REQUIRED }],
+        },
+      ],
+    },
   ];
 
   if (!document.getElementById('description') && document.getElementById('object_message')) {
     document.getElementById('object_message').focus();
   }
-
-  attrValuesPairs.forEach((_, i) => {
-    const f = `attribute_${i + 1}`;
-    const v = `value_${i + 1}`;
-    const labelKey = `attributeValuePairLabel_${i + 1}`;
-
-    const subForm = [
-      {
-        component: componentTypes.SUB_FORM,
-        id: `subform_${i + 1}`,
-        name: `subform_${i + 1}`,
-        className: 'subform',
-        fields: [
-          {
-            component: componentTypes.PLAIN_TEXT,
-            id: labelKey,
-            name: labelKey,
-            className: 'attributeValuePairLabel',
-            label: `${i + 1}`,
-            style: { fontWeight: 'bold' },
-          },
-          {
-            component: componentTypes.TEXT_FIELD,
-            id: f,
-            name: f,
-            maxLength,
-            label: ' ',
-            initialValue: resolve.new.attrs[i][0],
-            fieldprops: {
-              className: 'field-input',
-              'data-miq_observe': JSON.stringify({ interval: '.5', url }),
-            },
-          },
-          {
-            component: componentTypes.TEXT_FIELD,
-            id: v,
-            name: v,
-            maxLength,
-            label: ' ',
-            initialValue: resolve.new.attrs[i][1],
-            fieldprops: {
-              className: 'value-input',
-              'data-miq_observe': JSON.stringify({ interval: '.5', url }),
-            },
-          },
-        ],
-      },
-    ];
-    fields.push(subForm);
-  });
 
   return {
     title: 'Object Details',

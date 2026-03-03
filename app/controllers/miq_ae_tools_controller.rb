@@ -359,7 +359,7 @@ Methods updated/added: %{method_stats}") % stat_options, :success)
 
   def get_form_targets
     assert_privileges('miq_ae_class_simulation')
-    if params.key?(:target_class) && params[:target_class] != '-1'
+    if params.key?(:target_class) && params[:target_class] != "undefined"
       targets = Rbac.filtered(params[:target_class]).select(:id, *columns_for_klass(params[:target_class])) if params[:target_class].present?
       unless targets.nil?
         @resolve[:targets] = targets.sort_by { |t| t.name.downcase }.collect { |t| [t.name, t.id.to_s] }
