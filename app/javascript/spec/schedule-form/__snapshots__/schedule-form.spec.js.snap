@@ -7802,7 +7802,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                         onFocus={[Function]}
                                                       >
                                                         <select
-                                                          aria-describedby="action_typ-helper-text"
                                                           className="cds--select-input"
                                                           id="action_typ"
                                                           name="action_typ"
@@ -7924,17 +7923,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
-                                                      <ForwardRef
-                                                        as="div"
-                                                        className="cds--form__helper-text"
-                                                        id="action_typ-helper-text"
-                                                      >
-                                                        <div
-                                                          className="cds--form__helper-text"
-                                                          dir="auto"
-                                                          id="action_typ-helper-text"
-                                                        />
-                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>
@@ -8223,7 +8211,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                         onFocus={[Function]}
                                                       >
                                                         <select
-                                                          aria-describedby="filter_typ-helper-text"
                                                           className="cds--select-input"
                                                           id="filter_typ"
                                                           name="filter_typ"
@@ -8345,17 +8332,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
-                                                      <ForwardRef
-                                                        as="div"
-                                                        className="cds--form__helper-text"
-                                                        id="filter_typ-helper-text"
-                                                      >
-                                                        <div
-                                                          className="cds--form__helper-text"
-                                                          dir="auto"
-                                                          id="filter_typ-helper-text"
-                                                        />
-                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>
@@ -8492,7 +8468,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                           onFocus={[Function]}
                                                         >
                                                           <select
-                                                            aria-describedby="filter_value-helper-text"
                                                             className="cds--select-input"
                                                             id="filter_value"
                                                             name="filter_value"
@@ -8533,17 +8508,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                             </Icon>
                                                           </ForwardRef(ChevronDown)>
                                                         </div>
-                                                        <ForwardRef
-                                                          as="div"
-                                                          className="cds--form__helper-text"
-                                                          id="filter_value-helper-text"
-                                                        >
-                                                          <div
-                                                            className="cds--form__helper-text"
-                                                            dir="auto"
-                                                            id="filter_value-helper-text"
-                                                          />
-                                                        </ForwardRef>
                                                       </div>
                                                     </div>
                                                   </Select>
@@ -8904,7 +8868,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                           onFocus={[Function]}
                                                         >
                                                           <select
-                                                            aria-describedby="zone_id-helper-text"
                                                             className="cds--select-input"
                                                             id="zone_id"
                                                             name="zone_id"
@@ -9057,17 +9020,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                             </Icon>
                                                           </ForwardRef(ChevronDown)>
                                                         </div>
-                                                        <ForwardRef
-                                                          as="div"
-                                                          className="cds--form__helper-text"
-                                                          id="zone_id-helper-text"
-                                                        >
-                                                          <div
-                                                            className="cds--form__helper-text"
-                                                            dir="auto"
-                                                            id="zone_id-helper-text"
-                                                          />
-                                                        </ForwardRef>
                                                       </div>
                                                     </div>
                                                   </Select>
@@ -9320,7 +9272,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                           onFocus={[Function]}
                                                         >
                                                           <select
-                                                            aria-describedby="instance_name-helper-text"
                                                             className="cds--select-input"
                                                             id="instance_name"
                                                             name="instance_name"
@@ -9377,17 +9328,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                             </Icon>
                                                           </ForwardRef(ChevronDown)>
                                                         </div>
-                                                        <ForwardRef
-                                                          as="div"
-                                                          className="cds--form__helper-text"
-                                                          id="instance_name-helper-text"
-                                                        >
-                                                          <div
-                                                            className="cds--form__helper-text"
-                                                            dir="auto"
-                                                            id="instance_name-helper-text"
-                                                          />
-                                                        </ForwardRef>
                                                       </div>
                                                     </div>
                                                   </Select>
@@ -11807,7 +11747,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                         onFocus={[Function]}
                                                       >
                                                         <select
-                                                          aria-describedby="timer_typ-helper-text"
                                                           className="cds--select-input"
                                                           id="timer_typ"
                                                           name="timer_typ"
@@ -11929,17 +11868,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
-                                                      <ForwardRef
-                                                        as="div"
-                                                        className="cds--form__helper-text"
-                                                        id="timer_typ-helper-text"
-                                                      >
-                                                        <div
-                                                          className="cds--form__helper-text"
-                                                          dir="auto"
-                                                          id="timer_typ-helper-text"
-                                                        />
-                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>
@@ -12257,7 +12185,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                         onFocus={[Function]}
                                                       >
                                                         <select
-                                                          aria-describedby="timer_value-helper-text"
                                                           className="cds--select-input"
                                                           id="timer_value"
                                                           name="timer_value"
@@ -12395,17 +12322,6 @@ exports[`Schedule form component should render edit form when filter_type is not
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
-                                                      <ForwardRef
-                                                        as="div"
-                                                        className="cds--form__helper-text"
-                                                        id="timer_value-helper-text"
-                                                      >
-                                                        <div
-                                                          className="cds--form__helper-text"
-                                                          dir="auto"
-                                                          id="timer_value-helper-text"
-                                                        />
-                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>
@@ -23612,7 +23528,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                         onFocus={[Function]}
                                                       >
                                                         <select
-                                                          aria-describedby="action_typ-helper-text"
                                                           className="cds--select-input"
                                                           id="action_typ"
                                                           name="action_typ"
@@ -23734,17 +23649,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
-                                                      <ForwardRef
-                                                        as="div"
-                                                        className="cds--form__helper-text"
-                                                        id="action_typ-helper-text"
-                                                      >
-                                                        <div
-                                                          className="cds--form__helper-text"
-                                                          dir="auto"
-                                                          id="action_typ-helper-text"
-                                                        />
-                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>
@@ -23900,7 +23804,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                           onFocus={[Function]}
                                                         >
                                                           <select
-                                                            aria-describedby="filter_typ-helper-text"
                                                             className="cds--select-input"
                                                             id="filter_typ"
                                                             name="filter_typ"
@@ -23941,17 +23844,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                             </Icon>
                                                           </ForwardRef(ChevronDown)>
                                                         </div>
-                                                        <ForwardRef
-                                                          as="div"
-                                                          className="cds--form__helper-text"
-                                                          id="filter_typ-helper-text"
-                                                        >
-                                                          <div
-                                                            className="cds--form__helper-text"
-                                                            dir="auto"
-                                                            id="filter_typ-helper-text"
-                                                          />
-                                                        </ForwardRef>
                                                       </div>
                                                     </div>
                                                   </Select>
@@ -24089,7 +23981,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                           onFocus={[Function]}
                                                         >
                                                           <select
-                                                            aria-describedby="filter_value-helper-text"
                                                             className="cds--select-input"
                                                             id="filter_value"
                                                             name="filter_value"
@@ -24130,17 +24021,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                             </Icon>
                                                           </ForwardRef(ChevronDown)>
                                                         </div>
-                                                        <ForwardRef
-                                                          as="div"
-                                                          className="cds--form__helper-text"
-                                                          id="filter_value-helper-text"
-                                                        >
-                                                          <div
-                                                            className="cds--form__helper-text"
-                                                            dir="auto"
-                                                            id="filter_value-helper-text"
-                                                          />
-                                                        </ForwardRef>
                                                       </div>
                                                     </div>
                                                   </Select>
@@ -24498,7 +24378,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                         onFocus={[Function]}
                                                       >
                                                         <select
-                                                          aria-describedby="zone_id-helper-text"
                                                           className="cds--select-input"
                                                           id="zone_id"
                                                           name="zone_id"
@@ -24651,17 +24530,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
-                                                      <ForwardRef
-                                                        as="div"
-                                                        className="cds--form__helper-text"
-                                                        id="zone_id-helper-text"
-                                                      >
-                                                        <div
-                                                          className="cds--form__helper-text"
-                                                          dir="auto"
-                                                          id="zone_id-helper-text"
-                                                        />
-                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>
@@ -25105,7 +24973,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                         onFocus={[Function]}
                                                       >
                                                         <select
-                                                          aria-describedby="instance_name-helper-text"
                                                           className="cds--select-input"
                                                           id="instance_name"
                                                           name="instance_name"
@@ -25290,17 +25157,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
-                                                      <ForwardRef
-                                                        as="div"
-                                                        className="cds--form__helper-text"
-                                                        id="instance_name-helper-text"
-                                                      >
-                                                        <div
-                                                          className="cds--form__helper-text"
-                                                          dir="auto"
-                                                          id="instance_name-helper-text"
-                                                        />
-                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>
@@ -30068,7 +29924,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                         onFocus={[Function]}
                                                       >
                                                         <select
-                                                          aria-describedby="timer_typ-helper-text"
                                                           className="cds--select-input"
                                                           id="timer_typ"
                                                           name="timer_typ"
@@ -30190,17 +30045,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
-                                                      <ForwardRef
-                                                        as="div"
-                                                        className="cds--form__helper-text"
-                                                        id="timer_typ-helper-text"
-                                                      >
-                                                        <div
-                                                          className="cds--form__helper-text"
-                                                          dir="auto"
-                                                          id="timer_typ-helper-text"
-                                                        />
-                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>
@@ -30518,7 +30362,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                         onFocus={[Function]}
                                                       >
                                                         <select
-                                                          aria-describedby="timer_value-helper-text"
                                                           className="cds--select-input"
                                                           id="timer_value"
                                                           name="timer_value"
@@ -30656,17 +30499,6 @@ exports[`Schedule form component should render edit form when filter_type is nul
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
-                                                      <ForwardRef
-                                                        as="div"
-                                                        className="cds--form__helper-text"
-                                                        id="timer_value-helper-text"
-                                                      >
-                                                        <div
-                                                          className="cds--form__helper-text"
-                                                          dir="auto"
-                                                          id="timer_value-helper-text"
-                                                        />
-                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>
@@ -40402,7 +40234,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                         onFocus={[Function]}
                                                       >
                                                         <select
-                                                          aria-describedby="action_typ-helper-text"
                                                           className="cds--select-input"
                                                           id="action_typ"
                                                           name="action_typ"
@@ -40524,17 +40355,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
-                                                      <ForwardRef
-                                                        as="div"
-                                                        className="cds--form__helper-text"
-                                                        id="action_typ-helper-text"
-                                                      >
-                                                        <div
-                                                          className="cds--form__helper-text"
-                                                          dir="auto"
-                                                          id="action_typ-helper-text"
-                                                        />
-                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>
@@ -40823,7 +40643,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                         onFocus={[Function]}
                                                       >
                                                         <select
-                                                          aria-describedby="filter_typ-helper-text"
                                                           className="cds--select-input"
                                                           id="filter_typ"
                                                           name="filter_typ"
@@ -40945,17 +40764,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
-                                                      <ForwardRef
-                                                        as="div"
-                                                        className="cds--form__helper-text"
-                                                        id="filter_typ-helper-text"
-                                                      >
-                                                        <div
-                                                          className="cds--form__helper-text"
-                                                          dir="auto"
-                                                          id="filter_typ-helper-text"
-                                                        />
-                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>
@@ -41092,7 +40900,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                           onFocus={[Function]}
                                                         >
                                                           <select
-                                                            aria-describedby="filter_value-helper-text"
                                                             className="cds--select-input"
                                                             id="filter_value"
                                                             name="filter_value"
@@ -41133,17 +40940,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                             </Icon>
                                                           </ForwardRef(ChevronDown)>
                                                         </div>
-                                                        <ForwardRef
-                                                          as="div"
-                                                          className="cds--form__helper-text"
-                                                          id="filter_value-helper-text"
-                                                        >
-                                                          <div
-                                                            className="cds--form__helper-text"
-                                                            dir="auto"
-                                                            id="filter_value-helper-text"
-                                                          />
-                                                        </ForwardRef>
                                                       </div>
                                                     </div>
                                                   </Select>
@@ -41353,7 +41149,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                           onFocus={[Function]}
                                                         >
                                                           <select
-                                                            aria-describedby="zone_id-helper-text"
                                                             className="cds--select-input"
                                                             id="zone_id"
                                                             name="zone_id"
@@ -41410,17 +41205,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                             </Icon>
                                                           </ForwardRef(ChevronDown)>
                                                         </div>
-                                                        <ForwardRef
-                                                          as="div"
-                                                          className="cds--form__helper-text"
-                                                          id="zone_id-helper-text"
-                                                        >
-                                                          <div
-                                                            className="cds--form__helper-text"
-                                                            dir="auto"
-                                                            id="zone_id-helper-text"
-                                                          />
-                                                        </ForwardRef>
                                                       </div>
                                                     </div>
                                                   </Select>
@@ -41673,7 +41457,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                           onFocus={[Function]}
                                                         >
                                                           <select
-                                                            aria-describedby="instance_name-helper-text"
                                                             className="cds--select-input"
                                                             id="instance_name"
                                                             name="instance_name"
@@ -41730,17 +41513,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                             </Icon>
                                                           </ForwardRef(ChevronDown)>
                                                         </div>
-                                                        <ForwardRef
-                                                          as="div"
-                                                          className="cds--form__helper-text"
-                                                          id="instance_name-helper-text"
-                                                        >
-                                                          <div
-                                                            className="cds--form__helper-text"
-                                                            dir="auto"
-                                                            id="instance_name-helper-text"
-                                                          />
-                                                        </ForwardRef>
                                                       </div>
                                                     </div>
                                                   </Select>
@@ -44160,7 +43932,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                         onFocus={[Function]}
                                                       >
                                                         <select
-                                                          aria-describedby="timer_typ-helper-text"
                                                           className="cds--select-input"
                                                           id="timer_typ"
                                                           name="timer_typ"
@@ -44282,17 +44053,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
-                                                      <ForwardRef
-                                                        as="div"
-                                                        className="cds--form__helper-text"
-                                                        id="timer_typ-helper-text"
-                                                      >
-                                                        <div
-                                                          className="cds--form__helper-text"
-                                                          dir="auto"
-                                                          id="timer_typ-helper-text"
-                                                        />
-                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>
@@ -44453,7 +44213,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                           onFocus={[Function]}
                                                         >
                                                           <select
-                                                            aria-describedby="timer_value-helper-text"
                                                             className="cds--select-input"
                                                             id="timer_value"
                                                             name="timer_value"
@@ -44494,17 +44253,6 @@ exports[`Schedule form component should render schedule add form 1`] = `
                                                             </Icon>
                                                           </ForwardRef(ChevronDown)>
                                                         </div>
-                                                        <ForwardRef
-                                                          as="div"
-                                                          className="cds--form__helper-text"
-                                                          id="timer_value-helper-text"
-                                                        >
-                                                          <div
-                                                            className="cds--form__helper-text"
-                                                            dir="auto"
-                                                            id="timer_value-helper-text"
-                                                          />
-                                                        </ForwardRef>
                                                       </div>
                                                     </div>
                                                   </Select>

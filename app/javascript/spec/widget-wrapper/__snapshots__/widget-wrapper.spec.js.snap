@@ -234,7 +234,9 @@ exports[`Widget wrapper component should render a widget wrapper with a chart 1`
               className="export-spinner cds--loading cds--loading--small"
             >
               <svg
+                aria-label="loading"
                 className="cds--loading__svg"
+                role="img"
                 viewBox="0 0 100 100"
               >
                 <title>
@@ -496,7 +498,9 @@ exports[`Widget wrapper component should render a widget wrapper with a menu 1`]
               className="export-spinner cds--loading cds--loading--small"
             >
               <svg
+                aria-label="loading"
                 className="cds--loading__svg"
+                role="img"
                 viewBox="0 0 100 100"
               >
                 <title>
@@ -758,7 +762,9 @@ exports[`Widget wrapper component should render a widget wrapper with a report 1
               className="export-spinner cds--loading cds--loading--small"
             >
               <svg
+                aria-label="loading"
                 className="cds--loading__svg"
+                role="img"
                 viewBox="0 0 100 100"
               >
                 <title>

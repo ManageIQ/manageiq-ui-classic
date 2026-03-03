@@ -4677,7 +4677,6 @@ exports[`VM common form component should render adding form variant add new time
                                                 onFocus={[Function]}
                                               >
                                                 <select
-                                                  aria-describedby="profile_type-helper-text"
                                                   className="cds--select-input"
                                                   id="profile_type"
                                                   name="profile_type"
@@ -4751,17 +4750,6 @@ exports[`VM common form component should render adding form variant add new time
                                                   </Icon>
                                                 </ForwardRef(ChevronDown)>
                                               </div>
-                                              <ForwardRef
-                                                as="div"
-                                                className="cds--form__helper-text"
-                                                id="profile_type-helper-text"
-                                              >
-                                                <div
-                                                  className="cds--form__helper-text"
-                                                  dir="auto"
-                                                  id="profile_type-helper-text"
-                                                />
-                                              </ForwardRef>
                                             </div>
                                           </div>
                                         </Select>
@@ -13025,7 +13013,6 @@ exports[`VM common form component should render adding form variant add new time
                                                 onFocus={[Function]}
                                               >
                                                 <select
-                                                  aria-describedby="profile.tz-helper-text"
                                                   className="cds--select-input"
                                                   id="profile.tz"
                                                   name="profile.tz"
@@ -13083,17 +13070,6 @@ exports[`VM common form component should render adding form variant add new time
                                                   </Icon>
                                                 </ForwardRef(ChevronDown)>
                                               </div>
-                                              <ForwardRef
-                                                as="div"
-                                                className="cds--form__helper-text"
-                                                id="profile.tz-helper-text"
-                                              >
-                                                <div
-                                                  className="cds--form__helper-text"
-                                                  dir="auto"
-                                                  id="profile.tz-helper-text"
-                                                />
-                                              </ForwardRef>
                                             </div>
                                           </div>
                                         </Select>
@@ -14913,7 +14889,9 @@ exports[`VM common form component should render copying form variant new name on
         className="export-spinner cds--loading cds--loading--small"
       >
         <svg
+          aria-label="loading"
           className="cds--loading__svg"
+          role="img"
           viewBox="0 0 100 100"
         >
           <title>
@@ -14973,7 +14951,9 @@ exports[`VM common form component should render copying form variant with new va
         className="export-spinner cds--loading cds--loading--small"
       >
         <svg
+          aria-label="loading"
           className="cds--loading__svg"
+          role="img"
           viewBox="0 0 100 100"
         >
           <title>
@@ -15033,7 +15013,9 @@ exports[`VM common form component should render editing form variant all new val
         className="export-spinner cds--loading cds--loading--small"
       >
         <svg
+          aria-label="loading"
           className="cds--loading__svg"
+          role="img"
           viewBox="0 0 100 100"
         >
           <title>
@@ -15093,7 +15075,9 @@ exports[`VM common form component should render editing form variant some new va
         className="export-spinner cds--loading cds--loading--small"
       >
         <svg
+          aria-label="loading"
           className="cds--loading__svg"
+          role="img"
           viewBox="0 0 100 100"
         >
           <title>

@@ -40,7 +40,9 @@ exports[`PolicyProfileForm form component should render editing form variant 1`]
         className="export-spinner cds--loading cds--loading--small"
       >
         <svg
+          aria-label="loading"
           className="cds--loading__svg"
+          role="img"
           viewBox="0 0 100 100"
         >
           <title>
@@ -95,7 +97,9 @@ exports[`PolicyProfileForm form component should render new form variant 1`] = `
         className="export-spinner cds--loading cds--loading--small"
       >
         <svg
+          aria-label="loading"
           className="cds--loading__svg"
+          role="img"
           viewBox="0 0 100 100"
         >
           <title>
