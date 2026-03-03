@@ -53,7 +53,9 @@ exports[`Button Group form component should render the editing form 1`] = `
         className="export-spinner cds--loading cds--loading--small"
       >
         <svg
+          aria-label="loading"
           className="cds--loading__svg"
+          role="img"
           viewBox="0 0 100 100"
         >
           <title>
@@ -116,7 +118,9 @@ exports[`Button Group form component should render the editing form for generic 
         className="export-spinner cds--loading cds--loading--small"
       >
         <svg
+          aria-label="loading"
           className="cds--loading__svg"
+          role="img"
           viewBox="0 0 100 100"
         >
           <title>

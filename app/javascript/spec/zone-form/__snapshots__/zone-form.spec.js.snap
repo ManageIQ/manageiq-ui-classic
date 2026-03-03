@@ -2695,7 +2695,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                         onFocus={[Function]}
                                                       >
                                                         <select
-                                                          aria-describedby="settings.concurrent_vm_scans-helper-text"
                                                           className="cds--select-input"
                                                           id="settings.concurrent_vm_scans"
                                                           name="settings.concurrent_vm_scans"
@@ -2977,17 +2976,6 @@ exports[`zone Form Component should render editing a zone form 1`] = `
                                                           </Icon>
                                                         </ForwardRef(ChevronDown)>
                                                       </div>
-                                                      <ForwardRef
-                                                        as="div"
-                                                        className="cds--form__helper-text"
-                                                        id="settings.concurrent_vm_scans-helper-text"
-                                                      >
-                                                        <div
-                                                          className="cds--form__helper-text"
-                                                          dir="auto"
-                                                          id="settings.concurrent_vm_scans-helper-text"
-                                                        />
-                                                      </ForwardRef>
                                                     </div>
                                                   </div>
                                                 </Select>

@@ -426,7 +426,9 @@ exports[`Custom Button form component should edit a generic object custom button
         className="export-spinner cds--loading cds--loading--small"
       >
         <svg
+          aria-label="loading"
           className="cds--loading__svg"
+          role="img"
           viewBox="0 0 100 100"
         >
           <title>
@@ -877,7 +879,9 @@ exports[`Custom Button form component should render the editing form for generic
         className="export-spinner cds--loading cds--loading--small"
       >
         <svg
+          aria-label="loading"
           className="cds--loading__svg"
+          role="img"
           viewBox="0 0 100 100"
         >
           <title>

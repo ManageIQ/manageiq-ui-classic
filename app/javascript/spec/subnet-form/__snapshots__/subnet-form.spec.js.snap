@@ -68,7 +68,9 @@ exports[`Subnet form component renders the editing form variant 1`] = `
         className="export-spinner cds--loading cds--loading--small"
       >
         <svg
+          aria-label="loading"
           className="cds--loading__svg"
+          role="img"
           viewBox="0 0 100 100"
         >
           <title>

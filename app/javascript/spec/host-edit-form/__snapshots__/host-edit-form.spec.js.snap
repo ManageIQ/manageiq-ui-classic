@@ -6942,7 +6942,6 @@ exports[`Show Edit Host Form Component should render form for multiple hosts 1`]
                                               onFocus={[Function]}
                                             >
                                               <select
-                                                aria-describedby="host_validate_against-helper-text"
                                                 className="cds--select-input"
                                                 id="host_validate_against"
                                                 name="host_validate_against"
@@ -7032,17 +7031,6 @@ exports[`Show Edit Host Form Component should render form for multiple hosts 1`]
                                                 </Icon>
                                               </ForwardRef(ChevronDown)>
                                             </div>
-                                            <ForwardRef
-                                              as="div"
-                                              className="cds--form__helper-text"
-                                              id="host_validate_against-helper-text"
-                                            >
-                                              <div
-                                                className="cds--form__helper-text"
-                                                dir="auto"
-                                                id="host_validate_against-helper-text"
-                                              />
-                                            </ForwardRef>
                                           </div>
                                         </div>
                                       </Select>
