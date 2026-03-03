@@ -59,8 +59,8 @@ const createSchema = (
       className: 'automate-object-request',
       label: __('Request'),
       initialValue: resolve.new.object_request,
-      validate: [{ type: validatorTypes.REQUIRED }],
       isRequired: true,
+      validate: [{ type: validatorTypes.REQUIRED }],
     },
 
     {
@@ -83,12 +83,12 @@ const createSchema = (
       isSearchable: true,
       simpleValue: true,
       isRequired: true,
-      validate: [{ type: validatorTypes.REQUIRED }],
       onChange: (targetClass) => {
         if (formData.targetClass !== targetClass) {
           setFormData((prevData) => ({ ...prevData, targetClass }));
         }
       },
+      validate: [{ type: validatorTypes.REQUIRED }],
     },
 
     {
@@ -99,7 +99,6 @@ const createSchema = (
       key: `target_${formData.targetClass}`,
       className: 'automate-selection-target',
       isRequired: true,
-      validate: [{ type: validatorTypes.REQUIRED }],
       loadOptions: () => (loadTargets(formData.targetClass)),
       condition: {
         not: {
@@ -107,6 +106,7 @@ const createSchema = (
           isEmpty: true,
         },
       },
+      validate: [{ type: validatorTypes.REQUIRED }],
     },
     {
       id: 'simulationParameters',
