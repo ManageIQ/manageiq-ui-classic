@@ -141,7 +141,6 @@ exports[`Automate Simulation Form should submit a new simulation 1`] = `
               "className": "automate-target-class",
               "component": "select",
               "id": "target_class",
-              "initialValue": null,
               "isRequired": true,
               "isSearchable": true,
               "label": "Type",
@@ -150,7 +149,6 @@ exports[`Automate Simulation Form should submit a new simulation 1`] = `
               "options": Array [
                 Object {
                   "label": "<None>",
-                  "value": undefined,
                 },
                 Object {
                   "label": "Availability Zone",
@@ -307,10 +305,9 @@ exports[`Automate Simulation Form should submit a new simulation 1`] = `
               },
               "id": "target_id",
               "isRequired": true,
-              "key": "target_undefined",
               "label": "Selection",
               "loadOptions": [Function],
-              "name": "target_id",
+              "name": "target_id_undefined",
               "validate": Array [
                 Object {
                   "type": "required",
@@ -358,7 +355,6 @@ exports[`Automate Simulation Form should submit a new simulation 1`] = `
                 Object {
                   "className": "attribute_value_field_wrapper",
                   "component": "text-field",
-                  "id": "attribute",
                   "isRequired": true,
                   "label": "attribute",
                   "maxLength": undefined,
@@ -372,7 +368,6 @@ exports[`Automate Simulation Form should submit a new simulation 1`] = `
                 Object {
                   "className": "attribute_value_field_wrapper",
                   "component": "text-field",
-                  "id": "value",
                   "isRequired": true,
                   "label": "value",
                   "maxLength": undefined,

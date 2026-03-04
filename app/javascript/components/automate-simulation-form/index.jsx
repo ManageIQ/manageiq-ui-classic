@@ -10,30 +10,33 @@ const AutomateSimulationForm = ({
   resolve, maxNameLength, url, attrValuesPairs, maxLength,
 }) => {
   const typeClassesOptions = [
-    { label: `<${__('None')}>`, value: undefined },
+    { label: `<${__('None')}>` },
     ...Object.entries(resolve.target_classes).map(([key, value]) => ({ label: value, value: key })),
   ];
 
   const [formData, setFormData] = useState({
     isLoading: false,
     tempData: undefined,
-    targetClass: undefined,
     simulationTree: { notice: 'Enter Automation Simulation options on the left and press Submit' },
   });
 
   const [initialValues, setInitialValues] = useState(resolve.new);
 
   useEffect(() => {
-    if (resolve.new.attrs) {
-      setInitialValues({
-        ...resolve.new,
-        attrs: resolve.new.attrs
-          .filter((attr) => attr[0] != null && attr[1] != null)
-          .map((attr) => ({ attribute: attr[0], value: attr[1] })),
-      });
-    } else {
-      setInitialValues(resolve.new);
+    const newInitialValues = { ...resolve.new };
+
+    // Handle target_class and target_id
+    if (resolve.new.target_class) {
+      newInitialValues[`target_id_${resolve.new.target_class}`] = resolve.new.target_id;
     }
+
+    // Handle attrs transformation
+    if (resolve.new.attrs) {
+      newInitialValues.attrs = resolve.new.attrs
+        .filter((attr) => attr[0] != null && attr[1] != null)
+        .map((attr) => ({ attribute: attr[0], value: attr[1] }));
+    }
+    setInitialValues(newInitialValues);
   }, []);
 
   useEffect(() => {
@@ -67,6 +70,13 @@ const AutomateSimulationForm = ({
       target_id: values.target_id,
       button: 'throw',
     };
+
+    // Look for any keys that start with 'target_id_'
+    Object.keys(values).forEach((key) => {
+      if (key.startsWith('target_id_')) {
+        data.target_id = values[key];
+      }
+    });
 
     if (values.attrs && values.attrs.length > 0) {
       values.attrs.forEach((ae, index) => {

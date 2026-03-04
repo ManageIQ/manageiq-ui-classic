@@ -5,14 +5,14 @@ const loadTargets = (selectedTargetClass) => http.get(targetsURL(selectedTargetC
   .then((formVars) => {
     if (formVars && formVars.targets) {
       return [
-        { label: `<${__('None')}>`, value: '-1' },
+        { label: `<${__('None')}>`, value: undefined },
         ...formVars.targets.map(([key, value]) => ({
           label: String(key),
           value: String(value),
         })),
       ];
     }
-    return [{ label: `<${__('None')}>`, value: '-1' }];
+    return [{ label: `<${__('None')}>`, value: undefined }];
   });
 
 const createSchema = (
@@ -27,7 +27,6 @@ const createSchema = (
       label: __('Object Details'),
       style: { fontSize: '16px' },
     },
-
     {
       component: componentTypes.SELECT,
       id: 'instance_name',
@@ -51,7 +50,6 @@ const createSchema = (
       initialValue: resolve.new.object_message,
       isRequired: true,
     },
-
     {
       component: componentTypes.TEXT_FIELD,
       id: 'object_request',
@@ -62,7 +60,6 @@ const createSchema = (
       isRequired: true,
       validate: [{ type: validatorTypes.REQUIRED }],
     },
-
     {
       component: componentTypes.PLAIN_TEXT,
       id: 'object_attribute',
@@ -71,14 +68,12 @@ const createSchema = (
       label: __('Object Attribute'),
       style: { fontSize: '16px' },
     },
-
     {
       component: componentTypes.SELECT,
       id: 'target_class',
       name: 'target_class',
       label: __('Type'),
       options: typeClassesOptions,
-      initialValue: resolve.new.target_class,
       className: 'automate-target-class',
       isSearchable: true,
       simpleValue: true,
@@ -90,13 +85,11 @@ const createSchema = (
       },
       validate: [{ type: validatorTypes.REQUIRED }],
     },
-
     {
       component: componentTypes.SELECT,
       id: 'target_id',
-      name: 'target_id',
+      name: `target_id_${formData.targetClass}`,
       label: __('Selection'),
-      key: `target_${formData.targetClass}`,
       className: 'automate-selection-target',
       isRequired: true,
       loadOptions: () => (loadTargets(formData.targetClass)),
@@ -149,7 +142,6 @@ const createSchema = (
           component: componentTypes.TEXT_FIELD,
           className: 'attribute_value_field_wrapper',
           name: 'attribute',
-          id: 'attribute',
           label: 'attribute',
           maxLength,
           isRequired: true,
@@ -159,7 +151,6 @@ const createSchema = (
           component: componentTypes.TEXT_FIELD,
           className: 'attribute_value_field_wrapper',
           name: 'value',
-          id: 'value',
           label: 'value',
           maxLength,
           isRequired: true,
