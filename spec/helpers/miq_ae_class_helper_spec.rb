@@ -44,4 +44,48 @@ describe MiqAeClassHelper do
       end
     end
   end
+
+  describe '#row_data' do
+    let(:dummy_class) { Class.new.include(MiqAeClassHelper).new }
+
+    context 'with simple string value' do
+      it 'returns correct hash structure' do
+        result = dummy_class.send(:row_data, 'Test Label', 'Test Value')
+        expect(result).to eq({:cells => {:label => 'Test Label', :value => 'Test Value', :color => ""}})
+      end
+    end
+
+    context 'with array value' do
+      it 'joins array elements with comma and space' do
+        result = dummy_class.send(:row_data, 'Test Label', ['Value1', 'Value2'])
+        expect(result).to eq({:cells => {:label => 'Test Label', :value => 'Value1, Value2', :color => ""}})
+      end
+    end
+
+    context 'with style parameter' do
+      it 'includes color in the result' do
+        result = dummy_class.send(:row_data, 'Test Label', 'Test Value', 'red')
+        expect(result).to eq({:cells => {:label => 'Test Label', :value => 'Test Value', :color => 'red'}})
+      end
+    end
+
+    context 'with icon parameter set to true' do
+      it 'uses icon key instead of value key' do
+        result = dummy_class.send(:row_data, 'Test Label', 'icon-name', 'blue', :icon => true)
+        expect(result).to eq({:cells => {:label => 'Test Label', :icon => 'icon-name', :color => 'blue'}})
+      end
+
+      it 'handles array values with icon parameter' do
+        result = dummy_class.send(:row_data, 'Test Label', ['icon1', 'icon2'], '', :icon => true)
+        expect(result).to eq({:cells => {:label => 'Test Label', :icon => 'icon1, icon2', :color => ''}})
+      end
+    end
+
+    context 'with icon parameter set to false' do
+      it 'uses value key' do
+        result = dummy_class.send(:row_data, 'Test Label', 'Test Value', '', :icon => false)
+        expect(result).to eq({:cells => {:label => 'Test Label', :value => 'Test Value', :color => ''}})
+      end
+    end
+  end
 end
