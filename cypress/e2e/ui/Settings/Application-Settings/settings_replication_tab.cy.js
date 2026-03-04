@@ -60,37 +60,28 @@ const SUBSCRIPTIONS_TABLE_SELECTOR = '.subscriptions-table';
 const MIQ_DATA_TABLE_BUTTON_SELECTOR = '.miq-data-table .miq-data-table-button';
 
 function addSubscription() {
-  // Select "Global" in the dropdown
   cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"]`).select(REPLICATION_TYPE_GLOBAL, { force: true });
   
-  // Check that "Add Subscription" button is visible for global type
   cy.contains('button', ADD_SUBSCRIPTION_BUTTON_TEXT).should('be.visible');
 
-  // Click on Add subscription and see if modal is visible
   cy.contains('button', ADD_SUBSCRIPTION_BUTTON_TEXT).click();
-  // cy.get(MODAL_SELECTOR).should('exist'); // Ensure modal exists
   cy.get(MODAL_SELECTOR).should('be.visible');
   cy.get(MODAL_HEADER_SELECTOR).should('have.text', ADD_SUBSCRIPTION_MODAL_HEADING);
 
-  // Close the modal when clicking anywhere outside the modal
   cy.get('body').click(0, 0);
   cy.get(MODAL_SELECTOR).should('not.be.visible');
 
-  // Open the modal again
   cy.contains('button', ADD_SUBSCRIPTION_BUTTON_TEXT).click();
   cy.get(MODAL_SELECTOR).should('be.visible');
 
-  // Check if the modal contains the required fields
   cy.get(`input[name="${DBNAME_INPUT_NAME}"]`).scrollIntoView().should('be.visible');
   cy.get(`input[name="${HOST_INPUT_NAME}"]`).should('be.visible');
   cy.get(`input[name="${USER_INPUT_NAME}"]`).should('be.visible');
   cy.get(`input[name="${PASSWORD_INPUT_NAME}"]`).should('be.visible');
   cy.get(`input[name="${PORT_INPUT_NAME}"]`).should('be.visible');
 
-  // Check that the Accept button is initially disabled
   cy.contains(`${MODAL_SELECTOR} button`, ACCEPT_BUTTON_TEXT).should('be.disabled');
 
-  // Type into the fields
   cy.get(`input[name="${DBNAME_INPUT_NAME}"]`)
     .clear({ force: true })
     .type(TEST_DB_NAME, { force: true, delay: 100 })
@@ -100,10 +91,8 @@ function addSubscription() {
   cy.get(`input[name="${PASSWORD_INPUT_NAME}"]`).type(TEST_PASSWORD);
   cy.get(`input[name="${PORT_INPUT_NAME}"]`).type(TEST_PORT);
 
-  // Verify that the Accept button is now enabled in the modal
   cy.contains(`${MODAL_SELECTOR} button`, ACCEPT_BUTTON_TEXT).should('not.be.disabled').click();
 
-  // Verify the subscription was added
   cy.get(SUBSCRIPTIONS_TABLE_SELECTOR).should('be.visible');
 }
 
@@ -115,19 +104,15 @@ describe('Automate Replication form operations: Settings > Application Settings 
     cy.selectAccordionItem([MANAGEIQ_REGION_ACCORDION_ITEM]);
     cy.expect_explorer_title('ManageIQ Region');
     
-    // Click the Replication tab
     cy.tabs({ tabLabel: REPLICATION_TAB });
 
-    // Wait for the replication type dropdown to appear
     cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"]`).should('be.visible');
   });
 
   describe('Validate Replication Type Operations', () => {
     it('Validate replication type dropdown and options', () => {
-    // Check if the dropdown exists and is visible
     cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"]`).should('exist').and('be.visible');
 
-    // Check if the dropdown has the correct options
     cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"] option`).should('have.length', 3);
     cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"] option[value="${REPLICATION_TYPE_NONE}"]`).should('exist');
     cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"] option[value="${REPLICATION_TYPE_GLOBAL}"]`).should('exist');
@@ -137,7 +122,6 @@ describe('Automate Replication form operations: Settings > Application Settings 
   it('Validate save remote type', () => {
     cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"]`).select(REPLICATION_TYPE_REMOTE);
 
-    // Click save button with API interception
     cy.interceptApi({
       alias: 'saveReplicationApi',
       method: 'POST',
@@ -145,14 +129,12 @@ describe('Automate Replication form operations: Settings > Application Settings 
       triggerFn: () => cy.contains('button', SAVE_BUTTON_TEXT).click(),
     });
 
-    // Verify success message
     cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SAVE_INITIATED);
   });
 
   it('Validate save none type', () => {
     cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_NO_REPLICATION_ROLE);
 
-    // First, save remote type
     cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"]`).select(REPLICATION_TYPE_REMOTE);
     cy.interceptApi({
       alias: 'saveRemoteApi',
@@ -161,13 +143,10 @@ describe('Automate Replication form operations: Settings > Application Settings 
       triggerFn: () => cy.contains('button', SAVE_BUTTON_TEXT).click(),
     });
 
-    // Now, select none type
     cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"]`).select(REPLICATION_TYPE_NONE);
 
-    // Check that there is a flash message after selecting None
     cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_REPLICATION_DISABLED);
 
-    // Click save button
     cy.interceptApi({
       alias: 'saveNoneApi',
       method: 'POST',
@@ -175,7 +154,6 @@ describe('Automate Replication form operations: Settings > Application Settings 
       triggerFn: () => cy.contains('button', SAVE_BUTTON_TEXT).click(),
     });
 
-    // Verify success message
     cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SAVE_INITIATED);
   });
 
@@ -183,7 +161,6 @@ describe('Automate Replication form operations: Settings > Application Settings 
     cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"]`).select(REPLICATION_TYPE_REMOTE);
     cy.contains('button', RESET_BUTTON_TEXT).click();
 
-    // Check that there is a flash message after reset
     cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_RESET);
     });
   });
@@ -196,7 +173,6 @@ describe('Automate Replication form operations: Settings > Application Settings 
     it('Validate create subscription for global type', () => {
     addSubscription();
 
-    // Checks that the new subscription is visible in the UI
     cy.get(SUBSCRIPTIONS_TABLE_SELECTOR)
       .find('table')
       .find('tbody')
@@ -207,40 +183,34 @@ describe('Automate Replication form operations: Settings > Application Settings 
   it('Validate update subscription', () => {
     addSubscription();
 
-    // Click the Update button
     cy.contains(MIQ_DATA_TABLE_BUTTON_SELECTOR, UPDATE_BUTTON_TEXT)
       .should('be.visible')
       .click();
 
-    // Verify modal is visible with correct title
     cy.get(MODAL_SELECTOR).should('be.visible');
     cy.get(MODAL_HEADER_SELECTOR).should('have.text', `${EDIT_SUBSCRIPTION_MODAL_HEADING_PREFIX} ${TEST_DB_NAME}`);
 
-    // Edit a field in the modal
     cy.get(`input[name="${USER_INPUT_NAME}"]`)
       .clear({ force: true })
       .type(TEST_USER_2, { force: true, delay: 100 })
       .should('have.value', TEST_USER_2);
 
-    // Click Accept button
     cy.contains(`${MODAL_SELECTOR} button`, ACCEPT_BUTTON_TEXT)
       .should('be.visible')
       .click();
 
-    // Check that edited value is reflected in the UI
     cy.get(SUBSCRIPTIONS_TABLE_SELECTOR)
       .find('table')
       .find('tbody')
       .find('tr')
       .find('td')
-      .eq(2) // Select the 3rd <td> (0-based index)
+      .eq(2)
       .should('have.text', TEST_USER_2);
   });
 
   it('Validate subscription validation', () => {
     addSubscription();
 
-    // Click the Validate button with API interception
     cy.interceptApi({
       alias: 'validateSubscriptionApi',
       method: 'POST',
@@ -250,14 +220,12 @@ describe('Automate Replication form operations: Settings > Application Settings 
         .click(),
     });
 
-    // Verify error message
     cy.expect_flash(flashClassMap.error, FLASH_MESSAGE_VALIDATION_FAILED);
   });
 
   it('Validate save subscriptions to database', () => {
     addSubscription();
 
-    // Click Save button with API interception
     cy.interceptApi({
       alias: 'saveSubscriptionsApi',
       method: 'POST',
@@ -265,19 +233,16 @@ describe('Automate Replication form operations: Settings > Application Settings 
       triggerFn: () => cy.contains('button', SAVE_BUTTON_TEXT).click(),
     });
 
-    // Verify success message
     cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SAVE_INITIATED);
   });
 
   it('Validate delete subscription from UI', () => {
     addSubscription();
 
-    // Click Delete button
     cy.contains(MIQ_DATA_TABLE_BUTTON_SELECTOR, DELETE_BUTTON_TEXT)
       .should('be.visible')
       .click();
 
-    // Verify subscription is removed
     cy.get(SUBSCRIPTIONS_TABLE_SELECTOR)
       .find('table')
       .find('tbody')
@@ -294,14 +259,12 @@ describe('Automate Replication form operations: Settings > Application Settings 
     it('Validate subscriptions removed when switching replication type', () => {
     addSubscription();
 
-    // Verify subscription is added
     cy.get(SUBSCRIPTIONS_TABLE_SELECTOR)
       .find('table')
       .find('tbody')
       .find('tr')
       .should('have.length', 1);
 
-    // Save to db with API interception
     cy.interceptApi({
       alias: 'saveGlobalApi',
       method: 'POST',
@@ -309,13 +272,10 @@ describe('Automate Replication form operations: Settings > Application Settings 
       triggerFn: () => cy.contains('button', SAVE_BUTTON_TEXT).click(),
     });
 
-    // Change replication type to remote
     cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"]`).select(REPLICATION_TYPE_REMOTE);
 
-    // Verify warning message
     cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_SUBSCRIPTIONS_REMOVED);
 
-    // Save the remote type with API interception
     cy.interceptApi({
       alias: 'saveRemoteTypeApi',
       method: 'POST',
@@ -323,10 +283,8 @@ describe('Automate Replication form operations: Settings > Application Settings 
       triggerFn: () => cy.contains('button', SAVE_BUTTON_TEXT).click(),
     });
 
-    // Change back to global type
     cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"]`).select(REPLICATION_TYPE_GLOBAL);
 
-    // Verify that there are no subscriptions in the UI for global type
     cy.get(SUBSCRIPTIONS_TABLE_SELECTOR)
       .find('table')
       .find('tbody')
@@ -339,23 +297,18 @@ describe('Automate Replication form operations: Settings > Application Settings 
     it('Validate reset fields in subscription modal', () => {
     addSubscription();
 
-    // Open the modal again
     cy.contains('button', ADD_SUBSCRIPTION_BUTTON_TEXT).click();
     cy.get(MODAL_SELECTOR).should('be.visible');
 
-    // Fill in some fields
     cy.get(`input[name="${DBNAME_INPUT_NAME}"]`).type('test_reset');
 
-    // Click the Reset button
     cy.contains(`${MODAL_SELECTOR} button`, RESET_BUTTON_TEXT)
       .should('be.visible')
       .click();
 
-    // Assert that the fields are reset
     cy.get(`input[name="${DBNAME_INPUT_NAME}"]`).should('have.value', '');
     cy.get(`input[name="${HOST_INPUT_NAME}"]`).should('have.value', '');
 
-    // Checks that there is a flash message after reset
     cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_RESET);
     });
 
@@ -364,7 +317,6 @@ describe('Automate Replication form operations: Settings > Application Settings 
       cy.contains('button', ADD_SUBSCRIPTION_BUTTON_TEXT).click();
       cy.get(MODAL_SELECTOR).should('be.visible');
 
-      // Click cancel button in the modal
       cy.contains(`${MODAL_SELECTOR} button`, CANCEL_BUTTON_TEXT).click();
       cy.get(MODAL_SELECTOR).should('not.be.visible');
     });
