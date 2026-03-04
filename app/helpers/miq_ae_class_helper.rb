@@ -380,7 +380,8 @@ module MiqAeClassHelper
 
   private
 
-  def row_data(label, value)
-    {:cells => {:label => label, :value => value}}
+  def row_data(label, value, style = "", icon: false)
+    data = value.kind_of?(Array) ? [value[0], value[1]].join(', ') : value
+    {:cells => {:label => label, (icon ? :icon : :value) => data, :color => style}}
   end
 end
