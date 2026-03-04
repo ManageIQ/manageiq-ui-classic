@@ -31,13 +31,14 @@ const createSchema = (subscriptions, setState, setModalOpen, replicationType, is
   };
 
   const validateSubscription = (selectedRow) => {
-    const cellKeys = [0, 1, 2, 3, 4];
     const rowData = {};
 
-    cellKeys.forEach((index) => {
-      const cell = selectedRow.cells[index];
-      if (cell) {
-        rowData[cell.id.split(':')[1]] = cell.value;
+    selectedRow.cells.forEach((cell) => {
+      if (cell && cell.id) {
+        const fieldName = cell.id.split(':')[1];
+        if (fieldName && cell.value !== undefined) {
+          rowData[fieldName] = cell.value;
+        }
       }
     });
 
