@@ -42,18 +42,17 @@ const createSchema = (subscriptions, setState, setModalOpen, replicationType, is
       }
     });
 
-    http.post(`/ops/pglogical_validate_subscription`, rowData, { skipErrors: [400] }, {
+    http.post(`/ops/pglogical_validate_subscription`, rowData, {
       skipErrors: [400],
-    })
-      .then((response) => {
-        if (response.status === 'success') {
-          miqFlash('success', __('Validation successful'));
-        } else {
-          miqFlash('error', __(response.message));
-        }
-      }).catch(() => {
-        miqFlash('error', __('Something went wrong'));
-      });
+    }).then((response) => {
+      if (response.status === 'success') {
+        miqFlash('success', __('Validation successful'));
+      } else {
+        miqFlash('error', response.message);
+      }
+    }).catch(() => {
+      miqFlash('error', __('Unable to validate subscription.'));
+    });
   };
 
   const replicationFields = ({
@@ -69,15 +68,15 @@ const createSchema = (subscriptions, setState, setModalOpen, replicationType, is
 
           setState((state) => {
             if (state.savedReplicationType === 'none' && newValue === 'none') {
-              helperText = 'No replication role has been set';
+              helperText = __('No replication role has been set');
             } else if (state.savedReplicationType === 'remote' && newValue === 'none') {
-              helperText = 'Replication will be disabled for this region';
+              helperText = __('Replication will be disabled for this region');
             } else if (state.savedReplicationType === 'global' && newValue === 'none') {
-              helperText = 'All current subscriptions will be removed';
+              helperText = __('All current subscriptions will be removed');
             } else if (state.savedReplicationType === 'global' && newValue === 'remote') {
-              helperText = 'Changing to remote replication role will remove all current subscriptions';
+              helperText = __('Changing to remote replication role will remove all current subscriptions');
             } else if (newValue === 'global' && state.subscriptions.length === 0) {
-              helperText = 'At least 1 subscription must be added to save server replication type';
+              helperText = __('At least 1 subscription must be added to save server replication type');
             }
 
             return {

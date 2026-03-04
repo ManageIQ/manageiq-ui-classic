@@ -155,7 +155,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
         handleSaveResponse(response.message);
       })
       .catch(() => {
-        miqFlash('error', __('Something went wrong'));
+        miqFlash('error', __('Unable to save replication settings.'));
       });
   };
 
