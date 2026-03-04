@@ -89,15 +89,15 @@ const createSchema = (subscriptions, setState, setModalOpen, replicationType, is
         },
         options: [
           {
-            label: `<${_('None')}>`,
+            label: `<${__('None')}>`,
             value: 'none',
           },
           {
-            label: `Global`,
+            label: __('Global'),
             value: 'global',
           },
           {
-            label: `Remote`,
+            label: __('Remote'),
             value: 'remote',
           },
         ],
@@ -117,6 +117,7 @@ const createSchema = (subscriptions, setState, setModalOpen, replicationType, is
           id: 'subscriptions-table',
           rows: createRows(subscriptions),
           onCellClick: (selectedRow) => {
+            // eslint-disable-next-line default-case
             switch (selectedRow.callbackAction) {
               case 'editSubscription':
                 editSubscription(selectedRow);
@@ -126,8 +127,6 @@ const createSchema = (subscriptions, setState, setModalOpen, replicationType, is
                 break;
               case 'validateSubscription':
                 validateSubscription(selectedRow);
-                break;
-              default:
                 break;
             }
           },
