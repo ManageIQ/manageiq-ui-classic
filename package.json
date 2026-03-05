@@ -59,7 +59,7 @@
     "awesome-debounce-promise": "^2.1.0",
     "bootstrap-filestyle": "~1.2.1",
     "bootstrap-select": "^1.13.18",
-    "bootstrap-switch": "3.3.4",
+    "bootstrap-switch": "3.4.0",
     "classnames": "~2.5.0",
     "codemirror": "~5.65.0",
     "connected-react-router": "~6.9.0",
