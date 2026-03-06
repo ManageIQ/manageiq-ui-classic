@@ -11,6 +11,7 @@ const extname = require('path-complete-extname');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const { SplitChunksPlugin } = require('webpack').optimize;
 const { execSync } = require('child_process');
+const fs = require('fs');
 
 const { env, settings, i18n, output, engines } = require('./configuration.js');
 const loaders = require('./loaders.js');
@@ -73,6 +74,28 @@ let plugins = [
       compiler.hooks.done.tap('done timestamp', () => {
         // setTimeout to append instead of prepend the date
         setTimeout(() => console.log('webpack: done', new Date()));
+      });
+    },
+  },
+
+  // plugin to create a marker file when building with CYPRESS=true
+  {
+    apply(compiler) {
+      compiler.hooks.done.tap('cypress marker', () => {
+        const markerPath = resolve(__dirname, '../../tmp/.cypress-build-marker');
+        const tmpDir = resolve(__dirname, '../../tmp');
+        if (env.CYPRESS === 'true') {
+          // Ensure tmp directory exists
+          if (!fs.existsSync(tmpDir)) {
+            fs.mkdirSync(tmpDir, { recursive: true });
+          }
+          // Create marker file
+          fs.writeFileSync(markerPath, new Date().toISOString());
+          console.log('✓ Cypress build marker created');
+        } else if (fs.existsSync(markerPath)) {
+          // Remove marker file if it exists (for non-Cypress builds)
+          fs.unlinkSync(markerPath);
+        }
       });
     },
   },
