@@ -1,4 +1,6 @@
 module CatalogHelper
+  include SharedHelper::AbShowHelper
+  include SharedHelper::AbListHelper
   include TextualSummary
   include RequestInfoHelper
   include Mixins::AutomationMixin
@@ -288,10 +290,6 @@ module CatalogHelper
 
   def provision_data(data, type)
     data && data[type]
-  end
-
-  def row_data(label, value)
-    {:cells => {:label => label, :value => value}}
   end
 
   def catalog_provision?(record, type)
