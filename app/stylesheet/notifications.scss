@@ -141,11 +141,6 @@
         .cds--btn--ghost:active {
           background-color: #e5e5e5;
         }
-       // Target the wrapper div (added in Carbon 1.100.0) that contains __details
-       // This div has no class but is a direct child that wraps the notification content
-        > div:has(> .cds--actionable-notification__details) {
-          width: 100%;
-        }
 
         .cds--actionable-notification__details {
           display: flex;
