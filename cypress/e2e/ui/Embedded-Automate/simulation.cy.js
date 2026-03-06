@@ -49,13 +49,6 @@ describe('Automation > Embedded Automate > Simulation', () => {
       // Click the save button
       cy.getFormButtonByTypeWithText({ buttonText: 'Save', buttonType: 'submit' }).click();
 
-      // Clear the notifications if there are any
-      cy.get('body').then($body => {
-        if ($body.find('.toast-pf').length) {
-          cy.get(':nth-child(1) > .toast-pf > :nth-child(2)').click();
-        }
-      });
-
       // Check if the tree view renders
       cy.get('.cds--accordion__content');
 
