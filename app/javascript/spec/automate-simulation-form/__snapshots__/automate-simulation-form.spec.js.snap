@@ -11,6 +11,24 @@ exports[`Automate Simulation Form should submit a new simulation 1`] = `
       FormTemplate={[Function]}
       canReset={true}
       className="automate-simulation-form"
+      initialValues={
+        Object {
+          "attrs": Array [
+            Array [],
+            Array [],
+            Array [],
+            Array [],
+            Array [],
+          ],
+          "instance_name": "Request",
+          "object_message": "create",
+          "object_request": "",
+          "readonly": true,
+          "starting_object": "SYSTEM/PROCESS",
+          "target_class": null,
+          "target_id": null,
+        }
+      }
       onReset={[Function]}
       onSubmit={[Function]}
       schema={
@@ -100,8 +118,14 @@ exports[`Automate Simulation Form should submit a new simulation 1`] = `
               "component": "text-field",
               "id": "object_request",
               "initialValue": "",
+              "isRequired": true,
               "label": "Request",
               "name": "object_request",
+              "validate": Array [
+                Object {
+                  "type": "required",
+                },
+              ],
             },
             Object {
               "className": "automate-object-attribute",
@@ -117,7 +141,7 @@ exports[`Automate Simulation Form should submit a new simulation 1`] = `
               "className": "automate-target-class",
               "component": "select",
               "id": "target_class",
-              "initialValue": null,
+              "isRequired": true,
               "isSearchable": true,
               "label": "Type",
               "name": "target_class",
@@ -125,7 +149,6 @@ exports[`Automate Simulation Form should submit a new simulation 1`] = `
               "options": Array [
                 Object {
                   "label": "<None>",
-                  "value": "-1",
                 },
                 Object {
                   "label": "Availability Zone",
@@ -267,20 +290,6 @@ exports[`Automate Simulation Form should submit a new simulation 1`] = `
               "simpleValue": true,
               "validate": Array [
                 Object {
-                  "condition": Object {
-                    "not": Object {
-                      "or": Array [
-                        Object {
-                          "is": "-1",
-                          "when": "target_class",
-                        },
-                        Object {
-                          "isEmpty": true,
-                          "when": "target_class",
-                        },
-                      ],
-                    },
-                  },
                   "type": "required",
                 },
               ],
@@ -290,40 +299,17 @@ exports[`Automate Simulation Form should submit a new simulation 1`] = `
               "component": "select",
               "condition": Object {
                 "not": Object {
-                  "or": Array [
-                    Object {
-                      "is": "-1",
-                      "when": "target_class",
-                    },
-                    Object {
-                      "isEmpty": true,
-                      "when": "target_class",
-                    },
-                  ],
+                  "isEmpty": true,
+                  "when": "target_class",
                 },
               },
-              "id": "selection_target",
-              "initialValue": null,
-              "key": "selection_target_-1",
+              "id": "target_id",
+              "isRequired": true,
               "label": "Selection",
               "loadOptions": [Function],
-              "name": "selection_target",
+              "name": "target_id_undefined",
               "validate": Array [
                 Object {
-                  "condition": Object {
-                    "not": Object {
-                      "or": Array [
-                        Object {
-                          "is": "-1",
-                          "when": "target_class",
-                        },
-                        Object {
-                          "isEmpty": true,
-                          "when": "target_class",
-                        },
-                      ],
-                    },
-                  },
                   "type": "required",
                 },
               ],
@@ -356,226 +342,47 @@ exports[`Automate Simulation Form should submit a new simulation 1`] = `
                 "fontSize": "16px",
               },
             },
-            Array [
-              Object {
-                "className": "subform",
-                "component": "sub-form",
-                "fields": Array [
-                  Object {
-                    "className": "attributeValuePairLabel",
-                    "component": "plain-text",
-                    "id": "attributeValuePairLabel_1",
-                    "label": "1",
-                    "name": "attributeValuePairLabel_1",
-                    "style": Object {
-                      "fontWeight": "bold",
-                    },
-                  },
-                  Object {
-                    "component": "text-field",
-                    "fieldprops": Object {
-                      "className": "field-input",
-                      "data-miq_observe": "{\\"interval\\":\\".5\\"}",
-                    },
-                    "id": "attribute_1",
-                    "initialValue": undefined,
-                    "label": " ",
-                    "maxLength": undefined,
-                    "name": "attribute_1",
-                  },
-                  Object {
-                    "component": "text-field",
-                    "fieldprops": Object {
-                      "className": "value-input",
-                      "data-miq_observe": "{\\"interval\\":\\".5\\"}",
-                    },
-                    "id": "value_1",
-                    "initialValue": undefined,
-                    "label": " ",
-                    "maxLength": undefined,
-                    "name": "value_1",
-                  },
-                ],
-                "id": "subform_1",
-                "name": "subform_1",
+            Object {
+              "AddButtonProps": Object {
+                "size": "sm",
               },
-            ],
-            Array [
-              Object {
-                "className": "subform",
-                "component": "sub-form",
-                "fields": Array [
-                  Object {
-                    "className": "attributeValuePairLabel",
-                    "component": "plain-text",
-                    "id": "attributeValuePairLabel_2",
-                    "label": "2",
-                    "name": "attributeValuePairLabel_2",
-                    "style": Object {
-                      "fontWeight": "bold",
-                    },
-                  },
-                  Object {
-                    "component": "text-field",
-                    "fieldprops": Object {
-                      "className": "field-input",
-                      "data-miq_observe": "{\\"interval\\":\\".5\\"}",
-                    },
-                    "id": "attribute_2",
-                    "initialValue": undefined,
-                    "label": " ",
-                    "maxLength": undefined,
-                    "name": "attribute_2",
-                  },
-                  Object {
-                    "component": "text-field",
-                    "fieldprops": Object {
-                      "className": "value-input",
-                      "data-miq_observe": "{\\"interval\\":\\".5\\"}",
-                    },
-                    "id": "value_2",
-                    "initialValue": undefined,
-                    "label": " ",
-                    "maxLength": undefined,
-                    "name": "value_2",
-                  },
-                ],
-                "id": "subform_2",
-                "name": "subform_2",
+              "RemoveButtonProps": Object {
+                "size": "sm",
               },
-            ],
-            Array [
-              Object {
-                "className": "subform",
-                "component": "sub-form",
-                "fields": Array [
-                  Object {
-                    "className": "attributeValuePairLabel",
-                    "component": "plain-text",
-                    "id": "attributeValuePairLabel_3",
-                    "label": "3",
-                    "name": "attributeValuePairLabel_3",
-                    "style": Object {
-                      "fontWeight": "bold",
+              "component": "field-array",
+              "fieldKey": "field_array",
+              "fields": Array [
+                Object {
+                  "className": "attribute_value_field_wrapper",
+                  "component": "text-field",
+                  "isRequired": true,
+                  "label": "attribute",
+                  "maxLength": undefined,
+                  "name": "attribute",
+                  "validate": Array [
+                    Object {
+                      "type": "required",
                     },
-                  },
-                  Object {
-                    "component": "text-field",
-                    "fieldprops": Object {
-                      "className": "field-input",
-                      "data-miq_observe": "{\\"interval\\":\\".5\\"}",
+                  ],
+                },
+                Object {
+                  "className": "attribute_value_field_wrapper",
+                  "component": "text-field",
+                  "isRequired": true,
+                  "label": "value",
+                  "maxLength": undefined,
+                  "name": "value",
+                  "validate": Array [
+                    Object {
+                      "type": "required",
                     },
-                    "id": "attribute_3",
-                    "initialValue": undefined,
-                    "label": " ",
-                    "maxLength": undefined,
-                    "name": "attribute_3",
-                  },
-                  Object {
-                    "component": "text-field",
-                    "fieldprops": Object {
-                      "className": "value-input",
-                      "data-miq_observe": "{\\"interval\\":\\".5\\"}",
-                    },
-                    "id": "value_3",
-                    "initialValue": undefined,
-                    "label": " ",
-                    "maxLength": undefined,
-                    "name": "value_3",
-                  },
-                ],
-                "id": "subform_3",
-                "name": "subform_3",
-              },
-            ],
-            Array [
-              Object {
-                "className": "subform",
-                "component": "sub-form",
-                "fields": Array [
-                  Object {
-                    "className": "attributeValuePairLabel",
-                    "component": "plain-text",
-                    "id": "attributeValuePairLabel_4",
-                    "label": "4",
-                    "name": "attributeValuePairLabel_4",
-                    "style": Object {
-                      "fontWeight": "bold",
-                    },
-                  },
-                  Object {
-                    "component": "text-field",
-                    "fieldprops": Object {
-                      "className": "field-input",
-                      "data-miq_observe": "{\\"interval\\":\\".5\\"}",
-                    },
-                    "id": "attribute_4",
-                    "initialValue": undefined,
-                    "label": " ",
-                    "maxLength": undefined,
-                    "name": "attribute_4",
-                  },
-                  Object {
-                    "component": "text-field",
-                    "fieldprops": Object {
-                      "className": "value-input",
-                      "data-miq_observe": "{\\"interval\\":\\".5\\"}",
-                    },
-                    "id": "value_4",
-                    "initialValue": undefined,
-                    "label": " ",
-                    "maxLength": undefined,
-                    "name": "value_4",
-                  },
-                ],
-                "id": "subform_4",
-                "name": "subform_4",
-              },
-            ],
-            Array [
-              Object {
-                "className": "subform",
-                "component": "sub-form",
-                "fields": Array [
-                  Object {
-                    "className": "attributeValuePairLabel",
-                    "component": "plain-text",
-                    "id": "attributeValuePairLabel_5",
-                    "label": "5",
-                    "name": "attributeValuePairLabel_5",
-                    "style": Object {
-                      "fontWeight": "bold",
-                    },
-                  },
-                  Object {
-                    "component": "text-field",
-                    "fieldprops": Object {
-                      "className": "field-input",
-                      "data-miq_observe": "{\\"interval\\":\\".5\\"}",
-                    },
-                    "id": "attribute_5",
-                    "initialValue": undefined,
-                    "label": " ",
-                    "maxLength": undefined,
-                    "name": "attribute_5",
-                  },
-                  Object {
-                    "component": "text-field",
-                    "fieldprops": Object {
-                      "className": "value-input",
-                      "data-miq_observe": "{\\"interval\\":\\".5\\"}",
-                    },
-                    "id": "value_5",
-                    "initialValue": undefined,
-                    "label": " ",
-                    "maxLength": undefined,
-                    "name": "value_5",
-                  },
-                ],
-                "id": "subform_5",
-                "name": "subform_5",
-              },
-            ],
+                  ],
+                },
+              ],
+              "id": "attrs",
+              "maxItems": 5,
+              "name": "attrs",
+            },
           ],
           "title": "Object Details",
         }
