@@ -854,6 +854,8 @@ Rails.application.routes.draw do
         show
         show_list
         tagging_edit
+        delete_container_projects
+        new
       ],
       :post => %w[
         button
