@@ -502,7 +502,6 @@ exports[`VM common form component should render adding form variant add new time
               "font-icon-picker": [Function],
               "font-icon-picker-ddf": [Function],
               "key-value-list": [Function],
-              "multi-select": [Function],
               "password-field": [Function],
               "plain-text": [Function],
               "radio": [Function],
@@ -515,7 +514,6 @@ exports[`VM common form component should render adding form variant add new time
               "textarea": [Function],
               "time-picker": [Function],
               "tree-selector": [Function],
-              "tree-view": [Function],
               "validate-credentials": [Function],
               "wizard": [Function],
             }
@@ -1002,7 +1000,6 @@ exports[`VM common form component should render adding form variant add new time
                 "font-icon-picker": [Function],
                 "font-icon-picker-ddf": [Function],
                 "key-value-list": [Function],
-                "multi-select": [Function],
                 "password-field": [Function],
                 "plain-text": [Function],
                 "radio": [Function],
@@ -1016,7 +1013,6 @@ exports[`VM common form component should render adding form variant add new time
                 "textarea": [Function],
                 "time-picker": [Function],
                 "tree-selector": [Function],
-                "tree-view": [Function],
                 "validate-credentials": [Function],
                 "wizard": [Function],
               }
