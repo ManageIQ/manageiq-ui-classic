@@ -672,7 +672,6 @@ exports[`Host aggregate form component should render add host form variant (remv
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -683,23 +682,6 @@ exports[`Host aggregate form component should render add host form variant (remv
                             canReset={true}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="select"
-                                  id="host_id"
-                                  includeEmpty={true}
-                                  isRequired={true}
-                                  label="Host"
-                                  name="host_id"
-                                  options={Array []}
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -765,26 +747,6 @@ exports[`Host aggregate form component should render add host form variant (remv
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "select",
-                                    "id": "host_id",
-                                    "includeEmpty": true,
-                                    "isRequired": true,
-                                    "label": "Host",
-                                    "name": "host_id",
-                                    "options": Array [],
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Remove"
                           >
                             <ButtonGroup>

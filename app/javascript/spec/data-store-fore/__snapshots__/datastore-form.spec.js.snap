@@ -1294,7 +1294,6 @@ exports[`Datastore form component Datastore domain form component should render 
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -1305,57 +1304,6 @@ exports[`Datastore form component Datastore domain form component should render 
                             canReset={true}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="sub-form"
-                                  fields={
-                                    Array [
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "name",
-                                        "isDisabled": false,
-                                        "isRequired": true,
-                                        "label": "Name",
-                                        "maxLength": 128,
-                                        "name": "name",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "description",
-                                        "isDisabled": false,
-                                        "label": "Description",
-                                        "maxLength": 128,
-                                        "name": "description",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "enabled",
-                                        "label": "Enabled",
-                                        "name": "enabled",
-                                      },
-                                    ]
-                                  }
-                                  id="datastore-form-wrapper"
-                                  name="datastore-form-wrapper"
-                                  title="Info"
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -1444,58 +1392,6 @@ exports[`Datastore form component Datastore domain form component should render 
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "sub-form",
-                                    "fields": Array [
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "name",
-                                        "isDisabled": false,
-                                        "isRequired": true,
-                                        "label": "Name",
-                                        "maxLength": 128,
-                                        "name": "name",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "description",
-                                        "isDisabled": false,
-                                        "label": "Description",
-                                        "maxLength": 128,
-                                        "name": "description",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "enabled",
-                                        "label": "Enabled",
-                                        "name": "enabled",
-                                      },
-                                    ],
-                                    "id": "datastore-form-wrapper",
-                                    "name": "datastore-form-wrapper",
-                                    "title": "Info",
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Save"
                           >
                             <ButtonGroup>
@@ -2940,7 +2836,6 @@ exports[`Datastore form component Datastore namespace form component should rend
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -2951,58 +2846,6 @@ exports[`Datastore form component Datastore namespace form component should rend
                             canReset={true}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="sub-form"
-                                  fields={
-                                    Array [
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "namespacePath",
-                                        "isDisabled": true,
-                                        "label": "Fully Qualified Name",
-                                        "name": "namespacePath",
-                                      },
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "name",
-                                        "isDisabled": false,
-                                        "isRequired": true,
-                                        "label": "Name",
-                                        "maxLength": 128,
-                                        "name": "name",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "description",
-                                        "isDisabled": false,
-                                        "label": "Description",
-                                        "maxLength": 128,
-                                        "name": "description",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                    ]
-                                  }
-                                  id="datastore-form-wrapper"
-                                  name="datastore-form-wrapper"
-                                  title="Info"
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -3094,59 +2937,6 @@ exports[`Datastore form component Datastore namespace form component should rend
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "sub-form",
-                                    "fields": Array [
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "namespacePath",
-                                        "isDisabled": true,
-                                        "label": "Fully Qualified Name",
-                                        "name": "namespacePath",
-                                      },
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "name",
-                                        "isDisabled": false,
-                                        "isRequired": true,
-                                        "label": "Name",
-                                        "maxLength": 128,
-                                        "name": "name",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "description",
-                                        "isDisabled": false,
-                                        "label": "Description",
-                                        "maxLength": 128,
-                                        "name": "description",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                    ],
-                                    "id": "datastore-form-wrapper",
-                                    "name": "datastore-form-wrapper",
-                                    "title": "Info",
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Save"
                           >
                             <ButtonGroup>

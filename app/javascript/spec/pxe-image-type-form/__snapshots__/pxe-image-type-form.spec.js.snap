@@ -1229,7 +1229,6 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -1240,54 +1239,6 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                             canReset={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="sub-form"
-                                  fields={
-                                    Array [
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "name",
-                                        "label": "Name",
-                                        "maxLength": 255,
-                                        "name": "name",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "id": "provision_type",
-                                        "includeEmpty": true,
-                                        "label": "Type",
-                                        "name": "provision_type",
-                                        "options": Array [
-                                          Object {
-                                            "label": "Host",
-                                            "value": "host",
-                                          },
-                                          Object {
-                                            "label": "VM and Instance",
-                                            "value": "vm",
-                                          },
-                                        ],
-                                        "placeholder": "<Choose>",
-                                      },
-                                    ]
-                                  }
-                                  id="basic-information"
-                                  name="basic-information"
-                                  title="Basic Information"
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -1364,55 +1315,6 @@ exports[`Pxe Image Type Form Component should render adding a new pxe image type
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "sub-form",
-                                    "fields": Array [
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "name",
-                                        "label": "Name",
-                                        "maxLength": 255,
-                                        "name": "name",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "id": "provision_type",
-                                        "includeEmpty": true,
-                                        "label": "Type",
-                                        "name": "provision_type",
-                                        "options": Array [
-                                          Object {
-                                            "label": "Host",
-                                            "value": "host",
-                                          },
-                                          Object {
-                                            "label": "VM and Instance",
-                                            "value": "vm",
-                                          },
-                                        ],
-                                        "placeholder": "<Choose>",
-                                      },
-                                    ],
-                                    "id": "basic-information",
-                                    "name": "basic-information",
-                                    "title": "Basic Information",
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Add"
                           >
                             <ButtonGroup>
@@ -2754,7 +2656,6 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -2765,54 +2666,6 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                             canReset={true}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="sub-form"
-                                  fields={
-                                    Array [
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "name",
-                                        "label": "Name",
-                                        "maxLength": 255,
-                                        "name": "name",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "id": "provision_type",
-                                        "includeEmpty": true,
-                                        "label": "Type",
-                                        "name": "provision_type",
-                                        "options": Array [
-                                          Object {
-                                            "label": "Host",
-                                            "value": "host",
-                                          },
-                                          Object {
-                                            "label": "VM and Instance",
-                                            "value": "vm",
-                                          },
-                                        ],
-                                        "placeholder": "<Choose>",
-                                      },
-                                    ]
-                                  }
-                                  id="basic-information"
-                                  name="basic-information"
-                                  title="Basic Information"
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -2896,55 +2749,6 @@ exports[`Pxe Image Type Form Component should render editing a pxe image type 1`
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "sub-form",
-                                    "fields": Array [
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "name",
-                                        "label": "Name",
-                                        "maxLength": 255,
-                                        "name": "name",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "id": "provision_type",
-                                        "includeEmpty": true,
-                                        "label": "Type",
-                                        "name": "provision_type",
-                                        "options": Array [
-                                          Object {
-                                            "label": "Host",
-                                            "value": "host",
-                                          },
-                                          Object {
-                                            "label": "VM and Instance",
-                                            "value": "vm",
-                                          },
-                                        ],
-                                        "placeholder": "<Choose>",
-                                      },
-                                    ],
-                                    "id": "basic-information",
-                                    "name": "basic-information",
-                                    "title": "Basic Information",
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Save"
                           >
                             <ButtonGroup>

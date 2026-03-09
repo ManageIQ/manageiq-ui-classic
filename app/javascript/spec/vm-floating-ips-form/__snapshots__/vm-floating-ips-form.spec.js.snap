@@ -797,7 +797,6 @@ exports[`Associate / Disassociate form component should render associate form va
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -808,30 +807,6 @@ exports[`Associate / Disassociate form component should render associate form va
                             canReset={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="select"
-                                  id="floating_ip"
-                                  includeEmpty={true}
-                                  isRequired={true}
-                                  label="Floating IP"
-                                  loadOptions={[Function]}
-                                  name="floating_ip"
-                                  validate={
-                                    Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ]
-                                  }
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -905,31 +880,6 @@ exports[`Associate / Disassociate form component should render associate form va
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "select",
-                                    "id": "floating_ip",
-                                    "includeEmpty": true,
-                                    "isRequired": true,
-                                    "label": "Floating IP",
-                                    "loadOptions": [Function],
-                                    "name": "floating_ip",
-                                    "validate": Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ],
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Save"
                           >
                             <ButtonGroup>
@@ -1814,7 +1764,6 @@ exports[`Associate / Disassociate form component should render disassociate form
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -1825,30 +1774,6 @@ exports[`Associate / Disassociate form component should render disassociate form
                             canReset={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="select"
-                                  id="floating_ip"
-                                  includeEmpty={true}
-                                  isRequired={true}
-                                  label="Floating IP"
-                                  loadOptions={[Function]}
-                                  name="floating_ip"
-                                  validate={
-                                    Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ]
-                                  }
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -1922,31 +1847,6 @@ exports[`Associate / Disassociate form component should render disassociate form
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "select",
-                                    "id": "floating_ip",
-                                    "includeEmpty": true,
-                                    "isRequired": true,
-                                    "label": "Floating IP",
-                                    "loadOptions": [Function],
-                                    "name": "floating_ip",
-                                    "validate": Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ],
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Save"
                           >
                             <ButtonGroup>
@@ -2749,7 +2649,6 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -2760,30 +2659,6 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                             canReset={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="select"
-                                  id="floating_ip"
-                                  includeEmpty={true}
-                                  isRequired={true}
-                                  label="Floating IP"
-                                  loadOptions={[Function]}
-                                  name="floating_ip"
-                                  validate={
-                                    Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ]
-                                  }
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -2857,31 +2732,6 @@ exports[`Associate / Disassociate form component should submit Associate API cal
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "select",
-                                    "id": "floating_ip",
-                                    "includeEmpty": true,
-                                    "isRequired": true,
-                                    "label": "Floating IP",
-                                    "loadOptions": [Function],
-                                    "name": "floating_ip",
-                                    "validate": Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ],
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Save"
                           >
                             <ButtonGroup>
@@ -3657,7 +3507,6 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -3668,30 +3517,6 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                             canReset={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="select"
-                                  id="floating_ip"
-                                  includeEmpty={true}
-                                  isRequired={true}
-                                  label="Floating IP"
-                                  loadOptions={[Function]}
-                                  name="floating_ip"
-                                  validate={
-                                    Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ]
-                                  }
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -3765,31 +3590,6 @@ exports[`Associate / Disassociate form component should submit Disassociate API 
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "select",
-                                    "id": "floating_ip",
-                                    "includeEmpty": true,
-                                    "isRequired": true,
-                                    "label": "Floating IP",
-                                    "loadOptions": [Function],
-                                    "name": "floating_ip",
-                                    "validate": Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ],
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Save"
                           >
                             <ButtonGroup>

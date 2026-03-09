@@ -2127,7 +2127,6 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -2138,99 +2137,6 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                             canReset={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="sub-form"
-                                  fields={
-                                    Array [
-                                      Object {
-                                        "className": "settings_category_name",
-                                        "component": "text-field",
-                                        "id": "name",
-                                        "isDisabled": false,
-                                        "isRequired": true,
-                                        "label": "Name",
-                                        "maxLength": 50,
-                                        "name": "name",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "description",
-                                        "isRequired": true,
-                                        "label": "Description",
-                                        "maxLength": 150,
-                                        "name": "description",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "example_text",
-                                        "isRequired": true,
-                                        "label": "Long Description",
-                                        "maxLength": 150,
-                                        "name": "example_text",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "switch",
-                                        "id": "show",
-                                        "label": "Show in console",
-                                        "maxLength": 50,
-                                        "name": "show",
-                                        "offText": "No",
-                                        "onText": "Yes",
-                                      },
-                                      Object {
-                                        "className": "settings_category_single_value",
-                                        "component": "switch",
-                                        "id": "single_value",
-                                        "isDisabled": false,
-                                        "label": "Single value",
-                                        "maxLength": 50,
-                                        "name": "single_value",
-                                        "offText": "No",
-                                        "onText": "Yes",
-                                      },
-                                      Object {
-                                        "component": "switch",
-                                        "id": "perf_by_tag",
-                                        "label": "Capture C & U Data by Tag",
-                                        "maxLength": 50,
-                                        "name": "perf_by_tag",
-                                        "offText": "No",
-                                        "onText": "Yes",
-                                      },
-                                      Object {
-                                        "component": "plain-text",
-                                        "label": "* Name and Single Value fields cannot be edited after adding a category.",
-                                        "name": "plain-text-component",
-                                      },
-                                    ]
-                                  }
-                                  id="name-wrapper"
-                                  name="subform-1"
-                                  title="Category Information"
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -2321,100 +2227,6 @@ exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "sub-form",
-                                    "fields": Array [
-                                      Object {
-                                        "className": "settings_category_name",
-                                        "component": "text-field",
-                                        "id": "name",
-                                        "isDisabled": false,
-                                        "isRequired": true,
-                                        "label": "Name",
-                                        "maxLength": 50,
-                                        "name": "name",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "description",
-                                        "isRequired": true,
-                                        "label": "Description",
-                                        "maxLength": 150,
-                                        "name": "description",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "example_text",
-                                        "isRequired": true,
-                                        "label": "Long Description",
-                                        "maxLength": 150,
-                                        "name": "example_text",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "switch",
-                                        "id": "show",
-                                        "label": "Show in console",
-                                        "maxLength": 50,
-                                        "name": "show",
-                                        "offText": "No",
-                                        "onText": "Yes",
-                                      },
-                                      Object {
-                                        "className": "settings_category_single_value",
-                                        "component": "switch",
-                                        "id": "single_value",
-                                        "isDisabled": false,
-                                        "label": "Single value",
-                                        "maxLength": 50,
-                                        "name": "single_value",
-                                        "offText": "No",
-                                        "onText": "Yes",
-                                      },
-                                      Object {
-                                        "component": "switch",
-                                        "id": "perf_by_tag",
-                                        "label": "Capture C & U Data by Tag",
-                                        "maxLength": 50,
-                                        "name": "perf_by_tag",
-                                        "offText": "No",
-                                        "onText": "Yes",
-                                      },
-                                      Object {
-                                        "component": "plain-text",
-                                        "label": "* Name and Single Value fields cannot be edited after adding a category.",
-                                        "name": "plain-text-component",
-                                      },
-                                    ],
-                                    "id": "name-wrapper",
-                                    "name": "subform-1",
-                                    "title": "Category Information",
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Add"
                           >
                             <ButtonGroup>
