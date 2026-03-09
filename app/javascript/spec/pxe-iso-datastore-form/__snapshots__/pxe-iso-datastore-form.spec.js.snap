@@ -1067,7 +1067,6 @@ exports[`Pxe Iso Datastore Form Component should render adding a new iso datasto
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -1078,47 +1077,6 @@ exports[`Pxe Iso Datastore Form Component should render adding a new iso datasto
                             canReset={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="sub-form"
-                                  fields={
-                                    Array [
-                                      Object {
-                                        "component": "select",
-                                        "id": "ems_id",
-                                        "includeEmpty": true,
-                                        "label": "Provider",
-                                        "name": "ems_id",
-                                        "options": Array [
-                                          Object {
-                                            "label": "provider 1",
-                                            "value": "1 provider 1",
-                                          },
-                                          Object {
-                                            "label": "provider 2",
-                                            "value": "2 provider 2",
-                                          },
-                                        ],
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                    ]
-                                  }
-                                  id="basic-information"
-                                  name="basic-information"
-                                  title="Basic Information"
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -1192,48 +1150,6 @@ exports[`Pxe Iso Datastore Form Component should render adding a new iso datasto
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "sub-form",
-                                    "fields": Array [
-                                      Object {
-                                        "component": "select",
-                                        "id": "ems_id",
-                                        "includeEmpty": true,
-                                        "label": "Provider",
-                                        "name": "ems_id",
-                                        "options": Array [
-                                          Object {
-                                            "label": "provider 1",
-                                            "value": "1 provider 1",
-                                          },
-                                          Object {
-                                            "label": "provider 2",
-                                            "value": "2 provider 2",
-                                          },
-                                        ],
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                    ],
-                                    "id": "basic-information",
-                                    "name": "basic-information",
-                                    "title": "Basic Information",
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Add"
                           >
                             <ButtonGroup>

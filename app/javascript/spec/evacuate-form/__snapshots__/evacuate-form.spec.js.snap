@@ -1656,7 +1656,6 @@ exports[`evacuate form component should render evacuate form when hosts empty 1`
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -1666,73 +1665,6 @@ exports[`evacuate form component should render evacuate form when hosts empty 1`
                             }
                             canReset={false}
                             cancelLabel="Cancel"
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="sub-form"
-                                  fields={
-                                    Array [
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "auto_select_host",
-                                        "isDisabled": true,
-                                        "label": "Auto-select Host?",
-                                        "name": "auto_select_host",
-                                        "validateOnMount": true,
-                                      },
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "on_shared_storage",
-                                        "label": "On Shared Storage",
-                                        "name": "on_shared_storage",
-                                        "validateOnMount": true,
-                                      },
-                                      Object {
-                                        "component": "password-field",
-                                        "condition": Object {
-                                          "is": false,
-                                          "when": "on_shared_storage",
-                                        },
-                                        "id": "admin_password",
-                                        "isRequired": true,
-                                        "label": "Admin Password",
-                                        "name": "admin_password",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "condition": Object {
-                                          "is": false,
-                                          "when": "auto_select_host",
-                                        },
-                                        "id": "destination_host",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "labelText": "Hosts",
-                                        "name": "destination_host",
-                                        "options": Array [],
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                    ]
-                                  }
-                                  name="EvacuateInstance"
-                                  title="Evacuate Host"
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -1804,74 +1736,6 @@ exports[`evacuate form component should render evacuate form when hosts empty 1`
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "sub-form",
-                                    "fields": Array [
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "auto_select_host",
-                                        "isDisabled": true,
-                                        "label": "Auto-select Host?",
-                                        "name": "auto_select_host",
-                                        "validateOnMount": true,
-                                      },
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "on_shared_storage",
-                                        "label": "On Shared Storage",
-                                        "name": "on_shared_storage",
-                                        "validateOnMount": true,
-                                      },
-                                      Object {
-                                        "component": "password-field",
-                                        "condition": Object {
-                                          "is": false,
-                                          "when": "on_shared_storage",
-                                        },
-                                        "id": "admin_password",
-                                        "isRequired": true,
-                                        "label": "Admin Password",
-                                        "name": "admin_password",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "condition": Object {
-                                          "is": false,
-                                          "when": "auto_select_host",
-                                        },
-                                        "id": "destination_host",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "labelText": "Hosts",
-                                        "name": "destination_host",
-                                        "options": Array [],
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                    ],
-                                    "name": "EvacuateInstance",
-                                    "title": "Evacuate Host",
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Submit"
                           >
                             <ButtonGroup>
@@ -3992,7 +3856,6 @@ exports[`evacuate form component should render evacuate form with host options 1
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -4002,94 +3865,6 @@ exports[`evacuate form component should render evacuate form with host options 1
                             }
                             canReset={false}
                             cancelLabel="Cancel"
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="sub-form"
-                                  fields={
-                                    Array [
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "auto_select_host",
-                                        "isDisabled": false,
-                                        "label": "Auto-select Host?",
-                                        "name": "auto_select_host",
-                                        "validateOnMount": true,
-                                      },
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "on_shared_storage",
-                                        "label": "On Shared Storage",
-                                        "name": "on_shared_storage",
-                                        "validateOnMount": true,
-                                      },
-                                      Object {
-                                        "component": "password-field",
-                                        "condition": Object {
-                                          "is": false,
-                                          "when": "on_shared_storage",
-                                        },
-                                        "id": "admin_password",
-                                        "isRequired": true,
-                                        "label": "Admin Password",
-                                        "name": "admin_password",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "condition": Object {
-                                          "is": false,
-                                          "when": "auto_select_host",
-                                        },
-                                        "id": "destination_host",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "labelText": "Hosts",
-                                        "name": "destination_host",
-                                        "options": Array [
-                                          Object {
-                                            "label": "hostone",
-                                            "value": "hostone",
-                                          },
-                                          Object {
-                                            "label": "hosttwo",
-                                            "value": "hosttwo",
-                                          },
-                                          Object {
-                                            "label": "hostthree",
-                                            "value": "hostthree",
-                                          },
-                                          Object {
-                                            "label": "hostfour",
-                                            "value": "hostfour",
-                                          },
-                                          Object {
-                                            "label": "hostfive",
-                                            "value": "hostfive",
-                                          },
-                                        ],
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                    ]
-                                  }
-                                  name="EvacuateInstance"
-                                  title="Evacuate Host"
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -4161,95 +3936,6 @@ exports[`evacuate form component should render evacuate form with host options 1
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "sub-form",
-                                    "fields": Array [
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "auto_select_host",
-                                        "isDisabled": false,
-                                        "label": "Auto-select Host?",
-                                        "name": "auto_select_host",
-                                        "validateOnMount": true,
-                                      },
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "on_shared_storage",
-                                        "label": "On Shared Storage",
-                                        "name": "on_shared_storage",
-                                        "validateOnMount": true,
-                                      },
-                                      Object {
-                                        "component": "password-field",
-                                        "condition": Object {
-                                          "is": false,
-                                          "when": "on_shared_storage",
-                                        },
-                                        "id": "admin_password",
-                                        "isRequired": true,
-                                        "label": "Admin Password",
-                                        "name": "admin_password",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "condition": Object {
-                                          "is": false,
-                                          "when": "auto_select_host",
-                                        },
-                                        "id": "destination_host",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "labelText": "Hosts",
-                                        "name": "destination_host",
-                                        "options": Array [
-                                          Object {
-                                            "label": "hostone",
-                                            "value": "hostone",
-                                          },
-                                          Object {
-                                            "label": "hosttwo",
-                                            "value": "hosttwo",
-                                          },
-                                          Object {
-                                            "label": "hostthree",
-                                            "value": "hostthree",
-                                          },
-                                          Object {
-                                            "label": "hostfour",
-                                            "value": "hostfour",
-                                          },
-                                          Object {
-                                            "label": "hostfive",
-                                            "value": "hostfive",
-                                          },
-                                        ],
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                    ],
-                                    "name": "EvacuateInstance",
-                                    "title": "Evacuate Host",
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Submit"
                           >
                             <ButtonGroup>
@@ -5990,7 +5676,6 @@ exports[`evacuate form component should render evacuate form with multiple insta
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -6000,73 +5685,6 @@ exports[`evacuate form component should render evacuate form with multiple insta
                             }
                             canReset={false}
                             cancelLabel="Cancel"
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="sub-form"
-                                  fields={
-                                    Array [
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "auto_select_host",
-                                        "isDisabled": true,
-                                        "label": "Auto-select Host?",
-                                        "name": "auto_select_host",
-                                        "validateOnMount": true,
-                                      },
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "on_shared_storage",
-                                        "label": "On Shared Storage",
-                                        "name": "on_shared_storage",
-                                        "validateOnMount": true,
-                                      },
-                                      Object {
-                                        "component": "password-field",
-                                        "condition": Object {
-                                          "is": false,
-                                          "when": "on_shared_storage",
-                                        },
-                                        "id": "admin_password",
-                                        "isRequired": true,
-                                        "label": "Admin Password",
-                                        "name": "admin_password",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "condition": Object {
-                                          "is": false,
-                                          "when": "auto_select_host",
-                                        },
-                                        "id": "destination_host",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "labelText": "Hosts",
-                                        "name": "destination_host",
-                                        "options": Array [],
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                    ]
-                                  }
-                                  name="EvacuateInstance"
-                                  title="Evacuate Host"
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -6138,74 +5756,6 @@ exports[`evacuate form component should render evacuate form with multiple insta
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "sub-form",
-                                    "fields": Array [
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "auto_select_host",
-                                        "isDisabled": true,
-                                        "label": "Auto-select Host?",
-                                        "name": "auto_select_host",
-                                        "validateOnMount": true,
-                                      },
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "on_shared_storage",
-                                        "label": "On Shared Storage",
-                                        "name": "on_shared_storage",
-                                        "validateOnMount": true,
-                                      },
-                                      Object {
-                                        "component": "password-field",
-                                        "condition": Object {
-                                          "is": false,
-                                          "when": "on_shared_storage",
-                                        },
-                                        "id": "admin_password",
-                                        "isRequired": true,
-                                        "label": "Admin Password",
-                                        "name": "admin_password",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "condition": Object {
-                                          "is": false,
-                                          "when": "auto_select_host",
-                                        },
-                                        "id": "destination_host",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "labelText": "Hosts",
-                                        "name": "destination_host",
-                                        "options": Array [],
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                    ],
-                                    "name": "EvacuateInstance",
-                                    "title": "Evacuate Host",
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Submit"
                           >
                             <ButtonGroup>

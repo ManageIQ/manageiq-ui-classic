@@ -821,7 +821,6 @@ exports[`Pxe Edit Iso Image Form Component should render editing a iso image 1`]
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -832,33 +831,6 @@ exports[`Pxe Edit Iso Image Form Component should render editing a iso image 1`]
                             canReset={true}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="sub-form"
-                                  fields={
-                                    Array [
-                                      Object {
-                                        "component": "select",
-                                        "id": "pxe_image_type_id",
-                                        "includeEmpty": true,
-                                        "label": "Type",
-                                        "loadOptions": [Function],
-                                        "name": "pxe_image_type_id",
-                                        "placeholder": "<Choose>",
-                                      },
-                                    ]
-                                  }
-                                  id="basic-information"
-                                  name="basic-information"
-                                  title="Basic Information"
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -928,34 +900,6 @@ exports[`Pxe Edit Iso Image Form Component should render editing a iso image 1`]
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "sub-form",
-                                    "fields": Array [
-                                      Object {
-                                        "component": "select",
-                                        "id": "pxe_image_type_id",
-                                        "includeEmpty": true,
-                                        "label": "Type",
-                                        "loadOptions": [Function],
-                                        "name": "pxe_image_type_id",
-                                        "placeholder": "<Choose>",
-                                      },
-                                    ],
-                                    "id": "basic-information",
-                                    "name": "basic-information",
-                                    "title": "Basic Information",
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Save"
                           >
                             <ButtonGroup>

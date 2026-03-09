@@ -2271,7 +2271,6 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -2282,94 +2281,6 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                             canReset={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="sub-form"
-                                  fields={
-                                    Array [
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "name",
-                                        "isRequired": true,
-                                        "label": "Name",
-                                        "maxLength": 255,
-                                        "name": "name",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "description",
-                                        "label": "Description",
-                                        "maxLength": 100,
-                                        "name": "description",
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "id": "pxe_image_type_id",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "label": "Image Type",
-                                        "loadOptions": [Function],
-                                        "name": "pxe_image_type_id",
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "id": "type",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "label": "Type",
-                                        "name": "type",
-                                        "options": Array [
-                                          Object {
-                                            "label": "Kickstart",
-                                            "value": "CustomizationTemplateKickstart",
-                                          },
-                                          Object {
-                                            "label": "Sysprep",
-                                            "value": "CustomizationTemplateSysprep",
-                                          },
-                                          Object {
-                                            "label": "CloudInit",
-                                            "value": "CustomizationTemplateCloudInit",
-                                          },
-                                        ],
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "code-editor",
-                                        "id": "script",
-                                        "label": "Script",
-                                        "mode": "xml",
-                                        "name": "script",
-                                      },
-                                    ]
-                                  }
-                                  id="basic-information"
-                                  name="basic-information"
-                                  title="Basic Information"
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -2457,95 +2368,6 @@ exports[`Pxe Customization Template Form Component should render adding a new px
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "sub-form",
-                                    "fields": Array [
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "name",
-                                        "isRequired": true,
-                                        "label": "Name",
-                                        "maxLength": 255,
-                                        "name": "name",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "description",
-                                        "label": "Description",
-                                        "maxLength": 100,
-                                        "name": "description",
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "id": "pxe_image_type_id",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "label": "Image Type",
-                                        "loadOptions": [Function],
-                                        "name": "pxe_image_type_id",
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "id": "type",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "label": "Type",
-                                        "name": "type",
-                                        "options": Array [
-                                          Object {
-                                            "label": "Kickstart",
-                                            "value": "CustomizationTemplateKickstart",
-                                          },
-                                          Object {
-                                            "label": "Sysprep",
-                                            "value": "CustomizationTemplateSysprep",
-                                          },
-                                          Object {
-                                            "label": "CloudInit",
-                                            "value": "CustomizationTemplateCloudInit",
-                                          },
-                                        ],
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "code-editor",
-                                        "id": "script",
-                                        "label": "Script",
-                                        "mode": "xml",
-                                        "name": "script",
-                                      },
-                                    ],
-                                    "id": "basic-information",
-                                    "name": "basic-information",
-                                    "title": "Basic Information",
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Add"
                           >
                             <ButtonGroup>
@@ -4941,7 +4763,6 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -4951,94 +4772,6 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                             }
                             canReset={false}
                             cancelLabel="Cancel"
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="sub-form"
-                                  fields={
-                                    Array [
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "name",
-                                        "isRequired": true,
-                                        "label": "Name",
-                                        "maxLength": 255,
-                                        "name": "name",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "description",
-                                        "label": "Description",
-                                        "maxLength": 100,
-                                        "name": "description",
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "id": "pxe_image_type_id",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "label": "Image Type",
-                                        "loadOptions": [Function],
-                                        "name": "pxe_image_type_id",
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "id": "type",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "label": "Type",
-                                        "name": "type",
-                                        "options": Array [
-                                          Object {
-                                            "label": "Kickstart",
-                                            "value": "CustomizationTemplateKickstart",
-                                          },
-                                          Object {
-                                            "label": "Sysprep",
-                                            "value": "CustomizationTemplateSysprep",
-                                          },
-                                          Object {
-                                            "label": "CloudInit",
-                                            "value": "CustomizationTemplateCloudInit",
-                                          },
-                                        ],
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "code-editor",
-                                        "id": "script",
-                                        "label": "Script",
-                                        "mode": "shell",
-                                        "name": "script",
-                                      },
-                                    ]
-                                  }
-                                  id="basic-information"
-                                  name="basic-information"
-                                  title="Basic Information"
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -5140,95 +4873,6 @@ exports[`Pxe Customization Template Form Component should render copying a pxe c
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "sub-form",
-                                    "fields": Array [
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "name",
-                                        "isRequired": true,
-                                        "label": "Name",
-                                        "maxLength": 255,
-                                        "name": "name",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "description",
-                                        "label": "Description",
-                                        "maxLength": 100,
-                                        "name": "description",
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "id": "pxe_image_type_id",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "label": "Image Type",
-                                        "loadOptions": [Function],
-                                        "name": "pxe_image_type_id",
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "id": "type",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "label": "Type",
-                                        "name": "type",
-                                        "options": Array [
-                                          Object {
-                                            "label": "Kickstart",
-                                            "value": "CustomizationTemplateKickstart",
-                                          },
-                                          Object {
-                                            "label": "Sysprep",
-                                            "value": "CustomizationTemplateSysprep",
-                                          },
-                                          Object {
-                                            "label": "CloudInit",
-                                            "value": "CustomizationTemplateCloudInit",
-                                          },
-                                        ],
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "code-editor",
-                                        "id": "script",
-                                        "label": "Script",
-                                        "mode": "shell",
-                                        "name": "script",
-                                      },
-                                    ],
-                                    "id": "basic-information",
-                                    "name": "basic-information",
-                                    "title": "Basic Information",
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Add"
                           >
                             <ButtonGroup>
@@ -7621,7 +7265,6 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -7632,94 +7275,6 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                             canReset={true}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="sub-form"
-                                  fields={
-                                    Array [
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "name",
-                                        "isRequired": true,
-                                        "label": "Name",
-                                        "maxLength": 255,
-                                        "name": "name",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "description",
-                                        "label": "Description",
-                                        "maxLength": 100,
-                                        "name": "description",
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "id": "pxe_image_type_id",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "label": "Image Type",
-                                        "loadOptions": [Function],
-                                        "name": "pxe_image_type_id",
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "id": "type",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "label": "Type",
-                                        "name": "type",
-                                        "options": Array [
-                                          Object {
-                                            "label": "Kickstart",
-                                            "value": "CustomizationTemplateKickstart",
-                                          },
-                                          Object {
-                                            "label": "Sysprep",
-                                            "value": "CustomizationTemplateSysprep",
-                                          },
-                                          Object {
-                                            "label": "CloudInit",
-                                            "value": "CustomizationTemplateCloudInit",
-                                          },
-                                        ],
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "code-editor",
-                                        "id": "script",
-                                        "label": "Script",
-                                        "mode": "shell",
-                                        "name": "script",
-                                      },
-                                    ]
-                                  }
-                                  id="basic-information"
-                                  name="basic-information"
-                                  title="Basic Information"
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -7821,95 +7376,6 @@ exports[`Pxe Customization Template Form Component should render editing a pxe c
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "sub-form",
-                                    "fields": Array [
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "name",
-                                        "isRequired": true,
-                                        "label": "Name",
-                                        "maxLength": 255,
-                                        "name": "name",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "description",
-                                        "label": "Description",
-                                        "maxLength": 100,
-                                        "name": "description",
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "id": "pxe_image_type_id",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "label": "Image Type",
-                                        "loadOptions": [Function],
-                                        "name": "pxe_image_type_id",
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "id": "type",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "label": "Type",
-                                        "name": "type",
-                                        "options": Array [
-                                          Object {
-                                            "label": "Kickstart",
-                                            "value": "CustomizationTemplateKickstart",
-                                          },
-                                          Object {
-                                            "label": "Sysprep",
-                                            "value": "CustomizationTemplateSysprep",
-                                          },
-                                          Object {
-                                            "label": "CloudInit",
-                                            "value": "CustomizationTemplateCloudInit",
-                                          },
-                                        ],
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "code-editor",
-                                        "id": "script",
-                                        "label": "Script",
-                                        "mode": "shell",
-                                        "name": "script",
-                                      },
-                                    ],
-                                    "id": "basic-information",
-                                    "name": "basic-information",
-                                    "title": "Basic Information",
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Save"
                           >
                             <ButtonGroup>

@@ -1247,7 +1247,6 @@ exports[`Cloud Volume Backup Create form component should render the cloud volum
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -1258,61 +1257,6 @@ exports[`Cloud Volume Backup Create form component should render the cloud volum
                             canReset={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="sub-form"
-                                  fields={
-                                    Array [
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "name",
-                                        "isRequired": true,
-                                        "label": "Backup Name",
-                                        "maxLength": 50,
-                                        "name": "name",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                    ]
-                                  }
-                                  id="basic-information"
-                                  name="basic-information"
-                                  title="Basic Information"
-                                />,
-                                <SingleField
-                                  component="sub-form"
-                                  fields={
-                                    Array [
-                                      Object {
-                                        "component": "switch",
-                                        "id": "incremental",
-                                        "label": "Incremental?",
-                                        "maxLength": 50,
-                                        "name": "incremental",
-                                      },
-                                      Object {
-                                        "component": "switch",
-                                        "id": "force",
-                                        "label": "Force?",
-                                        "maxLength": 50,
-                                        "name": "force",
-                                      },
-                                    ]
-                                  }
-                                  id="options"
-                                  name="options"
-                                  title="Options"
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -1392,60 +1336,6 @@ exports[`Cloud Volume Backup Create form component should render the cloud volum
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "sub-form",
-                                    "fields": Array [
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "name",
-                                        "isRequired": true,
-                                        "label": "Backup Name",
-                                        "maxLength": 50,
-                                        "name": "name",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                    ],
-                                    "id": "basic-information",
-                                    "name": "basic-information",
-                                    "title": "Basic Information",
-                                  },
-                                  Object {
-                                    "component": "sub-form",
-                                    "fields": Array [
-                                      Object {
-                                        "component": "switch",
-                                        "id": "incremental",
-                                        "label": "Incremental?",
-                                        "maxLength": 50,
-                                        "name": "incremental",
-                                      },
-                                      Object {
-                                        "component": "switch",
-                                        "id": "force",
-                                        "label": "Force?",
-                                        "maxLength": 50,
-                                        "name": "force",
-                                      },
-                                    ],
-                                    "id": "options",
-                                    "name": "options",
-                                    "title": "Options",
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Save"
                           >
                             <ButtonGroup>
@@ -2780,7 +2670,6 @@ exports[`Cloud Volume Backup Create form component when adding a new backup of c
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -2791,61 +2680,6 @@ exports[`Cloud Volume Backup Create form component when adding a new backup of c
                             canReset={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="sub-form"
-                                  fields={
-                                    Array [
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "name",
-                                        "isRequired": true,
-                                        "label": "Backup Name",
-                                        "maxLength": 50,
-                                        "name": "name",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                    ]
-                                  }
-                                  id="basic-information"
-                                  name="basic-information"
-                                  title="Basic Information"
-                                />,
-                                <SingleField
-                                  component="sub-form"
-                                  fields={
-                                    Array [
-                                      Object {
-                                        "component": "switch",
-                                        "id": "incremental",
-                                        "label": "Incremental?",
-                                        "maxLength": 50,
-                                        "name": "incremental",
-                                      },
-                                      Object {
-                                        "component": "switch",
-                                        "id": "force",
-                                        "label": "Force?",
-                                        "maxLength": 50,
-                                        "name": "force",
-                                      },
-                                    ]
-                                  }
-                                  id="options"
-                                  name="options"
-                                  title="Options"
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -2925,60 +2759,6 @@ exports[`Cloud Volume Backup Create form component when adding a new backup of c
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "sub-form",
-                                    "fields": Array [
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "name",
-                                        "isRequired": true,
-                                        "label": "Backup Name",
-                                        "maxLength": 50,
-                                        "name": "name",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                    ],
-                                    "id": "basic-information",
-                                    "name": "basic-information",
-                                    "title": "Basic Information",
-                                  },
-                                  Object {
-                                    "component": "sub-form",
-                                    "fields": Array [
-                                      Object {
-                                        "component": "switch",
-                                        "id": "incremental",
-                                        "label": "Incremental?",
-                                        "maxLength": 50,
-                                        "name": "incremental",
-                                      },
-                                      Object {
-                                        "component": "switch",
-                                        "id": "force",
-                                        "label": "Force?",
-                                        "maxLength": 50,
-                                        "name": "force",
-                                      },
-                                    ],
-                                    "id": "options",
-                                    "name": "options",
-                                    "title": "Options",
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Save"
                           >
                             <ButtonGroup>
@@ -3928,7 +3708,6 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -3939,39 +3718,6 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
                             canReset={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="sub-form"
-                                  fields={
-                                    Array [
-                                      Object {
-                                        "component": "select",
-                                        "id": "backup_id",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "label": "Cloud Volume Backup",
-                                        "loadOptions": [Function],
-                                        "name": "backup_id",
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                    ]
-                                  }
-                                  id="basic-information"
-                                  name="basic-information"
-                                  title="Basic Information"
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -4037,40 +3783,6 @@ exports[`Cloud Volume Restore from backup form component should render the cloud
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "sub-form",
-                                    "fields": Array [
-                                      Object {
-                                        "component": "select",
-                                        "id": "backup_id",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "label": "Cloud Volume Backup",
-                                        "loadOptions": [Function],
-                                        "name": "backup_id",
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                    ],
-                                    "id": "basic-information",
-                                    "name": "basic-information",
-                                    "title": "Basic Information",
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Save"
                           >
                             <ButtonGroup>
@@ -5020,7 +4732,6 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -5031,39 +4742,6 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
                             canReset={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="sub-form"
-                                  fields={
-                                    Array [
-                                      Object {
-                                        "component": "select",
-                                        "id": "backup_id",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "label": "Cloud Volume Backup",
-                                        "loadOptions": [Function],
-                                        "name": "backup_id",
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                    ]
-                                  }
-                                  id="basic-information"
-                                  name="basic-information"
-                                  title="Basic Information"
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -5129,40 +4807,6 @@ exports[`Cloud Volume Restore from backup form component when restoring cloud vo
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "sub-form",
-                                    "fields": Array [
-                                      Object {
-                                        "component": "select",
-                                        "id": "backup_id",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "label": "Cloud Volume Backup",
-                                        "loadOptions": [Function],
-                                        "name": "backup_id",
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                    ],
-                                    "id": "basic-information",
-                                    "name": "basic-information",
-                                    "title": "Basic Information",
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Save"
                           >
                             <ButtonGroup>
@@ -5897,7 +5541,6 @@ exports[`Cloud Volume Snapshot Create form component should render the cloud vol
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -5908,31 +5551,6 @@ exports[`Cloud Volume Snapshot Create form component should render the cloud vol
                             canReset={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="sub-form"
-                                  fields={
-                                    Array [
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "name",
-                                        "label": "Snapshot Name",
-                                        "maxLength": 50,
-                                        "name": "name",
-                                      },
-                                    ]
-                                  }
-                                  id="basic-information"
-                                  name="basic-information"
-                                  title="Basic Information"
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -5998,32 +5616,6 @@ exports[`Cloud Volume Snapshot Create form component should render the cloud vol
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "sub-form",
-                                    "fields": Array [
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "name",
-                                        "label": "Snapshot Name",
-                                        "maxLength": 50,
-                                        "name": "name",
-                                      },
-                                    ],
-                                    "id": "basic-information",
-                                    "name": "basic-information",
-                                    "title": "Basic Information",
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Save"
                           >
                             <ButtonGroup>
@@ -6758,7 +6350,6 @@ exports[`Cloud Volume Snapshot Create form component when adding a new snapshot 
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -6769,31 +6360,6 @@ exports[`Cloud Volume Snapshot Create form component when adding a new snapshot 
                             canReset={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="sub-form"
-                                  fields={
-                                    Array [
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "name",
-                                        "label": "Snapshot Name",
-                                        "maxLength": 50,
-                                        "name": "name",
-                                      },
-                                    ]
-                                  }
-                                  id="basic-information"
-                                  name="basic-information"
-                                  title="Basic Information"
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -6859,32 +6425,6 @@ exports[`Cloud Volume Snapshot Create form component when adding a new snapshot 
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "sub-form",
-                                    "fields": Array [
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "name",
-                                        "label": "Snapshot Name",
-                                        "maxLength": 50,
-                                        "name": "name",
-                                      },
-                                    ],
-                                    "id": "basic-information",
-                                    "name": "basic-information",
-                                    "title": "Basic Information",
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Save"
                           >
                             <ButtonGroup>

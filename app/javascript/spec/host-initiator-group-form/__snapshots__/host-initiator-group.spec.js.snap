@@ -1658,7 +1658,6 @@ exports[`Host Initiator Group Form Loads data and renders 1`] = `
                             <FormControls
                               Button={[Function]}
                               ButtonGroup={[Function]}
-                              FormSpy={[Function]}
                               buttonOrder={
                                 Array [
                                   "submit",
@@ -1668,71 +1667,6 @@ exports[`Host Initiator Group Form Loads data and renders 1`] = `
                               }
                               canReset={false}
                               cancelLabel="Cancel"
-                              formFields={
-                                Array [
-                                  <SingleField
-                                    component="select"
-                                    id="ems_id"
-                                    includeEmpty={true}
-                                    isDisabled={false}
-                                    isRequired={true}
-                                    label="Provider:"
-                                    loadOptions={[Function]}
-                                    name="ems_id"
-                                    onChange={[Function]}
-                                    placeholder="<Choose>"
-                                    validate={
-                                      Array [
-                                        Object {
-                                          "type": "required",
-                                        },
-                                      ]
-                                    }
-                                  />,
-                                  <SingleField
-                                    component="text-field"
-                                    id="name"
-                                    isRequired={true}
-                                    label="Name:"
-                                    name="name"
-                                    validate={
-                                      Array [
-                                        Object {
-                                          "type": "required",
-                                        },
-                                        [Function],
-                                      ]
-                                    }
-                                  />,
-                                  <SingleField
-                                    component="select"
-                                    condition={
-                                      Object {
-                                        "isNotEmpty": true,
-                                        "when": "ems_id",
-                                      }
-                                    }
-                                    id="physical_storage_id"
-                                    includeEmpty={true}
-                                    isRequired={true}
-                                    label="Physical Storage:"
-                                    loadOptions={[Function]}
-                                    name="physical_storage_id"
-                                    placeholder="<Choose>"
-                                    validate={
-                                      Array [
-                                        Object {
-                                          "type": "required",
-                                        },
-                                      ]
-                                    }
-                                  />,
-                                  <SingleField
-                                    component="spy-field"
-                                    name="spy-field"
-                                  />,
-                                ]
-                              }
                               formSpyProps={
                                 Object {
                                   "active": undefined,
@@ -1822,68 +1756,6 @@ exports[`Host Initiator Group Form Loads data and renders 1`] = `
                               onCancel={[Function]}
                               onReset={[Function]}
                               resetLabel="Reset"
-                              schema={
-                                Object {
-                                  "fields": Array [
-                                    Object {
-                                      "component": "select",
-                                      "id": "ems_id",
-                                      "includeEmpty": true,
-                                      "isDisabled": false,
-                                      "isRequired": true,
-                                      "key": "2",
-                                      "label": "Provider:",
-                                      "loadOptions": [Function],
-                                      "name": "ems_id",
-                                      "onChange": [Function],
-                                      "placeholder": "<Choose>",
-                                      "validate": Array [
-                                        Object {
-                                          "type": "required",
-                                        },
-                                      ],
-                                    },
-                                    Object {
-                                      "component": "text-field",
-                                      "id": "name",
-                                      "isRequired": true,
-                                      "label": "Name:",
-                                      "name": "name",
-                                      "validate": Array [
-                                        Object {
-                                          "type": "required",
-                                        },
-                                        [Function],
-                                      ],
-                                    },
-                                    Object {
-                                      "component": "select",
-                                      "condition": Object {
-                                        "isNotEmpty": true,
-                                        "when": "ems_id",
-                                      },
-                                      "id": "physical_storage_id",
-                                      "includeEmpty": true,
-                                      "isRequired": true,
-                                      "key": "physical_storage_id-2",
-                                      "label": "Physical Storage:",
-                                      "loadOptions": [Function],
-                                      "name": "physical_storage_id",
-                                      "placeholder": "<Choose>",
-                                      "validate": Array [
-                                        Object {
-                                          "type": "required",
-                                        },
-                                      ],
-                                    },
-                                    Object {
-                                      "component": "spy-field",
-                                      "initialize": undefined,
-                                      "name": "spy-field",
-                                    },
-                                  ],
-                                }
-                              }
                               submitLabel="Add"
                             >
                               <ButtonGroup>
