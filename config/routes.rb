@@ -2446,10 +2446,6 @@ Rails.application.routes.draw do
         diagnostics_tree_select
         explorer
         fetch_target_ids
-        forest_accept
-        forest_delete
-        forest_form_field_changed
-        forest_select
         help_menu_form_field_changed
         label_tag_mapping_delete
         label_tag_mapping_edit
