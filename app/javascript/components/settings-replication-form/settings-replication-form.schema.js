@@ -140,6 +140,7 @@ const createSchema = (subscriptions, setState, setModalOpen, replicationType, is
                 className: 'replication_form',
                 action: 'add',
               },
+              selectedSubscription: {},
             }));
           },
         }],

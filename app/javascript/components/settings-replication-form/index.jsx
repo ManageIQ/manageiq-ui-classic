@@ -199,6 +199,7 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
       >
         {/* Render the MiqFormRenderer inside the modal */}
         <MiqFormRenderer
+          key={isModalOpen}
           schema={createSubscriptionSchema()}
           componentMapper={componentMapper}
           initialValues={selectedSubscription || {}}
