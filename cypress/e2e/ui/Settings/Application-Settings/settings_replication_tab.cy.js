@@ -74,22 +74,22 @@ function addSubscription() {
   cy.contains('button', ADD_SUBSCRIPTION_BUTTON_TEXT).click();
   cy.get(MODAL_SELECTOR).should('be.visible');
 
-  cy.get(`input[name="${DBNAME_INPUT_NAME}"]`).scrollIntoView().should('be.visible');
-  cy.get(`input[name="${HOST_INPUT_NAME}"]`).should('be.visible');
-  cy.get(`input[name="${USER_INPUT_NAME}"]`).should('be.visible');
-  cy.get(`input[name="${PASSWORD_INPUT_NAME}"]`).should('be.visible');
-  cy.get(`input[name="${PORT_INPUT_NAME}"]`).should('be.visible');
+  cy.getFormInputFieldByIdAndType({ inputId: DBNAME_INPUT_NAME }).scrollIntoView().should('be.visible');
+  cy.getFormInputFieldByIdAndType({ inputId: HOST_INPUT_NAME }).should('be.visible');
+  cy.getFormInputFieldByIdAndType({ inputId: USER_INPUT_NAME }).should('be.visible');
+  cy.getFormInputFieldByIdAndType({ inputId: PASSWORD_INPUT_NAME, inputType: 'password' }).should('be.visible');
+  cy.getFormInputFieldByIdAndType({ inputId: PORT_INPUT_NAME }).should('be.visible');
 
   cy.contains(`${MODAL_SELECTOR} button`, ACCEPT_BUTTON_TEXT).should('be.disabled');
 
-  cy.get(`input[name="${DBNAME_INPUT_NAME}"]`)
+  cy.getFormInputFieldByIdAndType({ inputId: DBNAME_INPUT_NAME })
     .clear({ force: true })
     .type(TEST_DB_NAME, { force: true, delay: 100 })
     .should('have.value', TEST_DB_NAME);
-  cy.get(`input[name="${HOST_INPUT_NAME}"]`).type(TEST_HOST);
-  cy.get(`input[name="${USER_INPUT_NAME}"]`).type(TEST_USER_1);
-  cy.get(`input[name="${PASSWORD_INPUT_NAME}"]`).type(TEST_PASSWORD);
-  cy.get(`input[name="${PORT_INPUT_NAME}"]`).type(TEST_PORT);
+  cy.getFormInputFieldByIdAndType({ inputId: HOST_INPUT_NAME }).type(TEST_HOST);
+  cy.getFormInputFieldByIdAndType({ inputId: USER_INPUT_NAME }).type(TEST_USER_1);
+  cy.getFormInputFieldByIdAndType({ inputId: PASSWORD_INPUT_NAME, inputType: 'password' }).type(TEST_PASSWORD);
+  cy.getFormInputFieldByIdAndType({ inputId: PORT_INPUT_NAME }).type(TEST_PORT);
 
   cy.contains(`${MODAL_SELECTOR} button`, ACCEPT_BUTTON_TEXT).should('not.be.disabled').click();
 
@@ -190,7 +190,7 @@ describe('Automate Replication form operations: Settings > Application Settings 
     cy.get(MODAL_SELECTOR).should('be.visible');
     cy.get(MODAL_HEADER_SELECTOR).should('have.text', `${EDIT_SUBSCRIPTION_MODAL_HEADING_PREFIX} ${TEST_DB_NAME}`);
 
-    cy.get(`input[name="${USER_INPUT_NAME}"]`)
+    cy.getFormInputFieldByIdAndType({ inputId: USER_INPUT_NAME })
       .clear({ force: true })
       .type(TEST_USER_2, { force: true, delay: 100 })
       .should('have.value', TEST_USER_2);
@@ -300,14 +300,14 @@ describe('Automate Replication form operations: Settings > Application Settings 
     cy.contains('button', ADD_SUBSCRIPTION_BUTTON_TEXT).click();
     cy.get(MODAL_SELECTOR).should('be.visible');
 
-    cy.get(`input[name="${DBNAME_INPUT_NAME}"]`).type('test_reset');
+    cy.getFormInputFieldByIdAndType({ inputId: DBNAME_INPUT_NAME }).type('test_reset');
 
     cy.contains(`${MODAL_SELECTOR} button`, RESET_BUTTON_TEXT)
       .should('be.visible')
       .click();
 
-    cy.get(`input[name="${DBNAME_INPUT_NAME}"]`).should('have.value', '');
-    cy.get(`input[name="${HOST_INPUT_NAME}"]`).should('have.value', '');
+    cy.getFormInputFieldByIdAndType({ inputId: DBNAME_INPUT_NAME }).should('have.value', '');
+    cy.getFormInputFieldByIdAndType({ inputId: HOST_INPUT_NAME }).should('have.value', '');
 
     cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_RESET);
     });
