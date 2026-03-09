@@ -3724,11 +3724,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 25.3.5
-  resolution: "@types/node@npm:25.3.5"
+  version: 25.4.0
+  resolution: "@types/node@npm:25.4.0"
   dependencies:
     undici-types: "npm:~7.18.0"
-  checksum: 10/bca6dafa72a0fdc51f4832be89bb7fe6f22a8b68c73722cb78ebb94f5bee9c1049416e73b6776886083a72941ee2235eea363dfc9678a78077d24a090b35a01d
+  checksum: 10/c8d55bdb395d56ad94d227724302b2615d6cd2d8a20f432a1ccf16bd4e537c61b062882e49dbd1fcfd845d91a18f62deb256ab07268c24549a4c7f740d74b903
   languageName: node
   linkType: hard
 
@@ -19049,11 +19049,11 @@ __metadata:
   linkType: hard
 
 "systeminformation@npm:^5.31.1":
-  version: 5.31.3
-  resolution: "systeminformation@npm:5.31.3"
+  version: 5.31.4
+  resolution: "systeminformation@npm:5.31.4"
   bin:
     systeminformation: lib/cli.js
-  checksum: 10/7724884026aa52336f4832d27d9863f4cf926bc2c75c1be5b14a8395f21b3f4a6ad490f09655ede4c142582d46a96eae8676787533e8d8de70b4ebfc9fa1c3c4
+  checksum: 10/8b42b0ff666ff748535324223aad2a71a61a3828a477331d245933beed2291cd5a2ca9fe68d565341cf484d79175685ff90ba708197cd58c2fd2658f6ef8fb14
   conditions: (os=darwin | os=linux | os=win32 | os=freebsd | os=openbsd | os=netbsd | os=sunos | os=android)
   languageName: node
   linkType: hard
