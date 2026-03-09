@@ -2,6 +2,7 @@ import React from 'react';
 import { useFieldApi, useFormApi } from '@@ddf';
 import { Button } from '@carbon/react';
 import MiqDataTable from '../miq-data-table';
+import './styles.css';
 
 export const SubscriptionsTableComponent = (props) => {
   const {
@@ -11,18 +12,15 @@ export const SubscriptionsTableComponent = (props) => {
 
   return (
     <div className="subscriptions-section">
-      <div className="subscriptions-button" style={{ display: 'flex', flexDirection: 'row-reverse' }}>
+      <div className="subscriptions-button">
         <Button
           kind="primary"
-          className="subscription-add bx--btn bx--btn--primary pull-right"
-          type="button"
-          variant="contained"
           onClick={() => onButtonClick(formOptions)}
         >
           {addButtonLabel}
         </Button>
       </div>
-      <div className="subscriptions-table" style={{ display: 'grid', overflow: 'auto' }}>
+      <div className="subscriptions-table">
         <MiqDataTable
           headers={[
             { key: 'dbname', header: __('Database') },
