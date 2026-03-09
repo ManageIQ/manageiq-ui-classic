@@ -1663,7 +1663,6 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -1674,82 +1673,6 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                             canReset={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="select"
-                                  id="timezone"
-                                  initialValue="UTC"
-                                  isSearchable={true}
-                                  label="Timezone"
-                                  name="timezone"
-                                  options={
-                                    Array [
-                                      Object {
-                                        "label": "(GMT-12:00) International Date Line West",
-                                        "value": "International Date Line West",
-                                      },
-                                      Object {
-                                        "label": "(GMT-11:00) American Samoa",
-                                        "value": "American Samoa",
-                                      },
-                                      Object {
-                                        "label": "(GMT-11:00) Midway Island",
-                                        "value": "Midway Island",
-                                      },
-                                      Object {
-                                        "label": "(GMT-10:00) Hawaii",
-                                        "value": "Hawaii",
-                                      },
-                                      Object {
-                                        "label": "(GMT-09:00) Alaska",
-                                        "value": "Alaska",
-                                      },
-                                    ]
-                                  }
-                                  simpleValue={true}
-                                  validate={
-                                    Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ]
-                                  }
-                                />,
-                                <SingleField
-                                  component="date-picker"
-                                  id="startDate"
-                                  isRequired={true}
-                                  label="Start Date"
-                                  name="startDate"
-                                  validate={
-                                    Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ]
-                                  }
-                                />,
-                                <SingleField
-                                  component="date-picker"
-                                  id="endDate"
-                                  isRequired={true}
-                                  label="End Date"
-                                  name="endDate"
-                                  validate={
-                                    Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ]
-                                  }
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -1835,78 +1758,6 @@ exports[`DiagnosticsCURepairForm Component Should add a record from DiagnosticsC
                             }
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "select",
-                                    "id": "timezone",
-                                    "initialValue": "UTC",
-                                    "isSearchable": true,
-                                    "label": "Timezone",
-                                    "name": "timezone",
-                                    "options": Array [
-                                      Object {
-                                        "label": "(GMT-12:00) International Date Line West",
-                                        "value": "International Date Line West",
-                                      },
-                                      Object {
-                                        "label": "(GMT-11:00) American Samoa",
-                                        "value": "American Samoa",
-                                      },
-                                      Object {
-                                        "label": "(GMT-11:00) Midway Island",
-                                        "value": "Midway Island",
-                                      },
-                                      Object {
-                                        "label": "(GMT-10:00) Hawaii",
-                                        "value": "Hawaii",
-                                      },
-                                      Object {
-                                        "label": "(GMT-09:00) Alaska",
-                                        "value": "Alaska",
-                                      },
-                                    ],
-                                    "simpleValue": true,
-                                    "validate": Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ],
-                                  },
-                                  Object {
-                                    "component": "date-picker",
-                                    "id": "startDate",
-                                    "isRequired": true,
-                                    "label": "Start Date",
-                                    "name": "startDate",
-                                    "validate": Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ],
-                                  },
-                                  Object {
-                                    "component": "date-picker",
-                                    "id": "endDate",
-                                    "isRequired": true,
-                                    "label": "End Date",
-                                    "name": "endDate",
-                                    "validate": Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ],
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                                "title": "Collection Options",
-                              }
-                            }
                             submitLabel="Save"
                           >
                             <ButtonGroup>

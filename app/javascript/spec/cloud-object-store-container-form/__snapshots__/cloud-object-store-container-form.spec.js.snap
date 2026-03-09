@@ -698,7 +698,6 @@ exports[`Cloud Object Store Container form component should add Amazon cloud obj
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -709,30 +708,6 @@ exports[`Cloud Object Store Container form component should add Amazon cloud obj
                             canReset={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="select"
-                                  id="storage_manager_id"
-                                  isRequired={true}
-                                  label="Storage Manager"
-                                  loadOptions={[Function]}
-                                  name="storage_manager_id"
-                                  onChange={[Function]}
-                                  validate={
-                                    Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ]
-                                  }
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -806,31 +781,6 @@ exports[`Cloud Object Store Container form component should add Amazon cloud obj
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "select",
-                                    "id": "storage_manager_id",
-                                    "isRequired": true,
-                                    "label": "Storage Manager",
-                                    "loadOptions": [Function],
-                                    "name": "storage_manager_id",
-                                    "onChange": [Function],
-                                    "validate": Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ],
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Add"
                           >
                             <ButtonGroup>
@@ -1602,7 +1552,6 @@ exports[`Cloud Object Store Container form component should add Openstack cloud 
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -1613,30 +1562,6 @@ exports[`Cloud Object Store Container form component should add Openstack cloud 
                             canReset={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="select"
-                                  id="storage_manager_id"
-                                  isRequired={true}
-                                  label="Storage Manager"
-                                  loadOptions={[Function]}
-                                  name="storage_manager_id"
-                                  onChange={[Function]}
-                                  validate={
-                                    Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ]
-                                  }
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -1702,31 +1627,6 @@ exports[`Cloud Object Store Container form component should add Openstack cloud 
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "select",
-                                    "id": "storage_manager_id",
-                                    "isRequired": true,
-                                    "label": "Storage Manager",
-                                    "loadOptions": [Function],
-                                    "name": "storage_manager_id",
-                                    "onChange": [Function],
-                                    "validate": Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ],
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Add"
                           >
                             <ButtonGroup>
@@ -2512,7 +2412,6 @@ exports[`Cloud Object Store Container form component should render add cloud obj
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -2523,30 +2422,6 @@ exports[`Cloud Object Store Container form component should render add cloud obj
                             canReset={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="select"
-                                  id="storage_manager_id"
-                                  isRequired={true}
-                                  label="Storage Manager"
-                                  loadOptions={[Function]}
-                                  name="storage_manager_id"
-                                  onChange={[Function]}
-                                  validate={
-                                    Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ]
-                                  }
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -2620,31 +2495,6 @@ exports[`Cloud Object Store Container form component should render add cloud obj
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "select",
-                                    "id": "storage_manager_id",
-                                    "isRequired": true,
-                                    "label": "Storage Manager",
-                                    "loadOptions": [Function],
-                                    "name": "storage_manager_id",
-                                    "onChange": [Function],
-                                    "validate": Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ],
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Add"
                           >
                             <ButtonGroup>

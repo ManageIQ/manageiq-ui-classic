@@ -1567,7 +1567,6 @@ exports[`Live Migrate form component should render live migrate form when hosts 
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -1578,71 +1577,6 @@ exports[`Live Migrate form component should render live migrate form when hosts 
                             canReset={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="sub-form"
-                                  fields={
-                                    Array [
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "auto_select_host",
-                                        "isDisabled": true,
-                                        "label": "Auto-select Host?",
-                                        "name": "auto_select_host",
-                                      },
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "block_migration",
-                                        "label": "Block Migration",
-                                        "name": "block_migration",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "disk_over_commit",
-                                        "label": "Disk Over Commit",
-                                        "name": "disk_over_commit",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "condition": Object {
-                                          "is": false,
-                                          "when": "auto_select_host",
-                                        },
-                                        "id": "destination_host",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "labelText": "Hosts",
-                                        "name": "destination_host",
-                                        "options": Array [],
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                    ]
-                                  }
-                                  name="MigrateInstance"
-                                  title="Migrate Instance"
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -1729,72 +1663,6 @@ exports[`Live Migrate form component should render live migrate form when hosts 
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "sub-form",
-                                    "fields": Array [
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "auto_select_host",
-                                        "isDisabled": true,
-                                        "label": "Auto-select Host?",
-                                        "name": "auto_select_host",
-                                      },
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "block_migration",
-                                        "label": "Block Migration",
-                                        "name": "block_migration",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "disk_over_commit",
-                                        "label": "Disk Over Commit",
-                                        "name": "disk_over_commit",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "condition": Object {
-                                          "is": false,
-                                          "when": "auto_select_host",
-                                        },
-                                        "id": "destination_host",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "labelText": "Hosts",
-                                        "name": "destination_host",
-                                        "options": Array [],
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                    ],
-                                    "name": "MigrateInstance",
-                                    "title": "Migrate Instance",
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Submit"
                           >
                             <ButtonGroup>
@@ -3829,7 +3697,6 @@ exports[`Live Migrate form component should render live migrate form with host o
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -3840,92 +3707,6 @@ exports[`Live Migrate form component should render live migrate form with host o
                             canReset={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="sub-form"
-                                  fields={
-                                    Array [
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "auto_select_host",
-                                        "isDisabled": false,
-                                        "label": "Auto-select Host?",
-                                        "name": "auto_select_host",
-                                      },
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "block_migration",
-                                        "label": "Block Migration",
-                                        "name": "block_migration",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "disk_over_commit",
-                                        "label": "Disk Over Commit",
-                                        "name": "disk_over_commit",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "condition": Object {
-                                          "is": false,
-                                          "when": "auto_select_host",
-                                        },
-                                        "id": "destination_host",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "labelText": "Hosts",
-                                        "name": "destination_host",
-                                        "options": Array [
-                                          Object {
-                                            "label": "hostone",
-                                            "value": "hostone",
-                                          },
-                                          Object {
-                                            "label": "hosttwo",
-                                            "value": "hosttwo",
-                                          },
-                                          Object {
-                                            "label": "hostthree",
-                                            "value": "hostthree",
-                                          },
-                                          Object {
-                                            "label": "hostfour",
-                                            "value": "hostfour",
-                                          },
-                                          Object {
-                                            "label": "hostfive",
-                                            "value": "hostfive",
-                                          },
-                                        ],
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                    ]
-                                  }
-                                  name="MigrateInstance"
-                                  title="Migrate Instance"
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -4012,93 +3793,6 @@ exports[`Live Migrate form component should render live migrate form with host o
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "sub-form",
-                                    "fields": Array [
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "auto_select_host",
-                                        "isDisabled": false,
-                                        "label": "Auto-select Host?",
-                                        "name": "auto_select_host",
-                                      },
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "block_migration",
-                                        "label": "Block Migration",
-                                        "name": "block_migration",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "disk_over_commit",
-                                        "label": "Disk Over Commit",
-                                        "name": "disk_over_commit",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "condition": Object {
-                                          "is": false,
-                                          "when": "auto_select_host",
-                                        },
-                                        "id": "destination_host",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "labelText": "Hosts",
-                                        "name": "destination_host",
-                                        "options": Array [
-                                          Object {
-                                            "label": "hostone",
-                                            "value": "hostone",
-                                          },
-                                          Object {
-                                            "label": "hosttwo",
-                                            "value": "hosttwo",
-                                          },
-                                          Object {
-                                            "label": "hostthree",
-                                            "value": "hostthree",
-                                          },
-                                          Object {
-                                            "label": "hostfour",
-                                            "value": "hostfour",
-                                          },
-                                          Object {
-                                            "label": "hostfive",
-                                            "value": "hostfive",
-                                          },
-                                        ],
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                    ],
-                                    "name": "MigrateInstance",
-                                    "title": "Migrate Instance",
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Submit"
                           >
                             <ButtonGroup>
@@ -5753,7 +5447,6 @@ exports[`Live Migrate form component should render live migrate form with multip
                           <FormControls
                             Button={[Function]}
                             ButtonGroup={[Function]}
-                            FormSpy={[Function]}
                             buttonOrder={
                               Array [
                                 "submit",
@@ -5764,71 +5457,6 @@ exports[`Live Migrate form component should render live migrate form with multip
                             canReset={false}
                             cancelLabel="Cancel"
                             disableSubmit={true}
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="sub-form"
-                                  fields={
-                                    Array [
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "auto_select_host",
-                                        "isDisabled": true,
-                                        "label": "Auto-select Host?",
-                                        "name": "auto_select_host",
-                                      },
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "block_migration",
-                                        "label": "Block Migration",
-                                        "name": "block_migration",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "disk_over_commit",
-                                        "label": "Disk Over Commit",
-                                        "name": "disk_over_commit",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "condition": Object {
-                                          "is": false,
-                                          "when": "auto_select_host",
-                                        },
-                                        "id": "destination_host",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "labelText": "Hosts",
-                                        "name": "destination_host",
-                                        "options": Array [],
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                    ]
-                                  }
-                                  name="MigrateInstance"
-                                  title="Migrate Instance"
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
                             formSpyProps={
                               Object {
                                 "active": undefined,
@@ -5915,72 +5543,6 @@ exports[`Live Migrate form component should render live migrate form with multip
                             onCancel={[Function]}
                             onReset={[Function]}
                             resetLabel="Reset"
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "sub-form",
-                                    "fields": Array [
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "auto_select_host",
-                                        "isDisabled": true,
-                                        "label": "Auto-select Host?",
-                                        "name": "auto_select_host",
-                                      },
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "block_migration",
-                                        "label": "Block Migration",
-                                        "name": "block_migration",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "checkbox",
-                                        "id": "disk_over_commit",
-                                        "label": "Disk Over Commit",
-                                        "name": "disk_over_commit",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "select",
-                                        "condition": Object {
-                                          "is": false,
-                                          "when": "auto_select_host",
-                                        },
-                                        "id": "destination_host",
-                                        "includeEmpty": true,
-                                        "isRequired": true,
-                                        "labelText": "Hosts",
-                                        "name": "destination_host",
-                                        "options": Array [],
-                                        "placeholder": "<Choose>",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                    ],
-                                    "name": "MigrateInstance",
-                                    "title": "Migrate Instance",
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
                             submitLabel="Submit"
                           >
                             <ButtonGroup>

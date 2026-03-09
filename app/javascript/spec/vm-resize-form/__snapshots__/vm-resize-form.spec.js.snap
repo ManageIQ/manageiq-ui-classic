@@ -621,7 +621,6 @@ exports[`vm resize form component should render a resize form 1`] = `
                                         <FormControls
                                           Button={[Function]}
                                           ButtonGroup={[Function]}
-                                          FormSpy={[Function]}
                                           buttonOrder={
                                             Array [
                                               "submit",
@@ -632,31 +631,6 @@ exports[`vm resize form component should render a resize form 1`] = `
                                           canReset={false}
                                           cancelLabel="Cancel"
                                           disableSubmit={true}
-                                          formFields={
-                                            Array [
-                                              Array [
-                                                <SingleField
-                                                  component="text-field"
-                                                  id="memory"
-                                                  initialValue={2}
-                                                  isRequired={true}
-                                                  label="Memory (GiB)"
-                                                  name="memory"
-                                                  validate={
-                                                    Array [
-                                                      Object {
-                                                        "type": "required",
-                                                      },
-                                                    ]
-                                                  }
-                                                />,
-                                              ],
-                                              <SingleField
-                                                component="spy-field"
-                                                name="spy-field"
-                                              />,
-                                            ]
-                                          }
                                           formSpyProps={
                                             Object {
                                               "active": undefined,
@@ -734,32 +708,6 @@ exports[`vm resize form component should render a resize form 1`] = `
                                           onCancel={[Function]}
                                           onReset={[Function]}
                                           resetLabel="Reset"
-                                          schema={
-                                            Object {
-                                              "fields": Array [
-                                                Array [
-                                                  Object {
-                                                    "component": "text-field",
-                                                    "id": "memory",
-                                                    "initialValue": 2,
-                                                    "isRequired": true,
-                                                    "label": "Memory (GiB)",
-                                                    "name": "memory",
-                                                    "validate": Array [
-                                                      Object {
-                                                        "type": "required",
-                                                      },
-                                                    ],
-                                                  },
-                                                ],
-                                                Object {
-                                                  "component": "spy-field",
-                                                  "initialize": undefined,
-                                                  "name": "spy-field",
-                                                },
-                                              ],
-                                            }
-                                          }
                                           submitLabel="Save"
                                         >
                                           <ButtonGroup>
