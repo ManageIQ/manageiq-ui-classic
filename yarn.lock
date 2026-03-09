@@ -5205,18 +5205,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-loader@npm:~8.4.0":
-  version: 8.4.1
-  resolution: "babel-loader@npm:8.4.1"
+"babel-loader@npm:~10.1.0":
+  version: 10.1.1
+  resolution: "babel-loader@npm:10.1.1"
   dependencies:
-    find-cache-dir: "npm:^3.3.1"
-    loader-utils: "npm:^2.0.4"
-    make-dir: "npm:^3.1.0"
-    schema-utils: "npm:^2.6.5"
+    find-up: "npm:^5.0.0"
   peerDependencies:
-    "@babel/core": ^7.0.0
-    webpack: ">=2"
-  checksum: 10/b54ae3796a351e5b5186cd7a8d53a902b679a33a187424c2858e385850142139a4343524c9fddd0eb4356250e51e67e47a9efeef79d01e132976c406212cba1d
+    "@babel/core": ^7.12.0 || ^8.0.0-beta.1
+    "@rspack/core": ^1.0.0 || ^2.0.0-0
+    webpack: ">=5.61.0"
+  peerDependenciesMeta:
+    "@rspack/core":
+      optional: true
+    webpack:
+      optional: true
+  checksum: 10/4169d55704e7b5204d79b628266d7820856602864044c7110893052e8a7c118a4cacb94bebfb33a6ca2e91b195e0359e6e214e6ef3c9e48137537b7624cc3338
   languageName: node
   linkType: hard
 
@@ -9707,6 +9710,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"find-up@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "find-up@npm:5.0.0"
+  dependencies:
+    locate-path: "npm:^6.0.0"
+    path-exists: "npm:^4.0.0"
+  checksum: 10/07955e357348f34660bde7920783204ff5a26ac2cafcaa28bace494027158a97b9f56faaf2d89a6106211a8174db650dd9f503f9c0d526b1202d5554a00b9095
+  languageName: node
+  linkType: hard
+
 "flat-cache@npm:^3.0.4":
   version: 3.2.0
   resolution: "flat-cache@npm:3.2.0"
@@ -13381,7 +13394,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"loader-utils@npm:^2.0.0, loader-utils@npm:^2.0.4":
+"loader-utils@npm:^2.0.0":
   version: 2.0.4
   resolution: "loader-utils@npm:2.0.4"
   dependencies:
@@ -13408,6 +13421,15 @@ __metadata:
   dependencies:
     p-locate: "npm:^4.1.0"
   checksum: 10/83e51725e67517287d73e1ded92b28602e3ae5580b301fe54bfb76c0c723e3f285b19252e375712316774cf52006cb236aed5704692c32db0d5d089b69696e30
+  languageName: node
+  linkType: hard
+
+"locate-path@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "locate-path@npm:6.0.0"
+  dependencies:
+    p-locate: "npm:^5.0.0"
+  checksum: 10/72eb661788a0368c099a184c59d2fee760b3831c9c1c33955e8a19ae4a21b4116e53fa736dc086cdeb9fce9f7cc508f2f92d2d3aae516f133e16a2bb59a39f5a
   languageName: node
   linkType: hard
 
@@ -13563,7 +13585,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"make-dir@npm:^3.0.0, make-dir@npm:^3.0.2, make-dir@npm:^3.1.0":
+"make-dir@npm:^3.0.0, make-dir@npm:^3.0.2":
   version: 3.1.0
   resolution: "make-dir@npm:3.1.0"
   dependencies:
@@ -13650,7 +13672,7 @@ __metadata:
     autoprefixer: "npm:~9.8.0"
     awesome-debounce-promise: "npm:^2.1.0"
     babel-jest: "npm:~25.5.1"
-    babel-loader: "npm:~8.4.0"
+    babel-loader: "npm:~10.1.0"
     bootstrap-filestyle: "npm:~1.2.1"
     bootstrap-select: "npm:^1.13.18"
     bootstrap-switch: "npm:3.3.4"
@@ -15061,6 +15083,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"p-limit@npm:^3.0.2":
+  version: 3.1.0
+  resolution: "p-limit@npm:3.1.0"
+  dependencies:
+    yocto-queue: "npm:^0.1.0"
+  checksum: 10/7c3690c4dbf62ef625671e20b7bdf1cbc9534e83352a2780f165b0d3ceba21907e77ad63401708145ca4e25bfc51636588d89a8c0aeb715e6c37d1c066430360
+  languageName: node
+  linkType: hard
+
 "p-locate@npm:^3.0.0":
   version: 3.0.0
   resolution: "p-locate@npm:3.0.0"
@@ -15076,6 +15107,15 @@ __metadata:
   dependencies:
     p-limit: "npm:^2.2.0"
   checksum: 10/513bd14a455f5da4ebfcb819ef706c54adb09097703de6aeaa5d26fe5ea16df92b48d1ac45e01e3944ce1e6aa2a66f7f8894742b8c9d6e276e16cd2049a2b870
+  languageName: node
+  linkType: hard
+
+"p-locate@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "p-locate@npm:5.0.0"
+  dependencies:
+    p-limit: "npm:^3.0.2"
+  checksum: 10/1623088f36cf1cbca58e9b61c4e62bf0c60a07af5ae1ca99a720837356b5b6c5ba3eb1b2127e47a06865fee59dd0453cad7cc844cda9d5a62ac1a5a51b7c86d3
   languageName: node
   linkType: hard
 
@@ -17727,7 +17767,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"schema-utils@npm:^2.6.1, schema-utils@npm:^2.6.5, schema-utils@npm:^2.7.0":
+"schema-utils@npm:^2.6.1, schema-utils@npm:^2.7.0":
   version: 2.7.1
   resolution: "schema-utils@npm:2.7.1"
   dependencies:
@@ -20951,5 +20991,12 @@ __metadata:
     buffer-crc32: "npm:~0.2.3"
     fd-slicer: "npm:~1.1.0"
   checksum: 10/1e4c311050dc0cf2ee3dbe8854fe0a6cde50e420b3e561a8d97042526b4cf7a0718d6c8d89e9e526a152f4a9cec55bcea9c3617264115f48bd6704cf12a04445
+  languageName: node
+  linkType: hard
+
+"yocto-queue@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "yocto-queue@npm:0.1.0"
+  checksum: 10/f77b3d8d00310def622123df93d4ee654fc6a0096182af8bd60679ddcdfb3474c56c6c7190817c84a2785648cdee9d721c0154eb45698c62176c322fb46fc700
   languageName: node
   linkType: hard
