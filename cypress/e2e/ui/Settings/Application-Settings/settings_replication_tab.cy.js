@@ -60,7 +60,7 @@ const SUBSCRIPTIONS_TABLE_SELECTOR = '.subscriptions-table';
 const MIQ_DATA_TABLE_BUTTON_SELECTOR = '.miq-data-table .miq-data-table-button';
 
 function addSubscription() {
-  cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"]`).select(REPLICATION_TYPE_GLOBAL, { force: true });
+  cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME }).select(REPLICATION_TYPE_GLOBAL, { force: true });
   
   cy.contains('button', ADD_SUBSCRIPTION_BUTTON_TEXT).should('be.visible');
 
@@ -106,21 +106,21 @@ describe('Automate Replication form operations: Settings > Application Settings 
     
     cy.tabs({ tabLabel: REPLICATION_TAB });
 
-    cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"]`).should('be.visible');
+    cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME }).should('be.visible');
   });
 
   describe('Validate Replication Type Operations', () => {
     it('Validate replication type dropdown and options', () => {
-    cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"]`).should('exist').and('be.visible');
+    cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME }).should('exist').and('be.visible');
 
-    cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"] option`).should('have.length', 3);
-    cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"] option[value="${REPLICATION_TYPE_NONE}"]`).should('exist');
-    cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"] option[value="${REPLICATION_TYPE_GLOBAL}"]`).should('exist');
-    cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"] option[value="${REPLICATION_TYPE_REMOTE}"]`).should('exist');
+    cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME }).find('option').should('have.length', 3);
+    cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME }).find(`option[value="${REPLICATION_TYPE_NONE}"]`).should('exist');
+    cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME }).find(`option[value="${REPLICATION_TYPE_GLOBAL}"]`).should('exist');
+    cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME }).find(`option[value="${REPLICATION_TYPE_REMOTE}"]`).should('exist');
   });
 
   it('Validate save remote type', () => {
-    cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"]`).select(REPLICATION_TYPE_REMOTE);
+    cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME }).select(REPLICATION_TYPE_REMOTE);
 
     cy.interceptApi({
       alias: 'saveReplicationApi',
@@ -135,7 +135,7 @@ describe('Automate Replication form operations: Settings > Application Settings 
   it('Validate save none type', () => {
     cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_NO_REPLICATION_ROLE);
 
-    cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"]`).select(REPLICATION_TYPE_REMOTE);
+    cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME }).select(REPLICATION_TYPE_REMOTE);
     cy.interceptApi({
       alias: 'saveRemoteApi',
       method: 'POST',
@@ -143,7 +143,7 @@ describe('Automate Replication form operations: Settings > Application Settings 
       triggerFn: () => cy.contains('button', SAVE_BUTTON_TEXT).click(),
     });
 
-    cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"]`).select(REPLICATION_TYPE_NONE);
+    cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME }).select(REPLICATION_TYPE_NONE);
 
     cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_REPLICATION_DISABLED);
 
@@ -158,7 +158,7 @@ describe('Automate Replication form operations: Settings > Application Settings 
   });
 
   it('Validate reset functionality', () => {
-    cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"]`).select(REPLICATION_TYPE_REMOTE);
+    cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME }).select(REPLICATION_TYPE_REMOTE);
     cy.contains('button', RESET_BUTTON_TEXT).click();
 
     cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_RESET);
@@ -272,7 +272,7 @@ describe('Automate Replication form operations: Settings > Application Settings 
       triggerFn: () => cy.contains('button', SAVE_BUTTON_TEXT).click(),
     });
 
-    cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"]`).select(REPLICATION_TYPE_REMOTE);
+    cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME }).select(REPLICATION_TYPE_REMOTE);
 
     cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_SUBSCRIPTIONS_REMOVED);
 
@@ -283,7 +283,7 @@ describe('Automate Replication form operations: Settings > Application Settings 
       triggerFn: () => cy.contains('button', SAVE_BUTTON_TEXT).click(),
     });
 
-    cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"]`).select(REPLICATION_TYPE_GLOBAL);
+    cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME }).select(REPLICATION_TYPE_GLOBAL);
 
     cy.get(SUBSCRIPTIONS_TABLE_SELECTOR)
       .find('table')
@@ -313,7 +313,7 @@ describe('Automate Replication form operations: Settings > Application Settings 
     });
 
     it('Validate modal closes when cancel button clicked', () => {
-      cy.get(`select[name="${REPLICATION_TYPE_SELECT_NAME}"]`).select(REPLICATION_TYPE_GLOBAL);
+      cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME }).select(REPLICATION_TYPE_GLOBAL);
       cy.contains('button', ADD_SUBSCRIPTION_BUTTON_TEXT).click();
       cy.get(MODAL_SELECTOR).should('be.visible');
 
