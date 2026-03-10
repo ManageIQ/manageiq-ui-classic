@@ -59,6 +59,15 @@ const MODAL_HEADER_SELECTOR = '.cds--modal-header__heading';
 const SUBSCRIPTIONS_TABLE_SELECTOR = '.subscriptions-table';
 const MIQ_DATA_TABLE_BUTTON_SELECTOR = '.miq-data-table .miq-data-table-button';
 
+function saveReplicationForm() {
+  cy.interceptApi({
+    alias: 'saveReplication',
+    method: 'POST',
+    urlPattern: /\/ops\/pglogical_save_subscriptions\/.*\?button=save/,
+    triggerFn: () => cy.contains('button', SAVE_BUTTON_TEXT).click(),
+  });
+}
+
 function addSubscription() {
   cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME }).select(REPLICATION_TYPE_GLOBAL, { force: true });
   
@@ -122,12 +131,7 @@ describe('Automate Replication form operations: Settings > Application Settings 
   it('Validate save remote type', () => {
     cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME }).select(REPLICATION_TYPE_REMOTE);
 
-    cy.interceptApi({
-      alias: 'saveReplicationApi',
-      method: 'POST',
-      urlPattern: /\/ops\/pglogical_save_subscriptions\/.*\?button=save/,
-      triggerFn: () => cy.contains('button', SAVE_BUTTON_TEXT).click(),
-    });
+    saveReplicationForm();
 
     cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SAVE_INITIATED);
   });
@@ -136,23 +140,13 @@ describe('Automate Replication form operations: Settings > Application Settings 
     cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_NO_REPLICATION_ROLE);
 
     cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME }).select(REPLICATION_TYPE_REMOTE);
-    cy.interceptApi({
-      alias: 'saveRemoteApi',
-      method: 'POST',
-      urlPattern: /\/ops\/pglogical_save_subscriptions\/.*\?button=save/,
-      triggerFn: () => cy.contains('button', SAVE_BUTTON_TEXT).click(),
-    });
+    saveReplicationForm();
 
     cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME }).select(REPLICATION_TYPE_NONE);
 
     cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_REPLICATION_DISABLED);
 
-    cy.interceptApi({
-      alias: 'saveNoneApi',
-      method: 'POST',
-      urlPattern: /\/ops\/pglogical_save_subscriptions\/.*\?button=save/,
-      triggerFn: () => cy.contains('button', SAVE_BUTTON_TEXT).click(),
-    });
+    saveReplicationForm();
 
     cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SAVE_INITIATED);
   });
@@ -226,12 +220,7 @@ describe('Automate Replication form operations: Settings > Application Settings 
   it('Validate save subscriptions to database', () => {
     addSubscription();
 
-    cy.interceptApi({
-      alias: 'saveSubscriptionsApi',
-      method: 'POST',
-      urlPattern: /\/ops\/pglogical_save_subscriptions\/.*\?button=save/,
-      triggerFn: () => cy.contains('button', SAVE_BUTTON_TEXT).click(),
-    });
+    saveReplicationForm();
 
     cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SAVE_INITIATED);
   });
@@ -266,23 +255,13 @@ describe('Automate Replication form operations: Settings > Application Settings 
       .find('tr')
       .should('have.length', 1);
 
-    cy.interceptApi({
-      alias: 'saveGlobalApi',
-      method: 'POST',
-      urlPattern: /\/ops\/pglogical_save_subscriptions\/.*\?button=save/,
-      triggerFn: () => cy.contains('button', SAVE_BUTTON_TEXT).click(),
-    });
+    saveReplicationForm();
 
     cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME }).select(REPLICATION_TYPE_REMOTE);
 
     cy.expect_flash(flashClassMap.warning, FLASH_MESSAGE_SUBSCRIPTIONS_REMOVED);
 
-    cy.interceptApi({
-      alias: 'saveRemoteTypeApi',
-      method: 'POST',
-      urlPattern: /\/ops\/pglogical_save_subscriptions\/.*\?button=save/,
-      triggerFn: () => cy.contains('button', SAVE_BUTTON_TEXT).click(),
-    });
+    saveReplicationForm();
 
     cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME }).select(REPLICATION_TYPE_GLOBAL);
 
