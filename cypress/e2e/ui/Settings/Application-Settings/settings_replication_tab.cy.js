@@ -240,6 +240,7 @@ describe('Automate Replication form operations: Settings > Application Settings 
     addSubscription();
 
     cy.contains(MIQ_DATA_TABLE_BUTTON_SELECTOR, DELETE_BUTTON_TEXT)
+      .scrollIntoView()
       .should('be.visible')
       .click();
 
