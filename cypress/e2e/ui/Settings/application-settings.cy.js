@@ -61,7 +61,7 @@ function selectFromMultiSelect(optionsToClick) {
     'Choose one or more Groups'
   ).click();
   optionsToClick.forEach((option) => {
-    cy.contains('#downshift-0-menu .bx--list-box__menu-item', option).click();
+    cy.contains('#downshift-0-menu .cds--list-box__menu-item', option).click();
   });
   // Collapsing the select list
   cy.contains(
@@ -71,7 +71,7 @@ function selectFromMultiSelect(optionsToClick) {
 }
 
 function getUserInfoElementSelector(childIndex, type) {
-  return `ul.settings_schedule_user_information .bx--structured-list-tbody > :nth-child(${childIndex}) > .${type}`;
+  return `ul.settings_schedule_user_information .cds--structured-list-tbody > :nth-child(${childIndex}) > .${type}`;
 }
 
 function assertUserInformation({
@@ -101,7 +101,7 @@ function assertUserInformation({
   assertSelectedGroups(
     selectedGroups,
     'ul.settings_schedule_groups_information',
-    '.bx--link .content .expand'
+    '.cds--link .content .expand'
   );
 }
 
@@ -149,11 +149,8 @@ describe('Settings > Application Settings > Users', () => {
           [LABEL_CONFIG_KEYS.FOR_VALUE]: 'email',
           [LABEL_CONFIG_KEYS.EXPECTED_TEXT]: 'E-mail Address',
         },
-        {
-          [LABEL_CONFIG_KEYS.FOR_VALUE]: 'downshift-0-toggle-button',
-          [LABEL_CONFIG_KEYS.EXPECTED_TEXT]: 'Available Groups',
-        },
       ]);
+      cy.get('#downshift-0-label').contains('Available Groups')
       cy.getFormLegendByText({ legendText: 'Password' }).should('be.visible');
       cy.contains('form label#selected-groups-label', 'Selected Groups');
       cy.contains('form #selected-groups', 'EvmGroup-super_administrator');
@@ -245,6 +242,10 @@ describe('Settings > Application Settings > Users', () => {
           expect(interception.response.statusCode).to.equal(200),
       });
     });
+
+    afterEach(() => {
+      cy.appDbState('restore');
+    });
   });
 
   describe('Validate new user actions', () => {
@@ -335,7 +336,7 @@ describe('Settings > Application Settings > Users', () => {
       cy.getFormInputFieldByIdAndType({ inputId: 'userid' })
         .clear()
         .type(USERNAME_FOR_EDIT_TEST);
-      cy.get('.bx--col-sm-1 > .bx--btn').click();
+      cy.get('.cds--tooltip-trigger__wrapper > .cds--btn').click();
       cy.getFormInputFieldByIdAndType({
         inputId: 'password',
         inputType: 'password',
@@ -709,7 +710,7 @@ describe('Settings > Application Settings > Users', () => {
         inputId: 'passwordPlaceholder',
         inputType: 'password',
       }).should('be.disabled');
-      cy.get('.bx--col-sm-1 > .bx--btn').click();
+      cy.get('.cds--tooltip-trigger__wrapper > .cds--btn').click();
       cy.getFormInputFieldByIdAndType({
         inputId: 'password',
         inputType: 'password',
@@ -744,7 +745,6 @@ describe('Settings > Application Settings > Users', () => {
         inputId: 'confirmPassword',
         inputType: 'password',
       }).type(TEST_PASS_WORD);
-      // TODO:
       cy.getFormLabelByForAttribute({ forValue: 'confirmPassword' }).click();
       cy.contains('#confirmPassword-error-msg', 'do not match').should(
         'be.visible'
@@ -755,7 +755,7 @@ describe('Settings > Application Settings > Users', () => {
       }).should('be.disabled');
 
       // Click the cancel edit password button, update name field and verify that the submit button is now enabled & click it
-      cy.get('.bx--col-sm-1 > .bx--btn').click();
+      cy.get('.cds--tooltip-trigger__wrapper > .cds--btn').click();
       cy.getFormInputFieldByIdAndType({ inputId: 'name' }).type(' Edited');
 
       cy.interceptApi({
@@ -801,7 +801,7 @@ describe('Settings > Application Settings > Users', () => {
       selectToolbarOption({ option: 'Edit this User' });
 
       // Enter new matching passwords and click the submit button
-      cy.get('.bx--col-sm-1 > .bx--btn').click();
+      cy.get('.cds--tooltip-trigger__wrapper > .cds--btn').click();
       cy.getFormInputFieldByIdAndType({
         inputId: 'password',
         inputType: 'password',
