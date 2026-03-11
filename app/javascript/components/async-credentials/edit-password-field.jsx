@@ -75,7 +75,12 @@ const EditPasswordField = ({ componentClass, ...props }) => {
             size="md"
             onClick={setEditMode}
             iconDescription={buttonLabel}
-            renderIcon={(props) => (icon || <EditOff size={16} {...props} />)}
+            renderIcon={(props) => {
+              if (icon) {
+                return icon;
+              }
+              return (<EditOff size={16} {...props} />);
+            }}
           />
         </Column>
       </Grid>

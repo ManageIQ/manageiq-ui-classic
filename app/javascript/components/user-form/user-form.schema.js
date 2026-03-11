@@ -1,5 +1,6 @@
 import { componentTypes, validatorTypes } from '@@ddf';
-import { Edit16 } from '@carbon/icons-react';
+import { Edit } from '@carbon/react/icons';
+import React from 'react';
 
 function createSchema(id, editMode, setState, disabled, dbMode, availableGroups, selectedGroups) {
   const fields = [
@@ -66,7 +67,7 @@ function createSchema(id, editMode, setState, disabled, dbMode, availableGroups,
             maxLength: 50,
             id: 'passwordPlaceholder',
             name: 'passwordPlaceholder',
-            icon: Edit16,
+            icon: (<Edit size={16} />),
             kind: 'primary',
             editMode,
             disabled: true,
