@@ -9,6 +9,5 @@ require('./dialog_user/dialog_user_reconfigure_controller.js');
 require('./ems_keypair/ems_keypair_controller.js');
 require('./error_modal_controller.js');
 require('./miq_ae_class/ae_inline_method_selection_controller.js');
-require('./ops/pglogical_replication_form_controller.js');
 require('./playbook-reusable-code-mixin.js');
 require('./tree_view_controller.js');
