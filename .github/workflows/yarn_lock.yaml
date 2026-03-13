@@ -34,10 +34,14 @@ jobs:
         rm -f yarn.lock
         yarn install
         git diff
+    - name: Update Jest snapshots
+      run: yarn jest -u
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v8
       with:
-        add-paths: yarn.lock
+        add-paths: |
+          yarn.lock
+          **/__snapshots__/**
         commit-message: Update yarn.lock with latest dependencies
         branch: update_yarn_lock
         author: ManageIQ Bot <bot@manageiq.org>
