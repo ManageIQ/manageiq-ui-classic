@@ -5070,7 +5070,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"autoprefixer@npm:^9.6.1, autoprefixer@npm:~9.8.0":
+"autoprefixer@npm:^9.6.1":
   version: 9.8.8
   resolution: "autoprefixer@npm:9.8.8"
   dependencies:
@@ -5084,6 +5084,23 @@ __metadata:
   bin:
     autoprefixer: bin/autoprefixer
   checksum: 10/88e7fbd31733563678a26b42a55cf7dd333029de5961cbd7774c0efe6be1b66e9135ba20aa7a9a289cc2cf2938488593b3809c3f518eb58b7557b7c5c3e0b307
+  languageName: node
+  linkType: hard
+
+"autoprefixer@npm:~10.4.0":
+  version: 10.4.27
+  resolution: "autoprefixer@npm:10.4.27"
+  dependencies:
+    browserslist: "npm:^4.28.1"
+    caniuse-lite: "npm:^1.0.30001774"
+    fraction.js: "npm:^5.3.4"
+    picocolors: "npm:^1.1.1"
+    postcss-value-parser: "npm:^4.2.0"
+  peerDependencies:
+    postcss: ^8.1.0
+  bin:
+    autoprefixer: bin/autoprefixer
+  checksum: 10/5dd9ec57cc1c2af556e10d6c76d082f66d23275671b8b125f6c1d33ba7d9a984d80d3fb4fab7b5e092ac1a34f3aa5a131a392f131f5924029c3cb82faea15b0c
   languageName: node
   linkType: hard
 
@@ -6131,6 +6148,13 @@ __metadata:
   version: 1.0.30001777
   resolution: "caniuse-lite@npm:1.0.30001777"
   checksum: 10/4f71c57ac7f46bd0c0b42bef212df28639652972e7cf6e3f40f902a87fa86d77217f76b1021dcef202ab6eb5958bad83cdcc81336a954fb4e857c2975ddb2569
+  languageName: node
+  linkType: hard
+
+"caniuse-lite@npm:^1.0.30001774":
+  version: 1.0.30001778
+  resolution: "caniuse-lite@npm:1.0.30001778"
+  checksum: 10/52dab6283bc817f57155c7e4c165a7c057ed8eafe40b51b10a88f84ca63e05871f135ffbb10e4473460e25998d25ce34bf1448f01be1e070d5abf0b05d8c349d
   languageName: node
   linkType: hard
 
@@ -9842,6 +9866,13 @@ __metadata:
   version: 0.2.0
   resolution: "forwarded@npm:0.2.0"
   checksum: 10/29ba9fd347117144e97cbb8852baae5e8b2acb7d1b591ef85695ed96f5b933b1804a7fac4a15dd09ca7ac7d0cdc104410e8102aae2dd3faa570a797ba07adb81
+  languageName: node
+  linkType: hard
+
+"fraction.js@npm:^5.3.4":
+  version: 5.3.4
+  resolution: "fraction.js@npm:5.3.4"
+  checksum: 10/ef2c4bc81b2484065f8f7e4c2498f3fdfe6d233b8e7c7f75e3683ed10698536129b2c2dbd6c3f788ca4a020ec07116dd909a91036a364c98dc802b5003bfc613
   languageName: node
   linkType: hard
 
@@ -13647,7 +13678,7 @@ __metadata:
     angular-ui-sortable: "npm:~0.19.0"
     angular.validators: "npm:~4.4.3"
     array-includes: "npm:^3.1.9"
-    autoprefixer: "npm:~9.8.0"
+    autoprefixer: "npm:~10.4.0"
     awesome-debounce-promise: "npm:^2.1.0"
     babel-jest: "npm:~25.5.1"
     babel-loader: "npm:~8.4.0"
