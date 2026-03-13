@@ -2,9 +2,19 @@
 
 #### Run
 
-Please note that the rails server has to be running first:
+**Prerequisites:**
 
-    bin/rails s
+Before running Cypress tests, ensure the following:
+
+1. **Build webpack with CYPRESS flag** - This disables debug notifications that would block Cypress from accessing UI elements:
+
+       CYPRESS=true bin/webpack
+
+   If you skip this step, Cypress will show an error and refuse to start.
+
+2. **Start the Rails server**:
+
+       bin/rails s
 
 
 Run without interaction:
