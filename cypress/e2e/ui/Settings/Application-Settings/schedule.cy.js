@@ -41,6 +41,12 @@ const ACTION_TYPE_HOST_COMPILANCE_CHECK = 'host_check_compliance';
 const ACTION_TYPE_CONTAINER_COMPILANCE_CHECK =
   'container_image_check_compliance';
 const ACTION_TYPE_AUTOMATION_TASKS = 'automation_request';
+const ZONE_DEFAULT = 'Default Zone';
+const SYSTEM_OPTION_REQUEST = 'Request';
+const OBJECT_MESSAGE = 'Test message';
+const OBJECT_REQUEST = 'Test request';
+const OBJECT_TYPE_EVM_USER = 'EVM User';
+const OBJECT_OPTION_ADMIN = 'Administrator';
 const TIMER_TYPE_ONCE = 'Once';
 const TIMER_TYPE_HOURLY = 'Hourly';
 const TIMER_TYPE_DAILY = 'Daily';
@@ -100,11 +106,16 @@ function addSchedule() {
   );
   cy.getFormLabelByForAttribute({ forValue: 'enabled' }).click();
   cy.getFormSelectFieldById({ selectId: 'action_typ' }).select(
-    ACTION_TYPE_VM_ANALYSIS
+    ACTION_TYPE_AUTOMATION_TASKS,
   );
-  cy.getFormSelectFieldById({ selectId: 'filter_typ' }).select(
-    ACTION_TYPE_VM_ANALYSIS
+  cy.getFormSelectFieldById({ selectId: 'zone_id' }).select(ZONE_DEFAULT);
+  cy.getFormSelectFieldById({ selectId: 'instance_name' }).select(
+    SYSTEM_OPTION_REQUEST,
   );
+  cy.getFormInputFieldByIdAndType({ inputId: 'message' }).type(OBJECT_MESSAGE);
+  cy.getFormInputFieldByIdAndType({ inputId: 'request' }).type(OBJECT_REQUEST);
+  cy.changeSelect('target_class', OBJECT_TYPE_EVM_USER);
+  cy.changeSelect('target_id', OBJECT_OPTION_ADMIN);
   cy.getFormSelectFieldById({ selectId: 'timer_typ' }).select(
     TIMER_TYPE_HOURLY
   );
