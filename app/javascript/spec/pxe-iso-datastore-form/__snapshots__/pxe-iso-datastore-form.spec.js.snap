@@ -100,7 +100,6 @@ exports[`Pxe Iso Datastore Form Component should render adding a new iso datasto
             "font-icon-picker": [Function],
             "font-icon-picker-ddf": [Function],
             "key-value-list": [Function],
-            "multi-select": [Function],
             "password-field": [Function],
             "plain-text": [Function],
             "radio": [Function],
@@ -113,7 +112,6 @@ exports[`Pxe Iso Datastore Form Component should render adding a new iso datasto
             "textarea": [Function],
             "time-picker": [Function],
             "tree-selector": [Function],
-            "tree-view": [Function],
             "validate-credentials": [Function],
             "wizard": [Function],
           }
@@ -182,7 +180,6 @@ exports[`Pxe Iso Datastore Form Component should render adding a new iso datasto
               "font-icon-picker": [Function],
               "font-icon-picker-ddf": [Function],
               "key-value-list": [Function],
-              "multi-select": [Function],
               "password-field": [Function],
               "plain-text": [Function],
               "radio": [Function],
@@ -196,7 +193,6 @@ exports[`Pxe Iso Datastore Form Component should render adding a new iso datasto
               "textarea": [Function],
               "time-picker": [Function],
               "tree-selector": [Function],
-              "tree-view": [Function],
               "validate-credentials": [Function],
               "wizard": [Function],
             }
