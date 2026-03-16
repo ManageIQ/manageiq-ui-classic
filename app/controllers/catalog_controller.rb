@@ -233,6 +233,7 @@ class CatalogController < ApplicationController
 
     # need to check req_id in session since we are using common code for prov requests and atomic ST screens
     id = session[:edit][:req_id] || "new"
+    @checked_id ||= 'new'
     return unless load_edit("prov_edit__#{id}", "replace_cell__explorer")
     get_form_vars
     build_automate_tree(:automate_catalog) if automate_tree_needed?
