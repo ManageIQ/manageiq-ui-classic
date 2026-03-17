@@ -273,7 +273,9 @@ const MiqToolbar = ({ kebabLimit, toolbars: initToolbars }) => {
   if (custom) {
     switch (name) {
       case 'dashboard':
-        return <DashboardToolbar {...props} />;
+        return (
+          <div className="dashboard-toolbar"><DashboardToolbar {...props} /></div>
+        );
       default:
         return null;
     }

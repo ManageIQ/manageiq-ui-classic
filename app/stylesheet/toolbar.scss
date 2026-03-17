@@ -19,6 +19,37 @@
   }
 }
 
+.dashboard-toolbar {
+  padding-bottom: 10px;
+
+  #dropdown-custom {
+    svg {
+      position: absolute;
+      top: 10px;
+      margin-left: 15px;
+    }
+  }
+
+  #reset-dashboard-button {
+    margin-left: 20px;
+    padding-bottom: 10px;
+  }
+}
+
+.dashboard-toolbar-option-with-icon {
+  display: flex;
+  align-items: center;
+
+  .option-icon {
+    display: inline-flex;
+    margin-right: 5px;
+  }
+
+  .option-text {
+    display: inline-flex;
+  }
+}
+
 .miq-toolbar-actions {
   margin-top: -10px;
   margin-left: -20px;  /* this compensates for toolbar-pf-filter not being in the first position */
@@ -186,26 +217,6 @@
 
   &:hover {
     background-color: transparent;
-  }
-}
-
-#dropdown-custom-2 {
-  svg {
-    position: absolute;
-    top: 10px;
-    margin-left: 15px;
-  }
-}
-
-.refresh_button {
-  margin-left: 20px;
-  background-color: inherit;
-  border: none;
-  background-image: none;
-  box-shadow: none;
-
-  &:hover {
-    background-color: #e5e5e5;
   }
 }
 
