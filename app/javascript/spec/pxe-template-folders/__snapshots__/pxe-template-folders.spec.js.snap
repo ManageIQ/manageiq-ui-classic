@@ -37,7 +37,7 @@ exports[`PxeTemplateFolders Component should render with empty folders array 1`]
       Array [
         Object {
           "Name": Object {
-            "icon": "pficon pficon-folder-close",
+            "icon": "carbon--Folder",
             "text": "Examples (read only)",
           },
           "clickable": true,
@@ -91,7 +91,7 @@ exports[`PxeTemplateFolders Component should render with folders data 1`] = `
       Array [
         Object {
           "Name": Object {
-            "icon": "pficon pficon-folder-close",
+            "icon": "carbon--Folder",
             "text": "Examples (read only)",
           },
           "clickable": true,
@@ -99,7 +99,7 @@ exports[`PxeTemplateFolders Component should render with folders data 1`] = `
         },
         Object {
           "Name": Object {
-            "icon": "pficon pficon-folder-close",
+            "icon": "carbon--Folder",
             "text": "Folder 1",
           },
           "clickable": true,
@@ -107,7 +107,7 @@ exports[`PxeTemplateFolders Component should render with folders data 1`] = `
         },
         Object {
           "Name": Object {
-            "icon": "pficon pficon-folder-close",
+            "icon": "carbon--Folder",
             "text": "Folder 2",
           },
           "clickable": true,

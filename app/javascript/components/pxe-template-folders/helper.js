@@ -14,7 +14,7 @@ export const tableData = (folders) => {
       // Add the system folder (Examples)
       id: 'xx-xx-system',
       clickable: true,
-      cells: [{ text: __('Examples (read only)'), icon: 'pficon pficon-folder-close' }],
+      cells: [{ text: __('Examples (read only)'), icon: 'carbon--Folder' }],
     },
   ];
 
@@ -23,7 +23,7 @@ export const tableData = (folders) => {
       {
         id: `pit-${folder.id}`,
         clickable: true,
-        cells: [{ text: folder.name, icon: 'pficon pficon-folder-close' }],
+        cells: [{ text: folder.name, icon: 'carbon--Folder' }],
       }
     );
   });
