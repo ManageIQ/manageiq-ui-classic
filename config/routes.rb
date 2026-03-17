@@ -2223,7 +2223,6 @@ Rails.application.routes.draw do
         prov_load_tab
         request_copy
         request_edit
-        retrieve_email
         show_list
         sort_configured_system_grid
         sort_configuration_script_grid
