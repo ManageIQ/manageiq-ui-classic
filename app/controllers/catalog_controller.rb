@@ -96,13 +96,13 @@ class CatalogController < ApplicationController
   def servicetemplate_edit
     assert_privileges_for_servicetemplate_edit
 
-    checked_id = find_checked_items.first || params[:id]
+    @checked_id = find_checked_items.first || params[:id]
     @sb[:cached_waypoint_ids] = MiqAeClass.waypoint_ids_for_state_machines
-    @record = checked_id.present? ? find_record_with_rbac(ServiceTemplate, checked_id) : ServiceTemplate.new
+    @record = @checked_id.present? ? find_record_with_rbac(ServiceTemplate, @checked_id) : ServiceTemplate.new
     @sb[:st_form_active_tab] = "basic"
     composite_type = @record.service_type == "composite"
     new_atomic_item = params[:pressed] == "atomic_catalogitem_new" || (params[:button].present? && session[:edit][:new][:service_type] == "atomic")
-    if checked_id.present? && composite_type || checked_id.nil? && !new_atomic_item
+    if @checked_id.present? && composite_type || @checked_id.nil? && !new_atomic_item
       st_edit
     else
       atomic_st_edit
@@ -118,8 +118,8 @@ class CatalogController < ApplicationController
   def servicetemplate_copy
     assert_privileges("catalogitem_edit")
 
-    checked_id = find_checked_items.first || params[:id]
-    @record = find_record_with_rbac(ServiceTemplate, checked_id)
+    @checked_id = find_checked_items.first || params[:id]
+    @record = find_record_with_rbac(ServiceTemplate, @checked_id)
     if !@record.template_valid?
       add_flash(_("This item is not valid and cannot be copied."), :error)
       javascript_flash
@@ -233,6 +233,7 @@ class CatalogController < ApplicationController
 
     # need to check req_id in session since we are using common code for prov requests and atomic ST screens
     id = session[:edit][:req_id] || "new"
+    @checked_id ||= 'new'
     return unless load_edit("prov_edit__#{id}", "replace_cell__explorer")
     get_form_vars
     build_automate_tree(:automate_catalog) if automate_tree_needed?
