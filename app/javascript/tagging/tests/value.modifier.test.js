@@ -3,18 +3,20 @@ import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import ValueModifier from '../components/InnerComponents/ValueModifier';
 
-const selectedTagValue = [{ description: 'Duck', id: 1 }];
+const selectedTagCategory = { label: 'Animal', id: '1' };
+const selectedTagValue = [{ label: 'Duck', id: 1 }];
 const onTagValueChange = jest.fn();
 const tagValues = [
-  { description: 'Duck', id: 1 },
-  { description: 'Cat', id: 2 },
-  { description: 'Dog', id: 3 },
+  { label: 'Duck', id: 1 },
+  { label: 'Cat', id: 2 },
+  { label: 'Dog', id: 3 },
 ];
 
 describe('TagCategory Component', () => {
   it('match snapshot', () => {
     const component = shallow(
       <ValueModifier
+        selectedTagCategory={selectedTagCategory}
         onTagValueChange={onTagValueChange}
         selectedTagValues={selectedTagValue}
         multiValue={false}

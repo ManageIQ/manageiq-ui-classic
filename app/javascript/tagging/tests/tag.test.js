@@ -3,8 +3,8 @@ import Tag from '../components/InnerComponents/Tag';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 
-const tagCategory = { description: 'animal', id: 1 };
-const tagValue = { description: 'duck', id: 1 };
+const tagCategory = { label: 'animal', id: 1 };
+const tagValue = { label: 'duck', id: 1 };
 function onDelete(x) {
   return x;
 }

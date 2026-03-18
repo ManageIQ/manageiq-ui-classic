@@ -3,11 +3,12 @@ import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import ValueSelector from '../components/InnerComponents/ValueSelector';
 
+const selectedTagCategory = { label: 'Comic Book Characters', id: '1' };
 const tagValues = [
-  { description: 'Asterix', id: 1 },
-  { description: 'Obelix', id: 2 }
+  { label: 'Asterix', id: 1 },
+  { label: 'Obelix', id: 2 }
 ];
-const selectedTagValues = [{ description: 'Obelix', id: 2 }];
+const selectedTagValues = [{ label: 'Obelix', id: 2 }];
 function onChange(x) {
   return x;
 }
@@ -15,6 +16,7 @@ function onChange(x) {
 test('match snapshot', () => {
   const component = shallow(
     <ValueSelector
+      selectedTagCategory={selectedTagCategory}
       values={tagValues}
       onTagValueChange={onChange}
       selectedOption={selectedTagValues}
@@ -31,6 +33,7 @@ test('match snapshot without multiple values', () => {
       onTagValueChange={onChange}
       selectedOption={selectedTagValues}
       multiValue={false}
+      selectedTagCategory={selectedTagCategory}
     />
   );
   const tree = toJson(component);
