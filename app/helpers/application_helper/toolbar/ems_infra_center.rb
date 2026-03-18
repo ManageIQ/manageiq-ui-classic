@@ -5,6 +5,11 @@ class ApplicationHelper::Toolbar::EmsInfraCenter < ApplicationHelper::Toolbar::B
       'fa fa-refresh fa-lg',
       N_('Refresh this page'),
       nil),
+    button(
+      :refresh_server_summary,
+      'carbon--Renew',
+      N_('Refresh this page'),
+      nil),
     select(
       :ems_infra_vmdb_choice,
       nil,
