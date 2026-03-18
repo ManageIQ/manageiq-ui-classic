@@ -13,27 +13,27 @@ exports[`TagCategory Component match snapshot 1`] = `
       onTagCategoryChange={[MockFunction]}
       selectedOption={
         Object {
-          "description": "animal",
           "id": 1,
+          "label": "animal",
         }
       }
       tagCategories={
         Array [
           Object {
-            "description": "Name",
             "id": 1,
+            "label": "Name",
           },
           Object {
-            "description": "Number",
             "id": 2,
+            "label": "Number",
           },
           Object {
-            "description": "Animal",
             "id": 3,
+            "label": "Animal",
           },
           Object {
-            "description": "Food",
             "id": 4,
+            "label": "Food",
           },
         ]
       }

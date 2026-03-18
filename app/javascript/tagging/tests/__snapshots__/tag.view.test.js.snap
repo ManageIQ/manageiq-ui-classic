@@ -39,16 +39,16 @@ exports[`Tag view match snapshot 1`] = `
             showCloseButton={true}
             tagCategory={
               Object {
-                "description": "Name",
                 "id": 1,
+                "label": "Name",
               }
             }
             valueTruncate={[Function]}
             values={
               Array [
                 Object {
-                  "description": "Pepa",
                   "id": 11,
+                  "label": "Pepa",
                 },
               ]
             }

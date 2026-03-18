@@ -25,27 +25,27 @@ exports[`Tagging modifier match snapshot 1`] = `
       onTagCategoryChange={[Function]}
       selectedTagCategory={
         Object {
-          "description": "animal",
           "id": 1,
+          "label": "animal",
         }
       }
       tagCategories={
         Array [
           Object {
-            "description": "Name",
             "id": 1,
+            "label": "Name",
           },
           Object {
-            "description": "Number",
             "id": 2,
+            "label": "Number",
           },
           Object {
-            "description": "Animal",
             "id": 3,
+            "label": "Animal",
           },
           Object {
-            "description": "Food",
             "id": 4,
+            "label": "Food",
           },
         ]
       }
@@ -54,27 +54,34 @@ exports[`Tagging modifier match snapshot 1`] = `
       isDisabled={false}
       multiValue={false}
       onTagValueChange={[Function]}
-      selectedTagValue={
+      selectedTagCategory={
         Object {
-          "description": "duck",
           "id": 1,
+          "label": "animal",
         }
       }
-      selectedTagValues={Array []}
+      selectedTagValues={
+        Array [
+          Object {
+            "id": 1,
+            "label": "duck",
+          },
+        ]
+      }
       valueLabel="Value"
       values={
         Array [
           Object {
-            "description": "Duck",
             "id": 31,
+            "label": "Duck",
           },
           Object {
-            "description": "Cat",
             "id": 32,
+            "label": "Cat",
           },
           Object {
-            "description": "Dog",
             "id": 33,
+            "label": "Dog",
           },
         ]
       }

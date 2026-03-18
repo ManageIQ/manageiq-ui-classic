@@ -21,35 +21,35 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
         onTagCategoryChange={[MockFunction]}
         selectedTagCategory={
           Object {
-            "description": "animal",
             "id": 1,
+            "label": "animal",
           }
         }
         tagCategories={
           Array [
             Object {
-              "description": "Name",
               "id": 1,
+              "label": "Name",
               "singleValue": undefined,
             },
             Object {
-              "description": "Number",
               "id": 2,
+              "label": "Number",
               "singleValue": undefined,
             },
             Object {
-              "description": "Animal",
               "id": 3,
+              "label": "Animal",
               "singleValue": undefined,
             },
             Object {
-              "description": "Food",
               "id": 4,
+              "label": "Food",
               "singleValue": false,
             },
             Object {
-              "description": "Something",
               "id": 5,
+              "label": "Something",
               "singleValue": true,
             },
           ]
@@ -61,15 +61,15 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
         onTagValueChange={[Function]}
         selectedTagCategory={
           Object {
-            "description": "animal",
             "id": 1,
+            "label": "animal",
           }
         }
         selectedTagValues={
           Array [
             Object {
-              "description": "Pepa",
               "id": 11,
+              "label": "Pepa",
             },
           ]
         }
@@ -77,12 +77,12 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
         values={
           Array [
             Object {
-              "description": "Pepa",
               "id": 11,
+              "label": "Pepa",
             },
             Object {
-              "description": "Franta",
               "id": 12,
+              "label": "Franta",
             },
           ]
         }
@@ -99,12 +99,12 @@ exports[`Tagging component without redux mapping match snapshot 1`] = `
       assignedTags={
         Array [
           Object {
-            "description": "Name",
             "id": 1,
+            "label": "Name",
             "values": Array [
               Object {
-                "description": "Pepa",
                 "id": 11,
+                "label": "Pepa",
               },
             ],
           },
@@ -140,35 +140,35 @@ exports[`Tagging component without redux mapping should call methods - singleVal
         onTagCategoryChange={[MockFunction]}
         selectedTagCategory={
           Object {
-            "description": "Food",
             "id": 4,
+            "label": "Food",
           }
         }
         tagCategories={
           Array [
             Object {
-              "description": "Name",
               "id": 1,
+              "label": "Name",
               "singleValue": undefined,
             },
             Object {
-              "description": "Number",
               "id": 2,
+              "label": "Number",
               "singleValue": undefined,
             },
             Object {
-              "description": "Animal",
               "id": 3,
+              "label": "Animal",
               "singleValue": undefined,
             },
             Object {
-              "description": "Food",
               "id": 4,
+              "label": "Food",
               "singleValue": false,
             },
             Object {
-              "description": "Something",
               "id": 5,
+              "label": "Something",
               "singleValue": true,
             },
           ]
@@ -180,8 +180,8 @@ exports[`Tagging component without redux mapping should call methods - singleVal
         onTagValueChange={[Function]}
         selectedTagCategory={
           Object {
-            "description": "Food",
             "id": 4,
+            "label": "Food",
           }
         }
         selectedTagValues={Array []}
@@ -189,16 +189,16 @@ exports[`Tagging component without redux mapping should call methods - singleVal
         values={
           Array [
             Object {
-              "description": "Steak",
               "id": 41,
+              "label": "Steak",
             },
             Object {
-              "description": "Duck",
               "id": 42,
+              "label": "Duck",
             },
             Object {
-              "description": "Salad",
               "id": 43,
+              "label": "Salad",
             },
           ]
         }
@@ -215,12 +215,12 @@ exports[`Tagging component without redux mapping should call methods - singleVal
       assignedTags={
         Array [
           Object {
-            "description": "Name",
             "id": 1,
+            "label": "Name",
             "values": Array [
               Object {
-                "description": "Pepa",
                 "id": 11,
+                "label": "Pepa",
               },
             ],
           },
@@ -256,35 +256,35 @@ exports[`Tagging component without redux mapping should call methods - singleVal
         onTagCategoryChange={[MockFunction]}
         selectedTagCategory={
           Object {
-            "description": "Something",
             "id": 5,
+            "label": "Something",
           }
         }
         tagCategories={
           Array [
             Object {
-              "description": "Name",
               "id": 1,
+              "label": "Name",
               "singleValue": undefined,
             },
             Object {
-              "description": "Number",
               "id": 2,
+              "label": "Number",
               "singleValue": undefined,
             },
             Object {
-              "description": "Animal",
               "id": 3,
+              "label": "Animal",
               "singleValue": undefined,
             },
             Object {
-              "description": "Food",
               "id": 4,
+              "label": "Food",
               "singleValue": false,
             },
             Object {
-              "description": "Something",
               "id": 5,
+              "label": "Something",
               "singleValue": true,
             },
           ]
@@ -296,8 +296,8 @@ exports[`Tagging component without redux mapping should call methods - singleVal
         onTagValueChange={[Function]}
         selectedTagCategory={
           Object {
-            "description": "Something",
             "id": 5,
+            "label": "Something",
           }
         }
         selectedTagValues={Array []}
@@ -305,12 +305,12 @@ exports[`Tagging component without redux mapping should call methods - singleVal
         values={
           Array [
             Object {
-              "description": "Knedlik",
               "id": 51,
+              "label": "Knedlik",
             },
             Object {
-              "description": "Daenerys Stormborn of the House Targaryen, First of Her Name,...and Mother of Dragons",
               "id": 52,
+              "label": "Daenerys Stormborn of the House Targaryen, First of Her Name,...and Mother of Dragons",
             },
           ]
         }
@@ -327,12 +327,12 @@ exports[`Tagging component without redux mapping should call methods - singleVal
       assignedTags={
         Array [
           Object {
-            "description": "Name",
             "id": 1,
+            "label": "Name",
             "values": Array [
               Object {
-                "description": "Pepa",
                 "id": 11,
+                "label": "Pepa",
               },
             ],
           },

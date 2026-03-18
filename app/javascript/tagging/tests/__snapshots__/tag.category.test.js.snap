@@ -21,14 +21,14 @@ exports[`TagCategory Component match snapshot 1`] = `
     showCloseButton={true}
     tagCategory={
       Object {
-        "description": "animal",
         "id": 1,
+        "label": "animal",
       }
     }
     tagValue={
       Object {
-        "description": "duck",
         "id": 1,
+        "label": "duck",
       }
     }
     truncate={[Function]}
@@ -39,14 +39,14 @@ exports[`TagCategory Component match snapshot 1`] = `
     showCloseButton={true}
     tagCategory={
       Object {
-        "description": "animal",
         "id": 1,
+        "label": "animal",
       }
     }
     tagValue={
       Object {
-        "description": "lion",
         "id": 2,
+        "label": "lion",
       }
     }
     truncate={[Function]}
