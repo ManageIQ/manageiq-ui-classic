@@ -24,12 +24,13 @@ const resetButton = () => (
     hasIconOnly
     iconDescription={__('Reset Dashboard Widgets to the default')}
     onClick={resetClick}
-    renderIcon={() => <Reply size={20} />}
+    size="md"
+    renderIcon={() => <Reply size={18} />}
   />
 );
 
 const closeFunc = () => {
-  document.getElementById('dropdown-custom').focus();
+  document.getElementById('dashboard-add-widget-menu').focus();
 };
 
 const MenuIcon = (props) => {
@@ -73,7 +74,7 @@ const addMenu = (items, locked) => {
   return (
     <OverflowMenu
       aria-label={title}
-      id="dropdown-custom"
+      id="dashboard-add-widget-menu"
       floatingmenu="true"
       disabled={locked}
       title={title}

@@ -27,7 +27,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
         aria-label="Add widget"
         disabled={false}
         floatingmenu="true"
-        id="dropdown-custom"
+        id="dashboard-add-widget-menu"
         menuOptionsClass="scrollable-options"
         onClose={[Function]}
         renderIcon={[Function]}
@@ -37,7 +37,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
           aria-label="Add widget"
           disabled={false}
           floatingmenu="true"
-          id="dropdown-custom"
+          id="dashboard-add-widget-menu"
           menuOptionsClass="scrollable-options"
           onClose={[Function]}
           renderIcon={[Function]}
@@ -52,7 +52,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
               className="cds--overflow-menu cds--overflow-menu--md"
               disabled={false}
               floatingmenu="true"
-              id="dropdown-custom"
+              id="dashboard-add-widget-menu"
               kind="ghost"
               label="Options"
               onClick={[Function]}
@@ -97,7 +97,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
                         disabled={false}
                         floatingmenu="true"
                         hasIconOnly={true}
-                        id="dropdown-custom"
+                        id="dashboard-add-widget-menu"
                         kind="ghost"
                         onBlur={[Function]}
                         onClick={[Function]}
@@ -118,7 +118,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
                           className="cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
                           disabled={false}
                           floatingmenu="true"
-                          id="dropdown-custom"
+                          id="dashboard-add-widget-menu"
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -215,6 +215,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
         kind="ghost"
         onClick={[Function]}
         renderIcon={[Function]}
+        size="md"
       >
         <ForwardRef
           align="top"
@@ -226,6 +227,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
           label="Reset Dashboard Widgets to the default"
           onClick={[Function]}
           renderIcon={null}
+          size="md"
         >
           <ForwardRef
             align="top"
@@ -271,10 +273,11 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
                     onMouseMove={[Function]}
                     onTouchStart={[Function]}
                     renderIcon={null}
+                    size="md"
                   >
                     <button
                       aria-labelledby="tooltip-5"
-                      className="cds--btn cds--btn--ghost cds--btn--icon-only"
+                      className="cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
                       disabled={false}
                       id="reset-dashboard-button"
                       onBlur={[Function]}
@@ -289,23 +292,23 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
                     >
                       <renderIcon>
                         <ForwardRef(Reply)
-                          size={20}
+                          size={18}
                         >
                           <Icon
                             fill="currentColor"
-                            height={20}
+                            height={18}
                             viewBox="0 0 32 32"
-                            width={20}
+                            width={18}
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             <svg
                               aria-hidden={true}
                               fill="currentColor"
                               focusable="false"
-                              height={20}
+                              height={18}
                               preserveAspectRatio="xMidYMid meet"
                               viewBox="0 0 32 32"
-                              width={20}
+                              width={18}
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
