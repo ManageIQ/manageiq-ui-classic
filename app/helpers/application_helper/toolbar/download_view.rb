@@ -32,37 +32,4 @@ class ApplicationHelper::Toolbar::DownloadView < ApplicationHelper::Toolbar::Bas
       ]
     ),
   ])
-  button_group('download_main_2', [
-  select(
-    :download_choice,
-    'carbon--Download',
-    N_('Download'),
-    nil,
-    :items => [
-      button(
-        :download_text,
-        'carbon--Document',
-        N_('Download this report in text format'),
-        N_('Download as Text'),
-        :url       => "/download_data",
-        :url_parms => "?download_type=text"),
-      button(
-        :download_csv,
-        'carbon--Document',
-        N_('Download this report in CSV format'),
-        N_('Download as CSV'),
-        :url       => "/download_data",
-        :url_parms => "?download_type=csv"),
-      button(
-        :download_pdf,
-        'carbon--Printer',
-        N_('Print or export this report in PDF format'),
-        N_('Print or export as PDF'),
-        :klass     => ApplicationHelper::Button::Basic,
-        :popup     => true,
-        :url       => "/download_data",
-        :url_parms => "?download_type=pdf"),
-    ]
-  ),
-  ])
 end
