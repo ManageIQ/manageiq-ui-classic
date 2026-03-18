@@ -9,13 +9,13 @@ describe ApplicationController do
                :message => "VMDB config updated (changing_value:[test] to [test2], password:[********] to [********])")
     end
 
-    it "#build_config_audit (private) password filtering" do
-      edit = {:current => {:user_proxies => [{:ldapport => "389", :bind_pwd => "secret"}]},
-              :new     => {:user_proxies => [{:ldapport => "636", :bind_pwd => "super_secret"}]}}
+    it "#build_config_audit (private) nested password filtering" do
+      edit = {:current => {:smtp => {:password => "secret"}},
+              :new     => {:smtp => {:password => "super_secret"}}}
       expect(controller.send(:build_config_audit, edit))
         .to eq(:event   => "vmdb_config_update",
                :userid  => nil,
-               :message => "VMDB config updated (user_proxies/0/ldapport:[389] to [636], user_proxies/0/bind_pwd:[********] to [********])")
+               :message => "VMDB config updated (smtp/password:[********] to [********])")
     end
 
     it "#build_created_audit (private)" do

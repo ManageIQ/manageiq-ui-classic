@@ -56,7 +56,7 @@ class ApplicationHelper::Toolbar::DiagnosticsServerCenter < ApplicationHelper::T
       :url   => "/fetch_production_log",
       :klass => ApplicationHelper::Button::DiagnosticsProductionLogs),
   ])
-  button_group('ldap_domain_vmdb', [
+  button_group('server_role_management', [
     select(
       :restart_vmdb_choice,
       nil,

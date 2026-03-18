@@ -9,7 +9,7 @@ class ApplicationHelper::Toolbar::DiagnosticsZoneCenter < ApplicationHelper::Too
       nil,
       :klass => ApplicationHelper::Button::ReloadServerTree),
   ])
-  button_group('ldap_domain_vmdb', [
+  button_group('server_role_management', [
     select(
       :zone_configuration_choice,
       nil,

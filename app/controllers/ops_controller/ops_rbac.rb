@@ -456,22 +456,15 @@ module OpsController::OpsRbac
   def rbac_group_user_lookup_field_changed
     return unless load_edit("rbac_group_edit__#{params[:id]}", "replace_cell__explorer")
 
-    @edit[:new][:user]     = params[:user]     if params[:user]
-    @edit[:new][:user_id]  = params[:user_id]  if params[:user_id]
-    @edit[:new][:user_pwd] = params[:password] if params[:password]
+    @edit[:new][:user] = params[:user] if params[:user]
   end
 
   def rbac_group_user_lookup
     assert_privileges(params[:id] == "new" ? "rbac_group_add" : "rbac_group_edit")
-
+    raise "rbac_group_user_lookup is only valid in httpd mode" unless ::Settings.authentication.mode == "httpd"
 
     rbac_group_user_lookup_field_changed
     add_flash(_("User must be entered to perform LDAP Group Look Up"), :error) if @edit[:new][:user].blank?
-
-    if ::Settings.authentication.mode != "httpd"
-      add_flash(_("Username must be entered to perform LDAP Group Look Up"), :error) if @edit[:new][:user_id].blank?
-      add_flash(_("User Password must be entered to perform LDAP Group Look Up"), :error) if @edit[:new][:user_pwd].blank?
-    end
 
     unless @flash_array.nil?
       javascript_flash
@@ -481,13 +474,7 @@ module OpsController::OpsRbac
     @record = MiqGroup.find_by(:id => @edit[:group_id])
     @sb[:roles] = @edit[:roles]
     begin
-      @edit[:ldap_groups_by_user] = if ::Settings.authentication.mode == "httpd"
-                                      MiqGroup.get_httpd_groups_by_user(@edit[:new][:user])
-                                    else
-                                      MiqGroup.get_ldap_groups_by_user(@edit[:new][:user],
-                                                                       @edit[:new][:user_id],
-                                                                       @edit[:new][:user_pwd])
-                                    end
+      @edit[:ldap_groups_by_user] = MiqGroup.get_httpd_groups_by_user(@edit[:new][:user])
     rescue => bang
       @edit[:ldap_groups_by_user] = []
       add_flash(_("Error during 'LDAP Group Look Up': %{message}") % {:message => bang.message}, :error)

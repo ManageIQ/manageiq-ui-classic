@@ -137,38 +137,6 @@ describe OpsController do
       end
     end
 
-    describe "#settings_get_form_vars" do
-      before do
-        miq_server = FactoryBot.create(:miq_server)
-        current = ::Settings.to_hash
-        current[:authentication] = { :ldap_role => true, :mode => 'ldap' }
-        edit = {:current => current,
-                :new     => copy_hash(current),
-                :key     => "settings_authentication_edit__#{miq_server.id}"}
-        controller.instance_variable_set(:@edit, edit)
-        session[:edit] = edit
-        controller.instance_variable_set(:@sb,
-                                         :selected_server_id => miq_server.id,
-                                         :active_tab         => 'settings_authentication')
-        controller.x_node = "svr-#{miq_server.id}"
-      end
-
-      it "sets ldap_role to false to make forest entries div hidden" do
-        controller.params = {:id                  => 'authentication',
-                             :authentication_mode => 'database'}
-        controller.send(:settings_get_form_vars)
-        expect(assigns(:edit)[:new][:authentication][:ldap_role]).to eq(false)
-      end
-
-      it "resets ldap_role to it's original state so forest entries div can be displayed" do
-        session[:edit][:new][:authentication][:mode] = 'database'
-        controller.params = {:id                  => 'authentication',
-                             :authentication_mode => 'ldap'}
-        controller.send(:settings_get_form_vars)
-        expect(assigns(:edit)[:new][:authentication][:ldap_role]).to eq(true)
-      end
-    end
-
     describe "#pglogical_save_subscriptions" do
       before { allow(controller).to receive(:javascript_flash) }
 
