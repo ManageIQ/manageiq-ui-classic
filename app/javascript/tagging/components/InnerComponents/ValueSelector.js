@@ -136,9 +136,9 @@ class ValueSelector extends React.Component {
 }
 
 ValueSelector.propTypes = {
-  selectedTagCategory: PropTypes.objectOf({
-    id: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
+  selectedTagCategory: PropTypes.shape({
+    id: PropTypes.string,
+    label: PropTypes.string,
   }).isRequired,
   selectedOption: PropTypes.arrayOf(TaggingPropTypes.value),
   values: PropTypes.arrayOf(TaggingPropTypes.value).isRequired,
