@@ -7,7 +7,7 @@ function deleteAssignedTag(state, actionTag) {
   const filteredTagValues = selectedItem.values.filter(value => (value.id !== actionTag.tagValue.id));
   return [...filteredState,
     {
-      description: actionTag.tagCategory.description,
+      label: actionTag.tagCategory.label,
       id: actionTag.tagCategory.id,
       values: [...filteredTagValues],
     },
@@ -28,7 +28,7 @@ function changeAssignedTags(state, actionTag) {
   if (actionTag.tagValue && actionTag.tagValue.length > 0) {
     return [...filteredState,
       {
-        description: actionTag.tagCategory.description,
+        label: actionTag.tagCategory.label,
         id: actionTag.tagCategory.id,
         values: actionTag.tagValue,
       }];

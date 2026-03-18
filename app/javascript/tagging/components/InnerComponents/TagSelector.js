@@ -11,7 +11,7 @@ class TagSelector extends React.Component {
     if (selectedOption) {
       onTagCategoryChange({
         id: selectedOption.id,
-        description: tagCategories.find((category) => category.id === selectedOption.id).description,
+        label: tagCategories.find((category) => category.id === selectedOption.id).label,
       });
     }
   };
@@ -29,7 +29,7 @@ class TagSelector extends React.Component {
               width: 'calc(100% - 18px)',
             }}
           >
-            {item.description}
+            {item.label}
           </span>
           <span
             className="pull-right pficon pficon-info tag-icon"
@@ -41,10 +41,8 @@ class TagSelector extends React.Component {
       );
     }
 
-    return item.description;
+    return item.label;
   };
-
-  itemToString = (item) => item?.description || '';
 
   render() {
     const { selectedOption, isDisabled, tagCategories } = this.props;
@@ -61,7 +59,6 @@ class TagSelector extends React.Component {
         disabled={isDisabled}
         onChange={this.handleChange}
         items={tagCategories}
-        itemToString={this.itemToString}
         itemToElement={this.itemToElement}
         selectedItem={selectedItem}
       />
