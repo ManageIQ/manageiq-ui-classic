@@ -184,7 +184,7 @@ module ApplicationController::Tags
         :label       => cat.description,
         :singleValue => cat.single_value,
         :values      => cat.entries.sort_by { |e| e[:description].downcase }.map do |entry|
-          { :id => entry.id.to_s, :label => entry.description }
+          {:id => entry.id.to_s, :label => entry.description}
         end
       }
     end
@@ -194,7 +194,7 @@ module ApplicationController::Tags
         :label  => tag.parent.description,
         :id     => tag.parent.id.to_s,
         :values => assignments.select { |assignment| assignment.parent_id == tag.parent_id }.map do |assignment|
-          { :label => assignment.description, :id => assignment.id.to_s }
+          {:label => assignment.description, :id => assignment.id.to_s}
         end
       }
     end
