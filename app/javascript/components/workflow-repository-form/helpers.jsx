@@ -23,3 +23,12 @@ export const customUrlValidator = (urlString) => {
 
   return isValid;
 };
+
+export const validationString = () => {
+  let validationString = `URL must include a protocol (http:// or https://) with path or be a valid SSH path (user@server:path or ssh://user@address:port/path)`;
+
+  if (process.env.NODE_ENV === 'development') {
+    validationString = `URL must include a protocol (http://, https:// or file://) with path or be a valid SSH path (user@server:path or ssh://user@address:port/path)`;
+  }
+  return validationString;
+};
