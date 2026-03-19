@@ -204,18 +204,34 @@ module ContainerServiceMixin
   end
 
   def hourly_metrics
-    MetricRollup.with_interval_and_time_range("hourly", (1.day.ago.beginning_of_hour.utc)..(Time.now.utc))
-                .where(:resource => @resource)
-                .order('timestamp')
+    query = MetricRollup.with_interval_and_time_range("hourly", (1.day.ago.beginning_of_hour.utc)..(Time.now.utc))
+
+    if @resource.respond_to?(:id)
+      # Single provider
+      query.where(:resource_type => @resource.class.name, :resource_id => @resource.id)
+    else
+      # Collection of providers - get all their class names
+      provider_types = @resource.pluck(:type).uniq
+      query.where(:resource_type => provider_types, :resource_id => @resource.pluck(:id))
+    end.order('timestamp')
   end
 
   def daily_metrics
     current_user = @controller.current_user
     tp = TimeProfile.profile_for_user_tz(current_user.id, current_user.get_timezone) || TimeProfile.default_time_profile
 
-    @daily_metrics ||= Metric::Helper.find_for_interval_name('daily', tp)
-                                     .where(:resource => @resource)
-                                     .where('timestamp > ?', 30.days.ago.utc)
-                                     .order('timestamp')
+    @daily_metrics ||= begin
+      query = Metric::Helper.find_for_interval_name('daily', tp)
+
+      if @resource.respond_to?(:id)
+        # Single provider
+        query.where(:resource_type => @resource.class.name, :resource_id => @resource.id)
+      else
+        # Collection of providers - get all their class names
+        provider_types = @resource.pluck(:type).uniq
+        query.where(:resource_type => provider_types, :resource_id => @resource.pluck(:id))
+      end.where('timestamp > ?', 30.days.ago.utc)
+        .order('timestamp')
+    end
   end
 end
