@@ -36,7 +36,9 @@ describe ContainerDashboardService do
         :derived_vm_numvcpus      => 2,
         :derived_memory_available => 2048,
         :cpu_usage_rate_average   => 100,
-        :time_profile             => time_profile
+        :time_profile             => time_profile,
+        :resource_type            => ems_openshift.class.name,
+        :resource_id              => ems_openshift.id
       )
 
       current_metric_kubernetes = FactoryBot.create(
@@ -46,7 +48,9 @@ describe ContainerDashboardService do
         :derived_vm_numvcpus      => 1,
         :derived_memory_available => 1024,
         :cpu_usage_rate_average   => 100,
-        :time_profile             => time_profile
+        :time_profile             => time_profile,
+        :resource_type            => ems_kubernetes.class.name,
+        :resource_id              => ems_kubernetes.id
       )
 
       old_metric = FactoryBot.create(
@@ -56,21 +60,22 @@ describe ContainerDashboardService do
         :derived_vm_numvcpus      => 2,
         :derived_memory_available => 2048,
         :cpu_usage_rate_average   => 100,
-        :time_profile             => time_profile
+        :time_profile             => time_profile,
+        :resource_type            => ems_openshift.class.name,
+        :resource_id              => ems_openshift.id
       )
 
       nil_fielded_metric = FactoryBot.create(
         :metric_rollup_cm_daily,
-        :timestamp    => old_date,
-        :time_profile => time_profile
+        :timestamp     => old_date,
+        :time_profile  => time_profile,
+        :resource_type => ems_openshift.class.name,
+        :resource_id   => ems_openshift.id
       )
 
-      ems_openshift.metric_rollups << current_metric_openshift
-      ems_openshift.metric_rollups << old_metric
-      ems_openshift.metric_rollups << nil_fielded_metric
-      ems_kubernetes.metric_rollups << current_metric_kubernetes
-      ems_kubernetes.metric_rollups << old_metric.dup
-      ems_kubernetes.metric_rollups << nil_fielded_metric.dup
+      current_metric_kubernetes.update!(:resource_type => ems_kubernetes.class.name, :resource_id => ems_kubernetes.id)
+      old_metric.dup.update!(:resource_type => ems_kubernetes.class.name, :resource_id => ems_kubernetes.id)
+      nil_fielded_metric.dup.update!(:resource_type => ems_kubernetes.class.name, :resource_id => ems_kubernetes.id)
 
       node_utilization_all_providers = described_class.new(nil, controller).ems_utilization[:xy_data]
       node_utilization_single_provider = described_class.new(ems_openshift.id, controller).ems_utilization[:xy_data]
@@ -352,35 +357,46 @@ describe ContainerDashboardService do
         :metric_rollup_cm_daily,
         :timestamp              => previous_date,
         :net_usage_rate_average => 2000,
-        :time_profile           => time_profile
+        :time_profile           => time_profile,
+        :resource_type          => ems_openshift.class.name,
+        :resource_id            => ems_openshift.id
       )
 
       current_metric_openshift = FactoryBot.create(
         :metric_rollup_cm_daily,
         :timestamp              => current_date,
         :net_usage_rate_average => 1000,
-        :time_profile           => time_profile
+        :time_profile           => time_profile,
+        :resource_type          => ems_openshift.class.name,
+        :resource_id            => ems_openshift.id
       )
 
       current_metric_kubernetes = FactoryBot.create(
         :metric_rollup_cm_daily,
         :timestamp              => current_date,
         :net_usage_rate_average => 1500,
-        :time_profile           => time_profile
+        :time_profile           => time_profile,
+        :resource_type          => ems_kubernetes.class.name,
+        :resource_id            => ems_kubernetes.id
       )
 
       old_metric = FactoryBot.create(
         :metric_rollup_cm_daily,
         :timestamp              => old_date,
         :net_usage_rate_average => 1500,
-        :time_profile           => time_profile
+        :time_profile           => time_profile,
+        :resource_type          => ems_openshift.class.name,
+        :resource_id            => ems_openshift.id
       )
 
-      ems_openshift.metric_rollups << previous_metric_openshift
-      ems_openshift.metric_rollups << current_metric_openshift
-      ems_openshift.metric_rollups << old_metric
-      ems_kubernetes.metric_rollups << current_metric_kubernetes
-      ems_kubernetes.metric_rollups << old_metric.dup
+      FactoryBot.create(
+        :metric_rollup_cm_daily,
+        :timestamp              => old_date,
+        :net_usage_rate_average => 1500,
+        :time_profile           => time_profile,
+        :resource_type          => ems_kubernetes.class.name,
+        :resource_id            => ems_kubernetes.id
+      )
 
       daily_network_trends = described_class.new(nil, controller).network_metrics[:xy_data]
       daily_network_trends_single_provider = described_class.new(ems_openshift.id, controller).network_metrics[:xy_data]
@@ -410,43 +426,62 @@ describe ContainerDashboardService do
         :metric_rollup_cm_hr,
         :timestamp              => previous_date,
         :net_usage_rate_average => 2000,
-        :time_profile           => time_profile
+        :time_profile           => time_profile,
+        :resource_type          => ems_openshift.class.name,
+        :resource_id            => ems_openshift.id
       )
 
       current_metric_openshift = FactoryBot.create(
         :metric_rollup_cm_hr,
         :timestamp              => current_date,
         :net_usage_rate_average => 1000,
-        :time_profile           => time_profile
+        :time_profile           => time_profile,
+        :resource_type          => ems_openshift.class.name,
+        :resource_id            => ems_openshift.id
       )
 
       current_metric_kubernetes = FactoryBot.create(
         :metric_rollup_cm_hr,
         :timestamp              => current_date,
         :net_usage_rate_average => 1500,
-        :time_profile           => time_profile
+        :time_profile           => time_profile,
+        :resource_type          => ems_kubernetes.class.name,
+        :resource_id            => ems_kubernetes.id
       )
 
       old_metric = FactoryBot.create(
         :metric_rollup_cm_hr,
         :timestamp              => old_date,
         :net_usage_rate_average => 1500,
-        :time_profile           => time_profile
+        :time_profile           => time_profile,
+        :resource_type          => ems_openshift.class.name,
+        :resource_id            => ems_openshift.id
       )
 
       nil_fields_metric = FactoryBot.create(
         :metric_rollup_cm_hr,
-        :timestamp    => old_date,
-        :time_profile => time_profile
+        :timestamp     => old_date,
+        :time_profile  => time_profile,
+        :resource_type => ems_openshift.class.name,
+        :resource_id   => ems_openshift.id
       )
 
-      ems_openshift.metric_rollups << previous_metric_openshift
-      ems_openshift.metric_rollups << current_metric_openshift
-      ems_openshift.metric_rollups << old_metric
-      ems_openshift.metric_rollups << nil_fields_metric
-      ems_kubernetes.metric_rollups << current_metric_kubernetes
-      ems_kubernetes.metric_rollups << old_metric.dup
-      ems_kubernetes.metric_rollups << nil_fields_metric.dup
+      FactoryBot.create(
+        :metric_rollup_cm_hr,
+        :timestamp              => old_date,
+        :net_usage_rate_average => 1500,
+        :time_profile           => time_profile,
+        :resource_type          => ems_kubernetes.class.name,
+        :resource_id            => ems_kubernetes.id
+      )
+
+      FactoryBot.create(
+        :metric_rollup_cm_hr,
+        :timestamp     => old_date,
+        :time_profile  => time_profile,
+        :resource_type => ems_kubernetes.class.name,
+        :resource_id   => ems_kubernetes.id
+      )
 
       hourly_network_trends = described_class.new(nil, controller).network_metrics[:xy_data]
       hourly_network_trends_single_provider = described_class.new(ems_openshift.id, controller).network_metrics[:xy_data]
