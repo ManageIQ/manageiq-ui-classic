@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_dependency "webpacker", "~>2.0.0"
 
   s.add_development_dependency "debride"
-  s.add_development_dependency "manageiq-style", "~> 1.5.0"
+  s.add_development_dependency "manageiq-style"
   s.add_development_dependency "rails-controller-testing", '~> 1.0.2'
   s.add_development_dependency "simplecov", ">= 0.21.2"
 
