@@ -991,7 +991,7 @@ class CatalogController < ApplicationController
     elsif prov_type.starts_with?('generic')
       prov_type.gsub(/(generic)(_.*)?/, 'service_template\2').classify.constantize
     else
-      ServiceTemplate
+      "ServiceTemplate#{prov_type.camelize}".safe_constantize || ServiceTemplate
     end
   end
 
@@ -1093,7 +1093,7 @@ class CatalogController < ApplicationController
            end
       common_st_record_vars(st)
       add_orchestration_template_vars(st)  if st.kind_of?(ServiceTemplateOrchestration)
-      add_configuration_script_vars(st)    if st.kind_of?(ServiceTemplateAutomation)
+      add_configuration_script_vars(st)    if st.kind_of?(ServiceTemplateAutomation) && !need_prov_dialogs?(@edit[:new][:st_prov_type])
       add_server_profile_template_vars(st) if @edit[:new][:st_prov_type] == 'cisco_intersight'
       st.service_type = "atomic"
 
@@ -1303,7 +1303,7 @@ class CatalogController < ApplicationController
     @available_catalogs = available_catalogs.sort # Get available catalogs with tenants and ancestors
     @additional_tenants = @edit[:new][:tenant_ids].map(&:to_s) # Get ids of selected Additional Tenants in the Tenants tree
     available_orchestration_templates if @record.kind_of?(ServiceTemplateOrchestration)
-    available_automation_managers     if @record.kind_of?(ServiceTemplateAutomation)
+    available_automation_managers     if @record.kind_of?(ServiceTemplateAutomation) && !need_prov_dialogs?(@record.prov_type)
     available_container_managers      if @record.kind_of?(ServiceTemplateContainerTemplate)
     fetch_zones
     @edit[:new][:zone_id] = @record.zone_id
