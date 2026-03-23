@@ -111,7 +111,7 @@ const DynamicSection = ({ section, sectionAction }) => {
   );
 
   const handleDragStart = (event) => {
-    const isModalOpen = document.querySelector('.bx--modal.is-visible') !== null;
+    const isModalOpen = document.querySelector('.cds--modal.is-visible') !== null;
     if (isModalOpen) {
       event.preventDefault();
       return;
