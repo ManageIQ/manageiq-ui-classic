@@ -3,13 +3,13 @@ import CategoryModifier from '../components/InnerComponents/CategoryModifier';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 
-const selectedTagCategory = { description: 'animal', id: 1 };
+const selectedTagCategory = { label: 'animal', id: 1 };
 const onTagCategoryChange = jest.fn();
 const tagCategories = [
-  { description: 'Name', id: 1 },
-  { description: 'Number', id: 2 },
-  { description: 'Animal', id: 3 },
-  { description: 'Food', id: 4 }
+  { label: 'Name', id: 1 },
+  { label: 'Number', id: 2 },
+  { label: 'Animal', id: 3 },
+  { label: 'Food', id: 4 }
 ];
 
 describe('TagCategory Component', () => {

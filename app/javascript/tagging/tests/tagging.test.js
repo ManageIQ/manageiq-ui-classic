@@ -5,42 +5,42 @@ import Tagging from '../components/Tagging/Tagging';
 
 const tags = [
   {
-    description: 'Name',
+    label: 'Name',
     id: 1,
-    values: [{ description: 'Pepa', id: 11 }, { description: 'Franta', id: 12 }],
+    values: [{ label: 'Pepa', id: 11 }, { label: 'Franta', id: 12 }],
   },
   {
-    description: 'Number',
+    label: 'Number',
     id: 2,
-    values: [{ description: '1', id: 21 }, { description: '2', id: 22 }],
+    values: [{ label: '1', id: 21 }, { label: '2', id: 22 }],
   },
   {
-    description: 'Animal',
+    label: 'Animal',
     id: 3,
     values: [
-      { description: 'Duck', id: 31 },
-      { description: 'Cat', id: 32 },
-      { description: 'Dog', id: 33 },
+      { label: 'Duck', id: 31 },
+      { label: 'Cat', id: 32 },
+      { label: 'Dog', id: 33 },
     ],
   },
   {
-    description: 'Food',
+    label: 'Food',
     id: 4,
     singleValue: false,
     values: [
-      { description: 'Steak', id: 41 },
-      { description: 'Duck', id: 42 },
-      { description: 'Salad', id: 43 },
+      { label: 'Steak', id: 41 },
+      { label: 'Duck', id: 42 },
+      { label: 'Salad', id: 43 },
     ],
   },
   {
-    description: 'Something',
+    label: 'Something',
     id: 5,
     singleValue: true,
     values: [
-      { description: 'Knedlik', id: 51 },
+      { label: 'Knedlik', id: 51 },
       {
-        description:
+        label:
           'Daenerys Stormborn of the House Targaryen, First of Her Name,...and Mother of Dragons',
         id: 52,
       },
@@ -48,15 +48,14 @@ const tags = [
   },
 ];
 
-const selectedTagCategory = { description: 'animal', id: 1 };
-const selectedTagValue = { description: 'duck', id: 1 };
-const selectedTagCategory1 = { description: 'Food', id: 4 };
-const selectedTagCategory2 = { description: 'Something', id: 5 };
+const selectedTagCategory = { label: 'animal', id: 1 };
+const selectedTagCategory1 = { label: 'Food', id: 4 };
+const selectedTagCategory2 = { label: 'Something', id: 5 };
 const assignedTags = [
   {
-    description: 'Name',
+    label: 'Name',
     id: 1,
-    values: [{ description: 'Pepa', id: 11 }],
+    values: [{ label: 'Pepa', id: 11 }],
   },
 ];
 
@@ -74,7 +73,6 @@ describe('Tagging component without redux mapping', () => {
       onTagCategoryChange={onChange}
       onTagDeleteClick={onDelete}
       selectedTagCategory={selectedTagCategory}
-      selectedTagValue={selectedTagValue}
     />);
     const tree = toJson(component);
     expect(tree).toMatchSnapshot();
@@ -95,7 +93,6 @@ describe('Tagging component without redux mapping', () => {
       onTagCategoryChange={onTagCategoryChange}
       onTagDeleteClick={onTagDeleteClick}
       selectedTagCategory={selectedTagCategory}
-      selectedTagValue={selectedTagValue}
     />);
     wrapper.instance().onTagCategoryChange('xaxa');
     expect(onTagCategoryChange.mock.calls).toHaveLength(1);
@@ -120,7 +117,6 @@ describe('Tagging component without redux mapping', () => {
       onTagCategoryChange={onTagCategoryChange}
       onTagDeleteClick={onTagDeleteClick}
       selectedTagCategory={selectedTagCategory1}
-      selectedTagValue={selectedTagValue}
     />);
     const tree = toJson(wrapper);
     expect(tree).toMatchSnapshot();
@@ -142,7 +138,6 @@ describe('Tagging component without redux mapping', () => {
       onTagCategoryChange={onTagCategoryChange}
       onTagDeleteClick={onTagDeleteClick}
       selectedTagCategory={selectedTagCategory2}
-      selectedTagValue={selectedTagValue}
     />);
     const tree = toJson(wrapper);
     expect(tree).toMatchSnapshot();

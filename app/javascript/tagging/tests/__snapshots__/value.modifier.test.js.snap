@@ -14,24 +14,30 @@ exports[`TagCategory Component match snapshot 1`] = `
       selectedOption={
         Array [
           Object {
-            "description": "Duck",
             "id": 1,
+            "label": "Duck",
           },
         ]
+      }
+      selectedTagCategory={
+        Object {
+          "id": "1",
+          "label": "Animal",
+        }
       }
       values={
         Array [
           Object {
-            "description": "Duck",
             "id": 1,
+            "label": "Duck",
           },
           Object {
-            "description": "Cat",
             "id": 2,
+            "label": "Cat",
           },
           Object {
-            "description": "Dog",
             "id": 3,
+            "label": "Dog",
           },
         ]
       }

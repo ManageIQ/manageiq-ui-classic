@@ -21,12 +21,12 @@ class TagCategory extends React.Component {
     return (
       <ul className="tag-category list-inline">
         <li key={this.props.tagCategory.id} id={`tag_category_${this.props.tagCategory.id}`}>
-          <div className="category-label" title={this.props.tagCategory.description}>
-            {this.props.categoryTruncate(this.props.tagCategory.description)}
+          <div className="category-label" title={this.props.tagCategory.label}>
+            {this.props.categoryTruncate(this.props.tagCategory.label)}
           </div>
         </li>
         {values
-          .sort((a, b) => (a.description < b.description ? -1 : 1))
+          .sort((a, b) => (a.label < b.label ? -1 : 1))
           .map((tagValue) => this.generateTag(tagValue))}
       </ul>
     );

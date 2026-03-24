@@ -5,7 +5,7 @@ import TaggingPropTypes from '../TaggingPropTypes';
 
 class ValueSelector extends React.Component {
   getValues = (values) =>
-    values.map((tag) => ({ value: tag.id, label: tag.description }));
+    values.map((tag) => ({ value: tag.id, label: tag.label }));
 
   /**
    * Maps the selected options for the select box input.
@@ -24,7 +24,7 @@ class ValueSelector extends React.Component {
   /**
    * Handles the single and multi select value changes.
    *
-   * Sends an Array of {description, id} to the callback.
+   * Sends an Array of {label, id} to the callback.
    * If null is received sends and empty array instead
    * (happens when removing elements one by one).
    * On reset button (multi select) sends the default empty array.
@@ -70,23 +70,23 @@ class ValueSelector extends React.Component {
     const selectedOptions = [];
     if (selectedOption.length !== 0) {
       if (selectedOption.length === 1) {
-        label = `${selectedOption[0].description}`;
+        label = `${selectedOption[0].label}`;
         if (multiValue) {
           selectedOptions.push({
-            label: selectedOption[0].description,
+            label: selectedOption[0].label,
             value: selectedOption[0].id,
           });
         }
       } else {
         selectedOption.forEach((option) => {
           selectedOptions.push({
-            label: option.description,
+            label: option.label,
             value: option.id,
           });
           if (label === '') {
-            label = `${option.description}`;
+            label = `${option.label}`;
           } else {
-            label = `${label}, ${option.description}`;
+            label = `${label}, ${option.label}`;
           }
         });
       }
@@ -102,7 +102,7 @@ class ValueSelector extends React.Component {
           label={label}
           initialSelectedItems={selectedOptions}
           // eslint-disable-next-line react/destructuring-assignment
-          key={this.props.selectedTagCategory.description}
+          key={this.props.selectedTagCategory.label}
           items={values}
           disabled={isDisabled}
           onChange={(val) => this.handleChange(val)}
@@ -136,9 +136,9 @@ class ValueSelector extends React.Component {
 }
 
 ValueSelector.propTypes = {
-  selectedTagCategory: PropTypes.objectOf({
-    id: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
+  selectedTagCategory: PropTypes.shape({
+    id: PropTypes.string,
+    label: PropTypes.string,
   }).isRequired,
   selectedOption: PropTypes.arrayOf(TaggingPropTypes.value),
   values: PropTypes.arrayOf(TaggingPropTypes.value).isRequired,

@@ -11,7 +11,7 @@ class TagView extends React.Component {
     <li key={tag.id}>
       <TagCategory
         key={tag.id}
-        tagCategory={{ id: tag.id, description: tag.description }}
+        tagCategory={{ id: tag.id, label: tag.label }}
         values={tag.values}
         onTagDeleteClick={this.props.onTagDeleteClick}
         showCloseButton={this.props.showCloseButton}
@@ -23,7 +23,7 @@ class TagView extends React.Component {
     const { hideHeader, header } = this.props;
     const assignedTags = [...this.props.assignedTags];
     const view = (assignedTags.length > 0
-      ? <ul className="list-inline">{ assignedTags.sort((a, b) => (a.description < b.description ? -1 : 1)).map(this.generateTagCategories) }</ul>
+      ? <ul className="list-inline">{ assignedTags.sort((a, b) => (a.label < b.label ? -1 : 1)).map(this.generateTagCategories) }</ul>
       : <NotificationMessage type="info" message={__('No Assigned Tags')} />
     );
     return (

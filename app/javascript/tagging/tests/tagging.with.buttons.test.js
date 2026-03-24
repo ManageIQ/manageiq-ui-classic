@@ -7,23 +7,23 @@ import TaggingWithButtons from '../components/TaggingWithButtons/TaggingWithButt
 
 
 const tags = [
-  { description: 'Name', id: 1, values: [{ description: 'Pepa', id: 11 }, { description: 'Franta', id: 12 }] },
-  { description: 'Number', id: 2, values: [{ description: '1', id: 21 }, { description: '2', id: 22 }] },
-  { description: 'Animal', id: 3, values: [{ description: 'Duck', id: 31 }, { description: 'Cat', id: 32 }, { description: 'Dog', id: 33 }] },
-  { description: 'Food', id: 4, values: [{ description: 'Steak', id: 41 }, { description: 'Duck', id: 42 }, { description: 'Salad', id: 43 }] },
+  { label: 'Name', id: 1, values: [{ label: 'Pepa', id: 11 }, { label: 'Franta', id: 12 }] },
+  { label: 'Number', id: 2, values: [{ label: '1', id: 21 }, { label: '2', id: 22 }] },
+  { label: 'Animal', id: 3, values: [{ label: 'Duck', id: 31 }, { label: 'Cat', id: 32 }, { label: 'Dog', id: 33 }] },
+  { label: 'Food', id: 4, values: [{ label: 'Steak', id: 41 }, { label: 'Duck', id: 42 }, { label: 'Salad', id: 43 }] },
   {
-    description: 'Something',
+    label: 'Something',
     id: 5,
-    values: [{ description: 'Knedlik', id: 51 },
-      { description: 'Daenerys Stormborn of the House Targaryen, First of Her Name,...and Mother of Dragons', id: 52 }],
+    values: [{ label: 'Knedlik', id: 51 },
+      { label: 'Daenerys Stormborn of the House Targaryen, First of Her Name,...and Mother of Dragons', id: 52 }],
   },
 ];
 
-const assignedTags = [{ description: 'Name', id: 1, tagValues: [{ description: 'Pepa', id: 11 }] }];
+const assignedTags = [{ label: 'Name', id: 1, tagValues: [{ label: 'Pepa', id: 11 }] }];
 
 const initialState = {
   tagging: {
-    appState: { tags, assignedTags, selected: { tagCategory: { description: 'Name', id: 1 }, tagValue: {} } },
+    appState: { tags, assignedTags, selected: { tagCategory: { label: 'Name', id: 1 }, tagValue: {} } },
   },
 };
 const initialProps = {
@@ -59,11 +59,11 @@ describe('Test connected Tagging component', () => {
 
     wrapper = shallow(<TaggingWithButtons
       {...initialProps}
-      multiValuedescription
-      selectedTagCategory={{ description: 'Name', id: 1 }}
+      multiValuelabel
+      selectedTagCategory={{ label: 'Name', id: 1 }}
       onTagCategoryChange={onTagCategoryChange}
     />);
-    wrapper.instance().onTagCategoryChange({ description: 'Number', id: 2 });
-    expect(onTagCategoryChange).toBeCalledWith({ description: 'Number', id: 2 });
+    wrapper.instance().onTagCategoryChange({ label: 'Number', id: 2 });
+    expect(onTagCategoryChange).toBeCalledWith({ label: 'Number', id: 2 });
   });
 });
