@@ -19,6 +19,28 @@
   }
 }
 
+.dashboard-toolbar {
+  padding-bottom: 10px;
+
+  #reset-dashboard-button {
+    margin-left: 20px;
+  }
+}
+
+.dashboard-toolbar-option-with-icon {
+  display: flex;
+  align-items: center;
+
+  .option-icon {
+    display: inline-flex;
+    width: 1.5rem;
+  }
+
+  .option-text {
+    display: inline-flex;
+  }
+}
+
 .miq-toolbar-actions {
   margin-top: -10px;
   margin-left: -20px;  /* this compensates for toolbar-pf-filter not being in the first position */
@@ -99,7 +121,7 @@
   color: #9c9c9c !important;
 }
 
-// This targets the common toolbar and dashboard toolbar options
+// This targets the common toolbar
 .miq-toolbar-option-text-with-icon {
   i {
     display: inline-block;
@@ -186,26 +208,6 @@
 
   &:hover {
     background-color: transparent;
-  }
-}
-
-#dropdown-custom-2 {
-  svg {
-    position: absolute;
-    top: 10px;
-    margin-left: 15px;
-  }
-}
-
-.refresh_button {
-  margin-left: 20px;
-  background-color: inherit;
-  border: none;
-  background-image: none;
-  box-shadow: none;
-
-  &:hover {
-    background-color: #e5e5e5;
   }
 }
 
