@@ -34,6 +34,12 @@
                :label  => _("Configuration Scripts"),
                :keys   => keys})
   - when :customize
+    - keys = [:verbosity, :execution_ttl, :log_output]
+    = render(:partial => "prov_dialog_fieldset",
+             :locals  => {:workflow => wf,
+               :dialog => dialog,
+               :label  => _("Provision"),
+               :keys   => keys})
     - keys = [:root_password]
     = render(:partial => "prov_dialog_fieldset",
              :locals => {:workflow => wf,
