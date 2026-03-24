@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { PieChart } from '@carbon/charts-react';
 import EmptyChart from '../emptyChart';
-import { chartConfig } from '../charts_config';
 
 const ServersHealthPieChart = ({ data, config }) => {
   const pieChartData = [
@@ -23,9 +22,6 @@ const ServersHealthPieChart = ({ data, config }) => {
   const PieOptions = {
     height: '230px',
     resizable: true,
-    color: {
-      scale: chartConfig.serversHealthUsagePieConfig.color,
-    },
     tooltip: {
       truncation: {
         type: 'none',
