@@ -25,7 +25,20 @@ const UsageTrendChart = ({
 
   const resultData = data.vms;
   const configName = resultData[dataPoint].interval_name + config;
-  const title = chartConfig[configName] ? chartConfig[configName].headTitle : __('New Image Usage Trend');
+  const getTitle = () => {
+    if (chartConfig[configName]) {
+      return chartConfig[configName].headTitle;
+    }
+    // When no data is available, the title can’t be fetched from the chart config,
+    // so it is assigned based on configName(either network or image)
+    if (configName === 'NetworkUsageConfig') {
+      return chartConfig.dailyNetworkUsageConfig.headTitle;
+    }
+
+    return chartConfig.dailyImageUsageConfig.headTitle;
+  };
+  const title = getTitle();
+
   return (
     <div className="card-pf card-pf-utilization">
       <div className="card-pf-heading">
