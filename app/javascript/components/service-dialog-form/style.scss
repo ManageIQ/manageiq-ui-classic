@@ -208,6 +208,13 @@
 .cds--modal.edit-field-modal {
   z-index: 9999;
   pointer-events: auto;
+
+  // Restrict textarea vertical expansion in edit field modal
+  .cds--text-area {
+    resize: vertical;
+    min-height: 80px;
+    max-height: 200px;
+  }
 }
 
 // Disable pointer events on draggable elements when modal is open

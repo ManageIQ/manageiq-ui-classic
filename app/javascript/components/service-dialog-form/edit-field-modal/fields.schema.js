@@ -23,7 +23,7 @@ export const textAreaComponent = (field) => ({
   id: field.name,
   name: field.name,
   label: field.label,
-  rows: 10,
+  rows: 2,
   ...(field.condition && { condition: field.condition }),
   ...(field.placeholder && { placeholder: field.placeholder }),
 });
