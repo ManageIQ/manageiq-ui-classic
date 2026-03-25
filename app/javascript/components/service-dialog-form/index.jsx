@@ -1,7 +1,7 @@
 /* eslint-disable radix */
 import React, { useState, useRef, useEffect } from 'react';
 import {
-  Tabs, Tab, Button, TextInput, TextArea,
+  Tabs, TabList, Tab, TabPanels, TabPanel, Button, TextInput, TextArea,
 } from '@carbon/react';
 import { AddAlt } from '@carbon/react/icons';
 import {
@@ -488,8 +488,8 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
     </div>
   );
 
-  /** Function to render the tabs from the tabLabels props */
-  const renderTabs = () => data.formFields.map((tab, tabPosition) => (
+  /** Function to render tab labels for TabList */
+  const renderTabList = () => data.formFields.map((tab, tabPosition) => (
     <Tab
       key={`tab${tab.tabId.toString()}`}
       draggable={tab.tabId !== 'new'}
@@ -521,37 +521,47 @@ const ServiceDialogForm = ({ dialogData, dialogAction }) => {
           resetDragRefs();
         }
       }}
-      label={tab.tabId === 'new' ? (
+      onClick={() => onTabSelect(tab.tabId, tabPosition)}
+    >
+      {tab.tabId === 'new' ? (
         <span className="create-tab-label">
           <AddAlt />
           {tab.name}
         </span>
       ) : tab.name}
-      onClick={() => onTabSelect(tab.tabId, tabPosition)}
-    >
-      {tab.tabId !== 'new'
-      && (
+    </Tab>
+  ));
+
+  /** Function to render tab panels content */
+  const renderTabPanels = () => data.formFields.map((tab) => (
+    <TabPanel key={`panel${tab.tabId.toString()}`}>
+      {tab.tabId !== 'new' && (
         <section className="dynamic-sections-wrapper">
           {renderTabName(tab)}
           {renderSections(tab)}
           {renderAddSectionButton(tab.tabId)}
         </section>
       )}
-    </Tab>
+    </TabPanel>
   ));
 
   /** Function to render the tab contents. */
   const renderTabContents = () => (
-    <div
-      className="dynamic-tabs-wrapper"
-    >
+    <div className="dynamic-tabs-wrapper">
       <Tabs
         className="miq_custom_tabs"
-        id="dynamic-tabs"
-        selected={selectedTabIndex}
-        onSelectionChange={setSelectedTabIndex}
+        selectedIndex={selectedTabIndex}
+        onChange={(evt) => {
+          const newIndex = evt.selectedIndex;
+          setSelectedTabIndex(newIndex);
+        }}
       >
-        {renderTabs()}
+        <TabList aria-label="Dialog tabs">
+          {renderTabList()}
+        </TabList>
+        <TabPanels>
+          {renderTabPanels()}
+        </TabPanels>
       </Tabs>
     </div>
   );
