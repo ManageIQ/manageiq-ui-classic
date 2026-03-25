@@ -177,8 +177,8 @@ export const dropComponent = (section, { componentId }) => {
         name: `dropdown_${Date.now()}`,
         label: 'Dropdown',
         items: [
-          { id: '1', text: 'Option 1', value: '1' },
-          { id: '2', text: 'Option 2', value: '2' }
+          { value: '1', description: 'Option 1' },
+          { value: '2', description: 'Option 2' }
         ],
         position: section.fields.length,
         visible: true,
@@ -194,8 +194,8 @@ export const dropComponent = (section, { componentId }) => {
         name: `radio_button_${Date.now()}`,
         label: 'Radio Button',
         items: [
-          { id: '1', text: 'Option 1', value: '1' },
-          { id: '2', text: 'Option 2', value: '2' }
+          { value: '1', description: 'Option 1' },
+          { value: '2', description: 'Option 2' }
         ],
         position: section.fields.length,
         visible: true,
@@ -363,8 +363,12 @@ export const getFieldValues = (field) => {
     case 'DialogFieldRadioButton':
       return {
         ...commonProps,
-        items: field.values ? field.values.map(([value, description]) => ({ value, description })) : [],
+        items: field.values
+          ? field.values.map(([value, description]) => ({ value, description }))
+          : field.items || [],
         value: field.default_value || field.value || '',
+        sortBy: field.options && field.options.sort_by ? field.options.sort_by : 'description',
+        sortOrder: field.options && field.options.sort_order ? field.options.sort_order : 'ascending',
       };
       
     case 'DialogFieldDateControl':

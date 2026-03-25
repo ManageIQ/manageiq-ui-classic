@@ -167,10 +167,10 @@ const DynamicRadioButton = ({ dynamicFieldData, onFieldAction }) => {
         >
           {sortedItems.map((option) => (
             <RadioButton
-              key={option.id}
-              id={`tab-${tabId}-section-${sectionId}-field-${fieldPosition}-radio-button-${option.id}`}
-              labelText={__(option.text)}
-              value={option.id}
+              key={option.value}
+              id={`tab-${tabId}-section-${sectionId}-field-${fieldPosition}-radio-button-${option.value}`}
+              labelText={__(option.description)}
+              value={option.value}
               disabled={fieldState.readOnly}
             />
           ))}

@@ -214,7 +214,13 @@ const selectOptions = (field, initialData) => {
     case 'automationType':
       return automationType;
     case 'value':
-      return initialData.items;
+      // Transform items from { value, description } to { label, value } for SELECT component
+      return initialData.items
+        ? initialData.items.map((item) => ({
+          label: item.description || item.text || item.label,
+          value: item.value
+        }))
+        : [];
     case 'categories':
       return initialData.categories;
     case 'subCategories':
