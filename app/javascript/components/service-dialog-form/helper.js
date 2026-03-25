@@ -177,8 +177,9 @@ export const dropComponent = (section, { componentId }) => {
         name: `dropdown_${Date.now()}`,
         label: 'Dropdown',
         items: [
-          { value: '1', description: 'Option 1' },
-          { value: '2', description: 'Option 2' }
+          { value: '1', description: 'One' },
+          { value: '2', description: 'Two' },
+          { value: '3', description: 'Three' }
         ],
         position: section.fields.length,
         visible: true,
@@ -194,8 +195,9 @@ export const dropComponent = (section, { componentId }) => {
         name: `radio_button_${Date.now()}`,
         label: 'Radio Button',
         items: [
-          { value: '1', description: 'Option 1' },
-          { value: '2', description: 'Option 2' }
+          { value: '1', description: 'One' },
+          { value: '2', description: 'Two' },
+          { value: '3', description: 'Three' }
         ],
         position: section.fields.length,
         visible: true,
@@ -353,7 +355,9 @@ export const getFieldValues = (field) => {
     case 'DialogFieldDropDownList':
       return {
         ...commonProps,
-        items: field.values ? field.values.map(([value, description]) => ({ value, description })) : [],
+        items: field.values
+          ? field.values.map(([value, description]) => ({ value, description }))
+          : field.items || [],
         multiselect: field.force_multi_value || false,
         value: field.default_value || field.value || [],
         sortBy: field.options && field.options.sort_by ? field.options.sort_by : 'description',
