@@ -13637,7 +13637,6 @@ __metadata:
     "@babel/preset-react": "npm:~7.28.0"
     "@babel/register": "npm:~7.28.0"
     "@babel/runtime-corejs3": "npm:~7.29.0"
-    "@carbon/charts": "npm:^0.58.2"
     "@carbon/charts-react": "npm:^0.58.2"
     "@carbon/react": "npm:~1.102.0"
     "@carbon/themes": "npm:~11.69.0"

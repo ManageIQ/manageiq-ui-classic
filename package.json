@@ -32,7 +32,6 @@
   },
   "homepage": "https://github.com/ManageIQ/manageiq#readme",
   "dependencies": {
-    "@carbon/charts": "^0.58.2",
     "@carbon/charts-react": "^0.58.2",
     "@carbon/react": "~1.102.0",
     "@carbon/themes": "~11.69.0",
