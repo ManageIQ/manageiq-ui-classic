@@ -107,7 +107,7 @@ const DynamicTextArea = ({ dynamicFieldData, onFieldAction }) => {
   // Define text area options and edit fields configuration
   const textAreaEditFields = useMemo(() => {
     const ordinaryOptions = [
-      dynamicFields.defaultValue,
+      dynamicFields.defaultTextAreaValue,
       dynamicFields.required,
       dynamicFields.readOnly,
       dynamicFields.visible,
@@ -138,7 +138,7 @@ const DynamicTextArea = ({ dynamicFieldData, onFieldAction }) => {
     ];
     
     if (fieldState.dynamic) {
-      tabs.push(overridableOptions());
+      tabs.push(overridableOptions('textArea'));
     }
     
     return tabs;

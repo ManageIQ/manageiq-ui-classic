@@ -1,17 +1,17 @@
 import { componentTypes } from '@@ddf';
 
 export const dynamicFields = {
+  automateEntryPoint: { label: __('Entry point'), name: 'automateEntryPoint', field: 'embedded-automate-entry-point' },
+  automationType: { label: __('Automation Type'), name: 'automationType', field: componentTypes.SELECT },
   categories: { label: __('Categories'), name: 'categories', field: componentTypes.SELECT },
   defaultCheckboxValue: { label: __('Default value'), name: 'checked', field: componentTypes.SWITCH },
   defaultDatePickerValue: { label: __('Default value'), name: 'value', field: componentTypes.DATE_PICKER },
   defaultDateTimePickerValue: { label: __('Default value'), name: 'value', field: 'date-time-picker' },
   defaultDropdownValue: { label: __('Default value'), name: 'value', field: componentTypes.SELECT },
+  defaultTextAreaValue: { label: __('Default value'), name: 'value', field: componentTypes.TEXTAREA },
   defaultValue: { label: __('Default value'), name: 'value', field: componentTypes.TEXT_FIELD },
   dynamic: { label: __('Dynamic'), name: 'dynamic', field: componentTypes.SWITCH },
   entries: { label: __('Entries'), name: 'items', field: componentTypes.FIELD_ARRAY },
-  automationType: { label: __('Automation Type'), name: 'automationType', field: componentTypes.SELECT },
-  automateEntryPoint: { label: __('Entry point'), name: 'automateEntryPoint', field: 'embedded-automate-entry-point' },
-  workflowEntryPoint: { label: __('Entry point'), name: 'workflowEntryPoint', field: 'embedded-workflow-entry-point' },
   fieldsToRefresh: { label: __('Fields to refresh'), name: 'fieldsToRefresh', field: componentTypes.SELECT },
   help: { label: __('Help'), name: 'helperText', field: componentTypes.TEXTAREA },
   label: { label: __('Label'), name: 'label', field: componentTypes.TEXT_FIELD },
@@ -19,18 +19,22 @@ export const dynamicFields = {
   multiselect: { label: __('Multiselect'), name: 'multiselect', field: componentTypes.SWITCH },
   name: { label: __('Name'), name: 'name', field: componentTypes.TEXT_FIELD },
   protected: { label: __('Protected'), name: 'protected', field: componentTypes.SWITCH },
+  readOnly: { label: __('Read only'), name: 'readOnly', field: componentTypes.SWITCH },
   reconfigurable: { label: __('Reconfigurable'), name: 'reconfigurable', field: componentTypes.SWITCH },
   required: { label: __('Required'), name: 'required', field: componentTypes.SWITCH },
-  readOnly: { label: __('Read only'), name: 'readOnly', field: componentTypes.SWITCH },
+  showPastDates: { label: __('Show Past Dates'), name: 'showPastDates', field: componentTypes.SWITCH },
   showRefresh: { label: __('Show refresh button'), name: 'showRefresh', field: componentTypes.SWITCH },
+  singleValue: { label: __('Single value'), name: 'singleValue', field: componentTypes.SWITCH },
   sortBy: { label: __('Sort by'), name: 'sortBy', field: componentTypes.SELECT },
   sortOrder: { label: __('Sort order'), name: 'sortOrder', field: componentTypes.SELECT },
-  showPastDates: { label: __('Show Past Dates'), name: 'showPastDates', field: componentTypes.SWITCH },
-  singleValue: { label: __('Single value'), name: 'singleValue', field: componentTypes.SWITCH },
   subCategories: { label: __('Entries'), name: 'subCategories', field: componentTypes.SELECT },
-  visible: { label: __('Visible'), name: 'visible', field: componentTypes.SWITCH },
-  valueType: { label: __('Value type'), name: 'dataType', field: componentTypes.SELECT },
   validation: { label: __('Validation'), name: 'validation', field: componentTypes.SWITCH },
+  validatorMessage: {
+    condition: { when: 'validation', is: true },
+    label: __('Validation Message'),
+    name: 'validationMessage',
+    field: componentTypes.TEXT_FIELD,
+  },
   validatorRule: {
     condition: { when: 'validation', is: true },
     label: __('Validator Rule'),
@@ -38,12 +42,9 @@ export const dynamicFields = {
     field: componentTypes.TEXT_FIELD,
     placeholder: __('Regular Expression'),
   },
-  validatorMessage: {
-    condition: { when: 'validation', is: true },
-    label: __('Validation Message'),
-    name: 'validationMessage',
-    field: componentTypes.TEXT_FIELD,
-  },
+  valueType: { label: __('Value type'), name: 'dataType', field: componentTypes.SELECT },
+  visible: { label: __('Visible'), name: 'visible', field: componentTypes.SWITCH },
+  workflowEntryPoint: { label: __('Entry point'), name: 'workflowEntryPoint', field: 'embedded-workflow-entry-point' },
 };
 
 export const fieldTab = {
@@ -78,11 +79,12 @@ const defaultValField = (type) => {
       return dynamicFields.defaultDatePickerValue;
     case 'timePicker':
       return dynamicFields.defaultDateTimePickerValue;
+    case 'textArea':
+      return dynamicFields.defaultTextAreaValue;
     default:
       return dynamicFields.defaultValue;
   }
 };
-
 
 export const overridableOptions = (type) => ({
   name: fieldTab.overridableOptions,
