@@ -238,8 +238,8 @@
   .cds--fieldset {
     // Target the container div that holds all array items
     > div {
-      // Each array item is a direct child div with no class
-      > div:not(.addContainer-0-2-5) {
+      // Each array item is a direct child div that contains form items and a remove button
+      > div:has(.cds--form-item) {
         display: flex;
         flex-direction: row;
         align-items: flex-start;
@@ -266,8 +266,7 @@
         }
       }
 
-      // Style the add button container
-      .addContainer-0-2-5 {
+      > div:has(button[id^="add-"]) {
         margin-top: 8px;
       }
     }
