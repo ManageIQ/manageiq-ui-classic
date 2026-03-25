@@ -27,7 +27,7 @@
 }
 
 .chart-holder {
-  .bx--cc--chart-wrapper {
+  .cds--cc--chart-wrapper {
     .layout-svg-wrapper {
       width: 90%;
       left: 5%;
@@ -35,7 +35,7 @@
       margin-top: 6px;
     }
 
-    .bx--cc--title {
+    .cds--cc--title {
       .title {
         display: none;
       }
@@ -53,11 +53,11 @@
   }
 }
 
-.bx--cc--pie {
+.cds--cc--pie {
   overflow: visible !important;
 }
 
-.bx--cc--toolbar {
+.cds--chart-holder .cds--cc--toolbar {
   .cds--overflow-menu-options {
     top: 10%;
   }
@@ -68,7 +68,7 @@
   height: 0;
 }
 
-.bx--cc--legend {
+.cds--cc--legend {
   .legend-item {
     height: 30px;
     margin-top: 2px;
@@ -87,7 +87,7 @@
     margin-bottom: 50px;
     width: 50%;
 
-    .chart-holder.bx--chart-holder {
+    .chart-holder.cds--chart-holder {
       width: 100% !important;
     }
   }
@@ -120,7 +120,7 @@
 }
 
 .card-pf-utilization {
-  .chart-holder.bx--chart-holder {
+  .chart-holder.cds--chart-holder {
     margin-bottom: 40px;
   }
 
