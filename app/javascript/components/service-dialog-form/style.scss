@@ -149,7 +149,6 @@
 
                 // Fix Carbon MultiSelect dropdown styling 
                 .cds--list-box__menu {
-                  list-style: none;
                   padding: 0;
                 }
               }
@@ -225,6 +224,11 @@
     resize: vertical;
     min-height: 80px;
     max-height: 300px;
+  }
+
+  // Fix Carbon MultiSelect dropdown styling in modal
+  .cds--list-box__menu {
+    padding: 0;
   }
 }
 
