@@ -286,3 +286,10 @@ body:has(.cds--modal.is-visible) {
     pointer-events: auto;
   }
 }
+
+// Remove default legend border/underline
+.cds--radio-button-group legend,
+.cds--fieldset legend {
+  border: 0;
+  border-bottom: 0;
+}
