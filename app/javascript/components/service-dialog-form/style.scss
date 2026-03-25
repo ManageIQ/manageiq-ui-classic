@@ -146,6 +146,12 @@
                   resize: vertical;
                   max-height: 300px;
                 }
+
+                // Fix Carbon MultiSelect dropdown styling 
+                .cds--list-box__menu {
+                  list-style: none;
+                  padding: 0;
+                }
               }
               .dynamic-form-field-actions {
                 display: flex;
