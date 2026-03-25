@@ -3123,9 +3123,9 @@ __metadata:
   linkType: hard
 
 "@rails/actioncable@npm:^8.0.0":
-  version: 8.1.200
-  resolution: "@rails/actioncable@npm:8.1.200"
-  checksum: 10/f7153a95511d56f4aa6efd7b10000b5da9ed00a7acb2e7998592ceefd2370e6db660013d21a65f4653b0779c73619c9c6e1d6fb7775737b483533b1cf6a708f9
+  version: 8.1.300
+  resolution: "@rails/actioncable@npm:8.1.300"
+  checksum: 10/9a8682b9d311ded0cf3a6fcb581fdcde8e21e16dba375a854cb6adb38167dbe06ccac6ca5a4edcdf55accc9396fcbd5dc0aa8b4605427c9f0ee9c5b4e687bfed
   languageName: node
   linkType: hard
 
