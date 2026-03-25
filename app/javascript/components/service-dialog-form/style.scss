@@ -141,6 +141,11 @@
                 flex-direction: column;
                 flex-grow: 1;
                 padding: 10px;
+
+                .cds--text-area {
+                  resize: vertical;
+                  max-height: 300px;
+                }
               }
               .dynamic-form-field-actions {
                 display: flex;
