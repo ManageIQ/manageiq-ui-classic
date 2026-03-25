@@ -6,14 +6,6 @@
     position: relative;
     min-height: 50px;
 
-    widget-chart {
-      .bx--cc--skeleton {
-        margin-left: 25%;
-        width: 50%;
-        left: auto;
-      }
-    }
-
     div[id^="ww_"] {
       width: 100%;
       height: auto;
@@ -45,23 +37,8 @@
           overflow-y: auto;
         }
 
-        div.bx--cc--legend {
+        div.cds--cc--legend {
           height: auto !important;
-        }
-
-        widget-footer {
-          display: flex;
-          overflow: hidden;
-          margin-top: 10px;
-          margin-left: -20px;
-          width: calc(100% + 40px);
-
-          .card-pf-footer {
-            margin: 10px 0 0 0 !important;
-            width: 100%;
-            padding: 20px;
-            border-top: 1px solid theme.$layer-selected-01;
-          }
         }
       }
     }
