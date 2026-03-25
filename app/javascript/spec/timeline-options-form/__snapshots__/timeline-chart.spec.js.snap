@@ -24,7 +24,7 @@ exports[`Show Timeline Chart should render empty chart 1`] = `
     title=""
   >
     <div>
-      <L3
+      <e
         className="line_charts"
         data={Array []}
         options={
@@ -68,7 +68,7 @@ exports[`Show Timeline Chart should render empty chart 1`] = `
         <div
           className="chart-holder"
         />
-      </L3>
+      </e>
     </div>
   </TimelineChart>
 </Provider>
