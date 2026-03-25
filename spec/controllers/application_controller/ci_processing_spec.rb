@@ -635,6 +635,19 @@ describe ApplicationController do
         expect(assigns(:flash_array).first[:message]).to include("does not apply")
       end
     end
+
+    context 'Microsoft provider' do
+      let(:vm) { FactoryBot.create(:vm_microsoft) }
+
+      it "Reconfigure VM action should not be allowed for a VM marked as reconfigurable" do
+        expect(controller).to receive(:render)
+        controller.send(:vm_reconfigure)
+        unless subject.reconfigurable?
+          expect(controller.send(:flash_errors?)).to be_truthy
+          expect(assigns(:flash_array).first[:message]).to include("does not apply")
+        end
+      end
+    end
   end
 
   describe "#item_supports? (private)" do
