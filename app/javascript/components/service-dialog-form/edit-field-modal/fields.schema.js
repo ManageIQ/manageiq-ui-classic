@@ -41,7 +41,7 @@ export const fieldArrayComponent = (field) => ({
   name: field.name,
   label: field.label,
   id: field.name,
-  // className: 'field-array-item',
+  className: 'entries-field-array',
   AddButtonProps: {
     size: 'small',
   },
@@ -49,23 +49,21 @@ export const fieldArrayComponent = (field) => ({
     size: 'small',
   },
   itemDefaultExpanded: true, // ensures fields are always visible
-  noLabel: true, // removes the duplicate label for each item
+  noItemLabel: true, // removes the duplicate label for each item
   fields: [
     {
       component: componentTypes.TEXT_FIELD,
       name: 'description',
-      // placeholder: 'Description',
-      label: 'Description',
+      placeholder: 'Description',
+      hideLabel: true,
       isRequired: true,
-      className: 'field-column',
     },
     {
       component: componentTypes.TEXT_FIELD,
       name: 'value',
-      // placeholder: 'Value',
-      label: 'Value',
+      placeholder: 'Value',
+      hideLabel: true,
       isRequired: true,
-      className: 'field-column',
     },
   ],
 });

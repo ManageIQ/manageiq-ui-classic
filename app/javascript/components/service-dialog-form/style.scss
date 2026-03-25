@@ -232,6 +232,48 @@
   }
 }
 
+// 'Entries' Field array styling for side-by-side layout
+.edit-field-modal {
+  // Target the fieldset with class formGroup-* (the entries field array)
+  .cds--fieldset {
+    // Target the container div that holds all array items
+    > div {
+      // Each array item is a direct child div with no class
+      > div:not(.addContainer-0-2-5) {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 8px;
+
+        // Make form items display side by side
+        .cds--form-item {
+          flex: 1;
+          margin-bottom: 0;
+
+          // Hide the label wrapper if it exists
+          .cds--text-input__label-wrapper {
+            display: none;
+          }
+        }
+
+        // Style the remove button
+        .cds--btn--danger,
+        button[id^="remove-"] {
+          margin-top: 0;
+          align-self: flex-start;
+          flex-shrink: 0;
+        }
+      }
+
+      // Style the add button container
+      .addContainer-0-2-5 {
+        margin-top: 8px;
+      }
+    }
+  }
+}
+
 // Disable pointer events on draggable elements when modal is open
 body:has(.cds--modal.is-visible) {
   .dynamic-section,
