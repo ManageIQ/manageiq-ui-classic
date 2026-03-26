@@ -73,7 +73,7 @@ ManageIQ implements the following cypress extensions:
 ##### toolbar
 
 * `cy.toolbarItems(toolbarButton)` - returns an array of objects {text: String, disabled: Boolean} for the toolbar dropdown buttons for when a toolbar button is clicked. `toolbarButton` is the string for the text of the toolbar button that you want to click on.
-* `cy.toolbar(toolbarButton, toolbarOption)` - click on the toolbar button specified by the user. Can also then click on a specified dropdown option as well. `toolbarButton` is the string for the text of the toolbar button that you want to click on. `toolbarOption` is the string for the text of the toolbar dropdown option that you want to click on.
+* `cy.toolbar(toolbarButton, toolbarOption, otherOptions)` - click on the toolbar button specified by the user. Can also then click on a specified dropdown option as well. `toolbarButton` is the string for the text of the toolbar button that you want to click on. `toolbarOption` is the string for the text of the toolbar dropdown option that you want to click on. `otherOptions` is an optional object with additional options: `matchedButtonIndex` (number, default: -1) to select a specific button when multiple buttons with the same text exist. Use -1 to automatically select the first enabled button, or use 0, 1, 2... to select a specific matched button by index. e.g. `cy.toolbar('Configuration', 'Add a new Report');` (auto-selects first enabled button), `cy.toolbar('Configuration', 'Add a new Report', { matchedButtonIndex: 0 });` (selects first matched button), `cy.toolbar('Configuration', 'Add a new Report', { matchedButtonIndex: 1 });` (selects second matched button).
 
 ##### api_commands
 
