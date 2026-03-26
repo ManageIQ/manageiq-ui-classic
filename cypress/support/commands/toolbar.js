@@ -2,17 +2,49 @@
 
 // toolbarButton: String for the text of the toolbar button to click.
 // toolbarOption: String for the text of the dropdown button to click after the toolbar dropdown is opened.
-Cypress.Commands.add('toolbar', (toolbarButton, toolbarOption = '') => {
+// otherOptions: Object (optional) - Additional options for toolbar interaction.
+//               - matchedButtonIndex: Number (default: -1) - Index among buttons with matching text (0-based).
+//                                     Use -1 to automatically select the first enabled button.
+//                                     Use 0, 1, 2... to select a specific matched button by index.
+Cypress.Commands.add('toolbar', (toolbarButton, toolbarOption = '', otherOptions = {}) => {
+  const { matchedButtonIndex = -1 } = otherOptions;
+
   const clickToolbarButton = cy
     .get('#toolbar')
     .find('button')
     .then((buttons) => {
-      const targetToolbarButton = [...buttons].find(
+      const matchedButtons = [...buttons].filter(
         (btn) => btn.innerText.trim() === toolbarButton
       );
+      const matchedButtonCount = matchedButtons.length;
 
-      if (!targetToolbarButton) {
+      if (matchedButtonCount === 0) {
         cy.logAndThrowError(`cy.toolbar: Toolbar button: "${toolbarButton}" was not found`);
+      }
+
+      let targetToolbarButton;
+      // If matchedButtonIndex is -1 (default), intelligently select the button
+      if (matchedButtonIndex === -1) {
+        // If only one button matches, use it
+        if (matchedButtonCount === 1) {
+          targetToolbarButton = matchedButtons[0];
+        } else {
+          // Multiple buttons found - prefer the first enabled one
+          targetToolbarButton = matchedButtons.find((btn) => !btn.disabled);
+
+          if (!targetToolbarButton) {
+            // All buttons are disabled, use the first one (will fail with proper error)
+            targetToolbarButton = matchedButtons[0];
+          }
+        }
+      } else {
+        // Specific matched button index requested
+        if (matchedButtonIndex >= matchedButtonCount) {
+          cy.logAndThrowError(
+            `cy.toolbar: Matched button index ${matchedButtonIndex} out of range. Found ${matchedButtonCount} button(s) with text "${toolbarButton}". Index must be between 0 and ${matchedButtonCount - 1}.`
+          );
+        }
+        targetToolbarButton = matchedButtons[matchedButtonIndex];
       }
       return cy.wrap(targetToolbarButton).click();
     });
