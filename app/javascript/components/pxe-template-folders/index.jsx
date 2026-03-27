@@ -8,14 +8,14 @@ const PxeTemplateFolders = ({ folders }) => {
   const { headers, rows } = tableData(folders);
 
   const handleCellClick = (row) => {
-    if (row && row.id) {
+    if (row?.id) {
       window.miqTreeActivateNode('customization_templates_tree', row.id);
     }
   };
 
   return (
     <div id="template_folders_div">
-      {rows.rowItems.length > 0 ? (
+      {rows?.rowItems?.length > 0 ? (
         <MiqDataTable
           headers={headers}
           rows={rows.rowItems}

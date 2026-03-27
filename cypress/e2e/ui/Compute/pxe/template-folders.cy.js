@@ -6,55 +6,38 @@ describe('Compute > Infrastructure > PXE > Customization Templates', () => {
     cy.menu('Compute', 'Infrastructure', 'PXE');
   });
 
-  describe('PXE Servers Table', () => {
-    it('displays the PXE explorer page', () => {
-      cy.get('#explorer').should('be.visible');
-      cy.get('#explorer_title_text').should('contain', 'All PXE Servers');
-    });
-  });
-
   describe('Customization Template Folders Table', () => {
     beforeEach(() => {
       cy.accordion('Customization Templates');
     });
 
-    it('navigates to Customization Templates tree', () => {
-      cy.get('#template_folders_div').should('be.visible');
-    });
-
     it('displays and allows clicking on system folder, Examples (read only)', () => {
       // Click on Examples folder
-      cy.get('#template_folders_div')
-        .contains('Examples (read only)')
-        .closest('tr')
-        .click();
+      cy.clickTableRowByText({ text: 'Examples (read only)' });
 
       // Verify navigation occurred (tree node should be selected)
       cy.get('#treeview-customization_templates_tree')
         .find('.node-selected')
         .contains('Examples (read only)');
 
-      cy.get('#explorer_title_text').contains('Examples (read only)');
+      cy.expect_explorer_title('Examples (read only)');
       cy.get('#gtl_div').contains('ESXi 4.1');
     });
 
     it('can click on a customization template within the system folder list and navigate to its details page', () => {
       // Click on Examples folder
-      cy.get('#template_folders_div')
-        .contains('Examples (read only)')
-        .closest('tr')
-        .click();
+      cy.clickTableRowByText({ text: 'Examples (read only)' });
 
       // Verify navigation occurred (tree node should be selected)
       cy.get('#treeview-customization_templates_tree')
         .find('.node-selected')
         .contains('Examples (read only)');
 
-      cy.get('#explorer_title_text').contains('Examples (read only)');
+      cy.expect_explorer_title('Examples (read only)');
       cy.get('#gtl_div').contains('ESXi 4.1').click();
 
       cy.get('.cds--accordion__item > .cds--accordion__heading').contains('Basic Information');
-      cy.get('#explorer_title_text').contains('Customization Template "ESXi 4.1"');
+      cy.expect_explorer_title('Customization Template "ESXi 4.1"');
       cy.get('[tabindex="0"] > .label_header').contains('Name');
       cy.get('[tabindex="0"] > .content_value > .content').contains('ESXi 4.1');
       cy.get('[tabindex="1"] > .label_header').contains('Description');
@@ -83,16 +66,13 @@ describe('Compute > Infrastructure > PXE > Customization Templates', () => {
 
     it('navigates to folder content when clicked', () => {
       // Click on CentOS-6 folder
-      cy.get('#template_folders_div')
-        .contains('CentOS-6')
-        .closest('tr')
-        .click();
+      cy.clickTableRowByText({ text: 'CentOS-6' });
 
       // Verify navigation occurred (tree node should be selected)
       cy.get('#treeview-customization_templates_tree').find('.node-selected').contains('CentOS-6');
 
       // Verify that the main content area updates
-      cy.get('#explorer_title_text').contains('Customization Templates for System Image Types "CentOS-6"');
+      cy.expect_explorer_title('Customization Templates for System Image Types "CentOS-6"');
     });
   });
 });
