@@ -1,7 +1,6 @@
 import { headerData, rowData } from '../miq-data-table/helper';
 
 export const tableData = (folders) => {
-  let rows = [];
   const columns = [
     { text: 'name', header_text: __('name') },
   ];
@@ -18,6 +17,5 @@ export const tableData = (folders) => {
     );
   });
 
-  rows = rowData(headerKeys, initialData, false);
-  return rows;
+  return rowData(headerKeys, initialData, false);
 };
