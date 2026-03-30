@@ -110,6 +110,7 @@
     "@babel/eslint-parser": "~7.28.0",
     "@babel/plugin-transform-class-properties": "~7.28.0",
     "@babel/plugin-transform-nullish-coalescing-operator": "~7.28.6",
+    "@babel/plugin-transform-numeric-separator": "~7.28.6",
     "@babel/plugin-transform-optional-chaining": "~7.28.6",
     "@babel/preset-env": "~7.29.0",
     "@babel/preset-react": "~7.28.0",
