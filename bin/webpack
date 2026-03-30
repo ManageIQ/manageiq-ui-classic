@@ -3,6 +3,7 @@ $stdout.sync = true
 
 require "shellwords"
 require "yaml"
+require "json"
 
 ENV["RAILS_ENV"] ||= "development"
 RAILS_ENV = ENV["RAILS_ENV"]
@@ -13,6 +14,54 @@ NODE_ENV = ENV["NODE_ENV"]
 APP_PATH          = File.expand_path("../", __dir__)
 NODE_MODULES_PATH = File.join(APP_PATH, "node_modules")
 WEBPACK_CONFIG    = File.join(APP_PATH, "config/webpack/#{NODE_ENV}.js")
+
+# Check Node.js version against package.json requirements
+def check_node_version
+  package_json_path = File.join(APP_PATH, "package.json")
+  package_json = JSON.parse(File.read(package_json_path))
+  required_version = package_json.dig("engines", "node")
+
+  if required_version
+    current_version = `node --version`.strip.sub(/^v/, '')
+
+    # Parse the version requirement (supports ^, ~, >=, etc.)
+    if required_version =~ /^\^(\d+)\.(\d+)\.(\d+)$/
+      required_major = $1.to_i
+      required_minor = $2.to_i
+      required_patch = $3.to_i
+
+      current_parts = current_version.split('.').map(&:to_i)
+      current_major = current_parts[0]
+      current_minor = current_parts[1] || 0
+      current_patch = current_parts[2] || 0
+
+      if current_major != required_major
+        abort <<~ERROR
+          Error: Incorrect Node.js version!
+
+          Required: Node.js #{required_version} (from package.json)
+          Current:  Node.js v#{current_version}
+
+          The major version must be #{required_major}.
+          Please install Node.js version #{required_version} or compatible.
+        ERROR
+      elsif current_major == required_major &&
+            (current_minor < required_minor ||
+             (current_minor == required_minor && current_patch < required_patch))
+        abort <<~ERROR
+          Error: Node.js version too old!
+
+          Required: Node.js #{required_version} (from package.json)
+          Current:  Node.js v#{current_version}
+
+          Please upgrade to Node.js #{required_major}.#{required_minor}.#{required_patch} or higher.
+        ERROR
+      end
+    end
+  end
+end
+
+check_node_version
 
 unless File.exist?(WEBPACK_CONFIG)
   puts "Webpack configuration not found."
