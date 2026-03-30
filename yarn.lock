@@ -1488,7 +1488,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/icons-react@npm:^11.64.0, @carbon/icons-react@npm:^11.77.0":
+"@carbon/icons-react@npm:^11.64.0":
   version: 11.77.0
   resolution: "@carbon/icons-react@npm:11.77.0"
   dependencies:
@@ -1498,6 +1498,19 @@ __metadata:
   peerDependencies:
     react: ">=16"
   checksum: 10/db4e19765313d009356a1d8e0e6bbfcabe8f86621c64f7964ffa941d94c34e6170d044404334353823ad15bd98fbd88247106e95f59ab423e81bf4287ae7f3c1
+  languageName: node
+  linkType: hard
+
+"@carbon/icons-react@npm:^11.77.1":
+  version: 11.77.1
+  resolution: "@carbon/icons-react@npm:11.77.1"
+  dependencies:
+    "@carbon/icon-helpers": "npm:^10.74.0"
+    "@ibm/telemetry-js": "npm:^1.5.0"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    react: ">=16"
+  checksum: 10/af28e74b1b45c9aeb9c5e9320e47ed8a6d26a80d19f20fbe59d4d50dfd6579af13b9a5a7d8278c8593cd8926f3419f0161fa99aa33d91f218b95dbdcbd7ee626
   languageName: node
   linkType: hard
 
@@ -1519,13 +1532,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/react@npm:~1.104.0":
-  version: 1.104.0
-  resolution: "@carbon/react@npm:1.104.0"
+"@carbon/react@npm:~1.104.1":
+  version: 1.104.1
+  resolution: "@carbon/react@npm:1.104.1"
   dependencies:
     "@babel/runtime": "npm:^7.27.3"
     "@carbon/feature-flags": "npm:^1.2.0"
-    "@carbon/icons-react": "npm:^11.77.0"
+    "@carbon/icons-react": "npm:^11.77.1"
     "@carbon/layout": "npm:^11.50.0"
     "@carbon/styles": "npm:^1.103.0"
     "@carbon/utilities": "npm:^0.18.0"
@@ -1545,7 +1558,7 @@ __metadata:
     react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
     react-is: ^16.13.1 || ^17.0.2 || ^18.3.1 || ^19.0.0
     sass: ^1.33.0
-  checksum: 10/ce58e1bf62c5bed44482c9d5fd49b38a7a8a2ae06a17fe589cec68a9796991f143ebbe9fd455f4f471a18ceea093b1be8678cac5b686fb65857d5095433adfd9
+  checksum: 10/c3a544b4f7e7ad0e1b0df6285ec0fc6cd1934a7d19c851ec61d91b9701205af3eebfc9ac94fa2fb68c3bbe721bfcbecf00a56fa6f0001653d78b419a0e487bd3
   languageName: node
   linkType: hard
 
@@ -13919,7 +13932,7 @@ __metadata:
     "@babel/register": "npm:~7.28.0"
     "@babel/runtime-corejs3": "npm:~7.29.0"
     "@carbon/charts-react": "npm:~1.27.3"
-    "@carbon/react": "npm:~1.104.0"
+    "@carbon/react": "npm:~1.104.1"
     "@carbon/themes": "npm:~11.70.0"
     "@data-driven-forms/carbon-component-mapper": "npm:~4.1.13"
     "@data-driven-forms/react-form-renderer": "npm:~4.1.13"
