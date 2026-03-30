@@ -929,7 +929,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-transform-numeric-separator@npm:^7.28.6":
+"@babel/plugin-transform-numeric-separator@npm:^7.28.6, @babel/plugin-transform-numeric-separator@npm:~7.28.6":
   version: 7.28.6
   resolution: "@babel/plugin-transform-numeric-separator@npm:7.28.6"
   dependencies:
@@ -13686,6 +13686,7 @@ __metadata:
     "@babel/eslint-parser": "npm:~7.28.0"
     "@babel/plugin-transform-class-properties": "npm:~7.28.0"
     "@babel/plugin-transform-nullish-coalescing-operator": "npm:~7.28.6"
+    "@babel/plugin-transform-numeric-separator": "npm:~7.28.6"
     "@babel/plugin-transform-optional-chaining": "npm:~7.28.6"
     "@babel/preset-env": "npm:~7.29.0"
     "@babel/preset-react": "npm:~7.28.0"
