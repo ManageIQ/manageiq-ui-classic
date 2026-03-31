@@ -988,10 +988,8 @@ class CatalogController < ApplicationController
   def class_service_template(prov_type)
     if content_library?
       ManageIQ::Providers::Vmware::InfraManager::OvfServiceTemplate
-    elsif prov_type.starts_with?('generic')
-      prov_type.gsub(/(generic)(_.*)?/, 'service_template\2').classify.constantize
     else
-      "ServiceTemplate#{prov_type.camelize}".safe_constantize || ServiceTemplate
+      ServiceTemplate.class_from_prov_type(prov_type)
     end
   end
 
