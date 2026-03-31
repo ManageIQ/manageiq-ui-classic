@@ -4,13 +4,11 @@ import PropTypes from 'prop-types';
 import { carbonizeIcon } from '../../menu/icon';
 
 export const MenuIcon = (props) => {
-  let IconElement;
-  if (props.icon) {
-    IconElement = carbonizeIcon(props.icon, { className: 'carbon-icon' });
-  }
+  const IconElement = props.icon ? carbonizeIcon(props.icon, { className: 'carbon-icon' }) : null;
+
   return (
     <div className="miq-toolbar-option-text-with-icon">
-      {props.icon ? <IconElement color={props.color} /> : undefined}
+      {IconElement && <IconElement color={props.color} />}
       <span>{ props.text }</span>
     </div>
   );

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import * as icons from '@carbon/react/icons';
 
 export const carbonizeIcon = (classname, options = undefined) => {
-  const size = (options && options.size) || 20; // Default size is 24px
+  const size = (options?.size) || 20; // Default size is 24px
 
   if (!classname) {
     return null;
@@ -15,7 +15,7 @@ export const carbonizeIcon = (classname, options = undefined) => {
 
   const name = classname.replace(/^carbon--/, '');
   const IconComponent = icons[name];
-  if (options && options.className) {
+  if (options?.className) {
     return (props) => (
       <div className={`${options.className}-div`}>
         <IconComponent className={options.className} size={size} {...props} />

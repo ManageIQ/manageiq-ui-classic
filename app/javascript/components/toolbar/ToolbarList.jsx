@@ -50,11 +50,7 @@ export const ToolbarList = (props) => {
   };
 
   const iconText = text ?? title;
-  let IconElement;
-
-  if (icon) {
-    IconElement = carbonizeIcon(icon, { className: 'carbon-icon' });
-  }
+  const IconElement = icon ? carbonizeIcon(icon, { className: 'carbon-icon' }) : null;
 
   return (
     <OverflowMenu
@@ -68,7 +64,7 @@ export const ToolbarList = (props) => {
       onClose={closeFunc}
       renderIcon={(iconProps) => (
         <div className="toolbar-overflow">
-          {icon ? <IconElement style={{ color }} /> : undefined}
+          {IconElement && <IconElement style={{ color }} />}
           <ChevronDown size={20} {...iconProps} />
           <span>{iconText}</span>
         </div>
