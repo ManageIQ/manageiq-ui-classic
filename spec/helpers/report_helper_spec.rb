@@ -65,4 +65,32 @@ describe ReportHelper do
       expect(options).to eq(expected_array)
     end
   end
+
+  describe '#visibility_options' do
+    let(:role1) { FactoryBot.create(:miq_user_role, :name => 'EvmRole-auditor') }
+    let(:role2) { FactoryBot.create(:miq_user_role, :name => 'EvmRole-desktop') }
+
+    it 'returns "To All Users" when visibility is set to all' do
+      widget = FactoryBot.create(:miq_widget, :visibility => {:roles => ['_ALL_']})
+      expect(helper.visibility_options(widget)).to eq('To All Users')
+    end
+
+    it 'converts role IDs to role names for display' do
+      widget = FactoryBot.create(:miq_widget, :visibility => {:roles => [role1.id, role2.id]})
+      result = helper.visibility_options(widget)
+      expect(result).to include('EvmRole-auditor')
+      expect(result).to include('EvmRole-desktop')
+      expect(result).to include('By Roles:')
+    end
+
+    it 'converts group IDs to group descriptions for display' do
+      group1 = FactoryBot.create(:miq_group, :description => 'Group1')
+      group2 = FactoryBot.create(:miq_group, :description => 'Group2')
+      widget = FactoryBot.create(:miq_widget, :visibility => {:groups => [group1.id, group2.id]})
+      result = helper.visibility_options(widget)
+      expect(result).to include('Group1')
+      expect(result).to include('Group2')
+      expect(result).to include('By Groups:')
+    end
+  end
 end

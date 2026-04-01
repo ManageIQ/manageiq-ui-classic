@@ -23,17 +23,25 @@ describe('Automation > Embedded Automate > Customization > Buttons', () => {
       cy.get('#description').type('Test button description');
 
       cy.get('.icon-button').click();
+      cy.get('.cds--modal-container').should('be.visible');
       cy.get(':nth-child(1) > span > .ff').click();
-      cy.get('.bx--modal-footer > .bx--btn--primary').click();
+      cy.get('.cds--modal-footer > .cds--btn--primary').click();
 
       cy.tabs({ tabLabel: 'Advanced' });
 
       cy.get('#object_request').scrollIntoView();
       cy.get('#object_request').type('test_request');
 
-      cy.get('#form_role_visibility button[data-id="visibility_typ"]').scrollIntoView();
-      cy.get('#form_role_visibility button[data-id="visibility_typ"]').click();
-      cy.get('#form_role_visibility .dropdown-menu [data-original-index="1"] > a').click();
+      cy.interceptApi({
+        alias: 'visibilityChanged',
+        urlPattern: '/miq_ae_customization/automate_button_field_changed',
+        triggerFn: () => {
+          cy.get('#form_role_visibility button[data-id="visibility_typ"]').scrollIntoView();
+          cy.get('#form_role_visibility button[data-id="visibility_typ"]').click();
+          cy.get('#form_role_visibility .dropdown-menu [data-original-index="1"] > a').click();
+        },
+        waitOnlyIfRequestIntercepted: true,
+      });
 
       cy.contains('User Roles').scrollIntoView();
 
@@ -51,9 +59,7 @@ describe('Automation > Embedded Automate > Customization > Buttons', () => {
         waitOnlyIfRequestIntercepted: true,
       });
 
-      // Click Add button
-      // TODO: cy.getFormButtonByTypeWithText expects this in the main_content div, but it's in the form_buttons_div
-      // within the full_content div - enhance the cy.getFormButtonByTypeWithText to accept a div id or normalize the location of the button
+      // TODO: cy.getFormButtonByTypeWithText expects button in main_content div, but it's in form_buttons_div
       cy.get('#buttons_on > .btn-primary').click();
       cy.expect_flash(flashClassMap.success, 'was added');
 

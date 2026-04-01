@@ -296,10 +296,8 @@ module ReportController::Widgets
           @sb[:user_roles] = Rbac.filtered(MiqUserRole.where(:id => role_ids)).order(:name).pluck(:name)
         end
       elsif @widget.visibility && @widget.visibility[:groups]
-        @sb[:groups] = []
-        Rbac.filtered(MiqGroup.non_tenant_groups_in_my_region).sort_by(&:description).each do |r|
-          @sb[:groups].push(r.description) if @widget.visibility[:groups].include?(r.description)
-        end
+        group_ids = @widget.visibility[:groups]
+        @sb[:groups] = Rbac.filtered(MiqGroup.where(:id => group_ids)).order(:description).pluck(:description)
       end
     end
   end
@@ -334,8 +332,7 @@ module ReportController::Widgets
         @edit[:new][:roles] = @widget.visibility[:roles][0] == "_ALL_" ? ["_ALL_"] : @widget.visibility[:roles].sort
       elsif @widget.visibility[:groups]
         @edit[:new][:visibility_typ] = "group"
-        groups = Rbac.filtered(MiqGroup.in_my_region.where(:description => @widget.visibility[:groups]))
-        @edit[:new][:groups] = groups.collect(&:id).sort
+        @edit[:new][:groups] = @widget.visibility[:groups][0] == "_ALL_" ? ["_ALL_"] : @widget.visibility[:groups].sort
       end
     end
     @edit[:sorted_user_roles] =
@@ -558,12 +555,7 @@ module ReportController::Widgets
     widget.content_type = WIDGET_CONTENT_TYPE[@sb[:wtype]]
     widget.visibility ||= {}
     if @edit[:new][:visibility_typ] == "group"
-      groups = []
-      @edit[:new][:groups].each do |g|
-        group = MiqGroup.find(g)
-        groups.push(group.description) if g == group.id.to_s
-      end
-      widget.visibility[:groups] = groups
+      widget.visibility[:groups] = @edit[:new][:groups]
       widget.visibility.delete(:roles) if widget.visibility[:roles]
     else
       if @edit[:new][:visibility_typ] == "role"
