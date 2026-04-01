@@ -6,10 +6,13 @@ import { MenuIcon } from './MenuIcon';
 import { isEnabled } from './utility';
 import { ToolbarClick } from './ToolbarClick';
 import CountContext from './ToolbarContext';
+import { carbonizeIcon } from '../../menu/icon';
 
 export const ToolbarList = (props) => {
   const count = useContext(CountContext);
-  const { items, title, id, text, icon, color, onClick } = props;
+  const {
+    items, title, id, text, icon, color, onClick,
+  } = props;
   // Set this true for overflowmenu keydown event
   const [overflowTab, setOverflowTab] = useState(false);
 
@@ -47,6 +50,7 @@ export const ToolbarList = (props) => {
   };
 
   const iconText = text ?? title;
+  const IconElement = icon ? carbonizeIcon(icon, { className: 'carbon-icon' }) : null;
 
   return (
     <OverflowMenu
@@ -60,7 +64,7 @@ export const ToolbarList = (props) => {
       onClose={closeFunc}
       renderIcon={(iconProps) => (
         <div className="toolbar-overflow">
-          { icon && <i className={icon} style={{ color }} /> }
+          {IconElement && <IconElement style={{ color }} />}
           <ChevronDown size={20} {...iconProps} />
           <span>{iconText}</span>
         </div>

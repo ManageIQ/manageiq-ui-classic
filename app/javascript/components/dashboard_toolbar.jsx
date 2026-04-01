@@ -35,7 +35,7 @@ const closeFunc = () => {
 
 const MenuIcon = (props) => {
   const icon = props.image;
-  const IconElement = carbonizeIcon(icon, 24);
+  const IconElement = carbonizeIcon(icon, { size: 24 });
   if (icon) {
     return (
       <div className="dashboard-toolbar-option-with-icon">

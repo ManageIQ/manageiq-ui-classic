@@ -68,6 +68,18 @@
         top: 10px;
       }
 
+      // Dynamically injected classname from props in icon.jsx
+      .carbon-icon-div {
+        display: inline-flex;
+        padding-right: 5px;
+        padding-bottom: 10px;
+
+        .carbon-icon {
+          position: static;
+          left: 0px;
+        }
+      }
+
       i {
         color: #161616;
         padding-right: 4px;
@@ -123,6 +135,15 @@
 
 // This targets the common toolbar
 .miq-toolbar-option-text-with-icon {
+  .carbon-icon-div {
+    display: inline-block;
+    padding-right: 5px;
+
+    .carbon-icon {
+      margin-bottom: -5px;
+    }
+  }
+  
   i {
     display: inline-block;
     width: 1.5rem;
