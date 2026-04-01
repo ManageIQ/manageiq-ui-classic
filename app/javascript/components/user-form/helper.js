@@ -44,11 +44,9 @@ export const passwordValidation = (initialValues, id, editMode, values, setState
     }
   }
 
-  if (editMode && values.password !== values.confirmPassword) {
+  if ((editMode || !id) && values.password !== values.confirmPassword) {
     errors.confirmPassword = 'Password/Verify Password do not match';
   }
-  if (!!id === false && values.password !== values.confirmPassword) {
-    errors.confirmPassword = 'Password/Verify Password do not match';
-  }
+
   return errors;
 };
