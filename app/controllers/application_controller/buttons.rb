@@ -852,12 +852,7 @@ module ApplicationController::Buttons
     end
     button.visibility ||= {}
     if @edit[:new][:visibility_typ] == "role"
-      roles = []
-      @edit[:new][:roles].each do |r|
-        role = MiqUserRole.find_by(:id => r)
-        roles.push(role.name) if role
-      end
-      button.visibility[:roles] = roles
+      button.visibility[:roles] = @edit[:new][:roles]
     else
       button.visibility[:roles] = ["_ALL_"]
     end
@@ -1023,16 +1018,7 @@ module ApplicationController::Buttons
     # Visibility Box
     if @custom_button.visibility && @custom_button.visibility[:roles]
       @edit[:new][:visibility_typ] = @custom_button.visibility[:roles][0] == "_ALL_" ? "all" : "role"
-      if @custom_button.visibility[:roles][0] == "_ALL_"
-        @edit[:new][:roles] = ["_ALL_"]
-      else
-        @edit[:new][:roles] ||= []
-        @custom_button.visibility[:roles].each do |r|
-          role = MiqUserRole.find_by(:name => r)
-          @edit[:new][:roles].push(role.id) if role
-        end
-      end
-      @edit[:new][:roles].sort! if @edit[:new][:roles].present?
+      @edit[:new][:roles] = @custom_button.visibility[:roles][0] == "_ALL_" ? ["_ALL_"] : @custom_button.visibility[:roles].sort
     end
 
     @edit[:sorted_user_roles] = []
@@ -1096,9 +1082,8 @@ module ApplicationController::Buttons
       end
       @sb[:user_roles] = []
       if @custom_button.visibility && @custom_button.visibility[:roles] && @custom_button.visibility[:roles][0] != "_ALL_"
-        MiqUserRole.all.sort_by(&:name).each do |r|
-          @sb[:user_roles].push(r.name) if @custom_button.visibility[:roles].include?(r.name)
-        end
+        role_ids = @custom_button.visibility[:roles]
+        @sb[:user_roles] = MiqUserRole.where(:id => role_ids).order(:name).pluck(:name)
       end
       @resolve[:new][:target_class] = "ServiceTemplate"
       dialog_id = @custom_button.resource_action.dialog_id
