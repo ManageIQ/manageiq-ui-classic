@@ -6,10 +6,6 @@ module NodeVersionCheck
     gem_root = defined?(APP_PATH) ? APP_PATH : File.expand_path("..", __dir__)
     version_check_script = File.join(gem_root, "scripts/check-node-version.js")
 
-    unless system("node", version_check_script)
-      # rubocop:disable Rails/Exit
-      exit 1
-      # rubocop:enable Rails/Exit
-    end
+    abort unless system("node", version_check_script)
   end
 end
