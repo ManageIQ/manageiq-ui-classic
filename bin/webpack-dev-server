@@ -16,10 +16,8 @@ NODE_MODULES_PATH = File.join(APP_PATH, "node_modules")
 WEBPACK_CONFIG    = File.join(APP_PATH, "config/webpack/development.js")
 
 # Check Node.js version before proceeding
-version_check_script = File.join(APP_PATH, "scripts/check-node-version.js")
-unless system("node", version_check_script)
-  exit 1
-end
+require File.join(APP_PATH, "lib/node_version_check")
+NodeVersionCheck.verify!
 
 def args(key)
   index = ARGV.index(key)
