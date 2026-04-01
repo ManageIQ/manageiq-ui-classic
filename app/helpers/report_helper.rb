@@ -30,7 +30,17 @@ module ReportHelper
     if values.first == "_ALL_"
       _("To All Users")
     else
-      _("By %{typ}: %{values}") % {:typ => typ.to_s.titleize, :values => values.join(',')}
+      # TODO: Come back to this, I think group and roles are both doing it wrong and once we always get ids here, we can remove this logic and get the description/name/etc.
+      display_values = if typ == :roles
+                         # Convert role IDs to role names for display
+                         MiqUserRole.where(:id => values).pluck(:name).join(',')
+                       elsif typ == :groups
+                         # Convert group IDs to group descriptions for display
+                         MiqGroup.where(:id => values).pluck(:description).join(',')
+                       else
+                         values.join(',')
+                       end
+      _("By %{typ}: %{values}") % {:typ => typ.to_s.titleize, :values => display_values}
     end
   end
 

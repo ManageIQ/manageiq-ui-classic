@@ -75,7 +75,7 @@ describe ReportController do
       @edit_hash[:new][:visibility_typ] = 'group'
       @edit_hash[:new][:groups] = [group.id.to_s]
       controller.send(:widget_set_record_vars, @widget)
-      expect(@widget.visibility[:groups]).to eq([group.description])
+      expect(@widget.visibility[:groups]).to eq([group.id.to_s])
     end
   end
 
@@ -113,6 +113,22 @@ describe ReportController do
       controller.send(:widget_get_node_info)
 
       expect(assigns(:sb)[:user_roles]).to eq([])
+    end
+
+    it "loads group descriptions from permitted group IDs for display" do
+      user = controller.send(:current_user)
+      group = user.current_group
+      group.update!(:description => "WidgetGroup1")
+
+      widget = FactoryBot.create(:miq_widget,
+                                 :title      => "Widget With Groups",
+                                 :visibility => {:groups => [group.id]})
+
+      controller.instance_variable_set(:@sb, {:trees => {:widgets_tree => {:active_node => "root-xx-#{widget.id}"}}})
+      controller.x_node = "root-xx-#{widget.id}"
+      controller.send(:widget_get_node_info)
+
+      expect(assigns(:sb)[:groups]).to eq(["WidgetGroup1"])
     end
   end
 
