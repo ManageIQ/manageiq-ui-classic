@@ -67,7 +67,7 @@ describe ReportController do
       @edit_hash[:new][:visibility_typ] = 'role'
       @edit_hash[:new][:roles] = [role.id.to_s]
       controller.send(:widget_set_record_vars, @widget)
-      expect(@widget.visibility[:roles]).to eq([role.name])
+      expect(@widget.visibility[:roles]).to eq([role.id.to_s])
     end
 
     it "sets group visibility for widget" do
@@ -76,6 +76,43 @@ describe ReportController do
       @edit_hash[:new][:groups] = [group.id.to_s]
       controller.send(:widget_set_record_vars, @widget)
       expect(@widget.visibility[:groups]).to eq([group.description])
+    end
+  end
+
+  context "#widget_get_node_info" do
+    before do
+      user = FactoryBot.create(:user_with_group)
+      login_as user
+      allow(controller).to receive(:current_user).and_return(user)
+      allow(User).to receive(:server_timezone).and_return("UTC")
+      allow(MiqServer).to receive(:my_server).and_return(double("MiqServer", :logon_status => :ready, :id => 1))
+      controller.instance_variable_set(:@sb, {})
+    end
+
+    it "loads role names from role IDs for display" do
+      role1 = FactoryBot.create(:miq_user_role, :name => "WidgetRole1")
+      role2 = FactoryBot.create(:miq_user_role, :name => "WidgetRole2")
+      widget = FactoryBot.create(:miq_widget,
+                                 :title      => "Widget With Roles",
+                                 :visibility => {:roles => [role1.id, role2.id]})
+
+      controller.instance_variable_set(:@sb, {:trees => {:widgets_tree => {:active_node => "root-xx-#{widget.id}"}}})
+      controller.x_node = "root-xx-#{widget.id}"
+      controller.send(:widget_get_node_info)
+
+      expect(assigns(:sb)[:user_roles]).to match_array(["WidgetRole1", "WidgetRole2"])
+    end
+
+    it "handles widgets with _ALL_ visibility" do
+      widget = FactoryBot.create(:miq_widget,
+                                 :title      => "Widget For All",
+                                 :visibility => {:roles => ["_ALL_"]})
+
+      controller.instance_variable_set(:@sb, {:trees => {:widgets_tree => {:active_node => "root-xx-#{widget.id}"}}})
+      controller.x_node = "root-xx-#{widget.id}"
+      controller.send(:widget_get_node_info)
+
+      expect(assigns(:sb)[:user_roles]).to eq([])
     end
   end
 
