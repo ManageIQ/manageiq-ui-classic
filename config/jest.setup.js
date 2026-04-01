@@ -15,6 +15,35 @@ require('whatwg-fetch');
 
 require('../app/javascript/oldjs/miq_global.js');
 
+/* ============== RTL test setup ============== */
+
+require('@testing-library/jest-dom');
+
+// TODO: These mocks(getSelection & MutationObserver) can likely be removed
+// after upgrading Jest to the latest version & adding jest-environment-jsdom
+
+// Mock getSelection for @testing-library/user-event, user-event looks for 
+// element.ownerDocument.getSelection, so we need to mock it on document
+document.getSelection = () => ({
+  removeAllRanges: () => {},
+  addRange: () => {},
+  rangeCount: 0,
+});
+
+// Mock MutationObserver for @testing-library/dom waitFor
+global.MutationObserver = class {
+  constructor(callback) {
+    this.callback = callback;
+  }
+  disconnect() {}
+  observe() {}
+  takeRecords() {
+    return [];
+  }
+};
+
+/* ============================================ */
+
 import { rxSubject, sendDataWithRx, listenToRx } from '../app/javascript/miq_observable';
 ManageIQ.angular.rxSubject = rxSubject;
 window.sendDataWithRx = sendDataWithRx;
