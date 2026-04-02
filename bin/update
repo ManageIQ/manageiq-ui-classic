@@ -1,11 +1,12 @@
 #!/usr/bin/env ruby
 require 'pathname'
-require_relative "../lib/node_version_check"
+# TODO: Uncomment after this PR(#9941) merges 
+# require_relative "../lib/node_version_check"
 
 gem_root = Pathname.new(__dir__).join("..")
 
-# Check Node.js version before proceeding
-abort unless NodeVersionCheck.verify!
+# TODO: Uncomment after this PR(#9941) merges
+# abort unless NodeVersionCheck.verify! # Check Node.js version before proceeding
 
 if gem_root.join("spec/manageiq").symlink?
   puts "== SKIPPING update of spec/manageiq because it is symlinked =="
