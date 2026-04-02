@@ -1,8 +1,13 @@
 #!/usr/bin/env ruby
 
 require "pathname"
+require_relative "../lib/node_version_check"
 
 gem_root = Pathname.new(__dir__).join("..")
+
+# Check Node.js version before proceeding
+abort unless NodeVersionCheck.verify!
+
 system(gem_root.join("bin/before_install").to_s)
 
 require gem_root.join("spec/manageiq/lib/manageiq/environment")

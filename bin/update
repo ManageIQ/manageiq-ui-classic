@@ -1,7 +1,11 @@
 #!/usr/bin/env ruby
 require 'pathname'
+require_relative "../lib/node_version_check"
 
 gem_root = Pathname.new(__dir__).join("..")
+
+# Check Node.js version before proceeding
+abort unless NodeVersionCheck.verify!
 
 if gem_root.join("spec/manageiq").symlink?
   puts "== SKIPPING update of spec/manageiq because it is symlinked =="
