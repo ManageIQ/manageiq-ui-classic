@@ -1,8 +1,7 @@
 import React from 'react';
-import { act } from 'react-dom/test-utils';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import fetchMock from 'fetch-mock';
-import { mount } from 'enzyme';
-import toJson from 'enzyme-to-json';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
@@ -54,64 +53,77 @@ describe('Notification drawer tests', () => {
 
   it('should render correctly', () => {
     const store = mockStore({ ...initialState });
-    const wrapper = mount(
+    const { container } = render(
       <Provider store={store}>
         <NotificationDrawer />
       </Provider>,
     );
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
-  it('should dispatch toggleDrawerVisibility after click on Close button', () => {
+  it('should dispatch toggleDrawerVisibility after click on Close button', async() => {
+    const user = userEvent.setup();
     const store = mockStore({ ...initialState });
-    const wrapper = mount(
+    render(
       <Provider store={store}>
         <NotificationDrawer />
       </Provider>,
     );
-    act(() => {
-      wrapper.find('Button[iconDescription="Close"]').props().onClick();
-    });
+
+    const closeButton = screen.getByRole('button', { name: /close/i });
+    await user.click(closeButton);
+
     const expectedPayload = { type: TOGGLE_DRAWER_VISIBILITY };
     expect(store.getActions()).toEqual([expectedPayload]);
   });
 
-  it('should expand drawer after click on expand button', () => {
+  it('should expand drawer after click on expand button', async() => {
+    const user = userEvent.setup();
     const store = mockStore({ ...initialState });
-    const wrapper = mount(
+    const { container } = render(
       <Provider store={store}>
         <NotificationDrawer />
       </Provider>,
     );
-    expect(wrapper.find('.notification-drawer-expanded')).toHaveLength(0);
-    act(() => {
-      wrapper.find('Button[iconDescription="collapsed"]').props().onClick();
+
+    expect(
+      container.querySelector('.notification-drawer-expanded'),
+    ).not.toBeInTheDocument();
+
+    const expandButton = screen.getByRole('button', { name: /collapsed/i });
+    await user.click(expandButton);
+
+    await waitFor(() => {
+      expect(
+        container.querySelector('.notification-drawer-expanded'),
+      ).toBeInTheDocument();
     });
-    wrapper.update();
-    expect(wrapper.find('.notification-drawer-expanded')).toHaveLength(1);
   });
 
-  it('should dispatch markNotificationRead after click on notification content', async(done) => {
+  it('should dispatch markNotificationRead after click on notification content', async() => {
+    const user = userEvent.setup();
     fetchMock.post('/api/notifications/', {
       action: 'mark_all_seen',
       resources: [{ id: '10000000003625' }],
     });
     const store = mockStore({ ...initialState });
-    const wrapper = mount(
+    render(
       <Provider store={store}>
         <NotificationDrawer />
       </Provider>,
     );
-    await act(async() => {
-      wrapper.find('Button#markAllReadBtn').first().simulate('click');
+
+    const markAllReadBtn = screen.getByRole('button', {
+      name: /mark all read/i,
     });
+    await user.click(markAllReadBtn);
+
     const expectedPayload = [
       {
         type: '@@notifications/markAllRead',
       },
     ];
     expect(store.getActions()).toEqual(expectedPayload);
-    done();
   });
 
   it('should show notification limit bar', () => {
@@ -122,26 +134,36 @@ describe('Notification drawer tests', () => {
         maxNotifications: lowerMaxNotifications,
       },
     });
-    const wrapper = mount(
+    const { container } = render(
       <Provider store={store}>
         <NotificationDrawer />
       </Provider>,
     );
-    expect(wrapper.find('div.maxnotifications-text')).toHaveLength(1);
+    expect(
+      container.querySelector('div.maxnotifications-text'),
+    ).toBeInTheDocument();
   });
 
-  it('should dispatch toogleMaxNotifications after click on Show all', async(done) => {
-    const store = mockStore({ ...initialState, maxNotifications: lowerMaxNotifications });
-    fetchMock.getOnce('/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc', resources);
+  it('should dispatch toogleMaxNotifications after click on Show all', async() => {
+    const user = userEvent.setup();
+    const store = mockStore({
+      ...initialState,
+      maxNotifications: lowerMaxNotifications,
+    });
+    fetchMock.getOnce(
+      '/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc',
+      resources,
+    );
     fetchMock.getOnce('/api/notifications', {});
-    const wrapper = mount(
+    render(
       <Provider store={store}>
         <NotificationDrawer />
       </Provider>,
     );
-    await act(async() => {
-      wrapper.find('#toggleMaxNotifications').first().simulate('click');
-    });
+
+    const toggleButton = screen.getByRole('button', { name: /show all/i });
+    await user.click(toggleButton);
+
     const expectedPayload = [
       expect.objectContaining({
         type: INIT_NOTIFICATIONS,
@@ -151,55 +173,62 @@ describe('Notification drawer tests', () => {
       },
     ];
     expect(store.getActions()).toEqual(expectedPayload);
-    done();
   });
 
-  it('should dispatch markAllRead after click on Mark all read', async(done) => {
+  it('should dispatch markAllRead after click on Mark all read', async() => {
+    const user = userEvent.setup();
     fetchMock.postOnce('/api/notifications/', {});
     const store = mockStore({ ...initialState });
-    const wrapper = mount(
+    render(
       <Provider store={store}>
         <NotificationDrawer />
       </Provider>,
     );
-    await act(async() => {
-      wrapper.find('button#markAllReadBtn').simulate('click');
+
+    const markAllReadBtn = screen.getByRole('button', {
+      name: /mark all read/i,
     });
+    await user.click(markAllReadBtn);
+
     const expectedPayload = {
       type: MARK_ALL_READ,
     };
     expect(store.getActions()).toEqual([expectedPayload]);
-    done();
   });
 
-  it('should clear all and init after click on Clear all', async(done) => {
+  it('should clear all and init after click on Clear all', async() => {
+    const user = userEvent.setup();
     fetchMock.postOnce('/api/notifications/', {});
     const store = mockStore({ ...initialState });
     const { maxNotifications } = store.getState().notificationReducer;
-    const limitFragment = !!maxNotifications ? `&limit=${maxNotifications}` : '';
-    fetchMock.getOnce(`/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc${limitFragment}`, resources);
+    const limitFragment = !!maxNotifications
+      ? `&limit=${maxNotifications}`
+      : '';
+    fetchMock.getOnce(
+      `/api/notifications?expand=resources&attributes=details&sort_by=id&sort_order=desc${limitFragment}`,
+      resources,
+    );
     fetchMock.getOnce('/api/notifications', {});
-    const wrapper = mount(
+    render(
       <Provider store={store}>
         <NotificationDrawer />
       </Provider>,
     );
-    const expectedPayload = [{
-      payload: [
-        { id: '10000000003625' },
-        { id: '10000000003624' },
-      ],
-      type: CLEAR_ALL,
-    },
-    expect.objectContaining({
-      type: INIT_NOTIFICATIONS,
-    }),
+
+    const expectedPayload = [
+      {
+        payload: [{ id: '10000000003625' }, { id: '10000000003624' }],
+        type: CLEAR_ALL,
+      },
+      expect.objectContaining({
+        type: INIT_NOTIFICATIONS,
+      }),
     ];
-    await act(async() => {
-      wrapper.find('button#clearAllBtn').simulate('click');
-    });
+
+    const clearAllBtn = screen.getByRole('button', { name: /clear all/i });
+    await user.click(clearAllBtn);
+
     expect(store.getActions()).toEqual(expectedPayload);
-    done();
   });
 
   it('should not render notification drawer when hidden', () => {
@@ -210,11 +239,11 @@ describe('Notification drawer tests', () => {
         isDrawerVisible: false,
       },
     });
-    const wrapper = mount(
+    render(
       <Provider store={store}>
         <NotificationDrawer />
       </Provider>,
     );
-    expect(wrapper.find('#miq-notifications-drawer-container')).toHaveLength(0);
+    expect(screen.queryByText('Notifications')).not.toBeInTheDocument();
   });
 });
