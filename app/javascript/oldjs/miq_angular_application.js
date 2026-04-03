@@ -19,7 +19,6 @@ ManageIQ.angular.app = angular.module('ManageIQ', [
   'patternfly.charts',
   'patternfly.views',
   'ui.bootstrap',
-  'ui.codemirror',
 ]);
 miqHttpInject(ManageIQ.angular.app);
 
