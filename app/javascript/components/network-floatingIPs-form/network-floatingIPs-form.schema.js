@@ -10,8 +10,7 @@ function changeValue(value, loadSchema, emptySchema) {
 }
 
 function createSchema(ems, recordId, loadSchema, emptySchema, providerFields = []) {
-  const providers = ems.filter((tenant) => tenant.type !== 'ManageIQ::Providers::Nuage::NetworkManager');
-  const providerOptions = providers.map(({ id, name }) => ({ label: name, value: id }));
+  const providerOptions = ems.map(({ id, name }) => ({ label: name, value: id }));
   providerOptions.unshift({ label: `<${__('Choose')}>`, value: '-1' });
 
   const fields = [
