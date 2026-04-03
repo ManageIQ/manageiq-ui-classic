@@ -30,7 +30,8 @@ module ReportHelper
     if values.first == "_ALL_"
       _("To All Users")
     else
-      _("By %{typ}: %{values}") % {:typ => typ.to_s.titleize, :values => values.join(',')}
+      display_values = widget.visibility_values.join(',')
+      _("By %{typ}: %{values}") % {:typ => typ.to_s.titleize, :values => display_values}
     end
   end
 
