@@ -15,6 +15,7 @@ class ChargebackAssignmentController < ApplicationController
     assert_privileges("chargeback_assignments")
 
     @tabform = ChargebackRate::VALID_CB_RATE_TYPES.include?(params[:tab]) ? params[:tab] : "Compute"
+    tab_vars(@tabform)
     session[:changed] = @changed = false
     build_tabs
     set_form_vars
@@ -25,6 +26,7 @@ class ChargebackAssignmentController < ApplicationController
 
     clear_flash_msg
     @tabform = params['uib-tab']
+    tab_vars(params['uib-tab'])
     build_tabs
     set_form_vars
     render :action => "index"
@@ -80,6 +82,12 @@ class ChargebackAssignmentController < ApplicationController
     @title = _("Chargeback Assignments")
     @active_tab = @tabform
     @tabs = [["Compute", _("Compute")], ["Storage", _("Storage")]]
+  end
+
+  def tab_vars(current_tab)
+    # @path = '/chargeback_assignment/change_tab/'
+    @current_tab = current_tab.to_s
+    @check_for_changes = true
   end
 
   # Set record vars for save
