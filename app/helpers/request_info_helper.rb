@@ -3,7 +3,7 @@ module RequestInfoHelper
 
   PROV_FIELD_TYPES = [:vm, :host, :ds, :template, :vc, :pxe_img, :iso_img, :window_image].freeze
 
-  PROV_FIELDS = [:src_vm_id, :placement_host_name, :placement_ds_name, :attached_ds, :sysprep_custom_spec, :customization_template_id, :pxe_image_id, :iso_image_id, :windows_image_id, :src_configuration_script_id].freeze
+  PROV_FIELDS = [:src_vm_id, :placement_host_name, :placement_ds_name, :attached_ds, :sysprep_custom_spec, :customization_template_id, :pxe_image_id, :iso_image_id, :windows_image_id, :src_configuration_script_id, :credential_id].freeze
 
   def provision_tab_configuration(workflow)
     prov_tab_labels = workflow.provisioning_tab_list.pluck(:name)
@@ -56,6 +56,8 @@ module RequestInfoHelper
              {:type => :window_image, :window_images => @windows_images}
            when :src_configuration_script_id
              {:type => :configuration_script, :configuration_scripts => @configuration_scripts}
+           when :credential_id
+             {:type => :credential, :credentials => @credentials}
            else
              {}
            end
@@ -107,6 +109,18 @@ module RequestInfoHelper
       rows.push({:id => data[:script].id.to_s, :clickable => true, :cells => prov_configuration_script_grid_cells(data[:script])})
     end
     {:headers => headers, :rows => rows, :selected => :src_configuration_script_id, :none_index => data[:none_index]}
+  end
+
+  def prov_credential_data(data)
+    edit = data[:edit]
+    headers = prov_grid_credential_header(edit, data[:credentials], data[:type])
+    rows = []
+    if data[:credentials]
+      rows += data[:credentials].map do |credential|
+        prov_row_item(credential.id.to_s, prov_credential_grid_cells(credential))
+      end
+    end
+    {:headers => headers, :rows => rows, :selected => :credential_id, :none_index => data[:none_index]}
   end
 
   def prov_host_data(data)
@@ -308,6 +322,27 @@ module RequestInfoHelper
       prov_cell_data(data.description),
       prov_cell_data(data.manager_name)
     ]
+  end
+
+  def prov_credential_grid_cells(data)
+    [
+      prov_cell_data(data.name),
+      prov_cell_data(data.type)
+    ]
+  end
+
+  def prov_grid_credential_header(edit, credentials, type)
+    header_keys = prov_header_keys(type.to_s)
+    headers = []
+    edit[header_keys[:columns]].each_with_index do |h, index|
+      item = prov_grid_header_item(edit[header_keys[:headers]][h])
+      if credentials
+        item[:sort_choice] = h
+        item[:sort_data] = prov_sort_data(edit, index, header_keys)
+      end
+      headers.push(item)
+    end
+    headers
   end
 
   def prov_host_grid_cells(data, options)

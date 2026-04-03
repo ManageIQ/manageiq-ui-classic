@@ -1,6 +1,7 @@
 module ApplicationController::MiqRequestMethods
   extend ActiveSupport::Concern
   include RequestInfoHelper
+
   included do
     helper_method :dialog_partial_for_workflow
   end
@@ -392,6 +393,15 @@ module ApplicationController::MiqRequestMethods
     @configuration_scripts = _build_whatever_grid("configuration_script", configuration_scripts, headers, sort_order, sort_by)
   end
 
+  def build_credential_grid(credentials, sort_order = nil, sort_by = nil)
+    sort_by ||= "name"
+    sort_order ||= "ASC"
+
+    headers = {"name" => _("Name"), "type" => _("Type")}
+
+    @credentials = _build_whatever_grid("credential", credentials, headers, sort_order, sort_by)
+  end
+
   def build_pxe_img_grid(pxe_imgs, sort_order = nil, sort_by = nil)
     sort_by ||= "name"
     sort_order ||= "ASC"
@@ -534,6 +544,8 @@ module ApplicationController::MiqRequestMethods
         build_tags_for_provisioning(@edit[:wf], @edit.fetch_path(:new, tag_symbol_for_workflow), true)
       when :service
         build_configuration_script_grid(@edit[:wf].get_field(:src_configuration_script_id, :service)[:values], @edit[:configuration_script_sortdir], @edit[:configuration_script_sortcol])
+      when :customize
+        build_credential_grid(@edit[:wf].get_field(:credential_id, :customize)[:values], @edit[:credential_sortdir], @edit[:credential_sortcol]) if @edit[:wf].get_field(:credential_id, :customize).present?
       end
     when MiqProvisionVirtWorkflow
       if @edit[:new][:current_tab_key] == :service
@@ -826,6 +838,10 @@ module ApplicationController::MiqRequestMethods
                 @edit[:new][f.to_sym] = [val, v.name] # Save [value, description]
               end
             elsif evm_object_class == :ConfigurationScriptBase
+              if v.id.to_i == val.to_i
+                @edit[:new][f.to_sym] = [val, v.name] # Save [value, name]
+              end
+            elsif evm_object_class == :Authentication
               if v.id.to_i == val.to_i
                 @edit[:new][f.to_sym] = [val, v.name] # Save [value, name]
               end
