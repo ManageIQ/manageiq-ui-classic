@@ -3,7 +3,6 @@ import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
 import { shallow } from 'enzyme';
 import NetworkRouterForm from '../../components/routers-form/index';
-import * as networkModule from '../../helpers/network-providers';
 
 require('../helpers/set_fixtures_helper.js');
 require('../helpers/old_js_file_require_helper.js');
@@ -53,9 +52,8 @@ describe('Network Router form component', () => {
     },
   };
 
-  networkModule.networkProviders = jest.fn().mockReturnValue(new Promise((resolve) => resolve(providersMock)));
-
   beforeEach(() => {
+    fetchMock.get('/api/providers?expand=resources&attributes=id,name,supports_create_network_router,type&filter[]=supports_create_network_router=true', { resources: providersMock });
     submitSpyMiqSparkleOn = jest.spyOn(window, 'miqSparkleOn');
     submitSpyMiqSparkleOff = jest.spyOn(window, 'miqSparkleOff');
     spyMiqAjaxButton = jest.spyOn(window, 'miqAjaxButton');
