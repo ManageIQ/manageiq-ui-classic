@@ -4,32 +4,106 @@
 
 **Prerequisites:**
 
-Before running Cypress tests, ensure the following:
+Before running Cypress tests, you must build webpack with the CYPRESS flag. This disables debug notifications that would block Cypress from accessing UI elements:
 
-1. **Build webpack with CYPRESS flag** - This disables debug notifications that would block Cypress from accessing UI elements:
+    CYPRESS=true bin/webpack
 
-       CYPRESS=true bin/webpack
+If you skip this step, Cypress will show an error and refuse to start.
 
-   If you skip this step, Cypress will show an error and refuse to start.
+**Webpack Options:**
+- Use `CYPRESS=true bin/webpack` for a one-time build
+- Use `CYPRESS=true bin/webpack --watch` if live editing UI files and want automatic pack updates
 
-2. **Start the Rails server**:
-
-       bin/rails s
+**Note:** The `CYPRESS` environment variable prevents code reloading in dev mode and disables debug notifications.
 
 
-Run without interaction:
+### Usage
 
-    yarn cypress:run:chrome
-    yarn cypress:run:firefox
+##### Initial Setup
 
-Will run the tests in console, and output a screengrab and screenshot in `cypress/screenshots` and `cypress/videos`.
+```bash
+cd manageiq-ui-classic
+yarn  # Install Cypress the first time
+```
 
-Run interactively:
+##### Optional Environment Variables
 
-    yarn cypress:open
+- `HEADED=true` - Run with visible browser (default: headless)
+- `SPEC="**/reports.cy.js"` - Run specific test file (default: all tests)
 
-Opens a chrome instance for debugging.
+##### Method 1: Automated (Self-Contained)
 
+Fully automated - no other processes needed. The rake task automatically handles starting the Rails server and simulating the queue worker.
+
+```bash
+[HEADED=true] [SPEC="**/reports.cy.js"] CYPRESS=true bundle exec rake spec:cypress
+```
+
+##### Method 2: Automated (Manual Server)
+
+Non-interactive but requires separate Rails server (and optionally Rails console with simulated queue worker for some tests).
+
+Start Rails server in separate terminal:
+
+```bash
+CYPRESS=true bin/rails s
+```
+
+Optional: Start queue worker simulation in another terminal (needed for some tests):
+
+```bash
+bin/rails c
+```
+
+Then in console:
+
+```ruby
+simulate_queue_worker
+```
+
+Run tests with optional HEADED and SPEC parameters:
+
+```bash
+[HEADED=true] [SPEC="**/reports.cy.js"] CYPRESS=true yarn cypress:run:chrome
+```
+
+##### Method 3: Interactive
+
+Run tests interactively with the Cypress UI (useful for debugging).
+
+Terminal 1 - Start webpack with --watch for live UI updates:
+
+```bash
+CYPRESS=true bin/webpack --watch
+```
+
+Terminal 2 - Start Rails server:
+
+```bash
+CYPRESS=true bin/rails s
+```
+
+Terminal 3 - Simulate queue worker (needed for some tests):
+
+```bash
+bin/rails c
+```
+
+Then in console:
+
+```ruby
+simulate_queue_worker
+```
+
+Terminal 4 - Open Cypress interactive UI:
+
+```bash
+CYPRESS=true yarn cypress:open
+```
+
+This opens the Cypress UI where you can select and watch individual tests run.
+
+Note: Without `--watch`, you can run webpack and Cypress UI in the same terminal.
 
 #### Write
 
@@ -43,7 +117,7 @@ ManageIQ implements the following cypress extensions:
 
 * `cy.accordion(title)` - open an accordion panel. `title`: String for the accordion title for the accordion panel to open.
 * `cy.accordionItem(name)` - click on a record in the accordion panel. `name`: String for the record to click in the accordion panel.
-* `cy.selectAccordionItem(accordionPath)` - navigates the expanded accordion panel(use cy.accordion to expand an accordion panel) and then expand the nodes along the given path and click the final target item. `accordionPath`: A mixed array of strings and/or regex patterns that represent the path to the intended target node. e.g. Simple string path: `cy.selectAccordionItem(['Datastore', 'My-Domain', 'My-Namespace']);`, Path with regular expressions: `cy.selectAccordionItem([/^ManageIQ Region:/, /^Zone:/, /^Server:/]);`, Mixed path with strings and regular expressions: `cy.selectAccordionItem([/^ManageIQ Region:/, 'Zones', /^Zone:/]);`                                             
+* `cy.selectAccordionItem(accordionPath)` - navigates the expanded accordion panel(use cy.accordion to expand an accordion panel) and then expand the nodes along the given path and click the final target item. `accordionPath`: A mixed array of strings and/or regex patterns that represent the path to the intended target node. e.g. Simple string path: `cy.selectAccordionItem(['Datastore', 'My-Domain', 'My-Namespace']);`, Path with regular expressions: `cy.selectAccordionItem([/^ManageIQ Region:/, /^Zone:/, /^Server:/]);`, Mixed path with strings and regular expressions: `cy.selectAccordionItem([/^ManageIQ Region:/, 'Zones', /^Zone:/]);`
 
 ##### gtl
 
