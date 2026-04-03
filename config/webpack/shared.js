@@ -33,7 +33,6 @@ const sharedPackages = [
   'moment',
   'prop-types',
   'react',
-  'react-bootstrap',
   'react-dom',
   'react-redux',
   'react-router',
