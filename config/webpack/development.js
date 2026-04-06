@@ -2,6 +2,7 @@
 
 const { merge } = require('webpack-merge')
 const sharedConfig = require('./shared.js')
+const NodeVersionCheckPlugin = require('./NodeVersionCheckPlugin');
 const { settings, output } = require('./configuration.js')
 const { env } = require('process')
 
@@ -14,6 +15,9 @@ const {
 module.exports = merge(sharedConfig, {
   mode: 'development',
   devtool: 'inline-source-map',
+  plugins: [
+    new NodeVersionCheckPlugin(),
+  ],
 
   devServer: {
     clientLogLevel: 'none',
