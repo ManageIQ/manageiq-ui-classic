@@ -887,10 +887,10 @@ module OpsController::OpsRbac
       tags = cats.map do |cat|
         {
           :id          => cat.id.to_s,
-          :description => cat.description,
+          :label       => cat.description,
           :singleValue => false,
-          :values      => cat.entries.sort_by { |e| e[:description.downcase] }.map do |entry|
-            { :id => entry.id.to_s, :description => entry.description }
+          :values      => cat.entries.sort_by { |e| e[:label.downcase] }.map do |entry|
+            {:id => entry.id.to_s, :label => entry.description}
           end
         }
       end
@@ -898,9 +898,9 @@ module OpsController::OpsRbac
       filters = @edit&.fetch_path(:new, :filters) || @filters
       assigned_tags = Tag.where(:name => filters.flatten).map do |tag|
         {
-          :description => tag.category.description,
-          :id          => tag.category.id.to_s,
-          :values      => [{:id => tag.classification.id.to_s, :description => tag.classification.description}]
+          :label  => tag.category.description,
+          :id     => tag.category.id.to_s,
+          :values => [{:id => tag.classification.id.to_s, :label => tag.classification.description}]
         }
       end
 

@@ -1075,17 +1075,17 @@ module ApplicationController::MiqRequestMethods
     tags = wf.allowed_tags.map do |cat|
       {
         :values      => cat[:children].map do |tag|
-          {:id => tag.first, :description => tag.second[:description]}
+          {:id => tag.first, :label => tag.second[:label]}
         end,
         :id          => cat[:name],
-        :description => cat[:description],
+        :label       => cat[:description],
         :singleValue => cat[:single_value],
       }
     end
     assignments = Classification.find(vm_tags)
     assigned_tags = assignments.map do |tag|
       {
-        :description => tag.parent.description,
+        :label       => tag.parent.description,
         :id          => tag.parent.name,
         :singleValue => tag.parent.single_value,
         :values      => ->(arr, single_value) { single_value ? [arr.last] : arr }.call(
@@ -1094,7 +1094,7 @@ module ApplicationController::MiqRequestMethods
           end,
           tag.parent.single_value
         ).map do |assignment|
-          { :description => assignment.description, :id => assignment.id }
+          { :label => assignment.description, :id => assignment.id }
         end
       }
     end.uniq
