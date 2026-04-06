@@ -1,32 +1,48 @@
 ### cypress in manageiq-ui-classic
 
-#### Run
+#### Setup
 
-**Prerequisites:**
-
-Before running Cypress tests, you must build webpack with the CYPRESS flag. This disables debug notifications that would block Cypress from accessing UI elements:
-
-    CYPRESS=true bin/webpack
-
-If you skip this step, Cypress will show an error and refuse to start.
-
-**Webpack Options:**
-- Use `CYPRESS=true bin/webpack` for a one-time build
-- Use `CYPRESS=true bin/webpack --watch` if live editing UI files and want automatic pack updates
-
-**Note:** The `CYPRESS` environment variable prevents code reloading in dev mode and disables debug notifications.
-
-
-### Usage
-
-##### Initial Setup
+##### Initial Setup (One-Time)
 
 ```bash
 cd manageiq-ui-classic
-yarn  # Install Cypress the first time
+yarn  # Install Cypress and dependencies (run once initially, then again when packages are updated)
 ```
 
-##### Optional Environment Variables
+**Database Requirements:**
+
+Cypress uses the development database from `config/database.yml` and expects a clean, seeded database. If you need a populated development database for regular development, consider using a separate database for Cypress tests as pre-populated data may cause test failures. We are exploring ways to simplify this workflow.
+
+The following command sets up the database as Cypress expects:
+
+```bash
+dropdb vmdb_development; createdb vmdb_development; bundle exec rake db:migrate db:seed # from manageiq directory
+```
+
+##### Before Running Tests
+
+Build webpack with the CYPRESS flag (required before running tests, and whenever UI files change):
+
+```bash
+cd manageiq-ui-classic
+CYPRESS=true bin/webpack
+```
+
+**Webpack Options:**
+- Use `CYPRESS=true bin/webpack` for a one-time build
+- Use `CYPRESS=true bin/webpack --watch` for automatic rebuilds when editing UI files
+
+**Note:** If you skip this step, Cypress will show an error and refuse to start.
+
+### Usage
+
+##### Environment Variables
+
+**Required**
+
+- `CYPRESS=true` - disables debug notifications that would prevent Cypress from accessing UI elements and development mode code reloading
+
+**Optional**
 
 - `HEADED=true` - Run with visible browser (default: headless)
 - `SPEC="**/reports.cy.js"` - Run specific test file (default: all tests)
@@ -53,7 +69,7 @@ CYPRESS=true bin/rails s
 Optional: Start queue worker simulation in another terminal (needed for some tests):
 
 ```bash
-bundle exec rake app:evm:simulate_queue_worker # from manageiq-ui-classic
+bundle exec rake app:evm:simulate_queue_worker # from manageiq-ui-classic directory
 # OR
 bundle exec rake evm:simulate_queue_worker # from manageiq directory
 ```
@@ -91,7 +107,7 @@ CYPRESS=true bin/rails s
 Terminal 3 - Simulate queue worker (needed for some tests):
 
 ```bash
-bundle exec rake app:evm:simulate_queue_worker # from manageiq-ui-classic
+bundle exec rake app:evm:simulate_queue_worker # from manageiq-ui-classic directory
 # OR
 bundle exec rake evm:simulate_queue_worker # from manageiq directory
 ```
