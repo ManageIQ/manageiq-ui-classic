@@ -30,13 +30,14 @@ yarn  # Install Cypress the first time
 
 - `HEADED=true` - Run with visible browser (default: headless)
 - `SPEC="**/reports.cy.js"` - Run specific test file (default: all tests)
+- `CYPRESS_BROWSER=chromium|edge|firefox` - Run with alternative browser (default: chrome)
 
 ##### Method 1: Automated (Self-Contained)
 
 Fully automated - no other processes needed. The rake task automatically handles starting the Rails server and simulating the queue worker.
 
 ```bash
-[HEADED=true] [SPEC="**/reports.cy.js"] CYPRESS=true bundle exec rake spec:cypress
+[HEADED=true] [SPEC="**/reports.cy.js"] [CYPRESS_BROWSER=chromium|edge|firefox] CYPRESS=true bundle exec rake spec:cypress
 ```
 
 ##### Method 2: Automated (Manual Server)
@@ -57,10 +58,18 @@ bundle exec rake app:evm:simulate_queue_worker # from manageiq-ui-classic
 bundle exec rake evm:simulate_queue_worker # from manageiq directory
 ```
 
-Run tests with optional HEADED and SPEC parameters:
+Run tests with optional HEADED and SPEC parameters using Chrome (default):
 
 ```bash
 [HEADED=true] [SPEC="**/reports.cy.js"] CYPRESS=true yarn cypress:run:chrome
+```
+
+Or use alternative browsers (chromium, edge, firefox):
+
+```bash
+[HEADED=true] [SPEC="**/reports.cy.js"] CYPRESS=true yarn cypress:run:chromium
+[HEADED=true] [SPEC="**/reports.cy.js"] CYPRESS=true yarn cypress:run:edge
+[HEADED=true] [SPEC="**/reports.cy.js"] CYPRESS=true yarn cypress:run:firefox
 ```
 
 ##### Method 3: Interactive
