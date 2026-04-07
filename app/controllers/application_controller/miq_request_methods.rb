@@ -1094,7 +1094,7 @@ module ApplicationController::MiqRequestMethods
           end,
           tag.parent.single_value
         ).map do |assignment|
-          { :label => assignment.description, :id => assignment.id }
+          {:label => assignment.description, :id => assignment.id}
         end
       }
     end.uniq
