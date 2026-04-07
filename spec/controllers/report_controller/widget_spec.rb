@@ -93,7 +93,6 @@ describe ReportController do
       role1 = FactoryBot.create(:miq_user_role, :name => "WidgetRole1")
       role2 = FactoryBot.create(:miq_user_role, :name => "WidgetRole2")
       widget = FactoryBot.create(:miq_widget,
-                                 :title      => "Widget With Roles",
                                  :visibility => {:roles => [role1.id, role2.id]})
 
       controller.instance_variable_set(:@sb, {:trees => {:widgets_tree => {:active_node => "root-xx-#{widget.id}"}}})
@@ -105,7 +104,6 @@ describe ReportController do
 
     it "handles widgets with _ALL_ visibility" do
       widget = FactoryBot.create(:miq_widget,
-                                 :title      => "Widget For All",
                                  :visibility => {:roles => ["_ALL_"]})
 
       controller.instance_variable_set(:@sb, {:trees => {:widgets_tree => {:active_node => "root-xx-#{widget.id}"}}})
@@ -121,7 +119,6 @@ describe ReportController do
       group.update!(:description => "WidgetGroup1")
 
       widget = FactoryBot.create(:miq_widget,
-                                 :title      => "Widget With Groups",
                                  :visibility => {:groups => [group.id]})
 
       controller.instance_variable_set(:@sb, {:trees => {:widgets_tree => {:active_node => "root-xx-#{widget.id}"}}})
