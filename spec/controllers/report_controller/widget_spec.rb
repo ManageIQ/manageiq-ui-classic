@@ -65,17 +65,17 @@ describe ReportController do
     it "sets role visibility for widget" do
       role = FactoryBot.create(:miq_user_role, :name => "foo")
       @edit_hash[:new][:visibility_typ] = 'role'
-      @edit_hash[:new][:roles] = [role.id.to_s]
+      @edit_hash[:new][:roles] = [role.id]
       controller.send(:widget_set_record_vars, @widget)
-      expect(@widget.visibility[:roles]).to eq([role.id.to_s])
+      expect(@widget.visibility[:roles]).to eq([role.id])
     end
 
     it "sets group visibility for widget" do
       group = FactoryBot.create(:miq_group, :description => "foo_group")
       @edit_hash[:new][:visibility_typ] = 'group'
-      @edit_hash[:new][:groups] = [group.id.to_s]
+      @edit_hash[:new][:groups] = [group.id]
       controller.send(:widget_set_record_vars, @widget)
-      expect(@widget.visibility[:groups]).to eq([group.id.to_s])
+      expect(@widget.visibility[:groups]).to eq([group.id])
     end
   end
 

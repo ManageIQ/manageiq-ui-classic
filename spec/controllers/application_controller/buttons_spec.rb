@@ -344,9 +344,9 @@ describe ApplicationController do
     end
 
     it "sets new role and preserves old role for custom button" do
-      edit[:new][:roles] = [old_role.id, role.id.to_s] # old roles are represented by int and new ones by string
+      edit[:new][:roles] = [old_role.id, role.id]
       controller.send(:button_set_record_vars, custom_button)
-      expect(custom_button.visibility[:roles]).to eq([old_role.id, role.id.to_s])
+      expect(custom_button.visibility[:roles]).to eq([old_role.id, role.id])
     end
   end
 
