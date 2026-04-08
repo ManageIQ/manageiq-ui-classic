@@ -13,6 +13,7 @@ const UserForm = ({
   const [{
     initialValues, isLoading, editMode, groups, selectedGroups, // Use to populate the custom component
   }, setState] = useState({ isLoading: true });
+  const url = '/ops';
 
   useEffect(() => {
     if (id) {
@@ -86,23 +87,7 @@ const UserForm = ({
     if (values.email === undefined) {
       values.email = '';
     }
-    const groupIds = new Set();
-    const sortedGroupIds = [];
-    const groupIdObjects = [];
-    values.groups.forEach((group) => {
-      if (group.value) {
-        groupIds.add(group.value);
-      } else {
-        groupIds.add(group);
-      }
-    });
-    groupIds.forEach((group) => {
-      sortedGroupIds.push(group);
-    });
-    sortedGroupIds.sort();
-    sortedGroupIds.forEach((group) => {
-      groupIdObjects.push({ id: group });
-    });
+    const groupIdObjects = [...new Set(values.groups.map((g) => g.value || g))].sort().map((id) => ({ id }));
     if (id) {
       if (values.confirmPassword && values.confirmPassword === values.password) {
         API.post(`/api/users/${id}`,
@@ -116,7 +101,7 @@ const UserForm = ({
               miq_groups: groupIdObjects,
             },
           }).then(() => {
-          miqRedirectBack(`User ${values.name} was saved`, 'success', '/ops/');
+          miqRedirectBack(`User ${values.name} was saved`, 'success', url);
         });
       } else {
         API.post(`/api/users/${id}`,
@@ -129,7 +114,7 @@ const UserForm = ({
               miq_groups: groupIdObjects,
             },
           }).then(() => {
-          miqRedirectBack(`User ${values.name} was saved`, 'success', '/ops/');
+          miqRedirectBack(`User ${values.name} was saved`, 'success', url);
         });
       }
       miqSparkleOff();
@@ -141,14 +126,13 @@ const UserForm = ({
         email: values.email,
         miq_groups: groupIdObjects,
       }).then(() => {
-        miqRedirectBack(`User ${values.name} was saved`, 'success', '/ops/');
+        miqRedirectBack(`User ${values.name} was saved`, 'success', url);
       });
       miqSparkleOff();
     }
   };
 
   const onCancel = () => {
-    const url = '/ops/';
     let message = '';
     message = __('Add of new User was cancelled by the user');
     miqRedirectBack(message, 'success', url);
@@ -177,7 +161,7 @@ const UserForm = ({
         canReset={!!id}
         onReset={onFormReset}
         buttonsLabels={{
-          submitLabel: id ? __('Submit') : __('Add'),
+          submitLabel: id ? __('Save') : __('Add'),
         }}
       />
     </div>

@@ -1,10 +1,12 @@
 const areGroupsEqual = (initialValues, selectedGroups = []) => {
-  selectedGroups.sort();
-  initialValues.groups.sort();
-  if (selectedGroups.length !== initialValues.groups.length) {
+  const selectedGroupsCopy = [...selectedGroups];
+  selectedGroupsCopy.sort();
+  const initialGroupValuesCopy = [...initialValues.groups];
+  initialGroupValuesCopy.sort();
+  if (selectedGroupsCopy.length !== initialGroupValuesCopy.length) {
     return false;
   }
-  return selectedGroups.every((group, index) => group === initialValues.groups[index]);
+  return selectedGroupsCopy.every((group, index) => group === initialGroupValuesCopy[index]);
 };
 
 export const passwordValidation = (initialValues, id, editMode, values, setState, selectedGroups) => {

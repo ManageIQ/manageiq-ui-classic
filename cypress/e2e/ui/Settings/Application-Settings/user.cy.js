@@ -3,8 +3,8 @@ import {
   LABEL_CONFIG_KEYS,
   BUTTON_CONFIG_KEYS,
   FIELD_CONFIG_KEYS,
-} from '../../../support/commands/constants/command_constants';
-import { flashClassMap } from '../../../support/assertions/assertion_constants';
+} from '../../../../support/commands/constants/command_constants';
+import { flashClassMap } from '../../../../support/assertions/assertion_constants';
 
 // Field values
 const EVM_GROUP_SUPER_ADMIN = 'EvmGroup-super_administrator';
@@ -180,7 +180,7 @@ describe('Settings > Application Settings > Users', () => {
       ).should('be.disabled');
       cy.validateFormButtons([
         {
-          [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: 'Submit',
+          [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: 'Save',
           [BUTTON_CONFIG_KEYS.BUTTON_TYPE]: 'submit',
           [BUTTON_CONFIG_KEYS.SHOULD_BE_DISABLED]: true,
         },
@@ -211,7 +211,7 @@ describe('Settings > Application Settings > Users', () => {
         triggerFn: () =>
           cy
             .getFormButtonByTypeWithText({
-              buttonText: 'Submit',
+              buttonText: 'Save',
               buttonType: 'submit',
             })
             .click(),
@@ -234,7 +234,7 @@ describe('Settings > Application Settings > Users', () => {
         triggerFn: () =>
           cy
             .getFormButtonByTypeWithText({
-              buttonText: 'Submit',
+              buttonText: 'Save',
               buttonType: 'submit',
             })
             .click(),
@@ -366,7 +366,7 @@ describe('Settings > Application Settings > Users', () => {
         triggerFn: () =>
           cy
             .getFormButtonByTypeWithText({
-              buttonText: 'Submit',
+              buttonText: 'Save',
               buttonType: 'submit',
             })
             .click(),
@@ -695,7 +695,7 @@ describe('Settings > Application Settings > Users', () => {
       // Edit the name field and confirm submit & reset buttons are enabled
       cy.getFormInputFieldByIdAndType({ inputId: 'name' }).type(' Edited');
       cy.getFormButtonByTypeWithText({
-        buttonText: 'Submit',
+        buttonText: 'Save',
         buttonType: 'submit',
       }).should('be.enabled');
       cy.getFormButtonByTypeWithText({
@@ -726,7 +726,7 @@ describe('Settings > Application Settings > Users', () => {
         inputType: 'password',
       }).type(UPDATED_TEST_PASS_WORD);
       cy.getFormButtonByTypeWithText({
-        buttonText: 'Submit',
+        buttonText: 'Save',
         buttonType: 'submit',
       }).should('be.enabled');
 
@@ -736,7 +736,7 @@ describe('Settings > Application Settings > Users', () => {
         inputType: 'password',
       }).clear();
       cy.getFormButtonByTypeWithText({
-        buttonText: 'Submit',
+        buttonText: 'Save',
         buttonType: 'submit',
       }).should('be.disabled');
 
@@ -750,7 +750,7 @@ describe('Settings > Application Settings > Users', () => {
         'be.visible'
       );
       cy.getFormButtonByTypeWithText({
-        buttonText: 'Submit',
+        buttonText: 'Save',
         buttonType: 'submit',
       }).should('be.disabled');
 
@@ -764,7 +764,7 @@ describe('Settings > Application Settings > Users', () => {
         triggerFn: () =>
           cy
             .getFormButtonByTypeWithText({
-              buttonText: 'Submit',
+              buttonText: 'Save',
               buttonType: 'submit',
             })
             .should('be.enabled')
@@ -816,7 +816,7 @@ describe('Settings > Application Settings > Users', () => {
         triggerFn: () =>
           cy
             .getFormButtonByTypeWithText({
-              buttonText: 'Submit',
+              buttonText: 'Save',
               buttonType: 'submit',
             })
             .click(),

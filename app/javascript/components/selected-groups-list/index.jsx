@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const SelectedGroupsList = ({ groups }) => {
   const selectedGroups = [];
-  // console.log(groups);
+
   groups.sort();
   if (groups) {
     groups.forEach((group) => {
