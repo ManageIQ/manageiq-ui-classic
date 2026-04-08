@@ -28,12 +28,14 @@
       = h(field.values.detect { |k, _v| k == wf.value(field.name) }.try(:last) || wf.value(field.name))
 
     - when "DialogFieldDropDownList"
-      - # If the automation engine is changed to return arrays instead of strings separated by "\u001F" then we need to change the code below
+      -# If the automation engine is changed to return arrays instead of
+      -# strings separated by "\u001F" then we need to change the code below
       = h(field.value.blank? ? _("<None>") : field.value.to_s.gsub("\x1F", ", "))
 
     - when 'DialogFieldTagControl'
       - value = wf.value(field.name) || '' # it returns in format Clasification::id
-      - # If the automation engine is changed to return arrays instead of strings separated by "\u001F" then we need to change the code below
+      -# If the automation engine is changed to return arrays instead of
+      -# strings separated by "\u001F" then we need to change the code below
       - classification_ids = value.split("\u001F").map { |tag| tag.split('::').second }
       - classifications = Classification.where(:id => classification_ids).pluck(:description)
       = h(classifications.join(', '))
