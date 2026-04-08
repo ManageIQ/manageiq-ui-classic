@@ -9,7 +9,7 @@ const areGroupsEqual = (initialValues, selectedGroups = []) => {
   return selectedGroupsCopy.every((group, index) => group === initialGroupValuesCopy[index]);
 };
 
-export const passwordValidation = (initialValues, id, editMode, values, setState, selectedGroups) => {
+export const confirmPasswordValidation = (initialValues, id, editMode, values, setState, selectedGroups) => {
   if (values.groups === undefined) {
     if (selectedGroups.length > 0) {
       setState((state) => ({
@@ -37,12 +37,6 @@ export const passwordValidation = (initialValues, id, editMode, values, setState
             && values.email === initialValues.email
             && areGroupsEqual(initialValues, groupIds)) {
       errors.confirmPassword = '';
-    }
-  }
-
-  if (values.password === undefined) {
-    if (!!id && editMode) {
-      errors.password = 'Required';
     }
   }
 

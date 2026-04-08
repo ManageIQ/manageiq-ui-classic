@@ -5,7 +5,7 @@ import { Loading } from '@carbon/react';
 import createSchema from './user-form.schema';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import { API } from '../../http_api';
-import { passwordValidation } from './helper';
+import { confirmPasswordValidation } from './helper';
 
 const UserForm = ({
   id, copyUserId, disabled, dbMode,
@@ -155,7 +155,7 @@ const UserForm = ({
       <MiqFormRenderer
         schema={createSchema(id, editMode, setState, disabled, dbMode, groups, selectedGroups)}
         initialValues={initialValues}
-        validate={(values) => passwordValidation(initialValues, id, editMode, values, setState, selectedGroups)}
+        validate={(values) => confirmPasswordValidation(initialValues, id, editMode, values, setState, selectedGroups)}
         onSubmit={onSubmit}
         onCancel={onCancel}
         canReset={!!id}

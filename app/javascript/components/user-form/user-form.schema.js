@@ -47,6 +47,10 @@ function createSchema(id, editMode, setState, disabled, dbMode, availableGroups,
                 editMode: !editMode,
               }));
             },
+            validate: [{
+              type: validatorTypes.REQUIRED,
+              message: __('Required'),
+            }],
             placeholder: '●●●●●●●●',
             buttonLabel: editMode ? __('Cancel') : __('Change'),
           },
