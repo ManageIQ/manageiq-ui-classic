@@ -32,7 +32,6 @@ describe TreeNode::ExtManagementSystem do
     :ems_azure_network                => {},
     :ems_amazon_network               => {},
     :ems_google_network               => {},
-    :ems_nuage_network                => {},
     :ems_openstack_network            => { :suppress_callback => ManageIQ::Providers::Openstack::NetworkManager },
     :ems_vmware_cloud_network         => {},
     :ems_cinder                       => {},
