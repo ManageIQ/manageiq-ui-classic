@@ -1,3 +1,6 @@
+// Stimulus
+import '../controllers';
+
 require('./miq_global.js');
 require('./jquery_overrides.js');
 
@@ -32,6 +35,3 @@ if (process.env.NODE_ENV === 'development' && process.env.CYPRESS !== 'true') {
   require('./miq_debug.js');
   require('./miq_debug.css');
 }
-
-// Stimulus
-import "../controllers"
