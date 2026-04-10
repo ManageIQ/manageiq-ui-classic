@@ -12,9 +12,10 @@
   ],
   "scripts": {
     "cypress:open": "cypress open",
-    "cypress:run:chrome": "cypress run --headless --browser chrome ${SPEC:+--spec \"$SPEC\"}",
-    "cypress:run:edge": "cypress run --headless --browser edge ${SPEC:+--spec \"$SPEC\"}",
-    "cypress:run:firefox": "cypress run --headless --browser firefox ${SPEC:+--spec \"$SPEC\"}",
+    "cypress:run:chrome": "cypress run ${HEADED:+--headed} ${HEADED:---headless} --browser chrome ${SPEC:+--spec \"$SPEC\"}",
+    "cypress:run:chromium": "cypress run ${HEADED:+--headed} ${HEADED:---headless} --browser chromium ${SPEC:+--spec \"$SPEC\"}",
+    "cypress:run:edge": "cypress run ${HEADED:+--headed} ${HEADED:---headless} --browser edge ${SPEC:+--spec \"$SPEC\"}",
+    "cypress:run:firefox": "cypress run ${HEADED:+--headed} ${HEADED:---headless} --browser firefox ${SPEC:+--spec \"$SPEC\"}",
     "test": "jest",
     "test:watch": "jest --watchAll",
     "test:current": "jest --watch",

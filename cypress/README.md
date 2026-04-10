@@ -1,35 +1,126 @@
 ### cypress in manageiq-ui-classic
 
-#### Run
+#### Setup
 
-**Prerequisites:**
+##### Initial Setup (One-Time)
 
-Before running Cypress tests, ensure the following:
+```bash
+cd manageiq-ui-classic
+yarn  # Install Cypress and dependencies (run once initially, then again when packages are updated)
+```
 
-1. **Build webpack with CYPRESS flag** - This disables debug notifications that would block Cypress from accessing UI elements:
+**Database Requirements:**
 
-       CYPRESS=true bin/webpack
+Cypress uses the development database from `config/database.yml` and expects a clean, seeded database. If you need a populated development database for regular development, consider using a separate database for Cypress tests as pre-populated data may cause test failures. We are exploring ways to simplify this workflow.
 
-   If you skip this step, Cypress will show an error and refuse to start.
+The following command sets up the database as Cypress expects:
 
-2. **Start the Rails server**:
+```bash
+dropdb vmdb_development; createdb vmdb_development; bundle exec rake db:migrate db:seed # from manageiq directory
+```
 
-       bin/rails s
+##### Before Running Tests
 
+Build webpack with the CYPRESS flag (required before running tests, and whenever UI files change):
 
-Run without interaction:
+```bash
+cd manageiq-ui-classic
+CYPRESS=true bin/webpack
+```
 
-    yarn cypress:run:chrome
-    yarn cypress:run:firefox
+**Webpack Options:**
+- Use `CYPRESS=true bin/webpack` for a one-time build
+- Use `CYPRESS=true bin/webpack --watch` for automatic rebuilds when editing UI files
 
-Will run the tests in console, and output a screengrab and screenshot in `cypress/screenshots` and `cypress/videos`.
+**Note:** If you skip this step, Cypress will show an error and refuse to start.
 
-Run interactively:
+### Usage
 
-    yarn cypress:open
+##### Environment Variables
 
-Opens a chrome instance for debugging.
+**Required**
 
+- `CYPRESS=true` - disables debug notifications that would prevent Cypress from accessing UI elements and development mode code reloading
+
+**Optional**
+
+- `HEADED=true` - Run with visible browser (default: headless)
+- `SPEC="**/reports.cy.js"` - Run specific test file (default: all tests)
+- `CYPRESS_BROWSER=chromium|edge|firefox` - Run with alternative browser (default: chrome)
+
+##### Method 1: Automated (Self-Contained)
+
+Fully automated - no other processes needed. The rake task automatically handles starting the Rails server and simulating the queue worker.
+
+```bash
+[HEADED=true] [SPEC="**/reports.cy.js"] [CYPRESS_BROWSER=chromium|edge|firefox] CYPRESS=true bundle exec rake spec:cypress
+```
+
+##### Method 2: Automated (Manual Server)
+
+Non-interactive but requires separate Rails server (and optionally Rails console with simulated queue worker for some tests).
+
+Start Rails server in separate terminal:
+
+```bash
+CYPRESS=true bin/rails s
+```
+
+Optional: Start queue worker simulation in another terminal (needed for some tests):
+
+```bash
+bundle exec rake app:evm:simulate_queue_worker # from manageiq-ui-classic directory
+# OR
+bundle exec rake evm:simulate_queue_worker # from manageiq directory
+```
+
+Run tests with optional HEADED and SPEC parameters using Chrome (default):
+
+```bash
+[HEADED=true] [SPEC="**/reports.cy.js"] CYPRESS=true yarn cypress:run:chrome
+```
+
+Or use alternative browsers (chromium, edge, firefox):
+
+```bash
+[HEADED=true] [SPEC="**/reports.cy.js"] CYPRESS=true yarn cypress:run:chromium
+[HEADED=true] [SPEC="**/reports.cy.js"] CYPRESS=true yarn cypress:run:edge
+[HEADED=true] [SPEC="**/reports.cy.js"] CYPRESS=true yarn cypress:run:firefox
+```
+
+##### Method 3: Interactive
+
+Run tests interactively with the Cypress UI (useful for debugging).
+
+Terminal 1 - Start webpack with --watch for live UI updates:
+
+```bash
+CYPRESS=true bin/webpack --watch
+```
+
+Terminal 2 - Start Rails server:
+
+```bash
+CYPRESS=true bin/rails s
+```
+
+Terminal 3 - Simulate queue worker (needed for some tests):
+
+```bash
+bundle exec rake app:evm:simulate_queue_worker # from manageiq-ui-classic directory
+# OR
+bundle exec rake evm:simulate_queue_worker # from manageiq directory
+```
+
+Terminal 4 - Open Cypress interactive UI:
+
+```bash
+CYPRESS=true yarn cypress:open
+```
+
+This opens the Cypress UI where you can select and watch individual tests run.
+
+Note: Without `--watch`, you can run webpack and Cypress UI in the same terminal.
 
 #### Write
 
@@ -43,7 +134,7 @@ ManageIQ implements the following cypress extensions:
 
 * `cy.accordion(title)` - open an accordion panel. `title`: String for the accordion title for the accordion panel to open.
 * `cy.accordionItem(name)` - click on a record in the accordion panel. `name`: String for the record to click in the accordion panel.
-* `cy.selectAccordionItem(accordionPath)` - navigates the expanded accordion panel(use cy.accordion to expand an accordion panel) and then expand the nodes along the given path and click the final target item. `accordionPath`: A mixed array of strings and/or regex patterns that represent the path to the intended target node. e.g. Simple string path: `cy.selectAccordionItem(['Datastore', 'My-Domain', 'My-Namespace']);`, Path with regular expressions: `cy.selectAccordionItem([/^ManageIQ Region:/, /^Zone:/, /^Server:/]);`, Mixed path with strings and regular expressions: `cy.selectAccordionItem([/^ManageIQ Region:/, 'Zones', /^Zone:/]);`                                             
+* `cy.selectAccordionItem(accordionPath)` - navigates the expanded accordion panel(use cy.accordion to expand an accordion panel) and then expand the nodes along the given path and click the final target item. `accordionPath`: A mixed array of strings and/or regex patterns that represent the path to the intended target node. e.g. Simple string path: `cy.selectAccordionItem(['Datastore', 'My-Domain', 'My-Namespace']);`, Path with regular expressions: `cy.selectAccordionItem([/^ManageIQ Region:/, /^Zone:/, /^Server:/]);`, Mixed path with strings and regular expressions: `cy.selectAccordionItem([/^ManageIQ Region:/, 'Zones', /^Zone:/]);`
 
 ##### gtl
 
