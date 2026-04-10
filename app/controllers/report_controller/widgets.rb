@@ -329,10 +329,20 @@ module ReportController::Widgets
     if @widget.visibility
       if @widget.visibility[:roles]
         @edit[:new][:visibility_typ] = @widget.visibility[:roles][0] == "_ALL_" ? "all" : "role"
-        @edit[:new][:roles] = @widget.visibility[:roles][0] == "_ALL_" ? ["_ALL_"] : @widget.visibility[:roles].sort
+        if @widget.visibility[:roles][0] == "_ALL_"
+          @edit[:new][:roles] = ["_ALL_"]
+        else
+          role_ids = Rbac.filtered(MiqUserRole.where(:id => @widget.visibility[:roles]))
+          @edit[:new][:roles] = role_ids.pluck(:id).sort
+        end
       elsif @widget.visibility[:groups]
         @edit[:new][:visibility_typ] = "group"
-        @edit[:new][:groups] = @widget.visibility[:groups][0] == "_ALL_" ? ["_ALL_"] : @widget.visibility[:groups].sort
+        if @widget.visibility[:groups][0] == "_ALL_"
+          @edit[:new][:groups] = ["_ALL_"]
+        else
+          group_ids = Rbac.filtered(MiqGroup.where(:id => @widget.visibility[:groups]))
+          @edit[:new][:groups] = group_ids.pluck(:id).sort
+        end
       end
     end
     @edit[:sorted_user_roles] =
