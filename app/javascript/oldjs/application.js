@@ -1,3 +1,6 @@
+// Stimulus
+import '../controllers';
+
 require('./miq_global.js');
 require('./jquery_overrides.js');
 

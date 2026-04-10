@@ -2,6 +2,7 @@ require 'rails/engine'
 require 'sprockets/railtie'
 
 require 'high_voltage'
+require 'stimulus-rails'
 require 'webpacker'
 
 module ManageIQ
