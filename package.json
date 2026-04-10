@@ -51,7 +51,6 @@
     "angular-dragdrop": "~1.0.13",
     "angular-gettext": "^2.4.1",
     "angular-patternfly": "~3.26.0",
-    "angular-sanitize": "~1.8.3",
     "angular-ui-bootstrap": "~2.5.6",
     "angular-ui-codemirror": "~0.3.0",
     "angular-ui-sortable": "~0.19.0",

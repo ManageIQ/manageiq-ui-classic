@@ -37,7 +37,6 @@ require('patternfly/dist/js/patternfly-functions-tree-grid.js');
 window.angular = require('angular');
 require('angular-ui-bootstrap');
 require('angular-gettext');
-require('angular-sanitize');
 require('angular.validators');
 require('ng-annotate-loader!angular-ui-codemirror');
 require('angular-dragdrop'); // ngDragDrop, used by ui-components

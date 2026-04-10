@@ -14,7 +14,6 @@ ManageIQ.angular.app = angular.module('ManageIQ', [
   'miqStaticAssets.miqSelect',
   'miqStaticAssets.treeSelector',
   'miqStaticAssets.treeView',
-  'ngSanitize', // FIXME: require('angular-sanitize'),
   'patternfly',
   'patternfly.charts',
   'patternfly.views',
