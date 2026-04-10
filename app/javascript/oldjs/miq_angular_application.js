@@ -10,7 +10,6 @@ ManageIQ.angular.app = angular.module('ManageIQ', [
   'miqStaticAssets.common',
   'miqStaticAssets.dialogEditor',
   'miqStaticAssets.dialogUser',
-  'miqStaticAssets.fonticonPicker',
   'miqStaticAssets.miqSelect',
   'miqStaticAssets.treeSelector',
   'miqStaticAssets.treeView',
