@@ -5419,7 +5419,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-jest@npm:^25.5.1, babel-jest@npm:~25.5.1":
+"babel-jest@npm:^25.5.1":
   version: 25.5.1
   resolution: "babel-jest@npm:25.5.1"
   dependencies:
@@ -13688,7 +13688,6 @@ __metadata:
     array-includes: "npm:^3.1.9"
     autoprefixer: "npm:~9.8.0"
     awesome-debounce-promise: "npm:^2.1.0"
-    babel-jest: "npm:~25.5.1"
     babel-loader: "npm:~8.4.0"
     bootstrap-filestyle: "npm:~1.2.1"
     bootstrap-select: "npm:^1.13.18"
