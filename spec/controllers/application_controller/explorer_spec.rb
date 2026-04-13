@@ -69,10 +69,11 @@ describe ReportController do
                                        :active_tree => :widgets_tree)
       TreeBuilderReportWidgets.new('widgets_tree', {})
       nodes = controller.send(:tree_add_child_nodes, 'xx-r')
+      # TreeBuilderReportWidgets uses widget.title for tree node text (see x_get_tree_custom_kids)
       expected = [{:key        => "xx-r_-#{widget.id}",
-                   :text       => widget.name,
+                   :text       => widget.title,
                    :icon       => 'fa fa-file-text-o',
-                   :tooltip    => widget.name,
+                   :tooltip    => widget.title,
                    :state      => {:expanded => false},
                    :selectable => true}]
       expect(nodes).to eq(expected)
