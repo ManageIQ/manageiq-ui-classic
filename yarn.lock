@@ -13547,7 +13547,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:~4.18.1":
+"lodash@npm:~4.18.0":
   version: 4.18.1
   resolution: "lodash@npm:4.18.1"
   checksum: 10/306fea53dfd39dad1f03d45ba654a2405aebd35797b673077f401edb7df2543623dc44b9effbb98f69b32152295fff725a4cec99c684098947430600c6af0c3f
@@ -13762,7 +13762,7 @@ __metadata:
     jquery.hotkeys: "npm:~0.1.0"
     jquery.observe_field: "npm:~0.1.0"
     js-yaml: "npm:~3.14.0"
-    lodash: "npm:~4.17.23"
+    lodash: "npm:~4.18.0"
     moment: "npm:~2.30.1"
     moment-duration-format: "npm:~2.3.0"
     moment-strftime: "npm:~0.5.0"
