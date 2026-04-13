@@ -2,3 +2,13 @@
   display: flex;
   justify-content: flex-end;
 }
+
+/* For subscriptions marked for deletion */
+.subscriptions-table .disabled-row {
+  background-color: #fff1f1;
+  opacity: 0.8;
+}
+
+.subscriptions-table .disabled-row:hover {
+  background-color: #ffe0e0;
+}

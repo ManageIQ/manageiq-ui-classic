@@ -3,31 +3,79 @@ import { componentTypes } from '@@ddf';
 import { createRows } from './helper';
 import miqFlash from '../../helpers/miq-flash';
 
-const createSchema = (subscriptions, setState, setModalOpen, replicationType, isSubscriptionModified) => {
+const createSchema = (subscriptions, setState, setModalOpen, replicationType, isSubscriptionModified, setConfirmModal) => {
   const deleteSubscription = (selectedRow) => {
     const rowId = parseInt(selectedRow.id, 10);
+    const subscription = subscriptions[rowId];
 
+    const isNewRecord = subscription.newRecord === true;
+
+    if (isNewRecord) {
+      // New records: remove immediately from UI
+      setState((prev) => ({
+        ...prev,
+        subscriptions: prev.subscriptions.filter((_, i) => i !== rowId),
+        selectedRowId: rowId,
+        selectedSubscription: subscriptions[rowId],
+      }));
+    } else {
+      // Existing records: show confirmation dialog
+      setConfirmModal({
+        type: 'delete',
+        rowId,
+        label: __('Confirm Delete'),
+        message: __(
+          'Deleting a subscription will remove all replicated data which originated in the selected region. Do you want to continue?'
+        ),
+      });
+    }
+  };
+
+  const cancelDelete = (selectedRow) => {
+    const rowId = parseInt(selectedRow.id, 10);
     setState((prev) => ({
       ...prev,
-      subscriptions: prev.subscriptions.filter((_, i) => i !== rowId),
-      selectedRowId: rowId,
-      selectedSubscription: subscriptions[rowId],
+      subscriptions: prev.subscriptions.map((sub, i) => {
+        if (i === rowId) {
+          // eslint-disable-next-line no-unused-vars
+          const { remove, ...rest } = sub;
+          return rest;
+        }
+        return sub;
+      }),
     }));
   };
 
   const editSubscription = (selectedRow) => {
     const rowId = parseInt(selectedRow.id, 10);
-    setModalOpen(true);
-    setState((state) => ({
-      ...state,
-      selectedRowId: rowId,
-      form: {
-        type: 'replication',
-        className: 'replication_form',
-        action: 'edit',
-      },
-      selectedSubscription: subscriptions[rowId],
-    }));
+    const subscription = subscriptions[rowId];
+    const isNewRecord = subscription.newRecord === true;
+
+    // Show confirmation dialog for existing subscriptions (not new records)
+    if (!isNewRecord) {
+      setConfirmModal({
+        type: 'edit',
+        rowId,
+        label: __('Confirm Edit'),
+        message: __(
+          'An updated subscription must point to the same database with which it was originally created. '
+          + 'Failure to do so will result in undefined behavior. Do you want to continue?'
+        ),
+      });
+    } else {
+      // New records: open edit modal directly
+      setModalOpen(true);
+      setState((state) => ({
+        ...state,
+        selectedRowId: rowId,
+        form: {
+          type: 'replication',
+          className: 'replication_form',
+          action: 'edit',
+        },
+        selectedSubscription: subscriptions[rowId],
+      }));
+    }
   };
 
   const validateSubscription = (selectedRow) => {
@@ -129,6 +177,9 @@ const createSchema = (subscriptions, setState, setModalOpen, replicationType, is
                 break;
               case 'deleteSubscription':
                 deleteSubscription(selectedRow);
+                break;
+              case 'cancelDelete':
+                cancelDelete(selectedRow);
                 break;
               case 'validateSubscription':
                 validateSubscription(selectedRow);

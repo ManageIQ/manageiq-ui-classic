@@ -35,7 +35,7 @@ const TEST_PORT = '8888';
 const SAVE_BUTTON_TEXT = 'Save';
 const RESET_BUTTON_TEXT = 'Reset';
 const CANCEL_BUTTON_TEXT = 'Cancel';
-const ACCEPT_BUTTON_TEXT = 'Add';
+const ADD_BUTTON_TEXT = 'Add';
 const ADD_SUBSCRIPTION_BUTTON_TEXT = 'Add Subscription';
 const UPDATE_BUTTON_TEXT = 'Update';
 const VALIDATE_BUTTON_TEXT = 'Validate';
@@ -44,6 +44,8 @@ const DELETE_BUTTON_TEXT = 'Delete';
 // Modal headings
 const ADD_SUBSCRIPTION_MODAL_HEADING = 'Add Subscription';
 const EDIT_SUBSCRIPTION_MODAL_HEADING_PREFIX = 'Edit';
+const CONFIRM_DELETE_MODAL_HEADING = 'Confirm Delete';
+const CONFIRM_EDIT_MODAL_HEADING = 'Confirm Edit';
 
 // Flash message text snippets
 const FLASH_MESSAGE_SAVE_INITIATED = 'save initiated';
@@ -58,6 +60,39 @@ const MODAL_SELECTOR = '.cds--modal';
 const MODAL_HEADER_SELECTOR = '.cds--modal-header__heading';
 const SUBSCRIPTIONS_TABLE_SELECTOR = '.subscriptions-table';
 const MIQ_DATA_TABLE_BUTTON_SELECTOR = '.miq-data-table .miq-data-table-button';
+
+const CONFIRM_OK_BUTTON_TEXT = 'Ok';
+const CONFIRM_CANCEL_BUTTON_TEXT = 'Cancel';
+
+function navigateToReplicationTab() {
+  cy.login();
+  cy.menu(SETTINGS_MENU_OPTION, APP_SETTINGS_MENU_OPTION);
+  cy.accordion(SETTINGS_ACCORDION_ITEM);
+  cy.selectAccordionItem([MANAGEIQ_REGION_ACCORDION_ITEM]);
+  cy.expect_explorer_title('ManageIQ Region');
+  cy.tabs({ tabLabel: REPLICATION_TAB });
+}
+
+function setupSavedSubscription(subscription) {
+  cy.intercept('GET', '/ops/pglogical_subscriptions_form_fields/new', {
+    statusCode: 200,
+    body: {
+      replication_type: 'global',
+      subscriptions: [subscription],
+    },
+  }).as('getSubscriptions');
+
+  navigateToReplicationTab();
+  cy.wait('@getSubscriptions');
+  cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME }).select(REPLICATION_TYPE_GLOBAL);
+}
+
+function handleConfirmationModal(heading, buttonText) {
+  cy.get(MODAL_SELECTOR).should('be.visible');
+  cy.contains(MODAL_HEADER_SELECTOR, heading).should('be.visible');
+  
+  cy.contains('button', buttonText).click({force: true});
+}
 
 function saveReplicationForm() {
   cy.interceptApi({
@@ -89,7 +124,7 @@ function addSubscription() {
   cy.getFormInputFieldByIdAndType({ inputId: PASSWORD_INPUT_NAME, inputType: 'password' }).should('be.visible');
   cy.getFormInputFieldByIdAndType({ inputId: PORT_INPUT_NAME }).should('be.visible');
 
-  cy.contains(`${MODAL_SELECTOR} button`, ACCEPT_BUTTON_TEXT).should('be.disabled');
+  cy.contains(`${MODAL_SELECTOR} button`, ADD_BUTTON_TEXT).should('be.disabled');
 
   cy.getFormInputFieldByIdAndType({ inputId: DBNAME_INPUT_NAME })
     .clear({ force: true })
@@ -100,21 +135,14 @@ function addSubscription() {
   cy.getFormInputFieldByIdAndType({ inputId: PASSWORD_INPUT_NAME, inputType: 'password' }).type(TEST_PASSWORD);
   cy.getFormInputFieldByIdAndType({ inputId: PORT_INPUT_NAME }).type(TEST_PORT);
 
-  cy.contains(`${MODAL_SELECTOR} button`, ACCEPT_BUTTON_TEXT).should('not.be.disabled').click();
+  cy.contains(`${MODAL_SELECTOR} button`, ADD_BUTTON_TEXT).should('not.be.disabled').click();
 
   cy.get(SUBSCRIPTIONS_TABLE_SELECTOR).should('be.visible');
 }
 
-describe('Automate Replication form operations: Settings > Application Settings > Replication', () => {
+describe('Settings > Application Settings > Replication form operations', () => {
   beforeEach(() => {
-    cy.login();
-    cy.menu(SETTINGS_MENU_OPTION, APP_SETTINGS_MENU_OPTION);
-    cy.accordion(SETTINGS_ACCORDION_ITEM);
-    cy.selectAccordionItem([MANAGEIQ_REGION_ACCORDION_ITEM]);
-    cy.expect_explorer_title('ManageIQ Region');
-    
-    cy.tabs({ tabLabel: REPLICATION_TAB });
-
+    navigateToReplicationTab();
     cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME }).should('be.visible');
   });
 
@@ -174,13 +202,14 @@ describe('Automate Replication form operations: Settings > Application Settings 
       .should('have.length', 1);
   });
 
-  it('Validate update subscription', () => {
+  it('Validate update subscription for new record', () => {
     addSubscription();
 
     cy.contains(MIQ_DATA_TABLE_BUTTON_SELECTOR, UPDATE_BUTTON_TEXT)
       .should('be.visible')
       .click();
 
+    // New records should open edit modal directly without confirmation
     cy.get(MODAL_SELECTOR).should('be.visible');
     cy.get(MODAL_HEADER_SELECTOR).should('have.text', `${EDIT_SUBSCRIPTION_MODAL_HEADING_PREFIX} ${TEST_DB_NAME}`);
 
@@ -189,7 +218,7 @@ describe('Automate Replication form operations: Settings > Application Settings 
       .type(TEST_USER_2, { force: true, delay: 100 })
       .should('have.value', TEST_USER_2);
 
-    cy.contains(`${MODAL_SELECTOR} button`, ACCEPT_BUTTON_TEXT)
+    cy.contains(`${MODAL_SELECTOR} button`, UPDATE_BUTTON_TEXT)
       .should('be.visible')
       .click();
 
@@ -200,6 +229,71 @@ describe('Automate Replication form operations: Settings > Application Settings 
       .find('td')
       .eq(2)
       .should('have.text', TEST_USER_2);
+  });
+
+  it('Validate update subscription for saved record', () => {
+    const MOCK_SAVED_SUBSCRIPTION = {
+      id: 888,
+      dbname: 'saved_db',
+      host: 'localhost',
+      user: 'saveduser',
+      password: 'savedpass',
+      port: 5432,
+    };
+
+    setupSavedSubscription(MOCK_SAVED_SUBSCRIPTION);
+
+    // Click update button - should show confirmation modal
+    cy.contains(MIQ_DATA_TABLE_BUTTON_SELECTOR, UPDATE_BUTTON_TEXT)
+      .should('be.visible')
+      .click();
+
+    cy.contains('An updated subscription must point to the same database').should('be.visible');
+    handleConfirmationModal(CONFIRM_EDIT_MODAL_HEADING, CONFIRM_OK_BUTTON_TEXT);
+
+    cy.contains(MODAL_HEADER_SELECTOR, CONFIRM_EDIT_MODAL_HEADING).should('not.exist');
+    cy.contains(MODAL_HEADER_SELECTOR, `${EDIT_SUBSCRIPTION_MODAL_HEADING_PREFIX} ${MOCK_SAVED_SUBSCRIPTION.dbname}`).should('be.visible');
+
+    cy.getFormInputFieldByIdAndType({ inputId: USER_INPUT_NAME })
+      .clear({ force: true })
+      .type(TEST_USER_2, { force: true, delay: 100 })
+      .should('have.value', TEST_USER_2);
+
+    cy.contains(`${MODAL_SELECTOR} button`, UPDATE_BUTTON_TEXT).click();
+
+    cy.get(SUBSCRIPTIONS_TABLE_SELECTOR)
+      .find('table')
+      .find('tbody')
+      .find('tr')
+      .find('td')
+      .eq(2)
+      .should('have.text', TEST_USER_2);
+  });
+
+  it('Validate cancel edit confirmation for saved record', () => {
+    const MOCK_SAVED_SUBSCRIPTION = {
+      id: 777,
+      dbname: 'cancel_test_db',
+      host: 'localhost',
+      user: 'canceluser',
+      password: 'cancelpass',
+      port: 5432,
+    };
+
+    setupSavedSubscription(MOCK_SAVED_SUBSCRIPTION);
+
+    cy.contains(MIQ_DATA_TABLE_BUTTON_SELECTOR, UPDATE_BUTTON_TEXT)
+      .should('be.visible')
+      .click();
+
+    handleConfirmationModal(CONFIRM_EDIT_MODAL_HEADING, CONFIRM_CANCEL_BUTTON_TEXT);
+
+    cy.get(SUBSCRIPTIONS_TABLE_SELECTOR)
+      .find('tbody tr')
+      .should('have.length', 1)
+      .within(() => {
+        cy.contains(MOCK_SAVED_SUBSCRIPTION.dbname).should('exist');
+      });
   });
 
   it('Validate subscription validation', () => {
@@ -299,6 +393,169 @@ describe('Automate Replication form operations: Settings > Application Settings 
 
       cy.contains(`${MODAL_SELECTOR} button`, CANCEL_BUTTON_TEXT).click();
       cy.get(MODAL_SELECTOR).should('not.be.visible');
+    });
+  });
+
+  describe('Validate Deletion of Existing Subscriptions', () => {
+    const CANCEL_DELETE_BUTTON_TEXT = 'Cancel Delete';
+    const DISABLED_ROW_SELECTOR = '.disabled-row';
+    
+    const MOCK_SUBSCRIPTION = {
+      id: 999,
+      dbname: 'test_database',
+      host: 'localhost',
+      user: 'testuser',
+      password: 'testpass',
+      port: 5432,
+    };
+
+    const setupAndNavigate = () => {
+      cy.intercept('GET', '/ops/pglogical_subscriptions_form_fields/new', {
+        statusCode: 200,
+        body: {
+          replication_type: 'global',
+          subscriptions: [MOCK_SUBSCRIPTION],
+        },
+      }).as('getSubscriptions');
+
+      cy.login();
+      cy.menu(SETTINGS_MENU_OPTION, APP_SETTINGS_MENU_OPTION);
+      cy.accordion(SETTINGS_ACCORDION_ITEM);
+      cy.selectAccordionItem([MANAGEIQ_REGION_ACCORDION_ITEM]);
+      cy.expect_explorer_title('ManageIQ Region');
+      cy.tabs({ tabLabel: REPLICATION_TAB });
+
+      cy.wait('@getSubscriptions');
+      cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME }).select(REPLICATION_TYPE_GLOBAL);
+    };
+
+    afterEach(() => {
+      cy.appDbState('restore');
+    });
+
+    it('Validate cancel delete to restore subscription', () => {
+      setupAndNavigate();
+
+      cy.contains('test_database').should('be.visible');
+
+      // Click delete button - should show confirmation modal
+      cy.contains(MIQ_DATA_TABLE_BUTTON_SELECTOR, DELETE_BUTTON_TEXT)
+        .scrollIntoView()
+        .click();
+
+      // Verify confirmation modal appears with correct heading and message
+      cy.get(MODAL_SELECTOR).should('be.visible');
+      cy.contains(MODAL_HEADER_SELECTOR, CONFIRM_DELETE_MODAL_HEADING).should('be.visible');
+      cy.contains('Deleting a subscription will remove all replicated data').should('be.visible');
+
+      // Click Ok to confirm deletion
+      cy.contains('button', CONFIRM_OK_BUTTON_TEXT).click();
+
+      // Wait for confirmation modal to close
+      cy.contains(MODAL_HEADER_SELECTOR, CONFIRM_DELETE_MODAL_HEADING).should('not.exist');
+
+      // Verify subscription is marked for deletion
+      cy.contains('button', CANCEL_DELETE_BUTTON_TEXT).scrollIntoView().should('be.visible');
+      cy.get(DISABLED_ROW_SELECTOR).should('exist');
+
+      // Click "Cancel Delete" to restore
+      cy.contains('button', CANCEL_DELETE_BUTTON_TEXT).scrollIntoView().click();
+
+      cy.get(DISABLED_ROW_SELECTOR).should('not.exist');
+      cy.get(SUBSCRIPTIONS_TABLE_SELECTOR)
+        .find('tbody tr')
+        .should('have.length', 1)
+        .within(() => {
+          cy.contains('test_database').should('exist');
+          cy.contains(DELETE_BUTTON_TEXT).should('exist');
+        });
+    });
+
+    it('Validate cancel delete confirmation modal', () => {
+      setupAndNavigate();
+
+      cy.contains('test_database').should('be.visible');
+
+      // Click delete button
+      cy.contains(MIQ_DATA_TABLE_BUTTON_SELECTOR, DELETE_BUTTON_TEXT)
+        .scrollIntoView()
+        .click();
+
+      // Verify confirmation modal appears
+      cy.get(MODAL_SELECTOR).should('be.visible');
+      cy.contains(MODAL_HEADER_SELECTOR, CONFIRM_DELETE_MODAL_HEADING).should('be.visible');
+
+      // Click Cancel to abort deletion
+      cy.contains('button', CONFIRM_CANCEL_BUTTON_TEXT).click({force: true});
+
+      cy.get(DISABLED_ROW_SELECTOR).should('not.exist');
+      
+      cy.get(SUBSCRIPTIONS_TABLE_SELECTOR)
+        .find('tbody tr')
+        .should('have.length', 1)
+        .within(() => {
+          cy.contains('test_database').should('exist');
+          cy.contains(DELETE_BUTTON_TEXT).should('exist');
+        });
+    });
+
+    it('Validate error message and ensure successful save with multiple subscriptions', () => {
+      setupAndNavigate();
+
+      // Click delete and confirm
+      cy.contains(MIQ_DATA_TABLE_BUTTON_SELECTOR, DELETE_BUTTON_TEXT)
+        .scrollIntoView()
+        .click();
+
+      // Confirm deletion in modal
+      cy.get(MODAL_SELECTOR).should('be.visible');
+      cy.contains(MODAL_HEADER_SELECTOR, CONFIRM_DELETE_MODAL_HEADING).should('be.visible');
+      cy.contains('button', CONFIRM_OK_BUTTON_TEXT).click();
+
+      // Wait for confirmation modal to close
+      cy.contains(MODAL_HEADER_SELECTOR, CONFIRM_DELETE_MODAL_HEADING).should('not.exist');
+
+      // Verify subscription is marked for deletion
+      cy.get(DISABLED_ROW_SELECTOR).should('exist');
+
+      // Try to save after deleting all subscriptions - an error should be displayed
+      cy.contains('button', SAVE_BUTTON_TEXT).click();
+      cy.expect_flash(flashClassMap.error, 'At least 1 subscription must be added to save server replication type');
+
+      // Add a new subscription
+      cy.contains('button', ADD_SUBSCRIPTION_BUTTON_TEXT).click();
+      cy.get(MODAL_SELECTOR).should('be.visible');
+
+      cy.getFormInputFieldByIdAndType({ inputId: DBNAME_INPUT_NAME })
+        .clear({ force: true })
+        .type('new_database', { force: true, delay: 100 });
+      cy.getFormInputFieldByIdAndType({ inputId: HOST_INPUT_NAME }).type('newhost');
+      cy.getFormInputFieldByIdAndType({ inputId: USER_INPUT_NAME }).type('newuser');
+      cy.getFormInputFieldByIdAndType({ inputId: PASSWORD_INPUT_NAME, inputType: 'password' }).type('newpass');
+      cy.getFormInputFieldByIdAndType({ inputId: PORT_INPUT_NAME }).type('5434');
+
+      cy.contains(`${MODAL_SELECTOR} button`, ADD_BUTTON_TEXT).click();
+
+      // Verify both subscriptions exist: one marked for deletion, one active
+      cy.get(SUBSCRIPTIONS_TABLE_SELECTOR).find('tbody tr').should('have.length', 2);
+      cy.get(DISABLED_ROW_SELECTOR).should('have.length', 1);
+      cy.contains('new_database').should('be.visible');
+
+      cy.intercept('POST', '/ops/pglogical_save_subscriptions/new?button=save', {
+        statusCode: 200,
+        body: { message: 'Replication settings save initiated' },
+      }).as('saveSubscriptions');
+
+      cy.contains('button', SAVE_BUTTON_TEXT).click();
+
+      cy.wait('@saveSubscriptions').its('request.body').should((body) => {
+        expect(body.subscriptions).to.exist;
+        expect(body.subscriptions['0']).to.have.property('remove', true);
+        expect(body.subscriptions['1']).to.not.have.property('remove');
+        expect(body.subscriptions['1'].dbname).to.equal('new_database');
+      });
+
+      cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_SAVE_INITIATED);
     });
   });
 });
