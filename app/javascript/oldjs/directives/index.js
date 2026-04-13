@@ -1,6 +1,5 @@
 require('./autofocus.js');
 require('./checkchange.js');
-require('./detect_spaces.js');
 require('./miq_form.js');
 require('./miqrequired.js');
 require('./reconfigure/validateMultiple.js');
