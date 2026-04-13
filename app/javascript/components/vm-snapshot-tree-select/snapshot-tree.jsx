@@ -3,7 +3,7 @@ import {
   Camera, ChevronRight, ChevronDown, VirtualMachine,
 } from '@carbon/react/icons';
 import TreeView, { flattenTree } from 'react-accessible-treeview';
-import './styles.css';
+import './styles.scss';
 import PropTypes from 'prop-types';
 
 const allNodeData = [];

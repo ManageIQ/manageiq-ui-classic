@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import './styles.css';
+import './styles.scss';
 import SnapshotTree from './snapshot-tree';
 
 const VMSnapshotTreeSelect = ({

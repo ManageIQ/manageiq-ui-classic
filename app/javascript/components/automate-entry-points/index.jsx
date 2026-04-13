@@ -9,7 +9,7 @@ import {
   FolderOpen,
 } from '@carbon/react/icons';
 import TreeView from 'react-accessible-treeview';
-import './styles.css';
+import './styles.scss';
 
 const initialData = [
   {
