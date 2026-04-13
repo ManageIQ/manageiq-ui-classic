@@ -1691,7 +1691,7 @@ class ApplicationController < ActionController::Base
       params.each do |var, value|
         next unless var.starts_with?(prefix)
 
-        name = var.split(prefix).last
+        name = var.split(prefix).last.to_i
         if value == "1"
           @edit[:new][key] |= [name] # union
         elsif value.downcase == "null"
