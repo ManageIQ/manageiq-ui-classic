@@ -250,11 +250,10 @@ class CatalogController < ApplicationController
       else
         prov_set_form_vars if need_prov_dialogs?(params[:st_prov_type])
         @record = class_service_template(params[:st_prov_type]).new
-        set_form_vars
         @edit[:new][:st_prov_type] = params[:st_prov_type] if params[:st_prov_type]
         @edit[:new][:service_type] = "atomic"
-        default_entry_point(@edit[:new][:st_prov_type],
-                            @edit[:new][:service_type])
+        set_form_vars
+        default_entry_point(@edit[:new][:st_prov_type], @edit[:new][:service_type])
         @edit[:rec_id] = @record.try(:id)
         @tabactive = @edit[:new][:current_tab_key]
       end
@@ -1301,7 +1300,7 @@ class CatalogController < ApplicationController
     @available_catalogs = available_catalogs.sort # Get available catalogs with tenants and ancestors
     @additional_tenants = @edit[:new][:tenant_ids].map(&:to_s) # Get ids of selected Additional Tenants in the Tenants tree
     available_orchestration_templates if @record.kind_of?(ServiceTemplateOrchestration)
-    available_automation_managers     if @record.kind_of?(ServiceTemplateAutomation) && !need_prov_dialogs?(@record.prov_type)
+    available_automation_managers     if @record.kind_of?(ServiceTemplateAutomation) && !need_prov_dialogs?(@edit[:new][:st_prov_type])
     available_container_managers      if @record.kind_of?(ServiceTemplateContainerTemplate)
     fetch_zones
     @edit[:new][:zone_id] = @record.zone_id
