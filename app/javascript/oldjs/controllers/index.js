@@ -1,4 +1,3 @@
-require('./buttons/button_group_controller.js');
 require('./catalog/catalog_item_form_controller.js');
 require('./container_dashboard/card/card-module.js');
 require('./container_dashboard/util.js');
