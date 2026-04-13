@@ -1745,19 +1745,19 @@ __metadata:
   linkType: hard
 
 "@data-driven-forms/react-form-renderer@npm:^4.1.10, @data-driven-forms/react-form-renderer@npm:~4.1.13":
-  version: 4.1.13
-  resolution: "@data-driven-forms/react-form-renderer@npm:4.1.13"
+  version: 4.1.14
+  resolution: "@data-driven-forms/react-form-renderer@npm:4.1.14"
   dependencies:
     final-form: "npm:^4.20.10"
     final-form-arrays: "npm:^3.0.2"
     final-form-focus: "npm:^1.1.2"
-    lodash: "npm:^4.17.23"
+    lodash: "npm:^4.18.1"
     react-final-form: "npm:^6.5.0"
     react-final-form-arrays: "npm:^3.1.1"
   peerDependencies:
     react: ^17.0.2 || ^18.0.0 || ^19.0.0
     react-dom: ^17.0.2 || ^18.0.0 || ^19.0.0
-  checksum: 10/646e5a5ce3f2a47ff72b9c1e7996be755f89259386ea7078f554b4156fd5a2d6057200ee1cdb7120d0cd9b20f31cdf1616293737b007496fb15a7f592e8fa0bd
+  checksum: 10/d8cea6b68edb6391d60464cadfd5c7b2f32d05a110f2bf0d043572dd49a4bcec1383b2a31ad6c04c56b9c5868a0e0ea45a4a928b16b656808402b0c44b53237e
   languageName: node
   linkType: hard
 
