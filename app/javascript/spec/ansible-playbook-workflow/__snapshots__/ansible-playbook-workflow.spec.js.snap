@@ -1,104 +1,259 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AnsiblePlaybookWorkflow component should render the AnsiblePlaybookWorkflow with payload 1`] = `
-<div
-  className="row"
->
+<div>
   <div
-    className="col-md-12 col-lg-6"
+    class="row"
   >
-    <Tabs>
-      <TabList
-        aria-label="Ansible Playbook Tabs"
-        className="miq_custom_tabs"
+    <div
+      class="col-md-12 col-lg-6"
+    >
+      <div
+        class="cds--tabs miq_custom_tabs"
       >
-        <ForwardRef>
-          Text
-        </ForwardRef>
-      </TabList>
-      <TabPanels>
-        <ForwardRef>
-          <Controlled
-            className="miq-codemirror ansible-playbook-workflow-payload"
-            options={
-              Object {
-                "autoCloseBrackets": true,
-                "gutters": Array [
-                  "CodeMirror-lint-markers",
-                ],
-                "lineNumbers": true,
-                "lineWrapping": true,
-                "lint": true,
-                "mode": "yaml",
-                "styleActiveLine": true,
-                "theme": "eclipse",
-              }
-            }
-            value="
-  ---
-  - name: Provision instances
-    hosts: localhost
-    connection: local
-    gather_facts: False
-    # load AWS variables from this group vars file
-    vars_files:
-      - group_vars/all
-    tasks:
-      - name: Launch instances
-        ec2:
-        access_key: \\"{{ ec2_access_key }}\\"
-        secret_key: \\"{{ ec2_secret_key }}\\"
-        keypair: \\"{{ ec2_keypair }}\\"
-        group: \\"{{ ec2_security_group }}\\"
-        type: \\"{{ ec2_instance_type }}\\"
-        image: \\"{{ ec2_image }}\\"
-        region: \\"{{ ec2_region }}\\"
-        instance_tags: \\"{'ansible_group':'jboss', 'type':'{{ ec2_instance_type }}', 'group':'{{ ec2_security_group }}', 'Name':'demo_''{{ tower_user_name }}'}\\"
-        count: \\"{{ ec2_instance_count }}\\"
-        wait: true
-        register: ec2
-      - name: Wait for SSH to come up
-        wait_for:
-        host: \\"{{ item.public_dns_name }}\\"
-        port: 22
-        delay: 60
-        timeout: 320
-        state: started
-        with_items: \\"{{ ec2.instances }}\\""
-          />
-        </ForwardRef>
-      </TabPanels>
-    </Tabs>
+        <button
+          aria-hidden="true"
+          aria-label="Scroll left"
+          class="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--previous cds--tab--overflow-nav-button--hidden"
+          tabindex="-1"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 16 16"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M5 8 10 3 10.7 3.7 6.4 8 10.7 12.3 10 13z"
+            />
+          </svg>
+        </button>
+        <div
+          aria-label="Ansible Playbook Tabs"
+          class="cds--tab--list"
+          role="tablist"
+        >
+          <button
+            aria-controls="ccs-1-tabpanel-0"
+            aria-selected="true"
+            class="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
+            id="ccs-1-tab-0"
+            role="tab"
+            tabindex="0"
+            type="button"
+          >
+            <div
+              class="cds--tabs__nav-item-label-wrapper"
+            >
+              <span
+                class="cds--tabs__nav-item-label"
+                dir="auto"
+              >
+                Text
+              </span>
+            </div>
+          </button>
+          <div
+            class="cds--tabs__nav-item--close--hidden"
+          >
+            <button
+              aria-hidden="true"
+              class="cds--visually-hidden cds--tabs__nav-item--close-icon--selected"
+              tabindex="-1"
+              title="Remove Text tab"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                aria-label="Press delete to remove Text tab"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                role="img"
+                viewBox="0 0 32 32"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <button
+          aria-hidden="true"
+          aria-label="Scroll right"
+          class="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--next cds--tab--overflow-nav-button--hidden"
+          tabindex="-1"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 16 16"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        aria-labelledby="ccs-1-tab-0"
+        class="cds--tab-content"
+        id="ccs-1-tabpanel-0"
+        role="tabpanel"
+      >
+        <div
+          class="react-codemirror2 miq-codemirror ansible-playbook-workflow-payload"
+        >
+          <div
+            class="CodeMirror cm-s-eclipse CodeMirror-wrap"
+            translate="no"
+          >
+            <div
+              style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 0px;"
+            >
+              <textarea
+                autocapitalize="off"
+                autocorrect="off"
+                spellcheck="false"
+                style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; min-height: 1em; outline: none;"
+                tabindex="0"
+              />
+            </div>
+            <div
+              class="CodeMirror-vscrollbar"
+              cm-not-content="true"
+              style="display: block; bottom: 0px;"
+              tabindex="-1"
+            >
+              <div
+                style="min-width: 1px; height: 255px;"
+              />
+            </div>
+            <div
+              class="CodeMirror-hscrollbar"
+              cm-not-content="true"
+              tabindex="-1"
+            >
+              <div
+                style="height: 100%; min-height: 1px; width: 0px;"
+              />
+            </div>
+            <div
+              class="CodeMirror-scrollbar-filler"
+              cm-not-content="true"
+            />
+            <div
+              class="CodeMirror-gutter-filler"
+              cm-not-content="true"
+            />
+            <div
+              class="CodeMirror-scroll"
+              tabindex="-1"
+            >
+              <div
+                class="CodeMirror-sizer"
+                style="margin-left: 0px; padding-right: 0px; padding-bottom: 0px;"
+              >
+                <div
+                  style="position: relative;"
+                >
+                  <div
+                    class="CodeMirror-lines"
+                    role="presentation"
+                  >
+                    <div
+                      role="presentation"
+                      style="position: relative; outline: none;"
+                    >
+                      <div
+                        class="CodeMirror-measure"
+                      />
+                      <div
+                        class="CodeMirror-measure"
+                      >
+                        <pre
+                          class="CodeMirror-line"
+                          role="presentation"
+                        >
+                          <span
+                            role="presentation"
+                            style="padding-right: .1px;"
+                          >
+                                    with_items: "{{ ec2.instances }}"
+                          </span>
+                        </pre>
+                      </div>
+                      <div
+                        style="position: relative; z-index: 1;"
+                      />
+                      <div
+                        class="CodeMirror-cursors"
+                      />
+                      <div
+                        class="CodeMirror-code"
+                        role="presentation"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                style="position: absolute; height: 50px; width: 1px; border-bottom: 0px solid transparent;"
+              />
+              <div
+                class="CodeMirror-gutters"
+              >
+                <div
+                  class="CodeMirror-gutter CodeMirror-lint-markers"
+                />
+                <div
+                  class="CodeMirror-gutter CodeMirror-linenumbers"
+                  style="width: 1px;"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;
 
 exports[`AnsiblePlaybookWorkflow component should render the AnsiblePlaybookWorkflow without payload and display a notification 1`] = `
-<AnsiblePlaybookWorkflow
-  payloadType="yaml"
->
+<div>
   <div
-    className="row"
+    class="row"
   >
     <div
-      className="col-md-12 col-lg-6"
+      class="col-md-12 col-lg-6"
     >
-      <NotificationMessage
-        message="Payload is not available."
-        type="info"
+      <div
+        class="miq-notification-message-container alert alert-info"
       >
-        <div
-          className="miq-notification-message-container alert alert-info"
-        >
-          <span
-            className="pficon pficon-info"
-          />
-          <strong>
-            Payload is not available.
-          </strong>
-        </div>
-      </NotificationMessage>
+        <span
+          class="pficon pficon-info"
+        />
+        <strong>
+          Payload is not available.
+        </strong>
+      </div>
     </div>
   </div>
-</AnsiblePlaybookWorkflow>
+</div>
 `;
