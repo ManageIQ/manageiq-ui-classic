@@ -2,4 +2,3 @@
 
 require('../oldjs/application.js');
 require('jasmine-jquery/lib/jasmine-jquery.js');
-require('angular-mocks');

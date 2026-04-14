@@ -116,7 +116,6 @@
     "@babel/preset-react": "~7.28.0",
     "@babel/register": "~7.28.0",
     "@babel/runtime-corejs3": "~7.29.0",
-    "angular-mocks": "~1.8.0",
     "autoprefixer": "~9.8.0",
     "babel-loader": "~8.4.0",
     "compression-webpack-plugin": "^6.1.1",

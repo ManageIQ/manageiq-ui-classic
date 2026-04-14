@@ -6,11 +6,9 @@ require('../helpers/angular.js');
 require('../helpers/API.js');
 require('../helpers/addFlash.js');
 require('../helpers/sprintf.js');
-require('angular-mocks');
 
 describe('Toolbar actions', () => {
   beforeEach(() => {
-    angular.mock.module('miq.api');
   });
 
   describe('gridChecks', () => {
