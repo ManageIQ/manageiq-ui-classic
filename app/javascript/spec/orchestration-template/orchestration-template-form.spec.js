@@ -7,6 +7,7 @@ import '../helpers/miqFlashLater';
 import '../helpers/miqSparkle';
 import '../helpers/miqAjaxButton';
 import '../helpers/sprintf';
+import '../helpers/codemirrorRangeMock';
 import { mount } from '../helpers/mountForm';
 
 import OrcherstrationTemplateForm from '../../components/orchestration-template/orcherstration-template-form';
@@ -33,7 +34,7 @@ describe('OrcherstrationTemplate form', () => {
     addFlashSpy.mockRestore();
   });
 
-  it('should call submit function', async(done) => {
+  it('should call submit function', async() => {
     fetchMock.postOnce('/api/orchestration_templates', {});
     let wrapper;
     await act(async() => {
@@ -58,10 +59,9 @@ describe('OrcherstrationTemplate form', () => {
       content: 'Some random content',
     }));
     expect(sparkleOnSpy).toHaveBeenCalledTimes(1);
-    done();
   });
 
-  it('should call miqFlashLater on cancel action', async(done) => {
+  it('should call miqFlashLater on cancel action', async() => {
     let wrapper;
     await act(async() => {
       wrapper = mount(<OrcherstrationTemplateForm {...initialProps} />);
@@ -77,10 +77,9 @@ describe('OrcherstrationTemplate form', () => {
       'success',
       '/catalog/explorer',
     );
-    done();
   });
 
-  it('should render edit variant', async(done) => {
+  it('should render edit variant', async() => {
     const sparkleOnSpy = jest.spyOn(window, 'miqSparkleOn');
     fetchMock.patchOnce('/api/orchestration_templates/123', {});
     fetchMock.getOnce('/api/orchestration_templates/123?attributes=name,description,type,ems_id,draft,content', {
@@ -104,10 +103,9 @@ describe('OrcherstrationTemplate form', () => {
       content: 'content',
     }));
     expect(sparkleOnSpy).toHaveBeenCalledTimes(1);
-    done();
   });
 
-  it('should render copy variant', async(done) => {
+  it('should render copy variant', async() => {
     const sparkleOnSpy = jest.spyOn(window, 'miqSparkleOn');
     fetchMock.postOnce('/api/orchestration_templates/123', {});
     fetchMock.getOnce('/api/orchestration_templates/123?attributes=name,description,type,ems_id,draft,content', {
@@ -141,7 +139,6 @@ describe('OrcherstrationTemplate form', () => {
       },
     }));
     expect(sparkleOnSpy).toHaveBeenCalledTimes(1);
-    done();
   });
 });
 
@@ -167,7 +164,7 @@ describe('Orcherstration Stack form', () => {
     spyMiqAjaxButton.mockRestore();
   });
 
-  it('should render copy variant', async(done) => {
+  it('should render copy variant', async() => {
     const sparkleOnSpy = jest.spyOn(window, 'miqSparkleOn');
     fetchMock.postOnce('/api/orchestration_templates/123', {});
     fetchMock.getOnce('/api/orchestration_templates/123?attributes=name,description,type,ems_id,draft,content', {
@@ -195,10 +192,9 @@ describe('Orcherstration Stack form', () => {
     expect(fetchMock.lastCall()).toBeTruthy();
     expect(sparkleOnSpy).toHaveBeenCalledTimes(1);
     expect(wrapper).toMatchSnapshot();
-    done();
   });
 
-  it('should call submit function', async(done) => {
+  it('should call submit function', () => {
     const addContent = {
       templateId: 123,
       templateName: 'template_name',
@@ -209,16 +205,14 @@ describe('Orcherstration Stack form', () => {
 
     miqAjaxButton(`/orchestration_stack/stacks_ot_copy?button=add`, addContent);
     expect(spyMiqAjaxButton).toHaveBeenCalledWith('/orchestration_stack/stacks_ot_copy?button=add', addContent);
-    done();
   });
 
-  it('should call cancel function', async(done) => {
+  it('should call cancel function', () => {
     const cancelMessage = __('Copy of Orchestration Template was cancelled by the user');
     miqRedirectBack(cancelMessage, 'success', `/orchestration_stack/show/${123}?display=stack_orchestration_template#/`);
 
     expect(miqRedirectBack).toHaveBeenCalledWith(
       cancelMessage, 'success', `/orchestration_stack/show/${123}?display=stack_orchestration_template#/`
     );
-    done();
   });
 });

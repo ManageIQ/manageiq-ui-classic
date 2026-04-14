@@ -121,9 +121,6 @@ module.exports = {
       }, {}
     ),
     'shims': [
-      'es6-shim',
-      'array-includes',
-      'whatwg-fetch',
       'core-js/stable',
       'regenerator-runtime/runtime',
     ],
