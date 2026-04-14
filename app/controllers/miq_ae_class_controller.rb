@@ -711,7 +711,7 @@ class MiqAeClassController < ApplicationController
     @edit[:new][:description] = @ae_class.description
     @edit[:new][:namespace] = @ae_class.namespace
     @edit[:new][:inherits] = @ae_class.inherits
-    @edit[:inherits_from] = MiqAeClass.all.collect { |c| [c.fqname, c.fqname] }
+    @edit[:inherits_from] = MiqAeClass.includes(:domain).collect { |c| [c.fqname, c.fqname] }
     @edit[:current] = @edit[:new].dup
     @right_cell_text = if @edit[:rec_id].nil?
                          _("Adding a new Automate Class")
