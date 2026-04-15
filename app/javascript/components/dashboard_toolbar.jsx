@@ -22,7 +22,7 @@ const resetButton = () => (
     id="reset-dashboard-button"
     kind="ghost"
     hasIconOnly
-    iconDescription={__('Reset Dashboard Widgets to the default')}
+    iconDescription={__('Reset Dashboard Widgets to the defaults')}
     onClick={resetClick}
     size="md"
     renderIcon={() => <Reply size={18} />}
