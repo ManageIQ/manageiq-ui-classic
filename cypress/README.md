@@ -162,7 +162,15 @@ Terminal 4 - Open Cypress interactive UI:
 CYPRESS=true yarn cypress:open
 ```
 
-This opens the Cypress UI where you can select and watch individual tests run.
+This opens the Cypress UI. From there:
+
+1. Select "E2E Testing"
+2. Choose your browser (Chrome recommended for development)
+3. Click on a spec file to run it
+4. Watch tests run in real time with:
+   - Left side: test results with pass/fail status
+   - Right side: live browser view of the application
+   - Top bar: controls to pause, rerun, and see pass/fail counts
 
 Note: Without `--watch`, you can run webpack and Cypress UI in the same terminal.
 
@@ -420,21 +428,3 @@ it('can delete a rate', () => { /* ... */ });
 ```
 
 **Guidelines:** Start with workflow tests for happy paths, use separate tests for edge cases and validations
-
-#### 7. Using the Cypress UI
-
-The Cypress UI is the recommended way to write, run, and debug tests:
-
-1. Start with `CYPRESS=true yarn cypress:open`
-2. Select "E2E Testing"
-3. Choose your browser (Chrome recommended for development)
-4. Click on a spec file to run it
-5. Watch tests run in real-time with the test runner showing:
-   - Left side: Test results with pass/fail status
-   - Right side: Live browser view of the application
-   - Top bar: Controls to pause, rerun, and see pass/fail counts
-
-**Headless mode** (for CI-like testing):
-```bash
-CYPRESS=true yarn cypress:run:chrome
-```
