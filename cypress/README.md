@@ -192,23 +192,23 @@ To enable snapshot history for easier debugging:
 
 Understanding these files will help you write and debug Cypress tests:
 
-**1. `cypress.config.js`**
+**`cypress.config.js`**
 - Contains Cypress configuration settings
 - Defines base URL, viewport size, video recording settings
 - Controls `numTestsKeptInMemory` for debugging vs. performance
 
-**2. `cypress/support/e2e.js`**
+**`cypress/support/e2e.js`**
 - Imports all Cypress commands and assertions
 - Contains global error handling logic
 - Example: Handles `uncaught:exception` errors that don't affect tests but would cause false failures in certain browsers
 
-**3. `cypress/support/assertions/`**
+**`cypress/support/assertions/`**
 - Contains reusable test assertion functions
 - Use these to verify expected UI behavior
 - Example: `cy.expect_text(element, text)` verifies element contains expected text
 - Think of assertions as "test case commands" that verify conditions
 
-**4. `cypress/support/commands/`**
+**`cypress/support/commands/`**
 - Contains reusable Cypress commands for common UI interactions
 - Use these to navigate, click, read data, etc.
 - Example: `cy.login()`, `cy.menu()`, `cy.toolbar()`
