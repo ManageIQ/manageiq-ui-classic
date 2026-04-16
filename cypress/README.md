@@ -9,6 +9,10 @@ cd manageiq-ui-classic
 yarn  # Install Cypress and dependencies (run once initially, then again when packages are updated)
 ```
 
+<details>
+
+<summary>Database Requirements (One-Time Setup)</summary>
+
 ##### Database Requirements
 
 Cypress uses the development database from `config/database.yml` and expects a clean, seeded database.
@@ -48,6 +52,8 @@ bundle exec rake db:seed       # Populates default data
 ```
 
 Then restart your server.
+
+</details>
 
 #### Before Running Tests
 
@@ -164,6 +170,10 @@ Note: Without `--watch`, you can run webpack and Cypress UI in the same terminal
 
 It's good practice to run all commands from the `manageiq-ui-classic` directory. While `bin/rails s` can be run from the `manageiq` directory, commands like `bin/webpack` and Cypress commands only work from `manageiq-ui-classic`. Running everything from one location helps keep organized.
 
+<details>
+
+<summary>Debugging Configuration</summary>
+
 ### Debugging Configuration
 
 #### Memory and Snapshot History
@@ -175,6 +185,12 @@ To enable snapshot history for easier debugging:
 - Or change to a value > 0: `numTestsKeptInMemory: 50`
 
 Remember to reset this before committing if you're working on large test files.
+
+</details>
+
+<details>
+
+<summary>Important Files</summary>
 
 ### Important Files
 
@@ -202,11 +218,17 @@ Understanding these files will help you write and debug Cypress tests:
 - Example: `cy.login()`, `cy.menu()`, `cy.toolbar()`
 - Think of commands as "UI interaction helpers" that aren't tests themselves
 
+</details>
+
 ### Writing Tests
 
 Actual tests can be found in `cypress/e2e/ui/`.
 
 ManageIQ implements the following cypress extensions:
+
+<details>
+
+<summary>Cypress Commands (API Reference)</summary>
 
 ### Cypress Commands
 
@@ -285,6 +307,12 @@ ManageIQ implements the following cypress extensions:
 * `cy.providerValidation({ stubErrorResponse, errorMessage })` - performs validation with optional error response stubbing. `stubErrorResponse` is whether to stub an error response. `errorMessage` is the error message to show.
 * `generateProviderTests(providerConfig)` - generates all test suites for a provider. `providerConfig` is the provider configuration object.
 
+</details>
+
+<details>
+
+<summary>Cypress Assertions (API Reference)</summary>
+
 ### Cypress Assertions
 
 * `cy.expect_explorer_title(title)` - check that the title on an explorer screen matches the provided title. `title`: String for the title.
@@ -299,6 +327,12 @@ ManageIQ implements the following cypress extensions:
 * `cy.expect_modal({ modalHeaderText, modalContentExpectedTexts, targetFooterButtonText })` - command to validate and interact with modal dialogs. Verifies the modal content and clicks a specified button in the modal footer. `modalHeaderText` is the optional text to verify in the modal header (case insensitive). `modalContentExpectedTexts` is an optional array of text strings that should be present in the modal content (case insensitive). `targetFooterButtonText` is the text of the button in the modal footer to click (required). e.g. `cy.expect_modal({ modalHeaderText: 'Confirmation', modalContentExpectedTexts: ['you want to continue?'], targetFooterButtonText: 'Confirm' });`, `cy.expect_modal({ modalContentExpectedTexts: ['cannot be undone.', 'data will be permanently deleted.'], targetFooterButtonText: 'Cancel' });`, `cy.expect_modal({ targetFooterButtonText: 'OK' });`
 * `cy.expect_inline_field_errors({ containsText })` - command to validate inline field error messages. `containsText` is the text that the error message should contain (required). e.g. `cy.expect_inline_field_errors({ containsText: 'blank' });`, `cy.expect_inline_field_errors({ containsText: 'taken' });`
 * `cy.expect_dual_list({ availableItemsHeaderText, selectedItemsHeaderText, availableItems, selectedItems })` - command to test dual-list components (components with two lists where items can be moved between them). Tests all aspects including item selection, moving items between lists, and search functionality. `availableItemsHeaderText` is the optional string for the heading of the available items list. `selectedItemsHeaderText` is the optional string for the heading of the selected items list. `availableItems` is an optional array of strings representing the items initially in the available items list. `selectedItems` is an optional array of strings representing the items initially in the selected items list. At least one of `availableItems` or `selectedItems` must contain items. The command automatically detects whether to test a flow starting from available items or selected items based on which list has items initially. e.g. `cy.expect_dual_list({ availableItemsHeaderText: 'Available Items', selectedItemsHeaderText: 'Selected Items', availableItems: ['Item 1', 'Item 2', 'Item 3'] });`, `cy.expect_dual_list({ availableItemsHeaderText: 'Unassigned Roles', selectedItemsHeaderText: 'Assigned Roles', selectedItems: ['Role 1', 'Role 2', 'Role 3'] });`
+
+</details>
+
+<details>
+
+<summary>Test Writing Guidelines</summary>
 
 ## Test Writing Guidelines
 
@@ -417,3 +451,5 @@ it('can delete a rate', () => { /* ... */ });
 ```
 
 **Guidelines:** Start with workflow tests for happy paths, use separate tests for edge cases and validations
+
+</details>
