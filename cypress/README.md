@@ -84,7 +84,7 @@ CYPRESS=true bin/webpack
 
 **Required**
 
-- `CYPRESS=true` - disables debug notifications that would prevent Cypress from accessing UI elements and development mode code reloading
+- `CYPRESS=true` - disables debug notifications that would prevent Cypress from accessing UI elements, development mode code reloading, and [rate limiting](https://github.com/ManageIQ/manageiq/blob/master/lib/manageiq/rack_attack.rb)
 
 **Optional**
 
@@ -179,30 +179,6 @@ To enable snapshot history for easier debugging:
 - Or change to a value > 0: `numTestsKeptInMemory: 50`
 
 **Note:** Remember to reset this before committing if you're working on large test files.
-
-#### Development Commands Reference
-
-**Server Commands:**
-```bash
-# Start Rails server (from manageiq-ui-classic)
-CYPRESS=true bin/rails s
-
-# Start Rails console (from manageiq-ui-classic)
-rails c
-# Then in console:
-simulate_queue_worker  # Simulates queue worker for tests that need it
-```
-
-**Webpack Commands:**
-```bash
-# One-time build
-CYPRESS=true bin/webpack
-
-# Watch mode - auto-rebuild on file changes (useful when editing UI code)
-CYPRESS=true bin/webpack --watch
-```
-
-**Note:** The `CYPRESS=true` environment variable disables debug notifications and code reloading that would interfere with Cypress tests. It also disables rate limiting (see `lib/manageiq/rack_attack.rb`).
 
 #### Important Files
 
