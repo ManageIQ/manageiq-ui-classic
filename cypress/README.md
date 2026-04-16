@@ -324,10 +324,43 @@ afterEach(() => {
 - **Removes rows created during the test** - Use `afterEach` with `cy.appDbState('restore')` for tests that create new records
 - **Does NOT restore deleted or modified rows** - If your test deletes or modifies existing rows, you must manually restore them in your test
 
+**Creating test data with FactoryBot:**
+
+Through cypress-on-rails, you can leverage Ruby/Rails test factories (FactoryBot) from JavaScript within your tests using `cy.appFactories()`:
+
+```javascript
+// Create a single record
+cy.appFactories([
+  ['create', 'service_template', {name: 'My Service', generic_subtype: 'custom', prov_type: 'generic', display: true}],
+]).then((results) => {
+  // results[0] contains the created record with its id
+  const serviceTemplate = results[0];
+});
+
+// Create related records using the first record's id
+cy.appFactories([
+  ['create', 'service_template', {name: 'My Service'}],
+]).then((results) => {
+  cy.appFactories([
+    ['create', 'resource_action', {action: 'Provision', resource_id: results[0].id, resource_type: 'ServiceTemplate'}],
+    ['create', 'resource_action', {action: 'Retirement', resource_id: results[0].id, resource_type: 'ServiceTemplate'}]
+  ]);
+});
+```
+
+**Important requirements:**
+- **Factory names must match existing Ruby-side factories** - The argument after 'create' (e.g., 'service_template') must correspond to a defined FactoryBot factory in the Ruby codebase
+- **All factory names must be unique** - When creating new factories for Cypress tests, ensure the factory name doesn't conflict with existing factories
+- **Design factories to return the needed object** - If your Cypress test needs specific information (id, name, etc.) from a created object, structure the Ruby factory so that object is the top-level return value. You may need to flip the order of how dependent associations are created in the factory
+
 **Best practices:**
+- Put complicated logic for creating records in the factory itself (in Ruby)
+- Use `cy.appFactories()` to string together simple relationships in tests
 - You can still combine related operations (add + edit + delete) into a single test when it makes logical sense
 
-**Examples:** See [tests using appDbState('restore')](https://github.com/search?q=repo%3AManageIQ%2Fmanageiq-ui-classic+appDbState%28%27restore%27%29&type=code)
+**Examples:**
+- [Tests using appDbState('restore')](https://github.com/search?q=repo%3AManageIQ%2Fmanageiq-ui-classic+appDbState%28%27restore%27%29&type=code)
+- [Tests using cy.appFactories()](https://github.com/search?q=repo%3AManageIQ%2Fmanageiq-ui-classic+cy.appFactories&type=code)
 
 #### 2. File Structure
 
