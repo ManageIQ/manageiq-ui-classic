@@ -356,7 +356,7 @@ cy.appFactories([
 **Best practices:**
 - Put complicated logic for creating records in the factory itself (in Ruby)
 - Use `cy.appFactories()` to string together simple relationships in tests
-- You can still combine related operations (add + edit + delete) into a single test when it makes logical sense
+- Consider combining related operations (add + edit + delete) into workflow tests - see "Test Granularity" section below for guidance on when to combine vs. split tests
 
 **Examples:**
 - [Tests using appDbState('restore')](https://github.com/search?q=repo%3AManageIQ%2Fmanageiq-ui-classic+appDbState%28%27restore%27%29&type=code)
@@ -401,21 +401,29 @@ Before creating a PR, ensure your tests pass on:
 
 Run tests on all browsers using the commands in the Usage section above.
 
-#### 6. Test Structure
+#### 6. Test Structure and Granularity
 
-Use `describe()` for organizing related tests and `it()` for individual test cases:
+Use `describe()` for organizing related tests and `it()` for individual test cases.
+
+These are integration tests that simulate real user workflows through the UI - they're not unit tests. You'll need to decide whether to combine operations (add/edit/delete) into workflow tests or keep them separate. There are tradeoffs between test speed, test readability, and failure reporting, so weigh the pros/cons:
+
+**Combined workflow tests:** Faster, simulates real user behavior, operations build on each other (edit/delete need the added record), easier to follow when setup is complex, but less specific failures and can become long
 
 ```javascript
-describe('Chargeback Rates', () => {
-  it('loads the rates page', () => {
-    // Test code
-  });
-
-  it('can add, edit, and delete a rate', () => {
-    // Combined test for dependent operations
-  });
+it('can add, edit, and delete a rate', () => {
+  // Add, edit, delete in one test
 });
 ```
+
+**Separate tests:** Clearer failure reporting, easier to maintain, but slower and harder to follow (setup often in separate beforeEach blocks)
+
+```javascript
+it('can add a rate', () => { /* ... */ });
+it('can edit a rate', () => { /* ... */ });
+it('can delete a rate', () => { /* ... */ });
+```
+
+**Guidelines:** Start with workflow tests for happy paths, use separate tests for edge cases and validations
 
 #### 7. Using the Cypress UI
 
