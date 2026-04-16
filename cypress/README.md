@@ -11,23 +11,9 @@ yarn  # Install Cypress and dependencies (run once initially, then again when pa
 
 **Database Requirements:**
 
-Cypress uses the development database from `config/database.yml` and expects a clean, seeded database. If you need a populated development database for regular development, consider using a separate database for Cypress tests as pre-populated data may cause test failures.
+Cypress uses the development database from `config/database.yml` and expects a clean, seeded database.
 
-**Option 1: Single Database (Simple)**
-
-Set up the database as Cypress expects:
-
-```bash
-# From manageiq directory
-bundle exec rake evm:db:reset  # Drops, creates, and migrates current RAILS_ENV database (development by default)
-bundle exec rake db:seed       # Populates default data
-```
-
-**Option 2: Separate Cypress Database (Recommended for Active Development)**
-
-If you need both a populated development database and a clean Cypress database:
-
-1. In ManageIQ `config/database.yml` under `development`, create a new database entry by commenting out your current database and adding a line for your Cypress database:
+1. Configure a separate database in ManageIQ `config/database.yml` under `development`, or use your existing development database. If you use your existing database, these setup steps will completely erase it.
 
 ```yaml
 development:
@@ -35,15 +21,15 @@ development:
   database: vmdb_cypress        # Clean database for Cypress tests
 ```
 
-2. Set up the Cypress database:
+2. Set up the database Cypress will use:
 
 ```bash
 # From manageiq directory
-bundle exec rake evm:db:reset  # Drops, creates, and migrates vmdb_cypress (based on config/database.yml)
+bundle exec rake evm:db:reset  # Drops, creates, and migrates the current development database from config/database.yml
 bundle exec rake db:seed       # Populates default data
 ```
 
-3. To switch between databases, comment/uncomment the appropriate line in `config/database.yml`, then run:
+3. If you switch to a different development database later, update `config/database.yml`, then run:
 
 ```bash
 bin/update  # Updates dependencies and runs migrations
