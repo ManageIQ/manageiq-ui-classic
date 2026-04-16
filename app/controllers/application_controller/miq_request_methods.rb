@@ -1075,7 +1075,7 @@ module ApplicationController::MiqRequestMethods
     tags = wf.allowed_tags.map do |cat|
       {
         :values      => cat[:children].map do |tag|
-          {:id => tag.first, :label => tag.second[:label]}
+          {:id => tag.first, :label => tag.second[:description]}
         end,
         :id          => cat[:name],
         :label       => cat[:description],
