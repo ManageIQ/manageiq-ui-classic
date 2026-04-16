@@ -310,15 +310,24 @@ ManageIQ implements the following cypress extensions:
 
 ### Test Writing Guidelines
 
-#### 1. Avoid Dependent Tests
+#### 1. Database State Management
 
-Currently we have no way of resetting the database between tests or seeding data for individual tests. This means:
+Our Cypress configuration captures the database table state (rows that exist) before all tests run. You can restore this state between tests using `cy.appDbState('restore')`:
 
-- If you need to test edit/delete functionality, you must first create the record in the same test
-- **Combine related operations into a single test** (add + edit + delete) rather than separate tests
-- Example: See [rates.cy.js](https://github.com/ManageIQ/manageiq-ui-classic/blob/master/cypress/e2e/ui/Overview/Chargeback/rates.cy.js)
+```javascript
+afterEach(() => {
+  cy.appDbState('restore');
+});
+```
 
-**Why?** If you write 3 separate tests (add, edit, delete), one test failing will cause the others to fail since they depend on each other. Writing them as 1 test means only 1 failing test instead of 3.
+**What `appDbState('restore')` does:**
+- **Removes rows created during the test** - Use `afterEach` with `cy.appDbState('restore')` for tests that create new records
+- **Does NOT restore deleted or modified rows** - If your test deletes or modifies existing rows, you must manually restore them in your test
+
+**Best practices:**
+- You can still combine related operations (add + edit + delete) into a single test when it makes logical sense
+
+**Examples:** See [tests using appDbState('restore')](https://github.com/search?q=repo%3AManageIQ%2Fmanageiq-ui-classic+appDbState%28%27restore%27%29&type=code)
 
 #### 2. File Structure
 
