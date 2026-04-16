@@ -210,7 +210,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
       </OverflowMenu>
       <Button
         hasIconOnly={true}
-        iconDescription="Reset Dashboard Widgets to the default"
+        iconDescription="Reset Dashboard Widgets to the defaults"
         id="reset-dashboard-button"
         kind="ghost"
         onClick={[Function]}
@@ -224,7 +224,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
           highContrast={true}
           id="reset-dashboard-button"
           kind="ghost"
-          label="Reset Dashboard Widgets to the default"
+          label="Reset Dashboard Widgets to the defaults"
           onClick={[Function]}
           renderIcon={null}
           size="md"
@@ -238,7 +238,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
             dropShadow={false}
             enterDelayMs={100}
             highContrast={true}
-            label="Reset Dashboard Widgets to the default"
+            label="Reset Dashboard Widgets to the defaults"
             leaveDelayMs={100}
           >
             <Popover
@@ -338,7 +338,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
                     <span
                       className="cds--popover-content cds--tooltip-content"
                     >
-                      Reset Dashboard Widgets to the default
+                      Reset Dashboard Widgets to the defaults
                     </span>
                     <span
                       className="cds--popover-caret"
