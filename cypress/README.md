@@ -206,10 +206,6 @@ Understanding these files will help you write and debug Cypress tests:
 - Example: `cy.login()`, `cy.menu()`, `cy.toolbar()`
 - Think of commands as "UI interaction helpers" that aren't tests themselves
 
-**Assertions vs Commands:**
-- **Assertions** = Test conditions (does text match? is element visible?)
-- **Commands** = UI interactions (navigate menu, click button, read table)
-
 #### Write
 
 Actual tests can be found in `cypress/integration/ui/`.
