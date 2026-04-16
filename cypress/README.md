@@ -11,13 +11,57 @@ yarn  # Install Cypress and dependencies (run once initially, then again when pa
 
 **Database Requirements:**
 
-Cypress uses the development database from `config/database.yml` and expects a clean, seeded database. If you need a populated development database for regular development, consider using a separate database for Cypress tests as pre-populated data may cause test failures. We are exploring ways to simplify this workflow.
+Cypress uses the development database from `config/database.yml` and expects a clean, seeded database. If you need a populated development database for regular development, consider using a separate database for Cypress tests as pre-populated data may cause test failures.
 
-The following command sets up the database as Cypress expects:
+**Option 1: Single Database (Simple)**
+
+Set up the database as Cypress expects:
 
 ```bash
-dropdb vmdb_development; createdb vmdb_development; bundle exec rake db:migrate db:seed # from manageiq directory
+# From manageiq directory
+bundle exec rake evm:db:reset  # Drops, creates, and migrates current RAILS_ENV database (development by default)
+bundle exec rake db:seed       # Populates default data
 ```
+
+**Option 2: Separate Cypress Database (Recommended for Active Development)**
+
+If you need both a populated development database and a clean Cypress database:
+
+1. In ManageIQ `config/database.yml` under `development`, create a new database entry by commenting out your current database and adding a line for your Cypress database:
+
+```yaml
+development:
+  # database: vmdb_development  # Your regular dev database with data
+  database: vmdb_cypress        # Clean database for Cypress tests
+```
+
+2. Set up the Cypress database:
+
+```bash
+# From manageiq directory
+bundle exec rake evm:db:reset  # Drops, creates, and migrates vmdb_cypress (based on config/database.yml)
+bundle exec rake db:seed       # Populates default data
+```
+
+3. To switch between databases, comment/uncomment the appropriate line in `config/database.yml`, then run:
+
+```bash
+bin/update  # Updates dependencies and runs migrations
+```
+
+Then restart your server.
+
+**Resetting the Cypress Database:**
+
+If you need to reset your Cypress database back to default (e.g., you added test data and want to start fresh):
+
+```bash
+# From manageiq directory, with server stopped
+bundle exec rake evm:db:reset  # Drops, creates, and migrates current RAILS_ENV database (development by default)
+bundle exec rake db:seed       # Populates default data
+```
+
+Then restart your server.
 
 ##### Before Running Tests
 
@@ -122,6 +166,74 @@ This opens the Cypress UI where you can select and watch individual tests run.
 
 Note: Without `--watch`, you can run webpack and Cypress UI in the same terminal.
 
+**Tip:** It's good practice to run all commands from the `manageiq-ui-classic` directory. While `bin/rails s` can be run from the `manageiq` directory, commands like `bin/webpack` and Cypress commands only work from `manageiq-ui-classic`. Running everything from one location helps keep organized.
+
+#### Debugging Configuration
+
+**Memory and Snapshot History:**
+
+The `cypress.config.js` file contains `numTestsKeptInMemory: 0` to prevent memory issues with large test files (like `menu.cy.js` which visits every page in the UI). However, this prevents viewing snapshot history when debugging.
+
+To enable snapshot history for easier debugging:
+- Comment out the line: `// numTestsKeptInMemory: 0`
+- Or change to a value > 0: `numTestsKeptInMemory: 50`
+
+**Note:** Remember to reset this before committing if you're working on large test files.
+
+#### Development Commands Reference
+
+**Server Commands:**
+```bash
+# Start Rails server (from manageiq-ui-classic)
+CYPRESS=true bin/rails s
+
+# Start Rails console (from manageiq-ui-classic)
+rails c
+# Then in console:
+simulate_queue_worker  # Simulates queue worker for tests that need it
+```
+
+**Webpack Commands:**
+```bash
+# One-time build
+CYPRESS=true bin/webpack
+
+# Watch mode - auto-rebuild on file changes (useful when editing UI code)
+CYPRESS=true bin/webpack --watch
+```
+
+**Note:** The `CYPRESS=true` environment variable disables debug notifications and code reloading that would interfere with Cypress tests. It also disables rate limiting (see `lib/manageiq/rack_attack.rb`).
+
+#### Important Files
+
+Understanding these files will help you write and debug Cypress tests:
+
+**1. `cypress.config.js`**
+- Contains Cypress configuration settings
+- Defines base URL, viewport size, video recording settings
+- Controls `numTestsKeptInMemory` for debugging vs. performance
+
+**2. `cypress/support/e2e.js`**
+- Imports all Cypress commands and assertions
+- Contains global error handling logic
+- Example: Handles `uncaught:exception` errors that don't affect tests but would cause false failures in certain browsers
+
+**3. `cypress/support/assertions/`**
+- Contains reusable test assertion functions
+- Use these to verify expected UI behavior
+- Example: `cy.expect_text(element, text)` verifies element contains expected text
+- Think of assertions as "test case commands" that verify conditions
+
+**4. `cypress/support/commands/`**
+- Contains reusable Cypress commands for common UI interactions
+- Use these to navigate, click, read data, etc.
+- Example: `cy.login()`, `cy.menu()`, `cy.toolbar()`
+- Think of commands as "UI interaction helpers" that aren't tests themselves
+
+**Assertions vs Commands:**
+- **Assertions** = Test conditions (does text match? is element visible?)
+- **Commands** = UI interactions (navigate menu, click button, read table)
+
 #### Write
 
 Actual tests can be found in `cypress/integration/ui/`.
@@ -219,3 +331,88 @@ ManageIQ implements the following cypress extensions:
 * `cy.expect_modal({ modalHeaderText, modalContentExpectedTexts, targetFooterButtonText })` - command to validate and interact with modal dialogs. Verifies the modal content and clicks a specified button in the modal footer. `modalHeaderText` is the optional text to verify in the modal header (case insensitive). `modalContentExpectedTexts` is an optional array of text strings that should be present in the modal content (case insensitive). `targetFooterButtonText` is the text of the button in the modal footer to click (required). e.g. `cy.expect_modal({ modalHeaderText: 'Confirmation', modalContentExpectedTexts: ['you want to continue?'], targetFooterButtonText: 'Confirm' });`, `cy.expect_modal({ modalContentExpectedTexts: ['cannot be undone.', 'data will be permanently deleted.'], targetFooterButtonText: 'Cancel' });`, `cy.expect_modal({ targetFooterButtonText: 'OK' });`
 * `cy.expect_inline_field_errors({ containsText })` - command to validate inline field error messages. `containsText` is the text that the error message should contain (required). e.g. `cy.expect_inline_field_errors({ containsText: 'blank' });`, `cy.expect_inline_field_errors({ containsText: 'taken' });`
 * `cy.expect_dual_list({ availableItemsHeaderText, selectedItemsHeaderText, availableItems, selectedItems })` - command to test dual-list components (components with two lists where items can be moved between them). Tests all aspects including item selection, moving items between lists, and search functionality. `availableItemsHeaderText` is the optional string for the heading of the available items list. `selectedItemsHeaderText` is the optional string for the heading of the selected items list. `availableItems` is an optional array of strings representing the items initially in the available items list. `selectedItems` is an optional array of strings representing the items initially in the selected items list. At least one of `availableItems` or `selectedItems` must contain items. The command automatically detects whether to test a flow starting from available items or selected items based on which list has items initially. e.g. `cy.expect_dual_list({ availableItemsHeaderText: 'Available Items', selectedItemsHeaderText: 'Selected Items', availableItems: ['Item 1', 'Item 2', 'Item 3'] });`, `cy.expect_dual_list({ availableItemsHeaderText: 'Unassigned Roles', selectedItemsHeaderText: 'Assigned Roles', selectedItems: ['Role 1', 'Role 2', 'Role 3'] });`
+
+### Test Writing Guidelines
+
+#### 1. Avoid Dependent Tests
+
+Currently we have no way of resetting the database between tests or seeding data for individual tests. This means:
+
+- If you need to test edit/delete functionality, you must first create the record in the same test
+- **Combine related operations into a single test** (add + edit + delete) rather than separate tests
+- Example: See [rates.cy.js](https://github.com/ManageIQ/manageiq-ui-classic/blob/master/cypress/e2e/ui/Overview/Chargeback/rates.cy.js)
+
+**Why?** If you write 3 separate tests (add, edit, delete), one test failing will cause the others to fail since they depend on each other. Writing them as 1 test means only 1 failing test instead of 3.
+
+#### 2. File Structure
+
+Organize test files to match the UI navigation structure:
+
+```
+UI Navigation: Overview > Chargeback > Rates
+Test File: cypress/e2e/ui/Overview/Chargeback/rates.cy.js
+```
+
+For very large test files, you can split into multiple files:
+```
+cypress/e2e/ui/Overview/Chargeback/Rates/rates1.cy.js
+cypress/e2e/ui/Overview/Chargeback/Rates/rates2.cy.js
+```
+
+#### 3. No Provider Data
+
+We currently have no way to seed real provider data to the database. This prevents testing provider-related functionality. However, many pages can be tested without provider data.
+
+See [issue #8859](https://github.com/ManageIQ/manageiq-ui-classic/issues/8859) for a list of pages that can be tested without provider data (Phase 2 scope).
+
+#### 4. Create Baseline Tests
+
+For each spec file, create baseline tests that verify:
+- Page loads properly
+- Default data is present and correct
+- Basic UI elements are visible
+
+Example: In [rates.cy.js](https://github.com/ManageIQ/manageiq-ui-classic/blob/master/cypress/e2e/ui/Overview/Chargeback/rates.cy.js), baseline tests check that default rates are in the table with correct values.
+
+#### 5. Test All Browsers
+
+Before creating a PR, ensure your tests pass on:
+- Chrome
+- Edge
+- Firefox
+
+Run tests on all browsers using the commands in the Usage section above.
+
+#### 6. Test Structure
+
+Use `describe()` for organizing related tests and `it()` for individual test cases:
+
+```javascript
+describe('Chargeback Rates', () => {
+  it('loads the rates page', () => {
+    // Test code
+  });
+
+  it('can add, edit, and delete a rate', () => {
+    // Combined test for dependent operations
+  });
+});
+```
+
+#### 7. Using the Cypress UI
+
+The Cypress UI is the recommended way to write, run, and debug tests:
+
+1. Start with `CYPRESS=true yarn cypress:open`
+2. Select "E2E Testing"
+3. Choose your browser (Chrome recommended for development)
+4. Click on a spec file to run it
+5. Watch tests run in real-time with the test runner showing:
+   - Left side: Test results with pass/fail status
+   - Right side: Live browser view of the application
+   - Top bar: Controls to pause, rerun, and see pass/fail counts
+
+**Headless mode** (for CI-like testing):
+```bash
+CYPRESS=true yarn cypress:run:chrome
+```
