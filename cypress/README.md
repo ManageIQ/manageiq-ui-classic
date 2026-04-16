@@ -204,7 +204,7 @@ Understanding these files will help you write and debug Cypress tests:
 
 ### Writing Tests
 
-Actual tests can be found in `cypress/integration/ui/`.
+Actual tests can be found in `cypress/e2e/ui/`.
 
 ManageIQ implements the following cypress extensions:
 
