@@ -53,7 +53,6 @@
     "angular-patternfly": "~3.26.0",
     "angular-ui-bootstrap": "~2.5.6",
     "angular-ui-sortable": "~0.19.0",
-    "angular.validators": "~4.4.3",
     "array-includes": "^3.1.9",
     "awesome-debounce-promise": "^2.1.0",
     "bootstrap-filestyle": "~1.2.1",

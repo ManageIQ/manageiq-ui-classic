@@ -4876,13 +4876,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"angular.validators@npm:~4.4.3":
-  version: 4.4.3
-  resolution: "angular.validators@npm:4.4.3"
-  checksum: 10/03c337f2003e0099c12da520203ce704abeb93d1f6c90a7004a2df281e673a8b3ebbd730699b4d93c4fe053bbdbf95a1279d7701b6f645fb713082eb077cc2f6
-  languageName: node
-  linkType: hard
-
 "angular@npm:~1.8.3":
   version: 1.8.3
   resolution: "angular@npm:1.8.3"
@@ -13683,7 +13676,6 @@ __metadata:
     angular-patternfly: "npm:~3.26.0"
     angular-ui-bootstrap: "npm:~2.5.6"
     angular-ui-sortable: "npm:~0.19.0"
-    angular.validators: "npm:~4.4.3"
     array-includes: "npm:^3.1.9"
     autoprefixer: "npm:~9.8.0"
     awesome-debounce-promise: "npm:^2.1.0"
