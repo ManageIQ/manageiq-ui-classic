@@ -78,7 +78,7 @@ CYPRESS=true bin/webpack
 - `SPEC="**/reports.cy.js"` - Run specific test file (default: all tests)
 - `CYPRESS_BROWSER=chromium|edge|firefox` - Run with alternative browser (default: chrome)
 
-#### Method 1: Automated (Self-Contained)
+#### Running Tests: Self-contained
 
 Fully automated - no other processes needed. The rake task automatically handles starting the Rails server and simulating the queue worker.
 
@@ -86,7 +86,7 @@ Fully automated - no other processes needed. The rake task automatically handles
 [HEADED=true] [SPEC="**/reports.cy.js"] [CYPRESS_BROWSER=chromium|edge|firefox] CYPRESS=true bundle exec rake spec:cypress
 ```
 
-#### Method 2: Automated (Manual Server)
+#### Running Tests: Manual server
 
 Non-interactive but requires separate Rails server (and optionally Rails console with simulated queue worker for some tests).
 
@@ -118,7 +118,7 @@ Or use alternative browsers (chromium, edge, firefox):
 [HEADED=true] [SPEC="**/reports.cy.js"] CYPRESS=true yarn cypress:run:firefox
 ```
 
-#### Method 3: Interactive
+#### Running Tests: Interactive UI
 
 Run tests interactively with the Cypress UI (useful for debugging).
 
@@ -202,13 +202,13 @@ Understanding these files will help you write and debug Cypress tests:
 - Example: `cy.login()`, `cy.menu()`, `cy.toolbar()`
 - Think of commands as "UI interaction helpers" that aren't tests themselves
 
-### Write
+### Writing Tests
 
 Actual tests can be found in `cypress/integration/ui/`.
 
 ManageIQ implements the following cypress extensions:
 
-### Commands
+### Cypress Commands
 
 #### explorer
 
@@ -285,7 +285,7 @@ ManageIQ implements the following cypress extensions:
 * `cy.providerValidation({ stubErrorResponse, errorMessage })` - performs validation with optional error response stubbing. `stubErrorResponse` is whether to stub an error response. `errorMessage` is the error message to show.
 * `generateProviderTests(providerConfig)` - generates all test suites for a provider. `providerConfig` is the provider configuration object.
 
-### Assertions
+### Cypress Assertions
 
 * `cy.expect_explorer_title(title)` - check that the title on an explorer screen matches the provided title. `title`: String for the title.
 * `cy.expect_gtl_no_records_with_text({ containsText })` - verifies that the GTL view displays a "no records" message. Checks that the specified text is visible within the GTL view container. `containsText` is the optional text to verify in the no records message (defaults to 'No records'). e.g. `cy.expect_gtl_no_records_with_text();`, `cy.expect_gtl_no_records_with_text({ containsText: 'No items found' });`
