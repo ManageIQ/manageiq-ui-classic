@@ -1,15 +1,15 @@
-### cypress in manageiq-ui-classic
+## Cypress in manageiq-ui-classic
 
-#### Setup
+### Setup
 
-##### Initial Setup (One-Time)
+#### Initial Setup (One-Time)
 
 ```bash
 cd manageiq-ui-classic
 yarn  # Install Cypress and dependencies (run once initially, then again when packages are updated)
 ```
 
-**Database Requirements:**
+##### Database Requirements
 
 Cypress uses the development database from `config/database.yml` and expects a clean, seeded database.
 
@@ -37,7 +37,7 @@ bin/update  # Updates dependencies and runs migrations
 
 Then restart your server.
 
-**Resetting the Cypress Database:**
+##### Resetting the Cypress Database
 
 If you need to reset your Cypress database back to default (e.g., you added test data and want to start fresh):
 
@@ -49,7 +49,7 @@ bundle exec rake db:seed       # Populates default data
 
 Then restart your server.
 
-##### Before Running Tests
+#### Before Running Tests
 
 Build webpack with the CYPRESS flag (required before running tests, and whenever UI files change):
 
@@ -58,7 +58,7 @@ cd manageiq-ui-classic
 CYPRESS=true bin/webpack
 ```
 
-**Webpack Options:**
+##### Webpack Options
 - Use `CYPRESS=true bin/webpack` for a one-time build
 - Use `CYPRESS=true bin/webpack --watch` for automatic rebuilds when editing UI files
 
@@ -66,19 +66,19 @@ CYPRESS=true bin/webpack
 
 ### Usage
 
-##### Environment Variables
+#### Environment Variables
 
-**Required**
+##### Required
 
 - `CYPRESS=true` - disables debug notifications that would prevent Cypress from accessing UI elements, development mode code reloading, and [rate limiting](https://github.com/ManageIQ/manageiq/blob/master/lib/manageiq/rack_attack.rb)
 
-**Optional**
+##### Optional
 
 - `HEADED=true` - Run with visible browser (default: headless)
 - `SPEC="**/reports.cy.js"` - Run specific test file (default: all tests)
 - `CYPRESS_BROWSER=chromium|edge|firefox` - Run with alternative browser (default: chrome)
 
-##### Method 1: Automated (Self-Contained)
+#### Method 1: Automated (Self-Contained)
 
 Fully automated - no other processes needed. The rake task automatically handles starting the Rails server and simulating the queue worker.
 
@@ -86,7 +86,7 @@ Fully automated - no other processes needed. The rake task automatically handles
 [HEADED=true] [SPEC="**/reports.cy.js"] [CYPRESS_BROWSER=chromium|edge|firefox] CYPRESS=true bundle exec rake spec:cypress
 ```
 
-##### Method 2: Automated (Manual Server)
+#### Method 2: Automated (Manual Server)
 
 Non-interactive but requires separate Rails server (and optionally Rails console with simulated queue worker for some tests).
 
@@ -118,7 +118,7 @@ Or use alternative browsers (chromium, edge, firefox):
 [HEADED=true] [SPEC="**/reports.cy.js"] CYPRESS=true yarn cypress:run:firefox
 ```
 
-##### Method 3: Interactive
+#### Method 3: Interactive
 
 Run tests interactively with the Cypress UI (useful for debugging).
 
@@ -160,11 +160,13 @@ This opens the Cypress UI. From there:
 
 Note: Without `--watch`, you can run webpack and Cypress UI in the same terminal.
 
-**Tip:** It's good practice to run all commands from the `manageiq-ui-classic` directory. While `bin/rails s` can be run from the `manageiq` directory, commands like `bin/webpack` and Cypress commands only work from `manageiq-ui-classic`. Running everything from one location helps keep organized.
+##### Tip
 
-#### Debugging Configuration
+It's good practice to run all commands from the `manageiq-ui-classic` directory. While `bin/rails s` can be run from the `manageiq` directory, commands like `bin/webpack` and Cypress commands only work from `manageiq-ui-classic`. Running everything from one location helps keep organized.
 
-**Memory and Snapshot History:**
+### Debugging Configuration
+
+#### Memory and Snapshot History
 
 The `cypress.config.js` file contains `numTestsKeptInMemory: 0` to prevent memory issues with large test files (like `menu.cy.js` which visits every page in the UI). However, this prevents viewing snapshot history when debugging.
 
@@ -172,94 +174,94 @@ To enable snapshot history for easier debugging:
 - Comment out the line: `// numTestsKeptInMemory: 0`
 - Or change to a value > 0: `numTestsKeptInMemory: 50`
 
-**Note:** Remember to reset this before committing if you're working on large test files.
+Remember to reset this before committing if you're working on large test files.
 
-#### Important Files
+### Important Files
 
 Understanding these files will help you write and debug Cypress tests:
 
-**`cypress.config.js`**
+#### `cypress.config.js`
 - Contains Cypress configuration settings
 - Defines base URL, viewport size, video recording settings
 - Controls `numTestsKeptInMemory` for debugging vs. performance
 
-**`cypress/support/e2e.js`**
+#### `cypress/support/e2e.js`
 - Imports all Cypress commands and assertions
 - Contains global error handling logic
 - Example: Handles `uncaught:exception` errors that don't affect tests but would cause false failures in certain browsers
 
-**`cypress/support/assertions/`**
+#### `cypress/support/assertions/`
 - Contains reusable test assertion functions
 - Use these to verify expected UI behavior
 - Example: `cy.expect_text(element, text)` verifies element contains expected text
 - Think of assertions as "test case commands" that verify conditions
 
-**`cypress/support/commands/`**
+#### `cypress/support/commands/`
 - Contains reusable Cypress commands for common UI interactions
 - Use these to navigate, click, read data, etc.
 - Example: `cy.login()`, `cy.menu()`, `cy.toolbar()`
 - Think of commands as "UI interaction helpers" that aren't tests themselves
 
-#### Write
+### Write
 
 Actual tests can be found in `cypress/integration/ui/`.
 
 ManageIQ implements the following cypress extensions:
 
-#### Commands
+### Commands
 
-##### explorer
+#### explorer
 
 * `cy.accordion(title)` - open an accordion panel. `title`: String for the accordion title for the accordion panel to open.
 * `cy.accordionItem(name)` - click on a record in the accordion panel. `name`: String for the record to click in the accordion panel.
 * `cy.selectAccordionItem(accordionPath)` - navigates the expanded accordion panel(use cy.accordion to expand an accordion panel) and then expand the nodes along the given path and click the final target item. `accordionPath`: A mixed array of strings and/or regex patterns that represent the path to the intended target node. e.g. Simple string path: `cy.selectAccordionItem(['Datastore', 'My-Domain', 'My-Namespace']);`, Path with regular expressions: `cy.selectAccordionItem([/^ManageIQ Region:/, /^Zone:/, /^Server:/]);`, Mixed path with strings and regular expressions: `cy.selectAccordionItem([/^ManageIQ Region:/, 'Zones', /^Zone:/]);`
 
-##### gtl
+#### gtl
 
 * `cy.gtl_error()` - check that error message is present.
 * `cy.gtlGetTable()` - returns GTL table.
 * `cy.gtlGetRows(columns)` - return GTL table row data in an array. `columns`: Array of 0-based indexes of the columns to read (e.g. [1, 2, 3] will return all row data from columns 1, 2, and 3).
 * `cy.gtlClickRow(columns)` - click on a row in a GTL table. `columns`: Array of `{ title: String, number: Integer }`. `title` is the string you want to find in the table to click on, `number` is the column that string is found in. (e.g. `[{title: 'Default', number: 1}, {title: 'Compute', number: 2}]` will click on a row in the GTL table with `Default` in column 1 and `Compute` in column 2. Using just `[{title: 'Default', number: 1}]` will click on the first row found in the GTL table with `Default` in column 1).
 
-##### login
+#### login
 
 * `cy.login(user = admin, password = smartvm)` - log in to ManageIQ with the provided username and password. `user`: String for the user account to log in to, default is `admin`. `password`: String for the user account password to log in with, default is `smartvm`.
 
-##### menu
+#### menu
 
 * `cy.menu('primaryMenu', 'secondaryMenu', 'tertiaryMenu')` - navigates the side bar menu items. `primaryMenu`: String for the outer menu item on the side bar. `secondaryMenu`: String for the secondary menu when a side bar menu item is clicked. `tertiaryMenu`: String (optional) for the tertiary menu when a side bar secondary item is clicked. (e.g. `cy.menu('Overview', 'Dashboard')` will navigate to the Overview > Dashboard page while `cy.menu('Overview', 'Chargeback', 'Rates')` will navigate to the Overview > Chargeback > Rates page).
 * `cy.menuItems()` - returns an Array of `{ title: String, items: Array of { title: String, href: String, items: Array of { title: String, href: String } }}` for the menu items on the side bar. `title`: String for the menu item title. `href`: String for the url to navigate to, included when the menu item has no children. `items`: Array of the same object with `title` and `href`/`items`, this is included when the menu item has children menu items.
 
-##### miq_data_table_commands
+#### miq_data_table_commands
 
 * `cy.selectTableRowsByText({ textArray })` - selects table rows that contain any of the specified text values. Iterates through each text in the array and finds the corresponding row. If any text is not found in the table, it throws an error immediately. `textArray` is an array of text values to match against table rows. e.g. `cy.selectTableRowsByText({ textArray: ['Option 1', 'Option 2'] });`
 * `cy.clickTableRowByText({ text, columnIndex })` - clicks on a table row that contains the specified text. If columnIndex is provided, it will only look for the text in that specific column. `text` is the text to find in the table row. `columnIndex` is an optional 0-based index of the column to search in. e.g. `cy.clickTableRowByText({ text: 'My Service' });`, `cy.clickTableRowByText({ text: 'Active', columnIndex: 2 });`
 
-##### tabs
+#### tabs
 
 * `cy.tabs({ tabLabel })` - finds a tab element within a tablist that contains the specified label text and automatically clicks it to navigate to the tab. It requires a `tabLabel` parameter and will throw an error if none is provided. `tabLabel` is the text content of the tab to select. Returns a Cypress chainable element representing the selected tab. e.g. `cy.tabs({ tabLabel: 'Collect Logs' });`,  `cy.tabs({ tabLabel: 'Settings' }).then(() => { cy.get('input#name').should('be.visible'); });`
 
-##### toolbar
+#### toolbar
 
 * `cy.toolbarItems(toolbarButton)` - returns an array of objects {text: String, disabled: Boolean} for the toolbar dropdown buttons for when a toolbar button is clicked. `toolbarButton` is the string for the text of the toolbar button that you want to click on.
 * `cy.toolbar(toolbarButton, toolbarOption, otherOptions)` - click on the toolbar button specified by the user. Can also then click on a specified dropdown option as well. `toolbarButton` is the string for the text of the toolbar button that you want to click on. `toolbarOption` is the string for the text of the toolbar dropdown option that you want to click on. `otherOptions` is an optional object with additional options: `matchedButtonIndex` (number, default: -1) to select a specific button when multiple buttons with the same text exist. Use -1 to automatically select the first enabled button, or use 0, 1, 2... to select a specific matched button by index. e.g. `cy.toolbar('Configuration', 'Add a new Report');` (auto-selects first enabled button), `cy.toolbar('Configuration', 'Add a new Report', { matchedButtonIndex: 0 });` (selects first matched button), `cy.toolbar('Configuration', 'Add a new Report', { matchedButtonIndex: 1 });` (selects second matched button).
 
-##### api_commands
+#### api_commands
 
 * `cy.interceptApi({ alias, method = 'POST', urlPattern, waitOnlyIfRequestIntercepted, responseInterceptor, triggerFn, onApiResponse })` - intercepts API calls and waits for them to complete. This command will: 1) Register an intercept(in method-alias format e.g. post-myApiAlias) for the given alias & URL pattern if not already registered, 2) Execute the trigger function that makes the API call, 3) Wait for the intercepted request to complete. `alias` is the string for a unique alias for this interception. `method` is the string for the HTTP method (default: 'POST'). `urlPattern` is the string or RegExp for the URL pattern to intercept. `waitOnlyIfRequestIntercepted` is a boolean that when set to true, the command will only wait for the response if the request was actually intercepted (useful for conditional API calls - default: false). `responseInterceptor` is an optional function that can modify the response before it's returned to the application, with options to stub responses (`req.reply()`), let requests go to origin (`req.continue()`), or modify origin responses (`req.continue((res) => res.send())`). e.g. `{ responseInterceptor: (req) => req.reply({ body: { customData: 'value' } }) }`, `{ responseInterceptor: (req) => req.reply({ fixture: 'users.json' }) }`, `{ responseInterceptor: (req) => req.continue((res) => { res.send(200, { modified: true }) }) }`,  `triggerFn` is the function that triggers the API call. e.g. `{ triggerFn: () => { cy.get('button').click(); } }`. `onApiResponse` is an optional callback function that receives the interception object after the API call completes. Use this to perform assertions on the response, extract data, or perform additional actions based on the API result. Default is a no-op function. e.g. `{ onApiResponse: (interception) => { expect(interception.response.statusCode).to.equal(200); } }`. Usage example: `cy.interceptApi({ alias: 'getUsers', method: 'GET', urlPattern: '/api/users', triggerFn: () => cy.get('#load-users').click(), responseInterceptor: (req) => req.reply({ body: { name: "stubbed value" } }), onApiResponse: (interception) => { expect(interception.response.statusCode).to.equal(200); } });`
 * `cy.getInterceptedApiAliases()` - returns the intercepted API aliases stored in Cypress environment variables.
 * `cy.setInterceptedApiAlias(aliasKey, aliasValue)` - sets an intercepted API alias in the Cypress environment variables. `aliasKey` is the string for the key/name of the alias to set. `aliasValue` is an optional string for the value to store for the alias (defaults to the same as the key). e.g. `cy.setInterceptedApiAlias('getUsersApi');`, `cy.setInterceptedApiAlias('getUsersApi', 'customValue');`
 * `cy.resetInterceptedApiAliases()` - resets the intercepted API aliases stored in Cypress environment variables.
 
-##### custom_logging_commands
+#### custom_logging_commands
 
 * `cy.logAndThrowError(messageToLog, messageToThrow)` - Logs a custom error message to Cypress log and then throws an error. `messageToLog` is the message to display in the Cypress command log. `messageToThrow` is the optional error message to throw, defaults to `messageToLog`. e.g. `cy.logAndThrowError('This is the logged message', 'This is the thrown error message');`, `cy.logAndThrowError('This is the message that gets logged and thrown');`
 
-##### dual_list_commands
+#### dual_list_commands
 
 * `cy.dualListAction({ actionType, optionsToSelect })` - performs actions on a dual-list component (components with two lists where items can be moved between them). `actionType` is the type of action to perform, use values from DUAL_LIST_ACTION_TYPE: 'add' (move selected items from left to right), 'remove' (move selected items from right to left), 'add-all' (move all items from left to right), or 'remove-all' (move all items from right to left). `optionsToSelect` is an array of option texts to select (required for 'add' and 'remove' actions, not needed for 'add-all' and 'remove-all'). e.g. `cy.dualListAction({ actionType: DUAL_LIST_ACTION_TYPE.ADD, optionsToSelect: ['Option 1', 'Option 2'] });`, `cy.dualListAction({ actionType: DUAL_LIST_ACTION_TYPE.REMOVE, optionsToSelect: ['Option 3'] });`, `cy.dualListAction({ actionType: DUAL_LIST_ACTION_TYPE.ADD_ALL });`, `cy.dualListAction({ actionType: DUAL_LIST_ACTION_TYPE.REMOVE_ALL });`
 
-##### element_selectors
+#### element_selectors
 
 * `cy.getFormButtonByTypeWithText({ buttonType, buttonText })` - retrieves a form button, often found in form footers, by its name and type. `buttonText` is the name or text content of the button. `buttonType` is the HTML button type (e.g., 'button', 'submit', 'reset'). Defaults to 'button'. e.g. `cy.getFormButtonByTypeWithText({buttonText: 'Cancel'});`, `cy.getFormButtonByTypeWithText({buttonText: 'Submit', buttonType: 'submit'});`
 * `cy.getFormInputFieldByIdAndType({ inputId, inputType })` - retrieves a form input field by its ID and type. `inputId` is the ID of the input field. `inputType` is the HTML input type (e.g., 'text', 'email', 'password'). Defaults to 'text'. e.g. `cy.getFormInputFieldByIdAndType({inputId: 'name'});`, `cy.getFormInputFieldByIdAndType({inputId: 'name', inputType: 'text'});`
@@ -269,13 +271,13 @@ ManageIQ implements the following cypress extensions:
 * `cy.getFormSelectFieldById({ selectId })` - retrieves a form select field by its ID. `selectId` is the ID of the select field. e.g. `cy.getFormSelectFieldById({selectId: 'select-scan-limit'});`
 * `cy.getFormTextareaById({ textareaId })` - retrieves a form textarea field by its ID. `textareaId` is the ID of the textarea field. e.g. `cy.getFormTextareaById({textareaId: 'default.auth_key'});`
 
-##### form_elements_validation_commands
+#### form_elements_validation_commands
 
 * `cy.validateFormLabels(labelConfigs)` - validates form field labels based on provided configurations. `labelConfigs` is an array of label configuration objects with properties: `forValue` (required) - the 'for' attribute value of the label, `expectedText` (optional) - the expected text content of the label. e.g. `cy.validateFormLabels([{ forValue: 'name', expectedText: 'Name' }, { forValue: 'email', expectedText: 'Email Address' }]);` or using constants: `cy.validateFormLabels([{ [LABEL_CONFIG_KEYS.FOR_VALUE]: 'name', [LABEL_CONFIG_KEYS.EXPECTED_TEXT]: 'Name' }]);`
 * `cy.validateFormFields(fieldConfigs)` - validates form input fields based on provided configurations. `fieldConfigs` is an array of field configuration objects with properties: `id` (required) - the ID of the form field, `fieldType` (optional, default: 'input') - the type of field ('input', 'select', 'textarea'), `inputFieldType` (optional, default: 'text') - the type of input field ('text', 'password', 'number'), `shouldBeDisabled` (optional, default: false) - whether the field should be disabled, `expectedValue` (optional) - the expected value of the field. e.g. `cy.validateFormFields([{ id: 'name', shouldBeDisabled: true }, { id: 'role', fieldType: 'select', expectedValue: 'admin' }]);` or using constants: `cy.validateFormFields([{ [FIELD_CONFIG_KEYS.ID]: 'email', [FIELD_CONFIG_KEYS.INPUT_FIELD_TYPE]: 'email' }, { [FIELD_CONFIG_KEYS.ID]: 'name', [FIELD_CONFIG_KEYS.SHOULD_BE_DISABLED]: true }]);`
 * `cy.validateFormButtons(buttonConfigs)` - validates form buttons based on provided configurations. `buttonConfigs` is an array of button configuration objects with properties: `buttonText` (required) - the text of the button, `buttonType` (optional, default: 'button') - the type of button (e.g., 'submit', 'reset'), `shouldBeDisabled` (optional, default: false) - whether the button should be disabled. e.g. `cy.validateFormButtons([{ buttonText: 'Cancel' }, { buttonText: 'Submit', buttonType: 'submit', shouldBeDisabled: true }]);` or using constants: `cy.validateFormButtons([{ [BUTTON_CONFIG_KEYS.TEXT]: 'Cancel', [BUTTON_CONFIG_KEYS.BUTTON_WRAPPER_CLASS]: 'custom-button-wrapper' }]);`
 
-##### provider_helper_commands
+#### provider_helper_commands
 
 * `cy.fillProviderForm(providerConfig, nameValue, hostValue)` - fills a provider form based on provider configuration. `providerConfig` is the provider configuration object. `nameValue` is the name to use for the provider. `hostValue` is the hostname to use for the provider.
 * `cy.validateProviderFormFields(providerConfig, isEdit)` - validates a provider form based on provider configuration. `providerConfig` is the provider configuration object. `isEdit` is whether the form is in edit mode.
@@ -283,7 +285,7 @@ ManageIQ implements the following cypress extensions:
 * `cy.providerValidation({ stubErrorResponse, errorMessage })` - performs validation with optional error response stubbing. `stubErrorResponse` is whether to stub an error response. `errorMessage` is the error message to show.
 * `generateProviderTests(providerConfig)` - generates all test suites for a provider. `providerConfig` is the provider configuration object.
 
-#### Assertions
+### Assertions
 
 * `cy.expect_explorer_title(title)` - check that the title on an explorer screen matches the provided title. `title`: String for the title.
 * `cy.expect_gtl_no_records_with_text({ containsText })` - verifies that the GTL view displays a "no records" message. Checks that the specified text is visible within the GTL view container. `containsText` is the optional text to verify in the no records message (defaults to 'No records'). e.g. `cy.expect_gtl_no_records_with_text();`, `cy.expect_gtl_no_records_with_text({ containsText: 'No items found' });`
@@ -298,7 +300,7 @@ ManageIQ implements the following cypress extensions:
 * `cy.expect_inline_field_errors({ containsText })` - command to validate inline field error messages. `containsText` is the text that the error message should contain (required). e.g. `cy.expect_inline_field_errors({ containsText: 'blank' });`, `cy.expect_inline_field_errors({ containsText: 'taken' });`
 * `cy.expect_dual_list({ availableItemsHeaderText, selectedItemsHeaderText, availableItems, selectedItems })` - command to test dual-list components (components with two lists where items can be moved between them). Tests all aspects including item selection, moving items between lists, and search functionality. `availableItemsHeaderText` is the optional string for the heading of the available items list. `selectedItemsHeaderText` is the optional string for the heading of the selected items list. `availableItems` is an optional array of strings representing the items initially in the available items list. `selectedItems` is an optional array of strings representing the items initially in the selected items list. At least one of `availableItems` or `selectedItems` must contain items. The command automatically detects whether to test a flow starting from available items or selected items based on which list has items initially. e.g. `cy.expect_dual_list({ availableItemsHeaderText: 'Available Items', selectedItemsHeaderText: 'Selected Items', availableItems: ['Item 1', 'Item 2', 'Item 3'] });`, `cy.expect_dual_list({ availableItemsHeaderText: 'Unassigned Roles', selectedItemsHeaderText: 'Assigned Roles', selectedItems: ['Role 1', 'Role 2', 'Role 3'] });`
 
-### Test Writing Guidelines
+## Test Writing Guidelines
 
 #### 1. Database State Management
 
