@@ -375,10 +375,11 @@ UI Navigation: Overview > Chargeback > Rates
 Test File: cypress/e2e/ui/Overview/Chargeback/rates.cy.js
 ```
 
-For very large test files, you can split into multiple files:
+For very large test files, split them by feature or feature category so the file names describe what each test covers:
 ```
-cypress/e2e/ui/Overview/Chargeback/Rates/rates1.cy.js
-cypress/e2e/ui/Overview/Chargeback/Rates/rates2.cy.js
+cypress/e2e/ui/Overview/Chargeback/Rates/rate-list.cy.js
+cypress/e2e/ui/Overview/Chargeback/Rates/rate-form.cy.js
+cypress/e2e/ui/Overview/Chargeback/Rates/rate-validation.cy.js
 ```
 
 #### 3. No Provider Data
