@@ -352,7 +352,7 @@ afterEach(() => {
 
 **Creating test data with FactoryBot:**
 
-Through cypress-on-rails, you can leverage Ruby/Rails test factories (FactoryBot) from JavaScript within your tests using `cy.appFactories()`:
+Through cypress-on-rails, you can use the Rails application's existing test factories from JavaScript using `cy.appFactories()`. Check the [existing factories](https://github.com/ManageIQ/manageiq/tree/master/spec/factories) before creating a new one - you can use them directly or create new ones based on existing ones. For more on defining and using factories, see the [FactoryBot Getting Started guide](https://github.com/thoughtbot/factory_bot/blob/main/GETTING_STARTED.md).
 
 ```javascript
 // Create a single record
