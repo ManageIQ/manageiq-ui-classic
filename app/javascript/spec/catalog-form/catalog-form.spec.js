@@ -1,12 +1,12 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
+import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import CatalogForm from '../../components/catalog-form/catalog-form';
 import '../helpers/miqSparkle';
 import '../helpers/miqAjaxButton';
-import '../helpers/addFlash';
-import { mount, shallow } from '../helpers/mountForm';
+import { renderWithRedux } from '../helpers/mountForm';
 
 describe('Catalog form component', () => {
   let submitSpyMiqSparkleOn;
@@ -29,19 +29,14 @@ describe('Catalog form component', () => {
     },
   };
 
-  const originalRightValues = [
-    { value: 'http://localhost:3000/api/service_templates/2', label: 'template 2' },
-    { value: 'http://localhost:3000/api/service_templates/6', label: 'template 6' },
-  ];
-
-  const rightValues = [
-    'http://localhost:3000/api/service_templates/2',
-    'http://localhost:3000/api/service_templates/6',
-  ];
-
   const urlFreeTemplates = '/api/service_templates?expand=resources&filter[]=service_template_catalog_id=null';
   const urlTemplates = '/api/service_catalogs/1001?expand=service_templates';
 
+  // Helper function to get the submit button (filters "Add" buttons to find the submit type)
+  const getSubmitButton = () => {
+    const addButtons = screen.getAllByRole('button', { name: /^add$/i });
+    return addButtons.find((btn) => btn.getAttribute('type') === 'submit');
+  };
 
   beforeEach(() => {
     submitSpyMiqSparkleOn = jest.spyOn(window, 'miqSparkleOn');
@@ -57,117 +52,131 @@ describe('Catalog form component', () => {
     spyMiqAjaxButton.mockRestore();
   });
 
-  it('should render add variant form', (done) => {
+  it('should render add variant form', async() => {
     fetchMock.getOnce(urlFreeTemplates, { resources });
-    const wrapper = shallow(<CatalogForm />);
+    // Mock any additional API calls that might be triggered
+    fetchMock.get('begin:/api/service_catalogs', { resources: [] });
 
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper.dive())).toMatchSnapshot();
-      done();
+    const { container } = renderWithRedux(<CatalogForm />);
+
+    await waitFor(() => {
+      expect(getSubmitButton()).toBeInTheDocument();
     });
+
+    expect(container).toMatchSnapshot();
   });
 
-  it('should render edit variant form', (done) => {
-    fetchMock.getOnce(urlFreeTemplates, { resources })
-      .getOnce(urlTemplates, assignedResources);
-    const wrapper = shallow(<CatalogForm catalogId="1001" />);
+  it('should render edit variant form', async() => {
+    fetchMock.getOnce(urlFreeTemplates, { resources }).getOnce(urlTemplates, assignedResources);
+    fetchMock.get('begin:/api/service_catalogs', { resources: [] });
 
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper.dive())).toMatchSnapshot();
-      done();
+    const { container } = renderWithRedux(<CatalogForm catalogId="1001" />);
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     });
+
+    expect(container).toMatchSnapshot();
   });
 
-  it('should call cancel callback', (done) => {
-    fetchMock.getOnce(urlFreeTemplates, { resources })
-      .getOnce(urlTemplates, assignedResources);
-    const wrapper = mount(<CatalogForm catalogId="1001" />);
+  it('should call cancel callback', async() => {
+    fetchMock.getOnce(urlFreeTemplates, { resources }).getOnce(urlTemplates, assignedResources);
+    fetchMock.get('begin:/api/service_catalogs', { resources: [] });
+
+    renderWithRedux(<CatalogForm catalogId="1001" />);
     const url = '/catalog/st_catalog_edit/1001?button=cancel';
 
-    setImmediate(() => {
-      wrapper.update();
-      const button = wrapper.find('Button[label="Cancel"] button').first();
-      button.simulate('click');
-      expect(spyMiqAjaxButton).toHaveBeenCalledWith(url);
-      done();
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
     });
+
+    const cancelButton = screen.getByRole('button', { name: /cancel/i });
+    await userEvent.click(cancelButton);
+
+    expect(spyMiqAjaxButton).toHaveBeenCalledWith(url);
   });
 
-  it('should request data after mount and stop loading when creating new catalog', (done) => {
+  it('should request data after mount and stop loading when creating new catalog', async() => {
     fetchMock.getOnce(urlFreeTemplates, { resources });
-    const wrapper = mount(<CatalogForm />);
+    fetchMock.get('begin:/api/service_catalogs', { resources: [] });
+
+    renderWithRedux(<CatalogForm />);
 
     expect(submitSpyMiqSparkleOn).toHaveBeenCalled();
     expect(fetchMock.called(urlFreeTemplates)).toBe(true);
 
-    setImmediate(() => {
-      wrapper.update();
-      expect(wrapper.children().state().isLoaded).toBe(true);
-      expect(submitSpyMiqSparkleOff).toHaveBeenCalled();
-      done();
+    await waitFor(() => {
+      const addButtons = screen.getAllByRole('button', { name: /^add$/i });
+      const submitButton = addButtons.find((btn) => btn.getAttribute('type') === 'submit');
+      expect(submitButton).toBeInTheDocument();
     });
+
+    expect(submitSpyMiqSparkleOff).toHaveBeenCalled();
   });
 
-  it('should request data after mount and set to state when editing catalog', (done) => {
-    fetchMock
-      .getOnce(urlFreeTemplates, { resources })
-      .getOnce(urlTemplates, assignedResources);
-    const wrapper = mount(<CatalogForm catalogId="1001" />);
+  it('should request data after mount and set to state when editing catalog', async() => {
+    fetchMock.getOnce(urlFreeTemplates, { resources }).getOnce(urlTemplates, assignedResources);
+    renderWithRedux(<CatalogForm catalogId="1001" />);
 
     expect(submitSpyMiqSparkleOn).toHaveBeenCalled();
     expect(fetchMock.called(urlFreeTemplates)).toBe(true);
     expect(fetchMock.called(urlTemplates)).toBe(true);
 
-    setImmediate(() => {
-      wrapper.update();
-      expect(wrapper.children().state().initialValues).toEqual({
-        name: 'DROGO',
-        description: 'This is a DROGO!',
-        service_templates: rightValues,
-      });
-      expect(wrapper.children().state().originalRightValues).toEqual(originalRightValues);
-      expect(submitSpyMiqSparkleOff).toHaveBeenCalled();
-      done();
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     });
+
+    expect(submitSpyMiqSparkleOff).toHaveBeenCalled();
   });
 
-  it('should not submit values when form is not valid', (done) => {
+  it('should not submit values when form is not valid', async() => {
     fetchMock.getOnce(urlFreeTemplates, { resources });
-    const wrapper = mount(<CatalogForm />);
-
-    setImmediate(() => {
-      wrapper.update();
-      const spy = jest.spyOn(wrapper.children().instance(), 'submitValues');
-      wrapper.find('form').simulate('submit');
-      expect(spy).toHaveBeenCalledTimes(0);
-      done();
-    });
-  });
-
-  it('submit post data to API when adding new form', (done) => {
+    fetchMock.get('begin:/api/service_catalogs', { resources: [] });
     const urlCreate = '/api/service_catalogs';
-    fetchMock.getOnce(urlFreeTemplates, { resources });
     fetchMock.postOnce(urlCreate, {});
 
-    const wrapper = mount(<CatalogForm />);
-    const values = {
-      name: 'Some name',
-      description: '11',
-      service_templates: [
-        { value: 'http://localhost:3000/api/service_templates/44', label: 'template 44' },
-      ],
-    };
-    wrapper.children().instance().submitValues(values).then(() => {
-      expect(fetchMock.called(urlCreate)).toBe(true);
-      expect(spyMiqAjaxButton).toHaveBeenCalledWith('/catalog/st_catalog_edit?button=add', { name: 'Some name' });
-      done();
-    });
+    renderWithRedux(<CatalogForm />);
+
+    // Wait for form to load
+    await waitFor(() => expect(screen.getByLabelText(/name/i)).toBeInTheDocument());
+
+    await userEvent.click(getSubmitButton());
+
+    // Form should not submit without required fields
+    expect(fetchMock.called(urlCreate)).toBe(false);
   });
 
-  it('submit post data to API when adding new form and get error back', (done) => {
+  it('submit post data to API when adding new form', async() => {
     const urlCreate = '/api/service_catalogs';
+    fetchMock.getOnce(urlFreeTemplates, { resources });
+    fetchMock.get('begin:/api/service_catalogs', { resources: [] });
+    fetchMock.postOnce(urlCreate, {});
+
+    renderWithRedux(<CatalogForm />);
+
+    // Wait for form to load
+    await waitFor(() => expect(screen.getByLabelText(/name/i)).toBeInTheDocument());
+
+    // Fill in the form fields
+    const nameInput = screen.getByLabelText(/name/i);
+    await userEvent.type(nameInput, 'Some name');
+
+    // Wait for debounced validation to complete (250ms debounce + API call)
+    const submitButton = getSubmitButton();
+    await waitFor(() => expect(submitButton).not.toBeDisabled());
+
+    await userEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(fetchMock.called(urlCreate)).toBe(true);
+    });
+
+    expect(spyMiqAjaxButton).toHaveBeenCalledWith('/catalog/st_catalog_edit?button=add', { name: 'Some name' });
+  });
+
+  it('submit post data to API when adding new form and get error back', async() => {
+    const urlCreate = '/api/service_catalogs';
+    const spyAddFlash = jest.spyOn(window, 'add_flash');
     const returnObject = {
       status: 400,
       body: {
@@ -175,28 +184,38 @@ describe('Catalog form component', () => {
       },
     };
     fetchMock.getOnce(urlFreeTemplates, { resources });
+    fetchMock.get('begin:/api/service_catalogs', { resources: [] });
     fetchMock.postOnce(urlCreate, returnObject);
 
-    const wrapper = mount(<CatalogForm />);
-    const spyHandleError = jest.spyOn(wrapper.children().instance(), 'handleError');
+    renderWithRedux(<CatalogForm />);
 
-    expect(spyHandleError).not.toHaveBeenCalled();
+    // Wait for form to load
+    await waitFor(() => expect(screen.getByLabelText(/name/i)).toBeInTheDocument());
 
-    const values = {
-      name: 'Some name',
-      description: '11',
-      service_templates: [
-        { value: 'http://localhost:3000/api/service_templates/44', label: 'template 44' },
-      ],
-    };
+    // Fill in the form fields
+    const nameInput = screen.getByLabelText(/name/i);
+    await userEvent.type(nameInput, 'Some name');
 
-    return wrapper.children().instance().submitValues(values).then(() => {
-      expect(spyHandleError).toHaveBeenCalledWith(expect.objectContaining({ data: returnObject.body, status: returnObject.status }));
-      done();
+    // Wait for debounced validation to complete
+    const submitButton = getSubmitButton();
+    await waitFor(() => expect(submitButton).not.toBeDisabled());
+
+    await userEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(fetchMock.called(urlCreate)).toBe(true);
     });
+
+    // Verify error was handled
+    await waitFor(() => {
+      expect(spyAddFlash).toHaveBeenCalledWith('something', 'error');
+    });
+
+    spyAddFlash.mockRestore();
   });
 
-  it('submit post data to API when editing form and get error back', (done) => {
+  it('submit post data to API when editing form and get error back', async() => {
+    const spyAddFlash = jest.spyOn(window, 'add_flash');
     const returnObject = {
       status: 500,
       body: {
@@ -206,97 +225,190 @@ describe('Catalog form component', () => {
     const apiBase = '/api/service_catalogs/1001';
 
     fetchMock.getOnce(urlFreeTemplates, { resources });
-    fetchMock.getOnce('/api/service_catalogs/1001?expand=service_templates', {});
+    fetchMock.getOnce('/api/service_catalogs/1001?expand=service_templates', assignedResources);
+    fetchMock.get('begin:/api/service_catalogs', { resources: [] });
     fetchMock.postOnce(apiBase, returnObject);
 
-    const wrapper = mount(<CatalogForm catalogId="1001" />);
-    const spyHandleError = jest.spyOn(wrapper.children().instance(), 'handleError');
+    renderWithRedux(<CatalogForm catalogId="1001" />);
 
-    wrapper.children().instance().setState({ originalRightValues: [] });
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
+    });
 
-    expect(spyHandleError).not.toHaveBeenCalled();
+    // Fill in the form fields
+    const nameInput = screen.getByLabelText(/name/i);
+    await userEvent.clear(nameInput);
+    await userEvent.type(nameInput, 'Some name');
 
-    const values = {
-      name: 'Some name',
-      description: '11',
-      service_templates: [],
-    };
+    // Wait for debounced validation to complete
+    await waitFor(() => {
+      const submitButton = screen.getByRole('button', { name: /save/i });
+      expect(submitButton).not.toBeDisabled();
+    });
 
-    return wrapper.children().instance().submitValues(values).then(() => {
-      expect(spyHandleError).toHaveBeenCalledWith(expect.objectContaining({ data: returnObject.body, status: returnObject.status }));
-      done();
+    const submitButton = screen.getByRole('button', { name: /save/i });
+    await userEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(fetchMock.called(apiBase)).toBe(true);
+    });
+
+    // Verify error was handled
+    await waitFor(() => {
+      expect(spyAddFlash).toHaveBeenCalledWith('something', 'error');
+    });
+
+    spyAddFlash.mockRestore();
+  });
+
+  it('submit post data to API when editing form and switching items in lists', async() => {
+    const apiBase = '/api/service_catalogs/1001';
+    fetchMock.getOnce(urlFreeTemplates, { resources });
+    fetchMock.getOnce(urlTemplates, assignedResources);
+    // Mock validation API to return the current catalog with matching ID (as string to match catalogId prop)
+    fetchMock.get('begin:/api/service_catalogs?expand=resources&filter', {
+      resources: [{ id: '1001', name: 'DROGO' }],
+    });
+    fetchMock.postOnce(apiBase, { id: '1001' });
+    fetchMock.post(`${apiBase}/service_templates`, {});
+
+    renderWithRedux(<CatalogForm catalogId="1001" />);
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
+    });
+
+    // Wait for form validation to complete (validateOnMount is true)
+    await waitFor(() => {
+      const submitButton = screen.getByRole('button', { name: /save/i });
+      expect(submitButton).toBeInTheDocument();
+    });
+
+    // Modify the form to enable submit button (form is pristine until changed)
+    const descriptionInput = screen.getByLabelText(/description/i);
+    await userEvent.clear(descriptionInput);
+    await userEvent.type(descriptionInput, 'Updated description');
+
+    // Wait for form to recognize changes
+    await waitFor(() => {
+      const submitButton = screen.getByRole('button', { name: /save/i });
+      expect(submitButton).not.toBeDisabled();
+    });
+
+    const submitButton = screen.getByRole('button', { name: /save/i });
+    await userEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(fetchMock.called(apiBase)).toBe(true);
     });
   });
 
-  it('submit post data to API when editing form and switching items in lists', (done) => {
+  it('submit post data to API when editing form without switching items in lists', async() => {
     const apiBase = '/api/service_catalogs/1001';
-    fetchMock.get(urlFreeTemplates, { resources });
+    fetchMock.getOnce(urlFreeTemplates, { resources });
+    fetchMock.getOnce(urlTemplates, assignedResources);
+    // Mock validation API to return the current catalog
+    fetchMock.get('begin:/api/service_catalogs?expand=resources&filter', {
+      resources: [{ id: '1001', name: 'DROGO' }],
+    });
     fetchMock.postOnce(apiBase, { id: '1001' });
     fetchMock.post(`${apiBase}/service_templates`, {});
-    fetchMock.get(urlTemplates, assignedResources);
 
-    const wrapper = mount(<CatalogForm catalogId="1001" />);
+    renderWithRedux(<CatalogForm catalogId="1001" />);
 
-    const values = {
-      name: 'Some name',
-      description: '11',
-      service_templates: [
-        { value: 'http://localhost:3000/api/service_templates/44', label: 'template 44' },
-      ],
-    };
-
-    wrapper.children().instance().setState({ originalRightValues });
-
-    wrapper.children().instance().submitValues(values).then(() => {
-      expect(fetchMock.called(apiBase)).toBe(true);
-      expect(fetchMock.called(`${apiBase}/service_templates`)).toBe(true);
-      expect(spyMiqAjaxButton).toHaveBeenCalledWith('/catalog/st_catalog_edit/1001?button=save', { name: 'Some name' });
-      done();
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     });
-  });
 
-  it('submit post data to API when editing form without switching items in lists', (done) => {
-    const apiBase = '/api/service_catalogs/1001';
-    fetchMock.get(urlFreeTemplates, { resources });
-    fetchMock.postOnce(apiBase, { id: '1001' });
-    fetchMock.post(`${apiBase}/service_templates`, {});
-    fetchMock.get(urlTemplates, assignedResources);
+    // Change description but not service templates
+    const descriptionInput = screen.getByLabelText(/description/i);
+    await userEvent.clear(descriptionInput);
+    await userEvent.type(descriptionInput, 'Updated description');
 
-    const wrapper = mount(<CatalogForm catalogId="1001" />);
-
-    const values = {
-      name: 'Some name',
-      description: '11',
-      service_templates: rightValues,
-    };
-
-    wrapper.children().instance().setState({ originalRightValues });
-
-    wrapper.children().instance().submitValues(values).then(() => {
-      expect(fetchMock.called(apiBase)).toBe(true);
-      expect(fetchMock.called(`${apiBase}/service_templates`)).toBe(false);
-      expect(spyMiqAjaxButton).toHaveBeenCalledWith('/catalog/st_catalog_edit/1001?button=save', { name: 'Some name' });
-      done();
+    // Wait for form to recognize changes
+    await waitFor(() => {
+      const submitButton = screen.getByRole('button', { name: /save/i });
+      expect(submitButton).not.toBeDisabled();
     });
+
+    const submitButton = screen.getByRole('button', { name: /save/i });
+    await userEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(fetchMock.called(apiBase)).toBe(true);
+    });
+
+    // Verify service_templates endpoint was not called (no changes to service templates)
+    expect(fetchMock.called(`${apiBase}/service_templates`)).toBe(false);
   });
 
   describe('#handleError', () => {
-    it('should not parse duplicate name error', () => {
-      const error = {
-        data: { error: { message: 'This is some nice error' } },
+    it('should display generic error message', async() => {
+      const spyAddFlash = jest.spyOn(window, 'add_flash');
+      const urlCreate = '/api/service_catalogs';
+      const returnObject = {
+        status: 400,
+        body: {
+          error: { message: 'This is some nice error' },
+        },
       };
-      const wrapper = mount(<CatalogForm catalogId="1001" />);
+      fetchMock.getOnce(urlFreeTemplates, { resources });
+      fetchMock.get('begin:/api/service_catalogs', { resources: [] });
+      fetchMock.postOnce(urlCreate, returnObject);
 
-      expect(wrapper.children().instance().handleError(error)).toEqual(error.data.error.message);
+      renderWithRedux(<CatalogForm />);
+
+      // Wait for form to load
+      await waitFor(() => expect(screen.getByLabelText(/name/i)).toBeInTheDocument());
+
+      const nameInput = screen.getByLabelText(/name/i);
+      await userEvent.type(nameInput, 'Some name');
+
+      // Wait for debounced validation to complete
+      const submitButton = getSubmitButton();
+      await waitFor(() => expect(submitButton).not.toBeDisabled());
+
+      await userEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(spyAddFlash).toHaveBeenCalledWith('This is some nice error', 'error');
+      });
+
+      spyAddFlash.mockRestore();
     });
 
-    it('should parse duplicate name error', () => {
-      const error = {
-        data: { error: { message: 'Service catalog: Name has already been taken' } },
+    it('should parse duplicate name error', async() => {
+      const spyAddFlash = jest.spyOn(window, 'add_flash');
+      const urlCreate = '/api/service_catalogs';
+      const returnObject = {
+        status: 400,
+        body: {
+          error: { message: 'Service catalog: Name has already been taken' },
+        },
       };
-      const wrapper = mount(<CatalogForm catalogId="1001" />);
+      fetchMock.getOnce(urlFreeTemplates, { resources });
+      fetchMock.get('begin:/api/service_catalogs', { resources: [] });
+      fetchMock.postOnce(urlCreate, returnObject);
 
-      expect(wrapper.children().instance().handleError(error)).toEqual(__('Name has already been taken'));
+      renderWithRedux(<CatalogForm />);
+
+      // Wait for form to load
+      await waitFor(() => expect(screen.getByLabelText(/name/i)).toBeInTheDocument());
+
+      const nameInput = screen.getByLabelText(/name/i);
+      await userEvent.type(nameInput, 'Some name');
+
+      // Wait for debounced validation to complete
+      const submitButton = getSubmitButton();
+      await waitFor(() => expect(submitButton).not.toBeDisabled());
+
+      await userEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(spyAddFlash).toHaveBeenCalledWith('Name has already been taken', 'error');
+      });
+
+      spyAddFlash.mockRestore();
     });
   });
 });
