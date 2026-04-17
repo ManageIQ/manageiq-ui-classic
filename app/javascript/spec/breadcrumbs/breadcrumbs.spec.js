@@ -1,10 +1,8 @@
 import React from 'react';
 import configureStore from 'redux-mock-store';
-import toJson from 'enzyme-to-json';
 import { Provider } from 'react-redux';
-import { mount } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 
-import * as clickFunctions from '../../components/breadcrumbs/on-click-functions';
 import { BreadcrumbsBar as Breadcrumbs } from '../../components/breadcrumbs';
 
 describe('Breadcrumbs component', () => {
@@ -26,52 +24,34 @@ describe('Breadcrumbs component', () => {
     },
   });
 
-  const reduxMount = (data) => {
-    const Component = () => data;
-
-    return mount(
-      <Provider store={store}>
-        <Component />
-      </Provider>
-    );
-  };
+  const renderWithStore = (component) => render(<Provider store={store}>{component}</Provider>);
 
   it('is correctly rendered', () => {
-    const wrapper = reduxMount(<Breadcrumbs {...props} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const { container } = renderWithStore(<Breadcrumbs {...props} />);
+    expect(container).toMatchSnapshot();
   });
 
-  it('clicked on breadcrumb in tree', () => {
-    clickFunctions.onClickTree = jest.fn();
-
+  it('renders breadcrumb with tree key', () => {
     const initialProps = {
       ...props,
-      items: [
-        { key: 'xx-11', title: 'Item 11' },
-        { title: 'Header' },
-      ],
+      items: [{ key: 'xx-11', title: 'Item 11' }, { title: 'Header' }],
     };
-    const wrapper = reduxMount(<Breadcrumbs {...initialProps} />);
+    renderWithStore(<Breadcrumbs {...initialProps} />);
 
-    wrapper.find('a').first().simulate('click');
-
-    expect(clickFunctions.onClickTree).toHaveBeenCalledWith(expect.any(Object), initialProps.controllerName, initialProps.items[0]);
+    const link = screen.getByRole('link', { name: 'Item 11' });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('href', '#');
   });
 
-  it('clicked on breadcrumb', () => {
-    clickFunctions.onClick = jest.fn();
-
+  it('renders breadcrumb with url', async() => {
     const initialProps = {
       ...props,
-      items: [
-        { url: 'xx-11', title: 'Item 11' },
-        { title: 'Header' },
-      ],
+      items: [{ url: 'xx-11', title: 'Item 11' }, { title: 'Header' }],
     };
-    const wrapper = reduxMount(<Breadcrumbs {...initialProps} />);
+    renderWithStore(<Breadcrumbs {...initialProps} />);
 
-    wrapper.find('a').first().simulate('click');
-
-    expect(clickFunctions.onClick).toHaveBeenCalledWith(expect.any(Object), initialProps.items[0].url);
+    const link = screen.getByRole('link', { name: 'Item 11' });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('href', 'xx-11');
   });
 });

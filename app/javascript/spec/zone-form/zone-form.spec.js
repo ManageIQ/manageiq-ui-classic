@@ -1,10 +1,7 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
+import { waitFor } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
-import { shallow } from 'enzyme';
-
-import { act } from 'react-dom/test-utils';
-import { mount } from '../helpers/mountForm';
+import { renderWithRedux } from '../helpers/mountForm';
 import ZoneForm from '../../components/zone-form/index';
 
 describe('zone Form Component', () => {
@@ -22,23 +19,26 @@ describe('zone Form Component', () => {
     fetchMock.restore();
   });
 
-  it('should render a new Zone form', async(done) => {
-    const wrapper = shallow(<ZoneForm />);
-    wrapper.update();
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+  it('should render a new Zone form', () => {
+    const { container } = renderWithRedux(<ZoneForm />);
+    expect(container).toMatchSnapshot();
   });
 
-  it('should render editing a zone form', async(done) => {
+  it('should render editing a zone form', async() => {
     fetchMock.get('/api/zones/68?attributes=authentications', zone);
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<ZoneForm recordId="68" {...zone} />);
+    const { container } = renderWithRedux(<ZoneForm recordId="68" {...zone} />);
+
+    await waitFor(() => {
+      expect(fetchMock.called('/api/zones/68?attributes=authentications')).toBe(true);
     });
-    wrapper.update();
-    expect(toJson(wrapper)).toMatchSnapshot();
-    expect(wrapper.find('input[name="name"]').instance().value).toEqual('test add zone name');
-    expect(wrapper.find('input[name="description"]').instance().value).toEqual('test add zone');
-    done();
+
+    const nameInput = container.querySelector('input[name="name"]');
+    const descriptionInput = container.querySelector('input[name="description"]');
+
+    expect(nameInput).toBeInTheDocument();
+    expect(nameInput.value).toEqual('test add zone name');
+    expect(descriptionInput).toBeInTheDocument();
+    expect(descriptionInput.value).toEqual('test add zone');
+    expect(container).toMatchSnapshot();
   });
 });
