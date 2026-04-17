@@ -3,11 +3,11 @@
   %div{:class => 'row dashboard', :id => @tabs[0][1].split[0], 'role' => 'tabpanel', 'aria-labelledby' => "#{@tabs[0][1].split[0]}_tab"}
     .col-md-6.col-lg-6.columns#col1
       - @sb[:dashboards][@sb[:active_db]][:col1].each do |w|
-        - widget = MiqWidget.find_by_id(w)
+        - widget = @widgets_by_id[w]
         - if widget && widget.enabled && @available_widgets.include?(widget.id)
           = WidgetPresenter.new(self, controller, widget).render_partial
     .col-md-6.col-lg-6.columns#col2
       - @sb[:dashboards][@sb[:active_db]][:col2].each do |w|
-        - widget = MiqWidget.find_by_id(w)
+        - widget = @widgets_by_id[w]
         - if widget && widget.enabled && @available_widgets.include?(widget.id)
           = WidgetPresenter.new(self, controller, widget).render_partial

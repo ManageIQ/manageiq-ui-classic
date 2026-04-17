@@ -210,7 +210,15 @@ class DashboardController < ApplicationController
     widget_list = []
     prev_type   = nil
     @available_widgets = []
-    MiqWidget.available_for_user(current_user).sort_by { |a| a.content_type + a.title.downcase }.each do |w|
+
+    # Eager load widget contents for current user's group to avoid N+1 queries
+    widgets = MiqWidget.available_for_user(current_user)
+    eager_loaded_widgets = MiqWidget.where(:id => widgets.map(&:id)).includes(:miq_widget_contents).sort_by { |a| a.content_type + a.title.downcase }
+
+    # Pass widgets to view as hash for fast lookup instead of using find_by_id
+    @widgets_by_id = eager_loaded_widgets.index_by(&:id)
+
+    eager_loaded_widgets.each do |w|
       @available_widgets.push(w.id) # Keep track of widgets available to this user
       next if col_widgets.include?(w.id) || !w.enabled
 
