@@ -2,7 +2,7 @@ import React from 'react';
 import { useFieldApi, useFormApi } from '@@ddf';
 import { Button } from '@carbon/react';
 import MiqDataTable from '../miq-data-table';
-import './styles.css';
+import './styles.scss';
 
 export const SubscriptionsTableComponent = (props) => {
   const {
