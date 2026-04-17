@@ -56,7 +56,19 @@ module.exports = [
     test: /\.(scss|sass|css)$/i,
     use: [
       'style-loader',
-      'css-loader',
+      {
+        loader: 'css-loader',
+        options: {
+          // Function to filter URLs - return false to skip processing
+          url: (url) => {
+            // Don't process URLs that start with /upload/ - these are runtime user-uploaded assets
+            if (url.startsWith('/upload/')) {
+              return false;
+            }
+            return true;
+          },
+        },
+      },
       {
         loader: 'postcss-loader',
         options: {
