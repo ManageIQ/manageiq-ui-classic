@@ -151,6 +151,8 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-// Loading the API global to the test context
-import { API } from '../app/javascript/http_api';
+// Loading the API and http globals to the test context
+import { API, http } from '../app/javascript/http_api';
+
 window.API = API;
+window.http = http;
