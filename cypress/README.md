@@ -188,11 +188,13 @@ Remember to reset this before committing if you're working on large test files.
 
 </details>
 
+### Writing Tests
+
 <details>
 
 <summary>Important Files</summary>
 
-### Important Files
+#### Important Files
 
 Understanding these files will help you write and debug Cypress tests:
 
@@ -218,11 +220,9 @@ Understanding these files will help you write and debug Cypress tests:
 - Example: `cy.login()`, `cy.menu()`, `cy.toolbar()`
 - Think of commands as "UI interaction helpers" that aren't tests themselves
 
-</details>
-
-### Writing Tests
-
 Actual tests can be found in `cypress/e2e/ui/`.
+
+</details>
 
 ManageIQ implements the following cypress extensions:
 
