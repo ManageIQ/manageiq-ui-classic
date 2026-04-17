@@ -338,6 +338,8 @@ ManageIQ implements the following cypress extensions:
 
 #### 1. Database State Management
 
+##### Resetting Test Data
+
 Our Cypress configuration captures the database table state (rows that exist) before all tests run. You can restore this state between tests using `cy.appDbState('restore')`:
 
 ```javascript
@@ -350,7 +352,10 @@ afterEach(() => {
 - **Removes rows created during the test** - Use `afterEach` with `cy.appDbState('restore')` for tests that create new records
 - **Does NOT restore deleted or modified rows** - If your test deletes or modifies existing rows, you must manually restore them in your test
 
-**Creating test data with FactoryBot:**
+**Examples:**
+- [Tests using appDbState('restore')](https://github.com/search?q=repo%3AManageIQ%2Fmanageiq-ui-classic+appDbState%28%27restore%27%29&type=code)
+
+##### Creating Test Data with FactoryBot
 
 Through cypress-on-rails, you can use the Rails application's existing test factories from JavaScript using `cy.appFactories()`. Check the [existing factories](https://github.com/ManageIQ/manageiq/tree/master/spec/factories) before creating a new one - you can use them directly or create new ones based on existing ones. For more on defining and using factories, see the [FactoryBot Getting Started guide](https://github.com/thoughtbot/factory_bot/blob/main/GETTING_STARTED.md).
 
@@ -382,11 +387,11 @@ cy.appFactories([
 **Best practices:**
 - Put complicated logic for creating records in the factory itself (in Ruby)
 - Use `cy.appFactories()` to string together simple relationships in tests
-- Consider combining related operations (add + edit + delete) into workflow tests - see "Test Granularity" section below for guidance on when to combine vs. split tests
 
 **Examples:**
-- [Tests using appDbState('restore')](https://github.com/search?q=repo%3AManageIQ%2Fmanageiq-ui-classic+appDbState%28%27restore%27%29&type=code)
 - [Tests using cy.appFactories()](https://github.com/search?q=repo%3AManageIQ%2Fmanageiq-ui-classic+cy.appFactories&type=code)
+
+**Note:** Both factories and resetting test data can be used in combination with combining/splitting tests (see "Test Structure and Granularity" section below) to simplify test setup and make feature testing more readable.
 
 #### 2. File Structure
 
