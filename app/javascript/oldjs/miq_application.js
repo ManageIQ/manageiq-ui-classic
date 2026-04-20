@@ -1,4 +1,4 @@
-/* global add_flash getChartColumnDataValues getChartFormatedValue miqBrowserDetect miqExpressionPrefill miqFlashLater miqFlashSaved miqMenu miqTreeObject miqValueStylePrefill recalculateChartYAxisLabels */
+/* global add_flash miqBrowserDetect miqExpressionPrefill miqFlashLater miqFlashSaved miqMenu miqTreeObject miqValueStylePrefill */
 
 // MIQ specific JS functions
 
@@ -1315,26 +1315,9 @@ window.chartData = function(type, data, data2) {
   if (validateChartAxis(data.axis)) {
     let { format } = data.axis.y.tick;
     const titleFormat = _.cloneDeep(format);
-    const max = _.max(getChartColumnDataValues(data.data.columns));
-    let min = _.min(getChartColumnDataValues(data.data.columns));
-    const maxShowed = getChartFormatedValue(format, max);
-    const minShowed = getChartFormatedValue(format, min);
-    let changeFormat = true;
 
-    const tmp = validateMinMax(min, max, minShowed, maxShowed);
-    changeFormat = !tmp.invalid;
-    min = tmp.min;
-
-    if (changeFormat) {
-      // if min and max are close, labels should be more precise
-      const recalculated = recalculatePrecision(minShowed, maxShowed, format, min, max);
-      format = recalculated.format;
-    }
     data.axis.y.tick.format = ManageIQ.charts.formatters[format.function].c3(format.options);
     data.miq.format = format;
-    data.legend.item = {
-      onclick: recalculateChartYAxisLabels,
-    };
 
     data.tooltip.format.value = function(value, _ratio, _id) {
       const formatFunction = ManageIQ.charts.formatters[titleFormat.function].c3(titleFormat.options);
@@ -1367,12 +1350,6 @@ window.customizeChart = function(data) {
   if (data.miq.performance_chart) {
     data.axis.x.tick.centered = true;
     data.axis.x.tick.culling = { max: 5 };
-  }
-
-  // small C&U charts have very limited height
-  if (data.miq.flat_chart) {
-    const max = _.max(getChartColumnDataValues(data.data.columns));
-    data.axis.y.tick.values = [0, max];
   }
 
   if (data.miq.expand_tooltip) {
