@@ -37,6 +37,7 @@ function MiqButton(props) {
         onClick={buttonClicked}
         onKeyDown={buttonClicked}
         title={title}
+        disabled={!props.enabled}
       >
         {__(props.name)}
       </Button>
@@ -48,6 +49,7 @@ function MiqButton(props) {
       onClick={buttonClicked}
       onKeyDown={buttonClicked}
       title={title}
+      disabled={!props.enabled}
     >
       {__(props.name)}
     </Button>
