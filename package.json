@@ -144,7 +144,6 @@
     "postcss-loader": "~4.3.0",
     "react-test-renderer": "~16.14.0",
     "regenerator-runtime": "~0.14.1",
-    "resolve-url-loader": "^5.0.0",
     "sass": "~1.99.0",
     "sass-loader": "~8.0.2",
     "semver": "^7.7.4",
