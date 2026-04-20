@@ -3,7 +3,6 @@ import { mount } from 'enzyme';
 import fetchMock from 'fetch-mock';
 import { act } from 'react-dom/test-utils';
 
-import './helpers/mockAsyncRequest';
 import './helpers/miqSparkle';
 
 import ReportDataTable from '../components/data-tables/report-data-table/report-data-table';

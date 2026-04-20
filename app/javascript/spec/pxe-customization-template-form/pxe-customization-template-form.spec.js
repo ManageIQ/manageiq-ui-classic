@@ -4,11 +4,11 @@ import fetchMock from 'fetch-mock';
 
 import { act } from 'react-dom/test-utils';
 import '../helpers/miqSparkle';
+import '../helpers/codemirrorRangeMock';
 import { mount } from '../helpers/mountForm';
 import PxeCustomizationTemplateForm from '../../components/pxe-customization-template-form/index';
 
 describe('Pxe Customization Template Form Component', () => {
-
   const api = {
     resources: [
       {
@@ -35,44 +35,41 @@ describe('Pxe Customization Template Form Component', () => {
     fetchMock.restore();
   });
 
-  it('should render adding a new pxe customization template', async (done) => {
+  it('should render adding a new pxe customization template', async() => {
     fetchMock.get('/api/pxe_image_types?attributes=name,id&expand=resources', api);
     let wrapper;
 
-    await act(async () => {
+    await act(async() => {
       wrapper = mount(<PxeCustomizationTemplateForm />);
     });
     wrapper.update();
     expect(fetchMock.calls()).toHaveLength(2);
     expect(toJson(wrapper)).toMatchSnapshot();
-    done();
   });
 
-  it('should render editing a pxe customization template', async (done) => {
+  it('should render editing a pxe customization template', async() => {
     fetchMock.get('/api/pxe_image_types?attributes=name,id&expand=resources', api);
     fetchMock.get('/api/customization_templates/1', editOrCopyObject);
     let wrapper;
 
-    await act(async () => {
+    await act(async() => {
       wrapper = mount(<PxeCustomizationTemplateForm recordId="1" />);
     });
     wrapper.update();
     expect(fetchMock.calls()).toHaveLength(3);
     expect(toJson(wrapper)).toMatchSnapshot();
-    done();
   });
 
-  it('should render copying a pxe customization template', async (done) => {
+  it('should render copying a pxe customization template', async() => {
     fetchMock.get('/api/pxe_image_types?attributes=name,id&expand=resources', api);
     fetchMock.get('/api/customization_templates/1', editOrCopyObject);
     let wrapper;
 
-    await act(async () => {
+    await act(async() => {
       wrapper = mount(<PxeCustomizationTemplateForm copy="1" />);
     });
     wrapper.update();
     expect(fetchMock.calls()).toHaveLength(3);
     expect(toJson(wrapper)).toMatchSnapshot();
-    done();
   });
 });
