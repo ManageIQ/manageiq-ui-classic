@@ -1,142 +1,358 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MiqActionStructuredList should render action info structured list 1`] = `
-<StructuredListWrapper
-  aria-label="Structured list"
-  className="miq-structured-list miq_action_info"
->
-  <MiqStructuredListBody
-    clickEvents={false}
-    mode="miq_action_info"
-    rows={
-      Array [
-        Object {
-          "label": "Description",
-          "value": "bar",
-        },
-        Object {
-          "label": "Action Type",
-          "value": "Default",
-        },
-      ]
-    }
-  />
-</StructuredListWrapper>
+<div>
+  <div
+    aria-label="Structured list"
+    class="cds--structured-list miq-structured-list miq_action_info"
+    role="table"
+  >
+    <div
+      class="cds--structured-list-tbody"
+      role="rowgroup"
+    >
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="0"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header"
+          dir="auto"
+          role="cell"
+        />
+        <div
+          class="cds--structured-list-td content_value object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="expand wrap_text"
+            >
+              bar
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="1"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header"
+          dir="auto"
+          role="cell"
+        />
+        <div
+          class="cds--structured-list-td content_value object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="expand wrap_text"
+            >
+              Default
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`MiqActionStructuredList should render action policies structured list 1`] = `
-<StructuredListWrapper
-  aria-label="Structured list"
-  className="miq-structured-list miq_action"
->
-  <MiqStructuredListBody
-    clickEvents={false}
-    mode="miq_action"
-    rows={
-      Array [
-        Object {
-          "cells": Array [
-            Object {
-              "icon": "pficon pficon-warning-triangle-o",
-              "value": "Alert description",
-            },
-          ],
-          "onclick": Object {
-            "url": "/miq_policy/show/1",
-          },
-          "title": "View this Alert",
-        },
-      ]
-    }
-  />
-</StructuredListWrapper>
+<div>
+  <div
+    aria-label="Structured list"
+    class="cds--structured-list miq-structured-list miq_action"
+    role="table"
+  >
+    <div
+      class="cds--structured-list-tbody"
+      role="rowgroup"
+    >
+      <div
+        class="cds--structured-list-row clickable"
+        role="row"
+        tabindex="0"
+        title="View this Alert"
+      >
+        <div
+          class="cds--structured-list-td label_header object_item"
+          dir="auto"
+          role="cell"
+          title="View this Alert"
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="wrap_text"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`MiqActionStructuredList should render action type 1 structured list 1`] = `
-<StructuredListWrapper
-  aria-label="Structured list"
-  className="miq-structured-list miq_action_info"
->
-  <MiqStructuredListBody
-    clickEvents={false}
-    mode="miq_action_info"
-    rows={
-      Array [
-        Object {
-          "label": "Name",
-          "value": "Snapshot name",
-        },
-      ]
-    }
-  />
-</StructuredListWrapper>
+<div>
+  <div
+    aria-label="Structured list"
+    class="cds--structured-list miq-structured-list miq_action_info"
+    role="table"
+  >
+    <div
+      class="cds--structured-list-tbody"
+      role="rowgroup"
+    >
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="0"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header"
+          dir="auto"
+          role="cell"
+        />
+        <div
+          class="cds--structured-list-td content_value object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="expand wrap_text"
+            >
+              Snapshot name
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`MiqActionStructuredList should render action type 2 structured list 1`] = `
-<StructuredListWrapper
-  aria-label="Structured list"
-  className="miq-structured-list miq_action_info"
->
-  <MiqStructuredListBody
-    clickEvents={false}
-    mode="miq_action_info"
-    rows={
-      Array [
-        Object {
-          "label": "Object Details",
-        },
-        Object {
-          "label": "Starting Message",
-          "value": "Message",
-        },
-        Object {
-          "label": "Request",
-          "value": "Request",
-        },
-        Object {
-          "label": "Attribute/Value Pairs",
-          "value": Array [
-            Object {
-              "value": "pair1",
-            },
-            Object {
-              "value": "pair2",
-            },
-            Object {
-              "value": "pair3",
-            },
-          ],
-        },
-      ]
-    }
-  />
-</StructuredListWrapper>
+<div>
+  <div
+    aria-label="Structured list"
+    class="cds--structured-list miq-structured-list miq_action_info"
+    role="table"
+  >
+    <div
+      class="cds--structured-list-tbody"
+      role="rowgroup"
+    >
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="0"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header"
+          dir="auto"
+          role="cell"
+        />
+        <div
+          class="cds--structured-list-td content_value object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="wrap_text"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="1"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header"
+          dir="auto"
+          role="cell"
+        />
+        <div
+          class="cds--structured-list-td content_value object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="expand wrap_text"
+            >
+              Message
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="2"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header"
+          dir="auto"
+          role="cell"
+        />
+        <div
+          class="cds--structured-list-td content_value object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="expand wrap_text"
+            >
+              Request
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="3"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header"
+          dir="auto"
+          role="cell"
+        />
+        <div
+          class="cds--structured-list-td content_value object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="multi_row_cell"
+            >
+              <div
+                class="sub_row_item"
+                title=""
+              >
+                <div
+                  class="sub_value"
+                >
+                  <div
+                    class="expand wrap_text"
+                  >
+                    pair1
+                  </div>
+                </div>
+              </div>
+              <div
+                class="sub_row_item"
+                title=""
+              >
+                <div
+                  class="sub_value"
+                >
+                  <div
+                    class="expand wrap_text"
+                  >
+                    pair2
+                  </div>
+                </div>
+              </div>
+              <div
+                class="sub_row_item"
+                title=""
+              >
+                <div
+                  class="sub_value"
+                >
+                  <div
+                    class="expand wrap_text"
+                  >
+                    pair3
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`MiqActionStructuredList should render action type 3 structured list 1`] = `
-<StructuredListWrapper
-  aria-label="Structured list"
-  className="miq-structured-list miq_action_info"
->
-  <MiqStructuredListBody
-    clickEvents={false}
-    mode="miq_action_info"
-    rows={
-      Array [
-        Object {
-          "cells": Array [
-            Object {
-              "icon": "pficon pficon-warning-triangle-o",
-              "value": "Alert description",
-            },
-          ],
-          "onclick": Object {
-            "url": "/miq_alert/show/1",
-          },
-          "title": "View this Alert",
-        },
-      ]
-    }
-  />
-</StructuredListWrapper>
+<div>
+  <div
+    aria-label="Structured list"
+    class="cds--structured-list miq-structured-list miq_action_info"
+    role="table"
+  >
+    <div
+      class="cds--structured-list-tbody"
+      role="rowgroup"
+    >
+      <div
+        class="cds--structured-list-row clickable"
+        role="row"
+        tabindex="0"
+        title="View this Alert"
+      >
+        <div
+          class="cds--structured-list-td label_header object_item"
+          dir="auto"
+          role="cell"
+          title="View this Alert"
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="wrap_text"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 `;
