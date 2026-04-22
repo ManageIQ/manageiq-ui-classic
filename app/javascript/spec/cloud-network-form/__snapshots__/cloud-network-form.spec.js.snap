@@ -1,180 +1,285 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Cloud Network form component should render edit variant 1`] = `
-<Grid>
-  <ForwardRef
-    lg={16}
-    md={8}
-    sm={4}
+<div>
+  <div
+    class="cds--css-grid"
   >
-    <Connect(MiqFormRenderer)
-      buttonsLabels={
-        Object {
-          "submitLabel": "Save",
-        }
-      }
-      canReset={true}
-      initialValues={
-        Object {
-          "cidr": null,
-          "cloud_tenant": "2",
-          "cloud_tenant_id": "2",
-          "ems_id": "8",
-          "ems_ref": "121455-asad5516a-145dsa6-d1453ad",
-          "enabled": true,
-          "ext_management_system": Object {
-            "name": "OpenStack Network Manager",
-          },
-          "external_facing": true,
-          "extra_attributes": Object {
-            "maximum_transmission_unit": 1496,
-            "port_security_enabled": true,
-            "qos_policy_id": null,
-          },
-          "href": "http://localhost:3000/api/cloud_networks/50",
-          "id": "50",
-          "name": "ext",
-          "orchestration_stack_id": null,
-          "provider_network_type": "vlan",
-          "provider_physical_network": "datacentre",
-          "provider_segmentation_id": "17",
-          "shared": true,
-          "status": "active",
-          "type": "Type",
-          "vlan_transparent": null,
-        }
-      }
-      onCancel={[Function]}
-      onSubmit={[Function]}
-      schema={
-        Object {
-          "fields": Array [
-            Object {
-              "component": "sub-form",
-              "fields": Array [
-                Object {
-                  "component": "select",
-                  "id": "ems_id",
-                  "isDisabled": true,
-                  "isRequired": true,
-                  "label": "Network Manager",
-                  "name": "ems_id",
-                  "onChange": [Function],
-                  "options": Array [
-                    Object {
-                      "label": "OpenStack Network Manager",
-                      "value": "8",
-                    },
-                  ],
-                  "placeholder": "<Choose>",
-                  "validate": Array [
-                    Object {
-                      "message": "Required",
-                      "type": "required",
-                    },
-                  ],
-                  "validateOnMount": true,
-                },
-              ],
-              "id": "network-provider",
-              "name": "network-provider",
-              "title": "Network Provider",
-            },
-          ],
-        }
-      }
-      validate={[Function]}
-    />
-  </ForwardRef>
-</Grid>
+    <div
+      class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+    >
+      <form
+        class="cds--form form-0-2-3 form-react"
+        novalidate=""
+      >
+        <div
+          class=""
+          id="network-provider"
+          name="network-provider"
+        >
+          <div>
+            <h3>
+              Network Provider
+            </h3>
+          </div>
+          <div
+            class="cds--form-item"
+          >
+            <div
+              class="cds--select cds--select--disabled"
+            >
+              <label
+                class="cds--label cds--label--disabled"
+                dir="auto"
+                for="ems_id"
+              >
+                <span
+                  aria-hidden="true"
+                  class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+                >
+                  *
+                </span>
+                Network Manager
+              </label>
+              <div
+                class="cds--select-input__wrapper"
+              >
+                <select
+                  class="cds--select-input"
+                  disabled=""
+                  id="ems_id"
+                  name="ems_id"
+                  title="OpenStack Network Manager"
+                >
+                  <option
+                    class="cds--select-option"
+                    label="OpenStack Network Manager"
+                    value="8"
+                  >
+                    OpenStack Network Manager
+                  </option>
+                </select>
+                <svg
+                  aria-hidden="true"
+                  class="cds--select__arrow"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                  />
+                </svg>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--btn-set"
+        >
+          <button
+            class="cds--btn cds--btn--primary cds--btn--disabled"
+            disabled=""
+            type="submit"
+            variant="primary"
+          >
+            Save
+          </button>
+          <button
+            class="cds--btn cds--btn--secondary cds--btn--disabled"
+            disabled=""
+            type="button"
+          >
+            Reset
+          </button>
+          <button
+            class="cds--btn cds--btn--secondary"
+            type="button"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`Cloud Network form component should render form 1`] = `
-<Grid>
-  <ForwardRef
-    lg={16}
-    md={8}
-    sm={4}
+<div>
+  <div
+    class="cds--css-grid"
   >
-    <Connect(MiqFormRenderer)
-      buttonsLabels={
-        Object {
-          "submitLabel": "Add",
-        }
-      }
-      canReset={false}
-      initialValues={
-        Object {
-          "enabled": true,
-          "external_facing": false,
-          "shared": false,
-        }
-      }
-      onCancel={[Function]}
-      onSubmit={[Function]}
-      schema={
-        Object {
-          "fields": Array [
-            Object {
-              "component": "sub-form",
-              "fields": Array [
-                Object {
-                  "component": "select",
-                  "id": "ems_id",
-                  "isDisabled": false,
-                  "isRequired": true,
-                  "label": "Network Manager",
-                  "name": "ems_id",
-                  "onChange": [Function],
-                  "options": Array [
-                    Object {
-                      "label": "<Choose>",
-                      "value": "-1",
-                    },
-                    Object {
-                      "label": "Provider 4",
-                      "value": "4",
-                    },
-                    Object {
-                      "label": "Provider 31",
-                      "value": "31",
-                    },
-                    Object {
-                      "label": "Provider 8",
-                      "value": "8",
-                    },
-                    Object {
-                      "label": "Provider 50",
-                      "value": "50",
-                    },
-                    Object {
-                      "label": "Provider 18",
-                      "value": "18",
-                    },
-                    Object {
-                      "label": "Provider 39",
-                      "value": "39",
-                    },
-                  ],
-                  "placeholder": "<Choose>",
-                  "validate": Array [
-                    Object {
-                      "message": "Required",
-                      "type": "required",
-                    },
-                  ],
-                  "validateOnMount": true,
-                },
-              ],
-              "id": "network-provider",
-              "name": "network-provider",
-              "title": "Network Provider",
-            },
-          ],
-        }
-      }
-      validate={[Function]}
-    />
-  </ForwardRef>
-</Grid>
+    <div
+      class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+    >
+      <form
+        class="cds--form form-0-2-3 form-react"
+        novalidate=""
+      >
+        <div
+          class=""
+          id="network-provider"
+          name="network-provider"
+        >
+          <div>
+            <h3>
+              Network Provider
+            </h3>
+          </div>
+          <div
+            class="cds--form-item"
+          >
+            <div
+              class="cds--select cds--select--invalid"
+            >
+              <label
+                class="cds--label"
+                dir="auto"
+                for="ems_id"
+              >
+                <span
+                  aria-hidden="true"
+                  class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+                >
+                  *
+                </span>
+                Network Manager
+              </label>
+              <div
+                class="cds--select-input__wrapper"
+                data-invalid="true"
+              >
+                <select
+                  aria-describedby="ems_id-error-msg"
+                  aria-invalid="true"
+                  class="cds--select-input"
+                  id="ems_id"
+                  name="ems_id"
+                  title="<Choose>"
+                >
+                  <option
+                    class="cds--select-option"
+                    label="<Choose>"
+                    value="-1"
+                  >
+                    &lt;Choose&gt;
+                  </option>
+                  <option
+                    class="cds--select-option"
+                    label="Provider 4"
+                    value="4"
+                  >
+                    Provider 4
+                  </option>
+                  <option
+                    class="cds--select-option"
+                    label="Provider 31"
+                    value="31"
+                  >
+                    Provider 31
+                  </option>
+                  <option
+                    class="cds--select-option"
+                    label="Provider 8"
+                    value="8"
+                  >
+                    Provider 8
+                  </option>
+                  <option
+                    class="cds--select-option"
+                    label="Provider 50"
+                    value="50"
+                  >
+                    Provider 50
+                  </option>
+                  <option
+                    class="cds--select-option"
+                    label="Provider 18"
+                    value="18"
+                  >
+                    Provider 18
+                  </option>
+                  <option
+                    class="cds--select-option"
+                    label="Provider 39"
+                    value="39"
+                  >
+                    Provider 39
+                  </option>
+                </select>
+                <svg
+                  aria-hidden="true"
+                  class="cds--select__arrow"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                  />
+                </svg>
+                <svg
+                  aria-hidden="true"
+                  class="cds--select__invalid-icon"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8,1C4.2,1,1,4.2,1,8s3.2,7,7,7s7-3.1,7-7S11.9,1,8,1z M7.5,4h1v5h-1C7.5,9,7.5,4,7.5,4z M8,12.2 c-0.4,0-0.8-0.4-0.8-0.8s0.3-0.8,0.8-0.8c0.4,0,0.8,0.4,0.8,0.8S8.4,12.2,8,12.2z"
+                  />
+                  <path
+                    d="M7.5,4h1v5h-1C7.5,9,7.5,4,7.5,4z M8,12.2c-0.4,0-0.8-0.4-0.8-0.8s0.3-0.8,0.8-0.8 c0.4,0,0.8,0.4,0.8,0.8S8.4,12.2,8,12.2z"
+                    data-icon-path="inner-path"
+                    opacity="0"
+                  />
+                </svg>
+                
+              </div>
+              <div
+                class="cds--form-requirement"
+                dir="auto"
+                id="ems_id-error-msg"
+              >
+                Required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--btn-set"
+        >
+          <button
+            class="cds--btn cds--btn--primary cds--btn--disabled"
+            disabled=""
+            type="submit"
+            variant="primary"
+          >
+            Add
+          </button>
+          <button
+            class="cds--btn cds--btn--secondary"
+            type="button"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 `;
