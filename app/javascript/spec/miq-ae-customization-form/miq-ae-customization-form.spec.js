@@ -1,8 +1,8 @@
 import React from 'react';
 import fetchMock from 'fetch-mock';
-import { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
+import { screen, waitFor } from '@testing-library/react';
 import MiqAeCustomization from '../../components/miq-ae-customization';
+import { renderWithRedux } from '../helpers/mountForm';
 
 describe('MiqAeCustomization Form Component', () => {
   const customizationMockData = [
@@ -14,7 +14,7 @@ describe('MiqAeCustomization Form Component', () => {
   ];
 
   const MiqAeCustomizationEditData = {
-    id: '40',
+    id: 40,
     name: 'test',
     description: 'test description',
     dialogType: 'Configured System Provision',
@@ -29,18 +29,10 @@ describe('MiqAeCustomization Form Component', () => {
   };
 
   const dialogTypes = [
-    [
-      'Configured System Provision', 'MiqProvisionConfiguredSystemWorkflow',
-    ],
-    [
-      'Physical Server Provision', 'PhysicalServerProvisionWorkflow',
-    ],
-    [
-      'VM Migrate', 'VmMigrateWorkflow',
-    ],
-    [
-      'VM Provision', 'MiqProvisionWorkflow',
-    ],
+    ['Configured System Provision', 'MiqProvisionConfiguredSystemWorkflow'],
+    ['Physical Server Provision', 'PhysicalServerProvisionWorkflow'],
+    ['VM Migrate', 'VmMigrateWorkflow'],
+    ['VM Provision', 'MiqProvisionWorkflow'],
   ];
 
   afterEach(() => {
@@ -49,51 +41,38 @@ describe('MiqAeCustomization Form Component', () => {
   });
 
   it('should render add dialog form correctly', async() => {
-    const wrapper = shallow(<MiqAeCustomization
-      dialogRecord={undefined}
-      dialogTypes={dialogTypes}
-    />);
-
     fetchMock.get(`/miq_ae_customization/old_dialogs_new?&expand=resources/`, customizationMockData);
 
-    await new Promise((resolve) => {
-      setImmediate(() => {
-        wrapper.update();
-        expect(toJson(wrapper)).toMatchSnapshot();
-        resolve();
-      });
+    const { container } = renderWithRedux(<MiqAeCustomization dialogRecord={{}} dialogTypes={dialogTypes} />);
+
+    await waitFor(() => {
+      expect(screen.getByRole('textbox', { name: /name/i })).toBeInTheDocument();
     });
+
+    expect(container).toMatchSnapshot();
   });
 
   it('should render edit dialog form correctly', async() => {
-    const wrapper = shallow(<MiqAeCustomization
-      dialogRecord={MiqAeCustomizationEditData}
-      dialogTypes={dialogTypes}
-    />);
+    fetchMock.get(`/miq_ae_customization/old_dialogs_edit_get/${MiqAeCustomizationEditData.id}/`, MiqAeCustomizationEditData);
 
-    fetchMock.get(`/miq_ae_customization/old_dialogs_edit_react/${MiqAeCustomizationEditData.id}?&expand=resources/`, customizationMockData);
-    await new Promise((resolve) => {
-      setImmediate(() => {
-        wrapper.update();
-        expect(toJson(wrapper)).toMatchSnapshot();
-        resolve();
-      });
+    const { container } = renderWithRedux(<MiqAeCustomization dialogRecord={MiqAeCustomizationEditData} dialogTypes={dialogTypes} />);
+
+    await waitFor(() => {
+      expect(screen.getByRole('textbox', { name: /name/i })).toBeInTheDocument();
     });
+
+    expect(container).toMatchSnapshot();
   });
 
   it('should render copy dialog form correctly', async() => {
-    const wrapper = shallow(<MiqAeCustomization
-      dialogRecord={MiqAeCustomizationCopyData}
-      dialogTypes={dialogTypes}
-    />);
     fetchMock.get(`/miq_ae_customization/old_dialogs_copy?&expand=resources`, customizationMockData);
 
-    await new Promise((resolve) => {
-      setImmediate(() => {
-        wrapper.update();
-        expect(toJson(wrapper)).toMatchSnapshot();
-        resolve();
-      });
+    const { container } = renderWithRedux(<MiqAeCustomization dialogRecord={MiqAeCustomizationCopyData} dialogTypes={dialogTypes} />);
+
+    await waitFor(() => {
+      expect(screen.getByRole('textbox', { name: /name/i })).toBeInTheDocument();
     });
+
+    expect(container).toMatchSnapshot();
   });
 });

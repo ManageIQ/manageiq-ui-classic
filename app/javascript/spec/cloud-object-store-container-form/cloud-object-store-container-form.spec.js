@@ -1,12 +1,8 @@
 import React from 'react';
-import { act } from 'react-dom/test-utils';
-import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
-import { mount } from '../helpers/mountForm';
+import { screen, waitFor } from '@testing-library/react';
+import { renderWithRedux } from '../helpers/mountForm';
 import CloudObjectStoreContainerForm from '../../components/cloud-object-store-container-form';
-
-require('../helpers/miqSparkle.js');
-require('../helpers/miqAjaxButton.js');
 
 describe('Cloud Object Store Container form component', () => {
   const attributes = 'attributes=id,name,supports_cloud_object_store_container_create';
@@ -25,7 +21,8 @@ describe('Cloud Object Store Container form component', () => {
         id: '87',
         name: 'dummy aws S3 Storage Manager',
         supports_cloud_object_store_container_create: true,
-      }],
+      },
+    ],
   };
   const options = {
     method: 'OPTIONS',
@@ -41,8 +38,8 @@ describe('Cloud Object Store Container form component', () => {
   });
 
   it('should render add cloud object store container form', () => {
-    const wrapper = mount(<CloudObjectStoreContainerForm />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const { container } = renderWithRedux(<CloudObjectStoreContainerForm />);
+    expect(container).toMatchSnapshot();
   });
 
   it('should add Openstack cloud object store container', async() => {
@@ -61,15 +58,16 @@ describe('Cloud Object Store Container form component', () => {
     fetchMock.getOnce('/api/providers/6?attributes=type,parent_manager.type', providerDetails);
     fetchMock.postOnce('/api/cloud_object_store_containers/', { body: submitData, status: 200 });
 
-    await act(async() => {
-      const wrapper = mount(<CloudObjectStoreContainerForm />);
-      expect(toJson(wrapper)).toMatchSnapshot();
+    const { container } = renderWithRedux(<CloudObjectStoreContainerForm />);
+
+    await waitFor(() => {
+      expect(screen.queryByRole('button', { name: /add/i })).toBeInTheDocument();
     });
 
-    fetchMock.restore();
+    expect(container).toMatchSnapshot();
   });
 
-  it('should add Amazon cloud object store container', async(done) => {
+  it('should add Amazon cloud object store container', async() => {
     const providerDetails = {
       type: 'ManageIQ::Providers::Amazon::StorageManager::S3',
       parent_manager: { type: 'ManageIQ::Providers::Amazon::CloudManager' },
@@ -87,8 +85,13 @@ describe('Cloud Object Store Container form component', () => {
     fetchMock.mock('/api/cloud_object_store_containers?ems_id=87', { data: { form_schema: { fields: [] } } }, options);
     fetchMock.getOnce('/api/providers/6?attributes=type,parent_manager.type', providerDetails);
     fetchMock.postOnce('/api/cloud_object_store_containers/', submitData);
-    const wrapper = mount(<CloudObjectStoreContainerForm />);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+
+    const { container } = renderWithRedux(<CloudObjectStoreContainerForm />);
+
+    await waitFor(() => {
+      expect(screen.queryByRole('button', { name: /add/i })).toBeInTheDocument();
+    });
+
+    expect(container).toMatchSnapshot();
   });
 });
