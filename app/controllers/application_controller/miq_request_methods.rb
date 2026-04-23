@@ -728,8 +728,6 @@ module ApplicationController::MiqRequestMethods
       # for some reason if tree is not expanded clicking on radiobuttons this.getAllChecked() sends up extra blanks
       @edit.store_path(:new, tag_symbol_for_workflow, ids.select(&:present?).collect(&:to_i))
     end
-    id = params[:ou_id].gsub(/_-_/, ",") if params[:ou_id]
-    @edit[:new][:ldap_ous] = id.match(/(.*)\,(.*)/)[1..2] if id # ou selected in a tree
 
     copy_params_if_present(@edit[:new], params, %i[start_hour start_min])
     @edit[:new][:start_date]    = params[:miq_date_1] if params[:miq_date_1]
