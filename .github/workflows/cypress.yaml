@@ -46,10 +46,11 @@ jobs:
       RUN_CYPRESS: "${{ matrix.cypress-browser == 'chrome' || (matrix.cypress-browser != 'chrome' && github.event_name != 'pull_request') }}"
       PGHOST: localhost
       PGPASSWORD: smartvm
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
     - uses: actions/checkout@v6
     - name: Install Edge
-      uses: browser-actions/setup-edge@v1
+      uses: browser-actions/setup-edge@v1.1.1
       if: "${{ matrix.cypress-browser == 'edge' && env.RUN_CYPRESS == 'true' }}"
     - name: Set up system
       run: bin/before_install
