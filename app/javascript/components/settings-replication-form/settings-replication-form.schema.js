@@ -51,7 +51,7 @@ const createSchema = (subscriptions, setState, setModalOpen, replicationType, is
     const subscription = subscriptions[rowId];
     const isNewRecord = subscription.newRecord === true;
 
-    // Show confirmation dialog for existing subscriptions (not new records)
+    // Show confirmation dialog for existing subscriptions
     if (!isNewRecord) {
       setConfirmModal({
         type: 'edit',

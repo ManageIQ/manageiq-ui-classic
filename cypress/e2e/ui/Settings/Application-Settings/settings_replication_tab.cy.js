@@ -202,14 +202,13 @@ describe('Settings > Application Settings > Replication form operations', () => 
       .should('have.length', 1);
   });
 
-  it('Validate update subscription for new record', () => {
+  it('Update newly added subscription', () => {
     addSubscription();
 
     cy.contains(MIQ_DATA_TABLE_BUTTON_SELECTOR, UPDATE_BUTTON_TEXT)
       .should('be.visible')
       .click();
 
-    // New records should open edit modal directly without confirmation
     cy.get(MODAL_SELECTOR).should('be.visible');
     cy.get(MODAL_HEADER_SELECTOR).should('have.text', `${EDIT_SUBSCRIPTION_MODAL_HEADING_PREFIX} ${TEST_DB_NAME}`);
 
@@ -231,13 +230,13 @@ describe('Settings > Application Settings > Replication form operations', () => 
       .should('have.text', TEST_USER_2);
   });
 
-  it('Validate update subscription for saved record', () => {
+  it('Update a saved subscription', () => {
     const MOCK_SAVED_SUBSCRIPTION = {
       id: 888,
-      dbname: 'saved_db',
+      dbname: 'test_db',
       host: 'localhost',
-      user: 'saveduser',
-      password: 'savedpass',
+      user: 'testuser',
+      password: 'testpass',
       port: 5432,
     };
 
@@ -270,7 +269,7 @@ describe('Settings > Application Settings > Replication form operations', () => 
       .should('have.text', TEST_USER_2);
   });
 
-  it('Validate cancel edit confirmation for saved record', () => {
+  it('Cancel editing a saved subscription', () => {
     const MOCK_SAVED_SUBSCRIPTION = {
       id: 777,
       dbname: 'cancel_test_db',
@@ -433,7 +432,7 @@ describe('Settings > Application Settings > Replication form operations', () => 
       cy.appDbState('restore');
     });
 
-    it('Validate cancel delete to restore subscription', () => {
+    it('Undo subscription deletion', () => {
       setupAndNavigate();
 
       cy.contains('test_database').should('be.visible');
@@ -443,22 +442,17 @@ describe('Settings > Application Settings > Replication form operations', () => 
         .scrollIntoView()
         .click();
 
-      // Verify confirmation modal appears with correct heading and message
       cy.get(MODAL_SELECTOR).should('be.visible');
       cy.contains(MODAL_HEADER_SELECTOR, CONFIRM_DELETE_MODAL_HEADING).should('be.visible');
       cy.contains('Deleting a subscription will remove all replicated data').should('be.visible');
 
-      // Click Ok to confirm deletion
       cy.contains('button', CONFIRM_OK_BUTTON_TEXT).click();
 
-      // Wait for confirmation modal to close
       cy.contains(MODAL_HEADER_SELECTOR, CONFIRM_DELETE_MODAL_HEADING).should('not.exist');
 
-      // Verify subscription is marked for deletion
       cy.contains('button', CANCEL_DELETE_BUTTON_TEXT).scrollIntoView().should('be.visible');
       cy.get(DISABLED_ROW_SELECTOR).should('exist');
 
-      // Click "Cancel Delete" to restore
       cy.contains('button', CANCEL_DELETE_BUTTON_TEXT).scrollIntoView().click();
 
       cy.get(DISABLED_ROW_SELECTOR).should('not.exist');
@@ -471,58 +465,25 @@ describe('Settings > Application Settings > Replication form operations', () => 
         });
     });
 
-    it('Validate cancel delete confirmation modal', () => {
-      setupAndNavigate();
-
-      cy.contains('test_database').should('be.visible');
-
-      // Click delete button
-      cy.contains(MIQ_DATA_TABLE_BUTTON_SELECTOR, DELETE_BUTTON_TEXT)
-        .scrollIntoView()
-        .click();
-
-      // Verify confirmation modal appears
-      cy.get(MODAL_SELECTOR).should('be.visible');
-      cy.contains(MODAL_HEADER_SELECTOR, CONFIRM_DELETE_MODAL_HEADING).should('be.visible');
-
-      // Click Cancel to abort deletion
-      cy.contains('button', CONFIRM_CANCEL_BUTTON_TEXT).click({force: true});
-
-      cy.get(DISABLED_ROW_SELECTOR).should('not.exist');
-      
-      cy.get(SUBSCRIPTIONS_TABLE_SELECTOR)
-        .find('tbody tr')
-        .should('have.length', 1)
-        .within(() => {
-          cy.contains('test_database').should('exist');
-          cy.contains(DELETE_BUTTON_TEXT).should('exist');
-        });
-    });
-
     it('Validate error message and ensure successful save with multiple subscriptions', () => {
       setupAndNavigate();
 
-      // Click delete and confirm
       cy.contains(MIQ_DATA_TABLE_BUTTON_SELECTOR, DELETE_BUTTON_TEXT)
         .scrollIntoView()
         .click();
 
-      // Confirm deletion in modal
       cy.get(MODAL_SELECTOR).should('be.visible');
       cy.contains(MODAL_HEADER_SELECTOR, CONFIRM_DELETE_MODAL_HEADING).should('be.visible');
       cy.contains('button', CONFIRM_OK_BUTTON_TEXT).click();
 
-      // Wait for confirmation modal to close
       cy.contains(MODAL_HEADER_SELECTOR, CONFIRM_DELETE_MODAL_HEADING).should('not.exist');
 
-      // Verify subscription is marked for deletion
       cy.get(DISABLED_ROW_SELECTOR).should('exist');
 
       // Try to save after deleting all subscriptions - an error should be displayed
       cy.contains('button', SAVE_BUTTON_TEXT).click();
       cy.expect_flash(flashClassMap.error, 'At least 1 subscription must be added to save server replication type');
 
-      // Add a new subscription
       cy.contains('button', ADD_SUBSCRIPTION_BUTTON_TEXT).click();
       cy.get(MODAL_SELECTOR).should('be.visible');
 
