@@ -11,6 +11,7 @@ import PxeServersForm from '../../components/pxe-servers-form/pxe-server-form';
 import { mount } from '../helpers/mountForm';
 import '../helpers/miqSparkle';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
+import { asyncValidator } from '../../components/pxe-servers-form/pxe-server-form.schema';
 
 describe('PxeServersForm', () => {
   let initialProps;
@@ -32,7 +33,7 @@ describe('PxeServersForm', () => {
     fetchMock.getOnce('/api/pxe_servers/123?attributes=access_url,authentications,customization_directory,name,pxe_directory,pxe_menus,uri,windows_images_directory', { // eslint-disable-line max-len
       pxe_menus: [{ file_name: 'bar' }],
       authentications: [{ userid: 'Pepa', foo: 'bar' }],
-    }).getOnce('/api/pxe_servers?expand=resources&filter[]=name=%27%27', { resources: [] });
+    }).getOnce('/api/pxe_servers?expand=resources&filter[]=name==%27%27', { resources: [] });
 
     let wrapper;
     await act(async() => {
@@ -50,10 +51,10 @@ describe('PxeServersForm', () => {
     done();
   });
 
-  it('should sucesfully call add action while editing', async(done) => {
+  it('should successfully call add action while editing', async(done) => {
     fetchMock
-      .getOnce('/api/pxe_servers?expand=resources&filter[]=name=%27%27', { resources: [] })
-      .getOnce('/api/pxe_servers?expand=resources&filter[]=name=%27my%20name%27', { resources: [] })
+      .getOnce('/api/pxe_servers?expand=resources&filter[]=name==%27%27', { resources: [] })
+      .getOnce('/api/pxe_servers?expand=resources&filter[]=name==%27my%20name%27', { resources: [] })
       .postOnce('/api/pxe_servers', {});
 
     const wrapper = mount(<PxeServersForm {...initialProps} />);
@@ -88,9 +89,9 @@ describe('PxeServersForm', () => {
     }, 500);
   });
 
-  it('should sucesfully call cancel add server action', async(done) => {
+  it('should successfully call cancel add server action', async(done) => {
     fetchMock
-      .getOnce('/api/pxe_servers?expand=resources&filter[]=name=%27%27', { resources: [] });
+      .getOnce('/api/pxe_servers?expand=resources&filter[]=name==%27%27', { resources: [] });
 
     let wrapper;
     await act(async() => {
@@ -102,13 +103,13 @@ describe('PxeServersForm', () => {
     done();
   });
 
-  it('should sucesfully call cancel edit server action', async(done) => {
+  it('should successfully call cancel edit server action', async(done) => {
     fetchMock.getOnce('/api/pxe_servers/123?attributes=access_url,authentications,customization_directory,name,pxe_directory,pxe_menus,uri,windows_images_directory', { // eslint-disable-line max-len
       pxe_menus: [{ file_name: 'bar' }],
       authentications: [],
       name: 'foo',
-    }).getOnce('/api/pxe_servers?expand=resources&filter[]=name=%27%27', { resources: [] })
-      .getOnce('/api/pxe_servers?expand=resources&filter[]=name=%27foo%27', { resources: [] });
+    }).getOnce('/api/pxe_servers?expand=resources&filter[]=name==%27%27', { resources: [] })
+      .getOnce('/api/pxe_servers?expand=resources&filter[]=name==%27foo%27', { resources: [] });
 
     let wrapper;
     await act(async() => {
@@ -119,5 +120,88 @@ describe('PxeServersForm', () => {
     wrapper.find('button.cds--btn--secondary').last().simulate('click');
     expect(miqRedirectBack).toHaveBeenCalledWith('Edit of PXE Server foo was cancelled by the user', 'success', '/pxe/explorer');
     done();
+  });
+
+  describe('asyncValidator on name field', () => {
+    afterEach(() => {
+      fetchMock.reset();
+    });
+
+    it('should allow a unique name', async() => {
+      const name = 'foo';
+      const expectedUrl = `/api/pxe_servers?expand=resources&filter[]=name==%27${name}%27`;
+
+      fetchMock.getOnce(expectedUrl, { resources: [] });
+
+      await expect(asyncValidator(name, null)).resolves.toBeUndefined();
+    });
+
+    it('should handle duplicate name validation', async() => {
+      const name = 'foo';
+      const id = 123;
+      const expectedUrl = `/api/pxe_servers?expand=resources&filter[]=name==%27${name}%27`;
+
+      fetchMock.getOnce(expectedUrl, {
+        resources: [
+          { id: 456, name: name }, // different server id
+        ],
+      });
+
+      await expect(asyncValidator(name, id)).rejects.toBe('Name has already been taken');
+    });
+
+    it('should allow same name when editing the same server', async() => {
+      const name = 'foo';
+      const id = 123;
+      const expectedUrl = `/api/pxe_servers?expand=resources&filter[]=name==%27${name}%27`;
+
+      fetchMock.getOnce(expectedUrl, {
+        resources: [
+          { id: id, name: name }, // same server id
+        ],
+      });
+
+      await expect(asyncValidator(name, id)).resolves.toBeUndefined();
+    });
+
+    it('should properly encode all special characters in name parameter', async() => {
+      const name = "test &=%#?'\"/ name";
+      const encodedName = encodeURIComponent(name);
+      const expectedUrl = `/api/pxe_servers?expand=resources&filter[]=name==%27${encodedName}%27`;
+
+      fetchMock.getOnce(expectedUrl, { resources: [] });
+
+      await expect(asyncValidator(name, null)).resolves.toBeUndefined();
+    });
+
+    it('should handle duplicate name validation with encoded characters', async() => {
+      const name = 'test & server';
+      const id = 123;
+      const encodedName = encodeURIComponent(name);
+      const expectedUrl = `/api/pxe_servers?expand=resources&filter[]=name==%27${encodedName}%27`;
+
+      fetchMock.getOnce(expectedUrl, {
+        resources: [
+          { id: 456, name: name }, // different server id
+        ],
+      });
+
+      await expect(asyncValidator(name, id)).rejects.toBe('Name has already been taken');
+    });
+
+    it('should reject empty name', async() => {
+      await expect(asyncValidator('', null)).rejects.toBe('Required');
+      expect(fetchMock.calls().length).toBe(0);
+    });
+
+    it('should reject undefined name', async() => {
+      await expect(asyncValidator(undefined, null)).rejects.toBe('Required');
+      expect(fetchMock.calls().length).toBe(0);
+    });
+
+    it('should reject null name', async() => {
+      await expect(asyncValidator(null, null)).rejects.toBe('Required');
+      expect(fetchMock.calls().length).toBe(0);
+    });
   });
 });

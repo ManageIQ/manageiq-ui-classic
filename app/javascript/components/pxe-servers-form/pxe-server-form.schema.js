@@ -2,17 +2,18 @@ import { componentTypes, validatorTypes } from '@@ddf';
 import debouncePromise from '../../helpers/promise-debounce';
 import { http, API } from '../../http_api';
 
-export const asyncValidator = (value, serverId) =>
-  API.get(`/api/pxe_servers?expand=resources&filter[]=name='${value ? value.replace('%', '%25') : ''}'`)
+export const asyncValidator = (value, serverId) => {
+  if (!value) {
+    return Promise.reject(__('Required'));
+  }
+  return API.get(`/api/pxe_servers?expand=resources&filter[]=name=='${encodeURIComponent(value)}'`)
     .then((json) => {
       if (json.resources.find(({ id, name }) => name === value && id !== serverId)) {
         throw __('Name has already been taken');
       }
-      if (value === '' || value === undefined) {
-        throw __('Required');
-      }
       return undefined;
     });
+};
 
 const asyncValidatorDebounced = debouncePromise(asyncValidator);
 
