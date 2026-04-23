@@ -1,11 +1,8 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
-
-import { act } from 'react-dom/test-utils';
+import { screen, waitFor, cleanup } from '@testing-library/react';
 import '../helpers/miqSparkle';
-import '../helpers/codemirrorRangeMock';
-import { mount } from '../helpers/mountForm';
+import { renderWithRedux } from '../helpers/mountForm';
 import PxeCustomizationTemplateForm from '../../components/pxe-customization-template-form/index';
 
 describe('Pxe Customization Template Form Component', () => {
@@ -31,45 +28,49 @@ describe('Pxe Customization Template Form Component', () => {
   };
 
   afterEach(() => {
-    fetchMock.reset();
+    cleanup();
     fetchMock.restore();
+    jest.clearAllMocks();
   });
 
   it('should render adding a new pxe customization template', async() => {
     fetchMock.get('/api/pxe_image_types?attributes=name,id&expand=resources', api);
-    let wrapper;
 
-    await act(async() => {
-      wrapper = mount(<PxeCustomizationTemplateForm />);
+    const { container } = renderWithRedux(<PxeCustomizationTemplateForm />);
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /add/i })).toBeInTheDocument();
     });
-    wrapper.update();
+
     expect(fetchMock.calls()).toHaveLength(2);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
   it('should render editing a pxe customization template', async() => {
     fetchMock.get('/api/pxe_image_types?attributes=name,id&expand=resources', api);
     fetchMock.get('/api/customization_templates/1', editOrCopyObject);
-    let wrapper;
 
-    await act(async() => {
-      wrapper = mount(<PxeCustomizationTemplateForm recordId="1" />);
+    const { container } = renderWithRedux(<PxeCustomizationTemplateForm recordId="1" />);
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     });
-    wrapper.update();
+
     expect(fetchMock.calls()).toHaveLength(3);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
   it('should render copying a pxe customization template', async() => {
     fetchMock.get('/api/pxe_image_types?attributes=name,id&expand=resources', api);
     fetchMock.get('/api/customization_templates/1', editOrCopyObject);
-    let wrapper;
 
-    await act(async() => {
-      wrapper = mount(<PxeCustomizationTemplateForm copy="1" />);
+    const { container } = renderWithRedux(<PxeCustomizationTemplateForm copy="1" />);
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /add/i })).toBeInTheDocument();
     });
-    wrapper.update();
+
     expect(fetchMock.calls()).toHaveLength(3);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 });

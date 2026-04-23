@@ -1,14 +1,12 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
-import { act } from 'react-dom/test-utils';
-import { mount } from '../helpers/mountForm';
+import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
+import { renderWithRedux } from '../helpers/mountForm';
 import CloudVolumeActions from '../../components/cloud-volume-actions-form';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import { CloudVolumeActionTypes, formData } from '../../components/cloud-volume-actions-form/helper';
-
-require('../helpers/miqSparkle');
-require('../helpers/miqAjaxButton');
 
 const record = { recordId: '23', name: 'Cloud volume name' };
 const expectedKeys = {
@@ -31,17 +29,16 @@ describe('create form data object has keys containing', () => {
 describe('Cloud Volume Backup Create form component', () => {
   const cloudVolume = { ...record, type: CloudVolumeActionTypes.CREATE_BACKUP };
   const data = formData(cloudVolume.recordId, cloudVolume.name, cloudVolume.type);
-  const createBackupComponent = (
-    <CloudVolumeActions
-      recordId={cloudVolume.recordId}
-      name={cloudVolume.name}
-      type={cloudVolume.type}
-    />
-  );
+  const createBackupComponent = <CloudVolumeActions recordId={cloudVolume.recordId} name={cloudVolume.name} type={cloudVolume.type} />;
 
   it('should render the cloud volume backup create form', async() => {
-    const wrapper = mount(createBackupComponent);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const { container } = renderWithRedux(createBackupComponent);
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
+    });
+
+    expect(container).toMatchSnapshot();
   });
 
   it('when adding a new backup of cloud volume', () => {
@@ -51,32 +48,29 @@ describe('Cloud Volume Backup Create form component', () => {
       force: true,
     };
     fetchMock.postOnce(data.save.postUrl, resources);
-    const wrapper = mount(createBackupComponent);
+    const { container } = renderWithRedux(createBackupComponent);
 
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
-  it('should call miqRedirectBack when the create form is cancelled', () => {
-    const wrapper = mount(createBackupComponent);
-    wrapper.find('button').last().simulate('click');
+  it('should call miqRedirectBack when the create form is cancelled', async() => {
+    const user = userEvent.setup();
+    renderWithRedux(createBackupComponent);
+
+    const cancelButton = screen.getByRole('button', { name: /cancel/i });
+    await user.click(cancelButton);
+
     expect(miqRedirectBack).toHaveBeenCalledWith(data.cancel.message, 'success', data.cancel.url);
   });
 });
 
 describe('Cloud Volume Restore from backup form component', () => {
   const cloudVolume = { ...record, type: CloudVolumeActionTypes.RESTORE_FROM_BACKUP };
-  const restoreFromBackupComponent = (
-    <CloudVolumeActions
-      recordId={cloudVolume.recordId}
-      name={cloudVolume.name}
-      type={cloudVolume.type}
-    />
-  );
+  const restoreFromBackupComponent = <CloudVolumeActions recordId={cloudVolume.recordId} name={cloudVolume.name} type={cloudVolume.type} />;
   const data = formData(cloudVolume.recordId, cloudVolume.name, cloudVolume.type);
 
   beforeEach(() => {
-    fetchMock
-      .mock(`/api/cloud_volumes/${cloudVolume.recordId}?attributes=cloud_volume_backups`, {});
+    fetchMock.mock(`/api/cloud_volumes/${cloudVolume.recordId}?attributes=cloud_volume_backups`, {});
   });
   afterEach(() => {
     fetchMock.reset();
@@ -93,42 +87,44 @@ describe('Cloud Volume Restore from backup form component', () => {
   });
 
   it('should render the cloud volume backup restore form', async() => {
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(restoreFromBackupComponent);
+    const { container } = renderWithRedux(restoreFromBackupComponent);
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     });
-    expect(toJson(wrapper)).toMatchSnapshot();
+
+    expect(container).toMatchSnapshot();
   });
 
   it('when restoring cloud volume from backup', async() => {
-    let wrapper;
     fetchMock.postOnce(data.save.postUrl, { backup_id: '1' });
-    await act(async() => {
-      wrapper = mount(restoreFromBackupComponent);
+    const { container } = renderWithRedux(restoreFromBackupComponent);
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     });
 
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
   it('should call miqRedirectBack when the restore from backup form is cancelled', async() => {
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(restoreFromBackupComponent);
+    const user = userEvent.setup();
+    renderWithRedux(restoreFromBackupComponent);
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
     });
-    wrapper.find('button').last().simulate('click');
+
+    const cancelButton = screen.getByRole('button', { name: /cancel/i });
+    await user.click(cancelButton);
+
     expect(miqRedirectBack).toHaveBeenCalledWith(data.cancel.message, 'success', data.cancel.url);
   });
 });
 
 describe('Cloud Volume Snapshot Create form component', () => {
   const cloudVolume = { ...record, type: CloudVolumeActionTypes.CREATE_SNAPSHOT };
-  const createSnapshotComponent = (
-    <CloudVolumeActions
-      recordId={cloudVolume.recordId}
-      name={cloudVolume.name}
-      type={cloudVolume.type}
-    />
-  );
+  const createSnapshotComponent = <CloudVolumeActions recordId={cloudVolume.recordId} name={cloudVolume.name} type={cloudVolume.type} />;
 
   const data = formData(cloudVolume.recordId, cloudVolume.name, cloudVolume.type);
 
@@ -142,8 +138,8 @@ describe('Cloud Volume Snapshot Create form component', () => {
   });
 
   it('should render the cloud volume snapshot create form', () => {
-    const wrapper = mount(createSnapshotComponent);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const { container } = renderWithRedux(createSnapshotComponent);
+    expect(container).toMatchSnapshot();
   });
 
   it('when adding a new snapshot of cloud volume', () => {
@@ -153,14 +149,18 @@ describe('Cloud Volume Snapshot Create form component', () => {
       force: true,
     };
     fetchMock.postOnce(data.save.postUrl, resources);
-    const wrapper = mount(createSnapshotComponent);
+    const { container } = renderWithRedux(createSnapshotComponent);
 
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
-  it('should call miqRedirectBack when the create form is cancelled', () => {
-    const wrapper = mount(createSnapshotComponent);
-    wrapper.find('button').last().simulate('click');
+  it('should call miqRedirectBack when the create form is cancelled', async() => {
+    const user = userEvent.setup();
+    renderWithRedux(createSnapshotComponent);
+
+    const cancelButton = screen.getByRole('button', { name: /cancel/i });
+    await user.click(cancelButton);
+
     expect(miqRedirectBack).toHaveBeenCalledWith(data.cancel.message, 'success', data.cancel.url);
   });
 });
