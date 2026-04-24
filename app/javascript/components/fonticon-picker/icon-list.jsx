@@ -7,7 +7,7 @@ const isFontIcon = (value, family) => value.selectorText && value.selectorText.i
 
 const clearRule = (rule, family) => {
   // eslint-disable-next-line no-useless-escape
-  const re = new RegExp(`.*(${family}\-[a-z0-9\-\_]+).*`);
+  const re = new RegExp(`.*(${family}-[a-z0-9_-]+).*`);
   return rule.replace(re, '$1');
 };
 
