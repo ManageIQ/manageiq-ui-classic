@@ -65,6 +65,11 @@ module.exports = [
             if (url.startsWith('/upload/')) {
               return false;
             }
+            // Don't process absolute paths starting with /packs/ in production
+            // These will be resolved at runtime
+            if (url.startsWith('/packs/')) {
+              return false;
+            }
             return true;
           },
         },
