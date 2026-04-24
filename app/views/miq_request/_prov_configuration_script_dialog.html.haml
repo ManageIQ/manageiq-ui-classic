@@ -34,6 +34,18 @@
                :label  => _("Configuration Scripts"),
                :keys   => keys})
   - when :customize
+    - keys = [:verbosity, :execution_ttl, :log_output]
+    = render(:partial => "prov_dialog_fieldset",
+             :locals  => {:workflow => wf,
+               :dialog => dialog,
+               :label  => _("Runner Options"),
+               :keys   => keys})
+    - keys = [:cloud_credential_type, :credential_id]
+    = render(:partial => "prov_dialog_fieldset",
+            :locals  => {:workflow => wf,
+              :dialog => dialog,
+              :label  => _("Credentials"),
+              :keys   => keys})
     - keys = [:root_password]
     = render(:partial => "prov_dialog_fieldset",
              :locals => {:workflow => wf,
