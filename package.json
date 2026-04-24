@@ -138,7 +138,6 @@
     "jasmine-jquery": "~2.1.1",
     "jest": "~26.6.3",
     "js-yaml": "~3.14.0",
-    "ng-annotate-loader": "~0.7.0",
     "node-fetch": "~2.7.0",
     "path-complete-extname": "~0.1.0",
     "postcss-loader": "~4.3.0",
