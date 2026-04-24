@@ -212,7 +212,7 @@ exports[`Chart Card component should render the quotas chart card 1`] = `
       <div
         className="quota-chart"
       >
-        <D3
+        <R3
           data={
             Array [
               Object {
@@ -246,7 +246,7 @@ exports[`Chart Card component should render the quotas chart card 1`] = `
       <div
         className="quota-chart"
       >
-        <D3
+        <R3
           data={
             Array [
               Object {
@@ -280,7 +280,7 @@ exports[`Chart Card component should render the quotas chart card 1`] = `
       <div
         className="quota-chart"
       >
-        <D3
+        <R3
           data={
             Array [
               Object {
@@ -314,7 +314,7 @@ exports[`Chart Card component should render the quotas chart card 1`] = `
       <div
         className="quota-chart"
       >
-        <D3
+        <R3
           data={
             Array [
               Object {
@@ -348,7 +348,7 @@ exports[`Chart Card component should render the quotas chart card 1`] = `
       <div
         className="quota-chart"
       >
-        <D3
+        <R3
           data={
             Array [
               Object {
@@ -382,7 +382,7 @@ exports[`Chart Card component should render the quotas chart card 1`] = `
       <div
         className="quota-chart"
       >
-        <D3
+        <R3
           data={
             Array [
               Object {

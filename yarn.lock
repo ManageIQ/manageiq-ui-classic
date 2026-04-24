@@ -1416,22 +1416,22 @@ __metadata:
   linkType: hard
 
 "@carbon/charts-react@npm:~1.27.3":
-  version: 1.27.3
-  resolution: "@carbon/charts-react@npm:1.27.3"
+  version: 1.27.8
+  resolution: "@carbon/charts-react@npm:1.27.8"
   dependencies:
-    "@carbon/charts": "npm:1.27.3"
+    "@carbon/charts": "npm:1.27.8"
     "@carbon/icons-react": "npm:^11.64.0"
     "@ibm/telemetry-js": "npm:^1.9.1"
   peerDependencies:
     react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
     react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
-  checksum: 10/0b74e1cb0592eb5348dbcbdaac15ee2dba00b18a3719082302b02a3d4cc37dd14a594f84326cbcd804c1e33f52a81bb07371ac9f7e37e8a5e8fbdef4f91087cc
+  checksum: 10/8c1ab3885f920f3161fca3462d22d974e8e73c990ec7e9b3c72eba6ad0d42b78c971e1b27739096580ca76dbd55d8e47f43b35c4aa3e8a64dc964cc4146948ad
   languageName: node
   linkType: hard
 
-"@carbon/charts@npm:1.27.3":
-  version: 1.27.3
-  resolution: "@carbon/charts@npm:1.27.3"
+"@carbon/charts@npm:1.27.8":
+  version: 1.27.8
+  resolution: "@carbon/charts@npm:1.27.8"
   dependencies:
     "@carbon/colors": "npm:^11.37.0"
     "@carbon/utils-position": "npm:^1.3.0"
@@ -1442,12 +1442,12 @@ __metadata:
     d3-cloud: "npm:^1.2.7"
     d3-sankey: "npm:^0.12.3"
     date-fns: "npm:^4.1.0"
-    dompurify: "npm:^3.2.6"
+    dompurify: "npm:^3.3.2"
     html-to-image: "npm:1.11.11"
-    lodash-es: "npm:^4.17.23"
+    lodash-es: "npm:^4.18.0"
     topojson-client: "npm:^3.1.0"
     tslib: "npm:^2.8.1"
-  checksum: 10/db08510d1010c93211b87deb809a5a6530898ad5ada3e73f8d8f1fee4581cf85439c595ba1560f595ea0c03356d2c13bb03a92f86dc043c737ecff5888c82d6d
+  checksum: 10/909ff8e8a2cc8ffdfd70777065a3fd6c34882dca9a2d6d5627b2ee311b2929f3c52792d5dda720e879981d2d43ef0a1de8cae0547de533cd32c6f16b03138ace
   languageName: node
   linkType: hard
 
@@ -7714,7 +7714,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:^3.2.6, dompurify@npm:^3.3.2":
+"dompurify@npm:^3.3.2":
   version: 3.4.0
   resolution: "dompurify@npm:3.4.0"
   dependencies:
@@ -12144,7 +12144,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash-es@npm:^4.17.23":
+"lodash-es@npm:^4.18.0":
   version: 4.18.1
   resolution: "lodash-es@npm:4.18.1"
   checksum: 10/8bfad225ef09ef42b04283cdaf7830efcc2ba29ae41b56501c74422155ee1ccaa1f0f6e8319def3451a1fe54dec501c8e4bee622bae2b2d98ac993731e0a5cce
