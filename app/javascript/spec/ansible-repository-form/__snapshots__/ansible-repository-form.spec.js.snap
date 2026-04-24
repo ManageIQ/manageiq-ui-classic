@@ -1,33 +1,1122 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Ansible Repository form component should render add form 1`] = `
-<Loading
-  className="export-spinner"
-  small={true}
-  withOverlay={false}
-/>
+<div>
+  <form
+    class="cds--form form-0-2-3 form-react"
+    novalidate=""
+  >
+    <div
+      class="cds--form-item cds--text-input-wrapper"
+    >
+      <div
+        class="cds--text-input__label-wrapper"
+      >
+        <label
+          class="cds--label"
+          dir="auto"
+          for="name"
+        >
+          <span
+            aria-hidden="true"
+            class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+          >
+            *
+          </span>
+          Name
+        </label>
+      </div>
+      <div
+        class="cds--text-input__field-outer-wrapper"
+      >
+        <div
+          class="cds--text-input__field-wrapper"
+        >
+          <input
+            class="cds--text-input"
+            id="name"
+            maxlength="128"
+            name="name"
+            type="text"
+            value=""
+          />
+          
+          <span
+            aria-atomic="true"
+            aria-live="assertive"
+            class="cds--text-input__counter-alert"
+            role="alert"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--form-item cds--text-input-wrapper"
+    >
+      <div
+        class="cds--text-input__label-wrapper"
+      >
+        <label
+          class="cds--label"
+          dir="auto"
+          for="description"
+        >
+          Description
+        </label>
+      </div>
+      <div
+        class="cds--text-input__field-outer-wrapper"
+      >
+        <div
+          class="cds--text-input__field-wrapper"
+        >
+          <input
+            class="cds--text-input"
+            id="description"
+            maxlength="128"
+            name="description"
+            type="text"
+            value=""
+          />
+          
+          <span
+            aria-atomic="true"
+            aria-live="assertive"
+            class="cds--text-input__counter-alert"
+            role="alert"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--form-item cds--text-input-wrapper"
+    >
+      <div
+        class="cds--text-input__label-wrapper"
+      >
+        <label
+          class="cds--label"
+          dir="auto"
+          for="scm_url"
+        >
+          <span
+            aria-hidden="true"
+            class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+          >
+            *
+          </span>
+          URL
+        </label>
+      </div>
+      <div
+        class="cds--text-input__field-outer-wrapper"
+      >
+        <div
+          class="cds--text-input__field-wrapper"
+        >
+          <input
+            class="cds--text-input"
+            id="scm_url"
+            maxlength="128"
+            name="scm_url"
+            type="text"
+            value=""
+          />
+          
+          <span
+            aria-atomic="true"
+            aria-live="assertive"
+            class="cds--text-input__counter-alert"
+            role="alert"
+          />
+        </div>
+      </div>
+    </div>
+    <div>
+      <div
+        class="cds--form-item cds--checkbox-wrapper"
+      >
+        <input
+          class="cds--checkbox"
+          id="verify_ssl"
+          name="verify_ssl"
+          type="checkbox"
+          value=""
+        />
+        <label
+          class="cds--checkbox-label"
+          for="verify_ssl"
+          title=""
+        >
+          <div
+            class="cds--checkbox-label-text"
+            dir="auto"
+          >
+            Verify SSL
+            
+          </div>
+        </label>
+        <div
+          class="cds--checkbox__validation-msg"
+        />
+      </div>
+    </div>
+    <div
+      class="cds--form-item"
+    >
+      <div
+        class="cds--select"
+      >
+        <label
+          class="cds--label"
+          dir="auto"
+          for="authentication_id"
+        >
+          SCM Credentials
+        </label>
+        <div
+          class="cds--select-input__wrapper"
+        >
+          <select
+            class="cds--select-input"
+            id="authentication_id"
+            name="authentication_id"
+            title=""
+          >
+            <option
+              class="cds--select-option"
+              label="Select credentials"
+              value=""
+            >
+              Select credentials
+            </option>
+            <option
+              class="cds--select-option"
+              label="Test Credential"
+              value="149"
+            >
+              Test Credential
+            </option>
+          </select>
+          <svg
+            aria-hidden="true"
+            class="cds--select__arrow"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 16 16"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+            />
+          </svg>
+          
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--form-item cds--text-input-wrapper"
+    >
+      <div
+        class="cds--text-input__label-wrapper"
+      >
+        <label
+          class="cds--label"
+          dir="auto"
+          for="scm_branch"
+        >
+          SCM Branch
+        </label>
+      </div>
+      <div
+        class="cds--text-input__field-outer-wrapper"
+      >
+        <div
+          class="cds--text-input__field-wrapper"
+        >
+          <input
+            class="cds--text-input"
+            id="scm_branch"
+            maxlength="128"
+            name="scm_branch"
+            type="text"
+            value=""
+          />
+          
+          <span
+            aria-atomic="true"
+            aria-live="assertive"
+            class="cds--text-input__counter-alert"
+            role="alert"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--btn-set"
+    >
+      <button
+        class="cds--btn cds--btn--primary cds--btn--disabled"
+        disabled=""
+        type="submit"
+        variant="primary"
+      >
+        Save
+      </button>
+      <button
+        class="cds--btn cds--btn--secondary"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
 `;
 
 exports[`Ansible Repository form component should render edit variant 1`] = `
-<Loading
-  className="export-spinner"
-  small={true}
-  withOverlay={false}
-/>
+<div>
+  <form
+    class="cds--form form-0-2-3 form-react"
+    novalidate=""
+  >
+    <div
+      class="cds--form-item cds--text-input-wrapper"
+    >
+      <div
+        class="cds--text-input__label-wrapper"
+      >
+        <label
+          class="cds--label"
+          dir="auto"
+          for="name"
+        >
+          <span
+            aria-hidden="true"
+            class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+          >
+            *
+          </span>
+          Name
+        </label>
+      </div>
+      <div
+        class="cds--text-input__field-outer-wrapper"
+      >
+        <div
+          class="cds--text-input__field-wrapper"
+        >
+          <input
+            class="cds--text-input"
+            id="name"
+            maxlength="128"
+            name="name"
+            type="text"
+            value="avaleror_test"
+          />
+          
+          <span
+            aria-atomic="true"
+            aria-live="assertive"
+            class="cds--text-input__counter-alert"
+            role="alert"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--form-item cds--text-input-wrapper"
+    >
+      <div
+        class="cds--text-input__label-wrapper"
+      >
+        <label
+          class="cds--label"
+          dir="auto"
+          for="description"
+        >
+          Description
+        </label>
+      </div>
+      <div
+        class="cds--text-input__field-outer-wrapper"
+      >
+        <div
+          class="cds--text-input__field-wrapper"
+        >
+          <input
+            class="cds--text-input"
+            id="description"
+            maxlength="128"
+            name="description"
+            type="text"
+            value="playbooks for testing"
+          />
+          
+          <span
+            aria-atomic="true"
+            aria-live="assertive"
+            class="cds--text-input__counter-alert"
+            role="alert"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--form-item cds--text-input-wrapper"
+    >
+      <div
+        class="cds--text-input__label-wrapper"
+      >
+        <label
+          class="cds--label"
+          dir="auto"
+          for="scm_url"
+        >
+          <span
+            aria-hidden="true"
+            class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+          >
+            *
+          </span>
+          URL
+        </label>
+      </div>
+      <div
+        class="cds--text-input__field-outer-wrapper"
+      >
+        <div
+          class="cds--text-input__field-wrapper"
+        >
+          <input
+            class="cds--text-input"
+            id="scm_url"
+            maxlength="128"
+            name="scm_url"
+            type="text"
+            value="https://github.com/avaleror/ansible"
+          />
+          
+          <span
+            aria-atomic="true"
+            aria-live="assertive"
+            class="cds--text-input__counter-alert"
+            role="alert"
+          />
+        </div>
+      </div>
+    </div>
+    <div>
+      <div
+        class="cds--form-item cds--checkbox-wrapper"
+      >
+        <input
+          class="cds--checkbox"
+          id="verify_ssl"
+          name="verify_ssl"
+          type="checkbox"
+          value=""
+        />
+        <label
+          class="cds--checkbox-label"
+          for="verify_ssl"
+          title=""
+        >
+          <div
+            class="cds--checkbox-label-text"
+            dir="auto"
+          >
+            Verify SSL
+            
+          </div>
+        </label>
+        <div
+          class="cds--checkbox__validation-msg"
+        />
+      </div>
+    </div>
+    <div
+      class="cds--form-item"
+    >
+      <div
+        class="cds--select"
+      >
+        <label
+          class="cds--label"
+          dir="auto"
+          for="authentication_id"
+        >
+          SCM Credentials
+        </label>
+        <div
+          class="cds--select-input__wrapper"
+        >
+          <select
+            class="cds--select-input"
+            id="authentication_id"
+            name="authentication_id"
+            title=""
+          >
+            <option
+              class="cds--select-option"
+              label="Select credentials"
+              value=""
+            >
+              Select credentials
+            </option>
+            <option
+              class="cds--select-option"
+              label="Test Credential"
+              value="149"
+            >
+              Test Credential
+            </option>
+          </select>
+          <svg
+            aria-hidden="true"
+            class="cds--select__arrow"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 16 16"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+            />
+          </svg>
+          
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--form-item cds--text-input-wrapper"
+    >
+      <div
+        class="cds--text-input__label-wrapper"
+      >
+        <label
+          class="cds--label"
+          dir="auto"
+          for="scm_branch"
+        >
+          <span
+            aria-hidden="true"
+            class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+          >
+            *
+          </span>
+          SCM Branch
+        </label>
+      </div>
+      <div
+        class="cds--text-input__field-outer-wrapper"
+      >
+        <div
+          class="cds--text-input__field-wrapper"
+        >
+          <input
+            class="cds--text-input"
+            id="scm_branch"
+            maxlength="128"
+            name="scm_branch"
+            type="text"
+            value=""
+          />
+          
+          <span
+            aria-atomic="true"
+            aria-live="assertive"
+            class="cds--text-input__counter-alert"
+            role="alert"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--btn-set"
+    >
+      <button
+        class="cds--btn cds--btn--primary cds--btn--disabled"
+        disabled=""
+        type="submit"
+        variant="primary"
+      >
+        Save
+      </button>
+      <button
+        class="cds--btn cds--btn--secondary cds--btn--disabled"
+        disabled=""
+        type="button"
+      >
+        Reset
+      </button>
+      <button
+        class="cds--btn cds--btn--secondary"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
 `;
 
 exports[`Ansible Repository form component should submit add form 1`] = `
-<Loading
-  className="export-spinner"
-  small={true}
-  withOverlay={false}
-/>
+<div>
+  <form
+    class="cds--form form-0-2-3 form-react"
+    novalidate=""
+  >
+    <div
+      class="cds--form-item cds--text-input-wrapper"
+    >
+      <div
+        class="cds--text-input__label-wrapper"
+      >
+        <label
+          class="cds--label"
+          dir="auto"
+          for="name"
+        >
+          <span
+            aria-hidden="true"
+            class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+          >
+            *
+          </span>
+          Name
+        </label>
+      </div>
+      <div
+        class="cds--text-input__field-outer-wrapper"
+      >
+        <div
+          class="cds--text-input__field-wrapper"
+        >
+          <input
+            class="cds--text-input"
+            id="name"
+            maxlength="128"
+            name="name"
+            type="text"
+            value=""
+          />
+          
+          <span
+            aria-atomic="true"
+            aria-live="assertive"
+            class="cds--text-input__counter-alert"
+            role="alert"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--form-item cds--text-input-wrapper"
+    >
+      <div
+        class="cds--text-input__label-wrapper"
+      >
+        <label
+          class="cds--label"
+          dir="auto"
+          for="description"
+        >
+          Description
+        </label>
+      </div>
+      <div
+        class="cds--text-input__field-outer-wrapper"
+      >
+        <div
+          class="cds--text-input__field-wrapper"
+        >
+          <input
+            class="cds--text-input"
+            id="description"
+            maxlength="128"
+            name="description"
+            type="text"
+            value=""
+          />
+          
+          <span
+            aria-atomic="true"
+            aria-live="assertive"
+            class="cds--text-input__counter-alert"
+            role="alert"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--form-item cds--text-input-wrapper"
+    >
+      <div
+        class="cds--text-input__label-wrapper"
+      >
+        <label
+          class="cds--label"
+          dir="auto"
+          for="scm_url"
+        >
+          <span
+            aria-hidden="true"
+            class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+          >
+            *
+          </span>
+          URL
+        </label>
+      </div>
+      <div
+        class="cds--text-input__field-outer-wrapper"
+      >
+        <div
+          class="cds--text-input__field-wrapper"
+        >
+          <input
+            class="cds--text-input"
+            id="scm_url"
+            maxlength="128"
+            name="scm_url"
+            type="text"
+            value=""
+          />
+          
+          <span
+            aria-atomic="true"
+            aria-live="assertive"
+            class="cds--text-input__counter-alert"
+            role="alert"
+          />
+        </div>
+      </div>
+    </div>
+    <div>
+      <div
+        class="cds--form-item cds--checkbox-wrapper"
+      >
+        <input
+          class="cds--checkbox"
+          id="verify_ssl"
+          name="verify_ssl"
+          type="checkbox"
+          value=""
+        />
+        <label
+          class="cds--checkbox-label"
+          for="verify_ssl"
+          title=""
+        >
+          <div
+            class="cds--checkbox-label-text"
+            dir="auto"
+          >
+            Verify SSL
+            
+          </div>
+        </label>
+        <div
+          class="cds--checkbox__validation-msg"
+        />
+      </div>
+    </div>
+    <div
+      class="cds--form-item"
+    >
+      <div
+        class="cds--select"
+      >
+        <label
+          class="cds--label"
+          dir="auto"
+          for="authentication_id"
+        >
+          SCM Credentials
+        </label>
+        <div
+          class="cds--select-input__wrapper"
+        >
+          <select
+            class="cds--select-input"
+            id="authentication_id"
+            name="authentication_id"
+            title=""
+          >
+            <option
+              class="cds--select-option"
+              label="Select credentials"
+              value=""
+            >
+              Select credentials
+            </option>
+            <option
+              class="cds--select-option"
+              label="Test Credential"
+              value="149"
+            >
+              Test Credential
+            </option>
+          </select>
+          <svg
+            aria-hidden="true"
+            class="cds--select__arrow"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 16 16"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+            />
+          </svg>
+          
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--form-item cds--text-input-wrapper"
+    >
+      <div
+        class="cds--text-input__label-wrapper"
+      >
+        <label
+          class="cds--label"
+          dir="auto"
+          for="scm_branch"
+        >
+          SCM Branch
+        </label>
+      </div>
+      <div
+        class="cds--text-input__field-outer-wrapper"
+      >
+        <div
+          class="cds--text-input__field-wrapper"
+        >
+          <input
+            class="cds--text-input"
+            id="scm_branch"
+            maxlength="128"
+            name="scm_branch"
+            type="text"
+            value=""
+          />
+          
+          <span
+            aria-atomic="true"
+            aria-live="assertive"
+            class="cds--text-input__counter-alert"
+            role="alert"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--btn-set"
+    >
+      <button
+        class="cds--btn cds--btn--primary cds--btn--disabled"
+        disabled=""
+        type="submit"
+        variant="primary"
+      >
+        Save
+      </button>
+      <button
+        class="cds--btn cds--btn--secondary"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
 `;
 
 exports[`Ansible Repository form component should submit edit form 1`] = `
-<Loading
-  className="export-spinner"
-  small={true}
-  withOverlay={false}
-/>
+<div>
+  <form
+    class="cds--form form-0-2-3 form-react"
+    novalidate=""
+  >
+    <div
+      class="cds--form-item cds--text-input-wrapper"
+    >
+      <div
+        class="cds--text-input__label-wrapper"
+      >
+        <label
+          class="cds--label"
+          dir="auto"
+          for="name"
+        >
+          <span
+            aria-hidden="true"
+            class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+          >
+            *
+          </span>
+          Name
+        </label>
+      </div>
+      <div
+        class="cds--text-input__field-outer-wrapper"
+      >
+        <div
+          class="cds--text-input__field-wrapper"
+        >
+          <input
+            class="cds--text-input"
+            id="name"
+            maxlength="128"
+            name="name"
+            type="text"
+            value=""
+          />
+          
+          <span
+            aria-atomic="true"
+            aria-live="assertive"
+            class="cds--text-input__counter-alert"
+            role="alert"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--form-item cds--text-input-wrapper"
+    >
+      <div
+        class="cds--text-input__label-wrapper"
+      >
+        <label
+          class="cds--label"
+          dir="auto"
+          for="description"
+        >
+          Description
+        </label>
+      </div>
+      <div
+        class="cds--text-input__field-outer-wrapper"
+      >
+        <div
+          class="cds--text-input__field-wrapper"
+        >
+          <input
+            class="cds--text-input"
+            id="description"
+            maxlength="128"
+            name="description"
+            type="text"
+            value=""
+          />
+          
+          <span
+            aria-atomic="true"
+            aria-live="assertive"
+            class="cds--text-input__counter-alert"
+            role="alert"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--form-item cds--text-input-wrapper"
+    >
+      <div
+        class="cds--text-input__label-wrapper"
+      >
+        <label
+          class="cds--label"
+          dir="auto"
+          for="scm_url"
+        >
+          <span
+            aria-hidden="true"
+            class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+          >
+            *
+          </span>
+          URL
+        </label>
+      </div>
+      <div
+        class="cds--text-input__field-outer-wrapper"
+      >
+        <div
+          class="cds--text-input__field-wrapper"
+        >
+          <input
+            class="cds--text-input"
+            id="scm_url"
+            maxlength="128"
+            name="scm_url"
+            type="text"
+            value=""
+          />
+          
+          <span
+            aria-atomic="true"
+            aria-live="assertive"
+            class="cds--text-input__counter-alert"
+            role="alert"
+          />
+        </div>
+      </div>
+    </div>
+    <div>
+      <div
+        class="cds--form-item cds--checkbox-wrapper"
+      >
+        <input
+          class="cds--checkbox"
+          id="verify_ssl"
+          name="verify_ssl"
+          type="checkbox"
+          value=""
+        />
+        <label
+          class="cds--checkbox-label"
+          for="verify_ssl"
+          title=""
+        >
+          <div
+            class="cds--checkbox-label-text"
+            dir="auto"
+          >
+            Verify SSL
+            
+          </div>
+        </label>
+        <div
+          class="cds--checkbox__validation-msg"
+        />
+      </div>
+    </div>
+    <div
+      class="cds--form-item"
+    >
+      <div
+        class="cds--select"
+      >
+        <label
+          class="cds--label"
+          dir="auto"
+          for="authentication_id"
+        >
+          SCM Credentials
+        </label>
+        <div
+          class="cds--select-input__wrapper"
+        >
+          <select
+            class="cds--select-input"
+            id="authentication_id"
+            name="authentication_id"
+            title=""
+          >
+            <option
+              class="cds--select-option"
+              label="Select credentials"
+              value=""
+            >
+              Select credentials
+            </option>
+            <option
+              class="cds--select-option"
+              label="Test Credential"
+              value="149"
+            >
+              Test Credential
+            </option>
+          </select>
+          <svg
+            aria-hidden="true"
+            class="cds--select__arrow"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 16 16"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+            />
+          </svg>
+          
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--form-item cds--text-input-wrapper"
+    >
+      <div
+        class="cds--text-input__label-wrapper"
+      >
+        <label
+          class="cds--label"
+          dir="auto"
+          for="scm_branch"
+        >
+          SCM Branch
+        </label>
+      </div>
+      <div
+        class="cds--text-input__field-outer-wrapper"
+      >
+        <div
+          class="cds--text-input__field-wrapper"
+        >
+          <input
+            class="cds--text-input"
+            id="scm_branch"
+            maxlength="128"
+            name="scm_branch"
+            type="text"
+            value=""
+          />
+          
+          <span
+            aria-atomic="true"
+            aria-live="assertive"
+            class="cds--text-input__counter-alert"
+            role="alert"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--btn-set"
+    >
+      <button
+        class="cds--btn cds--btn--primary cds--btn--disabled"
+        disabled=""
+        type="submit"
+        variant="primary"
+      >
+        Save
+      </button>
+      <button
+        class="cds--btn cds--btn--secondary"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
 `;

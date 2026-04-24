@@ -1,13 +1,10 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
-import { shallow } from 'enzyme';
-import { act } from 'react-dom/test-utils';
-import { mount } from '../helpers/mountForm';
+import { screen, waitFor, cleanup } from '@testing-library/react';
+import { renderWithRedux } from '../helpers/mountForm';
 import CustomButtonForm from '../../components/generic-objects-form/custom-button-form';
 
-require('../helpers/miqSparkle');
-require('../helpers/miqAjaxButton');
+import '../helpers/miqAjaxButton';
 
 describe('Custom Button form component', () => {
   let submitSpy;
@@ -19,7 +16,8 @@ describe('Custom Button form component', () => {
     'Request',
     'parse_automation_request',
     'parse_event_stream',
-    'parse_provider_category'];
+    'parse_provider_category',
+  ];
   const ansiblePlaybooks = [
     { name: 'Blue Demo Raw', id: 55 },
     { name: 'CF create user', id: 78 },
@@ -86,47 +84,61 @@ describe('Custom Button form component', () => {
   beforeEach(() => {
     submitSpy = jest.spyOn(window, 'miqAjaxButton');
   });
+
   afterEach(() => {
-    fetchMock.reset();
+    cleanup();
     fetchMock.restore();
+    jest.clearAllMocks();
     submitSpy.mockRestore();
   });
 
-  it('should render the adding form for generic obj buttons', () => {
-    const wrapper = shallow(<CustomButtonForm
-      url="/generic_object_definition/show_list"
-      appliesToClass="GenericObjectDefinition"
-      appliesToId="60"
-      distinctInstances={distinctInstances}
-      ansiblePlaybooks={ansiblePlaybooks}
-    />);
+  it('should render the adding form for generic obj buttons', async() => {
     fetchMock.mock('/api/custom_buttons', buttonTypes, { method: 'Options' });
-    fetchMock.getOnce('/api/roles?expand=resources&attributes=name', roles);
-    fetchMock.getOnce('/api/service_dialogs?expand=resources&attributes=label', serviceDialogs);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    fetchMock.get('/api/roles?expand=resources&attributes=name', roles);
+    fetchMock.get('/api/service_dialogs?expand=resources&attributes=label', serviceDialogs);
+
+    const { container } = renderWithRedux(
+      <CustomButtonForm
+        url="/generic_object_definition/show_list"
+        appliesToClass="GenericObjectDefinition"
+        appliesToId="60"
+        distinctInstances={distinctInstances}
+        ansiblePlaybooks={ansiblePlaybooks}
+      />
+    );
+
+    await waitFor(() => {
+      expect(fetchMock.calls('/api/roles?expand=resources&attributes=name').length).toBe(1);
+      expect(fetchMock.calls('/api/service_dialogs?expand=resources&attributes=label').length).toBe(1);
+    });
+
+    expect(container).toMatchSnapshot();
   });
 
-  // eslint-disable-next-line jest/no-done-callback
-  it('should render the editing form for generic object custom buttons', async(done) => {
-    fetchMock.mock('/api/custom_buttons', buttonTypes, { method: 'Options' });
-    fetchMock.getOnce('/api/roles?expand=resources&attributes=name', roles);
-    fetchMock.getOnce('/api/service_dialogs?expand=resources&attributes=label', serviceDialogs);
-    fetchMock.getOnce('/api/custom_buttons/128?attributes=resource_action,uri_attributes', initialValues);
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<CustomButtonForm
+  it('should render the editing form for generic object custom buttons', async() => {
+    fetchMock.mock('/api/custom_buttons', buttonTypes, { method: 'OPTIONS' });
+    fetchMock.get('/api/roles?expand=resources&attributes=name', roles);
+    fetchMock.get('/api/service_dialogs?expand=resources&attributes=label', serviceDialogs);
+    fetchMock.get('/api/custom_buttons/128?attributes=resource_action,uri_attributes', initialValues);
+
+    const { container } = renderWithRedux(
+      <CustomButtonForm
         recId={128}
         url="/generic_object_definition/show_list"
         appliesToClass="GenericObjectDefinition"
         distinctInstances={distinctInstances}
         ansiblePlaybooks={ansiblePlaybooks}
-      />);
+      />
+    );
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     });
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+
+    expect(container).toMatchSnapshot();
   });
 
-  it('should add a new generic object custom button', () => {
+  it('should add a new generic object custom button', async() => {
     const submitValues = {
       applies_to_class: 'GenericObjectDefinition',
       applies_to_id: '60',
@@ -152,22 +164,31 @@ describe('Custom Button form component', () => {
       },
       visibility: { roles: ['_ALL_'] },
     };
-    const wrapper = shallow(<CustomButtonForm
-      url="/generic_object_definition/show_list"
-      appliesToClass="GenericObjectDefinition"
-      appliesToId="60"
-      distinctInstances={distinctInstances}
-      ansiblePlaybooks={ansiblePlaybooks}
-    />);
+
     fetchMock.mock('/api/custom_buttons', buttonTypes, { method: 'Options' });
-    fetchMock.getOnce('/api/roles?expand=resources&attributes=name', roles);
-    fetchMock.getOnce('/api/service_dialogs?expand=resources&attributes=label', serviceDialogs);
+    fetchMock.get('/api/roles?expand=resources&attributes=name', roles);
+    fetchMock.get('/api/service_dialogs?expand=resources&attributes=label', serviceDialogs);
     fetchMock.postOnce('/api/custom_buttons/', submitValues);
-    expect(toJson(wrapper)).toMatchSnapshot();
+
+    const { container } = renderWithRedux(
+      <CustomButtonForm
+        url="/generic_object_definition/show_list"
+        appliesToClass="GenericObjectDefinition"
+        appliesToId="60"
+        distinctInstances={distinctInstances}
+        ansiblePlaybooks={ansiblePlaybooks}
+      />
+    );
+
+    await waitFor(() => {
+      expect(fetchMock.calls('/api/roles?expand=resources&attributes=name').length).toBe(1);
+      expect(fetchMock.calls('/api/service_dialogs?expand=resources&attributes=label').length).toBe(1);
+    });
+
+    expect(container).toMatchSnapshot();
   });
 
-  // eslint-disable-next-line jest/no-done-callback
-  it('should edit a generic object custom button', async(done) => {
+  it('should edit a generic object custom button', async() => {
     const submitValues = {
       applies_to_class: 'GenericObjectDefinition',
       applies_to_id: '60',
@@ -190,26 +211,29 @@ describe('Custom Button form component', () => {
         request: 'create',
       },
       visibility: {
-        roles:
-        ['EvmRole-super_administrator', 'EvmRole-approver'],
+        roles: ['EvmRole-super_administrator', 'EvmRole-approver'],
       },
     };
     fetchMock.mock('/api/custom_buttons', buttonTypes, { method: 'Options' });
-    fetchMock.getOnce('/api/roles?expand=resources&attributes=name', roles);
-    fetchMock.getOnce('/api/service_dialogs?expand=resources&attributes=label', serviceDialogs);
-    fetchMock.getOnce('/api/custom_buttons/128?attributes=resource_action,uri_attributes', initialValues);
+    fetchMock.get('/api/roles?expand=resources&attributes=name', roles);
+    fetchMock.get('/api/service_dialogs?expand=resources&attributes=label', serviceDialogs);
+    fetchMock.get('/api/custom_buttons/128?attributes=resource_action,uri_attributes', initialValues);
     fetchMock.putOnce('/api/custom_buttons/128', submitValues);
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<CustomButtonForm
+
+    const { container } = renderWithRedux(
+      <CustomButtonForm
         recId={128}
         url="/generic_object_definition/show_list"
         appliesToClass="GenericObjectDefinition"
         distinctInstances={distinctInstances}
         ansiblePlaybooks={ansiblePlaybooks}
-      />);
+      />
+    );
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     });
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+
+    expect(container).toMatchSnapshot();
   });
 });

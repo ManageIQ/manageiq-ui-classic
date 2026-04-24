@@ -1,12 +1,11 @@
 import React from 'react';
-import { act } from 'react-dom/test-utils';
-import { mount } from 'enzyme';
-import toJson from 'enzyme-to-json';
+import { render, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { FormRenderer } from '@data-driven-forms/react-form-renderer';
 import { FormTemplate, componentMapper } from '@data-driven-forms/carbon-component-mapper';
 import AsyncCredentials from '../../components/async-credentials/async-credentials';
 
-const RendererWrapper = ({ asyncValidate, onSubmit = () => {}, ...props }) => (
+const RendererWrapper = ({ asyncValidate, onSubmit, ...props }) => (
   <FormRenderer
     onSubmit={onSubmit}
     FormTemplate={FormTemplate}
@@ -15,111 +14,148 @@ const RendererWrapper = ({ asyncValidate, onSubmit = () => {}, ...props }) => (
       'async-credentials': AsyncCredentials,
     }}
     schema={{
-      fields: [{
-        component: 'async-credentials',
-        name: 'validate_credentials',
-        asyncValidate,
-        fields: [{
-          component: 'text-field',
-          name: 'foo',
-          initialValue: 'bar',
-        }],
-      }],
+      fields: [
+        {
+          component: 'async-credentials',
+          name: 'validate_credentials',
+          asyncValidate,
+          fields: [
+            {
+              component: 'text-field',
+              name: 'foo',
+              initialValue: 'bar',
+            },
+          ],
+        },
+      ],
     }}
     {...props}
   />
 );
 
 describe('Async credentials component', () => {
-  it('should render correctly', async(done) => {
-    const wrapper = mount(<RendererWrapper asyncValidate={() => {}} />);
-    setImmediate(() => {
-      expect(toJson(wrapper.find(AsyncCredentials))).toMatchSnapshot();
-      done();
+  it('should render correctly', async() => {
+    const { container } = render(<RendererWrapper asyncValidate={() => {}} />);
+
+    await waitFor(() => {
+      expect(container.querySelector('input[name="foo"]')).toBeInTheDocument();
     });
+
+    expect(container).toMatchSnapshot();
   });
 
-  it('should call async validation function on button click and set valid state to true', async(done) => {
+  it('should call async validation function on button click and set valid state to true', async() => {
+    const user = userEvent.setup();
     const asyncValidate = jest.fn().mockReturnValue(new Promise((resolve) => resolve('Ok')));
     const onSubmit = jest.fn();
 
-    const wrapper = mount(<RendererWrapper asyncValidate={asyncValidate} onSubmit={onSubmit} />);
+    const { container } = render(<RendererWrapper asyncValidate={asyncValidate} onSubmit={onSubmit} />);
 
-    await act(async() => {
-      wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'baz' } });
-      setImmediate(() => wrapper.find('button[type="button"]').simulate('click'));
+    const input = container.querySelector('input[name="foo"]');
+    const validateButton = container.querySelector('button[type="button"]');
+
+    await user.clear(input);
+    await user.type(input, 'baz');
+    await user.click(validateButton);
+
+    await waitFor(() => {
+      expect(asyncValidate).toHaveBeenCalledWith(
+        {
+          foo: 'baz',
+          validate_credentials: false,
+        },
+        ['foo']
+      );
     });
-    expect(asyncValidate).toHaveBeenCalledWith({
-      foo: 'baz',
-      validate_credentials: false,
-    }, ['foo']);
 
-    wrapper.find('form').simulate('submit');
+    const form = container.querySelector('form');
+    await user.click(form.querySelector('button[type="submit"]'));
+
     expect(onSubmit).toHaveBeenCalledWith({ foo: 'baz', validate_credentials: true }, expect.anything(), expect.anything());
-
-    done();
   });
 
-  it('should call async validation function on button click and set valid state to false', async(done) => {
+  it('should call async validation function on button click and set valid state to false', async() => {
+    const user = userEvent.setup();
+    // eslint-disable-next-line prefer-promise-reject-errors
     const asyncValidate = jest.fn(() => Promise.reject('Validation failed'));
     const onSubmit = jest.fn();
 
-    const wrapper = mount(<RendererWrapper asyncValidate={asyncValidate} onSubmit={onSubmit} />);
+    const { container } = render(<RendererWrapper asyncValidate={asyncValidate} onSubmit={onSubmit} />);
 
-    await act(async() => {
-      wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'baz' } });
-      setImmediate(() => wrapper.find('button[type="button"]').simulate('click'));
+    const input = container.querySelector('input[name="foo"]');
+    const validateButton = container.querySelector('button[type="button"]');
+
+    await user.clear(input);
+    await user.type(input, 'baz');
+    await user.click(validateButton);
+
+    await waitFor(() => {
+      expect(asyncValidate).toHaveBeenCalledWith(
+        {
+          foo: 'baz',
+          validate_credentials: false,
+        },
+        ['foo']
+      );
     });
-    expect(asyncValidate).toHaveBeenCalledWith({
-      foo: 'baz',
-      validate_credentials: false,
-    }, ['foo']);
 
-    wrapper.update();
-
-    expect(wrapper.find('div.ddorg__carbon-error-helper-text').text()).toEqual('Validation failed');
-
-    done();
+    await waitFor(() => {
+      expect(container.querySelector('div.ddorg__carbon-error-helper-text').textContent).toEqual('Validation failed');
+    });
   });
 
-  it('should correctly set invalid state after input change', async(done) => {
+  it('should correctly set invalid state after input change', async() => {
+    const user = userEvent.setup();
     const asyncValidate = jest.fn().mockReturnValue(new Promise((resolve) => resolve('Ok')));
-    const wrapper = mount(<RendererWrapper asyncValidate={asyncValidate} />);
+    const { container } = render(<RendererWrapper asyncValidate={asyncValidate} />);
 
-    await act(async() => {
-      wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'baz' } });
-      setImmediate(() => wrapper.find('button[type="button"]').simulate('click'));
+    const input = container.querySelector('input[name="foo"]');
+    const validateButton = container.querySelector('button[type="button"]');
+
+    await user.clear(input);
+    await user.type(input, 'baz');
+    await user.click(validateButton);
+
+    await waitFor(() => {
+      expect(container.querySelector('div.cds--form__helper-text').textContent).toEqual('Validation successful');
     });
 
-    wrapper.update();
+    await user.clear(input);
+    await user.type(input, 'test');
 
-    expect(wrapper.find('div.cds--form__helper-text').text()).toEqual('Validation successful');
-    wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'test' } });
-    wrapper.update();
-    expect(wrapper.find('div.cds--form__helper-text').exists()).toBe(false);
-
-    done();
+    await waitFor(() => {
+      expect(container.querySelector('div.cds--form__helper-text')).not.toBeInTheDocument();
+    });
   });
 
-  it('should correctly set valid state after input change if passed initial values', async(done) => {
+  it('should correctly set valid state after input change if passed initial values', async() => {
+    const user = userEvent.setup();
     const asyncValidate = jest.fn().mockReturnValue(new Promise((resolve) => resolve('Ok')));
-    const wrapper = mount(<RendererWrapper asyncValidate={asyncValidate} />);
+    const { container } = render(<RendererWrapper asyncValidate={asyncValidate} />);
 
-    await act(async() => {
-      wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'baz' } });
-      setImmediate(() => wrapper.find('button[type="button"]').simulate('click'));
+    const input = container.querySelector('input[name="foo"]');
+    const validateButton = container.querySelector('button[type="button"]');
+
+    await user.clear(input);
+    await user.type(input, 'baz');
+    await user.click(validateButton);
+
+    await waitFor(() => {
+      expect(container.querySelector('div.cds--form__helper-text').textContent).toEqual('Validation successful');
     });
 
-    wrapper.update();
+    await user.clear(input);
+    await user.type(input, 'test');
 
-    expect(wrapper.find('div.cds--form__helper-text').text()).toEqual('Validation successful');
-    wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'test' } });
-    wrapper.update();
-    expect(wrapper.find('div.cds--form__helper-text').exists()).toBe(false);
-    wrapper.find('input[name="foo"]').simulate('change', { target: { value: 'baz' } });
-    wrapper.update();
-    expect(wrapper.find('div.cds--form__helper-text').text()).toEqual('Validation successful');
+    await waitFor(() => {
+      expect(container.querySelector('div.cds--form__helper-text')).not.toBeInTheDocument();
+    });
 
-    done();
+    await user.clear(input);
+    await user.type(input, 'baz');
+
+    await waitFor(() => {
+      expect(container.querySelector('div.cds--form__helper-text').textContent).toEqual('Validation successful');
+    });
   });
 });

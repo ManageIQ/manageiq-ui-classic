@@ -1,235 +1,75 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Breadcrumbs component is correctly rendered 1`] = `
-<Provider
-  store={
-    Object {
-      "clearActions": [Function],
-      "dispatch": [Function],
-      "getActions": [Function],
-      "getState": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-    }
-  }
->
-  <Component>
-    <BreadcrumbsBar
-      controllerName="provider"
-      items={
-        Array [
-          Object {
-            "title": "Providers",
-            "url": "/providers",
-          },
-          Object {
-            "key": "in tree",
-            "title": "Google",
-          },
-          Object {
-            "action": "accordion-select",
-            "title": "All",
-          },
-          Object {
-            "title": "This",
-          },
-        ]
-      }
-      jsRequest={false}
-      title="Title"
+<div>
+  <nav
+    aria-label="Breadcrumb"
+  >
+    <ol
+      class="cds--breadcrumb cds--breadcrumb--no-trailing-slash"
     >
-      <Breadcrumbs
-        controllerName="provider"
-        items={
-          Array [
-            Object {
-              "title": "Providers",
-              "url": "/providers",
-            },
-            Object {
-              "key": "in tree",
-              "title": "Google",
-            },
-            Object {
-              "action": "accordion-select",
-              "title": "All",
-            },
-            Object {
-              "title": "This",
-            },
-          ]
-        }
-        jsRequest={false}
-        title="Title"
+      <li
+        class="cds--breadcrumb-item"
       >
-        <Breadcrumb
-          noTrailingSlash={true}
+        <a
+          class="cds--link"
+          href="/providers"
         >
-          <nav
-            aria-label="Breadcrumb"
-          >
-            <ol
-              className="cds--breadcrumb cds--breadcrumb--no-trailing-slash"
-            >
-              <BreadcrumbItem
-                href="/providers"
-                key="/providers"
-                onClick={[Function]}
-              >
-                <li
-                  className="cds--breadcrumb-item"
-                  onClick={[Function]}
-                >
-                  <Link
-                    href="/providers"
-                  >
-                    <a
-                      className="cds--link"
-                      href="/providers"
-                      onClick={[Function]}
-                    >
-                      Providers
-                    </a>
-                  </Link>
-                </li>
-              </BreadcrumbItem>
-              <BreadcrumbItem
-                href="#"
-                key="in tree-1"
-                onClick={[Function]}
-              >
-                <li
-                  className="cds--breadcrumb-item"
-                  onClick={[Function]}
-                >
-                  <Link
-                    href="#"
-                  >
-                    <a
-                      className="cds--link"
-                      href="#"
-                      onClick={[Function]}
-                    >
-                      Google
-                    </a>
-                  </Link>
-                </li>
-              </BreadcrumbItem>
-              <li
-                className="inactive-item"
-                key="2"
-              >
-                All
-              </li>
-              <BreadcrumbItem
-                isCurrentPage={true}
-              >
-                <li
-                  className="cds--breadcrumb-item cds--breadcrumb-item--current"
-                >
-                  <strong
-                    className="cds--link"
-                  >
-                    This
-                  </strong>
-                </li>
-              </BreadcrumbItem>
-            </ol>
-          </nav>
-        </Breadcrumb>
-      </Breadcrumbs>
-      <NotificationsToggle
-        jsRequest={false}
+          Providers
+        </a>
+      </li>
+      <li
+        class="cds--breadcrumb-item"
       >
-        <div
-          className="notification-module"
+        <a
+          class="cds--link"
+          href="#"
         >
-          <Button
-            className="btn btn-default"
-            id="notifications-toggle"
-            onClick={[Function]}
-            size="sm"
-            title="0 unread notification"
-          >
-            <ForwardRef(ButtonBase)
-              className="btn btn-default"
-              id="notifications-toggle"
-              onClick={[Function]}
-              size="sm"
-              title="0 unread notification"
-            >
-              <button
-                className="btn btn-default cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary"
-                disabled={false}
-                id="notifications-toggle"
-                onClick={[Function]}
-                title="0 unread notification"
-                type="button"
-              >
-                Notifications
-                <MiqIcon
-                  icon="carbon--Notification"
-                  size={16}
-                >
-                  <Component
-                    style={
-                      Object {
-                        "marginBottom": "-4px",
-                      }
-                    }
-                  >
-                    <ForwardRef(Notification)
-                      size={16}
-                      style={
-                        Object {
-                          "marginBottom": "-4px",
-                        }
-                      }
-                    >
-                      <Icon
-                        fill="currentColor"
-                        height={16}
-                        style={
-                          Object {
-                            "marginBottom": "-4px",
-                          }
-                        }
-                        viewBox="0 0 16 16"
-                        width={16}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <svg
-                          aria-hidden={true}
-                          fill="currentColor"
-                          focusable="false"
-                          height={16}
-                          preserveAspectRatio="xMidYMid meet"
-                          style={
-                            Object {
-                              "marginBottom": "-4px",
-                            }
-                          }
-                          viewBox="0 0 16 16"
-                          width={16}
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M14.4,10.1L13,8.8V6.5c0-2.6-1.9-4.7-4.5-5v-1h-1v1C5,1.8,3,3.9,3,6.5v2.3l-1.4,1.3c-0.1,0.1-0.2,0.2-0.1,0.4V12 c0,0.3,0.2,0.5,0.4,0.5c0,0,0,0,0.1,0h3.5C5.5,13.9,6.6,15,8,15s2.5-1.1,2.5-2.5H14c0.3,0,0.5-0.2,0.5-0.4c0,0,0,0,0-0.1v-1.5 C14.5,10.4,14.4,10.2,14.4,10.1z M8,14c-0.8,0-1.5-0.7-1.5-1.5h3C9.5,13.3,8.8,14,8,14z M13.5,11.5h-11v-0.8l1.3-1.4 C3.9,9.3,4,9.1,4,9V6.5c0-2.2,1.8-4,4-4s4,1.8,4,4V9c0,0.1,0.1,0.3,0.1,0.4l1.4,1.3V11.5z"
-                          />
-                        </svg>
-                      </Icon>
-                    </ForwardRef(Notification)>
-                  </Component>
-                </MiqIcon>
-              </button>
-            </ForwardRef(ButtonBase)>
-          </Button>
-          <NotificationDrawer
-            jsRequest={false}
-          />
-        </div>
-      </NotificationsToggle>
-    </BreadcrumbsBar>
-  </Component>
-</Provider>
+          Google
+        </a>
+      </li>
+      <li
+        class="inactive-item"
+      >
+        All
+      </li>
+      <li
+        class="cds--breadcrumb-item cds--breadcrumb-item--current"
+      >
+        <strong
+          class="cds--link"
+        >
+          This
+        </strong>
+      </li>
+    </ol>
+  </nav>
+  <div
+    class="notification-module"
+  >
+    <button
+      class="btn btn-default cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary"
+      id="notifications-toggle"
+      title="0 unread notification"
+      type="button"
+    >
+      Notifications
+      <svg
+        aria-hidden="true"
+        fill="currentColor"
+        focusable="false"
+        height="16"
+        preserveAspectRatio="xMidYMid meet"
+        style="margin-bottom: -4px;"
+        viewBox="0 0 16 16"
+        width="16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M14.4,10.1L13,8.8V6.5c0-2.6-1.9-4.7-4.5-5v-1h-1v1C5,1.8,3,3.9,3,6.5v2.3l-1.4,1.3c-0.1,0.1-0.2,0.2-0.1,0.4V12 c0,0.3,0.2,0.5,0.4,0.5c0,0,0,0,0.1,0h3.5C5.5,13.9,6.6,15,8,15s2.5-1.1,2.5-2.5H14c0.3,0,0.5-0.2,0.5-0.4c0,0,0,0,0-0.1v-1.5 C14.5,10.4,14.4,10.2,14.4,10.1z M8,14c-0.8,0-1.5-0.7-1.5-1.5h3C9.5,13.3,8.8,14,8,14z M13.5,11.5h-11v-0.8l1.3-1.4 C3.9,9.3,4,9.1,4,9V6.5c0-2.2,1.8-4,4-4s4,1.8,4,4V9c0,0.1,0.1,0.3,0.1,0.4l1.4,1.3V11.5z"
+        />
+      </svg>
+    </button>
+  </div>
+</div>
 `;

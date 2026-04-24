@@ -2,117 +2,347 @@
 
 exports[`Container Project component should render the dashboard 1`] = `
 <div>
-  <div
-    id="column-1"
-  >
-    <div>
-      <div
-        className="card-wrapper"
-        id="containers"
-      >
-        <PfAggregateStatusCard
-          altLayout={false}
-          className={null}
-          data={
-            Object {
-              "count": 0,
-              "iconClass": "fa fa-cube",
-              "title": "Containers",
-            }
-          }
-          layout="mini"
-          showTopBorder={true}
-        />
+  <div>
+    <div
+      id="column-1"
+    >
+      <div>
+        <div
+          class="card-wrapper"
+          id="containers"
+        >
+          <div
+            class="card-pf card-pf-aggregate-status card-pf-aggregate-status-mini card-pf-accented"
+          >
+            <h2
+              class="card-pf-title"
+            >
+              <a>
+                <span
+                  class="fa fa-cube"
+                />
+                <span
+                  class="card-pf-aggregate-status-count"
+                >
+                   
+                  0
+                </span>
+                Containers
+              </a>
+            </h2>
+            <div
+              class="card-pf-body"
+            />
+          </div>
+        </div>
+        <div
+          class="card-wrapper"
+          id="images"
+        >
+          <div
+            class="card-pf card-pf-aggregate-status card-pf-aggregate-status-mini card-pf-accented"
+          >
+            <h2
+              class="card-pf-title"
+            >
+              <a>
+                <span
+                  class="pficon pficon-image"
+                />
+                <span
+                  class="card-pf-aggregate-status-count"
+                >
+                   
+                  0
+                </span>
+                Images
+              </a>
+            </h2>
+            <div
+              class="card-pf-body"
+            />
+          </div>
+        </div>
+        <div
+          class="card-wrapper"
+          id="services"
+        >
+          <div
+            class="card-pf card-pf-aggregate-status card-pf-aggregate-status-mini card-pf-accented"
+          >
+            <h2
+              class="card-pf-title"
+            >
+              <a>
+                <span
+                  class="pficon pficon-service"
+                />
+                <span
+                  class="card-pf-aggregate-status-count"
+                >
+                   
+                  0
+                </span>
+                Services
+              </a>
+            </h2>
+            <div
+              class="card-pf-body"
+            />
+          </div>
+        </div>
       </div>
       <div
-        className="card-wrapper"
-        id="images"
+        class="card-pf card-pf-aggregate-status card-pf-accented chart-card"
       >
-        <PfAggregateStatusCard
-          altLayout={false}
-          className={null}
-          data={
-            Object {
-              "count": 0,
-              "iconClass": "pficon pficon-image",
-              "title": "Images",
-            }
-          }
-          layout="mini"
-          showTopBorder={true}
-        />
+        <h2
+          class="card-title"
+        >
+          CPU Utilization
+        </h2>
+        <div
+          class="card-pf-body"
+        >
+          <div
+            aria-atomic="true"
+            aria-live="assertive"
+            class="export-spinner cds--loading cds--loading--small"
+          >
+            <svg
+              aria-label="loading"
+              class="cds--loading__svg"
+              role="img"
+              viewBox="0 0 100 100"
+            >
+              <title>
+                loading
+              </title>
+              <circle
+                class="cds--loading__background"
+                cx="50%"
+                cy="50%"
+                r="42"
+              />
+              <circle
+                class="cds--loading__stroke"
+                cx="50%"
+                cy="50%"
+                r="42"
+              />
+            </svg>
+          </div>
+        </div>
       </div>
       <div
-        className="card-wrapper"
-        id="services"
+        class="card-pf card-pf-aggregate-status card-pf-accented chart-card"
       >
-        <PfAggregateStatusCard
-          altLayout={false}
-          className={null}
-          data={
-            Object {
-              "count": 0,
-              "iconClass": "pficon pficon-service",
-              "title": "Services",
-            }
-          }
-          layout="mini"
-          showTopBorder={true}
-        />
+        <h2
+          class="card-title"
+        >
+          Memory Utilization
+        </h2>
+        <div
+          class="card-pf-body"
+        >
+          <div
+            aria-atomic="true"
+            aria-live="assertive"
+            class="export-spinner cds--loading cds--loading--small"
+          >
+            <svg
+              aria-label="loading"
+              class="cds--loading__svg"
+              role="img"
+              viewBox="0 0 100 100"
+            >
+              <title>
+                loading
+              </title>
+              <circle
+                class="cds--loading__background"
+                cx="50%"
+                cy="50%"
+                r="42"
+              />
+              <circle
+                class="cds--loading__stroke"
+                cx="50%"
+                cy="50%"
+                r="42"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div
+        class="card-pf card-pf-aggregate-status card-pf-accented chart-card"
+      >
+        <h2
+          class="card-title"
+        >
+          Network Utilization Trend
+        </h2>
+        <div
+          class="card-pf-body"
+        >
+          <div
+            aria-atomic="true"
+            aria-live="assertive"
+            class="export-spinner cds--loading cds--loading--small"
+          >
+            <svg
+              aria-label="loading"
+              class="cds--loading__svg"
+              role="img"
+              viewBox="0 0 100 100"
+            >
+              <title>
+                loading
+              </title>
+              <circle
+                class="cds--loading__background"
+                cx="50%"
+                cy="50%"
+                r="42"
+              />
+              <circle
+                class="cds--loading__stroke"
+                cx="50%"
+                cy="50%"
+                r="42"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div
+        class="card-pf card-pf-aggregate-status card-pf-accented chart-card"
+      >
+        <h2
+          class="card-title"
+        >
+          Pod Creation and Deletion Trends
+        </h2>
+        <div
+          class="card-pf-body"
+        >
+          <div
+            aria-atomic="true"
+            aria-live="assertive"
+            class="export-spinner cds--loading cds--loading--small"
+          >
+            <svg
+              aria-label="loading"
+              class="cds--loading__svg"
+              role="img"
+              viewBox="0 0 100 100"
+            >
+              <title>
+                loading
+              </title>
+              <circle
+                class="cds--loading__background"
+                cx="50%"
+                cy="50%"
+                r="42"
+              />
+              <circle
+                class="cds--loading__stroke"
+                cx="50%"
+                cy="50%"
+                r="42"
+              />
+            </svg>
+          </div>
+        </div>
       </div>
     </div>
-    <ChartCard
-      chartData={Array []}
-      chartType=""
-      config={Object {}}
-      isLoading={true}
-      options={Object {}}
-      title="CPU Utilization"
-    />
-    <ChartCard
-      chartData={Array []}
-      chartType=""
-      config={Object {}}
-      isLoading={true}
-      options={Object {}}
-      title="Memory Utilization"
-    />
-    <ChartCard
-      chartData={Array []}
-      chartType=""
-      config={Object {}}
-      isLoading={true}
-      options={Object {}}
-      title="Network Utilization Trend"
-    />
-    <ChartCard
-      chartData={Array []}
-      chartType=""
-      config={Object {}}
-      isLoading={true}
-      options={Object {}}
-      title="Pod Creation and Deletion Trends"
-    />
-  </div>
-  <div
-    id="column-2"
-  >
-    <ChartCard
-      chartData={Array []}
-      chartType=""
-      config={Object {}}
-      isLoading={true}
-      options={Object {}}
-      title="Quotas"
-    />
-    <ChartCard
-      chartData={Array []}
-      chartType=""
-      config={Object {}}
-      isLoading={true}
-      options={Object {}}
-      title="Pods"
-    />
+    <div
+      id="column-2"
+    >
+      <div
+        class="card-pf card-pf-aggregate-status card-pf-accented chart-card"
+      >
+        <h2
+          class="card-title"
+        >
+          Quotas
+        </h2>
+        <div
+          class="card-pf-body"
+        >
+          <div
+            aria-atomic="true"
+            aria-live="assertive"
+            class="export-spinner cds--loading cds--loading--small"
+          >
+            <svg
+              aria-label="loading"
+              class="cds--loading__svg"
+              role="img"
+              viewBox="0 0 100 100"
+            >
+              <title>
+                loading
+              </title>
+              <circle
+                class="cds--loading__background"
+                cx="50%"
+                cy="50%"
+                r="42"
+              />
+              <circle
+                class="cds--loading__stroke"
+                cx="50%"
+                cy="50%"
+                r="42"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div
+        class="card-pf card-pf-aggregate-status card-pf-accented chart-card"
+      >
+        <h2
+          class="card-title"
+        >
+          Pods
+        </h2>
+        <div
+          class="card-pf-body"
+        >
+          <div
+            aria-atomic="true"
+            aria-live="assertive"
+            class="export-spinner cds--loading cds--loading--small"
+          >
+            <svg
+              aria-label="loading"
+              class="cds--loading__svg"
+              role="img"
+              viewBox="0 0 100 100"
+            >
+              <title>
+                loading
+              </title>
+              <circle
+                class="cds--loading__background"
+                cx="50%"
+                cy="50%"
+                r="42"
+              />
+              <circle
+                class="cds--loading__stroke"
+                cx="50%"
+                cy="50%"
+                r="42"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;

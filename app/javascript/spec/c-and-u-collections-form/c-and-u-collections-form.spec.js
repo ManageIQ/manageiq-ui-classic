@@ -1,9 +1,8 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
-import { act } from 'react-dom/test-utils';
+import { screen, waitFor } from '@testing-library/react';
 
-import { mount } from '../helpers/mountForm';
+import { renderWithRedux } from '../helpers/mountForm';
 import DiagnosticsCURepairForm from '../../components/c-and-u-collections-form';
 import { formatDate } from '../../components/c-and-u-collections-form/helper';
 
@@ -12,16 +11,25 @@ describe('DiagnosticsCURepairForm Component', () => {
     fetchMock.reset();
     fetchMock.restore();
   });
+
   it('Should render a new DiagnosticsCURepair form', async() => {
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<DiagnosticsCURepairForm />);
+    const timezones = [
+      { name: 'UTC', description: '(GMT+00:00) UTC' },
+      { name: 'Hawaii', description: '(GMT-10:00) Hawaii' },
+    ];
+    fetchMock.getOnce('/api', { timezones });
+
+    const { container } = renderWithRedux(<DiagnosticsCURepairForm />);
+
+    // Wait for the form to load after API call
+    await waitFor(() => {
+      expect(screen.getByText(/Note/i)).toBeInTheDocument();
     });
-    wrapper.update();
-    expect(toJson(wrapper)).toMatchSnapshot();
+
+    expect(container).toMatchSnapshot();
   });
 
-  it('Should add a record from DiagnosticsCURepair form', async(done) => {
+  it('Should add a record from DiagnosticsCURepair form', async() => {
     const paramsData = {
       timezone: 'UTC',
       start_date: formatDate('12/12/2023'),
@@ -35,13 +43,15 @@ describe('DiagnosticsCURepairForm Component', () => {
       { name: 'Alaska', description: '(GMT-09:00) Alaska' },
     ];
     fetchMock.getOnce('/api', { timezones });
-    fetchMock.postOnce('/api/instances/1850//ops/cu_repair?button=submit/', paramsData);
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<DiagnosticsCURepairForm />);
+    fetchMock.postOnce('/ops/cu_repair?button=submit', paramsData);
+
+    const { container } = renderWithRedux(<DiagnosticsCURepairForm />);
+
+    // Wait for the form to load
+    await waitFor(() => {
+      expect(screen.getByText(/Note/i)).toBeInTheDocument();
     });
-    wrapper.update();
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+
+    expect(container).toMatchSnapshot();
   });
 });

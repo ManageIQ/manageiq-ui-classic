@@ -1,348 +1,1122 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Tagging component without redux mapping match snapshot 1`] = `
-<Grid
-  className="tagging-row-wrapper tagging-form"
-  condensed={true}
->
-  <ForwardRef
-    className="tagging-block-outer"
-    lg={8}
-    md={4}
-    sm={4}
+<div>
+  <div
+    class="tagging-row-wrapper tagging-form cds--css-grid cds--css-grid--condensed"
   >
-    <TagModifier
-      header="Add/Modify tag"
-      hideHeader={false}
+    <div
+      class="tagging-block-outer cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
     >
-      <CategoryModifier
-        categoryLabel="Category"
-        isDisabled={false}
-        onTagCategoryChange={[MockFunction]}
-        selectedTagCategory={
-          Object {
-            "id": 1,
-            "label": "animal",
-          }
-        }
-        tagCategories={
-          Array [
-            Object {
-              "id": 1,
-              "label": "Name",
-              "singleValue": undefined,
-            },
-            Object {
-              "id": 2,
-              "label": "Number",
-              "singleValue": undefined,
-            },
-            Object {
-              "id": 3,
-              "label": "Animal",
-              "singleValue": undefined,
-            },
-            Object {
-              "id": 4,
-              "label": "Food",
-              "singleValue": false,
-            },
-            Object {
-              "id": 5,
-              "label": "Something",
-              "singleValue": true,
-            },
-          ]
-        }
-      />
-      <ValueModifier
-        isDisabled={false}
-        multiValue={true}
-        onTagValueChange={[Function]}
-        selectedTagCategory={
-          Object {
-            "id": 1,
-            "label": "animal",
-          }
-        }
-        selectedTagValues={
-          Array [
-            Object {
-              "id": 11,
-              "label": "Pepa",
-            },
-          ]
-        }
-        valueLabel="Value"
-        values={
-          Array [
-            Object {
-              "id": 11,
-              "label": "Pepa",
-            },
-            Object {
-              "id": 12,
-              "label": "Franta",
-            },
-          ]
-        }
-      />
-    </TagModifier>
-  </ForwardRef>
-  <ForwardRef
-    className="tagging-block-outer"
-    lg={8}
-    md={4}
-    sm={4}
-  >
-    <TagView
-      assignedTags={
-        Array [
-          Object {
-            "id": 1,
-            "label": "Name",
-            "values": Array [
-              Object {
-                "id": 11,
-                "label": "Pepa",
-              },
-            ],
-          },
-        ]
-      }
-      header="Assigned tags"
-      hideHeader={false}
-      onTagDeleteClick={[Function]}
-      showCloseButton={true}
-    />
-  </ForwardRef>
-</Grid>
+      <div
+        class="tag-modifier-header cds--subgrid cds--subgrid--wide"
+      >
+        <div
+          class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+        >
+          <h4>
+            Add/Modify tag
+          </h4>
+        </div>
+      </div>
+      <form
+        class="cds--form tag-modifier-form"
+        horizontal="true"
+      >
+        <fieldset
+          class="cds--fieldset"
+        >
+          <legend
+            class="cds--label"
+          >
+            Category
+          </legend>
+          <div
+            class="tag-modifier-form-row category-modifier cds--css-grid-column"
+          >
+            <div
+              class="cds--dropdown__wrapper cds--list-box__wrapper tag-select"
+            >
+              
+              <div
+                class="cds--dropdown cds--list-box"
+                id="dropdown-tag-select"
+              >
+                <button
+                  aria-activedescendant=""
+                  aria-controls="downshift-0-menu"
+                  aria-expanded="false"
+                  aria-haspopup="listbox"
+                  aria-labelledby="downshift-0-label"
+                  class="cds--list-box__field"
+                  id="downshift-0-toggle-button"
+                  role="combobox"
+                  tabindex="0"
+                  title="Name"
+                  type="button"
+                >
+                  <span
+                    class="cds--list-box__label"
+                  >
+                    Name
+                  </span>
+                  <div
+                    class="cds--list-box__menu-icon"
+                  >
+                    <svg
+                      aria-label="Open menu"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      name="chevron--down"
+                      preserveAspectRatio="xMidYMid meet"
+                      role="img"
+                      viewBox="0 0 16 16"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                      />
+                      <title>
+                        Open menu
+                      </title>
+                    </svg>
+                  </div>
+                </button>
+                
+                <ul
+                  aria-labelledby="downshift-0-label"
+                  class="cds--list-box__menu"
+                  id="downshift-0-menu"
+                  role="listbox"
+                />
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset
+          class="cds--fieldset"
+        >
+          <legend
+            class="cds--label"
+          >
+            Value
+          </legend>
+          <div
+            class="tag-modifier-form-row value-modifier cds--css-grid-column"
+          >
+            <div
+              class="cds--multi-select__wrapper cds--list-box__wrapper tag-select"
+            >
+              <label
+                class="cds--label"
+                for="downshift-1-toggle-button"
+                id="downshift-1-label"
+              >
+                <span
+                  class="cds--visually-hidden"
+                >
+                  Total items selected: 
+                   
+                  1
+                   
+                  ,
+                  To clear selection, press Delete or Backspace
+                </span>
+              </label>
+              <div
+                class="cds--multi-select cds--multi-select--selected cds--list-box cds--list-box--expanded"
+                id="multiselect-tag-select"
+              >
+                <div
+                  class="cds--list-box__field--wrapper cds--list-box__field--wrapper--input-focused"
+                >
+                  <div
+                    class="cds--tag cds--tag--filter cds--tag--high-contrast"
+                  >
+                    <span
+                      class="cds--tag__label"
+                      title="1"
+                    >
+                      1
+                    </span>
+                    <div
+                      aria-label="Clear all selected items"
+                      class="cds--tag__close-icon"
+                      role="button"
+                      tabindex="-1"
+                      title="Clear all selected items"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        fill="currentColor"
+                        focusable="false"
+                        height="16"
+                        preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 32 32"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <button
+                    aria-activedescendant=""
+                    aria-controls="downshift-1-menu"
+                    aria-expanded="true"
+                    aria-haspopup="listbox"
+                    aria-labelledby="downshift-1-label"
+                    class="cds--list-box__field"
+                    id="downshift-1-toggle-button"
+                    role="combobox"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <span
+                      class="cds--list-box__label"
+                      id="multiselect-field-label-id-3"
+                    >
+                      Pepa
+                    </span>
+                    <div
+                      class="cds--list-box__menu-icon cds--list-box__menu-icon--open"
+                    >
+                      <svg
+                        aria-label="Close menu"
+                        fill="currentColor"
+                        focusable="false"
+                        height="16"
+                        name="chevron--down"
+                        preserveAspectRatio="xMidYMid meet"
+                        role="img"
+                        viewBox="0 0 16 16"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                        />
+                        <title>
+                          Close menu
+                        </title>
+                      </svg>
+                    </div>
+                  </button>
+                  
+                </div>
+                <ul
+                  aria-labelledby="downshift-1-label"
+                  class="cds--list-box__menu"
+                  id="downshift-1-menu"
+                  role="listbox"
+                >
+                  <li
+                    aria-checked="false"
+                    aria-label="Franta"
+                    aria-selected="false"
+                    class="cds--list-box__menu-item"
+                    id="downshift-1-item-0"
+                    role="option"
+                  >
+                    <div
+                      class="cds--list-box__menu-item__option"
+                    >
+                      <div
+                        class="cds--checkbox-wrapper"
+                      >
+                        <div
+                          class="cds--form-item cds--checkbox-wrapper"
+                        >
+                          <input
+                            class="cds--checkbox"
+                            id="downshift-1-item-0__checkbox"
+                            type="checkbox"
+                          />
+                          <label
+                            class="cds--checkbox-label"
+                            for="downshift-1-item-0__checkbox"
+                            title=""
+                          >
+                            <div
+                              class="cds--checkbox-label-text"
+                              dir="auto"
+                            >
+                              Franta
+                              
+                            </div>
+                          </label>
+                          <div
+                            class="cds--checkbox__validation-msg"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li
+                    aria-checked="true"
+                    aria-label="Pepa"
+                    aria-selected="true"
+                    class="cds--list-box__menu-item cds--list-box__menu-item--active"
+                    id="downshift-1-item-1"
+                    role="option"
+                  >
+                    <div
+                      class="cds--list-box__menu-item__option"
+                    >
+                      <div
+                        class="cds--checkbox-wrapper"
+                      >
+                        <div
+                          class="cds--form-item cds--checkbox-wrapper"
+                        >
+                          <input
+                            checked=""
+                            class="cds--checkbox"
+                            id="downshift-1-item-1__checkbox"
+                            type="checkbox"
+                          />
+                          <label
+                            class="cds--checkbox-label"
+                            for="downshift-1-item-1__checkbox"
+                            title=""
+                          >
+                            <div
+                              class="cds--checkbox-label-text"
+                              dir="auto"
+                            >
+                              Pepa
+                              
+                            </div>
+                          </label>
+                          <div
+                            class="cds--checkbox__validation-msg"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <div
+      class="tagging-block-outer cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
+    >
+      <div
+        id="assignments_div"
+      >
+        <div
+          class="tag-modifier-header cds--subgrid cds--subgrid--wide"
+        >
+          <div
+            class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+          >
+            <h4>
+              Assigned tags
+            </h4>
+          </div>
+        </div>
+        <div
+          class="tag-modifier-form assigned-tags cds--subgrid cds--subgrid--condensed"
+        >
+          <div
+            class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+          >
+            <ul
+              class="list-inline"
+            >
+              <li>
+                <ul
+                  class="tag-category list-inline"
+                >
+                  <li
+                    id="tag_category_1"
+                  >
+                    <div
+                      class="category-label"
+                      title="Name"
+                    >
+                      Name
+                    </div>
+                  </li>
+                  <li
+                    class="tag"
+                  >
+                    <label
+                      class="cds--label cds--label--no-margin tagColor"
+                      dir="auto"
+                      for="tag_value_11"
+                      title="Pepa"
+                    >
+                      <div
+                        class="value-label"
+                      >
+                        <span
+                          class="value-span"
+                        >
+                          Pepa
+                        </span>
+                        <span
+                          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+                        >
+                          <div
+                            class="cds--tooltip-trigger__wrapper"
+                          >
+                            <button
+                              aria-labelledby="tooltip-5"
+                              class="tagButton cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary cds--btn--icon-only"
+                              type="button"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                fill="currentColor"
+                                focusable="false"
+                                height="16"
+                                preserveAspectRatio="xMidYMid meet"
+                                viewBox="0 0 32 32"
+                                width="16"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                                />
+                              </svg>
+                            </button>
+                          </div>
+                          <span
+                            aria-hidden="true"
+                            class="cds--popover"
+                            id="tooltip-5"
+                            role="tooltip"
+                          >
+                            <span
+                              class="cds--popover-content cds--tooltip-content"
+                            >
+                              Close Icon
+                            </span>
+                            <span
+                              class="cds--popover-caret"
+                            />
+                          </span>
+                        </span>
+                      </div>
+                    </label>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`Tagging component without redux mapping should call methods - singleValue is false 1`] = `
-<Grid
-  className="tagging-row-wrapper tagging-form"
-  condensed={true}
->
-  <ForwardRef
-    className="tagging-block-outer"
-    lg={8}
-    md={4}
-    sm={4}
+<div>
+  <div
+    class="tagging-row-wrapper tagging-form cds--css-grid cds--css-grid--condensed"
   >
-    <TagModifier
-      header="Add/Modify tag"
-      hideHeader={false}
+    <div
+      class="tagging-block-outer cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
     >
-      <CategoryModifier
-        categoryLabel="Category"
-        isDisabled={false}
-        onTagCategoryChange={[MockFunction]}
-        selectedTagCategory={
-          Object {
-            "id": 4,
-            "label": "Food",
-          }
-        }
-        tagCategories={
-          Array [
-            Object {
-              "id": 1,
-              "label": "Name",
-              "singleValue": undefined,
-            },
-            Object {
-              "id": 2,
-              "label": "Number",
-              "singleValue": undefined,
-            },
-            Object {
-              "id": 3,
-              "label": "Animal",
-              "singleValue": undefined,
-            },
-            Object {
-              "id": 4,
-              "label": "Food",
-              "singleValue": false,
-            },
-            Object {
-              "id": 5,
-              "label": "Something",
-              "singleValue": true,
-            },
-          ]
-        }
-      />
-      <ValueModifier
-        isDisabled={false}
-        multiValue={true}
-        onTagValueChange={[Function]}
-        selectedTagCategory={
-          Object {
-            "id": 4,
-            "label": "Food",
-          }
-        }
-        selectedTagValues={Array []}
-        valueLabel="Value"
-        values={
-          Array [
-            Object {
-              "id": 41,
-              "label": "Steak",
-            },
-            Object {
-              "id": 42,
-              "label": "Duck",
-            },
-            Object {
-              "id": 43,
-              "label": "Salad",
-            },
-          ]
-        }
-      />
-    </TagModifier>
-  </ForwardRef>
-  <ForwardRef
-    className="tagging-block-outer"
-    lg={8}
-    md={4}
-    sm={4}
-  >
-    <TagView
-      assignedTags={
-        Array [
-          Object {
-            "id": 1,
-            "label": "Name",
-            "values": Array [
-              Object {
-                "id": 11,
-                "label": "Pepa",
-              },
-            ],
-          },
-        ]
-      }
-      header="Assigned tags"
-      hideHeader={false}
-      onTagDeleteClick={[Function]}
-      showCloseButton={true}
-    />
-  </ForwardRef>
-</Grid>
+      <div
+        class="tag-modifier-header cds--subgrid cds--subgrid--wide"
+      >
+        <div
+          class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+        >
+          <h4>
+            Add/Modify tag
+          </h4>
+        </div>
+      </div>
+      <form
+        class="cds--form tag-modifier-form"
+        horizontal="true"
+      >
+        <fieldset
+          class="cds--fieldset"
+        >
+          <legend
+            class="cds--label"
+          >
+            Category
+          </legend>
+          <div
+            class="tag-modifier-form-row category-modifier cds--css-grid-column"
+          >
+            <div
+              class="cds--dropdown__wrapper cds--list-box__wrapper tag-select"
+            >
+              
+              <div
+                class="cds--dropdown cds--list-box"
+                id="dropdown-tag-select"
+              >
+                <button
+                  aria-activedescendant=""
+                  aria-controls="downshift-7-menu"
+                  aria-expanded="false"
+                  aria-haspopup="listbox"
+                  aria-labelledby="downshift-7-label"
+                  class="cds--list-box__field"
+                  id="downshift-7-toggle-button"
+                  role="combobox"
+                  tabindex="0"
+                  title="Food"
+                  type="button"
+                >
+                  <span
+                    class="cds--list-box__label"
+                  >
+                    Food
+                  </span>
+                  <div
+                    class="cds--list-box__menu-icon"
+                  >
+                    <svg
+                      aria-label="Open menu"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      name="chevron--down"
+                      preserveAspectRatio="xMidYMid meet"
+                      role="img"
+                      viewBox="0 0 16 16"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                      />
+                      <title>
+                        Open menu
+                      </title>
+                    </svg>
+                  </div>
+                </button>
+                
+                <ul
+                  aria-labelledby="downshift-7-label"
+                  class="cds--list-box__menu"
+                  id="downshift-7-menu"
+                  role="listbox"
+                />
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset
+          class="cds--fieldset"
+        >
+          <legend
+            class="cds--label"
+          >
+            Value
+          </legend>
+          <div
+            class="tag-modifier-form-row value-modifier cds--css-grid-column"
+          >
+            <div
+              class="cds--multi-select__wrapper cds--list-box__wrapper tag-select"
+            >
+              <label
+                class="cds--label"
+                for="downshift-8-toggle-button"
+                id="downshift-8-label"
+              />
+              <div
+                class="cds--multi-select cds--list-box cds--list-box--expanded"
+                id="multiselect-tag-select"
+              >
+                <div
+                  class="cds--list-box__field--wrapper cds--list-box__field--wrapper--input-focused"
+                >
+                  <button
+                    aria-activedescendant=""
+                    aria-controls="downshift-8-menu"
+                    aria-expanded="true"
+                    aria-haspopup="listbox"
+                    aria-labelledby="downshift-8-label"
+                    class="cds--list-box__field"
+                    id="downshift-8-toggle-button"
+                    role="combobox"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <span
+                      class="cds--list-box__label"
+                      id="multiselect-field-label-id-13"
+                    >
+                      Select tag value
+                    </span>
+                    <div
+                      class="cds--list-box__menu-icon cds--list-box__menu-icon--open"
+                    >
+                      <svg
+                        aria-label="Close menu"
+                        fill="currentColor"
+                        focusable="false"
+                        height="16"
+                        name="chevron--down"
+                        preserveAspectRatio="xMidYMid meet"
+                        role="img"
+                        viewBox="0 0 16 16"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                        />
+                        <title>
+                          Close menu
+                        </title>
+                      </svg>
+                    </div>
+                  </button>
+                  
+                </div>
+                <ul
+                  aria-labelledby="downshift-8-label"
+                  class="cds--list-box__menu"
+                  id="downshift-8-menu"
+                  role="listbox"
+                >
+                  <li
+                    aria-checked="false"
+                    aria-label="Duck"
+                    aria-selected="false"
+                    class="cds--list-box__menu-item"
+                    id="downshift-8-item-0"
+                    role="option"
+                  >
+                    <div
+                      class="cds--list-box__menu-item__option"
+                    >
+                      <div
+                        class="cds--checkbox-wrapper"
+                      >
+                        <div
+                          class="cds--form-item cds--checkbox-wrapper"
+                        >
+                          <input
+                            class="cds--checkbox"
+                            id="downshift-8-item-0__checkbox"
+                            type="checkbox"
+                          />
+                          <label
+                            class="cds--checkbox-label"
+                            for="downshift-8-item-0__checkbox"
+                            title=""
+                          >
+                            <div
+                              class="cds--checkbox-label-text"
+                              dir="auto"
+                            >
+                              Duck
+                              
+                            </div>
+                          </label>
+                          <div
+                            class="cds--checkbox__validation-msg"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li
+                    aria-checked="false"
+                    aria-label="Salad"
+                    aria-selected="false"
+                    class="cds--list-box__menu-item"
+                    id="downshift-8-item-1"
+                    role="option"
+                  >
+                    <div
+                      class="cds--list-box__menu-item__option"
+                    >
+                      <div
+                        class="cds--checkbox-wrapper"
+                      >
+                        <div
+                          class="cds--form-item cds--checkbox-wrapper"
+                        >
+                          <input
+                            class="cds--checkbox"
+                            id="downshift-8-item-1__checkbox"
+                            type="checkbox"
+                          />
+                          <label
+                            class="cds--checkbox-label"
+                            for="downshift-8-item-1__checkbox"
+                            title=""
+                          >
+                            <div
+                              class="cds--checkbox-label-text"
+                              dir="auto"
+                            >
+                              Salad
+                              
+                            </div>
+                          </label>
+                          <div
+                            class="cds--checkbox__validation-msg"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li
+                    aria-checked="false"
+                    aria-label="Steak"
+                    aria-selected="false"
+                    class="cds--list-box__menu-item"
+                    id="downshift-8-item-2"
+                    role="option"
+                  >
+                    <div
+                      class="cds--list-box__menu-item__option"
+                    >
+                      <div
+                        class="cds--checkbox-wrapper"
+                      >
+                        <div
+                          class="cds--form-item cds--checkbox-wrapper"
+                        >
+                          <input
+                            class="cds--checkbox"
+                            id="downshift-8-item-2__checkbox"
+                            type="checkbox"
+                          />
+                          <label
+                            class="cds--checkbox-label"
+                            for="downshift-8-item-2__checkbox"
+                            title=""
+                          >
+                            <div
+                              class="cds--checkbox-label-text"
+                              dir="auto"
+                            >
+                              Steak
+                              
+                            </div>
+                          </label>
+                          <div
+                            class="cds--checkbox__validation-msg"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <div
+      class="tagging-block-outer cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
+    >
+      <div
+        id="assignments_div"
+      >
+        <div
+          class="tag-modifier-header cds--subgrid cds--subgrid--wide"
+        >
+          <div
+            class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+          >
+            <h4>
+              Assigned tags
+            </h4>
+          </div>
+        </div>
+        <div
+          class="tag-modifier-form assigned-tags cds--subgrid cds--subgrid--condensed"
+        >
+          <div
+            class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+          >
+            <ul
+              class="list-inline"
+            >
+              <li>
+                <ul
+                  class="tag-category list-inline"
+                >
+                  <li
+                    id="tag_category_1"
+                  >
+                    <div
+                      class="category-label"
+                      title="Name"
+                    >
+                      Name
+                    </div>
+                  </li>
+                  <li
+                    class="tag"
+                  >
+                    <label
+                      class="cds--label cds--label--no-margin tagColor"
+                      dir="auto"
+                      for="tag_value_11"
+                      title="Pepa"
+                    >
+                      <div
+                        class="value-label"
+                      >
+                        <span
+                          class="value-span"
+                        >
+                          Pepa
+                        </span>
+                        <span
+                          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+                        >
+                          <div
+                            class="cds--tooltip-trigger__wrapper"
+                          >
+                            <button
+                              aria-labelledby="tooltip-18"
+                              class="tagButton cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary cds--btn--icon-only"
+                              type="button"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                fill="currentColor"
+                                focusable="false"
+                                height="16"
+                                preserveAspectRatio="xMidYMid meet"
+                                viewBox="0 0 32 32"
+                                width="16"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                                />
+                              </svg>
+                            </button>
+                          </div>
+                          <span
+                            aria-hidden="true"
+                            class="cds--popover"
+                            id="tooltip-18"
+                            role="tooltip"
+                          >
+                            <span
+                              class="cds--popover-content cds--tooltip-content"
+                            >
+                              Close Icon
+                            </span>
+                            <span
+                              class="cds--popover-caret"
+                            />
+                          </span>
+                        </span>
+                      </div>
+                    </label>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`Tagging component without redux mapping should call methods - singleValue is true 1`] = `
-<Grid
-  className="tagging-row-wrapper tagging-form"
-  condensed={true}
->
-  <ForwardRef
-    className="tagging-block-outer"
-    lg={8}
-    md={4}
-    sm={4}
+<div>
+  <div
+    class="tagging-row-wrapper tagging-form cds--css-grid cds--css-grid--condensed"
   >
-    <TagModifier
-      header="Add/Modify tag"
-      hideHeader={false}
+    <div
+      class="tagging-block-outer cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
     >
-      <CategoryModifier
-        categoryLabel="Category"
-        isDisabled={false}
-        onTagCategoryChange={[MockFunction]}
-        selectedTagCategory={
-          Object {
-            "id": 5,
-            "label": "Something",
-          }
-        }
-        tagCategories={
-          Array [
-            Object {
-              "id": 1,
-              "label": "Name",
-              "singleValue": undefined,
-            },
-            Object {
-              "id": 2,
-              "label": "Number",
-              "singleValue": undefined,
-            },
-            Object {
-              "id": 3,
-              "label": "Animal",
-              "singleValue": undefined,
-            },
-            Object {
-              "id": 4,
-              "label": "Food",
-              "singleValue": false,
-            },
-            Object {
-              "id": 5,
-              "label": "Something",
-              "singleValue": true,
-            },
-          ]
-        }
-      />
-      <ValueModifier
-        isDisabled={false}
-        multiValue={false}
-        onTagValueChange={[Function]}
-        selectedTagCategory={
-          Object {
-            "id": 5,
-            "label": "Something",
-          }
-        }
-        selectedTagValues={Array []}
-        valueLabel="Value"
-        values={
-          Array [
-            Object {
-              "id": 51,
-              "label": "Knedlik",
-            },
-            Object {
-              "id": 52,
-              "label": "Daenerys Stormborn of the House Targaryen, First of Her Name,...and Mother of Dragons",
-            },
-          ]
-        }
-      />
-    </TagModifier>
-  </ForwardRef>
-  <ForwardRef
-    className="tagging-block-outer"
-    lg={8}
-    md={4}
-    sm={4}
-  >
-    <TagView
-      assignedTags={
-        Array [
-          Object {
-            "id": 1,
-            "label": "Name",
-            "values": Array [
-              Object {
-                "id": 11,
-                "label": "Pepa",
-              },
-            ],
-          },
-        ]
-      }
-      header="Assigned tags"
-      hideHeader={false}
-      onTagDeleteClick={[Function]}
-      showCloseButton={true}
-    />
-  </ForwardRef>
-</Grid>
+      <div
+        class="tag-modifier-header cds--subgrid cds--subgrid--wide"
+      >
+        <div
+          class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+        >
+          <h4>
+            Add/Modify tag
+          </h4>
+        </div>
+      </div>
+      <form
+        class="cds--form tag-modifier-form"
+        horizontal="true"
+      >
+        <fieldset
+          class="cds--fieldset"
+        >
+          <legend
+            class="cds--label"
+          >
+            Category
+          </legend>
+          <div
+            class="tag-modifier-form-row category-modifier cds--css-grid-column"
+          >
+            <div
+              class="cds--dropdown__wrapper cds--list-box__wrapper tag-select"
+            >
+              
+              <div
+                class="cds--dropdown cds--list-box"
+                id="dropdown-tag-select"
+              >
+                <button
+                  aria-activedescendant=""
+                  aria-controls="downshift-10-menu"
+                  aria-expanded="false"
+                  aria-haspopup="listbox"
+                  aria-labelledby="downshift-10-label"
+                  class="cds--list-box__field"
+                  id="downshift-10-toggle-button"
+                  role="combobox"
+                  tabindex="0"
+                  title="Something"
+                  type="button"
+                >
+                  <span
+                    class="cds--list-box__label"
+                  >
+                    Something
+                  </span>
+                  <div
+                    class="cds--list-box__menu-icon"
+                  >
+                    <svg
+                      aria-label="Open menu"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      name="chevron--down"
+                      preserveAspectRatio="xMidYMid meet"
+                      role="img"
+                      viewBox="0 0 16 16"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                      />
+                      <title>
+                        Open menu
+                      </title>
+                    </svg>
+                  </div>
+                </button>
+                
+                <ul
+                  aria-labelledby="downshift-10-label"
+                  class="cds--list-box__menu"
+                  id="downshift-10-menu"
+                  role="listbox"
+                />
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset
+          class="cds--fieldset"
+        >
+          <legend
+            class="cds--label"
+          >
+            Value
+          </legend>
+          <div
+            class="tag-modifier-form-row value-modifier cds--css-grid-column"
+          >
+            <div
+              class="cds--dropdown__wrapper cds--list-box__wrapper tag-select"
+            >
+              
+              <div
+                class="cds--dropdown cds--list-box"
+                id="dropdown-tag-select"
+              >
+                <button
+                  aria-activedescendant=""
+                  aria-controls="downshift-11-menu"
+                  aria-expanded="false"
+                  aria-haspopup="listbox"
+                  aria-labelledby="downshift-11-label"
+                  class="cds--list-box__field"
+                  id="downshift-11-toggle-button"
+                  role="combobox"
+                  tabindex="0"
+                  title="Select tag value"
+                  type="button"
+                >
+                  <span
+                    class="cds--list-box__label"
+                  >
+                    Select tag value
+                  </span>
+                  <div
+                    class="cds--list-box__menu-icon"
+                  >
+                    <svg
+                      aria-label="Open menu"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      name="chevron--down"
+                      preserveAspectRatio="xMidYMid meet"
+                      role="img"
+                      viewBox="0 0 16 16"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                      />
+                      <title>
+                        Open menu
+                      </title>
+                    </svg>
+                  </div>
+                </button>
+                
+                <ul
+                  aria-labelledby="downshift-11-label"
+                  class="cds--list-box__menu"
+                  id="downshift-11-menu"
+                  role="listbox"
+                />
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <div
+      class="tagging-block-outer cds--sm:col-span-4 cds--md:col-span-4 cds--lg:col-span-8 cds--css-grid-column"
+    >
+      <div
+        id="assignments_div"
+      >
+        <div
+          class="tag-modifier-header cds--subgrid cds--subgrid--wide"
+        >
+          <div
+            class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+          >
+            <h4>
+              Assigned tags
+            </h4>
+          </div>
+        </div>
+        <div
+          class="tag-modifier-form assigned-tags cds--subgrid cds--subgrid--condensed"
+        >
+          <div
+            class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+          >
+            <ul
+              class="list-inline"
+            >
+              <li>
+                <ul
+                  class="tag-category list-inline"
+                >
+                  <li
+                    id="tag_category_1"
+                  >
+                    <div
+                      class="category-label"
+                      title="Name"
+                    >
+                      Name
+                    </div>
+                  </li>
+                  <li
+                    class="tag"
+                  >
+                    <label
+                      class="cds--label cds--label--no-margin tagColor"
+                      dir="auto"
+                      for="tag_value_11"
+                      title="Pepa"
+                    >
+                      <div
+                        class="value-label"
+                      >
+                        <span
+                          class="value-span"
+                        >
+                          Pepa
+                        </span>
+                        <span
+                          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+                        >
+                          <div
+                            class="cds--tooltip-trigger__wrapper"
+                          >
+                            <button
+                              aria-labelledby="tooltip-21"
+                              class="tagButton cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary cds--btn--icon-only"
+                              type="button"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                fill="currentColor"
+                                focusable="false"
+                                height="16"
+                                preserveAspectRatio="xMidYMid meet"
+                                viewBox="0 0 32 32"
+                                width="16"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                                />
+                              </svg>
+                            </button>
+                          </div>
+                          <span
+                            aria-hidden="true"
+                            class="cds--popover"
+                            id="tooltip-21"
+                            role="tooltip"
+                          >
+                            <span
+                              class="cds--popover-content cds--tooltip-content"
+                            >
+                              Close Icon
+                            </span>
+                            <span
+                              class="cds--popover-caret"
+                            />
+                          </span>
+                        </span>
+                      </div>
+                    </label>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 `;
