@@ -138,20 +138,6 @@ class ServiceController < ApplicationController
     Service
   end
 
-  def sanitize_output(stdout)
-    htm = stdout.gsub('"', '\"')
-
-    regex_map = {
-      /\\'/ => "'",
-      /'/   => "\\\\'",
-      /{{/  => '\{\{',
-      /}}/  => '\}\}'
-    }
-    regex_map.each_pair { |f, t| htm.gsub!(f, t) }
-    htm
-  end
-  helper_method :sanitize_output
-
   def textual_group_list
     if @item && @item.kind_of?(GenericObject)
       [%i[go_properties attribute_details_list methods go_relationships]]
