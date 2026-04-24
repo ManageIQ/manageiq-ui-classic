@@ -93,6 +93,7 @@ module.exports = [
               'node_modules',
             ],
             implementation: require('sass').default,
+            quietDeps: true,
           },
         },
       },
