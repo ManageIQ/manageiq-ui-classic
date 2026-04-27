@@ -82,7 +82,7 @@ div#saml-login {
 
     .details {
       p:first-child {
-        border-top: 1px solid rgba($color-pf-white, (30/100));
+        border-top: 1px solid rgba($color-pf-white, (30 * 0.01));
         padding-top: 25px;
         margin-top: 25px;
       }
@@ -94,7 +94,7 @@ div#saml-login {
           margin-top: 0;
         }
 
-        border-left: 1px solid rgba($color-pf-white, (30/100));
+        border-left: 1px solid rgba($color-pf-white, (30 * 0.01));
         padding-left: 40px;
       }
 

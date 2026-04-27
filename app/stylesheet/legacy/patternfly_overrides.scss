@@ -102,7 +102,7 @@ body#dashboard .blank-slate-pf {
       margin-right: 0;
       min-width: ($font-size-base * 2 + 2); // 26px
       position: absolute;
-      left: ($grid-gutter-width / 2);
+      left: ($grid-gutter-width * 0.5);
       text-align: center;
       top: 15px;
     }

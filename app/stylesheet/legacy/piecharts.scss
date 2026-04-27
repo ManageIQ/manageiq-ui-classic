@@ -26,7 +26,7 @@
 
   @for $i from 0 through 10 {
     &.fill-#{$i}::before {
-      transform: rotate(#{$i / 20}turn);
+      transform: rotate(#{$i * 0.05}turn);
     }
   }
 
@@ -34,7 +34,7 @@
     &.fill-#{$i} {
       &::before {
         background: $chart-fill;
-        transform: rotate(#{($i - 10) / 20}turn);
+        transform: rotate(#{($i - 10) * 0.05}turn);
       }
 
       &.invert::before {
