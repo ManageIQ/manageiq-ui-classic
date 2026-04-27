@@ -78,9 +78,7 @@ module.exports = [
       {
         loader: 'sass-loader',
         options: {
-          prependData: () => {
-            return `$img-base-path: '${appBasePath}';`;// Path variable for login and about modal images.
-          },
+          additionalData: `$img-base-path: '${appBasePath}';`,
           sassOptions: {
             sourceMap: true,
             includePaths: [
