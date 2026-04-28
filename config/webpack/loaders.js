@@ -1,6 +1,6 @@
 const { merge } = require('webpack-merge');
 
-const { env, publicPath } = require('./configuration.js');
+const { env, output } = require('./configuration.js');
 const babelrc = require('../../.babelrc.js');
 const nodeModules = '../../node_modules';
 const appBasePath = (env.NODE_ENV === 'production') ? '/packs/' : '../../assets/images/layout/';// Need different paths for developement and prod envs.
@@ -46,7 +46,7 @@ module.exports = [
     use: [{
       loader: 'file-loader',
       options: {
-        publicPath,
+        publicPath: output.publicPath,
         name: '[name]-[hash].[ext]',
       },
     }],
