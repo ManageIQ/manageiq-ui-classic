@@ -96,6 +96,8 @@ module.exports = [
               'node_modules',
             ],
             implementation: require('sass').default,
+            quietDeps: true, // TODO: Ignore patternfly and fontawesome sass warnings; remove this once we've removed those packages
+            silenceDeprecations: ["legacy-js-api"], // TODO: Ignore sass-loader warnings; remove those once we've upgraded sass-loader to v16+
           },
         },
       },
