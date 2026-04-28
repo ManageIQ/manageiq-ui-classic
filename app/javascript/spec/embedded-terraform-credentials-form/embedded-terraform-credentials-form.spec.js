@@ -1,9 +1,7 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
+import { waitFor } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
-
-import { act } from 'react-dom/test-utils';
-import { mount } from '../helpers/mountForm';
+import { renderWithRedux } from '../helpers/mountForm';
 import EmbeddedTerraformCredentialsForm from '../../components/embedded-terraform-credentials-form';
 
 describe('Embedded Terraform Credential Form Component', () => {
@@ -33,13 +31,16 @@ describe('Embedded Terraform Credential Form Component', () => {
   };
 
   beforeEach(() => {
-    fetchMock.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedTerraform::AutomationManager', {
-      resources: [
-        {
-          href: 'http://localhost:3000/api/providers/77',
-        },
-      ],
-    });
+    fetchMock.get(
+      '/api/providers?collection_class=ManageIQ::Providers::EmbeddedTerraform::AutomationManager',
+      {
+        resources: [
+          {
+            href: 'http://localhost:3000/api/providers/77',
+          },
+        ],
+      }
+    );
   });
 
   afterEach(() => {
@@ -47,30 +48,30 @@ describe('Embedded Terraform Credential Form Component', () => {
     fetchMock.restore();
   });
 
-  it('should render adding a new credential', async(done) => {
+  it('should render adding a new credential', async() => {
     fetchMock.once('/api/authentications', api);
-    let wrapper;
 
-    await act(async() => {
-      wrapper = mount(<EmbeddedTerraformCredentialsForm />);
+    const { container } = renderWithRedux(<EmbeddedTerraformCredentialsForm />);
+
+    await waitFor(() => {
+      expect(fetchMock.calls()).toHaveLength(2);
     });
-    wrapper.update();
-    expect(fetchMock.calls()).toHaveLength(2);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+
+    expect(container).toMatchSnapshot();
   });
 
-  it('should render editing a credential', async(done) => {
+  it('should render editing a credential', async() => {
     fetchMock.once('/api/authentications', api);
     fetchMock.get('/api/authentications/1', { ems_ref: 'test', type: 'foo' });
-    let wrapper;
 
-    await act(async() => {
-      wrapper = mount(<EmbeddedTerraformCredentialsForm recordId="1" />);
+    const { container } = renderWithRedux(
+      <EmbeddedTerraformCredentialsForm recordId="1" />
+    );
+
+    await waitFor(() => {
+      expect(fetchMock.calls()).toHaveLength(3);
     });
-    wrapper.update();
-    expect(fetchMock.calls()).toHaveLength(3);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+
+    expect(container).toMatchSnapshot();
   });
 });

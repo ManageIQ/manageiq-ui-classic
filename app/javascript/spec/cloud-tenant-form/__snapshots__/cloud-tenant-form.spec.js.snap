@@ -1,93 +1,223 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Cloud tenant form component should render adding form variant 1`] = `
-<Grid>
-  <ForwardRef
-    lg={16}
-    md={8}
-    sm={4}
+<div>
+  <div
+    class="cds--css-grid"
   >
-    <Connect(MiqFormRenderer)
-      buttonsLabels={
-        Object {
-          "submitLabel": "Add",
-        }
-      }
-      canReset={false}
-      initialValues={Object {}}
-      onCancel={[Function]}
-      onSubmit={[Function]}
-      schema={
-        Object {
-          "fields": Array [
-            Object {
-              "component": "text-field",
-              "id": "name",
-              "isRequired": true,
-              "label": "Tenant Name",
-              "maxLength": 128,
-              "name": "name",
-              "validate": Array [
-                Object {
-                  "type": "required",
-                },
-              ],
-            },
-            Object {
-              "component": "select",
-              "id": "ems_id",
-              "includeEmpty": true,
-              "isRequired": true,
-              "label": "Cloud Provider",
-              "loadOptions": [Function],
-              "name": "ems_id",
-              "onChange": [Function],
-              "validate": Array [
-                Object {
-                  "type": "required",
-                },
-              ],
-            },
-            Object {
-              "component": "select",
-              "condition": Object {
-                "isNotEmpty": true,
-                "when": "ems_id",
-              },
-              "id": "parent_id",
-              "key": "parent_id-undefined",
-              "label": "Parent Cloud Tenant",
-              "loadOptions": [Function],
-              "name": "parent_id",
-            },
-          ],
-        }
-      }
-    />
-  </ForwardRef>
-</Grid>
+    <div
+      class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+    >
+      <form
+        class="cds--form form-0-2-3 form-react"
+        novalidate=""
+      >
+        <div
+          class="cds--form-item cds--text-input-wrapper"
+        >
+          <div
+            class="cds--text-input__label-wrapper"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="name"
+            >
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+              >
+                *
+              </span>
+              Tenant Name
+            </label>
+          </div>
+          <div
+            class="cds--text-input__field-outer-wrapper"
+          >
+            <div
+              class="cds--text-input__field-wrapper"
+            >
+              <input
+                class="cds--text-input"
+                id="name"
+                maxlength="128"
+                name="name"
+                type="text"
+                value=""
+              />
+              
+              <span
+                aria-atomic="true"
+                aria-live="assertive"
+                class="cds--text-input__counter-alert"
+                role="alert"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--form-item"
+        >
+          <div
+            class="cds--select"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="ems_id"
+            >
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+              >
+                *
+              </span>
+              Cloud Provider
+            </label>
+            <div
+              class="cds--select-input__wrapper"
+            >
+              <select
+                class="cds--select-input"
+                id="ems_id"
+                loadingmessage="Loading..."
+                name="ems_id"
+                title=""
+              >
+                <option
+                  class="cds--select-option"
+                  value=""
+                >
+                  &lt;Choose&gt;
+                </option>
+              </select>
+              <svg
+                aria-hidden="true"
+                class="cds--select__arrow"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                />
+              </svg>
+              
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--btn-set"
+        >
+          <button
+            class="cds--btn cds--btn--primary cds--btn--disabled"
+            disabled=""
+            type="submit"
+            variant="primary"
+          >
+            Add
+          </button>
+          <button
+            class="cds--btn cds--btn--secondary"
+            type="button"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`Cloud tenant form component should render editing form variant 1`] = `
-<Provider
-  store={
-    Object {
-      "asyncReducers": Object {
-        "FormButtons": [Function],
-        "miqCustomTabReducer": [Function],
-        "notificationReducer": [Function],
-      },
-      "dispatch": [Function],
-      "getState": [Function],
-      "injectReducers": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-      Symbol(observable): [Function],
-    }
-  }
->
-  <CloudTenantForm
-    recordId="1"
-  />
-</Provider>
+<div>
+  <div
+    class="cds--css-grid"
+  >
+    <div
+      class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+    >
+      <form
+        class="cds--form form-0-2-3 form-react"
+        novalidate=""
+      >
+        <div
+          class="cds--form-item cds--text-input-wrapper"
+        >
+          <div
+            class="cds--text-input__label-wrapper"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="name"
+            >
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+              >
+                *
+              </span>
+              Tenant Name
+            </label>
+          </div>
+          <div
+            class="cds--text-input__field-outer-wrapper"
+          >
+            <div
+              class="cds--text-input__field-wrapper"
+            >
+              <input
+                class="cds--text-input"
+                id="name"
+                maxlength="128"
+                name="name"
+                type="text"
+                value="foo"
+              />
+              
+              <span
+                aria-atomic="true"
+                aria-live="assertive"
+                class="cds--text-input__counter-alert"
+                role="alert"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--btn-set"
+        >
+          <button
+            class="cds--btn cds--btn--primary cds--btn--disabled"
+            disabled=""
+            type="submit"
+            variant="primary"
+          >
+            Save
+          </button>
+          <button
+            class="cds--btn cds--btn--secondary cds--btn--disabled"
+            disabled=""
+            type="button"
+          >
+            Reset
+          </button>
+          <button
+            class="cds--btn cds--btn--secondary"
+            type="button"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 `;
