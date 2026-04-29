@@ -1,19 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Tag Component match snapshot 1`] = `
-<li
-  className="tag"
-  key="1"
->
-  <FormLabel
-    className="tagColor"
-    id="tag_value_1"
-    key="1"
-    title="duck"
+<div>
+  <li
+    class="tag"
   >
-    <div
-      className="value-label"
-    />
-  </FormLabel>
-</li>
+    <label
+      class="cds--label cds--label--no-margin tagColor"
+      dir="auto"
+      for="tag_value_1"
+      title="duck"
+    >
+      <div
+        class="value-label"
+      />
+    </label>
+  </li>
+</div>
 `;
