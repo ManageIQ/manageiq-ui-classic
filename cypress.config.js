@@ -23,7 +23,7 @@ module.exports = defineConfig({
       openMode: false,
       runMode: true,
     },
-    setupNodeEvents(_on, _config) {
+    setupNodeEvents(on, _config) {
       // Check for Cypress build marker
       const markerPath = path.resolve(__dirname, 'tmp/.cypress-build-marker');
       if (!fs.existsSync(markerPath)) {
