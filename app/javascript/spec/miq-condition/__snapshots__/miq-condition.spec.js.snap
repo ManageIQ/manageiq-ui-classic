@@ -1,0 +1,356 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MiqConditionStructuredList should render condition expression structured list 1`] = `
+<div>
+  <div
+    aria-label="Structured list"
+    class="cds--structured-list miq-structured-list miq_condition_expression"
+    role="table"
+  >
+    <div
+      class="cds--structured-list-tbody"
+      role="rowgroup"
+    >
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="0"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content color"
+          >
+            <div
+              class="expand wrap_text"
+            >
+              Expression1
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="1"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content color"
+          >
+            <div
+              class="expand wrap_text"
+            >
+              Expression2
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="2"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content color"
+          >
+            <div
+              class="expand wrap_text"
+            >
+              Expression3
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`MiqConditionStructuredList should render condition info structured list 1`] = `
+<div>
+  <div
+    aria-label="Structured list"
+    class="cds--structured-list miq-structured-list miq_condition_info"
+    role="table"
+  >
+    <div
+      class="cds--structured-list-tbody"
+      role="rowgroup"
+    >
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="0"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header"
+          dir="auto"
+          role="cell"
+        />
+        <div
+          class="cds--structured-list-td content_value object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="expand wrap_text"
+            >
+              bar
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`MiqConditionStructuredList should render condition notes structured list 1`] = `
+<div>
+  <div
+    aria-label="Structured list"
+    class="cds--structured-list miq-structured-list miq_condition_notes"
+    role="table"
+  >
+    <div
+      class="cds--structured-list-tbody"
+      role="rowgroup"
+    >
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="0"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td content_value object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="cds--form-item"
+          >
+            <div
+              class="cds--text-area__label-wrapper"
+            >
+              <label
+                class="cds--label"
+                dir="auto"
+              />
+            </div>
+            <div
+              class="cds--text-area__wrapper"
+            >
+              <textarea
+                aria-invalid="false"
+                class="cds--text-area"
+                placeholder=""
+                rows="4"
+                style="width: 100%;"
+              >
+                text area description
+              </textarea>
+              
+              <span
+                aria-atomic="true"
+                aria-live="assertive"
+                class="cds--text-area__counter-alert"
+                role="alert"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`MiqConditionStructuredList should render condition policy structured list 1`] = `
+<div>
+  <div
+    aria-label="Structured list"
+    class="cds--structured-list miq-structured-list miq_condition_policies"
+    role="table"
+  >
+    <div
+      class="cds--structured-list-tbody"
+      role="rowgroup"
+    >
+      <div
+        class="cds--structured-list-row clickable"
+        role="row"
+        tabindex="0"
+        title="View this model policy"
+      >
+        <div
+          class="cds--structured-list-td label_header object_item"
+          dir="auto"
+          role="cell"
+          title="View this model policy"
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="wrap_text"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--structured-list-row clickable"
+        role="row"
+        tabindex="1"
+        title="View this model policy"
+      >
+        <div
+          class="cds--structured-list-td label_header object_item"
+          dir="auto"
+          role="cell"
+          title="View this model policy"
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="wrap_text"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--structured-list-row clickable"
+        role="row"
+        tabindex="2"
+        title="View this model policy"
+      >
+        <div
+          class="cds--structured-list-td label_header object_item"
+          dir="auto"
+          role="cell"
+          title="View this model policy"
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="wrap_text"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`MiqConditionStructuredList should render condition scope structured list 1`] = `
+<div>
+  <div
+    aria-label="Structured list"
+    class="cds--structured-list miq-structured-list miq_condition_scope"
+    role="table"
+  >
+    <div
+      class="cds--structured-list-tbody"
+      role="rowgroup"
+    >
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="0"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content color"
+          >
+            <div
+              class="expand wrap_text"
+            >
+              Expression1
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="1"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content color"
+          >
+            <div
+              class="expand wrap_text"
+            >
+              Expression2
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="2"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content color"
+          >
+            <div
+              class="expand wrap_text"
+            >
+              Expression3
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
