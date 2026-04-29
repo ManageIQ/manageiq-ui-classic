@@ -1,61 +1,112 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Tag view match snapshot 1`] = `
-<div
-  id="assignments_div"
->
-  <Grid
-    className="tag-modifier-header"
+exports[`Tag view should match snapshot 1`] = `
+<div>
+  <div
+    id="assignments_div"
   >
-    <ForwardRef
-      lg={16}
-      md={8}
-      sm={4}
+    <div
+      class="tag-modifier-header cds--css-grid"
     >
-      <h4>
-        Assigned tags
-      </h4>
-    </ForwardRef>
-  </Grid>
-  <Grid
-    className="tag-modifier-form assigned-tags"
-    condensed={true}
-  >
-    <ForwardRef
-      lg={16}
-      md={8}
-      sm={4}
-    >
-      <ul
-        className="list-inline"
+      <div
+        class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
       >
-        <li
-          key="1"
+        <h4>
+          Assigned tags
+        </h4>
+      </div>
+    </div>
+    <div
+      class="tag-modifier-form assigned-tags cds--css-grid cds--css-grid--condensed"
+    >
+      <div
+        class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+      >
+        <ul
+          class="list-inline"
         >
-          <TagCategory
-            categoryTruncate={[Function]}
-            key="1"
-            onTagDeleteClick={[MockFunction]}
-            showCloseButton={true}
-            tagCategory={
-              Object {
-                "id": 1,
-                "label": "Name",
-              }
-            }
-            valueTruncate={[Function]}
-            values={
-              Array [
-                Object {
-                  "id": 11,
-                  "label": "Pepa",
-                },
-              ]
-            }
-          />
-        </li>
-      </ul>
-    </ForwardRef>
-  </Grid>
+          <li>
+            <ul
+              class="tag-category list-inline"
+            >
+              <li
+                id="tag_category_1"
+              >
+                <div
+                  class="category-label"
+                  title="Name"
+                >
+                  Name
+                </div>
+              </li>
+              <li
+                class="tag"
+              >
+                <label
+                  class="cds--label cds--label--no-margin tagColor"
+                  dir="auto"
+                  for="tag_value_11"
+                  title="Pepa"
+                >
+                  <div
+                    class="value-label"
+                  >
+                    <span
+                      class="value-span"
+                    >
+                      Pepa
+                    </span>
+                    <span
+                      class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+                    >
+                      <div
+                        class="cds--tooltip-trigger__wrapper"
+                      >
+                        <button
+                          aria-labelledby="tooltip-2"
+                          class="tagButton cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary cds--btn--icon-only"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            fill="currentColor"
+                            focusable="false"
+                            height="16"
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 32 32"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                      <span
+                        aria-hidden="true"
+                        class="cds--popover"
+                        id="tooltip-2"
+                        role="tooltip"
+                      >
+                        <span
+                          class="cds--popover-content cds--tooltip-content"
+                        >
+                          Close Icon
+                        </span>
+                        <span
+                          class="cds--popover-caret"
+                        />
+                      </span>
+                    </span>
+                  </div>
+                </label>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
 `;
