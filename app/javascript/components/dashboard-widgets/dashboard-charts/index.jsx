@@ -7,8 +7,7 @@ import {
 import { getConvertedData } from '../../carbon-charts/helpers';
 import EmptyChart from './emptyChart';
 
-// eslint-disable-next-line no-unused-vars
-const DashboardWidget = ({ data, id, title }) => {
+const DashboardWidget = ({ data, _id, title }) => {
   const convertedData = getConvertedData(data);
   let showLegend = true;
   const nameTable = data.miq.name_table;
@@ -55,13 +54,13 @@ const DashboardWidget = ({ data, id, title }) => {
 
 DashboardWidget.propTypes = {
   data: PropTypes.objectOf(PropTypes.any),
-  id: PropTypes.string,
+  _id: PropTypes.string,
   title: PropTypes.string,
 };
 
 DashboardWidget.defaultProps = {
   data: null,
-  id: null,
+  _id: null,
   title: null,
 };
 

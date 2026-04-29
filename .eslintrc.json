@@ -175,8 +175,10 @@
       "args": "after-used",
       "argsIgnorePattern": "^_",
       "vars": "local",
+      "varsIgnorePattern": "^_",
       "caughtErrors": "all",
-      "caughtErrorsIgnorePattern": "^_"
+      "caughtErrorsIgnorePattern": "^_",
+      "ignoreRestSiblings": true
     }],
     "no-alert": 2,
     "no-debugger": 2,

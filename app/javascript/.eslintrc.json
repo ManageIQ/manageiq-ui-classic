@@ -56,8 +56,10 @@
       "args": "after-used",
       "argsIgnorePattern": "^_",
       "vars": "local",
+      "varsIgnorePattern": "^_",
       "caughtErrors": "all",
-      "caughtErrorsIgnorePattern": "^_"
+      "caughtErrorsIgnorePattern": "^_",
+      "ignoreRestSiblings": true
     }],
     "no-use-before-define": ["error", {
       "functions": false,
