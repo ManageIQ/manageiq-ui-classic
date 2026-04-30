@@ -12,7 +12,7 @@ const {
 
 module.exports = merge(sharedConfig, {
   mode: 'development',
-  devtool: 'inline-source-map',
+  devtool: 'eval-cheap-module-source-map',
   plugins: [
     new NodeVersionCheckPlugin(),
   ],
