@@ -3,13 +3,11 @@ import React from 'react';
 import { componentTypes, useFormApi } from '@@ddf';
 import componentMapper from '../../forms/mappers/componentMapper';
 
-// eslint-disable-next-line no-unused-vars
-const Component = componentMapper[componentTypes.BUTTON];
+const _Component = componentMapper[componentTypes.BUTTON];
 
-// eslint-disable-next-line no-unused-vars, react/prop-types
-const DetectButton = ({ dependencies, target, ...props }) => {
-  // eslint-disable-next-line no-unused-vars
-  const formOptions = useFormApi();
+// eslint-disable-next-line react/prop-types
+const DetectButton = ({ dependencies: _dependencies, target: _target, ..._props }) => {
+  const _formOptions = useFormApi();
   return <span />;
 
   // const onClick = () => {
