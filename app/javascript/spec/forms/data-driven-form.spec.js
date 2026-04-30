@@ -1,7 +1,7 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { componentTypes } from '@@ddf';
-import { act } from 'react-dom/test-utils';
 
 import MiqFormRenderer from '../../forms/data-driven-form';
 
@@ -10,11 +10,13 @@ describe('DataDrivenForm', () => {
 
   beforeEach(() => {
     const schema = {
-      fields: [{
-        component: componentTypes.TEXT_FIELD,
-        name: 'name',
-        labelText: 'label',
-      }],
+      fields: [
+        {
+          component: componentTypes.TEXT_FIELD,
+          name: 'name',
+          labelText: 'label',
+        },
+      ],
     };
     initialProps = {
       schema,
@@ -23,25 +25,24 @@ describe('DataDrivenForm', () => {
   });
 
   it('should render correctly', () => {
-    const wrapper = mount(<MiqFormRenderer {...initialProps} />);
-    expect(wrapper.find('form')).toHaveLength(1);
-    expect(wrapper.find('input')).toHaveLength(1);
+    const { container } = render(<MiqFormRenderer {...initialProps} />);
 
-    expect(wrapper.html()).toMatchSnapshot();
+    expect(container.querySelector('form')).toBeInTheDocument();
+    expect(container.querySelector('input')).toBeInTheDocument();
+    expect(container).toMatchSnapshot();
   });
 
-  it('should set pristine in reducer when changing state', () => {
-    const wrapper = mount(<MiqFormRenderer {...initialProps} />);
-    const changeInput = (value) => act(() => {
-      wrapper.find('input').first().simulate('change', { target: { value } });
-    });
+  it('should set pristine in reducer when changing state', async() => {
+    const user = userEvent.setup();
 
-    changeInput('changed-value');
+    const { container } = render(<MiqFormRenderer {...initialProps} />);
 
+    const input = container.querySelector('input');
+
+    await user.type(input, 'changed-value');
     expect(ManageIQ.redux.store.getState().FormButtons.pristine).toEqual(false);
 
-    changeInput('');
-
+    await user.clear(input);
     expect(ManageIQ.redux.store.getState().FormButtons.pristine).toEqual(true);
   });
 });

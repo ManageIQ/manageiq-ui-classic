@@ -1,209 +1,764 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Flavor form component matches the snapshot 1`] = `
-<Grid>
-  <ForwardRef
-    lg={16}
-    md={8}
-    sm={4}
+<div>
+  <div
+    class="cds--css-grid"
   >
-    <Connect(MiqFormRenderer)
-      buttonsLabels={
-        Object {
-          "submitLabel": "Add",
-        }
-      }
-      onCancel={[Function]}
-      onSubmit={[Function]}
-      schema={
-        Object {
-          "fields": Array [
-            Object {
-              "component": "select",
-              "id": "emsId",
-              "isRequired": true,
-              "isSearchable": true,
-              "labelText": "Provider",
-              "loadOptions": [Function],
-              "name": "emsId",
-              "onChange": [Function],
-              "simpleValue": true,
-              "validate": Array [
-                Object {
-                  "type": "required",
-                },
-              ],
-            },
-            Object {
-              "component": "text-field",
-              "id": "name",
-              "isRequired": true,
-              "label": "Name",
-              "name": "name",
-              "validate": Array [
-                Object {
-                  "type": "required",
-                },
-              ],
-            },
-            Object {
-              "component": "text-field",
-              "dataType": "integer",
-              "id": "ram",
-              "isRequired": true,
-              "label": "RAM size (in MB)",
-              "name": "ram",
-              "type": "number",
-              "validate": Array [
-                Object {
-                  "type": "required",
-                },
-                Object {
-                  "message": "Must be an integer",
-                  "pattern": "^[-+]?[0-9]\\\\d*$",
-                  "type": "pattern",
-                },
-                Object {
-                  "message": "Must be greater than or equal to 1",
-                  "type": "min-number-value",
-                  "value": 1,
-                },
-              ],
-            },
-            Object {
-              "component": "text-field",
-              "dataType": "integer",
-              "id": "vcpus",
-              "isRequired": true,
-              "label": "VCPUs",
-              "name": "vcpus",
-              "type": "number",
-              "validate": Array [
-                Object {
-                  "type": "required",
-                },
-                Object {
-                  "message": "Must be an integer",
-                  "pattern": "^[-+]?[0-9]\\\\d*$",
-                  "type": "pattern",
-                },
-                Object {
-                  "message": "Must be greater than or equal to 1",
-                  "type": "min-number-value",
-                  "value": 1,
-                },
-              ],
-            },
-            Object {
-              "component": "text-field",
-              "dataType": "integer",
-              "id": "disk",
-              "isRequired": true,
-              "label": "Disk size in GB",
-              "name": "disk",
-              "type": "number",
-              "validate": Array [
-                Object {
-                  "type": "required",
-                },
-                Object {
-                  "message": "Must be an integer",
-                  "pattern": "^[-+]?[0-9]\\\\d*$",
-                  "type": "pattern",
-                },
-                Object {
-                  "message": "Must be greater than or equal to 1",
-                  "type": "min-number-value",
-                  "value": 1,
-                },
-              ],
-            },
-            Object {
-              "component": "text-field",
-              "dataType": "integer",
-              "id": "swap",
-              "isRequired": true,
-              "label": "Swap size (in MB)",
-              "name": "swap",
-              "type": "number",
-              "validate": Array [
-                Object {
-                  "type": "required",
-                },
-                Object {
-                  "message": "Must be an integer",
-                  "pattern": "^[-+]?[0-9]\\\\d*$",
-                  "type": "pattern",
-                },
-                Object {
-                  "message": "Must be greater than or equal to 0",
-                  "type": "min-number-value",
-                  "value": 1,
-                },
-              ],
-            },
-            Object {
-              "component": "text-field",
-              "id": "rxtx_factor",
-              "initialValue": 1,
-              "isRequired": true,
-              "label": "RXTX factor",
-              "name": "rxtx_factor",
-              "type": "number",
-              "validate": Array [
-                Object {
-                  "type": "required",
-                },
-                Object {
-                  "message": "Must be an integer",
-                  "pattern": "^[-+]?[0-9]\\\\d*$",
-                  "type": "pattern",
-                },
-                Object {
-                  "message": "Must be greater than or equal to 0",
-                  "type": "min-number-value",
-                  "value": 1,
-                },
-              ],
-            },
-            Object {
-              "component": "switch",
-              "id": "is_public",
-              "initialValue": true,
-              "label": "Public",
-              "name": "is_public",
-              "offText": "No",
-              "onText": "Yes",
-            },
-            Object {
-              "component": "select",
-              "condition": Object {
-                "and": Array [
-                  Object {
-                    "is": false,
-                    "when": "is_public",
-                  },
-                  Object {
-                    "isNotEmpty": true,
-                    "when": "emsId",
-                  },
-                ],
-              },
-              "id": "cloud_tenant_refs",
-              "isClearable": true,
-              "isMulti": true,
-              "isSearchable": true,
-              "key": "cloud_tenant_refs-undefined",
-              "label": "Cloud Tenants",
-              "loadOptions": [Function],
-              "name": "cloud_tenant_refs",
-              "placeholder": "Nothing selected",
-              "simpleValue": true,
-            },
-          ],
-        }
-      }
-    />
-  </ForwardRef>
-</Grid>
+    <div
+      class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+    >
+      <form
+        class="cds--form form-0-2-3 form-react"
+        novalidate=""
+      >
+        <div
+          class="cds--list-box__wrapper"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="emsId"
+            id="downshift-0-label"
+          >
+            Provider
+          </label>
+          <div
+            class="cds--combo-box cds--list-box"
+          >
+            <div
+              class="cds--list-box__field"
+            >
+              <input
+                aria-activedescendant=""
+                aria-autocomplete="list"
+                aria-controls="downshift-0-menu"
+                aria-expanded="false"
+                aria-haspopup="listbox"
+                aria-labelledby="downshift-0-label"
+                autocomplete="off"
+                class="cds--text-input cds--text-input--empty"
+                id="emsId"
+                loadingmessage="Loading..."
+                name="emsId"
+                placeholder="<Choose>"
+                role="combobox"
+                tabindex="0"
+                title=""
+                type="text"
+                value=""
+              />
+              
+              <button
+                aria-controls="downshift-0-menu"
+                aria-expanded="false"
+                aria-label="Open"
+                class="cds--list-box__menu-icon"
+                id="downshift-0-toggle-button"
+                tabindex="-1"
+                title="Open"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                  />
+                </svg>
+              </button>
+            </div>
+            
+            <ul
+              aria-labelledby="downshift-0-label"
+              class="cds--list-box__menu"
+              id="downshift-0-menu"
+              role="listbox"
+            />
+          </div>
+        </div>
+        <div
+          class="cds--form-item cds--text-input-wrapper"
+        >
+          <div
+            class="cds--text-input__label-wrapper"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="name"
+            >
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+              >
+                *
+              </span>
+              Name
+            </label>
+          </div>
+          <div
+            class="cds--text-input__field-outer-wrapper"
+          >
+            <div
+              class="cds--text-input__field-wrapper"
+            >
+              <input
+                class="cds--text-input"
+                id="name"
+                name="name"
+                type="text"
+                value=""
+              />
+              
+              <span
+                aria-atomic="true"
+                aria-live="assertive"
+                class="cds--text-input__counter-alert"
+                role="alert"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--form-item"
+        >
+          <div
+            class="cds--number cds--number--helpertext cds--number--md"
+            data-invalid="true"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="ram"
+            >
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+              >
+                *
+              </span>
+              RAM size (in MB)
+            </label>
+            <div
+              class="cds--number__input-wrapper"
+            >
+              <input
+                aria-describedby="ram-error-msg"
+                aria-invalid="true"
+                data-invalid="true"
+                id="ram"
+                inputmode="decimal"
+                name="ram"
+                pattern="[0-9]*"
+                step="1"
+                type="number"
+                value=""
+              />
+              
+              <svg
+                aria-hidden="true"
+                class="cds--number__invalid"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8,1C4.2,1,1,4.2,1,8s3.2,7,7,7s7-3.1,7-7S11.9,1,8,1z M7.5,4h1v5h-1C7.5,9,7.5,4,7.5,4z M8,12.2 c-0.4,0-0.8-0.4-0.8-0.8s0.3-0.8,0.8-0.8c0.4,0,0.8,0.4,0.8,0.8S8.4,12.2,8,12.2z"
+                />
+                <path
+                  d="M7.5,4h1v5h-1C7.5,9,7.5,4,7.5,4z M8,12.2c-0.4,0-0.8-0.4-0.8-0.8s0.3-0.8,0.8-0.8 c0.4,0,0.8,0.4,0.8,0.8S8.4,12.2,8,12.2z"
+                  data-icon-path="inner-path"
+                  opacity="0"
+                />
+              </svg>
+              <div
+                class="cds--number__controls"
+              >
+                <button
+                  aria-label="Decrement number"
+                  class="cds--number__control-btn down-icon"
+                  tabindex="-1"
+                  title="Decrement number"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="down-icon"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8 15H24V17H8z"
+                    />
+                  </svg>
+                </button>
+                <div
+                  class="cds--number__rule-divider"
+                />
+                <button
+                  aria-label="Increment number"
+                  class="cds--number__control-btn up-icon"
+                  tabindex="-1"
+                  title="Increment number"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="up-icon"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17 24 15z"
+                    />
+                  </svg>
+                </button>
+                <div
+                  class="cds--number__rule-divider"
+                />
+              </div>
+            </div>
+            <div
+              class="cds--form-requirement"
+              dir="auto"
+              id="ram-error-msg"
+            />
+          </div>
+        </div>
+        <div
+          class="cds--form-item"
+        >
+          <div
+            class="cds--number cds--number--helpertext cds--number--md"
+            data-invalid="true"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="vcpus"
+            >
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+              >
+                *
+              </span>
+              VCPUs
+            </label>
+            <div
+              class="cds--number__input-wrapper"
+            >
+              <input
+                aria-describedby="vcpus-error-msg"
+                aria-invalid="true"
+                data-invalid="true"
+                id="vcpus"
+                inputmode="decimal"
+                name="vcpus"
+                pattern="[0-9]*"
+                step="1"
+                type="number"
+                value=""
+              />
+              
+              <svg
+                aria-hidden="true"
+                class="cds--number__invalid"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8,1C4.2,1,1,4.2,1,8s3.2,7,7,7s7-3.1,7-7S11.9,1,8,1z M7.5,4h1v5h-1C7.5,9,7.5,4,7.5,4z M8,12.2 c-0.4,0-0.8-0.4-0.8-0.8s0.3-0.8,0.8-0.8c0.4,0,0.8,0.4,0.8,0.8S8.4,12.2,8,12.2z"
+                />
+                <path
+                  d="M7.5,4h1v5h-1C7.5,9,7.5,4,7.5,4z M8,12.2c-0.4,0-0.8-0.4-0.8-0.8s0.3-0.8,0.8-0.8 c0.4,0,0.8,0.4,0.8,0.8S8.4,12.2,8,12.2z"
+                  data-icon-path="inner-path"
+                  opacity="0"
+                />
+              </svg>
+              <div
+                class="cds--number__controls"
+              >
+                <button
+                  aria-label="Decrement number"
+                  class="cds--number__control-btn down-icon"
+                  tabindex="-1"
+                  title="Decrement number"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="down-icon"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8 15H24V17H8z"
+                    />
+                  </svg>
+                </button>
+                <div
+                  class="cds--number__rule-divider"
+                />
+                <button
+                  aria-label="Increment number"
+                  class="cds--number__control-btn up-icon"
+                  tabindex="-1"
+                  title="Increment number"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="up-icon"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17 24 15z"
+                    />
+                  </svg>
+                </button>
+                <div
+                  class="cds--number__rule-divider"
+                />
+              </div>
+            </div>
+            <div
+              class="cds--form-requirement"
+              dir="auto"
+              id="vcpus-error-msg"
+            />
+          </div>
+        </div>
+        <div
+          class="cds--form-item"
+        >
+          <div
+            class="cds--number cds--number--helpertext cds--number--md"
+            data-invalid="true"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="disk"
+            >
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+              >
+                *
+              </span>
+              Disk size in GB
+            </label>
+            <div
+              class="cds--number__input-wrapper"
+            >
+              <input
+                aria-describedby="disk-error-msg"
+                aria-invalid="true"
+                data-invalid="true"
+                id="disk"
+                inputmode="decimal"
+                name="disk"
+                pattern="[0-9]*"
+                step="1"
+                type="number"
+                value=""
+              />
+              
+              <svg
+                aria-hidden="true"
+                class="cds--number__invalid"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8,1C4.2,1,1,4.2,1,8s3.2,7,7,7s7-3.1,7-7S11.9,1,8,1z M7.5,4h1v5h-1C7.5,9,7.5,4,7.5,4z M8,12.2 c-0.4,0-0.8-0.4-0.8-0.8s0.3-0.8,0.8-0.8c0.4,0,0.8,0.4,0.8,0.8S8.4,12.2,8,12.2z"
+                />
+                <path
+                  d="M7.5,4h1v5h-1C7.5,9,7.5,4,7.5,4z M8,12.2c-0.4,0-0.8-0.4-0.8-0.8s0.3-0.8,0.8-0.8 c0.4,0,0.8,0.4,0.8,0.8S8.4,12.2,8,12.2z"
+                  data-icon-path="inner-path"
+                  opacity="0"
+                />
+              </svg>
+              <div
+                class="cds--number__controls"
+              >
+                <button
+                  aria-label="Decrement number"
+                  class="cds--number__control-btn down-icon"
+                  tabindex="-1"
+                  title="Decrement number"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="down-icon"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8 15H24V17H8z"
+                    />
+                  </svg>
+                </button>
+                <div
+                  class="cds--number__rule-divider"
+                />
+                <button
+                  aria-label="Increment number"
+                  class="cds--number__control-btn up-icon"
+                  tabindex="-1"
+                  title="Increment number"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="up-icon"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17 24 15z"
+                    />
+                  </svg>
+                </button>
+                <div
+                  class="cds--number__rule-divider"
+                />
+              </div>
+            </div>
+            <div
+              class="cds--form-requirement"
+              dir="auto"
+              id="disk-error-msg"
+            />
+          </div>
+        </div>
+        <div
+          class="cds--form-item"
+        >
+          <div
+            class="cds--number cds--number--helpertext cds--number--md"
+            data-invalid="true"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="swap"
+            >
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+              >
+                *
+              </span>
+              Swap size (in MB)
+            </label>
+            <div
+              class="cds--number__input-wrapper"
+            >
+              <input
+                aria-describedby="swap-error-msg"
+                aria-invalid="true"
+                data-invalid="true"
+                id="swap"
+                inputmode="decimal"
+                name="swap"
+                pattern="[0-9]*"
+                step="1"
+                type="number"
+                value=""
+              />
+              
+              <svg
+                aria-hidden="true"
+                class="cds--number__invalid"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8,1C4.2,1,1,4.2,1,8s3.2,7,7,7s7-3.1,7-7S11.9,1,8,1z M7.5,4h1v5h-1C7.5,9,7.5,4,7.5,4z M8,12.2 c-0.4,0-0.8-0.4-0.8-0.8s0.3-0.8,0.8-0.8c0.4,0,0.8,0.4,0.8,0.8S8.4,12.2,8,12.2z"
+                />
+                <path
+                  d="M7.5,4h1v5h-1C7.5,9,7.5,4,7.5,4z M8,12.2c-0.4,0-0.8-0.4-0.8-0.8s0.3-0.8,0.8-0.8 c0.4,0,0.8,0.4,0.8,0.8S8.4,12.2,8,12.2z"
+                  data-icon-path="inner-path"
+                  opacity="0"
+                />
+              </svg>
+              <div
+                class="cds--number__controls"
+              >
+                <button
+                  aria-label="Decrement number"
+                  class="cds--number__control-btn down-icon"
+                  tabindex="-1"
+                  title="Decrement number"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="down-icon"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8 15H24V17H8z"
+                    />
+                  </svg>
+                </button>
+                <div
+                  class="cds--number__rule-divider"
+                />
+                <button
+                  aria-label="Increment number"
+                  class="cds--number__control-btn up-icon"
+                  tabindex="-1"
+                  title="Increment number"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="up-icon"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17 24 15z"
+                    />
+                  </svg>
+                </button>
+                <div
+                  class="cds--number__rule-divider"
+                />
+              </div>
+            </div>
+            <div
+              class="cds--form-requirement"
+              dir="auto"
+              id="swap-error-msg"
+            />
+          </div>
+        </div>
+        <div
+          class="cds--form-item"
+        >
+          <div
+            class="cds--number cds--number--helpertext cds--number--md"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="rxtx_factor"
+            >
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+              >
+                *
+              </span>
+              RXTX factor
+            </label>
+            <div
+              class="cds--number__input-wrapper"
+            >
+              <input
+                aria-invalid="false"
+                id="rxtx_factor"
+                inputmode="decimal"
+                name="rxtx_factor"
+                pattern="[0-9]*"
+                step="1"
+                type="number"
+                value="1"
+              />
+              
+              <div
+                class="cds--number__controls"
+              >
+                <button
+                  aria-label="Decrement number"
+                  class="cds--number__control-btn down-icon"
+                  tabindex="-1"
+                  title="Decrement number"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="down-icon"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8 15H24V17H8z"
+                    />
+                  </svg>
+                </button>
+                <div
+                  class="cds--number__rule-divider"
+                />
+                <button
+                  aria-label="Increment number"
+                  class="cds--number__control-btn up-icon"
+                  tabindex="-1"
+                  title="Increment number"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="up-icon"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17 24 15z"
+                    />
+                  </svg>
+                </button>
+                <div
+                  class="cds--number__rule-divider"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="cds--toggle"
+          >
+            <button
+              aria-checked="true"
+              aria-labelledby="is_public_label"
+              class="cds--toggle__button"
+              id="is_public"
+              role="switch"
+              type="button"
+            />
+            <label
+              class="cds--toggle__label"
+              for="is_public"
+              id="is_public_label"
+            >
+              <span
+                class="cds--toggle__label-text"
+                dir="auto"
+              >
+                Public
+              </span>
+              <div
+                class="cds--toggle__appearance"
+              >
+                <div
+                  class="cds--toggle__switch cds--toggle__switch--checked"
+                />
+                <span
+                  aria-hidden="true"
+                  class="cds--toggle__text"
+                  dir="auto"
+                >
+                  Yes
+                </span>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div
+          class="cds--btn-set"
+        >
+          <button
+            class="cds--btn cds--btn--primary cds--btn--disabled"
+            disabled=""
+            type="submit"
+            variant="primary"
+          >
+            Add
+          </button>
+          <button
+            class="cds--btn cds--btn--secondary"
+            type="button"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 `;
