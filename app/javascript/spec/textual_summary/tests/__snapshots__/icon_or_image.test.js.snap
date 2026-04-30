@@ -1,62 +1,40 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Icon or Image renders icon with background 1`] = `
-<IconOrImage
-  background="blue"
-  icon="fa fa-foobar"
-  image={null}
-  title="foo bar title"
->
+<div>
   <div
-    className="backgrounded-icon"
-    style={
-      Object {
-        "background": "blue",
-      }
-    }
+    class="backgrounded-icon"
+    style="background: blue;"
   >
     <i
-      className="fa fa-foobar"
+      class="fa fa-foobar"
       title="foo bar title"
     />
   </div>
-</IconOrImage>
+</div>
 `;
 
 exports[`Icon or Image renders icon with title and alt if icon and no image are passed in 1`] = `
-<IconOrImage
-  background={null}
-  icon="fa fa-foobar"
-  image={null}
-  title="foo bar title"
->
+<div>
   <i
-    className="fa fa-foobar"
+    class="fa fa-foobar"
     title="foo bar title"
   />
-</IconOrImage>
+</div>
 `;
 
 exports[`Icon or Image renders image with title and alt if image is passed in 1`] = `
-<IconOrImage
-  background={null}
-  icon={null}
-  image="foo/bar.png"
-  title="foo bar title"
->
+<div>
   <img
     alt="foo bar title"
     src="foo/bar.png"
     title="foo bar title"
   />
-</IconOrImage>
+</div>
 `;
 
 exports[`Icon or Image renders nothing if no icon and no image are passed in 1`] = `
-<IconOrImage
-  background={null}
-  icon=""
-  image={null}
-  title="foo bar title"
-/>
+<div>
+  
+</div>
 `;

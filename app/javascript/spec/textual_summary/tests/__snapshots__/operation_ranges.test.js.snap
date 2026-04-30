@@ -1,928 +1,280 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Operation Ranges renders just fine... 1`] = `
-<OperationRanges
-  items={
-    Array [
-      Object {
-        "hoverClass": "no-hover",
-        "label": "CPU",
-        "value": Array [
-          Object {
-            "label": "Max",
-            "value": "Not Available",
-          },
-          Object {
-            "label": "High",
-            "value": "0 MHz",
-          },
-          Object {
-            "label": "Average",
-            "value": "0 MHz",
-          },
-          Object {
-            "label": "Low",
-            "value": "0 MHz",
-          },
-        ],
-      },
-      Object {
-        "hoverClass": "no-hover",
-        "label": "CPU Usage",
-        "value": Array [
-          Object {
-            "label": "Max",
-            "value": "Not Available",
-          },
-          Object {
-            "label": "High",
-            "value": "0.00%",
-          },
-          Object {
-            "label": "Average",
-            "value": "0.00%",
-          },
-          Object {
-            "label": "Low",
-            "value": "0.00%",
-          },
-        ],
-      },
-    ]
-  }
-  title="Operation Ranges"
->
-  <MiqStructuredList
-    headers={Array []}
-    mode="operation_ranges"
-    rows={
-      Array [
-        Object {
-          "hoverClass": "no-hover",
-          "label": "CPU",
-          "value": Array [
-            Object {
-              "label": "Max",
-              "value": "Not Available",
-            },
-            Object {
-              "label": "High",
-              "value": "0 MHz",
-            },
-            Object {
-              "label": "Average",
-              "value": "0 MHz",
-            },
-            Object {
-              "label": "Low",
-              "value": "0 MHz",
-            },
-          ],
-        },
-        Object {
-          "hoverClass": "no-hover",
-          "label": "CPU Usage",
-          "value": Array [
-            Object {
-              "label": "Max",
-              "value": "Not Available",
-            },
-            Object {
-              "label": "High",
-              "value": "0.00%",
-            },
-            Object {
-              "label": "Average",
-              "value": "0.00%",
-            },
-            Object {
-              "label": "Low",
-              "value": "0.00%",
-            },
-          ],
-        },
-      ]
-    }
-    title="Operation Ranges"
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion operation_ranges cds--accordion--start"
   >
-    <Accordion
-      align="start"
-      className="miq-structured-list-accordion operation_ranges"
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
     >
-      <AccordionProvider
-        disabled={false}
+      <button
+        aria-controls="accordion-item-3"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
       >
-        <ul
-          className="cds--accordion miq-structured-list-accordion operation_ranges cds--accordion--start"
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <AccordionItem
-            open={true}
-            title="Operation Ranges"
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Operation Ranges
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-3"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list operation_ranges"
+            role="table"
           >
-            <li
-              className="cds--accordion__item cds--accordion__item--active"
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
             >
-              <defaultRenderToggle
-                aria-controls="accordion-item-3"
-                aria-expanded={true}
-                className="cds--accordion__heading"
-                disabled={false}
-                onClick={[Function]}
-                onKeyDown={[Function]}
-                type="button"
-              >
-                <button
-                  aria-controls="accordion-item-3"
-                  aria-expanded={true}
-                  className="cds--accordion__heading"
-                  disabled={false}
-                  onClick={[Function]}
-                  onKeyDown={[Function]}
-                  type="button"
-                >
-                  <ForwardRef(ChevronRight)
-                    className="cds--accordion__arrow"
-                  >
-                    <Icon
-                      className="cds--accordion__arrow"
-                      fill="currentColor"
-                      height={16}
-                      viewBox="0 0 16 16"
-                      width={16}
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <svg
-                        aria-hidden={true}
-                        className="cds--accordion__arrow"
-                        fill="currentColor"
-                        focusable="false"
-                        height={16}
-                        preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 16 16"
-                        width={16}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
-                        />
-                      </svg>
-                    </Icon>
-                  </ForwardRef(ChevronRight)>
-                  <ForwardRef
-                    as="div"
-                    className="cds--accordion__title"
-                  >
-                    <div
-                      className="cds--accordion__title"
-                      dir="auto"
-                    >
-                      Operation Ranges
-                    </div>
-                  </ForwardRef>
-                </button>
-              </defaultRenderToggle>
               <div
-                className="cds--accordion__wrapper"
-                onTransitionEnd={[Function]}
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
               >
                 <div
-                  className="cds--accordion__content"
-                  id="accordion-item-3"
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
                 >
-                  <StructuredListWrapper
-                    aria-label="Structured list"
-                    className="miq-structured-list operation_ranges"
+                  CPU
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
                   >
                     <div
-                      aria-label="Structured list"
-                      className="cds--structured-list miq-structured-list operation_ranges"
-                      role="table"
+                      class="multi_row_cell"
                     >
-                      <MiqStructuredListBody
-                        clickEvents={false}
-                        mode="operation_ranges"
-                        rows={
-                          Array [
-                            Object {
-                              "hoverClass": "no-hover",
-                              "label": "CPU",
-                              "value": Array [
-                                Object {
-                                  "label": "Max",
-                                  "value": "Not Available",
-                                },
-                                Object {
-                                  "label": "High",
-                                  "value": "0 MHz",
-                                },
-                                Object {
-                                  "label": "Average",
-                                  "value": "0 MHz",
-                                },
-                                Object {
-                                  "label": "Low",
-                                  "value": "0 MHz",
-                                },
-                              ],
-                            },
-                            Object {
-                              "hoverClass": "no-hover",
-                              "label": "CPU Usage",
-                              "value": Array [
-                                Object {
-                                  "label": "Max",
-                                  "value": "Not Available",
-                                },
-                                Object {
-                                  "label": "High",
-                                  "value": "0.00%",
-                                },
-                                Object {
-                                  "label": "Average",
-                                  "value": "0.00%",
-                                },
-                                Object {
-                                  "label": "Low",
-                                  "value": "0.00%",
-                                },
-                              ],
-                            },
-                          ]
-                        }
+                      <div
+                        class="sub_row_item"
+                        title=""
                       >
-                        <StructuredListBody>
+                        <div
+                          class="sub_label"
+                          title="Max"
+                        >
+                          Max
+                        </div>
+                        <div
+                          class="sub_value"
+                        >
                           <div
-                            className="cds--structured-list-tbody"
-                            role="rowgroup"
+                            class="expand wrap_text"
                           >
-                            <StructuredListRow
-                              className="not-clickable"
-                              key="0"
-                              onClick={[Function]}
-                              tabIndex={0}
-                              title=""
-                            >
-                              <div
-                                className="cds--structured-list-row not-clickable"
-                                onBlur={[Function]}
-                                onClick={[Function]}
-                                onFocus={[Function]}
-                                role="row"
-                                tabIndex={0}
-                                title=""
-                              >
-                                <MiqStructuredListBodyLabel
-                                  label="CPU"
-                                >
-                                  <StructuredListCell
-                                    className="label_header"
-                                  >
-                                    <ForwardRef
-                                      as="div"
-                                      className="cds--structured-list-td label_header"
-                                      role="cell"
-                                    >
-                                      <div
-                                        className="cds--structured-list-td label_header"
-                                        dir="auto"
-                                        role="cell"
-                                      >
-                                        CPU
-                                      </div>
-                                    </ForwardRef>
-                                  </StructuredListCell>
-                                </MiqStructuredListBodyLabel>
-                                <MiqStructuredListBodyValue
-                                  clickEvents={false}
-                                  row={
-                                    Object {
-                                      "hoverClass": "no-hover",
-                                      "label": "CPU",
-                                      "value": Array [
-                                        Object {
-                                          "label": "Max",
-                                          "value": "Not Available",
-                                        },
-                                        Object {
-                                          "label": "High",
-                                          "value": "0 MHz",
-                                        },
-                                        Object {
-                                          "label": "Average",
-                                          "value": "0 MHz",
-                                        },
-                                        Object {
-                                          "label": "Low",
-                                          "value": "0 MHz",
-                                        },
-                                      ],
-                                    }
-                                  }
-                                >
-                                  <MiqStructuredListObject
-                                    clickEvents={false}
-                                    row={
-                                      Object {
-                                        "hoverClass": "no-hover",
-                                        "label": "CPU",
-                                        "value": Array [
-                                          Object {
-                                            "label": "Max",
-                                            "value": "Not Available",
-                                          },
-                                          Object {
-                                            "label": "High",
-                                            "value": "0 MHz",
-                                          },
-                                          Object {
-                                            "label": "Average",
-                                            "value": "0 MHz",
-                                          },
-                                          Object {
-                                            "label": "Low",
-                                            "value": "0 MHz",
-                                          },
-                                        ],
-                                      }
-                                    }
-                                  >
-                                    <StructuredListCell
-                                      className="content_value object_item"
-                                      title=""
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value object_item"
-                                        role="cell"
-                                        title=""
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value object_item"
-                                          dir="auto"
-                                          role="cell"
-                                          title=""
-                                        >
-                                          <MiqStructuredListConditionalTag
-                                            clickEvents={false}
-                                            row={
-                                              Object {
-                                                "hoverClass": "no-hover",
-                                                "label": "CPU",
-                                                "value": Array [
-                                                  Object {
-                                                    "label": "Max",
-                                                    "value": "Not Available",
-                                                  },
-                                                  Object {
-                                                    "label": "High",
-                                                    "value": "0 MHz",
-                                                  },
-                                                  Object {
-                                                    "label": "Average",
-                                                    "value": "0 MHz",
-                                                  },
-                                                  Object {
-                                                    "label": "Low",
-                                                    "value": "0 MHz",
-                                                  },
-                                                ],
-                                              }
-                                            }
-                                          >
-                                            <MiqStructuredListLink
-                                              clickEvents={false}
-                                              row={
-                                                Object {
-                                                  "hoverClass": "no-hover",
-                                                  "label": "CPU",
-                                                  "value": Array [
-                                                    Object {
-                                                      "label": "Max",
-                                                      "value": "Not Available",
-                                                    },
-                                                    Object {
-                                                      "label": "High",
-                                                      "value": "0 MHz",
-                                                    },
-                                                    Object {
-                                                      "label": "Average",
-                                                      "value": "0 MHz",
-                                                    },
-                                                    Object {
-                                                      "label": "Low",
-                                                      "value": "0 MHz",
-                                                    },
-                                                  ],
-                                                }
-                                              }
-                                            >
-                                              <MiqStructuredListContent
-                                                row={
-                                                  Object {
-                                                    "hoverClass": "no-hover",
-                                                    "label": "CPU",
-                                                    "value": Array [
-                                                      Object {
-                                                        "label": "Max",
-                                                        "value": "Not Available",
-                                                      },
-                                                      Object {
-                                                        "label": "High",
-                                                        "value": "0 MHz",
-                                                      },
-                                                      Object {
-                                                        "label": "Average",
-                                                        "value": "0 MHz",
-                                                      },
-                                                      Object {
-                                                        "label": "Low",
-                                                        "value": "0 MHz",
-                                                      },
-                                                    ],
-                                                  }
-                                                }
-                                              >
-                                                <div
-                                                  className="content"
-                                                >
-                                                  <MiqStructuredListMultiRow
-                                                    value={
-                                                      Array [
-                                                        Object {
-                                                          "label": "Max",
-                                                          "value": "Not Available",
-                                                        },
-                                                        Object {
-                                                          "label": "High",
-                                                          "value": "0 MHz",
-                                                        },
-                                                        Object {
-                                                          "label": "Average",
-                                                          "value": "0 MHz",
-                                                        },
-                                                        Object {
-                                                          "label": "Low",
-                                                          "value": "0 MHz",
-                                                        },
-                                                      ]
-                                                    }
-                                                  >
-                                                    <div
-                                                      className="multi_row_cell"
-                                                    >
-                                                      <div
-                                                        className="sub_row_item"
-                                                        key="0"
-                                                        title=""
-                                                      >
-                                                        <div
-                                                          className="sub_label"
-                                                          title="Max"
-                                                        >
-                                                          Max
-                                                        </div>
-                                                        <div
-                                                          className="sub_value"
-                                                        >
-                                                          <MiqStructuredListText
-                                                            value="Not Available"
-                                                          >
-                                                            <div
-                                                              className="expand wrap_text"
-                                                            >
-                                                              Not Available
-                                                            </div>
-                                                          </MiqStructuredListText>
-                                                        </div>
-                                                      </div>
-                                                      <div
-                                                        className="sub_row_item"
-                                                        key="1"
-                                                        title=""
-                                                      >
-                                                        <div
-                                                          className="sub_label"
-                                                          title="High"
-                                                        >
-                                                          High
-                                                        </div>
-                                                        <div
-                                                          className="sub_value"
-                                                        >
-                                                          <MiqStructuredListText
-                                                            value="0 MHz"
-                                                          >
-                                                            <div
-                                                              className="expand wrap_text"
-                                                            >
-                                                              0 MHz
-                                                            </div>
-                                                          </MiqStructuredListText>
-                                                        </div>
-                                                      </div>
-                                                      <div
-                                                        className="sub_row_item"
-                                                        key="2"
-                                                        title=""
-                                                      >
-                                                        <div
-                                                          className="sub_label"
-                                                          title="Average"
-                                                        >
-                                                          Average
-                                                        </div>
-                                                        <div
-                                                          className="sub_value"
-                                                        >
-                                                          <MiqStructuredListText
-                                                            value="0 MHz"
-                                                          >
-                                                            <div
-                                                              className="expand wrap_text"
-                                                            >
-                                                              0 MHz
-                                                            </div>
-                                                          </MiqStructuredListText>
-                                                        </div>
-                                                      </div>
-                                                      <div
-                                                        className="sub_row_item"
-                                                        key="3"
-                                                        title=""
-                                                      >
-                                                        <div
-                                                          className="sub_label"
-                                                          title="Low"
-                                                        >
-                                                          Low
-                                                        </div>
-                                                        <div
-                                                          className="sub_value"
-                                                        >
-                                                          <MiqStructuredListText
-                                                            value="0 MHz"
-                                                          >
-                                                            <div
-                                                              className="expand wrap_text"
-                                                            >
-                                                              0 MHz
-                                                            </div>
-                                                          </MiqStructuredListText>
-                                                        </div>
-                                                      </div>
-                                                    </div>
-                                                  </MiqStructuredListMultiRow>
-                                                </div>
-                                              </MiqStructuredListContent>
-                                            </MiqStructuredListLink>
-                                          </MiqStructuredListConditionalTag>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                  </MiqStructuredListObject>
-                                </MiqStructuredListBodyValue>
-                              </div>
-                            </StructuredListRow>
-                            <StructuredListRow
-                              className="not-clickable"
-                              key="1"
-                              onClick={[Function]}
-                              tabIndex={1}
-                              title=""
-                            >
-                              <div
-                                className="cds--structured-list-row not-clickable"
-                                onBlur={[Function]}
-                                onClick={[Function]}
-                                onFocus={[Function]}
-                                role="row"
-                                tabIndex={1}
-                                title=""
-                              >
-                                <MiqStructuredListBodyLabel
-                                  label="CPU Usage"
-                                >
-                                  <StructuredListCell
-                                    className="label_header"
-                                  >
-                                    <ForwardRef
-                                      as="div"
-                                      className="cds--structured-list-td label_header"
-                                      role="cell"
-                                    >
-                                      <div
-                                        className="cds--structured-list-td label_header"
-                                        dir="auto"
-                                        role="cell"
-                                      >
-                                        CPU Usage
-                                      </div>
-                                    </ForwardRef>
-                                  </StructuredListCell>
-                                </MiqStructuredListBodyLabel>
-                                <MiqStructuredListBodyValue
-                                  clickEvents={false}
-                                  row={
-                                    Object {
-                                      "hoverClass": "no-hover",
-                                      "label": "CPU Usage",
-                                      "value": Array [
-                                        Object {
-                                          "label": "Max",
-                                          "value": "Not Available",
-                                        },
-                                        Object {
-                                          "label": "High",
-                                          "value": "0.00%",
-                                        },
-                                        Object {
-                                          "label": "Average",
-                                          "value": "0.00%",
-                                        },
-                                        Object {
-                                          "label": "Low",
-                                          "value": "0.00%",
-                                        },
-                                      ],
-                                    }
-                                  }
-                                >
-                                  <MiqStructuredListObject
-                                    clickEvents={false}
-                                    row={
-                                      Object {
-                                        "hoverClass": "no-hover",
-                                        "label": "CPU Usage",
-                                        "value": Array [
-                                          Object {
-                                            "label": "Max",
-                                            "value": "Not Available",
-                                          },
-                                          Object {
-                                            "label": "High",
-                                            "value": "0.00%",
-                                          },
-                                          Object {
-                                            "label": "Average",
-                                            "value": "0.00%",
-                                          },
-                                          Object {
-                                            "label": "Low",
-                                            "value": "0.00%",
-                                          },
-                                        ],
-                                      }
-                                    }
-                                  >
-                                    <StructuredListCell
-                                      className="content_value object_item"
-                                      title=""
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value object_item"
-                                        role="cell"
-                                        title=""
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value object_item"
-                                          dir="auto"
-                                          role="cell"
-                                          title=""
-                                        >
-                                          <MiqStructuredListConditionalTag
-                                            clickEvents={false}
-                                            row={
-                                              Object {
-                                                "hoverClass": "no-hover",
-                                                "label": "CPU Usage",
-                                                "value": Array [
-                                                  Object {
-                                                    "label": "Max",
-                                                    "value": "Not Available",
-                                                  },
-                                                  Object {
-                                                    "label": "High",
-                                                    "value": "0.00%",
-                                                  },
-                                                  Object {
-                                                    "label": "Average",
-                                                    "value": "0.00%",
-                                                  },
-                                                  Object {
-                                                    "label": "Low",
-                                                    "value": "0.00%",
-                                                  },
-                                                ],
-                                              }
-                                            }
-                                          >
-                                            <MiqStructuredListLink
-                                              clickEvents={false}
-                                              row={
-                                                Object {
-                                                  "hoverClass": "no-hover",
-                                                  "label": "CPU Usage",
-                                                  "value": Array [
-                                                    Object {
-                                                      "label": "Max",
-                                                      "value": "Not Available",
-                                                    },
-                                                    Object {
-                                                      "label": "High",
-                                                      "value": "0.00%",
-                                                    },
-                                                    Object {
-                                                      "label": "Average",
-                                                      "value": "0.00%",
-                                                    },
-                                                    Object {
-                                                      "label": "Low",
-                                                      "value": "0.00%",
-                                                    },
-                                                  ],
-                                                }
-                                              }
-                                            >
-                                              <MiqStructuredListContent
-                                                row={
-                                                  Object {
-                                                    "hoverClass": "no-hover",
-                                                    "label": "CPU Usage",
-                                                    "value": Array [
-                                                      Object {
-                                                        "label": "Max",
-                                                        "value": "Not Available",
-                                                      },
-                                                      Object {
-                                                        "label": "High",
-                                                        "value": "0.00%",
-                                                      },
-                                                      Object {
-                                                        "label": "Average",
-                                                        "value": "0.00%",
-                                                      },
-                                                      Object {
-                                                        "label": "Low",
-                                                        "value": "0.00%",
-                                                      },
-                                                    ],
-                                                  }
-                                                }
-                                              >
-                                                <div
-                                                  className="content"
-                                                >
-                                                  <MiqStructuredListMultiRow
-                                                    value={
-                                                      Array [
-                                                        Object {
-                                                          "label": "Max",
-                                                          "value": "Not Available",
-                                                        },
-                                                        Object {
-                                                          "label": "High",
-                                                          "value": "0.00%",
-                                                        },
-                                                        Object {
-                                                          "label": "Average",
-                                                          "value": "0.00%",
-                                                        },
-                                                        Object {
-                                                          "label": "Low",
-                                                          "value": "0.00%",
-                                                        },
-                                                      ]
-                                                    }
-                                                  >
-                                                    <div
-                                                      className="multi_row_cell"
-                                                    >
-                                                      <div
-                                                        className="sub_row_item"
-                                                        key="0"
-                                                        title=""
-                                                      >
-                                                        <div
-                                                          className="sub_label"
-                                                          title="Max"
-                                                        >
-                                                          Max
-                                                        </div>
-                                                        <div
-                                                          className="sub_value"
-                                                        >
-                                                          <MiqStructuredListText
-                                                            value="Not Available"
-                                                          >
-                                                            <div
-                                                              className="expand wrap_text"
-                                                            >
-                                                              Not Available
-                                                            </div>
-                                                          </MiqStructuredListText>
-                                                        </div>
-                                                      </div>
-                                                      <div
-                                                        className="sub_row_item"
-                                                        key="1"
-                                                        title=""
-                                                      >
-                                                        <div
-                                                          className="sub_label"
-                                                          title="High"
-                                                        >
-                                                          High
-                                                        </div>
-                                                        <div
-                                                          className="sub_value"
-                                                        >
-                                                          <MiqStructuredListText
-                                                            value="0.00%"
-                                                          >
-                                                            <div
-                                                              className="expand wrap_text"
-                                                            >
-                                                              0.00%
-                                                            </div>
-                                                          </MiqStructuredListText>
-                                                        </div>
-                                                      </div>
-                                                      <div
-                                                        className="sub_row_item"
-                                                        key="2"
-                                                        title=""
-                                                      >
-                                                        <div
-                                                          className="sub_label"
-                                                          title="Average"
-                                                        >
-                                                          Average
-                                                        </div>
-                                                        <div
-                                                          className="sub_value"
-                                                        >
-                                                          <MiqStructuredListText
-                                                            value="0.00%"
-                                                          >
-                                                            <div
-                                                              className="expand wrap_text"
-                                                            >
-                                                              0.00%
-                                                            </div>
-                                                          </MiqStructuredListText>
-                                                        </div>
-                                                      </div>
-                                                      <div
-                                                        className="sub_row_item"
-                                                        key="3"
-                                                        title=""
-                                                      >
-                                                        <div
-                                                          className="sub_label"
-                                                          title="Low"
-                                                        >
-                                                          Low
-                                                        </div>
-                                                        <div
-                                                          className="sub_value"
-                                                        >
-                                                          <MiqStructuredListText
-                                                            value="0.00%"
-                                                          >
-                                                            <div
-                                                              className="expand wrap_text"
-                                                            >
-                                                              0.00%
-                                                            </div>
-                                                          </MiqStructuredListText>
-                                                        </div>
-                                                      </div>
-                                                    </div>
-                                                  </MiqStructuredListMultiRow>
-                                                </div>
-                                              </MiqStructuredListContent>
-                                            </MiqStructuredListLink>
-                                          </MiqStructuredListConditionalTag>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                  </MiqStructuredListObject>
-                                </MiqStructuredListBodyValue>
-                              </div>
-                            </StructuredListRow>
+                            Not Available
                           </div>
-                        </StructuredListBody>
-                      </MiqStructuredListBody>
+                        </div>
+                      </div>
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="sub_label"
+                          title="High"
+                        >
+                          High
+                        </div>
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            0 MHz
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="sub_label"
+                          title="Average"
+                        >
+                          Average
+                        </div>
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            0 MHz
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="sub_label"
+                          title="Low"
+                        >
+                          Low
+                        </div>
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            0 MHz
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </StructuredListWrapper>
+                  </div>
                 </div>
               </div>
-            </li>
-          </AccordionItem>
-        </ul>
-      </AccordionProvider>
-    </Accordion>
-  </MiqStructuredList>
-</OperationRanges>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="1"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  CPU Usage
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="multi_row_cell"
+                    >
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="sub_label"
+                          title="Max"
+                        >
+                          Max
+                        </div>
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            Not Available
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="sub_label"
+                          title="High"
+                        >
+                          High
+                        </div>
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            0.00%
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="sub_label"
+                          title="Average"
+                        >
+                          Average
+                        </div>
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            0.00%
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="sub_label"
+                          title="Low"
+                        >
+                          Low
+                        </div>
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            0.00%
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 `;
