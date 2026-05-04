@@ -58,7 +58,7 @@ const packagesFromModules = (modules) => {
 
 module.exports = merge(sharedConfig, {
   mode: 'production',
-  devtool: 'source-map',
+  devtool: false,
   stats: 'normal',
 
   plugins: [
