@@ -1,150 +1,471 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MiqAlertSetStructuredList should render alert set alerts structured list 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion miq_alert_set"
->
-  <AccordionItem
-    open={true}
-    title="Alerts"
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion miq_alert_set cds--accordion--start"
   >
-    <StructuredListWrapper
-      aria-label="Structured list"
-      className="miq-structured-list miq_alert_set"
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
     >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="miq_alert_set"
-        rows={
-          Array [
-            Object {
-              "cells": Array [
-                Object {
-                  "icon": "pficon pficon-warning-triangle-o",
-                  "value": "Alert description",
-                },
-              ],
-              "onclick": Object {
-                "url": "/miq_alert/show/1",
-              },
-              "title": "View this Alert",
-            },
-          ]
-        }
-      />
-    </StructuredListWrapper>
-  </AccordionItem>
-</Accordion>
+      <button
+        aria-controls="accordion-item-10"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Alerts
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-10"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list miq_alert_set"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row clickable"
+                role="row"
+                tabindex="0"
+                title="View this Alert"
+              >
+                <div
+                  class="cds--structured-list-td label_header object_item"
+                  dir="auto"
+                  role="cell"
+                  title="View this Alert"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="wrap_text"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 `;
 
 exports[`MiqAlertSetStructuredList should render alert set assigned structured list 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion miq_alert_set_assigned"
->
-  <AccordionItem
-    open={true}
-    title="Assigned To"
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion miq_alert_set_assigned cds--accordion--start"
   >
-    <StructuredListWrapper
-      aria-label="Structured list"
-      className="miq-structured-list miq_alert_set_assigned"
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
     >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="miq_alert_set_assigned"
-        rows={
-          Array [
-            Object {
-              "label": "The Enterprise",
-            },
-            Object {
-              "label": "Object class",
-              "value": Array [
-                Object {
-                  "value": "path1",
-                },
-                Object {
-                  "value": "path2",
-                },
-                Object {
-                  "value": "path3",
-                },
-              ],
-            },
-          ]
-        }
-      />
-    </StructuredListWrapper>
-  </AccordionItem>
-</Accordion>
+      <button
+        aria-controls="accordion-item-4"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Assigned To
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-4"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list miq_alert_set_assigned"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  The Enterprise
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="wrap_text"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="1"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Object class
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="multi_row_cell"
+                    >
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            path1
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            path2
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            path3
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 `;
 
 exports[`MiqAlertSetStructuredList should render alert set info structured list 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion miq_alert_set_info"
->
-  <AccordionItem
-    open={true}
-    title="Basic Information"
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion miq_alert_set_info cds--accordion--start"
   >
-    <StructuredListWrapper
-      aria-label="Structured list"
-      className="miq-structured-list miq_alert_set_info"
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
     >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="miq_alert_set_info"
-        rows={
-          Array [
-            Object {
-              "label": "Description",
-              "value": "bar",
-            },
-            Object {
-              "label": "Mode",
-              "value": "Mode",
-            },
-          ]
-        }
-      />
-    </StructuredListWrapper>
-  </AccordionItem>
-</Accordion>
+      <button
+        aria-controls="accordion-item-3"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Basic Information
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-3"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list miq_alert_set_info"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Description
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      bar
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="1"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Mode
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      Mode
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 `;
 
 exports[`MiqAlertSetStructuredList should render alert set notes structured list 1`] = `
-<Accordion
-  align="start"
-  className="miq-structured-list-accordion miq_alert_set_notes"
->
-  <AccordionItem
-    open={true}
-    title="Notes"
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion miq_alert_set_notes cds--accordion--start"
   >
-    <StructuredListWrapper
-      aria-label="Structured list"
-      className="miq-structured-list miq_alert_set_notes"
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
     >
-      <MiqStructuredListBody
-        clickEvents={false}
-        mode="miq_alert_set_notes"
-        rows={
-          Array [
-            Object {
-              "value": Object {
-                "input": "text_area",
-                "readonly": true,
-                "rows": 4,
-                "text": "text area description",
-              },
-            },
-          ]
-        }
-      />
-    </StructuredListWrapper>
-  </AccordionItem>
-</Accordion>
+      <button
+        aria-controls="accordion-item-7"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Notes
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-7"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list miq_alert_set_notes"
+            role="table"
+          >
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="cds--form-item"
+                  >
+                    <div
+                      class="cds--text-area__label-wrapper"
+                    >
+                      <label
+                        class="cds--label"
+                        dir="auto"
+                      />
+                    </div>
+                    <div
+                      class="cds--text-area__wrapper"
+                    >
+                      <textarea
+                        aria-invalid="false"
+                        class="cds--text-area"
+                        placeholder=""
+                        rows="4"
+                        style="width: 100%;"
+                      >
+                        text area description
+                      </textarea>
+                      
+                      <span
+                        aria-atomic="true"
+                        aria-live="assertive"
+                        class="cds--text-area__counter-alert"
+                        role="alert"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 `;

@@ -7,13 +7,24 @@ export const codeMirrorData = {
   mode: 'miq_summary code_mirror',
   items: [
     {
-      label: __('Label'),
-      value: __('Value'),
+      cells: [
+        {
+          label: __('Label'),
+          value: __('Value'),
+        },
+      ],
     },
     {
-      label: '',
-      value: { input: 'code_mirror', props: { mode: 'ruby', payload: payloadData } },
-      title: 'code mirror',
+      cells: [
+        {
+          label: '',
+          value: {
+            input: 'code_mirror',
+            props: { mode: 'ruby', payload: payloadData },
+          },
+          title: 'code mirror',
+        },
+      ],
     },
   ],
   title: __('Automation Method Data'),
