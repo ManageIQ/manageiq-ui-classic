@@ -15,7 +15,6 @@ const SettingsReplicationForm = ({ pglogicalReplicationFormId }) => {
   const [{
     subscriptions, form, replicationHelperText, helperTextType,
     isLoading, replicationType, selectedRowId, selectedSubscription, isSubscriptionModified,
-    // eslint-disable-next-line no-unused-vars
     savedSubscriptions, savedReplicationType,
   }, setState] = useState(
     {

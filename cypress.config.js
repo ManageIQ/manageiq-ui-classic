@@ -23,8 +23,7 @@ module.exports = defineConfig({
       openMode: false,
       runMode: true,
     },
-    // eslint-disable-next-line no-unused-vars
-    setupNodeEvents(on, config) {
+    setupNodeEvents(on, _config) {
       // Check for Cypress build marker
       const markerPath = path.resolve(__dirname, 'tmp/.cypress-build-marker');
       if (!fs.existsSync(markerPath)) {

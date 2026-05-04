@@ -53,8 +53,7 @@ KebabListItem.defaultProps = {
   item: null,
 };
 
-// eslint-disable-next-line no-unused-vars
-export const DropDownMenu = forwardRef((props, ref) => (
+export const DropDownMenu = forwardRef((props, _ref) => (
   <SideNavItems className="button_groups">
     {props.items.map((item) => KebabListItem(item, props))}
   </SideNavItems>
