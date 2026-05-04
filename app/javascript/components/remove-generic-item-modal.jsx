@@ -209,7 +209,7 @@ class RemoveGenericItemModal extends React.Component {
               type="checkbox"
               id="forceCheckbox"
               checked={force}
-              onChange={(_ev) => {
+              onChange={() => {
                 this.setState({
                   force: !force,
                 });

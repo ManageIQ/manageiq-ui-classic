@@ -7,7 +7,7 @@ import Quaditem from './Quaditem';
 const quadSet = ['topLeft', 'topRight', 'bottomLeft', 'bottomRight', 'middle'];
 
 const renderSingle = (item) => {
-  const { className: _className, ...rest } = item;
+  const { className, ...rest } = item;
   return (
     <div className="single-wrapper">
       <Quaditem {...rest} />
@@ -18,7 +18,7 @@ const renderSingle = (item) => {
 const renderQuad = (data) => (
   <div className="quad-wrapper">
     {quadSet.filter((key) => data[key]).map((item) => {
-      const { className: _className, ...rest } = data[item];
+      const { className, ...rest } = data[item];
       return (<Quaditem key={item} className={kebabCase(item)} {...rest} />);
     })}
   </div>
