@@ -10180,13 +10180,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"imports-loader@npm:~0.8.0":
-  version: 0.8.0
-  resolution: "imports-loader@npm:0.8.0"
+"imports-loader@npm:~1.2.0":
+  version: 1.2.0
+  resolution: "imports-loader@npm:1.2.0"
   dependencies:
-    loader-utils: "npm:^1.0.2"
+    loader-utils: "npm:^2.0.0"
+    schema-utils: "npm:^3.0.0"
     source-map: "npm:^0.6.1"
-  checksum: 10/a8c5e4418f02a052e79c50c13afb999563b2fbbcdc07f0fe0c18ac0be8dbfa8b19bc0d63b7e6d7b2fa580a062fd8ac5ab7c9c12d57f9beb7e058312d51aec51f
+    strip-comments: "npm:^2.0.1"
+  peerDependencies:
+    webpack: ^4.0.0 || ^5.0.0
+  checksum: 10/1a5fea9348f23c88aa350f2e28f424643994a11adc79bbece15d56066736ca8933f541848a215b087eb9635343248428140878af9a39cd073baa4922ddec3d67
   languageName: node
   linkType: hard
 
@@ -12058,7 +12062,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"loader-utils@npm:^1.0.2, loader-utils@npm:^1.2.3":
+"loader-utils@npm:^1.2.3":
   version: 1.4.2
   resolution: "loader-utils@npm:1.4.2"
   dependencies:
@@ -12341,7 +12345,7 @@ __metadata:
     glob: "npm:~7.2.0"
     history: "npm:^4.7.2"
     identity-obj-proxy: "npm:^3.0.0"
-    imports-loader: "npm:~0.8.0"
+    imports-loader: "npm:~1.2.0"
     jasmine-jquery: "npm:~2.1.1"
     jest: "npm:~26.6.3"
     jquery: "npm:~2.2.4"
@@ -16438,6 +16442,13 @@ __metadata:
   version: 4.0.0
   resolution: "strip-bom@npm:4.0.0"
   checksum: 10/9dbcfbaf503c57c06af15fe2c8176fb1bf3af5ff65003851a102749f875a6dbe0ab3b30115eccf6e805e9d756830d3e40ec508b62b3f1ddf3761a20ebe29d3f3
+  languageName: node
+  linkType: hard
+
+"strip-comments@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "strip-comments@npm:2.0.1"
+  checksum: 10/43ea36189e4ba543c6ffb0384831e9e23c3b57ede5592c6edcbfc883f489f91d00328fe2670b4e467f61c7886eff68deae3e946f0f092346b2b3cb058b9cfdba
   languageName: node
   linkType: hard
 
