@@ -301,7 +301,8 @@ function editQuotasTable(quotaName = ALLOCATED_STORAGE_QUOTA, quotaValue) {
 
 describe('Automate Tenant form operations: Settings > Application Settings > Access Control > Tenants', () => {
   beforeEach(() => {
-    cy.login();
+    cy.login('admin', 'smartvm', { cached: true });
+    cy.visit(COMPONENT_ROUTE_URL);
   });
 
   describe('Validate Parent Tenant operations: Edit, Add Project, Manage Quotas', () => {
