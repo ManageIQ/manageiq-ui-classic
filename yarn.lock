@@ -12357,7 +12357,7 @@ __metadata:
     moment-timezone: "npm:~0.6.0"
     node-fetch: "npm:~2.7.0"
     numeral: "npm:~2.0.6"
-    path-complete-extname: "npm:~0.1.0"
+    path-complete-extname: "npm:~1.0.0"
     patternfly: "npm:~3.59.5"
     postcss-loader: "npm:~4.3.0"
     prop-types: "npm:^15.6.0"
@@ -13699,10 +13699,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"path-complete-extname@npm:~0.1.0":
-  version: 0.1.0
-  resolution: "path-complete-extname@npm:0.1.0"
-  checksum: 10/335051f784e5e7b959e6b0d662e84ee3ea3df0a53aafbf2dd760ca2c2aaa15b76634301acc93f96f9221f1c75e5656d17e3177f432335477a02104c28ecac593
+"path-complete-extname@npm:~1.0.0":
+  version: 1.0.0
+  resolution: "path-complete-extname@npm:1.0.0"
+  checksum: 10/04083f38469ad4c030b2dcfb27ea812dd14beb1c0bd95b69eb72a276aa65ea43496afd0c320f3a358ea174772678c2979613e84220e6c26bb3eb2615c62f5731
   languageName: node
   linkType: hard
 
