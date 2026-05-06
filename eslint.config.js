@@ -116,6 +116,11 @@ module.exports = [
       react: {
         version: 'detect',
       },
+      'import/resolver': {
+        node: {
+          extensions: ['.js', '.jsx', '.json'],
+        },
+      },
     },
     rules: {
       // Jest rules
