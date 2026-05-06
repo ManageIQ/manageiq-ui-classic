@@ -1,14 +1,10 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
-import { shallow } from 'enzyme';
-import { act } from 'react-dom/test-utils';
+import { waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import PhysicalStorageForm from '../../components/physical-storage-form';
-import { mount } from '../helpers/mountForm';
+import { renderWithRedux } from '../helpers/mountForm';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
-
-require('../helpers/miqSparkle.js');
-require('../helpers/miqAjaxButton.js');
 
 describe('Physical storage form component', () => {
   const emsList = {
@@ -40,10 +36,26 @@ describe('Physical storage form component', () => {
     physical_storage_family_id: '1',
     capabilities: 'Default',
     actions: [
-      { name: 'edit', method: 'patch', href: 'https://9.151.190.197/api/physical_storages/1' },
-      { name: 'edit', method: 'put', href: 'https://9.151.190.197/api/physical_storages/1' },
-      { name: 'refresh', method: 'post', href: 'https://9.151.190.197/api/physical_storages/1' },
-      { name: 'delete', method: 'post', href: 'https://9.151.190.197/api/physical_storages/1' },
+      {
+        name: 'edit',
+        method: 'patch',
+        href: 'https://9.151.190.197/api/physical_storages/1',
+      },
+      {
+        name: 'edit',
+        method: 'put',
+        href: 'https://9.151.190.197/api/physical_storages/1',
+      },
+      {
+        name: 'refresh',
+        method: 'post',
+        href: 'https://9.151.190.197/api/physical_storages/1',
+      },
+      {
+        name: 'delete',
+        method: 'post',
+        href: 'https://9.151.190.197/api/physical_storages/1',
+      },
     ],
   };
 
@@ -76,48 +88,73 @@ describe('Physical storage form component', () => {
     ],
   };
 
-  beforeEach(() => {
-
-  });
-
   afterEach(() => {
     fetchMock.reset();
     fetchMock.restore();
   });
 
-  it('should render adding form variant', (done) => {
-    const wrapper = shallow(<PhysicalStorageForm />);
+  it('should render adding form variant', async() => {
+    fetchMock.mock(
+      '/api/providers?expand=resources&attributes=id,name,supports_block_storage&filter[]=supports_block_storage=true&filter[]=supports_add_storage=true',
+      emsList
+    );
 
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
+    const { container } = renderWithRedux(<PhysicalStorageForm />);
+
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
     });
+    expect(container).toMatchSnapshot();
   });
 
-  it('should render editing form variant', async(done) => {
-    fetchMock.getOnce('/api/physical_storages/1', physicalStorageMock);
-    fetchMock.mock('/api/physical_storages?ems_id=2', { data: { form_schema: { fields: [] } } }, { method: 'OPTIONS' });
-    fetchMock.mock('/api/providers?expand=resources&attributes=id,name,supports_block_storage&filter[]=supports_block_storage=true&filter[]=supports_add_storage=true', emsList);
-    fetchMock.mock('/api/providers?expand=resources&attributes=id,name,supports_block_storage&filter[]=supports_block_storage=true', emsList);
-    fetchMock.mock('/api/providers/2?attributes=type,physical_storage_families', physicalStorageFamilyMock);
+  it('should render editing form variant', async() => {
+    fetchMock.get('/api/physical_storages/1', physicalStorageMock);
+    fetchMock.mock(
+      '/api/physical_storages?ems_id=2',
+      { data: { form_schema: { fields: [] } } },
+      { method: 'OPTIONS' }
+    );
+    fetchMock.mock(
+      '/api/providers?expand=resources&attributes=id,name,supports_block_storage&filter[]=supports_block_storage=true&filter[]=supports_add_storage=true',
+      emsList
+    );
+    fetchMock.mock(
+      '/api/providers?expand=resources&attributes=id,name,supports_block_storage&filter[]=supports_block_storage=true',
+      emsList
+    );
+    fetchMock.mock(
+      '/api/providers/2?attributes=type,physical_storage_families',
+      physicalStorageFamilyMock
+    );
 
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<PhysicalStorageForm recordId="1" />);
+    const { container } = renderWithRedux(<PhysicalStorageForm recordId="1" />);
+
+    await waitFor(() => {
+      expect(fetchMock.called('/api/physical_storages/1')).toBe(true);
     });
-    expect(fetchMock.called('/api/physical_storages/1')).toBe(true);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+    expect(container).toMatchSnapshot();
   });
 
-  it('should call miqRedirectBack when canceling create form', async(done) => {
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<PhysicalStorageForm />);
+  it('should call miqRedirectBack when canceling create form', async() => {
+    fetchMock.mock(
+      '/api/providers?expand=resources&attributes=id,name,supports_block_storage&filter[]=supports_block_storage=true&filter[]=supports_add_storage=true',
+      emsList
+    );
+
+    const user = userEvent.setup();
+    const { getByRole } = renderWithRedux(<PhysicalStorageForm />);
+
+    await waitFor(() => {
+      expect(getByRole('button', { name: /cancel/i })).toBeInTheDocument();
     });
-    wrapper.find('button').last().simulate('click');
-    expect(miqRedirectBack).toHaveBeenCalledWith('Add of new Physical Storage was cancelled by the user.', 'warning', '/physical_storage/show_list');
-    done();
+
+    const cancelButton = getByRole('button', { name: /cancel/i });
+    await user.click(cancelButton);
+
+    expect(miqRedirectBack).toHaveBeenCalledWith(
+      'Add of new Physical Storage was cancelled by the user.',
+      'warning',
+      '/physical_storage/show_list'
+    );
   });
 });

@@ -1,41 +1,47 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
-import { shallow } from 'enzyme';
+import { waitFor } from '@testing-library/react';
+import { renderWithRedux } from '../helpers/mountForm';
 import NetworkSecurityGroupsForm from '../../components/network-security-groups-form';
+
+import '../helpers/miqSparkle';
 import '../helpers/miqAjaxButton';
 
-require('../helpers/set_fixtures_helper.js');
-require('../helpers/old_js_file_require_helper.js');
-require('../helpers/miqSparkle.js');
-require('../helpers/miqAjaxButton.js');
-
-jest.mock('../../helpers/miq-redirect-back', () => jest.fn());
-
-describe('Network Router Interfaces Form Component', () => {
+describe('Network Security Groups Form Component', () => {
   let submitSpyMiqSparkleOn;
   let submitSpyMiqSparkleOff;
   let spyMiqAjaxButton;
 
   const securityGroupId = '82';
-  const providers = [
-    {
-      id: '54',
-      parent_ems_id: '22',
-      tenant_id: '1',
-      type: 'ManageIQ::Providers::Redhat::NetworkManager',
-      zone_id: '9',
-      name: 'RHV Network Manager',
+  const providers = {
+    resources: [
+      {
+        id: '54',
+        parent_ems_id: '22',
+        tenant_id: '1',
+        type: 'ManageIQ::Providers::Redhat::NetworkManager',
+        zone_id: '9',
+        name: 'RHV Network Manager',
+      },
+      {
+        id: '31',
+        parent_ems_id: '30',
+        tenant_id: '1',
+        type: 'ManageIQ::Providers::Openstack::NetworkManager',
+        zone_id: '8',
+        name: 'OpenStack Director Network Manager',
+      },
+    ],
+  };
+
+  const optionsResponse = {
+    data: {
+      form_schema: {
+        fields: [],
+      },
     },
-    {
-      id: '31',
-      parent_ems_id: '30',
-      tenant_id: '1',
-      type: 'ManageIQ::Providers::Openstack::NetworkManager',
-      zone_id: '8',
-      name: 'OpenStack Director Network Manager',
-    },
-  ];
+  };
+
   const firewallRules = [
     {
       created_on: '2017-10-06T16:57:17Z',
@@ -117,36 +123,61 @@ describe('Network Router Interfaces Form Component', () => {
     spyMiqAjaxButton.mockRestore();
   });
 
-  it('should render add security group form', (done) => {
-    const wrapper = shallow(<NetworkSecurityGroupsForm />);
-    fetchMock.getOnce(
+  it('should render add security group form', async() => {
+    fetchMock.get(
       '/api/providers?&expand=resources&filter[]=supports_create_security_group=true',
-      providers,
+      providers
     );
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
+
+    const { container } = renderWithRedux(<NetworkSecurityGroupsForm />);
+
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
     });
+    expect(container).toMatchSnapshot();
   });
 
-  it('should render edit security group form', (done) => {
-    const wrapper = shallow(<NetworkSecurityGroupsForm securityGroupId={securityGroupId} />);
-    fetchMock.getOnce(
+  it('should render edit security group form', async() => {
+    fetchMock.get(
+      '/api/providers?&expand=resources&filter[]=supports_create_security_group=true',
+      providers
+    );
+    fetchMock.get(
       `/api/security_groups/${securityGroupId}?attributes=name,ext_management_system.name,description,cloud_tenant,firewall_rules,ems_id`,
       securityGroup
     );
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
+    fetchMock.mock(`/api/security_groups/${securityGroupId}`, optionsResponse, {
+      method: 'OPTIONS',
     });
+
+    const { container } = renderWithRedux(
+      <NetworkSecurityGroupsForm securityGroupId={securityGroupId} />
+    );
+
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
+    });
+    expect(container).toMatchSnapshot();
   });
 
-  it('should add security group', (done) => {
-    const wrapper = shallow(<NetworkSecurityGroupsForm />);
+  it('should add security group', async() => {
+    fetchMock.get(
+      '/api/providers?&expand=resources&filter[]=supports_create_security_group=true',
+      providers
+    );
+
+    const { container } = renderWithRedux(<NetworkSecurityGroupsForm />);
+
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
+    });
+
     const addSecurityGroup = {
-      ems_id: '8', name: '00', description: '1', cloud_tenant_id: '2', firewall_rules: [],
+      ems_id: '8',
+      name: '00',
+      description: '1',
+      cloud_tenant_id: '2',
+      firewall_rules: [],
     };
     miqAjaxButton(
       `/security_group/update/${securityGroupId}?button=save`,
@@ -158,15 +189,30 @@ describe('Network Router Interfaces Form Component', () => {
       addSecurityGroup,
       { complete: false }
     );
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
-    });
+    expect(container).toMatchSnapshot();
   });
 
-  it('should edit security group', (done) => {
-    const wrapper = shallow(<NetworkSecurityGroupsForm securityGroupId={securityGroupId} />);
+  it('should edit security group', async() => {
+    fetchMock.get(
+      '/api/providers?&expand=resources&filter[]=supports_create_security_group=true',
+      providers
+    );
+    fetchMock.get(
+      `/api/security_groups/${securityGroupId}?attributes=name,ext_management_system.name,description,cloud_tenant,firewall_rules,ems_id`,
+      securityGroup
+    );
+    fetchMock.mock(`/api/security_groups/${securityGroupId}`, optionsResponse, {
+      method: 'OPTIONS',
+    });
+
+    const { container } = renderWithRedux(
+      <NetworkSecurityGroupsForm securityGroupId={securityGroupId} />
+    );
+
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
+    });
+
     const editSecurityGroup = {
       cloud_tenant: {
         name: 'cloud-user-demo',
@@ -192,15 +238,30 @@ describe('Network Router Interfaces Form Component', () => {
       editSecurityGroup,
       { complete: false }
     );
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
-    });
+    expect(container).toMatchSnapshot();
   });
 
-  it('should edit security group firewall rules', (done) => {
-    const wrapper = shallow(<NetworkSecurityGroupsForm securityGroupId={securityGroupId} />);
+  it('should edit security group firewall rules', async() => {
+    fetchMock.get(
+      '/api/providers?&expand=resources&filter[]=supports_create_security_group=true',
+      providers
+    );
+    fetchMock.get(
+      `/api/security_groups/${securityGroupId}?attributes=name,ext_management_system.name,description,cloud_tenant,firewall_rules,ems_id`,
+      securityGroup
+    );
+    fetchMock.mock(`/api/security_groups/${securityGroupId}`, optionsResponse, {
+      method: 'OPTIONS',
+    });
+
+    const { container } = renderWithRedux(
+      <NetworkSecurityGroupsForm securityGroupId={securityGroupId} />
+    );
+
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
+    });
+
     const editedFirewallRules = [
       {
         created_on: '2017-10-06T16:57:17Z',
@@ -268,10 +329,6 @@ describe('Network Router Interfaces Form Component', () => {
       editSecurityGroup,
       { complete: false }
     );
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
-    });
+    expect(container).toMatchSnapshot();
   });
 });
