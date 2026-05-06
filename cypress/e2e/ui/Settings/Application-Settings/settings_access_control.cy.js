@@ -18,7 +18,8 @@ describe('Settings > Application Settings > Access Control', () => {
   const DELETE_ITEM = 'Delete this item';
 
   beforeEach(() => {
-    cy.login();
+    cy.login('admin', 'smartvm', { cached: true });
+    cy.visit('/dashboard/show'); // Cached login requires visiting an authenticated page
     cy.menu(PRIMARY_MENU_OPTION, SECONDARY_MENU_OPTION);
     cy.accordion(ACCORDION);
   });

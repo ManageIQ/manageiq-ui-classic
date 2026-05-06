@@ -10,7 +10,8 @@ describe('Settings > My Settings', () => {
   };
 
   beforeEach(() => {
-    cy.login();
+    cy.login('admin', 'smartvm', { cached: true });
+    cy.visit('/dashboard/show'); // Cached login requires visiting an authenticated page
     interceptUserSettingsLoad();
   });
 
@@ -31,7 +32,7 @@ describe('Settings > My Settings', () => {
     // Wait for page to load before clicking log out to prevent errors
     cy.get('[name="general-subform"] > :nth-child(2) > .cds--select');
     cy.menu('Logout');
-    cy.login();
+    cy.login('admin', 'smartvm'); // No caching - testing logout/login flow
     cy.url().should('include', '/dashboard');
 
     interceptUserSettingsLoad('userSettingsReload');
@@ -49,7 +50,7 @@ describe('Settings > My Settings', () => {
 
     cy.get('[name="general-subform"] > :nth-child(2) > .cds--select');
     cy.menu('Logout');
-    cy.login();
+    cy.login('admin', 'smartvm'); // No caching - testing logout/login flow
     cy.url().should('include', '/utilization');
   });
 });

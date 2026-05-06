@@ -3,7 +3,8 @@ import { flashClassMap } from "../../../../support/assertions/assertion_constant
 
 describe('Settings > Application Settings > Details', () => {
   beforeEach(() => {
-    cy.login();
+    cy.login('admin', 'smartvm', { cached: true });
+    cy.visit('/dashboard/show'); // Cached login requires visiting an authenticated page
     cy.menu('Settings', 'Application Settings');
     cy.accordion('Settings');
     cy.selectAccordionItem([/^ManageIQ Region:/]);

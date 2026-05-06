@@ -48,7 +48,8 @@ function assertGtlData({ columnIndex, expectedRowCount, rowContainsText }) {
 
 describe('Automate Service Requests form operations: Services > Requests', () => {
   beforeEach(() => {
-    cy.login();
+    cy.login('admin', 'smartvm', { cached: true });
+    cy.visit('/dashboard/show'); // Cached login requires visiting an authenticated page
   });
 
   describe('Verify form fields', () => {

@@ -126,7 +126,8 @@ describe('Automate operations on Namespaces: Automation -> Embedded Automate -> 
       ['create', 'miq_ae_domain', {name: DOMAIN_NAME}],
     ]);
 
-    cy.login();
+    cy.login('admin', 'smartvm', { cached: true });
+    cy.visit('/dashboard/show'); // Cached login requires visiting an authenticated page
     cy.menu(
       AUTOMATION_MENU_OPTION,
       EMBEDDED_AUTOMATION_MENU_OPTION,

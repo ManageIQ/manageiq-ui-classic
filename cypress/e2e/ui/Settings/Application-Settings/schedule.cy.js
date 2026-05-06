@@ -155,7 +155,8 @@ function clickScheduleItem(scheduleName) {
 }
 
 function loginAndNavigateToSchedules() {
-  cy.login();
+  cy.login('admin', 'smartvm', { cached: true });
+  cy.visit('/dashboard/show'); // Cached login requires visiting an authenticated page
   cy.menu(SETTINGS_OPTION, APP_SETTINGS_OPTION);
   cy.accordion(SETTINGS_OPTION);
   cy.selectAccordionItem([

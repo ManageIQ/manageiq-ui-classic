@@ -2,7 +2,8 @@
 
 describe('Menu', () => {
   beforeEach(() => {
-    cy.login();
+    cy.login('admin', 'smartvm', { cached: true });
+    cy.visit('/dashboard/show'); // Cached login requires visiting an authenticated page
   });
 
   it('Menu contains all menu items', () => {
