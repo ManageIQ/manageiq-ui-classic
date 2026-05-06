@@ -11,7 +11,8 @@ describe('Automation > Embedded Automate > Explorer', () => {
       ])
     });
 
-    cy.login();
+    cy.login('admin', 'smartvm', { cached: true });
+    cy.visit('/dashboard/show'); // Cached login requires visiting an authenticated page
     cy.intercept('POST', '/ops/accordion_select?id=rbac_accord').as('accordion');
     cy.menu('Automation', 'Embedded Automate', 'Explorer');
     cy.expect_explorer_title('Datastore');
