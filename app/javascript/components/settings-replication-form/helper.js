@@ -4,8 +4,11 @@ export const createRows = (subscriptions) => {
 
   if (Array.isArray(subscriptions) && subscriptions.length > 0) {
     subscriptions.forEach((value, index) => {
+      const isMarkedForDeletion = value.remove === true;
+
       rows.push({
         id: index.toString(),
+        disabled: isMarkedForDeletion,
         dbname: { text: value.dbname },
         host: { text: value.host },
         user: { text: value.user },
@@ -20,6 +23,7 @@ export const createRows = (subscriptions) => {
           kind: 'tertiary',
           size: 'md',
           callback: 'editSubscription',
+          disabled: isMarkedForDeletion,
         },
         validate: {
           is_button: true,
@@ -27,8 +31,15 @@ export const createRows = (subscriptions) => {
           kind: 'tertiary',
           size: 'md',
           callback: 'validateSubscription',
+          disabled: isMarkedForDeletion,
         },
-        delete: {
+        delete: isMarkedForDeletion ? {
+          is_button: true,
+          text: __('Cancel Delete'),
+          kind: 'tertiary',
+          size: 'md',
+          callback: 'cancelDelete',
+        } : {
           is_button: true,
           text: __('Delete'),
           kind: 'danger',

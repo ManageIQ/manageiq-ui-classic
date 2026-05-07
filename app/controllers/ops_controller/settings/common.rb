@@ -187,7 +187,7 @@ module OpsController::Settings::Common
     to_remove = []
     params[:subscriptions]&.each do |_k, subscription_params|
       subscription = find_or_new_subscription(subscription_params['id'])
-      if subscription.id && subscription_params['remove'] == "true"
+      if subscription.id && subscription_params['remove']
         to_remove << subscription
       else
         set_subscription_attributes(subscription, subscription_params)
