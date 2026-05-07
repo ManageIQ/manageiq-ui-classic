@@ -1,22 +1,18 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
+import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import fetchMock from 'fetch-mock';
-import { act } from 'react-dom/test-utils';
-import { Button, Select } from '@carbon/react';
 import TimelineOptions from '../../components/timeline-options/timeline-options';
-import { sampleReponse, sampleSubmitPressedValues, sampleVmData } from './sample-data';
-import { mount, shallow } from '../helpers/mountForm';
-import mapper from '../../forms/mappers/componentMapper';
+import { sampleReponse } from './sample-data';
+import { renderWithRedux } from '../helpers/mountForm';
 import '../../oldjs/miq_application'; // for miqJqueryRequest
 
 describe('Show Timeline Options form component', () => {
   let submitSpy;
-
-  const dummySubmitChosenFormOptions = (dummyValue) => { };
+  const dummySubmitChosenFormOptions = () => {};
 
   beforeEach(() => {
-    fetchMock
-      .once('/api/event_streams', sampleReponse);
+    fetchMock.once('/api/event_streams', sampleReponse);
     submitSpy = jest.spyOn(window, 'miqJqueryRequest');
   });
 
@@ -27,40 +23,39 @@ describe('Show Timeline Options form component', () => {
   });
 
   /*
- * Render Form
- */
+   * Render Form
+   */
 
-  it('should render form', async(done) => {
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<TimelineOptions submitChosenFormOptions={dummySubmitChosenFormOptions} />);
+  it('should render form', async() => {
+    const { container } = renderWithRedux(
+      <TimelineOptions submitChosenFormOptions={dummySubmitChosenFormOptions} />
+    );
+    await waitFor(() => {
+      expect(container.querySelector('select')).toBeInTheDocument();
     });
-    setImmediate(() => {
-      wrapper.update();
-      expect(wrapper.find(Select)).toHaveLength(1);
-      expect(wrapper.find(Button)).toHaveLength(1);
-      expect(wrapper.find(mapper['date-picker'])).toHaveLength(2);
-      // expect(toJson(wrapper)).toMatchSnapshot();
-      // We cant do toMatchSnapshot because the select date fields change dynamically to the current date
-      done();
-    });
+    expect(container.querySelectorAll('select')).toHaveLength(1);
+    expect(screen.getByRole('button', { name: /apply/i })).toBeInTheDocument();
+    expect(container.querySelectorAll('.cds--date-picker')).toHaveLength(2);
   });
 
   /*
- * Submit Logic
- */
+   * Submit Logic
+   */
 
-  it('should not submit values when form is empty', async(done) => {
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<TimelineOptions submitChosenFormOptions={dummySubmitChosenFormOptions} />);
+  it('should not submit values when form is empty', async() => {
+    const user = userEvent.setup();
+    renderWithRedux(
+      <TimelineOptions submitChosenFormOptions={dummySubmitChosenFormOptions} />
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: /apply/i })
+      ).toBeInTheDocument();
     });
-    setImmediate(() => {
-      wrapper.update();
-      expect(wrapper.find(Button)).toHaveLength(1);
-      wrapper.find(Button).first().simulate('click');
-      expect(submitSpy).toHaveBeenCalledTimes(0);
-      done();
-    });
+
+    const applyButton = screen.getByRole('button', { name: /apply/i });
+    await user.click(applyButton);
+    expect(submitSpy).toHaveBeenCalledTimes(0);
   });
 });
