@@ -1,7 +1,7 @@
 import React from 'react';
+import { waitFor } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
-import { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
+import { renderWithRedux } from '../helpers/mountForm';
 import UserForm from '../../components/user-form/index';
 
 describe('User Form Component', () => {
@@ -51,49 +51,65 @@ describe('User Form Component', () => {
     fetchMock.restore();
   });
 
-  it('should render add User form correctly', async(done) => {
-    const wrapper = shallow(<UserForm />);
-    fetchMock.get('/api/groups?&expand=resources', groupsMockData);
-
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
+  it('should render add User form correctly', async() => {
+    fetchMock.get('/api/groups?&expand=resources', {
+      resources: groupsMockData,
     });
+
+    const { container } = renderWithRedux(<UserForm dbMode="database" />);
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
+    });
+    expect(container).toMatchSnapshot();
   });
 
-  it('should render edit User form correclty', async(done) => {
-    const wrapper = shallow(<UserForm id={40} data={userData} disabled={false} />);
-    fetchMock.get('/api/groups?&expand=resources', groupsMockData);
-    fetchMock.get('/api/users/41', userMockData);
-
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
+  it('should render edit User form correclty', async() => {
+    fetchMock.get('/api/groups?&expand=resources', {
+      resources: groupsMockData,
     });
+    fetchMock.get('/api/users/40?&attributes=miq_groups', {
+      ...userMockData,
+      miq_groups: [],
+    });
+
+    const { container } = renderWithRedux(
+      <UserForm id={40} data={userData} disabled={false} dbMode="database" />
+    );
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
+    });
+    expect(container).toMatchSnapshot();
   });
 
-  it('should render edit Admin User form correclty', async(done) => {
-    const wrapper = shallow(<UserForm id={1} data={userData} disabled />);
-    fetchMock.get('/api/groups?&expand=resources', groupsMockData);
-    fetchMock.get('/api/users/1', adminMockData);
-
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
+  it('should render edit Admin User form correclty', async() => {
+    fetchMock.get('/api/groups?&expand=resources', {
+      resources: groupsMockData,
     });
+    fetchMock.get('/api/users/1?&attributes=miq_groups', {
+      ...adminMockData,
+      miq_groups: [],
+    });
+
+    const { container } = renderWithRedux(
+      <UserForm id={1} data={userData} disabled dbMode="database" />
+    );
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
+    });
+    expect(container).toMatchSnapshot();
   });
 
-  it('should render copy User form correclty', async(done) => {
-    const wrapper = shallow(<UserForm data={userData} />);
-    fetchMock.get('/api/groups?&expand=resources', groupsMockData);
-
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
+  it('should render copy User form correclty', async() => {
+    fetchMock.get('/api/groups?&expand=resources', {
+      resources: groupsMockData,
     });
+
+    const { container } = renderWithRedux(
+      <UserForm data={userData} dbMode="database" />
+    );
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
+    });
+    expect(container).toMatchSnapshot();
   });
 });
