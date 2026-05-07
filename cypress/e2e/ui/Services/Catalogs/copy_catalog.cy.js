@@ -48,7 +48,8 @@ describe('Automate Copy Catalog Item form operations: Services > Catalogs > Cata
       ])
     });
 
-    cy.login();
+    cy.login('admin', 'smartvm', { cached: true });
+    cy.visit('/dashboard/show'); // Cached login requires visiting an authenticated page
     cy.menu(SERVICES_MENU_OPTION, CATALOGS_MENU_OPTION);
 
     cy.accordion(CATALOG_ITEMS_ACCORDION_ITEM);

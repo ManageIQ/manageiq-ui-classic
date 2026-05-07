@@ -4,7 +4,8 @@ import { getProviderConfig, PROVIDER_TYPES } from './provider-factory';
 
 describe('Automate Cloud Provider form operations: Compute > Clouds > Providers > Configuration > Add a New Cloud Provider', () => {
   beforeEach(() => {
-    cy.login();
+    cy.login('admin', 'smartvm', { cached: true });
+    cy.visit('/dashboard/show'); // Cached login requires visiting an authenticated page
     cy.menu('Compute', 'Clouds', 'Providers');
     cy.toolbar('Configuration', 'Add a New Cloud Provider');
   });

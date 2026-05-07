@@ -107,7 +107,8 @@ function assertUserInformation({
 
 describe('Settings > Application Settings > Users', () => {
   beforeEach(() => {
-    cy.login();
+    cy.login('admin', 'smartvm', { cached: true });
+    cy.visit('/dashboard/show'); // Cached login requires visiting an authenticated page
     cy.menu(SETTINGS_MENU_OPTION, APP_SETTINGS_MENU_OPTION);
     cy.accordion(ACCESS_CONTROL_ACCORDION_LABEL);
   });
@@ -312,11 +313,11 @@ describe('Settings > Application Settings > Users', () => {
 
       // Logout of admin user and login to the new user account and logout again
       cy.menu(LOGOUT_MENU_OPTION);
-      cy.login(USERNAME_FOR_ADD_TEST, TEST_PASS_WORD);
+      cy.login(USERNAME_FOR_ADD_TEST, TEST_PASS_WORD); // No caching - testing different user login
       cy.menu(LOGOUT_MENU_OPTION);
 
       // Login to admin user again and navigate to user table
-      cy.login();
+      cy.login('admin', 'smartvm'); // No caching - testing logout/login flow
       cy.menu(SETTINGS_MENU_OPTION, APP_SETTINGS_MENU_OPTION);
       cy.accordion(ACCESS_CONTROL_ACCORDION_LABEL);
 
@@ -386,11 +387,11 @@ describe('Settings > Application Settings > Users', () => {
 
       // Logout of admin user and login to the edited account and logout again
       cy.menu(LOGOUT_MENU_OPTION);
-      cy.login(USERNAME_FOR_EDIT_TEST, UPDATED_TEST_PASS_WORD);
+      cy.login(USERNAME_FOR_EDIT_TEST, UPDATED_TEST_PASS_WORD); // No caching - testing different user login
       cy.menu(LOGOUT_MENU_OPTION);
 
       // Login to admin user again and navigate to user table
-      cy.login();
+      cy.login('admin', 'smartvm'); // No caching - testing logout/login flow
       cy.menu(SETTINGS_MENU_OPTION, APP_SETTINGS_MENU_OPTION);
       cy.accordion(ACCESS_CONTROL_ACCORDION_LABEL);
 
@@ -524,15 +525,15 @@ describe('Settings > Application Settings > Users', () => {
 
       // Logout of admin user and login to the new user account and logout again
       cy.menu(LOGOUT_MENU_OPTION);
-      cy.login(USERNAME_FOR_ADD_TEST, TEST_PASS_WORD);
+      cy.login(USERNAME_FOR_ADD_TEST, TEST_PASS_WORD); // No caching - testing different user login
       cy.menu(LOGOUT_MENU_OPTION);
 
       // Login to copied user then logout
-      cy.login(USERNAME_FOR_COPY_TEST, UPDATED_TEST_PASS_WORD);
+      cy.login(USERNAME_FOR_COPY_TEST, UPDATED_TEST_PASS_WORD); // No caching - testing different user login
       cy.menu(LOGOUT_MENU_OPTION);
 
       // Login to admin user again and navigate to user table
-      cy.login();
+      cy.login('admin', 'smartvm'); // No caching - testing logout/login flow
       cy.menu(SETTINGS_MENU_OPTION, APP_SETTINGS_MENU_OPTION);
       cy.accordion(ACCESS_CONTROL_ACCORDION_LABEL);
 
@@ -675,11 +676,11 @@ describe('Settings > Application Settings > Users', () => {
 
       // Logout of admin user and login to the new user account and logout again
       cy.menu(LOGOUT_MENU_OPTION);
-      cy.login(USERNAME_FOR_ADD_TEST, TEST_PASS_WORD);
+      cy.login(USERNAME_FOR_ADD_TEST, TEST_PASS_WORD); // No caching - testing different user login
       cy.menu(LOGOUT_MENU_OPTION);
 
       // Login to admin user again and navigate to user table
-      cy.login();
+      cy.login('admin', 'smartvm'); // No caching - testing logout/login flow
       cy.menu(SETTINGS_MENU_OPTION, APP_SETTINGS_MENU_OPTION);
       cy.accordion(ACCESS_CONTROL_ACCORDION_LABEL);
 
@@ -784,11 +785,11 @@ describe('Settings > Application Settings > Users', () => {
 
       // Logout of admin user and login to the edited account and logout again
       cy.menu(LOGOUT_MENU_OPTION);
-      cy.login(USERNAME_FOR_ADD_TEST, TEST_PASS_WORD);
+      cy.login(USERNAME_FOR_ADD_TEST, TEST_PASS_WORD); // No caching - testing different user login
       cy.menu(LOGOUT_MENU_OPTION);
 
       // Login to admin user again and navigate to user table
-      cy.login();
+      cy.login(); // No caching - testing logout/login flow
       cy.menu(SETTINGS_MENU_OPTION, APP_SETTINGS_MENU_OPTION);
       cy.accordion(ACCESS_CONTROL_ACCORDION_LABEL);
       cy.selectAccordionItem([
@@ -836,11 +837,11 @@ describe('Settings > Application Settings > Users', () => {
 
       // Logout of admin user, login to the edited account with the new password and logout again
       cy.menu(LOGOUT_MENU_OPTION);
-      cy.login(USERNAME_FOR_ADD_TEST, UPDATED_TEST_PASS_WORD);
+      cy.login(USERNAME_FOR_ADD_TEST, UPDATED_TEST_PASS_WORD); // No caching - testing different user login
       cy.menu(LOGOUT_MENU_OPTION);
 
       // Login to admin user again and navigate to user table
-      cy.login();
+      cy.login(); // No caching - testing logout/login flow
       cy.menu(SETTINGS_MENU_OPTION, APP_SETTINGS_MENU_OPTION);
       cy.accordion(ACCESS_CONTROL_ACCORDION_LABEL);
       cy.selectAccordionItem([

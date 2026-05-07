@@ -107,7 +107,8 @@ function addSubscription() {
 
 describe('Automate Replication form operations: Settings > Application Settings > Replication', () => {
   beforeEach(() => {
-    cy.login();
+    cy.login('admin', 'smartvm', { cached: true });
+    cy.visit('/ops/explorer');
     cy.menu(SETTINGS_MENU_OPTION, APP_SETTINGS_MENU_OPTION);
     cy.accordion(SETTINGS_ACCORDION_ITEM);
     cy.selectAccordionItem([MANAGEIQ_REGION_ACCORDION_ITEM]);

@@ -174,7 +174,8 @@ function selectZoneAccordionItem(childZoneNode) {
 
 describe('Automate Zone form operations: Settings > Application Settings > Settings > Zones > Configuration > Add a new Zone', () => {
   beforeEach(() => {
-    cy.login();
+    cy.login('admin', 'smartvm', { cached: true });
+    cy.visit('/dashboard/show'); // Cached login requires visiting an authenticated page
     cy.menu(SETTINGS_LABEL, APP_SETTINGS_OPTION);
     cy.accordion(SETTINGS_LABEL);
     selectZoneAccordionItem();

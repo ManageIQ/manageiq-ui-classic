@@ -4,7 +4,8 @@ describe('Overview > Dashboard Tests', () => {
   const defaultCards = [];
 
   beforeEach(() => {
-    cy.login();
+    cy.login('admin', 'smartvm', { cached: true });
+    cy.visit('/dashboard/show'); // Cached login requires visiting an authenticated page
     cy.menu('Overview', 'Dashboard');
   });
 

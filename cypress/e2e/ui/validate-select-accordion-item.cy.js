@@ -3,7 +3,8 @@
 /* @RemoveLater: Remove this test suite once the command is confirmed to be stable */
 describe('Validate select accordion item', () => {
   beforeEach(() => {
-    cy.login();
+    cy.login('admin', 'smartvm', { cached: true });
+    cy.visit('/dashboard/show'); // Cached login requires visiting an authenticated page
     cy.menu('Settings', 'Application Settings');
   });
 

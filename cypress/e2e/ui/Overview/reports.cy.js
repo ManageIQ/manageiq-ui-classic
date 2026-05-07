@@ -2,7 +2,8 @@
 
 describe('Overview > Reports Tests', () => {
   beforeEach(() => {
-    cy.login();
+    cy.login('admin', 'smartvm', { cached: true });
+    cy.visit('/dashboard/show'); // Cached login requires visiting an authenticated page
     cy.menu('Overview', 'Reports');
   });
 

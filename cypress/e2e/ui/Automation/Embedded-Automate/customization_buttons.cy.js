@@ -3,7 +3,8 @@ import { flashClassMap } from '../../../../support/assertions/assertion_constant
 
 describe('Automation > Embedded Automate > Customization > Buttons', () => {
   beforeEach(() => {
-    cy.login();
+    cy.login('admin', 'smartvm', { cached: true });
+    cy.visit('/miq_ae_customization/explorer'); // Cached login requires visiting an authenticated page
     cy.menu('Automation', 'Embedded Automate', 'Customization');
     cy.get('#explorer_title_text');
     cy.accordion('Buttons');

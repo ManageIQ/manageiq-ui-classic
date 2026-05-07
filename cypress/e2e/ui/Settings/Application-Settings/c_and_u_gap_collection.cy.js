@@ -67,7 +67,8 @@ function saveFormAndAssertFlashMessage(flashMessageType, flashMessage) {
 
 describe('Automate C & U Gap Collection form operations: Settings > Application Settings > Diagnostics > ManageIQ Region > Zone Default Zone > C & U Gap Collection', () => {
   beforeEach(() => {
-    cy.login();
+    cy.login('admin', 'smartvm', { cached: true });
+    cy.visit('/dashboard/show'); // Cached login requires visiting an authenticated page
     // Navigate to Application settings and expand Diagnostics accordion
     cy.menu(SETTINGS_MENU_OPTION, APP_SETTINGS_MENU_OPTION);
     cy.accordion(DIAGNOSTICS_ACCORDION_ITEM);
