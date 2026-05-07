@@ -1,9 +1,14 @@
 import React from 'react';
-import { act } from 'react-dom/test-utils';
-import { mount } from 'enzyme';
-import toJson from 'enzyme-to-json';
-import { FormRenderer, useFormApi } from '@data-driven-forms/react-form-renderer';
-import { FormTemplate, componentMapper } from '@data-driven-forms/carbon-component-mapper';
+import { render, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import {
+  FormRenderer,
+  useFormApi,
+} from '@data-driven-forms/react-form-renderer';
+import {
+  FormTemplate,
+  componentMapper,
+} from '@data-driven-forms/carbon-component-mapper';
 import ProtocolSelector from '../../components/provider-form/protocol-selector';
 import EditingContext from '../../components/provider-form/editing-context';
 
@@ -91,8 +96,8 @@ const RendererWrapper = (props) => (
 
 describe('ProtocolSelector component', () => {
   it('should match the snapshot', () => {
-    const wrapper = mount(<RendererWrapper />);
-    expect(toJson(wrapper.find(ProtocolSelector))).toMatchSnapshot();
+    const { container } = render(<RendererWrapper />);
+    expect(container).toMatchSnapshot();
   });
 
   const initialValues = {
@@ -108,38 +113,65 @@ describe('ProtocolSelector component', () => {
     },
   };
 
-  it('should render correct form fields initially', async(done) => {
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<RendererWrapper initialValues={initialValues} />);
-      wrapper.update();
+  it('should render correct form fields initially', async() => {
+    const { container } = render(
+      <RendererWrapper initialValues={initialValues} />
+    );
+
+    await waitFor(() => {
+      expect(
+        container.querySelector('select[name="type"]')
+      ).toBeInTheDocument();
     });
 
-    expect(wrapper.find('select[name="type"]').prop('value')).toEqual('stf');
-    expect(wrapper.find('input[name="endpoints.stf.host"]').prop('value')).toEqual('localhost');
-    expect(wrapper.find('input[name="authentications.stf.username"]').prop('value')).toEqual('Bob Smith');
-    expect(wrapper.contains('input[name="endpoints.amqp.host')).toBe(false);
-    expect(wrapper.contains('input[name="authentications.amqp.username')).toBe(false);
-    done();
+    expect(container.querySelector('select[name="type"]').value).toEqual('stf');
+    expect(
+      container.querySelector('input[name="endpoints.stf.host"]').value
+    ).toEqual('localhost');
+    expect(
+      container.querySelector('input[name="authentications.stf.username"]')
+        .value
+    ).toEqual('Bob Smith');
+    expect(
+      container.querySelector('input[name="endpoints.amqp.host"]')
+    ).not.toBeInTheDocument();
+    expect(
+      container.querySelector('input[name="authentications.amqp.username"]')
+    ).not.toBeInTheDocument();
   });
 
-  it('should render correct form fields on change', async(done) => {
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<RendererWrapper initialValues={initialValues} />);
+  it('should render correct form fields on change', async() => {
+    const { container } = render(
+      <RendererWrapper initialValues={initialValues} />
+    );
+    const user = userEvent.setup();
+
+    await waitFor(() => {
+      expect(
+        container.querySelector('select[name="type"]')
+      ).toBeInTheDocument();
     });
 
-    await act(async() => {
-      wrapper.find('DummyComponent').prop('change')('type', 'amqp');
+    const typeSelect = container.querySelector('select[name="type"]');
+    await user.selectOptions(typeSelect, 'amqp');
+
+    await waitFor(() => {
+      expect(container.querySelector('select[name="type"]').value).toEqual(
+        'amqp'
+      );
     });
 
-    wrapper.update();
-
-    expect(wrapper.find('select[name="type"]').prop('value')).toEqual('amqp');
-    expect(wrapper.exists('input[name="endpoints.amqp.host"]')).toBe(true);
-    expect(wrapper.exists('input[name="authentications.amqp.username"]')).toBe(true);
-    expect(wrapper.exists('input[name="endpoints.stf.host"]')).toBe(false);
-    expect(wrapper.exists('input[name="authentications.stf.username"]')).toBe(false);
-    done();
+    expect(
+      container.querySelector('input[name="endpoints.amqp.host"]')
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector('input[name="authentications.amqp.username"]')
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector('input[name="endpoints.stf.host"]')
+    ).not.toBeInTheDocument();
+    expect(
+      container.querySelector('input[name="authentications.stf.username"]')
+    ).not.toBeInTheDocument();
   });
 });

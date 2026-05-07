@@ -1,247 +1,81 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ProtocolSelector component should match the snapshot 1`] = `
-<ProtocolSelector
-  component="protocol-selector"
-  label="Type"
-  name="type"
-  options={
-    Array [
-      Object {
-        "label": "STF",
-        "pivot": "endpoints.stf.host",
-        "value": "stf",
-      },
-      Object {
-        "label": "AMQP",
-        "pivot": "endponts.amqp.host",
-        "value": "amqp",
-      },
-    ]
-  }
->
-  <SelectWithOnChange
-    component="protocol-selector"
-    label="Type"
-    name="type"
-    onChange={[Function]}
-    options={
-      Array [
-        Object {
-          "label": "STF",
-          "pivot": "endpoints.stf.host",
-          "value": "stf",
-        },
-        Object {
-          "label": "AMQP",
-          "pivot": "endponts.amqp.host",
-          "value": "amqp",
-        },
-      ]
-    }
-    placeholder="<Choose>"
+<div>
+  <form
+    class="cds--form form-0-2-3"
+    novalidate=""
   >
-    <Select
-      component="protocol-selector"
-      label="Type"
-      name="type"
-      options={
-        Array [
-          Object {
-            "label": "STF",
-            "pivot": "endpoints.stf.host",
-            "value": "stf",
-          },
-          Object {
-            "label": "AMQP",
-            "pivot": "endponts.amqp.host",
-            "value": "amqp",
-          },
-        ]
-      }
-      placeholder="<Choose>"
+    <div />
+    <div
+      class="cds--form-item"
     >
-      <Select
-        SelectComponent={[Function]}
-        invalidText=""
-        labelText="Type"
-        loadOptionsChangeCounter={1}
-        loadingMessage="Loading..."
-        name="type"
-        onBlur={[Function]}
-        onChange={[Function]}
-        onFocus={[Function]}
-        options={
-          Array [
-            Object {
-              "label": "STF",
-              "pivot": "endpoints.stf.host",
-              "value": "stf",
-            },
-            Object {
-              "label": "AMQP",
-              "pivot": "endponts.amqp.host",
-              "value": "amqp",
-            },
-          ]
-        }
-        placeholder="<Choose>"
-        simpleValue={false}
-        value=""
+      <div
+        class="cds--select"
       >
-        <ClearedSelect
-          className=""
-          closeMenuOnSelect={true}
-          hideSelectedOptions={false}
-          invalidText=""
-          isClearable={false}
-          isFetching={false}
-          isSearchable={false}
-          labelText="Type"
-          name="type"
-          noOptionsMessage={[Function]}
-          onBlur={[Function]}
-          onChange={[Function]}
-          onFocus={[Function]}
-          onInputChange={[Function]}
-          options={
-            Array [
-              Object {
-                "label": "STF",
-                "pivot": "endpoints.stf.host",
-                "value": "stf",
-              },
-              Object {
-                "label": "AMQP",
-                "pivot": "endponts.amqp.host",
-                "value": "amqp",
-              },
-            ]
-          }
-          placeholder="<Choose>"
-          value=""
+        <label
+          class="cds--label"
+          dir="auto"
+          for="type"
         >
-          <Select
-            className=""
+          Type
+        </label>
+        <div
+          class="cds--select-input__wrapper"
+        >
+          <select
+            class="cds--select-input"
             id="type"
-            invalid={false}
-            invalidText=""
-            labelText="Type"
             name="type"
-            onBlur={[Function]}
-            onChange={[Function]}
-            onFocus={[Function]}
-            value=""
+            title="STF"
           >
-            <div
-              className="cds--form-item"
+            <option
+              class="cds--select-option"
+              label="STF"
+              pivot="endpoints.stf.host"
+              value="stf"
             >
-              <div
-                className="cds--select"
-              >
-                <ForwardRef
-                  as="label"
-                  className="cds--label"
-                  htmlFor="type"
-                >
-                  <label
-                    className="cds--label"
-                    dir="auto"
-                    htmlFor="type"
-                  >
-                    Type
-                  </label>
-                </ForwardRef>
-                <div
-                  className="cds--select-input__wrapper"
-                  data-invalid={null}
-                  onBlur={[Function]}
-                  onFocus={[Function]}
-                >
-                  <select
-                    className="cds--select-input"
-                    id="type"
-                    name="type"
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    onFocus={[Function]}
-                    onKeyDown={[Function]}
-                    onMouseDown={[Function]}
-                    title="STF"
-                    value=""
-                  >
-                    <SelectItem
-                      key="stf"
-                      label="STF"
-                      pivot="endpoints.stf.host"
-                      text="STF"
-                      value="stf"
-                    >
-                      <option
-                        className="cds--select-option"
-                        disabled={false}
-                        hidden={false}
-                        label="STF"
-                        pivot="endpoints.stf.host"
-                        value="stf"
-                      >
-                        STF
-                      </option>
-                    </SelectItem>
-                    <SelectItem
-                      key="amqp"
-                      label="AMQP"
-                      pivot="endponts.amqp.host"
-                      text="AMQP"
-                      value="amqp"
-                    >
-                      <option
-                        className="cds--select-option"
-                        disabled={false}
-                        hidden={false}
-                        label="AMQP"
-                        pivot="endponts.amqp.host"
-                        value="amqp"
-                      >
-                        AMQP
-                      </option>
-                    </SelectItem>
-                  </select>
-                  <ForwardRef(ChevronDown)
-                    className="cds--select__arrow"
-                  >
-                    <Icon
-                      className="cds--select__arrow"
-                      fill="currentColor"
-                      height={16}
-                      viewBox="0 0 16 16"
-                      width={16}
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <svg
-                        aria-hidden={true}
-                        className="cds--select__arrow"
-                        fill="currentColor"
-                        focusable="false"
-                        height={16}
-                        preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 16 16"
-                        width={16}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
-                        />
-                      </svg>
-                    </Icon>
-                  </ForwardRef(ChevronDown)>
-                </div>
-              </div>
-            </div>
-          </Select>
-        </ClearedSelect>
-      </Select>
-    </Select>
-  </SelectWithOnChange>
-</ProtocolSelector>
+              STF
+            </option>
+            <option
+              class="cds--select-option"
+              label="AMQP"
+              pivot="endponts.amqp.host"
+              value="amqp"
+            >
+              AMQP
+            </option>
+          </select>
+          <svg
+            aria-hidden="true"
+            class="cds--select__arrow"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 16 16"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+            />
+          </svg>
+          
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--btn-set"
+    >
+      <button
+        class="cds--btn cds--btn--primary"
+        type="submit"
+        variant="primary"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>
 `;
