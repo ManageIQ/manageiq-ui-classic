@@ -1,1328 +1,805 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MiqCustomTab component should render tabs for catalog edit page 1`] = `
-<Provider
-  store={
-    Object {
-      "clearActions": [Function],
-      "dispatch": [Function],
-      "getActions": [Function],
-      "getState": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-    }
-  }
->
-  <Component>
-    <MiqCustomTab
-      containerId="catalog-edit-tabs"
-      tabLabels={
-        Array [
-          "basic",
-          "detail",
-          "resource",
-        ]
-      }
-      type="CATALOG_EDIT"
+<div>
+  <div
+    class="cds--tabs miq_custom_tabs"
+  >
+    <button
+      aria-hidden="true"
+      aria-label="Scroll left"
+      class="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--previous cds--tab--overflow-nav-button--hidden"
+      tabindex="-1"
+      type="button"
     >
-      <Tabs>
-        <TabList
-          aria-label="Custom tabs"
-          className="miq_custom_tabs"
-          id="catalog_edit_static"
+      <svg
+        aria-hidden="true"
+        fill="currentColor"
+        focusable="false"
+        height="16"
+        preserveAspectRatio="xMidYMid meet"
+        viewBox="0 0 16 16"
+        width="16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M5 8 10 3 10.7 3.7 6.4 8 10.7 12.3 10 13z"
+        />
+      </svg>
+    </button>
+    <div
+      aria-label="Custom tabs"
+      class="cds--tab--list"
+      id="catalog_edit_static"
+      role="tablist"
+    >
+      <button
+        aria-controls="ccs-3-tabpanel-0"
+        aria-selected="true"
+        class="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
+        id="ccs-3-tab-0"
+        role="tab"
+        tabindex="0"
+        type="button"
+      >
+        <div
+          class="cds--tabs__nav-item-label-wrapper"
         >
-          <div
-            className="cds--tabs miq_custom_tabs"
+          <span
+            class="cds--tabs__nav-item-label"
+            dir="auto"
           >
-            <button
-              aria-hidden="true"
-              aria-label="Scroll left"
-              className="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--previous cds--tab--overflow-nav-button--hidden"
-              tabIndex={-1}
-              type="button"
-            >
-              <ForwardRef(ChevronLeft)>
-                <Icon
-                  fill="currentColor"
-                  height={16}
-                  viewBox="0 0 16 16"
-                  width={16}
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <svg
-                    aria-hidden={true}
-                    fill="currentColor"
-                    focusable="false"
-                    height={16}
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 16 16"
-                    width={16}
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M5 8 10 3 10.7 3.7 6.4 8 10.7 12.3 10 13z"
-                    />
-                  </svg>
-                </Icon>
-              </ForwardRef(ChevronLeft)>
-            </button>
-            <div
-              aria-label="Custom tabs"
-              className="cds--tab--list"
-              id="catalog_edit_static"
-              onBlur={[Function]}
-              onKeyDown={[Function]}
-              onScroll={[Function]}
-              role="tablist"
-            >
-              <ForwardRef
-                key="tabbasic"
-                onClick={[Function]}
-              >
-                <button
-                  aria-controls="ccs-3-tabpanel-0"
-                  aria-selected={true}
-                  className="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
-                  id="ccs-3-tab-0"
-                  onClick={[Function]}
-                  onKeyDown={[Function]}
-                  role="tab"
-                  tabIndex="0"
-                  type="button"
-                >
-                  <div
-                    className="cds--tabs__nav-item-label-wrapper"
-                  >
-                    <ForwardRef
-                      className="cds--tabs__nav-item-label"
-                    >
-                      <span
-                        className="cds--tabs__nav-item-label"
-                        dir="auto"
-                      >
-                        Basic Information
-                      </span>
-                    </ForwardRef>
-                  </div>
-                </button>
-                <div
-                  className="cds--tabs__nav-item--close--hidden"
-                >
-                  <button
-                    aria-hidden="true"
-                    className="cds--visually-hidden cds--tabs__nav-item--close-icon--selected"
-                    onClick={[Function]}
-                    tabIndex={-1}
-                    title="Remove Basic Information tab"
-                    type="button"
-                  >
-                    <ForwardRef(Close)
-                      aria-hidden="true"
-                      aria-label="Press delete to remove Basic Information tab"
-                    >
-                      <Icon
-                        aria-hidden="true"
-                        aria-label="Press delete to remove Basic Information tab"
-                        fill="currentColor"
-                        height={16}
-                        viewBox="0 0 32 32"
-                        width={16}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          aria-label="Press delete to remove Basic Information tab"
-                          fill="currentColor"
-                          focusable="false"
-                          height={16}
-                          preserveAspectRatio="xMidYMid meet"
-                          role="img"
-                          viewBox="0 0 32 32"
-                          width={16}
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
-                          />
-                        </svg>
-                      </Icon>
-                    </ForwardRef(Close)>
-                  </button>
-                </div>
-              </ForwardRef>
-              <ForwardRef
-                key="tabdetail"
-                onClick={[Function]}
-              >
-                <button
-                  aria-controls="ccs-3-tabpanel-1"
-                  aria-selected={false}
-                  className="cds--tabs__nav-item cds--tabs__nav-link"
-                  id="ccs-3-tab-1"
-                  onClick={[Function]}
-                  onKeyDown={[Function]}
-                  role="tab"
-                  tabIndex="-1"
-                  type="button"
-                >
-                  <div
-                    className="cds--tabs__nav-item-label-wrapper"
-                  >
-                    <ForwardRef
-                      className="cds--tabs__nav-item-label"
-                    >
-                      <span
-                        className="cds--tabs__nav-item-label"
-                        dir="auto"
-                      >
-                        Details
-                      </span>
-                    </ForwardRef>
-                  </div>
-                </button>
-                <div
-                  className="cds--tabs__nav-item--close--hidden"
-                >
-                  <button
-                    aria-hidden="true"
-                    className="cds--visually-hidden"
-                    onClick={[Function]}
-                    tabIndex={-1}
-                    title="Remove Details tab"
-                    type="button"
-                  >
-                    <ForwardRef(Close)
-                      aria-hidden="true"
-                      aria-label="Press delete to remove Details tab"
-                    >
-                      <Icon
-                        aria-hidden="true"
-                        aria-label="Press delete to remove Details tab"
-                        fill="currentColor"
-                        height={16}
-                        viewBox="0 0 32 32"
-                        width={16}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          aria-label="Press delete to remove Details tab"
-                          fill="currentColor"
-                          focusable="false"
-                          height={16}
-                          preserveAspectRatio="xMidYMid meet"
-                          role="img"
-                          viewBox="0 0 32 32"
-                          width={16}
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
-                          />
-                        </svg>
-                      </Icon>
-                    </ForwardRef(Close)>
-                  </button>
-                </div>
-              </ForwardRef>
-              <ForwardRef
-                key="tabresource"
-                onClick={[Function]}
-              >
-                <button
-                  aria-controls="ccs-3-tabpanel-2"
-                  aria-selected={false}
-                  className="cds--tabs__nav-item cds--tabs__nav-link"
-                  id="ccs-3-tab-2"
-                  onClick={[Function]}
-                  onKeyDown={[Function]}
-                  role="tab"
-                  tabIndex="-1"
-                  type="button"
-                >
-                  <div
-                    className="cds--tabs__nav-item-label-wrapper"
-                  >
-                    <ForwardRef
-                      className="cds--tabs__nav-item-label"
-                    >
-                      <span
-                        className="cds--tabs__nav-item-label"
-                        dir="auto"
-                      >
-                        Selected Resources
-                      </span>
-                    </ForwardRef>
-                  </div>
-                </button>
-                <div
-                  className="cds--tabs__nav-item--close--hidden"
-                >
-                  <button
-                    aria-hidden="true"
-                    className="cds--visually-hidden"
-                    onClick={[Function]}
-                    tabIndex={-1}
-                    title="Remove Selected Resources tab"
-                    type="button"
-                  >
-                    <ForwardRef(Close)
-                      aria-hidden="true"
-                      aria-label="Press delete to remove Selected Resources tab"
-                    >
-                      <Icon
-                        aria-hidden="true"
-                        aria-label="Press delete to remove Selected Resources tab"
-                        fill="currentColor"
-                        height={16}
-                        viewBox="0 0 32 32"
-                        width={16}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          aria-label="Press delete to remove Selected Resources tab"
-                          fill="currentColor"
-                          focusable="false"
-                          height={16}
-                          preserveAspectRatio="xMidYMid meet"
-                          role="img"
-                          viewBox="0 0 32 32"
-                          width={16}
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
-                          />
-                        </svg>
-                      </Icon>
-                    </ForwardRef(Close)>
-                  </button>
-                </div>
-              </ForwardRef>
-            </div>
-            <button
-              aria-hidden="true"
-              aria-label="Scroll right"
-              className="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--next cds--tab--overflow-nav-button--hidden"
-              tabIndex={-1}
-              type="button"
-            >
-              <ForwardRef(ChevronRight)>
-                <Icon
-                  fill="currentColor"
-                  height={16}
-                  viewBox="0 0 16 16"
-                  width={16}
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <svg
-                    aria-hidden={true}
-                    fill="currentColor"
-                    focusable="false"
-                    height={16}
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 16 16"
-                    width={16}
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
-                    />
-                  </svg>
-                </Icon>
-              </ForwardRef(ChevronRight)>
-            </button>
-          </div>
-        </TabList>
-      </Tabs>
-    </MiqCustomTab>
-  </Component>
-</Provider>
+            Basic Information
+          </span>
+        </div>
+      </button>
+      <div
+        class="cds--tabs__nav-item--close--hidden"
+      >
+        <button
+          aria-hidden="true"
+          class="cds--visually-hidden cds--tabs__nav-item--close-icon--selected"
+          tabindex="-1"
+          title="Remove Basic Information tab"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="Press delete to remove Basic Information tab"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            viewBox="0 0 32 32"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+            />
+          </svg>
+        </button>
+      </div>
+      <button
+        aria-controls="ccs-3-tabpanel-1"
+        aria-selected="false"
+        class="cds--tabs__nav-item cds--tabs__nav-link"
+        id="ccs-3-tab-1"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        <div
+          class="cds--tabs__nav-item-label-wrapper"
+        >
+          <span
+            class="cds--tabs__nav-item-label"
+            dir="auto"
+          >
+            Details
+          </span>
+        </div>
+      </button>
+      <div
+        class="cds--tabs__nav-item--close--hidden"
+      >
+        <button
+          aria-hidden="true"
+          class="cds--visually-hidden"
+          tabindex="-1"
+          title="Remove Details tab"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="Press delete to remove Details tab"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            viewBox="0 0 32 32"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+            />
+          </svg>
+        </button>
+      </div>
+      <button
+        aria-controls="ccs-3-tabpanel-2"
+        aria-selected="false"
+        class="cds--tabs__nav-item cds--tabs__nav-link"
+        id="ccs-3-tab-2"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        <div
+          class="cds--tabs__nav-item-label-wrapper"
+        >
+          <span
+            class="cds--tabs__nav-item-label"
+            dir="auto"
+          >
+            Selected Resources
+          </span>
+        </div>
+      </button>
+      <div
+        class="cds--tabs__nav-item--close--hidden"
+      >
+        <button
+          aria-hidden="true"
+          class="cds--visually-hidden"
+          tabindex="-1"
+          title="Remove Selected Resources tab"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="Press delete to remove Selected Resources tab"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            viewBox="0 0 32 32"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <button
+      aria-hidden="true"
+      aria-label="Scroll right"
+      class="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--next cds--tab--overflow-nav-button--hidden"
+      tabindex="-1"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        fill="currentColor"
+        focusable="false"
+        height="16"
+        preserveAspectRatio="xMidYMid meet"
+        viewBox="0 0 16 16"
+        width="16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+        />
+      </svg>
+    </button>
+  </div>
+</div>
 `;
 
 exports[`MiqCustomTab component should render tabs for catalog summary page 1`] = `
-<Provider
-  store={
-    Object {
-      "clearActions": [Function],
-      "dispatch": [Function],
-      "getActions": [Function],
-      "getState": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-    }
-  }
->
-  <Component>
-    <MiqCustomTab
-      containerId="catalog-tabs"
-      tabLabels={
-        Array [
-          "basic",
-          "detail",
-          "resource",
-        ]
-      }
-      type="CATALOG_SUMMARY"
+<div>
+  <div
+    class="cds--tabs miq_custom_tabs"
+  >
+    <button
+      aria-hidden="true"
+      aria-label="Scroll left"
+      class="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--previous cds--tab--overflow-nav-button--hidden"
+      tabindex="-1"
+      type="button"
     >
-      <Tabs>
-        <TabList
-          aria-label="Custom tabs"
-          className="miq_custom_tabs"
-          id="catalog_summary_static"
+      <svg
+        aria-hidden="true"
+        fill="currentColor"
+        focusable="false"
+        height="16"
+        preserveAspectRatio="xMidYMid meet"
+        viewBox="0 0 16 16"
+        width="16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M5 8 10 3 10.7 3.7 6.4 8 10.7 12.3 10 13z"
+        />
+      </svg>
+    </button>
+    <div
+      aria-label="Custom tabs"
+      class="cds--tab--list"
+      id="catalog_summary_static"
+      role="tablist"
+    >
+      <button
+        aria-controls="ccs-1-tabpanel-0"
+        aria-selected="true"
+        class="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
+        id="ccs-1-tab-0"
+        role="tab"
+        tabindex="0"
+        type="button"
+      >
+        <div
+          class="cds--tabs__nav-item-label-wrapper"
         >
-          <div
-            className="cds--tabs miq_custom_tabs"
+          <span
+            class="cds--tabs__nav-item-label"
+            dir="auto"
           >
-            <button
-              aria-hidden="true"
-              aria-label="Scroll left"
-              className="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--previous cds--tab--overflow-nav-button--hidden"
-              tabIndex={-1}
-              type="button"
-            >
-              <ForwardRef(ChevronLeft)>
-                <Icon
-                  fill="currentColor"
-                  height={16}
-                  viewBox="0 0 16 16"
-                  width={16}
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <svg
-                    aria-hidden={true}
-                    fill="currentColor"
-                    focusable="false"
-                    height={16}
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 16 16"
-                    width={16}
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M5 8 10 3 10.7 3.7 6.4 8 10.7 12.3 10 13z"
-                    />
-                  </svg>
-                </Icon>
-              </ForwardRef(ChevronLeft)>
-            </button>
-            <div
-              aria-label="Custom tabs"
-              className="cds--tab--list"
-              id="catalog_summary_static"
-              onBlur={[Function]}
-              onKeyDown={[Function]}
-              onScroll={[Function]}
-              role="tablist"
-            >
-              <ForwardRef
-                key="tabbasic"
-                onClick={[Function]}
-              >
-                <button
-                  aria-controls="ccs-1-tabpanel-0"
-                  aria-selected={true}
-                  className="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
-                  id="ccs-1-tab-0"
-                  onClick={[Function]}
-                  onKeyDown={[Function]}
-                  role="tab"
-                  tabIndex="0"
-                  type="button"
-                >
-                  <div
-                    className="cds--tabs__nav-item-label-wrapper"
-                  >
-                    <ForwardRef
-                      className="cds--tabs__nav-item-label"
-                    >
-                      <span
-                        className="cds--tabs__nav-item-label"
-                        dir="auto"
-                      >
-                        Basic Information
-                      </span>
-                    </ForwardRef>
-                  </div>
-                </button>
-                <div
-                  className="cds--tabs__nav-item--close--hidden"
-                >
-                  <button
-                    aria-hidden="true"
-                    className="cds--visually-hidden cds--tabs__nav-item--close-icon--selected"
-                    onClick={[Function]}
-                    tabIndex={-1}
-                    title="Remove Basic Information tab"
-                    type="button"
-                  >
-                    <ForwardRef(Close)
-                      aria-hidden="true"
-                      aria-label="Press delete to remove Basic Information tab"
-                    >
-                      <Icon
-                        aria-hidden="true"
-                        aria-label="Press delete to remove Basic Information tab"
-                        fill="currentColor"
-                        height={16}
-                        viewBox="0 0 32 32"
-                        width={16}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          aria-label="Press delete to remove Basic Information tab"
-                          fill="currentColor"
-                          focusable="false"
-                          height={16}
-                          preserveAspectRatio="xMidYMid meet"
-                          role="img"
-                          viewBox="0 0 32 32"
-                          width={16}
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
-                          />
-                        </svg>
-                      </Icon>
-                    </ForwardRef(Close)>
-                  </button>
-                </div>
-              </ForwardRef>
-              <ForwardRef
-                key="tabdetail"
-                onClick={[Function]}
-              >
-                <button
-                  aria-controls="ccs-1-tabpanel-1"
-                  aria-selected={false}
-                  className="cds--tabs__nav-item cds--tabs__nav-link"
-                  id="ccs-1-tab-1"
-                  onClick={[Function]}
-                  onKeyDown={[Function]}
-                  role="tab"
-                  tabIndex="-1"
-                  type="button"
-                >
-                  <div
-                    className="cds--tabs__nav-item-label-wrapper"
-                  >
-                    <ForwardRef
-                      className="cds--tabs__nav-item-label"
-                    >
-                      <span
-                        className="cds--tabs__nav-item-label"
-                        dir="auto"
-                      >
-                        Details
-                      </span>
-                    </ForwardRef>
-                  </div>
-                </button>
-                <div
-                  className="cds--tabs__nav-item--close--hidden"
-                >
-                  <button
-                    aria-hidden="true"
-                    className="cds--visually-hidden"
-                    onClick={[Function]}
-                    tabIndex={-1}
-                    title="Remove Details tab"
-                    type="button"
-                  >
-                    <ForwardRef(Close)
-                      aria-hidden="true"
-                      aria-label="Press delete to remove Details tab"
-                    >
-                      <Icon
-                        aria-hidden="true"
-                        aria-label="Press delete to remove Details tab"
-                        fill="currentColor"
-                        height={16}
-                        viewBox="0 0 32 32"
-                        width={16}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          aria-label="Press delete to remove Details tab"
-                          fill="currentColor"
-                          focusable="false"
-                          height={16}
-                          preserveAspectRatio="xMidYMid meet"
-                          role="img"
-                          viewBox="0 0 32 32"
-                          width={16}
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
-                          />
-                        </svg>
-                      </Icon>
-                    </ForwardRef(Close)>
-                  </button>
-                </div>
-              </ForwardRef>
-              <ForwardRef
-                key="tabresource"
-                onClick={[Function]}
-              >
-                <button
-                  aria-controls="ccs-1-tabpanel-2"
-                  aria-selected={false}
-                  className="cds--tabs__nav-item cds--tabs__nav-link"
-                  id="ccs-1-tab-2"
-                  onClick={[Function]}
-                  onKeyDown={[Function]}
-                  role="tab"
-                  tabIndex="-1"
-                  type="button"
-                >
-                  <div
-                    className="cds--tabs__nav-item-label-wrapper"
-                  >
-                    <ForwardRef
-                      className="cds--tabs__nav-item-label"
-                    >
-                      <span
-                        className="cds--tabs__nav-item-label"
-                        dir="auto"
-                      >
-                        Selected Resources
-                      </span>
-                    </ForwardRef>
-                  </div>
-                </button>
-                <div
-                  className="cds--tabs__nav-item--close--hidden"
-                >
-                  <button
-                    aria-hidden="true"
-                    className="cds--visually-hidden"
-                    onClick={[Function]}
-                    tabIndex={-1}
-                    title="Remove Selected Resources tab"
-                    type="button"
-                  >
-                    <ForwardRef(Close)
-                      aria-hidden="true"
-                      aria-label="Press delete to remove Selected Resources tab"
-                    >
-                      <Icon
-                        aria-hidden="true"
-                        aria-label="Press delete to remove Selected Resources tab"
-                        fill="currentColor"
-                        height={16}
-                        viewBox="0 0 32 32"
-                        width={16}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          aria-label="Press delete to remove Selected Resources tab"
-                          fill="currentColor"
-                          focusable="false"
-                          height={16}
-                          preserveAspectRatio="xMidYMid meet"
-                          role="img"
-                          viewBox="0 0 32 32"
-                          width={16}
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
-                          />
-                        </svg>
-                      </Icon>
-                    </ForwardRef(Close)>
-                  </button>
-                </div>
-              </ForwardRef>
-            </div>
-            <button
-              aria-hidden="true"
-              aria-label="Scroll right"
-              className="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--next cds--tab--overflow-nav-button--hidden"
-              tabIndex={-1}
-              type="button"
-            >
-              <ForwardRef(ChevronRight)>
-                <Icon
-                  fill="currentColor"
-                  height={16}
-                  viewBox="0 0 16 16"
-                  width={16}
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <svg
-                    aria-hidden={true}
-                    fill="currentColor"
-                    focusable="false"
-                    height={16}
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 16 16"
-                    width={16}
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
-                    />
-                  </svg>
-                </Icon>
-              </ForwardRef(ChevronRight)>
-            </button>
-          </div>
-        </TabList>
-      </Tabs>
-    </MiqCustomTab>
-  </Component>
-</Provider>
+            Basic Information
+          </span>
+        </div>
+      </button>
+      <div
+        class="cds--tabs__nav-item--close--hidden"
+      >
+        <button
+          aria-hidden="true"
+          class="cds--visually-hidden cds--tabs__nav-item--close-icon--selected"
+          tabindex="-1"
+          title="Remove Basic Information tab"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="Press delete to remove Basic Information tab"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            viewBox="0 0 32 32"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+            />
+          </svg>
+        </button>
+      </div>
+      <button
+        aria-controls="ccs-1-tabpanel-1"
+        aria-selected="false"
+        class="cds--tabs__nav-item cds--tabs__nav-link"
+        id="ccs-1-tab-1"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        <div
+          class="cds--tabs__nav-item-label-wrapper"
+        >
+          <span
+            class="cds--tabs__nav-item-label"
+            dir="auto"
+          >
+            Details
+          </span>
+        </div>
+      </button>
+      <div
+        class="cds--tabs__nav-item--close--hidden"
+      >
+        <button
+          aria-hidden="true"
+          class="cds--visually-hidden"
+          tabindex="-1"
+          title="Remove Details tab"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="Press delete to remove Details tab"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            viewBox="0 0 32 32"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+            />
+          </svg>
+        </button>
+      </div>
+      <button
+        aria-controls="ccs-1-tabpanel-2"
+        aria-selected="false"
+        class="cds--tabs__nav-item cds--tabs__nav-link"
+        id="ccs-1-tab-2"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        <div
+          class="cds--tabs__nav-item-label-wrapper"
+        >
+          <span
+            class="cds--tabs__nav-item-label"
+            dir="auto"
+          >
+            Selected Resources
+          </span>
+        </div>
+      </button>
+      <div
+        class="cds--tabs__nav-item--close--hidden"
+      >
+        <button
+          aria-hidden="true"
+          class="cds--visually-hidden"
+          tabindex="-1"
+          title="Remove Selected Resources tab"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="Press delete to remove Selected Resources tab"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            viewBox="0 0 32 32"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <button
+      aria-hidden="true"
+      aria-label="Scroll right"
+      class="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--next cds--tab--overflow-nav-button--hidden"
+      tabindex="-1"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        fill="currentColor"
+        focusable="false"
+        height="16"
+        preserveAspectRatio="xMidYMid meet"
+        viewBox="0 0 16 16"
+        width="16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+        />
+      </svg>
+    </button>
+  </div>
+</div>
 `;
 
 exports[`MiqCustomTab component should render tabs for request info page under catalog summary page 1`] = `
-<Provider
-  store={
-    Object {
-      "clearActions": [Function],
-      "dispatch": [Function],
-      "getActions": [Function],
-      "getState": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-    }
-  }
->
-  <Component>
-    <MiqCustomTab
-      containerId="request-info-tabs"
-      tabLabels={
-        Array [
-          "requester",
-          "purpose",
-          "service",
-          "environment",
-          "hardware",
-          "customize",
-          "schedule",
-        ]
-      }
-      type="CATALOG_REQUEST_INFO"
+<div>
+  <div
+    class="cds--tabs miq_custom_tabs"
+  >
+    <button
+      aria-hidden="true"
+      aria-label="Scroll left"
+      class="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--previous cds--tab--overflow-nav-button--hidden"
+      tabindex="-1"
+      type="button"
     >
-      <Tabs>
-        <TabList
-          aria-label="Custom tabs"
-          className="miq_custom_tabs"
-          id="catalog_request_info_dynamic"
+      <svg
+        aria-hidden="true"
+        fill="currentColor"
+        focusable="false"
+        height="16"
+        preserveAspectRatio="xMidYMid meet"
+        viewBox="0 0 16 16"
+        width="16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M5 8 10 3 10.7 3.7 6.4 8 10.7 12.3 10 13z"
+        />
+      </svg>
+    </button>
+    <div
+      aria-label="Custom tabs"
+      class="cds--tab--list"
+      id="catalog_request_info_dynamic"
+      role="tablist"
+    >
+      <button
+        aria-controls="ccs-2-tabpanel-0"
+        aria-selected="true"
+        class="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
+        id="ccs-2-tab-0"
+        role="tab"
+        tabindex="0"
+        type="button"
+      >
+        <div
+          class="cds--tabs__nav-item-label-wrapper"
         >
-          <div
-            className="cds--tabs miq_custom_tabs"
+          <span
+            class="cds--tabs__nav-item-label"
+            dir="auto"
           >
-            <button
-              aria-hidden="true"
-              aria-label="Scroll left"
-              className="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--previous cds--tab--overflow-nav-button--hidden"
-              tabIndex={-1}
-              type="button"
-            >
-              <ForwardRef(ChevronLeft)>
-                <Icon
-                  fill="currentColor"
-                  height={16}
-                  viewBox="0 0 16 16"
-                  width={16}
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <svg
-                    aria-hidden={true}
-                    fill="currentColor"
-                    focusable="false"
-                    height={16}
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 16 16"
-                    width={16}
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M5 8 10 3 10.7 3.7 6.4 8 10.7 12.3 10 13z"
-                    />
-                  </svg>
-                </Icon>
-              </ForwardRef(ChevronLeft)>
-            </button>
-            <div
-              aria-label="Custom tabs"
-              className="cds--tab--list"
-              id="catalog_request_info_dynamic"
-              onBlur={[Function]}
-              onKeyDown={[Function]}
-              onScroll={[Function]}
-              role="tablist"
-            >
-              <ForwardRef
-                key="tabrequester"
-                onClick={[Function]}
-              >
-                <button
-                  aria-controls="ccs-2-tabpanel-0"
-                  aria-selected={true}
-                  className="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
-                  id="ccs-2-tab-0"
-                  onClick={[Function]}
-                  onKeyDown={[Function]}
-                  role="tab"
-                  tabIndex="0"
-                  type="button"
-                >
-                  <div
-                    className="cds--tabs__nav-item-label-wrapper"
-                  >
-                    <ForwardRef
-                      className="cds--tabs__nav-item-label"
-                    >
-                      <span
-                        className="cds--tabs__nav-item-label"
-                        dir="auto"
-                      >
-                        Requester
-                      </span>
-                    </ForwardRef>
-                  </div>
-                </button>
-                <div
-                  className="cds--tabs__nav-item--close--hidden"
-                >
-                  <button
-                    aria-hidden="true"
-                    className="cds--visually-hidden cds--tabs__nav-item--close-icon--selected"
-                    onClick={[Function]}
-                    tabIndex={-1}
-                    title="Remove Requester tab"
-                    type="button"
-                  >
-                    <ForwardRef(Close)
-                      aria-hidden="true"
-                      aria-label="Press delete to remove Requester tab"
-                    >
-                      <Icon
-                        aria-hidden="true"
-                        aria-label="Press delete to remove Requester tab"
-                        fill="currentColor"
-                        height={16}
-                        viewBox="0 0 32 32"
-                        width={16}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          aria-label="Press delete to remove Requester tab"
-                          fill="currentColor"
-                          focusable="false"
-                          height={16}
-                          preserveAspectRatio="xMidYMid meet"
-                          role="img"
-                          viewBox="0 0 32 32"
-                          width={16}
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
-                          />
-                        </svg>
-                      </Icon>
-                    </ForwardRef(Close)>
-                  </button>
-                </div>
-              </ForwardRef>
-              <ForwardRef
-                key="tabpurpose"
-                onClick={[Function]}
-              >
-                <button
-                  aria-controls="ccs-2-tabpanel-1"
-                  aria-selected={false}
-                  className="cds--tabs__nav-item cds--tabs__nav-link"
-                  id="ccs-2-tab-1"
-                  onClick={[Function]}
-                  onKeyDown={[Function]}
-                  role="tab"
-                  tabIndex="-1"
-                  type="button"
-                >
-                  <div
-                    className="cds--tabs__nav-item-label-wrapper"
-                  >
-                    <ForwardRef
-                      className="cds--tabs__nav-item-label"
-                    >
-                      <span
-                        className="cds--tabs__nav-item-label"
-                        dir="auto"
-                      >
-                        Purpose
-                      </span>
-                    </ForwardRef>
-                  </div>
-                </button>
-                <div
-                  className="cds--tabs__nav-item--close--hidden"
-                >
-                  <button
-                    aria-hidden="true"
-                    className="cds--visually-hidden"
-                    onClick={[Function]}
-                    tabIndex={-1}
-                    title="Remove Purpose tab"
-                    type="button"
-                  >
-                    <ForwardRef(Close)
-                      aria-hidden="true"
-                      aria-label="Press delete to remove Purpose tab"
-                    >
-                      <Icon
-                        aria-hidden="true"
-                        aria-label="Press delete to remove Purpose tab"
-                        fill="currentColor"
-                        height={16}
-                        viewBox="0 0 32 32"
-                        width={16}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          aria-label="Press delete to remove Purpose tab"
-                          fill="currentColor"
-                          focusable="false"
-                          height={16}
-                          preserveAspectRatio="xMidYMid meet"
-                          role="img"
-                          viewBox="0 0 32 32"
-                          width={16}
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
-                          />
-                        </svg>
-                      </Icon>
-                    </ForwardRef(Close)>
-                  </button>
-                </div>
-              </ForwardRef>
-              <ForwardRef
-                key="tabservice"
-                onClick={[Function]}
-              >
-                <button
-                  aria-controls="ccs-2-tabpanel-2"
-                  aria-selected={false}
-                  className="cds--tabs__nav-item cds--tabs__nav-link"
-                  id="ccs-2-tab-2"
-                  onClick={[Function]}
-                  onKeyDown={[Function]}
-                  role="tab"
-                  tabIndex="-1"
-                  type="button"
-                >
-                  <div
-                    className="cds--tabs__nav-item-label-wrapper"
-                  >
-                    <ForwardRef
-                      className="cds--tabs__nav-item-label"
-                    >
-                      <span
-                        className="cds--tabs__nav-item-label"
-                        dir="auto"
-                      >
-                        Catalog
-                      </span>
-                    </ForwardRef>
-                  </div>
-                </button>
-                <div
-                  className="cds--tabs__nav-item--close--hidden"
-                >
-                  <button
-                    aria-hidden="true"
-                    className="cds--visually-hidden"
-                    onClick={[Function]}
-                    tabIndex={-1}
-                    title="Remove Catalog tab"
-                    type="button"
-                  >
-                    <ForwardRef(Close)
-                      aria-hidden="true"
-                      aria-label="Press delete to remove Catalog tab"
-                    >
-                      <Icon
-                        aria-hidden="true"
-                        aria-label="Press delete to remove Catalog tab"
-                        fill="currentColor"
-                        height={16}
-                        viewBox="0 0 32 32"
-                        width={16}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          aria-label="Press delete to remove Catalog tab"
-                          fill="currentColor"
-                          focusable="false"
-                          height={16}
-                          preserveAspectRatio="xMidYMid meet"
-                          role="img"
-                          viewBox="0 0 32 32"
-                          width={16}
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
-                          />
-                        </svg>
-                      </Icon>
-                    </ForwardRef(Close)>
-                  </button>
-                </div>
-              </ForwardRef>
-              <ForwardRef
-                key="tabenvironment"
-                onClick={[Function]}
-              >
-                <button
-                  aria-controls="ccs-2-tabpanel-3"
-                  aria-selected={false}
-                  className="cds--tabs__nav-item cds--tabs__nav-link"
-                  id="ccs-2-tab-3"
-                  onClick={[Function]}
-                  onKeyDown={[Function]}
-                  role="tab"
-                  tabIndex="-1"
-                  type="button"
-                >
-                  <div
-                    className="cds--tabs__nav-item-label-wrapper"
-                  >
-                    <ForwardRef
-                      className="cds--tabs__nav-item-label"
-                    >
-                      <span
-                        className="cds--tabs__nav-item-label"
-                        dir="auto"
-                      >
-                        Environment
-                      </span>
-                    </ForwardRef>
-                  </div>
-                </button>
-                <div
-                  className="cds--tabs__nav-item--close--hidden"
-                >
-                  <button
-                    aria-hidden="true"
-                    className="cds--visually-hidden"
-                    onClick={[Function]}
-                    tabIndex={-1}
-                    title="Remove Environment tab"
-                    type="button"
-                  >
-                    <ForwardRef(Close)
-                      aria-hidden="true"
-                      aria-label="Press delete to remove Environment tab"
-                    >
-                      <Icon
-                        aria-hidden="true"
-                        aria-label="Press delete to remove Environment tab"
-                        fill="currentColor"
-                        height={16}
-                        viewBox="0 0 32 32"
-                        width={16}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          aria-label="Press delete to remove Environment tab"
-                          fill="currentColor"
-                          focusable="false"
-                          height={16}
-                          preserveAspectRatio="xMidYMid meet"
-                          role="img"
-                          viewBox="0 0 32 32"
-                          width={16}
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
-                          />
-                        </svg>
-                      </Icon>
-                    </ForwardRef(Close)>
-                  </button>
-                </div>
-              </ForwardRef>
-              <ForwardRef
-                key="tabhardware"
-                onClick={[Function]}
-              >
-                <button
-                  aria-controls="ccs-2-tabpanel-4"
-                  aria-selected={false}
-                  className="cds--tabs__nav-item cds--tabs__nav-link"
-                  id="ccs-2-tab-4"
-                  onClick={[Function]}
-                  onKeyDown={[Function]}
-                  role="tab"
-                  tabIndex="-1"
-                  type="button"
-                >
-                  <div
-                    className="cds--tabs__nav-item-label-wrapper"
-                  >
-                    <ForwardRef
-                      className="cds--tabs__nav-item-label"
-                    >
-                      <span
-                        className="cds--tabs__nav-item-label"
-                        dir="auto"
-                      >
-                        Properties
-                      </span>
-                    </ForwardRef>
-                  </div>
-                </button>
-                <div
-                  className="cds--tabs__nav-item--close--hidden"
-                >
-                  <button
-                    aria-hidden="true"
-                    className="cds--visually-hidden"
-                    onClick={[Function]}
-                    tabIndex={-1}
-                    title="Remove Properties tab"
-                    type="button"
-                  >
-                    <ForwardRef(Close)
-                      aria-hidden="true"
-                      aria-label="Press delete to remove Properties tab"
-                    >
-                      <Icon
-                        aria-hidden="true"
-                        aria-label="Press delete to remove Properties tab"
-                        fill="currentColor"
-                        height={16}
-                        viewBox="0 0 32 32"
-                        width={16}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          aria-label="Press delete to remove Properties tab"
-                          fill="currentColor"
-                          focusable="false"
-                          height={16}
-                          preserveAspectRatio="xMidYMid meet"
-                          role="img"
-                          viewBox="0 0 32 32"
-                          width={16}
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
-                          />
-                        </svg>
-                      </Icon>
-                    </ForwardRef(Close)>
-                  </button>
-                </div>
-              </ForwardRef>
-              <ForwardRef
-                key="tabcustomize"
-                onClick={[Function]}
-              >
-                <button
-                  aria-controls="ccs-2-tabpanel-5"
-                  aria-selected={false}
-                  className="cds--tabs__nav-item cds--tabs__nav-link"
-                  id="ccs-2-tab-5"
-                  onClick={[Function]}
-                  onKeyDown={[Function]}
-                  role="tab"
-                  tabIndex="-1"
-                  type="button"
-                >
-                  <div
-                    className="cds--tabs__nav-item-label-wrapper"
-                  >
-                    <ForwardRef
-                      className="cds--tabs__nav-item-label"
-                    >
-                      <span
-                        className="cds--tabs__nav-item-label"
-                        dir="auto"
-                      >
-                        Customize
-                      </span>
-                    </ForwardRef>
-                  </div>
-                </button>
-                <div
-                  className="cds--tabs__nav-item--close--hidden"
-                >
-                  <button
-                    aria-hidden="true"
-                    className="cds--visually-hidden"
-                    onClick={[Function]}
-                    tabIndex={-1}
-                    title="Remove Customize tab"
-                    type="button"
-                  >
-                    <ForwardRef(Close)
-                      aria-hidden="true"
-                      aria-label="Press delete to remove Customize tab"
-                    >
-                      <Icon
-                        aria-hidden="true"
-                        aria-label="Press delete to remove Customize tab"
-                        fill="currentColor"
-                        height={16}
-                        viewBox="0 0 32 32"
-                        width={16}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          aria-label="Press delete to remove Customize tab"
-                          fill="currentColor"
-                          focusable="false"
-                          height={16}
-                          preserveAspectRatio="xMidYMid meet"
-                          role="img"
-                          viewBox="0 0 32 32"
-                          width={16}
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
-                          />
-                        </svg>
-                      </Icon>
-                    </ForwardRef(Close)>
-                  </button>
-                </div>
-              </ForwardRef>
-              <ForwardRef
-                key="tabschedule"
-                onClick={[Function]}
-              >
-                <button
-                  aria-controls="ccs-2-tabpanel-6"
-                  aria-selected={false}
-                  className="cds--tabs__nav-item cds--tabs__nav-link"
-                  id="ccs-2-tab-6"
-                  onClick={[Function]}
-                  onKeyDown={[Function]}
-                  role="tab"
-                  tabIndex="-1"
-                  type="button"
-                >
-                  <div
-                    className="cds--tabs__nav-item-label-wrapper"
-                  >
-                    <ForwardRef
-                      className="cds--tabs__nav-item-label"
-                    >
-                      <span
-                        className="cds--tabs__nav-item-label"
-                        dir="auto"
-                      >
-                        Schedule
-                      </span>
-                    </ForwardRef>
-                  </div>
-                </button>
-                <div
-                  className="cds--tabs__nav-item--close--hidden"
-                >
-                  <button
-                    aria-hidden="true"
-                    className="cds--visually-hidden"
-                    onClick={[Function]}
-                    tabIndex={-1}
-                    title="Remove Schedule tab"
-                    type="button"
-                  >
-                    <ForwardRef(Close)
-                      aria-hidden="true"
-                      aria-label="Press delete to remove Schedule tab"
-                    >
-                      <Icon
-                        aria-hidden="true"
-                        aria-label="Press delete to remove Schedule tab"
-                        fill="currentColor"
-                        height={16}
-                        viewBox="0 0 32 32"
-                        width={16}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          aria-label="Press delete to remove Schedule tab"
-                          fill="currentColor"
-                          focusable="false"
-                          height={16}
-                          preserveAspectRatio="xMidYMid meet"
-                          role="img"
-                          viewBox="0 0 32 32"
-                          width={16}
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
-                          />
-                        </svg>
-                      </Icon>
-                    </ForwardRef(Close)>
-                  </button>
-                </div>
-              </ForwardRef>
-            </div>
-            <button
-              aria-hidden="true"
-              aria-label="Scroll right"
-              className="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--next cds--tab--overflow-nav-button--hidden"
-              tabIndex={-1}
-              type="button"
-            >
-              <ForwardRef(ChevronRight)>
-                <Icon
-                  fill="currentColor"
-                  height={16}
-                  viewBox="0 0 16 16"
-                  width={16}
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <svg
-                    aria-hidden={true}
-                    fill="currentColor"
-                    focusable="false"
-                    height={16}
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 16 16"
-                    width={16}
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
-                    />
-                  </svg>
-                </Icon>
-              </ForwardRef(ChevronRight)>
-            </button>
-          </div>
-        </TabList>
-      </Tabs>
-    </MiqCustomTab>
-  </Component>
-</Provider>
+            Requester
+          </span>
+        </div>
+      </button>
+      <div
+        class="cds--tabs__nav-item--close--hidden"
+      >
+        <button
+          aria-hidden="true"
+          class="cds--visually-hidden cds--tabs__nav-item--close-icon--selected"
+          tabindex="-1"
+          title="Remove Requester tab"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="Press delete to remove Requester tab"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            viewBox="0 0 32 32"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+            />
+          </svg>
+        </button>
+      </div>
+      <button
+        aria-controls="ccs-2-tabpanel-1"
+        aria-selected="false"
+        class="cds--tabs__nav-item cds--tabs__nav-link"
+        id="ccs-2-tab-1"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        <div
+          class="cds--tabs__nav-item-label-wrapper"
+        >
+          <span
+            class="cds--tabs__nav-item-label"
+            dir="auto"
+          >
+            Purpose
+          </span>
+        </div>
+      </button>
+      <div
+        class="cds--tabs__nav-item--close--hidden"
+      >
+        <button
+          aria-hidden="true"
+          class="cds--visually-hidden"
+          tabindex="-1"
+          title="Remove Purpose tab"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="Press delete to remove Purpose tab"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            viewBox="0 0 32 32"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+            />
+          </svg>
+        </button>
+      </div>
+      <button
+        aria-controls="ccs-2-tabpanel-2"
+        aria-selected="false"
+        class="cds--tabs__nav-item cds--tabs__nav-link"
+        id="ccs-2-tab-2"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        <div
+          class="cds--tabs__nav-item-label-wrapper"
+        >
+          <span
+            class="cds--tabs__nav-item-label"
+            dir="auto"
+          >
+            Catalog
+          </span>
+        </div>
+      </button>
+      <div
+        class="cds--tabs__nav-item--close--hidden"
+      >
+        <button
+          aria-hidden="true"
+          class="cds--visually-hidden"
+          tabindex="-1"
+          title="Remove Catalog tab"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="Press delete to remove Catalog tab"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            viewBox="0 0 32 32"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+            />
+          </svg>
+        </button>
+      </div>
+      <button
+        aria-controls="ccs-2-tabpanel-3"
+        aria-selected="false"
+        class="cds--tabs__nav-item cds--tabs__nav-link"
+        id="ccs-2-tab-3"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        <div
+          class="cds--tabs__nav-item-label-wrapper"
+        >
+          <span
+            class="cds--tabs__nav-item-label"
+            dir="auto"
+          >
+            Environment
+          </span>
+        </div>
+      </button>
+      <div
+        class="cds--tabs__nav-item--close--hidden"
+      >
+        <button
+          aria-hidden="true"
+          class="cds--visually-hidden"
+          tabindex="-1"
+          title="Remove Environment tab"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="Press delete to remove Environment tab"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            viewBox="0 0 32 32"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+            />
+          </svg>
+        </button>
+      </div>
+      <button
+        aria-controls="ccs-2-tabpanel-4"
+        aria-selected="false"
+        class="cds--tabs__nav-item cds--tabs__nav-link"
+        id="ccs-2-tab-4"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        <div
+          class="cds--tabs__nav-item-label-wrapper"
+        >
+          <span
+            class="cds--tabs__nav-item-label"
+            dir="auto"
+          >
+            Properties
+          </span>
+        </div>
+      </button>
+      <div
+        class="cds--tabs__nav-item--close--hidden"
+      >
+        <button
+          aria-hidden="true"
+          class="cds--visually-hidden"
+          tabindex="-1"
+          title="Remove Properties tab"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="Press delete to remove Properties tab"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            viewBox="0 0 32 32"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+            />
+          </svg>
+        </button>
+      </div>
+      <button
+        aria-controls="ccs-2-tabpanel-5"
+        aria-selected="false"
+        class="cds--tabs__nav-item cds--tabs__nav-link"
+        id="ccs-2-tab-5"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        <div
+          class="cds--tabs__nav-item-label-wrapper"
+        >
+          <span
+            class="cds--tabs__nav-item-label"
+            dir="auto"
+          >
+            Customize
+          </span>
+        </div>
+      </button>
+      <div
+        class="cds--tabs__nav-item--close--hidden"
+      >
+        <button
+          aria-hidden="true"
+          class="cds--visually-hidden"
+          tabindex="-1"
+          title="Remove Customize tab"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="Press delete to remove Customize tab"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            viewBox="0 0 32 32"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+            />
+          </svg>
+        </button>
+      </div>
+      <button
+        aria-controls="ccs-2-tabpanel-6"
+        aria-selected="false"
+        class="cds--tabs__nav-item cds--tabs__nav-link"
+        id="ccs-2-tab-6"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        <div
+          class="cds--tabs__nav-item-label-wrapper"
+        >
+          <span
+            class="cds--tabs__nav-item-label"
+            dir="auto"
+          >
+            Schedule
+          </span>
+        </div>
+      </button>
+      <div
+        class="cds--tabs__nav-item--close--hidden"
+      >
+        <button
+          aria-hidden="true"
+          class="cds--visually-hidden"
+          tabindex="-1"
+          title="Remove Schedule tab"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="Press delete to remove Schedule tab"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            viewBox="0 0 32 32"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <button
+      aria-hidden="true"
+      aria-label="Scroll right"
+      class="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--next cds--tab--overflow-nav-button--hidden"
+      tabindex="-1"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        fill="currentColor"
+        focusable="false"
+        height="16"
+        preserveAspectRatio="xMidYMid meet"
+        viewBox="0 0 16 16"
+        width="16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+        />
+      </svg>
+    </button>
+  </div>
+</div>
 `;

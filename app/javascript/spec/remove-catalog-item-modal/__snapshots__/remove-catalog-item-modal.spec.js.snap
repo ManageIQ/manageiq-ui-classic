@@ -1,79 +1,77 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`RemoveCatalogItemModal should correctly render modal for duplicate catalog items 1`] = `
-<ForwardRef(ModalBody)
-  className="warning-modal-body"
->
-  <div>
-    <h4>
-      Are you sure you want to permanently delete the following catalog item?
-    </h4>
-    <ul>
-      <li
-        key="123"
-      >
-        <h4>
-          <strong>
-            name123
-          </strong>
-        </h4>
-      </li>
-    </ul>
+<div>
+  <div
+    class="cds--layer-two cds--modal-content cds--modal-scroll-content--no-fade warning-modal-body"
+  >
+    <div>
+      <h4>
+        Are you sure you want to permanently delete the following catalog item?
+      </h4>
+      <ul>
+        <li>
+          <h4>
+            <strong>
+              name123
+            </strong>
+          </h4>
+        </li>
+      </ul>
+    </div>
   </div>
-</ForwardRef(ModalBody)>
+</div>
 `;
 
 exports[`RemoveCatalogItemModal should correctly render modal for multiple catalog items 1`] = `
-<ForwardRef(ModalBody)
-  className="warning-modal-body"
->
-  <div>
-    <h4>
-      Are you sure you want to permanently delete the following catalog item?
-    </h4>
-    <ul>
-      <li
-        key="123"
-      >
-        <h4>
-          <strong>
-            name123
-          </strong>
-        </h4>
-      </li>
-      <li
-        key="456"
-      >
-        <h4>
-          <strong>
-            name456
-          </strong>
-        </h4>
-      </li>
-    </ul>
+<div>
+  <div
+    class="cds--layer-two cds--modal-content cds--modal-scroll-content--no-fade warning-modal-body"
+  >
+    <div>
+      <h4>
+        Are you sure you want to permanently delete the following catalog item?
+      </h4>
+      <ul>
+        <li>
+          <h4>
+            <strong>
+              name123
+            </strong>
+          </h4>
+        </li>
+        <li>
+          <h4>
+            <strong>
+              name456
+            </strong>
+          </h4>
+        </li>
+      </ul>
+    </div>
   </div>
-</ForwardRef(ModalBody)>
+</div>
 `;
 
 exports[`RemoveCatalogItemModal should correctly render modal for single catalog item 1`] = `
-<ForwardRef(ModalBody)
-  className="warning-modal-body"
->
-  <div>
-    <h4>
-      Are you sure you want to permanently delete the following catalog item?
-    </h4>
-    <ul>
-      <li
-        key="123"
-      >
-        <h4>
-          <strong>
-            name123
-          </strong>
-        </h4>
-      </li>
-    </ul>
+<div>
+  <div
+    class="cds--layer-two cds--modal-content cds--modal-scroll-content--no-fade warning-modal-body"
+  >
+    <div>
+      <h4>
+        Are you sure you want to permanently delete the following catalog item?
+      </h4>
+      <ul>
+        <li>
+          <h4>
+            <strong>
+              name123
+            </strong>
+          </h4>
+        </li>
+      </ul>
+    </div>
   </div>
-</ForwardRef(ModalBody)>
+</div>
 `;
