@@ -81,4 +81,49 @@ describe Menu::DefaultMenu do
       end
     end
   end
+
+  describe "visibility" do
+    before do
+      @user = login_as(FactoryBot.create(:user_admin))
+    end
+
+    describe "by role" do
+      it "when entitled" do
+        expect(Menu::DefaultMenu.services_menu_section).to be_visible
+      end
+
+      it "when not entitled" do
+        allow(@user).to receive(:role_allows_any?).and_return(false)
+
+        expect(Menu::DefaultMenu.services_menu_section).to_not be_visible
+      end
+    end
+
+    describe "by Vmdb::PermissionStores" do
+      it "when everything is permitted" do
+        allow(Vmdb::PermissionStores).to receive(:instance).and_return(
+          Vmdb::PermissionStores.new([])
+        )
+
+        expect(Menu::DefaultMenu.services_menu_section).to be_visible
+      end
+
+      it "when section is not permitted" do
+        allow(Vmdb::PermissionStores).to receive(:instance).and_return(
+          Vmdb::PermissionStores.new(["ui-menu:svc"])
+        )
+
+        expect(Menu::DefaultMenu.services_menu_section).to_not be_visible
+      end
+
+      it "when item is not permitted" do
+        allow(Vmdb::PermissionStores).to receive(:instance).and_return(
+          Vmdb::PermissionStores.new(["ui-menu:services"])
+        )
+
+        expect(Menu::DefaultMenu.services_menu_section).to be_visible
+        expect(Menu::DefaultMenu.services_menu_section.items.detect { |i| i.id == "services" }).to_not be_visible
+      end
+    end
+  end
 end

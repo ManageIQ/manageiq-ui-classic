@@ -33,7 +33,7 @@ module Menu
     end
 
     def visible?
-      return true if rbac_feature.nil?
+      return false unless Vmdb::PermissionStores.instance.supported_ui_menu?(id)
 
       rbac_feature.nil? || ApplicationHelper.role_allows?(**rbac_feature)
     end
