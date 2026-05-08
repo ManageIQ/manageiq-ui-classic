@@ -23,12 +23,10 @@ require('./miq_qe.js');
 require('./git_import.js');
 require('./import.js');
 require('./automate_import_export.js');
-require('./miq_c3_config.js');
 require('./miq_ujs_bindings.js');
 require('./miq_tree.js');
 require('./miq_formatters.js');
 require('./miq_toolbar.js');
-require('./miq_c3.js');
 require('./miq_explorer.js');
 
 if (process.env.NODE_ENV === 'development' && process.env.CYPRESS !== 'true') {
