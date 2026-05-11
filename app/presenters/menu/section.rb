@@ -33,10 +33,12 @@ module Menu
     end
 
     def visible?
+      return false unless Vmdb::PermissionStores.instance.supported_ui_menu?(id)
+
       userid = User.current_userid
-      store = Vmdb::PermissionStores.instance
-      auth  = store.can?(id) && User.current_user.role_allows_any?(:identifiers => features_recursive)
+      auth = User.current_user.role_allows_any?(:identifiers => features_recursive)
       $log.debug("Role Authorization #{auth ? "successful" : "failed"} for: userid [#{userid}], main tab [#{id}]")
+
       auth
     end
 
