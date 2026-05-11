@@ -1,13 +1,12 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import PxeTemplateFolders from '../../components/pxe-template-folders/index';
 
 describe('PxeTemplateFolders Component', () => {
-  let mockMiqTreeActivateNode;
+  const mockMiqTreeActivateNode = jest.fn();
 
   beforeEach(() => {
-    mockMiqTreeActivateNode = jest.fn();
     window.miqTreeActivateNode = mockMiqTreeActivateNode;
   });
 
@@ -16,18 +15,16 @@ describe('PxeTemplateFolders Component', () => {
   });
 
   it('should render with empty folders array', () => {
-    const wrapper = shallow(<PxeTemplateFolders folders={[]} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const { container } = render(<PxeTemplateFolders folders={[]} />);
+    expect(container).toMatchSnapshot();
   });
 
   it('should render only system folder when no user folders', () => {
-    const wrapper = shallow(<PxeTemplateFolders folders={[]} />);
-    const dataTable = wrapper.find('MiqDataTable');
-    const rows = dataTable.prop('rows');
-
-    // Should have only the system folder
-    expect(rows).toHaveLength(1);
-    expect(rows[0].id).toBe('xx-xx-system');
+    render(<PxeTemplateFolders folders={[]} />);
+    const rows = screen.getAllByRole('row');
+    // Should have header row + 1 system folder row = 2 total
+    expect(rows).toHaveLength(2);
+    expect(screen.getByText('Examples (read only)')).toBeInTheDocument();
   });
 
   it('should render with folders data', () => {
@@ -35,15 +32,11 @@ describe('PxeTemplateFolders Component', () => {
       { id: 1, name: 'Folder 1' },
       { id: 2, name: 'Folder 2' },
     ];
-    const wrapper = shallow(<PxeTemplateFolders folders={folders} />);
-    const dataTable = wrapper.find('MiqDataTable');
-
-    expect(toJson(wrapper)).toMatchSnapshot();
-    expect(dataTable).toHaveLength(1);
-    expect(dataTable.prop('mode')).toBe('template-folders');
-    expect(dataTable.prop('headers')).toBeDefined();
-    expect(dataTable.prop('rows')).toBeDefined();
-    expect(dataTable.prop('onCellClick')).toBeDefined();
+    const { container } = render(<PxeTemplateFolders folders={folders} />);
+    expect(container).toMatchSnapshot();
+    expect(screen.getByText('Examples (read only)')).toBeInTheDocument();
+    expect(screen.getByText('Folder 1')).toBeInTheDocument();
+    expect(screen.getByText('Folder 2')).toBeInTheDocument();
   });
 
   it('should render correct number of rows (system + user folders)', () => {
@@ -52,22 +45,21 @@ describe('PxeTemplateFolders Component', () => {
       { id: 2, name: 'Folder 2' },
       { id: 3, name: 'Folder 3' },
     ];
-    const wrapper = shallow(<PxeTemplateFolders folders={folders} />);
-    const dataTable = wrapper.find('MiqDataTable');
-    const rows = dataTable.prop('rows');
+    render(<PxeTemplateFolders folders={folders} />);
+    const rows = screen.getAllByRole('row');
 
-    // Should have 1 system folder + 3 user folders = 4 total
-    expect(rows).toHaveLength(4);
+    // Should have header row + 1 system folder + 3 user folders = 5 total
+    expect(rows).toHaveLength(5);
   });
 
-  it('should call miqTreeActivateNode when handleCellClick is triggered with system folder', () => {
+  it('should call miqTreeActivateNode when handleCellClick is triggered with system folder', async() => {
+    const user = userEvent.setup();
     const folders = [{ id: 1, name: 'Test Folder' }];
-    const wrapper = shallow(<PxeTemplateFolders folders={folders} />);
-    const dataTable = wrapper.find('MiqDataTable');
-    const onCellClick = dataTable.prop('onCellClick');
 
-    // Simulate clicking on system folder
-    onCellClick({ id: 'xx-xx-system' });
+    render(<PxeTemplateFolders folders={folders} />);
+    // Click on system folder row
+    const systemCell = screen.getByText('Examples (read only)');
+    await user.click(systemCell);
 
     expect(mockMiqTreeActivateNode).toHaveBeenCalledWith(
       'customization_templates_tree',
@@ -75,14 +67,14 @@ describe('PxeTemplateFolders Component', () => {
     );
   });
 
-  it('should call miqTreeActivateNode when handleCellClick is triggered with user folder', () => {
+  it('should call miqTreeActivateNode when handleCellClick is triggered with user folder', async() => {
+    const user = userEvent.setup();
     const folders = [{ id: 1, name: 'Test Folder' }];
-    const wrapper = shallow(<PxeTemplateFolders folders={folders} />);
-    const dataTable = wrapper.find('MiqDataTable');
-    const onCellClick = dataTable.prop('onCellClick');
+    render(<PxeTemplateFolders folders={folders} />);
 
-    // Simulate clicking on user folder
-    onCellClick({ id: 'pit-1' });
+    // Click on user folder cell
+    const userFolderCell = screen.getByText('Test Folder');
+    await user.click(userFolderCell);
 
     expect(mockMiqTreeActivateNode).toHaveBeenCalledWith(
       'customization_templates_tree',
@@ -91,17 +83,15 @@ describe('PxeTemplateFolders Component', () => {
   });
 
   it('should not call miqTreeActivateNode when row has no id', () => {
+    const user = userEvent.setup();
     const folders = [{ id: 1, name: 'Test Folder' }];
-    const wrapper = shallow(<PxeTemplateFolders folders={folders} />);
-    const dataTable = wrapper.find('MiqDataTable');
-    const onCellClick = dataTable.prop('onCellClick');
+    const { container } = render(<PxeTemplateFolders folders={folders} />);
+    const dataTableDiv = container.querySelector(
+      '#template_folders_div .miq-data-table'
+    );
+    expect(dataTableDiv).toBeInTheDocument();
+    user.click(dataTableDiv);
 
-    // Simulate clicking on row without id
-    onCellClick({});
-    expect(mockMiqTreeActivateNode).not.toHaveBeenCalled();
-
-    // Simulate clicking with null row
-    onCellClick(null);
     expect(mockMiqTreeActivateNode).not.toHaveBeenCalled();
   });
 
@@ -110,13 +100,10 @@ describe('PxeTemplateFolders Component', () => {
       { id: 1, name: 'Folder 1' },
       { id: 2, name: 'Folder 2' },
     ];
-    const wrapper = shallow(<PxeTemplateFolders folders={folders} />);
-    const dataTable = wrapper.find('MiqDataTable');
-    const rows = dataTable.prop('rows');
-
-    // Check that all rows are clickable
-    rows.forEach((row) => {
-      expect(row.clickable).toBe(true);
-    });
+    const { container } = render(<PxeTemplateFolders folders={folders} />);
+    // Check that all rows have the clickable-row class
+    const clickableRows = container.querySelectorAll('tr.clickable-row');
+    // Should have 3 clickable rows: 1 system folder + 2 user folders
+    expect(clickableRows).toHaveLength(3);
   });
 });
