@@ -881,26 +881,23 @@ class MiqAeClassController < ApplicationController
 
     fields_get_form_vars
     @changed = (@edit[:new] != @edit[:current])
-      unless %w[up down].include?(params[:button])
-        if params[:field_datatype] == "password"
-          session[:field_data][:default_value] =
-            @edit[:new_field][:default_value] = ''
-        elsif params[:field_datatype]
-          session[:field_data][:default_value] =
-            @edit[:new_field][:default_value] = ''
-        end
-        params.each do |field, _value|
-          next unless field.to_s.starts_with?("fields_datatype")
-
-          f = field.split('fields_datatype')
-          def_field = "fields_default_value_" << f[1].to_s
-          pwd_field = "fields_password_value_" << f[1].to_s
-          if @edit[:new][:fields][f[1].to_i]['datatype'] == "password"
-          else
-          end
-          @edit[:new][:fields][f[1].to_i]['default_value'] = nil
-        end
+    unless %w[up down].include?(params[:button])
+      if params[:field_datatype] == "password"
+        session[:field_data][:default_value] =
+          @edit[:new_field][:default_value] = ''
+      elsif params[:field_datatype]
+        session[:field_data][:default_value] =
+          @edit[:new_field][:default_value] = ''
       end
+      params.each do |field, _value|
+        next unless field.to_s.starts_with?("fields_datatype")
+
+        f = field.split('fields_datatype')
+        def_field = "fields_default_value_" << f[1].to_s
+        pwd_field = "fields_password_value_" << f[1].to_s
+        @edit[:new][:fields][f[1].to_i]['default_value'] = nil
+      end
+    end
     render :json => {:message => 'Field updated successfully'}, :status => 200
   end
 
