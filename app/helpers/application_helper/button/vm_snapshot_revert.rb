@@ -8,7 +8,6 @@ class ApplicationHelper::Button::VmSnapshotRevert < ApplicationHelper::Button::B
 
   def disabled?
     # TODO: move ovirt's @active special case into supports mechanism.
-    @error_message = @record.try(:revert_to_snapshot_denied_message, @active)
     @error_message ||= unless @record.supports?(:revert_to_snapshot)
                          @record.unsupported_reason(:revert_to_snapshot)
                        end
