@@ -2567,10 +2567,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@novnc/novnc@npm:~1.2.0":
-  version: 1.2.0
-  resolution: "@novnc/novnc@npm:1.2.0"
-  checksum: 10/d163fa2b4ad168ca4a93518920bfb8a0e78763cd6f808f56a1f916b7265dde5f4b76df2ebee73cbb3ac37823e12d575d955198646a40f85c60087680faa7554a
+"@novnc/novnc@npm:~1.7.0":
+  version: 1.7.0
+  resolution: "@novnc/novnc@npm:1.7.0"
+  checksum: 10/408cd02668d57ce72fb714aad34cd27ec421437a388be74d949c0ea05e30ba87cce01b4ccd6a7e20a115f39f58c4d957c50d471d0197e8b9eeb58f1e8b4d3e35
   languageName: node
   linkType: hard
 
@@ -12295,7 +12295,7 @@ __metadata:
     "@hotwired/stimulus": "npm:^3.2.2"
     "@manageiq/font-fabulous": "npm:~1.0.5"
     "@manageiq/ui-components": "npm:~1.6.1"
-    "@novnc/novnc": "npm:~1.2.0"
+    "@novnc/novnc": "npm:~1.7.0"
     "@pf3/select": "npm:~1.12.6"
     "@rails/actioncable": "npm:^8.0.0"
     "@tshepomgaga/aws-sfn-graph": "npm:0.0.6"
