@@ -513,9 +513,9 @@ module ApplicationController::CiProcessing
   def deletesnapsvms
     assert_privileges(params[:pressed])
 
-    snap_selected = Snapshot.find_by(:id => session[:snap_selected])
-    record = find_record_with_rbac(record_class, params[:id])
-    error_message = record.try(:remove_snapshot_denied_message, snap_selected.current?)
+    snap_selected = Snapshot.find_by(:id => session[:snap_selected]) if session[:snap_selected]
+    record = find_record_with_rbac(record_class, params[:id]) if params[:id]
+    error_message = record.try(:remove_snapshot_denied_message, snap_selected.current?) if snap_selected
     if error_message
       javascript_flash(
         :text       => error_message,
