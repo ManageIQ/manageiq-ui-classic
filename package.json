@@ -49,7 +49,7 @@
     "angular-bootstrap-switch": "~0.5.2",
     "angular-dragdrop": "~1.0.13",
     "angular-gettext": "^2.4.1",
-    "angular-patternfly": "~3.26.0",
+    "angular-patternfly": "~5.0.0",
     "angular-ui-bootstrap": "~2.5.6",
     "angular-ui-sortable": "~0.19.0",
     "awesome-debounce-promise": "^2.1.0",
