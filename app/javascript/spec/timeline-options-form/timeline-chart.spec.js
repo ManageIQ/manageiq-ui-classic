@@ -1,19 +1,29 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
-import { act } from 'react-dom/test-utils';
+import { render, waitFor, screen } from '@testing-library/react';
 import TimelineChart from '../../components/timeline-options/timeline-chart';
-import { mount } from '../helpers/mountForm';
 
 describe('Show Timeline Chart', () => {
-  it('should render empty chart', async(done) => {
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<TimelineChart />);
+  it('should render empty chart', async() => {
+    const { container } = render(<TimelineChart />);
+    await waitFor(() => {
+      expect(container.querySelector('.chart-holder')).toBeInTheDocument();
     });
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
+
+    // Note: Snapshot testing not used because chart generates dynamic IDs (e.g., chart-clip-id-56801322452)
+    // that change on each render, making snapshots unstable
+    expect(
+      container.querySelector('.cds--cc--chart-wrapper')
+    ).toBeInTheDocument();
+    expect(container.querySelector('.cds--cc--axes')).toBeInTheDocument();
+    expect(container.querySelector('.cds--cc--line')).toBeInTheDocument();
+
+    const showAsTableButtons = screen.getAllByRole('button', {
+      name: 'Show as table',
     });
+    expect(showAsTableButtons.length).toBeGreaterThan(0);
+    const moreOptionsButtons = screen.getAllByRole('button', {
+      name: 'More options',
+    });
+    expect(moreOptionsButtons.length).toBeGreaterThan(0);
   });
 });
