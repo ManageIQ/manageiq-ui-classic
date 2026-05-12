@@ -1,214 +1,79 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Select component should match the snapshot 1`] = `
-<SelectWithOnChange
-  component="select"
-  label="Choose"
-  name="selectField"
-  options={
-    Array [
-      Object {
-        "label": "Dogs",
-        "value": "1",
-      },
-      Object {
-        "label": "Cats",
-        "value": "2",
-      },
-    ]
-  }
-  placeholder="<Choose>"
->
-  <Select
-    component="select"
-    label="Choose"
-    name="selectField"
-    options={
-      Array [
-        Object {
-          "label": "Dogs",
-          "value": "1",
-        },
-        Object {
-          "label": "Cats",
-          "value": "2",
-        },
-      ]
-    }
-    placeholder="<Choose>"
+<div>
+  <form
+    class="cds--form form-0-2-3"
+    novalidate=""
   >
-    <Select
-      SelectComponent={[Function]}
-      invalidText=""
-      labelText="Choose"
-      loadOptionsChangeCounter={1}
-      loadingMessage="Loading..."
-      name="selectField"
-      onBlur={[Function]}
-      onChange={[Function]}
-      onFocus={[Function]}
-      options={
-        Array [
-          Object {
-            "label": "Dogs",
-            "value": "1",
-          },
-          Object {
-            "label": "Cats",
-            "value": "2",
-          },
-        ]
-      }
-      placeholder="<Choose>"
-      simpleValue={false}
-      value=""
+    <div />
+    <div
+      class="cds--form-item"
     >
-      <ClearedSelect
-        className=""
-        closeMenuOnSelect={true}
-        hideSelectedOptions={false}
-        invalidText=""
-        isClearable={false}
-        isFetching={false}
-        isSearchable={false}
-        labelText="Choose"
-        name="selectField"
-        noOptionsMessage={[Function]}
-        onBlur={[Function]}
-        onChange={[Function]}
-        onFocus={[Function]}
-        onInputChange={[Function]}
-        options={
-          Array [
-            Object {
-              "label": "Dogs",
-              "value": "1",
-            },
-            Object {
-              "label": "Cats",
-              "value": "2",
-            },
-          ]
-        }
-        placeholder="<Choose>"
-        value=""
+      <div
+        class="cds--select"
       >
-        <Select
-          className=""
-          id="selectField"
-          invalid={false}
-          invalidText=""
-          labelText="Choose"
-          name="selectField"
-          onBlur={[Function]}
-          onChange={[Function]}
-          onFocus={[Function]}
-          value=""
+        <label
+          class="cds--label"
+          dir="auto"
+          for="selectField"
         >
-          <div
-            className="cds--form-item"
+          Choose
+        </label>
+        <div
+          class="cds--select-input__wrapper"
+        >
+          <select
+            class="cds--select-input"
+            id="selectField"
+            name="selectField"
+            title="Dogs"
           >
-            <div
-              className="cds--select"
+            <option
+              class="cds--select-option"
+              label="Dogs"
+              value="1"
             >
-              <ForwardRef
-                as="label"
-                className="cds--label"
-                htmlFor="selectField"
-              >
-                <label
-                  className="cds--label"
-                  dir="auto"
-                  htmlFor="selectField"
-                >
-                  Choose
-                </label>
-              </ForwardRef>
-              <div
-                className="cds--select-input__wrapper"
-                data-invalid={null}
-                onBlur={[Function]}
-                onFocus={[Function]}
-              >
-                <select
-                  className="cds--select-input"
-                  id="selectField"
-                  name="selectField"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onFocus={[Function]}
-                  onKeyDown={[Function]}
-                  onMouseDown={[Function]}
-                  title="Dogs"
-                  value=""
-                >
-                  <SelectItem
-                    key="1"
-                    label="Dogs"
-                    text="Dogs"
-                    value="1"
-                  >
-                    <option
-                      className="cds--select-option"
-                      disabled={false}
-                      hidden={false}
-                      label="Dogs"
-                      value="1"
-                    >
-                      Dogs
-                    </option>
-                  </SelectItem>
-                  <SelectItem
-                    key="2"
-                    label="Cats"
-                    text="Cats"
-                    value="2"
-                  >
-                    <option
-                      className="cds--select-option"
-                      disabled={false}
-                      hidden={false}
-                      label="Cats"
-                      value="2"
-                    >
-                      Cats
-                    </option>
-                  </SelectItem>
-                </select>
-                <ForwardRef(ChevronDown)
-                  className="cds--select__arrow"
-                >
-                  <Icon
-                    className="cds--select__arrow"
-                    fill="currentColor"
-                    height={16}
-                    viewBox="0 0 16 16"
-                    width={16}
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <svg
-                      aria-hidden={true}
-                      className="cds--select__arrow"
-                      fill="currentColor"
-                      focusable="false"
-                      height={16}
-                      preserveAspectRatio="xMidYMid meet"
-                      viewBox="0 0 16 16"
-                      width={16}
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
-                      />
-                    </svg>
-                  </Icon>
-                </ForwardRef(ChevronDown)>
-              </div>
-            </div>
-          </div>
-        </Select>
-      </ClearedSelect>
-    </Select>
-  </Select>
-</SelectWithOnChange>
+              Dogs
+            </option>
+            <option
+              class="cds--select-option"
+              label="Cats"
+              value="2"
+            >
+              Cats
+            </option>
+          </select>
+          <svg
+            aria-hidden="true"
+            class="cds--select__arrow"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 16 16"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+            />
+          </svg>
+          
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--btn-set"
+    >
+      <button
+        class="cds--btn cds--btn--primary"
+        type="submit"
+        variant="primary"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>
 `;
