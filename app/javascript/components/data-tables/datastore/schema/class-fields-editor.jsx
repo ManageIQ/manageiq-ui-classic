@@ -79,17 +79,23 @@ export const ClassFieldsEditor = (props) => {
       return [aeTypeIcon, dTypeIcon, subIcon];
     };
 
+    const getDefaultValue = () => {
+      if (field.datatype === 'password' && field.default_value) {
+        return '********';
+      }
+      return field.default_value || '';
+    };
+
     const row = {
       id: rowId.toString(),
       field_id: field.id,
       name: {
         text: getFieldName(),
         icon: getIconForValue() || [],
-        // raw: field.name, // Store the raw name value for modal editing
       },
       aetype: { text: field.aetype },
       datatype: { text: field.datatype },
-      default_value: { text: field.default_value || '' },
+      default_value: { text: getDefaultValue() },
       display_name: { text: field.display_name || '' },
       description: { text: field.description || '' },
       substitute: { text: field.substitute },
