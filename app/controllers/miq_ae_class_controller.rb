@@ -1119,7 +1119,7 @@ class MiqAeClassController < ApplicationController
         end
       rescue StandardError => bang
         session[:changed] = @changed = true
-        error_message = _("Error during 'save': %{error_message}") % {:error_message => bang.message}, :error
+        error_message = _("Error during 'save': %{error_message}") % {:error_message => bang.message}
         render :json => {:status => 500, :error => error_message}
       else
         AuditEvent.success(build_saved_audit(ae_class, @edit))
@@ -1130,7 +1130,6 @@ class MiqAeClassController < ApplicationController
     when "reset"
       fields_set_form_vars
       session[:changed] = false
-      add_flash(_("All changes have been reset"), :warning)
       @button = "reset"
       @in_a_form = true
       success_message = _("All changes have been reset")
