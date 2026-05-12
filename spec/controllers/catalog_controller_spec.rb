@@ -223,6 +223,8 @@ describe CatalogController do
 
       it "falls back to a new-request edit form when Request is missing" do
         @miq_request.destroy
+        MiqDialog.seed
+        EvmSpecHelper.create_guid_miq_server_zone
         post :x_button, :params => {:id => service_template_with_root_tenant.id, :pressed => "catalogitem_edit", :format => :js}
         expect(assigns(:flash_array)).to be_blank
         expect(assigns(:edit)).not_to be_nil
