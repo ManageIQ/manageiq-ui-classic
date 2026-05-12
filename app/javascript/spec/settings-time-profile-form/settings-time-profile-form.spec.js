@@ -1,13 +1,10 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
+import { waitFor } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
-import { shallow } from 'enzyme';
-import { act } from 'react-dom/test-utils';
-import { mount } from '../helpers/mountForm';
+import { renderWithRedux } from '../helpers/mountForm';
 import SettingsTimeProfileForm from '../../components/settings-time-profile-form';
 
-require('../helpers/miqSparkle.js');
-require('../helpers/miqAjaxButton.js');
+import '../helpers/miqAjaxButton';
 
 describe('VM common form component', () => {
   let submitSpy;
@@ -20,10 +17,17 @@ describe('VM common form component', () => {
     submitSpy.mockRestore();
   });
   it('should render adding form variant blank form', () => {
-    const wrapper = shallow(<SettingsTimeProfileForm timeProfileId="" timezones={[]} action="timeprofile_add" userid="admin" />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const { container } = renderWithRedux(
+      <SettingsTimeProfileForm
+        timeProfileId=""
+        timezones={[]}
+        action="timeprofile_add"
+        userid="admin"
+      />
+    );
+    expect(container).toMatchSnapshot();
   });
-  it('should render adding form variant add new time profile', async(done) => {
+  it('should render adding form variant add new time profile', async() => {
     const data = {
       action: 'create',
       profile_key: 'admin',
@@ -31,20 +35,26 @@ describe('VM common form component', () => {
       profile_type: 'global',
       profile: {
         days: [0, 1, 2, 3, 4, 5, 6],
-        hours: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+        hours: [
+          0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+          20, 21, 22, 23,
+        ],
         tz: 'UTC',
       },
       rollup_daily_metrics: false,
     };
     fetchMock.postOnce('/api/time_profiles', data);
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<SettingsTimeProfileForm timeProfileId="" timezones={[]} action="timeprofile_add" userid="admin" />);
-    });
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+    const { container } = renderWithRedux(
+      <SettingsTimeProfileForm
+        timeProfileId=""
+        timezones={[]}
+        action="timeprofile_add"
+        userid="admin"
+      />
+    );
+    expect(container).toMatchSnapshot();
   });
-  it('should render editing form variant all new values', async(done) => {
+  it('should render editing form variant all new values', async() => {
     const data = {
       action: 'edit',
       description: 'UTC1',
@@ -63,21 +73,31 @@ describe('VM common form component', () => {
       profile_key: 'user1',
       profile: {
         days: [0, 1, 2, 3, 4, 5, 6],
-        hours: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+        hours: [
+          0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+          20, 21, 22, 23,
+        ],
         tz: null,
       },
       rollup_daily_metrics: false,
     });
     fetchMock.postOnce('/api/time_profiles/1', data);
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<SettingsTimeProfileForm timeProfileId="1" timezones={[]} action="timeprofile_edit" userid="user1" />);
+    const { container } = renderWithRedux(
+      <SettingsTimeProfileForm
+        timeProfileId="1"
+        timezones={[]}
+        action="timeprofile_edit"
+        userid="user1"
+      />
+    );
+
+    await waitFor(() => {
+      expect(fetchMock.called('/api/time_profiles/1')).toBe(true);
     });
-    expect(fetchMock.called('/api/time_profiles/1')).toBe(true);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+
+    expect(container).toMatchSnapshot();
   });
-  it('should render editing form variant some new values', async(done) => {
+  it('should render editing form variant some new values', async() => {
     const data = {
       action: 'edit',
       description: 'UTC',
@@ -96,21 +116,31 @@ describe('VM common form component', () => {
       profile_key: 'admin',
       profile: {
         days: [0, 1, 2, 3, 4, 5, 6],
-        hours: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+        hours: [
+          0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+          20, 21, 22, 23,
+        ],
         tz: null,
       },
       rollup_daily_metrics: false,
     });
     fetchMock.postOnce('/api/time_profiles/1', data);
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<SettingsTimeProfileForm timeProfileId="1" timezones={[]} action="timeprofile_edit" userid="admin" />);
+    const { container } = renderWithRedux(
+      <SettingsTimeProfileForm
+        timeProfileId="1"
+        timezones={[]}
+        action="timeprofile_edit"
+        userid="admin"
+      />
+    );
+
+    await waitFor(() => {
+      expect(fetchMock.called('/api/time_profiles/1')).toBe(true);
     });
-    expect(fetchMock.called('/api/time_profiles/1')).toBe(true);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+
+    expect(container).toMatchSnapshot();
   });
-  it('should render copying form variant new name only', async(done) => {
+  it('should render copying form variant new name only', async() => {
     const data = {
       action: 'create',
       description: 'UTC_Copy',
@@ -118,7 +148,10 @@ describe('VM common form component', () => {
       profile_key: 'admin',
       profile: {
         days: [0, 1, 2, 3, 4, 5, 6],
-        hours: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+        hours: [
+          0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+          20, 21, 22, 23,
+        ],
         tz: null,
       },
       rollup_daily_metrics: false,
@@ -130,21 +163,31 @@ describe('VM common form component', () => {
       profile_key: 'admin',
       profile: {
         days: [0, 1, 2, 3, 4, 5, 6],
-        hours: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+        hours: [
+          0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+          20, 21, 22, 23,
+        ],
         tz: null,
       },
       rollup_daily_metrics: false,
     });
     fetchMock.postOnce('/api/time_profiles', data);
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<SettingsTimeProfileForm timeProfileId="1" timezones={[]} action="timeprofile_copy" userid="admin" />);
+    const { container } = renderWithRedux(
+      <SettingsTimeProfileForm
+        timeProfileId="1"
+        timezones={[]}
+        action="timeprofile_copy"
+        userid="admin"
+      />
+    );
+
+    await waitFor(() => {
+      expect(fetchMock.called('/api/time_profiles/1')).toBe(true);
     });
-    expect(fetchMock.called('/api/time_profiles/1')).toBe(true);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+
+    expect(container).toMatchSnapshot();
   });
-  it('should render copying form variant with new values', async(done) => {
+  it('should render copying form variant with new values', async() => {
     const data = {
       action: 'create',
       description: 'UTC_Copy',
@@ -164,18 +207,28 @@ describe('VM common form component', () => {
       profile_key: 'admin',
       profile: {
         days: [0, 1, 2, 3, 4, 5, 6],
-        hours: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+        hours: [
+          0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+          20, 21, 22, 23,
+        ],
         tz: null,
       },
       rollup_daily_metrics: false,
     });
     fetchMock.postOnce('/api/time_profiles', data);
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<SettingsTimeProfileForm timeProfileId="1" timezones={[]} action="timeprofile_copy" userid="admin" />);
+    const { container } = renderWithRedux(
+      <SettingsTimeProfileForm
+        timeProfileId="1"
+        timezones={[]}
+        action="timeprofile_copy"
+        userid="admin"
+      />
+    );
+
+    await waitFor(() => {
+      expect(fetchMock.called('/api/time_profiles/1')).toBe(true);
     });
-    expect(fetchMock.called('/api/time_profiles/1')).toBe(true);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+
+    expect(container).toMatchSnapshot();
   });
 });
