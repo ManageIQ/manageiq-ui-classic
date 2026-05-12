@@ -1,5 +1,1187 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`VM common form component should render all tasks form 1`] = `""`;
+exports[`VM common form component should render all tasks form 1`] = `
+<div>
+  <div
+    class="tasks-form"
+  >
+    <form>
+      <div
+        class="cds--form-item"
+      >
+        <div
+          class="cds--select"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="zone"
+          >
+            Zone
+          </label>
+          <div
+            class="cds--select-input__wrapper"
+          >
+            <select
+              class="cds--select-input"
+              id="zone"
+              name="zone"
+              title="All Zones"
+            >
+              <option
+                class="cds--select-option"
+                label="All Zones"
+                value="all"
+              >
+                All Zones
+              </option>
+            </select>
+            <svg
+              aria-hidden="true"
+              class="cds--select__arrow"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+              />
+            </svg>
+            
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--form-item"
+      >
+        <div
+          class="cds--select"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="user"
+          >
+            User
+          </label>
+          <div
+            class="cds--select-input__wrapper"
+          >
+            <select
+              class="cds--select-input"
+              id="user"
+              name="user"
+              title="All Users"
+            >
+              <option
+                class="cds--select-option"
+                label="All Users"
+                value="all"
+              >
+                All Users
+              </option>
+              <option
+                class="cds--select-option"
+                label="admin"
+                value="admin"
+              >
+                admin
+              </option>
+              <option
+                class="cds--select-option"
+                label="1"
+                value="1"
+              >
+                1
+              </option>
+              <option
+                class="cds--select-option"
+                label="system"
+                value="system"
+              >
+                system
+              </option>
+            </select>
+            <svg
+              aria-hidden="true"
+              class="cds--select__arrow"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+              />
+            </svg>
+            
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--form-item"
+      >
+        <div
+          class="cds--select"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="timePeriod"
+          >
+            24 Hour Time Period
+          </label>
+          <div
+            class="cds--select-input__wrapper"
+          >
+            <select
+              class="cds--select-input"
+              id="timePeriod"
+              name="timePeriod"
+              title="Today"
+            >
+              <option
+                class="cds--select-option"
+                label="Today"
+                value="0"
+              >
+                Today
+              </option>
+              <option
+                class="cds--select-option"
+                label="1 Days Ago"
+                value="1"
+              >
+                1 Days Ago
+              </option>
+              <option
+                class="cds--select-option"
+                label="2 Days Ago"
+                value="2"
+              >
+                2 Days Ago
+              </option>
+              <option
+                class="cds--select-option"
+                label="3 Days Ago"
+                value="3"
+              >
+                3 Days Ago
+              </option>
+              <option
+                class="cds--select-option"
+                label="4 Days Ago"
+                value="4"
+              >
+                4 Days Ago
+              </option>
+              <option
+                class="cds--select-option"
+                label="5 Days Ago"
+                value="5"
+              >
+                5 Days Ago
+              </option>
+              <option
+                class="cds--select-option"
+                label="6 Days Ago"
+                value="6"
+              >
+                6 Days Ago
+              </option>
+            </select>
+            <svg
+              aria-hidden="true"
+              class="cds--select__arrow"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+              />
+            </svg>
+            
+          </div>
+        </div>
+      </div>
+      <div
+        class=""
+        id="TaskStatus"
+        name="TaskStatus"
+      >
+        <fieldset
+          class="cds--fieldset"
+        >
+          <legend
+            class="cds--label"
+          >
+            <span
+              aria-hidden="true"
+              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-2"
+            >
+              *
+            </span>
+            Task Status
+          </legend>
+          <div
+            class="cds--form-item cds--checkbox-wrapper"
+          >
+            <input
+              aria-label="[object Object]"
+              checked=""
+              class="cds--checkbox"
+              id="taskStatus-queued"
+              label="[object Object]"
+              name="taskStatus"
+              type="checkbox"
+              value="queued"
+            />
+            <label
+              class="cds--checkbox-label"
+              for="taskStatus-queued"
+              title=""
+            >
+              <div
+                class="cds--checkbox-label-text"
+                dir="auto"
+              >
+                <div
+                  id="icon"
+                >
+                  <svg
+                    aria-label="Queued"
+                    class="my-custom-class"
+                    color="#363636"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    viewBox="0 0 32 32"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M28 4H30V28H28z"
+                    />
+                    <path
+                      d="M5,28a1,1,0,0,1-1-1V5a1,1,0,0,1,1.501-.8652l19,11a1,1,0,0,1,0,1.73l-19,11A.9975.9975,0,0,1,5,28Z"
+                    />
+                  </svg>
+                  <span
+                    class="Queued"
+                  >
+                    Queued
+                  </span>
+                </div>
+                
+              </div>
+            </label>
+            <div
+              class="cds--checkbox__validation-msg"
+            />
+          </div>
+          <div
+            class="cds--form-item cds--checkbox-wrapper"
+          >
+            <input
+              aria-label="[object Object]"
+              checked=""
+              class="cds--checkbox"
+              id="taskStatus-running"
+              label="[object Object]"
+              name="taskStatus"
+              type="checkbox"
+              value="running"
+            />
+            <label
+              class="cds--checkbox-label"
+              for="taskStatus-running"
+              title=""
+            >
+              <div
+                class="cds--checkbox-label-text"
+                dir="auto"
+              >
+                <div
+                  id="icon"
+                >
+                  <svg
+                    aria-label="Running"
+                    class="my-custom-class"
+                    color="#363636"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    viewBox="0 0 32 32"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M7.7,4.7a14.7,14.7,0,0,0-3,3.1L6.3,9A13.26,13.26,0,0,1,8.9,6.3Z"
+                    />
+                    <path
+                      d="M4.6,12.3l-1.9-.6A12.51,12.51,0,0,0,2,16H4A11.48,11.48,0,0,1,4.6,12.3Z"
+                    />
+                    <path
+                      d="M2.7,20.4a14.4,14.4,0,0,0,2,3.9l1.6-1.2a12.89,12.89,0,0,1-1.7-3.3Z"
+                    />
+                    <path
+                      d="M7.8,27.3a14.4,14.4,0,0,0,3.9,2l.6-1.9A12.89,12.89,0,0,1,9,25.7Z"
+                    />
+                    <path
+                      d="M11.7,2.7l.6,1.9A11.48,11.48,0,0,1,16,4V2A12.51,12.51,0,0,0,11.7,2.7Z"
+                    />
+                    <path
+                      d="M24.2,27.3a15.18,15.18,0,0,0,3.1-3.1L25.7,23A11.53,11.53,0,0,1,23,25.7Z"
+                    />
+                    <path
+                      d="M27.4,19.7l1.9.6A15.47,15.47,0,0,0,30,16H28A11.48,11.48,0,0,1,27.4,19.7Z"
+                    />
+                    <path
+                      d="M29.2,11.6a14.4,14.4,0,0,0-2-3.9L25.6,8.9a12.89,12.89,0,0,1,1.7,3.3Z"
+                    />
+                    <path
+                      d="M24.1,4.6a14.4,14.4,0,0,0-3.9-2l-.6,1.9a12.89,12.89,0,0,1,3.3,1.7Z"
+                    />
+                    <path
+                      d="M20.3,29.3l-.6-1.9A11.48,11.48,0,0,1,16,28v2A21.42,21.42,0,0,0,20.3,29.3Z"
+                    />
+                  </svg>
+                  <span
+                    class="Running"
+                  >
+                    Running
+                  </span>
+                </div>
+                
+              </div>
+            </label>
+            <div
+              class="cds--checkbox__validation-msg"
+            />
+          </div>
+          <div
+            class="cds--form-item cds--checkbox-wrapper"
+          >
+            <input
+              aria-label="[object Object]"
+              checked=""
+              class="cds--checkbox"
+              id="taskStatus-completed_ok"
+              label="[object Object]"
+              name="taskStatus"
+              type="checkbox"
+              value="completed_ok"
+            />
+            <label
+              class="cds--checkbox-label"
+              for="taskStatus-completed_ok"
+              title=""
+            >
+              <div
+                class="cds--checkbox-label-text"
+                dir="auto"
+              >
+                <div
+                  id="icon"
+                >
+                  <svg
+                    aria-label="Ok"
+                    class="my-custom-class"
+                    color="#3f9c35"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    viewBox="0 0 32 32"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M14 21.414 9 16.413 10.413 15 14 18.586 21.585 11 23 12.415 14 21.414z"
+                    />
+                    <path
+                      d="M16,2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12,12,0,0,1,16,28Z"
+                    />
+                  </svg>
+                  <span
+                    class="Ok"
+                  >
+                    Ok
+                  </span>
+                </div>
+                
+              </div>
+            </label>
+            <div
+              class="cds--checkbox__validation-msg"
+            />
+          </div>
+          <div
+            class="cds--form-item cds--checkbox-wrapper"
+          >
+            <input
+              aria-label="[object Object]"
+              checked=""
+              class="cds--checkbox"
+              id="taskStatus-completed_error"
+              label="[object Object]"
+              name="taskStatus"
+              type="checkbox"
+              value="completed_error"
+            />
+            <label
+              class="cds--checkbox-label"
+              for="taskStatus-completed_error"
+              title=""
+            >
+              <div
+                class="cds--checkbox-label-text"
+                dir="auto"
+              >
+                <div
+                  id="icon"
+                >
+                  <svg
+                    aria-label="Error"
+                    class="my-custom-class"
+                    color="#cc0000 "
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    viewBox="0 0 16 16"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8,1C4.1,1,1,4.1,1,8s3.1,7,7,7s7-3.1,7-7S11.9,1,8,1z M8,14c-3.3,0-6-2.7-6-6s2.7-6,6-6s6,2.7,6,6S11.3,14,8,14z"
+                    />
+                    <path
+                      d="M10.7 11.5 8 8.8 5.3 11.5 4.5 10.7 7.2 8 4.5 5.3 5.3 4.5 8 7.2 10.7 4.5 11.5 5.3 8.8 8 11.5 10.7z"
+                    />
+                  </svg>
+                  <span
+                    class="Error"
+                  >
+                    Error
+                  </span>
+                </div>
+                
+              </div>
+            </label>
+            <div
+              class="cds--checkbox__validation-msg"
+            />
+          </div>
+          <div
+            class="cds--form-item cds--checkbox-wrapper"
+          >
+            <input
+              aria-label="[object Object]"
+              checked=""
+              class="cds--checkbox"
+              id="taskStatus-completed_warn"
+              label="[object Object]"
+              name="taskStatus"
+              type="checkbox"
+              value="completed_warn"
+            />
+            <label
+              class="cds--checkbox-label"
+              for="taskStatus-completed_warn"
+              title=""
+            >
+              <div
+                class="cds--checkbox-label-text"
+                dir="auto"
+              >
+                <div
+                  id="icon"
+                >
+                  <svg
+                    aria-label="Warn"
+                    class="my-custom-class"
+                    color="#ec7a08"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    viewBox="0 0 16 16"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M14.5,14h-13c-0.2,0-0.3-0.1-0.4-0.2c-0.1-0.2-0.1-0.3,0-0.5l6.5-12C7.7,1,8,0.9,8.2,1.1c0.1,0,0.2,0.1,0.2,0.2l6.5,12 c0.1,0.2,0.1,0.3,0,0.5C14.9,13.9,14.7,14,14.5,14z M2.3,13h11.3L8,2.5L2.3,13z"
+                    />
+                    <path
+                      d="M7.5 6H8.5V9.5H7.5z"
+                    />
+                    <path
+                      d="M8,10.8c-0.4,0-0.8,0.3-0.8,0.8s0.3,0.8,0.8,0.8c0.4,0,0.8-0.3,0.8-0.8S8.4,10.8,8,10.8z"
+                    />
+                  </svg>
+                  <span
+                    class="Warn"
+                  >
+                    Warn
+                  </span>
+                </div>
+                
+              </div>
+            </label>
+            <div
+              class="cds--checkbox__validation-msg"
+            />
+          </div>
+        </fieldset>
+      </div>
+      <div
+        class="cds--form-item"
+      >
+        <div
+          class="cds--select"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="taskState"
+          >
+            Task State
+          </label>
+          <div
+            class="cds--select-input__wrapper"
+          >
+            <select
+              class="cds--select-input"
+              id="taskState"
+              name="taskState"
+              title="All States"
+            >
+              <option
+                class="cds--select-option"
+                label="All States"
+                value="all"
+              >
+                All States
+              </option>
+            </select>
+            <svg
+              aria-hidden="true"
+              class="cds--select__arrow"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+              />
+            </svg>
+            
+          </div>
+        </div>
+      </div>
+      <div
+        class="custom-button-wrapper"
+      >
+        <button
+          class="btnRight cds--btn cds--btn--primary cds--btn--disabled"
+          disabled=""
+          id="submit"
+          type="submit"
+        >
+          Apply
+        </button>
+        <button
+          class="btnRight cds--btn cds--btn--secondary cds--btn--disabled"
+          disabled=""
+          id="reset"
+          type="button"
+        >
+          Reset
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+`;
 
-exports[`VM common form component should render my tasks form 1`] = `""`;
+exports[`VM common form component should render my tasks form 1`] = `
+<div>
+  <div
+    class="tasks-form"
+  >
+    <form>
+      <div
+        class="cds--form-item"
+      >
+        <div
+          class="cds--select"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="zone"
+          >
+            Zone
+          </label>
+          <div
+            class="cds--select-input__wrapper"
+          >
+            <select
+              class="cds--select-input"
+              id="zone"
+              name="zone"
+              title="All Zones"
+            >
+              <option
+                class="cds--select-option"
+                label="All Zones"
+                value="all"
+              >
+                All Zones
+              </option>
+            </select>
+            <svg
+              aria-hidden="true"
+              class="cds--select__arrow"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+              />
+            </svg>
+            
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--form-item"
+      >
+        <div
+          class="cds--select"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="timePeriod"
+          >
+            24 Hour Time Period
+          </label>
+          <div
+            class="cds--select-input__wrapper"
+          >
+            <select
+              class="cds--select-input"
+              id="timePeriod"
+              name="timePeriod"
+              title="Today"
+            >
+              <option
+                class="cds--select-option"
+                label="Today"
+                value="0"
+              >
+                Today
+              </option>
+              <option
+                class="cds--select-option"
+                label="1 Days Ago"
+                value="1"
+              >
+                1 Days Ago
+              </option>
+              <option
+                class="cds--select-option"
+                label="2 Days Ago"
+                value="2"
+              >
+                2 Days Ago
+              </option>
+              <option
+                class="cds--select-option"
+                label="3 Days Ago"
+                value="3"
+              >
+                3 Days Ago
+              </option>
+              <option
+                class="cds--select-option"
+                label="4 Days Ago"
+                value="4"
+              >
+                4 Days Ago
+              </option>
+              <option
+                class="cds--select-option"
+                label="5 Days Ago"
+                value="5"
+              >
+                5 Days Ago
+              </option>
+              <option
+                class="cds--select-option"
+                label="6 Days Ago"
+                value="6"
+              >
+                6 Days Ago
+              </option>
+            </select>
+            <svg
+              aria-hidden="true"
+              class="cds--select__arrow"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+              />
+            </svg>
+            
+          </div>
+        </div>
+      </div>
+      <div
+        class=""
+        id="TaskStatus"
+        name="TaskStatus"
+      >
+        <fieldset
+          class="cds--fieldset"
+        >
+          <legend
+            class="cds--label"
+          >
+            <span
+              aria-hidden="true"
+              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-2"
+            >
+              *
+            </span>
+            Task Status
+          </legend>
+          <div
+            class="cds--form-item cds--checkbox-wrapper"
+          >
+            <input
+              aria-label="[object Object]"
+              checked=""
+              class="cds--checkbox"
+              id="taskStatus-queued"
+              label="[object Object]"
+              name="taskStatus"
+              type="checkbox"
+              value="queued"
+            />
+            <label
+              class="cds--checkbox-label"
+              for="taskStatus-queued"
+              title=""
+            >
+              <div
+                class="cds--checkbox-label-text"
+                dir="auto"
+              >
+                <div
+                  id="icon"
+                >
+                  <svg
+                    aria-label="Queued"
+                    class="my-custom-class"
+                    color="#363636"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    viewBox="0 0 32 32"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M28 4H30V28H28z"
+                    />
+                    <path
+                      d="M5,28a1,1,0,0,1-1-1V5a1,1,0,0,1,1.501-.8652l19,11a1,1,0,0,1,0,1.73l-19,11A.9975.9975,0,0,1,5,28Z"
+                    />
+                  </svg>
+                  <span
+                    class="Queued"
+                  >
+                    Queued
+                  </span>
+                </div>
+                
+              </div>
+            </label>
+            <div
+              class="cds--checkbox__validation-msg"
+            />
+          </div>
+          <div
+            class="cds--form-item cds--checkbox-wrapper"
+          >
+            <input
+              aria-label="[object Object]"
+              checked=""
+              class="cds--checkbox"
+              id="taskStatus-running"
+              label="[object Object]"
+              name="taskStatus"
+              type="checkbox"
+              value="running"
+            />
+            <label
+              class="cds--checkbox-label"
+              for="taskStatus-running"
+              title=""
+            >
+              <div
+                class="cds--checkbox-label-text"
+                dir="auto"
+              >
+                <div
+                  id="icon"
+                >
+                  <svg
+                    aria-label="Running"
+                    class="my-custom-class"
+                    color="#363636"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    viewBox="0 0 32 32"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M7.7,4.7a14.7,14.7,0,0,0-3,3.1L6.3,9A13.26,13.26,0,0,1,8.9,6.3Z"
+                    />
+                    <path
+                      d="M4.6,12.3l-1.9-.6A12.51,12.51,0,0,0,2,16H4A11.48,11.48,0,0,1,4.6,12.3Z"
+                    />
+                    <path
+                      d="M2.7,20.4a14.4,14.4,0,0,0,2,3.9l1.6-1.2a12.89,12.89,0,0,1-1.7-3.3Z"
+                    />
+                    <path
+                      d="M7.8,27.3a14.4,14.4,0,0,0,3.9,2l.6-1.9A12.89,12.89,0,0,1,9,25.7Z"
+                    />
+                    <path
+                      d="M11.7,2.7l.6,1.9A11.48,11.48,0,0,1,16,4V2A12.51,12.51,0,0,0,11.7,2.7Z"
+                    />
+                    <path
+                      d="M24.2,27.3a15.18,15.18,0,0,0,3.1-3.1L25.7,23A11.53,11.53,0,0,1,23,25.7Z"
+                    />
+                    <path
+                      d="M27.4,19.7l1.9.6A15.47,15.47,0,0,0,30,16H28A11.48,11.48,0,0,1,27.4,19.7Z"
+                    />
+                    <path
+                      d="M29.2,11.6a14.4,14.4,0,0,0-2-3.9L25.6,8.9a12.89,12.89,0,0,1,1.7,3.3Z"
+                    />
+                    <path
+                      d="M24.1,4.6a14.4,14.4,0,0,0-3.9-2l-.6,1.9a12.89,12.89,0,0,1,3.3,1.7Z"
+                    />
+                    <path
+                      d="M20.3,29.3l-.6-1.9A11.48,11.48,0,0,1,16,28v2A21.42,21.42,0,0,0,20.3,29.3Z"
+                    />
+                  </svg>
+                  <span
+                    class="Running"
+                  >
+                    Running
+                  </span>
+                </div>
+                
+              </div>
+            </label>
+            <div
+              class="cds--checkbox__validation-msg"
+            />
+          </div>
+          <div
+            class="cds--form-item cds--checkbox-wrapper"
+          >
+            <input
+              aria-label="[object Object]"
+              checked=""
+              class="cds--checkbox"
+              id="taskStatus-completed_ok"
+              label="[object Object]"
+              name="taskStatus"
+              type="checkbox"
+              value="completed_ok"
+            />
+            <label
+              class="cds--checkbox-label"
+              for="taskStatus-completed_ok"
+              title=""
+            >
+              <div
+                class="cds--checkbox-label-text"
+                dir="auto"
+              >
+                <div
+                  id="icon"
+                >
+                  <svg
+                    aria-label="Ok"
+                    class="my-custom-class"
+                    color="#3f9c35"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    viewBox="0 0 32 32"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M14 21.414 9 16.413 10.413 15 14 18.586 21.585 11 23 12.415 14 21.414z"
+                    />
+                    <path
+                      d="M16,2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12,12,0,0,1,16,28Z"
+                    />
+                  </svg>
+                  <span
+                    class="Ok"
+                  >
+                    Ok
+                  </span>
+                </div>
+                
+              </div>
+            </label>
+            <div
+              class="cds--checkbox__validation-msg"
+            />
+          </div>
+          <div
+            class="cds--form-item cds--checkbox-wrapper"
+          >
+            <input
+              aria-label="[object Object]"
+              checked=""
+              class="cds--checkbox"
+              id="taskStatus-completed_error"
+              label="[object Object]"
+              name="taskStatus"
+              type="checkbox"
+              value="completed_error"
+            />
+            <label
+              class="cds--checkbox-label"
+              for="taskStatus-completed_error"
+              title=""
+            >
+              <div
+                class="cds--checkbox-label-text"
+                dir="auto"
+              >
+                <div
+                  id="icon"
+                >
+                  <svg
+                    aria-label="Error"
+                    class="my-custom-class"
+                    color="#cc0000 "
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    viewBox="0 0 16 16"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8,1C4.1,1,1,4.1,1,8s3.1,7,7,7s7-3.1,7-7S11.9,1,8,1z M8,14c-3.3,0-6-2.7-6-6s2.7-6,6-6s6,2.7,6,6S11.3,14,8,14z"
+                    />
+                    <path
+                      d="M10.7 11.5 8 8.8 5.3 11.5 4.5 10.7 7.2 8 4.5 5.3 5.3 4.5 8 7.2 10.7 4.5 11.5 5.3 8.8 8 11.5 10.7z"
+                    />
+                  </svg>
+                  <span
+                    class="Error"
+                  >
+                    Error
+                  </span>
+                </div>
+                
+              </div>
+            </label>
+            <div
+              class="cds--checkbox__validation-msg"
+            />
+          </div>
+          <div
+            class="cds--form-item cds--checkbox-wrapper"
+          >
+            <input
+              aria-label="[object Object]"
+              checked=""
+              class="cds--checkbox"
+              id="taskStatus-completed_warn"
+              label="[object Object]"
+              name="taskStatus"
+              type="checkbox"
+              value="completed_warn"
+            />
+            <label
+              class="cds--checkbox-label"
+              for="taskStatus-completed_warn"
+              title=""
+            >
+              <div
+                class="cds--checkbox-label-text"
+                dir="auto"
+              >
+                <div
+                  id="icon"
+                >
+                  <svg
+                    aria-label="Warn"
+                    class="my-custom-class"
+                    color="#ec7a08"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    viewBox="0 0 16 16"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M14.5,14h-13c-0.2,0-0.3-0.1-0.4-0.2c-0.1-0.2-0.1-0.3,0-0.5l6.5-12C7.7,1,8,0.9,8.2,1.1c0.1,0,0.2,0.1,0.2,0.2l6.5,12 c0.1,0.2,0.1,0.3,0,0.5C14.9,13.9,14.7,14,14.5,14z M2.3,13h11.3L8,2.5L2.3,13z"
+                    />
+                    <path
+                      d="M7.5 6H8.5V9.5H7.5z"
+                    />
+                    <path
+                      d="M8,10.8c-0.4,0-0.8,0.3-0.8,0.8s0.3,0.8,0.8,0.8c0.4,0,0.8-0.3,0.8-0.8S8.4,10.8,8,10.8z"
+                    />
+                  </svg>
+                  <span
+                    class="Warn"
+                  >
+                    Warn
+                  </span>
+                </div>
+                
+              </div>
+            </label>
+            <div
+              class="cds--checkbox__validation-msg"
+            />
+          </div>
+        </fieldset>
+      </div>
+      <div
+        class="cds--form-item"
+      >
+        <div
+          class="cds--select"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="taskState"
+          >
+            Task State
+          </label>
+          <div
+            class="cds--select-input__wrapper"
+          >
+            <select
+              class="cds--select-input"
+              id="taskState"
+              name="taskState"
+              title="All States"
+            >
+              <option
+                class="cds--select-option"
+                label="All States"
+                value="all"
+              >
+                All States
+              </option>
+            </select>
+            <svg
+              aria-hidden="true"
+              class="cds--select__arrow"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+              />
+            </svg>
+            
+          </div>
+        </div>
+      </div>
+      <div
+        class="custom-button-wrapper"
+      >
+        <button
+          class="btnRight cds--btn cds--btn--primary cds--btn--disabled"
+          disabled=""
+          id="submit"
+          type="submit"
+        >
+          Apply
+        </button>
+        <button
+          class="btnRight cds--btn cds--btn--secondary cds--btn--disabled"
+          disabled=""
+          id="reset"
+          type="button"
+        >
+          Reset
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+`;

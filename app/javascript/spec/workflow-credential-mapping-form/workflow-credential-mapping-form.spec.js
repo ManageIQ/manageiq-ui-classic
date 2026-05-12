@@ -1,9 +1,7 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
+import { screen, waitFor } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
-
-import { act } from 'react-dom/test-utils';
-import { mount } from '../helpers/mountForm';
+import { renderWithRedux } from '../helpers/mountForm';
 import WorkflowCredentialMappingForm from '../../components/workflow-credential-mapping-form/index';
 
 describe('Workflow Credential Form Component', () => {
@@ -23,8 +21,14 @@ describe('Workflow Credential Form Component', () => {
       }
     }`,
     credentials: {
-      api_user: { credential_ref: 'api_credential', credential_field: 'userid' },
-      api_password: { credential_ref: 'test_credential', credential_field: 'password' },
+      api_user: {
+        credential_ref: 'api_credential',
+        credential_field: 'userid',
+      },
+      api_password: {
+        credential_ref: 'test_credential',
+        credential_field: 'password',
+      },
     },
   };
 
@@ -39,37 +43,50 @@ describe('Workflow Credential Form Component', () => {
     fetchMock.restore();
   });
 
-  it('should render mapping credentials to the workflow', async(done) => {
+  it('should render mapping credentials to the workflow', async() => {
     fetchMock.get(
       `/api/authentications?expand=resources&filter[]=type='ManageIQ::Providers::Workflows::AutomationManager::WorkflowCredential'`,
-      authenticationsApi,
+      authenticationsApi
     );
-    fetchMock.get('/api/configuration_script_payloads/1', configurationScriptPayloadsApi);
-    let wrapper;
+    fetchMock.get(
+      '/api/configuration_script_payloads/1',
+      configurationScriptPayloadsApi
+    );
 
-    await act(async() => {
-      wrapper = mount(<WorkflowCredentialMappingForm recordId="1" />);
+    const { container } = renderWithRedux(
+      <WorkflowCredentialMappingForm recordId="1" />
+    );
+
+    await waitFor(() => {
+      expect(fetchMock.calls()).toHaveLength(2);
+      expect(screen.getByText('Credentials Identifier')).toBeInTheDocument();
+      expect(screen.getAllByText('api_password').length).toBeGreaterThan(0);
+      expect(screen.getByText('Test Credential')).toBeInTheDocument();
+      expect(screen.getAllByText('api_user').length).toBeGreaterThan(0);
+      expect(screen.getByText('API Credential')).toBeInTheDocument();
     });
-    wrapper.update();
-    expect(fetchMock.calls()).toHaveLength(2);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+
+    expect(container).toMatchSnapshot();
   });
 
-  it('should redirect back to show_list page if a workflow has no credentials to map', async(done) => {
+  it('should redirect back to show_list page if a workflow has no credentials to map', async() => {
     fetchMock.get(
       `/api/authentications?expand=resources&filter[]=type='ManageIQ::Providers::Workflows::AutomationManager::WorkflowCredential'`,
-      { resources: [] },
+      { resources: [] }
     );
-    fetchMock.get('/api/configuration_script_payloads/2', configurationScriptPayloadsApi2);
-    let wrapper;
+    fetchMock.get(
+      '/api/configuration_script_payloads/2',
+      configurationScriptPayloadsApi2
+    );
 
-    await act(async() => {
-      wrapper = mount(<WorkflowCredentialMappingForm recordId="2" />);
+    const { container } = renderWithRedux(
+      <WorkflowCredentialMappingForm recordId="2" />
+    );
+
+    await waitFor(() => {
+      expect(fetchMock.calls()).toHaveLength(2);
     });
-    wrapper.update();
-    expect(fetchMock.calls()).toHaveLength(2);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+
+    expect(container).toMatchSnapshot();
   });
 });

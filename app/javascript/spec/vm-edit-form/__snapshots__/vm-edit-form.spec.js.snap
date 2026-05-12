@@ -1,311 +1,166 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`VM Edit form component should edit template with a parent and children 1`] = `
-<Provider
-  store={
-    Object {
-      "asyncReducers": Object {
-        "FormButtons": [Function],
-        "miqCustomTabReducer": [Function],
-        "notificationReducer": [Function],
-      },
-      "dispatch": [Function],
-      "getState": [Function],
-      "injectReducers": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-      Symbol(observable): [Function],
-    }
-  }
->
-  <VmEditForm
-    displayName="Template"
-    emsId="22"
-    isTemplate={true}
-    recordId="2686"
+<div>
+  <div
+    aria-atomic="true"
+    aria-live="assertive"
+    class="export-spinner cds--loading cds--loading--small"
   >
-    <Loading
-      className="export-spinner"
-      small={true}
-      withOverlay={false}
+    <svg
+      aria-label="loading"
+      class="cds--loading__svg"
+      role="img"
+      viewBox="0 0 100 100"
     >
-      <div
-        aria-atomic="true"
-        aria-live="assertive"
-        className="export-spinner cds--loading cds--loading--small"
-      >
-        <svg
-          aria-label="loading"
-          className="cds--loading__svg"
-          role="img"
-          viewBox="0 0 100 100"
-        >
-          <title>
-            loading
-          </title>
-          <circle
-            className="cds--loading__background"
-            cx="50%"
-            cy="50%"
-            r="42"
-          />
-          <circle
-            className="cds--loading__stroke"
-            cx="50%"
-            cy="50%"
-            r="42"
-          />
-        </svg>
-      </div>
-    </Loading>
-  </VmEditForm>
-</Provider>
+      <title>
+        loading
+      </title>
+      <circle
+        class="cds--loading__background"
+        cx="50%"
+        cy="50%"
+        r="42"
+      />
+      <circle
+        class="cds--loading__stroke"
+        cx="50%"
+        cy="50%"
+        r="42"
+      />
+    </svg>
+  </div>
+</div>
 `;
 
 exports[`VM Edit form component should edit template with no parent and children 1`] = `
-<Provider
-  store={
-    Object {
-      "asyncReducers": Object {
-        "FormButtons": [Function],
-        "miqCustomTabReducer": [Function],
-        "notificationReducer": [Function],
-      },
-      "dispatch": [Function],
-      "getState": [Function],
-      "injectReducers": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-      Symbol(observable): [Function],
-    }
-  }
->
-  <VmEditForm
-    displayName="Template"
-    emsId="22"
-    isTemplate={true}
-    recordId="2686"
+<div>
+  <div
+    aria-atomic="true"
+    aria-live="assertive"
+    class="export-spinner cds--loading cds--loading--small"
   >
-    <Loading
-      className="export-spinner"
-      small={true}
-      withOverlay={false}
+    <svg
+      aria-label="loading"
+      class="cds--loading__svg"
+      role="img"
+      viewBox="0 0 100 100"
     >
-      <div
-        aria-atomic="true"
-        aria-live="assertive"
-        className="export-spinner cds--loading cds--loading--small"
-      >
-        <svg
-          aria-label="loading"
-          className="cds--loading__svg"
-          role="img"
-          viewBox="0 0 100 100"
-        >
-          <title>
-            loading
-          </title>
-          <circle
-            className="cds--loading__background"
-            cx="50%"
-            cy="50%"
-            r="42"
-          />
-          <circle
-            className="cds--loading__stroke"
-            cx="50%"
-            cy="50%"
-            r="42"
-          />
-        </svg>
-      </div>
-    </Loading>
-  </VmEditForm>
-</Provider>
+      <title>
+        loading
+      </title>
+      <circle
+        class="cds--loading__background"
+        cx="50%"
+        cy="50%"
+        r="42"
+      />
+      <circle
+        class="cds--loading__stroke"
+        cx="50%"
+        cy="50%"
+        r="42"
+      />
+    </svg>
+  </div>
+</div>
 `;
 
 exports[`VM Edit form component should edit vm with a parent and children 1`] = `
-<Provider
-  store={
-    Object {
-      "asyncReducers": Object {
-        "FormButtons": [Function],
-        "miqCustomTabReducer": [Function],
-        "notificationReducer": [Function],
-      },
-      "dispatch": [Function],
-      "getState": [Function],
-      "injectReducers": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-      Symbol(observable): [Function],
-    }
-  }
->
-  <VmEditForm
-    displayName="Virtual Machine"
-    emsId="56"
-    isTemplate={false}
-    recordId="4671"
+<div>
+  <div
+    aria-atomic="true"
+    aria-live="assertive"
+    class="export-spinner cds--loading cds--loading--small"
   >
-    <Loading
-      className="export-spinner"
-      small={true}
-      withOverlay={false}
+    <svg
+      aria-label="loading"
+      class="cds--loading__svg"
+      role="img"
+      viewBox="0 0 100 100"
     >
-      <div
-        aria-atomic="true"
-        aria-live="assertive"
-        className="export-spinner cds--loading cds--loading--small"
-      >
-        <svg
-          aria-label="loading"
-          className="cds--loading__svg"
-          role="img"
-          viewBox="0 0 100 100"
-        >
-          <title>
-            loading
-          </title>
-          <circle
-            className="cds--loading__background"
-            cx="50%"
-            cy="50%"
-            r="42"
-          />
-          <circle
-            className="cds--loading__stroke"
-            cx="50%"
-            cy="50%"
-            r="42"
-          />
-        </svg>
-      </div>
-    </Loading>
-  </VmEditForm>
-</Provider>
+      <title>
+        loading
+      </title>
+      <circle
+        class="cds--loading__background"
+        cx="50%"
+        cy="50%"
+        r="42"
+      />
+      <circle
+        class="cds--loading__stroke"
+        cx="50%"
+        cy="50%"
+        r="42"
+      />
+    </svg>
+  </div>
+</div>
 `;
 
 exports[`VM Edit form component should edit vm with no parent or children 1`] = `
-<Provider
-  store={
-    Object {
-      "asyncReducers": Object {
-        "FormButtons": [Function],
-        "miqCustomTabReducer": [Function],
-        "notificationReducer": [Function],
-      },
-      "dispatch": [Function],
-      "getState": [Function],
-      "injectReducers": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-      Symbol(observable): [Function],
-    }
-  }
->
-  <VmEditForm
-    displayName="Virtual Machine"
-    emsId="56"
-    isTemplate={false}
-    recordId="4671"
+<div>
+  <div
+    aria-atomic="true"
+    aria-live="assertive"
+    class="export-spinner cds--loading cds--loading--small"
   >
-    <Loading
-      className="export-spinner"
-      small={true}
-      withOverlay={false}
+    <svg
+      aria-label="loading"
+      class="cds--loading__svg"
+      role="img"
+      viewBox="0 0 100 100"
     >
-      <div
-        aria-atomic="true"
-        aria-live="assertive"
-        className="export-spinner cds--loading cds--loading--small"
-      >
-        <svg
-          aria-label="loading"
-          className="cds--loading__svg"
-          role="img"
-          viewBox="0 0 100 100"
-        >
-          <title>
-            loading
-          </title>
-          <circle
-            className="cds--loading__background"
-            cx="50%"
-            cy="50%"
-            r="42"
-          />
-          <circle
-            className="cds--loading__stroke"
-            cx="50%"
-            cy="50%"
-            r="42"
-          />
-        </svg>
-      </div>
-    </Loading>
-  </VmEditForm>
-</Provider>
+      <title>
+        loading
+      </title>
+      <circle
+        class="cds--loading__background"
+        cx="50%"
+        cy="50%"
+        r="42"
+      />
+      <circle
+        class="cds--loading__stroke"
+        cx="50%"
+        cy="50%"
+        r="42"
+      />
+    </svg>
+  </div>
+</div>
 `;
 
 exports[`VM Edit form component should render vm edit form 1`] = `
-<Provider
-  store={
-    Object {
-      "asyncReducers": Object {
-        "FormButtons": [Function],
-        "miqCustomTabReducer": [Function],
-        "notificationReducer": [Function],
-      },
-      "dispatch": [Function],
-      "getState": [Function],
-      "injectReducers": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-      Symbol(observable): [Function],
-    }
-  }
->
-  <VmEditForm
-    displayName="Virtual Machine"
-    emsId="56"
-    isTemplate={false}
-    recordId="4671"
+<div>
+  <div
+    aria-atomic="true"
+    aria-live="assertive"
+    class="export-spinner cds--loading cds--loading--small"
   >
-    <Loading
-      className="export-spinner"
-      small={true}
-      withOverlay={false}
+    <svg
+      aria-label="loading"
+      class="cds--loading__svg"
+      role="img"
+      viewBox="0 0 100 100"
     >
-      <div
-        aria-atomic="true"
-        aria-live="assertive"
-        className="export-spinner cds--loading cds--loading--small"
-      >
-        <svg
-          aria-label="loading"
-          className="cds--loading__svg"
-          role="img"
-          viewBox="0 0 100 100"
-        >
-          <title>
-            loading
-          </title>
-          <circle
-            className="cds--loading__background"
-            cx="50%"
-            cy="50%"
-            r="42"
-          />
-          <circle
-            className="cds--loading__stroke"
-            cx="50%"
-            cy="50%"
-            r="42"
-          />
-        </svg>
-      </div>
-    </Loading>
-  </VmEditForm>
-</Provider>
+      <title>
+        loading
+      </title>
+      <circle
+        class="cds--loading__background"
+        cx="50%"
+        cy="50%"
+        r="42"
+      />
+      <circle
+        class="cds--loading__stroke"
+        cx="50%"
+        cy="50%"
+        r="42"
+      />
+    </svg>
+  </div>
+</div>
 `;
