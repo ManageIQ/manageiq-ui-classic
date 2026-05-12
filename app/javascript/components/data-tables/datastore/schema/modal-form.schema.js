@@ -5,11 +5,6 @@ const createClassFieldsSchema = (aeClassId, selectedRowId, aeTypeOptions,
   dTypeOptions, schemaField = {}) => {
   const classField = schemaField;
 
-  // const formatName = () => ({
-  //   display_name: classField.display_name?.text || '',
-  //   name: classField.name.raw,
-  // });
-
   const formatName = () => {
     const fullName = classField.name.text;
     const match = fullName.match(/^(.+?)\s*\(([^)]+)\)$/);
@@ -54,7 +49,6 @@ const createClassFieldsSchema = (aeClassId, selectedRowId, aeTypeOptions,
       if (selectedRowId !== undefined) {
         if (field === 'name' || field === 'display_name') {
           const formatted = formatName();
-          debugger
           return formatted[field] || defaultVal;
         }
         if (field === 'substitute') {
