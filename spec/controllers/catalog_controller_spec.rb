@@ -221,11 +221,15 @@ describe CatalogController do
         service_template_with_root_tenant.save
       end
 
-      it "shows flash message for missing Request" do
+      it "falls back to a new-request edit form when Request is missing" do
         @miq_request.destroy
         post :x_button, :params => {:id => service_template_with_root_tenant.id, :pressed => "catalogitem_edit", :format => :js}
-        expect(assigns(:flash_array).first[:message]).to include("Can not edit selected item, Request is missing")
-        expect(assigns(:edit)).to be_nil
+        expect(assigns(:flash_array)).to be_blank
+        expect(assigns(:edit)).not_to be_nil
+        expect(assigns(:edit)[:key]).to eq("prov_edit__new")
+        expect(assigns(:edit)[:wf]).not_to be_nil
+        expect(assigns(:edit)[:new][:current_tab_key]).not_to be_nil
+        expect(assigns(:edit)[:new][:st_prov_type]).to eq("vmware")
       end
 
       it "continues with setting edit screen when Request is present" do

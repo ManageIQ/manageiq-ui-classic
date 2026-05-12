@@ -202,10 +202,14 @@ class CatalogController < ApplicationController
         if request
           prov_set_form_vars(request) # Set vars from existing request
         else
-          add_flash(_("Can not edit selected item, Request is missing"), :error)
-          @edit = @record = nil
-          replace_right_cell
-          return
+          # Request-backed catalog items can outlive the original request. In that case,
+          # initialize a new provisioning workflow using the catalog item's provision type.
+          @edit ||= {}
+          @edit[:new] ||= {}
+          @edit[:current] ||= {}
+          @edit[:st_prov_type] = @record.prov_type
+          @edit[:new][:st_prov_type] = @record.prov_type
+          prov_set_form_vars
         end
       else
         # prov_set_form_vars
