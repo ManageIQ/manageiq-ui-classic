@@ -1398,9 +1398,6 @@ class MiqAeClassController < ApplicationController
   # AJAX driven routine to select a classification entry
   def field_select
     assert_privileges('miq_ae_field_edit')
-    fields_get_form_vars
-    session[:field_data] = {}
-    @edit[:new_field][:substitute] = session[:field_data][:substitute] = true
     render :json => {:status => 200}
   end
 
