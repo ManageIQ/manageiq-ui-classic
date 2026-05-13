@@ -1,10 +1,10 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
+import { screen, waitFor } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
-import { act } from 'react-dom/test-utils';
-
-import { mount } from '../helpers/mountForm';
+import { renderWithRedux } from '../helpers/mountForm';
 import RetirementForm from '../../components/retirement-form/index';
+
+import '../helpers/miq_formatters_helper';
 
 describe('Retirement Form Component', () => {
   afterEach(() => {
@@ -12,27 +12,38 @@ describe('Retirement Form Component', () => {
     fetchMock.restore();
   });
 
-  it('should render a new Retirement form', async(done) => {
-    let wrapper;
+  it('should render a new Retirement form', async() => {
+    fetchMock.getOnce(
+      '/api/services/180?attributes=retires_on,retirement_warn',
+      {
+        retires_on: null,
+        retirement_warn: null,
+      }
+    );
     const timezone = { tzinfo: { info: { identifier: 'America/New York' } } };
-    await act(async() => {
-      wrapper = mount(<RetirementForm retirementID={'["180"]'} url="/api/services" timezone={timezone} />);
+
+    const { container } = renderWithRedux(
+      <RetirementForm
+        retirementID='["180"]'
+        url="/api/services"
+        timezone={timezone}
+      />
+    );
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
     });
-    wrapper.update();
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+    expect(container).toMatchSnapshot();
   });
 
-  it('should submit Retirement Form with correct date and time', async(done) => {
-    let wrapper;
+  it('should submit Retirement Form with correct date and time', async() => {
     const retire = {
       retires_on: '2021-10-02T00:50:00Z',
       retirement_warn: null,
     };
-    await act(async() => {
-      wrapper = mount(<RetirementForm retirementID={'["42"]'} url="/api/services" {...retire} />);
-    });
-    fetchMock.getOnce('/api/services/42?attributes=retires_on,retirement_warn', retire);
+    fetchMock.getOnce(
+      '/api/services/42?attributes=retires_on,retirement_warn',
+      retire
+    );
 
     const retirementDate = new Date('2021-10-02T00:50:00Z');
     retirementDate.setMonth(11);
@@ -40,18 +51,27 @@ describe('Retirement Form Component', () => {
     retirementDate.setHours(15);
     retirementDate.setMinutes(59);
 
-    const resources = [{
-      id: '42',
-      date: retirementDate,
-      warn: 14,
-    }];
+    const resources = [
+      {
+        id: '42',
+        date: retirementDate,
+        warn: 14,
+      },
+    ];
     const postData = { action: 'request_retire', resources };
     fetchMock.postOnce('/api/services', postData);
-    wrapper.update();
 
-    expect(toJson(wrapper)).toMatchSnapshot();
-    expect(wrapper.find(RetirementForm).props().retires_on).toEqual('2021-10-02T00:50:00Z');
-    expect(wrapper.find(RetirementForm).props().retirement_warn).toEqual(null);
-    done();
+    const { container } = renderWithRedux(
+      <RetirementForm retirementID='["42"]' url="/api/services" {...retire} />
+    );
+    await waitFor(() => {
+      expect(
+        fetchMock.called(
+          '/api/services/42?attributes=retires_on,retirement_warn'
+        )
+      ).toBe(true);
+      expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
+    });
+    expect(container).toMatchSnapshot();
   });
 });
