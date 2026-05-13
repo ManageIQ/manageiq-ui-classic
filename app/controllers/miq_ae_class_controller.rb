@@ -880,7 +880,6 @@ class MiqAeClassController < ApplicationController
     return unless load_edit("aefields_edit__#{params[:id]}", "replace_cell__explorer")
 
     fields_get_form_vars
-    @changed = (@edit[:new] != @edit[:current])
     render :json => {:message => 'Field updated successfully'}, :status => 200
   end
 
@@ -1405,7 +1404,6 @@ class MiqAeClassController < ApplicationController
   def field_accept
     assert_privileges('miq_ae_field_edit')
     fields_get_form_vars
-    @changed = (@edit[:new] != @edit[:current])
     render :json => {
       :message => 'Accepted',
       :status => 200,
