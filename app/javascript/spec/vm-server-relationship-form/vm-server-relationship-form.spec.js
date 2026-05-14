@@ -1,8 +1,8 @@
 import React from 'react';
+import { screen, waitFor } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
-import { act } from 'react-dom/test-utils';
 import VmServerRelationShipForm from '../../components/vm-server-relationship-form';
-import { mount } from '../helpers/mountForm';
+import { renderWithRedux } from '../helpers/mountForm';
 
 describe('Vm server relationship form component', () => {
   const servers = {
@@ -19,31 +19,33 @@ describe('Vm server relationship form component', () => {
 
   const url = '/api/servers?expand=resources&attributes=id,name,vm_id&sort_by=name&sort_order=desc';
 
-  it('should request data after mount and set to state', async(done) => {
+  it('should request data after mount and set to state', async() => {
     fetchMock.getOnce(url, servers);
-    let wrapper;
+    renderWithRedux(<VmServerRelationShipForm recordId="2" redirect="" />);
 
-    await act(async() => {
-      wrapper = mount(<VmServerRelationShipForm recordId="2" redirect="" />);
+    await waitFor(() => {
+      expect(fetchMock.called(url)).toBe(true);
+      expect(
+        screen.getByRole('combobox', { name: /Server/i })
+      ).toBeInTheDocument();
     });
-    wrapper.update();
-
-    expect(fetchMock.called(url)).toBe(true);
-    expect(wrapper.find('select[name="serverId"]').prop('value')).toEqual('');
-    done();
+    expect(screen.getByRole('combobox', { name: /Server/i })).toHaveValue('');
   });
 
-  it('should request data after mount and set to state (with serverId)', async(done) => {
-    fetchMock.getOnce('/api/servers?expand=resources&attributes=id,name,vm_id&sort_by=name&sort_order=desc', servers);
-    let wrapper;
+  it('should request data after mount and set to state (with serverId)', async() => {
+    fetchMock.getOnce(
+      '/api/servers?expand=resources&attributes=id,name,vm_id&sort_by=name&sort_order=desc',
+      servers
+    );
 
-    await act(async() => {
-      wrapper = mount(<VmServerRelationShipForm recordId="1" redirect="" />);
+    renderWithRedux(<VmServerRelationShipForm recordId="1" redirect="" />);
+
+    await waitFor(() => {
+      expect(fetchMock.called(url)).toBe(true);
+      expect(
+        screen.getByRole('combobox', { name: /Server/i })
+      ).toBeInTheDocument();
     });
-    wrapper.update();
-
-    expect(fetchMock.called(url)).toBe(true);
-    expect(wrapper.find('select[name="serverId"]').prop('value')).toEqual('1');
-    done();
+    expect(screen.getByRole('combobox', { name: /Server/i })).toHaveValue('1');
   });
 });
