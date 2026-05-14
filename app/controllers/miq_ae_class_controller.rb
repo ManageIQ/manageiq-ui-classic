@@ -2311,7 +2311,7 @@ class MiqAeClassController < ApplicationController
             fld[field] = params[field_name] if params.key?(field_name)
           elsif %w[aetype datatype].include?(field)
             var_name = "fields_#{field}#{i}"
-            fld[field] = params[var_name.to_sym] if params[var_name.to_sym]
+            fld[field] = params[var_name.to_sym] if params.key?(var_name.to_sym)
           elsif field == "default_value"
             fld[field] = params[field_name] if params[field_name]
             fld[field] = params["fields_password_value_#{i}".to_sym] if params["fields_password_value_#{i}".to_sym]
@@ -2489,8 +2489,12 @@ class MiqAeClassController < ApplicationController
       end
 
       field_attributes.each do |attr|
-        if attr == "substitute" || @edit[:new][:fields][i][attr]
-          new_field.send("#{attr}=", @edit[:new][:fields][i][attr])
+        value = @edit[:new][:fields][i][attr]
+        # Skip setting priority if it's nil - it will be set based on array position
+        next if attr == "priority" && value.nil?
+        
+        if attr == "substitute" || @edit[:new][:fields][i].key?(attr)
+          new_field.send("#{attr}=", value)
         end
       end
       if new_field.new_record? || parent.nil?

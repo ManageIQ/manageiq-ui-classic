@@ -151,7 +151,7 @@ export const ClassFieldsEditor = (props) => {
         id: aeClassId,
         [`fields_name_${fieldIndex}`]: values.name,
         [`fields_aetype${fieldIndex}`]: values.aetype,
-        [`fields_datatype${fieldIndex}`]: values.datatype,
+        [`fields_datatype${fieldIndex}`]: values.datatype || null,
         [`fields_default_value_${fieldIndex}`]: values.default_value || '',
         [`fields_display_name_${fieldIndex}`]: values.display_name || '',
         [`fields_description_${fieldIndex}`]: values.description || '',
@@ -174,7 +174,11 @@ export const ClassFieldsEditor = (props) => {
         });
     } else {
       // For new fields, call backend to add to session
-      http.post(`/miq_ae_class/field_accept?button=accept`, values, { skipErrors: [400] })
+      const newFieldData = {
+        ...values,
+        datatype: values.datatype || null,
+      };
+      http.post(`/miq_ae_class/field_accept?button=accept`, newFieldData, { skipErrors: [400] })
         .then(() => {
           const data = formatFieldValues(values, state.rows.length);
           updateState(data);
