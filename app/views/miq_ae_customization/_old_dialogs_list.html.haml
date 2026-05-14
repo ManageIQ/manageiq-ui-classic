@@ -1,4 +1,5 @@
-- if x_node == "root"
+- @folders = MiqDialog::DIALOG_TYPES.sort
+- if x_node == "root" && @folders
   = render :partial => "old_dialogs_folders"
-- if @view
+- elsif @view
   = render :partial => 'layouts/x_gtl'

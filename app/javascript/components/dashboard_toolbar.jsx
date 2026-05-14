@@ -1,8 +1,11 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { OverflowMenu, OverflowMenuItem } from '@carbon/react';
-import { ChevronDown } from '@carbon/react/icons';
+import {
+  Button, OverflowMenu, OverflowMenuItem,
+} from '@carbon/react';
+import { Add, ChevronDown, Reply } from '@carbon/react/icons';
+import { carbonizeIcon } from '../menu/icon';
 
 const addClick = (item) =>
   window.miqJqueryRequest(`/dashboard/widget_add?widget=${item.id}`, { beforeSend: true, complete: true });
@@ -15,26 +18,42 @@ const resetClick = () => {
 };
 
 const resetButton = () => (
-  <button
-    type="button"
-    className="btn btn-default refresh_button"
-    title={__('Reset Dashboard Widgets to the defaults')}
+  <Button
+    id="reset-dashboard-button"
+    kind="ghost"
+    hasIconOnly
+    iconDescription={__('Reset Dashboard Widgets to the defaults')}
     onClick={resetClick}
-  >
-    <i className="fa fa-reply fa-lg" />
-  </button>
+    size="md"
+    renderIcon={() => <Reply size={18} />}
+  />
 );
 
 const closeFunc = () => {
-  document.getElementById('dropdown-custom-2').focus();
+  document.getElementById('dashboard-add-widget-menu').focus();
 };
 
-const MenuIcon = (props) => (
-  <div className="miq-toolbar-option-text-with-icon">
-    { props.image && <i className={props.image} /> }
-    <span>{ props.text }</span>
-  </div>
-);
+const MenuIcon = (props) => {
+  const icon = props.image;
+  const IconElement = carbonizeIcon(icon, { size: 24 });
+  if (icon) {
+    return (
+      <div className="dashboard-toolbar-option-with-icon">
+        <div className="option-icon">
+          <IconElement aria-label={icon} />
+        </div>
+        <div className="option-text">
+          {props.text}
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div>
+      <span>{props.text}</span>
+    </div>
+  );
+};
 
 MenuIcon.propTypes = {
   image: PropTypes.string,
@@ -55,7 +74,7 @@ const addMenu = (items, locked) => {
   return (
     <OverflowMenu
       aria-label={title}
-      id="dropdown-custom-2"
+      id="dashboard-add-widget-menu"
       floatingmenu="true"
       disabled={locked}
       title={title}
@@ -87,15 +106,14 @@ const addMenu = (items, locked) => {
 };
 
 const renderDisabled = () => (
-  <div className="btn-group.dropdown">
-    <button
-      type="button"
-      className="disabled btn btn-default dropdown-toggle"
-      title={__('No Widgets available to add')}
-    >
-      <i className="fa fa-plus fa-lg" />
-      <span className="caret" />
-    </button>
+  <div className="disabled-button" title={__('No Widgets available to add')}>
+    <Button
+      size="sm"
+      hasIconOnly
+      disabled
+      iconDescription={__('Add')}
+      renderIcon={() => <Add size={20} />}
+    />
   </div>
 );
 
@@ -123,7 +141,13 @@ const DashboardToolbar = (props) => {
 DashboardToolbar.propTypes = {
   allowAdd: PropTypes.bool.isRequired,
   allowReset: PropTypes.bool.isRequired,
-  items: PropTypes.arrayOf(PropTypes.any).isRequired,
+  items: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    title: PropTypes.string,
+    type: PropTypes.string,
+    image: PropTypes.string,
+    text: PropTypes.string,
+  })).isRequired,
   locked: PropTypes.bool.isRequired,
 };
 

@@ -3,10 +3,10 @@ import TagCategory from '../components/InnerComponents/TagCategory';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 
-const tagCategory = { description: 'animal', id: 1 };
+const tagCategory = { label: 'animal', id: 1 };
 const tagValues = [
-  { description: 'duck', id: 1 },
-  { description: 'lion', id: 2 }
+  { label: 'duck', id: 1 },
+  { label: 'lion', id: 2 }
 ];
 function onDelete(x) {
   return x;

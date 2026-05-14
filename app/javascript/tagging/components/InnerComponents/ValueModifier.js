@@ -28,7 +28,10 @@ const ValueModifier = ({
 );
 
 ValueModifier.propTypes = {
-  selectedTagCategory: PropTypes.string.isRequired,
+  selectedTagCategory: PropTypes.shape({
+    id: PropTypes.string,
+    label: PropTypes.string,
+  }).isRequired,
   selectedTagValues: PropTypes.arrayOf(TaggingPropTypes.value),
   onTagValueChange: PropTypes.func.isRequired,
   valueLabel: PropTypes.string,

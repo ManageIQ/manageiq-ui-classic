@@ -1,5 +1,5 @@
 import { componentTypes, validatorTypes } from '@@ddf';
-import { customUrlValidator } from './helpers';
+import { customUrlValidator, validationString } from './helpers';
 
 const getCredentials = () => API.get(
   // eslint-disable-next-line max-len
@@ -40,10 +40,7 @@ function createSchema(repositoryId) {
       name: 'scm_url',
       isRequired: true,
       validate: [
-        (value) => (customUrlValidator(value)
-          ? undefined
-          // eslint-disable-next-line max-len
-          : 'URL must include a protocol (http://, https:// or file://) with path or be a valid SSH path (user@server:path or ssh://user@address:port/path)'),
+        (value) => (customUrlValidator(value) ? undefined : validationString()),
       ],
     },
     {

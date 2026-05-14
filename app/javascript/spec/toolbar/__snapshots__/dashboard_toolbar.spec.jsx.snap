@@ -27,7 +27,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
         aria-label="Add widget"
         disabled={false}
         floatingmenu="true"
-        id="dropdown-custom-2"
+        id="dashboard-add-widget-menu"
         menuOptionsClass="scrollable-options"
         onClose={[Function]}
         renderIcon={[Function]}
@@ -37,7 +37,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
           aria-label="Add widget"
           disabled={false}
           floatingmenu="true"
-          id="dropdown-custom-2"
+          id="dashboard-add-widget-menu"
           menuOptionsClass="scrollable-options"
           onClose={[Function]}
           renderIcon={[Function]}
@@ -52,7 +52,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
               className="cds--overflow-menu cds--overflow-menu--md"
               disabled={false}
               floatingmenu="true"
-              id="dropdown-custom-2"
+              id="dashboard-add-widget-menu"
               kind="ghost"
               label="Options"
               onClick={[Function]}
@@ -97,7 +97,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
                         disabled={false}
                         floatingmenu="true"
                         hasIconOnly={true}
-                        id="dropdown-custom-2"
+                        id="dashboard-add-widget-menu"
                         kind="ghost"
                         onBlur={[Function]}
                         onClick={[Function]}
@@ -118,7 +118,7 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
                           className="cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
                           disabled={false}
                           floatingmenu="true"
-                          id="dropdown-custom-2"
+                          id="dashboard-add-widget-menu"
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -208,16 +208,148 @@ exports[`<DashboardToolbar /> renders ok 1`] = `
           </span>
         </ForwardRef>
       </OverflowMenu>
-      <button
-        className="btn btn-default refresh_button"
+      <Button
+        hasIconOnly={true}
+        iconDescription="Reset Dashboard Widgets to the defaults"
+        id="reset-dashboard-button"
+        kind="ghost"
         onClick={[Function]}
-        title="Reset Dashboard Widgets to the defaults"
-        type="button"
+        renderIcon={[Function]}
+        size="md"
       >
-        <i
-          className="fa fa-reply fa-lg"
-        />
-      </button>
+        <ForwardRef
+          align="top"
+          autoAlign={false}
+          dropShadow={false}
+          highContrast={true}
+          id="reset-dashboard-button"
+          kind="ghost"
+          label="Reset Dashboard Widgets to the defaults"
+          onClick={[Function]}
+          renderIcon={null}
+          size="md"
+        >
+          <ForwardRef
+            align="top"
+            autoAlign={false}
+            className="cds--icon-tooltip"
+            closeOnActivation={true}
+            defaultOpen={false}
+            dropShadow={false}
+            enterDelayMs={100}
+            highContrast={true}
+            label="Reset Dashboard Widgets to the defaults"
+            leaveDelayMs={100}
+          >
+            <Popover
+              align="top"
+              autoAlign={false}
+              className="cds--tooltip cds--icon-tooltip"
+              dropShadow={false}
+              highContrast={true}
+              onKeyDown={[Function]}
+              onMouseLeave={[Function]}
+              open={false}
+            >
+              <span
+                className="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+                onKeyDown={[Function]}
+                onMouseLeave={[Function]}
+              >
+                <div
+                  className="cds--tooltip-trigger__wrapper"
+                >
+                  <ForwardRef(ButtonBase)
+                    aria-labelledby="tooltip-5"
+                    hasIconOnly={true}
+                    id="reset-dashboard-button"
+                    kind="ghost"
+                    onBlur={[Function]}
+                    onClick={[Function]}
+                    onFocus={[Function]}
+                    onMouseDown={[Function]}
+                    onMouseEnter={[Function]}
+                    onMouseLeave={[Function]}
+                    onMouseMove={[Function]}
+                    onTouchStart={[Function]}
+                    renderIcon={null}
+                    size="md"
+                  >
+                    <button
+                      aria-labelledby="tooltip-5"
+                      className="cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+                      disabled={false}
+                      id="reset-dashboard-button"
+                      onBlur={[Function]}
+                      onClick={[Function]}
+                      onFocus={[Function]}
+                      onMouseDown={[Function]}
+                      onMouseEnter={[Function]}
+                      onMouseLeave={[Function]}
+                      onMouseMove={[Function]}
+                      onTouchStart={[Function]}
+                      type="button"
+                    >
+                      <renderIcon>
+                        <ForwardRef(Reply)
+                          size={18}
+                        >
+                          <Icon
+                            fill="currentColor"
+                            height={18}
+                            viewBox="0 0 32 32"
+                            width={18}
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <svg
+                              aria-hidden={true}
+                              fill="currentColor"
+                              focusable="false"
+                              height={18}
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 32 32"
+                              width={18}
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M28.88,30a1,1,0,0,1-.88-.5A15.19,15.19,0,0,0,15,22v6a1,1,0,0,1-.62.92,1,1,0,0,1-1.09-.21l-12-12a1,1,0,0,1,0-1.42l12-12a1,1,0,0,1,1.09-.21A1,1,0,0,1,15,4v6.11a17.19,17.19,0,0,1,15,17,16.34,16.34,0,0,1-.13,2,1,1,0,0,1-.79.86ZM14.5,20A17.62,17.62,0,0,1,28,26,15.31,15.31,0,0,0,13.91,12,1,1,0,0,1,13,11V6.41L3.41,16,13,25.59V21a1,1,0,0,1,1-1h.54Z"
+                              />
+                            </svg>
+                          </Icon>
+                        </ForwardRef(Reply)>
+                      </renderIcon>
+                    </button>
+                  </ForwardRef(ButtonBase)>
+                </div>
+                <PopoverContent
+                  aria-hidden="true"
+                  className="cds--tooltip-content"
+                  id="tooltip-5"
+                  onMouseEnter={[Function]}
+                  role="tooltip"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="cds--popover"
+                    id="tooltip-5"
+                    onMouseEnter={[Function]}
+                    role="tooltip"
+                  >
+                    <span
+                      className="cds--popover-content cds--tooltip-content"
+                    >
+                      Reset Dashboard Widgets to the defaults
+                    </span>
+                    <span
+                      className="cds--popover-caret"
+                    />
+                  </span>
+                </PopoverContent>
+              </span>
+            </Popover>
+          </ForwardRef>
+        </ForwardRef>
+      </Button>
     </div>
   </div>
 </DashboardToolbar>

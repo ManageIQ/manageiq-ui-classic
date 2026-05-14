@@ -202,10 +202,14 @@ class CatalogController < ApplicationController
         if request
           prov_set_form_vars(request) # Set vars from existing request
         else
-          add_flash(_("Can not edit selected item, Request is missing"), :error)
-          @edit = @record = nil
-          replace_right_cell
-          return
+          # Request-backed catalog items can outlive the original request. In that case,
+          # initialize a new provisioning workflow using the catalog item's provision type.
+          @edit ||= {}
+          @edit[:new] ||= {}
+          @edit[:current] ||= {}
+          @edit[:st_prov_type] = @record.prov_type
+          @edit[:new][:st_prov_type] = @record.prov_type
+          prov_set_form_vars
         end
       else
         # prov_set_form_vars
@@ -250,11 +254,12 @@ class CatalogController < ApplicationController
       else
         prov_set_form_vars if need_prov_dialogs?(params[:st_prov_type])
         @record = class_service_template(params[:st_prov_type]).new
-        set_form_vars
+
         @edit[:new][:st_prov_type] = params[:st_prov_type] if params[:st_prov_type]
         @edit[:new][:service_type] = "atomic"
-        default_entry_point(@edit[:new][:st_prov_type],
-                            @edit[:new][:service_type])
+
+        set_form_vars
+        default_entry_point(@edit[:new][:st_prov_type], @edit[:new][:service_type])
         @edit[:rec_id] = @record.try(:id)
         @tabactive = @edit[:new][:current_tab_key]
       end
@@ -988,10 +993,8 @@ class CatalogController < ApplicationController
   def class_service_template(prov_type)
     if content_library?
       ManageIQ::Providers::Vmware::InfraManager::OvfServiceTemplate
-    elsif prov_type.starts_with?('generic')
-      prov_type.gsub(/(generic)(_.*)?/, 'service_template\2').classify.constantize
     else
-      ServiceTemplate
+      ServiceTemplate.class_from_prov_type(prov_type)
     end
   end
 
@@ -1092,8 +1095,8 @@ class CatalogController < ApplicationController
              class_service_template(@edit[:new][:st_prov_type]).new
            end
       common_st_record_vars(st)
-      add_orchestration_template_vars(st) if st.kind_of?(ServiceTemplateOrchestration)
-      add_configuration_script_vars(st) if st.kind_of?(ServiceTemplateAnsibleTower) || st.kind_of?(ServiceTemplateAwx) || st.kind_of?(ServiceTemplateTerraformEnterprise)
+      add_orchestration_template_vars(st)  if st.kind_of?(ServiceTemplateOrchestration)
+      add_configuration_script_vars(st)    if st.kind_of?(ServiceTemplateAutomation) && !need_prov_dialogs?(@edit[:new][:st_prov_type])
       add_server_profile_template_vars(st) if @edit[:new][:st_prov_type] == 'cisco_intersight'
       st.service_type = "atomic"
 
@@ -1303,8 +1306,8 @@ class CatalogController < ApplicationController
     @available_catalogs = available_catalogs.sort # Get available catalogs with tenants and ancestors
     @additional_tenants = @edit[:new][:tenant_ids].map(&:to_s) # Get ids of selected Additional Tenants in the Tenants tree
     available_orchestration_templates if @record.kind_of?(ServiceTemplateOrchestration)
-    available_automation_managers if @record.kind_of?(ServiceTemplateAnsibleTower) || @record.kind_of?(ServiceTemplateAwx) || @record.kind_of?(ServiceTemplateTerraformEnterprise)
-    available_container_managers if @record.kind_of?(ServiceTemplateContainerTemplate)
+    available_automation_managers     if @record.kind_of?(ServiceTemplateAutomation) && !need_prov_dialogs?(@edit[:new][:st_prov_type])
+    available_container_managers      if @record.kind_of?(ServiceTemplateContainerTemplate)
     fetch_zones
     @edit[:new][:zone_id] = @record.zone_id
 

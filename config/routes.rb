@@ -2223,7 +2223,6 @@ Rails.application.routes.draw do
         prov_load_tab
         request_copy
         request_edit
-        retrieve_email
         show_list
         sort_configured_system_grid
         sort_configuration_script_grid
@@ -2446,10 +2445,6 @@ Rails.application.routes.draw do
         diagnostics_tree_select
         explorer
         fetch_target_ids
-        forest_accept
-        forest_delete
-        forest_form_field_changed
-        forest_select
         help_menu_form_field_changed
         label_tag_mapping_delete
         label_tag_mapping_edit
@@ -2472,7 +2467,6 @@ Rails.application.routes.draw do
         rbac_tenants_list
         rbac_tenant_manage_quotas
         rbac_user_edit
-        rbac_user_field_changed
         rbac_users_list
         region_edit
         restart_server

@@ -37,8 +37,6 @@ export const removeItems = (items, force, {
   ajaxReload, apiUrl, asyncDelete, redirectUrl, treeSelect,
 }) => {
   const apiPromises = [];
-  // eslint-disable-next-line no-unused-vars
-  const flashArray = [];
   const deleteMessage = asyncDelete ? __('Deletion of item %s has been successfully initiated') : __('The item "%s" has been successfully deleted');
 
   miqSparkleOn();
@@ -211,8 +209,7 @@ class RemoveGenericItemModal extends React.Component {
               type="checkbox"
               id="forceCheckbox"
               checked={force}
-              // eslint-disable-next-line no-unused-vars
-              onChange={(ev) => {
+              onChange={() => {
                 this.setState({
                   force: !force,
                 });

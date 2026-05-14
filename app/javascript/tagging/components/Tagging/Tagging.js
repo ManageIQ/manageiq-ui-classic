@@ -53,12 +53,12 @@ class Tagging extends React.Component {
     return true;
   }
 
-  // eslint-disable-next-line react/destructuring-assignment
-  tagCategories = this.props.tags.map((tag) => ({
-    description: tag.description,
-    id: tag.id,
-    singleValue: tag.singleValue,
-  })) || [];
+  tagCategories =
+    this.props.tags.map(({ label, id, singleValue }) => ({
+      label,
+      id,
+      singleValue,
+    })) || [];
 
   render() {
     const {

@@ -35,9 +35,11 @@ describe('Overview > Dashboard Tests', () => {
     cy.intercept('GET', '/dashboard/show*').as('dashboardReload');
     cy.intercept('POST', '/dashboard/widget_close*').as('widgetClose');
 
-    cy.toolbarItems('Add widget').then((list) => {
-      newCard = list[0].text;
-      list[0].button.click();
+    cy.get('#dashboard-add-widget-menu').click().then(() => {
+      cy.get('.scrollable-options').then((list) => {
+        newCard = list.children()[0].innerText;
+        cy.get(list.children()[0]).click();
+      });
     });
 
     cy.wait('@widgetAdd');
@@ -49,23 +51,30 @@ describe('Overview > Dashboard Tests', () => {
         newCards[index] = cards[index].firstChild.innerText;
       });
       expect(newCards).to.include(newCard);
+
+      // Find and click the widget that was just added
+      cy.contains('.card-pf', newCard)
+        .find('.cds--overflow-menu__wrapper')
+        .first()
+        .click();
+
+      // Wait for overflow menu to be visible and click the first option (Remove)
+      cy.get('.cds--overflow-menu-options')
+        .should('be.visible')
+        .find('button')
+        .first()
+        .click();
+
+      // Wait for modal to appear with increased timeout and ensure it's stable
+      cy.get('.cds--modal-container', { timeout: 10000 })
+        .should('be.visible')
+        .should('contain', 'want to remove');
     });
 
-    cy.get('.card-pf').then((cards) => {
-      const nums = [...Array(cards.length - 1).keys()];
-      nums.forEach((index) => {
-        if (cards[index].firstChild.innerText === newCard) {
-          cy.get(cards[index]).then((card) => {
-            cy.get(card.children()[0].children[0].children[0]).click().then(() => {
-              cy.get('.cds--overflow-menu-options').then((menuItems) => {
-                cy.get(menuItems.children()[0]).click().then(() => {
-                  cy.expect_modal({ modalContentExpectedTexts: ['want to remove'], targetFooterButtonText: 'OK' });
-                });
-              });
-            });
-          });
-        }
-      });
+    // Interact with the modal
+    cy.expect_modal({
+      modalContentExpectedTexts: ['want to remove'],
+      targetFooterButtonText: 'OK',
     });
 
     cy.wait('@widgetClose');
@@ -82,6 +91,7 @@ describe('Overview > Dashboard Tests', () => {
     cy.get('.card-pf').then((cards) => {
       cy.get(cards[0]).then((card) => {
         cy.get(card.children()[0].children[0].children[0]).click().then(() => {
+          cy.get('.cds--overflow-menu-options').should('be.visible');
           cy.get('.cds--overflow-menu-options').then((menuItems) => {
             cy.get(menuItems.children()[1]).click().then(() => {
               expect(card.children()[1].style.display).to.equal('none');
@@ -115,11 +125,12 @@ describe('Overview > Dashboard Tests', () => {
           urlPattern: `/dashboard/widget_chart_data/${widgetId}`,
           triggerFn: () => {
             cy.get(card.children()[0].children[0].children[0]).click().then(() => {
+              cy.get('.cds--overflow-menu-options').should('be.visible');
               cy.get('.cds--overflow-menu-options').then((menuItems) => {
                 cy.get(menuItems.children()[4]).click();
               });
             });
-          }
+          },
         });
       });
     });
@@ -133,6 +144,7 @@ describe('Overview > Dashboard Tests', () => {
         const newId = cards[0].children[1].id.split('_')[1].replace('w', '');
         cy.intercept('GET', `/dashboard/widget_chart_data/${newId}`).as('get');
         cy.get(card.children()[0].children[0].children[0]).click().then(() => {
+          cy.get('.cds--overflow-menu-options').should('be.visible');
           cy.get('.cds--overflow-menu-options').then((menuItems) => {
             cy.get(menuItems.children()[5]).click().then(() => {
               cy.wait('@get').then((getCall) => {
@@ -150,7 +162,7 @@ describe('Overview > Dashboard Tests', () => {
     cy.intercept('POST', '/dashboard/widget_add*').as('widgetAdd');
     cy.intercept('GET', '/dashboard/show*').as('dashboardReload');
 
-    cy.get('#dropdown-custom-2').click().then(() => {
+    cy.get('#dashboard-add-widget-menu').click().then(() => {
       cy.get('.scrollable-options').then((list) => {
         cy.get(list.children()[0]).click();
       });
@@ -158,7 +170,7 @@ describe('Overview > Dashboard Tests', () => {
     cy.wait('@widgetAdd');
     cy.wait('@dashboardReload');
 
-    cy.get('#dropdown-custom-2').click().then(() => {
+    cy.get('#dashboard-add-widget-menu').click().then(() => {
       cy.get('.scrollable-options').then((list) => {
         cy.get(list.children()[1]).click();
       });
@@ -173,12 +185,12 @@ describe('Overview > Dashboard Tests', () => {
       method: 'POST',
       urlPattern: '/dashboard/reset_widgets',
       triggerFn: () => {
-        cy.get('.miq-toolbar-group > .btn').click();
+        cy.get('#reset-dashboard-button').click();
       },
       onApiResponse: (interception) => {
         expect(interception.state).to.equal('Complete');
         expect(interception.response.statusCode).to.equal(200);
-      }
+      },
     });
 
     cy.wait('@dashboardReload');

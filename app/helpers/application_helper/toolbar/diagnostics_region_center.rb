@@ -9,7 +9,7 @@ class ApplicationHelper::Toolbar::DiagnosticsRegionCenter < ApplicationHelper::T
       nil,
       :klass => ApplicationHelper::Button::ReloadServerTree),
   ])
-  button_group('ldap_domain_vmdb', [
+  button_group('server_role_management', [
     select(
       :support_vmdb_choice,
       nil,

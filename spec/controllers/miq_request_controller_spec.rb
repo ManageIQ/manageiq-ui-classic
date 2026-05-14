@@ -488,22 +488,6 @@ describe MiqRequestController do
     end
   end
 
-  describe '#retrieve_email' do
-    let(:wf) { FactoryBot.create(:miq_provision_virt_workflow) }
-
-    before do
-      allow(controller).to receive(:session).and_return(:edit => {:wf => wf})
-      controller.params = {:field => 'retrieve_ldap'}
-      stub_user(:features => %w[miq_request_edit])
-    end
-
-    it 'calls render method and sets @edit according to the session' do
-      expect(controller).to receive(:render).with(:update)
-      controller.send(:retrieve_email)
-      expect(controller.instance_variable_get(:@edit)).to eq(:wf => wf)
-    end
-  end
-
   private
 
   def create_user_in_other_region(userid)

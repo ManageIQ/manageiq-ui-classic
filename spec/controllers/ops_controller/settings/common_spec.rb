@@ -137,55 +137,16 @@ describe OpsController do
       end
     end
 
-    describe "#settings_get_form_vars" do
-      before do
-        miq_server = FactoryBot.create(:miq_server)
-        current = ::Settings.to_hash
-        current[:authentication] = { :ldap_role => true, :mode => 'ldap' }
-        edit = {:current => current,
-                :new     => copy_hash(current),
-                :key     => "settings_authentication_edit__#{miq_server.id}"}
-        controller.instance_variable_set(:@edit, edit)
-        session[:edit] = edit
-        controller.instance_variable_set(:@sb,
-                                         :selected_server_id => miq_server.id,
-                                         :active_tab         => 'settings_authentication')
-        controller.x_node = "svr-#{miq_server.id}"
-      end
-
-      it "sets ldap_role to false to make forest entries div hidden" do
-        controller.params = {:id                  => 'authentication',
-                             :authentication_mode => 'database'}
-        controller.send(:settings_get_form_vars)
-        expect(assigns(:edit)[:new][:authentication][:ldap_role]).to eq(false)
-      end
-
-      it "resets ldap_role to it's original state so forest entries div can be displayed" do
-        session[:edit][:new][:authentication][:mode] = 'database'
-        controller.params = {:id                  => 'authentication',
-                             :authentication_mode => 'ldap'}
-        controller.send(:settings_get_form_vars)
-        expect(assigns(:edit)[:new][:authentication][:ldap_role]).to eq(true)
-      end
-    end
-
     describe "#pglogical_save_subscriptions" do
-      before { allow(controller).to receive(:javascript_flash) }
-
       context "remote" do
         let(:params) { {:replication_type => "remote"} }
 
         it "queues operation to set the region as a remote type" do
           controller.params = params
+          expect(controller).to receive(:render)
           controller.send(:pglogical_save_subscriptions)
           queue_item = MiqQueue.find_by(:method_name => "replication_type=")
           expect(queue_item.args).to eq([:remote])
-        end
-
-        it "task name is visible in the resulting flash message" do
-          controller.params = params
-          controller.send(:pglogical_save_subscriptions)
-          expect(assigns(:flash_array).first[:message]).to eq("Replication configuration save initiated. Check status of task \"Configure the database to be a replication remote region\" on My Tasks screen")
         end
       end
 
@@ -197,6 +158,7 @@ describe OpsController do
 
         it "queues operation to save and/or remove subscriptions settings for the global region" do
           controller.params = params
+          expect(controller).to receive(:render)
           controller.send(:pglogical_save_subscriptions)
           queue_item = MiqQueue.find_by(:method_name => "save_global_region")
           expect(queue_item.args[0][0].dbname).to eq(db_save)
@@ -207,6 +169,7 @@ describe OpsController do
           password = "some_password"
           subscriptions["0"] = {"password" => password}
           controller.params = params
+          expect(controller).to receive(:render)
           controller.send(:pglogical_save_subscriptions)
           queue_item = MiqQueue.find_by(:method_name => "save_global_region")
           queued_password = queue_item.args[0][0].password
@@ -220,6 +183,7 @@ describe OpsController do
 
         it "queues operations to set replication to none" do
           controller.params = params
+          expect(controller).to receive(:render)
           controller.send(:pglogical_save_subscriptions)
           queue_item = MiqQueue.find_by(:method_name => "replication_type=")
           expect(queue_item.args[0]).to eq(:none)

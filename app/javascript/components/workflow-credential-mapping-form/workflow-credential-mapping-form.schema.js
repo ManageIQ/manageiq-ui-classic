@@ -29,7 +29,6 @@ const createSchema = (credentials, credentialReferences, payloadCredentials, wor
   const deleteMapping = (selectedRow, cellType, formOptions) => {
     if (cellType === 'buttonCallback' && credentials[selectedRow.cells[0].value]) {
       // This is creating a new credentials object without the mapping we're trying to delete
-      // eslint-disable-next-line no-unused-vars
       const { [selectedRow.cells[0].value]: _, ...newCredentials } = credentials;
       setState((state) => ({
         ...state,

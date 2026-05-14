@@ -4,7 +4,6 @@ import fetchMock from 'fetch-mock';
 import { act } from 'react-dom/test-utils';
 import { shallow } from 'enzyme';
 import CloudNetworkForm from '../../components/cloud-network-form/cloud-network-form';
-import * as networkModule from '../../helpers/network-providers';
 import { mount } from '../helpers/mountForm';
 
 require('../helpers/set_fixtures_helper.js');
@@ -64,12 +63,11 @@ describe('Cloud Network form component', () => {
     ext_management_system: { name: 'OpenStack Network Manager' },
   };
 
-  networkModule.networkProviders = jest.fn().mockReturnValue(new Promise((resolve) => resolve(providersMock)));
-
   beforeEach(() => {
     submitSpyMiqSparkleOn = jest.spyOn(window, 'miqSparkleOn');
     submitSpyMiqSparkleOff = jest.spyOn(window, 'miqSparkleOff');
     spyMiqAjaxButton = jest.spyOn(window, 'miqAjaxButton');
+    fetchMock.get('/api/providers?expand=resources&attributes=id,name,supports_cloud_network_create&filter[]=supports_cloud_network_create=true&attributes=id,name,type', { resources: providersMock });
   });
 
   afterEach(() => {

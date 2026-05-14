@@ -166,4 +166,43 @@ describe MiqRequestController do
       end
     end
   end
+
+  describe '#build_tags_for_provisioning' do
+    let(:wf) { FactoryBot.create(:miq_provision_virt_workflow) }
+    let!(:parent_classification) do
+      FactoryBot.create(:classification,
+                        :name         => 'environment',
+                        :description  => 'Environment',
+                        :single_value => false)
+    end
+    let!(:child_classification) do
+      FactoryBot.create(:classification,
+                        :name        => 'prod',
+                        :description => 'Production',
+                        :parent      => parent_classification)
+    end
+
+    before do
+      stub_user(:features => %w[miq_request_edit])
+      allow(wf).to receive(:allowed_tags).and_return([{:name         => 'environment',
+                                                       :description  => 'Environment',
+                                                       :single_value => false,
+                                                       :children     => [['prod', {:description => 'Production'}]]}])
+    end
+
+    it 'returns tags with :label key for categories and values' do
+      controller.send(:build_tags_for_provisioning, wf, [child_classification.id], false)
+      tags = controller.instance_variable_get(:@tags)
+
+      # Check allowed tags have :label
+      tag_category = tags[:tags].first
+      expect(tag_category[:label]).to eq('Environment')
+      expect(tag_category[:values].first[:label]).to eq('Production')
+
+      # Check assigned tags have :label
+      assigned_tag = tags[:assignedTags].first
+      expect(assigned_tag[:label]).to eq('Environment')
+      expect(assigned_tag[:values].first[:label]).to eq('Production')
+    end
+  end
 end

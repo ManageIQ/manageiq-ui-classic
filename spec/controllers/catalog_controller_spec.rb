@@ -221,11 +221,17 @@ describe CatalogController do
         service_template_with_root_tenant.save
       end
 
-      it "shows flash message for missing Request" do
+      it "falls back to a new-request edit form when Request is missing" do
         @miq_request.destroy
+        MiqDialog.seed
+        EvmSpecHelper.create_guid_miq_server_zone
         post :x_button, :params => {:id => service_template_with_root_tenant.id, :pressed => "catalogitem_edit", :format => :js}
-        expect(assigns(:flash_array).first[:message]).to include("Can not edit selected item, Request is missing")
-        expect(assigns(:edit)).to be_nil
+        expect(assigns(:flash_array)).to be_blank
+        expect(assigns(:edit)).not_to be_nil
+        expect(assigns(:edit)[:key]).to eq("prov_edit__new")
+        expect(assigns(:edit)[:wf]).not_to be_nil
+        expect(assigns(:edit)[:new][:current_tab_key]).not_to be_nil
+        expect(assigns(:edit)[:new][:st_prov_type]).to eq("vmware")
       end
 
       it "continues with setting edit screen when Request is present" do
@@ -1197,20 +1203,33 @@ describe CatalogController do
     end
 
     context "with a ServiceTemplateAnsibleTower" do
-      let!(:ems_ansible_tower)     { FactoryBot.create(:provider_ansible_tower).automation_manager }
-      let(:record)                 { FactoryBot.create(:service_template_ansible_tower) }
+      let!(:ems_ansible_tower) { FactoryBot.create(:provider_ansible_tower).automation_manager }
+      let(:record) { FactoryBot.create(:service_template_ansible_tower, :prov_type => prov_type) }
 
-      it "sets available_managers" do
-        controller.send(:set_form_vars)
-        expect(controller.instance_variable_get(:@edit)[:new][:available_managers]).to eq([[ems_ansible_tower.name, ems_ansible_tower.id]])
-      end
+      context "with a generic_ provision type" do
+        let(:prov_type) { "generic_ansible_tower" }
 
-      context "with other automation managers" do
-        let!(:embedded_ansible) { FactoryBot.create(:provider_embedded_ansible).automation_manager }
-
-        it "doesn't include other automation managers" do
+        it "sets available_managers" do
           controller.send(:set_form_vars)
           expect(controller.instance_variable_get(:@edit)[:new][:available_managers]).to eq([[ems_ansible_tower.name, ems_ansible_tower.id]])
+        end
+
+        context "with other automation managers" do
+          let!(:embedded_ansible) { FactoryBot.create(:provider_embedded_ansible).automation_manager }
+
+          it "doesn't include other automation managers" do
+            controller.send(:set_form_vars)
+            expect(controller.instance_variable_get(:@edit)[:new][:available_managers]).to eq([[ems_ansible_tower.name, ems_ansible_tower.id]])
+          end
+        end
+      end
+
+      context "with a non-generic provision type" do
+        let(:prov_type) { "ansible_tower" }
+
+        it "doesn't set available_managers" do
+          controller.send(:set_form_vars)
+          expect(controller.instance_variable_get(:@edit)[:new].keys).not_to include(:available_managers)
         end
       end
     end

@@ -6,19 +6,19 @@ import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 
 const tagCategories = [
-  { description: 'Name', id: 1 },
-  { description: 'Number', id: 2 },
-  { description: 'Animal', id: 3 },
-  { description: 'Food', id: 4 },
+  { label: 'Name', id: 1 },
+  { label: 'Number', id: 2 },
+  { label: 'Animal', id: 3 },
+  { label: 'Food', id: 4 },
 ];
 const animalValues = [
-  { description: 'Duck', id: 31 },
-  { description: 'Cat', id: 32 },
-  { description: 'Dog', id: 33 },
+  { label: 'Duck', id: 31 },
+  { label: 'Cat', id: 32 },
+  { label: 'Dog', id: 33 },
 ];
 
-const selectedTagCategory = { description: 'animal', id: 1 };
-const selectedTagValue = { description: 'duck', id: 1 };
+const selectedTagCategory = { label: 'animal', id: 1 };
+const selectedTagValues = [{ label: 'duck', id: 1 }];
 
 const onChange = x => x;
 
@@ -32,8 +32,9 @@ describe('Tagging modifier', () => {
           tagCategories={tagCategories}
         />
         <ValueModifier
+          selectedTagCategory={selectedTagCategory}
           onTagValueChange={onChange}
-          selectedTagValue={selectedTagValue}
+          selectedTagValues={selectedTagValues}
           multiValue={false}
           values={animalValues}
         />

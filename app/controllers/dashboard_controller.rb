@@ -210,14 +210,23 @@ class DashboardController < ApplicationController
     widget_list = []
     prev_type   = nil
     @available_widgets = []
-    MiqWidget.available_for_user(current_user).sort_by { |a| a.content_type + a.title.downcase }.each do |w|
+
+    # Preload widget contents to reduce N+1 queries
+    widgets = MiqWidget.available_for_user(current_user)
+    MiqPreloader.preload(widgets, :miq_widget_contents)
+    eager_loaded_widgets = widgets.sort_by { |a| a.content_type + a.title.downcase }
+
+    # View will access the preloaded widgets indexed by id to avoid N+1 finds
+    @widgets_by_id = eager_loaded_widgets.index_by(&:id)
+
+    eager_loaded_widgets.each do |w|
       @available_widgets.push(w.id) # Keep track of widgets available to this user
       next if col_widgets.include?(w.id) || !w.enabled
 
       image, tip = case w.content_type
-                   when "menu"   then ["fa fa-share-square-o fa-lg", _("Add this Menu Widget")]
-                   when "chart"  then ["fa fa-pie-chart fa-lg",      _("Add this Chart Widget")]
-                   when "report" then ["fa fa-file-text-o fa-lg",    _("Add this Report Widget")]
+                   when "menu"   then ["carbon--Launch",   _("Add this Menu Widget")]
+                   when "chart"  then ["carbon--Diagram",  _("Add this Chart Widget")]
+                   when "report" then ["carbon--Document", _("Add this Report Widget")]
                    end
       if prev_type && prev_type != w.content_type
         widget_list << {:id => w.content_type, :type => :separator}

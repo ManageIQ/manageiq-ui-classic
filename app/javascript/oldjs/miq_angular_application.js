@@ -1,25 +1,19 @@
 ManageIQ.angular.app = angular.module('ManageIQ', [
-  'angular.validators', // FIXME: require('angular.validators'),
   'frapontillo.bootstrap-switch', // FIXME: require('angular-bootstrap-switch'),
   'gettext', // FIXME: require('angular-gettext'),
   'miq.api',
-  'miq.card',
   'miq.compat',
-  'miq.util',
   'miqStaticAssets',
   'miqStaticAssets.common',
   'miqStaticAssets.dialogEditor',
   'miqStaticAssets.dialogUser',
-  'miqStaticAssets.fonticonPicker',
   'miqStaticAssets.miqSelect',
   'miqStaticAssets.treeSelector',
   'miqStaticAssets.treeView',
-  'ngSanitize', // FIXME: require('angular-sanitize'),
   'patternfly',
   'patternfly.charts',
   'patternfly.views',
   'ui.bootstrap',
-  'ui.codemirror',
 ]);
 miqHttpInject(ManageIQ.angular.app);
 

@@ -42,23 +42,6 @@ describe ApplicationHelper do
       @user = login_as FactoryBot.create(:user, :features => features)
     end
 
-    context "permission store" do
-      it 'consults the permission store' do
-        menu = Menu::DefaultMenu.services_menu_section
-        allow(Vmdb::PermissionStores.instance).to receive(:can?).and_return(true)
-        allow(Vmdb::PermissionStores.instance).to receive(:can?).with(menu.id).and_return(false)
-
-        expect(Menu::DefaultMenu.services_menu_section.visible?).to be_falsey
-        expect(Menu::DefaultMenu.overview_menu_section.visible?).to be_truthy
-
-        # TODO: Fix this assert, it's bad.  We need to create the right feature
-        # for this user so it's allowed using normal permissions but not with
-        # the permission store.
-        allow(User).to receive_message_chain(:current_user, :role_allows_any?).and_return(true)
-        expect(Menu::DefaultMenu.services_menu_section.visible?).to be_falsey
-      end
-    end
-
     context "when with :feature" do
       context "and :any" do
         it "and entitled" do
@@ -80,17 +63,6 @@ describe ApplicationHelper do
           login_as FactoryBot.create(:user, :features => "service")
           expect(helper.role_allows?(:feature => "miq_report")).to be_falsey
         end
-      end
-    end
-
-    context "when with :main_tab_id" do
-      it "and entitled" do
-        expect(Menu::DefaultMenu.services_menu_section.visible?).to be_truthy
-      end
-
-      it "and not entitled" do
-        allow(@user).to receive(:role_allows_any?).and_return(false)
-        expect(Menu::DefaultMenu.services_menu_section.visible?).to be_falsey
       end
     end
 

@@ -14,11 +14,11 @@ const Tag = ({
           key={tagValue.id}
           id={`tag_value_${tagValue.id}`}
           className="tagColor"
-          title={tagValue.description}
+          title={tagValue.label}
         >
           <div className="value-label">
             <span className="value-span">
-              {truncate(tagValue.description)}
+              {truncate(tagValue.label)}
             </span>
             <Button
               size="sm"
@@ -39,10 +39,10 @@ const Tag = ({
         key={tagValue.id}
         id={`tag_value_${tagValue.id}`}
         className="tagColor"
-        title={tagValue.description}
+        title={tagValue.label}
       >
         <div className="value-label">
-          {truncate(tagValue.description)}
+          {truncate(tagValue.label)}
         </div>
       </FormLabel>
     </li>

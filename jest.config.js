@@ -11,9 +11,6 @@ module.exports = {
   setupFiles: ['./config/jest.setup.js'],
   testRegex: '(/__tests__/.*|(\\.|_|/)(test|spec))\\.jsx?$',
   testURL: 'http://localhost',
-  transform: {
-    '^.+\\.jsx?$': 'babel-jest',
-  },
   moduleFileExtensions: [
     'js',
     'jsx',

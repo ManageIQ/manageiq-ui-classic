@@ -5,9 +5,9 @@ import toJson from 'enzyme-to-json';
 
 const assignedTags = [
   {
-    description: 'Name',
+    label: 'Name',
     id: 1,
-    values: [{ description: 'Pepa', id: 11 }]
+    values: [{ label: 'Pepa', id: 11 }]
   }
 ];
 const onDelete = jest.fn();

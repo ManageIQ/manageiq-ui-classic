@@ -6,16 +6,15 @@ exports[`Tagging modifier match snapshot 1`] = `
   disabled={false}
   id="dropdown-tag-select"
   itemToElement={[Function]}
-  itemToString={[Function]}
   items={
     Array [
       Object {
-        "description": "Name",
         "id": 1,
+        "label": "Name",
       },
       Object {
-        "description": "Number",
         "id": 2,
+        "label": "Number",
       },
     ]
   }
@@ -23,8 +22,8 @@ exports[`Tagging modifier match snapshot 1`] = `
   onChange={[Function]}
   selectedItem={
     Object {
-      "description": "Name",
       "id": 1,
+      "label": "Name",
     }
   }
   titleText=""

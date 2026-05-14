@@ -64,13 +64,6 @@ module ApplicationController::MiqRequestMethods
           page << "ManageIQ.calendar.calDateFrom = new Date(#{@timezone_offset});"
           page << "miqBuildCalendar();"
         end
-        if @edit.fetch_path(:new, :owner_email).blank?
-          page << javascript_hide("lookup_button_on")
-          page << javascript_show("lookup_button_off")
-        else
-          page << javascript_hide("lookup_button_off")
-          page << javascript_show("lookup_button_on")
-        end
         if changed != session[:changed]
           session[:changed] = changed
           page << javascript_for_miq_button_visibility(changed)
@@ -735,8 +728,6 @@ module ApplicationController::MiqRequestMethods
       # for some reason if tree is not expanded clicking on radiobuttons this.getAllChecked() sends up extra blanks
       @edit.store_path(:new, tag_symbol_for_workflow, ids.select(&:present?).collect(&:to_i))
     end
-    id = params[:ou_id].gsub(/_-_/, ",") if params[:ou_id]
-    @edit[:new][:ldap_ous] = id.match(/(.*)\,(.*)/)[1..2] if id # ou selected in a tree
 
     copy_params_if_present(@edit[:new], params, %i[start_hour start_min])
     @edit[:new][:start_date]    = params[:miq_date_1] if params[:miq_date_1]
@@ -1082,17 +1073,17 @@ module ApplicationController::MiqRequestMethods
     tags = wf.allowed_tags.map do |cat|
       {
         :values      => cat[:children].map do |tag|
-          {:id => tag.first, :description => tag.second[:description]}
+          {:id => tag.first, :label => tag.second[:description]}
         end,
         :id          => cat[:name],
-        :description => cat[:description],
+        :label       => cat[:description],
         :singleValue => cat[:single_value],
       }
     end
     assignments = Classification.find(vm_tags)
     assigned_tags = assignments.map do |tag|
       {
-        :description => tag.parent.description,
+        :label       => tag.parent.description,
         :id          => tag.parent.name,
         :singleValue => tag.parent.single_value,
         :values      => ->(arr, single_value) { single_value ? [arr.last] : arr }.call(
@@ -1101,7 +1092,7 @@ module ApplicationController::MiqRequestMethods
           end,
           tag.parent.single_value
         ).map do |assignment|
-          { :description => assignment.description, :id => assignment.id }
+          {:label => assignment.description, :id => assignment.id}
         end
       }
     end.uniq

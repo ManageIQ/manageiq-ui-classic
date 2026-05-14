@@ -1,3 +1,6 @@
+// Stimulus
+import '../controllers';
+
 require('./miq_global.js');
 require('./jquery_overrides.js');
 
@@ -16,7 +19,6 @@ require('./services/');
 require('./miq_browser_detect.js');
 require('./miq_application.js');
 require('./miq_flash.js');
-require('./miq_change_stored_password.js');
 require('./miq_qe.js');
 require('./git_import.js');
 require('./import.js');
@@ -31,5 +33,5 @@ require('./miq_explorer.js');
 
 if (process.env.NODE_ENV === 'development' && process.env.CYPRESS !== 'true') {
   require('./miq_debug.js');
-  require('./miq_debug.css');
+  require('./miq_debug.scss');
 }

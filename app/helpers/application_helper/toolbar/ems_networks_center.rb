@@ -23,7 +23,7 @@ class ApplicationHelper::Toolbar::EmsNetworksCenter < ApplicationHelper::Toolbar
           t = N_('Add a New Network Provider'),
           t,
           :url   => "/new",
-          :klass => ApplicationHelper::Button::EmsNetworkNew),
+          :klass => ApplicationHelper::Button::ButtonNewDiscover),
         button(
           :ems_network_edit,
           'pficon pficon-edit fa-lg',
@@ -32,8 +32,7 @@ class ApplicationHelper::Toolbar::EmsNetworksCenter < ApplicationHelper::Toolbar
           :url_parms    => "main_div",
           :send_checked => true,
           :enabled      => false,
-          :onwhen       => "1",
-          :klass        => ApplicationHelper::Button::EmsNetwork),
+          :onwhen       => "1"),
         button(
           :ems_network_delete,
           'pficon pficon-delete fa-lg',

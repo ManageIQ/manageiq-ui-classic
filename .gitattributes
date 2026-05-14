@@ -1,3 +1,5 @@
+.yarn/releases/yarn-*.cjs binary
+
 # To use gron for human readable json differences:
 #   1) brew/apt install gron
 #   2) Add this to ~/.gitconfig:

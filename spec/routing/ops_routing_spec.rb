@@ -41,10 +41,6 @@ describe "routing for OpsController" do
     diagnostics_server_list
     diagnostics_tree_select
     explorer
-    forest_accept
-    forest_delete
-    forest_form_field_changed
-    forest_select
     label_tag_mapping_delete
     label_tag_mapping_edit
     label_tag_mapping_update
@@ -61,7 +57,6 @@ describe "routing for OpsController" do
     rbac_tags_edit
     rbac_tenants_list
     rbac_user_edit
-    rbac_user_field_changed
     rbac_users_list
     region_edit
     restart_server

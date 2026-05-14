@@ -28,6 +28,9 @@ cols:
 
 # Included tables (joined, has_one, has_many) and columns
 include:
+  memberof:
+    columns:
+    - name
 
 # Order of columns (from all tables)
 col_order:

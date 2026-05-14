@@ -9,6 +9,3 @@
     .col-xs-12.col-sm-12.col-md-6
       = react('EventChart', :providerId => @record.id.to_s, :apiUrl => 'ems_storage_dashboard/aggregate_event_data',
                 :title => 'Fixed vs Not-Fixed Events By Storage-System')
-
-  :javascript
-    ManageIQ.angular.app.value('providerId', '#{@record.id}');

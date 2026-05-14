@@ -23,8 +23,7 @@ module.exports = defineConfig({
       openMode: false,
       runMode: true,
     },
-    // eslint-disable-next-line no-unused-vars
-    setupNodeEvents(on, config) {
+    setupNodeEvents(on, _config) {
       // Check for Cypress build marker
       const markerPath = path.resolve(__dirname, 'tmp/.cypress-build-marker');
       if (!fs.existsSync(markerPath)) {
@@ -46,6 +45,15 @@ module.exports = defineConfig({
 
         throw new Error('Webpack was not built with CYPRESS=true. See console for details');
       }
+
+      // Capture DB state once before entire test run
+      on('before:run', async () => {
+        await fetch('http://localhost:3000/__e2e__/command', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: 'db_state', options: 'capture' })
+        });
+      });
 
       on('after:spec', (spec, results) => {
         // Delete the video on CI if the spec passed and no tests retried

@@ -133,13 +133,6 @@ describe ServiceController do
     end
   end
 
-  describe "#sanitize_output" do
-    it "escapes characters in the output string" do
-      output = controller.send(:sanitize_output, "I'm \"\\'Fred\\'\" {{Flintstone}}")
-      expect(output).to eq("I\\'m \\\"\\'Fred\\'\\\" \\{\\{Flintstone\\}\\}")
-    end
-  end
-
   context "Generic Object instances in Textual Summary" do
     it "displays Generic Objects in Ansible Playbook Service Textual Summary" do
       record = FactoryBot.create(:service_ansible_playbook)

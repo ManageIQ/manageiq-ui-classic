@@ -316,8 +316,12 @@ describe EmsNetworkController do
 
       it "when edit is pressed for unsupported network manager type" do
         allow(controller).to receive(:role_allows?).and_return(true)
-        google_net = FactoryBot.create(:ems_google_network)
-        get :edit, :params => { :id => google_net.id}
+
+        unsupported_network = FactoryBot.create(:ems_network)
+        stub_supports_not(unsupported_network, :update)
+
+        get :edit, :params => {:id => unsupported_network.id}
+
         expect(response.status).to eq(302)
         expect(session['flash_msgs']).not_to be_empty
         expect(session['flash_msgs'].first[:message]).to include('is not supported')
@@ -325,8 +329,10 @@ describe EmsNetworkController do
 
       it "when edit is pressed for supported network manager type" do
         allow(controller).to receive(:role_allows?).and_return(true)
-        nuage_net = FactoryBot.create(:ems_nuage_network)
-        get :edit, :params => { :id => nuage_net.id}
+
+        supported_network = FactoryBot.create(:ems_network)
+        stub_supports(supported_network, :update)
+        get :edit, :params => {:id => supported_network.id}
         expect(response.status).to eq(200)
         expect(session['flash_msgs']).to be_nil
       end

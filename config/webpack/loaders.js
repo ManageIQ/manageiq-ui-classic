@@ -1,6 +1,6 @@
 const { merge } = require('webpack-merge');
 
-const { env, publicPath } = require('./configuration.js');
+const { env, output } = require('./configuration.js');
 const babelrc = require('../../.babelrc.js');
 const nodeModules = '../../node_modules';
 const appBasePath = (env.NODE_ENV === 'production') ? '/packs/' : '../../assets/images/layout/';// Need different paths for developement and prod envs.
@@ -46,7 +46,7 @@ module.exports = [
     use: [{
       loader: 'file-loader',
       options: {
-        publicPath,
+        publicPath: output.publicPath,
         name: '[name]-[hash].[ext]',
       },
     }],
@@ -56,21 +56,34 @@ module.exports = [
     test: /\.(scss|sass|css)$/i,
     use: [
       'style-loader',
-      'css-loader',
+      {
+        loader: 'css-loader',
+        options: {
+          // Function to filter URLs - return false to skip processing
+          url: (url) => {
+            // Don't process URLs that start with /upload/ - these are runtime user-uploaded assets
+            if (url.startsWith('/upload/')) {
+              return false;
+            }
+            // Don't process absolute paths starting with /packs/ in production
+            // These will be resolved at runtime
+            if (url.startsWith('/packs/')) {
+              return false;
+            }
+            return true;
+          },
+        },
+      },
       {
         loader: 'postcss-loader',
         options: {
           sourceMap: true,
-          plugins: () => [require('autoprefixer')],
         },
       },
-      'resolve-url-loader',
       {
         loader: 'sass-loader',
         options: {
-          prependData: () => {
-            return `$img-base-path: '${appBasePath}';`;// Path variable for login and about modal images.
-          },
+          additionalData: `$img-base-path: '${appBasePath}';`,
           sassOptions: {
             sourceMap: true,
             includePaths: [
@@ -83,6 +96,8 @@ module.exports = [
               'node_modules',
             ],
             implementation: require('sass').default,
+            quietDeps: true, // TODO: Ignore patternfly and fontawesome sass warnings; remove this once we've removed those packages
+            silenceDeprecations: ["legacy-js-api"], // TODO: Ignore sass-loader warnings; remove those once we've upgraded sass-loader to v16+
           },
         },
       },

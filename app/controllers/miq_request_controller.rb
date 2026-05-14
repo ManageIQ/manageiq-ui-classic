@@ -300,28 +300,6 @@ class MiqRequestController < ApplicationController
     end
   end
 
-  WORKFLOW_METHOD_WHITELIST = {'retrieve_ldap' => :retrieve_ldap}.freeze
-
-  def retrieve_email
-    assert_privileges("miq_request_edit")
-    @edit = session[:edit]
-    begin
-      method = WORKFLOW_METHOD_WHITELIST[params[:field]]
-      @edit[:wf].send(method, @edit[:new]) unless method.nil?
-    rescue StandardError => bang
-      add_flash(_("Error retrieving LDAP info: %{error_message}") % {:error_message => bang.message}, :error)
-      javascript_flash
-    else
-      render :update do |page|
-        page << javascript_prologue
-        page.replace_html(:requester, :partial => "shared/views/prov_dialog",
-                                      :locals  => {:wf => @edit[:wf], :dialog => :requester})
-        page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-        page << "miqScrollTop();" if @flash_array.present?
-      end
-    end
-  end
-
   def post_install_callback
     MiqRequestTask.post_install_callback(params["task_id"]) if params["task_id"]
     head :ok

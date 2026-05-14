@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .login-pf body {
   padding-bottom: 0 !important;
   padding-top: 0 !important;
@@ -82,7 +84,7 @@ div#saml-login {
 
     .details {
       p:first-child {
-        border-top: 1px solid rgba($color-pf-white, (30/100));
+        border-top: 1px solid rgba($color-pf-white, 0.3);
         padding-top: 25px;
         margin-top: 25px;
       }
@@ -94,7 +96,7 @@ div#saml-login {
           margin-top: 0;
         }
 
-        border-left: 1px solid rgba($color-pf-white, (30/100));
+        border-left: 1px solid rgba($color-pf-white, 0.3);
         padding-left: 40px;
       }
 
@@ -183,7 +185,7 @@ div#saml-login {
   }
 
   .form-control {
-    height: ceil(($input-height-base + 10px ));
+    height: math.ceil($input-height-base + 10px);
   }
 
   .checkbox-label {
@@ -246,7 +248,7 @@ div#saml-login {
 
   .login-pf-signup {
     margin: $login-pf-signup-margin-top 0 0;
-    font-size: ceil(($font-size-base * 1.25));
+    font-size: math.ceil($font-size-base * 1.25);
     text-align: center;
 
     a {
@@ -352,7 +354,7 @@ div#saml-login {
       }
 
       &:last-of-type {
-        padding-left: ceil(($login-pf-accounts-section-heading-desktop-padding-left - 1px));
+        padding-left: math.ceil($login-pf-accounts-section-heading-desktop-padding-left - 1px);
         border-left: 1px solid $color-pf-black-300;
       }
     }

@@ -5,10 +5,10 @@ import TagSelector from '../components/InnerComponents/TagSelector';
 
 describe('Tagging modifier', () => {
   const tagCategories = [
-    { description: 'Name', id: 1 },
-    { description: 'Number', id: 2 },
+    { label: 'Name', id: 1 },
+    { label: 'Number', id: 2 },
   ];
-  const selectedTagValue = { description: 'Homer', id: 1 };
+  const selectedTagValue = { label: 'Homer', id: 1 };
   let onTagCategoryChange;
   beforeEach(() => {
     onTagCategoryChange = jest.fn();
@@ -31,7 +31,7 @@ describe('Tagging modifier', () => {
         selectedOption={selectedTagValue}
       />
     );
-    wrapper.instance().handleChange({ selectedItem: { description: 'Name', id: 1 } });
+    wrapper.instance().handleChange({ selectedItem: { label: 'Name', id: 1 } });
     expect(onTagCategoryChange.mock.calls).toHaveLength(1);
   });
 });

@@ -112,10 +112,6 @@ export const initalDataForFirstTestCase = {
             6
         ],
         [
-            "Nuage Zone",
-            11
-        ],
-        [
             "OpenShift Zone",
             7
         ],
@@ -4223,12 +4219,6 @@ export const zonesMockData = {
             "id": "12",
             "description": "Maintenance Zone",
             "visible": false
-        },
-        {
-            "href": "http://localhost:3001/api/zones/11",
-            "id": "11",
-            "description": "Nuage Zone",
-            "visible": true
         },
         {
             "href": "http://localhost:3001/api/zones/7",

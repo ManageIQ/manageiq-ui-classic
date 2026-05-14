@@ -60,21 +60,6 @@ module OpsController::Settings::Common
         end
       when 'settings_authentication'
         if @authmode_changed
-          if %w[ldap ldaps].include?(@edit[:new][:authentication][:mode])
-            page << javascript_show("ldap_div")
-            page << javascript_show("ldap_role_div")
-            page << javascript_show("ldap_role_div")
-
-            page << set_element_visible("user_proxies_div",        @edit[:new][:authentication][:ldap_role])
-            page << set_element_visible("ldap_role_details_div",   @edit[:new][:authentication][:ldap_role])
-            page << set_element_visible("ldap_default_group_div", !@edit[:new][:authentication][:ldap_role])
-
-            page << (@edit[:new][:authentication][:ldap_role] ? javascript_checked('ldap_role') : javascript_unchecked('ldap_role'))
-          else
-            page << javascript_hide("ldap_div")
-            page << javascript_hide("ldap_role_div")
-            page << javascript_hide("user_proxies_div")
-          end
           verb = @edit[:new][:authentication][:mode] == 'amazon'
           page << set_element_visible("amazon_div", verb)
           page << set_element_visible("amazon_role_div", verb)
@@ -86,41 +71,6 @@ module OpsController::Settings::Common
         if @provider_type_changed
           verb = @edit[:new][:authentication][:provider_type] == 'none'
           page << set_element_visible("none_local_login_div", !verb)
-        end
-        if @authusertype_changed
-          verb = @edit[:new][:authentication][:user_type] == 'samaccountname'
-          page << set_element_visible("user_type_samaccountname", verb)
-          page << set_element_visible("user_type_base", !verb)
-          if @edit[:new][:authentication][:user_type] == "dn-cn"
-            page << javascript_hide("upn-mail_prefix")
-            page << javascript_hide("dn-uid_prefix")
-            page << javascript_show("dn-cn_prefix")
-          elsif @edit[:new][:authentication][:user_type] == "dn-uid"
-            page << javascript_hide("upn-mail_prefix")
-            page << javascript_hide("dn-cn_prefix")
-            page << javascript_show("dn-uid_prefix")
-          else
-            page << javascript_hide("dn-cn_prefix")
-            page << javascript_hide("dn-uid_prefix")
-            page << javascript_show("upn-mail_prefix")
-          end
-        end
-        if @authldaprole_changed
-          page << set_element_visible("user_proxies_div", @edit[:new][:authentication][:ldap_role])
-          page << set_element_visible("ldap_role_details_div", @edit[:new][:authentication][:ldap_role])
-          page << set_element_visible("ldap_default_group_div", !@edit[:new][:authentication][:ldap_role])
-        end
-        if @authldapport_reset
-          page << "$('#authentication_ldapport').val('#{@edit[:new][:authentication][:ldapport]}');"
-        end
-        if @reset_verify_button
-          if !@edit[:new][:authentication][:ldaphost].empty? && !@edit[:new][:authentication][:ldapport].nil?
-            page << javascript_hide("verify_button_off")
-            page << javascript_show("verify_button_on")
-          else
-            page << javascript_hide("verify_button_on")
-            page << javascript_show("verify_button_off")
-          end
         end
         if @reset_amazon_verify_button
           if !@edit[:new][:authentication][:amazon_key].nil? && !@edit[:new][:authentication][:amazon_secret].nil?
@@ -141,7 +91,6 @@ module OpsController::Settings::Common
     assert_privileges("ops_settings")
 
     case params[:button]
-    when 'verify'        then settings_update_ldap_verify
     when 'amazon_verify' then settings_update_amazon_verify
     when 'email_verify'  then settings_update_email_verify
     when 'save'          then settings_update_save
@@ -192,9 +141,11 @@ module OpsController::Settings::Common
       queue_opts = {:class_name => "MiqRegion", :method_name => "replication_type=", :args => [:none]}
     end
     MiqTask.generic_action_with_callback(task_opts, queue_opts)
-    add_flash(_("Replication configuration save initiated. Check status of task \"%{task_name}\" on My Tasks screen") %
-                {:task_name => task_opts[:name]})
-    javascript_flash
+    flash_msg =
+      (_("Replication configuration save initiated. Check status of task \"%{task_name}\" on My Tasks screen") %
+      {:task_name => task_opts[:name]})
+
+    render :json => {:message => flash_msg}
   end
 
   def pglogical_validate_subscription
@@ -203,13 +154,14 @@ module OpsController::Settings::Common
     subscription = find_or_new_subscription(params[:id])
     valid = subscription.validate(params_for_connection_validation(params))
     if valid.nil?
-      add_flash(_("Subscription Credentials validated successfully"))
+      message = _("Subscription Credentials validated successfully")
+      status = 'success'
     else
-      valid.each do |v|
-        add_flash(v, :error)
-      end
+      message = valid.join('\n')
+      status = 'fail'
     end
-    javascript_flash
+
+    render :json => {:message => message, :status => status}
   end
 
   private
@@ -235,7 +187,7 @@ module OpsController::Settings::Common
     to_remove = []
     params[:subscriptions]&.each do |_k, subscription_params|
       subscription = find_or_new_subscription(subscription_params['id'])
-      if subscription.id && subscription_params['remove'] == "true"
+      if subscription.id && subscription_params['remove']
         to_remove << subscription
       else
         set_subscription_attributes(subscription, subscription_params)
@@ -303,27 +255,6 @@ module OpsController::Settings::Common
     end
   end
 
-  def settings_update_ldap_verify
-    settings_get_form_vars
-    return unless @edit
-
-    server_config = MiqServer.find(@sb[:selected_server_id]).settings
-    server_config.each_key do |category|
-      server_config[category] = @edit[:new][category].dup
-    end
-
-    valid, errors = MiqLdap.validate_connection(server_config)
-    if valid
-      add_flash(_("LDAP Settings validation was successful"))
-    else
-      errors.each do |error|
-        add_flash("#{error.attribute.to_s.titleize}: #{error.message}", :error)
-      end
-    end
-
-    javascript_flash
-  end
-
   def settings_update_amazon_verify
     settings_get_form_vars
     return unless @edit
@@ -382,7 +313,6 @@ module OpsController::Settings::Common
         render_flash
         return
       end
-      @edit[:new][:authentication][:ldaphost]&.reject!(&:blank?)
       @changed = (@edit[:new] != @edit[:current])
       server = MiqServer.find(@sb[:selected_server_id])
       unless update_server_zone(server)
@@ -607,7 +537,6 @@ module OpsController::Settings::Common
       @sb[:form_vars][:session_timeout_mins] = params[:session_timeout_mins] if params[:session_timeout_mins]
       @sb[:form_vars][:session_timeout_hours] = params[:session_timeout_hours] if params[:session_timeout_hours]
       new[:session][:timeout] = @sb[:form_vars][:session_timeout_hours].to_i * 3600 + @sb[:form_vars][:session_timeout_mins].to_i * 60 if params[:session_timeout_hours] || params[:session_timeout_mins]
-      @sb[:newrole] = (params[:ldap_role].to_s == "1") if params[:ldap_role]
       @sb[:new_amazon_role] = (params[:amazon_role].to_s == "1") if params[:amazon_role]
       @sb[:new_httpd_role] = (params[:httpd_role].to_s == "1") if params[:httpd_role]
       if params[:provider_type] && params[:provider_type] != auth[:provider_type]
@@ -616,15 +545,6 @@ module OpsController::Settings::Common
         auth[:oidc_enabled] = params[:provider_type] == "oidc"
         @provider_type_changed = true
       end
-      if params[:authentication_user_type] && params[:authentication_user_type] != auth[:user_type]
-        @authusertype_changed = true
-      end
-      auth[:user_suffix] = params[:authentication_user_suffix] if params[:authentication_user_suffix]
-      auth[:domain_prefix] = params[:authentication_domain_prefix] if params[:authentication_domain_prefix]
-      if @sb[:newrole] != auth[:ldap_role]
-        auth[:ldap_role] = @sb[:newrole]
-        @authldaprole_changed = true
-      end
       if @sb[:new_amazon_role] != auth[:amazon_role]
         auth[:amazon_role] = @sb[:new_amazon_role]
       end
@@ -632,22 +552,7 @@ module OpsController::Settings::Common
         auth[:httpd_role] = @sb[:new_httpd_role]
       end
       if params[:authentication_mode] && params[:authentication_mode] != auth[:mode]
-        if params[:authentication_mode] == "ldap"
-          params[:authentication_ldapport] = "389"
-          @sb[:newrole] = auth[:ldap_role] = @edit[:current][:authentication][:ldap_role]
-          @authldapport_reset = true
-        elsif params[:authentication_mode] == "ldaps"
-          params[:authentication_ldapport] = "636"
-          @sb[:newrole] = auth[:ldap_role] = @edit[:current][:authentication][:ldap_role]
-          @authldapport_reset = true
-        else
-          @sb[:newrole] = auth[:ldap_role] = false # setting it to false if database was selected to hide user_proxies box
-        end
         @authmode_changed = true
-      end
-      if (params[:authentication_ldaphost_1] || params[:authentication_ldaphost_2] || params[:authentication_ldaphost_3]) ||
-         (params[:authentication_ldapport] != auth[:ldapport])
-        @reset_verify_button = true
       end
       if (params[:authentication_amazon_key] != auth[:amazon_key]) ||
          (params[:authentication_amazon_secret] != auth[:amazon_secret])
@@ -656,23 +561,7 @@ module OpsController::Settings::Common
 
       auth[:amazon_key] = params[:authentication_amazon_key] if params[:authentication_amazon_key]
       auth[:amazon_secret] = params[:authentication_amazon_secret] if params[:authentication_amazon_secret]
-      auth[:ldaphost] ||= []
-      auth[:ldaphost][0] = params[:authentication_ldaphost_1] if params[:authentication_ldaphost_1]
-      auth[:ldaphost][1] = params[:authentication_ldaphost_2] if params[:authentication_ldaphost_2]
-      auth[:ldaphost][2] = params[:authentication_ldaphost_3] if params[:authentication_ldaphost_3]
 
-      auth[:follow_referrals] = (params[:follow_referrals].to_s == "1") if params[:follow_referrals]
-      auth[:get_direct_groups] = (params[:get_direct_groups].to_s == "1") if params[:get_direct_groups]
-      if params[:user_proxies] && params[:user_proxies][:mode] != auth[:user_proxies][0][:mode]
-        if params[:user_proxies][:mode] == "ldap"
-          params[:user_proxies][:ldapport] = "389"
-          @user_proxies_port_reset = true
-        elsif params[:user_proxies][:mode] == "ldaps"
-          params[:user_proxies][:ldapport] = "636"
-          @user_proxies_port_reset = true
-        end
-        @authmode_changed = true
-      end
       auth[:sso_enabled] = (params[:sso_enabled].to_s == "1") if params[:sso_enabled]
       auth[:provider_type] = params[:provider_type] if params[:provider_type]
       auth[:local_login_disabled] = (params[:local_login_disabled].to_s == "1") if params[:local_login_disabled]
@@ -718,7 +607,6 @@ module OpsController::Settings::Common
             new[category][key] = params["#{category}_#{key}"]
           end
         end
-        auth[:user_proxies][0] = copy_hash(params[:user_proxies]) if params[:user_proxies] && category == :authentication
       end
     end
   end
@@ -743,7 +631,6 @@ module OpsController::Settings::Common
       :key     => "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}",
     }
     @sb[:new_to] = nil
-    @sb[:newrole] = false
 
     @edit[:current][:server][:role] = @edit[:current][:server][:role] ? @edit[:current][:server][:role].split(",").sort.join(",") : ""
     @edit[:current][:server][:timezone] = "UTC" if @edit[:current][:server][:timezone].blank?
@@ -763,19 +650,14 @@ module OpsController::Settings::Common
     @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
     @edit[:current] = MiqServer.find(@sb[:selected_server_id]).settings
     # Avoid thinking roles change when not yet set
-    @edit[:current][:authentication][:ldap_role] ||= false
     @edit[:current][:authentication][:amazon_role] ||= false
     @edit[:current][:authentication][:httpd_role] ||= false
     @sb[:form_vars] = {}
     @sb[:form_vars][:session_timeout_hours] = @edit[:current][:session][:timeout] / 3600
     @sb[:form_vars][:session_timeout_mins] = (@edit[:current][:session][:timeout] % 3600) / 60
-    @edit[:current][:authentication][:ldaphost] = Array.wrap(@edit[:current][:authentication][:ldaphost])
-    @edit[:current][:authentication][:user_proxies] ||= [{}]
-    @edit[:current][:authentication][:follow_referrals] ||= false
     @edit[:current][:authentication][:sso_enabled] ||= false
     @edit[:current][:authentication][:provider_type] ||= "none"
     @edit[:current][:authentication][:local_login_disabled] ||= false
-    @sb[:newrole] = @edit[:current][:authentication][:ldap_role]
     @sb[:new_amazon_role] = @edit[:current][:authentication][:amazon_role]
     @sb[:new_httpd_role] = @edit[:current][:authentication][:httpd_role]
     @in_a_form = true

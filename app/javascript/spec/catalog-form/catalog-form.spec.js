@@ -7,6 +7,7 @@ import '../helpers/miqSparkle';
 import '../helpers/miqAjaxButton';
 import '../helpers/addFlash';
 import { mount, shallow } from '../helpers/mountForm';
+import { asyncValidator } from '../../components/catalog-form/catalog-form.schema';
 
 describe('Catalog form component', () => {
   let submitSpyMiqSparkleOn;
@@ -297,6 +298,89 @@ describe('Catalog form component', () => {
       const wrapper = mount(<CatalogForm catalogId="1001" />);
 
       expect(wrapper.children().instance().handleError(error)).toEqual(__('Name has already been taken'));
+    });
+  });
+
+  describe('asyncValidator on name field', () => {
+    afterEach(() => {
+      fetchMock.reset();
+    });
+
+    it('should allow a unique name', async() => {
+      const name = 'foo';
+      const expectedUrl = `/api/service_catalogs?expand=resources&filter[]=name==%27${name}%27`;
+
+      fetchMock.getOnce(expectedUrl, { resources: [] });
+
+      await expect(asyncValidator(name, null)).resolves.toBeUndefined();
+    });
+
+    it('should handle duplicate name validation', async() => {
+      const name = 'foo';
+      const id = 123;
+      const expectedUrl = `/api/service_catalogs?expand=resources&filter[]=name==%27${name}%27`;
+
+      fetchMock.getOnce(expectedUrl, {
+        resources: [
+          { id: 456, name: name }, // different catalog id
+        ],
+      });
+
+      await expect(asyncValidator(name, id)).rejects.toBe('Name has already been taken');
+    });
+
+    it('should allow same name when editing the same catalog', async() => {
+      const name = 'foo';
+      const id = 123;
+      const expectedUrl = `/api/service_catalogs?expand=resources&filter[]=name==%27${name}%27`;
+
+      fetchMock.getOnce(expectedUrl, {
+        resources: [
+          { id: id, name: name }, // same catalog id
+        ],
+      });
+
+      await expect(asyncValidator(name, id)).resolves.toBeUndefined();
+    });
+
+    it('should properly encode all special characters in name parameter', async() => {
+      const name = "test &=%#?'\"/ name";
+      const encodedName = encodeURIComponent(name);
+      const expectedUrl = `/api/service_catalogs?expand=resources&filter[]=name==%27${encodedName}%27`;
+
+      fetchMock.getOnce(expectedUrl, { resources: [] });
+
+      await expect(asyncValidator(name, null)).resolves.toBeUndefined();
+    });
+
+    it('should handle duplicate name validation with encoded characters', async() => {
+      const name = 'test & catalog';
+      const id = 123;
+      const encodedName = encodeURIComponent(name);
+      const expectedUrl = `/api/service_catalogs?expand=resources&filter[]=name==%27${encodedName}%27`;
+
+      fetchMock.getOnce(expectedUrl, {
+        resources: [
+          { id: 456, name: name }, // different catalog id
+        ],
+      });
+
+      await expect(asyncValidator(name, id)).rejects.toBe('Name has already been taken');
+    });
+
+    it('should reject empty name', async() => {
+      await expect(asyncValidator('', null)).rejects.toBe('Required');
+      expect(fetchMock.calls().length).toBe(0);
+    });
+
+    it('should reject undefined name', async() => {
+      await expect(asyncValidator(undefined, null)).rejects.toBe('Required');
+      expect(fetchMock.calls().length).toBe(0);
+    });
+
+    it('should reject null name', async() => {
+      await expect(asyncValidator(null, null)).rejects.toBe('Required');
+      expect(fetchMock.calls().length).toBe(0);
     });
   });
 });

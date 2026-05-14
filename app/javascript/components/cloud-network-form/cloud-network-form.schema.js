@@ -10,7 +10,6 @@ function changeValue(value, loadSchema, emptySchema) {
 }
 
 function createSchema(ems, cloudNetworkId, loadSchema, emptySchema, providerFields = []) {
-  const providers = ems.filter((tenant) => tenant.type !== 'ManageIQ::Providers::Nuage::NetworkManager');
   const fields = [{
     component: componentTypes.SUB_FORM,
     title: __('Network Provider'),
@@ -30,7 +29,7 @@ function createSchema(ems, cloudNetworkId, loadSchema, emptySchema, providerFiel
         type: validatorTypes.REQUIRED,
         message: __('Required'),
       }],
-      options: providers.map(({ id, name }) => ({ label: name, value: id })),
+      options: ems.map(({ id, name }) => ({ label: name, value: id })),
     }],
   },
   ...providerFields,

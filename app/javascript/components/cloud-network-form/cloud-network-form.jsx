@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Grid, Column } from '@carbon/react';
 import MiqFormRenderer from '../../forms/data-driven-form';
 import createSchema from './cloud-network-form.schema';
-import { networkProviders } from '../../helpers/network-providers';
+import { networkProviders } from './helper';
 import { API } from '../../http_api';
 import handleFailure from '../../helpers/handle-failure';
 

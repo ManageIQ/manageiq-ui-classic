@@ -78,12 +78,6 @@ describe 'routes for MiqRequestController' do
     end
   end
 
-  describe '#retrieve_email' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/retrieve_email")).to route_to("#{controller_name}#retrieve_email")
-    end
-  end
-
   describe '#show' do
     it 'routes with GET' do
       expect(get("/#{controller_name}/show")).to route_to("#{controller_name}#show")
