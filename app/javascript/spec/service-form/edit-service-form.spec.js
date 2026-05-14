@@ -1,17 +1,14 @@
 import React from 'react';
+import { waitFor } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
-import { act } from 'react-dom/test-utils';
+import { renderWithRedux } from '../helpers/mountForm';
 import EditServiceForm from '../../components/edit-service-form';
-import { mount } from '../helpers/mountForm';
 
-require('../helpers/addFlash.js');
-require('../helpers/miqSparkle.js');
-require('../helpers/miqAjaxButton.js');
+import '../helpers/miqAjaxButton';
 
 describe('Service form component', () => {
   let initialProps;
   let submitSpy;
-  let flashSpy;
 
   beforeEach(() => {
     initialProps = {
@@ -20,7 +17,6 @@ describe('Service form component', () => {
       recordId: 3,
     };
     submitSpy = jest.spyOn(window, 'miqAjaxButton');
-    flashSpy = jest.spyOn(window, 'add_flash');
   });
 
   afterEach(() => {
@@ -29,15 +25,14 @@ describe('Service form component', () => {
     submitSpy.mockRestore();
   });
 
-  it('should request data after mount and set to state', async(done) => {
-    fetchMock
-      .getOnce('/api/services/3', {
-        foo: 'bar',
-      });
-    await act(async() => {
-      mount(<EditServiceForm {...initialProps} />);
+  it('should request data after mount and set to state', async() => {
+    fetchMock.getOnce('/api/services/3', {
+      foo: 'bar',
     });
-    expect(fetchMock.lastUrl()).toEqual('/api/services/3');
-    done();
+
+    renderWithRedux(<EditServiceForm {...initialProps} />);
+    await waitFor(() => {
+      expect(fetchMock.lastUrl()).toEqual('/api/services/3');
+    });
   });
 });
