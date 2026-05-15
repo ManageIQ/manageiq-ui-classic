@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 describe('Automation > Embedded Automate > Simulation', () => {
   beforeEach(() => {
     cy.login();

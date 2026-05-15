@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 // selectId: String of the ID of the select element to interact with.
 // optionToSelect: String of the option to select from the dropdown.
 Cypress.Commands.add('changeSelect', (selectId, optionToSelect) => {

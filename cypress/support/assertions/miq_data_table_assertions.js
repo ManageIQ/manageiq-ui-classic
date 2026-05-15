@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 /**
  * Command to verify that the GTL (Grid/Tile/List) view displays a "no records" message.
  * This assertion checks that the specified text is visible within the GTL view container.

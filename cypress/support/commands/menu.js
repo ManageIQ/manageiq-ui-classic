@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 const primary = '#main-menu nav.primary';
 const secondary = 'div[role="presentation"] > .cds--side-nav__items';
 

@@ -1,8 +1,4 @@
-/* eslint-disable no-undef */
 import { flashClassMap } from '../../../../../support/assertions/assertion_constants';
-
-// Component route url
-const COMPONENT_ROUTE_URL = 'miq_ae_class/explorer#/';
 
 // Menu options
 const AUTOMATION_MENU_OPTION = 'Automation';
@@ -11,8 +7,6 @@ const EXPLORER_MENU_OPTION = 'Explorer';
 
 // Toolbar options
 const TOOLBAR_CONFIGURATION = 'Configuration';
-const TOOLBAR_ADD_NEW_DOMAIN = 'Add a New Domain';
-const TOOLBAR_REMOVE_DOMAIN = 'Remove this Domain';
 const TOOLBAR_ADD_NEW_NAMESPACE = 'Add a New Namespace';
 const TOOLBAR_EDIT_NAMESPACE = 'Edit this Namespace';
 const TOOLBAR_REMOVE_NAMESPACE = 'Remove this Namespace';

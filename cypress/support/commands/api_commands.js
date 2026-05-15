@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 /**
  * Custom command to get the intercepted API aliases stored in Cypress exposed data.
  * This command returns the object containing all registered API interception aliases.
@@ -122,7 +120,7 @@ Cypress.Commands.add(
     /* ===== TODO: Remove this block once interceptApi command becomes stable ===== */
     const exposedData = {
       interceptedAliases: Cypress.expose('interceptedAliases'),
-      wasRequestIntercepted: Cypress.expose('wasRequestIntercepted')
+      wasRequestIntercepted: Cypress.expose('wasRequestIntercepted'),
     };
     cy.log('Cypress Exposed Data:');
     cy.log(JSON.stringify(exposedData, null, 2));

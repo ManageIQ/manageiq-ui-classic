@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 describe('Settings > My Settings', () => {
   const interceptUserSettingsLoad = (alias = 'userSettingsLoad') => {
     cy.interceptApi({

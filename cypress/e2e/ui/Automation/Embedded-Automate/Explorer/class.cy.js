@@ -1,5 +1,4 @@
-/* eslint-disable no-undef */
-import { flashClassMap } from "../../../../../support/assertions/assertion_constants";
+import { flashClassMap } from '../../../../../support/assertions/assertion_constants';
 
 describe('Automation > Embedded Automate > Explorer', () => {
   beforeEach(() => {
@@ -7,8 +6,8 @@ describe('Automation > Embedded Automate > Explorer', () => {
       ['create', 'miq_ae_domain', {name: 'TestDomain'}],
     ]).then((results) => {
       cy.appFactories([
-        ['create', 'miq_ae_namespace', {name: 'TestNameSpace', domain_id: results[0].id}]
-      ])
+        ['create', 'miq_ae_namespace', {name: 'TestNameSpace', domain_id: results[0].id}],
+      ]);
     });
 
     cy.login();

@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 /**
  * @fileoverview
  * This file contains Cypress commands for interacting with data tables in the ManageIQ UI.

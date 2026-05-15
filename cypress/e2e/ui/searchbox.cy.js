@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 describe('Search box', () => {
   beforeEach(() => {
     cy.login();

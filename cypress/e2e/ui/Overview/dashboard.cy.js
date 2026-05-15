@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 describe('Overview > Dashboard Tests', () => {
   const defaultCards = [];
 

@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 
 /* @RemoveLater: Remove this test suite once the command is confirmed to be stable */
 describe('Validate select accordion item', () => {

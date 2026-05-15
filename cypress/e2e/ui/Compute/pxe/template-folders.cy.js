@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 describe('Compute > Infrastructure > PXE > Customization Templates', () => {
   beforeEach(() => {
     cy.login();

@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 // TODO: Remove this test once interceptApi command becomes stable
 describe('Validate intercept command', () => {
   beforeEach(() => {
