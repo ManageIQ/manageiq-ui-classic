@@ -1,11 +1,9 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
+import { render } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
-import { mount } from '../helpers/mountForm';
 import VmEditForm from '../../components/vm-edit-form';
 
-require('../helpers/miqSparkle.js');
-require('../helpers/miqAjaxButton.js');
+import '../helpers/miqAjaxButton';
 
 describe('VM Edit form component', () => {
   let submitSpy;
@@ -72,10 +70,17 @@ describe('VM Edit form component', () => {
     submitSpy.mockRestore();
   });
   it('should render vm edit form', () => {
-    const wrapper = mount(<VmEditForm recordId="4671" emsId="56" displayName="Virtual Machine" isTemplate={false} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const { container } = render(
+      <VmEditForm
+        recordId="4671"
+        emsId="56"
+        displayName="Virtual Machine"
+        isTemplate={false}
+      />
+    );
+    expect(container).toMatchSnapshot();
   });
-  it('should edit vm with a parent and children', async(done) => {
+  it('should edit vm with a parent and children', async() => {
     const parentVMOptions = {
       resources: [
         {
@@ -92,7 +97,8 @@ describe('VM Edit form component', () => {
           id: '4734',
           name: 'billy_cloudformator',
           location: '5b0a20b7-3583-49fc-a1e1-e64e528476d6.ovf',
-        }],
+        },
+      ],
     };
 
     const parentTemplateOptions = {
@@ -101,7 +107,8 @@ describe('VM Edit form component', () => {
           id: '4668',
           name: 'win2012-temp',
           location: '73c9b538-a84c-462f-a7f9-2c08fc3e212a.ovf',
-        }],
+        },
+      ],
     };
 
     const data = {
@@ -118,15 +125,30 @@ describe('VM Edit form component', () => {
       },
     };
 
-    fetchMock.getOnce(`/api/vms/?filter[]=ems_id=56&expand=resources`, parentVMOptions);
-    fetchMock.getOnce(`/api/templates/?filter[]=ems_id=56&expand=resources`, parentTemplateOptions);
-    fetchMock.getOnce(`/api/vms/4671?attributes=child_resources,parent_resource,custom_attributes`, vmInitialValues);
+    fetchMock.getOnce(
+      `/api/vms/?filter[]=ems_id=56&expand=resources`,
+      parentVMOptions
+    );
+    fetchMock.getOnce(
+      `/api/templates/?filter[]=ems_id=56&expand=resources`,
+      parentTemplateOptions
+    );
+    fetchMock.getOnce(
+      `/api/vms/4671?attributes=child_resources,parent_resource,custom_attributes`,
+      vmInitialValues
+    );
     fetchMock.postOnce('/api/vms/4671', data);
-    const wrapper = mount(<VmEditForm recordId="4671" emsId="56" displayName="Virtual Machine" isTemplate={false} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+    const { container } = render(
+      <VmEditForm
+        recordId="4671"
+        emsId="56"
+        displayName="Virtual Machine"
+        isTemplate={false}
+      />
+    );
+    expect(container).toMatchSnapshot();
   });
-  it('should edit vm with no parent or children', async(done) => {
+  it('should edit vm with no parent or children', async() => {
     const parentVMOptions = {
       resources: [
         {
@@ -167,15 +189,30 @@ describe('VM Edit form component', () => {
       },
     };
 
-    fetchMock.getOnce(`/api/vms/?filter[]=ems_id=56&expand=resources`, parentVMOptions);
-    fetchMock.getOnce(`/api/templates/?filter[]=ems_id=56&expand=resources`, parentTemplateOptions);
-    fetchMock.getOnce(`/api/vms/4671?attributes=child_resources,parent_resource,custom_attributes`, vmInitialValues);
+    fetchMock.getOnce(
+      `/api/vms/?filter[]=ems_id=56&expand=resources`,
+      parentVMOptions
+    );
+    fetchMock.getOnce(
+      `/api/templates/?filter[]=ems_id=56&expand=resources`,
+      parentTemplateOptions
+    );
+    fetchMock.getOnce(
+      `/api/vms/4671?attributes=child_resources,parent_resource,custom_attributes`,
+      vmInitialValues
+    );
     fetchMock.postOnce('/api/vms/4671', data);
-    const wrapper = mount(<VmEditForm recordId="4671" emsId="56" displayName="Virtual Machine" isTemplate={false} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+    const { container } = render(
+      <VmEditForm
+        recordId="4671"
+        emsId="56"
+        displayName="Virtual Machine"
+        isTemplate={false}
+      />
+    );
+    expect(container).toMatchSnapshot();
   });
-  it('should edit template with a parent and children', async(done) => {
+  it('should edit template with a parent and children', async() => {
     const parentVMOptions = {
       resources: [
         {
@@ -219,15 +256,30 @@ describe('VM Edit form component', () => {
         ],
       },
     };
-    fetchMock.getOnce('/api/vms/?filter[]=ems_id=22&expand=resources', parentVMOptions);
-    fetchMock.getOnce('/api/templates/?filter[]=ems_id=22&expand=resources', parentTemplateOptions);
-    fetchMock.getOnce('/api/templates/2686?attributes=child_resources,parent_resource,custom_attributes', templateInitialValues);
+    fetchMock.getOnce(
+      '/api/vms/?filter[]=ems_id=22&expand=resources',
+      parentVMOptions
+    );
+    fetchMock.getOnce(
+      '/api/templates/?filter[]=ems_id=22&expand=resources',
+      parentTemplateOptions
+    );
+    fetchMock.getOnce(
+      '/api/templates/2686?attributes=child_resources,parent_resource,custom_attributes',
+      templateInitialValues
+    );
     fetchMock.postOnce('/api/templates/2686', data);
-    const wrapper = mount(<VmEditForm recordId="2686" emsId="22" displayName="Template" isTemplate />);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+    const { container } = render(
+      <VmEditForm
+        recordId="2686"
+        emsId="22"
+        displayName="Template"
+        isTemplate
+      />
+    );
+    expect(container).toMatchSnapshot();
   });
-  it('should edit template with no parent and children', async(done) => {
+  it('should edit template with no parent and children', async() => {
     const parentVMOptions = {
       resources: [
         {
@@ -268,12 +320,27 @@ describe('VM Edit form component', () => {
       },
     };
 
-    fetchMock.getOnce('/api/vms/?filter[]=ems_id=22&expand=resources', parentVMOptions);
-    fetchMock.getOnce('/api/templates/?filter[]=ems_id=22&expand=resources', parentTemplateOptions);
-    fetchMock.getOnce('/api/templates/2686?attributes=child_resources,parent_resource,custom_attributes', templateInitialValues);
+    fetchMock.getOnce(
+      '/api/vms/?filter[]=ems_id=22&expand=resources',
+      parentVMOptions
+    );
+    fetchMock.getOnce(
+      '/api/templates/?filter[]=ems_id=22&expand=resources',
+      parentTemplateOptions
+    );
+    fetchMock.getOnce(
+      '/api/templates/2686?attributes=child_resources,parent_resource,custom_attributes',
+      templateInitialValues
+    );
     fetchMock.postOnce('/api/templates/2686', data);
-    const wrapper = mount(<VmEditForm recordId="2686" emsId="22" displayName="Template" isTemplate />);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+    const { container } = render(
+      <VmEditForm
+        recordId="2686"
+        emsId="22"
+        displayName="Template"
+        isTemplate
+      />
+    );
+    expect(container).toMatchSnapshot();
   });
 });

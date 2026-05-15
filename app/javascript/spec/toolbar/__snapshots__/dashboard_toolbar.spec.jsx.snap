@@ -1,356 +1,119 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<DashboardToolbar /> renders ok 1`] = `
-<DashboardToolbar
-  allowAdd={true}
-  allowReset={true}
-  items={
-    Array [
-      Object {
-        "id": 31,
-        "image": "fa fa-pie-chart fa-lg",
-        "text": "add",
-        "title": "Add this Chart Widget",
-        "type": "button",
-      },
-    ]
-  }
-  locked={false}
->
+<div>
   <div
-    className="toolbar-pf-actions miq-toolbar-actions"
+    class="toolbar-pf-actions miq-toolbar-actions"
   >
     <div
-      className="miq-toolbar-group form-group"
+      class="miq-toolbar-group form-group"
     >
-      <OverflowMenu
-        aria-label="Add widget"
-        disabled={false}
-        floatingmenu="true"
-        id="dashboard-add-widget-menu"
-        menuOptionsClass="scrollable-options"
-        onClose={[Function]}
-        renderIcon={[Function]}
-        title="Add widget"
+      <span
+        class="cds--overflow-menu__wrapper"
       >
-        <ForwardRef
-          aria-label="Add widget"
-          disabled={false}
-          floatingmenu="true"
-          id="dashboard-add-widget-menu"
-          menuOptionsClass="scrollable-options"
-          onClose={[Function]}
-          renderIcon={[Function]}
-          title="Add widget"
+        <span
+          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
         >
-          <span
-            className="cds--overflow-menu__wrapper"
+          <div
+            class="cds--tooltip-trigger__wrapper"
           >
-            <ForwardRef
-              aria-expanded={false}
-              aria-haspopup={true}
-              className="cds--overflow-menu cds--overflow-menu--md"
-              disabled={false}
+            <button
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-labelledby="tooltip-2"
+              class="cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
               floatingmenu="true"
               id="dashboard-add-widget-menu"
-              kind="ghost"
-              label="Options"
-              onClick={[Function]}
-              size="md"
               title="Add widget"
               type="button"
             >
-              <ForwardRef
-                autoAlign={false}
-                className="cds--icon-tooltip"
-                closeOnActivation={true}
-                defaultOpen={false}
-                dropShadow={false}
-                enterDelayMs={100}
-                highContrast={true}
-                label="Options"
-                leaveDelayMs={100}
+              <div
+                class="toolbar-dashboard"
               >
-                <Popover
-                  align="top"
-                  autoAlign={false}
-                  className="cds--tooltip cds--icon-tooltip"
-                  dropShadow={false}
-                  highContrast={true}
-                  onKeyDown={[Function]}
-                  onMouseLeave={[Function]}
-                  open={false}
+                <span>
+                  Add widget
+                </span>
+                <svg
+                  aria-label="Options"
+                  class="cds--overflow-menu__icon"
+                  fill="currentColor"
+                  focusable="false"
+                  height="20"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 32 32"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <span
-                    className="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
-                    onKeyDown={[Function]}
-                    onMouseLeave={[Function]}
-                  >
-                    <div
-                      className="cds--tooltip-trigger__wrapper"
-                    >
-                      <ForwardRef(ButtonBase)
-                        aria-expanded={false}
-                        aria-haspopup={true}
-                        aria-labelledby="tooltip-2"
-                        className="cds--overflow-menu cds--overflow-menu--md"
-                        disabled={false}
-                        floatingmenu="true"
-                        hasIconOnly={true}
-                        id="dashboard-add-widget-menu"
-                        kind="ghost"
-                        onBlur={[Function]}
-                        onClick={[Function]}
-                        onFocus={[Function]}
-                        onMouseDown={[Function]}
-                        onMouseEnter={[Function]}
-                        onMouseLeave={[Function]}
-                        onMouseMove={[Function]}
-                        onTouchStart={[Function]}
-                        size="md"
-                        title="Add widget"
-                        type="button"
-                      >
-                        <button
-                          aria-expanded={false}
-                          aria-haspopup={true}
-                          aria-labelledby="tooltip-2"
-                          className="cds--overflow-menu cds--overflow-menu--md cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
-                          disabled={false}
-                          floatingmenu="true"
-                          id="dashboard-add-widget-menu"
-                          onBlur={[Function]}
-                          onClick={[Function]}
-                          onFocus={[Function]}
-                          onMouseDown={[Function]}
-                          onMouseEnter={[Function]}
-                          onMouseLeave={[Function]}
-                          onMouseMove={[Function]}
-                          onTouchStart={[Function]}
-                          title="Add widget"
-                          type="button"
-                        >
-                          <renderIcon
-                            aria-label="Options"
-                            className="cds--overflow-menu__icon"
-                          >
-                            <div
-                              className="toolbar-dashboard"
-                            >
-                              <span>
-                                Add widget
-                              </span>
-                              <ForwardRef(ChevronDown)
-                                aria-label="Options"
-                                className="cds--overflow-menu__icon"
-                                size={20}
-                              >
-                                <Icon
-                                  aria-label="Options"
-                                  className="cds--overflow-menu__icon"
-                                  fill="currentColor"
-                                  height={20}
-                                  viewBox="0 0 32 32"
-                                  width={20}
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <svg
-                                    aria-label="Options"
-                                    className="cds--overflow-menu__icon"
-                                    fill="currentColor"
-                                    focusable="false"
-                                    height={20}
-                                    preserveAspectRatio="xMidYMid meet"
-                                    role="img"
-                                    viewBox="0 0 32 32"
-                                    width={20}
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M16 22 6 12 7.4 10.6 16 19.2 24.6 10.6 26 12z"
-                                    />
-                                  </svg>
-                                </Icon>
-                              </ForwardRef(ChevronDown)>
-                            </div>
-                          </renderIcon>
-                        </button>
-                      </ForwardRef(ButtonBase)>
-                    </div>
-                    <PopoverContent
-                      aria-hidden="true"
-                      className="cds--tooltip-content"
-                      id="tooltip-2"
-                      onMouseEnter={[Function]}
-                      role="tooltip"
-                    >
-                      <span
-                        aria-hidden="true"
-                        className="cds--popover"
-                        id="tooltip-2"
-                        onMouseEnter={[Function]}
-                        role="tooltip"
-                      >
-                        <span
-                          className="cds--popover-content cds--tooltip-content"
-                        >
-                          Options
-                        </span>
-                        <span
-                          className="cds--popover-caret"
-                        />
-                      </span>
-                    </PopoverContent>
-                  </span>
-                </Popover>
-              </ForwardRef>
-            </ForwardRef>
-          </span>
-        </ForwardRef>
-      </OverflowMenu>
-      <Button
-        hasIconOnly={true}
-        iconDescription="Reset Dashboard Widgets to the defaults"
-        id="reset-dashboard-button"
-        kind="ghost"
-        onClick={[Function]}
-        renderIcon={[Function]}
-        size="md"
-      >
-        <ForwardRef
-          align="top"
-          autoAlign={false}
-          dropShadow={false}
-          highContrast={true}
-          id="reset-dashboard-button"
-          kind="ghost"
-          label="Reset Dashboard Widgets to the defaults"
-          onClick={[Function]}
-          renderIcon={null}
-          size="md"
-        >
-          <ForwardRef
-            align="top"
-            autoAlign={false}
-            className="cds--icon-tooltip"
-            closeOnActivation={true}
-            defaultOpen={false}
-            dropShadow={false}
-            enterDelayMs={100}
-            highContrast={true}
-            label="Reset Dashboard Widgets to the defaults"
-            leaveDelayMs={100}
+                  <path
+                    d="M16 22 6 12 7.4 10.6 16 19.2 24.6 10.6 26 12z"
+                  />
+                </svg>
+              </div>
+            </button>
+          </div>
+          <span
+            aria-hidden="true"
+            class="cds--popover"
+            id="tooltip-2"
+            role="tooltip"
           >
-            <Popover
-              align="top"
-              autoAlign={false}
-              className="cds--tooltip cds--icon-tooltip"
-              dropShadow={false}
-              highContrast={true}
-              onKeyDown={[Function]}
-              onMouseLeave={[Function]}
-              open={false}
+            <span
+              class="cds--popover-content cds--tooltip-content"
             >
-              <span
-                className="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
-                onKeyDown={[Function]}
-                onMouseLeave={[Function]}
-              >
-                <div
-                  className="cds--tooltip-trigger__wrapper"
-                >
-                  <ForwardRef(ButtonBase)
-                    aria-labelledby="tooltip-5"
-                    hasIconOnly={true}
-                    id="reset-dashboard-button"
-                    kind="ghost"
-                    onBlur={[Function]}
-                    onClick={[Function]}
-                    onFocus={[Function]}
-                    onMouseDown={[Function]}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
-                    onMouseMove={[Function]}
-                    onTouchStart={[Function]}
-                    renderIcon={null}
-                    size="md"
-                  >
-                    <button
-                      aria-labelledby="tooltip-5"
-                      className="cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
-                      disabled={false}
-                      id="reset-dashboard-button"
-                      onBlur={[Function]}
-                      onClick={[Function]}
-                      onFocus={[Function]}
-                      onMouseDown={[Function]}
-                      onMouseEnter={[Function]}
-                      onMouseLeave={[Function]}
-                      onMouseMove={[Function]}
-                      onTouchStart={[Function]}
-                      type="button"
-                    >
-                      <renderIcon>
-                        <ForwardRef(Reply)
-                          size={18}
-                        >
-                          <Icon
-                            fill="currentColor"
-                            height={18}
-                            viewBox="0 0 32 32"
-                            width={18}
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <svg
-                              aria-hidden={true}
-                              fill="currentColor"
-                              focusable="false"
-                              height={18}
-                              preserveAspectRatio="xMidYMid meet"
-                              viewBox="0 0 32 32"
-                              width={18}
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M28.88,30a1,1,0,0,1-.88-.5A15.19,15.19,0,0,0,15,22v6a1,1,0,0,1-.62.92,1,1,0,0,1-1.09-.21l-12-12a1,1,0,0,1,0-1.42l12-12a1,1,0,0,1,1.09-.21A1,1,0,0,1,15,4v6.11a17.19,17.19,0,0,1,15,17,16.34,16.34,0,0,1-.13,2,1,1,0,0,1-.79.86ZM14.5,20A17.62,17.62,0,0,1,28,26,15.31,15.31,0,0,0,13.91,12,1,1,0,0,1,13,11V6.41L3.41,16,13,25.59V21a1,1,0,0,1,1-1h.54Z"
-                              />
-                            </svg>
-                          </Icon>
-                        </ForwardRef(Reply)>
-                      </renderIcon>
-                    </button>
-                  </ForwardRef(ButtonBase)>
-                </div>
-                <PopoverContent
-                  aria-hidden="true"
-                  className="cds--tooltip-content"
-                  id="tooltip-5"
-                  onMouseEnter={[Function]}
-                  role="tooltip"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="cds--popover"
-                    id="tooltip-5"
-                    onMouseEnter={[Function]}
-                    role="tooltip"
-                  >
-                    <span
-                      className="cds--popover-content cds--tooltip-content"
-                    >
-                      Reset Dashboard Widgets to the defaults
-                    </span>
-                    <span
-                      className="cds--popover-caret"
-                    />
-                  </span>
-                </PopoverContent>
-              </span>
-            </Popover>
-          </ForwardRef>
-        </ForwardRef>
-      </Button>
+              Options
+            </span>
+            <span
+              class="cds--popover-caret"
+            />
+          </span>
+        </span>
+      </span>
+      <span
+        class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+      >
+        <div
+          class="cds--tooltip-trigger__wrapper"
+        >
+          <button
+            aria-labelledby="tooltip-5"
+            class="cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+            id="reset-dashboard-button"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              fill="currentColor"
+              focusable="false"
+              height="18"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 32 32"
+              width="18"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M28.88,30a1,1,0,0,1-.88-.5A15.19,15.19,0,0,0,15,22v6a1,1,0,0,1-.62.92,1,1,0,0,1-1.09-.21l-12-12a1,1,0,0,1,0-1.42l12-12a1,1,0,0,1,1.09-.21A1,1,0,0,1,15,4v6.11a17.19,17.19,0,0,1,15,17,16.34,16.34,0,0,1-.13,2,1,1,0,0,1-.79.86ZM14.5,20A17.62,17.62,0,0,1,28,26,15.31,15.31,0,0,0,13.91,12,1,1,0,0,1,13,11V6.41L3.41,16,13,25.59V21a1,1,0,0,1,1-1h.54Z"
+              />
+            </svg>
+          </button>
+        </div>
+        <span
+          aria-hidden="true"
+          class="cds--popover"
+          id="tooltip-5"
+          role="tooltip"
+        >
+          <span
+            class="cds--popover-content cds--tooltip-content"
+          >
+            Reset Dashboard Widgets to the defaults
+          </span>
+          <span
+            class="cds--popover-caret"
+          />
+        </span>
+      </span>
     </div>
   </div>
-</DashboardToolbar>
+</div>
 `;

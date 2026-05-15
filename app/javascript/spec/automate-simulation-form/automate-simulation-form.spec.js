@@ -1,16 +1,10 @@
 import React from 'react';
 import fetchMock from 'fetch-mock';
-import { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
+import { waitFor } from '@testing-library/react';
 import AutomateSimulationForm from '../../components/automate-simulation-form';
+import { renderWithRedux } from '../helpers/mountForm';
 
 describe('Automate Simulation Form', () => {
-  const automateSimulationMockData = [
-    {
-      href: `/miq_ae_tools/resolve_react/new`,
-    },
-  ];
-
   afterEach(() => {
     fetchMock.reset();
     fetchMock.restore();
@@ -21,8 +15,14 @@ describe('Automate Simulation Form', () => {
     button_class: '',
     button_number: 1,
     instance_names: [
-      'Request', 'parse_provider_category', 'parse_event_stream', 
-      'parse_automation_request', 'MiqEvent', 'GenericObject', 'Event', 'Automation'
+      'Request',
+      'parse_provider_category',
+      'parse_event_stream',
+      'parse_automation_request',
+      'MiqEvent',
+      'GenericObject',
+      'Event',
+      'Automation',
     ],
     lastaction: null,
     new: {
@@ -75,19 +75,14 @@ describe('Automate Simulation Form', () => {
     },
   };
 
-  it('should submit a new simulation', async() => {
-    const wrapper = shallow(<AutomateSimulationForm
-      resolve={resolveMockData}
-      attrValuesPairs={[0, 1, 2, 3, 4]}
-    />);
+  it('should render the simulation form correctly', async() => {
+    const { container } = renderWithRedux(<AutomateSimulationForm resolve={resolveMockData} attrValuesPairs={[0, 1, 2, 3, 4]} />);
 
-    fetchMock.get(`/miq_ae_tools/resolve_react/new?&expand=resources/`, automateSimulationMockData);
-    await new Promise((resolve) => {
-      setImmediate(() => {
-        wrapper.update();
-        expect(toJson(wrapper)).toMatchSnapshot();
-        resolve();
-      });
+    // Wait for component to finish rendering
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
     });
+
+    expect(container).toMatchSnapshot();
   });
 });

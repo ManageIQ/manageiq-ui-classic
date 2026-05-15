@@ -1,16 +1,9 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
+import { screen, waitFor } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
-import { act } from 'react-dom/test-utils';
 import LiveMigrateForm from '../../components/live-migrate-form/index';
-import {
-  hosts,
-} from './data';
-import { mount } from '../helpers/mountForm';
-
-require('../helpers/miqSparkle.js');
-
-jest.mock('../../helpers/miq-redirect-back', () => jest.fn());
+import { renderWithRedux } from '../helpers/mountForm';
+import { hosts } from './data';
 
 describe('Live Migrate form component', () => {
   afterEach(() => {
@@ -18,44 +11,61 @@ describe('Live Migrate form component', () => {
     fetchMock.restore();
   });
 
-  it('should render live migrate form with host options', async(done) => {
+  it('should render live migrate form with host options', async() => {
     fetchMock.getOnce('/vm_cloud/live_migrate_form_fields/20', { hosts });
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<LiveMigrateForm recordId="20" />);
+
+    const { container } = renderWithRedux(<LiveMigrateForm recordId="20" />);
+
+    // Wait for loading to complete
+    await waitFor(() => {
+      expect(screen.queryByText(/loading/i)).not.toBeInTheDocument();
     });
-    wrapper.update();
+
     expect(fetchMock.calls()).toHaveLength(1);
-    expect(wrapper.find('input[name="auto_select_host"]').props().disabled).toBe(false);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+
+    const autoSelectInput = container.querySelector('input[name="auto_select_host"]');
+    expect(autoSelectInput).toBeInTheDocument();
+    expect(autoSelectInput.disabled).toBe(false);
+
+    expect(container).toMatchSnapshot();
   });
 
-  it('should render live migrate form when hosts empty', async(done) => {
+  it('should render live migrate form when hosts empty', async() => {
     const hosts = [];
     fetchMock.getOnce('/vm_cloud/live_migrate_form_fields/20', { hosts });
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<LiveMigrateForm recordId="20" />);
+
+    const { container } = renderWithRedux(<LiveMigrateForm recordId="20" />);
+
+    // Wait for loading to complete
+    await waitFor(() => {
+      expect(screen.queryByText(/loading/i)).not.toBeInTheDocument();
     });
-    wrapper.update();
+
     expect(fetchMock.calls()).toHaveLength(1);
-    expect(wrapper.find('destination_host')).toHaveLength(0);
-    expect(wrapper.find('input[name="auto_select_host"]').props().disabled).toBe(true);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+    expect(container.querySelector('destination_host')).not.toBeInTheDocument();
+
+    const autoSelectInput = container.querySelector('input[name="auto_select_host"]');
+    expect(autoSelectInput).toBeInTheDocument();
+    expect(autoSelectInput.disabled).toBe(true);
+
+    expect(container).toMatchSnapshot();
   });
 
-  it('should render live migrate form with multiple instances', async(done) => {
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<LiveMigrateForm recordId="" />);
+  it('should render live migrate form with multiple instances', async() => {
+    const { container } = renderWithRedux(<LiveMigrateForm recordId="" />);
+
+    // Wait for loading to complete
+    await waitFor(() => {
+      expect(screen.queryByText(/loading/i)).not.toBeInTheDocument();
     });
-    wrapper.update();
+
     expect(fetchMock.calls()).toHaveLength(0);
-    expect(wrapper.find('destination_host')).toHaveLength(0);
-    expect(wrapper.find('input[name="auto_select_host"]').props().disabled).toBe(true);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+    expect(container.querySelector('destination_host')).not.toBeInTheDocument();
+
+    const autoSelectInput = container.querySelector('input[name="auto_select_host"]');
+    expect(autoSelectInput).toBeInTheDocument();
+    expect(autoSelectInput.disabled).toBe(true);
+
+    expect(container).toMatchSnapshot();
   });
 });

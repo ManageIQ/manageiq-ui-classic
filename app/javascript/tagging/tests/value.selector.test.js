@@ -1,41 +1,38 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
+import { render } from '@testing-library/react';
 import ValueSelector from '../components/InnerComponents/ValueSelector';
 
-const selectedTagCategory = { label: 'Comic Book Characters', id: '1' };
-const tagValues = [
-  { label: 'Asterix', id: 1 },
-  { label: 'Obelix', id: 2 }
-];
-const selectedTagValues = [{ label: 'Obelix', id: 2 }];
-function onChange(x) {
-  return x;
-}
+describe('ValueSelector component', () => {
+  const selectedTagCategory = { label: 'Comic Book Characters', id: '1' };
+  const tagValues = [
+    { label: 'Asterix', id: 1 },
+    { label: 'Obelix', id: 2 },
+  ];
+  const selectedTagValues = [{ label: 'Obelix', id: 2 }];
+  const onChange = jest.fn();
 
-test('match snapshot', () => {
-  const component = shallow(
-    <ValueSelector
-      selectedTagCategory={selectedTagCategory}
-      values={tagValues}
-      onTagValueChange={onChange}
-      selectedOption={selectedTagValues}
-    />
-  );
-  const tree = toJson(component);
-  expect(tree).toMatchSnapshot();
-});
+  it('should match snapshot', () => {
+    const { container } = render(
+      <ValueSelector
+        selectedTagCategory={selectedTagCategory}
+        values={tagValues}
+        onTagValueChange={onChange}
+        selectedOption={selectedTagValues}
+      />
+    );
+    expect(container).toMatchSnapshot();
+  });
 
-test('match snapshot without multiple values', () => {
-  const component = shallow(
-    <ValueSelector
-      values={tagValues}
-      onTagValueChange={onChange}
-      selectedOption={selectedTagValues}
-      multiValue={false}
-      selectedTagCategory={selectedTagCategory}
-    />
-  );
-  const tree = toJson(component);
-  expect(tree).toMatchSnapshot();
+  it('should match snapshot without multiple values', () => {
+    const { container } = render(
+      <ValueSelector
+        values={tagValues}
+        onTagValueChange={onChange}
+        selectedOption={selectedTagValues}
+        multiValue={false}
+        selectedTagCategory={selectedTagCategory}
+      />
+    );
+    expect(container).toMatchSnapshot();
+  });
 });

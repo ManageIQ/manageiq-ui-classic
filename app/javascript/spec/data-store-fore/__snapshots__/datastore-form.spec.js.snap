@@ -1,3052 +1,635 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Datastore form component Datastore domain form component should render the Domain adding form 1`] = `
-<Connect(MiqFormRenderer)
-  buttonsLabels={
-    Object {
-      "submitLabel": "Add",
-    }
-  }
-  canReset={false}
-  initialValues={
-    Object {
-      "enabled": true,
-      "namespacePath": "",
-    }
-  }
-  onCancel={[Function]}
-  onSubmit={[Function]}
-  schema={
-    Object {
-      "fields": Array [
-        Object {
-          "component": "sub-form",
-          "fields": Array [
-            Object {
-              "component": "text-field",
-              "id": "name",
-              "isDisabled": false,
-              "isRequired": true,
-              "label": "Name",
-              "maxLength": 128,
-              "name": "name",
-              "validate": Array [
-                Object {
-                  "type": "required",
-                },
-              ],
-            },
-            Object {
-              "component": "text-field",
-              "id": "description",
-              "isDisabled": false,
-              "label": "Description",
-              "maxLength": 128,
-              "name": "description",
-              "validate": Array [
-                Object {
-                  "type": "required",
-                },
-              ],
-            },
-            Object {
-              "component": "checkbox",
-              "id": "enabled",
-              "label": "Enabled",
-              "name": "enabled",
-            },
-          ],
-          "id": "datastore-form-wrapper",
-          "name": "datastore-form-wrapper",
-          "title": "Info",
-        },
-      ],
-    }
-  }
-/>
+<div>
+  <form
+    class="cds--form form-0-2-3 form-react"
+    novalidate=""
+  >
+    <div
+      class=""
+      id="datastore-form-wrapper"
+      name="datastore-form-wrapper"
+    >
+      <div>
+        <h3>
+          Info
+        </h3>
+      </div>
+      <div
+        class="cds--form-item cds--text-input-wrapper"
+      >
+        <div
+          class="cds--text-input__label-wrapper"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="name"
+          >
+            <span
+              aria-hidden="true"
+              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+            >
+              *
+            </span>
+            Name
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+          >
+            <input
+              class="cds--text-input"
+              id="name"
+              maxlength="128"
+              name="name"
+              type="text"
+              value=""
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--form-item cds--text-input-wrapper"
+      >
+        <div
+          class="cds--text-input__label-wrapper"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="description"
+          >
+            Description
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+          >
+            <input
+              class="cds--text-input"
+              id="description"
+              maxlength="128"
+              name="description"
+              type="text"
+              value=""
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cds--form-item cds--checkbox-wrapper"
+        >
+          <input
+            checked=""
+            class="cds--checkbox"
+            id="enabled"
+            name="enabled"
+            type="checkbox"
+            value=""
+          />
+          <label
+            class="cds--checkbox-label"
+            for="enabled"
+            title=""
+          >
+            <div
+              class="cds--checkbox-label-text"
+              dir="auto"
+            >
+              Enabled
+              
+            </div>
+          </label>
+          <div
+            class="cds--checkbox__validation-msg"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--btn-set"
+    >
+      <button
+        class="cds--btn cds--btn--primary cds--btn--disabled"
+        disabled=""
+        type="submit"
+        variant="primary"
+      >
+        Add
+      </button>
+      <button
+        class="cds--btn cds--btn--secondary"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
 `;
 
 exports[`Datastore form component Datastore domain form component should render the Domain editing form 1`] = `
-<Provider
-  store={
-    Object {
-      "asyncReducers": Object {
-        "FormButtons": [Function],
-        "miqCustomTabReducer": [Function],
-        "notificationReducer": [Function],
-      },
-      "dispatch": [Function],
-      "getState": [Function],
-      "injectReducers": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-      Symbol(observable): [Function],
-    }
-  }
->
-  <DatastoreForm
-    descReadOnly={false}
-    domain={true}
-    nameReadOnly={false}
-    namespaceId={5630}
-    namespacePath=""
+<div>
+  <form
+    class="cds--form form-0-2-3 form-react"
+    novalidate=""
   >
-    <Connect(MiqFormRenderer)
-      buttonsLabels={
-        Object {
-          "submitLabel": "Save",
-        }
-      }
-      canReset={true}
-      initialValues={
-        Object {
-          "enabled": true,
-          "namespacePath": "",
-        }
-      }
-      onCancel={[Function]}
-      onSubmit={[Function]}
-      schema={
-        Object {
-          "fields": Array [
-            Object {
-              "component": "sub-form",
-              "fields": Array [
-                Object {
-                  "component": "text-field",
-                  "id": "name",
-                  "isDisabled": false,
-                  "isRequired": true,
-                  "label": "Name",
-                  "maxLength": 128,
-                  "name": "name",
-                  "validate": Array [
-                    Object {
-                      "type": "required",
-                    },
-                  ],
-                },
-                Object {
-                  "component": "text-field",
-                  "id": "description",
-                  "isDisabled": false,
-                  "label": "Description",
-                  "maxLength": 128,
-                  "name": "description",
-                  "validate": Array [
-                    Object {
-                      "type": "required",
-                    },
-                  ],
-                },
-                Object {
-                  "component": "checkbox",
-                  "id": "enabled",
-                  "label": "Enabled",
-                  "name": "enabled",
-                },
-              ],
-              "id": "datastore-form-wrapper",
-              "name": "datastore-form-wrapper",
-              "title": "Info",
-            },
-          ],
-        }
-      }
+    <div
+      class=""
+      id="datastore-form-wrapper"
+      name="datastore-form-wrapper"
     >
-      <MiqFormRenderer
-        buttonsLabels={
-          Object {
-            "submitLabel": "Save",
-          }
-        }
-        canReset={true}
-        className="form-react"
-        componentMapper={
-          Object {
-            "checkbox": [Function],
-            "code-editor": [Function],
-            "date-picker": [Function],
-            "dual-list-select": [Function],
-            "edit-password-field": [Function],
-            "embedded-automate-entry-point": [Function],
-            "embedded-workflow-entry-point": [Function],
-            "field-array": [Function],
-            "file-upload": [Function],
-            "font-icon-picker": [Function],
-            "font-icon-picker-ddf": [Function],
-            "key-value-list": [Function],
-            "password-field": [Function],
-            "plain-text": [Function],
-            "radio": [Function],
-            "select": [Function],
-            "selected-groups-list": [Function],
-            "slider": [Function],
-            "sub-form": [Function],
-            "switch": [Function],
-            "tabs": [Function],
-            "text-field": [Function],
-            "textarea": [Function],
-            "time-picker": [Function],
-            "tree-selector": [Function],
-            "validate-credentials": [Function],
-            "wizard": [Function],
-          }
-        }
-        disableSubmit={
-          Array [
-            "pristine",
-            "invalid",
-          ]
-        }
-        dispatch={[Function]}
-        initialValues={
-          Object {
-            "enabled": true,
-            "namespacePath": "",
-          }
-        }
-        onCancel={[Function]}
-        onSubmit={[Function]}
-        schema={
-          Object {
-            "fields": Array [
-              Object {
-                "component": "sub-form",
-                "fields": Array [
-                  Object {
-                    "component": "text-field",
-                    "id": "name",
-                    "isDisabled": false,
-                    "isRequired": true,
-                    "label": "Name",
-                    "maxLength": 128,
-                    "name": "name",
-                    "validate": Array [
-                      Object {
-                        "type": "required",
-                      },
-                    ],
-                  },
-                  Object {
-                    "component": "text-field",
-                    "id": "description",
-                    "isDisabled": false,
-                    "label": "Description",
-                    "maxLength": 128,
-                    "name": "description",
-                    "validate": Array [
-                      Object {
-                        "type": "required",
-                      },
-                    ],
-                  },
-                  Object {
-                    "component": "checkbox",
-                    "id": "enabled",
-                    "label": "Enabled",
-                    "name": "enabled",
-                  },
-                ],
-                "id": "datastore-form-wrapper",
-                "name": "datastore-form-wrapper",
-                "title": "Info",
-              },
-            ],
-          }
-        }
-        showFormControls={true}
+      <div>
+        <h3>
+          Info
+        </h3>
+      </div>
+      <div
+        class="cds--form-item cds--text-input-wrapper"
       >
-        <FormRenderer
-          FormTemplate={[Function]}
-          componentMapper={
-            Object {
-              "checkbox": [Function],
-              "code-editor": [Function],
-              "date-picker": [Function],
-              "dual-list-select": [Function],
-              "edit-password-field": [Function],
-              "embedded-automate-entry-point": [Function],
-              "embedded-workflow-entry-point": [Function],
-              "field-array": [Function],
-              "file-upload": [Function],
-              "font-icon-picker": [Function],
-              "font-icon-picker-ddf": [Function],
-              "key-value-list": [Function],
-              "password-field": [Function],
-              "plain-text": [Function],
-              "radio": [Function],
-              "select": [Function],
-              "selected-groups-list": [Function],
-              "slider": [Function],
-              "spy-field": [Function],
-              "sub-form": [Function],
-              "switch": [Function],
-              "tabs": [Function],
-              "text-field": [Function],
-              "textarea": [Function],
-              "time-picker": [Function],
-              "tree-selector": [Function],
-              "validate-credentials": [Function],
-              "wizard": [Function],
-            }
-          }
-          dispatch={[Function]}
-          initialValues={
-            Object {
-              "enabled": true,
-              "namespacePath": "",
-            }
-          }
-          onCancel={[Function]}
-          onReset={[Function]}
-          onSubmit={[Function]}
-          schema={
-            Object {
-              "fields": Array [
-                Object {
-                  "component": "sub-form",
-                  "fields": Array [
-                    Object {
-                      "component": "text-field",
-                      "id": "name",
-                      "isDisabled": false,
-                      "isRequired": true,
-                      "label": "Name",
-                      "maxLength": 128,
-                      "name": "name",
-                      "validate": Array [
-                        Object {
-                          "type": "required",
-                        },
-                      ],
-                    },
-                    Object {
-                      "component": "text-field",
-                      "id": "description",
-                      "isDisabled": false,
-                      "label": "Description",
-                      "maxLength": 128,
-                      "name": "description",
-                      "validate": Array [
-                        Object {
-                          "type": "required",
-                        },
-                      ],
-                    },
-                    Object {
-                      "component": "checkbox",
-                      "id": "enabled",
-                      "label": "Enabled",
-                      "name": "enabled",
-                    },
-                  ],
-                  "id": "datastore-form-wrapper",
-                  "name": "datastore-form-wrapper",
-                  "title": "Info",
-                },
-                Object {
-                  "component": "spy-field",
-                  "initialize": undefined,
-                  "name": "spy-field",
-                },
-              ],
-            }
-          }
+        <div
+          class="cds--text-input__label-wrapper"
         >
-          <ReactFinalForm
-            decorators={
-              Array [
-                [Function],
-              ]
-            }
-            dispatch={[Function]}
-            initialValues={
-              Object {
-                "enabled": true,
-                "namespacePath": "",
-              }
-            }
-            mutators={
-              Object {
-                "concat": [Function],
-                "insert": [Function],
-                "move": [Function],
-                "pop": [Function],
-                "push": [Function],
-                "remove": [Function],
-                "removeBatch": [Function],
-                "shift": [Function],
-                "swap": [Function],
-                "unshift": [Function],
-                "update": [Function],
-              }
-            }
-            onSubmit={[Function]}
-            render={[Function]}
-            subscription={
-              Object {
-                "pristine": true,
-                "submitting": true,
-                "valid": true,
-              }
-            }
+          <label
+            class="cds--label"
+            dir="auto"
+            for="name"
           >
-            <Component
-              formFields={
-                Array [
-                  <SingleField
-                    component="sub-form"
-                    fields={
-                      Array [
-                        Object {
-                          "component": "text-field",
-                          "id": "name",
-                          "isDisabled": false,
-                          "isRequired": true,
-                          "label": "Name",
-                          "maxLength": 128,
-                          "name": "name",
-                          "validate": Array [
-                            Object {
-                              "type": "required",
-                            },
-                          ],
-                        },
-                        Object {
-                          "component": "text-field",
-                          "id": "description",
-                          "isDisabled": false,
-                          "label": "Description",
-                          "maxLength": 128,
-                          "name": "description",
-                          "validate": Array [
-                            Object {
-                              "type": "required",
-                            },
-                          ],
-                        },
-                        Object {
-                          "component": "checkbox",
-                          "id": "enabled",
-                          "label": "Enabled",
-                          "name": "enabled",
-                        },
-                      ]
-                    }
-                    id="datastore-form-wrapper"
-                    name="datastore-form-wrapper"
-                    title="Info"
-                  />,
-                  <SingleField
-                    component="spy-field"
-                    name="spy-field"
-                  />,
-                ]
-              }
-              schema={
-                Object {
-                  "fields": Array [
-                    Object {
-                      "component": "sub-form",
-                      "fields": Array [
-                        Object {
-                          "component": "text-field",
-                          "id": "name",
-                          "isDisabled": false,
-                          "isRequired": true,
-                          "label": "Name",
-                          "maxLength": 128,
-                          "name": "name",
-                          "validate": Array [
-                            Object {
-                              "type": "required",
-                            },
-                          ],
-                        },
-                        Object {
-                          "component": "text-field",
-                          "id": "description",
-                          "isDisabled": false,
-                          "label": "Description",
-                          "maxLength": 128,
-                          "name": "description",
-                          "validate": Array [
-                            Object {
-                              "type": "required",
-                            },
-                          ],
-                        },
-                        Object {
-                          "component": "checkbox",
-                          "id": "enabled",
-                          "label": "Enabled",
-                          "name": "enabled",
-                        },
-                      ],
-                      "id": "datastore-form-wrapper",
-                      "name": "datastore-form-wrapper",
-                      "title": "Info",
-                    },
-                    Object {
-                      "component": "spy-field",
-                      "initialize": undefined,
-                      "name": "spy-field",
-                    },
-                  ],
-                }
-              }
+            <span
+              aria-hidden="true"
+              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
             >
-              <WrappedFormTemplate
-                canReset={true}
-                cancelLabel="Cancel"
-                disableSubmit={
-                  Array [
-                    "pristine",
-                    "invalid",
-                  ]
-                }
-                formFields={
-                  Array [
-                    <SingleField
-                      component="sub-form"
-                      fields={
-                        Array [
-                          Object {
-                            "component": "text-field",
-                            "id": "name",
-                            "isDisabled": false,
-                            "isRequired": true,
-                            "label": "Name",
-                            "maxLength": 128,
-                            "name": "name",
-                            "validate": Array [
-                              Object {
-                                "type": "required",
-                              },
-                            ],
-                          },
-                          Object {
-                            "component": "text-field",
-                            "id": "description",
-                            "isDisabled": false,
-                            "label": "Description",
-                            "maxLength": 128,
-                            "name": "description",
-                            "validate": Array [
-                              Object {
-                                "type": "required",
-                              },
-                            ],
-                          },
-                          Object {
-                            "component": "checkbox",
-                            "id": "enabled",
-                            "label": "Enabled",
-                            "name": "enabled",
-                          },
-                        ]
-                      }
-                      id="datastore-form-wrapper"
-                      name="datastore-form-wrapper"
-                      title="Info"
-                    />,
-                    <SingleField
-                      component="spy-field"
-                      name="spy-field"
-                    />,
-                  ]
-                }
-                formWrapperProps={
-                  Object {
-                    "className": "form-react",
-                  }
-                }
-                resetLabel="Reset"
-                schema={
-                  Object {
-                    "fields": Array [
-                      Object {
-                        "component": "sub-form",
-                        "fields": Array [
-                          Object {
-                            "component": "text-field",
-                            "id": "name",
-                            "isDisabled": false,
-                            "isRequired": true,
-                            "label": "Name",
-                            "maxLength": 128,
-                            "name": "name",
-                            "validate": Array [
-                              Object {
-                                "type": "required",
-                              },
-                            ],
-                          },
-                          Object {
-                            "component": "text-field",
-                            "id": "description",
-                            "isDisabled": false,
-                            "label": "Description",
-                            "maxLength": 128,
-                            "name": "description",
-                            "validate": Array [
-                              Object {
-                                "type": "required",
-                              },
-                            ],
-                          },
-                          Object {
-                            "component": "checkbox",
-                            "id": "enabled",
-                            "label": "Enabled",
-                            "name": "enabled",
-                          },
-                        ],
-                        "id": "datastore-form-wrapper",
-                        "name": "datastore-form-wrapper",
-                        "title": "Info",
-                      },
-                      Object {
-                        "component": "spy-field",
-                        "initialize": undefined,
-                        "name": "spy-field",
-                      },
-                    ],
-                  }
-                }
-                showFormControls={true}
-                submitLabel="Save"
-              >
-                <FormTemplate
-                  Button={[Function]}
-                  ButtonGroup={[Function]}
-                  Description={[Function]}
-                  FormWrapper={[Function]}
-                  Header={[Function]}
-                  Title={[Function]}
-                  buttonOrder={
-                    Array [
-                      "submit",
-                      "reset",
-                      "cancel",
-                    ]
-                  }
-                  canReset={true}
-                  cancelLabel="Cancel"
-                  disableSubmit={
-                    Array [
-                      "pristine",
-                      "invalid",
-                    ]
-                  }
-                  formFields={
-                    Array [
-                      <SingleField
-                        component="sub-form"
-                        fields={
-                          Array [
-                            Object {
-                              "component": "text-field",
-                              "id": "name",
-                              "isDisabled": false,
-                              "isRequired": true,
-                              "label": "Name",
-                              "maxLength": 128,
-                              "name": "name",
-                              "validate": Array [
-                                Object {
-                                  "type": "required",
-                                },
-                              ],
-                            },
-                            Object {
-                              "component": "text-field",
-                              "id": "description",
-                              "isDisabled": false,
-                              "label": "Description",
-                              "maxLength": 128,
-                              "name": "description",
-                              "validate": Array [
-                                Object {
-                                  "type": "required",
-                                },
-                              ],
-                            },
-                            Object {
-                              "component": "checkbox",
-                              "id": "enabled",
-                              "label": "Enabled",
-                              "name": "enabled",
-                            },
-                          ]
-                        }
-                        id="datastore-form-wrapper"
-                        name="datastore-form-wrapper"
-                        title="Info"
-                      />,
-                      <SingleField
-                        component="spy-field"
-                        name="spy-field"
-                      />,
-                    ]
-                  }
-                  formWrapperProps={
-                    Object {
-                      "className": "form-react",
-                    }
-                  }
-                  resetLabel="Reset"
-                  schema={
-                    Object {
-                      "fields": Array [
-                        Object {
-                          "component": "sub-form",
-                          "fields": Array [
-                            Object {
-                              "component": "text-field",
-                              "id": "name",
-                              "isDisabled": false,
-                              "isRequired": true,
-                              "label": "Name",
-                              "maxLength": 128,
-                              "name": "name",
-                              "validate": Array [
-                                Object {
-                                  "type": "required",
-                                },
-                              ],
-                            },
-                            Object {
-                              "component": "text-field",
-                              "id": "description",
-                              "isDisabled": false,
-                              "label": "Description",
-                              "maxLength": 128,
-                              "name": "description",
-                              "validate": Array [
-                                Object {
-                                  "type": "required",
-                                },
-                              ],
-                            },
-                            Object {
-                              "component": "checkbox",
-                              "id": "enabled",
-                              "label": "Enabled",
-                              "name": "enabled",
-                            },
-                          ],
-                          "id": "datastore-form-wrapper",
-                          "name": "datastore-form-wrapper",
-                          "title": "Info",
-                        },
-                        Object {
-                          "component": "spy-field",
-                          "initialize": undefined,
-                          "name": "spy-field",
-                        },
-                      ],
-                    }
-                  }
-                  showFormControls={true}
-                  submitLabel="Save"
-                >
-                  <Form
-                    className="form-react"
-                    onSubmit={[Function]}
-                  >
-                    <Form
-                      className="form-0-2-3 form-react"
-                      noValidate={true}
-                      onSubmit={[Function]}
-                    >
-                      <form
-                        className="cds--form form-0-2-3 form-react"
-                        noValidate={true}
-                        onSubmit={[Function]}
-                      >
-                        <SingleField
-                          component="sub-form"
-                          fields={
-                            Array [
-                              Object {
-                                "component": "text-field",
-                                "id": "name",
-                                "isDisabled": false,
-                                "isRequired": true,
-                                "label": "Name",
-                                "maxLength": 128,
-                                "name": "name",
-                                "validate": Array [
-                                  Object {
-                                    "type": "required",
-                                  },
-                                ],
-                              },
-                              Object {
-                                "component": "text-field",
-                                "id": "description",
-                                "isDisabled": false,
-                                "label": "Description",
-                                "maxLength": 128,
-                                "name": "description",
-                                "validate": Array [
-                                  Object {
-                                    "type": "required",
-                                  },
-                                ],
-                              },
-                              Object {
-                                "component": "checkbox",
-                                "id": "enabled",
-                                "label": "Enabled",
-                                "name": "enabled",
-                              },
-                            ]
-                          }
-                          id="datastore-form-wrapper"
-                          key="datastore-form-wrapper"
-                          name="datastore-form-wrapper"
-                          title="Info"
-                        >
-                          <FormConditionWrapper
-                            conditionMapper={Object {}}
-                            field={
-                              Object {
-                                "component": "sub-form",
-                                "fields": Array [
-                                  Object {
-                                    "component": "text-field",
-                                    "id": "name",
-                                    "isDisabled": false,
-                                    "isRequired": true,
-                                    "label": "Name",
-                                    "maxLength": 128,
-                                    "name": "name",
-                                    "validate": Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ],
-                                  },
-                                  Object {
-                                    "component": "text-field",
-                                    "id": "description",
-                                    "isDisabled": false,
-                                    "label": "Description",
-                                    "maxLength": 128,
-                                    "name": "description",
-                                    "validate": Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ],
-                                  },
-                                  Object {
-                                    "component": "checkbox",
-                                    "id": "enabled",
-                                    "label": "Enabled",
-                                    "name": "enabled",
-                                  },
-                                ],
-                                "id": "datastore-form-wrapper",
-                                "name": "datastore-form-wrapper",
-                                "title": "Info",
-                              }
-                            }
-                          >
-                            <FormFieldHideWrapper>
-                              <SubForm
-                                component="sub-form"
-                                fields={
-                                  Array [
-                                    Object {
-                                      "component": "text-field",
-                                      "id": "name",
-                                      "isDisabled": false,
-                                      "isRequired": true,
-                                      "label": "Name",
-                                      "maxLength": 128,
-                                      "name": "name",
-                                      "validate": Array [
-                                        Object {
-                                          "type": "required",
-                                        },
-                                      ],
-                                    },
-                                    Object {
-                                      "component": "text-field",
-                                      "id": "description",
-                                      "isDisabled": false,
-                                      "label": "Description",
-                                      "maxLength": 128,
-                                      "name": "description",
-                                      "validate": Array [
-                                        Object {
-                                          "type": "required",
-                                        },
-                                      ],
-                                    },
-                                    Object {
-                                      "component": "checkbox",
-                                      "id": "enabled",
-                                      "label": "Enabled",
-                                      "name": "enabled",
-                                    },
-                                  ]
-                                }
-                                id="datastore-form-wrapper"
-                                name="datastore-form-wrapper"
-                                title="Info"
-                              >
-                                <div
-                                  className=""
-                                  id="datastore-form-wrapper"
-                                  name="datastore-form-wrapper"
-                                >
-                                  <div>
-                                    <h3>
-                                      Info
-                                    </h3>
-                                  </div>
-                                  <SingleField
-                                    component="text-field"
-                                    id="name"
-                                    isDisabled={false}
-                                    isRequired={true}
-                                    key="name"
-                                    label="Name"
-                                    maxLength={128}
-                                    name="name"
-                                    validate={
-                                      Array [
-                                        Object {
-                                          "type": "required",
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    <FormConditionWrapper
-                                      conditionMapper={Object {}}
-                                      field={
-                                        Object {
-                                          "component": "text-field",
-                                          "id": "name",
-                                          "isDisabled": false,
-                                          "isRequired": true,
-                                          "label": "Name",
-                                          "maxLength": 128,
-                                          "name": "name",
-                                          "validate": Array [
-                                            Object {
-                                              "type": "required",
-                                            },
-                                          ],
-                                        }
-                                      }
-                                    >
-                                      <FormFieldHideWrapper>
-                                        <TextField
-                                          component="text-field"
-                                          id="name"
-                                          isDisabled={false}
-                                          isRequired={true}
-                                          label="Name"
-                                          maxLength={128}
-                                          name="name"
-                                          validate={
-                                            Array [
-                                              Object {
-                                                "type": "required",
-                                              },
-                                            ]
-                                          }
-                                        >
-                                          <TextInput
-                                            disabled={false}
-                                            id="name"
-                                            invalid={false}
-                                            invalidText=""
-                                            key="name"
-                                            labelText={
-                                              <IsRequired>
-                                                Name
-                                              </IsRequired>
-                                            }
-                                            maxLength={128}
-                                            name="name"
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            value=""
-                                            warn={false}
-                                            warnText=""
-                                          >
-                                            <div
-                                              className="cds--form-item cds--text-input-wrapper"
-                                            >
-                                              <div
-                                                className="cds--text-input__label-wrapper"
-                                              >
-                                                <ForwardRef
-                                                  as="label"
-                                                  className="cds--label"
-                                                  htmlFor="name"
-                                                >
-                                                  <label
-                                                    className="cds--label"
-                                                    dir="auto"
-                                                    htmlFor="name"
-                                                  >
-                                                    <IsRequired>
-                                                      <span
-                                                        aria-hidden="true"
-                                                        className="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
-                                                      >
-                                                        *
-                                                      </span>
-                                                      Name
-                                                    </IsRequired>
-                                                  </label>
-                                                </ForwardRef>
-                                              </div>
-                                              <div
-                                                className="cds--text-input__field-outer-wrapper"
-                                              >
-                                                <div
-                                                  className="cds--text-input__field-wrapper"
-                                                  data-invalid={null}
-                                                >
-                                                  <input
-                                                    className="cds--text-input"
-                                                    disabled={false}
-                                                    id="name"
-                                                    maxLength={128}
-                                                    name="name"
-                                                    onBlur={[Function]}
-                                                    onChange={[Function]}
-                                                    onClick={[Function]}
-                                                    onFocus={[Function]}
-                                                    type="text"
-                                                    value=""
-                                                  />
-                                                  <span
-                                                    aria-atomic="true"
-                                                    aria-live="assertive"
-                                                    className="cds--text-input__counter-alert"
-                                                    role="alert"
-                                                  />
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </TextInput>
-                                        </TextField>
-                                      </FormFieldHideWrapper>
-                                    </FormConditionWrapper>
-                                  </SingleField>
-                                  <SingleField
-                                    component="text-field"
-                                    id="description"
-                                    isDisabled={false}
-                                    key="description"
-                                    label="Description"
-                                    maxLength={128}
-                                    name="description"
-                                    validate={
-                                      Array [
-                                        Object {
-                                          "type": "required",
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    <FormConditionWrapper
-                                      conditionMapper={Object {}}
-                                      field={
-                                        Object {
-                                          "component": "text-field",
-                                          "id": "description",
-                                          "isDisabled": false,
-                                          "label": "Description",
-                                          "maxLength": 128,
-                                          "name": "description",
-                                          "validate": Array [
-                                            Object {
-                                              "type": "required",
-                                            },
-                                          ],
-                                        }
-                                      }
-                                    >
-                                      <FormFieldHideWrapper>
-                                        <TextField
-                                          component="text-field"
-                                          id="description"
-                                          isDisabled={false}
-                                          label="Description"
-                                          maxLength={128}
-                                          name="description"
-                                          validate={
-                                            Array [
-                                              Object {
-                                                "type": "required",
-                                              },
-                                            ]
-                                          }
-                                        >
-                                          <TextInput
-                                            disabled={false}
-                                            id="description"
-                                            invalid={false}
-                                            invalidText=""
-                                            key="description"
-                                            labelText="Description"
-                                            maxLength={128}
-                                            name="description"
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            value=""
-                                            warn={false}
-                                            warnText=""
-                                          >
-                                            <div
-                                              className="cds--form-item cds--text-input-wrapper"
-                                            >
-                                              <div
-                                                className="cds--text-input__label-wrapper"
-                                              >
-                                                <ForwardRef
-                                                  as="label"
-                                                  className="cds--label"
-                                                  htmlFor="description"
-                                                >
-                                                  <label
-                                                    className="cds--label"
-                                                    dir="auto"
-                                                    htmlFor="description"
-                                                  >
-                                                    Description
-                                                  </label>
-                                                </ForwardRef>
-                                              </div>
-                                              <div
-                                                className="cds--text-input__field-outer-wrapper"
-                                              >
-                                                <div
-                                                  className="cds--text-input__field-wrapper"
-                                                  data-invalid={null}
-                                                >
-                                                  <input
-                                                    className="cds--text-input"
-                                                    disabled={false}
-                                                    id="description"
-                                                    maxLength={128}
-                                                    name="description"
-                                                    onBlur={[Function]}
-                                                    onChange={[Function]}
-                                                    onClick={[Function]}
-                                                    onFocus={[Function]}
-                                                    type="text"
-                                                    value=""
-                                                  />
-                                                  <span
-                                                    aria-atomic="true"
-                                                    aria-live="assertive"
-                                                    className="cds--text-input__counter-alert"
-                                                    role="alert"
-                                                  />
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </TextInput>
-                                        </TextField>
-                                      </FormFieldHideWrapper>
-                                    </FormConditionWrapper>
-                                  </SingleField>
-                                  <SingleField
-                                    component="checkbox"
-                                    id="enabled"
-                                    key="enabled"
-                                    label="Enabled"
-                                    name="enabled"
-                                  >
-                                    <FormConditionWrapper
-                                      conditionMapper={Object {}}
-                                      field={
-                                        Object {
-                                          "component": "checkbox",
-                                          "id": "enabled",
-                                          "label": "Enabled",
-                                          "name": "enabled",
-                                        }
-                                      }
-                                    >
-                                      <FormFieldHideWrapper>
-                                        <Checkbox
-                                          component="checkbox"
-                                          id="enabled"
-                                          label="Enabled"
-                                          name="enabled"
-                                        >
-                                          <SingleCheckbox
-                                            component="checkbox"
-                                            id="enabled"
-                                            label="Enabled"
-                                            name="enabled"
-                                          >
-                                            <div>
-                                              <Checkbox
-                                                checked={true}
-                                                id="enabled"
-                                                labelText="Enabled"
-                                                name="enabled"
-                                                onBlur={[Function]}
-                                                onChange={[Function]}
-                                                onFocus={[Function]}
-                                                type="checkbox"
-                                              >
-                                                <div
-                                                  className="cds--form-item cds--checkbox-wrapper"
-                                                >
-                                                  <input
-                                                    checked={true}
-                                                    className="cds--checkbox"
-                                                    id="enabled"
-                                                    name="enabled"
-                                                    onBlur={[Function]}
-                                                    onChange={[Function]}
-                                                    onClick={[Function]}
-                                                    onFocus={[Function]}
-                                                    type="checkbox"
-                                                  />
-                                                  <label
-                                                    className="cds--checkbox-label"
-                                                    htmlFor="enabled"
-                                                    title=""
-                                                  >
-                                                    <ForwardRef
-                                                      as="div"
-                                                      className="cds--checkbox-label-text"
-                                                    >
-                                                      <div
-                                                        className="cds--checkbox-label-text"
-                                                        dir="auto"
-                                                      >
-                                                        Enabled
-                                                      </div>
-                                                    </ForwardRef>
-                                                  </label>
-                                                  <div
-                                                    className="cds--checkbox__validation-msg"
-                                                  />
-                                                </div>
-                                              </Checkbox>
-                                              <HelperTextBlock />
-                                            </div>
-                                          </SingleCheckbox>
-                                        </Checkbox>
-                                      </FormFieldHideWrapper>
-                                    </FormConditionWrapper>
-                                  </SingleField>
-                                </div>
-                              </SubForm>
-                            </FormFieldHideWrapper>
-                          </FormConditionWrapper>
-                        </SingleField>
-                        <SingleField
-                          component="spy-field"
-                          key="spy-field"
-                          name="spy-field"
-                        >
-                          <FormConditionWrapper
-                            conditionMapper={Object {}}
-                            field={
-                              Object {
-                                "component": "spy-field",
-                                "initialize": undefined,
-                                "name": "spy-field",
-                              }
-                            }
-                          >
-                            <FormFieldHideWrapper>
-                              <SpyField
-                                component="spy-field"
-                                name="spy-field"
-                              >
-                                <FormSpy
-                                  onChange={[Function]}
-                                  subscription={
-                                    Object {
-                                      "pristine": true,
-                                      "valid": true,
-                                    }
-                                  }
-                                />
-                              </SpyField>
-                            </FormFieldHideWrapper>
-                          </FormConditionWrapper>
-                        </SingleField>
-                        <FormSpy>
-                          <FormControls
-                            Button={[Function]}
-                            ButtonGroup={[Function]}
-                            buttonOrder={
-                              Array [
-                                "submit",
-                                "reset",
-                                "cancel",
-                              ]
-                            }
-                            canReset={true}
-                            cancelLabel="Cancel"
-                            disableSubmit={true}
-                            formSpyProps={
-                              Object {
-                                "active": undefined,
-                                "dirty": false,
-                                "dirtyFields": Object {},
-                                "dirtyFieldsSinceLastSubmit": Object {
-                                  "enabled": true,
-                                },
-                                "dirtySinceLastSubmit": false,
-                                "error": undefined,
-                                "errors": Object {
-                                  "description": "Required",
-                                  "name": "Required",
-                                },
-                                "form": Object {
-                                  "batch": [Function],
-                                  "blur": [Function],
-                                  "change": [Function],
-                                  "destroyOnUnregister": false,
-                                  "focus": [Function],
-                                  "getFieldState": [Function],
-                                  "getRegisteredFields": [Function],
-                                  "getState": [Function],
-                                  "initialize": [Function],
-                                  "isValidationPaused": [Function],
-                                  "mutators": Object {
-                                    "concat": [Function],
-                                    "insert": [Function],
-                                    "move": [Function],
-                                    "pop": [Function],
-                                    "push": [Function],
-                                    "remove": [Function],
-                                    "removeBatch": [Function],
-                                    "shift": [Function],
-                                    "swap": [Function],
-                                    "unshift": [Function],
-                                    "update": [Function],
-                                  },
-                                  "pauseValidation": [Function],
-                                  "registerField": [Function],
-                                  "reset": [Function],
-                                  "resetFieldState": [Function],
-                                  "restart": [Function],
-                                  "resumeValidation": [Function],
-                                  "setConfig": [Function],
-                                  "submit": [Function],
-                                  "subscribe": [Function],
-                                },
-                                "hasSubmitErrors": false,
-                                "hasValidationErrors": true,
-                                "initialValues": Object {
-                                  "enabled": true,
-                                  "namespacePath": "",
-                                },
-                                "invalid": true,
-                                "modified": Object {
-                                  "description": false,
-                                  "enabled": false,
-                                  "name": false,
-                                },
-                                "modifiedSinceLastSubmit": false,
-                                "pristine": true,
-                                "submitError": undefined,
-                                "submitErrors": undefined,
-                                "submitFailed": false,
-                                "submitSucceeded": false,
-                                "submitting": false,
-                                "touched": Object {
-                                  "description": false,
-                                  "enabled": false,
-                                  "name": false,
-                                },
-                                "valid": false,
-                                "validating": false,
-                                "values": Object {
-                                  "enabled": true,
-                                  "namespacePath": "",
-                                },
-                                "visited": Object {
-                                  "description": false,
-                                  "enabled": false,
-                                  "name": false,
-                                },
-                              }
-                            }
-                            onCancel={[Function]}
-                            onReset={[Function]}
-                            resetLabel="Reset"
-                            submitLabel="Save"
-                          >
-                            <ButtonGroup>
-                              <ButtonSet
-                                className=""
-                              >
-                                <div
-                                  className="cds--btn-set"
-                                >
-                                  <Button
-                                    buttonType="submit"
-                                    disabled={true}
-                                    key="form-submit"
-                                    label="Save"
-                                    type="submit"
-                                    variant="primary"
-                                  >
-                                    <Button
-                                      disabled={true}
-                                      kind="primary"
-                                      type="submit"
-                                      variant="primary"
-                                    >
-                                      <ForwardRef(ButtonBase)
-                                        disabled={true}
-                                        kind="primary"
-                                        type="submit"
-                                        variant="primary"
-                                      >
-                                        <button
-                                          className="cds--btn cds--btn--primary cds--btn--disabled"
-                                          disabled={true}
-                                          type="submit"
-                                          variant="primary"
-                                        >
-                                          Save
-                                        </button>
-                                      </ForwardRef(ButtonBase)>
-                                    </Button>
-                                  </Button>
-                                  <Button
-                                    buttonType="reset"
-                                    disabled={true}
-                                    key="form-reset"
-                                    label="Reset"
-                                    onClick={[Function]}
-                                    type="button"
-                                  >
-                                    <Button
-                                      disabled={true}
-                                      kind="secondary"
-                                      onClick={[Function]}
-                                      type="button"
-                                    >
-                                      <ForwardRef(ButtonBase)
-                                        disabled={true}
-                                        kind="secondary"
-                                        onClick={[Function]}
-                                        type="button"
-                                      >
-                                        <button
-                                          className="cds--btn cds--btn--secondary cds--btn--disabled"
-                                          disabled={true}
-                                          onClick={[Function]}
-                                          type="button"
-                                        >
-                                          Reset
-                                        </button>
-                                      </ForwardRef(ButtonBase)>
-                                    </Button>
-                                  </Button>
-                                  <Button
-                                    buttonType="cancel"
-                                    key="form-cancel"
-                                    label="Cancel"
-                                    onClick={[Function]}
-                                    type="button"
-                                  >
-                                    <Button
-                                      kind="secondary"
-                                      onClick={[Function]}
-                                      type="button"
-                                    >
-                                      <ForwardRef(ButtonBase)
-                                        kind="secondary"
-                                        onClick={[Function]}
-                                        type="button"
-                                      >
-                                        <button
-                                          className="cds--btn cds--btn--secondary"
-                                          disabled={false}
-                                          onClick={[Function]}
-                                          type="button"
-                                        >
-                                          Cancel
-                                        </button>
-                                      </ForwardRef(ButtonBase)>
-                                    </Button>
-                                  </Button>
-                                </div>
-                              </ButtonSet>
-                            </ButtonGroup>
-                          </FormControls>
-                        </FormSpy>
-                      </form>
-                    </Form>
-                  </Form>
-                </FormTemplate>
-              </WrappedFormTemplate>
-            </Component>
-          </ReactFinalForm>
-        </FormRenderer>
-      </MiqFormRenderer>
-    </Connect(MiqFormRenderer)>
-  </DatastoreForm>
-</Provider>
+              *
+            </span>
+            Name
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+          >
+            <input
+              class="cds--text-input"
+              id="name"
+              maxlength="128"
+              name="name"
+              type="text"
+              value=""
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--form-item cds--text-input-wrapper"
+      >
+        <div
+          class="cds--text-input__label-wrapper"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="description"
+          >
+            Description
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+          >
+            <input
+              class="cds--text-input"
+              id="description"
+              maxlength="128"
+              name="description"
+              type="text"
+              value=""
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cds--form-item cds--checkbox-wrapper"
+        >
+          <input
+            checked=""
+            class="cds--checkbox"
+            id="enabled"
+            name="enabled"
+            type="checkbox"
+            value=""
+          />
+          <label
+            class="cds--checkbox-label"
+            for="enabled"
+            title=""
+          >
+            <div
+              class="cds--checkbox-label-text"
+              dir="auto"
+            >
+              Enabled
+              
+            </div>
+          </label>
+          <div
+            class="cds--checkbox__validation-msg"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--btn-set"
+    >
+      <button
+        class="cds--btn cds--btn--primary cds--btn--disabled"
+        disabled=""
+        type="submit"
+        variant="primary"
+      >
+        Save
+      </button>
+      <button
+        class="cds--btn cds--btn--secondary cds--btn--disabled"
+        disabled=""
+        type="button"
+      >
+        Reset
+      </button>
+      <button
+        class="cds--btn cds--btn--secondary"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
 `;
 
 exports[`Datastore form component Datastore namespace form component should render the Namespace adding form 1`] = `
-<Connect(MiqFormRenderer)
-  buttonsLabels={
-    Object {
-      "submitLabel": "Add",
-    }
-  }
-  canReset={false}
-  initialValues={
-    Object {
-      "enabled": true,
-      "namespacePath": "/test/infrastructure",
-    }
-  }
-  onCancel={[Function]}
-  onSubmit={[Function]}
-  schema={
-    Object {
-      "fields": Array [
-        Object {
-          "component": "sub-form",
-          "fields": Array [
-            Object {
-              "component": "text-field",
-              "id": "namespacePath",
-              "isDisabled": true,
-              "label": "Fully Qualified Name",
-              "name": "namespacePath",
-            },
-            Object {
-              "component": "text-field",
-              "id": "name",
-              "isDisabled": false,
-              "isRequired": true,
-              "label": "Name",
-              "maxLength": 128,
-              "name": "name",
-              "validate": Array [
-                Object {
-                  "type": "required",
-                },
-              ],
-            },
-            Object {
-              "component": "text-field",
-              "id": "description",
-              "isDisabled": false,
-              "label": "Description",
-              "maxLength": 128,
-              "name": "description",
-              "validate": Array [
-                Object {
-                  "type": "required",
-                },
-              ],
-            },
-          ],
-          "id": "datastore-form-wrapper",
-          "name": "datastore-form-wrapper",
-          "title": "Info",
-        },
-      ],
-    }
-  }
-/>
+<div>
+  <form
+    class="cds--form form-0-2-3 form-react"
+    novalidate=""
+  >
+    <div
+      class=""
+      id="datastore-form-wrapper"
+      name="datastore-form-wrapper"
+    >
+      <div>
+        <h3>
+          Info
+        </h3>
+      </div>
+      <div
+        class="cds--form-item cds--text-input-wrapper"
+      >
+        <div
+          class="cds--text-input__label-wrapper"
+        >
+          <label
+            class="cds--label cds--label--disabled"
+            dir="auto"
+            for="namespacePath"
+          >
+            Fully Qualified Name
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+          >
+            <input
+              class="cds--text-input"
+              disabled=""
+              id="namespacePath"
+              name="namespacePath"
+              type="text"
+              value="/test/infrastructure"
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--form-item cds--text-input-wrapper"
+      >
+        <div
+          class="cds--text-input__label-wrapper"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="name"
+          >
+            <span
+              aria-hidden="true"
+              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+            >
+              *
+            </span>
+            Name
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+          >
+            <input
+              class="cds--text-input"
+              id="name"
+              maxlength="128"
+              name="name"
+              type="text"
+              value=""
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--form-item cds--text-input-wrapper"
+      >
+        <div
+          class="cds--text-input__label-wrapper"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="description"
+          >
+            Description
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+          >
+            <input
+              class="cds--text-input"
+              id="description"
+              maxlength="128"
+              name="description"
+              type="text"
+              value=""
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--btn-set"
+    >
+      <button
+        class="cds--btn cds--btn--primary cds--btn--disabled"
+        disabled=""
+        type="submit"
+        variant="primary"
+      >
+        Add
+      </button>
+      <button
+        class="cds--btn cds--btn--secondary"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
 `;
 
 exports[`Datastore form component Datastore namespace form component should render the Namespace editing form 1`] = `
-<Provider
-  store={
-    Object {
-      "asyncReducers": Object {
-        "FormButtons": [Function],
-        "miqCustomTabReducer": [Function],
-        "notificationReducer": [Function],
-      },
-      "dispatch": [Function],
-      "getState": [Function],
-      "injectReducers": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-      Symbol(observable): [Function],
-    }
-  }
->
-  <DatastoreForm
-    descReadOnly={false}
-    domain={false}
-    nameReadOnly={false}
-    namespaceId={5631}
-    namespacePath="/test/infrastructure"
+<div>
+  <form
+    class="cds--form form-0-2-3 form-react"
+    novalidate=""
   >
-    <Connect(MiqFormRenderer)
-      buttonsLabels={
-        Object {
-          "submitLabel": "Save",
-        }
-      }
-      canReset={true}
-      initialValues={
-        Object {
-          "description": "description",
-          "enabled": true,
-          "name": "name",
-          "namespacePath": "/test/infrastructure",
-        }
-      }
-      onCancel={[Function]}
-      onSubmit={[Function]}
-      schema={
-        Object {
-          "fields": Array [
-            Object {
-              "component": "sub-form",
-              "fields": Array [
-                Object {
-                  "component": "text-field",
-                  "id": "namespacePath",
-                  "isDisabled": true,
-                  "label": "Fully Qualified Name",
-                  "name": "namespacePath",
-                },
-                Object {
-                  "component": "text-field",
-                  "id": "name",
-                  "isDisabled": false,
-                  "isRequired": true,
-                  "label": "Name",
-                  "maxLength": 128,
-                  "name": "name",
-                  "validate": Array [
-                    Object {
-                      "type": "required",
-                    },
-                  ],
-                },
-                Object {
-                  "component": "text-field",
-                  "id": "description",
-                  "isDisabled": false,
-                  "label": "Description",
-                  "maxLength": 128,
-                  "name": "description",
-                  "validate": Array [
-                    Object {
-                      "type": "required",
-                    },
-                  ],
-                },
-              ],
-              "id": "datastore-form-wrapper",
-              "name": "datastore-form-wrapper",
-              "title": "Info",
-            },
-          ],
-        }
-      }
+    <div
+      class=""
+      id="datastore-form-wrapper"
+      name="datastore-form-wrapper"
     >
-      <MiqFormRenderer
-        buttonsLabels={
-          Object {
-            "submitLabel": "Save",
-          }
-        }
-        canReset={true}
-        className="form-react"
-        componentMapper={
-          Object {
-            "checkbox": [Function],
-            "code-editor": [Function],
-            "date-picker": [Function],
-            "dual-list-select": [Function],
-            "edit-password-field": [Function],
-            "embedded-automate-entry-point": [Function],
-            "embedded-workflow-entry-point": [Function],
-            "field-array": [Function],
-            "file-upload": [Function],
-            "font-icon-picker": [Function],
-            "font-icon-picker-ddf": [Function],
-            "key-value-list": [Function],
-            "password-field": [Function],
-            "plain-text": [Function],
-            "radio": [Function],
-            "select": [Function],
-            "selected-groups-list": [Function],
-            "slider": [Function],
-            "sub-form": [Function],
-            "switch": [Function],
-            "tabs": [Function],
-            "text-field": [Function],
-            "textarea": [Function],
-            "time-picker": [Function],
-            "tree-selector": [Function],
-            "validate-credentials": [Function],
-            "wizard": [Function],
-          }
-        }
-        disableSubmit={
-          Array [
-            "pristine",
-            "invalid",
-          ]
-        }
-        dispatch={[Function]}
-        initialValues={
-          Object {
-            "description": "description",
-            "enabled": true,
-            "name": "name",
-            "namespacePath": "/test/infrastructure",
-          }
-        }
-        onCancel={[Function]}
-        onSubmit={[Function]}
-        schema={
-          Object {
-            "fields": Array [
-              Object {
-                "component": "sub-form",
-                "fields": Array [
-                  Object {
-                    "component": "text-field",
-                    "id": "namespacePath",
-                    "isDisabled": true,
-                    "label": "Fully Qualified Name",
-                    "name": "namespacePath",
-                  },
-                  Object {
-                    "component": "text-field",
-                    "id": "name",
-                    "isDisabled": false,
-                    "isRequired": true,
-                    "label": "Name",
-                    "maxLength": 128,
-                    "name": "name",
-                    "validate": Array [
-                      Object {
-                        "type": "required",
-                      },
-                    ],
-                  },
-                  Object {
-                    "component": "text-field",
-                    "id": "description",
-                    "isDisabled": false,
-                    "label": "Description",
-                    "maxLength": 128,
-                    "name": "description",
-                    "validate": Array [
-                      Object {
-                        "type": "required",
-                      },
-                    ],
-                  },
-                ],
-                "id": "datastore-form-wrapper",
-                "name": "datastore-form-wrapper",
-                "title": "Info",
-              },
-            ],
-          }
-        }
-        showFormControls={true}
+      <div>
+        <h3>
+          Info
+        </h3>
+      </div>
+      <div
+        class="cds--form-item cds--text-input-wrapper"
       >
-        <FormRenderer
-          FormTemplate={[Function]}
-          componentMapper={
-            Object {
-              "checkbox": [Function],
-              "code-editor": [Function],
-              "date-picker": [Function],
-              "dual-list-select": [Function],
-              "edit-password-field": [Function],
-              "embedded-automate-entry-point": [Function],
-              "embedded-workflow-entry-point": [Function],
-              "field-array": [Function],
-              "file-upload": [Function],
-              "font-icon-picker": [Function],
-              "font-icon-picker-ddf": [Function],
-              "key-value-list": [Function],
-              "password-field": [Function],
-              "plain-text": [Function],
-              "radio": [Function],
-              "select": [Function],
-              "selected-groups-list": [Function],
-              "slider": [Function],
-              "spy-field": [Function],
-              "sub-form": [Function],
-              "switch": [Function],
-              "tabs": [Function],
-              "text-field": [Function],
-              "textarea": [Function],
-              "time-picker": [Function],
-              "tree-selector": [Function],
-              "validate-credentials": [Function],
-              "wizard": [Function],
-            }
-          }
-          dispatch={[Function]}
-          initialValues={
-            Object {
-              "description": "description",
-              "enabled": true,
-              "name": "name",
-              "namespacePath": "/test/infrastructure",
-            }
-          }
-          onCancel={[Function]}
-          onReset={[Function]}
-          onSubmit={[Function]}
-          schema={
-            Object {
-              "fields": Array [
-                Object {
-                  "component": "sub-form",
-                  "fields": Array [
-                    Object {
-                      "component": "text-field",
-                      "id": "namespacePath",
-                      "isDisabled": true,
-                      "label": "Fully Qualified Name",
-                      "name": "namespacePath",
-                    },
-                    Object {
-                      "component": "text-field",
-                      "id": "name",
-                      "isDisabled": false,
-                      "isRequired": true,
-                      "label": "Name",
-                      "maxLength": 128,
-                      "name": "name",
-                      "validate": Array [
-                        Object {
-                          "type": "required",
-                        },
-                      ],
-                    },
-                    Object {
-                      "component": "text-field",
-                      "id": "description",
-                      "isDisabled": false,
-                      "label": "Description",
-                      "maxLength": 128,
-                      "name": "description",
-                      "validate": Array [
-                        Object {
-                          "type": "required",
-                        },
-                      ],
-                    },
-                  ],
-                  "id": "datastore-form-wrapper",
-                  "name": "datastore-form-wrapper",
-                  "title": "Info",
-                },
-                Object {
-                  "component": "spy-field",
-                  "initialize": undefined,
-                  "name": "spy-field",
-                },
-              ],
-            }
-          }
+        <div
+          class="cds--text-input__label-wrapper"
         >
-          <ReactFinalForm
-            decorators={
-              Array [
-                [Function],
-              ]
-            }
-            dispatch={[Function]}
-            initialValues={
-              Object {
-                "description": "description",
-                "enabled": true,
-                "name": "name",
-                "namespacePath": "/test/infrastructure",
-              }
-            }
-            mutators={
-              Object {
-                "concat": [Function],
-                "insert": [Function],
-                "move": [Function],
-                "pop": [Function],
-                "push": [Function],
-                "remove": [Function],
-                "removeBatch": [Function],
-                "shift": [Function],
-                "swap": [Function],
-                "unshift": [Function],
-                "update": [Function],
-              }
-            }
-            onSubmit={[Function]}
-            render={[Function]}
-            subscription={
-              Object {
-                "pristine": true,
-                "submitting": true,
-                "valid": true,
-              }
-            }
+          <label
+            class="cds--label cds--label--disabled"
+            dir="auto"
+            for="namespacePath"
           >
-            <Component
-              formFields={
-                Array [
-                  <SingleField
-                    component="sub-form"
-                    fields={
-                      Array [
-                        Object {
-                          "component": "text-field",
-                          "id": "namespacePath",
-                          "isDisabled": true,
-                          "label": "Fully Qualified Name",
-                          "name": "namespacePath",
-                        },
-                        Object {
-                          "component": "text-field",
-                          "id": "name",
-                          "isDisabled": false,
-                          "isRequired": true,
-                          "label": "Name",
-                          "maxLength": 128,
-                          "name": "name",
-                          "validate": Array [
-                            Object {
-                              "type": "required",
-                            },
-                          ],
-                        },
-                        Object {
-                          "component": "text-field",
-                          "id": "description",
-                          "isDisabled": false,
-                          "label": "Description",
-                          "maxLength": 128,
-                          "name": "description",
-                          "validate": Array [
-                            Object {
-                              "type": "required",
-                            },
-                          ],
-                        },
-                      ]
-                    }
-                    id="datastore-form-wrapper"
-                    name="datastore-form-wrapper"
-                    title="Info"
-                  />,
-                  <SingleField
-                    component="spy-field"
-                    name="spy-field"
-                  />,
-                ]
-              }
-              schema={
-                Object {
-                  "fields": Array [
-                    Object {
-                      "component": "sub-form",
-                      "fields": Array [
-                        Object {
-                          "component": "text-field",
-                          "id": "namespacePath",
-                          "isDisabled": true,
-                          "label": "Fully Qualified Name",
-                          "name": "namespacePath",
-                        },
-                        Object {
-                          "component": "text-field",
-                          "id": "name",
-                          "isDisabled": false,
-                          "isRequired": true,
-                          "label": "Name",
-                          "maxLength": 128,
-                          "name": "name",
-                          "validate": Array [
-                            Object {
-                              "type": "required",
-                            },
-                          ],
-                        },
-                        Object {
-                          "component": "text-field",
-                          "id": "description",
-                          "isDisabled": false,
-                          "label": "Description",
-                          "maxLength": 128,
-                          "name": "description",
-                          "validate": Array [
-                            Object {
-                              "type": "required",
-                            },
-                          ],
-                        },
-                      ],
-                      "id": "datastore-form-wrapper",
-                      "name": "datastore-form-wrapper",
-                      "title": "Info",
-                    },
-                    Object {
-                      "component": "spy-field",
-                      "initialize": undefined,
-                      "name": "spy-field",
-                    },
-                  ],
-                }
-              }
+            Fully Qualified Name
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+          >
+            <input
+              class="cds--text-input"
+              disabled=""
+              id="namespacePath"
+              name="namespacePath"
+              type="text"
+              value="/test/infrastructure"
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--form-item cds--text-input-wrapper"
+      >
+        <div
+          class="cds--text-input__label-wrapper"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="name"
+          >
+            <span
+              aria-hidden="true"
+              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
             >
-              <WrappedFormTemplate
-                canReset={true}
-                cancelLabel="Cancel"
-                disableSubmit={
-                  Array [
-                    "pristine",
-                    "invalid",
-                  ]
-                }
-                formFields={
-                  Array [
-                    <SingleField
-                      component="sub-form"
-                      fields={
-                        Array [
-                          Object {
-                            "component": "text-field",
-                            "id": "namespacePath",
-                            "isDisabled": true,
-                            "label": "Fully Qualified Name",
-                            "name": "namespacePath",
-                          },
-                          Object {
-                            "component": "text-field",
-                            "id": "name",
-                            "isDisabled": false,
-                            "isRequired": true,
-                            "label": "Name",
-                            "maxLength": 128,
-                            "name": "name",
-                            "validate": Array [
-                              Object {
-                                "type": "required",
-                              },
-                            ],
-                          },
-                          Object {
-                            "component": "text-field",
-                            "id": "description",
-                            "isDisabled": false,
-                            "label": "Description",
-                            "maxLength": 128,
-                            "name": "description",
-                            "validate": Array [
-                              Object {
-                                "type": "required",
-                              },
-                            ],
-                          },
-                        ]
-                      }
-                      id="datastore-form-wrapper"
-                      name="datastore-form-wrapper"
-                      title="Info"
-                    />,
-                    <SingleField
-                      component="spy-field"
-                      name="spy-field"
-                    />,
-                  ]
-                }
-                formWrapperProps={
-                  Object {
-                    "className": "form-react",
-                  }
-                }
-                resetLabel="Reset"
-                schema={
-                  Object {
-                    "fields": Array [
-                      Object {
-                        "component": "sub-form",
-                        "fields": Array [
-                          Object {
-                            "component": "text-field",
-                            "id": "namespacePath",
-                            "isDisabled": true,
-                            "label": "Fully Qualified Name",
-                            "name": "namespacePath",
-                          },
-                          Object {
-                            "component": "text-field",
-                            "id": "name",
-                            "isDisabled": false,
-                            "isRequired": true,
-                            "label": "Name",
-                            "maxLength": 128,
-                            "name": "name",
-                            "validate": Array [
-                              Object {
-                                "type": "required",
-                              },
-                            ],
-                          },
-                          Object {
-                            "component": "text-field",
-                            "id": "description",
-                            "isDisabled": false,
-                            "label": "Description",
-                            "maxLength": 128,
-                            "name": "description",
-                            "validate": Array [
-                              Object {
-                                "type": "required",
-                              },
-                            ],
-                          },
-                        ],
-                        "id": "datastore-form-wrapper",
-                        "name": "datastore-form-wrapper",
-                        "title": "Info",
-                      },
-                      Object {
-                        "component": "spy-field",
-                        "initialize": undefined,
-                        "name": "spy-field",
-                      },
-                    ],
-                  }
-                }
-                showFormControls={true}
-                submitLabel="Save"
-              >
-                <FormTemplate
-                  Button={[Function]}
-                  ButtonGroup={[Function]}
-                  Description={[Function]}
-                  FormWrapper={[Function]}
-                  Header={[Function]}
-                  Title={[Function]}
-                  buttonOrder={
-                    Array [
-                      "submit",
-                      "reset",
-                      "cancel",
-                    ]
-                  }
-                  canReset={true}
-                  cancelLabel="Cancel"
-                  disableSubmit={
-                    Array [
-                      "pristine",
-                      "invalid",
-                    ]
-                  }
-                  formFields={
-                    Array [
-                      <SingleField
-                        component="sub-form"
-                        fields={
-                          Array [
-                            Object {
-                              "component": "text-field",
-                              "id": "namespacePath",
-                              "isDisabled": true,
-                              "label": "Fully Qualified Name",
-                              "name": "namespacePath",
-                            },
-                            Object {
-                              "component": "text-field",
-                              "id": "name",
-                              "isDisabled": false,
-                              "isRequired": true,
-                              "label": "Name",
-                              "maxLength": 128,
-                              "name": "name",
-                              "validate": Array [
-                                Object {
-                                  "type": "required",
-                                },
-                              ],
-                            },
-                            Object {
-                              "component": "text-field",
-                              "id": "description",
-                              "isDisabled": false,
-                              "label": "Description",
-                              "maxLength": 128,
-                              "name": "description",
-                              "validate": Array [
-                                Object {
-                                  "type": "required",
-                                },
-                              ],
-                            },
-                          ]
-                        }
-                        id="datastore-form-wrapper"
-                        name="datastore-form-wrapper"
-                        title="Info"
-                      />,
-                      <SingleField
-                        component="spy-field"
-                        name="spy-field"
-                      />,
-                    ]
-                  }
-                  formWrapperProps={
-                    Object {
-                      "className": "form-react",
-                    }
-                  }
-                  resetLabel="Reset"
-                  schema={
-                    Object {
-                      "fields": Array [
-                        Object {
-                          "component": "sub-form",
-                          "fields": Array [
-                            Object {
-                              "component": "text-field",
-                              "id": "namespacePath",
-                              "isDisabled": true,
-                              "label": "Fully Qualified Name",
-                              "name": "namespacePath",
-                            },
-                            Object {
-                              "component": "text-field",
-                              "id": "name",
-                              "isDisabled": false,
-                              "isRequired": true,
-                              "label": "Name",
-                              "maxLength": 128,
-                              "name": "name",
-                              "validate": Array [
-                                Object {
-                                  "type": "required",
-                                },
-                              ],
-                            },
-                            Object {
-                              "component": "text-field",
-                              "id": "description",
-                              "isDisabled": false,
-                              "label": "Description",
-                              "maxLength": 128,
-                              "name": "description",
-                              "validate": Array [
-                                Object {
-                                  "type": "required",
-                                },
-                              ],
-                            },
-                          ],
-                          "id": "datastore-form-wrapper",
-                          "name": "datastore-form-wrapper",
-                          "title": "Info",
-                        },
-                        Object {
-                          "component": "spy-field",
-                          "initialize": undefined,
-                          "name": "spy-field",
-                        },
-                      ],
-                    }
-                  }
-                  showFormControls={true}
-                  submitLabel="Save"
-                >
-                  <Form
-                    className="form-react"
-                    onSubmit={[Function]}
-                  >
-                    <Form
-                      className="form-0-2-3 form-react"
-                      noValidate={true}
-                      onSubmit={[Function]}
-                    >
-                      <form
-                        className="cds--form form-0-2-3 form-react"
-                        noValidate={true}
-                        onSubmit={[Function]}
-                      >
-                        <SingleField
-                          component="sub-form"
-                          fields={
-                            Array [
-                              Object {
-                                "component": "text-field",
-                                "id": "namespacePath",
-                                "isDisabled": true,
-                                "label": "Fully Qualified Name",
-                                "name": "namespacePath",
-                              },
-                              Object {
-                                "component": "text-field",
-                                "id": "name",
-                                "isDisabled": false,
-                                "isRequired": true,
-                                "label": "Name",
-                                "maxLength": 128,
-                                "name": "name",
-                                "validate": Array [
-                                  Object {
-                                    "type": "required",
-                                  },
-                                ],
-                              },
-                              Object {
-                                "component": "text-field",
-                                "id": "description",
-                                "isDisabled": false,
-                                "label": "Description",
-                                "maxLength": 128,
-                                "name": "description",
-                                "validate": Array [
-                                  Object {
-                                    "type": "required",
-                                  },
-                                ],
-                              },
-                            ]
-                          }
-                          id="datastore-form-wrapper"
-                          key="datastore-form-wrapper"
-                          name="datastore-form-wrapper"
-                          title="Info"
-                        >
-                          <FormConditionWrapper
-                            conditionMapper={Object {}}
-                            field={
-                              Object {
-                                "component": "sub-form",
-                                "fields": Array [
-                                  Object {
-                                    "component": "text-field",
-                                    "id": "namespacePath",
-                                    "isDisabled": true,
-                                    "label": "Fully Qualified Name",
-                                    "name": "namespacePath",
-                                  },
-                                  Object {
-                                    "component": "text-field",
-                                    "id": "name",
-                                    "isDisabled": false,
-                                    "isRequired": true,
-                                    "label": "Name",
-                                    "maxLength": 128,
-                                    "name": "name",
-                                    "validate": Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ],
-                                  },
-                                  Object {
-                                    "component": "text-field",
-                                    "id": "description",
-                                    "isDisabled": false,
-                                    "label": "Description",
-                                    "maxLength": 128,
-                                    "name": "description",
-                                    "validate": Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ],
-                                  },
-                                ],
-                                "id": "datastore-form-wrapper",
-                                "name": "datastore-form-wrapper",
-                                "title": "Info",
-                              }
-                            }
-                          >
-                            <FormFieldHideWrapper>
-                              <SubForm
-                                component="sub-form"
-                                fields={
-                                  Array [
-                                    Object {
-                                      "component": "text-field",
-                                      "id": "namespacePath",
-                                      "isDisabled": true,
-                                      "label": "Fully Qualified Name",
-                                      "name": "namespacePath",
-                                    },
-                                    Object {
-                                      "component": "text-field",
-                                      "id": "name",
-                                      "isDisabled": false,
-                                      "isRequired": true,
-                                      "label": "Name",
-                                      "maxLength": 128,
-                                      "name": "name",
-                                      "validate": Array [
-                                        Object {
-                                          "type": "required",
-                                        },
-                                      ],
-                                    },
-                                    Object {
-                                      "component": "text-field",
-                                      "id": "description",
-                                      "isDisabled": false,
-                                      "label": "Description",
-                                      "maxLength": 128,
-                                      "name": "description",
-                                      "validate": Array [
-                                        Object {
-                                          "type": "required",
-                                        },
-                                      ],
-                                    },
-                                  ]
-                                }
-                                id="datastore-form-wrapper"
-                                name="datastore-form-wrapper"
-                                title="Info"
-                              >
-                                <div
-                                  className=""
-                                  id="datastore-form-wrapper"
-                                  name="datastore-form-wrapper"
-                                >
-                                  <div>
-                                    <h3>
-                                      Info
-                                    </h3>
-                                  </div>
-                                  <SingleField
-                                    component="text-field"
-                                    id="namespacePath"
-                                    isDisabled={true}
-                                    key="namespacePath"
-                                    label="Fully Qualified Name"
-                                    name="namespacePath"
-                                  >
-                                    <FormConditionWrapper
-                                      conditionMapper={Object {}}
-                                      field={
-                                        Object {
-                                          "component": "text-field",
-                                          "id": "namespacePath",
-                                          "isDisabled": true,
-                                          "label": "Fully Qualified Name",
-                                          "name": "namespacePath",
-                                        }
-                                      }
-                                    >
-                                      <FormFieldHideWrapper>
-                                        <TextField
-                                          component="text-field"
-                                          id="namespacePath"
-                                          isDisabled={true}
-                                          label="Fully Qualified Name"
-                                          name="namespacePath"
-                                        >
-                                          <TextInput
-                                            disabled={true}
-                                            id="namespacePath"
-                                            invalid={false}
-                                            invalidText=""
-                                            key="namespacePath"
-                                            labelText="Fully Qualified Name"
-                                            name="namespacePath"
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            value="/test/infrastructure"
-                                            warn={false}
-                                            warnText=""
-                                          >
-                                            <div
-                                              className="cds--form-item cds--text-input-wrapper"
-                                            >
-                                              <div
-                                                className="cds--text-input__label-wrapper"
-                                              >
-                                                <ForwardRef
-                                                  as="label"
-                                                  className="cds--label cds--label--disabled"
-                                                  htmlFor="namespacePath"
-                                                >
-                                                  <label
-                                                    className="cds--label cds--label--disabled"
-                                                    dir="auto"
-                                                    htmlFor="namespacePath"
-                                                  >
-                                                    Fully Qualified Name
-                                                  </label>
-                                                </ForwardRef>
-                                              </div>
-                                              <div
-                                                className="cds--text-input__field-outer-wrapper"
-                                              >
-                                                <div
-                                                  className="cds--text-input__field-wrapper"
-                                                  data-invalid={null}
-                                                >
-                                                  <input
-                                                    className="cds--text-input"
-                                                    disabled={true}
-                                                    id="namespacePath"
-                                                    name="namespacePath"
-                                                    onBlur={[Function]}
-                                                    onChange={[Function]}
-                                                    onClick={[Function]}
-                                                    onFocus={[Function]}
-                                                    type="text"
-                                                    value="/test/infrastructure"
-                                                  />
-                                                  <span
-                                                    aria-atomic="true"
-                                                    aria-live="assertive"
-                                                    className="cds--text-input__counter-alert"
-                                                    role="alert"
-                                                  />
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </TextInput>
-                                        </TextField>
-                                      </FormFieldHideWrapper>
-                                    </FormConditionWrapper>
-                                  </SingleField>
-                                  <SingleField
-                                    component="text-field"
-                                    id="name"
-                                    isDisabled={false}
-                                    isRequired={true}
-                                    key="name"
-                                    label="Name"
-                                    maxLength={128}
-                                    name="name"
-                                    validate={
-                                      Array [
-                                        Object {
-                                          "type": "required",
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    <FormConditionWrapper
-                                      conditionMapper={Object {}}
-                                      field={
-                                        Object {
-                                          "component": "text-field",
-                                          "id": "name",
-                                          "isDisabled": false,
-                                          "isRequired": true,
-                                          "label": "Name",
-                                          "maxLength": 128,
-                                          "name": "name",
-                                          "validate": Array [
-                                            Object {
-                                              "type": "required",
-                                            },
-                                          ],
-                                        }
-                                      }
-                                    >
-                                      <FormFieldHideWrapper>
-                                        <TextField
-                                          component="text-field"
-                                          id="name"
-                                          isDisabled={false}
-                                          isRequired={true}
-                                          label="Name"
-                                          maxLength={128}
-                                          name="name"
-                                          validate={
-                                            Array [
-                                              Object {
-                                                "type": "required",
-                                              },
-                                            ]
-                                          }
-                                        >
-                                          <TextInput
-                                            disabled={false}
-                                            id="name"
-                                            invalid={false}
-                                            invalidText=""
-                                            key="name"
-                                            labelText={
-                                              <IsRequired>
-                                                Name
-                                              </IsRequired>
-                                            }
-                                            maxLength={128}
-                                            name="name"
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            value="name"
-                                            warn={false}
-                                            warnText=""
-                                          >
-                                            <div
-                                              className="cds--form-item cds--text-input-wrapper"
-                                            >
-                                              <div
-                                                className="cds--text-input__label-wrapper"
-                                              >
-                                                <ForwardRef
-                                                  as="label"
-                                                  className="cds--label"
-                                                  htmlFor="name"
-                                                >
-                                                  <label
-                                                    className="cds--label"
-                                                    dir="auto"
-                                                    htmlFor="name"
-                                                  >
-                                                    <IsRequired>
-                                                      <span
-                                                        aria-hidden="true"
-                                                        className="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
-                                                      >
-                                                        *
-                                                      </span>
-                                                      Name
-                                                    </IsRequired>
-                                                  </label>
-                                                </ForwardRef>
-                                              </div>
-                                              <div
-                                                className="cds--text-input__field-outer-wrapper"
-                                              >
-                                                <div
-                                                  className="cds--text-input__field-wrapper"
-                                                  data-invalid={null}
-                                                >
-                                                  <input
-                                                    className="cds--text-input"
-                                                    disabled={false}
-                                                    id="name"
-                                                    maxLength={128}
-                                                    name="name"
-                                                    onBlur={[Function]}
-                                                    onChange={[Function]}
-                                                    onClick={[Function]}
-                                                    onFocus={[Function]}
-                                                    type="text"
-                                                    value="name"
-                                                  />
-                                                  <span
-                                                    aria-atomic="true"
-                                                    aria-live="assertive"
-                                                    className="cds--text-input__counter-alert"
-                                                    role="alert"
-                                                  />
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </TextInput>
-                                        </TextField>
-                                      </FormFieldHideWrapper>
-                                    </FormConditionWrapper>
-                                  </SingleField>
-                                  <SingleField
-                                    component="text-field"
-                                    id="description"
-                                    isDisabled={false}
-                                    key="description"
-                                    label="Description"
-                                    maxLength={128}
-                                    name="description"
-                                    validate={
-                                      Array [
-                                        Object {
-                                          "type": "required",
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    <FormConditionWrapper
-                                      conditionMapper={Object {}}
-                                      field={
-                                        Object {
-                                          "component": "text-field",
-                                          "id": "description",
-                                          "isDisabled": false,
-                                          "label": "Description",
-                                          "maxLength": 128,
-                                          "name": "description",
-                                          "validate": Array [
-                                            Object {
-                                              "type": "required",
-                                            },
-                                          ],
-                                        }
-                                      }
-                                    >
-                                      <FormFieldHideWrapper>
-                                        <TextField
-                                          component="text-field"
-                                          id="description"
-                                          isDisabled={false}
-                                          label="Description"
-                                          maxLength={128}
-                                          name="description"
-                                          validate={
-                                            Array [
-                                              Object {
-                                                "type": "required",
-                                              },
-                                            ]
-                                          }
-                                        >
-                                          <TextInput
-                                            disabled={false}
-                                            id="description"
-                                            invalid={false}
-                                            invalidText=""
-                                            key="description"
-                                            labelText="Description"
-                                            maxLength={128}
-                                            name="description"
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            value="description"
-                                            warn={false}
-                                            warnText=""
-                                          >
-                                            <div
-                                              className="cds--form-item cds--text-input-wrapper"
-                                            >
-                                              <div
-                                                className="cds--text-input__label-wrapper"
-                                              >
-                                                <ForwardRef
-                                                  as="label"
-                                                  className="cds--label"
-                                                  htmlFor="description"
-                                                >
-                                                  <label
-                                                    className="cds--label"
-                                                    dir="auto"
-                                                    htmlFor="description"
-                                                  >
-                                                    Description
-                                                  </label>
-                                                </ForwardRef>
-                                              </div>
-                                              <div
-                                                className="cds--text-input__field-outer-wrapper"
-                                              >
-                                                <div
-                                                  className="cds--text-input__field-wrapper"
-                                                  data-invalid={null}
-                                                >
-                                                  <input
-                                                    className="cds--text-input"
-                                                    disabled={false}
-                                                    id="description"
-                                                    maxLength={128}
-                                                    name="description"
-                                                    onBlur={[Function]}
-                                                    onChange={[Function]}
-                                                    onClick={[Function]}
-                                                    onFocus={[Function]}
-                                                    type="text"
-                                                    value="description"
-                                                  />
-                                                  <span
-                                                    aria-atomic="true"
-                                                    aria-live="assertive"
-                                                    className="cds--text-input__counter-alert"
-                                                    role="alert"
-                                                  />
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </TextInput>
-                                        </TextField>
-                                      </FormFieldHideWrapper>
-                                    </FormConditionWrapper>
-                                  </SingleField>
-                                </div>
-                              </SubForm>
-                            </FormFieldHideWrapper>
-                          </FormConditionWrapper>
-                        </SingleField>
-                        <SingleField
-                          component="spy-field"
-                          key="spy-field"
-                          name="spy-field"
-                        >
-                          <FormConditionWrapper
-                            conditionMapper={Object {}}
-                            field={
-                              Object {
-                                "component": "spy-field",
-                                "initialize": undefined,
-                                "name": "spy-field",
-                              }
-                            }
-                          >
-                            <FormFieldHideWrapper>
-                              <SpyField
-                                component="spy-field"
-                                name="spy-field"
-                              >
-                                <FormSpy
-                                  onChange={[Function]}
-                                  subscription={
-                                    Object {
-                                      "pristine": true,
-                                      "valid": true,
-                                    }
-                                  }
-                                />
-                              </SpyField>
-                            </FormFieldHideWrapper>
-                          </FormConditionWrapper>
-                        </SingleField>
-                        <FormSpy>
-                          <FormControls
-                            Button={[Function]}
-                            ButtonGroup={[Function]}
-                            buttonOrder={
-                              Array [
-                                "submit",
-                                "reset",
-                                "cancel",
-                              ]
-                            }
-                            canReset={true}
-                            cancelLabel="Cancel"
-                            disableSubmit={true}
-                            formSpyProps={
-                              Object {
-                                "active": undefined,
-                                "dirty": false,
-                                "dirtyFields": Object {},
-                                "dirtyFieldsSinceLastSubmit": Object {
-                                  "description": true,
-                                  "name": true,
-                                  "namespacePath": true,
-                                },
-                                "dirtySinceLastSubmit": false,
-                                "error": undefined,
-                                "errors": Object {},
-                                "form": Object {
-                                  "batch": [Function],
-                                  "blur": [Function],
-                                  "change": [Function],
-                                  "destroyOnUnregister": false,
-                                  "focus": [Function],
-                                  "getFieldState": [Function],
-                                  "getRegisteredFields": [Function],
-                                  "getState": [Function],
-                                  "initialize": [Function],
-                                  "isValidationPaused": [Function],
-                                  "mutators": Object {
-                                    "concat": [Function],
-                                    "insert": [Function],
-                                    "move": [Function],
-                                    "pop": [Function],
-                                    "push": [Function],
-                                    "remove": [Function],
-                                    "removeBatch": [Function],
-                                    "shift": [Function],
-                                    "swap": [Function],
-                                    "unshift": [Function],
-                                    "update": [Function],
-                                  },
-                                  "pauseValidation": [Function],
-                                  "registerField": [Function],
-                                  "reset": [Function],
-                                  "resetFieldState": [Function],
-                                  "restart": [Function],
-                                  "resumeValidation": [Function],
-                                  "setConfig": [Function],
-                                  "submit": [Function],
-                                  "subscribe": [Function],
-                                },
-                                "hasSubmitErrors": false,
-                                "hasValidationErrors": false,
-                                "initialValues": Object {
-                                  "description": "description",
-                                  "enabled": true,
-                                  "name": "name",
-                                  "namespacePath": "/test/infrastructure",
-                                },
-                                "invalid": false,
-                                "modified": Object {
-                                  "description": false,
-                                  "name": false,
-                                  "namespacePath": false,
-                                },
-                                "modifiedSinceLastSubmit": false,
-                                "pristine": true,
-                                "submitError": undefined,
-                                "submitErrors": undefined,
-                                "submitFailed": false,
-                                "submitSucceeded": false,
-                                "submitting": false,
-                                "touched": Object {
-                                  "description": false,
-                                  "name": false,
-                                  "namespacePath": false,
-                                },
-                                "valid": true,
-                                "validating": false,
-                                "values": Object {
-                                  "description": "description",
-                                  "enabled": true,
-                                  "name": "name",
-                                  "namespacePath": "/test/infrastructure",
-                                },
-                                "visited": Object {
-                                  "description": false,
-                                  "name": false,
-                                  "namespacePath": false,
-                                },
-                              }
-                            }
-                            onCancel={[Function]}
-                            onReset={[Function]}
-                            resetLabel="Reset"
-                            submitLabel="Save"
-                          >
-                            <ButtonGroup>
-                              <ButtonSet
-                                className=""
-                              >
-                                <div
-                                  className="cds--btn-set"
-                                >
-                                  <Button
-                                    buttonType="submit"
-                                    disabled={true}
-                                    key="form-submit"
-                                    label="Save"
-                                    type="submit"
-                                    variant="primary"
-                                  >
-                                    <Button
-                                      disabled={true}
-                                      kind="primary"
-                                      type="submit"
-                                      variant="primary"
-                                    >
-                                      <ForwardRef(ButtonBase)
-                                        disabled={true}
-                                        kind="primary"
-                                        type="submit"
-                                        variant="primary"
-                                      >
-                                        <button
-                                          className="cds--btn cds--btn--primary cds--btn--disabled"
-                                          disabled={true}
-                                          type="submit"
-                                          variant="primary"
-                                        >
-                                          Save
-                                        </button>
-                                      </ForwardRef(ButtonBase)>
-                                    </Button>
-                                  </Button>
-                                  <Button
-                                    buttonType="reset"
-                                    disabled={true}
-                                    key="form-reset"
-                                    label="Reset"
-                                    onClick={[Function]}
-                                    type="button"
-                                  >
-                                    <Button
-                                      disabled={true}
-                                      kind="secondary"
-                                      onClick={[Function]}
-                                      type="button"
-                                    >
-                                      <ForwardRef(ButtonBase)
-                                        disabled={true}
-                                        kind="secondary"
-                                        onClick={[Function]}
-                                        type="button"
-                                      >
-                                        <button
-                                          className="cds--btn cds--btn--secondary cds--btn--disabled"
-                                          disabled={true}
-                                          onClick={[Function]}
-                                          type="button"
-                                        >
-                                          Reset
-                                        </button>
-                                      </ForwardRef(ButtonBase)>
-                                    </Button>
-                                  </Button>
-                                  <Button
-                                    buttonType="cancel"
-                                    key="form-cancel"
-                                    label="Cancel"
-                                    onClick={[Function]}
-                                    type="button"
-                                  >
-                                    <Button
-                                      kind="secondary"
-                                      onClick={[Function]}
-                                      type="button"
-                                    >
-                                      <ForwardRef(ButtonBase)
-                                        kind="secondary"
-                                        onClick={[Function]}
-                                        type="button"
-                                      >
-                                        <button
-                                          className="cds--btn cds--btn--secondary"
-                                          disabled={false}
-                                          onClick={[Function]}
-                                          type="button"
-                                        >
-                                          Cancel
-                                        </button>
-                                      </ForwardRef(ButtonBase)>
-                                    </Button>
-                                  </Button>
-                                </div>
-                              </ButtonSet>
-                            </ButtonGroup>
-                          </FormControls>
-                        </FormSpy>
-                      </form>
-                    </Form>
-                  </Form>
-                </FormTemplate>
-              </WrappedFormTemplate>
-            </Component>
-          </ReactFinalForm>
-        </FormRenderer>
-      </MiqFormRenderer>
-    </Connect(MiqFormRenderer)>
-  </DatastoreForm>
-</Provider>
+              *
+            </span>
+            Name
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+          >
+            <input
+              class="cds--text-input"
+              id="name"
+              maxlength="128"
+              name="name"
+              type="text"
+              value="name"
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--form-item cds--text-input-wrapper"
+      >
+        <div
+          class="cds--text-input__label-wrapper"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="description"
+          >
+            Description
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+          >
+            <input
+              class="cds--text-input"
+              id="description"
+              maxlength="128"
+              name="description"
+              type="text"
+              value="description"
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--btn-set"
+    >
+      <button
+        class="cds--btn cds--btn--primary cds--btn--disabled"
+        disabled=""
+        type="submit"
+        variant="primary"
+      >
+        Save
+      </button>
+      <button
+        class="cds--btn cds--btn--secondary cds--btn--disabled"
+        disabled=""
+        type="button"
+      >
+        Reset
+      </button>
+      <button
+        class="cds--btn cds--btn--secondary"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
 `;

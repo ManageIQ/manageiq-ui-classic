@@ -1,9 +1,6 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
-
-import { act } from 'react-dom/test-utils';
-import '../helpers/miqSparkle';
-import { mount } from '../helpers/mountForm';
+import { waitFor } from '@testing-library/react';
+import { renderWithRedux } from '../helpers/mountForm';
 import PxeIsoDatastoreForm from '../../components/pxe-iso-datastore-form/index';
 
 describe('Pxe Iso Datastore Form Component', () => {
@@ -18,14 +15,13 @@ describe('Pxe Iso Datastore Form Component', () => {
     },
   ];
 
-  it('should render adding a new iso datastore', async(done) => {
-    let wrapper;
-
-    await act(async() => {
-      wrapper = mount(<PxeIsoDatastoreForm emses={emses} />);
+  it('should render adding a new iso datastore', async() => {
+    const { container } = renderWithRedux(
+      <PxeIsoDatastoreForm emses={emses} />
+    );
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
     });
-    wrapper.update();
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+    expect(container).toMatchSnapshot();
   });
 });

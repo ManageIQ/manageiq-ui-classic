@@ -1,11 +1,473 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AutomationSimulation Component renders tabs and tab contents correctly 1`] = `
-<Tabs>
-  <TabList
-    aria-label="Automation Simulation Tabs"
-    className="automation_simulation_tab"
-  />
-  <TabPanels />
-</Tabs>
+<div>
+  <div
+    class="cds--tabs automation_simulation_tab"
+  >
+    <button
+      aria-hidden="true"
+      aria-label="Scroll left"
+      class="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--previous cds--tab--overflow-nav-button--hidden"
+      tabindex="-1"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        fill="currentColor"
+        focusable="false"
+        height="16"
+        preserveAspectRatio="xMidYMid meet"
+        viewBox="0 0 16 16"
+        width="16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M5 8 10 3 10.7 3.7 6.4 8 10.7 12.3 10 13z"
+        />
+      </svg>
+    </button>
+    <div
+      aria-label="Automation Simulation Tabs"
+      class="cds--tab--list"
+      role="tablist"
+    >
+      <button
+        aria-controls="ccs-8-tabpanel-0"
+        aria-selected="true"
+        class="cds--tabs__nav-item cds--tabs__nav-link cds--tabs__nav-item--selected"
+        id="ccs-8-tab-0"
+        role="tab"
+        tabindex="0"
+        type="button"
+      >
+        <div
+          class="cds--tabs__nav-item-label-wrapper"
+        >
+          <span
+            class="cds--tabs__nav-item-label"
+            dir="auto"
+          >
+            Tree View
+          </span>
+        </div>
+      </button>
+      <div
+        class="cds--tabs__nav-item--close--hidden"
+      >
+        <button
+          aria-hidden="true"
+          class="cds--visually-hidden cds--tabs__nav-item--close-icon--selected"
+          tabindex="-1"
+          title="Remove Tree View tab"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="Press delete to remove Tree View tab"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            viewBox="0 0 32 32"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+            />
+          </svg>
+        </button>
+      </div>
+      <button
+        aria-controls="ccs-8-tabpanel-1"
+        aria-selected="false"
+        class="cds--tabs__nav-item cds--tabs__nav-link"
+        id="ccs-8-tab-1"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        <div
+          class="cds--tabs__nav-item-label-wrapper"
+        >
+          <span
+            class="cds--tabs__nav-item-label"
+            dir="auto"
+          >
+            Object Info
+          </span>
+        </div>
+      </button>
+      <div
+        class="cds--tabs__nav-item--close--hidden"
+      >
+        <button
+          aria-hidden="true"
+          class="cds--visually-hidden"
+          tabindex="-1"
+          title="Remove Object Info tab"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="Press delete to remove Object Info tab"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            viewBox="0 0 32 32"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+            />
+          </svg>
+        </button>
+      </div>
+      <button
+        aria-controls="ccs-8-tabpanel-2"
+        aria-selected="false"
+        class="cds--tabs__nav-item cds--tabs__nav-link"
+        id="ccs-8-tab-2"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        <div
+          class="cds--tabs__nav-item-label-wrapper"
+        >
+          <span
+            class="cds--tabs__nav-item-label"
+            dir="auto"
+          >
+            Xml View
+          </span>
+        </div>
+      </button>
+      <div
+        class="cds--tabs__nav-item--close--hidden"
+      >
+        <button
+          aria-hidden="true"
+          class="cds--visually-hidden"
+          tabindex="-1"
+          title="Remove Xml View tab"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="Press delete to remove Xml View tab"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            viewBox="0 0 32 32"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <button
+      aria-hidden="true"
+      aria-label="Scroll right"
+      class="cds--tab--overflow-nav-button cds--tab--overflow-nav-button--next cds--tab--overflow-nav-button--hidden"
+      tabindex="-1"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        fill="currentColor"
+        focusable="false"
+        height="16"
+        preserveAspectRatio="xMidYMid meet"
+        viewBox="0 0 16 16"
+        width="16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+        />
+      </svg>
+    </button>
+  </div>
+  <div
+    aria-labelledby="ccs-8-tab-0"
+    class="cds--tab-content"
+    id="ccs-8-tabpanel-0"
+    role="tabpanel"
+  >
+    <ul
+      class="cds--accordion miq-structured-list-accordion miq_summary tab1 cds--accordion--start"
+    >
+      <li
+        class="cds--accordion__item cds--accordion__item--active"
+      >
+        <button
+          aria-controls="accordion-item-9"
+          aria-expanded="true"
+          class="cds--accordion__heading"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="cds--accordion__arrow"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 16 16"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+            />
+          </svg>
+          <div
+            class="cds--accordion__title"
+            dir="auto"
+          >
+            Tree View
+          </div>
+        </button>
+        <div
+          class="cds--accordion__wrapper"
+        >
+          <div
+            class="cds--accordion__content"
+            id="accordion-item-9"
+          >
+            <div
+              aria-label="Structured list"
+              class="cds--structured-list miq-structured-list miq_summary tab1"
+              role="table"
+            >
+              <div
+                class="cds--structured-list-tbody"
+                role="rowgroup"
+              >
+                <div
+                  class="cds--structured-list-row not-clickable"
+                  role="row"
+                  tabindex="0"
+                  title=""
+                >
+                  
+                  <div
+                    class="cds--structured-list-td content_value object_item"
+                    dir="auto"
+                    role="cell"
+                    title=""
+                  >
+                    <div
+                      class="react-tree-view"
+                    >
+                      <ul />
+                      <style>
+                        
+            .react-tree-view .indent-0 {
+                padding-left: calc((1em) * 0);
+            }
+            .react-tree-view .indent-0.no-open-button {
+                padding-left: calc((1em) * 0 + (1em + 4px));
+            }
+            
+                      </style>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div
+    aria-labelledby="ccs-8-tab-1"
+    class="cds--tab-content"
+    hidden=""
+    id="ccs-8-tabpanel-1"
+    role="tabpanel"
+  >
+    <ul
+      class="cds--accordion miq-structured-list-accordion miq_summary tab2 cds--accordion--start"
+    >
+      <li
+        class="cds--accordion__item cds--accordion__item--active"
+      >
+        <button
+          aria-controls="accordion-item-11"
+          aria-expanded="true"
+          class="cds--accordion__heading"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="cds--accordion__arrow"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 16 16"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+            />
+          </svg>
+          <div
+            class="cds--accordion__title"
+            dir="auto"
+          >
+            Object Info
+          </div>
+        </button>
+        <div
+          class="cds--accordion__wrapper"
+        >
+          <div
+            class="cds--accordion__content"
+            id="accordion-item-11"
+          >
+            <div
+              aria-label="Structured list"
+              class="cds--structured-list miq-structured-list miq_summary tab2"
+              role="table"
+            >
+              <div
+                class="cds--structured-list-tbody"
+                role="rowgroup"
+              >
+                <div
+                  class="cds--structured-list-row not-clickable"
+                  role="row"
+                  tabindex="0"
+                  title=""
+                >
+                  <div
+                    class="cds--structured-list-td label_header"
+                    dir="auto"
+                    role="cell"
+                  >
+                    URI
+                  </div>
+                  <div
+                    class="cds--structured-list-td content_value object_item"
+                    dir="auto"
+                    role="cell"
+                    title=""
+                  >
+                    <div
+                      class="content"
+                    >
+                      <div
+                        class="expand wrap_text"
+                      >
+                        /SYSTEM/PROCESS/GenericObject?CloudVolume
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div
+    aria-labelledby="ccs-8-tab-2"
+    class="cds--tab-content"
+    hidden=""
+    id="ccs-8-tabpanel-2"
+    role="tabpanel"
+  >
+    <ul
+      class="cds--accordion miq-structured-list-accordion miq_summary tab3 cds--accordion--start"
+    >
+      <li
+        class="cds--accordion__item cds--accordion__item--active"
+      >
+        <button
+          aria-controls="accordion-item-13"
+          aria-expanded="true"
+          class="cds--accordion__heading"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="cds--accordion__arrow"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 16 16"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+            />
+          </svg>
+          <div
+            class="cds--accordion__title"
+            dir="auto"
+          >
+            Xml View
+          </div>
+        </button>
+        <div
+          class="cds--accordion__wrapper"
+        >
+          <div
+            class="cds--accordion__content"
+            id="accordion-item-13"
+          >
+            <div
+              aria-label="Structured list"
+              class="cds--structured-list miq-structured-list miq_summary tab3"
+              role="table"
+            >
+              <div
+                class="cds--structured-list-tbody"
+                role="rowgroup"
+              >
+                <div
+                  class="cds--structured-list-row not-clickable"
+                  role="row"
+                  tabindex="0"
+                  title=""
+                >
+                  
+                  <div
+                    class="cds--structured-list-td content_value object_item"
+                    dir="auto"
+                    role="cell"
+                    title=""
+                  >
+                    <div
+                      id="xml_holder"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
 `;

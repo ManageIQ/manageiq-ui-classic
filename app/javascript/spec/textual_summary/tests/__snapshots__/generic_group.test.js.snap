@@ -1,431 +1,122 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`GenericGroup renders just fine 1`] = `
-<GenericGroup
-  items={
-    Array [
-      Object {
-        "hoverClass": "bar",
-        "label": "foo",
-        "value": "bar",
-      },
-      Object {
-        "hoverClass": "bar",
-        "label": "mrkef?",
-        "value": "v zime!",
-      },
-    ]
-  }
-  onClick={[Function]}
-  title="Foo Bar"
->
-  <MiqStructuredList
-    headers={Array []}
-    mode="generic_group"
-    onClick={[Function]}
-    rows={
-      Array [
-        Object {
-          "hoverClass": "bar",
-          "label": "foo",
-          "value": "bar",
-        },
-        Object {
-          "hoverClass": "bar",
-          "label": "mrkef?",
-          "value": "v zime!",
-        },
-      ]
-    }
-    title="Foo Bar"
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion generic_group cds--accordion--start"
   >
-    <Accordion
-      align="start"
-      className="miq-structured-list-accordion generic_group"
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
     >
-      <AccordionProvider
-        disabled={false}
+      <button
+        aria-controls="accordion-item-4"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
       >
-        <ul
-          className="cds--accordion miq-structured-list-accordion generic_group cds--accordion--start"
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <AccordionItem
-            open={true}
-            title="Foo Bar"
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Foo Bar
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-4"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list generic_group"
+            role="table"
           >
-            <li
-              className="cds--accordion__item cds--accordion__item--active"
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
             >
-              <defaultRenderToggle
-                aria-controls="accordion-item-3"
-                aria-expanded={true}
-                className="cds--accordion__heading"
-                disabled={false}
-                onClick={[Function]}
-                onKeyDown={[Function]}
-                type="button"
-              >
-                <button
-                  aria-controls="accordion-item-3"
-                  aria-expanded={true}
-                  className="cds--accordion__heading"
-                  disabled={false}
-                  onClick={[Function]}
-                  onKeyDown={[Function]}
-                  type="button"
-                >
-                  <ForwardRef(ChevronRight)
-                    className="cds--accordion__arrow"
-                  >
-                    <Icon
-                      className="cds--accordion__arrow"
-                      fill="currentColor"
-                      height={16}
-                      viewBox="0 0 16 16"
-                      width={16}
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <svg
-                        aria-hidden={true}
-                        className="cds--accordion__arrow"
-                        fill="currentColor"
-                        focusable="false"
-                        height={16}
-                        preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 16 16"
-                        width={16}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
-                        />
-                      </svg>
-                    </Icon>
-                  </ForwardRef(ChevronRight)>
-                  <ForwardRef
-                    as="div"
-                    className="cds--accordion__title"
-                  >
-                    <div
-                      className="cds--accordion__title"
-                      dir="auto"
-                    >
-                      Foo Bar
-                    </div>
-                  </ForwardRef>
-                </button>
-              </defaultRenderToggle>
               <div
-                className="cds--accordion__wrapper"
-                onTransitionEnd={[Function]}
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
               >
                 <div
-                  className="cds--accordion__content"
-                  id="accordion-item-3"
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
                 >
-                  <StructuredListWrapper
-                    aria-label="Structured list"
-                    className="miq-structured-list generic_group"
+                  foo
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
                   >
                     <div
-                      aria-label="Structured list"
-                      className="cds--structured-list miq-structured-list generic_group"
-                      role="table"
+                      class="expand wrap_text"
                     >
-                      <MiqStructuredListBody
-                        clickEvents={false}
-                        mode="generic_group"
-                        onClick={[Function]}
-                        rows={
-                          Array [
-                            Object {
-                              "hoverClass": "bar",
-                              "label": "foo",
-                              "value": "bar",
-                            },
-                            Object {
-                              "hoverClass": "bar",
-                              "label": "mrkef?",
-                              "value": "v zime!",
-                            },
-                          ]
-                        }
-                      >
-                        <StructuredListBody>
-                          <div
-                            className="cds--structured-list-tbody"
-                            role="rowgroup"
-                          >
-                            <StructuredListRow
-                              className="not-clickable"
-                              key="0"
-                              onClick={[Function]}
-                              tabIndex={0}
-                              title=""
-                            >
-                              <div
-                                className="cds--structured-list-row not-clickable"
-                                onBlur={[Function]}
-                                onClick={[Function]}
-                                onFocus={[Function]}
-                                role="row"
-                                tabIndex={0}
-                                title=""
-                              >
-                                <MiqStructuredListBodyLabel
-                                  label="foo"
-                                >
-                                  <StructuredListCell
-                                    className="label_header"
-                                  >
-                                    <ForwardRef
-                                      as="div"
-                                      className="cds--structured-list-td label_header"
-                                      role="cell"
-                                    >
-                                      <div
-                                        className="cds--structured-list-td label_header"
-                                        dir="auto"
-                                        role="cell"
-                                      >
-                                        foo
-                                      </div>
-                                    </ForwardRef>
-                                  </StructuredListCell>
-                                </MiqStructuredListBodyLabel>
-                                <MiqStructuredListBodyValue
-                                  clickEvents={false}
-                                  onClick={[Function]}
-                                  row={
-                                    Object {
-                                      "hoverClass": "bar",
-                                      "label": "foo",
-                                      "value": "bar",
-                                    }
-                                  }
-                                >
-                                  <MiqStructuredListObject
-                                    clickEvents={false}
-                                    onClick={[Function]}
-                                    row={
-                                      Object {
-                                        "hoverClass": "bar",
-                                        "label": "foo",
-                                        "value": "bar",
-                                      }
-                                    }
-                                  >
-                                    <StructuredListCell
-                                      className="content_value object_item"
-                                      title=""
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value object_item"
-                                        role="cell"
-                                        title=""
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value object_item"
-                                          dir="auto"
-                                          role="cell"
-                                          title=""
-                                        >
-                                          <MiqStructuredListConditionalTag
-                                            clickEvents={false}
-                                            onClick={[Function]}
-                                            row={
-                                              Object {
-                                                "hoverClass": "bar",
-                                                "label": "foo",
-                                                "value": "bar",
-                                              }
-                                            }
-                                          >
-                                            <MiqStructuredListLink
-                                              clickEvents={false}
-                                              onClick={[Function]}
-                                              row={
-                                                Object {
-                                                  "hoverClass": "bar",
-                                                  "label": "foo",
-                                                  "value": "bar",
-                                                }
-                                              }
-                                            >
-                                              <MiqStructuredListContent
-                                                row={
-                                                  Object {
-                                                    "hoverClass": "bar",
-                                                    "label": "foo",
-                                                    "value": "bar",
-                                                  }
-                                                }
-                                              >
-                                                <div
-                                                  className="content"
-                                                >
-                                                  <MiqStructuredListText
-                                                    value="bar"
-                                                  >
-                                                    <div
-                                                      className="expand wrap_text"
-                                                    >
-                                                      bar
-                                                    </div>
-                                                  </MiqStructuredListText>
-                                                </div>
-                                              </MiqStructuredListContent>
-                                            </MiqStructuredListLink>
-                                          </MiqStructuredListConditionalTag>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                  </MiqStructuredListObject>
-                                </MiqStructuredListBodyValue>
-                              </div>
-                            </StructuredListRow>
-                            <StructuredListRow
-                              className="not-clickable"
-                              key="1"
-                              onClick={[Function]}
-                              tabIndex={1}
-                              title=""
-                            >
-                              <div
-                                className="cds--structured-list-row not-clickable"
-                                onBlur={[Function]}
-                                onClick={[Function]}
-                                onFocus={[Function]}
-                                role="row"
-                                tabIndex={1}
-                                title=""
-                              >
-                                <MiqStructuredListBodyLabel
-                                  label="mrkef?"
-                                >
-                                  <StructuredListCell
-                                    className="label_header"
-                                  >
-                                    <ForwardRef
-                                      as="div"
-                                      className="cds--structured-list-td label_header"
-                                      role="cell"
-                                    >
-                                      <div
-                                        className="cds--structured-list-td label_header"
-                                        dir="auto"
-                                        role="cell"
-                                      >
-                                        mrkef?
-                                      </div>
-                                    </ForwardRef>
-                                  </StructuredListCell>
-                                </MiqStructuredListBodyLabel>
-                                <MiqStructuredListBodyValue
-                                  clickEvents={false}
-                                  onClick={[Function]}
-                                  row={
-                                    Object {
-                                      "hoverClass": "bar",
-                                      "label": "mrkef?",
-                                      "value": "v zime!",
-                                    }
-                                  }
-                                >
-                                  <MiqStructuredListObject
-                                    clickEvents={false}
-                                    onClick={[Function]}
-                                    row={
-                                      Object {
-                                        "hoverClass": "bar",
-                                        "label": "mrkef?",
-                                        "value": "v zime!",
-                                      }
-                                    }
-                                  >
-                                    <StructuredListCell
-                                      className="content_value object_item"
-                                      title=""
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value object_item"
-                                        role="cell"
-                                        title=""
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value object_item"
-                                          dir="auto"
-                                          role="cell"
-                                          title=""
-                                        >
-                                          <MiqStructuredListConditionalTag
-                                            clickEvents={false}
-                                            onClick={[Function]}
-                                            row={
-                                              Object {
-                                                "hoverClass": "bar",
-                                                "label": "mrkef?",
-                                                "value": "v zime!",
-                                              }
-                                            }
-                                          >
-                                            <MiqStructuredListLink
-                                              clickEvents={false}
-                                              onClick={[Function]}
-                                              row={
-                                                Object {
-                                                  "hoverClass": "bar",
-                                                  "label": "mrkef?",
-                                                  "value": "v zime!",
-                                                }
-                                              }
-                                            >
-                                              <MiqStructuredListContent
-                                                row={
-                                                  Object {
-                                                    "hoverClass": "bar",
-                                                    "label": "mrkef?",
-                                                    "value": "v zime!",
-                                                  }
-                                                }
-                                              >
-                                                <div
-                                                  className="content"
-                                                >
-                                                  <MiqStructuredListText
-                                                    value="v zime!"
-                                                  >
-                                                    <div
-                                                      className="expand wrap_text"
-                                                    >
-                                                      v zime!
-                                                    </div>
-                                                  </MiqStructuredListText>
-                                                </div>
-                                              </MiqStructuredListContent>
-                                            </MiqStructuredListLink>
-                                          </MiqStructuredListConditionalTag>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                  </MiqStructuredListObject>
-                                </MiqStructuredListBodyValue>
-                              </div>
-                            </StructuredListRow>
-                          </div>
-                        </StructuredListBody>
-                      </MiqStructuredListBody>
+                      bar
                     </div>
-                  </StructuredListWrapper>
+                  </div>
                 </div>
               </div>
-            </li>
-          </AccordionItem>
-        </ul>
-      </AccordionProvider>
-    </Accordion>
-  </MiqStructuredList>
-</GenericGroup>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="1"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  mrkef?
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="expand wrap_text"
+                    >
+                      v zime!
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 `;

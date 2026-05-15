@@ -1,51 +1,74 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
+import { waitFor } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
-import { shallow } from 'enzyme';
+import { renderWithRedux } from '../helpers/mountForm';
 import VmSnapshotTree from '../../components/vm-snapshot-tree-select/snapshot-tree';
-import { mount } from '../helpers/mountForm';
 
 describe('VM Snaspthot Tree Select', () => {
   const url = `/${ManageIQ.controller}/snap_pressed/${encodeURIComponent(1)}`;
-  const nodes = [{
-    class: 'no-cursor',
-    icon: 'pficon pficon-folder-close',
-    key: 'root',
-    selectable: false,
-    text: 'test-root',
-    tooltip: 'test-root',
-    state: { expanded: true },
-    nodes: [{
-      icon: 'fa fa-camera',
-      key: 'sn-1',
-      selectable: true,
-      text: 'test-child-1',
-      tooltip: 'test-child-1',
+  const nodes = [
+    {
+      class: 'no-cursor',
+      icon: 'pficon pficon-folder-close',
+      key: 'root',
+      selectable: false,
+      text: 'test-root',
+      tooltip: 'test-root',
       state: { expanded: true },
-      nodes: [{
-        icon: 'fa fa-camera',
-        key: 'sn-1_sn-2',
-        selectable: true,
-        text: 'test-child-2',
-        tooltip: 'test-child-2',
-        state: { expanded: true },
-      }],
-    }],
-  }];
+      nodes: [
+        {
+          icon: 'fa fa-camera',
+          key: 'sn-1',
+          selectable: true,
+          text: 'test-child-1',
+          tooltip: 'test-child-1',
+          state: { expanded: true },
+          nodes: [
+            {
+              icon: 'fa fa-camera',
+              key: 'sn-1_sn-2',
+              selectable: true,
+              text: 'test-child-2',
+              tooltip: 'test-child-2',
+              state: { expanded: true },
+            },
+          ],
+        },
+      ],
+    },
+  ];
 
-  it('should render snapshot tree', (done) => {
-    const wrapper = shallow(<VmSnapshotTree nodes={nodes} setSnapshot={() => {}} />);
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
-    });
+  afterEach(() => {
+    fetchMock.reset();
+    fetchMock.restore();
   });
 
-  it('should submit select API call', async(done) => {
+  it('should render snapshot tree', async() => {
+    const { container } = renderWithRedux(
+      <VmSnapshotTree
+        nodes={nodes}
+        setSnapshot={() => {}}
+        setCurrentSnapshot={() => {}}
+      />
+    );
+    await waitFor(() => {
+      expect(container.querySelector('.vm-snapshot-tree')).toBeInTheDocument();
+    });
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should submit select API call', async() => {
     fetchMock.postOnce(url, {});
-    const wrapper = mount(<VmSnapshotTree nodes={nodes} setSnapshot={() => {}} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+    const { container } = renderWithRedux(
+      <VmSnapshotTree
+        nodes={nodes}
+        setSnapshot={() => {}}
+        setCurrentSnapshot={() => {}}
+      />
+    );
+    await waitFor(() => {
+      expect(container.querySelector('.vm-snapshot-tree')).toBeInTheDocument();
+    });
+    expect(container).toMatchSnapshot();
   });
 });

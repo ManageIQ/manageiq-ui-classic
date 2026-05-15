@@ -1,71 +1,470 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Retirement Form Component should render a new Retirement form 1`] = `
-<Provider
-  store={
-    Object {
-      "asyncReducers": Object {
-        "FormButtons": [Function],
-        "miqCustomTabReducer": [Function],
-        "notificationReducer": [Function],
-      },
-      "dispatch": [Function],
-      "getState": [Function],
-      "injectReducers": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-      Symbol(observable): [Function],
-    }
-  }
->
-  <RetirementForm
-    retirementID="[\\"180\\"]"
-    timezone={
-      Object {
-        "tzinfo": Object {
-          "info": Object {
-            "identifier": "America/New York",
-          },
-        },
-      }
-    }
-    url="/api/services"
-  />
-</Provider>
+<div>
+  <form
+    class="cds--form form-0-2-3 form-react"
+    novalidate=""
+  >
+    <div
+      class=""
+      name="retirement-date-subform"
+    >
+      <div>
+        <h3>
+          Set/Remove Retirement Date
+        </h3>
+      </div>
+      <div
+        class="cds--form-item"
+      >
+        <div
+          class="cds--select"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="formMode"
+          >
+            <span
+              aria-hidden="true"
+              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+            >
+              *
+            </span>
+            Enter Retirement Date as
+          </label>
+          <div
+            class="cds--select-input__wrapper"
+          >
+            <select
+              class="cds--select-input"
+              id="formMode"
+              name="formMode"
+              title="Specific Date and Time"
+            >
+              <option
+                class="cds--select-option"
+                label="Specific Date and Time"
+                value="date"
+              >
+                Specific Date and Time
+              </option>
+              <option
+                class="cds--select-option"
+                label="Time Delay from Now"
+                value="delay"
+              >
+                Time Delay from Now
+              </option>
+            </select>
+            <svg
+              aria-hidden="true"
+              class="cds--select__arrow"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+              />
+            </svg>
+            
+          </div>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cds--form-item"
+          name="retirementDate"
+        >
+          <div
+            class="cds--date-picker cds--date-picker--single"
+          >
+            <div
+              class="cds--date-picker-container"
+            >
+              <label
+                class="cds--label"
+                dir="auto"
+                for="retirementDate"
+              >
+                Retirement Date
+              </label>
+              <div
+                class="cds--date-picker-input__wrapper"
+              >
+                <span>
+                  <input
+                    class="cds--date-picker__input cds--date-picker__input--md flatpickr-input"
+                    id="retirementDate"
+                    pattern="\\\\d{1,2}\\\\/\\\\d{1,2}\\\\/\\\\d{4}"
+                    type="text"
+                    variant="date-time"
+                  />
+                  
+                  <svg
+                    aria-hidden="true"
+                    class="cds--date-picker__icon"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    viewBox="0 0 32 32"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M26,4h-4V2h-2v2h-8V2h-2v2H6C4.9,4,4,4.9,4,6v20c0,1.1,0.9,2,2,2h20c1.1,0,2-0.9,2-2V6C28,4.9,27.1,4,26,4z M26,26H6V12h20 V26z M26,10H6V6h4v2h2V6h8v2h2V6h4V10z"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p
+        id="dateInfo"
+        name="dateInfo"
+      >
+        * Saving a blank date will remove all retirement dates
+      </p>
+    </div>
+    <div
+      class="cds--btn-set"
+    >
+      <button
+        class="cds--btn cds--btn--primary cds--btn--disabled"
+        disabled=""
+        type="submit"
+        variant="primary"
+      >
+        Save
+      </button>
+      <button
+        class="cds--btn cds--btn--secondary cds--btn--disabled"
+        disabled=""
+        type="button"
+      >
+        Reset
+      </button>
+      <button
+        class="cds--btn cds--btn--secondary"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
 `;
 
 exports[`Retirement Form Component should submit Retirement Form with correct date and time 1`] = `
-<Provider
-  store={
-    Object {
-      "asyncReducers": Object {
-        "FormButtons": [Function],
-        "miqCustomTabReducer": [Function],
-        "notificationReducer": [Function],
-      },
-      "dispatch": [Function],
-      "getState": [Function],
-      "injectReducers": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-      Symbol(observable): [Function],
-    }
-  }
->
-  <RetirementForm
-    retirementID="[\\"42\\"]"
-    retirement_warn={null}
-    retires_on="2021-10-02T00:50:00Z"
-    timezone={
-      Object {
-        "tzinfo": Object {
-          "info": Object {
-            "identifier": "Etc/UTC",
-          },
-        },
-      }
-    }
-    url="/api/services"
-  />
-</Provider>
+<div>
+  <form
+    class="cds--form form-0-2-3 form-react"
+    novalidate=""
+  >
+    <div
+      class=""
+      name="retirement-date-subform"
+    >
+      <div>
+        <h3>
+          Set/Remove Retirement Date
+        </h3>
+      </div>
+      <div
+        class="cds--form-item"
+      >
+        <div
+          class="cds--select"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="formMode"
+          >
+            <span
+              aria-hidden="true"
+              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+            >
+              *
+            </span>
+            Enter Retirement Date as
+          </label>
+          <div
+            class="cds--select-input__wrapper"
+          >
+            <select
+              class="cds--select-input"
+              id="formMode"
+              name="formMode"
+              title="Specific Date and Time"
+            >
+              <option
+                class="cds--select-option"
+                label="Specific Date and Time"
+                value="date"
+              >
+                Specific Date and Time
+              </option>
+              <option
+                class="cds--select-option"
+                label="Time Delay from Now"
+                value="delay"
+              >
+                Time Delay from Now
+              </option>
+            </select>
+            <svg
+              aria-hidden="true"
+              class="cds--select__arrow"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+              />
+            </svg>
+            
+          </div>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cds--form-item"
+          name="retirementDate"
+        >
+          <div
+            class="cds--date-picker cds--date-picker--single"
+          >
+            <div
+              class="cds--date-picker-container"
+            >
+              <label
+                class="cds--label"
+                dir="auto"
+                for="retirementDate"
+              >
+                Retirement Date
+              </label>
+              <div
+                class="cds--date-picker-input__wrapper"
+              >
+                <span>
+                  <input
+                    class="cds--date-picker__input cds--date-picker__input--md flatpickr-input"
+                    id="retirementDate"
+                    pattern="\\\\d{1,2}\\\\/\\\\d{1,2}\\\\/\\\\d{4}"
+                    type="text"
+                    variant="date-time"
+                  />
+                  
+                  <svg
+                    aria-hidden="true"
+                    class="cds--date-picker__icon"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    viewBox="0 0 32 32"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M26,4h-4V2h-2v2h-8V2h-2v2H6C4.9,4,4,4.9,4,6v20c0,1.1,0.9,2,2,2h20c1.1,0,2-0.9,2-2V6C28,4.9,27.1,4,26,4z M26,26H6V12h20 V26z M26,10H6V6h4v2h2V6h8v2h2V6h4V10z"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p
+        id="dateInfo"
+        name="dateInfo"
+      >
+        * Saving a blank date will remove all retirement dates
+      </p>
+      <div>
+        <div
+          class="cds--form-item"
+        >
+          <label
+            class="cds--label"
+            for="retirementTime"
+          >
+            Retirement Time
+          </label>
+          <div
+            class="cds--time-picker cds--time-picker--md"
+          >
+            <div
+              class="cds--time-picker__input"
+            >
+              <input
+                class="cds--time-picker__input-field cds--text-input"
+                id="retirementTime"
+                maxlength="5"
+                name="retirementTime"
+                pattern="(1[012]|[1-9]):[0-5][0-9](\\\\s)?"
+                placeholder="hh:mm"
+                type="text"
+                value="12:50"
+              />
+            </div>
+            <div
+              class="cds--select cds--time-picker__select"
+            >
+              <select
+                aria-label="open list of options"
+                class="cds--select-input"
+                id="retirementTime-12h"
+                labeltext="Period"
+              >
+                <option
+                  class="cds--select-option"
+                  selected=""
+                  value="AM"
+                >
+                  AM
+                </option>
+                <option
+                  class="cds--select-option"
+                  value="PM"
+                >
+                  PM
+                </option>
+              </select>
+              <svg
+                aria-hidden="true"
+                class="cds--select__arrow"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--form-item"
+      >
+        <div
+          class="cds--select"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="retirementWarning"
+          >
+            Retirement Warning
+          </label>
+          <div
+            class="cds--select-input__wrapper"
+          >
+            <select
+              class="cds--select-input"
+              id="retirementWarning"
+              name="retirementWarning"
+              title="None"
+            >
+              <option
+                class="cds--select-option"
+                label="None"
+                value=""
+              >
+                None
+              </option>
+              <option
+                class="cds--select-option"
+                label="1 Week before retirement"
+                value="7"
+              >
+                1 Week before retirement
+              </option>
+              <option
+                class="cds--select-option"
+                label="2 Weeks before retirement"
+                value="14"
+              >
+                2 Weeks before retirement
+              </option>
+              <option
+                class="cds--select-option"
+                label="30 Days before retirement"
+                value="30"
+              >
+                30 Days before retirement
+              </option>
+            </select>
+            <svg
+              aria-hidden="true"
+              class="cds--select__arrow"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+              />
+            </svg>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--btn-set"
+    >
+      <button
+        class="cds--btn cds--btn--primary cds--btn--disabled"
+        disabled=""
+        type="submit"
+        variant="primary"
+      >
+        Save
+      </button>
+      <button
+        class="cds--btn cds--btn--secondary cds--btn--disabled"
+        disabled=""
+        type="button"
+      >
+        Reset
+      </button>
+      <button
+        class="cds--btn cds--btn--secondary"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
 `;

@@ -2,11 +2,9 @@ import { onCustomAction } from '../../toolbar-actions/custom-action';
 import { getGridChecks } from '../../toolbar-actions/util.js';
 import '../../packs/toolbar-actions-common.js'; // subscribeToRx
 
-require('../helpers/angular.js');
-require('../helpers/API.js');
-require('../helpers/addFlash.js');
-require('../helpers/sprintf.js');
-require('angular-mocks');
+import '../helpers/angular';
+import '../helpers/API';
+import 'angular-mocks';
 
 describe('Toolbar actions', () => {
   beforeEach(() => {
@@ -55,16 +53,13 @@ describe('Toolbar actions', () => {
         );
     });
 
-    test('should call correct functions', (done) => {
+    test('should call correct functions', async () => {
       const payload = {
         action: 'some-action',
         resources: [{ id: 'rr' }, { id: '5' }],
       };
-      onCustomAction({ action: payload.action, entity: 'some-entity' }, payload.resources)
-        .then(() => {
-          expect(add_flash).toHaveBeenCalledWith('Requested some-action of selected item.', 'success');
-          done();
-        });
+      await onCustomAction({ action: payload.action, entity: 'some-entity' }, payload.resources);
+      expect(add_flash).toHaveBeenCalledWith('Requested some-action of selected item.', 'success');
     });
 
     test('should react to RX call', () => {

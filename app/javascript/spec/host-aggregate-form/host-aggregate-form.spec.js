@@ -1,15 +1,13 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
+import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import fetchMock from 'fetch-mock';
-import { shallow } from 'enzyme';
-import { act } from 'react-dom/test-utils';
 import HostAggregateForm from '../../components/host-aggregate-form';
-import AddRemoveHostAggregateForm from '../../components/host-aggregate-form/add-remove-host-aggregate-form'
-import { mount } from '../helpers/mountForm';
+import AddRemoveHostAggregateForm from '../../components/host-aggregate-form/add-remove-host-aggregate-form';
+import { renderWithRedux } from '../helpers/mountForm';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 
-require('../helpers/miqSparkle.js');
-require('../helpers/miqAjaxButton.js');
+import '../helpers/miqSparkle';
 
 describe('Host aggregate form component', () => {
   const emsList = {
@@ -20,13 +18,16 @@ describe('Host aggregate form component', () => {
   };
 
   beforeEach(() => {
-    fetchMock
-      .mock('/api/providers?expand=resources&attributes=id,name,supports_create_host_aggregate&filter[]=supports_create_host_aggregate=true', emsList);
+    fetchMock.mock(
+      '/api/providers?expand=resources&attributes=id,name,supports_create_host_aggregate&filter[]=supports_create_host_aggregate=true',
+      emsList
+    );
   });
 
   afterEach(() => {
     fetchMock.reset();
     fetchMock.restore();
+    jest.clearAllMocks();
   });
 
   const values = {
@@ -35,71 +36,110 @@ describe('Host aggregate form component', () => {
     ems_id: 2,
   };
 
-  it('should render adding form variant', (done) => {
-    const wrapper = shallow(<HostAggregateForm />);
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
+  it('should render adding form variant', async() => {
+    const { container } = renderWithRedux(<HostAggregateForm />);
+
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
     });
+
+    expect(container).toMatchSnapshot();
   });
 
-  it('should render editing form variant', async(done) => {
+  it('should render editing form variant', async() => {
     fetchMock.getOnce('/api/host_aggregates/1', values);
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<HostAggregateForm recordId="1" />);
+
+    const { container } = renderWithRedux(<HostAggregateForm recordId="1" />);
+
+    await waitFor(() => {
+      expect(fetchMock.called('/api/host_aggregates/1')).toBe(true);
     });
-    expect(fetchMock.called('/api/host_aggregates/1')).toBe(true);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+
+    expect(container).toMatchSnapshot();
   });
 
-  it('should call miqRedirectBack when canceling create form', async(done) => {
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<HostAggregateForm />);
+  it('should call miqRedirectBack when canceling create form', async() => {
+    const user = userEvent.setup();
+
+    renderWithRedux(<HostAggregateForm />);
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: /cancel/i })
+      ).toBeInTheDocument();
     });
-    wrapper.find('button').last().simulate('click');
-    expect(miqRedirectBack).toHaveBeenCalledWith('Creation of new Host Aggregate was canceled by the user.', 'warning', '/host_aggregate/show_list');
-    done();
+
+    const cancelButton = screen.getByRole('button', { name: /cancel/i });
+    await user.click(cancelButton);
+
+    expect(miqRedirectBack).toHaveBeenCalledWith(
+      'Creation of new Host Aggregate was canceled by the user.',
+      'warning',
+      '/host_aggregate/show_list'
+    );
   });
 
-  it('should render add host form', (done) => {
-    const wrapper = shallow(<AddRemoveHostAggregateForm />);
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
+  it('should render add host form', async() => {
+    const { container } = renderWithRedux(<AddRemoveHostAggregateForm />);
+
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
     });
+
+    expect(container).toMatchSnapshot();
   });
 
-  it('should render add host form variant (remvove host)', (done) => {
-    const wrapper = mount(<AddRemoveHostAggregateForm isAdd={false} />);
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
+  it('should render add host form variant (remvove host)', async() => {
+    const { container } = renderWithRedux(
+      <AddRemoveHostAggregateForm isAdd={false} />
+    );
+
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
     });
+
+    expect(container).toMatchSnapshot();
   });
 
-  it('should call miqRedirectBack when canceling add host form', async(done) => {
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<AddRemoveHostAggregateForm />);
+  it('should call miqRedirectBack when canceling add host form', async() => {
+    const user = userEvent.setup();
+
+    renderWithRedux(<AddRemoveHostAggregateForm />);
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: /cancel/i })
+      ).toBeInTheDocument();
     });
-    wrapper.find('button').last().simulate('click');
-    expect(miqRedirectBack).toHaveBeenCalledWith('Addition of Host was cancelled by the user.', 'warning', '/host_aggregate/show_list');
-    done();
+
+    const cancelButton = screen.getByRole('button', { name: /cancel/i });
+    await user.click(cancelButton);
+
+    expect(miqRedirectBack).toHaveBeenCalledWith(
+      'Addition of Host was cancelled by the user.',
+      'warning',
+      '/host_aggregate/show_list'
+    );
   });
 
-  it('should call miqRedirectBack when canceling remove host form', async(done) => {
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<AddRemoveHostAggregateForm isAdd={false} />);
+  it('should call miqRedirectBack when canceling remove host form', async() => {
+    const user = userEvent.setup();
+
+    renderWithRedux(<AddRemoveHostAggregateForm isAdd={false} />);
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: /cancel/i })
+      ).toBeInTheDocument();
     });
-    wrapper.find('button').last().simulate('click');
-    expect(miqRedirectBack).toHaveBeenCalledWith('Removal of Host was cancelled by the user.', 'warning', '/host_aggregate/show_list');
-    done();
+
+    const cancelButton = screen.getByRole('button', { name: /cancel/i });
+    await user.click(cancelButton);
+
+    expect(miqRedirectBack).toHaveBeenCalledWith(
+      'Removal of Host was cancelled by the user.',
+      'warning',
+      '/host_aggregate/show_list'
+    );
   });
 });

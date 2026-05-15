@@ -1,6 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import toJson from 'enzyme-to-json';
+import { render } from '@testing-library/react';
 
 import DashboardToolbar from '../../components/dashboard_toolbar';
 
@@ -11,17 +10,17 @@ const dashboardProps = {
   items: [
     {
       id: 31,
-      type: "button",
-      text: "add",
-      image: "fa fa-pie-chart fa-lg",
-      title: "Add this Chart Widget"
+      type: 'button',
+      text: 'add',
+      image: 'fa fa-pie-chart fa-lg',
+      title: 'Add this Chart Widget',
     },
   ],
-}
+};
 
 describe('<DashboardToolbar />', () => {
   it('renders ok', () => {
-    const t = mount(<DashboardToolbar {...dashboardProps} />);
-    expect(toJson(t)).toMatchSnapshot();
+    const { container } = render(<DashboardToolbar {...dashboardProps} />);
+    expect(container).toMatchSnapshot();
   });
 });

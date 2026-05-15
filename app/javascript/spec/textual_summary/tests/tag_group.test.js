@@ -1,9 +1,7 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import toJson from 'enzyme-to-json';
+import { render } from '@testing-library/react';
 import TagGroup from '../../../components/textual_summary/tag_group';
 import { tagGroupData } from '../data/tag_group';
-import IconOrImage from '../../../components/textual_summary/icon_or_image';
 
 describe('TagGroup', () => {
   /*
@@ -16,8 +14,10 @@ describe('TagGroup', () => {
    *      values joined with "<b>&nbsp;|..."
    */
   it('renders just fine', () => {
-    const image = mount(<TagGroup items={tagGroupData.items} title={tagGroupData.title} />);
-    expect(toJson(image)).toMatchSnapshot();
+    const { container } = render(
+      <TagGroup items={tagGroupData.items} title={tagGroupData.title} />
+    );
+    expect(container).toMatchSnapshot();
   });
 
   it('rendered array row with icon and values joined with "<b>&nbsp;|&nbsp;</b>")', () => {
@@ -35,8 +35,12 @@ describe('TagGroup', () => {
       title: 'Smart Management',
     };
 
-    const wrapper = mount(<TagGroup items={tagData.items} title={tagData.title} />);
-    expect(wrapper.html()).toContain('<div class="expand wrap_text">Policy\n2</div>');
-    expect(wrapper.containsMatchingElement(<i className="fa fa-tag" />)).toEqual(true);
+    const { container } = render(
+      <TagGroup items={tagData.items} title={tagData.title} />
+    );
+    expect(container.innerHTML).toContain(
+      '<div class="expand wrap_text">Policy\n2</div>'
+    );
+    expect(container.querySelector('i.fa.fa-tag')).toBeInTheDocument();
   });
 });

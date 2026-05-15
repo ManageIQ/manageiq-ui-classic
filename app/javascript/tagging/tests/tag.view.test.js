@@ -1,23 +1,21 @@
 import React from 'react';
+import { render } from '@testing-library/react';
 import TagView from '../components/InnerComponents/TagView';
-import { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
-
-const assignedTags = [
-  {
-    label: 'Name',
-    id: 1,
-    values: [{ label: 'Pepa', id: 11 }]
-  }
-];
-const onDelete = jest.fn();
 
 describe('Tag view', () => {
-  it('match snapshot', () => {
-    const component = shallow(
+  const assignedTags = [
+    {
+      label: 'Name',
+      id: 1,
+      values: [{ label: 'Pepa', id: 11 }],
+    },
+  ];
+  const onDelete = jest.fn();
+
+  it('should match snapshot', () => {
+    const { container } = render(
       <TagView assignedTags={assignedTags} onTagDeleteClick={onDelete} />
     );
-    const tree = toJson(component);
-    expect(tree).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 });

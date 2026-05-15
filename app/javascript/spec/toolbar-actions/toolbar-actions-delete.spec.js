@@ -1,11 +1,8 @@
 import * as deleteActions from '../../toolbar-actions/delete';
 import { getGridChecks } from '../../toolbar-actions/util.js';
 
-require('../helpers/angular.js');
-require('../helpers/addFlash.js');
-require('../helpers/sprintf.js');
-require('../helpers/miqAjaxButton.js');
-require('angular-mocks');
+import '../helpers/angular';
+import 'angular-mocks';
 
 describe('Toolbar actions', () => {
   beforeEach(() => {

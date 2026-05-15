@@ -1,12 +1,11 @@
 import React from 'react';
-import { act } from 'react-dom/test-utils';
+import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import fetchMock from 'fetch-mock';
-import { mount } from '../helpers/mountForm';
+import { renderWithRedux } from '../helpers/mountForm';
 import RegionForm from '../../components/region-form';
-import MiqFormRenderer from '../../forms/data-driven-form';
 import miqRedirectBack from '../../helpers/miq-redirect-back';
 import '../helpers/miqSparkle';
-import '../helpers/addFlash';
 import '../helpers/miqFlashLater';
 
 describe('RegionForm', () => {
@@ -15,6 +14,7 @@ describe('RegionForm', () => {
   const sparkleOffSpy = jest.spyOn(window, 'miqSparkleOff');
   const flashSpy = jest.spyOn(window, 'add_flash');
   const flashLaterSpy = jest.spyOn(window, 'miqFlashLater');
+
   beforeEach(() => {
     initialProps = {
       id: '123',
@@ -30,85 +30,97 @@ describe('RegionForm', () => {
     flashLaterSpy.mockReset();
   });
 
-  it('should mount and set initialValues', async(done) => {
+  it('should mount and set initialValues', async() => {
     fetchMock.getOnce('/api/regions/123?attributes=description', {
       description: 'foo',
     });
+    renderWithRedux(<RegionForm {...initialProps} />);
 
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<RegionForm {...initialProps} />);
+    await waitFor(() => {
+      expect(screen.getByLabelText(/Description/i)).toBeInTheDocument();
     });
-    wrapper.update();
-    expect(wrapper.find(MiqFormRenderer).props().initialValues).toEqual({
-      description: 'foo',
-    });
+    expect(screen.getByLabelText(/Description/i)).toHaveValue('foo');
     expect(fetchMock.calls()).toHaveLength(1);
     expect(sparkleOnSpy).toHaveBeenCalled();
     expect(sparkleOffSpy).toHaveBeenCalled();
-    done();
   });
 
-  it('should successfully call cancel', async(done) => {
+  it('should successfully call cancel', async() => {
+    const user = userEvent.setup();
     fetchMock.getOnce('/api/regions/123?attributes=description', {
       description: 'foo',
     });
+    renderWithRedux(<RegionForm {...initialProps} />);
 
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<RegionForm {...initialProps} />);
+    await waitFor(() => {
+      expect(screen.getByLabelText(/Description/i)).toBeInTheDocument();
     });
-    wrapper.update();
-    wrapper.find('button.cds--btn--secondary').last().simulate('click');
-    expect(miqRedirectBack).toHaveBeenCalledWith('Edit of Region was cancelled by the user', 'success', '/ops/explorer/?button=cancel'); // eslint-disable-line max-len
-    done();
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+
+    expect(miqRedirectBack).toHaveBeenCalledWith(
+      'Edit of Region was cancelled by the user',
+      'success',
+      '/ops/explorer/?button=cancel'
+    );
   });
 
-  it('should call addFlash when resetting edit form', async(done) => {
+  it('should call addFlash when resetting edit form', async() => {
+    const user = userEvent.setup();
     fetchMock.getOnce('/api/regions/123?attributes=description', {
       description: 'foo',
     });
+    renderWithRedux(<RegionForm {...initialProps} />);
 
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<RegionForm {...initialProps} />);
+    await waitFor(() => {
+      expect(screen.getByLabelText(/Description/i)).toBeInTheDocument();
     });
-    wrapper.update();
-    wrapper.find('input').first().simulate('change', { target: { value: 'bar' } });
-    wrapper.update();
-    wrapper.find('button').at(1).simulate('click');
-    expect(flashSpy).toHaveBeenCalledWith('All changes have been reset', 'warn');
-    done();
+    const descriptionInput = screen.getByLabelText(/Description/i);
+    await user.clear(descriptionInput);
+    await user.type(descriptionInput, 'bar');
+    const resetButton = screen.getByRole('button', { name: 'Reset' });
+    await user.click(resetButton);
+    expect(flashSpy).toHaveBeenCalledWith(
+      'All changes have been reset',
+      'warn'
+    );
   });
 
-  it('should enable submit button and call submit callback', async(done) => {
+  it('should enable submit button and call submit callback', async() => {
+    const user = userEvent.setup();
     fetchMock
       .getOnce('/api/regions/123?attributes=description', {
         description: 'foo',
       })
       .postOnce('/api/regions/123', {});
+    const { container } = renderWithRedux(<RegionForm {...initialProps} />);
 
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<RegionForm {...initialProps} />);
+    await waitFor(() => {
+      expect(screen.getByLabelText(/Description/i)).toBeInTheDocument();
     });
-    wrapper.update();
-    await act(async() => {
-      wrapper.find('input').first().simulate('change', { target: { value: 'bar' } });
+    const descriptionInput = screen.getByLabelText(/Description/i);
+    await user.clear(descriptionInput);
+    await user.type(descriptionInput, 'bar');
+    let submitButton;
+    await waitFor(() => {
+      submitButton = container.querySelector('button.cds--btn--primary');
+      expect(submitButton).not.toBeDisabled();
     });
-    wrapper.update();
-    setTimeout(async() => {
-      await act(async() => {
-        wrapper.find('form').simulate('submit');
-      });
-      expect(JSON.parse(fetchMock.calls()[1][1].body)).toEqual({
-        "action": "edit",
-        "resource": {
-          "description": "bar",
-        }
-      });
-      expect(miqRedirectBack).toHaveBeenCalledWith('Region was saved', 'success', '/ops/explorer/123?button=save'); // eslint-disable-line max-len
-      done();
-    }, 500);
+    await user.click(submitButton);
+    await waitFor(() => {
+      expect(fetchMock.called('/api/regions/123')).toBe(true);
+    });
+    expect(JSON.parse(fetchMock.calls()[1][1].body)).toEqual({
+      action: 'edit',
+      resource: {
+        description: 'bar',
+      },
+    });
+
+    expect(miqRedirectBack).toHaveBeenCalledWith(
+      'Region was saved',
+      'success',
+      '/ops/explorer/123?button=save'
+    );
   });
 });

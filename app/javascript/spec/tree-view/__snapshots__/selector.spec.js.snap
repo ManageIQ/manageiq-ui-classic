@@ -1,448 +1,169 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TreeSelector component should render correctly 1`] = `
-<TreeViewSelector
-  clearLabel="Clear"
-  closeLabel="Close"
-  component="tree-selector"
-  identifier={[Function]}
-  isClearable={true}
-  label="tree-selector"
-  lazyLoadData={[Function]}
-  loadData={[Function]}
-  modalLabel="Toggle"
-  name="tree-selector"
-  selectLabel="Select"
->
-  <FormGroup
-    className="miq-common-tree-view-selector"
-    legendText="tree-selector"
+<div>
+  <form
+    class="cds--form form-0-2-3"
+    novalidate=""
   >
     <fieldset
-      className="cds--fieldset miq-common-tree-view-selector"
-      disabled={false}
+      class="cds--fieldset miq-common-tree-view-selector"
     >
       <legend
-        className="cds--label"
+        class="cds--label"
       >
         tree-selector
       </legend>
-      <Grid
-        className="miq-tree-view-selector-grid"
-        condensed={true}
+      <div
+        class="miq-tree-view-selector-grid cds--css-grid cds--css-grid--condensed"
       >
-        <ForwardRef
-          className="miq-tree-view-selector-grid"
-          condensed={true}
+        <div
+          class="miq-tree-view-selector-input-grid-column cds--sm:col-span-3 cds--md:col-span-6 cds--lg:col-span-14 cds--css-grid-column"
         >
-          <GridSettings
-            mode="css-grid"
-            subgrid={true}
+          <div
+            class="cds--form-item cds--text-input-wrapper"
           >
             <div
-              className="miq-tree-view-selector-grid cds--css-grid cds--css-grid--condensed"
+              class="cds--text-input__label-wrapper"
             >
-              <ForwardRef
-                className="miq-tree-view-selector-input-grid-column"
-                lg={14}
-                md={6}
-                sm={3}
-              >
-                <ForwardRef
-                  as="div"
-                  className="miq-tree-view-selector-input-grid-column"
-                  lg={14}
-                  md={6}
-                  sm={3}
-                >
-                  <div
-                    className="miq-tree-view-selector-input-grid-column cds--sm:col-span-3 cds--md:col-span-6 cds--lg:col-span-14 cds--css-grid-column"
-                  >
-                    <TextInput
-                      id="tree-selector"
-                      invalid={false}
-                      invalidText=""
-                      key="tree-selector"
-                      labelText=""
-                      name="tree-selector"
-                      onBlur={[Function]}
-                      onChange={[Function]}
-                      onFocus={[Function]}
-                      value=""
-                      warn={false}
-                      warnText=""
-                    >
-                      <div
-                        className="cds--form-item cds--text-input-wrapper"
-                      >
-                        <div
-                          className="cds--text-input__label-wrapper"
-                        >
-                          <ForwardRef
-                            as="label"
-                            className="cds--label"
-                            htmlFor="tree-selector"
-                          >
-                            <label
-                              className="cds--label"
-                              dir="auto"
-                              htmlFor="tree-selector"
-                            />
-                          </ForwardRef>
-                        </div>
-                        <div
-                          className="cds--text-input__field-outer-wrapper"
-                        >
-                          <div
-                            className="cds--text-input__field-wrapper"
-                            data-invalid={null}
-                          >
-                            <input
-                              className="cds--text-input"
-                              disabled={false}
-                              id="tree-selector"
-                              name="tree-selector"
-                              onBlur={[Function]}
-                              onChange={[Function]}
-                              onClick={[Function]}
-                              onFocus={[Function]}
-                              type="text"
-                              value=""
-                            />
-                            <span
-                              aria-atomic="true"
-                              aria-live="assertive"
-                              className="cds--text-input__counter-alert"
-                              role="alert"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </TextInput>
-                  </div>
-                </ForwardRef>
-              </ForwardRef>
-              <ForwardRef
-                lg={1}
-                md={1}
-                sm={1}
-              >
-                <ForwardRef
-                  as="div"
-                  lg={1}
-                  md={1}
-                  sm={1}
-                >
-                  <div
-                    className="cds--sm:col-span-1 cds--md:col-span-1 cds--lg:col-span-1 cds--css-grid-column"
-                  >
-                    <Button
-                      className="tree-selector-toggle"
-                      hasIconOnly={true}
-                      iconDescription="Toggle"
-                      kind="primary"
-                      onClick={[Function]}
-                      renderIcon={[Function]}
-                      size="md"
-                    >
-                      <ForwardRef
-                        align="top"
-                        autoAlign={false}
-                        className="tree-selector-toggle"
-                        dropShadow={false}
-                        highContrast={true}
-                        kind="primary"
-                        label="Toggle"
-                        onClick={[Function]}
-                        renderIcon={null}
-                        size="md"
-                      >
-                        <ForwardRef
-                          align="top"
-                          autoAlign={false}
-                          className="cds--icon-tooltip"
-                          closeOnActivation={true}
-                          defaultOpen={false}
-                          dropShadow={false}
-                          enterDelayMs={100}
-                          highContrast={true}
-                          label="Toggle"
-                          leaveDelayMs={100}
-                        >
-                          <Popover
-                            align="top"
-                            autoAlign={false}
-                            className="cds--tooltip cds--icon-tooltip"
-                            dropShadow={false}
-                            highContrast={true}
-                            onKeyDown={[Function]}
-                            onMouseLeave={[Function]}
-                            open={false}
-                          >
-                            <span
-                              className="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
-                              onKeyDown={[Function]}
-                              onMouseLeave={[Function]}
-                            >
-                              <div
-                                className="cds--tooltip-trigger__wrapper"
-                              >
-                                <ForwardRef(ButtonBase)
-                                  aria-labelledby="tooltip-2"
-                                  className="tree-selector-toggle"
-                                  hasIconOnly={true}
-                                  kind="primary"
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onMouseDown={[Function]}
-                                  onMouseEnter={[Function]}
-                                  onMouseLeave={[Function]}
-                                  onMouseMove={[Function]}
-                                  onTouchStart={[Function]}
-                                  renderIcon={null}
-                                  size="md"
-                                >
-                                  <button
-                                    aria-labelledby="tooltip-2"
-                                    className="tree-selector-toggle cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
-                                    disabled={false}
-                                    onBlur={[Function]}
-                                    onClick={[Function]}
-                                    onFocus={[Function]}
-                                    onMouseDown={[Function]}
-                                    onMouseEnter={[Function]}
-                                    onMouseLeave={[Function]}
-                                    onMouseMove={[Function]}
-                                    onTouchStart={[Function]}
-                                    type="button"
-                                  >
-                                    <renderIcon>
-                                      <ForwardRef(TreeViewAlt)
-                                        size={16}
-                                      >
-                                        <Icon
-                                          fill="currentColor"
-                                          height={16}
-                                          viewBox="0 0 32 32"
-                                          width={16}
-                                          xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                          <svg
-                                            aria-hidden={true}
-                                            fill="currentColor"
-                                            focusable="false"
-                                            height={16}
-                                            preserveAspectRatio="xMidYMid meet"
-                                            viewBox="0 0 32 32"
-                                            width={16}
-                                            xmlns="http://www.w3.org/2000/svg"
-                                          >
-                                            <path
-                                              d="M23,9h6a2,2,0,0,0,2-2V3a2,2,0,0,0-2-2H23a2,2,0,0,0-2,2V4H11V3A2,2,0,0,0,9,1H3A2,2,0,0,0,1,3V7A2,2,0,0,0,3,9H9a2,2,0,0,0,2-2V6h4V26a2.0023,2.0023,0,0,0,2,2h4v1a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V25a2,2,0,0,0-2-2H23a2,2,0,0,0-2,2v1H17V17h4v1a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V14a2,2,0,0,0-2-2H23a2,2,0,0,0-2,2v1H17V6h4V7A2,2,0,0,0,23,9Zm0-6h6V7H23ZM9,7H3V3H9ZM23,25h6v4H23Zm0-11h6v4H23Z"
-                                              transform="translate(0 .005)"
-                                            />
-                                          </svg>
-                                        </Icon>
-                                      </ForwardRef(TreeViewAlt)>
-                                    </renderIcon>
-                                  </button>
-                                </ForwardRef(ButtonBase)>
-                              </div>
-                              <PopoverContent
-                                aria-hidden="true"
-                                className="cds--tooltip-content"
-                                id="tooltip-2"
-                                onMouseEnter={[Function]}
-                                role="tooltip"
-                              >
-                                <span
-                                  aria-hidden="true"
-                                  className="cds--popover"
-                                  id="tooltip-2"
-                                  onMouseEnter={[Function]}
-                                  role="tooltip"
-                                >
-                                  <span
-                                    className="cds--popover-content cds--tooltip-content"
-                                  >
-                                    Toggle
-                                  </span>
-                                  <span
-                                    className="cds--popover-caret"
-                                  />
-                                </span>
-                              </PopoverContent>
-                            </span>
-                          </Popover>
-                        </ForwardRef>
-                      </ForwardRef>
-                    </Button>
-                  </div>
-                </ForwardRef>
-              </ForwardRef>
-              <ForwardRef
-                lg={1}
-                md={1}
-                sm={1}
-              >
-                <ForwardRef
-                  as="div"
-                  lg={1}
-                  md={1}
-                  sm={1}
-                >
-                  <div
-                    className="cds--sm:col-span-1 cds--md:col-span-1 cds--lg:col-span-1 cds--css-grid-column"
-                  >
-                    <Button
-                      className="tree-selector-clear"
-                      hasIconOnly={true}
-                      iconDescription="Clear"
-                      onClick={[Function]}
-                      renderIcon={[Function]}
-                      size="md"
-                    >
-                      <ForwardRef
-                        align="top"
-                        autoAlign={false}
-                        className="tree-selector-clear"
-                        dropShadow={false}
-                        highContrast={true}
-                        kind="primary"
-                        label="Clear"
-                        onClick={[Function]}
-                        renderIcon={null}
-                        size="md"
-                      >
-                        <ForwardRef
-                          align="top"
-                          autoAlign={false}
-                          className="cds--icon-tooltip"
-                          closeOnActivation={true}
-                          defaultOpen={false}
-                          dropShadow={false}
-                          enterDelayMs={100}
-                          highContrast={true}
-                          label="Clear"
-                          leaveDelayMs={100}
-                        >
-                          <Popover
-                            align="top"
-                            autoAlign={false}
-                            className="cds--tooltip cds--icon-tooltip"
-                            dropShadow={false}
-                            highContrast={true}
-                            onKeyDown={[Function]}
-                            onMouseLeave={[Function]}
-                            open={false}
-                          >
-                            <span
-                              className="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
-                              onKeyDown={[Function]}
-                              onMouseLeave={[Function]}
-                            >
-                              <div
-                                className="cds--tooltip-trigger__wrapper"
-                              >
-                                <ForwardRef(ButtonBase)
-                                  aria-labelledby="tooltip-5"
-                                  className="tree-selector-clear"
-                                  hasIconOnly={true}
-                                  kind="primary"
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onMouseDown={[Function]}
-                                  onMouseEnter={[Function]}
-                                  onMouseLeave={[Function]}
-                                  onMouseMove={[Function]}
-                                  onTouchStart={[Function]}
-                                  renderIcon={null}
-                                  size="md"
-                                >
-                                  <button
-                                    aria-labelledby="tooltip-5"
-                                    className="tree-selector-clear cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
-                                    disabled={false}
-                                    onBlur={[Function]}
-                                    onClick={[Function]}
-                                    onFocus={[Function]}
-                                    onMouseDown={[Function]}
-                                    onMouseEnter={[Function]}
-                                    onMouseLeave={[Function]}
-                                    onMouseMove={[Function]}
-                                    onTouchStart={[Function]}
-                                    type="button"
-                                  >
-                                    <renderIcon>
-                                      <ForwardRef(Close)
-                                        size={16}
-                                      >
-                                        <Icon
-                                          fill="currentColor"
-                                          height={16}
-                                          viewBox="0 0 32 32"
-                                          width={16}
-                                          xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                          <svg
-                                            aria-hidden={true}
-                                            fill="currentColor"
-                                            focusable="false"
-                                            height={16}
-                                            preserveAspectRatio="xMidYMid meet"
-                                            viewBox="0 0 32 32"
-                                            width={16}
-                                            xmlns="http://www.w3.org/2000/svg"
-                                          >
-                                            <path
-                                              d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
-                                            />
-                                          </svg>
-                                        </Icon>
-                                      </ForwardRef(Close)>
-                                    </renderIcon>
-                                  </button>
-                                </ForwardRef(ButtonBase)>
-                              </div>
-                              <PopoverContent
-                                aria-hidden="true"
-                                className="cds--tooltip-content"
-                                id="tooltip-5"
-                                onMouseEnter={[Function]}
-                                role="tooltip"
-                              >
-                                <span
-                                  aria-hidden="true"
-                                  className="cds--popover"
-                                  id="tooltip-5"
-                                  onMouseEnter={[Function]}
-                                  role="tooltip"
-                                >
-                                  <span
-                                    className="cds--popover-content cds--tooltip-content"
-                                  >
-                                    Clear
-                                  </span>
-                                  <span
-                                    className="cds--popover-caret"
-                                  />
-                                </span>
-                              </PopoverContent>
-                            </span>
-                          </Popover>
-                        </ForwardRef>
-                      </ForwardRef>
-                    </Button>
-                  </div>
-                </ForwardRef>
-              </ForwardRef>
+              <label
+                class="cds--label"
+                dir="auto"
+                for="tree-selector"
+              />
             </div>
-          </GridSettings>
-        </ForwardRef>
-      </Grid>
+            <div
+              class="cds--text-input__field-outer-wrapper"
+            >
+              <div
+                class="cds--text-input__field-wrapper"
+              >
+                <input
+                  class="cds--text-input"
+                  id="tree-selector"
+                  name="tree-selector"
+                  type="text"
+                  value=""
+                />
+                
+                <span
+                  aria-atomic="true"
+                  aria-live="assertive"
+                  class="cds--text-input__counter-alert"
+                  role="alert"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--sm:col-span-1 cds--md:col-span-1 cds--lg:col-span-1 cds--css-grid-column"
+        >
+          <span
+            class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+          >
+            <div
+              class="cds--tooltip-trigger__wrapper"
+            >
+              <button
+                aria-labelledby="tooltip-2"
+                class="tree-selector-toggle cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 32 32"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M23,9h6a2,2,0,0,0,2-2V3a2,2,0,0,0-2-2H23a2,2,0,0,0-2,2V4H11V3A2,2,0,0,0,9,1H3A2,2,0,0,0,1,3V7A2,2,0,0,0,3,9H9a2,2,0,0,0,2-2V6h4V26a2.0023,2.0023,0,0,0,2,2h4v1a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V25a2,2,0,0,0-2-2H23a2,2,0,0,0-2,2v1H17V17h4v1a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V14a2,2,0,0,0-2-2H23a2,2,0,0,0-2,2v1H17V6h4V7A2,2,0,0,0,23,9Zm0-6h6V7H23ZM9,7H3V3H9ZM23,25h6v4H23Zm0-11h6v4H23Z"
+                    transform="translate(0 .005)"
+                  />
+                </svg>
+              </button>
+            </div>
+            <span
+              aria-hidden="true"
+              class="cds--popover"
+              id="tooltip-2"
+              role="tooltip"
+            >
+              <span
+                class="cds--popover-content cds--tooltip-content"
+              >
+                Toggle
+              </span>
+              <span
+                class="cds--popover-caret"
+              />
+            </span>
+          </span>
+        </div>
+        <div
+          class="cds--sm:col-span-1 cds--md:col-span-1 cds--lg:col-span-1 cds--css-grid-column"
+        >
+          <span
+            class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+          >
+            <div
+              class="cds--tooltip-trigger__wrapper"
+            >
+              <button
+                aria-labelledby="tooltip-5"
+                class="tree-selector-clear cds--btn cds--btn--md cds--layout--size-md cds--btn--primary cds--btn--icon-only"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 32 32"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <span
+              aria-hidden="true"
+              class="cds--popover"
+              id="tooltip-5"
+              role="tooltip"
+            >
+              <span
+                class="cds--popover-content cds--tooltip-content"
+              >
+                Clear
+              </span>
+              <span
+                class="cds--popover-caret"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
     </fieldset>
-  </FormGroup>
-</TreeViewSelector>
+    <div
+      class="cds--btn-set"
+    >
+      <button
+        class="cds--btn cds--btn--primary"
+        type="submit"
+        variant="primary"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>
 `;

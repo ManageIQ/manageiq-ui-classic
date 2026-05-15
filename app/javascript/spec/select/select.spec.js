@@ -1,8 +1,10 @@
 import React from 'react';
-import { act } from 'react-dom/test-utils';
-import { mount } from 'enzyme';
-import toJson from 'enzyme-to-json';
-import { FormRenderer, useFormApi } from '@data-driven-forms/react-form-renderer';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import {
+  FormRenderer,
+  useFormApi,
+} from '@data-driven-forms/react-form-renderer';
 import { FormTemplate } from '@data-driven-forms/carbon-component-mapper';
 import Select from '../../components/select';
 
@@ -12,6 +14,7 @@ const FormApiComponent = () => {
   return <DummyComponent {...formOptions} />;
 };
 
+// eslint-disable-next-line react/prop-types
 const RendererWrapper = ({ onChange }) => (
   <FormRenderer
     onSubmit={() => {}}
@@ -41,26 +44,30 @@ const RendererWrapper = ({ onChange }) => (
             },
           ],
           onChange,
-        }],
+        },
+      ],
     }}
   />
 );
 
 describe('Select component', () => {
   it('should match the snapshot', () => {
-    const wrapper = mount(<RendererWrapper />);
-    expect(toJson(wrapper.find(Select))).toMatchSnapshot();
+    const { container } = render(<RendererWrapper />);
+
+    expect(screen.getByLabelText('Choose')).toBeInTheDocument();
+    expect(container).toMatchSnapshot();
   });
 
-  it('should call onChange when changed', async(done) => {
+  it('should call onChange when changed', async () => {
+    const user = userEvent.setup();
     const onChange = jest.fn();
-    const wrapper = mount(<RendererWrapper onChange={onChange} />);
+    render(<RendererWrapper onChange={onChange} />);
 
-    await act(async() => {
-      wrapper.find('DummyComponent').prop('change')('selectField', '2');
+    const select = screen.getByLabelText('Choose');
+    await user.selectOptions(select, '2');
+
+    await waitFor(() => {
+      expect(onChange).toHaveBeenCalledWith('2');
     });
-
-    expect(onChange).toHaveBeenCalled();
-    done();
   });
 });

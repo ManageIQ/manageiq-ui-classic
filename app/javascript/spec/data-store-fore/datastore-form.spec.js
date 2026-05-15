@@ -1,14 +1,10 @@
-/* eslint-disable jest/no-done-callback */
 import React from 'react';
-import toJson from 'enzyme-to-json';
+import { waitFor } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
-import { shallow } from 'enzyme';
-import { act } from 'react-dom/test-utils';
-import { mount } from '../helpers/mountForm';
+import { renderWithRedux } from '../helpers/mountForm';
 import DatastoreForm from '../../components/data-store-form';
 
-require('../helpers/miqSparkle.js');
-require('../helpers/miqAjaxButton.js');
+import '../helpers/miqAjaxButton';
 
 describe('Datastore form component', () => {
   let submitSpy;
@@ -31,14 +27,16 @@ describe('Datastore form component', () => {
   describe('Datastore domain form component', () => {
     it('should render the Domain adding form', () => {
       const props = {
+        type: 'domain',
         domain: true,
         namespacePath: '',
         namespaceId: 'new',
         nameReadOnly: false,
         descReadOnly: false,
       };
-      const wrapper = shallow(
+      const { container } = renderWithRedux(
         <DatastoreForm
+          type={props.type}
           domain={props.domain}
           namespacePath={props.namespacePath}
           namespaceId={props.namespaceId}
@@ -46,14 +44,14 @@ describe('Datastore form component', () => {
           descReadOnly={props.descReadOnly}
         />
       );
-      wrapper.update();
       fetchMock.postOnce('/miq_ae_class/create_namespace/new?button=add', data);
-      expect(wrapper.find('input[name="namespacePath"]')).toHaveLength(0);
-      expect(toJson(wrapper)).toMatchSnapshot();
+      expect(container.querySelector('input[name="namespacePath"]')).toBeNull();
+      expect(container).toMatchSnapshot();
     });
 
-    it('should render the Domain editing form', async(done) => {
+    it('should render the Domain editing form', async() => {
       const props = {
+        type: 'domain',
         domain: true,
         namespacePath: '',
         namespaceId: 5630,
@@ -62,37 +60,10 @@ describe('Datastore form component', () => {
       };
       fetchMock.getOnce(`/miq_ae_class/namespace/${props.namespaceId}`, {});
       fetchMock.postOnce(`/miq_ae_class/namespace/${props.namespaceId}`, data);
-      let wrapper;
-      await act(async() => {
-        wrapper = mount(
-          <DatastoreForm
-            domain={props.domain}
-            namespacePath={props.namespacePath}
-            namespaceId={props.namespaceId}
-            nameReadOnly={props.nameReadOnly}
-            descReadOnly={props.descReadOnly}
-          />
-        );
-      });
-      wrapper.update();
-      expect(fetchMock.called(`/miq_ae_class/namespace/${props.namespaceId}`)).toBe(true);
-      expect(wrapper.find('input[name="namespacePath"]')).toHaveLength(0);
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
-    });
-  });
 
-  describe('Datastore namespace form component', () => {
-    it('should render the Namespace adding form', () => {
-      const props = {
-        domain: false,
-        namespacePath: '/test/infrastructure',
-        namespaceId: 'new',
-        nameReadOnly: false,
-        descReadOnly: false,
-      };
-      const wrapper = shallow(
+      const { container } = renderWithRedux(
         <DatastoreForm
+          type={props.type}
           domain={props.domain}
           namespacePath={props.namespacePath}
           namespaceId={props.namespaceId}
@@ -100,13 +71,45 @@ describe('Datastore form component', () => {
           descReadOnly={props.descReadOnly}
         />
       );
-      wrapper.update();
+
+      // Wait for the API call to complete
+      await waitFor(() => {
+        expect(
+          fetchMock.called(`/miq_ae_class/namespace/${props.namespaceId}`)
+        ).toBe(true);
+      });
+      expect(container.querySelector('input[name="namespacePath"]')).toBeNull();
+      expect(container).toMatchSnapshot();
+    });
+  });
+
+  describe('Datastore namespace form component', () => {
+    it('should render the Namespace adding form', () => {
+      const props = {
+        type: 'namespace',
+        domain: false,
+        namespacePath: '/test/infrastructure',
+        namespaceId: 'new',
+        nameReadOnly: false,
+        descReadOnly: false,
+      };
+      const { container } = renderWithRedux(
+        <DatastoreForm
+          type={props.type}
+          domain={props.domain}
+          namespacePath={props.namespacePath}
+          namespaceId={props.namespaceId}
+          nameReadOnly={props.nameReadOnly}
+          descReadOnly={props.descReadOnly}
+        />
+      );
       fetchMock.postOnce('/miq_ae_class/create_namespace/new?button=add', data);
-      expect(toJson(wrapper)).toMatchSnapshot();
+      expect(container).toMatchSnapshot();
     });
 
-    it('should render the Namespace editing form', async(done) => {
+    it('should render the Namespace editing form', async() => {
       const props = {
+        type: 'namespace',
         domain: false,
         namespacePath: '/test/infrastructure',
         namespaceId: 5631,
@@ -114,24 +117,34 @@ describe('Datastore form component', () => {
         descReadOnly: false,
       };
       fetchMock.getOnce(`/miq_ae_class/namespace/${props.namespaceId}`, data);
-      fetchMock.postOnce(`/miq_ae_class/update_namespace/${props.namespaceId}?button=save`, data);
-      let wrapper;
-      await act(async() => {
-        wrapper = mount(
-          <DatastoreForm
-            domain={props.domain}
-            namespacePath={props.namespacePath}
-            namespaceId={props.namespaceId}
-            nameReadOnly={props.nameReadOnly}
-            descReadOnly={props.descReadOnly}
-          />
-        );
+      fetchMock.postOnce(
+        `/miq_ae_class/update_namespace/${props.namespaceId}?button=save`,
+        data
+      );
+
+      const { container } = renderWithRedux(
+        <DatastoreForm
+          type={props.type}
+          domain={props.domain}
+          namespacePath={props.namespacePath}
+          namespaceId={props.namespaceId}
+          nameReadOnly={props.nameReadOnly}
+          descReadOnly={props.descReadOnly}
+        />
+      );
+
+      // Wait for the API call to complete
+      await waitFor(() => {
+        expect(
+          fetchMock.called(`/miq_ae_class/namespace/${props.namespaceId}`)
+        ).toBe(true);
       });
-      wrapper.update();
-      expect(fetchMock.called(`/miq_ae_class/namespace/${props.namespaceId}`)).toBe(true);
-      expect(wrapper.find('input[name="namespacePath"]').instance().value).toEqual(props.namespacePath);
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
+      const namespacePathInput = container.querySelector(
+        'input[name="namespacePath"]'
+      );
+      expect(namespacePathInput).toBeInTheDocument();
+      expect(namespacePathInput.value).toEqual(props.namespacePath);
+      expect(container).toMatchSnapshot();
     });
   });
 });

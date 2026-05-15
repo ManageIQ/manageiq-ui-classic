@@ -1,16 +1,9 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
+import { waitFor } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
-import { act } from 'react-dom/test-utils';
 import EvacuateForm from '../../components/evacuate-form/index';
-import {
-  hosts,
-} from './data';
-import { mount } from '../helpers/mountForm';
-
-require('../helpers/miqSparkle.js');
-
-jest.mock('../../helpers/miq-redirect-back', () => jest.fn());
+import { hosts } from './data';
+import { renderWithRedux } from '../helpers/mountForm';
 
 describe('evacuate form component', () => {
   afterEach(() => {
@@ -18,45 +11,66 @@ describe('evacuate form component', () => {
     fetchMock.restore();
   });
 
-  it('should render evacuate form with host options', async(done) => {
+  it('should render evacuate form with host options', async() => {
     fetchMock.getOnce('/vm_cloud/evacuate_form_fields/40', { hosts });
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<EvacuateForm recordId="40" />);
+
+    const { container } = renderWithRedux(<EvacuateForm recordId="40" />);
+
+    await waitFor(() => {
+      expect(fetchMock.calls()).toHaveLength(1);
     });
-    wrapper.update();
-    expect(fetchMock.calls()).toHaveLength(1);
-    expect(wrapper.find('input[name="auto_select_host"]').props().disabled).toBe(false);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+
+    const autoSelectHostInput = container.querySelector(
+      'input[name="auto_select_host"]'
+    );
+    expect(autoSelectHostInput).toBeInTheDocument();
+    expect(autoSelectHostInput.disabled).toBe(false);
+    expect(container).toMatchSnapshot();
   });
 
-  it('should render evacuate form when hosts empty', async(done) => {
+  it('should render evacuate form when hosts empty', async() => {
     const hosts = [];
     fetchMock.getOnce('/vm_cloud/evacuate_form_fields/40', { hosts });
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<EvacuateForm recordId="40" />);
+
+    const { container } = renderWithRedux(<EvacuateForm recordId="40" />);
+
+    await waitFor(() => {
+      expect(fetchMock.calls()).toHaveLength(1);
     });
-    wrapper.update();
-    expect(fetchMock.calls()).toHaveLength(1);
-    expect(wrapper.find('destination_host')).toHaveLength(0);
-    expect(wrapper.find('input[name="auto_select_host"]').props().disabled).toBe(true);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+
+    expect(
+      container.querySelector('[name="destination_host"]')
+    ).not.toBeInTheDocument();
+
+    const autoSelectHostInput = container.querySelector(
+      'input[name="auto_select_host"]'
+    );
+    expect(autoSelectHostInput).toBeInTheDocument();
+    expect(autoSelectHostInput.disabled).toBe(true);
+    expect(container).toMatchSnapshot();
   });
 
-  it('should render evacuate form with multiple instances', async(done) => {
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<EvacuateForm recordId="" />);
+  it('should render evacuate form with multiple instances', async() => {
+    const { container } = renderWithRedux(<EvacuateForm recordId="" />);
+
+    await waitFor(() => {
+      expect(fetchMock.calls()).toHaveLength(0);
     });
-    wrapper.update();
-    expect(fetchMock.calls()).toHaveLength(0);
-    expect(wrapper.find('destination_host')).toHaveLength(0);
-    expect(wrapper.find('input[name="auto_select_host"]').props().disabled).toBe(true);
-    expect(wrapper.find('input[name="on_shared_storage"]').props().checked).toBe(true);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+
+    expect(
+      container.querySelector('[name="destination_host"]')
+    ).not.toBeInTheDocument();
+    const autoSelectHostInput = container.querySelector(
+      'input[name="auto_select_host"]'
+    );
+    expect(autoSelectHostInput).toBeInTheDocument();
+    expect(autoSelectHostInput.disabled).toBe(true);
+
+    const onSharedStorageInput = container.querySelector(
+      'input[name="on_shared_storage"]'
+    );
+    expect(onSharedStorageInput).toBeInTheDocument();
+    expect(onSharedStorageInput.checked).toBe(true);
+    expect(container).toMatchSnapshot();
   });
 });

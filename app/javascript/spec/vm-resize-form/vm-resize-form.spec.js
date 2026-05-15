@@ -1,12 +1,8 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
+import { waitFor } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
-import { shallow } from 'enzyme';
-import { act } from 'react-dom/test-utils';
-import { mount } from '../helpers/mountForm';
+import { renderWithRedux } from '../helpers/mountForm';
 import VmResizeForm from '../../components/vm-resize-form/vm-resize-form';
-
-require('../helpers/miqSparkle.js');
 
 describe('vm resize form component', () => {
   const response = {
@@ -36,25 +32,25 @@ describe('vm resize form component', () => {
     fetchMock.restore();
   });
 
-  it('should render form', () => {
-    const wrapper = shallow(<VmResizeForm />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+  it('should render form', async() => {
+    const { container } = renderWithRedux(<VmResizeForm recordId="1" />);
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
+    });
+    expect(container).toMatchSnapshot();
   });
 
-  it('should render a resize form', async(done) => {
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<VmResizeForm recordId="1" vmCloudResizeFormId="53" />);
+  it('should render a resize form', async() => {
+    const { container } = renderWithRedux(
+      <VmResizeForm recordId="1" vmCloudResizeFormId="53" />
+    );
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
     });
-
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
-    });
+    expect(container).toMatchSnapshot();
   });
 
-  it('should submit resize API call', async(done) => {
+  it('should submit resize API call', async() => {
     const submitData = {
       action: 'resize',
       resource: {
@@ -63,11 +59,13 @@ describe('vm resize form component', () => {
       resizeFormId: '53',
     };
     fetchMock.postOnce('/api/vms/1', submitData);
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<VmResizeForm recordId="1" vmCloudResizeFormId="53" />);
+
+    const { container } = renderWithRedux(
+      <VmResizeForm recordId="1" vmCloudResizeFormId="53" />
+    );
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
     });
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+    expect(container).toMatchSnapshot();
   });
 });

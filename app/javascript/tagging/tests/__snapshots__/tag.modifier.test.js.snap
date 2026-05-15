@@ -1,91 +1,166 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Tagging modifier match snapshot 1`] = `
-<Fragment>
-  <Grid
-    className="tag-modifier-header"
+exports[`Tagging modifier should match snapshot 1`] = `
+<div>
+  <div
+    class="tag-modifier-header cds--css-grid"
   >
-    <ForwardRef
-      lg={16}
-      md={8}
-      sm={4}
+    <div
+      class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
     >
       <h4>
         Add/Modify tag
       </h4>
-    </ForwardRef>
-  </Grid>
-  <Form
-    className="tag-modifier-form"
+    </div>
+  </div>
+  <form
+    class="cds--form tag-modifier-form"
     horizontal="true"
   >
-    <CategoryModifier
-      categoryLabel="Category"
-      isDisabled={false}
-      onTagCategoryChange={[Function]}
-      selectedTagCategory={
-        Object {
-          "id": 1,
-          "label": "animal",
-        }
-      }
-      tagCategories={
-        Array [
-          Object {
-            "id": 1,
-            "label": "Name",
-          },
-          Object {
-            "id": 2,
-            "label": "Number",
-          },
-          Object {
-            "id": 3,
-            "label": "Animal",
-          },
-          Object {
-            "id": 4,
-            "label": "Food",
-          },
-        ]
-      }
-    />
-    <ValueModifier
-      isDisabled={false}
-      multiValue={false}
-      onTagValueChange={[Function]}
-      selectedTagCategory={
-        Object {
-          "id": 1,
-          "label": "animal",
-        }
-      }
-      selectedTagValues={
-        Array [
-          Object {
-            "id": 1,
-            "label": "duck",
-          },
-        ]
-      }
-      valueLabel="Value"
-      values={
-        Array [
-          Object {
-            "id": 31,
-            "label": "Duck",
-          },
-          Object {
-            "id": 32,
-            "label": "Cat",
-          },
-          Object {
-            "id": 33,
-            "label": "Dog",
-          },
-        ]
-      }
-    />
-  </Form>
-</Fragment>
+    <fieldset
+      class="cds--fieldset"
+    >
+      <legend
+        class="cds--label"
+      >
+        Category
+      </legend>
+      <div
+        class="tag-modifier-form-row category-modifier cds--col"
+      >
+        <div
+          class="cds--dropdown__wrapper cds--list-box__wrapper tag-select"
+        >
+          
+          <div
+            class="cds--dropdown cds--list-box"
+            id="dropdown-tag-select"
+          >
+            <button
+              aria-activedescendant=""
+              aria-controls="downshift-0-menu"
+              aria-expanded="false"
+              aria-haspopup="listbox"
+              aria-labelledby="downshift-0-label"
+              class="cds--list-box__field"
+              id="downshift-0-toggle-button"
+              role="combobox"
+              tabindex="0"
+              title="Name"
+              type="button"
+            >
+              <span
+                class="cds--list-box__label"
+              >
+                Name
+              </span>
+              <div
+                class="cds--list-box__menu-icon"
+              >
+                <svg
+                  aria-label="Open menu"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  name="chevron--down"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                  />
+                  <title>
+                    Open menu
+                  </title>
+                </svg>
+              </div>
+            </button>
+            
+            <ul
+              aria-labelledby="downshift-0-label"
+              class="cds--list-box__menu"
+              id="downshift-0-menu"
+              role="listbox"
+            />
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset
+      class="cds--fieldset"
+    >
+      <legend
+        class="cds--label"
+      >
+        Value
+      </legend>
+      <div
+        class="tag-modifier-form-row value-modifier cds--col"
+      >
+        <div
+          class="cds--dropdown__wrapper cds--list-box__wrapper tag-select"
+        >
+          
+          <div
+            class="cds--dropdown cds--list-box"
+            id="dropdown-tag-select"
+          >
+            <button
+              aria-activedescendant=""
+              aria-controls="downshift-1-menu"
+              aria-expanded="false"
+              aria-haspopup="listbox"
+              aria-labelledby="downshift-1-label"
+              class="cds--list-box__field"
+              id="downshift-1-toggle-button"
+              role="combobox"
+              tabindex="0"
+              title="duck"
+              type="button"
+            >
+              <span
+                class="cds--list-box__label"
+              >
+                duck
+              </span>
+              <div
+                class="cds--list-box__menu-icon"
+              >
+                <svg
+                  aria-label="Open menu"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  name="chevron--down"
+                  preserveAspectRatio="xMidYMid meet"
+                  role="img"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                  />
+                  <title>
+                    Open menu
+                  </title>
+                </svg>
+              </div>
+            </button>
+            
+            <ul
+              aria-labelledby="downshift-1-label"
+              class="cds--list-box__menu"
+              id="downshift-1-menu"
+              role="listbox"
+            />
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>
 `;

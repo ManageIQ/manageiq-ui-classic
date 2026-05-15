@@ -1,68 +1,199 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Import datastore via git component should render correctly 1`] = `
-<div
-  style={
-    Object {
-      "paddingBottom": 16,
-    }
-  }
->
-  <Connect(MiqFormRenderer)
-    disableSubmit={
-      Array [
-        "pristine",
-        "invalid",
-      ]
-    }
-    initialValues={
-      Object {
-        "git_verify_ssl": true,
-      }
-    }
-    onSubmit={[Function]}
-    schema={
-      Object {
-        "fields": Array [
-          Object {
-            "component": "text-field",
-            "id": "git_url",
-            "label": "Git URL",
-            "name": "git_url",
-            "validate": Array [
-              Object {
-                "type": "required",
-              },
-              Object {
-                "message": "Please provide a valid git URL",
-                "pattern": "^(http|https)://.*",
-                "type": "pattern",
-              },
-            ],
-            "validateOnMount": true,
-          },
-          Object {
-            "component": "text-field",
-            "id": "git_username",
-            "label": "Username",
-            "name": "git_username",
-          },
-          Object {
-            "component": "text-field",
-            "id": "git_password",
-            "label": "Password",
-            "name": "git_password",
-            "type": "password",
-          },
-          Object {
-            "component": "checkbox",
-            "id": "git_verify_ssl",
-            "label": "Verify Peer Certificate",
-            "name": "git_verify_ssl",
-          },
-        ],
-      }
-    }
-  />
+<div>
+  <div
+    style="padding-bottom: 16px;"
+  >
+    <form
+      class="cds--form form-0-2-3 form-react"
+      novalidate=""
+    >
+      <div
+        class="cds--form-item cds--text-input-wrapper"
+      >
+        <div
+          class="cds--text-input__label-wrapper"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="git_url"
+          >
+            Git URL
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+            data-invalid="true"
+          >
+            <svg
+              aria-hidden="true"
+              class="cds--text-input__invalid-icon"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8,1C4.2,1,1,4.2,1,8s3.2,7,7,7s7-3.1,7-7S11.9,1,8,1z M7.5,4h1v5h-1C7.5,9,7.5,4,7.5,4z M8,12.2 c-0.4,0-0.8-0.4-0.8-0.8s0.3-0.8,0.8-0.8c0.4,0,0.8,0.4,0.8,0.8S8.4,12.2,8,12.2z"
+              />
+              <path
+                d="M7.5,4h1v5h-1C7.5,9,7.5,4,7.5,4z M8,12.2c-0.4,0-0.8-0.4-0.8-0.8s0.3-0.8,0.8-0.8 c0.4,0,0.8,0.4,0.8,0.8S8.4,12.2,8,12.2z"
+                data-icon-path="inner-path"
+                opacity="0"
+              />
+            </svg>
+            <input
+              aria-describedby="git_url-error-msg"
+              aria-invalid="true"
+              class="cds--text-input cds--text-input--invalid"
+              data-invalid="true"
+              id="git_url"
+              name="git_url"
+              type="text"
+              value=""
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+          <div
+            class="cds--form-requirement"
+            dir="auto"
+            id="git_url-error-msg"
+          >
+            Required
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--form-item cds--text-input-wrapper"
+      >
+        <div
+          class="cds--text-input__label-wrapper"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="git_username"
+          >
+            Username
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+          >
+            <input
+              class="cds--text-input"
+              id="git_username"
+              name="git_username"
+              type="text"
+              value=""
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--form-item cds--text-input-wrapper"
+      >
+        <div
+          class="cds--text-input__label-wrapper"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="git_password"
+          >
+            Password
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+          >
+            <input
+              class="cds--text-input"
+              id="git_password"
+              name="git_password"
+              type="password"
+              value=""
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cds--form-item cds--checkbox-wrapper"
+        >
+          <input
+            checked=""
+            class="cds--checkbox"
+            id="git_verify_ssl"
+            name="git_verify_ssl"
+            type="checkbox"
+            value=""
+          />
+          <label
+            class="cds--checkbox-label"
+            for="git_verify_ssl"
+            title=""
+          >
+            <div
+              class="cds--checkbox-label-text"
+              dir="auto"
+            >
+              Verify Peer Certificate
+              
+            </div>
+          </label>
+          <div
+            class="cds--checkbox__validation-msg"
+          />
+        </div>
+      </div>
+      <div
+        class="cds--btn-set"
+      >
+        <button
+          class="cds--btn cds--btn--primary cds--btn--disabled"
+          disabled=""
+          type="submit"
+          variant="primary"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
 </div>
 `;

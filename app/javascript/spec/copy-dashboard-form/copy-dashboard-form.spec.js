@@ -1,13 +1,12 @@
 import React from 'react';
+import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import fetchMock from 'fetch-mock';
-import { act } from 'react-dom/test-utils';
 import CopyDashboardForm from '../../components/copy-dashboard-form/copy-dashboard-form';
-
+import { renderWithRedux } from '../helpers/mountForm';
 import '../helpers/miqSparkle';
 import '../helpers/miqAjaxButton';
-import MiqFormRenderer from '../../forms/data-driven-form';
 import * as handleFailure from '../../helpers/handle-failure';
-import { mount } from '../helpers/mountForm';
 
 describe('Copy Dashboard form', () => {
   let initialProps;
@@ -47,35 +46,34 @@ describe('Copy Dashboard form', () => {
 
   afterEach(() => {
     fetchMock.restore();
-
     submitSpyMiqSparkleOn.mockRestore();
     submitSpyMiqSparkleOff.mockRestore();
     spyMiqAjaxButton.mockRestore();
   });
 
-  it('should render correctly and set initialValue', async(done) => {
+  it('should render correctly and set initialValue', async() => {
     fetchMock
       .getOnce(baseUrl, dashboardData)
       .getOnce(apiUrl, apiData)
       .getOnce('/report/dashboard_get/55?name=Clint', { length: 1 });
 
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<CopyDashboardForm {...initialProps} />);
+    renderWithRedux(<CopyDashboardForm {...initialProps} />);
+
+    await waitFor(() => {
+      expect(screen.getByLabelText('Name')).toBeInTheDocument();
     });
 
-    wrapper.update();
-    expect(wrapper.find(MiqFormRenderer)).toHaveLength(1);
-    expect(wrapper.find('input[name="name"]').instance().value).toEqual('Clint');
-    expect(wrapper.find('input[name="description"]').instance().value).toEqual('good dashboard');
+    expect(screen.getByLabelText('Name')).toHaveValue('Clint');
+    expect(screen.getByLabelText('Description')).toHaveValue('good dashboard');
     expect(submitSpyMiqSparkleOn).toHaveBeenCalledTimes(1);
     expect(submitSpyMiqSparkleOff).toHaveBeenCalledTimes(1);
-    done();
   });
 
-  it('should handle error', async(done) => {
+  it('should handle error', async() => {
+    /* eslint-disable no-console */
     const original = console.error;
     console.error = jest.fn();
+    /* eslint-enable no-console */
 
     fetchMock
       .getOnce(baseUrl, dashboardData)
@@ -83,37 +81,41 @@ describe('Copy Dashboard form', () => {
       .getOnce('/report/dashboard_get/55?name=Clint', { length: 1 });
 
     handleFailure.default = jest.fn();
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<CopyDashboardForm {...initialProps} />);
-    });
 
-    wrapper.update();
-    expect(handleFailure.default).toHaveBeenCalled();
+    renderWithRedux(<CopyDashboardForm {...initialProps} />);
+    await waitFor(() => {
+      expect(handleFailure.default).toHaveBeenCalled();
+    });
+    /* eslint-disable no-console */
     expect(console.error).toHaveBeenCalled();
     console.error = original;
-    done();
+    /* eslint-enable no-console */
   });
 
-  it('should handle cancel', async(done) => {
+  it('should handle cancel', async() => {
+    const user = userEvent.setup();
     fetchMock
       .getOnce(baseUrl, dashboardData)
       .getOnce(apiUrl, apiData)
       .getOnce('/report/dashboard_get/55?name=Clint', { length: 1 });
-    let wrapper;
 
-    await act(async() => {
-      wrapper = mount(<CopyDashboardForm {...initialProps} />);
+    renderWithRedux(<CopyDashboardForm {...initialProps} />);
+
+    await waitFor(() => {
+      expect(screen.getByLabelText('Name')).toBeInTheDocument();
     });
-
-    wrapper.update();
-    wrapper.find('button.cds--btn--secondary').last().simulate('click'); // click on cancel
-    expect(submitSpyMiqSparkleOn).toHaveBeenCalledTimes(2);
-    expect(spyMiqAjaxButton).toHaveBeenCalledWith('/report/db_copy/55?button=cancel');
-    done();
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(submitSpyMiqSparkleOn).toHaveBeenCalledTimes(2);
+    });
+    expect(spyMiqAjaxButton).toHaveBeenCalledWith(
+      '/report/db_copy/55?button=cancel'
+    );
   });
 
   it('should handle submit', async() => {
+    const user = userEvent.setup();
     fetchMock
       .getOnce(baseUrl, dashboardData)
       .getOnce(apiUrl, apiData)
@@ -121,31 +123,41 @@ describe('Copy Dashboard form', () => {
       .getOnce('/report/dashboard_get/55?name=Clint', { length: 0 })
       .getOnce('/report/dashboard_get/55?name=new_name', { length: 0 });
 
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<CopyDashboardForm {...initialProps} />);
+    const { container } = renderWithRedux(
+      <CopyDashboardForm {...initialProps} />
+    );
+    await waitFor(() => {
+      expect(screen.getByLabelText('Name')).toBeInTheDocument();
     });
-
-    wrapper.update();
-
     expect(fetchMock.calls()).toHaveLength(2);
 
-    await act(async() => {
-      wrapper.find('input[name="name"]').simulate('change', { target: { value: 'new_name' } });
-      wrapper.find('input[name="group_id"]').simulate('change', { target: { value: '80s' } });
-    });
+    const nameInput = screen.getByLabelText('Name');
+    const groupInput = screen.getByRole('combobox', { name: 'Select Group' });
+    await user.clear(nameInput);
+    await user.type(nameInput, 'new_name');
+    await user.click(groupInput);
+    await user.clear(groupInput);
+    await user.type(groupInput, '80s');
 
-    await new Promise((resolve) => setTimeout(resolve, 0));
-    wrapper.update();
-
-    await act(async() => {
-      setTimeout(() => {
-        expect(spyMiqAjaxButton).toHaveBeenCalledWith(
-          '/report/dashboard_render',
-          { group: 'current group', name: 'new_name', original_name: 'original_name' },
-        );
-        expect(fetchMock.calls()).toHaveLength(4);
-      }, 500);
+    let submitButton;
+    await waitFor(() => {
+      submitButton = container.querySelector('button.cds--btn--primary');
+      expect(submitButton).not.toBeDisabled();
     });
+    await user.click(submitButton);
+    await waitFor(() => {
+      expect(fetchMock.called('/report/db_copy/55?button=save')).toBe(true);
+    });
+    await waitFor(() => {
+      expect(spyMiqAjaxButton).toHaveBeenCalledWith(
+        '/report/dashboard_render',
+        {
+          group: 'current group',
+          name: 'new_name',
+          original_name: 'original_name',
+        }
+      );
+    });
+    expect(fetchMock.calls()).toHaveLength(4);
   });
 });

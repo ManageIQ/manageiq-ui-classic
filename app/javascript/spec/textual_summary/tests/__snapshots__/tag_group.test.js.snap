@@ -1,1216 +1,282 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TagGroup renders just fine 1`] = `
-<TagGroup
-  items={
-    Array [
-      Object {
-        "hoverClass": "no-hover",
-        "icon": "pficon pficon-zone",
-        "label": "Managed by Zone",
-        "value": "default",
-      },
-      Object {
-        "hoverClass": "no-hover",
-        "label": "My Company X Tags",
-        "value": Array [
-          Object {
-            "icon": "fa fa-tag",
-            "label": "Dan Test",
-            "value": Array [
-              "Test 1",
-            ],
-          },
-          Object {
-            "icon": "fa fa-tag",
-            "label": "Demo bla",
-            "value": Array [
-              "Policy",
-              "2",
-            ],
-          },
-        ],
-      },
-      Object {
-        "label": "Other Tags",
-        "title": "All Other Tags",
-        "value": Array [
-          Object {
-            "icon": "fa fa-tag",
-            "label": "Test",
-            "value": Array [
-              "Test 1",
-            ],
-          },
-          Object {
-            "icon": "fa fa-tag",
-            "label": "Demo 2",
-            "value": Array [
-              "Policy",
-              "2",
-              "3",
-            ],
-          },
-          Object {
-            "link": "You clicked on Demo 3",
-            "title": "Click to display the item",
-            "value": Array [
-              "Demo 3",
-            ],
-          },
-        ],
-      },
-    ]
-  }
-  title="Smart Management"
->
-  <MiqStructuredList
-    headers={Array []}
-    mode="tag_group"
-    onClick={[Function]}
-    rows={
-      Array [
-        Object {
-          "hoverClass": "no-hover",
-          "icon": "pficon pficon-zone",
-          "label": "Managed by Zone",
-          "value": "default",
-        },
-        Object {
-          "hoverClass": "no-hover",
-          "label": "My Company X Tags",
-          "value": Array [
-            Object {
-              "icon": "fa fa-tag",
-              "label": "Dan Test",
-              "value": Array [
-                "Test 1",
-              ],
-            },
-            Object {
-              "icon": "fa fa-tag",
-              "label": "Demo bla",
-              "value": Array [
-                "Policy",
-                "2",
-              ],
-            },
-          ],
-        },
-        Object {
-          "label": "Other Tags",
-          "title": "All Other Tags",
-          "value": Array [
-            Object {
-              "icon": "fa fa-tag",
-              "label": "Test",
-              "value": Array [
-                "Test 1",
-              ],
-            },
-            Object {
-              "icon": "fa fa-tag",
-              "label": "Demo 2",
-              "value": Array [
-                "Policy",
-                "2",
-                "3",
-              ],
-            },
-            Object {
-              "link": "You clicked on Demo 3",
-              "title": "Click to display the item",
-              "value": Array [
-                "Demo 3",
-              ],
-            },
-          ],
-        },
-      ]
-    }
-    title="Smart Management"
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion tag_group cds--accordion--start"
   >
-    <Accordion
-      align="start"
-      className="miq-structured-list-accordion tag_group"
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
     >
-      <AccordionProvider
-        disabled={false}
+      <button
+        aria-controls="accordion-item-4"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
       >
-        <ul
-          className="cds--accordion miq-structured-list-accordion tag_group cds--accordion--start"
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <AccordionItem
-            open={true}
-            title="Smart Management"
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Smart Management
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-4"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list tag_group"
+            role="table"
           >
-            <li
-              className="cds--accordion__item cds--accordion__item--active"
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
             >
-              <defaultRenderToggle
-                aria-controls="accordion-item-4"
-                aria-expanded={true}
-                className="cds--accordion__heading"
-                disabled={false}
-                onClick={[Function]}
-                onKeyDown={[Function]}
-                type="button"
-              >
-                <button
-                  aria-controls="accordion-item-4"
-                  aria-expanded={true}
-                  className="cds--accordion__heading"
-                  disabled={false}
-                  onClick={[Function]}
-                  onKeyDown={[Function]}
-                  type="button"
-                >
-                  <ForwardRef(ChevronRight)
-                    className="cds--accordion__arrow"
-                  >
-                    <Icon
-                      className="cds--accordion__arrow"
-                      fill="currentColor"
-                      height={16}
-                      viewBox="0 0 16 16"
-                      width={16}
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <svg
-                        aria-hidden={true}
-                        className="cds--accordion__arrow"
-                        fill="currentColor"
-                        focusable="false"
-                        height={16}
-                        preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 16 16"
-                        width={16}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
-                        />
-                      </svg>
-                    </Icon>
-                  </ForwardRef(ChevronRight)>
-                  <ForwardRef
-                    as="div"
-                    className="cds--accordion__title"
-                  >
-                    <div
-                      className="cds--accordion__title"
-                      dir="auto"
-                    >
-                      Smart Management
-                    </div>
-                  </ForwardRef>
-                </button>
-              </defaultRenderToggle>
               <div
-                className="cds--accordion__wrapper"
-                onTransitionEnd={[Function]}
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
               >
                 <div
-                  className="cds--accordion__content"
-                  id="accordion-item-4"
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
                 >
-                  <StructuredListWrapper
-                    aria-label="Structured list"
-                    className="miq-structured-list tag_group"
+                  Managed by Zone
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
                   >
                     <div
-                      aria-label="Structured list"
-                      className="cds--structured-list miq-structured-list tag_group"
-                      role="table"
+                      class="cell icon"
                     >
-                      <MiqStructuredListBody
-                        clickEvents={false}
-                        mode="tag_group"
-                        onClick={[Function]}
-                        rows={
-                          Array [
-                            Object {
-                              "hoverClass": "no-hover",
-                              "icon": "pficon pficon-zone",
-                              "label": "Managed by Zone",
-                              "value": "default",
-                            },
-                            Object {
-                              "hoverClass": "no-hover",
-                              "label": "My Company X Tags",
-                              "value": Array [
-                                Object {
-                                  "icon": "fa fa-tag",
-                                  "label": "Dan Test",
-                                  "value": Array [
-                                    "Test 1",
-                                  ],
-                                },
-                                Object {
-                                  "icon": "fa fa-tag",
-                                  "label": "Demo bla",
-                                  "value": Array [
-                                    "Policy",
-                                    "2",
-                                  ],
-                                },
-                              ],
-                            },
-                            Object {
-                              "label": "Other Tags",
-                              "title": "All Other Tags",
-                              "value": Array [
-                                Object {
-                                  "icon": "fa fa-tag",
-                                  "label": "Test",
-                                  "value": Array [
-                                    "Test 1",
-                                  ],
-                                },
-                                Object {
-                                  "icon": "fa fa-tag",
-                                  "label": "Demo 2",
-                                  "value": Array [
-                                    "Policy",
-                                    "2",
-                                    "3",
-                                  ],
-                                },
-                                Object {
-                                  "link": "You clicked on Demo 3",
-                                  "title": "Click to display the item",
-                                  "value": Array [
-                                    "Demo 3",
-                                  ],
-                                },
-                              ],
-                            },
-                          ]
-                        }
-                      >
-                        <StructuredListBody>
-                          <div
-                            className="cds--structured-list-tbody"
-                            role="rowgroup"
-                          >
-                            <StructuredListRow
-                              className="not-clickable"
-                              key="0"
-                              onClick={[Function]}
-                              tabIndex={0}
-                              title=""
-                            >
-                              <div
-                                className="cds--structured-list-row not-clickable"
-                                onBlur={[Function]}
-                                onClick={[Function]}
-                                onFocus={[Function]}
-                                role="row"
-                                tabIndex={0}
-                                title=""
-                              >
-                                <MiqStructuredListBodyLabel
-                                  label="Managed by Zone"
-                                >
-                                  <StructuredListCell
-                                    className="label_header"
-                                  >
-                                    <ForwardRef
-                                      as="div"
-                                      className="cds--structured-list-td label_header"
-                                      role="cell"
-                                    >
-                                      <div
-                                        className="cds--structured-list-td label_header"
-                                        dir="auto"
-                                        role="cell"
-                                      >
-                                        Managed by Zone
-                                      </div>
-                                    </ForwardRef>
-                                  </StructuredListCell>
-                                </MiqStructuredListBodyLabel>
-                                <MiqStructuredListBodyValue
-                                  clickEvents={false}
-                                  onClick={[Function]}
-                                  row={
-                                    Object {
-                                      "hoverClass": "no-hover",
-                                      "icon": "pficon pficon-zone",
-                                      "label": "Managed by Zone",
-                                      "value": "default",
-                                    }
-                                  }
-                                >
-                                  <MiqStructuredListObject
-                                    clickEvents={false}
-                                    onClick={[Function]}
-                                    row={
-                                      Object {
-                                        "hoverClass": "no-hover",
-                                        "icon": "pficon pficon-zone",
-                                        "label": "Managed by Zone",
-                                        "value": "default",
-                                      }
-                                    }
-                                  >
-                                    <StructuredListCell
-                                      className="content_value object_item"
-                                      title=""
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value object_item"
-                                        role="cell"
-                                        title=""
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value object_item"
-                                          dir="auto"
-                                          role="cell"
-                                          title=""
-                                        >
-                                          <MiqStructuredListConditionalTag
-                                            clickEvents={false}
-                                            onClick={[Function]}
-                                            row={
-                                              Object {
-                                                "hoverClass": "no-hover",
-                                                "icon": "pficon pficon-zone",
-                                                "label": "Managed by Zone",
-                                                "value": "default",
-                                              }
-                                            }
-                                          >
-                                            <MiqStructuredListLink
-                                              clickEvents={false}
-                                              onClick={[Function]}
-                                              row={
-                                                Object {
-                                                  "hoverClass": "no-hover",
-                                                  "icon": "pficon pficon-zone",
-                                                  "label": "Managed by Zone",
-                                                  "value": "default",
-                                                }
-                                              }
-                                            >
-                                              <MiqStructuredListContent
-                                                row={
-                                                  Object {
-                                                    "hoverClass": "no-hover",
-                                                    "icon": "pficon pficon-zone",
-                                                    "label": "Managed by Zone",
-                                                    "value": "default",
-                                                  }
-                                                }
-                                              >
-                                                <div
-                                                  className="content"
-                                                >
-                                                  <MiqStructuredListIcon
-                                                    row={
-                                                      Object {
-                                                        "hoverClass": "no-hover",
-                                                        "icon": "pficon pficon-zone",
-                                                        "label": "Managed by Zone",
-                                                        "value": "default",
-                                                      }
-                                                    }
-                                                  >
-                                                    <div
-                                                      className="cell icon"
-                                                    >
-                                                      <i
-                                                        className="pficon pficon-zone"
-                                                        style={
-                                                          Object {
-                                                            "background": undefined,
-                                                            "color": undefined,
-                                                          }
-                                                        }
-                                                      />
-                                                    </div>
-                                                  </MiqStructuredListIcon>
-                                                  <MiqStructuredListText
-                                                    value="default"
-                                                  >
-                                                    <div
-                                                      className="expand wrap_text"
-                                                    >
-                                                      default
-                                                    </div>
-                                                  </MiqStructuredListText>
-                                                </div>
-                                              </MiqStructuredListContent>
-                                            </MiqStructuredListLink>
-                                          </MiqStructuredListConditionalTag>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                  </MiqStructuredListObject>
-                                </MiqStructuredListBodyValue>
-                              </div>
-                            </StructuredListRow>
-                            <StructuredListRow
-                              className="not-clickable"
-                              key="1"
-                              onClick={[Function]}
-                              tabIndex={1}
-                              title=""
-                            >
-                              <div
-                                className="cds--structured-list-row not-clickable"
-                                onBlur={[Function]}
-                                onClick={[Function]}
-                                onFocus={[Function]}
-                                role="row"
-                                tabIndex={1}
-                                title=""
-                              >
-                                <MiqStructuredListBodyLabel
-                                  label="My Company X Tags"
-                                >
-                                  <StructuredListCell
-                                    className="label_header"
-                                  >
-                                    <ForwardRef
-                                      as="div"
-                                      className="cds--structured-list-td label_header"
-                                      role="cell"
-                                    >
-                                      <div
-                                        className="cds--structured-list-td label_header"
-                                        dir="auto"
-                                        role="cell"
-                                      >
-                                        My Company X Tags
-                                      </div>
-                                    </ForwardRef>
-                                  </StructuredListCell>
-                                </MiqStructuredListBodyLabel>
-                                <MiqStructuredListBodyValue
-                                  clickEvents={false}
-                                  onClick={[Function]}
-                                  row={
-                                    Object {
-                                      "hoverClass": "no-hover",
-                                      "label": "My Company X Tags",
-                                      "value": Array [
-                                        Object {
-                                          "icon": "fa fa-tag",
-                                          "label": "Dan Test",
-                                          "value": Array [
-                                            "Test 1",
-                                          ],
-                                        },
-                                        Object {
-                                          "icon": "fa fa-tag",
-                                          "label": "Demo bla",
-                                          "value": Array [
-                                            "Policy",
-                                            "2",
-                                          ],
-                                        },
-                                      ],
-                                    }
-                                  }
-                                >
-                                  <MiqStructuredListObject
-                                    clickEvents={false}
-                                    onClick={[Function]}
-                                    row={
-                                      Object {
-                                        "hoverClass": "no-hover",
-                                        "label": "My Company X Tags",
-                                        "value": Array [
-                                          Object {
-                                            "icon": "fa fa-tag",
-                                            "label": "Dan Test",
-                                            "value": Array [
-                                              "Test 1",
-                                            ],
-                                          },
-                                          Object {
-                                            "icon": "fa fa-tag",
-                                            "label": "Demo bla",
-                                            "value": Array [
-                                              "Policy",
-                                              "2",
-                                            ],
-                                          },
-                                        ],
-                                      }
-                                    }
-                                  >
-                                    <StructuredListCell
-                                      className="content_value object_item"
-                                      title=""
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value object_item"
-                                        role="cell"
-                                        title=""
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value object_item"
-                                          dir="auto"
-                                          role="cell"
-                                          title=""
-                                        >
-                                          <MiqStructuredListConditionalTag
-                                            clickEvents={false}
-                                            onClick={[Function]}
-                                            row={
-                                              Object {
-                                                "hoverClass": "no-hover",
-                                                "label": "My Company X Tags",
-                                                "value": Array [
-                                                  Object {
-                                                    "icon": "fa fa-tag",
-                                                    "label": "Dan Test",
-                                                    "value": Array [
-                                                      "Test 1",
-                                                    ],
-                                                  },
-                                                  Object {
-                                                    "icon": "fa fa-tag",
-                                                    "label": "Demo bla",
-                                                    "value": Array [
-                                                      "Policy",
-                                                      "2",
-                                                    ],
-                                                  },
-                                                ],
-                                              }
-                                            }
-                                          >
-                                            <MiqStructuredListLink
-                                              clickEvents={false}
-                                              onClick={[Function]}
-                                              row={
-                                                Object {
-                                                  "hoverClass": "no-hover",
-                                                  "label": "My Company X Tags",
-                                                  "value": Array [
-                                                    Object {
-                                                      "icon": "fa fa-tag",
-                                                      "label": "Dan Test",
-                                                      "value": Array [
-                                                        "Test 1",
-                                                      ],
-                                                    },
-                                                    Object {
-                                                      "icon": "fa fa-tag",
-                                                      "label": "Demo bla",
-                                                      "value": Array [
-                                                        "Policy",
-                                                        "2",
-                                                      ],
-                                                    },
-                                                  ],
-                                                }
-                                              }
-                                            >
-                                              <MiqStructuredListContent
-                                                row={
-                                                  Object {
-                                                    "hoverClass": "no-hover",
-                                                    "label": "My Company X Tags",
-                                                    "value": Array [
-                                                      Object {
-                                                        "icon": "fa fa-tag",
-                                                        "label": "Dan Test",
-                                                        "value": Array [
-                                                          "Test 1",
-                                                        ],
-                                                      },
-                                                      Object {
-                                                        "icon": "fa fa-tag",
-                                                        "label": "Demo bla",
-                                                        "value": Array [
-                                                          "Policy",
-                                                          "2",
-                                                        ],
-                                                      },
-                                                    ],
-                                                  }
-                                                }
-                                              >
-                                                <div
-                                                  className="content"
-                                                >
-                                                  <MiqStructuredListMultiRow
-                                                    value={
-                                                      Array [
-                                                        Object {
-                                                          "icon": "fa fa-tag",
-                                                          "label": "Dan Test",
-                                                          "value": Array [
-                                                            "Test 1",
-                                                          ],
-                                                        },
-                                                        Object {
-                                                          "icon": "fa fa-tag",
-                                                          "label": "Demo bla",
-                                                          "value": Array [
-                                                            "Policy",
-                                                            "2",
-                                                          ],
-                                                        },
-                                                      ]
-                                                    }
-                                                  >
-                                                    <div
-                                                      className="multi_row_cell"
-                                                    >
-                                                      <div
-                                                        className="sub_row_item"
-                                                        key="0"
-                                                        title=""
-                                                      >
-                                                        <MiqStructuredListIcon
-                                                          row={
-                                                            Object {
-                                                              "icon": "fa fa-tag",
-                                                              "label": "Dan Test",
-                                                              "value": Array [
-                                                                "Test 1",
-                                                              ],
-                                                            }
-                                                          }
-                                                        >
-                                                          <div
-                                                            className="cell icon"
-                                                          >
-                                                            <i
-                                                              className="fa fa-tag"
-                                                              style={
-                                                                Object {
-                                                                  "background": undefined,
-                                                                  "color": undefined,
-                                                                }
-                                                              }
-                                                            />
-                                                          </div>
-                                                        </MiqStructuredListIcon>
-                                                        <div
-                                                          className="sub_label"
-                                                          title="Dan Test"
-                                                        >
-                                                          Dan Test
-                                                        </div>
-                                                        <div
-                                                          className="sub_value"
-                                                        >
-                                                          <MiqStructuredListText
-                                                            value={
-                                                              Array [
-                                                                "Test 1",
-                                                              ]
-                                                            }
-                                                          >
-                                                            <div
-                                                              className="expand wrap_text"
-                                                            >
-                                                              Test 1
-                                                            </div>
-                                                          </MiqStructuredListText>
-                                                        </div>
-                                                      </div>
-                                                      <div
-                                                        className="sub_row_item"
-                                                        key="1"
-                                                        title=""
-                                                      >
-                                                        <MiqStructuredListIcon
-                                                          row={
-                                                            Object {
-                                                              "icon": "fa fa-tag",
-                                                              "label": "Demo bla",
-                                                              "value": Array [
-                                                                "Policy",
-                                                                "2",
-                                                              ],
-                                                            }
-                                                          }
-                                                        >
-                                                          <div
-                                                            className="cell icon"
-                                                          >
-                                                            <i
-                                                              className="fa fa-tag"
-                                                              style={
-                                                                Object {
-                                                                  "background": undefined,
-                                                                  "color": undefined,
-                                                                }
-                                                              }
-                                                            />
-                                                          </div>
-                                                        </MiqStructuredListIcon>
-                                                        <div
-                                                          className="sub_label"
-                                                          title="Demo bla"
-                                                        >
-                                                          Demo bla
-                                                        </div>
-                                                        <div
-                                                          className="sub_value"
-                                                        >
-                                                          <MiqStructuredListText
-                                                            value={
-                                                              Array [
-                                                                "Policy",
-                                                                "2",
-                                                              ]
-                                                            }
-                                                          >
-                                                            <div
-                                                              className="expand wrap_text"
-                                                            >
-                                                              Policy
-2
-                                                            </div>
-                                                          </MiqStructuredListText>
-                                                        </div>
-                                                      </div>
-                                                    </div>
-                                                  </MiqStructuredListMultiRow>
-                                                </div>
-                                              </MiqStructuredListContent>
-                                            </MiqStructuredListLink>
-                                          </MiqStructuredListConditionalTag>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                  </MiqStructuredListObject>
-                                </MiqStructuredListBodyValue>
-                              </div>
-                            </StructuredListRow>
-                            <StructuredListRow
-                              className="not-clickable"
-                              key="2"
-                              onClick={[Function]}
-                              tabIndex={2}
-                              title=""
-                            >
-                              <div
-                                className="cds--structured-list-row not-clickable"
-                                onBlur={[Function]}
-                                onClick={[Function]}
-                                onFocus={[Function]}
-                                role="row"
-                                tabIndex={2}
-                                title=""
-                              >
-                                <MiqStructuredListBodyLabel
-                                  label="Other Tags"
-                                >
-                                  <StructuredListCell
-                                    className="label_header"
-                                  >
-                                    <ForwardRef
-                                      as="div"
-                                      className="cds--structured-list-td label_header"
-                                      role="cell"
-                                    >
-                                      <div
-                                        className="cds--structured-list-td label_header"
-                                        dir="auto"
-                                        role="cell"
-                                      >
-                                        Other Tags
-                                      </div>
-                                    </ForwardRef>
-                                  </StructuredListCell>
-                                </MiqStructuredListBodyLabel>
-                                <MiqStructuredListBodyValue
-                                  clickEvents={false}
-                                  onClick={[Function]}
-                                  row={
-                                    Object {
-                                      "label": "Other Tags",
-                                      "title": "All Other Tags",
-                                      "value": Array [
-                                        Object {
-                                          "icon": "fa fa-tag",
-                                          "label": "Test",
-                                          "value": Array [
-                                            "Test 1",
-                                          ],
-                                        },
-                                        Object {
-                                          "icon": "fa fa-tag",
-                                          "label": "Demo 2",
-                                          "value": Array [
-                                            "Policy",
-                                            "2",
-                                            "3",
-                                          ],
-                                        },
-                                        Object {
-                                          "link": "You clicked on Demo 3",
-                                          "title": "Click to display the item",
-                                          "value": Array [
-                                            "Demo 3",
-                                          ],
-                                        },
-                                      ],
-                                    }
-                                  }
-                                >
-                                  <MiqStructuredListObject
-                                    clickEvents={false}
-                                    onClick={[Function]}
-                                    row={
-                                      Object {
-                                        "label": "Other Tags",
-                                        "title": "All Other Tags",
-                                        "value": Array [
-                                          Object {
-                                            "icon": "fa fa-tag",
-                                            "label": "Test",
-                                            "value": Array [
-                                              "Test 1",
-                                            ],
-                                          },
-                                          Object {
-                                            "icon": "fa fa-tag",
-                                            "label": "Demo 2",
-                                            "value": Array [
-                                              "Policy",
-                                              "2",
-                                              "3",
-                                            ],
-                                          },
-                                          Object {
-                                            "link": "You clicked on Demo 3",
-                                            "title": "Click to display the item",
-                                            "value": Array [
-                                              "Demo 3",
-                                            ],
-                                          },
-                                        ],
-                                      }
-                                    }
-                                  >
-                                    <StructuredListCell
-                                      className="content_value object_item"
-                                      title="All Other Tags"
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value object_item"
-                                        role="cell"
-                                        title="All Other Tags"
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value object_item"
-                                          dir="auto"
-                                          role="cell"
-                                          title="All Other Tags"
-                                        >
-                                          <MiqStructuredListConditionalTag
-                                            clickEvents={false}
-                                            onClick={[Function]}
-                                            row={
-                                              Object {
-                                                "label": "Other Tags",
-                                                "title": "All Other Tags",
-                                                "value": Array [
-                                                  Object {
-                                                    "icon": "fa fa-tag",
-                                                    "label": "Test",
-                                                    "value": Array [
-                                                      "Test 1",
-                                                    ],
-                                                  },
-                                                  Object {
-                                                    "icon": "fa fa-tag",
-                                                    "label": "Demo 2",
-                                                    "value": Array [
-                                                      "Policy",
-                                                      "2",
-                                                      "3",
-                                                    ],
-                                                  },
-                                                  Object {
-                                                    "link": "You clicked on Demo 3",
-                                                    "title": "Click to display the item",
-                                                    "value": Array [
-                                                      "Demo 3",
-                                                    ],
-                                                  },
-                                                ],
-                                              }
-                                            }
-                                          >
-                                            <MiqStructuredListLink
-                                              clickEvents={false}
-                                              onClick={[Function]}
-                                              row={
-                                                Object {
-                                                  "label": "Other Tags",
-                                                  "title": "All Other Tags",
-                                                  "value": Array [
-                                                    Object {
-                                                      "icon": "fa fa-tag",
-                                                      "label": "Test",
-                                                      "value": Array [
-                                                        "Test 1",
-                                                      ],
-                                                    },
-                                                    Object {
-                                                      "icon": "fa fa-tag",
-                                                      "label": "Demo 2",
-                                                      "value": Array [
-                                                        "Policy",
-                                                        "2",
-                                                        "3",
-                                                      ],
-                                                    },
-                                                    Object {
-                                                      "link": "You clicked on Demo 3",
-                                                      "title": "Click to display the item",
-                                                      "value": Array [
-                                                        "Demo 3",
-                                                      ],
-                                                    },
-                                                  ],
-                                                }
-                                              }
-                                            >
-                                              <MiqStructuredListContent
-                                                row={
-                                                  Object {
-                                                    "label": "Other Tags",
-                                                    "title": "All Other Tags",
-                                                    "value": Array [
-                                                      Object {
-                                                        "icon": "fa fa-tag",
-                                                        "label": "Test",
-                                                        "value": Array [
-                                                          "Test 1",
-                                                        ],
-                                                      },
-                                                      Object {
-                                                        "icon": "fa fa-tag",
-                                                        "label": "Demo 2",
-                                                        "value": Array [
-                                                          "Policy",
-                                                          "2",
-                                                          "3",
-                                                        ],
-                                                      },
-                                                      Object {
-                                                        "link": "You clicked on Demo 3",
-                                                        "title": "Click to display the item",
-                                                        "value": Array [
-                                                          "Demo 3",
-                                                        ],
-                                                      },
-                                                    ],
-                                                  }
-                                                }
-                                              >
-                                                <div
-                                                  className="content"
-                                                >
-                                                  <MiqStructuredListMultiRow
-                                                    value={
-                                                      Array [
-                                                        Object {
-                                                          "icon": "fa fa-tag",
-                                                          "label": "Test",
-                                                          "value": Array [
-                                                            "Test 1",
-                                                          ],
-                                                        },
-                                                        Object {
-                                                          "icon": "fa fa-tag",
-                                                          "label": "Demo 2",
-                                                          "value": Array [
-                                                            "Policy",
-                                                            "2",
-                                                            "3",
-                                                          ],
-                                                        },
-                                                        Object {
-                                                          "link": "You clicked on Demo 3",
-                                                          "title": "Click to display the item",
-                                                          "value": Array [
-                                                            "Demo 3",
-                                                          ],
-                                                        },
-                                                      ]
-                                                    }
-                                                  >
-                                                    <div
-                                                      className="multi_row_cell"
-                                                    >
-                                                      <div
-                                                        className="sub_row_item"
-                                                        key="0"
-                                                        title=""
-                                                      >
-                                                        <MiqStructuredListIcon
-                                                          row={
-                                                            Object {
-                                                              "icon": "fa fa-tag",
-                                                              "label": "Test",
-                                                              "value": Array [
-                                                                "Test 1",
-                                                              ],
-                                                            }
-                                                          }
-                                                        >
-                                                          <div
-                                                            className="cell icon"
-                                                          >
-                                                            <i
-                                                              className="fa fa-tag"
-                                                              style={
-                                                                Object {
-                                                                  "background": undefined,
-                                                                  "color": undefined,
-                                                                }
-                                                              }
-                                                            />
-                                                          </div>
-                                                        </MiqStructuredListIcon>
-                                                        <div
-                                                          className="sub_label"
-                                                          title="Test"
-                                                        >
-                                                          Test
-                                                        </div>
-                                                        <div
-                                                          className="sub_value"
-                                                        >
-                                                          <MiqStructuredListText
-                                                            value={
-                                                              Array [
-                                                                "Test 1",
-                                                              ]
-                                                            }
-                                                          >
-                                                            <div
-                                                              className="expand wrap_text"
-                                                            >
-                                                              Test 1
-                                                            </div>
-                                                          </MiqStructuredListText>
-                                                        </div>
-                                                      </div>
-                                                      <div
-                                                        className="sub_row_item"
-                                                        key="1"
-                                                        title=""
-                                                      >
-                                                        <MiqStructuredListIcon
-                                                          row={
-                                                            Object {
-                                                              "icon": "fa fa-tag",
-                                                              "label": "Demo 2",
-                                                              "value": Array [
-                                                                "Policy",
-                                                                "2",
-                                                                "3",
-                                                              ],
-                                                            }
-                                                          }
-                                                        >
-                                                          <div
-                                                            className="cell icon"
-                                                          >
-                                                            <i
-                                                              className="fa fa-tag"
-                                                              style={
-                                                                Object {
-                                                                  "background": undefined,
-                                                                  "color": undefined,
-                                                                }
-                                                              }
-                                                            />
-                                                          </div>
-                                                        </MiqStructuredListIcon>
-                                                        <div
-                                                          className="sub_label"
-                                                          title="Demo 2"
-                                                        >
-                                                          Demo 2
-                                                        </div>
-                                                        <div
-                                                          className="sub_value"
-                                                        >
-                                                          <MiqStructuredListText
-                                                            value={
-                                                              Array [
-                                                                "Policy",
-                                                                "2",
-                                                                "3",
-                                                              ]
-                                                            }
-                                                          >
-                                                            <div
-                                                              className="expand wrap_text"
-                                                            >
-                                                              Policy
-2
-3
-                                                            </div>
-                                                          </MiqStructuredListText>
-                                                        </div>
-                                                      </div>
-                                                      <div
-                                                        className="sub_row_item"
-                                                        key="2"
-                                                        title="Click to display the item"
-                                                      >
-                                                        <div
-                                                          className="sub_value"
-                                                        >
-                                                          <MiqStructuredListText
-                                                            value={
-                                                              Array [
-                                                                "Demo 3",
-                                                              ]
-                                                            }
-                                                          >
-                                                            <div
-                                                              className="expand wrap_text"
-                                                            >
-                                                              Demo 3
-                                                            </div>
-                                                          </MiqStructuredListText>
-                                                        </div>
-                                                      </div>
-                                                    </div>
-                                                  </MiqStructuredListMultiRow>
-                                                </div>
-                                              </MiqStructuredListContent>
-                                            </MiqStructuredListLink>
-                                          </MiqStructuredListConditionalTag>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                  </MiqStructuredListObject>
-                                </MiqStructuredListBodyValue>
-                              </div>
-                            </StructuredListRow>
-                          </div>
-                        </StructuredListBody>
-                      </MiqStructuredListBody>
+                      <i
+                        class="pficon pficon-zone"
+                      />
                     </div>
-                  </StructuredListWrapper>
+                    <div
+                      class="expand wrap_text"
+                    >
+                      default
+                    </div>
+                  </div>
                 </div>
               </div>
-            </li>
-          </AccordionItem>
-        </ul>
-      </AccordionProvider>
-    </Accordion>
-  </MiqStructuredList>
-</TagGroup>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="1"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  My Company X Tags
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="multi_row_cell"
+                    >
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="cell icon"
+                        >
+                          <i
+                            class="fa fa-tag"
+                          />
+                        </div>
+                        <div
+                          class="sub_label"
+                          title="Dan Test"
+                        >
+                          Dan Test
+                        </div>
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            Test 1
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="cell icon"
+                        >
+                          <i
+                            class="fa fa-tag"
+                          />
+                        </div>
+                        <div
+                          class="sub_label"
+                          title="Demo bla"
+                        >
+                          Demo bla
+                        </div>
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            Policy
+2
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="2"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td label_header"
+                  dir="auto"
+                  role="cell"
+                >
+                  Other Tags
+                </div>
+                <div
+                  class="cds--structured-list-td content_value object_item"
+                  dir="auto"
+                  role="cell"
+                  title="All Other Tags"
+                >
+                  <div
+                    class="content"
+                  >
+                    <div
+                      class="multi_row_cell"
+                    >
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="cell icon"
+                        >
+                          <i
+                            class="fa fa-tag"
+                          />
+                        </div>
+                        <div
+                          class="sub_label"
+                          title="Test"
+                        >
+                          Test
+                        </div>
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            Test 1
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="sub_row_item"
+                        title=""
+                      >
+                        <div
+                          class="cell icon"
+                        >
+                          <i
+                            class="fa fa-tag"
+                          />
+                        </div>
+                        <div
+                          class="sub_label"
+                          title="Demo 2"
+                        >
+                          Demo 2
+                        </div>
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            Policy
+2
+3
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="sub_row_item"
+                        title="Click to display the item"
+                      >
+                        <div
+                          class="sub_value"
+                        >
+                          <div
+                            class="expand wrap_text"
+                          >
+                            Demo 3
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 `;

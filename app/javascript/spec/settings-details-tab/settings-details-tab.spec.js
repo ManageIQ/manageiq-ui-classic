@@ -1,8 +1,7 @@
 import React from 'react';
 import fetchMock from 'fetch-mock';
-import { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
-import settingsDetailsTab from '../../components/settings-details-tab';
+import { render, waitFor } from '@testing-library/react';
+import SettingsDetailsTab from '../../components/settings-details-tab';
 
 describe('SettingsDetailsTab Component', () => {
   const region = {
@@ -22,19 +21,17 @@ describe('SettingsDetailsTab Component', () => {
   });
 
   it('should render settings details tab', async() => {
-    const wrapper = shallow(<settingsDetailsTab
-      region={region}
-      scanItemsCount={scanItemsCount}
-      zonesCount={zonesCount}
-      miqSchedulesCount={miqSchedulesCount}
-    />);
-
-    await new Promise((resolve) => {
-      setImmediate(() => {
-        wrapper.update();
-        expect(toJson(wrapper)).toMatchSnapshot();
-        resolve();
-      });
+    const { container } = render(
+      <SettingsDetailsTab
+        region={region}
+        scanItemsCount={scanItemsCount}
+        zonesCount={zonesCount}
+        miqSchedulesCount={miqSchedulesCount}
+      />
+    );
+    await waitFor(() => {
+      expect(container.querySelector('.cds--data-table')).toBeInTheDocument();
     });
+    expect(container).toMatchSnapshot();
   });
 });

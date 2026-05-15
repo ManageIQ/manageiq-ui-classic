@@ -1,147 +1,445 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PxeServersForm should render correctly 1`] = `
-<Grid>
-  <ForwardRef
-    lg={16}
-    md={8}
-    sm={4}
+<div>
+  <div
+    class="cds--css-grid"
   >
-    <Connect(MiqFormRenderer)
-      canReset={false}
-      initialValues={Object {}}
-      onCancel={[Function]}
-      onSubmit={[Function]}
-      schema={
-        Object {
-          "fields": Array [
-            Object {
-              "component": "sub-form",
-              "fields": Array [
-                Object {
-                  "component": "text-field",
-                  "id": "name",
-                  "isRequired": true,
-                  "label": "Name",
-                  "name": "name",
-                  "validate": Array [
-                    [Function],
-                  ],
-                },
-                Object {
-                  "component": "text-field",
-                  "helperText": "URI should begin with s3:// for Amazon Web Services, nfs:// for Network File System, swift:// for OpenStack Swift or smb:// for Samba",
-                  "id": "uri",
-                  "isRequired": true,
-                  "label": "URI",
-                  "name": "uri",
-                  "placeholder": "schema://host:port/path",
-                  "validate": Array [
-                    Object {
-                      "type": "required",
-                    },
-                    Object {
-                      "message": "URI should begin with s3://, nfs://, swift:// or smb://",
-                      "pattern": /\\^\\(\\(s3\\)\\|\\(nfs\\)\\|\\(swift\\)\\|\\(smb\\)\\):\\\\/\\\\//,
-                      "type": "pattern",
-                    },
-                  ],
-                },
-                Object {
-                  "component": "sub-form",
-                  "condition": Object {
-                    "pattern": /\\^\\(\\?!nfs:\\\\/\\\\/\\)\\.\\+\\.\\*/,
-                    "when": "uri",
-                  },
-                  "fields": Array [
-                    Object {
-                      "asyncValidate": [Function],
-                      "component": "validate-credentials",
-                      "edit": false,
-                      "fields": Array [
-                        Object {
-                          "component": "text-field",
-                          "id": "authentication.userid",
-                          "isRequired": true,
-                          "label": "Username",
-                          "name": "authentication.userid",
-                          "validate": Array [
-                            Object {
-                              "type": "required",
-                            },
-                          ],
-                        },
-                        Object {
-                          "component": "password-field",
-                          "id": "authentication.password",
-                          "isRequired": true,
-                          "label": "Password",
-                          "name": "authentication.password",
-                          "validate": Array [
-                            Object {
-                              "type": "required",
-                            },
-                          ],
-                        },
-                      ],
-                      "id": "authentication.valid",
-                      "isRequired": true,
-                      "name": "authentication.valid",
-                      "validationDependencies": Array [
-                        "uri",
-                      ],
-                    },
-                  ],
-                  "id": "authentication-subform",
-                  "name": "authentication-subform",
-                },
-                Object {
-                  "component": "text-field",
-                  "id": "access_url",
-                  "label": "Access URL",
-                  "name": "access_url",
-                },
-                Object {
-                  "component": "text-field",
-                  "id": "pxe_directory",
-                  "label": "PXE Directory",
-                  "name": "pxe_directory",
-                },
-                Object {
-                  "component": "text-field",
-                  "id": "windows_images_directory",
-                  "label": "Windows Images Directory",
-                  "name": "windows_images_directory",
-                },
-                Object {
-                  "component": "text-field",
-                  "id": "customization_directory",
-                  "label": "Customization Directory",
-                  "name": "customization_directory",
-                },
-              ],
-              "id": "basic-information",
-              "name": "basic-information",
-              "title": "Basic Information",
-            },
-            Object {
-              "component": "sub-form",
-              "fields": Array [
-                Object {
-                  "component": "text-field",
-                  "id": "pxe_menus[0].file_name",
-                  "label": "Filename",
-                  "name": "pxe_menus[0].file_name",
-                },
-              ],
-              "id": "pxe-image-menus-subform",
-              "name": "pxe-image-menus-subform",
-              "title": "PXE Image Menus",
-            },
-          ],
-        }
-      }
-    />
-  </ForwardRef>
-</Grid>
+    <div
+      class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+    >
+      <form
+        class="cds--form form-0-2-3 form-react"
+        novalidate=""
+      >
+        <div
+          class=""
+          id="basic-information"
+          name="basic-information"
+        >
+          <div>
+            <h3>
+              Basic Information
+            </h3>
+          </div>
+          <div
+            class="cds--form-item cds--text-input-wrapper"
+          >
+            <div
+              class="cds--text-input__label-wrapper"
+            >
+              <label
+                class="cds--label"
+                dir="auto"
+                for="name"
+              >
+                <span
+                  aria-hidden="true"
+                  class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+                >
+                  *
+                </span>
+                Name
+              </label>
+            </div>
+            <div
+              class="cds--text-input__field-outer-wrapper"
+            >
+              <div
+                class="cds--text-input__field-wrapper"
+              >
+                <input
+                  class="cds--text-input"
+                  id="name"
+                  name="name"
+                  type="text"
+                  value=""
+                />
+                
+                <span
+                  aria-atomic="true"
+                  aria-live="assertive"
+                  class="cds--text-input__counter-alert"
+                  role="alert"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="cds--form-item cds--text-input-wrapper"
+          >
+            <div
+              class="cds--text-input__label-wrapper"
+            >
+              <label
+                class="cds--label"
+                dir="auto"
+                for="uri"
+              >
+                <span
+                  aria-hidden="true"
+                  class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+                >
+                  *
+                </span>
+                URI
+              </label>
+            </div>
+            <div
+              class="cds--text-input__field-outer-wrapper"
+            >
+              <div
+                class="cds--text-input__field-wrapper"
+              >
+                <input
+                  aria-describedby="uri-helper-text"
+                  class="cds--text-input"
+                  id="uri"
+                  name="uri"
+                  placeholder="schema://host:port/path"
+                  title="schema://host:port/path"
+                  type="text"
+                  value=""
+                />
+                
+                <span
+                  aria-atomic="true"
+                  aria-live="assertive"
+                  class="cds--text-input__counter-alert"
+                  role="alert"
+                />
+              </div>
+              <div
+                class="cds--form__helper-text"
+                dir="auto"
+                id="uri-helper-text"
+              >
+                URI should begin with s3:// for Amazon Web Services, nfs:// for Network File System, swift:// for OpenStack Swift or smb:// for Samba
+              </div>
+            </div>
+          </div>
+          <div
+            class=""
+            id="authentication-subform"
+            name="authentication-subform"
+          >
+            <div
+              class="cds--form-item cds--text-input-wrapper"
+            >
+              <div
+                class="cds--text-input__label-wrapper"
+              >
+                <label
+                  class="cds--label"
+                  dir="auto"
+                  for="authentication.userid"
+                >
+                  <span
+                    aria-hidden="true"
+                    class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+                  >
+                    *
+                  </span>
+                  Username
+                </label>
+              </div>
+              <div
+                class="cds--text-input__field-outer-wrapper"
+              >
+                <div
+                  class="cds--text-input__field-wrapper"
+                >
+                  <input
+                    class="cds--text-input"
+                    id="authentication.userid"
+                    name="authentication.userid"
+                    type="text"
+                    value=""
+                  />
+                  
+                  <span
+                    aria-atomic="true"
+                    aria-live="assertive"
+                    class="cds--text-input__counter-alert"
+                    role="alert"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="cds--form-item cds--text-input-wrapper"
+            >
+              <div
+                class="cds--text-input__label-wrapper"
+              >
+                <label
+                  class="cds--label"
+                  dir="auto"
+                  for="authentication.password"
+                >
+                  <span
+                    aria-hidden="true"
+                    class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+                  >
+                    *
+                  </span>
+                  Password
+                </label>
+              </div>
+              <div
+                class="cds--text-input__field-outer-wrapper"
+              >
+                <div
+                  class="cds--text-input__field-wrapper"
+                >
+                  <input
+                    autocomplete="new-password"
+                    class="cds--text-input"
+                    id="authentication.password"
+                    name="authentication.password"
+                    type="password"
+                    value=""
+                  />
+                  
+                  <span
+                    aria-atomic="true"
+                    aria-live="assertive"
+                    class="cds--text-input__counter-alert"
+                    role="alert"
+                  />
+                </div>
+              </div>
+            </div>
+            <input
+              name="authentication.valid"
+              type="hidden"
+              value="false"
+            />
+            <button
+              class="miq-validation-button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--tertiary cds--btn--disabled"
+              disabled=""
+              type="button"
+            >
+              Validate
+            </button>
+          </div>
+          <div
+            class="cds--form-item cds--text-input-wrapper"
+          >
+            <div
+              class="cds--text-input__label-wrapper"
+            >
+              <label
+                class="cds--label"
+                dir="auto"
+                for="access_url"
+              >
+                Access URL
+              </label>
+            </div>
+            <div
+              class="cds--text-input__field-outer-wrapper"
+            >
+              <div
+                class="cds--text-input__field-wrapper"
+              >
+                <input
+                  class="cds--text-input"
+                  id="access_url"
+                  name="access_url"
+                  type="text"
+                  value=""
+                />
+                
+                <span
+                  aria-atomic="true"
+                  aria-live="assertive"
+                  class="cds--text-input__counter-alert"
+                  role="alert"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="cds--form-item cds--text-input-wrapper"
+          >
+            <div
+              class="cds--text-input__label-wrapper"
+            >
+              <label
+                class="cds--label"
+                dir="auto"
+                for="pxe_directory"
+              >
+                PXE Directory
+              </label>
+            </div>
+            <div
+              class="cds--text-input__field-outer-wrapper"
+            >
+              <div
+                class="cds--text-input__field-wrapper"
+              >
+                <input
+                  class="cds--text-input"
+                  id="pxe_directory"
+                  name="pxe_directory"
+                  type="text"
+                  value=""
+                />
+                
+                <span
+                  aria-atomic="true"
+                  aria-live="assertive"
+                  class="cds--text-input__counter-alert"
+                  role="alert"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="cds--form-item cds--text-input-wrapper"
+          >
+            <div
+              class="cds--text-input__label-wrapper"
+            >
+              <label
+                class="cds--label"
+                dir="auto"
+                for="windows_images_directory"
+              >
+                Windows Images Directory
+              </label>
+            </div>
+            <div
+              class="cds--text-input__field-outer-wrapper"
+            >
+              <div
+                class="cds--text-input__field-wrapper"
+              >
+                <input
+                  class="cds--text-input"
+                  id="windows_images_directory"
+                  name="windows_images_directory"
+                  type="text"
+                  value=""
+                />
+                
+                <span
+                  aria-atomic="true"
+                  aria-live="assertive"
+                  class="cds--text-input__counter-alert"
+                  role="alert"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="cds--form-item cds--text-input-wrapper"
+          >
+            <div
+              class="cds--text-input__label-wrapper"
+            >
+              <label
+                class="cds--label"
+                dir="auto"
+                for="customization_directory"
+              >
+                Customization Directory
+              </label>
+            </div>
+            <div
+              class="cds--text-input__field-outer-wrapper"
+            >
+              <div
+                class="cds--text-input__field-wrapper"
+              >
+                <input
+                  class="cds--text-input"
+                  id="customization_directory"
+                  name="customization_directory"
+                  type="text"
+                  value=""
+                />
+                
+                <span
+                  aria-atomic="true"
+                  aria-live="assertive"
+                  class="cds--text-input__counter-alert"
+                  role="alert"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class=""
+          id="pxe-image-menus-subform"
+          name="pxe-image-menus-subform"
+        >
+          <div>
+            <h3>
+              PXE Image Menus
+            </h3>
+          </div>
+          <div
+            class="cds--form-item cds--text-input-wrapper"
+          >
+            <div
+              class="cds--text-input__label-wrapper"
+            >
+              <label
+                class="cds--label"
+                dir="auto"
+                for="pxe_menus[0].file_name"
+              >
+                Filename
+              </label>
+            </div>
+            <div
+              class="cds--text-input__field-outer-wrapper"
+            >
+              <div
+                class="cds--text-input__field-wrapper"
+              >
+                <input
+                  class="cds--text-input"
+                  id="pxe_menus[0].file_name"
+                  name="pxe_menus[0].file_name"
+                  type="text"
+                  value=""
+                />
+                
+                <span
+                  aria-atomic="true"
+                  aria-live="assertive"
+                  class="cds--text-input__counter-alert"
+                  role="alert"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--btn-set"
+        >
+          <button
+            class="cds--btn cds--btn--primary cds--btn--disabled"
+            disabled=""
+            type="submit"
+            variant="primary"
+          >
+            Save
+          </button>
+          <button
+            class="cds--btn cds--btn--secondary"
+            type="button"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 `;

@@ -1,7 +1,7 @@
 import React from 'react';
 import fetchMock from 'fetch-mock';
-import { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
+import { waitFor } from '@testing-library/react';
+import { renderWithRedux } from '../helpers/mountForm';
 import MiqAeClass from '../../components/miq-ae-class';
 
 describe('MiqAeClass Form Component', () => {
@@ -28,35 +28,37 @@ describe('MiqAeClass Form Component', () => {
   });
 
   it('should render add class form correctly', async() => {
-    const wrapper = shallow(<MiqAeClass
-      classRecord={undefined}
-      fqname={fqName}
-    />);
-
     fetchMock.get(`/miq_ae_class/new?&expand=resources/`, classMockData);
 
-    await new Promise((resolve) => {
-      setImmediate(() => {
-        wrapper.update();
-        expect(toJson(wrapper)).toMatchSnapshot();
-        resolve();
-      });
+    const { container } = renderWithRedux(
+      <MiqAeClass classRecord={{}} fqname={fqName} />
+    );
+
+    await waitFor(() => {
+      expect(container.firstChild).toBeInTheDocument();
     });
+
+    expect(container).toMatchSnapshot();
   });
 
   it('should render edit class form correctly', async() => {
-    const wrapper = shallow(<MiqAeClass
-      classRecord={MiqAeClassEditData}
-      fqname={fqName}
-    />);
+    fetchMock.get(
+      `/miq_ae_class/edit_class_react/${MiqAeClassEditData.id}?&expand=resources/`,
+      classMockData
+    );
+    fetchMock.get(
+      `/miq_ae_class/edit_class_record/${MiqAeClassEditData.id}/`,
+      MiqAeClassEditData
+    );
 
-    fetchMock.get(`/miq_ae_class/edit_class_react/${MiqAeClassEditData.id}?&expand=resources/`, classMockData);
-    await new Promise((resolve) => {
-      setImmediate(() => {
-        wrapper.update();
-        expect(toJson(wrapper)).toMatchSnapshot();
-        resolve();
-      });
+    const { container } = renderWithRedux(
+      <MiqAeClass classRecord={MiqAeClassEditData} fqname={fqName} />
+    );
+
+    await waitFor(() => {
+      expect(container.firstChild).toBeInTheDocument();
     });
+
+    expect(container).toMatchSnapshot();
   });
 });

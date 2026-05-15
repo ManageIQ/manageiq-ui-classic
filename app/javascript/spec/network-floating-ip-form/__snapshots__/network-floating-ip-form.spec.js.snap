@@ -1,50 +1,119 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Floating Ips Profile Form Component should render correctly 1`] = `
-<Connect(MiqFormRenderer)
-  buttonsLabels={
-    Object {
-      "submitLabel": "Add",
-    }
-  }
-  canReset={false}
-  onCancel={[Function]}
-  onSubmit={[Function]}
-  schema={
-    Object {
-      "fields": Array [
-        Object {
-          "component": "sub-form",
-          "fields": Array [
-            Object {
-              "component": "select",
-              "id": "ems_id",
-              "isDisabled": false,
-              "label": "Network Manager",
-              "name": "ems_id",
-              "onChange": [Function],
-              "options": Array [
-                Object {
-                  "label": "<Choose>",
-                  "value": "-1",
-                },
-              ],
-              "validate": Array [
-                Object {
-                  "message": "Required",
-                  "type": "required",
-                },
-              ],
-              "validateOnMount": true,
-            },
-          ],
-          "id": "network-management-provider",
-          "name": "network-management-provider",
-          "title": "Network Management Provider",
-        },
-      ],
-    }
-  }
-  validate={[Function]}
-/>
+<div>
+  <form
+    class="cds--form form-0-2-3 form-react"
+    novalidate=""
+  >
+    <div
+      class=""
+      id="network-management-provider"
+      name="network-management-provider"
+    >
+      <div>
+        <h3>
+          Network Management Provider
+        </h3>
+      </div>
+      <div
+        class="cds--form-item"
+      >
+        <div
+          class="cds--select cds--select--invalid"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="ems_id"
+          >
+            Network Manager
+          </label>
+          <div
+            class="cds--select-input__wrapper"
+            data-invalid="true"
+          >
+            <select
+              aria-describedby="ems_id-error-msg"
+              aria-invalid="true"
+              class="cds--select-input"
+              id="ems_id"
+              name="ems_id"
+              title="<Choose>"
+            >
+              <option
+                class="cds--select-option"
+                label="<Choose>"
+                value="-1"
+              >
+                &lt;Choose&gt;
+              </option>
+            </select>
+            <svg
+              aria-hidden="true"
+              class="cds--select__arrow"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+              />
+            </svg>
+            <svg
+              aria-hidden="true"
+              class="cds--select__invalid-icon"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8,1C4.2,1,1,4.2,1,8s3.2,7,7,7s7-3.1,7-7S11.9,1,8,1z M7.5,4h1v5h-1C7.5,9,7.5,4,7.5,4z M8,12.2 c-0.4,0-0.8-0.4-0.8-0.8s0.3-0.8,0.8-0.8c0.4,0,0.8,0.4,0.8,0.8S8.4,12.2,8,12.2z"
+              />
+              <path
+                d="M7.5,4h1v5h-1C7.5,9,7.5,4,7.5,4z M8,12.2c-0.4,0-0.8-0.4-0.8-0.8s0.3-0.8,0.8-0.8 c0.4,0,0.8,0.4,0.8,0.8S8.4,12.2,8,12.2z"
+                data-icon-path="inner-path"
+                opacity="0"
+              />
+            </svg>
+            
+          </div>
+          <div
+            class="cds--form-requirement"
+            dir="auto"
+            id="ems_id-error-msg"
+          >
+            Required
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="cds--btn-set"
+    >
+      <button
+        class="cds--btn cds--btn--primary cds--btn--disabled"
+        disabled=""
+        type="submit"
+        variant="primary"
+      >
+        Add
+      </button>
+      <button
+        class="cds--btn cds--btn--secondary"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
 `;
