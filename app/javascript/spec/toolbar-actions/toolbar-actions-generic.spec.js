@@ -55,16 +55,13 @@ describe('Toolbar actions', () => {
         );
     });
 
-    test('should call correct functions', (done) => {
+    test('should call correct functions', async () => {
       const payload = {
         action: 'some-action',
         resources: [{ id: 'rr' }, { id: '5' }],
       };
-      onCustomAction({ action: payload.action, entity: 'some-entity' }, payload.resources)
-        .then(() => {
-          expect(add_flash).toHaveBeenCalledWith('Requested some-action of selected item.', 'success');
-          done();
-        });
+      await onCustomAction({ action: payload.action, entity: 'some-entity' }, payload.resources);
+      expect(add_flash).toHaveBeenCalledWith('Requested some-action of selected item.', 'success');
     });
 
     test('should react to RX call', () => {
