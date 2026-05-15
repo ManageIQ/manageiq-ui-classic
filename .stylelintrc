@@ -1,5 +1,6 @@
 {
   "defaultSeverity": "warning",
+  "customSyntax": "postcss-scss",
   "extends": ["stylelint-config-standard"],
   "plugins": [
     "stylelint-scss"
@@ -9,6 +10,9 @@
     "scss/at-rule-no-unknown": true,
 
     "color-hex-length": null,
-    "shorthand-property-no-redundant-values": null
+    "shorthand-property-no-redundant-values": true,
+    "selector-class-pattern": ["^([a-z][a-z0-9]*(-[a-z0-9]+)*|cds--.*)$", {
+      "message": "Expected class selector to be kebab-case (except for carbon classes starting with 'cds--')"
+    }]
   }
 }
