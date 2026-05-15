@@ -49,5 +49,5 @@
 // Use cy.appDbState('restore') in afterEach to clean up test data.
 // Note, db_state is automatically captured once before the suite via before:run.
 Cypress.Commands.add('appDbState', function (options) {
-  return cy.app('db_state', options)
+  return cy.app('db_state', options);
 });

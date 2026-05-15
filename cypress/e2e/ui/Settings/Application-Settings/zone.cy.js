@@ -136,11 +136,11 @@ function validateFormElements(isEditForm = false) {
     },
     ...(isEditForm
       ? [
-          {
-            [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: RESET_BUTTON_TEXT,
-            [BUTTON_CONFIG_KEYS.SHOULD_BE_DISABLED]: true,
-          },
-        ]
+        {
+          [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: RESET_BUTTON_TEXT,
+          [BUTTON_CONFIG_KEYS.SHOULD_BE_DISABLED]: true,
+        },
+      ]
       : []),
   ]);
 }

@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 /**
  * Logs a custom error message to Cypress log and then throws an error.
  *

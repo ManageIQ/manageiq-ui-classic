@@ -1,46 +1,46 @@
 // CypressOnRails: don't remove these commands
 Cypress.Commands.add('appCommands', function (body) {
   Object.keys(body).forEach(key => body[key] === undefined ? delete body[key] : {});
-  const log = Cypress.log({ name: "APP", message: body, autoEnd: false })
+  const log = Cypress.log({ name: 'APP', message: body, autoEnd: false });
   return cy.request({
     method: 'POST',
-    url: "/__e2e__/command",
+    url: '/__e2e__/command',
     body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json',
     },
     log: false,
-    failOnStatusCode: false
+    failOnStatusCode: false,
   }).then((response) => {
     log.end();
     if (response.status !== 201) {
-      expect(response.body.message).to.equal('')
-      expect(response.status).to.be.equal(201)
+      expect(response.body.message).to.equal('');
+      expect(response.status).to.be.equal(201);
     }
-    return response.body
+    return response.body;
   });
 });
 
 Cypress.Commands.add('app', function (name, command_options) {
   return cy.appCommands({name: name, options: command_options}).then((body) => {
-    return body[0]
+    return body[0];
   });
 });
 
 Cypress.Commands.add('appEval', function (code) {
-  return cy.app('eval', code)
+  return cy.app('eval', code);
 });
 
 Cypress.Commands.add('appFactories', function (options) {
-  return cy.app('factory_bot', options)
+  return cy.app('factory_bot', options);
 });
 
 Cypress.Commands.add('appFixtures', function (options) {
-  cy.app('activerecord_fixtures', options)
+  cy.app('activerecord_fixtures', options);
 });
 
 Cypress.Commands.add('appScenario', function (name, options = {}) {
-  return cy.app('scenarios/' + name, options)
+  return cy.app('scenarios/' + name, options);
 });
 
 // CypressOnRails: end
