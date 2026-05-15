@@ -512,6 +512,19 @@ module ApplicationController::CiProcessing
   # Delete selected snapshot for vm
   def deletesnapsvms
     assert_privileges(params[:pressed])
+
+    snap_selected = Snapshot.find_by(:id => session[:snap_selected]) if session[:snap_selected]
+    record = find_record_with_rbac(record_class, params[:id]) if params[:id]
+    error_message = record.try(:remove_snapshot_denied_message, snap_selected.current?) if snap_selected
+    if error_message
+      javascript_flash(
+        :text       => error_message,
+        :severity   => :error,
+        :scroll_top => true
+      )
+      return
+    end
+
     generic_button_operation('remove_snapshot', _('Delete Snapshot'), vm_button_action,
                              @explorer ? {} : {:refresh_partial => 'vm_common/config'})
   end
@@ -520,6 +533,19 @@ module ApplicationController::CiProcessing
   # Delete selected snapshot for vm
   def revertsnapsvms
     assert_privileges(params[:pressed])
+
+    snap_selected = Snapshot.find_by(:id => session[:snap_selected])
+    record = find_record_with_rbac(record_class, params[:id])
+    error_message = record.try(:revert_to_snapshot_denied_message, snap_selected.current?)
+    if error_message
+      javascript_flash(
+        :text       => error_message,
+        :severity   => :error,
+        :scroll_top => true
+      )
+      return
+    end
+
     generic_button_operation('revert_to_snapshot', _('Revert to a Snapshot'), vm_button_action,
                              @explorer ? {} : {:refresh_partial => 'vm_common/config'})
   end
