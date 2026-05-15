@@ -86,12 +86,6 @@ window.listenToRx = listenToRx;
 // mock miq_application helpers
 window.add_flash = (x) => true;
 
-// configure enzyme adapter
-import Enzyme from 'enzyme';
-import EnzymeAdapter from 'enzyme-adapter-react-16';
-Enzyme.configure({ adapter: new EnzymeAdapter() });
-
-
 // mock document.body.createTextRange for code mirror
 document.body.createTextRange = () => ({
   setEnd: () => {},
