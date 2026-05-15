@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { flashClassMap } from '../../../../support/assertions/assertion_constants';
 import {
   LABEL_CONFIG_KEYS,
@@ -31,7 +30,6 @@ const SERVER_IP_FIELD_LABEL = 'Server IP';
 const MAX_SCAN_FIELD_LABEL = 'VM Scans';
 const FORM_HEADER_FRAGMENT = 'Zone';
 const INFO_SUB_HEADER = 'Info';
-const SETTINGS_SUB_HEADER = 'Settings';
 const ZONE_NAME = 'Test-Zone-Name';
 const INITIAL_ZONE_DESCRIPTION = 'Test-Zone-Description';
 const UPDATED_ZONE_DESCRIPTION = 'Test-Zone-Description-Updated';

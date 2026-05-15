@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import {
   LABEL_CONFIG_KEYS,
   BUTTON_CONFIG_KEYS,

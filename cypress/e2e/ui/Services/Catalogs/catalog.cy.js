@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { flashClassMap } from '../../../../support/assertions/assertion_constants';
 import {
   LABEL_CONFIG_KEYS,
@@ -86,11 +85,11 @@ function validateElements({ isEditForm }) {
     },
     ...(isEditForm
       ? [
-          {
-            [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: RESET_BUTTON_TEXT,
-            [BUTTON_CONFIG_KEYS.SHOULD_BE_DISABLED]: true,
-          },
-        ]
+        {
+          [BUTTON_CONFIG_KEYS.BUTTON_TEXT]: RESET_BUTTON_TEXT,
+          [BUTTON_CONFIG_KEYS.SHOULD_BE_DISABLED]: true,
+        },
+      ]
       : []),
   ]);
   cy.getFormLegendByText({ legendText: CATALOG_ITEMS_HEADER });
@@ -117,8 +116,8 @@ describe('Automate Catalog form operations: Services > Catalogs > Catalogs > Con
     ]).then((results) => {
       cy.appFactories([
         ['create', 'resource_action', {action: 'Provision', resource_id: results[0].id, resource_type: 'ServiceTemplate'}],
-        ['create', 'resource_action', {action: 'Retirement', resource_id: results[0].id, resource_type: 'ServiceTemplate'}]
-      ])
+        ['create', 'resource_action', {action: 'Retirement', resource_id: results[0].id, resource_type: 'ServiceTemplate'}],
+      ]);
     });
 
     cy.appFactories([
@@ -126,8 +125,8 @@ describe('Automate Catalog form operations: Services > Catalogs > Catalogs > Con
     ]).then((results) => {
       cy.appFactories([
         ['create', 'resource_action', {action: 'Provision', resource_id: results[0].id, resource_type: 'ServiceTemplate'}],
-        ['create', 'resource_action', {action: 'Retirement', resource_id: results[0].id, resource_type: 'ServiceTemplate'}]
-      ])
+        ['create', 'resource_action', {action: 'Retirement', resource_id: results[0].id, resource_type: 'ServiceTemplate'}],
+      ]);
     });
 
     cy.login();

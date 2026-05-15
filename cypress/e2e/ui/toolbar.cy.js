@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 describe('Toolbar functionality tests with database operations', () => {
   describe('Toolbar with multiple database records', () => {
     let provider1 = '';

@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 describe('Menu', () => {
   beforeEach(() => {
     cy.login();
