@@ -55,6 +55,73 @@ module.exports = [
     },
   },
   {
+    // Cypress test files
+    files: ['cypress/**/*.js'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+      },
+      globals: {
+        // Cypress globals
+        cy: 'readonly',
+        Cypress: 'readonly',
+        describe: 'readonly',
+        context: 'readonly',
+        it: 'readonly',
+        specify: 'readonly',
+        before: 'readonly',
+        beforeEach: 'readonly',
+        after: 'readonly',
+        afterEach: 'readonly',
+        expect: 'readonly',
+        assert: 'readonly',
+        // Browser environment
+        window: 'readonly',
+        document: 'readonly',
+        navigator: 'readonly',
+        console: 'readonly',
+      },
+    },
+    rules: {
+      'no-console': 0,
+      'no-unused-expressions': 0,
+      'no-trailing-spaces': 2,
+      'semi': [2, 'always'],
+      'semi-spacing': [2, {
+        before: false,
+        after: true,
+      }],
+      'quotes': ['warn', 'single', {
+        avoidEscape: true,
+        allowTemplateLiterals: true,
+      }],
+      'comma-dangle': ['warn', {
+        arrays: 'always-multiline',
+        objects: 'always-multiline',
+        imports: 'always-multiline',
+        exports: 'always-multiline',
+        functions: 'only-multiline',
+      }],
+      'indent': ['error', 2, {
+        SwitchCase: 1,
+        VariableDeclarator: 1,
+      }],
+      'eol-last': 2,
+      'no-multiple-empty-lines': [2, {
+        max: 2,
+      }],
+      'space-before-blocks': 2,
+      'keyword-spacing': 2,
+      'comma-spacing': [2, {
+        before: false,
+        after: true,
+      }],
+    },
+  },
+  {
     // Modern JavaScript/JSX files (ES6+) - app/javascript
     files: ['app/javascript/**/*.js', 'app/javascript/**/*.jsx'],
     plugins: {
@@ -664,6 +731,7 @@ module.exports = [
       'cypress.config.js',
       'eslint.config.js',
       'config/webpack/**/*.js',
+      'cypress/**/*.js',
       '.yarn/**',
     ],
     plugins: {
