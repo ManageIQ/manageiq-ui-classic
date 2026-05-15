@@ -1,10 +1,7 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
+import { render, screen } from '@testing-library/react';
 
-import { Toolbar } from '../../components/toolbar';
 import MiqToolbar from '../../components/miq-toolbar';
-import DashboardToolbar from '../../components/dashboard_toolbar';
 
 const dashboardData = [
   [
@@ -17,7 +14,11 @@ const dashboardData = [
         locked: false,
         items: [
           {
-            id: 31, type: 'button', text: 'add', image: 'fa fa-pie-chart fa-lg', title: 'Add',
+            id: 31,
+            type: 'button',
+            text: 'add',
+            image: 'fa fa-pie-chart fa-lg',
+            title: 'Add',
           },
         ],
       },
@@ -43,12 +44,12 @@ describe('<MiqToolbar />', () => {
   });
 
   it('renders DashboardToolbar', () => {
-    const t = shallow(<MiqToolbar kebabLimit={3} toolbars={dashboardData} />);
-    expect(t.find(DashboardToolbar)).toHaveLength(1);
+    render(<MiqToolbar kebabLimit={3} toolbars={dashboardData} />);
+    expect(screen.getByTitle('Add widget')).toBeInTheDocument();
   });
 
   it('renders Toolbar', () => {
-    const t = shallow(<MiqToolbar kebabLimit={3} toolbars={genericData} />);
-    expect(t.find(Toolbar)).toHaveLength(1);
+    render(<MiqToolbar kebabLimit={3} toolbars={genericData} />);
+    expect(screen.getByTitle('Refresh this page')).toBeInTheDocument();
   });
 });

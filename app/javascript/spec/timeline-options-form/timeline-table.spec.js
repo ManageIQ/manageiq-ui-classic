@@ -1,35 +1,31 @@
 import React from 'react';
-import { act } from 'react-dom/test-utils';
+import { waitFor } from '@testing-library/react';
 import TimelineTable from '../../components/timeline-options/timeline-table';
-import { mount } from '../helpers/mountForm';
+import { renderWithRedux } from '../helpers/mountForm';
 import { tableSampleData } from './sample-table-data';
 
 describe('Show Timeline Page', () => {
-/*
- * Render Page
- */
+  it('should render empty page', async() => {
+    const { container } = renderWithRedux(<TimelineTable data={[]} />);
 
-  it('should render empty page', async(done) => {
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<TimelineTable data={[]} />);
+    await waitFor(() => {
+      expect(
+        container.querySelector('.timeline-data-table')
+      ).toBeInTheDocument();
     });
-    setImmediate(() => {
-      wrapper.update();
-      expect(wrapper).toBeTruthy();
-      done();
-    });
+    expect(container.querySelector('.miq-data-table')).not.toBeInTheDocument();
   });
 
-  it('should render a table with data', async(done) => {
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<TimelineTable data={tableSampleData} />);
+  it('should render a table with data', async() => {
+    const { container } = renderWithRedux(
+      <TimelineTable data={tableSampleData} />
+    );
+
+    await waitFor(() => {
+      expect(
+        container.querySelector('.timeline-data-table')
+      ).toBeInTheDocument();
     });
-    setImmediate(() => {
-      wrapper.update();
-      expect(wrapper).toBeTruthy();
-      done();
-    });
+    expect(container.querySelector('.miq-data-table')).toBeInTheDocument();
   });
 });
