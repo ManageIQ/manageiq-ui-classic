@@ -25,7 +25,10 @@ module.exports = [
   },
   {
     // Config files (Node.js environment)
-    files: ['.babelrc.js', 'jest.config.js', 'cypress.config.js', 'eslint.config.js'],
+    files: ['.babelrc.js', 'jest.config.js', 'cypress.config.js', 'eslint.config.js', 'config/webpack/**/*.js'],
+    plugins: {
+      import: importPlugin,
+    },
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'commonjs',
@@ -38,10 +41,17 @@ module.exports = [
         __filename: 'readonly',
         process: 'readonly',
         console: 'readonly',
+        setTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearTimeout: 'readonly',
+        clearInterval: 'readonly',
+        Buffer: 'readonly',
+        global: 'readonly',
       },
     },
     rules: {
       'no-console': 0,
+      'import/no-dynamic-require': 0,
     },
   },
   {
@@ -653,6 +663,7 @@ module.exports = [
       'jest.config.js',
       'cypress.config.js',
       'eslint.config.js',
+      'config/webpack/**/*.js',
       '.yarn/**',
     ],
     plugins: {
