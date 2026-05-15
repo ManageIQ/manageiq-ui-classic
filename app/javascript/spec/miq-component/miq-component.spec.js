@@ -316,7 +316,7 @@ describe('Component API', () => {
     expect(resultingInstance.props).toEqual({ bar: 123 });
   });
 
-  it('multiple props modifications will trigger single instance.update', (done) => {
+  it('multiple props modifications will trigger single instance.update', async () => {
     const testBlueprint = {
       create() { return {}; },
       update: jest.fn().mockName('testBlueprint.update'),
@@ -330,10 +330,9 @@ describe('Component API', () => {
     resultingInstance.props.baz = true;
     resultingInstance.props.qux = ['1337'];
 
-    setTimeout(() => {
-      expect(resultingInstance.update).toHaveBeenCalledWith({ baz: true, qux: ['1337'] });
-      done();
-    });
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    
+    expect(resultingInstance.update).toHaveBeenCalledWith({ baz: true, qux: ['1337'] });
   });
 
   it('instance.destroy delegates to blueprint.destroy', () => {
