@@ -39,7 +39,7 @@
     "@data-driven-forms/react-form-renderer": "~4.1.13",
     "@hotwired/stimulus": "^3.2.2",
     "@manageiq/font-fabulous": "~1.0.5",
-    "@manageiq/ui-components": "~1.6.1",
+    "@manageiq/ui-components": "^1.7.1",
     "@novnc/novnc": "~1.2.0",
     "@pf3/select": "~1.12.6",
     "@rails/actioncable": "^8.0.0",
