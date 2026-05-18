@@ -2494,17 +2494,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@manageiq/ui-components@npm:~1.6.1":
-  version: 1.6.1
-  resolution: "@manageiq/ui-components@npm:1.6.1"
+"@manageiq/ui-components@npm:^1.7.1":
+  version: 1.7.1
+  resolution: "@manageiq/ui-components@npm:1.7.1"
   dependencies:
     angular-bootstrap-switch: "npm:^0.5.1"
     angular-dragdrop: "npm:^1.0.13"
-    angular-ui-sortable: "npm:^0.16.1"
+    angular-ui-sortable: "npm:^0.19.0"
     es6-shim: "npm:^0.35.3"
     es7-shim: "npm:^6.0.0"
     sprintf-js: "npm:^1.1.1"
-  checksum: 10/dc7fb7847d218f6425ceba753bee78a59d3c3fd99996256ed0cd01e2f73ce8e02eda78c5400ee4be14effb7865480c6c105f4a293fdca521c6c8767d23513fae
+  checksum: 10/2e3b7b2f6208e21c90cca8dda274ba44d33d6b6b36f3dfe35bf0faa452bc6f3849405ecad10c81dbc2edf2369f083689cf0039d8ccc1b4689f6dd7eead314246
   languageName: node
   linkType: hard
 
@@ -4607,14 +4607,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"angular-ui-sortable@npm:^0.16.1":
-  version: 0.16.1
-  resolution: "angular-ui-sortable@npm:0.16.1"
-  checksum: 10/73eaa449fd8bfcacc80a8a6efaeef67262ec5336da711dbdf84dd9aa669aed3ff087e98bbe4be8d83bb5a361520b3784e6d4a630abee083175beb6ac3403f562
-  languageName: node
-  linkType: hard
-
-"angular-ui-sortable@npm:~0.19.0":
+"angular-ui-sortable@npm:^0.19.0, angular-ui-sortable@npm:~0.19.0":
   version: 0.19.0
   resolution: "angular-ui-sortable@npm:0.19.0"
   dependencies:
@@ -12294,7 +12287,7 @@ __metadata:
     "@data-driven-forms/react-form-renderer": "npm:~4.1.13"
     "@hotwired/stimulus": "npm:^3.2.2"
     "@manageiq/font-fabulous": "npm:~1.0.5"
-    "@manageiq/ui-components": "npm:~1.6.1"
+    "@manageiq/ui-components": "npm:^1.7.1"
     "@novnc/novnc": "npm:~1.2.0"
     "@pf3/select": "npm:~1.12.6"
     "@rails/actioncable": "npm:^8.0.0"
