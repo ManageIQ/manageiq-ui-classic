@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import moment from 'moment';
 import {
   LABEL_CONFIG_KEYS,

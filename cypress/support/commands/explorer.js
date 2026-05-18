@@ -1,6 +1,3 @@
-/* eslint-disable no-loop-func */
-/* eslint-disable no-undef */
-
 // title: String of the accordion title for the accordian panel to open.
 Cypress.Commands.add('accordion', (title) => {
   cy.get('#main-content'); // ensure screen loads first
@@ -13,7 +10,7 @@ Cypress.Commands.add('accordion', (title) => {
     if (el.is('.collapsed')) {
       cy.interceptApi({
         alias: 'accordionSelectApi',
-        urlPattern: /\/[^\/]+\/accordion_select\?id=.*/,
+        urlPattern: /\/[^/]+\/accordion_select\?id=.*/,
         triggerFn: () => cy.wrap(el).click(),
         waitOnlyIfRequestIntercepted: true,
       });
@@ -97,7 +94,7 @@ Cypress.Commands.add('selectAccordionItem', (accordionPath) => {
             // intercept & wait for the Tree-Select api and then terminate
             cy.interceptApi({
               alias: 'treeSelectApi',
-              urlPattern: /\/[^\/]+\/tree_select\?id=.*&text=.*/,
+              urlPattern: /\/[^/]+\/tree_select\?id=.*&text=.*/,
               triggerFn: () => cy.wrap(currentLiElement).click(),
               waitOnlyIfRequestIntercepted: true,
             });

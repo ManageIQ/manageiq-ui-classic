@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 // Menu options
 const SETTINGS_MENU_OPTION = 'Settings';
 const APP_SETTINGS_MENU_OPTION = 'Application Settings';

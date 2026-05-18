@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { flashClassMap } from '../../../../support/assertions/assertion_constants';
 import {
   LABEL_CONFIG_KEYS,
@@ -44,8 +43,8 @@ describe('Automate Copy Catalog Item form operations: Services > Catalogs > Cata
     ]).then((results) => {
       cy.appFactories([
         ['create', 'resource_action', {action: 'Provision', resource_id: results[0].id, resource_type: 'ServiceTemplate'}],
-        ['create', 'resource_action', {action: 'Retirement', resource_id: results[0].id, resource_type: 'ServiceTemplate'}]
-      ])
+        ['create', 'resource_action', {action: 'Retirement', resource_id: results[0].id, resource_type: 'ServiceTemplate'}],
+      ]);
     });
 
     cy.login();

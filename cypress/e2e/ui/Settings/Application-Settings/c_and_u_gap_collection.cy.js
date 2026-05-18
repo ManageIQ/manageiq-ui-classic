@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 // TODO: Use aliased import(@cypress-dir) once #9631 is merged
 import { flashClassMap } from '../../../../support/assertions/assertion_constants';
 import {

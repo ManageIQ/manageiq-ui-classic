@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 /**
  * @fileoverview
  * This file contains Cypress commands for interacting with dual-list components.
@@ -89,8 +88,7 @@ Cypress.Commands.add('dualListAction', ({ actionType, optionsToSelect }) => {
     const targetListIndex = isActionTypeAdd ? 'first' : 'last';
     const targetButtonId = isActionTypeAdd ? '#move-right' : '#move-left';
     optionsToSelect.forEach((option) => {
-      cy.get(DUAL_LIST_BODY_SELECTOR)
-        [targetListIndex]()
+      cy.get(DUAL_LIST_BODY_SELECTOR)[targetListIndex]()
         .contains(DUAL_LIST_OPTION_ROW_SELECTOR, option)
         .click();
     });

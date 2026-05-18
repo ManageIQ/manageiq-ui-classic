@@ -10,7 +10,6 @@ const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const extname = require('path-complete-extname');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const { SplitChunksPlugin } = require('webpack').optimize;
-const { execSync } = require('child_process');
 const fs = require('fs');
 
 const { env, settings, i18n, output, engines } = require('./configuration.js');

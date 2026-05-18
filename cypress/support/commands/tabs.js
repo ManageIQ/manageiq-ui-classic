@@ -2,7 +2,7 @@
  * Selects and clicks a tab element by its label text.
  *
  * This command finds a tab element within a tablist that contains the specified label text
- * and automatically clicks it to navigate to the tab. It requires a tabLabel parameter and 
+ * and automatically clicks it to navigate to the tab. It requires a tabLabel parameter and
  * will throw an error if none is provided.
  *
  * @param {Object} options - The options object

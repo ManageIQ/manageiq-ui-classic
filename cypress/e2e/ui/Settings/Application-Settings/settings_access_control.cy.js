@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { flashClassMap } from '../../../../support/assertions/assertion_constants';
 
 describe('Settings > Application Settings > Access Control', () => {
@@ -25,9 +24,9 @@ describe('Settings > Application Settings > Access Control', () => {
 
   it('should be able to create and delete a tenant', () => {
     cy.selectAccordionItem([
-       /^ManageIQ Region/,
-       'Tenants',
-       'My Company',
+      /^ManageIQ Region/,
+      'Tenants',
+      'My Company',
     ]);
 
     cy.toolbar(TOOLBAR_MENU, 'Add child Tenant to this Tenant');
@@ -43,10 +42,10 @@ describe('Settings > Application Settings > Access Control', () => {
     }).click();
     cy.expect_flash(flashClassMap.success, FLASH_MESSAGE_OPERATION_ADDED);
     cy.selectAccordionItem([
-       /^ManageIQ Region/,
-       'Tenants',
-       'My Company',
-       INITIAL_TENANT_NAME
+      /^ManageIQ Region/,
+      'Tenants',
+      'My Company',
+      INITIAL_TENANT_NAME,
     ]);
 
     cy.expect_browser_confirm_with_text({

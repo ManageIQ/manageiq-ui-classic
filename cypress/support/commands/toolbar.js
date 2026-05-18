@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 // toolbarButton: String for the text of the toolbar button to click.
 // toolbarOption: String for the text of the dropdown button to click after the toolbar dropdown is opened.
 // otherOptions: Object (optional) - Additional options for toolbar interaction.
