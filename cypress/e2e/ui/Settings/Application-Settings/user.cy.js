@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import {
   LABEL_CONFIG_KEYS,
   BUTTON_CONFIG_KEYS,
@@ -91,9 +90,9 @@ function assertUserInformation({
   email
     ? cy.contains(getUserInfoElementSelector(4, 'content_value'), email)
     : cy
-        .get(getUserInfoElementSelector(4, 'content_value'))
-        .invoke('text')
-        .should('be.empty');
+      .get(getUserInfoElementSelector(4, 'content_value'))
+      .invoke('text')
+      .should('be.empty');
   cy.contains(getUserInfoElementSelector(5, 'label_header'), 'Current Group');
   cy.contains(getUserInfoElementSelector(5, 'content_value'), currentGroup);
   cy.contains(getUserInfoElementSelector(6, 'label_header'), 'Role');
@@ -150,7 +149,7 @@ describe('Settings > Application Settings > Users', () => {
           [LABEL_CONFIG_KEYS.EXPECTED_TEXT]: 'E-mail Address',
         },
       ]);
-      cy.get('#downshift-0-label').contains('Available Groups')
+      cy.get('#downshift-0-label').contains('Available Groups');
       cy.getFormLegendByText({ legendText: 'Password' }).should('be.visible');
       cy.contains('form label#selected-groups-label', 'Selected Groups');
       cy.contains('form #selected-groups', 'EvmGroup-super_administrator');

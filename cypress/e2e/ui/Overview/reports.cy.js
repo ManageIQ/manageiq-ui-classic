@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 describe('Overview > Reports Tests', () => {
   beforeEach(() => {
     cy.login();
@@ -38,7 +36,7 @@ describe('Overview > Reports Tests', () => {
       cy.get('#name').type('Cypress Test Report', { force: true });
       cy.wait('@fieldsChanged');
 
-      cy.get('#title').type('Cypress test report title', { force: true })
+      cy.get('#title').type('Cypress test report title', { force: true });
       cy.wait('@fieldsChanged');
 
       let basedOn = '';
@@ -240,7 +238,7 @@ describe('Overview > Reports Tests', () => {
           expect(tableValues[5]).to.eq('admin');
         });
       });
-  });
+    });
   });
 
   it('Can add, edit and delete a schedule', () => {

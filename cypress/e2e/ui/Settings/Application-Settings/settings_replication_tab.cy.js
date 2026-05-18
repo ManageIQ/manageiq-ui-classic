@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { flashClassMap } from '../../../../support/assertions/assertion_constants';
 
 // Menu options
@@ -98,7 +97,7 @@ function setupSavedSubscription(subscription) {
 function addSubscription() {
   cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME })
     .select(REPLICATION_TYPE_GLOBAL, { force: true });
-  
+
   cy.contains('button', ADD_SUBSCRIPTION_BUTTON_TEXT)
     .should('be.visible')
     .click();
@@ -122,7 +121,7 @@ function addSubscription() {
 
   cy.getFormInputFieldByIdAndType({ inputId: DBNAME_INPUT_NAME })
     .clear({ force: true })
-    .type(TEST_DB_NAME, { force: true, delay: 100 })
+    .type(TEST_DB_NAME, { force: true, delay: 100 });
   cy.getFormInputFieldByIdAndType({ inputId: HOST_INPUT_NAME }).type(TEST_HOST);
   cy.getFormInputFieldByIdAndType({ inputId: USER_INPUT_NAME }).type(TEST_USER_1);
   cy.getFormInputFieldByIdAndType({ inputId: PASSWORD_INPUT_NAME, inputType: 'password' }).type(TEST_PASSWORD);
@@ -145,9 +144,9 @@ function saveReplicationForm() {
 function handleConfirmationModal(heading, buttonText) {
   cy.get(MODAL_SELECTOR).should('be.visible');
   cy.contains(MODAL_HEADER_SELECTOR, heading).should('be.visible');
-  
+
   cy.contains('button', buttonText).click({force: true});
-  
+
   cy.contains(MODAL_HEADER_SELECTOR, heading).should('not.exist');
 }
 
@@ -256,11 +255,11 @@ describe('Settings > Application Settings > Replication form', () => {
     it('Verify Cancel and Reset operations in the subscription modal', () => {
       cy.getFormSelectFieldById({ selectId: REPLICATION_TYPE_SELECT_NAME })
         .select(REPLICATION_TYPE_GLOBAL, { force: true });
-      
+
       cy.contains('button', ADD_SUBSCRIPTION_BUTTON_TEXT)
         .should('be.visible')
         .click();
-        
+
       cy.get(MODAL_SELECTOR).should('be.visible');
 
       cy.contains(`${MODAL_SELECTOR} button`, CANCEL_BUTTON_TEXT)
@@ -272,9 +271,9 @@ describe('Settings > Application Settings > Replication form', () => {
       cy.contains('button', ADD_SUBSCRIPTION_BUTTON_TEXT)
         .should('be.visible')
         .click();
-        
+
       cy.get(MODAL_SELECTOR).should('be.visible');
-      
+
       cy.getFormInputFieldByIdAndType({ inputId: DBNAME_INPUT_NAME })
         .scrollIntoView()
         .type('test_reset', { force: true });
@@ -344,10 +343,10 @@ describe('Settings > Application Settings > Replication form', () => {
         .click();
 
       cy.contains('An updated subscription must point to the same database').should('be.visible');
-      
+
       // Confirm the edit operation - this will close the confirmation modal and open the edit modal
       handleConfirmationModal(CONFIRM_EDIT_MODAL_HEADING, CONFIRM_OK_BUTTON_TEXT);
-      
+
       // Verify the edit modal is now open
       cy.contains(MODAL_HEADER_SELECTOR, `${EDIT_SUBSCRIPTION_MODAL_HEADING_PREFIX} ${MOCK_SAVED_SUBSCRIPTION.dbname}`)
         .should('be.visible');
@@ -377,7 +376,7 @@ describe('Settings > Application Settings > Replication form', () => {
         .should('have.length', 0);
     });
 
-    it('Verify deleting a previously saved subscription', () => {      
+    it('Verify deleting a previously saved subscription', () => {
       const MOCK_SAVED_SUBSCRIPTION = {
         id: 888,
         dbname: 'test_db',
@@ -419,18 +418,18 @@ describe('Settings > Application Settings > Replication form', () => {
           cy.contains(MOCK_SAVED_SUBSCRIPTION.dbname).should('exist');
           cy.contains(DELETE_BUTTON_TEXT).should('exist');
         });
-      
+
       // Now delete again
       cy.contains(MIQ_DATA_TABLE_BUTTON_SELECTOR, DELETE_BUTTON_TEXT)
         .scrollIntoView()
         .click();
-      
+
       handleConfirmationModal(CONFIRM_DELETE_MODAL_HEADING, CONFIRM_OK_BUTTON_TEXT);
-            
+
       // Try to save after deleting all subscriptions - an error should be displayed
       cy.contains('button', SAVE_BUTTON_TEXT).click();
       cy.expect_flash(flashClassMap.error, 'At least 1 subscription must be added to save server replication type');
-      
+
       addSubscription();
 
       // Verify both subscriptions exist: one marked for deletion, one active
@@ -473,7 +472,7 @@ describe('Settings > Application Settings > Replication form', () => {
 
     it('Verify subscriptions are removed when switching replication type from global', () => {
       addSubscription();
-      
+
       cy.get(SUBSCRIPTIONS_TABLE_SELECTOR)
         .find('table').find('tbody').find('tr')
         .should('have.length', 1);
@@ -488,6 +487,6 @@ describe('Settings > Application Settings > Replication form', () => {
       cy.get(SUBSCRIPTIONS_TABLE_SELECTOR)
         .find('table').find('tbody').find('tr')
         .should('have.length', 0);
-      });
+    });
   });
 });

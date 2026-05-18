@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { generateProviderTests } from '../../../../../support/commands/provider_helper_commands';
 import { getProviderConfig, PROVIDER_TYPES } from './provider-factory';
 

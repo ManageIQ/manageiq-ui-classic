@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 Cypress.Commands.add('gtl_error', () => {
   return cy.get('#miq-gtl-view > #flash_msg_div').should('be.visible');
 });

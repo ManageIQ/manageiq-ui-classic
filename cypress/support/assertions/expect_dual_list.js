@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { DUAL_LIST_ACTION_TYPE } from '../commands/constants/command_constants';
 
 /**
@@ -37,9 +36,7 @@ function selectAndMoveItem(direction, targetItem) {
 
   // Verify the item moved correctly
   cy.get(DUAL_LIST_BODY_SELECTOR)[targetIndex]().should('contain', targetItem);
-  cy.get(DUAL_LIST_BODY_SELECTOR)
-    [sourceIndex]()
-    .should('not.contain', targetItem);
+  cy.get(DUAL_LIST_BODY_SELECTOR)[sourceIndex]().should('not.contain', targetItem);
 }
 
 /**
@@ -51,8 +48,7 @@ function selectAndMoveItem(direction, targetItem) {
  */
 function assertListItems(listIndex, listItems) {
   return cy
-    .get(DUAL_LIST_BODY_SELECTOR)
-    [listIndex]()
+    .get(DUAL_LIST_BODY_SELECTOR)[listIndex]()
     .within(() => {
       listItems.forEach((item) => {
         cy.contains(DUAL_LIST_ROW_SELECTOR, item)
@@ -83,8 +79,7 @@ function moveAllItems(direction, listItems) {
   // Verify all items are in the target list
   assertListItems(targetIndex, listItems);
   // Verify source list is empty
-  cy.get(DUAL_LIST_BODY_SELECTOR)
-    [sourceIndex]()
+  cy.get(DUAL_LIST_BODY_SELECTOR)[sourceIndex]()
     .within(() => {
       listItems.forEach((item) => {
         cy.get(DUAL_LIST_ROW_SELECTOR).should('not.contain', item);
@@ -111,8 +106,7 @@ function testSearchFunctionality(list, targetItem) {
   // Test with invalid search term
   const randomText = 'r@nd0m-it3m';
   cy.get(SEARCH_INPUT_FIELD_SELECTOR)[searchIndex]().type(randomText);
-  cy.get(DUAL_LIST_BODY_SELECTOR)
-    [listIndex]()
+  cy.get(DUAL_LIST_BODY_SELECTOR)[listIndex]()
     .should('not.contain', targetItem);
   cy.get(SEARCH_INPUT_FIELD_SELECTOR)[searchIndex]().clear();
 }

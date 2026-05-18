@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 describe('Rates', () => {
   beforeEach(() => {
     cy.login();
