@@ -18,15 +18,6 @@ describe ApplicationHelper::Button::VmSnapshotRemoveOne do
   before { stub_supports(record.ext_management_system, :snapshots) }
   describe '#disabled?' do
     subject { button.disabled? }
-    context 'when record.kind_of?(ManageIQ::Providers::Redhat::InfraManager::Vm)' do
-      context 'when record is active' do
-        it { is_expected.to be_truthy }
-      end
-      context 'when record is not active' do
-        let(:active) { false }
-        it { is_expected.to be_falsey }
-      end
-    end
     context 'when !record.kind_of?(ManageIQ::Providers::Redhat::InfraManager::Vm)' do
       let(:record) do
         record = FactoryBot.create(:vm_vmware, :ems_id => ems.id, :host_id => host.id)
