@@ -1,10 +1,8 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
-import { shallow } from 'enzyme';
-import { act } from 'react-dom/test-utils';
+import { screen, waitFor } from '@testing-library/react';
 import AttachDetachCloudVolumeForm from '../../components/cloud-volume-form/attach-detach-cloud-volume-form';
-import { mount } from '../helpers/mountForm';
+import { renderWithRedux } from '../helpers/mountForm';
 
 describe('Attach / Detach form component', () => {
   const sampleVmChoice = [
@@ -41,42 +39,50 @@ describe('Attach / Detach form component', () => {
     fetchMock.restore();
   });
 
-  it('should render form', async () => {
-    let wrapper;
-    await act(async() => {
-      wrapper = shallow(<AttachDetachCloudVolumeForm />);
-    });
-    expect(toJson(wrapper)).toMatchSnapshot();
+  it('should render form', async() => {
+    const { container } = renderWithRedux(<AttachDetachCloudVolumeForm />);
+    expect(container).toMatchSnapshot();
   });
 
   /** Steps to reach page tested:
     1. Storage > Volume
     2. Configuration > Attach / Detach to an Instance
   */
-  it('should render Attach Selected Cloud Volume to an Instance form', async(done) => {
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<AttachDetachCloudVolumeForm recordId="1" dropdownChoices={sampleVmChoice} dropdownLabel="Instance" />);
+  it('should render Attach Selected Cloud Volume to an Instance form', async() => {
+    const { container } = renderWithRedux(
+      <AttachDetachCloudVolumeForm
+        recordId="1"
+        dropdownChoices={sampleVmChoice}
+        dropdownLabel="Instance"
+      />
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: /attach/i })
+      ).toBeInTheDocument();
     });
 
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
-    });
+    expect(container).toMatchSnapshot();
   });
 
-  it('should render Detach Selected Cloud Volume from an Instance form', async(done) => {
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<AttachDetachCloudVolumeForm isAttach={false} recordId="1" dropdownChoices={sampleVmChoice} dropdownLabel="Instance" />);
+  it('should render Detach Selected Cloud Volume from an Instance form', async() => {
+    const { container } = renderWithRedux(
+      <AttachDetachCloudVolumeForm
+        isAttach={false}
+        recordId="1"
+        dropdownChoices={sampleVmChoice}
+        dropdownLabel="Instance"
+      />
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: /detach/i })
+      ).toBeInTheDocument();
     });
 
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
-    });
+    expect(container).toMatchSnapshot();
   });
 
   /**  Steps to reach page tested:
@@ -84,35 +90,45 @@ describe('Attach / Detach form component', () => {
     2. Select an Instance that allows for attach/detach (Openstack, IBM Cloud, Amazon)
     3. Configuration > Attach / Detach a Cloud Volume from this Instance
   */
-  it('should render Attach Cloud Volume to the Selected Instance form', async(done) => {
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<AttachDetachCloudVolumeForm recordId="1" dropdownChoices={sampleVmChoice} dropdownLabel="Volume" />);
+  it('should render Attach Cloud Volume to the Selected Instance form', async() => {
+    const { container } = renderWithRedux(
+      <AttachDetachCloudVolumeForm
+        recordId="1"
+        dropdownChoices={sampleVmChoice}
+        dropdownLabel="Volume"
+      />
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: /attach/i })
+      ).toBeInTheDocument();
     });
 
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
-    });
+    expect(container).toMatchSnapshot();
   });
 
-  it('should render Detach Cloud Volume from the Selected Instance form', async(done) => {
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<AttachDetachCloudVolumeForm isAttach={false} recordId="1" dropdownChoices={sampleVmChoice} dropdownLabel="Volume" />);
+  it('should render Detach Cloud Volume from the Selected Instance form', async() => {
+    const { container } = renderWithRedux(
+      <AttachDetachCloudVolumeForm
+        isAttach={false}
+        recordId="1"
+        dropdownChoices={sampleVmChoice}
+        dropdownLabel="Volume"
+      />
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: /detach/i })
+      ).toBeInTheDocument();
     });
 
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
-    });
+    expect(container).toMatchSnapshot();
   });
 
   /** Submit Logic */
-  it('should submit Attach API call', async(done) => {
-    let wrapper;
+  it('should submit Attach API call', async() => {
     const submitData = {
       action: 'attach',
       resource: {
@@ -121,28 +137,49 @@ describe('Attach / Detach form component', () => {
       },
     };
     fetchMock.postOnce('/api/cloud_volumes/1', submitData);
-    await act(async() => {
-      wrapper = mount(<AttachDetachCloudVolumeForm recordId="1" dropdownChoices={sampleVmChoice} dropdownLabel="Instance" />);
+
+    const { container } = renderWithRedux(
+      <AttachDetachCloudVolumeForm
+        recordId="1"
+        dropdownChoices={sampleVmChoice}
+        dropdownLabel="Instance"
+      />
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: /attach/i })
+      ).toBeInTheDocument();
     });
 
-    setImmediate(() => {
-      wrapper.update();
-      expect(toJson(wrapper)).toMatchSnapshot();
-      done();
-    });
+    expect(container).toMatchSnapshot();
   });
 
-  it('should submit Detach API call', async(done) => {
+  it('should submit Detach API call', async() => {
     const submitData = {
-      action: 'attach',
+      action: 'detach',
       resource: {
         vm_id: '1',
         device: '',
       },
     };
     fetchMock.postOnce('/api/cloud_volumes/1', submitData);
-    const wrapper = mount(<AttachDetachCloudVolumeForm isAttach={false} recordId="1" dropdownChoices={sampleVmChoice} dropdownLabel="Volume" />);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+
+    const { container } = renderWithRedux(
+      <AttachDetachCloudVolumeForm
+        isAttach={false}
+        recordId="1"
+        dropdownChoices={sampleVmChoice}
+        dropdownLabel="Volume"
+      />
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: /detach/i })
+      ).toBeInTheDocument();
+    });
+
+    expect(container).toMatchSnapshot();
   });
 });

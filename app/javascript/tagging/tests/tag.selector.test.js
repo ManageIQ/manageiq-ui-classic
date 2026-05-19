@@ -1,37 +1,48 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import TagSelector from '../components/InnerComponents/TagSelector';
 
-describe('Tagging modifier', () => {
+describe('Tagging selector', () => {
   const tagCategories = [
     { label: 'Name', id: 1 },
     { label: 'Number', id: 2 },
   ];
   const selectedTagValue = { label: 'Homer', id: 1 };
-  let onTagCategoryChange;
-  beforeEach(() => {
-    onTagCategoryChange = jest.fn();
-  });
+  const onTagCategoryChange = jest.fn();
 
-  it('match snapshot', () => {
-    const tree = shallow(<TagSelector
-      tagCategories={tagCategories}
-      onTagCategoryChange={onTagCategoryChange}
-      selectedOption={selectedTagValue}
-    />);
-    expect(toJson(tree)).toMatchSnapshot();
-  });
-
-  it('should call methods', () => {
-    const wrapper = shallow(
+  it('should match snapshot', () => {
+    const { container } = render(
       <TagSelector
         tagCategories={tagCategories}
         onTagCategoryChange={onTagCategoryChange}
         selectedOption={selectedTagValue}
       />
     );
-    wrapper.instance().handleChange({ selectedItem: { label: 'Name', id: 1 } });
-    expect(onTagCategoryChange.mock.calls).toHaveLength(1);
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should call onChange when selection changes', async() => {
+    const user = userEvent.setup();
+    render(
+      <TagSelector
+        tagCategories={tagCategories}
+        onTagCategoryChange={onTagCategoryChange}
+        selectedOption={selectedTagValue}
+      />
+    );
+
+    // Find and interact with the dropdown
+    const dropdown = screen.getByRole('combobox');
+    await user.click(dropdown);
+
+    // Select the "Number" option (different from currently selected "Name")
+    const options = screen.getAllByRole('option');
+    const numberOption = options.find(
+      (option) => option.textContent === 'Number'
+    );
+    await user.click(numberOption);
+
+    expect(onTagCategoryChange).toHaveBeenCalledTimes(1);
   });
 });

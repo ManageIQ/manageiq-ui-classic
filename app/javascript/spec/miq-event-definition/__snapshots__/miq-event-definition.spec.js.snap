@@ -1,54 +1,110 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MiqEventDefinitionStructuredList should render event definition info structured list 1`] = `
-<StructuredListWrapper
-  aria-label="Structured list"
-  className="miq-structured-list miq_event_definition_info"
->
-  <MiqStructuredListBody
-    clickEvents={false}
-    mode="miq_event_definition_info"
-    rows={
-      Array [
-        Object {
-          "label": "Event Group",
-          "value": "bar",
-        },
-        Object {
-          "label": "Attached to Policy",
-          "value": "policy description",
-        },
-      ]
-    }
-  />
-</StructuredListWrapper>
+<div>
+  <div
+    aria-label="Structured list"
+    class="cds--structured-list miq-structured-list miq_event_definition_info"
+    role="table"
+  >
+    <div
+      class="cds--structured-list-tbody"
+      role="rowgroup"
+    >
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="0"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header"
+          dir="auto"
+          role="cell"
+        />
+        <div
+          class="cds--structured-list-td content_value object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="expand wrap_text"
+            >
+              bar
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--structured-list-row not-clickable"
+        role="row"
+        tabindex="1"
+        title=""
+      >
+        <div
+          class="cds--structured-list-td label_header"
+          dir="auto"
+          role="cell"
+        />
+        <div
+          class="cds--structured-list-td content_value object_item"
+          dir="auto"
+          role="cell"
+          title=""
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="expand wrap_text"
+            >
+              policy description
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`MiqEventDefinitionStructuredList should render event definition policy structured list 1`] = `
-<StructuredListWrapper
-  aria-label="Structured list"
-  className="miq-structured-list miq_event_definition_policy"
->
-  <MiqStructuredListBody
-    clickEvents={false}
-    mode="miq_event_definition_policy"
-    onClick={[MockFunction]}
-    rows={
-      Array [
-        Object {
-          "cells": Array [
-            Object {
-              "icon": "pficon pficon-warning-triangle-o",
-              "value": "Policy description",
-            },
-          ],
-          "onclick": Object {
-            "url": "/miq_policy/show/1",
-          },
-          "title": "View this Model Alert",
-        },
-      ]
-    }
-  />
-</StructuredListWrapper>
+<div>
+  <div
+    aria-label="Structured list"
+    class="cds--structured-list miq-structured-list miq_event_definition_policy"
+    role="table"
+  >
+    <div
+      class="cds--structured-list-tbody"
+      role="rowgroup"
+    >
+      <div
+        class="cds--structured-list-row clickable"
+        role="row"
+        tabindex="0"
+        title="View this Model Alert"
+      >
+        <div
+          class="cds--structured-list-td label_header object_item"
+          dir="auto"
+          role="cell"
+          title="View this Model Alert"
+        >
+          <div
+            class="content"
+          >
+            <div
+              class="wrap_text"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 `;

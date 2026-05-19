@@ -1,9 +1,8 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
+import { waitFor } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
-import { act } from 'react-dom/test-utils';
 
-import { mount } from '../helpers/mountForm';
+import { renderWithRedux } from '../helpers/mountForm';
 import SettingsCategoryForm from '../../components/settings-category-form';
 
 describe('SettingsCategoryForm Component', () => {
@@ -11,25 +10,25 @@ describe('SettingsCategoryForm Component', () => {
     fetchMock.reset();
     fetchMock.restore();
   });
-  it('should render a new SettingsCategoryForm form', async(done) => {
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<SettingsCategoryForm recordId="new" />);
+  it('should render a new SettingsCategoryForm form', async() => {
+    const { container } = renderWithRedux(
+      <SettingsCategoryForm recordId="new" />
+    );
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
     });
-    wrapper.update();
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+    expect(container).toMatchSnapshot();
   });
 
-  it('should render edit SettingsCategoryForm', async(done) => {
+  it('should render edit SettingsCategoryForm', async() => {
     fetchMock.getOnce('/api/categories/100', {});
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<SettingsCategoryForm recordId="100" />);
+    const { container } = renderWithRedux(
+      <SettingsCategoryForm recordId="100" />
+    );
+    await waitFor(() => {
+      expect(fetchMock.calls()).toHaveLength(1);
     });
-    expect(fetchMock.calls()).toHaveLength(1);
     expect(fetchMock.called('/api/categories/100')).toBe(true);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+    expect(container).toMatchSnapshot();
   });
 });

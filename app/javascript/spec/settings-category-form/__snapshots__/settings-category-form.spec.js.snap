@@ -1,2337 +1,608 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SettingsCategoryForm Component should render a new SettingsCategoryForm form 1`] = `
-<Provider
-  store={
-    Object {
-      "asyncReducers": Object {
-        "FormButtons": [Function],
-        "miqCustomTabReducer": [Function],
-        "notificationReducer": [Function],
-      },
-      "dispatch": [Function],
-      "getState": [Function],
-      "injectReducers": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-      Symbol(observable): [Function],
-    }
-  }
->
-  <SettingsCategoryForm
-    recordId="new"
+<div>
+  <form
+    class="cds--form form-0-2-3 form-react"
+    novalidate=""
   >
-    <Connect(MiqFormRenderer)
-      buttonsLabels={
-        Object {
-          "submitLabel": "Add",
-        }
-      }
-      canReset={false}
-      onCancel={[Function]}
-      onSubmit={[Function]}
-      schema={
-        Object {
-          "fields": Array [
-            Object {
-              "component": "sub-form",
-              "fields": Array [
-                Object {
-                  "className": "settings_category_name",
-                  "component": "text-field",
-                  "id": "name",
-                  "isDisabled": false,
-                  "isRequired": true,
-                  "label": "Name",
-                  "maxLength": 50,
-                  "name": "name",
-                  "validate": Array [
-                    Object {
-                      "type": "required",
-                    },
-                  ],
-                },
-                Object {
-                  "component": "text-field",
-                  "id": "description",
-                  "isRequired": true,
-                  "label": "Description",
-                  "maxLength": 150,
-                  "name": "description",
-                  "validate": Array [
-                    Object {
-                      "type": "required",
-                    },
-                  ],
-                },
-                Object {
-                  "component": "text-field",
-                  "id": "example_text",
-                  "isRequired": true,
-                  "label": "Long Description",
-                  "maxLength": 150,
-                  "name": "example_text",
-                  "validate": Array [
-                    Object {
-                      "type": "required",
-                    },
-                  ],
-                },
-                Object {
-                  "component": "switch",
-                  "id": "show",
-                  "label": "Show in console",
-                  "maxLength": 50,
-                  "name": "show",
-                  "offText": "No",
-                  "onText": "Yes",
-                },
-                Object {
-                  "className": "settings_category_single_value",
-                  "component": "switch",
-                  "id": "single_value",
-                  "isDisabled": false,
-                  "label": "Single value",
-                  "maxLength": 50,
-                  "name": "single_value",
-                  "offText": "No",
-                  "onText": "Yes",
-                },
-                Object {
-                  "component": "switch",
-                  "id": "perf_by_tag",
-                  "label": "Capture C & U Data by Tag",
-                  "maxLength": 50,
-                  "name": "perf_by_tag",
-                  "offText": "No",
-                  "onText": "Yes",
-                },
-                Object {
-                  "component": "plain-text",
-                  "label": "* Name and Single Value fields cannot be edited after adding a category.",
-                  "name": "plain-text-component",
-                },
-              ],
-              "id": "name-wrapper",
-              "name": "subform-1",
-              "title": "Category Information",
-            },
-          ],
-        }
-      }
+    <div
+      class=""
+      id="name-wrapper"
+      name="subform-1"
     >
-      <MiqFormRenderer
-        buttonsLabels={
-          Object {
-            "submitLabel": "Add",
-          }
-        }
-        canReset={false}
-        className="form-react"
-        componentMapper={
-          Object {
-            "checkbox": [Function],
-            "code-editor": [Function],
-            "date-picker": [Function],
-            "dual-list-select": [Function],
-            "edit-password-field": [Function],
-            "embedded-automate-entry-point": [Function],
-            "embedded-workflow-entry-point": [Function],
-            "field-array": [Function],
-            "file-upload": [Function],
-            "font-icon-picker": [Function],
-            "font-icon-picker-ddf": [Function],
-            "key-value-list": [Function],
-            "password-field": [Function],
-            "plain-text": [Function],
-            "radio": [Function],
-            "select": [Function],
-            "selected-groups-list": [Function],
-            "slider": [Function],
-            "sub-form": [Function],
-            "switch": [Function],
-            "tabs": [Function],
-            "text-field": [Function],
-            "textarea": [Function],
-            "time-picker": [Function],
-            "tree-selector": [Function],
-            "validate-credentials": [Function],
-            "wizard": [Function],
-          }
-        }
-        disableSubmit={
-          Array [
-            "pristine",
-            "invalid",
-          ]
-        }
-        dispatch={[Function]}
-        onCancel={[Function]}
-        onSubmit={[Function]}
-        schema={
-          Object {
-            "fields": Array [
-              Object {
-                "component": "sub-form",
-                "fields": Array [
-                  Object {
-                    "className": "settings_category_name",
-                    "component": "text-field",
-                    "id": "name",
-                    "isDisabled": false,
-                    "isRequired": true,
-                    "label": "Name",
-                    "maxLength": 50,
-                    "name": "name",
-                    "validate": Array [
-                      Object {
-                        "type": "required",
-                      },
-                    ],
-                  },
-                  Object {
-                    "component": "text-field",
-                    "id": "description",
-                    "isRequired": true,
-                    "label": "Description",
-                    "maxLength": 150,
-                    "name": "description",
-                    "validate": Array [
-                      Object {
-                        "type": "required",
-                      },
-                    ],
-                  },
-                  Object {
-                    "component": "text-field",
-                    "id": "example_text",
-                    "isRequired": true,
-                    "label": "Long Description",
-                    "maxLength": 150,
-                    "name": "example_text",
-                    "validate": Array [
-                      Object {
-                        "type": "required",
-                      },
-                    ],
-                  },
-                  Object {
-                    "component": "switch",
-                    "id": "show",
-                    "label": "Show in console",
-                    "maxLength": 50,
-                    "name": "show",
-                    "offText": "No",
-                    "onText": "Yes",
-                  },
-                  Object {
-                    "className": "settings_category_single_value",
-                    "component": "switch",
-                    "id": "single_value",
-                    "isDisabled": false,
-                    "label": "Single value",
-                    "maxLength": 50,
-                    "name": "single_value",
-                    "offText": "No",
-                    "onText": "Yes",
-                  },
-                  Object {
-                    "component": "switch",
-                    "id": "perf_by_tag",
-                    "label": "Capture C & U Data by Tag",
-                    "maxLength": 50,
-                    "name": "perf_by_tag",
-                    "offText": "No",
-                    "onText": "Yes",
-                  },
-                  Object {
-                    "component": "plain-text",
-                    "label": "* Name and Single Value fields cannot be edited after adding a category.",
-                    "name": "plain-text-component",
-                  },
-                ],
-                "id": "name-wrapper",
-                "name": "subform-1",
-                "title": "Category Information",
-              },
-            ],
-          }
-        }
-        showFormControls={true}
+      <div>
+        <h3>
+          Category Information
+        </h3>
+      </div>
+      <div
+        class="cds--form-item settings_category_name cds--text-input-wrapper"
       >
-        <FormRenderer
-          FormTemplate={[Function]}
-          componentMapper={
-            Object {
-              "checkbox": [Function],
-              "code-editor": [Function],
-              "date-picker": [Function],
-              "dual-list-select": [Function],
-              "edit-password-field": [Function],
-              "embedded-automate-entry-point": [Function],
-              "embedded-workflow-entry-point": [Function],
-              "field-array": [Function],
-              "file-upload": [Function],
-              "font-icon-picker": [Function],
-              "font-icon-picker-ddf": [Function],
-              "key-value-list": [Function],
-              "password-field": [Function],
-              "plain-text": [Function],
-              "radio": [Function],
-              "select": [Function],
-              "selected-groups-list": [Function],
-              "slider": [Function],
-              "spy-field": [Function],
-              "sub-form": [Function],
-              "switch": [Function],
-              "tabs": [Function],
-              "text-field": [Function],
-              "textarea": [Function],
-              "time-picker": [Function],
-              "tree-selector": [Function],
-              "validate-credentials": [Function],
-              "wizard": [Function],
-            }
-          }
-          dispatch={[Function]}
-          onCancel={[Function]}
-          onReset={[Function]}
-          onSubmit={[Function]}
-          schema={
-            Object {
-              "fields": Array [
-                Object {
-                  "component": "sub-form",
-                  "fields": Array [
-                    Object {
-                      "className": "settings_category_name",
-                      "component": "text-field",
-                      "id": "name",
-                      "isDisabled": false,
-                      "isRequired": true,
-                      "label": "Name",
-                      "maxLength": 50,
-                      "name": "name",
-                      "validate": Array [
-                        Object {
-                          "type": "required",
-                        },
-                      ],
-                    },
-                    Object {
-                      "component": "text-field",
-                      "id": "description",
-                      "isRequired": true,
-                      "label": "Description",
-                      "maxLength": 150,
-                      "name": "description",
-                      "validate": Array [
-                        Object {
-                          "type": "required",
-                        },
-                      ],
-                    },
-                    Object {
-                      "component": "text-field",
-                      "id": "example_text",
-                      "isRequired": true,
-                      "label": "Long Description",
-                      "maxLength": 150,
-                      "name": "example_text",
-                      "validate": Array [
-                        Object {
-                          "type": "required",
-                        },
-                      ],
-                    },
-                    Object {
-                      "component": "switch",
-                      "id": "show",
-                      "label": "Show in console",
-                      "maxLength": 50,
-                      "name": "show",
-                      "offText": "No",
-                      "onText": "Yes",
-                    },
-                    Object {
-                      "className": "settings_category_single_value",
-                      "component": "switch",
-                      "id": "single_value",
-                      "isDisabled": false,
-                      "label": "Single value",
-                      "maxLength": 50,
-                      "name": "single_value",
-                      "offText": "No",
-                      "onText": "Yes",
-                    },
-                    Object {
-                      "component": "switch",
-                      "id": "perf_by_tag",
-                      "label": "Capture C & U Data by Tag",
-                      "maxLength": 50,
-                      "name": "perf_by_tag",
-                      "offText": "No",
-                      "onText": "Yes",
-                    },
-                    Object {
-                      "component": "plain-text",
-                      "label": "* Name and Single Value fields cannot be edited after adding a category.",
-                      "name": "plain-text-component",
-                    },
-                  ],
-                  "id": "name-wrapper",
-                  "name": "subform-1",
-                  "title": "Category Information",
-                },
-                Object {
-                  "component": "spy-field",
-                  "initialize": undefined,
-                  "name": "spy-field",
-                },
-              ],
-            }
-          }
+        <div
+          class="cds--text-input__label-wrapper"
         >
-          <ReactFinalForm
-            decorators={
-              Array [
-                [Function],
-              ]
-            }
-            dispatch={[Function]}
-            initialValues={Object {}}
-            mutators={
-              Object {
-                "concat": [Function],
-                "insert": [Function],
-                "move": [Function],
-                "pop": [Function],
-                "push": [Function],
-                "remove": [Function],
-                "removeBatch": [Function],
-                "shift": [Function],
-                "swap": [Function],
-                "unshift": [Function],
-                "update": [Function],
-              }
-            }
-            onSubmit={[Function]}
-            render={[Function]}
-            subscription={
-              Object {
-                "pristine": true,
-                "submitting": true,
-                "valid": true,
-              }
-            }
+          <label
+            class="cds--label"
+            dir="auto"
+            for="name"
           >
-            <Component
-              formFields={
-                Array [
-                  <SingleField
-                    component="sub-form"
-                    fields={
-                      Array [
-                        Object {
-                          "className": "settings_category_name",
-                          "component": "text-field",
-                          "id": "name",
-                          "isDisabled": false,
-                          "isRequired": true,
-                          "label": "Name",
-                          "maxLength": 50,
-                          "name": "name",
-                          "validate": Array [
-                            Object {
-                              "type": "required",
-                            },
-                          ],
-                        },
-                        Object {
-                          "component": "text-field",
-                          "id": "description",
-                          "isRequired": true,
-                          "label": "Description",
-                          "maxLength": 150,
-                          "name": "description",
-                          "validate": Array [
-                            Object {
-                              "type": "required",
-                            },
-                          ],
-                        },
-                        Object {
-                          "component": "text-field",
-                          "id": "example_text",
-                          "isRequired": true,
-                          "label": "Long Description",
-                          "maxLength": 150,
-                          "name": "example_text",
-                          "validate": Array [
-                            Object {
-                              "type": "required",
-                            },
-                          ],
-                        },
-                        Object {
-                          "component": "switch",
-                          "id": "show",
-                          "label": "Show in console",
-                          "maxLength": 50,
-                          "name": "show",
-                          "offText": "No",
-                          "onText": "Yes",
-                        },
-                        Object {
-                          "className": "settings_category_single_value",
-                          "component": "switch",
-                          "id": "single_value",
-                          "isDisabled": false,
-                          "label": "Single value",
-                          "maxLength": 50,
-                          "name": "single_value",
-                          "offText": "No",
-                          "onText": "Yes",
-                        },
-                        Object {
-                          "component": "switch",
-                          "id": "perf_by_tag",
-                          "label": "Capture C & U Data by Tag",
-                          "maxLength": 50,
-                          "name": "perf_by_tag",
-                          "offText": "No",
-                          "onText": "Yes",
-                        },
-                        Object {
-                          "component": "plain-text",
-                          "label": "* Name and Single Value fields cannot be edited after adding a category.",
-                          "name": "plain-text-component",
-                        },
-                      ]
-                    }
-                    id="name-wrapper"
-                    name="subform-1"
-                    title="Category Information"
-                  />,
-                  <SingleField
-                    component="spy-field"
-                    name="spy-field"
-                  />,
-                ]
-              }
-              schema={
-                Object {
-                  "fields": Array [
-                    Object {
-                      "component": "sub-form",
-                      "fields": Array [
-                        Object {
-                          "className": "settings_category_name",
-                          "component": "text-field",
-                          "id": "name",
-                          "isDisabled": false,
-                          "isRequired": true,
-                          "label": "Name",
-                          "maxLength": 50,
-                          "name": "name",
-                          "validate": Array [
-                            Object {
-                              "type": "required",
-                            },
-                          ],
-                        },
-                        Object {
-                          "component": "text-field",
-                          "id": "description",
-                          "isRequired": true,
-                          "label": "Description",
-                          "maxLength": 150,
-                          "name": "description",
-                          "validate": Array [
-                            Object {
-                              "type": "required",
-                            },
-                          ],
-                        },
-                        Object {
-                          "component": "text-field",
-                          "id": "example_text",
-                          "isRequired": true,
-                          "label": "Long Description",
-                          "maxLength": 150,
-                          "name": "example_text",
-                          "validate": Array [
-                            Object {
-                              "type": "required",
-                            },
-                          ],
-                        },
-                        Object {
-                          "component": "switch",
-                          "id": "show",
-                          "label": "Show in console",
-                          "maxLength": 50,
-                          "name": "show",
-                          "offText": "No",
-                          "onText": "Yes",
-                        },
-                        Object {
-                          "className": "settings_category_single_value",
-                          "component": "switch",
-                          "id": "single_value",
-                          "isDisabled": false,
-                          "label": "Single value",
-                          "maxLength": 50,
-                          "name": "single_value",
-                          "offText": "No",
-                          "onText": "Yes",
-                        },
-                        Object {
-                          "component": "switch",
-                          "id": "perf_by_tag",
-                          "label": "Capture C & U Data by Tag",
-                          "maxLength": 50,
-                          "name": "perf_by_tag",
-                          "offText": "No",
-                          "onText": "Yes",
-                        },
-                        Object {
-                          "component": "plain-text",
-                          "label": "* Name and Single Value fields cannot be edited after adding a category.",
-                          "name": "plain-text-component",
-                        },
-                      ],
-                      "id": "name-wrapper",
-                      "name": "subform-1",
-                      "title": "Category Information",
-                    },
-                    Object {
-                      "component": "spy-field",
-                      "initialize": undefined,
-                      "name": "spy-field",
-                    },
-                  ],
-                }
-              }
+            <span
+              aria-hidden="true"
+              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
             >
-              <WrappedFormTemplate
-                canReset={false}
-                cancelLabel="Cancel"
-                disableSubmit={
-                  Array [
-                    "pristine",
-                    "invalid",
-                  ]
-                }
-                formFields={
-                  Array [
-                    <SingleField
-                      component="sub-form"
-                      fields={
-                        Array [
-                          Object {
-                            "className": "settings_category_name",
-                            "component": "text-field",
-                            "id": "name",
-                            "isDisabled": false,
-                            "isRequired": true,
-                            "label": "Name",
-                            "maxLength": 50,
-                            "name": "name",
-                            "validate": Array [
-                              Object {
-                                "type": "required",
-                              },
-                            ],
-                          },
-                          Object {
-                            "component": "text-field",
-                            "id": "description",
-                            "isRequired": true,
-                            "label": "Description",
-                            "maxLength": 150,
-                            "name": "description",
-                            "validate": Array [
-                              Object {
-                                "type": "required",
-                              },
-                            ],
-                          },
-                          Object {
-                            "component": "text-field",
-                            "id": "example_text",
-                            "isRequired": true,
-                            "label": "Long Description",
-                            "maxLength": 150,
-                            "name": "example_text",
-                            "validate": Array [
-                              Object {
-                                "type": "required",
-                              },
-                            ],
-                          },
-                          Object {
-                            "component": "switch",
-                            "id": "show",
-                            "label": "Show in console",
-                            "maxLength": 50,
-                            "name": "show",
-                            "offText": "No",
-                            "onText": "Yes",
-                          },
-                          Object {
-                            "className": "settings_category_single_value",
-                            "component": "switch",
-                            "id": "single_value",
-                            "isDisabled": false,
-                            "label": "Single value",
-                            "maxLength": 50,
-                            "name": "single_value",
-                            "offText": "No",
-                            "onText": "Yes",
-                          },
-                          Object {
-                            "component": "switch",
-                            "id": "perf_by_tag",
-                            "label": "Capture C & U Data by Tag",
-                            "maxLength": 50,
-                            "name": "perf_by_tag",
-                            "offText": "No",
-                            "onText": "Yes",
-                          },
-                          Object {
-                            "component": "plain-text",
-                            "label": "* Name and Single Value fields cannot be edited after adding a category.",
-                            "name": "plain-text-component",
-                          },
-                        ]
-                      }
-                      id="name-wrapper"
-                      name="subform-1"
-                      title="Category Information"
-                    />,
-                    <SingleField
-                      component="spy-field"
-                      name="spy-field"
-                    />,
-                  ]
-                }
-                formWrapperProps={
-                  Object {
-                    "className": "form-react",
-                  }
-                }
-                resetLabel="Reset"
-                schema={
-                  Object {
-                    "fields": Array [
-                      Object {
-                        "component": "sub-form",
-                        "fields": Array [
-                          Object {
-                            "className": "settings_category_name",
-                            "component": "text-field",
-                            "id": "name",
-                            "isDisabled": false,
-                            "isRequired": true,
-                            "label": "Name",
-                            "maxLength": 50,
-                            "name": "name",
-                            "validate": Array [
-                              Object {
-                                "type": "required",
-                              },
-                            ],
-                          },
-                          Object {
-                            "component": "text-field",
-                            "id": "description",
-                            "isRequired": true,
-                            "label": "Description",
-                            "maxLength": 150,
-                            "name": "description",
-                            "validate": Array [
-                              Object {
-                                "type": "required",
-                              },
-                            ],
-                          },
-                          Object {
-                            "component": "text-field",
-                            "id": "example_text",
-                            "isRequired": true,
-                            "label": "Long Description",
-                            "maxLength": 150,
-                            "name": "example_text",
-                            "validate": Array [
-                              Object {
-                                "type": "required",
-                              },
-                            ],
-                          },
-                          Object {
-                            "component": "switch",
-                            "id": "show",
-                            "label": "Show in console",
-                            "maxLength": 50,
-                            "name": "show",
-                            "offText": "No",
-                            "onText": "Yes",
-                          },
-                          Object {
-                            "className": "settings_category_single_value",
-                            "component": "switch",
-                            "id": "single_value",
-                            "isDisabled": false,
-                            "label": "Single value",
-                            "maxLength": 50,
-                            "name": "single_value",
-                            "offText": "No",
-                            "onText": "Yes",
-                          },
-                          Object {
-                            "component": "switch",
-                            "id": "perf_by_tag",
-                            "label": "Capture C & U Data by Tag",
-                            "maxLength": 50,
-                            "name": "perf_by_tag",
-                            "offText": "No",
-                            "onText": "Yes",
-                          },
-                          Object {
-                            "component": "plain-text",
-                            "label": "* Name and Single Value fields cannot be edited after adding a category.",
-                            "name": "plain-text-component",
-                          },
-                        ],
-                        "id": "name-wrapper",
-                        "name": "subform-1",
-                        "title": "Category Information",
-                      },
-                      Object {
-                        "component": "spy-field",
-                        "initialize": undefined,
-                        "name": "spy-field",
-                      },
-                    ],
-                  }
-                }
-                showFormControls={true}
-                submitLabel="Add"
+              *
+            </span>
+            Name
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+          >
+            <input
+              class="cds--text-input"
+              id="name"
+              maxlength="50"
+              name="name"
+              type="text"
+              value=""
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--form-item cds--text-input-wrapper"
+      >
+        <div
+          class="cds--text-input__label-wrapper"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="description"
+          >
+            <span
+              aria-hidden="true"
+              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+            >
+              *
+            </span>
+            Description
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+          >
+            <input
+              class="cds--text-input"
+              id="description"
+              maxlength="150"
+              name="description"
+              type="text"
+              value=""
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--form-item cds--text-input-wrapper"
+      >
+        <div
+          class="cds--text-input__label-wrapper"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="example_text"
+          >
+            <span
+              aria-hidden="true"
+              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+            >
+              *
+            </span>
+            Long Description
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+          >
+            <input
+              class="cds--text-input"
+              id="example_text"
+              maxlength="150"
+              name="example_text"
+              type="text"
+              value=""
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cds--toggle"
+        >
+          <button
+            aria-checked="false"
+            aria-labelledby="show_label"
+            class="cds--toggle__button"
+            id="show"
+            maxlength="50"
+            role="switch"
+            type="button"
+          />
+          <label
+            class="cds--toggle__label"
+            for="show"
+            id="show_label"
+          >
+            <span
+              class="cds--toggle__label-text"
+              dir="auto"
+            >
+              Show in console
+            </span>
+            <div
+              class="cds--toggle__appearance"
+            >
+              <div
+                class="cds--toggle__switch"
+              />
+              <span
+                aria-hidden="true"
+                class="cds--toggle__text"
+                dir="auto"
               >
-                <FormTemplate
-                  Button={[Function]}
-                  ButtonGroup={[Function]}
-                  Description={[Function]}
-                  FormWrapper={[Function]}
-                  Header={[Function]}
-                  Title={[Function]}
-                  buttonOrder={
-                    Array [
-                      "submit",
-                      "reset",
-                      "cancel",
-                    ]
-                  }
-                  canReset={false}
-                  cancelLabel="Cancel"
-                  disableSubmit={
-                    Array [
-                      "pristine",
-                      "invalid",
-                    ]
-                  }
-                  formFields={
-                    Array [
-                      <SingleField
-                        component="sub-form"
-                        fields={
-                          Array [
-                            Object {
-                              "className": "settings_category_name",
-                              "component": "text-field",
-                              "id": "name",
-                              "isDisabled": false,
-                              "isRequired": true,
-                              "label": "Name",
-                              "maxLength": 50,
-                              "name": "name",
-                              "validate": Array [
-                                Object {
-                                  "type": "required",
-                                },
-                              ],
-                            },
-                            Object {
-                              "component": "text-field",
-                              "id": "description",
-                              "isRequired": true,
-                              "label": "Description",
-                              "maxLength": 150,
-                              "name": "description",
-                              "validate": Array [
-                                Object {
-                                  "type": "required",
-                                },
-                              ],
-                            },
-                            Object {
-                              "component": "text-field",
-                              "id": "example_text",
-                              "isRequired": true,
-                              "label": "Long Description",
-                              "maxLength": 150,
-                              "name": "example_text",
-                              "validate": Array [
-                                Object {
-                                  "type": "required",
-                                },
-                              ],
-                            },
-                            Object {
-                              "component": "switch",
-                              "id": "show",
-                              "label": "Show in console",
-                              "maxLength": 50,
-                              "name": "show",
-                              "offText": "No",
-                              "onText": "Yes",
-                            },
-                            Object {
-                              "className": "settings_category_single_value",
-                              "component": "switch",
-                              "id": "single_value",
-                              "isDisabled": false,
-                              "label": "Single value",
-                              "maxLength": 50,
-                              "name": "single_value",
-                              "offText": "No",
-                              "onText": "Yes",
-                            },
-                            Object {
-                              "component": "switch",
-                              "id": "perf_by_tag",
-                              "label": "Capture C & U Data by Tag",
-                              "maxLength": 50,
-                              "name": "perf_by_tag",
-                              "offText": "No",
-                              "onText": "Yes",
-                            },
-                            Object {
-                              "component": "plain-text",
-                              "label": "* Name and Single Value fields cannot be edited after adding a category.",
-                              "name": "plain-text-component",
-                            },
-                          ]
-                        }
-                        id="name-wrapper"
-                        name="subform-1"
-                        title="Category Information"
-                      />,
-                      <SingleField
-                        component="spy-field"
-                        name="spy-field"
-                      />,
-                    ]
-                  }
-                  formWrapperProps={
-                    Object {
-                      "className": "form-react",
-                    }
-                  }
-                  resetLabel="Reset"
-                  schema={
-                    Object {
-                      "fields": Array [
-                        Object {
-                          "component": "sub-form",
-                          "fields": Array [
-                            Object {
-                              "className": "settings_category_name",
-                              "component": "text-field",
-                              "id": "name",
-                              "isDisabled": false,
-                              "isRequired": true,
-                              "label": "Name",
-                              "maxLength": 50,
-                              "name": "name",
-                              "validate": Array [
-                                Object {
-                                  "type": "required",
-                                },
-                              ],
-                            },
-                            Object {
-                              "component": "text-field",
-                              "id": "description",
-                              "isRequired": true,
-                              "label": "Description",
-                              "maxLength": 150,
-                              "name": "description",
-                              "validate": Array [
-                                Object {
-                                  "type": "required",
-                                },
-                              ],
-                            },
-                            Object {
-                              "component": "text-field",
-                              "id": "example_text",
-                              "isRequired": true,
-                              "label": "Long Description",
-                              "maxLength": 150,
-                              "name": "example_text",
-                              "validate": Array [
-                                Object {
-                                  "type": "required",
-                                },
-                              ],
-                            },
-                            Object {
-                              "component": "switch",
-                              "id": "show",
-                              "label": "Show in console",
-                              "maxLength": 50,
-                              "name": "show",
-                              "offText": "No",
-                              "onText": "Yes",
-                            },
-                            Object {
-                              "className": "settings_category_single_value",
-                              "component": "switch",
-                              "id": "single_value",
-                              "isDisabled": false,
-                              "label": "Single value",
-                              "maxLength": 50,
-                              "name": "single_value",
-                              "offText": "No",
-                              "onText": "Yes",
-                            },
-                            Object {
-                              "component": "switch",
-                              "id": "perf_by_tag",
-                              "label": "Capture C & U Data by Tag",
-                              "maxLength": 50,
-                              "name": "perf_by_tag",
-                              "offText": "No",
-                              "onText": "Yes",
-                            },
-                            Object {
-                              "component": "plain-text",
-                              "label": "* Name and Single Value fields cannot be edited after adding a category.",
-                              "name": "plain-text-component",
-                            },
-                          ],
-                          "id": "name-wrapper",
-                          "name": "subform-1",
-                          "title": "Category Information",
-                        },
-                        Object {
-                          "component": "spy-field",
-                          "initialize": undefined,
-                          "name": "spy-field",
-                        },
-                      ],
-                    }
-                  }
-                  showFormControls={true}
-                  submitLabel="Add"
-                >
-                  <Form
-                    className="form-react"
-                    onSubmit={[Function]}
-                  >
-                    <Form
-                      className="form-0-2-3 form-react"
-                      noValidate={true}
-                      onSubmit={[Function]}
-                    >
-                      <form
-                        className="cds--form form-0-2-3 form-react"
-                        noValidate={true}
-                        onSubmit={[Function]}
-                      >
-                        <SingleField
-                          component="sub-form"
-                          fields={
-                            Array [
-                              Object {
-                                "className": "settings_category_name",
-                                "component": "text-field",
-                                "id": "name",
-                                "isDisabled": false,
-                                "isRequired": true,
-                                "label": "Name",
-                                "maxLength": 50,
-                                "name": "name",
-                                "validate": Array [
-                                  Object {
-                                    "type": "required",
-                                  },
-                                ],
-                              },
-                              Object {
-                                "component": "text-field",
-                                "id": "description",
-                                "isRequired": true,
-                                "label": "Description",
-                                "maxLength": 150,
-                                "name": "description",
-                                "validate": Array [
-                                  Object {
-                                    "type": "required",
-                                  },
-                                ],
-                              },
-                              Object {
-                                "component": "text-field",
-                                "id": "example_text",
-                                "isRequired": true,
-                                "label": "Long Description",
-                                "maxLength": 150,
-                                "name": "example_text",
-                                "validate": Array [
-                                  Object {
-                                    "type": "required",
-                                  },
-                                ],
-                              },
-                              Object {
-                                "component": "switch",
-                                "id": "show",
-                                "label": "Show in console",
-                                "maxLength": 50,
-                                "name": "show",
-                                "offText": "No",
-                                "onText": "Yes",
-                              },
-                              Object {
-                                "className": "settings_category_single_value",
-                                "component": "switch",
-                                "id": "single_value",
-                                "isDisabled": false,
-                                "label": "Single value",
-                                "maxLength": 50,
-                                "name": "single_value",
-                                "offText": "No",
-                                "onText": "Yes",
-                              },
-                              Object {
-                                "component": "switch",
-                                "id": "perf_by_tag",
-                                "label": "Capture C & U Data by Tag",
-                                "maxLength": 50,
-                                "name": "perf_by_tag",
-                                "offText": "No",
-                                "onText": "Yes",
-                              },
-                              Object {
-                                "component": "plain-text",
-                                "label": "* Name and Single Value fields cannot be edited after adding a category.",
-                                "name": "plain-text-component",
-                              },
-                            ]
-                          }
-                          id="name-wrapper"
-                          key="subform-1"
-                          name="subform-1"
-                          title="Category Information"
-                        >
-                          <FormConditionWrapper
-                            conditionMapper={Object {}}
-                            field={
-                              Object {
-                                "component": "sub-form",
-                                "fields": Array [
-                                  Object {
-                                    "className": "settings_category_name",
-                                    "component": "text-field",
-                                    "id": "name",
-                                    "isDisabled": false,
-                                    "isRequired": true,
-                                    "label": "Name",
-                                    "maxLength": 50,
-                                    "name": "name",
-                                    "validate": Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ],
-                                  },
-                                  Object {
-                                    "component": "text-field",
-                                    "id": "description",
-                                    "isRequired": true,
-                                    "label": "Description",
-                                    "maxLength": 150,
-                                    "name": "description",
-                                    "validate": Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ],
-                                  },
-                                  Object {
-                                    "component": "text-field",
-                                    "id": "example_text",
-                                    "isRequired": true,
-                                    "label": "Long Description",
-                                    "maxLength": 150,
-                                    "name": "example_text",
-                                    "validate": Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ],
-                                  },
-                                  Object {
-                                    "component": "switch",
-                                    "id": "show",
-                                    "label": "Show in console",
-                                    "maxLength": 50,
-                                    "name": "show",
-                                    "offText": "No",
-                                    "onText": "Yes",
-                                  },
-                                  Object {
-                                    "className": "settings_category_single_value",
-                                    "component": "switch",
-                                    "id": "single_value",
-                                    "isDisabled": false,
-                                    "label": "Single value",
-                                    "maxLength": 50,
-                                    "name": "single_value",
-                                    "offText": "No",
-                                    "onText": "Yes",
-                                  },
-                                  Object {
-                                    "component": "switch",
-                                    "id": "perf_by_tag",
-                                    "label": "Capture C & U Data by Tag",
-                                    "maxLength": 50,
-                                    "name": "perf_by_tag",
-                                    "offText": "No",
-                                    "onText": "Yes",
-                                  },
-                                  Object {
-                                    "component": "plain-text",
-                                    "label": "* Name and Single Value fields cannot be edited after adding a category.",
-                                    "name": "plain-text-component",
-                                  },
-                                ],
-                                "id": "name-wrapper",
-                                "name": "subform-1",
-                                "title": "Category Information",
-                              }
-                            }
-                          >
-                            <FormFieldHideWrapper>
-                              <SubForm
-                                component="sub-form"
-                                fields={
-                                  Array [
-                                    Object {
-                                      "className": "settings_category_name",
-                                      "component": "text-field",
-                                      "id": "name",
-                                      "isDisabled": false,
-                                      "isRequired": true,
-                                      "label": "Name",
-                                      "maxLength": 50,
-                                      "name": "name",
-                                      "validate": Array [
-                                        Object {
-                                          "type": "required",
-                                        },
-                                      ],
-                                    },
-                                    Object {
-                                      "component": "text-field",
-                                      "id": "description",
-                                      "isRequired": true,
-                                      "label": "Description",
-                                      "maxLength": 150,
-                                      "name": "description",
-                                      "validate": Array [
-                                        Object {
-                                          "type": "required",
-                                        },
-                                      ],
-                                    },
-                                    Object {
-                                      "component": "text-field",
-                                      "id": "example_text",
-                                      "isRequired": true,
-                                      "label": "Long Description",
-                                      "maxLength": 150,
-                                      "name": "example_text",
-                                      "validate": Array [
-                                        Object {
-                                          "type": "required",
-                                        },
-                                      ],
-                                    },
-                                    Object {
-                                      "component": "switch",
-                                      "id": "show",
-                                      "label": "Show in console",
-                                      "maxLength": 50,
-                                      "name": "show",
-                                      "offText": "No",
-                                      "onText": "Yes",
-                                    },
-                                    Object {
-                                      "className": "settings_category_single_value",
-                                      "component": "switch",
-                                      "id": "single_value",
-                                      "isDisabled": false,
-                                      "label": "Single value",
-                                      "maxLength": 50,
-                                      "name": "single_value",
-                                      "offText": "No",
-                                      "onText": "Yes",
-                                    },
-                                    Object {
-                                      "component": "switch",
-                                      "id": "perf_by_tag",
-                                      "label": "Capture C & U Data by Tag",
-                                      "maxLength": 50,
-                                      "name": "perf_by_tag",
-                                      "offText": "No",
-                                      "onText": "Yes",
-                                    },
-                                    Object {
-                                      "component": "plain-text",
-                                      "label": "* Name and Single Value fields cannot be edited after adding a category.",
-                                      "name": "plain-text-component",
-                                    },
-                                  ]
-                                }
-                                id="name-wrapper"
-                                name="subform-1"
-                                title="Category Information"
-                              >
-                                <div
-                                  className=""
-                                  id="name-wrapper"
-                                  name="subform-1"
-                                >
-                                  <div>
-                                    <h3>
-                                      Category Information
-                                    </h3>
-                                  </div>
-                                  <SingleField
-                                    className="settings_category_name"
-                                    component="text-field"
-                                    id="name"
-                                    isDisabled={false}
-                                    isRequired={true}
-                                    key="name"
-                                    label="Name"
-                                    maxLength={50}
-                                    name="name"
-                                    validate={
-                                      Array [
-                                        Object {
-                                          "type": "required",
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    <FormConditionWrapper
-                                      conditionMapper={Object {}}
-                                      field={
-                                        Object {
-                                          "className": "settings_category_name",
-                                          "component": "text-field",
-                                          "id": "name",
-                                          "isDisabled": false,
-                                          "isRequired": true,
-                                          "label": "Name",
-                                          "maxLength": 50,
-                                          "name": "name",
-                                          "validate": Array [
-                                            Object {
-                                              "type": "required",
-                                            },
-                                          ],
-                                        }
-                                      }
-                                    >
-                                      <FormFieldHideWrapper>
-                                        <TextField
-                                          className="settings_category_name"
-                                          component="text-field"
-                                          id="name"
-                                          isDisabled={false}
-                                          isRequired={true}
-                                          label="Name"
-                                          maxLength={50}
-                                          name="name"
-                                          validate={
-                                            Array [
-                                              Object {
-                                                "type": "required",
-                                              },
-                                            ]
-                                          }
-                                        >
-                                          <TextInput
-                                            className="settings_category_name"
-                                            disabled={false}
-                                            id="name"
-                                            invalid={false}
-                                            invalidText=""
-                                            key="name"
-                                            labelText={
-                                              <IsRequired>
-                                                Name
-                                              </IsRequired>
-                                            }
-                                            maxLength={50}
-                                            name="name"
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            value=""
-                                            warn={false}
-                                            warnText=""
-                                          >
-                                            <div
-                                              className="cds--form-item settings_category_name cds--text-input-wrapper"
-                                            >
-                                              <div
-                                                className="cds--text-input__label-wrapper"
-                                              >
-                                                <ForwardRef
-                                                  as="label"
-                                                  className="cds--label"
-                                                  htmlFor="name"
-                                                >
-                                                  <label
-                                                    className="cds--label"
-                                                    dir="auto"
-                                                    htmlFor="name"
-                                                  >
-                                                    <IsRequired>
-                                                      <span
-                                                        aria-hidden="true"
-                                                        className="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
-                                                      >
-                                                        *
-                                                      </span>
-                                                      Name
-                                                    </IsRequired>
-                                                  </label>
-                                                </ForwardRef>
-                                              </div>
-                                              <div
-                                                className="cds--text-input__field-outer-wrapper"
-                                              >
-                                                <div
-                                                  className="cds--text-input__field-wrapper"
-                                                  data-invalid={null}
-                                                >
-                                                  <input
-                                                    className="cds--text-input"
-                                                    disabled={false}
-                                                    id="name"
-                                                    maxLength={50}
-                                                    name="name"
-                                                    onBlur={[Function]}
-                                                    onChange={[Function]}
-                                                    onClick={[Function]}
-                                                    onFocus={[Function]}
-                                                    type="text"
-                                                    value=""
-                                                  />
-                                                  <span
-                                                    aria-atomic="true"
-                                                    aria-live="assertive"
-                                                    className="cds--text-input__counter-alert"
-                                                    role="alert"
-                                                  />
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </TextInput>
-                                        </TextField>
-                                      </FormFieldHideWrapper>
-                                    </FormConditionWrapper>
-                                  </SingleField>
-                                  <SingleField
-                                    component="text-field"
-                                    id="description"
-                                    isRequired={true}
-                                    key="description"
-                                    label="Description"
-                                    maxLength={150}
-                                    name="description"
-                                    validate={
-                                      Array [
-                                        Object {
-                                          "type": "required",
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    <FormConditionWrapper
-                                      conditionMapper={Object {}}
-                                      field={
-                                        Object {
-                                          "component": "text-field",
-                                          "id": "description",
-                                          "isRequired": true,
-                                          "label": "Description",
-                                          "maxLength": 150,
-                                          "name": "description",
-                                          "validate": Array [
-                                            Object {
-                                              "type": "required",
-                                            },
-                                          ],
-                                        }
-                                      }
-                                    >
-                                      <FormFieldHideWrapper>
-                                        <TextField
-                                          component="text-field"
-                                          id="description"
-                                          isRequired={true}
-                                          label="Description"
-                                          maxLength={150}
-                                          name="description"
-                                          validate={
-                                            Array [
-                                              Object {
-                                                "type": "required",
-                                              },
-                                            ]
-                                          }
-                                        >
-                                          <TextInput
-                                            id="description"
-                                            invalid={false}
-                                            invalidText=""
-                                            key="description"
-                                            labelText={
-                                              <IsRequired>
-                                                Description
-                                              </IsRequired>
-                                            }
-                                            maxLength={150}
-                                            name="description"
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            value=""
-                                            warn={false}
-                                            warnText=""
-                                          >
-                                            <div
-                                              className="cds--form-item cds--text-input-wrapper"
-                                            >
-                                              <div
-                                                className="cds--text-input__label-wrapper"
-                                              >
-                                                <ForwardRef
-                                                  as="label"
-                                                  className="cds--label"
-                                                  htmlFor="description"
-                                                >
-                                                  <label
-                                                    className="cds--label"
-                                                    dir="auto"
-                                                    htmlFor="description"
-                                                  >
-                                                    <IsRequired>
-                                                      <span
-                                                        aria-hidden="true"
-                                                        className="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
-                                                      >
-                                                        *
-                                                      </span>
-                                                      Description
-                                                    </IsRequired>
-                                                  </label>
-                                                </ForwardRef>
-                                              </div>
-                                              <div
-                                                className="cds--text-input__field-outer-wrapper"
-                                              >
-                                                <div
-                                                  className="cds--text-input__field-wrapper"
-                                                  data-invalid={null}
-                                                >
-                                                  <input
-                                                    className="cds--text-input"
-                                                    disabled={false}
-                                                    id="description"
-                                                    maxLength={150}
-                                                    name="description"
-                                                    onBlur={[Function]}
-                                                    onChange={[Function]}
-                                                    onClick={[Function]}
-                                                    onFocus={[Function]}
-                                                    type="text"
-                                                    value=""
-                                                  />
-                                                  <span
-                                                    aria-atomic="true"
-                                                    aria-live="assertive"
-                                                    className="cds--text-input__counter-alert"
-                                                    role="alert"
-                                                  />
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </TextInput>
-                                        </TextField>
-                                      </FormFieldHideWrapper>
-                                    </FormConditionWrapper>
-                                  </SingleField>
-                                  <SingleField
-                                    component="text-field"
-                                    id="example_text"
-                                    isRequired={true}
-                                    key="example_text"
-                                    label="Long Description"
-                                    maxLength={150}
-                                    name="example_text"
-                                    validate={
-                                      Array [
-                                        Object {
-                                          "type": "required",
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    <FormConditionWrapper
-                                      conditionMapper={Object {}}
-                                      field={
-                                        Object {
-                                          "component": "text-field",
-                                          "id": "example_text",
-                                          "isRequired": true,
-                                          "label": "Long Description",
-                                          "maxLength": 150,
-                                          "name": "example_text",
-                                          "validate": Array [
-                                            Object {
-                                              "type": "required",
-                                            },
-                                          ],
-                                        }
-                                      }
-                                    >
-                                      <FormFieldHideWrapper>
-                                        <TextField
-                                          component="text-field"
-                                          id="example_text"
-                                          isRequired={true}
-                                          label="Long Description"
-                                          maxLength={150}
-                                          name="example_text"
-                                          validate={
-                                            Array [
-                                              Object {
-                                                "type": "required",
-                                              },
-                                            ]
-                                          }
-                                        >
-                                          <TextInput
-                                            id="example_text"
-                                            invalid={false}
-                                            invalidText=""
-                                            key="example_text"
-                                            labelText={
-                                              <IsRequired>
-                                                Long Description
-                                              </IsRequired>
-                                            }
-                                            maxLength={150}
-                                            name="example_text"
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            value=""
-                                            warn={false}
-                                            warnText=""
-                                          >
-                                            <div
-                                              className="cds--form-item cds--text-input-wrapper"
-                                            >
-                                              <div
-                                                className="cds--text-input__label-wrapper"
-                                              >
-                                                <ForwardRef
-                                                  as="label"
-                                                  className="cds--label"
-                                                  htmlFor="example_text"
-                                                >
-                                                  <label
-                                                    className="cds--label"
-                                                    dir="auto"
-                                                    htmlFor="example_text"
-                                                  >
-                                                    <IsRequired>
-                                                      <span
-                                                        aria-hidden="true"
-                                                        className="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
-                                                      >
-                                                        *
-                                                      </span>
-                                                      Long Description
-                                                    </IsRequired>
-                                                  </label>
-                                                </ForwardRef>
-                                              </div>
-                                              <div
-                                                className="cds--text-input__field-outer-wrapper"
-                                              >
-                                                <div
-                                                  className="cds--text-input__field-wrapper"
-                                                  data-invalid={null}
-                                                >
-                                                  <input
-                                                    className="cds--text-input"
-                                                    disabled={false}
-                                                    id="example_text"
-                                                    maxLength={150}
-                                                    name="example_text"
-                                                    onBlur={[Function]}
-                                                    onChange={[Function]}
-                                                    onClick={[Function]}
-                                                    onFocus={[Function]}
-                                                    type="text"
-                                                    value=""
-                                                  />
-                                                  <span
-                                                    aria-atomic="true"
-                                                    aria-live="assertive"
-                                                    className="cds--text-input__counter-alert"
-                                                    role="alert"
-                                                  />
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </TextInput>
-                                        </TextField>
-                                      </FormFieldHideWrapper>
-                                    </FormConditionWrapper>
-                                  </SingleField>
-                                  <SingleField
-                                    component="switch"
-                                    id="show"
-                                    key="show"
-                                    label="Show in console"
-                                    maxLength={50}
-                                    name="show"
-                                    offText="No"
-                                    onText="Yes"
-                                  >
-                                    <FormConditionWrapper
-                                      conditionMapper={Object {}}
-                                      field={
-                                        Object {
-                                          "component": "switch",
-                                          "id": "show",
-                                          "label": "Show in console",
-                                          "maxLength": 50,
-                                          "name": "show",
-                                          "offText": "No",
-                                          "onText": "Yes",
-                                        }
-                                      }
-                                    >
-                                      <FormFieldHideWrapper>
-                                        <Switch
-                                          component="switch"
-                                          id="show"
-                                          label="Show in console"
-                                          maxLength={50}
-                                          name="show"
-                                          offText="No"
-                                          onText="Yes"
-                                        >
-                                          <div>
-                                            <Toggle
-                                              id="show"
-                                              key="show"
-                                              labelA="No"
-                                              labelB="Yes"
-                                              labelText="Show in console"
-                                              maxLength={50}
-                                              onBlur={[Function]}
-                                              onFocus={[Function]}
-                                              onToggle={[Function]}
-                                              toggled={false}
-                                              type="checkbox"
-                                            >
-                                              <div
-                                                className="cds--toggle"
-                                              >
-                                                <button
-                                                  aria-checked={false}
-                                                  aria-labelledby="show_label"
-                                                  className="cds--toggle__button"
-                                                  disabled={false}
-                                                  id="show"
-                                                  maxLength={50}
-                                                  onBlur={[Function]}
-                                                  onClick={[Function]}
-                                                  onFocus={[Function]}
-                                                  role="switch"
-                                                  type="button"
-                                                />
-                                                <label
-                                                  className="cds--toggle__label"
-                                                  htmlFor="show"
-                                                  id="show_label"
-                                                >
-                                                  <ForwardRef
-                                                    className="cds--toggle__label-text"
-                                                  >
-                                                    <span
-                                                      className="cds--toggle__label-text"
-                                                      dir="auto"
-                                                    >
-                                                      Show in console
-                                                    </span>
-                                                  </ForwardRef>
-                                                  <div
-                                                    className="cds--toggle__appearance"
-                                                  >
-                                                    <div
-                                                      className="cds--toggle__switch"
-                                                    />
-                                                    <ForwardRef
-                                                      aria-hidden="true"
-                                                      className="cds--toggle__text"
-                                                    >
-                                                      <span
-                                                        aria-hidden="true"
-                                                        className="cds--toggle__text"
-                                                        dir="auto"
-                                                      >
-                                                        No
-                                                      </span>
-                                                    </ForwardRef>
-                                                  </div>
-                                                </label>
-                                              </div>
-                                            </Toggle>
-                                            <HelperTextBlock />
-                                          </div>
-                                        </Switch>
-                                      </FormFieldHideWrapper>
-                                    </FormConditionWrapper>
-                                  </SingleField>
-                                  <SingleField
-                                    className="settings_category_single_value"
-                                    component="switch"
-                                    id="single_value"
-                                    isDisabled={false}
-                                    key="single_value"
-                                    label="Single value"
-                                    maxLength={50}
-                                    name="single_value"
-                                    offText="No"
-                                    onText="Yes"
-                                  >
-                                    <FormConditionWrapper
-                                      conditionMapper={Object {}}
-                                      field={
-                                        Object {
-                                          "className": "settings_category_single_value",
-                                          "component": "switch",
-                                          "id": "single_value",
-                                          "isDisabled": false,
-                                          "label": "Single value",
-                                          "maxLength": 50,
-                                          "name": "single_value",
-                                          "offText": "No",
-                                          "onText": "Yes",
-                                        }
-                                      }
-                                    >
-                                      <FormFieldHideWrapper>
-                                        <Switch
-                                          className="settings_category_single_value"
-                                          component="switch"
-                                          id="single_value"
-                                          isDisabled={false}
-                                          label="Single value"
-                                          maxLength={50}
-                                          name="single_value"
-                                          offText="No"
-                                          onText="Yes"
-                                        >
-                                          <div>
-                                            <Toggle
-                                              className="settings_category_single_value"
-                                              disabled={false}
-                                              id="single_value"
-                                              key="single_value"
-                                              labelA="No"
-                                              labelB="Yes"
-                                              labelText="Single value"
-                                              maxLength={50}
-                                              onBlur={[Function]}
-                                              onFocus={[Function]}
-                                              onToggle={[Function]}
-                                              toggled={false}
-                                              type="checkbox"
-                                            >
-                                              <div
-                                                className="cds--toggle settings_category_single_value"
-                                              >
-                                                <button
-                                                  aria-checked={false}
-                                                  aria-labelledby="single_value_label"
-                                                  className="cds--toggle__button"
-                                                  disabled={false}
-                                                  id="single_value"
-                                                  maxLength={50}
-                                                  onBlur={[Function]}
-                                                  onClick={[Function]}
-                                                  onFocus={[Function]}
-                                                  role="switch"
-                                                  type="button"
-                                                />
-                                                <label
-                                                  className="cds--toggle__label"
-                                                  htmlFor="single_value"
-                                                  id="single_value_label"
-                                                >
-                                                  <ForwardRef
-                                                    className="cds--toggle__label-text"
-                                                  >
-                                                    <span
-                                                      className="cds--toggle__label-text"
-                                                      dir="auto"
-                                                    >
-                                                      Single value
-                                                    </span>
-                                                  </ForwardRef>
-                                                  <div
-                                                    className="cds--toggle__appearance"
-                                                  >
-                                                    <div
-                                                      className="cds--toggle__switch"
-                                                    />
-                                                    <ForwardRef
-                                                      aria-hidden="true"
-                                                      className="cds--toggle__text"
-                                                    >
-                                                      <span
-                                                        aria-hidden="true"
-                                                        className="cds--toggle__text"
-                                                        dir="auto"
-                                                      >
-                                                        No
-                                                      </span>
-                                                    </ForwardRef>
-                                                  </div>
-                                                </label>
-                                              </div>
-                                            </Toggle>
-                                            <HelperTextBlock />
-                                          </div>
-                                        </Switch>
-                                      </FormFieldHideWrapper>
-                                    </FormConditionWrapper>
-                                  </SingleField>
-                                  <SingleField
-                                    component="switch"
-                                    id="perf_by_tag"
-                                    key="perf_by_tag"
-                                    label="Capture C & U Data by Tag"
-                                    maxLength={50}
-                                    name="perf_by_tag"
-                                    offText="No"
-                                    onText="Yes"
-                                  >
-                                    <FormConditionWrapper
-                                      conditionMapper={Object {}}
-                                      field={
-                                        Object {
-                                          "component": "switch",
-                                          "id": "perf_by_tag",
-                                          "label": "Capture C & U Data by Tag",
-                                          "maxLength": 50,
-                                          "name": "perf_by_tag",
-                                          "offText": "No",
-                                          "onText": "Yes",
-                                        }
-                                      }
-                                    >
-                                      <FormFieldHideWrapper>
-                                        <Switch
-                                          component="switch"
-                                          id="perf_by_tag"
-                                          label="Capture C & U Data by Tag"
-                                          maxLength={50}
-                                          name="perf_by_tag"
-                                          offText="No"
-                                          onText="Yes"
-                                        >
-                                          <div>
-                                            <Toggle
-                                              id="perf_by_tag"
-                                              key="perf_by_tag"
-                                              labelA="No"
-                                              labelB="Yes"
-                                              labelText="Capture C & U Data by Tag"
-                                              maxLength={50}
-                                              onBlur={[Function]}
-                                              onFocus={[Function]}
-                                              onToggle={[Function]}
-                                              toggled={false}
-                                              type="checkbox"
-                                            >
-                                              <div
-                                                className="cds--toggle"
-                                              >
-                                                <button
-                                                  aria-checked={false}
-                                                  aria-labelledby="perf_by_tag_label"
-                                                  className="cds--toggle__button"
-                                                  disabled={false}
-                                                  id="perf_by_tag"
-                                                  maxLength={50}
-                                                  onBlur={[Function]}
-                                                  onClick={[Function]}
-                                                  onFocus={[Function]}
-                                                  role="switch"
-                                                  type="button"
-                                                />
-                                                <label
-                                                  className="cds--toggle__label"
-                                                  htmlFor="perf_by_tag"
-                                                  id="perf_by_tag_label"
-                                                >
-                                                  <ForwardRef
-                                                    className="cds--toggle__label-text"
-                                                  >
-                                                    <span
-                                                      className="cds--toggle__label-text"
-                                                      dir="auto"
-                                                    >
-                                                      Capture C & U Data by Tag
-                                                    </span>
-                                                  </ForwardRef>
-                                                  <div
-                                                    className="cds--toggle__appearance"
-                                                  >
-                                                    <div
-                                                      className="cds--toggle__switch"
-                                                    />
-                                                    <ForwardRef
-                                                      aria-hidden="true"
-                                                      className="cds--toggle__text"
-                                                    >
-                                                      <span
-                                                        aria-hidden="true"
-                                                        className="cds--toggle__text"
-                                                        dir="auto"
-                                                      >
-                                                        No
-                                                      </span>
-                                                    </ForwardRef>
-                                                  </div>
-                                                </label>
-                                              </div>
-                                            </Toggle>
-                                            <HelperTextBlock />
-                                          </div>
-                                        </Switch>
-                                      </FormFieldHideWrapper>
-                                    </FormConditionWrapper>
-                                  </SingleField>
-                                  <SingleField
-                                    component="plain-text"
-                                    key="plain-text-component"
-                                    label="* Name and Single Value fields cannot be edited after adding a category."
-                                    name="plain-text-component"
-                                  >
-                                    <FormConditionWrapper
-                                      conditionMapper={Object {}}
-                                      field={
-                                        Object {
-                                          "component": "plain-text",
-                                          "label": "* Name and Single Value fields cannot be edited after adding a category.",
-                                          "name": "plain-text-component",
-                                        }
-                                      }
-                                    >
-                                      <FormFieldHideWrapper>
-                                        <PlainText
-                                          component="plain-text"
-                                          label="* Name and Single Value fields cannot be edited after adding a category."
-                                          name="plain-text-component"
-                                        >
-                                          <p
-                                            key="0"
-                                            name="plain-text-component"
-                                          >
-                                            * Name and Single Value fields cannot be edited after adding a category.
-                                          </p>
-                                        </PlainText>
-                                      </FormFieldHideWrapper>
-                                    </FormConditionWrapper>
-                                  </SingleField>
-                                </div>
-                              </SubForm>
-                            </FormFieldHideWrapper>
-                          </FormConditionWrapper>
-                        </SingleField>
-                        <SingleField
-                          component="spy-field"
-                          key="spy-field"
-                          name="spy-field"
-                        >
-                          <FormConditionWrapper
-                            conditionMapper={Object {}}
-                            field={
-                              Object {
-                                "component": "spy-field",
-                                "initialize": undefined,
-                                "name": "spy-field",
-                              }
-                            }
-                          >
-                            <FormFieldHideWrapper>
-                              <SpyField
-                                component="spy-field"
-                                name="spy-field"
-                              >
-                                <FormSpy
-                                  onChange={[Function]}
-                                  subscription={
-                                    Object {
-                                      "pristine": true,
-                                      "valid": true,
-                                    }
-                                  }
-                                />
-                              </SpyField>
-                            </FormFieldHideWrapper>
-                          </FormConditionWrapper>
-                        </SingleField>
-                        <FormSpy>
-                          <FormControls
-                            Button={[Function]}
-                            ButtonGroup={[Function]}
-                            buttonOrder={
-                              Array [
-                                "submit",
-                                "reset",
-                                "cancel",
-                              ]
-                            }
-                            canReset={false}
-                            cancelLabel="Cancel"
-                            disableSubmit={true}
-                            formSpyProps={
-                              Object {
-                                "active": undefined,
-                                "dirty": false,
-                                "dirtyFields": Object {},
-                                "dirtyFieldsSinceLastSubmit": Object {},
-                                "dirtySinceLastSubmit": false,
-                                "error": undefined,
-                                "errors": Object {
-                                  "description": "Required",
-                                  "example_text": "Required",
-                                  "name": "Required",
-                                },
-                                "form": Object {
-                                  "batch": [Function],
-                                  "blur": [Function],
-                                  "change": [Function],
-                                  "destroyOnUnregister": false,
-                                  "focus": [Function],
-                                  "getFieldState": [Function],
-                                  "getRegisteredFields": [Function],
-                                  "getState": [Function],
-                                  "initialize": [Function],
-                                  "isValidationPaused": [Function],
-                                  "mutators": Object {
-                                    "concat": [Function],
-                                    "insert": [Function],
-                                    "move": [Function],
-                                    "pop": [Function],
-                                    "push": [Function],
-                                    "remove": [Function],
-                                    "removeBatch": [Function],
-                                    "shift": [Function],
-                                    "swap": [Function],
-                                    "unshift": [Function],
-                                    "update": [Function],
-                                  },
-                                  "pauseValidation": [Function],
-                                  "registerField": [Function],
-                                  "reset": [Function],
-                                  "resetFieldState": [Function],
-                                  "restart": [Function],
-                                  "resumeValidation": [Function],
-                                  "setConfig": [Function],
-                                  "submit": [Function],
-                                  "subscribe": [Function],
-                                },
-                                "hasSubmitErrors": false,
-                                "hasValidationErrors": true,
-                                "initialValues": Object {},
-                                "invalid": true,
-                                "modified": Object {
-                                  "description": false,
-                                  "example_text": false,
-                                  "name": false,
-                                  "perf_by_tag": false,
-                                  "show": false,
-                                  "single_value": false,
-                                },
-                                "modifiedSinceLastSubmit": false,
-                                "pristine": true,
-                                "submitError": undefined,
-                                "submitErrors": undefined,
-                                "submitFailed": false,
-                                "submitSucceeded": false,
-                                "submitting": false,
-                                "touched": Object {
-                                  "description": false,
-                                  "example_text": false,
-                                  "name": false,
-                                  "perf_by_tag": false,
-                                  "show": false,
-                                  "single_value": false,
-                                },
-                                "valid": false,
-                                "validating": false,
-                                "values": Object {},
-                                "visited": Object {
-                                  "description": false,
-                                  "example_text": false,
-                                  "name": false,
-                                  "perf_by_tag": false,
-                                  "show": false,
-                                  "single_value": false,
-                                },
-                              }
-                            }
-                            onCancel={[Function]}
-                            onReset={[Function]}
-                            resetLabel="Reset"
-                            submitLabel="Add"
-                          >
-                            <ButtonGroup>
-                              <ButtonSet
-                                className=""
-                              >
-                                <div
-                                  className="cds--btn-set"
-                                >
-                                  <Button
-                                    buttonType="submit"
-                                    disabled={true}
-                                    key="form-submit"
-                                    label="Add"
-                                    type="submit"
-                                    variant="primary"
-                                  >
-                                    <Button
-                                      disabled={true}
-                                      kind="primary"
-                                      type="submit"
-                                      variant="primary"
-                                    >
-                                      <ForwardRef(ButtonBase)
-                                        disabled={true}
-                                        kind="primary"
-                                        type="submit"
-                                        variant="primary"
-                                      >
-                                        <button
-                                          className="cds--btn cds--btn--primary cds--btn--disabled"
-                                          disabled={true}
-                                          type="submit"
-                                          variant="primary"
-                                        >
-                                          Add
-                                        </button>
-                                      </ForwardRef(ButtonBase)>
-                                    </Button>
-                                  </Button>
-                                  <Button
-                                    buttonType="cancel"
-                                    key="form-cancel"
-                                    label="Cancel"
-                                    onClick={[Function]}
-                                    type="button"
-                                  >
-                                    <Button
-                                      kind="secondary"
-                                      onClick={[Function]}
-                                      type="button"
-                                    >
-                                      <ForwardRef(ButtonBase)
-                                        kind="secondary"
-                                        onClick={[Function]}
-                                        type="button"
-                                      >
-                                        <button
-                                          className="cds--btn cds--btn--secondary"
-                                          disabled={false}
-                                          onClick={[Function]}
-                                          type="button"
-                                        >
-                                          Cancel
-                                        </button>
-                                      </ForwardRef(ButtonBase)>
-                                    </Button>
-                                  </Button>
-                                </div>
-                              </ButtonSet>
-                            </ButtonGroup>
-                          </FormControls>
-                        </FormSpy>
-                      </form>
-                    </Form>
-                  </Form>
-                </FormTemplate>
-              </WrappedFormTemplate>
-            </Component>
-          </ReactFinalForm>
-        </FormRenderer>
-      </MiqFormRenderer>
-    </Connect(MiqFormRenderer)>
-  </SettingsCategoryForm>
-</Provider>
+                No
+              </span>
+            </div>
+          </label>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cds--toggle settings_category_single_value"
+        >
+          <button
+            aria-checked="false"
+            aria-labelledby="single_value_label"
+            class="cds--toggle__button"
+            id="single_value"
+            maxlength="50"
+            role="switch"
+            type="button"
+          />
+          <label
+            class="cds--toggle__label"
+            for="single_value"
+            id="single_value_label"
+          >
+            <span
+              class="cds--toggle__label-text"
+              dir="auto"
+            >
+              Single value
+            </span>
+            <div
+              class="cds--toggle__appearance"
+            >
+              <div
+                class="cds--toggle__switch"
+              />
+              <span
+                aria-hidden="true"
+                class="cds--toggle__text"
+                dir="auto"
+              >
+                No
+              </span>
+            </div>
+          </label>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cds--toggle"
+        >
+          <button
+            aria-checked="false"
+            aria-labelledby="perf_by_tag_label"
+            class="cds--toggle__button"
+            id="perf_by_tag"
+            maxlength="50"
+            role="switch"
+            type="button"
+          />
+          <label
+            class="cds--toggle__label"
+            for="perf_by_tag"
+            id="perf_by_tag_label"
+          >
+            <span
+              class="cds--toggle__label-text"
+              dir="auto"
+            >
+              Capture C & U Data by Tag
+            </span>
+            <div
+              class="cds--toggle__appearance"
+            >
+              <div
+                class="cds--toggle__switch"
+              />
+              <span
+                aria-hidden="true"
+                class="cds--toggle__text"
+                dir="auto"
+              >
+                No
+              </span>
+            </div>
+          </label>
+        </div>
+      </div>
+      <p
+        name="plain-text-component"
+      >
+        * Name and Single Value fields cannot be edited after adding a category.
+      </p>
+    </div>
+    <div
+      class="cds--btn-set"
+    >
+      <button
+        class="cds--btn cds--btn--primary cds--btn--disabled"
+        disabled=""
+        type="submit"
+        variant="primary"
+      >
+        Add
+      </button>
+      <button
+        class="cds--btn cds--btn--secondary"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
 `;
 
 exports[`SettingsCategoryForm Component should render edit SettingsCategoryForm 1`] = `
-<Provider
-  store={
-    Object {
-      "asyncReducers": Object {
-        "FormButtons": [Function],
-        "miqCustomTabReducer": [Function],
-        "notificationReducer": [Function],
-      },
-      "dispatch": [Function],
-      "getState": [Function],
-      "injectReducers": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-      Symbol(observable): [Function],
-    }
-  }
->
-  <SettingsCategoryForm
-    recordId="100"
-  />
-</Provider>
+<div>
+  <form
+    class="cds--form form-0-2-3 form-react"
+    novalidate=""
+  >
+    <div
+      class=""
+      id="name-wrapper"
+      name="subform-1"
+    >
+      <div>
+        <h3>
+          Category Information
+        </h3>
+      </div>
+      <div
+        class="cds--form-item settings_category_name cds--text-input-wrapper"
+      >
+        <div
+          class="cds--text-input__label-wrapper"
+        >
+          <label
+            class="cds--label cds--label--disabled"
+            dir="auto"
+            for="name"
+          >
+            <span
+              aria-hidden="true"
+              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+            >
+              *
+            </span>
+            Name
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+          >
+            <input
+              class="cds--text-input"
+              disabled=""
+              id="name"
+              maxlength="50"
+              name="name"
+              type="text"
+              value=""
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--form-item cds--text-input-wrapper"
+      >
+        <div
+          class="cds--text-input__label-wrapper"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="description"
+          >
+            <span
+              aria-hidden="true"
+              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+            >
+              *
+            </span>
+            Description
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+          >
+            <input
+              class="cds--text-input"
+              id="description"
+              maxlength="150"
+              name="description"
+              type="text"
+              value=""
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--form-item cds--text-input-wrapper"
+      >
+        <div
+          class="cds--text-input__label-wrapper"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="example_text"
+          >
+            <span
+              aria-hidden="true"
+              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-5"
+            >
+              *
+            </span>
+            Long Description
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+          >
+            <input
+              class="cds--text-input"
+              id="example_text"
+              maxlength="150"
+              name="example_text"
+              type="text"
+              value=""
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cds--toggle"
+        >
+          <button
+            aria-checked="false"
+            aria-labelledby="show_label"
+            class="cds--toggle__button"
+            id="show"
+            maxlength="50"
+            role="switch"
+            type="button"
+          />
+          <label
+            class="cds--toggle__label"
+            for="show"
+            id="show_label"
+          >
+            <span
+              class="cds--toggle__label-text"
+              dir="auto"
+            >
+              Show in console
+            </span>
+            <div
+              class="cds--toggle__appearance"
+            >
+              <div
+                class="cds--toggle__switch"
+              />
+              <span
+                aria-hidden="true"
+                class="cds--toggle__text"
+                dir="auto"
+              >
+                No
+              </span>
+            </div>
+          </label>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cds--toggle cds--toggle--disabled settings_category_single_value"
+        >
+          <button
+            aria-checked="false"
+            aria-labelledby="single_value_label"
+            class="cds--toggle__button"
+            disabled=""
+            id="single_value"
+            maxlength="50"
+            role="switch"
+            type="button"
+          />
+          <label
+            class="cds--toggle__label"
+            for="single_value"
+            id="single_value_label"
+          >
+            <span
+              class="cds--toggle__label-text"
+              dir="auto"
+            >
+              Single value
+            </span>
+            <div
+              class="cds--toggle__appearance"
+            >
+              <div
+                class="cds--toggle__switch"
+              />
+              <span
+                aria-hidden="true"
+                class="cds--toggle__text"
+                dir="auto"
+              >
+                No
+              </span>
+            </div>
+          </label>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cds--toggle"
+        >
+          <button
+            aria-checked="false"
+            aria-labelledby="perf_by_tag_label"
+            class="cds--toggle__button"
+            id="perf_by_tag"
+            maxlength="50"
+            role="switch"
+            type="button"
+          />
+          <label
+            class="cds--toggle__label"
+            for="perf_by_tag"
+            id="perf_by_tag_label"
+          >
+            <span
+              class="cds--toggle__label-text"
+              dir="auto"
+            >
+              Capture C & U Data by Tag
+            </span>
+            <div
+              class="cds--toggle__appearance"
+            >
+              <div
+                class="cds--toggle__switch"
+              />
+              <span
+                aria-hidden="true"
+                class="cds--toggle__text"
+                dir="auto"
+              >
+                No
+              </span>
+            </div>
+          </label>
+        </div>
+      </div>
+      <p
+        name="plain-text-component"
+      >
+        * Name and Single Value fields cannot be edited after adding a category.
+      </p>
+    </div>
+    <div
+      class="cds--btn-set"
+    >
+      <button
+        class="cds--btn cds--btn--primary cds--btn--disabled"
+        disabled=""
+        type="submit"
+        variant="primary"
+      >
+        Save
+      </button>
+      <button
+        class="cds--btn cds--btn--secondary cds--btn--disabled"
+        disabled=""
+        type="button"
+      >
+        Reset
+      </button>
+      <button
+        class="cds--btn cds--btn--secondary"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
 `;

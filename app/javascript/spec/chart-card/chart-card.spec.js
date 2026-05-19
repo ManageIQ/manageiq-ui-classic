@@ -1,18 +1,23 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import ChartCard from '../../components/container-projects/chart-card';
 import { chartConfig } from '../../components/provider-dashboard-charts/charts_config';
 
 describe('Chart Card component', () => {
   it('should render the loading card', () => {
-    const wrapper = shallow(<ChartCard title="Pods" isLoading />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const { container } = render(<ChartCard title="Pods" isLoading />);
+
+    expect(screen.getByText('Pods')).toBeInTheDocument();
+    expect(container.querySelector('.export-spinner')).toBeInTheDocument();
+    expect(container).toMatchSnapshot();
   });
 
   it('should render the empty card', () => {
-    const wrapper = shallow(<ChartCard chartType="empty" title="Pods" />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const { container } = render(<ChartCard chartType="empty" title="Pods" />);
+
+    expect(screen.getByText('Pods')).toBeInTheDocument();
+    expect(screen.getByText('No data available')).toBeInTheDocument();
+    expect(container).toMatchSnapshot();
   });
 
   it('should render the area chart card', () => {
@@ -26,9 +31,9 @@ describe('Chart Card component', () => {
     const getTooltipHTML = (pointData, tooltipType, unit) => {
       const date = moment(pointData[0].date);
       if (tooltipType === 'daily') {
-        return (`${date.format('MM/DD/YYYY')}: ${pointData[0].value} ${unit}`);
+        return `${date.format('MM/DD/YYYY')}: ${pointData[0].value} ${unit}`;
       }
-      return (`${date.format('h:mm A')}: ${pointData[0].value} ${unit}`);
+      return `${date.format('h:mm A')}: ${pointData[0].value} ${unit}`;
     };
     const options = {
       toolbar: { enabled: false },
@@ -66,41 +71,69 @@ describe('Chart Card component', () => {
         enabled: false,
       },
     };
-    const wrapper = shallow(<ChartCard
-      title="CPU Utilization"
-      textNumber={0.02}
-      textUnit="Cores"
-      textTitle="CPU Utilization"
-      chartData={chartData}
-      options={options}
-      isLoading={false}
-    />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const { container } = render(
+      <ChartCard
+        title="CPU Utilization"
+        textNumber={0.02}
+        textUnit="Cores"
+        textTitle="CPU Utilization"
+        chartData={chartData}
+        options={options}
+        isLoading={false}
+      />
+    );
+
+    const cpuTexts = screen.getAllByText('CPU Utilization');
+    expect(cpuTexts).toHaveLength(2);
+    expect(screen.getByText('0.02')).toBeInTheDocument();
+    expect(screen.getByText('Cores')).toBeInTheDocument();
+    expect(container.querySelector('.card-pf')).toBeInTheDocument();
   });
 
   it('should render the quotas chart card', () => {
     const chartData = [
       {
-        resource: 'cpu', quota_enforced: 20, quota_observed: '0.3', units: 'Cores',
+        resource: 'cpu',
+        quota_enforced: 20,
+        quota_observed: '0.3',
+        units: 'Cores',
       },
       {
-        resource: 'memory', quota_enforced: 1, quota_observed: 0, units: 'GB',
+        resource: 'memory',
+        quota_enforced: 1,
+        quota_observed: 0,
+        units: 'GB',
       },
       {
-        resource: 'pods', quota_enforced: 10, quota_observed: 4, units: '',
+        resource: 'pods',
+        quota_enforced: 10,
+        quota_observed: 4,
+        units: '',
       },
       {
-        resource: 'replicationcontrollers', quota_enforced: 5, quota_observed: 7, units: '',
+        resource: 'replicationcontrollers',
+        quota_enforced: 5,
+        quota_observed: 7,
+        units: '',
       },
       {
-        resource: 'resourcequotas', quota_enforced: 1, quota_observed: 1, units: '',
+        resource: 'resourcequotas',
+        quota_enforced: 1,
+        quota_observed: 1,
+        units: '',
       },
       {
-        resource: 'services', quota_enforced: 5, quota_observed: 4, units: '',
+        resource: 'services',
+        quota_enforced: 5,
+        quota_observed: 4,
+        units: '',
       },
     ];
-    const wrapper = shallow(<ChartCard chartType="quotas" title="Quotas" chartData={chartData} isLoading={false} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const { container } = render(<ChartCard chartType="quotas" title="Quotas" chartData={chartData} isLoading={false} />);
+
+    expect(screen.getByText('Quotas')).toBeInTheDocument();
+    expect(container.querySelectorAll('.quota-chart')).toHaveLength(6);
+    expect(container.querySelector('.card-pf')).toBeInTheDocument();
   });
 
   it('should render the pods trend chart card', () => {
@@ -110,24 +143,25 @@ describe('Chart Card component', () => {
         interval_name: 'hourly',
         xy_data: {
           dataAvailable: true,
-          xData: [
-            '2022-05-09T23:00:00.000Z',
-            '2022-05-10T00:00:00.000Z',
-            '2022-05-10T01:00:00.000Z',
-          ],
+          xData: ['2022-05-09T23:00:00.000Z', '2022-05-10T00:00:00.000Z', '2022-05-10T01:00:00.000Z'],
           yCreated: [1, 0, 0],
           yDeleted: [0, 0, 1],
         },
       },
     };
-    const wrapper = shallow(<ChartCard
-      chartType="podsTrend"
-      title="Pod Creation and Deletion Trends"
-      chartData={chartData}
-      isLoading={false}
-      config={chartConfig.hourlyPodUsageConfig}
-    />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const { container } = render(
+      <ChartCard
+        chartType="podsTrend"
+        title="Pod Creation and Deletion Trends"
+        chartData={chartData}
+        isLoading={false}
+        config={chartConfig.hourlyPodUsageConfig}
+      />
+    );
+
+    const titles = screen.getAllByText('Pod Creation and Deletion Trends');
+    expect(titles).toHaveLength(2);
+    expect(container.querySelector('.card-pf')).toBeInTheDocument();
   });
 
   it('should render the pods table card', () => {
@@ -162,7 +196,12 @@ describe('Chart Card component', () => {
         },
       ],
     };
-    const wrapper = shallow(<ChartCard chartType="table" title="Pods" chartData={chartData} isLoading={false} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const { container } = render(<ChartCard chartType="table" title="Pods" chartData={chartData} isLoading={false} />);
+
+    expect(screen.getByText('Pods')).toBeInTheDocument();
+    expect(screen.getByText('test0')).toBeInTheDocument();
+    expect(screen.getByText('test1')).toBeInTheDocument();
+    expect(screen.getByText('test2')).toBeInTheDocument();
+    expect(container).toMatchSnapshot();
   });
 });

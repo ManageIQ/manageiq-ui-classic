@@ -1,1297 +1,276 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Cloud Database form component should render "Add New" form 1`] = `
-<Grid>
-  <ForwardRef
-    lg={16}
-    md={8}
-    sm={4}
+<div>
+  <div
+    class="cds--css-grid"
   >
-    <Connect(MiqFormRenderer)
-      buttonsLabels={
-        Object {
-          "submitLabel": "Add",
-        }
-      }
-      canReset={true}
-      initialValues={Object {}}
-      onCancel={[Function]}
-      onReset={[Function]}
-      onSubmit={[Function]}
-      schema={
-        Object {
-          "fields": Array [
-            Object {
-              "component": "select",
-              "id": "ems_id",
-              "isDisabled": false,
-              "isRequired": true,
-              "label": "Cloud Provider",
-              "loadOptions": [Function],
-              "name": "ems_id",
-              "onChange": [Function],
-              "validate": Array [
-                Object {
-                  "type": "required",
-                },
-              ],
-            },
-          ],
-        }
-      }
-    />
-  </ForwardRef>
-</Grid>
+    <div
+      class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+    >
+      <form
+        class="cds--form form-0-2-3 form-react"
+        novalidate=""
+      >
+        <div
+          class="cds--form-item"
+        >
+          <div
+            class="cds--select"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="ems_id"
+            >
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+              >
+                *
+              </span>
+              Cloud Provider
+            </label>
+            <div
+              class="cds--select-input__wrapper"
+            >
+              <select
+                class="cds--select-input"
+                id="ems_id"
+                name="ems_id"
+                title=""
+              >
+                <option
+                  class="cds--select-option"
+                  label="<Choose>"
+                  value="-1"
+                >
+                  &lt;Choose&gt;
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="Blue"
+                  value="1"
+                >
+                  Blue
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="Yellow"
+                  value="2"
+                >
+                  Yellow
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="Green"
+                  value="3"
+                >
+                  Green
+                </option>
+              </select>
+              <svg
+                aria-hidden="true"
+                class="cds--select__arrow"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                />
+              </svg>
+              
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--btn-set"
+        >
+          <button
+            class="cds--btn cds--btn--primary cds--btn--disabled"
+            disabled=""
+            type="submit"
+            variant="primary"
+          >
+            Add
+          </button>
+          <button
+            class="cds--btn cds--btn--secondary cds--btn--disabled"
+            disabled=""
+            type="button"
+          >
+            Reset
+          </button>
+          <button
+            class="cds--btn cds--btn--secondary"
+            type="button"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`Cloud Database form component should render "Edit" form 1`] = `
-<Provider
-  store={
-    Object {
-      "asyncReducers": Object {
-        "FormButtons": [Function],
-        "miqCustomTabReducer": [Function],
-        "notificationReducer": [Function],
-      },
-      "dispatch": [Function],
-      "getState": [Function],
-      "injectReducers": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-      Symbol(observable): [Function],
-    }
-  }
->
-  <CloudDatabaseForm
-    recordId="1"
+<div>
+  <div
+    class="cds--css-grid"
   >
-    <Grid>
-      <ForwardRef>
-        <GridSettings
-          mode="css-grid"
-          subgrid={true}
+    <div
+      class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+    >
+      <form
+        class="cds--form form-0-2-3 form-react"
+        novalidate=""
+      >
+        <div
+          class="cds--form-item"
         >
           <div
-            className="cds--css-grid"
+            class="cds--select cds--select--disabled"
           >
-            <ForwardRef
-              lg={16}
-              md={8}
-              sm={4}
+            <label
+              class="cds--label cds--label--disabled"
+              dir="auto"
+              for="ems_id"
             >
-              <ForwardRef
-                as="div"
-                lg={16}
-                md={8}
-                sm={4}
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
               >
-                <div
-                  className="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+                *
+              </span>
+              Cloud Provider
+            </label>
+            <div
+              class="cds--select-input__wrapper"
+            >
+              <select
+                class="cds--select-input"
+                disabled=""
+                id="ems_id"
+                name="ems_id"
+                title=""
+              >
+                <option
+                  class="cds--select-option"
+                  label="<Choose>"
+                  value="-1"
                 >
-                  <Connect(MiqFormRenderer)
-                    buttonsLabels={
-                      Object {
-                        "submitLabel": "Save",
-                      }
-                    }
-                    canReset={false}
-                    initialValues={
-                      Object {
-                        "ems_id": "1",
-                      }
-                    }
-                    onCancel={[Function]}
-                    onReset={[Function]}
-                    onSubmit={[Function]}
-                    schema={
-                      Object {
-                        "fields": Array [
-                          Object {
-                            "component": "select",
-                            "id": "ems_id",
-                            "isDisabled": true,
-                            "isRequired": true,
-                            "label": "Cloud Provider",
-                            "loadOptions": [Function],
-                            "name": "ems_id",
-                            "onChange": [Function],
-                            "validate": Array [
-                              Object {
-                                "type": "required",
-                              },
-                            ],
-                          },
-                          Object {
-                            "component": "text-field",
-                            "id": "sample_component",
-                            "isRequired": true,
-                            "label": "Sample Component",
-                            "name": "Sample Component",
-                            "validate": Array [
-                              Object {
-                                "type": "required",
-                              },
-                            ],
-                          },
-                        ],
-                      }
-                    }
-                  >
-                    <MiqFormRenderer
-                      buttonsLabels={
-                        Object {
-                          "submitLabel": "Save",
-                        }
-                      }
-                      canReset={false}
-                      className="form-react"
-                      componentMapper={
-                        Object {
-                          "checkbox": [Function],
-                          "code-editor": [Function],
-                          "date-picker": [Function],
-                          "dual-list-select": [Function],
-                          "edit-password-field": [Function],
-                          "embedded-automate-entry-point": [Function],
-                          "embedded-workflow-entry-point": [Function],
-                          "field-array": [Function],
-                          "file-upload": [Function],
-                          "font-icon-picker": [Function],
-                          "font-icon-picker-ddf": [Function],
-                          "key-value-list": [Function],
-                          "password-field": [Function],
-                          "plain-text": [Function],
-                          "radio": [Function],
-                          "select": [Function],
-                          "selected-groups-list": [Function],
-                          "slider": [Function],
-                          "sub-form": [Function],
-                          "switch": [Function],
-                          "tabs": [Function],
-                          "text-field": [Function],
-                          "textarea": [Function],
-                          "time-picker": [Function],
-                          "tree-selector": [Function],
-                          "validate-credentials": [Function],
-                          "wizard": [Function],
-                        }
-                      }
-                      disableSubmit={
-                        Array [
-                          "pristine",
-                          "invalid",
-                        ]
-                      }
-                      dispatch={[Function]}
-                      initialValues={
-                        Object {
-                          "ems_id": "1",
-                        }
-                      }
-                      onCancel={[Function]}
-                      onReset={[Function]}
-                      onSubmit={[Function]}
-                      schema={
-                        Object {
-                          "fields": Array [
-                            Object {
-                              "component": "select",
-                              "id": "ems_id",
-                              "isDisabled": true,
-                              "isRequired": true,
-                              "label": "Cloud Provider",
-                              "loadOptions": [Function],
-                              "name": "ems_id",
-                              "onChange": [Function],
-                              "validate": Array [
-                                Object {
-                                  "type": "required",
-                                },
-                              ],
-                            },
-                            Object {
-                              "component": "text-field",
-                              "id": "sample_component",
-                              "isRequired": true,
-                              "label": "Sample Component",
-                              "name": "Sample Component",
-                              "validate": Array [
-                                Object {
-                                  "type": "required",
-                                },
-                              ],
-                            },
-                          ],
-                        }
-                      }
-                      showFormControls={true}
-                    >
-                      <FormRenderer
-                        FormTemplate={[Function]}
-                        componentMapper={
-                          Object {
-                            "checkbox": [Function],
-                            "code-editor": [Function],
-                            "date-picker": [Function],
-                            "dual-list-select": [Function],
-                            "edit-password-field": [Function],
-                            "embedded-automate-entry-point": [Function],
-                            "embedded-workflow-entry-point": [Function],
-                            "field-array": [Function],
-                            "file-upload": [Function],
-                            "font-icon-picker": [Function],
-                            "font-icon-picker-ddf": [Function],
-                            "key-value-list": [Function],
-                            "password-field": [Function],
-                            "plain-text": [Function],
-                            "radio": [Function],
-                            "select": [Function],
-                            "selected-groups-list": [Function],
-                            "slider": [Function],
-                            "spy-field": [Function],
-                            "sub-form": [Function],
-                            "switch": [Function],
-                            "tabs": [Function],
-                            "text-field": [Function],
-                            "textarea": [Function],
-                            "time-picker": [Function],
-                            "tree-selector": [Function],
-                            "validate-credentials": [Function],
-                            "wizard": [Function],
-                          }
-                        }
-                        dispatch={[Function]}
-                        initialValues={
-                          Object {
-                            "ems_id": "1",
-                          }
-                        }
-                        onCancel={[Function]}
-                        onReset={[Function]}
-                        onSubmit={[Function]}
-                        schema={
-                          Object {
-                            "fields": Array [
-                              Object {
-                                "component": "select",
-                                "id": "ems_id",
-                                "isDisabled": true,
-                                "isRequired": true,
-                                "label": "Cloud Provider",
-                                "loadOptions": [Function],
-                                "name": "ems_id",
-                                "onChange": [Function],
-                                "validate": Array [
-                                  Object {
-                                    "type": "required",
-                                  },
-                                ],
-                              },
-                              Object {
-                                "component": "text-field",
-                                "id": "sample_component",
-                                "isRequired": true,
-                                "label": "Sample Component",
-                                "name": "Sample Component",
-                                "validate": Array [
-                                  Object {
-                                    "type": "required",
-                                  },
-                                ],
-                              },
-                              Object {
-                                "component": "spy-field",
-                                "initialize": undefined,
-                                "name": "spy-field",
-                              },
-                            ],
-                          }
-                        }
-                      >
-                        <ReactFinalForm
-                          decorators={
-                            Array [
-                              [Function],
-                            ]
-                          }
-                          dispatch={[Function]}
-                          initialValues={
-                            Object {
-                              "ems_id": "1",
-                            }
-                          }
-                          mutators={
-                            Object {
-                              "concat": [Function],
-                              "insert": [Function],
-                              "move": [Function],
-                              "pop": [Function],
-                              "push": [Function],
-                              "remove": [Function],
-                              "removeBatch": [Function],
-                              "shift": [Function],
-                              "swap": [Function],
-                              "unshift": [Function],
-                              "update": [Function],
-                            }
-                          }
-                          onSubmit={[Function]}
-                          render={[Function]}
-                          subscription={
-                            Object {
-                              "pristine": true,
-                              "submitting": true,
-                              "valid": true,
-                            }
-                          }
-                        >
-                          <Component
-                            formFields={
-                              Array [
-                                <SingleField
-                                  component="select"
-                                  id="ems_id"
-                                  isDisabled={true}
-                                  isRequired={true}
-                                  label="Cloud Provider"
-                                  loadOptions={[Function]}
-                                  name="ems_id"
-                                  onChange={[Function]}
-                                  validate={
-                                    Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ]
-                                  }
-                                />,
-                                <SingleField
-                                  component="text-field"
-                                  id="sample_component"
-                                  isRequired={true}
-                                  label="Sample Component"
-                                  name="Sample Component"
-                                  validate={
-                                    Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ]
-                                  }
-                                />,
-                                <SingleField
-                                  component="spy-field"
-                                  name="spy-field"
-                                />,
-                              ]
-                            }
-                            schema={
-                              Object {
-                                "fields": Array [
-                                  Object {
-                                    "component": "select",
-                                    "id": "ems_id",
-                                    "isDisabled": true,
-                                    "isRequired": true,
-                                    "label": "Cloud Provider",
-                                    "loadOptions": [Function],
-                                    "name": "ems_id",
-                                    "onChange": [Function],
-                                    "validate": Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ],
-                                  },
-                                  Object {
-                                    "component": "text-field",
-                                    "id": "sample_component",
-                                    "isRequired": true,
-                                    "label": "Sample Component",
-                                    "name": "Sample Component",
-                                    "validate": Array [
-                                      Object {
-                                        "type": "required",
-                                      },
-                                    ],
-                                  },
-                                  Object {
-                                    "component": "spy-field",
-                                    "initialize": undefined,
-                                    "name": "spy-field",
-                                  },
-                                ],
-                              }
-                            }
-                          >
-                            <WrappedFormTemplate
-                              canReset={false}
-                              cancelLabel="Cancel"
-                              disableSubmit={
-                                Array [
-                                  "pristine",
-                                  "invalid",
-                                ]
-                              }
-                              formFields={
-                                Array [
-                                  <SingleField
-                                    component="select"
-                                    id="ems_id"
-                                    isDisabled={true}
-                                    isRequired={true}
-                                    label="Cloud Provider"
-                                    loadOptions={[Function]}
-                                    name="ems_id"
-                                    onChange={[Function]}
-                                    validate={
-                                      Array [
-                                        Object {
-                                          "type": "required",
-                                        },
-                                      ]
-                                    }
-                                  />,
-                                  <SingleField
-                                    component="text-field"
-                                    id="sample_component"
-                                    isRequired={true}
-                                    label="Sample Component"
-                                    name="Sample Component"
-                                    validate={
-                                      Array [
-                                        Object {
-                                          "type": "required",
-                                        },
-                                      ]
-                                    }
-                                  />,
-                                  <SingleField
-                                    component="spy-field"
-                                    name="spy-field"
-                                  />,
-                                ]
-                              }
-                              formWrapperProps={
-                                Object {
-                                  "className": "form-react",
-                                }
-                              }
-                              resetLabel="Reset"
-                              schema={
-                                Object {
-                                  "fields": Array [
-                                    Object {
-                                      "component": "select",
-                                      "id": "ems_id",
-                                      "isDisabled": true,
-                                      "isRequired": true,
-                                      "label": "Cloud Provider",
-                                      "loadOptions": [Function],
-                                      "name": "ems_id",
-                                      "onChange": [Function],
-                                      "validate": Array [
-                                        Object {
-                                          "type": "required",
-                                        },
-                                      ],
-                                    },
-                                    Object {
-                                      "component": "text-field",
-                                      "id": "sample_component",
-                                      "isRequired": true,
-                                      "label": "Sample Component",
-                                      "name": "Sample Component",
-                                      "validate": Array [
-                                        Object {
-                                          "type": "required",
-                                        },
-                                      ],
-                                    },
-                                    Object {
-                                      "component": "spy-field",
-                                      "initialize": undefined,
-                                      "name": "spy-field",
-                                    },
-                                  ],
-                                }
-                              }
-                              showFormControls={true}
-                              submitLabel="Save"
-                            >
-                              <FormTemplate
-                                Button={[Function]}
-                                ButtonGroup={[Function]}
-                                Description={[Function]}
-                                FormWrapper={[Function]}
-                                Header={[Function]}
-                                Title={[Function]}
-                                buttonOrder={
-                                  Array [
-                                    "submit",
-                                    "reset",
-                                    "cancel",
-                                  ]
-                                }
-                                canReset={false}
-                                cancelLabel="Cancel"
-                                disableSubmit={
-                                  Array [
-                                    "pristine",
-                                    "invalid",
-                                  ]
-                                }
-                                formFields={
-                                  Array [
-                                    <SingleField
-                                      component="select"
-                                      id="ems_id"
-                                      isDisabled={true}
-                                      isRequired={true}
-                                      label="Cloud Provider"
-                                      loadOptions={[Function]}
-                                      name="ems_id"
-                                      onChange={[Function]}
-                                      validate={
-                                        Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ]
-                                      }
-                                    />,
-                                    <SingleField
-                                      component="text-field"
-                                      id="sample_component"
-                                      isRequired={true}
-                                      label="Sample Component"
-                                      name="Sample Component"
-                                      validate={
-                                        Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ]
-                                      }
-                                    />,
-                                    <SingleField
-                                      component="spy-field"
-                                      name="spy-field"
-                                    />,
-                                  ]
-                                }
-                                formWrapperProps={
-                                  Object {
-                                    "className": "form-react",
-                                  }
-                                }
-                                resetLabel="Reset"
-                                schema={
-                                  Object {
-                                    "fields": Array [
-                                      Object {
-                                        "component": "select",
-                                        "id": "ems_id",
-                                        "isDisabled": true,
-                                        "isRequired": true,
-                                        "label": "Cloud Provider",
-                                        "loadOptions": [Function],
-                                        "name": "ems_id",
-                                        "onChange": [Function],
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "text-field",
-                                        "id": "sample_component",
-                                        "isRequired": true,
-                                        "label": "Sample Component",
-                                        "name": "Sample Component",
-                                        "validate": Array [
-                                          Object {
-                                            "type": "required",
-                                          },
-                                        ],
-                                      },
-                                      Object {
-                                        "component": "spy-field",
-                                        "initialize": undefined,
-                                        "name": "spy-field",
-                                      },
-                                    ],
-                                  }
-                                }
-                                showFormControls={true}
-                                submitLabel="Save"
-                              >
-                                <Form
-                                  className="form-react"
-                                  onSubmit={[Function]}
-                                >
-                                  <Form
-                                    className="form-0-2-3 form-react"
-                                    noValidate={true}
-                                    onSubmit={[Function]}
-                                  >
-                                    <form
-                                      className="cds--form form-0-2-3 form-react"
-                                      noValidate={true}
-                                      onSubmit={[Function]}
-                                    >
-                                      <SingleField
-                                        component="select"
-                                        id="ems_id"
-                                        isDisabled={true}
-                                        isRequired={true}
-                                        key="ems_id"
-                                        label="Cloud Provider"
-                                        loadOptions={[Function]}
-                                        name="ems_id"
-                                        onChange={[Function]}
-                                        validate={
-                                          Array [
-                                            Object {
-                                              "type": "required",
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        <FormConditionWrapper
-                                          conditionMapper={Object {}}
-                                          field={
-                                            Object {
-                                              "component": "select",
-                                              "id": "ems_id",
-                                              "isDisabled": true,
-                                              "isRequired": true,
-                                              "label": "Cloud Provider",
-                                              "loadOptions": [Function],
-                                              "name": "ems_id",
-                                              "onChange": [Function],
-                                              "validate": Array [
-                                                Object {
-                                                  "type": "required",
-                                                },
-                                              ],
-                                            }
-                                          }
-                                        >
-                                          <FormFieldHideWrapper>
-                                            <SelectWithOnChange
-                                              component="select"
-                                              id="ems_id"
-                                              isDisabled={true}
-                                              isRequired={true}
-                                              label="Cloud Provider"
-                                              loadOptions={[Function]}
-                                              name="ems_id"
-                                              onChange={[Function]}
-                                              placeholder="<Choose>"
-                                              validate={
-                                                Array [
-                                                  Object {
-                                                    "type": "required",
-                                                  },
-                                                ]
-                                              }
-                                            >
-                                              <Select
-                                                component="select"
-                                                id="ems_id"
-                                                isDisabled={true}
-                                                isRequired={true}
-                                                label="Cloud Provider"
-                                                loadOptions={[Function]}
-                                                name="ems_id"
-                                                placeholder="<Choose>"
-                                                validate={
-                                                  Array [
-                                                    Object {
-                                                      "type": "required",
-                                                    },
-                                                  ]
-                                                }
-                                              >
-                                                <Select
-                                                  SelectComponent={[Function]}
-                                                  disabled={true}
-                                                  id="ems_id"
-                                                  invalidText=""
-                                                  labelText={
-                                                    <IsRequired>
-                                                      Cloud Provider
-                                                    </IsRequired>
-                                                  }
-                                                  loadOptions={[Function]}
-                                                  loadOptionsChangeCounter={1}
-                                                  loadingMessage="Loading..."
-                                                  name="ems_id"
-                                                  onBlur={[Function]}
-                                                  onChange={[Function]}
-                                                  onFocus={[Function]}
-                                                  placeholder="<Choose>"
-                                                  simpleValue={false}
-                                                  value="1"
-                                                >
-                                                  <ClearedSelect
-                                                    className=""
-                                                    closeMenuOnSelect={true}
-                                                    disabled={true}
-                                                    hideSelectedOptions={false}
-                                                    id="ems_id"
-                                                    invalidText=""
-                                                    isClearable={false}
-                                                    isFetching={false}
-                                                    isSearchable={false}
-                                                    labelText={
-                                                      <IsRequired>
-                                                        Cloud Provider
-                                                      </IsRequired>
-                                                    }
-                                                    name="ems_id"
-                                                    noOptionsMessage={[Function]}
-                                                    onBlur={[Function]}
-                                                    onChange={[Function]}
-                                                    onFocus={[Function]}
-                                                    onInputChange={[Function]}
-                                                    options={
-                                                      Array [
-                                                        Object {
-                                                          "label": "<Choose>",
-                                                          "value": "-1",
-                                                        },
-                                                        Object {
-                                                          "label": "Blue",
-                                                          "value": "1",
-                                                        },
-                                                        Object {
-                                                          "label": "Yellow",
-                                                          "value": "2",
-                                                        },
-                                                        Object {
-                                                          "label": "Green",
-                                                          "value": "3",
-                                                        },
-                                                      ]
-                                                    }
-                                                    placeholder="<Choose>"
-                                                    value="1"
-                                                  >
-                                                    <Select
-                                                      className=""
-                                                      disabled={true}
-                                                      id="ems_id"
-                                                      invalid={false}
-                                                      invalidText=""
-                                                      labelText={
-                                                        <IsRequired>
-                                                          Cloud Provider
-                                                        </IsRequired>
-                                                      }
-                                                      name="ems_id"
-                                                      onBlur={[Function]}
-                                                      onChange={[Function]}
-                                                      onFocus={[Function]}
-                                                      value="1"
-                                                    >
-                                                      <div
-                                                        className="cds--form-item"
-                                                      >
-                                                        <div
-                                                          className="cds--select cds--select--disabled"
-                                                        >
-                                                          <ForwardRef
-                                                            as="label"
-                                                            className="cds--label cds--label--disabled"
-                                                            htmlFor="ems_id"
-                                                          >
-                                                            <label
-                                                              className="cds--label cds--label--disabled"
-                                                              dir="auto"
-                                                              htmlFor="ems_id"
-                                                            >
-                                                              <IsRequired>
-                                                                <span
-                                                                  aria-hidden="true"
-                                                                  className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
-                                                                >
-                                                                  *
-                                                                </span>
-                                                                Cloud Provider
-                                                              </IsRequired>
-                                                            </label>
-                                                          </ForwardRef>
-                                                          <div
-                                                            className="cds--select-input__wrapper"
-                                                            data-invalid={null}
-                                                            onBlur={[Function]}
-                                                            onFocus={[Function]}
-                                                          >
-                                                            <select
-                                                              className="cds--select-input"
-                                                              disabled={true}
-                                                              id="ems_id"
-                                                              name="ems_id"
-                                                              onBlur={[Function]}
-                                                              onChange={[Function]}
-                                                              onFocus={[Function]}
-                                                              onKeyDown={[Function]}
-                                                              onMouseDown={[Function]}
-                                                              title=""
-                                                              value="1"
-                                                            >
-                                                              <SelectItem
-                                                                key="-1"
-                                                                label="<Choose>"
-                                                                text="<Choose>"
-                                                                value="-1"
-                                                              >
-                                                                <option
-                                                                  className="cds--select-option"
-                                                                  disabled={false}
-                                                                  hidden={false}
-                                                                  label="<Choose>"
-                                                                  value="-1"
-                                                                >
-                                                                  &lt;Choose&gt;
-                                                                </option>
-                                                              </SelectItem>
-                                                              <SelectItem
-                                                                key="1"
-                                                                label="Blue"
-                                                                text="Blue"
-                                                                value="1"
-                                                              >
-                                                                <option
-                                                                  className="cds--select-option"
-                                                                  disabled={false}
-                                                                  hidden={false}
-                                                                  label="Blue"
-                                                                  value="1"
-                                                                >
-                                                                  Blue
-                                                                </option>
-                                                              </SelectItem>
-                                                              <SelectItem
-                                                                key="2"
-                                                                label="Yellow"
-                                                                text="Yellow"
-                                                                value="2"
-                                                              >
-                                                                <option
-                                                                  className="cds--select-option"
-                                                                  disabled={false}
-                                                                  hidden={false}
-                                                                  label="Yellow"
-                                                                  value="2"
-                                                                >
-                                                                  Yellow
-                                                                </option>
-                                                              </SelectItem>
-                                                              <SelectItem
-                                                                key="3"
-                                                                label="Green"
-                                                                text="Green"
-                                                                value="3"
-                                                              >
-                                                                <option
-                                                                  className="cds--select-option"
-                                                                  disabled={false}
-                                                                  hidden={false}
-                                                                  label="Green"
-                                                                  value="3"
-                                                                >
-                                                                  Green
-                                                                </option>
-                                                              </SelectItem>
-                                                            </select>
-                                                            <ForwardRef(ChevronDown)
-                                                              className="cds--select__arrow"
-                                                            >
-                                                              <Icon
-                                                                className="cds--select__arrow"
-                                                                fill="currentColor"
-                                                                height={16}
-                                                                viewBox="0 0 16 16"
-                                                                width={16}
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                              >
-                                                                <svg
-                                                                  aria-hidden={true}
-                                                                  className="cds--select__arrow"
-                                                                  fill="currentColor"
-                                                                  focusable="false"
-                                                                  height={16}
-                                                                  preserveAspectRatio="xMidYMid meet"
-                                                                  viewBox="0 0 16 16"
-                                                                  width={16}
-                                                                  xmlns="http://www.w3.org/2000/svg"
-                                                                >
-                                                                  <path
-                                                                    d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
-                                                                  />
-                                                                </svg>
-                                                              </Icon>
-                                                            </ForwardRef(ChevronDown)>
-                                                          </div>
-                                                        </div>
-                                                      </div>
-                                                    </Select>
-                                                  </ClearedSelect>
-                                                </Select>
-                                              </Select>
-                                            </SelectWithOnChange>
-                                          </FormFieldHideWrapper>
-                                        </FormConditionWrapper>
-                                      </SingleField>
-                                      <SingleField
-                                        component="text-field"
-                                        id="sample_component"
-                                        isRequired={true}
-                                        key="Sample Component"
-                                        label="Sample Component"
-                                        name="Sample Component"
-                                        validate={
-                                          Array [
-                                            Object {
-                                              "type": "required",
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        <FormConditionWrapper
-                                          conditionMapper={Object {}}
-                                          field={
-                                            Object {
-                                              "component": "text-field",
-                                              "id": "sample_component",
-                                              "isRequired": true,
-                                              "label": "Sample Component",
-                                              "name": "Sample Component",
-                                              "validate": Array [
-                                                Object {
-                                                  "type": "required",
-                                                },
-                                              ],
-                                            }
-                                          }
-                                        >
-                                          <FormFieldHideWrapper>
-                                            <TextField
-                                              component="text-field"
-                                              id="sample_component"
-                                              isRequired={true}
-                                              label="Sample Component"
-                                              name="Sample Component"
-                                              validate={
-                                                Array [
-                                                  Object {
-                                                    "type": "required",
-                                                  },
-                                                ]
-                                              }
-                                            >
-                                              <TextInput
-                                                id="sample_component"
-                                                invalid={false}
-                                                invalidText=""
-                                                key="Sample Component"
-                                                labelText={
-                                                  <IsRequired>
-                                                    Sample Component
-                                                  </IsRequired>
-                                                }
-                                                name="Sample Component"
-                                                onBlur={[Function]}
-                                                onChange={[Function]}
-                                                onFocus={[Function]}
-                                                value=""
-                                                warn={false}
-                                                warnText=""
-                                              >
-                                                <div
-                                                  className="cds--form-item cds--text-input-wrapper"
-                                                >
-                                                  <div
-                                                    className="cds--text-input__label-wrapper"
-                                                  >
-                                                    <ForwardRef
-                                                      as="label"
-                                                      className="cds--label"
-                                                      htmlFor="sample_component"
-                                                    >
-                                                      <label
-                                                        className="cds--label"
-                                                        dir="auto"
-                                                        htmlFor="sample_component"
-                                                      >
-                                                        <IsRequired>
-                                                          <span
-                                                            aria-hidden="true"
-                                                            className="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
-                                                          >
-                                                            *
-                                                          </span>
-                                                          Sample Component
-                                                        </IsRequired>
-                                                      </label>
-                                                    </ForwardRef>
-                                                  </div>
-                                                  <div
-                                                    className="cds--text-input__field-outer-wrapper"
-                                                  >
-                                                    <div
-                                                      className="cds--text-input__field-wrapper"
-                                                      data-invalid={null}
-                                                    >
-                                                      <input
-                                                        className="cds--text-input"
-                                                        disabled={false}
-                                                        id="sample_component"
-                                                        name="Sample Component"
-                                                        onBlur={[Function]}
-                                                        onChange={[Function]}
-                                                        onClick={[Function]}
-                                                        onFocus={[Function]}
-                                                        type="text"
-                                                        value=""
-                                                      />
-                                                      <span
-                                                        aria-atomic="true"
-                                                        aria-live="assertive"
-                                                        className="cds--text-input__counter-alert"
-                                                        role="alert"
-                                                      />
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                              </TextInput>
-                                            </TextField>
-                                          </FormFieldHideWrapper>
-                                        </FormConditionWrapper>
-                                      </SingleField>
-                                      <SingleField
-                                        component="spy-field"
-                                        key="spy-field"
-                                        name="spy-field"
-                                      >
-                                        <FormConditionWrapper
-                                          conditionMapper={Object {}}
-                                          field={
-                                            Object {
-                                              "component": "spy-field",
-                                              "initialize": undefined,
-                                              "name": "spy-field",
-                                            }
-                                          }
-                                        >
-                                          <FormFieldHideWrapper>
-                                            <SpyField
-                                              component="spy-field"
-                                              name="spy-field"
-                                            >
-                                              <FormSpy
-                                                onChange={[Function]}
-                                                subscription={
-                                                  Object {
-                                                    "pristine": true,
-                                                    "valid": true,
-                                                  }
-                                                }
-                                              />
-                                            </SpyField>
-                                          </FormFieldHideWrapper>
-                                        </FormConditionWrapper>
-                                      </SingleField>
-                                      <FormSpy>
-                                        <FormControls
-                                          Button={[Function]}
-                                          ButtonGroup={[Function]}
-                                          buttonOrder={
-                                            Array [
-                                              "submit",
-                                              "reset",
-                                              "cancel",
-                                            ]
-                                          }
-                                          canReset={false}
-                                          cancelLabel="Cancel"
-                                          disableSubmit={true}
-                                          formSpyProps={
-                                            Object {
-                                              "active": undefined,
-                                              "dirty": false,
-                                              "dirtyFields": Object {},
-                                              "dirtyFieldsSinceLastSubmit": Object {
-                                                "ems_id": true,
-                                              },
-                                              "dirtySinceLastSubmit": false,
-                                              "error": undefined,
-                                              "errors": Object {
-                                                "Sample Component": "Required",
-                                              },
-                                              "form": Object {
-                                                "batch": [Function],
-                                                "blur": [Function],
-                                                "change": [Function],
-                                                "destroyOnUnregister": false,
-                                                "focus": [Function],
-                                                "getFieldState": [Function],
-                                                "getRegisteredFields": [Function],
-                                                "getState": [Function],
-                                                "initialize": [Function],
-                                                "isValidationPaused": [Function],
-                                                "mutators": Object {
-                                                  "concat": [Function],
-                                                  "insert": [Function],
-                                                  "move": [Function],
-                                                  "pop": [Function],
-                                                  "push": [Function],
-                                                  "remove": [Function],
-                                                  "removeBatch": [Function],
-                                                  "shift": [Function],
-                                                  "swap": [Function],
-                                                  "unshift": [Function],
-                                                  "update": [Function],
-                                                },
-                                                "pauseValidation": [Function],
-                                                "registerField": [Function],
-                                                "reset": [Function],
-                                                "resetFieldState": [Function],
-                                                "restart": [Function],
-                                                "resumeValidation": [Function],
-                                                "setConfig": [Function],
-                                                "submit": [Function],
-                                                "subscribe": [Function],
-                                              },
-                                              "hasSubmitErrors": false,
-                                              "hasValidationErrors": true,
-                                              "initialValues": Object {
-                                                "ems_id": "1",
-                                              },
-                                              "invalid": true,
-                                              "modified": Object {
-                                                "Sample Component": false,
-                                                "ems_id": false,
-                                              },
-                                              "modifiedSinceLastSubmit": false,
-                                              "pristine": true,
-                                              "submitError": undefined,
-                                              "submitErrors": undefined,
-                                              "submitFailed": false,
-                                              "submitSucceeded": false,
-                                              "submitting": false,
-                                              "touched": Object {
-                                                "Sample Component": false,
-                                                "ems_id": false,
-                                              },
-                                              "valid": false,
-                                              "validating": false,
-                                              "values": Object {
-                                                "ems_id": "1",
-                                              },
-                                              "visited": Object {
-                                                "Sample Component": false,
-                                                "ems_id": false,
-                                              },
-                                            }
-                                          }
-                                          onCancel={[Function]}
-                                          onReset={[Function]}
-                                          resetLabel="Reset"
-                                          submitLabel="Save"
-                                        >
-                                          <ButtonGroup>
-                                            <ButtonSet
-                                              className=""
-                                            >
-                                              <div
-                                                className="cds--btn-set"
-                                              >
-                                                <Button
-                                                  buttonType="submit"
-                                                  disabled={true}
-                                                  key="form-submit"
-                                                  label="Save"
-                                                  type="submit"
-                                                  variant="primary"
-                                                >
-                                                  <Button
-                                                    disabled={true}
-                                                    kind="primary"
-                                                    type="submit"
-                                                    variant="primary"
-                                                  >
-                                                    <ForwardRef(ButtonBase)
-                                                      disabled={true}
-                                                      kind="primary"
-                                                      type="submit"
-                                                      variant="primary"
-                                                    >
-                                                      <button
-                                                        className="cds--btn cds--btn--primary cds--btn--disabled"
-                                                        disabled={true}
-                                                        type="submit"
-                                                        variant="primary"
-                                                      >
-                                                        Save
-                                                      </button>
-                                                    </ForwardRef(ButtonBase)>
-                                                  </Button>
-                                                </Button>
-                                                <Button
-                                                  buttonType="cancel"
-                                                  key="form-cancel"
-                                                  label="Cancel"
-                                                  onClick={[Function]}
-                                                  type="button"
-                                                >
-                                                  <Button
-                                                    kind="secondary"
-                                                    onClick={[Function]}
-                                                    type="button"
-                                                  >
-                                                    <ForwardRef(ButtonBase)
-                                                      kind="secondary"
-                                                      onClick={[Function]}
-                                                      type="button"
-                                                    >
-                                                      <button
-                                                        className="cds--btn cds--btn--secondary"
-                                                        disabled={false}
-                                                        onClick={[Function]}
-                                                        type="button"
-                                                      >
-                                                        Cancel
-                                                      </button>
-                                                    </ForwardRef(ButtonBase)>
-                                                  </Button>
-                                                </Button>
-                                              </div>
-                                            </ButtonSet>
-                                          </ButtonGroup>
-                                        </FormControls>
-                                      </FormSpy>
-                                    </form>
-                                  </Form>
-                                </Form>
-                              </FormTemplate>
-                            </WrappedFormTemplate>
-                          </Component>
-                        </ReactFinalForm>
-                      </FormRenderer>
-                    </MiqFormRenderer>
-                  </Connect(MiqFormRenderer)>
-                </div>
-              </ForwardRef>
-            </ForwardRef>
+                  &lt;Choose&gt;
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="Blue"
+                  value="1"
+                >
+                  Blue
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="Yellow"
+                  value="2"
+                >
+                  Yellow
+                </option>
+                <option
+                  class="cds--select-option"
+                  label="Green"
+                  value="3"
+                >
+                  Green
+                </option>
+              </select>
+              <svg
+                aria-hidden="true"
+                class="cds--select__arrow"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                />
+              </svg>
+              
+            </div>
           </div>
-        </GridSettings>
-      </ForwardRef>
-    </Grid>
-  </CloudDatabaseForm>
-</Provider>
+        </div>
+        <div
+          class="cds--form-item cds--text-input-wrapper"
+        >
+          <div
+            class="cds--text-input__label-wrapper"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="sample_component"
+            >
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-4"
+              >
+                *
+              </span>
+              Sample Component
+            </label>
+          </div>
+          <div
+            class="cds--text-input__field-outer-wrapper"
+          >
+            <div
+              class="cds--text-input__field-wrapper"
+            >
+              <input
+                class="cds--text-input"
+                id="sample_component"
+                name="Sample Component"
+                type="text"
+                value=""
+              />
+              
+              <span
+                aria-atomic="true"
+                aria-live="assertive"
+                class="cds--text-input__counter-alert"
+                role="alert"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--btn-set"
+        >
+          <button
+            class="cds--btn cds--btn--primary cds--btn--disabled"
+            disabled=""
+            type="submit"
+            variant="primary"
+          >
+            Save
+          </button>
+          <button
+            class="cds--btn cds--btn--secondary"
+            type="button"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 `;

@@ -1,7 +1,6 @@
 import React from 'react';
+import { render } from '@testing-library/react';
 import Tag from '../components/InnerComponents/Tag';
-import { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
 
 const tagCategory = { label: 'animal', id: 1 };
 const tagValue = { label: 'duck', id: 1 };
@@ -11,7 +10,7 @@ function onDelete(x) {
 
 describe('Tag Component', () => {
   it('match snapshot', () => {
-    const component = shallow(
+    const { container } = render(
       <Tag
         tagCategory={tagCategory}
         tagValue={tagValue}
@@ -19,7 +18,6 @@ describe('Tag Component', () => {
         truncate={jest.fn()}
       />
     );
-    const tree = toJson(component);
-    expect(tree).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 });

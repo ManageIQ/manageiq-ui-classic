@@ -1,222 +1,93 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Filter Dropdown form should handle cancel 1`] = `
-<Provider
-  store={
-    Object {
-      "asyncReducers": Object {
-        "FormButtons": [Function],
-        "miqCustomTabReducer": [Function],
-        "notificationReducer": [Function],
-      },
-      "dispatch": [Function],
-      "getState": [Function],
-      "injectReducers": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-      Symbol(observable): [Function],
-    }
-  }
->
-  <FilterDropdown
-    defSearches={
-      Array [
-        Object {
-          "db": null,
-          "description": "ALL (Default)",
-          "filter": null,
-          "id": 0,
-          "name": "ALL",
-        },
-        Object {
-          "db": null,
-          "description": "ALL (Default)",
-          "filter": null,
-          "id": 1,
-          "name": "filter1",
-        },
-        Object {
-          "db": null,
-          "description": "ALL (Default)",
-          "filter": null,
-          "id": 2,
-          "name": "filter2",
-        },
-      ]
-    }
-    defaultSelected="bbb"
-    filterSelected="aaa"
-    mySearches={Array []}
+<div>
+  <div
+    class="select_filter"
   >
-    <div
-      className="select_filter"
+    <fieldset
+      class="miq-fieldset"
     >
-      <fieldset
-        className="miq-fieldset"
+      <div
+        class="miq-fieldset-content"
       >
         <div
-          className="miq-fieldset-content"
+          class="cds--form-item"
         >
-          <Select
-            aria-label="Choose a Filter"
-            defaultValue="placeholder-item"
-            id="select_filter_dropdown"
-            noLabel={true}
-            onChange={[Function]}
+          <div
+            class="cds--select"
           >
             <div
-              className="cds--form-item"
+              class="cds--select-input__wrapper"
             >
-              <div
-                className="cds--select"
+              <select
+                aria-label="Choose a Filter"
+                class="cds--select-input"
+                id="select_filter_dropdown"
+                title="Choose a Filter"
               >
-                <div
-                  className="cds--select-input__wrapper"
-                  data-invalid={null}
-                  onBlur={[Function]}
-                  onFocus={[Function]}
+                <option
+                  class="cds--select-option"
+                  disabled=""
+                  hidden=""
+                  selected=""
+                  value="placeholder-item"
                 >
-                  <select
-                    aria-label="Choose a Filter"
-                    className="cds--select-input"
-                    defaultValue="placeholder-item"
-                    id="select_filter_dropdown"
-                    onChange={[Function]}
-                    onKeyDown={[Function]}
-                    onMouseDown={[Function]}
-                    title="Choose a Filter"
+                  Choose a Filter
+                </option>
+                <optgroup
+                  class="cds--select-optgroup"
+                  label="Global Filters"
+                >
+                  <option
+                    class="cds--select-option"
+                    value="0"
                   >
-                    <SelectItem
-                      disabled={true}
-                      hidden={true}
-                      text="Choose a Filter"
-                      value="placeholder-item"
-                    >
-                      <option
-                        className="cds--select-option"
-                        disabled={true}
-                        hidden={true}
-                        value="placeholder-item"
-                      >
-                        Choose a Filter
-                      </option>
-                    </SelectItem>
-                    <SelectItemGroup
-                      label="Global Filters"
-                    >
-                      <optgroup
-                        className="cds--select-optgroup"
-                        disabled={false}
-                        label="Global Filters"
-                      >
-                        <SelectItem
-                          key="0"
-                          text="ALL (Default)"
-                          value={0}
-                        >
-                          <option
-                            className="cds--select-option"
-                            disabled={false}
-                            hidden={false}
-                            value={0}
-                          >
-                            ALL (Default)
-                          </option>
-                        </SelectItem>
-                        <SelectItem
-                          key="1"
-                          text="ALL (Default)"
-                          value={1}
-                        >
-                          <option
-                            className="cds--select-option"
-                            disabled={false}
-                            hidden={false}
-                            value={1}
-                          >
-                            ALL (Default)
-                          </option>
-                        </SelectItem>
-                        <SelectItem
-                          key="2"
-                          text="ALL (Default)"
-                          value={2}
-                        >
-                          <option
-                            className="cds--select-option"
-                            disabled={false}
-                            hidden={false}
-                            value={2}
-                          >
-                            ALL (Default)
-                          </option>
-                        </SelectItem>
-                      </optgroup>
-                    </SelectItemGroup>
-                  </select>
-                  <ForwardRef(ChevronDown)
-                    className="cds--select__arrow"
+                    ALL (Default)
+                  </option>
+                  <option
+                    class="cds--select-option"
+                    value="1"
                   >
-                    <Icon
-                      className="cds--select__arrow"
-                      fill="currentColor"
-                      height={16}
-                      viewBox="0 0 16 16"
-                      width={16}
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <svg
-                        aria-hidden={true}
-                        className="cds--select__arrow"
-                        fill="currentColor"
-                        focusable="false"
-                        height={16}
-                        preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 16 16"
-                        width={16}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
-                        />
-                      </svg>
-                    </Icon>
-                  </ForwardRef(ChevronDown)>
-                </div>
-              </div>
-            </div>
-          </Select>
-          <Button
-            className="default_button"
-            id="set_default"
-            onClick={[Function]}
-            size="sm"
-            title={"Select a filter to set it as my default"}
-            type="submit"
-          >
-            <ForwardRef(ButtonBase)
-              className="default_button"
-              id="set_default"
-              onClick={[Function]}
-              size="sm"
-              title={"Select a filter to set it as my default"}
-              type="submit"
-            >
-              <button
-                className="default_button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary"
-                disabled={false}
-                id="set_default"
-                onClick={[Function]}
-                title={"Select a filter to set it as my default"}
-                type="submit"
+                    ALL (Default)
+                  </option>
+                  <option
+                    class="cds--select-option"
+                    value="2"
+                  >
+                    ALL (Default)
+                  </option>
+                </optgroup>
+              </select>
+              <svg
+                aria-hidden="true"
+                class="cds--select__arrow"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                Set Default
-              </button>
-            </ForwardRef(ButtonBase)>
-          </Button>
+                <path
+                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                />
+              </svg>
+              
+            </div>
+          </div>
         </div>
-      </fieldset>
-    </div>
-  </FilterDropdown>
-</Provider>
+        <button
+          class="default_button cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary"
+          id="set_default"
+          title="Select a filter to set it as my default"
+          type="submit"
+        >
+          Set Default
+        </button>
+      </div>
+    </fieldset>
+  </div>
+</div>
 `;

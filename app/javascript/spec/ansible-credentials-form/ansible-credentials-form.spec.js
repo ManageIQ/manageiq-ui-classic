@@ -1,9 +1,7 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
 import fetchMock from 'fetch-mock';
-
-import { act } from 'react-dom/test-utils';
-import { mount } from '../helpers/mountForm';
+import { waitFor } from '@testing-library/react';
+import { renderWithRedux } from '../helpers/mountForm';
 import AnsibleCredentialsForm from '../../components/ansible-credentials-form/index';
 
 describe('Ansible Credential Form Component', () => {
@@ -34,12 +32,12 @@ describe('Ansible Credential Form Component', () => {
   };
 
   beforeEach(() => {
-    fetchMock.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager', { 
-        "resources": [
-            {
-              "href": "http://localhost:3000/api/providers/1"
-            }
-        ],
+    fetchMock.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager', {
+      resources: [
+        {
+          href: 'http://localhost:3000/api/providers/1',
+        },
+      ],
     });
   });
 
@@ -48,30 +46,30 @@ describe('Ansible Credential Form Component', () => {
     fetchMock.restore();
   });
 
-  it('should render adding a new credential', async(done) => {
+  it('should render adding a new credential', async() => {
     fetchMock.once('/api/authentications', api);
-    let wrapper;
 
-    await act(async() => {
-      wrapper = mount(<AnsibleCredentialsForm />);
+    const { container } = renderWithRedux(<AnsibleCredentialsForm />);
+
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
     });
-    wrapper.update();
+
     expect(fetchMock.calls()).toHaveLength(2);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+    expect(container).toMatchSnapshot();
   });
 
-  it('should render editing a credential', async(done) => {
+  it('should render editing a credential', async() => {
     fetchMock.once('/api/authentications', api);
     fetchMock.get('/api/authentications/1', { userid: 'test', type: 'foo' });
-    let wrapper;
 
-    await act(async() => {
-      wrapper = mount(<AnsibleCredentialsForm recordId="1" />);
+    const { container } = renderWithRedux(<AnsibleCredentialsForm recordId="1" />);
+
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
     });
-    wrapper.update();
+
     expect(fetchMock.calls()).toHaveLength(3);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    done();
+    expect(container).toMatchSnapshot();
   });
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from '../helpers/mountForm';
+import { renderWithRedux } from '../helpers/mountForm';
 import { TreeViewRedux } from '../../components/tree-view';
 
 ManageIQ.redux.addReducer = ManageIQ.redux.store.injectReducers;
@@ -22,7 +22,8 @@ describe('Tree View component', () => {
             key: 'e-38',
             text: 'Amazon',
             tooltip: 'Ems Cloud: Amazon',
-            image: '/assets/svg/vendor-ec2-04c432db85be0fd670cd6da83b8685dab51e1b7a63258b70cccbdf8d7f72c988.svg',
+            image:
+              '/assets/svg/vendor-ec2-04c432db85be0fd670cd6da83b8685dab51e1b7a63258b70cccbdf8d7f72c988.svg',
             selectable: true,
             state: { checked: false, expanded: false },
           },
@@ -30,7 +31,8 @@ describe('Tree View component', () => {
             key: 'e-40',
             text: 'Amazon EBS Storage Manager',
             tooltip: 'Provider: Amazon EBS Storage Manager',
-            image: '/assets/svg/vendor-ec2_ebs_storage-04c432db85be0fd670cd6da83b8685dab51e1b7a63258b70cccbdf8d7f72c988.svg',
+            image:
+              '/assets/svg/vendor-ec2_ebs_storage-04c432db85be0fd670cd6da83b8685dab51e1b7a63258b70cccbdf8d7f72c988.svg',
             selectable: true,
             state: { checked: false, expanded: false },
           },
@@ -38,7 +40,8 @@ describe('Tree View component', () => {
             key: 'e-39',
             text: 'Amazon Network Manager',
             tooltip: 'Provider: Amazon Network Manager',
-            image: '/assets/svg/vendor-ec2_network-04c432db85be0fd670cd6da83b8685dab51e1b7a63258b70cccbdf8d7f72c988.svg',
+            image:
+              '/assets/svg/vendor-ec2_network-04c432db85be0fd670cd6da83b8685dab51e1b7a63258b70cccbdf8d7f72c988.svg',
             selectable: true,
             state: { checked: false, expanded: false },
           },
@@ -46,7 +49,8 @@ describe('Tree View component', () => {
             key: 'at-19',
             text: 'Ansible Tower Automation Manager',
             tooltip: 'Provider: Ansible Tower Automation Manager',
-            image: '/assets/svg/vendor-ansible-53cf0c18065b8e2c8b99cbde9dca3ac9245ec363b700af6e9fd2bc5b743c85a9.svg',
+            image:
+              '/assets/svg/vendor-ansible-53cf0c18065b8e2c8b99cbde9dca3ac9245ec363b700af6e9fd2bc5b743c85a9.svg',
             selectable: true,
             state: { checked: false, expanded: false },
           },
@@ -54,7 +58,8 @@ describe('Tree View component', () => {
             key: 'e-3',
             text: 'Azure (East US)',
             tooltip: 'Ems Cloud: Azure (East US)',
-            image: '/assets/svg/vendor-azure-9e2644144afcc98aa84451aee955851b15e6409a916d9054849b3a136a1f4887.svg',
+            image:
+              '/assets/svg/vendor-azure-9e2644144afcc98aa84451aee955851b15e6409a916d9054849b3a136a1f4887.svg',
             selectable: true,
             state: { checked: true, expanded: false },
           },
@@ -67,7 +72,7 @@ describe('Tree View component', () => {
   };
 
   it('should mount to the correct redux store', () => {
-    mount(<TreeViewRedux {...props} />);
+    renderWithRedux(<TreeViewRedux {...props} />);
     expect(ManageIQ.redux.store.getState().object_tree).toBeTruthy();
   });
 });

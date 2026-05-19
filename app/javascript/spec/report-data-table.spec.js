@@ -1,7 +1,6 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, waitFor } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
-import { act } from 'react-dom/test-utils';
 
 import './helpers/miqSparkle';
 
@@ -38,35 +37,34 @@ describe('<ReportDataTable />', () => {
     return `/api/results/${initialProps.reportResultId}?${params}`;
   };
 
-  it('should fetch and display report data when instantiated', async(done) => {
+  it('should fetch and display report data when instantiated', async () => {
     fetchMock.getOnce(requestUrl(), { report: { col_order: [] }, count: 1, result_set: [{ foo: 'bar' }] });
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<ReportDataTable {...initialProps} />);
+    
+    const { container } = render(<ReportDataTable {...initialProps} />);
+    
+    // Wait for data to load
+    await waitFor(() => {
+      expect(fetchMock.calls()).toHaveLength(1);
     });
-    wrapper.update();
-    expect(fetchMock.calls()).toHaveLength(1);
-    expect(wrapper.find('div.report-table-toolbar')).toHaveLength(1);
-    expect(wrapper.find('div.report-data-table')).toHaveLength(1);
-    expect(wrapper.find('div.miq-pagination')).toHaveLength(1);
-    done();
+    
+    expect(container.querySelector('div.report-table-toolbar')).toBeInTheDocument();
+    expect(container.querySelector('div.report-data-table')).toBeInTheDocument();
+    expect(container.querySelector('div.miq-pagination')).toBeInTheDocument();
   });
 
-  it('should display empty state when there is no data', async(done) => {
+  it('should display empty state when there is no data', async () => {
     fetchMock.getOnce(requestUrl(), { report: { col_order: [] }, count: 0, result_set: [] });
 
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<ReportDataTable {...initialProps} />);
+    const { container } = render(<ReportDataTable {...initialProps} />);
+
+    // Wait for data to load
+    await waitFor(() => {
+      expect(fetchMock.calls()).toHaveLength(1);
     });
 
-    wrapper.update();
-
-    expect(fetchMock.calls()).toHaveLength(1);
-    expect(wrapper.find('div.report-table-toolbar')).toHaveLength(1);
-    expect(wrapper.find('div.report-data-table')).toHaveLength(0);
-    expect(wrapper.find('div.miq-pagination')).toHaveLength(0);
-    expect(wrapper.find('div.no-records-found')).toHaveLength(1);
-    done();
+    expect(container.querySelector('div.report-table-toolbar')).toBeInTheDocument();
+    expect(container.querySelector('div.report-data-table')).not.toBeInTheDocument();
+    expect(container.querySelector('div.miq-pagination')).not.toBeInTheDocument();
+    expect(container.querySelector('div.no-records-found')).toBeInTheDocument();
   });
 });

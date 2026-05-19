@@ -1,13 +1,11 @@
 import React from 'react';
-import { act } from 'react-dom/test-utils';
+import { waitFor, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import fetchMock from 'fetch-mock';
 import WorkersForm from '../../components/workers-form/workers-form';
 
 import '../helpers/miqSparkle';
-import '../helpers/addFlash';
-import '../helpers/sprintf';
-import MiqFormRenderer from '../../forms/data-driven-form';
-import { mount } from '../helpers/mountForm';
+import { renderWithRedux } from '../helpers/mountForm';
 
 describe('Workers form', () => {
   let initialProps;
@@ -40,7 +38,8 @@ describe('Workers form', () => {
           queue_worker_base: {
             ems_metrics_collector_worker: {
               defaults: {
-                count: 8, memory_threshold: 419430400,
+                count: 8,
+                memory_threshold: 419430400,
               },
             },
             ems_refresh_worker: {
@@ -50,25 +49,31 @@ describe('Workers form', () => {
             },
             defaults: {},
             ems_metrics_processor_worker: {
-              count: 2, memory_threshold: 629145600,
+              count: 2,
+              memory_threshold: 629145600,
             },
             generic_worker: { count: 2, memory_threshold: 524288000 },
             priority_worker: {
-              memory_threshold: 419430400, count: 2,
+              memory_threshold: 419430400,
+              count: 2,
             },
             reporting_worker: { count: 2 },
             smart_proxy_worker: {
-              count: 2, memory_threshold: 576716800,
+              count: 2,
+              memory_threshold: 576716800,
             },
           },
           defaults: {
-            count: 1, memory_threshold: '400.megabytes',
+            count: 1,
+            memory_threshold: '400.megabytes',
           },
           ui_worker: {
-            memory_threshold: '1.gigabytes', count: 1,
+            memory_threshold: '1.gigabytes',
+            count: 1,
           },
           web_service_worker: {
-            connection_pool_size: 8, memory_threshold: 1073741824,
+            connection_pool_size: 8,
+            memory_threshold: 1073741824,
           },
           remote_console_worker: {
             memory_threshold: '1.gigabytes',
@@ -113,96 +118,78 @@ describe('Workers form', () => {
     spyAddFlash.mockRestore();
   });
 
-  it('should render correctly', async(done) => {
-    fetchMock
-      .getOnce(baseUrl, settingsData);
-
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<WorkersForm {...initialProps} />);
-    });
-
-    wrapper.update();
-    expect(wrapper.find(MiqFormRenderer)).toHaveLength(1);
-    done();
-  });
-
-  it('should render error when loading is broken', (done) => {
-    fetchMock
-      .getOnce(baseUrl, 500);
-
-    const wrapper = mount(<WorkersForm {...initialProps} />);
-
-    setImmediate(() => {
-      wrapper.update();
-      expect(wrapper.find(MiqFormRenderer)).toHaveLength(0);
-      expect(spyAddFlash).toHaveBeenCalledWith('Could not fetch the data', 'error');
-      done();
+  it('should render correctly', async() => {
+    fetchMock.getOnce(baseUrl, settingsData);
+    const { container } = renderWithRedux(<WorkersForm {...initialProps} />);
+    await waitFor(() => {
+      expect(container.querySelector('form')).toBeInTheDocument();
     });
   });
 
-  it('should request data after mount and set to state', async(done) => {
-    fetchMock
-      .getOnce(baseUrl, settingsData);
-
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<WorkersForm {...initialProps} />);
+  it('should render error when loading is broken', async() => {
+    fetchMock.getOnce(baseUrl, 500);
+    renderWithRedux(<WorkersForm {...initialProps} />);
+    await waitFor(() => {
+      expect(spyAddFlash).toHaveBeenCalledWith(
+        'Could not fetch the data',
+        'error'
+      );
     });
+  });
 
-    wrapper.update();
-    expect(submitSpyMiqSparkleOn).toHaveBeenCalled();
-    expect(submitSpyMiqSparkleOff).toHaveBeenCalled();
+  it('should request data after mount and set to state', async() => {
+    fetchMock.getOnce(baseUrl, settingsData);
+    const { container } = renderWithRedux(<WorkersForm {...initialProps} />);
+
+    await waitFor(() => {
+      expect(submitSpyMiqSparkleOn).toHaveBeenCalled();
+      expect(submitSpyMiqSparkleOff).toHaveBeenCalled();
+    });
     expect(fetchMock.called(baseUrl)).toBe(true);
     expect(fetchMock.calls()).toHaveLength(1);
-
     Object.keys(expectedValues).forEach((key) => {
-      expect(wrapper.find(`select[name="${key}"]`).props().value).toEqual(expectedValues[key]);
+      const select = container.querySelector(`select[name="${key}"]`);
+      expect(select).toHaveValue(String(expectedValues[key]));
     });
-
-    done();
   });
 
-  it('should send data in the patch format, show message and set initialValues', async(done) => {
-    fetchMock
-      .getOnce(baseUrl, settingsData);
-    fetchMock
-      .patchOnce(baseUrl, settingsData);
+  it('should send data in the patch format, show message and set initialValues', async() => {
+    const user = userEvent.setup();
+    fetchMock.getOnce(baseUrl, settingsData);
+    fetchMock.patchOnce(baseUrl, settingsData);
+    const { container } = renderWithRedux(<WorkersForm {...initialProps} />);
 
-    let wrapper;
-    await act(async() => {
-      wrapper = mount(<WorkersForm {...initialProps} />);
+    await waitFor(() => {
+      expect(fetchMock.calls()).toHaveLength(1);
     });
-    wrapper.update();
-    expect(fetchMock.calls()).toHaveLength(1);
-
-    await act(async() => {
-      wrapper.find('select[name="smart_proxy_worker.count"]').prop('onChange')(1);
+    const smartProxySelect = container.querySelector(
+      'select[name="smart_proxy_worker.count"]'
+    );
+    await user.selectOptions(smartProxySelect, '1');
+    const form = container.querySelector('form');
+    await user.click(within(form).getByRole('button', { name: /save/i }));
+    await waitFor(() => {
+      expect(fetchMock.calls()).toHaveLength(2);
     });
-
-    wrapper.update();
-
-    await act(async() => {
-      wrapper.find('form').simulate('submit');
-    });
-    expect(fetchMock.calls()).toHaveLength(2);
-    expect(fetchMock.lastCall()[1].body).toEqual(JSON.stringify({
-      workers: {
-        worker_base: {
-          queue_worker_base: {
-            smart_proxy_worker: {
-              count: 1,
+    expect(fetchMock.lastCall()[1].body).toEqual(
+      JSON.stringify({
+        workers: {
+          worker_base: {
+            queue_worker_base: {
+              smart_proxy_worker: {
+                count: '1',
+              },
             },
           },
         },
-      },
-    }));
-
-    expect(wrapper.find('select[name="smart_proxy_worker.count"]').props().value).toEqual(1);
-
+      })
+    );
+    expect(smartProxySelect).toHaveValue('1');
     expect(submitSpyMiqSparkleOn).toHaveBeenCalledTimes(2);
     expect(submitSpyMiqSparkleOff).toHaveBeenCalledTimes(2);
-    expect(spyAddFlash).toHaveBeenCalledWith(`Configuration settings saved for ${initialProps.product} Server "${initialProps.server.name} [${initialProps.server.id}]" in Zone "${initialProps.zone}"`, 'success');
-    done();
+    expect(spyAddFlash).toHaveBeenCalledWith(
+      `Configuration settings saved for ${initialProps.product} Server "${initialProps.server.name} [${initialProps.server.id}]" in Zone "${initialProps.zone}"`,
+      'success'
+    );
   });
 });

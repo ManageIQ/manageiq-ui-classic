@@ -1,3614 +1,460 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Show Service Request Page should render 1`] = `
-<Provider
-  store={
-    Object {
-      "asyncReducers": Object {
-        "FormButtons": [Function],
-        "miqCustomTabReducer": [Function],
-        "notificationReducer": [Function],
-      },
-      "dispatch": [Function],
-      "getState": [Function],
-      "injectReducers": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-      Symbol(observable): [Function],
-    }
-  }
->
-  <ServiceRequestDefault
-    miqRequestInitialOptions={
-      Object {
-        "reasonText": null,
-        "requestType": Array [
-          "MiqProvisionConfiguredSystemRequest",
-          "MiqProvisionRequest",
-          "OrchestrationStackRetireRequest",
-          "PhysicalServerProvisionRequest",
-          "PhysicalServerFirmwareUpdateRequest",
-          "ServiceRetireRequest",
-          "ServiceReconfigureRequest",
-          "ServiceTemplateProvisionRequest",
-          "VmCloudReconfigureRequest",
-          "VmMigrateRequest",
-          "VmReconfigureRequest",
-          "VmRetireRequest",
-        ],
-        "selectedPeriod": 7,
-        "selectedType": "all",
-        "selectedUser": "all",
-        "states": Array [
-          Object {
-            "checked": true,
-            "label": "Pending Approval",
-            "value": "pending_approval",
-          },
-          Object {
-            "checked": true,
-            "label": "Approved",
-            "value": "approved",
-          },
-          Object {
-            "checked": true,
-            "label": "Denied",
-            "value": "denied",
-          },
-        ],
-        "timePeriods": Array [
-          Object {
-            "label": "Last 24 Hours",
-            "value": 1,
-          },
-          Object {
-            "label": "Last 7 Days",
-            "value": 7,
-          },
-          Object {
-            "label": "Last 365 Days",
-            "value": 365,
-          },
-        ],
-        "types": Array [
-          Object {
-            "label": "All",
-            "value": "all",
-          },
-          Object {
-            "label": "Foreman Provision",
-            "value": "provision_via_foreman",
-          },
-          Object {
-            "label": "VM Provision",
-            "value": "template",
-          },
-          Object {
-            "label": "VM Clone",
-            "value": "clone_to_vm",
-          },
-          Object {
-            "label": "VM Publish",
-            "value": "clone_to_template",
-          },
-          Object {
-            "label": "Orchestration Stack Retire",
-            "value": "orchestration_stack_retire",
-          },
-          Object {
-            "label": "Physical Server Provision",
-            "value": "provision_physical_server",
-          },
-          Object {
-            "label": "Physical Server Firmware Update",
-            "value": "physical_server_firmware_update",
-          },
-          Object {
-            "label": "Service Retire",
-            "value": "service_retire",
-          },
-          Object {
-            "label": "Service Reconfigure",
-            "value": "service_reconfigure",
-          },
-          Object {
-            "label": "Service Provision",
-            "value": "clone_to_service",
-          },
-          Object {
-            "label": "VM Cloud Reconfigure",
-            "value": "vm_cloud_reconfigure",
-          },
-          Object {
-            "label": "VM Migrate",
-            "value": "vm_migrate",
-          },
-          Object {
-            "label": "VM Reconfigure",
-            "value": "vm_reconfigure",
-          },
-          Object {
-            "label": "VM Retire",
-            "value": "vm_retire",
-          },
-        ],
-        "users": Array [
-          Object {
-            "label": "Administrator",
-            "value": 1,
-          },
-          Object {
-            "label": "All",
-            "value": "all",
-          },
-        ],
-      }
-    }
+<div>
+  <div
+    class="service-request-form"
   >
-    <div
-      className="service-request-form"
-    >
-      <Connect(MiqFormRenderer)
-        FormTemplate={[Function]}
-        canReset={true}
-        initialValues={
-          Object {
-            "approvalStates": Array [
-              "pending_approval",
-              "approved",
-              "denied",
-            ],
-            "selectedPeriod": 7,
-          }
-        }
-        onReset={[Function]}
-        onSubmit={[Function]}
-        schema={
-          Object {
-            "fields": Array [
-              Object {
-                "component": "select",
-                "id": "selectedUser",
-                "isRequired": true,
-                "label": "Requester:",
-                "name": "selectedUser",
-                "options": Array [
-                  Object {
-                    "label": "All",
-                    "value": "all",
-                  },
-                  Object {
-                    "label": "Administrator",
-                    "value": 1,
-                  },
-                ],
-              },
-              Object {
-                "component": "sub-form",
-                "fields": Array [
-                  Object {
-                    "component": "checkbox",
-                    "id": "approvalStates",
-                    "isRequired": true,
-                    "label": "Approval State:",
-                    "name": "approvalStates",
-                    "options": Array [
-                      Object {
-                        "label": "Pending Approval",
-                        "value": "pending_approval",
-                      },
-                      Object {
-                        "label": "Approved",
-                        "value": "approved",
-                      },
-                      Object {
-                        "label": "Denied",
-                        "value": "denied",
-                      },
-                    ],
-                  },
-                ],
-                "id": "approval_state",
-                "name": "approval_state",
-              },
-              Object {
-                "component": "select",
-                "id": "types",
-                "isRequired": true,
-                "label": "Type:",
-                "name": "types",
-                "options": Array [
-                  Object {
-                    "label": "All",
-                    "value": "all",
-                  },
-                  Object {
-                    "label": "Foreman Provision",
-                    "value": "provision_via_foreman",
-                  },
-                  Object {
-                    "label": "VM Provision",
-                    "value": "template",
-                  },
-                  Object {
-                    "label": "VM Clone",
-                    "value": "clone_to_vm",
-                  },
-                  Object {
-                    "label": "VM Publish",
-                    "value": "clone_to_template",
-                  },
-                  Object {
-                    "label": "Orchestration Stack Retire",
-                    "value": "orchestration_stack_retire",
-                  },
-                  Object {
-                    "label": "Physical Server Provision",
-                    "value": "provision_physical_server",
-                  },
-                  Object {
-                    "label": "Physical Server Firmware Update",
-                    "value": "physical_server_firmware_update",
-                  },
-                  Object {
-                    "label": "Service Retire",
-                    "value": "service_retire",
-                  },
-                  Object {
-                    "label": "Service Reconfigure",
-                    "value": "service_reconfigure",
-                  },
-                  Object {
-                    "label": "Service Provision",
-                    "value": "clone_to_service",
-                  },
-                  Object {
-                    "label": "VM Cloud Reconfigure",
-                    "value": "vm_cloud_reconfigure",
-                  },
-                  Object {
-                    "label": "VM Migrate",
-                    "value": "vm_migrate",
-                  },
-                  Object {
-                    "label": "VM Reconfigure",
-                    "value": "vm_reconfigure",
-                  },
-                  Object {
-                    "label": "VM Retire",
-                    "value": "vm_retire",
-                  },
-                ],
-              },
-              Object {
-                "component": "select",
-                "id": "selectedPeriod",
-                "isRequired": true,
-                "label": "Request Date:",
-                "name": "selectedPeriod",
-                "options": Array [
-                  Object {
-                    "label": "Last 24 Hours",
-                    "value": 1,
-                  },
-                  Object {
-                    "label": "Last 7 Days",
-                    "value": 7,
-                  },
-                  Object {
-                    "label": "Last 365 Days",
-                    "value": 365,
-                  },
-                ],
-              },
-              Object {
-                "component": "text-field",
-                "id": "reasonText",
-                "label": "Reason:",
-                "maxLength": 128,
-                "name": "reasonText",
-              },
-            ],
-          }
-        }
+    <form>
+      <div
+        class="cds--form-item"
       >
-        <MiqFormRenderer
-          FormTemplate={[Function]}
-          buttonsLabels={Object {}}
-          canReset={true}
-          className="form-react"
-          componentMapper={
-            Object {
-              "checkbox": [Function],
-              "code-editor": [Function],
-              "date-picker": [Function],
-              "dual-list-select": [Function],
-              "edit-password-field": [Function],
-              "embedded-automate-entry-point": [Function],
-              "embedded-workflow-entry-point": [Function],
-              "field-array": [Function],
-              "file-upload": [Function],
-              "font-icon-picker": [Function],
-              "font-icon-picker-ddf": [Function],
-              "key-value-list": [Function],
-              "password-field": [Function],
-              "plain-text": [Function],
-              "radio": [Function],
-              "select": [Function],
-              "selected-groups-list": [Function],
-              "slider": [Function],
-              "sub-form": [Function],
-              "switch": [Function],
-              "tabs": [Function],
-              "text-field": [Function],
-              "textarea": [Function],
-              "time-picker": [Function],
-              "tree-selector": [Function],
-              "validate-credentials": [Function],
-              "wizard": [Function],
-            }
-          }
-          disableSubmit={
-            Array [
-              "pristine",
-              "invalid",
-            ]
-          }
-          dispatch={[Function]}
-          initialValues={
-            Object {
-              "approvalStates": Array [
-                "pending_approval",
-                "approved",
-                "denied",
-              ],
-              "selectedPeriod": 7,
-            }
-          }
-          onReset={[Function]}
-          onSubmit={[Function]}
-          schema={
-            Object {
-              "fields": Array [
-                Object {
-                  "component": "select",
-                  "id": "selectedUser",
-                  "isRequired": true,
-                  "label": "Requester:",
-                  "name": "selectedUser",
-                  "options": Array [
-                    Object {
-                      "label": "All",
-                      "value": "all",
-                    },
-                    Object {
-                      "label": "Administrator",
-                      "value": 1,
-                    },
-                  ],
-                },
-                Object {
-                  "component": "sub-form",
-                  "fields": Array [
-                    Object {
-                      "component": "checkbox",
-                      "id": "approvalStates",
-                      "isRequired": true,
-                      "label": "Approval State:",
-                      "name": "approvalStates",
-                      "options": Array [
-                        Object {
-                          "label": "Pending Approval",
-                          "value": "pending_approval",
-                        },
-                        Object {
-                          "label": "Approved",
-                          "value": "approved",
-                        },
-                        Object {
-                          "label": "Denied",
-                          "value": "denied",
-                        },
-                      ],
-                    },
-                  ],
-                  "id": "approval_state",
-                  "name": "approval_state",
-                },
-                Object {
-                  "component": "select",
-                  "id": "types",
-                  "isRequired": true,
-                  "label": "Type:",
-                  "name": "types",
-                  "options": Array [
-                    Object {
-                      "label": "All",
-                      "value": "all",
-                    },
-                    Object {
-                      "label": "Foreman Provision",
-                      "value": "provision_via_foreman",
-                    },
-                    Object {
-                      "label": "VM Provision",
-                      "value": "template",
-                    },
-                    Object {
-                      "label": "VM Clone",
-                      "value": "clone_to_vm",
-                    },
-                    Object {
-                      "label": "VM Publish",
-                      "value": "clone_to_template",
-                    },
-                    Object {
-                      "label": "Orchestration Stack Retire",
-                      "value": "orchestration_stack_retire",
-                    },
-                    Object {
-                      "label": "Physical Server Provision",
-                      "value": "provision_physical_server",
-                    },
-                    Object {
-                      "label": "Physical Server Firmware Update",
-                      "value": "physical_server_firmware_update",
-                    },
-                    Object {
-                      "label": "Service Retire",
-                      "value": "service_retire",
-                    },
-                    Object {
-                      "label": "Service Reconfigure",
-                      "value": "service_reconfigure",
-                    },
-                    Object {
-                      "label": "Service Provision",
-                      "value": "clone_to_service",
-                    },
-                    Object {
-                      "label": "VM Cloud Reconfigure",
-                      "value": "vm_cloud_reconfigure",
-                    },
-                    Object {
-                      "label": "VM Migrate",
-                      "value": "vm_migrate",
-                    },
-                    Object {
-                      "label": "VM Reconfigure",
-                      "value": "vm_reconfigure",
-                    },
-                    Object {
-                      "label": "VM Retire",
-                      "value": "vm_retire",
-                    },
-                  ],
-                },
-                Object {
-                  "component": "select",
-                  "id": "selectedPeriod",
-                  "isRequired": true,
-                  "label": "Request Date:",
-                  "name": "selectedPeriod",
-                  "options": Array [
-                    Object {
-                      "label": "Last 24 Hours",
-                      "value": 1,
-                    },
-                    Object {
-                      "label": "Last 7 Days",
-                      "value": 7,
-                    },
-                    Object {
-                      "label": "Last 365 Days",
-                      "value": 365,
-                    },
-                  ],
-                },
-                Object {
-                  "component": "text-field",
-                  "id": "reasonText",
-                  "label": "Reason:",
-                  "maxLength": 128,
-                  "name": "reasonText",
-                },
-              ],
-            }
-          }
-          showFormControls={true}
+        <div
+          class="cds--select"
         >
-          <FormRenderer
-            FormTemplate={[Function]}
-            componentMapper={
-              Object {
-                "checkbox": [Function],
-                "code-editor": [Function],
-                "date-picker": [Function],
-                "dual-list-select": [Function],
-                "edit-password-field": [Function],
-                "embedded-automate-entry-point": [Function],
-                "embedded-workflow-entry-point": [Function],
-                "field-array": [Function],
-                "file-upload": [Function],
-                "font-icon-picker": [Function],
-                "font-icon-picker-ddf": [Function],
-                "key-value-list": [Function],
-                "password-field": [Function],
-                "plain-text": [Function],
-                "radio": [Function],
-                "select": [Function],
-                "selected-groups-list": [Function],
-                "slider": [Function],
-                "spy-field": [Function],
-                "sub-form": [Function],
-                "switch": [Function],
-                "tabs": [Function],
-                "text-field": [Function],
-                "textarea": [Function],
-                "time-picker": [Function],
-                "tree-selector": [Function],
-                "validate-credentials": [Function],
-                "wizard": [Function],
-              }
-            }
-            dispatch={[Function]}
-            initialValues={
-              Object {
-                "approvalStates": Array [
-                  "pending_approval",
-                  "approved",
-                  "denied",
-                ],
-                "selectedPeriod": 7,
-              }
-            }
-            onReset={[Function]}
-            onSubmit={[Function]}
-            schema={
-              Object {
-                "fields": Array [
-                  Object {
-                    "component": "select",
-                    "id": "selectedUser",
-                    "isRequired": true,
-                    "label": "Requester:",
-                    "name": "selectedUser",
-                    "options": Array [
-                      Object {
-                        "label": "All",
-                        "value": "all",
-                      },
-                      Object {
-                        "label": "Administrator",
-                        "value": 1,
-                      },
-                    ],
-                  },
-                  Object {
-                    "component": "sub-form",
-                    "fields": Array [
-                      Object {
-                        "component": "checkbox",
-                        "id": "approvalStates",
-                        "isRequired": true,
-                        "label": "Approval State:",
-                        "name": "approvalStates",
-                        "options": Array [
-                          Object {
-                            "label": "Pending Approval",
-                            "value": "pending_approval",
-                          },
-                          Object {
-                            "label": "Approved",
-                            "value": "approved",
-                          },
-                          Object {
-                            "label": "Denied",
-                            "value": "denied",
-                          },
-                        ],
-                      },
-                    ],
-                    "id": "approval_state",
-                    "name": "approval_state",
-                  },
-                  Object {
-                    "component": "select",
-                    "id": "types",
-                    "isRequired": true,
-                    "label": "Type:",
-                    "name": "types",
-                    "options": Array [
-                      Object {
-                        "label": "All",
-                        "value": "all",
-                      },
-                      Object {
-                        "label": "Foreman Provision",
-                        "value": "provision_via_foreman",
-                      },
-                      Object {
-                        "label": "VM Provision",
-                        "value": "template",
-                      },
-                      Object {
-                        "label": "VM Clone",
-                        "value": "clone_to_vm",
-                      },
-                      Object {
-                        "label": "VM Publish",
-                        "value": "clone_to_template",
-                      },
-                      Object {
-                        "label": "Orchestration Stack Retire",
-                        "value": "orchestration_stack_retire",
-                      },
-                      Object {
-                        "label": "Physical Server Provision",
-                        "value": "provision_physical_server",
-                      },
-                      Object {
-                        "label": "Physical Server Firmware Update",
-                        "value": "physical_server_firmware_update",
-                      },
-                      Object {
-                        "label": "Service Retire",
-                        "value": "service_retire",
-                      },
-                      Object {
-                        "label": "Service Reconfigure",
-                        "value": "service_reconfigure",
-                      },
-                      Object {
-                        "label": "Service Provision",
-                        "value": "clone_to_service",
-                      },
-                      Object {
-                        "label": "VM Cloud Reconfigure",
-                        "value": "vm_cloud_reconfigure",
-                      },
-                      Object {
-                        "label": "VM Migrate",
-                        "value": "vm_migrate",
-                      },
-                      Object {
-                        "label": "VM Reconfigure",
-                        "value": "vm_reconfigure",
-                      },
-                      Object {
-                        "label": "VM Retire",
-                        "value": "vm_retire",
-                      },
-                    ],
-                  },
-                  Object {
-                    "component": "select",
-                    "id": "selectedPeriod",
-                    "isRequired": true,
-                    "label": "Request Date:",
-                    "name": "selectedPeriod",
-                    "options": Array [
-                      Object {
-                        "label": "Last 24 Hours",
-                        "value": 1,
-                      },
-                      Object {
-                        "label": "Last 7 Days",
-                        "value": 7,
-                      },
-                      Object {
-                        "label": "Last 365 Days",
-                        "value": 365,
-                      },
-                    ],
-                  },
-                  Object {
-                    "component": "text-field",
-                    "id": "reasonText",
-                    "label": "Reason:",
-                    "maxLength": 128,
-                    "name": "reasonText",
-                  },
-                  Object {
-                    "component": "spy-field",
-                    "initialize": undefined,
-                    "name": "spy-field",
-                  },
-                ],
-              }
-            }
+          <label
+            class="cds--label"
+            dir="auto"
+            for="selectedUser"
           >
-            <ReactFinalForm
-              decorators={
-                Array [
-                  [Function],
-                ]
-              }
-              dispatch={[Function]}
-              initialValues={
-                Object {
-                  "approvalStates": Array [
-                    "pending_approval",
-                    "approved",
-                    "denied",
-                  ],
-                  "selectedPeriod": 7,
-                }
-              }
-              mutators={
-                Object {
-                  "concat": [Function],
-                  "insert": [Function],
-                  "move": [Function],
-                  "pop": [Function],
-                  "push": [Function],
-                  "remove": [Function],
-                  "removeBatch": [Function],
-                  "shift": [Function],
-                  "swap": [Function],
-                  "unshift": [Function],
-                  "update": [Function],
-                }
-              }
-              onSubmit={[Function]}
-              render={[Function]}
-              subscription={
-                Object {
-                  "pristine": true,
-                  "submitting": true,
-                  "valid": true,
-                }
-              }
+            <span
+              aria-hidden="true"
+              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
             >
-              <FormTemplate
-                formFields={
-                  Array [
-                    <SingleField
-                      component="select"
-                      id="selectedUser"
-                      isRequired={true}
-                      label="Requester:"
-                      name="selectedUser"
-                      options={
-                        Array [
-                          Object {
-                            "label": "All",
-                            "value": "all",
-                          },
-                          Object {
-                            "label": "Administrator",
-                            "value": 1,
-                          },
-                        ]
-                      }
-                    />,
-                    <SingleField
-                      component="sub-form"
-                      fields={
-                        Array [
-                          Object {
-                            "component": "checkbox",
-                            "id": "approvalStates",
-                            "isRequired": true,
-                            "label": "Approval State:",
-                            "name": "approvalStates",
-                            "options": Array [
-                              Object {
-                                "label": "Pending Approval",
-                                "value": "pending_approval",
-                              },
-                              Object {
-                                "label": "Approved",
-                                "value": "approved",
-                              },
-                              Object {
-                                "label": "Denied",
-                                "value": "denied",
-                              },
-                            ],
-                          },
-                        ]
-                      }
-                      id="approval_state"
-                      name="approval_state"
-                    />,
-                    <SingleField
-                      component="select"
-                      id="types"
-                      isRequired={true}
-                      label="Type:"
-                      name="types"
-                      options={
-                        Array [
-                          Object {
-                            "label": "All",
-                            "value": "all",
-                          },
-                          Object {
-                            "label": "Foreman Provision",
-                            "value": "provision_via_foreman",
-                          },
-                          Object {
-                            "label": "VM Provision",
-                            "value": "template",
-                          },
-                          Object {
-                            "label": "VM Clone",
-                            "value": "clone_to_vm",
-                          },
-                          Object {
-                            "label": "VM Publish",
-                            "value": "clone_to_template",
-                          },
-                          Object {
-                            "label": "Orchestration Stack Retire",
-                            "value": "orchestration_stack_retire",
-                          },
-                          Object {
-                            "label": "Physical Server Provision",
-                            "value": "provision_physical_server",
-                          },
-                          Object {
-                            "label": "Physical Server Firmware Update",
-                            "value": "physical_server_firmware_update",
-                          },
-                          Object {
-                            "label": "Service Retire",
-                            "value": "service_retire",
-                          },
-                          Object {
-                            "label": "Service Reconfigure",
-                            "value": "service_reconfigure",
-                          },
-                          Object {
-                            "label": "Service Provision",
-                            "value": "clone_to_service",
-                          },
-                          Object {
-                            "label": "VM Cloud Reconfigure",
-                            "value": "vm_cloud_reconfigure",
-                          },
-                          Object {
-                            "label": "VM Migrate",
-                            "value": "vm_migrate",
-                          },
-                          Object {
-                            "label": "VM Reconfigure",
-                            "value": "vm_reconfigure",
-                          },
-                          Object {
-                            "label": "VM Retire",
-                            "value": "vm_retire",
-                          },
-                        ]
-                      }
-                    />,
-                    <SingleField
-                      component="select"
-                      id="selectedPeriod"
-                      isRequired={true}
-                      label="Request Date:"
-                      name="selectedPeriod"
-                      options={
-                        Array [
-                          Object {
-                            "label": "Last 24 Hours",
-                            "value": 1,
-                          },
-                          Object {
-                            "label": "Last 7 Days",
-                            "value": 7,
-                          },
-                          Object {
-                            "label": "Last 365 Days",
-                            "value": 365,
-                          },
-                        ]
-                      }
-                    />,
-                    <SingleField
-                      component="text-field"
-                      id="reasonText"
-                      label="Reason:"
-                      maxLength={128}
-                      name="reasonText"
-                    />,
-                    <SingleField
-                      component="spy-field"
-                      name="spy-field"
-                    />,
-                  ]
-                }
-                schema={
-                  Object {
-                    "fields": Array [
-                      Object {
-                        "component": "select",
-                        "id": "selectedUser",
-                        "isRequired": true,
-                        "label": "Requester:",
-                        "name": "selectedUser",
-                        "options": Array [
-                          Object {
-                            "label": "All",
-                            "value": "all",
-                          },
-                          Object {
-                            "label": "Administrator",
-                            "value": 1,
-                          },
-                        ],
-                      },
-                      Object {
-                        "component": "sub-form",
-                        "fields": Array [
-                          Object {
-                            "component": "checkbox",
-                            "id": "approvalStates",
-                            "isRequired": true,
-                            "label": "Approval State:",
-                            "name": "approvalStates",
-                            "options": Array [
-                              Object {
-                                "label": "Pending Approval",
-                                "value": "pending_approval",
-                              },
-                              Object {
-                                "label": "Approved",
-                                "value": "approved",
-                              },
-                              Object {
-                                "label": "Denied",
-                                "value": "denied",
-                              },
-                            ],
-                          },
-                        ],
-                        "id": "approval_state",
-                        "name": "approval_state",
-                      },
-                      Object {
-                        "component": "select",
-                        "id": "types",
-                        "isRequired": true,
-                        "label": "Type:",
-                        "name": "types",
-                        "options": Array [
-                          Object {
-                            "label": "All",
-                            "value": "all",
-                          },
-                          Object {
-                            "label": "Foreman Provision",
-                            "value": "provision_via_foreman",
-                          },
-                          Object {
-                            "label": "VM Provision",
-                            "value": "template",
-                          },
-                          Object {
-                            "label": "VM Clone",
-                            "value": "clone_to_vm",
-                          },
-                          Object {
-                            "label": "VM Publish",
-                            "value": "clone_to_template",
-                          },
-                          Object {
-                            "label": "Orchestration Stack Retire",
-                            "value": "orchestration_stack_retire",
-                          },
-                          Object {
-                            "label": "Physical Server Provision",
-                            "value": "provision_physical_server",
-                          },
-                          Object {
-                            "label": "Physical Server Firmware Update",
-                            "value": "physical_server_firmware_update",
-                          },
-                          Object {
-                            "label": "Service Retire",
-                            "value": "service_retire",
-                          },
-                          Object {
-                            "label": "Service Reconfigure",
-                            "value": "service_reconfigure",
-                          },
-                          Object {
-                            "label": "Service Provision",
-                            "value": "clone_to_service",
-                          },
-                          Object {
-                            "label": "VM Cloud Reconfigure",
-                            "value": "vm_cloud_reconfigure",
-                          },
-                          Object {
-                            "label": "VM Migrate",
-                            "value": "vm_migrate",
-                          },
-                          Object {
-                            "label": "VM Reconfigure",
-                            "value": "vm_reconfigure",
-                          },
-                          Object {
-                            "label": "VM Retire",
-                            "value": "vm_retire",
-                          },
-                        ],
-                      },
-                      Object {
-                        "component": "select",
-                        "id": "selectedPeriod",
-                        "isRequired": true,
-                        "label": "Request Date:",
-                        "name": "selectedPeriod",
-                        "options": Array [
-                          Object {
-                            "label": "Last 24 Hours",
-                            "value": 1,
-                          },
-                          Object {
-                            "label": "Last 7 Days",
-                            "value": 7,
-                          },
-                          Object {
-                            "label": "Last 365 Days",
-                            "value": 365,
-                          },
-                        ],
-                      },
-                      Object {
-                        "component": "text-field",
-                        "id": "reasonText",
-                        "label": "Reason:",
-                        "maxLength": 128,
-                        "name": "reasonText",
-                      },
-                      Object {
-                        "component": "spy-field",
-                        "initialize": undefined,
-                        "name": "spy-field",
-                      },
-                    ],
-                  }
-                }
+              *
+            </span>
+            Requester:
+          </label>
+          <div
+            class="cds--select-input__wrapper"
+          >
+            <select
+              class="cds--select-input"
+              id="selectedUser"
+              name="selectedUser"
+              title="All"
+            >
+              <option
+                class="cds--select-option"
+                label="All"
+                value="all"
               >
-                <FormTemplate
-                  formFields={
-                    Array [
-                      <SingleField
-                        component="select"
-                        id="selectedUser"
-                        isRequired={true}
-                        label="Requester:"
-                        name="selectedUser"
-                        options={
-                          Array [
-                            Object {
-                              "label": "All",
-                              "value": "all",
-                            },
-                            Object {
-                              "label": "Administrator",
-                              "value": 1,
-                            },
-                          ]
-                        }
-                      />,
-                      <SingleField
-                        component="sub-form"
-                        fields={
-                          Array [
-                            Object {
-                              "component": "checkbox",
-                              "id": "approvalStates",
-                              "isRequired": true,
-                              "label": "Approval State:",
-                              "name": "approvalStates",
-                              "options": Array [
-                                Object {
-                                  "label": "Pending Approval",
-                                  "value": "pending_approval",
-                                },
-                                Object {
-                                  "label": "Approved",
-                                  "value": "approved",
-                                },
-                                Object {
-                                  "label": "Denied",
-                                  "value": "denied",
-                                },
-                              ],
-                            },
-                          ]
-                        }
-                        id="approval_state"
-                        name="approval_state"
-                      />,
-                      <SingleField
-                        component="select"
-                        id="types"
-                        isRequired={true}
-                        label="Type:"
-                        name="types"
-                        options={
-                          Array [
-                            Object {
-                              "label": "All",
-                              "value": "all",
-                            },
-                            Object {
-                              "label": "Foreman Provision",
-                              "value": "provision_via_foreman",
-                            },
-                            Object {
-                              "label": "VM Provision",
-                              "value": "template",
-                            },
-                            Object {
-                              "label": "VM Clone",
-                              "value": "clone_to_vm",
-                            },
-                            Object {
-                              "label": "VM Publish",
-                              "value": "clone_to_template",
-                            },
-                            Object {
-                              "label": "Orchestration Stack Retire",
-                              "value": "orchestration_stack_retire",
-                            },
-                            Object {
-                              "label": "Physical Server Provision",
-                              "value": "provision_physical_server",
-                            },
-                            Object {
-                              "label": "Physical Server Firmware Update",
-                              "value": "physical_server_firmware_update",
-                            },
-                            Object {
-                              "label": "Service Retire",
-                              "value": "service_retire",
-                            },
-                            Object {
-                              "label": "Service Reconfigure",
-                              "value": "service_reconfigure",
-                            },
-                            Object {
-                              "label": "Service Provision",
-                              "value": "clone_to_service",
-                            },
-                            Object {
-                              "label": "VM Cloud Reconfigure",
-                              "value": "vm_cloud_reconfigure",
-                            },
-                            Object {
-                              "label": "VM Migrate",
-                              "value": "vm_migrate",
-                            },
-                            Object {
-                              "label": "VM Reconfigure",
-                              "value": "vm_reconfigure",
-                            },
-                            Object {
-                              "label": "VM Retire",
-                              "value": "vm_retire",
-                            },
-                          ]
-                        }
-                      />,
-                      <SingleField
-                        component="select"
-                        id="selectedPeriod"
-                        isRequired={true}
-                        label="Request Date:"
-                        name="selectedPeriod"
-                        options={
-                          Array [
-                            Object {
-                              "label": "Last 24 Hours",
-                              "value": 1,
-                            },
-                            Object {
-                              "label": "Last 7 Days",
-                              "value": 7,
-                            },
-                            Object {
-                              "label": "Last 365 Days",
-                              "value": 365,
-                            },
-                          ]
-                        }
-                      />,
-                      <SingleField
-                        component="text-field"
-                        id="reasonText"
-                        label="Reason:"
-                        maxLength={128}
-                        name="reasonText"
-                      />,
-                      <SingleField
-                        component="spy-field"
-                        name="spy-field"
-                      />,
-                    ]
-                  }
-                  schema={
-                    Object {
-                      "fields": Array [
-                        Object {
-                          "component": "select",
-                          "id": "selectedUser",
-                          "isRequired": true,
-                          "label": "Requester:",
-                          "name": "selectedUser",
-                          "options": Array [
-                            Object {
-                              "label": "All",
-                              "value": "all",
-                            },
-                            Object {
-                              "label": "Administrator",
-                              "value": 1,
-                            },
-                          ],
-                        },
-                        Object {
-                          "component": "sub-form",
-                          "fields": Array [
-                            Object {
-                              "component": "checkbox",
-                              "id": "approvalStates",
-                              "isRequired": true,
-                              "label": "Approval State:",
-                              "name": "approvalStates",
-                              "options": Array [
-                                Object {
-                                  "label": "Pending Approval",
-                                  "value": "pending_approval",
-                                },
-                                Object {
-                                  "label": "Approved",
-                                  "value": "approved",
-                                },
-                                Object {
-                                  "label": "Denied",
-                                  "value": "denied",
-                                },
-                              ],
-                            },
-                          ],
-                          "id": "approval_state",
-                          "name": "approval_state",
-                        },
-                        Object {
-                          "component": "select",
-                          "id": "types",
-                          "isRequired": true,
-                          "label": "Type:",
-                          "name": "types",
-                          "options": Array [
-                            Object {
-                              "label": "All",
-                              "value": "all",
-                            },
-                            Object {
-                              "label": "Foreman Provision",
-                              "value": "provision_via_foreman",
-                            },
-                            Object {
-                              "label": "VM Provision",
-                              "value": "template",
-                            },
-                            Object {
-                              "label": "VM Clone",
-                              "value": "clone_to_vm",
-                            },
-                            Object {
-                              "label": "VM Publish",
-                              "value": "clone_to_template",
-                            },
-                            Object {
-                              "label": "Orchestration Stack Retire",
-                              "value": "orchestration_stack_retire",
-                            },
-                            Object {
-                              "label": "Physical Server Provision",
-                              "value": "provision_physical_server",
-                            },
-                            Object {
-                              "label": "Physical Server Firmware Update",
-                              "value": "physical_server_firmware_update",
-                            },
-                            Object {
-                              "label": "Service Retire",
-                              "value": "service_retire",
-                            },
-                            Object {
-                              "label": "Service Reconfigure",
-                              "value": "service_reconfigure",
-                            },
-                            Object {
-                              "label": "Service Provision",
-                              "value": "clone_to_service",
-                            },
-                            Object {
-                              "label": "VM Cloud Reconfigure",
-                              "value": "vm_cloud_reconfigure",
-                            },
-                            Object {
-                              "label": "VM Migrate",
-                              "value": "vm_migrate",
-                            },
-                            Object {
-                              "label": "VM Reconfigure",
-                              "value": "vm_reconfigure",
-                            },
-                            Object {
-                              "label": "VM Retire",
-                              "value": "vm_retire",
-                            },
-                          ],
-                        },
-                        Object {
-                          "component": "select",
-                          "id": "selectedPeriod",
-                          "isRequired": true,
-                          "label": "Request Date:",
-                          "name": "selectedPeriod",
-                          "options": Array [
-                            Object {
-                              "label": "Last 24 Hours",
-                              "value": 1,
-                            },
-                            Object {
-                              "label": "Last 7 Days",
-                              "value": 7,
-                            },
-                            Object {
-                              "label": "Last 365 Days",
-                              "value": 365,
-                            },
-                          ],
-                        },
-                        Object {
-                          "component": "text-field",
-                          "id": "reasonText",
-                          "label": "Reason:",
-                          "maxLength": 128,
-                          "name": "reasonText",
-                        },
-                        Object {
-                          "component": "spy-field",
-                          "initialize": undefined,
-                          "name": "spy-field",
-                        },
-                      ],
-                    }
-                  }
-                >
-                  <form
-                    onSubmit={[Function]}
-                  >
-                    <SingleField
-                      component="select"
-                      id="selectedUser"
-                      isRequired={true}
-                      key="selectedUser"
-                      label="Requester:"
-                      name="selectedUser"
-                      options={
-                        Array [
-                          Object {
-                            "label": "All",
-                            "value": "all",
-                          },
-                          Object {
-                            "label": "Administrator",
-                            "value": 1,
-                          },
-                        ]
-                      }
-                    >
-                      <FormConditionWrapper
-                        conditionMapper={Object {}}
-                        field={
-                          Object {
-                            "component": "select",
-                            "id": "selectedUser",
-                            "isRequired": true,
-                            "label": "Requester:",
-                            "name": "selectedUser",
-                            "options": Array [
-                              Object {
-                                "label": "All",
-                                "value": "all",
-                              },
-                              Object {
-                                "label": "Administrator",
-                                "value": 1,
-                              },
-                            ],
-                          }
-                        }
-                      >
-                        <FormFieldHideWrapper>
-                          <SelectWithOnChange
-                            component="select"
-                            id="selectedUser"
-                            isRequired={true}
-                            label="Requester:"
-                            name="selectedUser"
-                            options={
-                              Array [
-                                Object {
-                                  "label": "All",
-                                  "value": "all",
-                                },
-                                Object {
-                                  "label": "Administrator",
-                                  "value": 1,
-                                },
-                              ]
-                            }
-                            placeholder="<Choose>"
-                          >
-                            <Select
-                              component="select"
-                              id="selectedUser"
-                              isRequired={true}
-                              label="Requester:"
-                              name="selectedUser"
-                              options={
-                                Array [
-                                  Object {
-                                    "label": "All",
-                                    "value": "all",
-                                  },
-                                  Object {
-                                    "label": "Administrator",
-                                    "value": 1,
-                                  },
-                                ]
-                              }
-                              placeholder="<Choose>"
-                            >
-                              <Select
-                                SelectComponent={[Function]}
-                                id="selectedUser"
-                                invalidText=""
-                                labelText={
-                                  <IsRequired>
-                                    Requester:
-                                  </IsRequired>
-                                }
-                                loadOptionsChangeCounter={1}
-                                loadingMessage="Loading..."
-                                name="selectedUser"
-                                onBlur={[Function]}
-                                onChange={[Function]}
-                                onFocus={[Function]}
-                                options={
-                                  Array [
-                                    Object {
-                                      "label": "All",
-                                      "value": "all",
-                                    },
-                                    Object {
-                                      "label": "Administrator",
-                                      "value": 1,
-                                    },
-                                  ]
-                                }
-                                placeholder="<Choose>"
-                                simpleValue={false}
-                                value=""
-                              >
-                                <ClearedSelect
-                                  className=""
-                                  closeMenuOnSelect={true}
-                                  hideSelectedOptions={false}
-                                  id="selectedUser"
-                                  invalidText=""
-                                  isClearable={false}
-                                  isFetching={false}
-                                  isSearchable={false}
-                                  labelText={
-                                    <IsRequired>
-                                      Requester:
-                                    </IsRequired>
-                                  }
-                                  name="selectedUser"
-                                  noOptionsMessage={[Function]}
-                                  onBlur={[Function]}
-                                  onChange={[Function]}
-                                  onFocus={[Function]}
-                                  onInputChange={[Function]}
-                                  options={
-                                    Array [
-                                      Object {
-                                        "label": "All",
-                                        "value": "all",
-                                      },
-                                      Object {
-                                        "label": "Administrator",
-                                        "value": 1,
-                                      },
-                                    ]
-                                  }
-                                  placeholder="<Choose>"
-                                  value=""
-                                >
-                                  <Select
-                                    className=""
-                                    id="selectedUser"
-                                    invalid={false}
-                                    invalidText=""
-                                    labelText={
-                                      <IsRequired>
-                                        Requester:
-                                      </IsRequired>
-                                    }
-                                    name="selectedUser"
-                                    onBlur={[Function]}
-                                    onChange={[Function]}
-                                    onFocus={[Function]}
-                                    value=""
-                                  >
-                                    <div
-                                      className="cds--form-item"
-                                    >
-                                      <div
-                                        className="cds--select"
-                                      >
-                                        <ForwardRef
-                                          as="label"
-                                          className="cds--label"
-                                          htmlFor="selectedUser"
-                                        >
-                                          <label
-                                            className="cds--label"
-                                            dir="auto"
-                                            htmlFor="selectedUser"
-                                          >
-                                            <IsRequired>
-                                              <span
-                                                aria-hidden="true"
-                                                className="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
-                                              >
-                                                *
-                                              </span>
-                                              Requester:
-                                            </IsRequired>
-                                          </label>
-                                        </ForwardRef>
-                                        <div
-                                          className="cds--select-input__wrapper"
-                                          data-invalid={null}
-                                          onBlur={[Function]}
-                                          onFocus={[Function]}
-                                        >
-                                          <select
-                                            className="cds--select-input"
-                                            id="selectedUser"
-                                            name="selectedUser"
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            onKeyDown={[Function]}
-                                            onMouseDown={[Function]}
-                                            title="All"
-                                            value=""
-                                          >
-                                            <SelectItem
-                                              key="all"
-                                              label="All"
-                                              text="All"
-                                              value="all"
-                                            >
-                                              <option
-                                                className="cds--select-option"
-                                                disabled={false}
-                                                hidden={false}
-                                                label="All"
-                                                value="all"
-                                              >
-                                                All
-                                              </option>
-                                            </SelectItem>
-                                            <SelectItem
-                                              key="1"
-                                              label="Administrator"
-                                              text="Administrator"
-                                              value={1}
-                                            >
-                                              <option
-                                                className="cds--select-option"
-                                                disabled={false}
-                                                hidden={false}
-                                                label="Administrator"
-                                                value={1}
-                                              >
-                                                Administrator
-                                              </option>
-                                            </SelectItem>
-                                          </select>
-                                          <ForwardRef(ChevronDown)
-                                            className="cds--select__arrow"
-                                          >
-                                            <Icon
-                                              className="cds--select__arrow"
-                                              fill="currentColor"
-                                              height={16}
-                                              viewBox="0 0 16 16"
-                                              width={16}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                              <svg
-                                                aria-hidden={true}
-                                                className="cds--select__arrow"
-                                                fill="currentColor"
-                                                focusable="false"
-                                                height={16}
-                                                preserveAspectRatio="xMidYMid meet"
-                                                viewBox="0 0 16 16"
-                                                width={16}
-                                                xmlns="http://www.w3.org/2000/svg"
-                                              >
-                                                <path
-                                                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
-                                                />
-                                              </svg>
-                                            </Icon>
-                                          </ForwardRef(ChevronDown)>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </Select>
-                                </ClearedSelect>
-                              </Select>
-                            </Select>
-                          </SelectWithOnChange>
-                        </FormFieldHideWrapper>
-                      </FormConditionWrapper>
-                    </SingleField>
-                    <SingleField
-                      component="sub-form"
-                      fields={
-                        Array [
-                          Object {
-                            "component": "checkbox",
-                            "id": "approvalStates",
-                            "isRequired": true,
-                            "label": "Approval State:",
-                            "name": "approvalStates",
-                            "options": Array [
-                              Object {
-                                "label": "Pending Approval",
-                                "value": "pending_approval",
-                              },
-                              Object {
-                                "label": "Approved",
-                                "value": "approved",
-                              },
-                              Object {
-                                "label": "Denied",
-                                "value": "denied",
-                              },
-                            ],
-                          },
-                        ]
-                      }
-                      id="approval_state"
-                      key="approval_state"
-                      name="approval_state"
-                    >
-                      <FormConditionWrapper
-                        conditionMapper={Object {}}
-                        field={
-                          Object {
-                            "component": "sub-form",
-                            "fields": Array [
-                              Object {
-                                "component": "checkbox",
-                                "id": "approvalStates",
-                                "isRequired": true,
-                                "label": "Approval State:",
-                                "name": "approvalStates",
-                                "options": Array [
-                                  Object {
-                                    "label": "Pending Approval",
-                                    "value": "pending_approval",
-                                  },
-                                  Object {
-                                    "label": "Approved",
-                                    "value": "approved",
-                                  },
-                                  Object {
-                                    "label": "Denied",
-                                    "value": "denied",
-                                  },
-                                ],
-                              },
-                            ],
-                            "id": "approval_state",
-                            "name": "approval_state",
-                          }
-                        }
-                      >
-                        <FormFieldHideWrapper>
-                          <SubForm
-                            component="sub-form"
-                            fields={
-                              Array [
-                                Object {
-                                  "component": "checkbox",
-                                  "id": "approvalStates",
-                                  "isRequired": true,
-                                  "label": "Approval State:",
-                                  "name": "approvalStates",
-                                  "options": Array [
-                                    Object {
-                                      "label": "Pending Approval",
-                                      "value": "pending_approval",
-                                    },
-                                    Object {
-                                      "label": "Approved",
-                                      "value": "approved",
-                                    },
-                                    Object {
-                                      "label": "Denied",
-                                      "value": "denied",
-                                    },
-                                  ],
-                                },
-                              ]
-                            }
-                            id="approval_state"
-                            name="approval_state"
-                          >
-                            <div
-                              className=""
-                              id="approval_state"
-                              name="approval_state"
-                            >
-                              <SingleField
-                                component="checkbox"
-                                id="approvalStates"
-                                isRequired={true}
-                                key="approvalStates"
-                                label="Approval State:"
-                                name="approvalStates"
-                                options={
-                                  Array [
-                                    Object {
-                                      "label": "Pending Approval",
-                                      "value": "pending_approval",
-                                    },
-                                    Object {
-                                      "label": "Approved",
-                                      "value": "approved",
-                                    },
-                                    Object {
-                                      "label": "Denied",
-                                      "value": "denied",
-                                    },
-                                  ]
-                                }
-                              >
-                                <FormConditionWrapper
-                                  conditionMapper={Object {}}
-                                  field={
-                                    Object {
-                                      "component": "checkbox",
-                                      "id": "approvalStates",
-                                      "isRequired": true,
-                                      "label": "Approval State:",
-                                      "name": "approvalStates",
-                                      "options": Array [
-                                        Object {
-                                          "label": "Pending Approval",
-                                          "value": "pending_approval",
-                                        },
-                                        Object {
-                                          "label": "Approved",
-                                          "value": "approved",
-                                        },
-                                        Object {
-                                          "label": "Denied",
-                                          "value": "denied",
-                                        },
-                                      ],
-                                    }
-                                  }
-                                >
-                                  <FormFieldHideWrapper>
-                                    <Checkbox
-                                      component="checkbox"
-                                      id="approvalStates"
-                                      isRequired={true}
-                                      label="Approval State:"
-                                      name="approvalStates"
-                                      options={
-                                        Array [
-                                          Object {
-                                            "label": "Pending Approval",
-                                            "value": "pending_approval",
-                                          },
-                                          Object {
-                                            "label": "Approved",
-                                            "value": "approved",
-                                          },
-                                          Object {
-                                            "label": "Denied",
-                                            "value": "denied",
-                                          },
-                                        ]
-                                      }
-                                    >
-                                      <MultipleChoiceList
-                                        Checkbox={[Function]}
-                                        Wrapper={[Function]}
-                                        component="checkbox"
-                                        id="approvalStates"
-                                        isRequired={true}
-                                        label="Approval State:"
-                                        name="approvalStates"
-                                        options={
-                                          Array [
-                                            Object {
-                                              "label": "Pending Approval",
-                                              "value": "pending_approval",
-                                            },
-                                            Object {
-                                              "label": "Approved",
-                                              "value": "approved",
-                                            },
-                                            Object {
-                                              "label": "Denied",
-                                              "value": "denied",
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        <Wrapper
-                                          isRequired={true}
-                                          label="Approval State:"
-                                          meta={
-                                            Object {
-                                              "active": false,
-                                              "data": Object {},
-                                              "dirty": false,
-                                              "dirtySinceLastSubmit": false,
-                                              "error": undefined,
-                                              "initial": Array [
-                                                "pending_approval",
-                                                "approved",
-                                                "denied",
-                                              ],
-                                              "invalid": false,
-                                              "length": 3,
-                                              "modified": false,
-                                              "modifiedSinceLastSubmit": false,
-                                              "pristine": true,
-                                              "submitError": undefined,
-                                              "submitFailed": false,
-                                              "submitSucceeded": false,
-                                              "submitting": false,
-                                              "touched": false,
-                                              "valid": true,
-                                              "validating": false,
-                                              "visited": false,
-                                            }
-                                          }
-                                          name="approvalStates"
-                                          rest={
-                                            Object {
-                                              "id": "approvalStates",
-                                            }
-                                          }
-                                          showError={false}
-                                        >
-                                          <FormGroup
-                                            legendText={
-                                              <IsRequired>
-                                                Approval State:
-                                              </IsRequired>
-                                            }
-                                          >
-                                            <fieldset
-                                              className="cds--fieldset"
-                                              disabled={false}
-                                            >
-                                              <legend
-                                                className="cds--label"
-                                              >
-                                                <IsRequired>
-                                                  <span
-                                                    aria-hidden="true"
-                                                    className="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
-                                                  >
-                                                    *
-                                                  </span>
-                                                  Approval State:
-                                                </IsRequired>
-                                              </legend>
-                                              <SingleCheckbox
-                                                Checkbox={[Function]}
-                                                aria-label="Pending Approval"
-                                                id="approvalStates-pending_approval"
-                                                key="approvalStates-pending_approval"
-                                                label="Pending Approval"
-                                                name="approvalStates"
-                                                option={
-                                                  Object {
-                                                    "label": "Pending Approval",
-                                                    "value": "pending_approval",
-                                                  }
-                                                }
-                                                value="pending_approval"
-                                              >
-                                                <SingleCheckboxInCommon
-                                                  aria-label="Pending Approval"
-                                                  checked={true}
-                                                  id="approvalStates-pending_approval"
-                                                  label="Pending Approval"
-                                                  meta={
-                                                    Object {
-                                                      "active": false,
-                                                      "data": Object {},
-                                                      "dirty": false,
-                                                      "dirtySinceLastSubmit": false,
-                                                      "error": undefined,
-                                                      "initial": Array [
-                                                        "pending_approval",
-                                                        "approved",
-                                                        "denied",
-                                                      ],
-                                                      "invalid": false,
-                                                      "length": 3,
-                                                      "modified": false,
-                                                      "modifiedSinceLastSubmit": false,
-                                                      "pristine": true,
-                                                      "submitError": undefined,
-                                                      "submitFailed": false,
-                                                      "submitSucceeded": false,
-                                                      "submitting": false,
-                                                      "touched": false,
-                                                      "valid": true,
-                                                      "validating": false,
-                                                      "visited": false,
-                                                    }
-                                                  }
-                                                  name="approvalStates"
-                                                  onBlur={[Function]}
-                                                  onChange={[Function]}
-                                                  onFocus={[Function]}
-                                                  option={
-                                                    Object {
-                                                      "label": "Pending Approval",
-                                                      "value": "pending_approval",
-                                                    }
-                                                  }
-                                                  type="checkbox"
-                                                  value="pending_approval"
-                                                >
-                                                  <Checkbox
-                                                    aria-label="Pending Approval"
-                                                    checked={true}
-                                                    id="approvalStates-pending_approval"
-                                                    label="Pending Approval"
-                                                    labelText="Pending Approval"
-                                                    name="approvalStates"
-                                                    onBlur={[Function]}
-                                                    onChange={[Function]}
-                                                    onFocus={[Function]}
-                                                    type="checkbox"
-                                                    value="pending_approval"
-                                                  >
-                                                    <div
-                                                      className="cds--form-item cds--checkbox-wrapper"
-                                                    >
-                                                      <input
-                                                        aria-label="Pending Approval"
-                                                        checked={true}
-                                                        className="cds--checkbox"
-                                                        id="approvalStates-pending_approval"
-                                                        label="Pending Approval"
-                                                        name="approvalStates"
-                                                        onBlur={[Function]}
-                                                        onChange={[Function]}
-                                                        onClick={[Function]}
-                                                        onFocus={[Function]}
-                                                        type="checkbox"
-                                                        value="pending_approval"
-                                                      />
-                                                      <label
-                                                        className="cds--checkbox-label"
-                                                        htmlFor="approvalStates-pending_approval"
-                                                        title=""
-                                                      >
-                                                        <ForwardRef
-                                                          as="div"
-                                                          className="cds--checkbox-label-text"
-                                                        >
-                                                          <div
-                                                            className="cds--checkbox-label-text"
-                                                            dir="auto"
-                                                          >
-                                                            Pending Approval
-                                                          </div>
-                                                        </ForwardRef>
-                                                      </label>
-                                                      <div
-                                                        className="cds--checkbox__validation-msg"
-                                                      />
-                                                    </div>
-                                                  </Checkbox>
-                                                </SingleCheckboxInCommon>
-                                              </SingleCheckbox>
-                                              <SingleCheckbox
-                                                Checkbox={[Function]}
-                                                aria-label="Approved"
-                                                id="approvalStates-approved"
-                                                key="approvalStates-approved"
-                                                label="Approved"
-                                                name="approvalStates"
-                                                option={
-                                                  Object {
-                                                    "label": "Approved",
-                                                    "value": "approved",
-                                                  }
-                                                }
-                                                value="approved"
-                                              >
-                                                <SingleCheckboxInCommon
-                                                  aria-label="Approved"
-                                                  checked={true}
-                                                  id="approvalStates-approved"
-                                                  label="Approved"
-                                                  meta={
-                                                    Object {
-                                                      "active": false,
-                                                      "data": Object {},
-                                                      "dirty": false,
-                                                      "dirtySinceLastSubmit": false,
-                                                      "error": undefined,
-                                                      "initial": Array [
-                                                        "pending_approval",
-                                                        "approved",
-                                                        "denied",
-                                                      ],
-                                                      "invalid": false,
-                                                      "length": 3,
-                                                      "modified": false,
-                                                      "modifiedSinceLastSubmit": false,
-                                                      "pristine": true,
-                                                      "submitError": undefined,
-                                                      "submitFailed": false,
-                                                      "submitSucceeded": false,
-                                                      "submitting": false,
-                                                      "touched": false,
-                                                      "valid": true,
-                                                      "validating": false,
-                                                      "visited": false,
-                                                    }
-                                                  }
-                                                  name="approvalStates"
-                                                  onBlur={[Function]}
-                                                  onChange={[Function]}
-                                                  onFocus={[Function]}
-                                                  option={
-                                                    Object {
-                                                      "label": "Approved",
-                                                      "value": "approved",
-                                                    }
-                                                  }
-                                                  type="checkbox"
-                                                  value="approved"
-                                                >
-                                                  <Checkbox
-                                                    aria-label="Approved"
-                                                    checked={true}
-                                                    id="approvalStates-approved"
-                                                    label="Approved"
-                                                    labelText="Approved"
-                                                    name="approvalStates"
-                                                    onBlur={[Function]}
-                                                    onChange={[Function]}
-                                                    onFocus={[Function]}
-                                                    type="checkbox"
-                                                    value="approved"
-                                                  >
-                                                    <div
-                                                      className="cds--form-item cds--checkbox-wrapper"
-                                                    >
-                                                      <input
-                                                        aria-label="Approved"
-                                                        checked={true}
-                                                        className="cds--checkbox"
-                                                        id="approvalStates-approved"
-                                                        label="Approved"
-                                                        name="approvalStates"
-                                                        onBlur={[Function]}
-                                                        onChange={[Function]}
-                                                        onClick={[Function]}
-                                                        onFocus={[Function]}
-                                                        type="checkbox"
-                                                        value="approved"
-                                                      />
-                                                      <label
-                                                        className="cds--checkbox-label"
-                                                        htmlFor="approvalStates-approved"
-                                                        title=""
-                                                      >
-                                                        <ForwardRef
-                                                          as="div"
-                                                          className="cds--checkbox-label-text"
-                                                        >
-                                                          <div
-                                                            className="cds--checkbox-label-text"
-                                                            dir="auto"
-                                                          >
-                                                            Approved
-                                                          </div>
-                                                        </ForwardRef>
-                                                      </label>
-                                                      <div
-                                                        className="cds--checkbox__validation-msg"
-                                                      />
-                                                    </div>
-                                                  </Checkbox>
-                                                </SingleCheckboxInCommon>
-                                              </SingleCheckbox>
-                                              <SingleCheckbox
-                                                Checkbox={[Function]}
-                                                aria-label="Denied"
-                                                id="approvalStates-denied"
-                                                key="approvalStates-denied"
-                                                label="Denied"
-                                                name="approvalStates"
-                                                option={
-                                                  Object {
-                                                    "label": "Denied",
-                                                    "value": "denied",
-                                                  }
-                                                }
-                                                value="denied"
-                                              >
-                                                <SingleCheckboxInCommon
-                                                  aria-label="Denied"
-                                                  checked={true}
-                                                  id="approvalStates-denied"
-                                                  label="Denied"
-                                                  meta={
-                                                    Object {
-                                                      "active": false,
-                                                      "data": Object {},
-                                                      "dirty": false,
-                                                      "dirtySinceLastSubmit": false,
-                                                      "error": undefined,
-                                                      "initial": Array [
-                                                        "pending_approval",
-                                                        "approved",
-                                                        "denied",
-                                                      ],
-                                                      "invalid": false,
-                                                      "length": 3,
-                                                      "modified": false,
-                                                      "modifiedSinceLastSubmit": false,
-                                                      "pristine": true,
-                                                      "submitError": undefined,
-                                                      "submitFailed": false,
-                                                      "submitSucceeded": false,
-                                                      "submitting": false,
-                                                      "touched": false,
-                                                      "valid": true,
-                                                      "validating": false,
-                                                      "visited": false,
-                                                    }
-                                                  }
-                                                  name="approvalStates"
-                                                  onBlur={[Function]}
-                                                  onChange={[Function]}
-                                                  onFocus={[Function]}
-                                                  option={
-                                                    Object {
-                                                      "label": "Denied",
-                                                      "value": "denied",
-                                                    }
-                                                  }
-                                                  type="checkbox"
-                                                  value="denied"
-                                                >
-                                                  <Checkbox
-                                                    aria-label="Denied"
-                                                    checked={true}
-                                                    id="approvalStates-denied"
-                                                    label="Denied"
-                                                    labelText="Denied"
-                                                    name="approvalStates"
-                                                    onBlur={[Function]}
-                                                    onChange={[Function]}
-                                                    onFocus={[Function]}
-                                                    type="checkbox"
-                                                    value="denied"
-                                                  >
-                                                    <div
-                                                      className="cds--form-item cds--checkbox-wrapper"
-                                                    >
-                                                      <input
-                                                        aria-label="Denied"
-                                                        checked={true}
-                                                        className="cds--checkbox"
-                                                        id="approvalStates-denied"
-                                                        label="Denied"
-                                                        name="approvalStates"
-                                                        onBlur={[Function]}
-                                                        onChange={[Function]}
-                                                        onClick={[Function]}
-                                                        onFocus={[Function]}
-                                                        type="checkbox"
-                                                        value="denied"
-                                                      />
-                                                      <label
-                                                        className="cds--checkbox-label"
-                                                        htmlFor="approvalStates-denied"
-                                                        title=""
-                                                      >
-                                                        <ForwardRef
-                                                          as="div"
-                                                          className="cds--checkbox-label-text"
-                                                        >
-                                                          <div
-                                                            className="cds--checkbox-label-text"
-                                                            dir="auto"
-                                                          >
-                                                            Denied
-                                                          </div>
-                                                        </ForwardRef>
-                                                      </label>
-                                                      <div
-                                                        className="cds--checkbox__validation-msg"
-                                                      />
-                                                    </div>
-                                                  </Checkbox>
-                                                </SingleCheckboxInCommon>
-                                              </SingleCheckbox>
-                                              <HelperTextBlock
-                                                errorText={false}
-                                              />
-                                            </fieldset>
-                                          </FormGroup>
-                                        </Wrapper>
-                                      </MultipleChoiceList>
-                                    </Checkbox>
-                                  </FormFieldHideWrapper>
-                                </FormConditionWrapper>
-                              </SingleField>
-                            </div>
-                          </SubForm>
-                        </FormFieldHideWrapper>
-                      </FormConditionWrapper>
-                    </SingleField>
-                    <SingleField
-                      component="select"
-                      id="types"
-                      isRequired={true}
-                      key="types"
-                      label="Type:"
-                      name="types"
-                      options={
-                        Array [
-                          Object {
-                            "label": "All",
-                            "value": "all",
-                          },
-                          Object {
-                            "label": "Foreman Provision",
-                            "value": "provision_via_foreman",
-                          },
-                          Object {
-                            "label": "VM Provision",
-                            "value": "template",
-                          },
-                          Object {
-                            "label": "VM Clone",
-                            "value": "clone_to_vm",
-                          },
-                          Object {
-                            "label": "VM Publish",
-                            "value": "clone_to_template",
-                          },
-                          Object {
-                            "label": "Orchestration Stack Retire",
-                            "value": "orchestration_stack_retire",
-                          },
-                          Object {
-                            "label": "Physical Server Provision",
-                            "value": "provision_physical_server",
-                          },
-                          Object {
-                            "label": "Physical Server Firmware Update",
-                            "value": "physical_server_firmware_update",
-                          },
-                          Object {
-                            "label": "Service Retire",
-                            "value": "service_retire",
-                          },
-                          Object {
-                            "label": "Service Reconfigure",
-                            "value": "service_reconfigure",
-                          },
-                          Object {
-                            "label": "Service Provision",
-                            "value": "clone_to_service",
-                          },
-                          Object {
-                            "label": "VM Cloud Reconfigure",
-                            "value": "vm_cloud_reconfigure",
-                          },
-                          Object {
-                            "label": "VM Migrate",
-                            "value": "vm_migrate",
-                          },
-                          Object {
-                            "label": "VM Reconfigure",
-                            "value": "vm_reconfigure",
-                          },
-                          Object {
-                            "label": "VM Retire",
-                            "value": "vm_retire",
-                          },
-                        ]
-                      }
-                    >
-                      <FormConditionWrapper
-                        conditionMapper={Object {}}
-                        field={
-                          Object {
-                            "component": "select",
-                            "id": "types",
-                            "isRequired": true,
-                            "label": "Type:",
-                            "name": "types",
-                            "options": Array [
-                              Object {
-                                "label": "All",
-                                "value": "all",
-                              },
-                              Object {
-                                "label": "Foreman Provision",
-                                "value": "provision_via_foreman",
-                              },
-                              Object {
-                                "label": "VM Provision",
-                                "value": "template",
-                              },
-                              Object {
-                                "label": "VM Clone",
-                                "value": "clone_to_vm",
-                              },
-                              Object {
-                                "label": "VM Publish",
-                                "value": "clone_to_template",
-                              },
-                              Object {
-                                "label": "Orchestration Stack Retire",
-                                "value": "orchestration_stack_retire",
-                              },
-                              Object {
-                                "label": "Physical Server Provision",
-                                "value": "provision_physical_server",
-                              },
-                              Object {
-                                "label": "Physical Server Firmware Update",
-                                "value": "physical_server_firmware_update",
-                              },
-                              Object {
-                                "label": "Service Retire",
-                                "value": "service_retire",
-                              },
-                              Object {
-                                "label": "Service Reconfigure",
-                                "value": "service_reconfigure",
-                              },
-                              Object {
-                                "label": "Service Provision",
-                                "value": "clone_to_service",
-                              },
-                              Object {
-                                "label": "VM Cloud Reconfigure",
-                                "value": "vm_cloud_reconfigure",
-                              },
-                              Object {
-                                "label": "VM Migrate",
-                                "value": "vm_migrate",
-                              },
-                              Object {
-                                "label": "VM Reconfigure",
-                                "value": "vm_reconfigure",
-                              },
-                              Object {
-                                "label": "VM Retire",
-                                "value": "vm_retire",
-                              },
-                            ],
-                          }
-                        }
-                      >
-                        <FormFieldHideWrapper>
-                          <SelectWithOnChange
-                            component="select"
-                            id="types"
-                            isRequired={true}
-                            label="Type:"
-                            name="types"
-                            options={
-                              Array [
-                                Object {
-                                  "label": "All",
-                                  "value": "all",
-                                },
-                                Object {
-                                  "label": "Foreman Provision",
-                                  "value": "provision_via_foreman",
-                                },
-                                Object {
-                                  "label": "VM Provision",
-                                  "value": "template",
-                                },
-                                Object {
-                                  "label": "VM Clone",
-                                  "value": "clone_to_vm",
-                                },
-                                Object {
-                                  "label": "VM Publish",
-                                  "value": "clone_to_template",
-                                },
-                                Object {
-                                  "label": "Orchestration Stack Retire",
-                                  "value": "orchestration_stack_retire",
-                                },
-                                Object {
-                                  "label": "Physical Server Provision",
-                                  "value": "provision_physical_server",
-                                },
-                                Object {
-                                  "label": "Physical Server Firmware Update",
-                                  "value": "physical_server_firmware_update",
-                                },
-                                Object {
-                                  "label": "Service Retire",
-                                  "value": "service_retire",
-                                },
-                                Object {
-                                  "label": "Service Reconfigure",
-                                  "value": "service_reconfigure",
-                                },
-                                Object {
-                                  "label": "Service Provision",
-                                  "value": "clone_to_service",
-                                },
-                                Object {
-                                  "label": "VM Cloud Reconfigure",
-                                  "value": "vm_cloud_reconfigure",
-                                },
-                                Object {
-                                  "label": "VM Migrate",
-                                  "value": "vm_migrate",
-                                },
-                                Object {
-                                  "label": "VM Reconfigure",
-                                  "value": "vm_reconfigure",
-                                },
-                                Object {
-                                  "label": "VM Retire",
-                                  "value": "vm_retire",
-                                },
-                              ]
-                            }
-                            placeholder="<Choose>"
-                          >
-                            <Select
-                              component="select"
-                              id="types"
-                              isRequired={true}
-                              label="Type:"
-                              name="types"
-                              options={
-                                Array [
-                                  Object {
-                                    "label": "All",
-                                    "value": "all",
-                                  },
-                                  Object {
-                                    "label": "Foreman Provision",
-                                    "value": "provision_via_foreman",
-                                  },
-                                  Object {
-                                    "label": "VM Provision",
-                                    "value": "template",
-                                  },
-                                  Object {
-                                    "label": "VM Clone",
-                                    "value": "clone_to_vm",
-                                  },
-                                  Object {
-                                    "label": "VM Publish",
-                                    "value": "clone_to_template",
-                                  },
-                                  Object {
-                                    "label": "Orchestration Stack Retire",
-                                    "value": "orchestration_stack_retire",
-                                  },
-                                  Object {
-                                    "label": "Physical Server Provision",
-                                    "value": "provision_physical_server",
-                                  },
-                                  Object {
-                                    "label": "Physical Server Firmware Update",
-                                    "value": "physical_server_firmware_update",
-                                  },
-                                  Object {
-                                    "label": "Service Retire",
-                                    "value": "service_retire",
-                                  },
-                                  Object {
-                                    "label": "Service Reconfigure",
-                                    "value": "service_reconfigure",
-                                  },
-                                  Object {
-                                    "label": "Service Provision",
-                                    "value": "clone_to_service",
-                                  },
-                                  Object {
-                                    "label": "VM Cloud Reconfigure",
-                                    "value": "vm_cloud_reconfigure",
-                                  },
-                                  Object {
-                                    "label": "VM Migrate",
-                                    "value": "vm_migrate",
-                                  },
-                                  Object {
-                                    "label": "VM Reconfigure",
-                                    "value": "vm_reconfigure",
-                                  },
-                                  Object {
-                                    "label": "VM Retire",
-                                    "value": "vm_retire",
-                                  },
-                                ]
-                              }
-                              placeholder="<Choose>"
-                            >
-                              <Select
-                                SelectComponent={[Function]}
-                                id="types"
-                                invalidText=""
-                                labelText={
-                                  <IsRequired>
-                                    Type:
-                                  </IsRequired>
-                                }
-                                loadOptionsChangeCounter={1}
-                                loadingMessage="Loading..."
-                                name="types"
-                                onBlur={[Function]}
-                                onChange={[Function]}
-                                onFocus={[Function]}
-                                options={
-                                  Array [
-                                    Object {
-                                      "label": "All",
-                                      "value": "all",
-                                    },
-                                    Object {
-                                      "label": "Foreman Provision",
-                                      "value": "provision_via_foreman",
-                                    },
-                                    Object {
-                                      "label": "VM Provision",
-                                      "value": "template",
-                                    },
-                                    Object {
-                                      "label": "VM Clone",
-                                      "value": "clone_to_vm",
-                                    },
-                                    Object {
-                                      "label": "VM Publish",
-                                      "value": "clone_to_template",
-                                    },
-                                    Object {
-                                      "label": "Orchestration Stack Retire",
-                                      "value": "orchestration_stack_retire",
-                                    },
-                                    Object {
-                                      "label": "Physical Server Provision",
-                                      "value": "provision_physical_server",
-                                    },
-                                    Object {
-                                      "label": "Physical Server Firmware Update",
-                                      "value": "physical_server_firmware_update",
-                                    },
-                                    Object {
-                                      "label": "Service Retire",
-                                      "value": "service_retire",
-                                    },
-                                    Object {
-                                      "label": "Service Reconfigure",
-                                      "value": "service_reconfigure",
-                                    },
-                                    Object {
-                                      "label": "Service Provision",
-                                      "value": "clone_to_service",
-                                    },
-                                    Object {
-                                      "label": "VM Cloud Reconfigure",
-                                      "value": "vm_cloud_reconfigure",
-                                    },
-                                    Object {
-                                      "label": "VM Migrate",
-                                      "value": "vm_migrate",
-                                    },
-                                    Object {
-                                      "label": "VM Reconfigure",
-                                      "value": "vm_reconfigure",
-                                    },
-                                    Object {
-                                      "label": "VM Retire",
-                                      "value": "vm_retire",
-                                    },
-                                  ]
-                                }
-                                placeholder="<Choose>"
-                                simpleValue={false}
-                                value=""
-                              >
-                                <ClearedSelect
-                                  className=""
-                                  closeMenuOnSelect={true}
-                                  hideSelectedOptions={false}
-                                  id="types"
-                                  invalidText=""
-                                  isClearable={false}
-                                  isFetching={false}
-                                  isSearchable={false}
-                                  labelText={
-                                    <IsRequired>
-                                      Type:
-                                    </IsRequired>
-                                  }
-                                  name="types"
-                                  noOptionsMessage={[Function]}
-                                  onBlur={[Function]}
-                                  onChange={[Function]}
-                                  onFocus={[Function]}
-                                  onInputChange={[Function]}
-                                  options={
-                                    Array [
-                                      Object {
-                                        "label": "All",
-                                        "value": "all",
-                                      },
-                                      Object {
-                                        "label": "Foreman Provision",
-                                        "value": "provision_via_foreman",
-                                      },
-                                      Object {
-                                        "label": "VM Provision",
-                                        "value": "template",
-                                      },
-                                      Object {
-                                        "label": "VM Clone",
-                                        "value": "clone_to_vm",
-                                      },
-                                      Object {
-                                        "label": "VM Publish",
-                                        "value": "clone_to_template",
-                                      },
-                                      Object {
-                                        "label": "Orchestration Stack Retire",
-                                        "value": "orchestration_stack_retire",
-                                      },
-                                      Object {
-                                        "label": "Physical Server Provision",
-                                        "value": "provision_physical_server",
-                                      },
-                                      Object {
-                                        "label": "Physical Server Firmware Update",
-                                        "value": "physical_server_firmware_update",
-                                      },
-                                      Object {
-                                        "label": "Service Retire",
-                                        "value": "service_retire",
-                                      },
-                                      Object {
-                                        "label": "Service Reconfigure",
-                                        "value": "service_reconfigure",
-                                      },
-                                      Object {
-                                        "label": "Service Provision",
-                                        "value": "clone_to_service",
-                                      },
-                                      Object {
-                                        "label": "VM Cloud Reconfigure",
-                                        "value": "vm_cloud_reconfigure",
-                                      },
-                                      Object {
-                                        "label": "VM Migrate",
-                                        "value": "vm_migrate",
-                                      },
-                                      Object {
-                                        "label": "VM Reconfigure",
-                                        "value": "vm_reconfigure",
-                                      },
-                                      Object {
-                                        "label": "VM Retire",
-                                        "value": "vm_retire",
-                                      },
-                                    ]
-                                  }
-                                  placeholder="<Choose>"
-                                  value=""
-                                >
-                                  <Select
-                                    className=""
-                                    id="types"
-                                    invalid={false}
-                                    invalidText=""
-                                    labelText={
-                                      <IsRequired>
-                                        Type:
-                                      </IsRequired>
-                                    }
-                                    name="types"
-                                    onBlur={[Function]}
-                                    onChange={[Function]}
-                                    onFocus={[Function]}
-                                    value=""
-                                  >
-                                    <div
-                                      className="cds--form-item"
-                                    >
-                                      <div
-                                        className="cds--select"
-                                      >
-                                        <ForwardRef
-                                          as="label"
-                                          className="cds--label"
-                                          htmlFor="types"
-                                        >
-                                          <label
-                                            className="cds--label"
-                                            dir="auto"
-                                            htmlFor="types"
-                                          >
-                                            <IsRequired>
-                                              <span
-                                                aria-hidden="true"
-                                                className="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
-                                              >
-                                                *
-                                              </span>
-                                              Type:
-                                            </IsRequired>
-                                          </label>
-                                        </ForwardRef>
-                                        <div
-                                          className="cds--select-input__wrapper"
-                                          data-invalid={null}
-                                          onBlur={[Function]}
-                                          onFocus={[Function]}
-                                        >
-                                          <select
-                                            className="cds--select-input"
-                                            id="types"
-                                            name="types"
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            onKeyDown={[Function]}
-                                            onMouseDown={[Function]}
-                                            title="All"
-                                            value=""
-                                          >
-                                            <SelectItem
-                                              key="all"
-                                              label="All"
-                                              text="All"
-                                              value="all"
-                                            >
-                                              <option
-                                                className="cds--select-option"
-                                                disabled={false}
-                                                hidden={false}
-                                                label="All"
-                                                value="all"
-                                              >
-                                                All
-                                              </option>
-                                            </SelectItem>
-                                            <SelectItem
-                                              key="provision_via_foreman"
-                                              label="Foreman Provision"
-                                              text="Foreman Provision"
-                                              value="provision_via_foreman"
-                                            >
-                                              <option
-                                                className="cds--select-option"
-                                                disabled={false}
-                                                hidden={false}
-                                                label="Foreman Provision"
-                                                value="provision_via_foreman"
-                                              >
-                                                Foreman Provision
-                                              </option>
-                                            </SelectItem>
-                                            <SelectItem
-                                              key="template"
-                                              label="VM Provision"
-                                              text="VM Provision"
-                                              value="template"
-                                            >
-                                              <option
-                                                className="cds--select-option"
-                                                disabled={false}
-                                                hidden={false}
-                                                label="VM Provision"
-                                                value="template"
-                                              >
-                                                VM Provision
-                                              </option>
-                                            </SelectItem>
-                                            <SelectItem
-                                              key="clone_to_vm"
-                                              label="VM Clone"
-                                              text="VM Clone"
-                                              value="clone_to_vm"
-                                            >
-                                              <option
-                                                className="cds--select-option"
-                                                disabled={false}
-                                                hidden={false}
-                                                label="VM Clone"
-                                                value="clone_to_vm"
-                                              >
-                                                VM Clone
-                                              </option>
-                                            </SelectItem>
-                                            <SelectItem
-                                              key="clone_to_template"
-                                              label="VM Publish"
-                                              text="VM Publish"
-                                              value="clone_to_template"
-                                            >
-                                              <option
-                                                className="cds--select-option"
-                                                disabled={false}
-                                                hidden={false}
-                                                label="VM Publish"
-                                                value="clone_to_template"
-                                              >
-                                                VM Publish
-                                              </option>
-                                            </SelectItem>
-                                            <SelectItem
-                                              key="orchestration_stack_retire"
-                                              label="Orchestration Stack Retire"
-                                              text="Orchestration Stack Retire"
-                                              value="orchestration_stack_retire"
-                                            >
-                                              <option
-                                                className="cds--select-option"
-                                                disabled={false}
-                                                hidden={false}
-                                                label="Orchestration Stack Retire"
-                                                value="orchestration_stack_retire"
-                                              >
-                                                Orchestration Stack Retire
-                                              </option>
-                                            </SelectItem>
-                                            <SelectItem
-                                              key="provision_physical_server"
-                                              label="Physical Server Provision"
-                                              text="Physical Server Provision"
-                                              value="provision_physical_server"
-                                            >
-                                              <option
-                                                className="cds--select-option"
-                                                disabled={false}
-                                                hidden={false}
-                                                label="Physical Server Provision"
-                                                value="provision_physical_server"
-                                              >
-                                                Physical Server Provision
-                                              </option>
-                                            </SelectItem>
-                                            <SelectItem
-                                              key="physical_server_firmware_update"
-                                              label="Physical Server Firmware Update"
-                                              text="Physical Server Firmware Update"
-                                              value="physical_server_firmware_update"
-                                            >
-                                              <option
-                                                className="cds--select-option"
-                                                disabled={false}
-                                                hidden={false}
-                                                label="Physical Server Firmware Update"
-                                                value="physical_server_firmware_update"
-                                              >
-                                                Physical Server Firmware Update
-                                              </option>
-                                            </SelectItem>
-                                            <SelectItem
-                                              key="service_retire"
-                                              label="Service Retire"
-                                              text="Service Retire"
-                                              value="service_retire"
-                                            >
-                                              <option
-                                                className="cds--select-option"
-                                                disabled={false}
-                                                hidden={false}
-                                                label="Service Retire"
-                                                value="service_retire"
-                                              >
-                                                Service Retire
-                                              </option>
-                                            </SelectItem>
-                                            <SelectItem
-                                              key="service_reconfigure"
-                                              label="Service Reconfigure"
-                                              text="Service Reconfigure"
-                                              value="service_reconfigure"
-                                            >
-                                              <option
-                                                className="cds--select-option"
-                                                disabled={false}
-                                                hidden={false}
-                                                label="Service Reconfigure"
-                                                value="service_reconfigure"
-                                              >
-                                                Service Reconfigure
-                                              </option>
-                                            </SelectItem>
-                                            <SelectItem
-                                              key="clone_to_service"
-                                              label="Service Provision"
-                                              text="Service Provision"
-                                              value="clone_to_service"
-                                            >
-                                              <option
-                                                className="cds--select-option"
-                                                disabled={false}
-                                                hidden={false}
-                                                label="Service Provision"
-                                                value="clone_to_service"
-                                              >
-                                                Service Provision
-                                              </option>
-                                            </SelectItem>
-                                            <SelectItem
-                                              key="vm_cloud_reconfigure"
-                                              label="VM Cloud Reconfigure"
-                                              text="VM Cloud Reconfigure"
-                                              value="vm_cloud_reconfigure"
-                                            >
-                                              <option
-                                                className="cds--select-option"
-                                                disabled={false}
-                                                hidden={false}
-                                                label="VM Cloud Reconfigure"
-                                                value="vm_cloud_reconfigure"
-                                              >
-                                                VM Cloud Reconfigure
-                                              </option>
-                                            </SelectItem>
-                                            <SelectItem
-                                              key="vm_migrate"
-                                              label="VM Migrate"
-                                              text="VM Migrate"
-                                              value="vm_migrate"
-                                            >
-                                              <option
-                                                className="cds--select-option"
-                                                disabled={false}
-                                                hidden={false}
-                                                label="VM Migrate"
-                                                value="vm_migrate"
-                                              >
-                                                VM Migrate
-                                              </option>
-                                            </SelectItem>
-                                            <SelectItem
-                                              key="vm_reconfigure"
-                                              label="VM Reconfigure"
-                                              text="VM Reconfigure"
-                                              value="vm_reconfigure"
-                                            >
-                                              <option
-                                                className="cds--select-option"
-                                                disabled={false}
-                                                hidden={false}
-                                                label="VM Reconfigure"
-                                                value="vm_reconfigure"
-                                              >
-                                                VM Reconfigure
-                                              </option>
-                                            </SelectItem>
-                                            <SelectItem
-                                              key="vm_retire"
-                                              label="VM Retire"
-                                              text="VM Retire"
-                                              value="vm_retire"
-                                            >
-                                              <option
-                                                className="cds--select-option"
-                                                disabled={false}
-                                                hidden={false}
-                                                label="VM Retire"
-                                                value="vm_retire"
-                                              >
-                                                VM Retire
-                                              </option>
-                                            </SelectItem>
-                                          </select>
-                                          <ForwardRef(ChevronDown)
-                                            className="cds--select__arrow"
-                                          >
-                                            <Icon
-                                              className="cds--select__arrow"
-                                              fill="currentColor"
-                                              height={16}
-                                              viewBox="0 0 16 16"
-                                              width={16}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                              <svg
-                                                aria-hidden={true}
-                                                className="cds--select__arrow"
-                                                fill="currentColor"
-                                                focusable="false"
-                                                height={16}
-                                                preserveAspectRatio="xMidYMid meet"
-                                                viewBox="0 0 16 16"
-                                                width={16}
-                                                xmlns="http://www.w3.org/2000/svg"
-                                              >
-                                                <path
-                                                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
-                                                />
-                                              </svg>
-                                            </Icon>
-                                          </ForwardRef(ChevronDown)>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </Select>
-                                </ClearedSelect>
-                              </Select>
-                            </Select>
-                          </SelectWithOnChange>
-                        </FormFieldHideWrapper>
-                      </FormConditionWrapper>
-                    </SingleField>
-                    <SingleField
-                      component="select"
-                      id="selectedPeriod"
-                      isRequired={true}
-                      key="selectedPeriod"
-                      label="Request Date:"
-                      name="selectedPeriod"
-                      options={
-                        Array [
-                          Object {
-                            "label": "Last 24 Hours",
-                            "value": 1,
-                          },
-                          Object {
-                            "label": "Last 7 Days",
-                            "value": 7,
-                          },
-                          Object {
-                            "label": "Last 365 Days",
-                            "value": 365,
-                          },
-                        ]
-                      }
-                    >
-                      <FormConditionWrapper
-                        conditionMapper={Object {}}
-                        field={
-                          Object {
-                            "component": "select",
-                            "id": "selectedPeriod",
-                            "isRequired": true,
-                            "label": "Request Date:",
-                            "name": "selectedPeriod",
-                            "options": Array [
-                              Object {
-                                "label": "Last 24 Hours",
-                                "value": 1,
-                              },
-                              Object {
-                                "label": "Last 7 Days",
-                                "value": 7,
-                              },
-                              Object {
-                                "label": "Last 365 Days",
-                                "value": 365,
-                              },
-                            ],
-                          }
-                        }
-                      >
-                        <FormFieldHideWrapper>
-                          <SelectWithOnChange
-                            component="select"
-                            id="selectedPeriod"
-                            isRequired={true}
-                            label="Request Date:"
-                            name="selectedPeriod"
-                            options={
-                              Array [
-                                Object {
-                                  "label": "Last 24 Hours",
-                                  "value": 1,
-                                },
-                                Object {
-                                  "label": "Last 7 Days",
-                                  "value": 7,
-                                },
-                                Object {
-                                  "label": "Last 365 Days",
-                                  "value": 365,
-                                },
-                              ]
-                            }
-                            placeholder="<Choose>"
-                          >
-                            <Select
-                              component="select"
-                              id="selectedPeriod"
-                              isRequired={true}
-                              label="Request Date:"
-                              name="selectedPeriod"
-                              options={
-                                Array [
-                                  Object {
-                                    "label": "Last 24 Hours",
-                                    "value": 1,
-                                  },
-                                  Object {
-                                    "label": "Last 7 Days",
-                                    "value": 7,
-                                  },
-                                  Object {
-                                    "label": "Last 365 Days",
-                                    "value": 365,
-                                  },
-                                ]
-                              }
-                              placeholder="<Choose>"
-                            >
-                              <Select
-                                SelectComponent={[Function]}
-                                id="selectedPeriod"
-                                invalidText=""
-                                labelText={
-                                  <IsRequired>
-                                    Request Date:
-                                  </IsRequired>
-                                }
-                                loadOptionsChangeCounter={1}
-                                loadingMessage="Loading..."
-                                name="selectedPeriod"
-                                onBlur={[Function]}
-                                onChange={[Function]}
-                                onFocus={[Function]}
-                                options={
-                                  Array [
-                                    Object {
-                                      "label": "Last 24 Hours",
-                                      "value": 1,
-                                    },
-                                    Object {
-                                      "label": "Last 7 Days",
-                                      "value": 7,
-                                    },
-                                    Object {
-                                      "label": "Last 365 Days",
-                                      "value": 365,
-                                    },
-                                  ]
-                                }
-                                placeholder="<Choose>"
-                                simpleValue={false}
-                                value={7}
-                              >
-                                <ClearedSelect
-                                  className=""
-                                  closeMenuOnSelect={true}
-                                  hideSelectedOptions={false}
-                                  id="selectedPeriod"
-                                  invalidText=""
-                                  isClearable={false}
-                                  isFetching={false}
-                                  isSearchable={false}
-                                  labelText={
-                                    <IsRequired>
-                                      Request Date:
-                                    </IsRequired>
-                                  }
-                                  name="selectedPeriod"
-                                  noOptionsMessage={[Function]}
-                                  onBlur={[Function]}
-                                  onChange={[Function]}
-                                  onFocus={[Function]}
-                                  onInputChange={[Function]}
-                                  options={
-                                    Array [
-                                      Object {
-                                        "label": "Last 24 Hours",
-                                        "value": 1,
-                                      },
-                                      Object {
-                                        "label": "Last 7 Days",
-                                        "value": 7,
-                                      },
-                                      Object {
-                                        "label": "Last 365 Days",
-                                        "value": 365,
-                                      },
-                                    ]
-                                  }
-                                  placeholder="<Choose>"
-                                  value={7}
-                                >
-                                  <Select
-                                    className=""
-                                    id="selectedPeriod"
-                                    invalid={false}
-                                    invalidText=""
-                                    labelText={
-                                      <IsRequired>
-                                        Request Date:
-                                      </IsRequired>
-                                    }
-                                    name="selectedPeriod"
-                                    onBlur={[Function]}
-                                    onChange={[Function]}
-                                    onFocus={[Function]}
-                                    value={7}
-                                  >
-                                    <div
-                                      className="cds--form-item"
-                                    >
-                                      <div
-                                        className="cds--select"
-                                      >
-                                        <ForwardRef
-                                          as="label"
-                                          className="cds--label"
-                                          htmlFor="selectedPeriod"
-                                        >
-                                          <label
-                                            className="cds--label"
-                                            dir="auto"
-                                            htmlFor="selectedPeriod"
-                                          >
-                                            <IsRequired>
-                                              <span
-                                                aria-hidden="true"
-                                                className="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
-                                              >
-                                                *
-                                              </span>
-                                              Request Date:
-                                            </IsRequired>
-                                          </label>
-                                        </ForwardRef>
-                                        <div
-                                          className="cds--select-input__wrapper"
-                                          data-invalid={null}
-                                          onBlur={[Function]}
-                                          onFocus={[Function]}
-                                        >
-                                          <select
-                                            className="cds--select-input"
-                                            id="selectedPeriod"
-                                            name="selectedPeriod"
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            onKeyDown={[Function]}
-                                            onMouseDown={[Function]}
-                                            title="Last 24 Hours"
-                                            value={7}
-                                          >
-                                            <SelectItem
-                                              key="1"
-                                              label="Last 24 Hours"
-                                              text="Last 24 Hours"
-                                              value={1}
-                                            >
-                                              <option
-                                                className="cds--select-option"
-                                                disabled={false}
-                                                hidden={false}
-                                                label="Last 24 Hours"
-                                                value={1}
-                                              >
-                                                Last 24 Hours
-                                              </option>
-                                            </SelectItem>
-                                            <SelectItem
-                                              key="7"
-                                              label="Last 7 Days"
-                                              text="Last 7 Days"
-                                              value={7}
-                                            >
-                                              <option
-                                                className="cds--select-option"
-                                                disabled={false}
-                                                hidden={false}
-                                                label="Last 7 Days"
-                                                value={7}
-                                              >
-                                                Last 7 Days
-                                              </option>
-                                            </SelectItem>
-                                            <SelectItem
-                                              key="365"
-                                              label="Last 365 Days"
-                                              text="Last 365 Days"
-                                              value={365}
-                                            >
-                                              <option
-                                                className="cds--select-option"
-                                                disabled={false}
-                                                hidden={false}
-                                                label="Last 365 Days"
-                                                value={365}
-                                              >
-                                                Last 365 Days
-                                              </option>
-                                            </SelectItem>
-                                          </select>
-                                          <ForwardRef(ChevronDown)
-                                            className="cds--select__arrow"
-                                          >
-                                            <Icon
-                                              className="cds--select__arrow"
-                                              fill="currentColor"
-                                              height={16}
-                                              viewBox="0 0 16 16"
-                                              width={16}
-                                              xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                              <svg
-                                                aria-hidden={true}
-                                                className="cds--select__arrow"
-                                                fill="currentColor"
-                                                focusable="false"
-                                                height={16}
-                                                preserveAspectRatio="xMidYMid meet"
-                                                viewBox="0 0 16 16"
-                                                width={16}
-                                                xmlns="http://www.w3.org/2000/svg"
-                                              >
-                                                <path
-                                                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
-                                                />
-                                              </svg>
-                                            </Icon>
-                                          </ForwardRef(ChevronDown)>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </Select>
-                                </ClearedSelect>
-                              </Select>
-                            </Select>
-                          </SelectWithOnChange>
-                        </FormFieldHideWrapper>
-                      </FormConditionWrapper>
-                    </SingleField>
-                    <SingleField
-                      component="text-field"
-                      id="reasonText"
-                      key="reasonText"
-                      label="Reason:"
-                      maxLength={128}
-                      name="reasonText"
-                    >
-                      <FormConditionWrapper
-                        conditionMapper={Object {}}
-                        field={
-                          Object {
-                            "component": "text-field",
-                            "id": "reasonText",
-                            "label": "Reason:",
-                            "maxLength": 128,
-                            "name": "reasonText",
-                          }
-                        }
-                      >
-                        <FormFieldHideWrapper>
-                          <TextField
-                            component="text-field"
-                            id="reasonText"
-                            label="Reason:"
-                            maxLength={128}
-                            name="reasonText"
-                          >
-                            <TextInput
-                              id="reasonText"
-                              invalid={false}
-                              invalidText=""
-                              key="reasonText"
-                              labelText="Reason:"
-                              maxLength={128}
-                              name="reasonText"
-                              onBlur={[Function]}
-                              onChange={[Function]}
-                              onFocus={[Function]}
-                              value=""
-                              warn={false}
-                              warnText=""
-                            >
-                              <div
-                                className="cds--form-item cds--text-input-wrapper"
-                              >
-                                <div
-                                  className="cds--text-input__label-wrapper"
-                                >
-                                  <ForwardRef
-                                    as="label"
-                                    className="cds--label"
-                                    htmlFor="reasonText"
-                                  >
-                                    <label
-                                      className="cds--label"
-                                      dir="auto"
-                                      htmlFor="reasonText"
-                                    >
-                                      Reason:
-                                    </label>
-                                  </ForwardRef>
-                                </div>
-                                <div
-                                  className="cds--text-input__field-outer-wrapper"
-                                >
-                                  <div
-                                    className="cds--text-input__field-wrapper"
-                                    data-invalid={null}
-                                  >
-                                    <input
-                                      className="cds--text-input"
-                                      disabled={false}
-                                      id="reasonText"
-                                      maxLength={128}
-                                      name="reasonText"
-                                      onBlur={[Function]}
-                                      onChange={[Function]}
-                                      onClick={[Function]}
-                                      onFocus={[Function]}
-                                      type="text"
-                                      value=""
-                                    />
-                                    <span
-                                      aria-atomic="true"
-                                      aria-live="assertive"
-                                      className="cds--text-input__counter-alert"
-                                      role="alert"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </TextInput>
-                          </TextField>
-                        </FormFieldHideWrapper>
-                      </FormConditionWrapper>
-                    </SingleField>
-                    <SingleField
-                      component="spy-field"
-                      key="spy-field"
-                      name="spy-field"
-                    >
-                      <FormConditionWrapper
-                        conditionMapper={Object {}}
-                        field={
-                          Object {
-                            "component": "spy-field",
-                            "initialize": undefined,
-                            "name": "spy-field",
-                          }
-                        }
-                      >
-                        <FormFieldHideWrapper>
-                          <SpyField
-                            component="spy-field"
-                            name="spy-field"
-                          >
-                            <FormSpy
-                              onChange={[Function]}
-                              subscription={
-                                Object {
-                                  "pristine": true,
-                                  "valid": true,
-                                }
-                              }
-                            />
-                          </SpyField>
-                        </FormFieldHideWrapper>
-                      </FormConditionWrapper>
-                    </SingleField>
-                    <FormSpy>
-                      <div
-                        className="custom-button-wrapper"
-                      >
-                        <Button
-                          className="btnRight"
-                          disabled={false}
-                          id="submit"
-                          kind="primary"
-                          type="submit"
-                        >
-                          <ForwardRef(ButtonBase)
-                            className="btnRight"
-                            disabled={false}
-                            id="submit"
-                            kind="primary"
-                            type="submit"
-                          >
-                            <button
-                              className="btnRight cds--btn cds--btn--primary"
-                              disabled={false}
-                              id="submit"
-                              type="submit"
-                            >
-                              Apply
-                            </button>
-                          </ForwardRef(ButtonBase)>
-                        </Button>
-                        <Button
-                          className="btnRight"
-                          disabled={false}
-                          id="reset"
-                          kind="secondary"
-                          onClick={[Function]}
-                          type="button"
-                        >
-                          <ForwardRef(ButtonBase)
-                            className="btnRight"
-                            disabled={false}
-                            id="reset"
-                            kind="secondary"
-                            onClick={[Function]}
-                            type="button"
-                          >
-                            <button
-                              className="btnRight cds--btn cds--btn--secondary"
-                              disabled={false}
-                              id="reset"
-                              onClick={[Function]}
-                              type="button"
-                            >
-                              Reset
-                            </button>
-                          </ForwardRef(ButtonBase)>
-                        </Button>
-                      </div>
-                    </FormSpy>
-                  </form>
-                </FormTemplate>
-              </FormTemplate>
-            </ReactFinalForm>
-          </FormRenderer>
-        </MiqFormRenderer>
-      </Connect(MiqFormRenderer)>
-    </div>
-  </ServiceRequestDefault>
-</Provider>
+                All
+              </option>
+              <option
+                class="cds--select-option"
+                label="Administrator"
+                value="1"
+              >
+                Administrator
+              </option>
+            </select>
+            <svg
+              aria-hidden="true"
+              class="cds--select__arrow"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+              />
+            </svg>
+            
+          </div>
+        </div>
+      </div>
+      <div
+        class=""
+        id="approval_state"
+        name="approval_state"
+      >
+        <fieldset
+          class="cds--fieldset"
+        >
+          <legend
+            class="cds--label"
+          >
+            <span
+              aria-hidden="true"
+              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
+            >
+              *
+            </span>
+            Approval State:
+          </legend>
+          <div
+            class="cds--form-item cds--checkbox-wrapper"
+          >
+            <input
+              aria-label="Pending Approval"
+              class="cds--checkbox"
+              id="approvalStates-pending_approval"
+              label="Pending Approval"
+              name="approvalStates"
+              type="checkbox"
+              value="pending_approval"
+            />
+            <label
+              class="cds--checkbox-label"
+              for="approvalStates-pending_approval"
+              title=""
+            >
+              <div
+                class="cds--checkbox-label-text"
+                dir="auto"
+              >
+                Pending Approval
+                
+              </div>
+            </label>
+            <div
+              class="cds--checkbox__validation-msg"
+            />
+          </div>
+          <div
+            class="cds--form-item cds--checkbox-wrapper"
+          >
+            <input
+              aria-label="Approved"
+              class="cds--checkbox"
+              id="approvalStates-approved"
+              label="Approved"
+              name="approvalStates"
+              type="checkbox"
+              value="approved"
+            />
+            <label
+              class="cds--checkbox-label"
+              for="approvalStates-approved"
+              title=""
+            >
+              <div
+                class="cds--checkbox-label-text"
+                dir="auto"
+              >
+                Approved
+                
+              </div>
+            </label>
+            <div
+              class="cds--checkbox__validation-msg"
+            />
+          </div>
+          <div
+            class="cds--form-item cds--checkbox-wrapper"
+          >
+            <input
+              aria-label="Denied"
+              class="cds--checkbox"
+              id="approvalStates-denied"
+              label="Denied"
+              name="approvalStates"
+              type="checkbox"
+              value="denied"
+            />
+            <label
+              class="cds--checkbox-label"
+              for="approvalStates-denied"
+              title=""
+            >
+              <div
+                class="cds--checkbox-label-text"
+                dir="auto"
+              >
+                Denied
+                
+              </div>
+            </label>
+            <div
+              class="cds--checkbox__validation-msg"
+            />
+          </div>
+        </fieldset>
+      </div>
+      <div
+        class="cds--form-item"
+      >
+        <div
+          class="cds--select"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="types"
+          >
+            <span
+              aria-hidden="true"
+              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
+            >
+              *
+            </span>
+            Type:
+          </label>
+          <div
+            class="cds--select-input__wrapper"
+          >
+            <select
+              class="cds--select-input"
+              id="types"
+              name="types"
+              title="All"
+            >
+              <option
+                class="cds--select-option"
+                label="All"
+                value="all"
+              >
+                All
+              </option>
+              <option
+                class="cds--select-option"
+                label="Foreman Provision"
+                value="provision_via_foreman"
+              >
+                Foreman Provision
+              </option>
+              <option
+                class="cds--select-option"
+                label="VM Provision"
+                value="template"
+              >
+                VM Provision
+              </option>
+              <option
+                class="cds--select-option"
+                label="VM Clone"
+                value="clone_to_vm"
+              >
+                VM Clone
+              </option>
+              <option
+                class="cds--select-option"
+                label="VM Publish"
+                value="clone_to_template"
+              >
+                VM Publish
+              </option>
+              <option
+                class="cds--select-option"
+                label="Orchestration Stack Retire"
+                value="orchestration_stack_retire"
+              >
+                Orchestration Stack Retire
+              </option>
+              <option
+                class="cds--select-option"
+                label="Physical Server Provision"
+                value="provision_physical_server"
+              >
+                Physical Server Provision
+              </option>
+              <option
+                class="cds--select-option"
+                label="Physical Server Firmware Update"
+                value="physical_server_firmware_update"
+              >
+                Physical Server Firmware Update
+              </option>
+              <option
+                class="cds--select-option"
+                label="Service Retire"
+                value="service_retire"
+              >
+                Service Retire
+              </option>
+              <option
+                class="cds--select-option"
+                label="Service Reconfigure"
+                value="service_reconfigure"
+              >
+                Service Reconfigure
+              </option>
+              <option
+                class="cds--select-option"
+                label="Service Provision"
+                value="clone_to_service"
+              >
+                Service Provision
+              </option>
+              <option
+                class="cds--select-option"
+                label="VM Cloud Reconfigure"
+                value="vm_cloud_reconfigure"
+              >
+                VM Cloud Reconfigure
+              </option>
+              <option
+                class="cds--select-option"
+                label="VM Migrate"
+                value="vm_migrate"
+              >
+                VM Migrate
+              </option>
+              <option
+                class="cds--select-option"
+                label="VM Reconfigure"
+                value="vm_reconfigure"
+              >
+                VM Reconfigure
+              </option>
+              <option
+                class="cds--select-option"
+                label="VM Retire"
+                value="vm_retire"
+              >
+                VM Retire
+              </option>
+            </select>
+            <svg
+              aria-hidden="true"
+              class="cds--select__arrow"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+              />
+            </svg>
+            
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--form-item"
+      >
+        <div
+          class="cds--select"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="selectedPeriod"
+          >
+            <span
+              aria-hidden="true"
+              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
+            >
+              *
+            </span>
+            Request Date:
+          </label>
+          <div
+            class="cds--select-input__wrapper"
+          >
+            <select
+              class="cds--select-input"
+              id="selectedPeriod"
+              name="selectedPeriod"
+              title="Last 24 Hours"
+            >
+              <option
+                class="cds--select-option"
+                label="Last 24 Hours"
+                value="1"
+              >
+                Last 24 Hours
+              </option>
+              <option
+                class="cds--select-option"
+                label="Last 7 Days"
+                value="7"
+              >
+                Last 7 Days
+              </option>
+              <option
+                class="cds--select-option"
+                label="Last 365 Days"
+                value="365"
+              >
+                Last 365 Days
+              </option>
+            </select>
+            <svg
+              aria-hidden="true"
+              class="cds--select__arrow"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+              />
+            </svg>
+            
+          </div>
+        </div>
+      </div>
+      <div
+        class="cds--form-item cds--text-input-wrapper"
+      >
+        <div
+          class="cds--text-input__label-wrapper"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="reasonText"
+          >
+            Reason:
+          </label>
+        </div>
+        <div
+          class="cds--text-input__field-outer-wrapper"
+        >
+          <div
+            class="cds--text-input__field-wrapper"
+          >
+            <input
+              class="cds--text-input"
+              id="reasonText"
+              maxlength="128"
+              name="reasonText"
+              type="text"
+              value=""
+            />
+            
+            <span
+              aria-atomic="true"
+              aria-live="assertive"
+              class="cds--text-input__counter-alert"
+              role="alert"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="custom-button-wrapper"
+      >
+        <button
+          class="btnRight cds--btn cds--btn--primary"
+          id="submit"
+          type="submit"
+        >
+          Apply
+        </button>
+        <button
+          class="btnRight cds--btn cds--btn--secondary"
+          id="reset"
+          type="button"
+        >
+          Reset
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
 `;

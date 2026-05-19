@@ -1,43 +1,78 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TagCategory Component match snapshot 1`] = `
-<FormGroup
-  legendText="Category"
->
-  <ForwardRef
-    className="tag-modifier-form-row category-modifier"
+exports[`Category modifier Component should match snapshot 1`] = `
+<div>
+  <fieldset
+    class="cds--fieldset"
   >
-    <TagSelector
-      infoText="Only a single value can be assigned from these categories"
-      isDisabled={false}
-      onTagCategoryChange={[MockFunction]}
-      selectedOption={
-        Object {
-          "id": 1,
-          "label": "animal",
-        }
-      }
-      tagCategories={
-        Array [
-          Object {
-            "id": 1,
-            "label": "Name",
-          },
-          Object {
-            "id": 2,
-            "label": "Number",
-          },
-          Object {
-            "id": 3,
-            "label": "Animal",
-          },
-          Object {
-            "id": 4,
-            "label": "Food",
-          },
-        ]
-      }
-    />
-  </ForwardRef>
-</FormGroup>
+    <legend
+      class="cds--label"
+    >
+      Category
+    </legend>
+    <div
+      class="tag-modifier-form-row category-modifier cds--col"
+    >
+      <div
+        class="cds--dropdown__wrapper cds--list-box__wrapper tag-select"
+      >
+        
+        <div
+          class="cds--dropdown cds--list-box"
+          id="dropdown-tag-select"
+        >
+          <button
+            aria-activedescendant=""
+            aria-controls="downshift-0-menu"
+            aria-expanded="false"
+            aria-haspopup="listbox"
+            aria-labelledby="downshift-0-label"
+            class="cds--list-box__field"
+            id="downshift-0-toggle-button"
+            role="combobox"
+            tabindex="0"
+            title="Name"
+            type="button"
+          >
+            <span
+              class="cds--list-box__label"
+            >
+              Name
+            </span>
+            <div
+              class="cds--list-box__menu-icon"
+            >
+              <svg
+                aria-label="Open menu"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                name="chevron--down"
+                preserveAspectRatio="xMidYMid meet"
+                role="img"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                />
+                <title>
+                  Open menu
+                </title>
+              </svg>
+            </div>
+          </button>
+          
+          <ul
+            aria-labelledby="downshift-0-label"
+            class="cds--list-box__menu"
+            id="downshift-0-menu"
+            role="listbox"
+          />
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</div>
 `;

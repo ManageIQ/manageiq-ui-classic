@@ -1,1185 +1,367 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Simple Table renders just fine... 1`] = `
-<SimpleTable
-  labels={
-    Array [
-      "Network Protocol",
-      "Host Protocol",
-      "Direction",
-      "Port",
-      "End Port",
-      "Source",
-    ]
-  }
-  onClick={[Function]}
-  rows={
-    Array [
-      Array [
-        null,
-        "-1",
-        "outbound",
-        0,
-        0,
-        "0.0.0.0/0",
-      ],
-      Array [
-        null,
-        "TCP",
-        "inbound",
-        22,
-        22,
-        "0.0.0.0/0",
-      ],
-      Array [
-        null,
-        Object {
-          "link": "some_link",
-          "value": Array [
-            "TCP",
-          ],
-        },
-        "inbound",
-        80,
-        80,
-        "0.0.0.0/0",
-      ],
-    ]
-  }
-  title="Firewall Rules"
->
-  <MiqStructuredList
-    headers={
-      Array [
-        "Network Protocol",
-        "Host Protocol",
-        "Direction",
-        "Port",
-        "End Port",
-        "Source",
-      ]
-    }
-    mode="simple_table"
-    onClick={[Function]}
-    rows={
-      Array [
-        Array [
-          null,
-          "-1",
-          "outbound",
-          0,
-          0,
-          "0.0.0.0/0",
-        ],
-        Array [
-          null,
-          "TCP",
-          "inbound",
-          22,
-          22,
-          "0.0.0.0/0",
-        ],
-        Array [
-          null,
-          Object {
-            "link": "some_link",
-            "value": Array [
-              "TCP",
-            ],
-          },
-          "inbound",
-          80,
-          80,
-          "0.0.0.0/0",
-        ],
-      ]
-    }
-    title="Firewall Rules"
+<div>
+  <ul
+    class="cds--accordion miq-structured-list-accordion simple_table cds--accordion--start"
   >
-    <Accordion
-      align="start"
-      className="miq-structured-list-accordion simple_table"
+    <li
+      class="cds--accordion__item cds--accordion__item--active"
     >
-      <AccordionProvider
-        disabled={false}
+      <button
+        aria-controls="accordion-item-5"
+        aria-expanded="true"
+        class="cds--accordion__heading"
+        type="button"
       >
-        <ul
-          className="cds--accordion miq-structured-list-accordion simple_table cds--accordion--start"
+        <svg
+          aria-hidden="true"
+          class="cds--accordion__arrow"
+          fill="currentColor"
+          focusable="false"
+          height="16"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 16 16"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <AccordionItem
-            open={true}
-            title="Firewall Rules"
+          <path
+            d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+          />
+        </svg>
+        <div
+          class="cds--accordion__title"
+          dir="auto"
+        >
+          Firewall Rules
+        </div>
+      </button>
+      <div
+        class="cds--accordion__wrapper"
+      >
+        <div
+          class="cds--accordion__content"
+          id="accordion-item-5"
+        >
+          <div
+            aria-label="Structured list"
+            class="cds--structured-list miq-structured-list simple_table"
+            role="table"
           >
-            <li
-              className="cds--accordion__item cds--accordion__item--active"
+            <div
+              class="cds--structured-list-thead"
+              role="rowgroup"
             >
-              <defaultRenderToggle
-                aria-controls="accordion-item-5"
-                aria-expanded={true}
-                className="cds--accordion__heading"
-                disabled={false}
-                onClick={[Function]}
-                onKeyDown={[Function]}
-                type="button"
-              >
-                <button
-                  aria-controls="accordion-item-5"
-                  aria-expanded={true}
-                  className="cds--accordion__heading"
-                  disabled={false}
-                  onClick={[Function]}
-                  onKeyDown={[Function]}
-                  type="button"
-                >
-                  <ForwardRef(ChevronRight)
-                    className="cds--accordion__arrow"
-                  >
-                    <Icon
-                      className="cds--accordion__arrow"
-                      fill="currentColor"
-                      height={16}
-                      viewBox="0 0 16 16"
-                      width={16}
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <svg
-                        aria-hidden={true}
-                        className="cds--accordion__arrow"
-                        fill="currentColor"
-                        focusable="false"
-                        height={16}
-                        preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 16 16"
-                        width={16}
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
-                        />
-                      </svg>
-                    </Icon>
-                  </ForwardRef(ChevronRight)>
-                  <ForwardRef
-                    as="div"
-                    className="cds--accordion__title"
-                  >
-                    <div
-                      className="cds--accordion__title"
-                      dir="auto"
-                    >
-                      Firewall Rules
-                    </div>
-                  </ForwardRef>
-                </button>
-              </defaultRenderToggle>
               <div
-                className="cds--accordion__wrapper"
-                onTransitionEnd={[Function]}
+                class="cds--structured-list-row cds--structured-list-row--header-row"
+                role="row"
+                tabindex="0"
+              >
+                <span
+                  class="cds--structured-list-th list_header"
+                  dir="auto"
+                  role="columnheader"
+                >
+                  Network Protocol
+                </span>
+                <span
+                  class="cds--structured-list-th list_header"
+                  dir="auto"
+                  role="columnheader"
+                >
+                  Host Protocol
+                </span>
+                <span
+                  class="cds--structured-list-th list_header"
+                  dir="auto"
+                  role="columnheader"
+                >
+                  Direction
+                </span>
+                <span
+                  class="cds--structured-list-th list_header"
+                  dir="auto"
+                  role="columnheader"
+                >
+                  Port
+                </span>
+                <span
+                  class="cds--structured-list-th list_header"
+                  dir="auto"
+                  role="columnheader"
+                >
+                  End Port
+                </span>
+                <span
+                  class="cds--structured-list-th list_header"
+                  dir="auto"
+                  role="columnheader"
+                >
+                  Source
+                </span>
+              </div>
+            </div>
+            <div
+              class="cds--structured-list-tbody"
+              role="rowgroup"
+            >
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="0"
+                title=""
               >
                 <div
-                  className="cds--accordion__content"
-                  id="accordion-item-5"
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
                 >
-                  <StructuredListWrapper
-                    aria-label="Structured list"
-                    className="miq-structured-list simple_table"
+                  <div
+                    class="wrap_text"
+                  />
+                </div>
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="expand wrap_text"
                   >
-                    <div
-                      aria-label="Structured list"
-                      className="cds--structured-list miq-structured-list simple_table"
-                      role="table"
-                    >
-                      <MiqStructuredListHeader
-                        headers={
-                          Array [
-                            "Network Protocol",
-                            "Host Protocol",
-                            "Direction",
-                            "Port",
-                            "End Port",
-                            "Source",
-                          ]
-                        }
-                      >
-                        <StructuredListHead>
-                          <div
-                            className="cds--structured-list-thead"
-                            role="rowgroup"
-                          >
-                            <StructuredListRow
-                              head={true}
-                              tabIndex={0}
-                            >
-                              <div
-                                className="cds--structured-list-row cds--structured-list-row--header-row"
-                                role="row"
-                                tabIndex={0}
-                              >
-                                <StructuredListCell
-                                  className="list_header"
-                                  head={true}
-                                  key="0"
-                                >
-                                  <ForwardRef
-                                    className="cds--structured-list-th list_header"
-                                    role="columnheader"
-                                  >
-                                    <span
-                                      className="cds--structured-list-th list_header"
-                                      dir="auto"
-                                      role="columnheader"
-                                    >
-                                      Network Protocol
-                                    </span>
-                                  </ForwardRef>
-                                </StructuredListCell>
-                                <StructuredListCell
-                                  className="list_header"
-                                  head={true}
-                                  key="1"
-                                >
-                                  <ForwardRef
-                                    className="cds--structured-list-th list_header"
-                                    role="columnheader"
-                                  >
-                                    <span
-                                      className="cds--structured-list-th list_header"
-                                      dir="auto"
-                                      role="columnheader"
-                                    >
-                                      Host Protocol
-                                    </span>
-                                  </ForwardRef>
-                                </StructuredListCell>
-                                <StructuredListCell
-                                  className="list_header"
-                                  head={true}
-                                  key="2"
-                                >
-                                  <ForwardRef
-                                    className="cds--structured-list-th list_header"
-                                    role="columnheader"
-                                  >
-                                    <span
-                                      className="cds--structured-list-th list_header"
-                                      dir="auto"
-                                      role="columnheader"
-                                    >
-                                      Direction
-                                    </span>
-                                  </ForwardRef>
-                                </StructuredListCell>
-                                <StructuredListCell
-                                  className="list_header"
-                                  head={true}
-                                  key="3"
-                                >
-                                  <ForwardRef
-                                    className="cds--structured-list-th list_header"
-                                    role="columnheader"
-                                  >
-                                    <span
-                                      className="cds--structured-list-th list_header"
-                                      dir="auto"
-                                      role="columnheader"
-                                    >
-                                      Port
-                                    </span>
-                                  </ForwardRef>
-                                </StructuredListCell>
-                                <StructuredListCell
-                                  className="list_header"
-                                  head={true}
-                                  key="4"
-                                >
-                                  <ForwardRef
-                                    className="cds--structured-list-th list_header"
-                                    role="columnheader"
-                                  >
-                                    <span
-                                      className="cds--structured-list-th list_header"
-                                      dir="auto"
-                                      role="columnheader"
-                                    >
-                                      End Port
-                                    </span>
-                                  </ForwardRef>
-                                </StructuredListCell>
-                                <StructuredListCell
-                                  className="list_header"
-                                  head={true}
-                                  key="5"
-                                >
-                                  <ForwardRef
-                                    className="cds--structured-list-th list_header"
-                                    role="columnheader"
-                                  >
-                                    <span
-                                      className="cds--structured-list-th list_header"
-                                      dir="auto"
-                                      role="columnheader"
-                                    >
-                                      Source
-                                    </span>
-                                  </ForwardRef>
-                                </StructuredListCell>
-                              </div>
-                            </StructuredListRow>
-                          </div>
-                        </StructuredListHead>
-                      </MiqStructuredListHeader>
-                      <MiqStructuredListBody
-                        clickEvents={false}
-                        mode="simple_table"
-                        onClick={[Function]}
-                        rows={
-                          Array [
-                            Array [
-                              null,
-                              "-1",
-                              "outbound",
-                              0,
-                              0,
-                              "0.0.0.0/0",
-                            ],
-                            Array [
-                              null,
-                              "TCP",
-                              "inbound",
-                              22,
-                              22,
-                              "0.0.0.0/0",
-                            ],
-                            Array [
-                              null,
-                              Object {
-                                "link": "some_link",
-                                "value": Array [
-                                  "TCP",
-                                ],
-                              },
-                              "inbound",
-                              80,
-                              80,
-                              "0.0.0.0/0",
-                            ],
-                          ]
-                        }
-                      >
-                        <StructuredListBody>
-                          <div
-                            className="cds--structured-list-tbody"
-                            role="rowgroup"
-                          >
-                            <StructuredListRow
-                              className="not-clickable"
-                              key="0"
-                              onClick={[Function]}
-                              tabIndex={0}
-                              title=""
-                            >
-                              <div
-                                className="cds--structured-list-row not-clickable"
-                                onBlur={[Function]}
-                                onClick={[Function]}
-                                onFocus={[Function]}
-                                role="row"
-                                tabIndex={0}
-                                title=""
-                              >
-                                <MiqStructuredListBodyValue
-                                  clickEvents={false}
-                                  onClick={[Function]}
-                                  row={
-                                    Array [
-                                      null,
-                                      "-1",
-                                      "outbound",
-                                      0,
-                                      0,
-                                      "0.0.0.0/0",
-                                    ]
-                                  }
-                                >
-                                  <MiqStructuredListArray
-                                    clickEvents={false}
-                                    onClick={[Function]}
-                                    row={
-                                      Array [
-                                        null,
-                                        "-1",
-                                        "outbound",
-                                        0,
-                                        0,
-                                        "0.0.0.0/0",
-                                      ]
-                                    }
-                                  >
-                                    <StructuredListCell
-                                      className="content_value array_item"
-                                      key="0"
-                                      onClick={[Function]}
-                                      title=""
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value array_item"
-                                        onClick={[Function]}
-                                        role="cell"
-                                        title=""
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value array_item"
-                                          dir="auto"
-                                          onClick={[Function]}
-                                          role="cell"
-                                          title=""
-                                        >
-                                          <MiqStructuredListText
-                                            value={null}
-                                          >
-                                            <div
-                                              className="wrap_text"
-                                            />
-                                          </MiqStructuredListText>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                    <StructuredListCell
-                                      className="content_value array_item"
-                                      key="1"
-                                      onClick={[Function]}
-                                      title=""
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value array_item"
-                                        onClick={[Function]}
-                                        role="cell"
-                                        title=""
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value array_item"
-                                          dir="auto"
-                                          onClick={[Function]}
-                                          role="cell"
-                                          title=""
-                                        >
-                                          <MiqStructuredListText
-                                            value="-1"
-                                          >
-                                            <div
-                                              className="expand wrap_text"
-                                            >
-                                              -1
-                                            </div>
-                                          </MiqStructuredListText>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                    <StructuredListCell
-                                      className="content_value array_item"
-                                      key="2"
-                                      onClick={[Function]}
-                                      title=""
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value array_item"
-                                        onClick={[Function]}
-                                        role="cell"
-                                        title=""
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value array_item"
-                                          dir="auto"
-                                          onClick={[Function]}
-                                          role="cell"
-                                          title=""
-                                        >
-                                          <MiqStructuredListText
-                                            value="outbound"
-                                          >
-                                            <div
-                                              className="expand wrap_text"
-                                            >
-                                              outbound
-                                            </div>
-                                          </MiqStructuredListText>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                    <StructuredListCell
-                                      className="content_value array_item"
-                                      key="3"
-                                      onClick={[Function]}
-                                      title=""
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value array_item"
-                                        onClick={[Function]}
-                                        role="cell"
-                                        title=""
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value array_item"
-                                          dir="auto"
-                                          onClick={[Function]}
-                                          role="cell"
-                                          title=""
-                                        >
-                                          <MiqStructuredListText
-                                            value={0}
-                                          >
-                                            <div
-                                              className="expand wrap_text"
-                                            >
-                                              0
-                                            </div>
-                                          </MiqStructuredListText>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                    <StructuredListCell
-                                      className="content_value array_item"
-                                      key="4"
-                                      onClick={[Function]}
-                                      title=""
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value array_item"
-                                        onClick={[Function]}
-                                        role="cell"
-                                        title=""
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value array_item"
-                                          dir="auto"
-                                          onClick={[Function]}
-                                          role="cell"
-                                          title=""
-                                        >
-                                          <MiqStructuredListText
-                                            value={0}
-                                          >
-                                            <div
-                                              className="expand wrap_text"
-                                            >
-                                              0
-                                            </div>
-                                          </MiqStructuredListText>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                    <StructuredListCell
-                                      className="content_value array_item"
-                                      key="5"
-                                      onClick={[Function]}
-                                      title=""
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value array_item"
-                                        onClick={[Function]}
-                                        role="cell"
-                                        title=""
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value array_item"
-                                          dir="auto"
-                                          onClick={[Function]}
-                                          role="cell"
-                                          title=""
-                                        >
-                                          <MiqStructuredListText
-                                            value="0.0.0.0/0"
-                                          >
-                                            <div
-                                              className="expand wrap_text"
-                                            >
-                                              0.0.0.0/0
-                                            </div>
-                                          </MiqStructuredListText>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                  </MiqStructuredListArray>
-                                </MiqStructuredListBodyValue>
-                              </div>
-                            </StructuredListRow>
-                            <StructuredListRow
-                              className="not-clickable"
-                              key="1"
-                              onClick={[Function]}
-                              tabIndex={1}
-                              title=""
-                            >
-                              <div
-                                className="cds--structured-list-row not-clickable"
-                                onBlur={[Function]}
-                                onClick={[Function]}
-                                onFocus={[Function]}
-                                role="row"
-                                tabIndex={1}
-                                title=""
-                              >
-                                <MiqStructuredListBodyValue
-                                  clickEvents={false}
-                                  onClick={[Function]}
-                                  row={
-                                    Array [
-                                      null,
-                                      "TCP",
-                                      "inbound",
-                                      22,
-                                      22,
-                                      "0.0.0.0/0",
-                                    ]
-                                  }
-                                >
-                                  <MiqStructuredListArray
-                                    clickEvents={false}
-                                    onClick={[Function]}
-                                    row={
-                                      Array [
-                                        null,
-                                        "TCP",
-                                        "inbound",
-                                        22,
-                                        22,
-                                        "0.0.0.0/0",
-                                      ]
-                                    }
-                                  >
-                                    <StructuredListCell
-                                      className="content_value array_item"
-                                      key="0"
-                                      onClick={[Function]}
-                                      title=""
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value array_item"
-                                        onClick={[Function]}
-                                        role="cell"
-                                        title=""
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value array_item"
-                                          dir="auto"
-                                          onClick={[Function]}
-                                          role="cell"
-                                          title=""
-                                        >
-                                          <MiqStructuredListText
-                                            value={null}
-                                          >
-                                            <div
-                                              className="wrap_text"
-                                            />
-                                          </MiqStructuredListText>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                    <StructuredListCell
-                                      className="content_value array_item"
-                                      key="1"
-                                      onClick={[Function]}
-                                      title=""
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value array_item"
-                                        onClick={[Function]}
-                                        role="cell"
-                                        title=""
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value array_item"
-                                          dir="auto"
-                                          onClick={[Function]}
-                                          role="cell"
-                                          title=""
-                                        >
-                                          <MiqStructuredListText
-                                            value="TCP"
-                                          >
-                                            <div
-                                              className="expand wrap_text"
-                                            >
-                                              TCP
-                                            </div>
-                                          </MiqStructuredListText>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                    <StructuredListCell
-                                      className="content_value array_item"
-                                      key="2"
-                                      onClick={[Function]}
-                                      title=""
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value array_item"
-                                        onClick={[Function]}
-                                        role="cell"
-                                        title=""
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value array_item"
-                                          dir="auto"
-                                          onClick={[Function]}
-                                          role="cell"
-                                          title=""
-                                        >
-                                          <MiqStructuredListText
-                                            value="inbound"
-                                          >
-                                            <div
-                                              className="expand wrap_text"
-                                            >
-                                              inbound
-                                            </div>
-                                          </MiqStructuredListText>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                    <StructuredListCell
-                                      className="content_value array_item"
-                                      key="3"
-                                      onClick={[Function]}
-                                      title=""
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value array_item"
-                                        onClick={[Function]}
-                                        role="cell"
-                                        title=""
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value array_item"
-                                          dir="auto"
-                                          onClick={[Function]}
-                                          role="cell"
-                                          title=""
-                                        >
-                                          <MiqStructuredListText
-                                            value={22}
-                                          >
-                                            <div
-                                              className="expand wrap_text"
-                                            >
-                                              22
-                                            </div>
-                                          </MiqStructuredListText>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                    <StructuredListCell
-                                      className="content_value array_item"
-                                      key="4"
-                                      onClick={[Function]}
-                                      title=""
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value array_item"
-                                        onClick={[Function]}
-                                        role="cell"
-                                        title=""
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value array_item"
-                                          dir="auto"
-                                          onClick={[Function]}
-                                          role="cell"
-                                          title=""
-                                        >
-                                          <MiqStructuredListText
-                                            value={22}
-                                          >
-                                            <div
-                                              className="expand wrap_text"
-                                            >
-                                              22
-                                            </div>
-                                          </MiqStructuredListText>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                    <StructuredListCell
-                                      className="content_value array_item"
-                                      key="5"
-                                      onClick={[Function]}
-                                      title=""
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value array_item"
-                                        onClick={[Function]}
-                                        role="cell"
-                                        title=""
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value array_item"
-                                          dir="auto"
-                                          onClick={[Function]}
-                                          role="cell"
-                                          title=""
-                                        >
-                                          <MiqStructuredListText
-                                            value="0.0.0.0/0"
-                                          >
-                                            <div
-                                              className="expand wrap_text"
-                                            >
-                                              0.0.0.0/0
-                                            </div>
-                                          </MiqStructuredListText>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                  </MiqStructuredListArray>
-                                </MiqStructuredListBodyValue>
-                              </div>
-                            </StructuredListRow>
-                            <StructuredListRow
-                              className="not-clickable"
-                              key="2"
-                              onClick={[Function]}
-                              tabIndex={2}
-                              title=""
-                            >
-                              <div
-                                className="cds--structured-list-row not-clickable"
-                                onBlur={[Function]}
-                                onClick={[Function]}
-                                onFocus={[Function]}
-                                role="row"
-                                tabIndex={2}
-                                title=""
-                              >
-                                <MiqStructuredListBodyValue
-                                  clickEvents={false}
-                                  onClick={[Function]}
-                                  row={
-                                    Array [
-                                      null,
-                                      Object {
-                                        "link": "some_link",
-                                        "value": Array [
-                                          "TCP",
-                                        ],
-                                      },
-                                      "inbound",
-                                      80,
-                                      80,
-                                      "0.0.0.0/0",
-                                    ]
-                                  }
-                                >
-                                  <MiqStructuredListArray
-                                    clickEvents={false}
-                                    onClick={[Function]}
-                                    row={
-                                      Array [
-                                        null,
-                                        Object {
-                                          "link": "some_link",
-                                          "value": Array [
-                                            "TCP",
-                                          ],
-                                        },
-                                        "inbound",
-                                        80,
-                                        80,
-                                        "0.0.0.0/0",
-                                      ]
-                                    }
-                                  >
-                                    <StructuredListCell
-                                      className="content_value array_item"
-                                      key="0"
-                                      onClick={[Function]}
-                                      title=""
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value array_item"
-                                        onClick={[Function]}
-                                        role="cell"
-                                        title=""
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value array_item"
-                                          dir="auto"
-                                          onClick={[Function]}
-                                          role="cell"
-                                          title=""
-                                        >
-                                          <MiqStructuredListText
-                                            value={null}
-                                          >
-                                            <div
-                                              className="wrap_text"
-                                            />
-                                          </MiqStructuredListText>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                    <StructuredListCell
-                                      className="content_value array_item"
-                                      key="1"
-                                      onClick={[Function]}
-                                      title=""
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value array_item"
-                                        onClick={[Function]}
-                                        role="cell"
-                                        title=""
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value array_item"
-                                          dir="auto"
-                                          onClick={[Function]}
-                                          role="cell"
-                                          title=""
-                                        >
-                                          <MiqStructuredListConditionalTag
-                                            clickEvents={false}
-                                            onClick={[Function]}
-                                            row={
-                                              Object {
-                                                "link": "some_link",
-                                                "value": Array [
-                                                  "TCP",
-                                                ],
-                                              }
-                                            }
-                                          >
-                                            <MiqStructuredListLink
-                                              clickEvents={false}
-                                              onClick={[Function]}
-                                              row={
-                                                Object {
-                                                  "link": "some_link",
-                                                  "value": Array [
-                                                    "TCP",
-                                                  ],
-                                                }
-                                              }
-                                            >
-                                              <Link
-                                                className="cell_link"
-                                                href="some_link"
-                                                onClick={[Function]}
-                                                to="some_link"
-                                              >
-                                                <a
-                                                  className="cds--link cell_link"
-                                                  href="some_link"
-                                                  onClick={[Function]}
-                                                  to="some_link"
-                                                >
-                                                  <MiqStructuredListContent
-                                                    row={
-                                                      Object {
-                                                        "link": "some_link",
-                                                        "value": Array [
-                                                          "TCP",
-                                                        ],
-                                                      }
-                                                    }
-                                                  >
-                                                    <div
-                                                      className="content"
-                                                    >
-                                                      <MiqStructuredListMultiRow
-                                                        value={
-                                                          Array [
-                                                            "TCP",
-                                                          ]
-                                                        }
-                                                      >
-                                                        <div
-                                                          className="multi_row_cell"
-                                                        >
-                                                          <div
-                                                            className="sub_row_item"
-                                                            key="0"
-                                                            title=""
-                                                          >
-                                                            <div
-                                                              className="sub_value"
-                                                            >
-                                                              <MiqStructuredListText>
-                                                                <div
-                                                                  className="wrap_text"
-                                                                />
-                                                              </MiqStructuredListText>
-                                                            </div>
-                                                          </div>
-                                                        </div>
-                                                      </MiqStructuredListMultiRow>
-                                                    </div>
-                                                  </MiqStructuredListContent>
-                                                </a>
-                                              </Link>
-                                            </MiqStructuredListLink>
-                                          </MiqStructuredListConditionalTag>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                    <StructuredListCell
-                                      className="content_value array_item"
-                                      key="2"
-                                      onClick={[Function]}
-                                      title=""
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value array_item"
-                                        onClick={[Function]}
-                                        role="cell"
-                                        title=""
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value array_item"
-                                          dir="auto"
-                                          onClick={[Function]}
-                                          role="cell"
-                                          title=""
-                                        >
-                                          <MiqStructuredListText
-                                            value="inbound"
-                                          >
-                                            <div
-                                              className="expand wrap_text"
-                                            >
-                                              inbound
-                                            </div>
-                                          </MiqStructuredListText>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                    <StructuredListCell
-                                      className="content_value array_item"
-                                      key="3"
-                                      onClick={[Function]}
-                                      title=""
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value array_item"
-                                        onClick={[Function]}
-                                        role="cell"
-                                        title=""
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value array_item"
-                                          dir="auto"
-                                          onClick={[Function]}
-                                          role="cell"
-                                          title=""
-                                        >
-                                          <MiqStructuredListText
-                                            value={80}
-                                          >
-                                            <div
-                                              className="expand wrap_text"
-                                            >
-                                              80
-                                            </div>
-                                          </MiqStructuredListText>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                    <StructuredListCell
-                                      className="content_value array_item"
-                                      key="4"
-                                      onClick={[Function]}
-                                      title=""
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value array_item"
-                                        onClick={[Function]}
-                                        role="cell"
-                                        title=""
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value array_item"
-                                          dir="auto"
-                                          onClick={[Function]}
-                                          role="cell"
-                                          title=""
-                                        >
-                                          <MiqStructuredListText
-                                            value={80}
-                                          >
-                                            <div
-                                              className="expand wrap_text"
-                                            >
-                                              80
-                                            </div>
-                                          </MiqStructuredListText>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                    <StructuredListCell
-                                      className="content_value array_item"
-                                      key="5"
-                                      onClick={[Function]}
-                                      title=""
-                                    >
-                                      <ForwardRef
-                                        as="div"
-                                        className="cds--structured-list-td content_value array_item"
-                                        onClick={[Function]}
-                                        role="cell"
-                                        title=""
-                                      >
-                                        <div
-                                          className="cds--structured-list-td content_value array_item"
-                                          dir="auto"
-                                          onClick={[Function]}
-                                          role="cell"
-                                          title=""
-                                        >
-                                          <MiqStructuredListText
-                                            value="0.0.0.0/0"
-                                          >
-                                            <div
-                                              className="expand wrap_text"
-                                            >
-                                              0.0.0.0/0
-                                            </div>
-                                          </MiqStructuredListText>
-                                        </div>
-                                      </ForwardRef>
-                                    </StructuredListCell>
-                                  </MiqStructuredListArray>
-                                </MiqStructuredListBodyValue>
-                              </div>
-                            </StructuredListRow>
-                          </div>
-                        </StructuredListBody>
-                      </MiqStructuredListBody>
-                    </div>
-                  </StructuredListWrapper>
+                    -1
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="expand wrap_text"
+                  >
+                    outbound
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="expand wrap_text"
+                  >
+                    0
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="expand wrap_text"
+                  >
+                    0
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="expand wrap_text"
+                  >
+                    0.0.0.0/0
+                  </div>
                 </div>
               </div>
-            </li>
-          </AccordionItem>
-        </ul>
-      </AccordionProvider>
-    </Accordion>
-  </MiqStructuredList>
-</SimpleTable>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="1"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="wrap_text"
+                  />
+                </div>
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="expand wrap_text"
+                  >
+                    TCP
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="expand wrap_text"
+                  >
+                    inbound
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="expand wrap_text"
+                  >
+                    22
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="expand wrap_text"
+                  >
+                    22
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="expand wrap_text"
+                  >
+                    0.0.0.0/0
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cds--structured-list-row not-clickable"
+                role="row"
+                tabindex="2"
+                title=""
+              >
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="wrap_text"
+                  />
+                </div>
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <a
+                    class="cds--link cell_link"
+                    href="some_link"
+                    to="some_link"
+                  >
+                    <div
+                      class="content"
+                    >
+                      <div
+                        class="multi_row_cell"
+                      >
+                        <div
+                          class="sub_row_item"
+                          title=""
+                        >
+                          <div
+                            class="sub_value"
+                          >
+                            <div
+                              class="wrap_text"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="expand wrap_text"
+                  >
+                    inbound
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="expand wrap_text"
+                  >
+                    80
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="expand wrap_text"
+                  >
+                    80
+                  </div>
+                </div>
+                <div
+                  class="cds--structured-list-td content_value array_item"
+                  dir="auto"
+                  role="cell"
+                  title=""
+                >
+                  <div
+                    class="expand wrap_text"
+                  >
+                    0.0.0.0/0
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 `;

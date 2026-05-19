@@ -1,133 +1,108 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`NotificationMessage component blank message should not render message 1`] = `
-<NotificationMessage
-  message=""
-  type="error"
-/>
-`;
+exports[`NotificationMessage component blank message should not render message 1`] = `<div />`;
 
 exports[`NotificationMessage component invalid type should not render message 1`] = `
-<NotificationMessage
-  message="No message will be displayed"
-  type="unknown"
->
+<div>
   <div
-    className="miq-notification-message-container alert alert-info"
+    class="miq-notification-message-container alert alert-info"
   >
     <span
-      className="pficon fa fa-regular fa-question-circle"
+      class="pficon fa fa-regular fa-question-circle"
     />
     <strong>
       No message will be displayed
     </strong>
   </div>
-</NotificationMessage>
+</div>
 `;
 
 exports[`NotificationMessage component should render error message 1`] = `
-<NotificationMessage
-  message="Error message goes here"
-  type="error"
->
+<div>
   <div
-    className="miq-notification-message-container alert alert-danger"
+    class="miq-notification-message-container alert alert-danger"
   >
     <span
-      className="pficon pficon-error-circle-o"
+      class="pficon pficon-error-circle-o"
     />
     <strong>
       Error message goes here
     </strong>
   </div>
-</NotificationMessage>
+</div>
 `;
 
 exports[`NotificationMessage component should render information message 1`] = `
-<NotificationMessage
-  message="Information message goes here"
-  type="info"
->
+<div>
   <div
-    className="miq-notification-message-container alert alert-info"
+    class="miq-notification-message-container alert alert-info"
   >
     <span
-      className="pficon pficon-info"
+      class="pficon pficon-info"
     />
     <strong>
       Information message goes here
     </strong>
   </div>
-</NotificationMessage>
+</div>
 `;
 
 exports[`NotificationMessage component should render success message 1`] = `
-<NotificationMessage
-  message="Success message goes here"
-  type="success"
->
+<div>
   <div
-    className="miq-notification-message-container alert alert-success"
+    class="miq-notification-message-container alert alert-success"
   >
     <span
-      className="pficon pficon-ok"
+      class="pficon pficon-ok"
     />
     <strong>
       Success message goes here
     </strong>
   </div>
-</NotificationMessage>
+</div>
 `;
 
 exports[`NotificationMessage component should render warning message 1`] = `
-<NotificationMessage
-  message="Warning message goes here"
-  type="warning"
->
+<div>
   <div
-    className="miq-notification-message-container alert alert-warning"
+    class="miq-notification-message-container alert alert-warning"
   >
     <span
-      className="pficon pficon-warning-triangle-o"
+      class="pficon pficon-warning-triangle-o"
     />
     <strong>
       Warning message goes here
     </strong>
   </div>
-</NotificationMessage>
+</div>
 `;
 
 exports[`NotificationMessage component unknown error type message should be rendered with blank type 1`] = `
-<NotificationMessage
-  message="Message goes here"
-  type=""
->
+<div>
   <div
-    className="miq-notification-message-container alert alert-info"
+    class="miq-notification-message-container alert alert-info"
   >
     <span
-      className="pficon fa fa-regular fa-question-circle"
+      class="pficon fa fa-regular fa-question-circle"
     />
     <strong>
       Message goes here
     </strong>
   </div>
-</NotificationMessage>
+</div>
 `;
 
 exports[`NotificationMessage component unknown error type message should be rendered with no type 1`] = `
-<NotificationMessage
-  message="Message goes here"
->
+<div>
   <div
-    className="miq-notification-message-container alert alert-info"
+    class="miq-notification-message-container alert alert-info"
   >
     <span
-      className="pficon fa fa-regular fa-question-circle"
+      class="pficon fa fa-regular fa-question-circle"
     />
     <strong>
       Message goes here
     </strong>
   </div>
-</NotificationMessage>
+</div>
 `;

@@ -1,1708 +1,2860 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Data table component should render a data table with cells which have multiple rows or single row 1`] = `
-<div
-  className="miq-data-table chargeback-rate"
->
-  <DataTable
-    headers={Array []}
-    isSortable={false}
-    rows={Array []}
-    size="lg"
-    sortDirection="ASC"
-    stickyHeader={false}
+<div>
+  <div
+    class="miq-data-table chargeback-rate"
   >
-    <Component />
-  </DataTable>
+    <div
+      class="cds--data-table-content"
+    >
+      <table
+        class="cds--data-table cds--data-table--lg cds--data-table--visible-overflow-menu"
+      >
+        <tbody
+          aria-live="polite"
+        />
+      </table>
+    </div>
+  </div>
 </div>
 `;
 
 exports[`Data table component should render a simple data tabe with pagination and sorting 1`] = `
-<div
-  className="miq-data-table list"
->
-  <DataTable
-    headers={
-      Array [
-        Object {
-          "header": "Name",
-          "key": "name",
-        },
-        Object {
-          "header": "Status",
-          "key": "status",
-        },
-      ]
-    }
-    isSortable={true}
-    rows={
-      Array [
-        Object {
-          "id": "a",
-          "name": "Load balancer 1",
-          "status": "Disabled",
-        },
-        Object {
-          "id": "b",
-          "name": "Load balancer 2",
-          "status": "Starting",
-        },
-        Object {
-          "id": "c",
-          "name": "Load balancer 3",
-          "status": "Active",
-        },
-      ]
-    }
-    size="lg"
-    sortDirection="ASC"
-    stickyHeader={false}
+<div>
+  <div
+    class="miq-data-table list"
   >
-    <Component />
-  </DataTable>
-  <MiqPagination
-    pageOptions={
-      Object {
-        "onPageChange": [MockFunction],
-        "onPageSet": [MockFunction],
-        "onPerPageSelect": [MockFunction],
-        "page": 1,
-        "pageSize": 10,
-        "pageSizes": Array [
-          10,
-          20,
-          30,
-          40,
-          50,
-        ],
-        "totalItems": 3,
-      }
-    }
-  />
+    <div
+      class="cds--data-table-content"
+    >
+      <table
+        class="cds--data-table cds--data-table--lg cds--data-table--sort cds--data-table--visible-overflow-menu"
+      >
+        <thead>
+          <tr>
+            <th
+              aria-live="off"
+              class="cds--table-column-checkbox"
+              scope="col"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-4__select-all"
+                  name="select-all-4"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-4__select-all"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select all rows
+                  </span>
+                </label>
+              </div>
+            </th>
+            <th
+              aria-sort="none"
+              class="miq-data-table-header cds--table-sort__header"
+              scope="col"
+            >
+              <div
+                class="cds--table-sort__description"
+                id="table-sort-3"
+              >
+                Click to sort rows by Name header in ascending order
+              </div>
+              <button
+                aria-describedby="table-sort-3"
+                class="miq-data-table-header cds--table-sort"
+                type="button"
+              >
+                <span
+                  class="cds--table-sort__flex"
+                >
+                  <div
+                    class="cds--table-header-label"
+                  >
+                    Name
+                  </div>
+                  <svg
+                    aria-hidden="true"
+                    class="cds--table-sort__icon"
+                    fill="currentColor"
+                    focusable="false"
+                    height="20"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
+                    />
+                  </svg>
+                  <svg
+                    aria-hidden="true"
+                    class="cds--table-sort__icon-unsorted"
+                    fill="currentColor"
+                    focusable="false"
+                    height="20"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
+                    />
+                    <path
+                      d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
+                    />
+                  </svg>
+                  <div
+                    class="cds--table-header-label--decorator-inner"
+                  />
+                </span>
+              </button>
+            </th>
+            <th
+              aria-sort="none"
+              class="miq-data-table-header cds--table-sort__header"
+              scope="col"
+            >
+              <div
+                class="cds--table-sort__description"
+                id="table-sort-4"
+              >
+                Click to sort rows by Status header in ascending order
+              </div>
+              <button
+                aria-describedby="table-sort-4"
+                class="miq-data-table-header cds--table-sort"
+                type="button"
+              >
+                <span
+                  class="cds--table-sort__flex"
+                >
+                  <div
+                    class="cds--table-header-label"
+                  >
+                    Status
+                  </div>
+                  <svg
+                    aria-hidden="true"
+                    class="cds--table-sort__icon"
+                    fill="currentColor"
+                    focusable="false"
+                    height="20"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
+                    />
+                  </svg>
+                  <svg
+                    aria-hidden="true"
+                    class="cds--table-sort__icon-unsorted"
+                    fill="currentColor"
+                    focusable="false"
+                    height="20"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
+                    />
+                    <path
+                      d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
+                    />
+                  </svg>
+                  <div
+                    class="cds--table-header-label--decorator-inner"
+                  />
+                </span>
+              </button>
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          aria-live="polite"
+        >
+          <tr
+            class=""
+            tabindex="0"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-4__select-row-a"
+                  name="select-row-4"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-4__select-row-a"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title="Load balancer 1"
+                >
+                  Load balancer 1
+                </span>
+              </div>
+            </td>
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title="Disabled"
+                >
+                  Disabled
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class=""
+            tabindex="1"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-4__select-row-b"
+                  name="select-row-4"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-4__select-row-b"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title="Load balancer 2"
+                >
+                  Load balancer 2
+                </span>
+              </div>
+            </td>
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title="Starting"
+                >
+                  Starting
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class=""
+            tabindex="2"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-4__select-row-c"
+                  name="select-row-4"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-4__select-row-c"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title="Load balancer 3"
+                >
+                  Load balancer 3
+                </span>
+              </div>
+            </td>
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title="Active"
+                >
+                  Active
+                </span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <fieldset
+      class="miq-fieldset"
+    >
+      <legend
+        class="miq-fieldset-legend legend-search"
+      >
+        Pagination
+      </legend>
+      <div
+        class="miq-fieldset-content"
+      >
+        <div
+          class="cds--pagination cds--pagination--md miq-pagination"
+        >
+          <div
+            class="cds--pagination__left"
+          >
+            <label
+              class="cds--pagination__text"
+              for="cds-pagination-select-id-8"
+              id="cds-pagination-select-id-8-count-label"
+            >
+              Items per page:
+            </label>
+            <div
+              class="cds--form-item cds--select__item-count"
+            >
+              <div
+                class="cds--select cds--select--inline"
+              >
+                <div
+                  class="cds--select-input--inline__wrapper"
+                >
+                  <div
+                    class="cds--select-input__wrapper"
+                  >
+                    <select
+                      class="cds--select-input"
+                      id="cds-pagination-select-id-8"
+                      title="10"
+                    >
+                      <option
+                        class="cds--select-option"
+                        value="10"
+                      >
+                        10
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="20"
+                      >
+                        20
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="30"
+                      >
+                        30
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="40"
+                      >
+                        40
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="50"
+                      >
+                        50
+                      </option>
+                    </select>
+                    <svg
+                      aria-hidden="true"
+                      class="cds--select__arrow"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 16 16"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span
+              class="cds--pagination__text cds--pagination__items-count"
+            >
+              1-3 of 3 item
+            </span>
+          </div>
+          <div
+            class="cds--pagination__right"
+          >
+            <div
+              class="cds--form-item cds--select__page-number"
+            >
+              <div
+                class="cds--select cds--select--inline"
+              >
+                <label
+                  class="cds--label cds--visually-hidden"
+                  dir="auto"
+                  for="cds-pagination-select-id-8-right"
+                >
+                  Page of 1 page
+                </label>
+                <div
+                  class="cds--select-input--inline__wrapper"
+                >
+                  <div
+                    class="cds--select-input__wrapper"
+                  >
+                    <select
+                      class="cds--select-input"
+                      id="cds-pagination-select-id-8-right"
+                      title="1"
+                    >
+                      <option
+                        class="cds--select-option"
+                        value="1"
+                      >
+                        1
+                      </option>
+                    </select>
+                    <svg
+                      aria-hidden="true"
+                      class="cds--select__arrow"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 16 16"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span
+              class="cds--pagination__text"
+            >
+              of 1 page
+            </span>
+            <div
+              class="cds--pagination__control-buttons"
+            >
+              <span
+                class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip cds--icon-tooltip--disabled"
+              >
+                <div
+                  class="cds--tooltip-trigger__wrapper"
+                >
+                  <button
+                    aria-label="Previous page"
+                    aria-labelledby="tooltip-10"
+                    class="cds--pagination__button cds--pagination__button--backward cds--pagination__button--no-index cds--btn cds--btn--ghost cds--btn--disabled cds--btn--icon-only"
+                    disabled=""
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 32 32"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M20 24 10 16 20 8z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <span
+                  aria-hidden="true"
+                  class="cds--popover"
+                  id="tooltip-10"
+                  role="tooltip"
+                >
+                  <span
+                    class="cds--popover-content cds--tooltip-content"
+                  >
+                    Previous page
+                  </span>
+                  <span
+                    class="cds--popover-caret"
+                  />
+                </span>
+              </span>
+              <span
+                class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip cds--icon-tooltip--disabled"
+              >
+                <div
+                  class="cds--tooltip-trigger__wrapper"
+                >
+                  <button
+                    aria-label="Next page"
+                    aria-labelledby="tooltip-13"
+                    class="cds--pagination__button cds--pagination__button--forward cds--pagination__button--no-index cds--btn cds--btn--ghost cds--btn--disabled cds--btn--icon-only"
+                    disabled=""
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 32 32"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 8 22 16 12 24z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <span
+                  aria-hidden="true"
+                  class="cds--popover"
+                  id="tooltip-13"
+                  role="tooltip"
+                >
+                  <span
+                    class="cds--popover-content cds--tooltip-content"
+                  >
+                    Next page
+                  </span>
+                  <span
+                    class="cds--popover-caret"
+                  />
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
 </div>
 `;
 
 exports[`Data table component should render a simple data table 1`] = `
-<div
-  className="miq-data-table list"
->
-  <DataTable
-    headers={Array []}
-    isSortable={false}
-    rows={Array []}
-    size="lg"
-    sortDirection="ASC"
-    stickyHeader={false}
+<div>
+  <div
+    class="miq-data-table list"
   >
-    <Component />
-  </DataTable>
+    <div
+      class="cds--data-table-content"
+    >
+      <table
+        class="cds--data-table cds--data-table--lg cds--data-table--visible-overflow-menu"
+      >
+        <tbody
+          aria-live="polite"
+        />
+      </table>
+    </div>
+  </div>
 </div>
 `;
 
 exports[`Data table component should render a simple non-clickable data table 1`] = `
-<div
-  className="miq-data-table list"
->
-  <DataTable
-    headers={
-      Array [
-        Object {
-          "header": "Name",
-          "key": "name",
-        },
-        Object {
-          "header": "Title",
-          "key": "title",
-        },
-      ]
-    }
-    isSortable={false}
-    rows={
-      Array [
-        Object {
-          "id": "0",
-          "name": Object {
-            "icon": "fa fa-file-text-o",
-            "text": "CPU Wait Time (by VM)",
-          },
-          "title": "CPU Wait/Ready Time (by VM)",
-        },
-        Object {
-          "id": "1",
-          "name": Object {
-            "icon": "fa fa-file-text-o",
-            "text": "test",
-          },
-          "title": "test",
-        },
-        Object {
-          "id": "2",
-          "name": Object {
-            "icon": "fa fa-file-text-o",
-            "text": "zReport1",
-          },
-          "title": "zReport1",
-        },
-      ]
-    }
-    size="lg"
-    sortDirection="ASC"
-    stickyHeader={false}
+<div>
+  <div
+    class="miq-data-table list"
   >
-    <Component />
-  </DataTable>
+    <div
+      class="cds--data-table-content"
+    >
+      <table
+        class="cds--data-table cds--data-table--lg cds--data-table--visible-overflow-menu"
+      >
+        <thead>
+          <tr>
+            <th
+              aria-sort="none"
+              class="miq-data-table-header cds--table-sort__header"
+              scope="col"
+            >
+              <div
+                class="cds--table-sort__description"
+                id="table-sort-1"
+              >
+                Click to sort rows by Name header in ascending order
+              </div>
+              <button
+                aria-describedby="table-sort-1"
+                class="miq-data-table-header cds--table-sort"
+                type="button"
+              >
+                <span
+                  class="cds--table-sort__flex"
+                >
+                  <div
+                    class="cds--table-header-label"
+                  >
+                    Name
+                  </div>
+                  <svg
+                    aria-hidden="true"
+                    class="cds--table-sort__icon"
+                    fill="currentColor"
+                    focusable="false"
+                    height="20"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
+                    />
+                  </svg>
+                  <svg
+                    aria-hidden="true"
+                    class="cds--table-sort__icon-unsorted"
+                    fill="currentColor"
+                    focusable="false"
+                    height="20"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
+                    />
+                    <path
+                      d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
+                    />
+                  </svg>
+                  <div
+                    class="cds--table-header-label--decorator-inner"
+                  />
+                </span>
+              </button>
+            </th>
+            <th
+              aria-sort="none"
+              class="miq-data-table-header cds--table-sort__header"
+              scope="col"
+            >
+              <div
+                class="cds--table-sort__description"
+                id="table-sort-2"
+              >
+                Click to sort rows by Title header in ascending order
+              </div>
+              <button
+                aria-describedby="table-sort-2"
+                class="miq-data-table-header cds--table-sort"
+                type="button"
+              >
+                <span
+                  class="cds--table-sort__flex"
+                >
+                  <div
+                    class="cds--table-header-label"
+                  >
+                    Title
+                  </div>
+                  <svg
+                    aria-hidden="true"
+                    class="cds--table-sort__icon"
+                    fill="currentColor"
+                    focusable="false"
+                    height="20"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M16 4 6 14 7.41 15.41 15 7.83 15 28 17 28 17 7.83 24.59 15.41 26 14 16 4z"
+                    />
+                  </svg>
+                  <svg
+                    aria-hidden="true"
+                    class="cds--table-sort__icon-unsorted"
+                    fill="currentColor"
+                    focusable="false"
+                    height="20"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M27.6 20.6 24 24.2 24 4 22 4 22 24.2 18.4 20.6 17 22 23 28 29 22z"
+                    />
+                    <path
+                      d="M9 4 3 10 4.4 11.4 8 7.8 8 28 10 28 10 7.8 13.6 11.4 15 10z"
+                    />
+                  </svg>
+                  <div
+                    class="cds--table-header-label--decorator-inner"
+                  />
+                </span>
+              </button>
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          aria-live="polite"
+        >
+          <tr
+            class=""
+            tabindex="0"
+            title=""
+          >
+            <td>
+              <div
+                class="cell"
+                title=""
+              >
+                <i
+                  class="fa-lg icon fa fa-file-text-o"
+                />
+                <span
+                  class="cds--front-line"
+                  title="CPU Wait Time (by VM)"
+                >
+                  CPU Wait Time (by VM)
+                </span>
+              </div>
+            </td>
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title="CPU Wait/Ready Time (by VM)"
+                >
+                  CPU Wait/Ready Time (by VM)
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class=""
+            tabindex="1"
+            title=""
+          >
+            <td>
+              <div
+                class="cell"
+                title=""
+              >
+                <i
+                  class="fa-lg icon fa fa-file-text-o"
+                />
+                <span
+                  class="cds--front-line"
+                  title="test"
+                >
+                  test
+                </span>
+              </div>
+            </td>
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title="test"
+                >
+                  test
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class=""
+            tabindex="2"
+            title=""
+          >
+            <td>
+              <div
+                class="cell"
+                title=""
+              >
+                <i
+                  class="fa-lg icon fa fa-file-text-o"
+                />
+                <span
+                  class="cds--front-line"
+                  title="zReport1"
+                >
+                  zReport1
+                </span>
+              </div>
+            </td>
+            <td>
+              <div
+                class="cell"
+              >
+                <span
+                  class="cds--front-line"
+                  title="zReport1"
+                >
+                  zReport1
+                </span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 `;
 
 exports[`Data table component should render a static-gtl-view data table with checkboxes and icon 1`] = `
-<div
-  className="miq-data-table static-gtl-view"
->
-  <DataTable
-    headers={Array []}
-    isSortable={true}
-    rows={
-      Array [
-        Object {
-          "Kernel Version": Object {
-            "text": "3.10.0-327.el7.x86_64",
-          },
-          "Name": Object {
-            "text": "ocp-compute1.cfme2.lab.eng.rdu2.redhat.com",
-          },
-          "Operating System": Object {
-            "text": "Red Hat Enterprise Linux",
-          },
-          "Provider": Object {
-            "icon": "pficon pficon-container-node",
-            "image": "",
-            "text": "OCP 3.6 QE1",
-            "title": "OCP 3.6 QE1",
-          },
-          "Ready": Object {
-            "text": "True",
-          },
-          "Runtime Version": Object {
-            "text": "docker://1.12.6",
-          },
-          "clickable": null,
-          "id": "9",
-        },
-        Object {
-          "Kernel Version": Object {
-            "text": "3.10.0-327.el7.x86_64",
-          },
-          "Name": Object {
-            "text": "ocp-compute1.cfme2.lab.eng.rdu2.redhat.com",
-          },
-          "Operating System": Object {
-            "text": "Red Hat Enterprise Linux",
-          },
-          "Provider": Object {
-            "icon": "pficon pficon-container-node",
-            "image": "",
-            "text": "OCP 3.6 QE1",
-            "title": "OCP 3.6 QE1",
-          },
-          "Ready": Object {
-            "text": "True",
-          },
-          "Runtime Version": Object {
-            "text": "docker://1.12.6",
-          },
-          "clickable": null,
-          "id": "10",
-        },
-        Object {
-          "Kernel Version": Object {
-            "text": "3.10.0-327.el7.x86_64",
-          },
-          "Name": Object {
-            "text": "ocp-compute1.cfme2.lab.eng.rdu2.redhat.com",
-          },
-          "Operating System": Object {
-            "text": "Red Hat Enterprise Linux",
-          },
-          "Provider": Object {
-            "icon": "pficon pficon-container-node",
-            "image": "",
-            "text": "OCP 3.6 QE1",
-            "title": "OCP 3.6 QE1",
-          },
-          "Ready": Object {
-            "text": "True",
-          },
-          "Runtime Version": Object {
-            "text": "docker://1.12.6",
-          },
-          "clickable": null,
-          "id": "11",
-        },
-        Object {
-          "Kernel Version": Object {
-            "text": "3.10.0-327.el7.x86_64",
-          },
-          "Name": Object {
-            "text": "ocp-compute1.cfme2.lab.eng.rdu2.redhat.com",
-          },
-          "Operating System": Object {
-            "text": "Red Hat Enterprise Linux",
-          },
-          "Provider": Object {
-            "icon": "pficon pficon-container-node",
-            "image": "",
-            "text": "OCP 3.6 QE1",
-            "title": "OCP 3.6 QE1",
-          },
-          "Ready": Object {
-            "text": "True",
-          },
-          "Runtime Version": Object {
-            "text": "docker://1.12.6",
-          },
-          "clickable": null,
-          "id": "12",
-        },
-        Object {
-          "Kernel Version": Object {
-            "text": "3.10.0-327.el7.x86_64",
-          },
-          "Name": Object {
-            "text": "ocp-compute1.cfme2.lab.eng.rdu2.redhat.com",
-          },
-          "Operating System": Object {
-            "text": "Red Hat Enterprise Linux",
-          },
-          "Provider": Object {
-            "icon": "pficon pficon-container-node",
-            "image": "",
-            "text": "OCP 3.6 QE1",
-            "title": "OCP 3.6 QE1",
-          },
-          "Ready": Object {
-            "text": "True",
-          },
-          "Runtime Version": Object {
-            "text": "docker://1.12.6",
-          },
-          "clickable": null,
-          "id": "13",
-        },
-        Object {
-          "Kernel Version": Object {
-            "text": "3.10.0-327.el7.x86_64",
-          },
-          "Name": Object {
-            "text": "ocp-compute1.cfme2.lab.eng.rdu2.redhat.com",
-          },
-          "Operating System": Object {
-            "text": "Red Hat Enterprise Linux",
-          },
-          "Provider": Object {
-            "icon": "pficon pficon-container-node",
-            "image": "",
-            "text": "OCP 3.6 QE1",
-            "title": "OCP 3.6 QE1",
-          },
-          "Ready": Object {
-            "text": "True",
-          },
-          "Runtime Version": Object {
-            "text": "docker://1.12.6",
-          },
-          "clickable": null,
-          "id": "19",
-        },
-        Object {
-          "Kernel Version": Object {
-            "text": "3.10.0-327.el7.x86_64",
-          },
-          "Name": Object {
-            "text": "ocp-compute1.cfme2.lab.eng.rdu2.redhat.com",
-          },
-          "Operating System": Object {
-            "text": "Red Hat Enterprise Linux",
-          },
-          "Provider": Object {
-            "icon": "pficon pficon-container-node",
-            "image": "",
-            "text": "OCP 3.6 QE1",
-            "title": "OCP 3.6 QE1",
-          },
-          "Ready": Object {
-            "text": "True",
-          },
-          "Runtime Version": Object {
-            "text": "docker://1.12.6",
-          },
-          "clickable": null,
-          "id": "20",
-        },
-      ]
-    }
-    size="lg"
-    sortDirection="ASC"
-    stickyHeader={false}
+<div>
+  <div
+    class="miq-data-table static-gtl-view"
   >
-    <Component />
-  </DataTable>
-  <MiqPagination
-    pageOptions={
-      Object {
-        "onPageChange": [MockFunction],
-        "onPageSet": [MockFunction],
-        "onPerPageSelect": [MockFunction],
-        "page": 1,
-        "pageSize": 10,
-        "pageSizes": Array [
-          10,
-          20,
-          30,
-          40,
-          50,
-        ],
-        "totalItems": 7,
-      }
-    }
-  />
+    <div
+      class="cds--data-table-content"
+    >
+      <table
+        class="cds--data-table cds--data-table--lg cds--data-table--sort cds--data-table--visible-overflow-menu"
+      >
+        <tbody
+          aria-live="polite"
+        >
+          <tr
+            class="clickable-row"
+            tabindex="0"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-5__select-row-9"
+                  name="select-row-5"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-5__select-row-9"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="1"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-5__select-row-10"
+                  name="select-row-5"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-5__select-row-10"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="2"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-5__select-row-11"
+                  name="select-row-5"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-5__select-row-11"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="3"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-5__select-row-12"
+                  name="select-row-5"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-5__select-row-12"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="4"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-5__select-row-13"
+                  name="select-row-5"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-5__select-row-13"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="5"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-5__select-row-19"
+                  name="select-row-5"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-5__select-row-19"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="6"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-5__select-row-20"
+                  name="select-row-5"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-5__select-row-20"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <fieldset
+      class="miq-fieldset"
+    >
+      <legend
+        class="miq-fieldset-legend legend-search"
+      >
+        Pagination
+      </legend>
+      <div
+        class="miq-fieldset-content"
+      >
+        <div
+          class="cds--pagination cds--pagination--md miq-pagination"
+        >
+          <div
+            class="cds--pagination__left"
+          >
+            <label
+              class="cds--pagination__text"
+              for="cds-pagination-select-id-22"
+              id="cds-pagination-select-id-22-count-label"
+            >
+              Items per page:
+            </label>
+            <div
+              class="cds--form-item cds--select__item-count"
+            >
+              <div
+                class="cds--select cds--select--inline"
+              >
+                <div
+                  class="cds--select-input--inline__wrapper"
+                >
+                  <div
+                    class="cds--select-input__wrapper"
+                  >
+                    <select
+                      class="cds--select-input"
+                      id="cds-pagination-select-id-22"
+                      title="10"
+                    >
+                      <option
+                        class="cds--select-option"
+                        value="10"
+                      >
+                        10
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="20"
+                      >
+                        20
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="30"
+                      >
+                        30
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="40"
+                      >
+                        40
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="50"
+                      >
+                        50
+                      </option>
+                    </select>
+                    <svg
+                      aria-hidden="true"
+                      class="cds--select__arrow"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 16 16"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span
+              class="cds--pagination__text cds--pagination__items-count"
+            >
+              1-7 of 7 item
+            </span>
+          </div>
+          <div
+            class="cds--pagination__right"
+          >
+            <div
+              class="cds--form-item cds--select__page-number"
+            >
+              <div
+                class="cds--select cds--select--inline"
+              >
+                <label
+                  class="cds--label cds--visually-hidden"
+                  dir="auto"
+                  for="cds-pagination-select-id-22-right"
+                >
+                  Page of 1 page
+                </label>
+                <div
+                  class="cds--select-input--inline__wrapper"
+                >
+                  <div
+                    class="cds--select-input__wrapper"
+                  >
+                    <select
+                      class="cds--select-input"
+                      id="cds-pagination-select-id-22-right"
+                      title="1"
+                    >
+                      <option
+                        class="cds--select-option"
+                        value="1"
+                      >
+                        1
+                      </option>
+                    </select>
+                    <svg
+                      aria-hidden="true"
+                      class="cds--select__arrow"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 16 16"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span
+              class="cds--pagination__text"
+            >
+              of 1 page
+            </span>
+            <div
+              class="cds--pagination__control-buttons"
+            >
+              <span
+                class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip cds--icon-tooltip--disabled"
+              >
+                <div
+                  class="cds--tooltip-trigger__wrapper"
+                >
+                  <button
+                    aria-label="Previous page"
+                    aria-labelledby="tooltip-24"
+                    class="cds--pagination__button cds--pagination__button--backward cds--pagination__button--no-index cds--btn cds--btn--ghost cds--btn--disabled cds--btn--icon-only"
+                    disabled=""
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 32 32"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M20 24 10 16 20 8z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <span
+                  aria-hidden="true"
+                  class="cds--popover"
+                  id="tooltip-24"
+                  role="tooltip"
+                >
+                  <span
+                    class="cds--popover-content cds--tooltip-content"
+                  >
+                    Previous page
+                  </span>
+                  <span
+                    class="cds--popover-caret"
+                  />
+                </span>
+              </span>
+              <span
+                class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip cds--icon-tooltip--disabled"
+              >
+                <div
+                  class="cds--tooltip-trigger__wrapper"
+                >
+                  <button
+                    aria-label="Next page"
+                    aria-labelledby="tooltip-27"
+                    class="cds--pagination__button cds--pagination__button--forward cds--pagination__button--no-index cds--btn cds--btn--ghost cds--btn--disabled cds--btn--icon-only"
+                    disabled=""
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 32 32"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 8 22 16 12 24z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <span
+                  aria-hidden="true"
+                  class="cds--popover"
+                  id="tooltip-27"
+                  role="tooltip"
+                >
+                  <span
+                    class="cds--popover-content cds--tooltip-content"
+                  >
+                    Next page
+                  </span>
+                  <span
+                    class="cds--popover-caret"
+                  />
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
 </div>
 `;
 
 exports[`Data table component should render a static-gtl-view data table with checkboxes, images and icon 1`] = `
-<div
-  className="miq-data-table static-gtl-view"
->
-  <DataTable
-    headers={Array []}
-    isSortable={true}
-    rows={
-      Array [
-        Object {
-          "Authentication Status": Object {
-            "icon": "pficon pficon-unknown",
-            "text": "None",
-            "title": "None",
-          },
-          "Cluster": Object {
-            "text": "overcloud-Controller-kw7lgjvt3ncf",
-          },
-          "Compliant": Object {
-            "text": "",
-            "title": "",
-          },
-          "Hypervisor Hostname": Object {
-            "text": "overcloud-controller-0",
-          },
-          "IP Address": Object {
-            "text": "10.9.60.8",
-          },
-          "Last Analysis Time": Object {
-            "text": "Never",
-          },
-          "Name": Object {
-            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
-          },
-          "Platform": Object {
-            "text": "rhel (No hypervisor, Host Type is Controller)",
-          },
-          "Power": Object {
-            "background": "#336699",
-            "icon": "pficon pficon-unknown",
-            "text": "unknown",
-            "title": "unknown",
-          },
-          "Provider": Object {
-            "icon": "pficon pficon-container-node",
-            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
-            "text": "OpenStack Director",
-            "title": "OpenStack Director",
-          },
-          "Total Templates": Object {
-            "text": "0",
-          },
-          "Total VMs": Object {
-            "text": "3",
-          },
-          "clickable": null,
-          "id": "7",
-        },
-        Object {
-          "Authentication Status": Object {
-            "icon": "pficon pficon-unknown",
-            "text": "None",
-            "title": "None",
-          },
-          "Cluster": Object {
-            "text": "overcloud-Controller-kw7lgjvt3ncf",
-          },
-          "Compliant": Object {
-            "text": "",
-            "title": "",
-          },
-          "Hypervisor Hostname": Object {
-            "text": "overcloud-controller-0",
-          },
-          "IP Address": Object {
-            "text": "10.9.60.8",
-          },
-          "Last Analysis Time": Object {
-            "text": "Never",
-          },
-          "Name": Object {
-            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
-          },
-          "Platform": Object {
-            "text": "rhel (No hypervisor, Host Type is Controller)",
-          },
-          "Power": Object {
-            "background": "#336699",
-            "icon": "pficon pficon-unknown",
-            "text": "unknown",
-            "title": "unknown",
-          },
-          "Provider": Object {
-            "icon": "pficon pficon-container-node",
-            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
-            "text": "OpenStack Director",
-            "title": "OpenStack Director",
-          },
-          "Total Templates": Object {
-            "text": "0",
-          },
-          "Total VMs": Object {
-            "text": "3",
-          },
-          "clickable": null,
-          "id": "8",
-        },
-        Object {
-          "Authentication Status": Object {
-            "icon": "pficon pficon-unknown",
-            "text": "None",
-            "title": "None",
-          },
-          "Cluster": Object {
-            "text": "overcloud-Controller-kw7lgjvt3ncf",
-          },
-          "Compliant": Object {
-            "text": "",
-            "title": "",
-          },
-          "Hypervisor Hostname": Object {
-            "text": "overcloud-controller-0",
-          },
-          "IP Address": Object {
-            "text": "10.9.60.8",
-          },
-          "Last Analysis Time": Object {
-            "text": "Never",
-          },
-          "Name": Object {
-            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
-          },
-          "Platform": Object {
-            "text": "rhel (No hypervisor, Host Type is Controller)",
-          },
-          "Power": Object {
-            "background": "#336699",
-            "icon": "pficon pficon-unknown",
-            "text": "unknown",
-            "title": "unknown",
-          },
-          "Provider": Object {
-            "icon": "pficon pficon-container-node",
-            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
-            "text": "OpenStack Director",
-            "title": "OpenStack Director",
-          },
-          "Total Templates": Object {
-            "text": "0",
-          },
-          "Total VMs": Object {
-            "text": "3",
-          },
-          "clickable": null,
-          "id": "9",
-        },
-        Object {
-          "Authentication Status": Object {
-            "icon": "pficon pficon-unknown",
-            "text": "None",
-            "title": "None",
-          },
-          "Cluster": Object {
-            "text": "overcloud-Controller-kw7lgjvt3ncf",
-          },
-          "Compliant": Object {
-            "text": "",
-            "title": "",
-          },
-          "Hypervisor Hostname": Object {
-            "text": "overcloud-controller-0",
-          },
-          "IP Address": Object {
-            "text": "10.9.60.8",
-          },
-          "Last Analysis Time": Object {
-            "text": "Never",
-          },
-          "Name": Object {
-            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
-          },
-          "Platform": Object {
-            "text": "rhel (No hypervisor, Host Type is Controller)",
-          },
-          "Power": Object {
-            "background": "#336699",
-            "icon": "pficon pficon-unknown",
-            "text": "unknown",
-            "title": "unknown",
-          },
-          "Provider": Object {
-            "icon": "pficon pficon-container-node",
-            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
-            "text": "OpenStack Director",
-            "title": "OpenStack Director",
-          },
-          "Total Templates": Object {
-            "text": "0",
-          },
-          "Total VMs": Object {
-            "text": "3",
-          },
-          "clickable": null,
-          "id": "21",
-        },
-        Object {
-          "Authentication Status": Object {
-            "icon": "pficon pficon-unknown",
-            "text": "None",
-            "title": "None",
-          },
-          "Cluster": Object {
-            "text": "overcloud-Controller-kw7lgjvt3ncf",
-          },
-          "Compliant": Object {
-            "text": "",
-            "title": "",
-          },
-          "Hypervisor Hostname": Object {
-            "text": "overcloud-controller-0",
-          },
-          "IP Address": Object {
-            "text": "10.9.60.8",
-          },
-          "Last Analysis Time": Object {
-            "text": "Never",
-          },
-          "Name": Object {
-            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
-          },
-          "Platform": Object {
-            "text": "rhel (No hypervisor, Host Type is Controller)",
-          },
-          "Power": Object {
-            "background": "#336699",
-            "icon": "pficon pficon-unknown",
-            "text": "unknown",
-            "title": "unknown",
-          },
-          "Provider": Object {
-            "icon": "pficon pficon-container-node",
-            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
-            "text": "OpenStack Director",
-            "title": "OpenStack Director",
-          },
-          "Total Templates": Object {
-            "text": "0",
-          },
-          "Total VMs": Object {
-            "text": "3",
-          },
-          "clickable": null,
-          "id": "18",
-        },
-        Object {
-          "Authentication Status": Object {
-            "icon": "pficon pficon-unknown",
-            "text": "None",
-            "title": "None",
-          },
-          "Cluster": Object {
-            "text": "overcloud-Controller-kw7lgjvt3ncf",
-          },
-          "Compliant": Object {
-            "text": "",
-            "title": "",
-          },
-          "Hypervisor Hostname": Object {
-            "text": "overcloud-controller-0",
-          },
-          "IP Address": Object {
-            "text": "10.9.60.8",
-          },
-          "Last Analysis Time": Object {
-            "text": "Never",
-          },
-          "Name": Object {
-            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
-          },
-          "Platform": Object {
-            "text": "rhel (No hypervisor, Host Type is Controller)",
-          },
-          "Power": Object {
-            "background": "#336699",
-            "icon": "pficon pficon-unknown",
-            "text": "unknown",
-            "title": "unknown",
-          },
-          "Provider": Object {
-            "icon": "pficon pficon-container-node",
-            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
-            "text": "OpenStack Director",
-            "title": "OpenStack Director",
-          },
-          "Total Templates": Object {
-            "text": "0",
-          },
-          "Total VMs": Object {
-            "text": "3",
-          },
-          "clickable": null,
-          "id": "17",
-        },
-        Object {
-          "Authentication Status": Object {
-            "icon": "pficon pficon-unknown",
-            "text": "None",
-            "title": "None",
-          },
-          "Cluster": Object {
-            "text": "overcloud-Controller-kw7lgjvt3ncf",
-          },
-          "Compliant": Object {
-            "text": "",
-            "title": "",
-          },
-          "Hypervisor Hostname": Object {
-            "text": "overcloud-controller-0",
-          },
-          "IP Address": Object {
-            "text": "10.9.60.8",
-          },
-          "Last Analysis Time": Object {
-            "text": "Never",
-          },
-          "Name": Object {
-            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
-          },
-          "Platform": Object {
-            "text": "rhel (No hypervisor, Host Type is Controller)",
-          },
-          "Power": Object {
-            "background": "#336699",
-            "icon": "pficon pficon-unknown",
-            "text": "unknown",
-            "title": "unknown",
-          },
-          "Provider": Object {
-            "icon": "pficon pficon-container-node",
-            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
-            "text": "OpenStack Director",
-            "title": "OpenStack Director",
-          },
-          "Total Templates": Object {
-            "text": "0",
-          },
-          "Total VMs": Object {
-            "text": "3",
-          },
-          "clickable": null,
-          "id": "20",
-        },
-        Object {
-          "Authentication Status": Object {
-            "icon": "pficon pficon-unknown",
-            "text": "None",
-            "title": "None",
-          },
-          "Cluster": Object {
-            "text": "overcloud-Controller-kw7lgjvt3ncf",
-          },
-          "Compliant": Object {
-            "text": "",
-            "title": "",
-          },
-          "Hypervisor Hostname": Object {
-            "text": "overcloud-controller-0",
-          },
-          "IP Address": Object {
-            "text": "10.9.60.8",
-          },
-          "Last Analysis Time": Object {
-            "text": "Never",
-          },
-          "Name": Object {
-            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
-          },
-          "Platform": Object {
-            "text": "rhel (No hypervisor, Host Type is Controller)",
-          },
-          "Power": Object {
-            "background": "#336699",
-            "icon": "pficon pficon-unknown",
-            "text": "unknown",
-            "title": "unknown",
-          },
-          "Provider": Object {
-            "icon": "pficon pficon-container-node",
-            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
-            "text": "OpenStack Director",
-            "title": "OpenStack Director",
-          },
-          "Total Templates": Object {
-            "text": "0",
-          },
-          "Total VMs": Object {
-            "text": "3",
-          },
-          "clickable": null,
-          "id": "19",
-        },
-        Object {
-          "Authentication Status": Object {
-            "icon": "pficon pficon-unknown",
-            "text": "None",
-            "title": "None",
-          },
-          "Cluster": Object {
-            "text": "overcloud-Controller-kw7lgjvt3ncf",
-          },
-          "Compliant": Object {
-            "text": "",
-            "title": "",
-          },
-          "Hypervisor Hostname": Object {
-            "text": "overcloud-controller-0",
-          },
-          "IP Address": Object {
-            "text": "10.9.60.8",
-          },
-          "Last Analysis Time": Object {
-            "text": "Never",
-          },
-          "Name": Object {
-            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
-          },
-          "Platform": Object {
-            "text": "rhel (No hypervisor, Host Type is Controller)",
-          },
-          "Power": Object {
-            "background": "#336699",
-            "icon": "pficon pficon-unknown",
-            "text": "unknown",
-            "title": "unknown",
-          },
-          "Provider": Object {
-            "icon": "pficon pficon-container-node",
-            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
-            "text": "OpenStack Director",
-            "title": "OpenStack Director",
-          },
-          "Total Templates": Object {
-            "text": "0",
-          },
-          "Total VMs": Object {
-            "text": "3",
-          },
-          "clickable": null,
-          "id": "16",
-        },
-        Object {
-          "Authentication Status": Object {
-            "icon": "pficon pficon-unknown",
-            "text": "None",
-            "title": "None",
-          },
-          "Cluster": Object {
-            "text": "overcloud-Controller-kw7lgjvt3ncf",
-          },
-          "Compliant": Object {
-            "text": "",
-            "title": "",
-          },
-          "Hypervisor Hostname": Object {
-            "text": "overcloud-controller-0",
-          },
-          "IP Address": Object {
-            "text": "10.9.60.8",
-          },
-          "Last Analysis Time": Object {
-            "text": "Never",
-          },
-          "Name": Object {
-            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
-          },
-          "Platform": Object {
-            "text": "rhel (No hypervisor, Host Type is Controller)",
-          },
-          "Power": Object {
-            "background": "#336699",
-            "icon": "pficon pficon-unknown",
-            "text": "unknown",
-            "title": "unknown",
-          },
-          "Provider": Object {
-            "icon": "pficon pficon-container-node",
-            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
-            "text": "OpenStack Director",
-            "title": "OpenStack Director",
-          },
-          "Total Templates": Object {
-            "text": "0",
-          },
-          "Total VMs": Object {
-            "text": "3",
-          },
-          "clickable": null,
-          "id": "25",
-        },
-        Object {
-          "Authentication Status": Object {
-            "icon": "pficon pficon-unknown",
-            "text": "None",
-            "title": "None",
-          },
-          "Cluster": Object {
-            "text": "overcloud-Controller-kw7lgjvt3ncf",
-          },
-          "Compliant": Object {
-            "text": "",
-            "title": "",
-          },
-          "Hypervisor Hostname": Object {
-            "text": "overcloud-controller-0",
-          },
-          "IP Address": Object {
-            "text": "10.9.60.8",
-          },
-          "Last Analysis Time": Object {
-            "text": "Never",
-          },
-          "Name": Object {
-            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
-          },
-          "Platform": Object {
-            "text": "rhel (No hypervisor, Host Type is Controller)",
-          },
-          "Power": Object {
-            "background": "#336699",
-            "icon": "pficon pficon-unknown",
-            "text": "unknown",
-            "title": "unknown",
-          },
-          "Provider": Object {
-            "icon": "pficon pficon-container-node",
-            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
-            "text": "OpenStack Director",
-            "title": "OpenStack Director",
-          },
-          "Total Templates": Object {
-            "text": "0",
-          },
-          "Total VMs": Object {
-            "text": "3",
-          },
-          "clickable": null,
-          "id": "26",
-        },
-        Object {
-          "Authentication Status": Object {
-            "icon": "pficon pficon-unknown",
-            "text": "None",
-            "title": "None",
-          },
-          "Cluster": Object {
-            "text": "overcloud-Controller-kw7lgjvt3ncf",
-          },
-          "Compliant": Object {
-            "text": "",
-            "title": "",
-          },
-          "Hypervisor Hostname": Object {
-            "text": "overcloud-controller-0",
-          },
-          "IP Address": Object {
-            "text": "10.9.60.8",
-          },
-          "Last Analysis Time": Object {
-            "text": "Never",
-          },
-          "Name": Object {
-            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
-          },
-          "Platform": Object {
-            "text": "rhel (No hypervisor, Host Type is Controller)",
-          },
-          "Power": Object {
-            "background": "#336699",
-            "icon": "pficon pficon-unknown",
-            "text": "unknown",
-            "title": "unknown",
-          },
-          "Provider": Object {
-            "icon": "pficon pficon-container-node",
-            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
-            "text": "OpenStack Director",
-            "title": "OpenStack Director",
-          },
-          "Total Templates": Object {
-            "text": "0",
-          },
-          "Total VMs": Object {
-            "text": "3",
-          },
-          "clickable": null,
-          "id": "27",
-        },
-        Object {
-          "Authentication Status": Object {
-            "icon": "pficon pficon-unknown",
-            "text": "None",
-            "title": "None",
-          },
-          "Cluster": Object {
-            "text": "overcloud-Controller-kw7lgjvt3ncf",
-          },
-          "Compliant": Object {
-            "text": "",
-            "title": "",
-          },
-          "Hypervisor Hostname": Object {
-            "text": "overcloud-controller-0",
-          },
-          "IP Address": Object {
-            "text": "10.9.60.8",
-          },
-          "Last Analysis Time": Object {
-            "text": "Never",
-          },
-          "Name": Object {
-            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
-          },
-          "Platform": Object {
-            "text": "rhel (No hypervisor, Host Type is Controller)",
-          },
-          "Power": Object {
-            "background": "#336699",
-            "icon": "pficon pficon-unknown",
-            "text": "unknown",
-            "title": "unknown",
-          },
-          "Provider": Object {
-            "icon": "pficon pficon-container-node",
-            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
-            "text": "OpenStack Director",
-            "title": "OpenStack Director",
-          },
-          "Total Templates": Object {
-            "text": "0",
-          },
-          "Total VMs": Object {
-            "text": "3",
-          },
-          "clickable": null,
-          "id": "28",
-        },
-        Object {
-          "Authentication Status": Object {
-            "icon": "pficon pficon-unknown",
-            "text": "None",
-            "title": "None",
-          },
-          "Cluster": Object {
-            "text": "overcloud-Controller-kw7lgjvt3ncf",
-          },
-          "Compliant": Object {
-            "text": "",
-            "title": "",
-          },
-          "Hypervisor Hostname": Object {
-            "text": "overcloud-controller-0",
-          },
-          "IP Address": Object {
-            "text": "10.9.60.8",
-          },
-          "Last Analysis Time": Object {
-            "text": "Never",
-          },
-          "Name": Object {
-            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
-          },
-          "Platform": Object {
-            "text": "rhel (No hypervisor, Host Type is Controller)",
-          },
-          "Power": Object {
-            "background": "#336699",
-            "icon": "pficon pficon-unknown",
-            "text": "unknown",
-            "title": "unknown",
-          },
-          "Provider": Object {
-            "icon": "pficon pficon-container-node",
-            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
-            "text": "OpenStack Director",
-            "title": "OpenStack Director",
-          },
-          "Total Templates": Object {
-            "text": "0",
-          },
-          "Total VMs": Object {
-            "text": "3",
-          },
-          "clickable": null,
-          "id": "3",
-        },
-        Object {
-          "Authentication Status": Object {
-            "icon": "pficon pficon-unknown",
-            "text": "None",
-            "title": "None",
-          },
-          "Cluster": Object {
-            "text": "overcloud-Controller-kw7lgjvt3ncf",
-          },
-          "Compliant": Object {
-            "text": "",
-            "title": "",
-          },
-          "Hypervisor Hostname": Object {
-            "text": "overcloud-controller-0",
-          },
-          "IP Address": Object {
-            "text": "10.9.60.8",
-          },
-          "Last Analysis Time": Object {
-            "text": "Never",
-          },
-          "Name": Object {
-            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
-          },
-          "Platform": Object {
-            "text": "rhel (No hypervisor, Host Type is Controller)",
-          },
-          "Power": Object {
-            "background": "#336699",
-            "icon": "pficon pficon-unknown",
-            "text": "unknown",
-            "title": "unknown",
-          },
-          "Provider": Object {
-            "icon": "pficon pficon-container-node",
-            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
-            "text": "OpenStack Director",
-            "title": "OpenStack Director",
-          },
-          "Total Templates": Object {
-            "text": "0",
-          },
-          "Total VMs": Object {
-            "text": "3",
-          },
-          "clickable": null,
-          "id": "24",
-        },
-        Object {
-          "Authentication Status": Object {
-            "icon": "pficon pficon-unknown",
-            "text": "None",
-            "title": "None",
-          },
-          "Cluster": Object {
-            "text": "overcloud-Controller-kw7lgjvt3ncf",
-          },
-          "Compliant": Object {
-            "text": "",
-            "title": "",
-          },
-          "Hypervisor Hostname": Object {
-            "text": "overcloud-controller-0",
-          },
-          "IP Address": Object {
-            "text": "10.9.60.8",
-          },
-          "Last Analysis Time": Object {
-            "text": "Never",
-          },
-          "Name": Object {
-            "text": "17d6ec2e-0e75-45ab-95a6-642eb41855cd (Controller)",
-          },
-          "Platform": Object {
-            "text": "rhel (No hypervisor, Host Type is Controller)",
-          },
-          "Power": Object {
-            "background": "#336699",
-            "icon": "pficon pficon-unknown",
-            "text": "unknown",
-            "title": "unknown",
-          },
-          "Provider": Object {
-            "icon": "pficon pficon-container-node",
-            "image": "/assets/svg/vendor-redhat-6ef2b0c582ea1f2b1279306a1e1c72f55b4f561a0a524816aa1b0ce9325ee065.svg",
-            "text": "OpenStack Director",
-            "title": "OpenStack Director",
-          },
-          "Total Templates": Object {
-            "text": "0",
-          },
-          "Total VMs": Object {
-            "text": "3",
-          },
-          "clickable": null,
-          "id": "1",
-        },
-      ]
-    }
-    size="lg"
-    sortDirection="ASC"
-    stickyHeader={false}
+<div>
+  <div
+    class="miq-data-table static-gtl-view"
   >
-    <Component />
-  </DataTable>
-  <MiqPagination
-    pageOptions={
-      Object {
-        "onPageChange": [MockFunction],
-        "onPageSet": [MockFunction],
-        "onPerPageSelect": [MockFunction],
-        "page": 1,
-        "pageSize": 10,
-        "pageSizes": Array [
-          10,
-          20,
-          30,
-          40,
-          50,
-        ],
-        "totalItems": 100,
-      }
-    }
-  />
+    <div
+      class="cds--data-table-content"
+    >
+      <table
+        class="cds--data-table cds--data-table--lg cds--data-table--sort cds--data-table--visible-overflow-menu"
+      >
+        <tbody
+          aria-live="polite"
+        >
+          <tr
+            class="clickable-row"
+            tabindex="0"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-6__select-row-7"
+                  name="select-row-6"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-6__select-row-7"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="1"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-6__select-row-8"
+                  name="select-row-6"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-6__select-row-8"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="2"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-6__select-row-9"
+                  name="select-row-6"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-6__select-row-9"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="3"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-6__select-row-21"
+                  name="select-row-6"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-6__select-row-21"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="4"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-6__select-row-18"
+                  name="select-row-6"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-6__select-row-18"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="5"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-6__select-row-17"
+                  name="select-row-6"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-6__select-row-17"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="6"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-6__select-row-20"
+                  name="select-row-6"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-6__select-row-20"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="7"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-6__select-row-19"
+                  name="select-row-6"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-6__select-row-19"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="8"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-6__select-row-16"
+                  name="select-row-6"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-6__select-row-16"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="9"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-6__select-row-25"
+                  name="select-row-6"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-6__select-row-25"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="10"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-6__select-row-26"
+                  name="select-row-6"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-6__select-row-26"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="11"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-6__select-row-27"
+                  name="select-row-6"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-6__select-row-27"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="12"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-6__select-row-28"
+                  name="select-row-6"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-6__select-row-28"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="13"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-6__select-row-3"
+                  name="select-row-6"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-6__select-row-3"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="14"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-6__select-row-24"
+                  name="select-row-6"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-6__select-row-24"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="15"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-6__select-row-1"
+                  name="select-row-6"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-6__select-row-1"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <fieldset
+      class="miq-fieldset"
+    >
+      <legend
+        class="miq-fieldset-legend legend-search"
+      >
+        Pagination
+      </legend>
+      <div
+        class="miq-fieldset-content"
+      >
+        <div
+          class="cds--pagination cds--pagination--md miq-pagination"
+        >
+          <div
+            class="cds--pagination__left"
+          >
+            <label
+              class="cds--pagination__text"
+              for="cds-pagination-select-id-45"
+              id="cds-pagination-select-id-45-count-label"
+            >
+              Items per page:
+            </label>
+            <div
+              class="cds--form-item cds--select__item-count"
+            >
+              <div
+                class="cds--select cds--select--inline"
+              >
+                <div
+                  class="cds--select-input--inline__wrapper"
+                >
+                  <div
+                    class="cds--select-input__wrapper"
+                  >
+                    <select
+                      class="cds--select-input"
+                      id="cds-pagination-select-id-45"
+                      title="10"
+                    >
+                      <option
+                        class="cds--select-option"
+                        value="10"
+                      >
+                        10
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="20"
+                      >
+                        20
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="30"
+                      >
+                        30
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="40"
+                      >
+                        40
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="50"
+                      >
+                        50
+                      </option>
+                    </select>
+                    <svg
+                      aria-hidden="true"
+                      class="cds--select__arrow"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 16 16"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span
+              class="cds--pagination__text cds--pagination__items-count"
+            >
+              1-10 of 100 item
+            </span>
+          </div>
+          <div
+            class="cds--pagination__right"
+          >
+            <div
+              class="cds--form-item cds--select__page-number"
+            >
+              <div
+                class="cds--select cds--select--inline"
+              >
+                <label
+                  class="cds--label cds--visually-hidden"
+                  dir="auto"
+                  for="cds-pagination-select-id-45-right"
+                >
+                  Page of 10 pages
+                </label>
+                <div
+                  class="cds--select-input--inline__wrapper"
+                >
+                  <div
+                    class="cds--select-input__wrapper"
+                  >
+                    <select
+                      class="cds--select-input"
+                      id="cds-pagination-select-id-45-right"
+                      title="1"
+                    >
+                      <option
+                        class="cds--select-option"
+                        value="1"
+                      >
+                        1
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="2"
+                      >
+                        2
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="3"
+                      >
+                        3
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="4"
+                      >
+                        4
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="5"
+                      >
+                        5
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="6"
+                      >
+                        6
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="7"
+                      >
+                        7
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="8"
+                      >
+                        8
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="9"
+                      >
+                        9
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="10"
+                      >
+                        10
+                      </option>
+                    </select>
+                    <svg
+                      aria-hidden="true"
+                      class="cds--select__arrow"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 16 16"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span
+              class="cds--pagination__text"
+            >
+              of 10 page
+            </span>
+            <div
+              class="cds--pagination__control-buttons"
+            >
+              <span
+                class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip cds--icon-tooltip--disabled"
+              >
+                <div
+                  class="cds--tooltip-trigger__wrapper"
+                >
+                  <button
+                    aria-label="Previous page"
+                    aria-labelledby="tooltip-47"
+                    class="cds--pagination__button cds--pagination__button--backward cds--pagination__button--no-index cds--btn cds--btn--ghost cds--btn--disabled cds--btn--icon-only"
+                    disabled=""
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 32 32"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M20 24 10 16 20 8z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <span
+                  aria-hidden="true"
+                  class="cds--popover"
+                  id="tooltip-47"
+                  role="tooltip"
+                >
+                  <span
+                    class="cds--popover-content cds--tooltip-content"
+                  >
+                    Previous page
+                  </span>
+                  <span
+                    class="cds--popover-caret"
+                  />
+                </span>
+              </span>
+              <span
+                class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+              >
+                <div
+                  class="cds--tooltip-trigger__wrapper"
+                >
+                  <button
+                    aria-label="Next page"
+                    aria-labelledby="tooltip-50"
+                    class="cds--pagination__button cds--pagination__button--forward cds--btn cds--btn--ghost cds--btn--icon-only"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 32 32"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 8 22 16 12 24z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <span
+                  aria-hidden="true"
+                  class="cds--popover"
+                  id="tooltip-50"
+                  role="tooltip"
+                >
+                  <span
+                    class="cds--popover-content cds--tooltip-content"
+                  >
+                    Next page
+                  </span>
+                  <span
+                    class="cds--popover-caret"
+                  />
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
 </div>
 `;
 
 exports[`Data table component should render a static-gtl-view data table with icons and buttons 1`] = `
-<div
-  className="miq-data-table static-gtl-view"
->
-  <DataTable
-    headers={Array []}
-    isSortable={true}
-    rows={
-      Array [
-        Object {
-          "Catalog": Object {
-            "text": "AWS",
-          },
-          "Created On": Object {
-            "text": "09/30/20 19:31:00 UTC",
-          },
-          "Description": Object {
-            "text": "11 test",
-          },
-          "Display in Catalog": Object {
-            "text": "True",
-          },
-          "Item Type": Object {
-            "text": "VMware Content Library OVF Template",
-          },
-          "Name": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "text": "1111111",
-          },
-          "Type": Object {
-            "text": "Item",
-          },
-          "Valid": Object {
-            "text": "True",
-          },
-          "clickable": null,
-          "defaultKey_0": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "title": "View this item",
-          },
-          "defaultKey_9": Object {
-            "alt": "Order this Service",
-            "disabled": false,
-            "is_button": true,
-            "onclick": Object {
-              "remote": true,
-              "url": "/catalog/x_button/0?pressed=svc_catalog_provision",
-            },
-            "text": "Order",
-            "title": "Order this Service",
-          },
-          "id": "0",
-        },
-        Object {
-          "Catalog": Object {
-            "text": "AWS",
-          },
-          "Created On": Object {
-            "text": "09/30/20 19:31:00 UTC",
-          },
-          "Description": Object {
-            "text": "11 test",
-          },
-          "Display in Catalog": Object {
-            "text": "True",
-          },
-          "Item Type": Object {
-            "text": "VMware Content Library OVF Template",
-          },
-          "Name": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "text": "1111111",
-          },
-          "Type": Object {
-            "text": "Item",
-          },
-          "Valid": Object {
-            "text": "True",
-          },
-          "clickable": null,
-          "defaultKey_0": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "title": "View this item",
-          },
-          "defaultKey_9": Object {
-            "alt": "Order this Service",
-            "disabled": false,
-            "is_button": true,
-            "onclick": Object {
-              "remote": true,
-              "url": "/catalog/x_button/1?pressed=svc_catalog_provision",
-            },
-            "text": "Order",
-            "title": "Order this Service",
-          },
-          "id": "1",
-        },
-        Object {
-          "Catalog": Object {
-            "text": "AWS",
-          },
-          "Created On": Object {
-            "text": "09/30/20 19:31:00 UTC",
-          },
-          "Description": Object {
-            "text": "11 test",
-          },
-          "Display in Catalog": Object {
-            "text": "True",
-          },
-          "Item Type": Object {
-            "text": "VMware Content Library OVF Template",
-          },
-          "Name": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "text": "1111111",
-          },
-          "Type": Object {
-            "text": "Item",
-          },
-          "Valid": Object {
-            "text": "True",
-          },
-          "clickable": null,
-          "defaultKey_0": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "title": "View this item",
-          },
-          "defaultKey_9": Object {
-            "alt": "Order this Service",
-            "disabled": false,
-            "is_button": true,
-            "onclick": Object {
-              "remote": true,
-              "url": "/catalog/x_button/2?pressed=svc_catalog_provision",
-            },
-            "text": "Order",
-            "title": "Order this Service",
-          },
-          "id": "2",
-        },
-        Object {
-          "Catalog": Object {
-            "text": "AWS",
-          },
-          "Created On": Object {
-            "text": "09/30/20 19:31:00 UTC",
-          },
-          "Description": Object {
-            "text": "11 test",
-          },
-          "Display in Catalog": Object {
-            "text": "True",
-          },
-          "Item Type": Object {
-            "text": "VMware Content Library OVF Template",
-          },
-          "Name": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "text": "1111111",
-          },
-          "Type": Object {
-            "text": "Item",
-          },
-          "Valid": Object {
-            "text": "True",
-          },
-          "clickable": null,
-          "defaultKey_0": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "title": "View this item",
-          },
-          "defaultKey_9": Object {
-            "alt": "Order this Service",
-            "disabled": false,
-            "is_button": true,
-            "onclick": Object {
-              "remote": true,
-              "url": "/catalog/x_button/3?pressed=svc_catalog_provision",
-            },
-            "text": "Order",
-            "title": "Order this Service",
-          },
-          "id": "3",
-        },
-        Object {
-          "Catalog": Object {
-            "text": "AWS",
-          },
-          "Created On": Object {
-            "text": "09/30/20 19:31:00 UTC",
-          },
-          "Description": Object {
-            "text": "11 test",
-          },
-          "Display in Catalog": Object {
-            "text": "True",
-          },
-          "Item Type": Object {
-            "text": "VMware Content Library OVF Template",
-          },
-          "Name": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "text": "1111111",
-          },
-          "Type": Object {
-            "text": "Item",
-          },
-          "Valid": Object {
-            "text": "True",
-          },
-          "clickable": null,
-          "defaultKey_0": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "title": "View this item",
-          },
-          "defaultKey_9": Object {
-            "alt": "Order this Service",
-            "disabled": false,
-            "is_button": true,
-            "onclick": Object {
-              "remote": true,
-              "url": "/catalog/x_button/4?pressed=svc_catalog_provision",
-            },
-            "text": "Order",
-            "title": "Order this Service",
-          },
-          "id": "4",
-        },
-        Object {
-          "Catalog": Object {
-            "text": "AWS",
-          },
-          "Created On": Object {
-            "text": "09/30/20 19:31:00 UTC",
-          },
-          "Description": Object {
-            "text": "11 test",
-          },
-          "Display in Catalog": Object {
-            "text": "True",
-          },
-          "Item Type": Object {
-            "text": "VMware Content Library OVF Template",
-          },
-          "Name": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "text": "1111111",
-          },
-          "Type": Object {
-            "text": "Item",
-          },
-          "Valid": Object {
-            "text": "True",
-          },
-          "clickable": null,
-          "defaultKey_0": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "title": "View this item",
-          },
-          "defaultKey_9": Object {
-            "alt": "Order this Service",
-            "disabled": false,
-            "is_button": true,
-            "onclick": Object {
-              "remote": true,
-              "url": "/catalog/x_button/5?pressed=svc_catalog_provision",
-            },
-            "text": "Order",
-            "title": "Order this Service",
-          },
-          "id": "5",
-        },
-        Object {
-          "Catalog": Object {
-            "text": "AWS",
-          },
-          "Created On": Object {
-            "text": "09/30/20 19:31:00 UTC",
-          },
-          "Description": Object {
-            "text": "11 test",
-          },
-          "Display in Catalog": Object {
-            "text": "True",
-          },
-          "Item Type": Object {
-            "text": "VMware Content Library OVF Template",
-          },
-          "Name": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "text": "1111111",
-          },
-          "Type": Object {
-            "text": "Item",
-          },
-          "Valid": Object {
-            "text": "True",
-          },
-          "clickable": null,
-          "defaultKey_0": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "title": "View this item",
-          },
-          "defaultKey_9": Object {
-            "alt": "Order this Service",
-            "disabled": false,
-            "is_button": true,
-            "onclick": Object {
-              "remote": true,
-              "url": "/catalog/x_button/6?pressed=svc_catalog_provision",
-            },
-            "text": "Order",
-            "title": "Order this Service",
-          },
-          "id": "6",
-        },
-        Object {
-          "Catalog": Object {
-            "text": "AWS",
-          },
-          "Created On": Object {
-            "text": "09/30/20 19:31:00 UTC",
-          },
-          "Description": Object {
-            "text": "11 test",
-          },
-          "Display in Catalog": Object {
-            "text": "True",
-          },
-          "Item Type": Object {
-            "text": "VMware Content Library OVF Template",
-          },
-          "Name": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "text": "1111111",
-          },
-          "Type": Object {
-            "text": "Item",
-          },
-          "Valid": Object {
-            "text": "True",
-          },
-          "clickable": null,
-          "defaultKey_0": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "title": "View this item",
-          },
-          "defaultKey_9": Object {
-            "alt": "Order this Service",
-            "disabled": false,
-            "is_button": true,
-            "onclick": Object {
-              "remote": true,
-              "url": "/catalog/x_button/7?pressed=svc_catalog_provision",
-            },
-            "text": "Order",
-            "title": "Order this Service",
-          },
-          "id": "7",
-        },
-        Object {
-          "Catalog": Object {
-            "text": "AWS",
-          },
-          "Created On": Object {
-            "text": "09/30/20 19:31:00 UTC",
-          },
-          "Description": Object {
-            "text": "11 test",
-          },
-          "Display in Catalog": Object {
-            "text": "True",
-          },
-          "Item Type": Object {
-            "text": "VMware Content Library OVF Template",
-          },
-          "Name": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "text": "1111111",
-          },
-          "Type": Object {
-            "text": "Item",
-          },
-          "Valid": Object {
-            "text": "True",
-          },
-          "clickable": null,
-          "defaultKey_0": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "title": "View this item",
-          },
-          "defaultKey_9": Object {
-            "alt": "Order this Service",
-            "disabled": false,
-            "is_button": true,
-            "onclick": Object {
-              "remote": true,
-              "url": "/catalog/x_button/8?pressed=svc_catalog_provision",
-            },
-            "text": "Order",
-            "title": "Order this Service",
-          },
-          "id": "8",
-        },
-        Object {
-          "Catalog": Object {
-            "text": "AWS",
-          },
-          "Created On": Object {
-            "text": "09/30/20 19:31:00 UTC",
-          },
-          "Description": Object {
-            "text": "11 test",
-          },
-          "Display in Catalog": Object {
-            "text": "True",
-          },
-          "Item Type": Object {
-            "text": "VMware Content Library OVF Template",
-          },
-          "Name": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "text": "1111111",
-          },
-          "Type": Object {
-            "text": "Item",
-          },
-          "Valid": Object {
-            "text": "True",
-          },
-          "clickable": null,
-          "defaultKey_0": Object {
-            "icon": "fa fa-cube",
-            "image": "",
-            "title": "View this item",
-          },
-          "defaultKey_9": Object {
-            "alt": "Order this Service",
-            "disabled": false,
-            "is_button": true,
-            "onclick": Object {
-              "remote": true,
-              "url": "/catalog/x_button/9?pressed=svc_catalog_provision",
-            },
-            "text": "Order",
-            "title": "Order this Service",
-          },
-          "id": "9",
-        },
-      ]
-    }
-    size="lg"
-    sortDirection="ASC"
-    stickyHeader={false}
+<div>
+  <div
+    class="miq-data-table static-gtl-view"
   >
-    <Component />
-  </DataTable>
-  <MiqPagination
-    pageOptions={
-      Object {
-        "onPageChange": [MockFunction],
-        "onPageSet": [MockFunction],
-        "onPerPageSelect": [MockFunction],
-        "page": 1,
-        "pageSize": 10,
-        "pageSizes": Array [
-          10,
-          20,
-          30,
-          40,
-          50,
-        ],
-        "totalItems": 100,
-      }
-    }
-  />
+    <div
+      class="cds--data-table-content"
+    >
+      <table
+        class="cds--data-table cds--data-table--lg cds--data-table--sort cds--data-table--visible-overflow-menu"
+      >
+        <tbody
+          aria-live="polite"
+        >
+          <tr
+            class="clickable-row"
+            tabindex="0"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-7__select-row-0"
+                  name="select-row-7"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-7__select-row-0"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="1"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-7__select-row-1"
+                  name="select-row-7"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-7__select-row-1"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="2"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-7__select-row-2"
+                  name="select-row-7"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-7__select-row-2"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="3"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-7__select-row-3"
+                  name="select-row-7"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-7__select-row-3"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="4"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-7__select-row-4"
+                  name="select-row-7"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-7__select-row-4"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="5"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-7__select-row-5"
+                  name="select-row-7"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-7__select-row-5"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="6"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-7__select-row-6"
+                  name="select-row-7"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-7__select-row-6"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="7"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-7__select-row-7"
+                  name="select-row-7"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-7__select-row-7"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="8"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-7__select-row-8"
+                  name="select-row-7"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-7__select-row-8"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="clickable-row"
+            tabindex="9"
+            title=""
+          >
+            <td
+              aria-live="off"
+              class="cds--table-column-checkbox"
+            >
+              <div
+                class="cds--checkbox--inline"
+              >
+                <input
+                  class="cds--checkbox"
+                  id="data-table-7__select-row-9"
+                  name="select-row-7"
+                  type="checkbox"
+                />
+                <label
+                  class="cds--checkbox-label"
+                  for="data-table-7__select-row-9"
+                >
+                  <span
+                    class="cds--visually-hidden"
+                  >
+                    Select row
+                  </span>
+                </label>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <fieldset
+      class="miq-fieldset"
+    >
+      <legend
+        class="miq-fieldset-legend legend-search"
+      >
+        Pagination
+      </legend>
+      <div
+        class="miq-fieldset-content"
+      >
+        <div
+          class="cds--pagination cds--pagination--md miq-pagination"
+        >
+          <div
+            class="cds--pagination__left"
+          >
+            <label
+              class="cds--pagination__text"
+              for="cds-pagination-select-id-62"
+              id="cds-pagination-select-id-62-count-label"
+            >
+              Items per page:
+            </label>
+            <div
+              class="cds--form-item cds--select__item-count"
+            >
+              <div
+                class="cds--select cds--select--inline"
+              >
+                <div
+                  class="cds--select-input--inline__wrapper"
+                >
+                  <div
+                    class="cds--select-input__wrapper"
+                  >
+                    <select
+                      class="cds--select-input"
+                      id="cds-pagination-select-id-62"
+                      title="10"
+                    >
+                      <option
+                        class="cds--select-option"
+                        value="10"
+                      >
+                        10
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="20"
+                      >
+                        20
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="30"
+                      >
+                        30
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="40"
+                      >
+                        40
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="50"
+                      >
+                        50
+                      </option>
+                    </select>
+                    <svg
+                      aria-hidden="true"
+                      class="cds--select__arrow"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 16 16"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span
+              class="cds--pagination__text cds--pagination__items-count"
+            >
+              1-10 of 100 item
+            </span>
+          </div>
+          <div
+            class="cds--pagination__right"
+          >
+            <div
+              class="cds--form-item cds--select__page-number"
+            >
+              <div
+                class="cds--select cds--select--inline"
+              >
+                <label
+                  class="cds--label cds--visually-hidden"
+                  dir="auto"
+                  for="cds-pagination-select-id-62-right"
+                >
+                  Page of 10 pages
+                </label>
+                <div
+                  class="cds--select-input--inline__wrapper"
+                >
+                  <div
+                    class="cds--select-input__wrapper"
+                  >
+                    <select
+                      class="cds--select-input"
+                      id="cds-pagination-select-id-62-right"
+                      title="1"
+                    >
+                      <option
+                        class="cds--select-option"
+                        value="1"
+                      >
+                        1
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="2"
+                      >
+                        2
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="3"
+                      >
+                        3
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="4"
+                      >
+                        4
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="5"
+                      >
+                        5
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="6"
+                      >
+                        6
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="7"
+                      >
+                        7
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="8"
+                      >
+                        8
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="9"
+                      >
+                        9
+                      </option>
+                      <option
+                        class="cds--select-option"
+                        value="10"
+                      >
+                        10
+                      </option>
+                    </select>
+                    <svg
+                      aria-hidden="true"
+                      class="cds--select__arrow"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 16 16"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span
+              class="cds--pagination__text"
+            >
+              of 10 page
+            </span>
+            <div
+              class="cds--pagination__control-buttons"
+            >
+              <span
+                class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip cds--icon-tooltip--disabled"
+              >
+                <div
+                  class="cds--tooltip-trigger__wrapper"
+                >
+                  <button
+                    aria-label="Previous page"
+                    aria-labelledby="tooltip-64"
+                    class="cds--pagination__button cds--pagination__button--backward cds--pagination__button--no-index cds--btn cds--btn--ghost cds--btn--disabled cds--btn--icon-only"
+                    disabled=""
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 32 32"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M20 24 10 16 20 8z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <span
+                  aria-hidden="true"
+                  class="cds--popover"
+                  id="tooltip-64"
+                  role="tooltip"
+                >
+                  <span
+                    class="cds--popover-content cds--tooltip-content"
+                  >
+                    Previous page
+                  </span>
+                  <span
+                    class="cds--popover-caret"
+                  />
+                </span>
+              </span>
+              <span
+                class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+              >
+                <div
+                  class="cds--tooltip-trigger__wrapper"
+                >
+                  <button
+                    aria-label="Next page"
+                    aria-labelledby="tooltip-67"
+                    class="cds--pagination__button cds--pagination__button--forward cds--btn cds--btn--ghost cds--btn--icon-only"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      focusable="false"
+                      height="16"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 32 32"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 8 22 16 12 24z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <span
+                  aria-hidden="true"
+                  class="cds--popover"
+                  id="tooltip-67"
+                  role="tooltip"
+                >
+                  <span
+                    class="cds--popover-content cds--tooltip-content"
+                  >
+                    Next page
+                  </span>
+                  <span
+                    class="cds--popover-caret"
+                  />
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
 </div>
 `;
 
 exports[`Data table component should render strings without double escaping strings 1`] = `
-<div
-  className="miq-data-table list"
->
-  <DataTable
-    headers={Array []}
-    isSortable={false}
-    rows={Array []}
-    size="lg"
-    sortDirection="ASC"
-    stickyHeader={false}
+<div>
+  <div
+    class="miq-data-table list"
   >
-    <Component />
-  </DataTable>
+    <div
+      class="cds--data-table-content"
+    >
+      <table
+        class="cds--data-table cds--data-table--lg cds--data-table--visible-overflow-menu"
+      >
+        <tbody
+          aria-live="polite"
+        />
+      </table>
+    </div>
+  </div>
 </div>
 `;

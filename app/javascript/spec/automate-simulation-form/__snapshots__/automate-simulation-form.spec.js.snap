@@ -1,412 +1,431 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Automate Simulation Form should submit a new simulation 1`] = `
-<div
-  className="automate-simulation-page"
->
+exports[`Automate Simulation Form should render the simulation form correctly 1`] = `
+<div>
   <div
-    className="automate-simulation-form-wrapper"
-  >
-    <Connect(MiqFormRenderer)
-      FormTemplate={[Function]}
-      canReset={true}
-      className="automate-simulation-form"
-      initialValues={
-        Object {
-          "attrs": Array [
-            Array [],
-            Array [],
-            Array [],
-            Array [],
-            Array [],
-          ],
-          "instance_name": "Request",
-          "object_message": "create",
-          "object_request": "",
-          "readonly": true,
-          "starting_object": "SYSTEM/PROCESS",
-          "target_class": null,
-          "target_id": null,
-        }
-      }
-      onReset={[Function]}
-      onSubmit={[Function]}
-      schema={
-        Object {
-          "fields": Array [
-            Object {
-              "className": "automate-object-details",
-              "component": "plain-text",
-              "id": "object_details",
-              "label": "Object Details",
-              "name": "object_details",
-              "style": Object {
-                "fontSize": "16px",
-              },
-            },
-            Object {
-              "className": "automate-instance-name",
-              "component": "select",
-              "id": "instance_name",
-              "initialValue": Array [
-                "Request",
-                "parse_provider_category",
-                "parse_event_stream",
-                "parse_automation_request",
-                "MiqEvent",
-                "GenericObject",
-                "Event",
-                "Automation",
-              ],
-              "isSearchable": true,
-              "label": "System/Process",
-              "name": "instance_name",
-              "options": Array [
-                Object {
-                  "label": "Request",
-                  "value": "Request",
-                },
-                Object {
-                  "label": "parse_provider_category",
-                  "value": "parse_provider_category",
-                },
-                Object {
-                  "label": "parse_event_stream",
-                  "value": "parse_event_stream",
-                },
-                Object {
-                  "label": "parse_automation_request",
-                  "value": "parse_automation_request",
-                },
-                Object {
-                  "label": "MiqEvent",
-                  "value": "MiqEvent",
-                },
-                Object {
-                  "label": "GenericObject",
-                  "value": "GenericObject",
-                },
-                Object {
-                  "label": "Event",
-                  "value": "Event",
-                },
-                Object {
-                  "label": "Automation",
-                  "value": "Automation",
-                },
-              ],
-              "simpleValue": true,
-              "url": undefined,
-              "validate": Array [
-                Object {
-                  "type": "required",
-                },
-              ],
-            },
-            Object {
-              "className": "automate-object-message",
-              "component": "text-field",
-              "id": "object_message",
-              "initialValue": "create",
-              "isRequired": true,
-              "label": "Message",
-              "maxLength": undefined,
-              "name": "object_message",
-            },
-            Object {
-              "className": "automate-object-request",
-              "component": "text-field",
-              "id": "object_request",
-              "initialValue": "",
-              "isRequired": true,
-              "label": "Request",
-              "name": "object_request",
-              "validate": Array [
-                Object {
-                  "type": "required",
-                },
-              ],
-            },
-            Object {
-              "className": "automate-object-attribute",
-              "component": "plain-text",
-              "id": "object_attribute",
-              "label": "Object Attribute",
-              "name": "object_attribute",
-              "style": Object {
-                "fontSize": "16px",
-              },
-            },
-            Object {
-              "className": "automate-target-class",
-              "component": "select",
-              "id": "target_class",
-              "isRequired": true,
-              "isSearchable": true,
-              "label": "Type",
-              "name": "target_class",
-              "onChange": [Function],
-              "options": Array [
-                Object {
-                  "label": "<None>",
-                },
-                Object {
-                  "label": "Availability Zone",
-                  "value": "AvailabilityZone",
-                },
-                Object {
-                  "label": "Cloud Network",
-                  "value": "CloudNetwork",
-                },
-                Object {
-                  "label": "Cloud Object Store Container",
-                  "value": "CloudObjectStoreContainer",
-                },
-                Object {
-                  "label": "Cloud Subnet",
-                  "value": "CloudSubnet",
-                },
-                Object {
-                  "label": "Cloud Tenant",
-                  "value": "CloudTenant",
-                },
-                Object {
-                  "label": "Cloud Volume",
-                  "value": "CloudVolume",
-                },
-                Object {
-                  "label": "Container Pod",
-                  "value": "ContainerGroup",
-                },
-                Object {
-                  "label": "Container Image",
-                  "value": "ContainerImage",
-                },
-                Object {
-                  "label": "Container Node",
-                  "value": "ContainerNode",
-                },
-                Object {
-                  "label": "Container Project",
-                  "value": "ContainerProject",
-                },
-                Object {
-                  "label": "Container Template",
-                  "value": "ContainerTemplate",
-                },
-                Object {
-                  "label": "Container Volume",
-                  "value": "ContainerVolume",
-                },
-                Object {
-                  "label": "Cluster",
-                  "value": "EmsCluster",
-                },
-                Object {
-                  "label": "Provider",
-                  "value": "ExtManagementSystem",
-                },
-                Object {
-                  "label": "Generic Object",
-                  "value": "GenericObject",
-                },
-                Object {
-                  "label": "Host",
-                  "value": "Host",
-                },
-                Object {
-                  "label": "Group",
-                  "value": "MiqGroup",
-                },
-                Object {
-                  "label": "VM Template and Image",
-                  "value": "MiqTemplate",
-                },
-                Object {
-                  "label": "Network Router",
-                  "value": "NetworkRouter",
-                },
-                Object {
-                  "label": "Network Service",
-                  "value": "NetworkService",
-                },
-                Object {
-                  "label": "Orchestration Stack",
-                  "value": "OrchestrationStack",
-                },
-                Object {
-                  "label": "Physical Chassis",
-                  "value": "PhysicalChassis",
-                },
-                Object {
-                  "label": "Physical Rack",
-                  "value": "PhysicalRack",
-                },
-                Object {
-                  "label": "Physical Server",
-                  "value": "PhysicalServer",
-                },
-                Object {
-                  "label": "Physical Storage",
-                  "value": "PhysicalStorage",
-                },
-                Object {
-                  "label": "Security Group",
-                  "value": "SecurityGroup",
-                },
-                Object {
-                  "label": "Security Policy",
-                  "value": "SecurityPolicy",
-                },
-                Object {
-                  "label": "Security Policy Rule",
-                  "value": "SecurityPolicyRule",
-                },
-                Object {
-                  "label": "Service",
-                  "value": "Service",
-                },
-                Object {
-                  "label": "Datastore",
-                  "value": "Storage",
-                },
-                Object {
-                  "label": "Virtual Infra Switch",
-                  "value": "Switch",
-                },
-                Object {
-                  "label": "Tenant",
-                  "value": "Tenant",
-                },
-                Object {
-                  "label": "User",
-                  "value": "User",
-                },
-                Object {
-                  "label": "VM and Instance",
-                  "value": "Vm",
-                },
-              ],
-              "simpleValue": true,
-              "validate": Array [
-                Object {
-                  "type": "required",
-                },
-              ],
-            },
-            Object {
-              "className": "automate-selection-target",
-              "component": "select",
-              "condition": Object {
-                "not": Object {
-                  "isEmpty": true,
-                  "when": "target_class",
-                },
-              },
-              "id": "target_id",
-              "isRequired": true,
-              "label": "Selection",
-              "loadOptions": [Function],
-              "name": "target_id_undefined",
-              "validate": Array [
-                Object {
-                  "type": "required",
-                },
-              ],
-            },
-            Object {
-              "className": "automate-simulation-parameters",
-              "component": "plain-text",
-              "id": "simulationParameters",
-              "label": "Simulation Parameters",
-              "name": "simulationParameters",
-              "style": Object {
-                "fontSize": "16px",
-              },
-            },
-            Object {
-              "className": "automate-readonly",
-              "component": "checkbox",
-              "id": "readonly",
-              "initialValue": true,
-              "label": "Execute Methods",
-              "name": "readonly",
-              "title": "Simulation parameters",
-            },
-            Object {
-              "component": "plain-text",
-              "id": "AttributeValuePairs",
-              "label": "Attribute/Value Pairs",
-              "name": "AttributeValuePairs",
-              "style": Object {
-                "fontSize": "16px",
-              },
-            },
-            Object {
-              "AddButtonProps": Object {
-                "size": "sm",
-              },
-              "RemoveButtonProps": Object {
-                "size": "sm",
-              },
-              "component": "field-array",
-              "fieldKey": "field_array",
-              "fields": Array [
-                Object {
-                  "className": "attribute_value_field_wrapper",
-                  "component": "text-field",
-                  "isRequired": true,
-                  "label": "attribute",
-                  "maxLength": undefined,
-                  "name": "attribute",
-                  "validate": Array [
-                    Object {
-                      "type": "required",
-                    },
-                  ],
-                },
-                Object {
-                  "className": "attribute_value_field_wrapper",
-                  "component": "text-field",
-                  "isRequired": true,
-                  "label": "value",
-                  "maxLength": undefined,
-                  "name": "value",
-                  "validate": Array [
-                    Object {
-                      "type": "required",
-                    },
-                  ],
-                },
-              ],
-              "id": "attrs",
-              "maxItems": 5,
-              "name": "attrs",
-            },
-          ],
-          "title": "Object Details",
-        }
-      }
-    />
-  </div>
-  <div
-    className="automate-simulation-summary-wrapper"
+    class="automate-simulation-page"
   >
     <div
-      className="simulation-title-text"
+      class="automate-simulation-form-wrapper"
     >
-      Simulation
+      <form>
+        <p
+          class="automate-object-details"
+          id="object_details"
+          name="object_details"
+          style="font-size: 16px;"
+        >
+          Object Details
+        </p>
+        <div
+          class="cds--list-box__wrapper automate-instance-name"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="instance_name"
+            id="downshift-2-label"
+          >
+            System/Process
+          </label>
+          <div
+            class="cds--combo-box cds--list-box"
+          >
+            <div
+              class="cds--list-box__field"
+            >
+              <input
+                aria-activedescendant=""
+                aria-autocomplete="list"
+                aria-controls="downshift-2-menu"
+                aria-expanded="false"
+                aria-haspopup="listbox"
+                aria-labelledby="downshift-2-label"
+                autocomplete="off"
+                class="cds--text-input"
+                id="instance_name"
+                name="instance_name"
+                placeholder="<Choose>"
+                role="combobox"
+                tabindex="0"
+                title="Request"
+                type="text"
+                value="Request"
+              />
+              <button
+                aria-label="Clear selected item"
+                class="cds--list-box__selection"
+                tabindex="-1"
+                title="Clear selected item"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 32 32"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                  />
+                </svg>
+              </button>
+              <button
+                aria-controls="downshift-2-menu"
+                aria-expanded="false"
+                aria-label="Open"
+                class="cds--list-box__menu-icon"
+                id="downshift-2-toggle-button"
+                tabindex="-1"
+                title="Open"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                  />
+                </svg>
+              </button>
+            </div>
+            
+            <ul
+              aria-labelledby="downshift-2-label"
+              class="cds--list-box__menu"
+              id="downshift-2-menu"
+              role="listbox"
+            />
+          </div>
+        </div>
+        <div
+          class="cds--form-item automate-object-message cds--text-input-wrapper"
+        >
+          <div
+            class="cds--text-input__label-wrapper"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="object_message"
+            >
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
+              >
+                *
+              </span>
+              Message
+            </label>
+          </div>
+          <div
+            class="cds--text-input__field-outer-wrapper"
+          >
+            <div
+              class="cds--text-input__field-wrapper"
+            >
+              <input
+                class="cds--text-input"
+                id="object_message"
+                name="object_message"
+                type="text"
+                value="create"
+              />
+              
+              <span
+                aria-atomic="true"
+                aria-live="assertive"
+                class="cds--text-input__counter-alert"
+                role="alert"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="cds--form-item automate-object-request cds--text-input-wrapper"
+        >
+          <div
+            class="cds--text-input__label-wrapper"
+          >
+            <label
+              class="cds--label"
+              dir="auto"
+              for="object_request"
+            >
+              <span
+                aria-hidden="true"
+                class="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
+              >
+                *
+              </span>
+              Request
+            </label>
+          </div>
+          <div
+            class="cds--text-input__field-outer-wrapper"
+          >
+            <div
+              class="cds--text-input__field-wrapper"
+            >
+              <input
+                class="cds--text-input"
+                id="object_request"
+                name="object_request"
+                type="text"
+                value=""
+              />
+              
+              <span
+                aria-atomic="true"
+                aria-live="assertive"
+                class="cds--text-input__counter-alert"
+                role="alert"
+              />
+            </div>
+          </div>
+        </div>
+        <p
+          class="automate-object-attribute"
+          id="object_attribute"
+          name="object_attribute"
+          style="font-size: 16px;"
+        >
+          Object Attribute
+        </p>
+        <div
+          class="cds--list-box__wrapper automate-target-class"
+        >
+          <label
+            class="cds--label"
+            dir="auto"
+            for="target_class"
+            id="downshift-3-label"
+          >
+            <span
+              aria-hidden="true"
+              class="ddorg__carbon-component-mapper_is-required isRequired-0-2-1"
+            >
+              *
+            </span>
+            Type
+          </label>
+          <div
+            class="cds--combo-box cds--list-box"
+          >
+            <div
+              class="cds--list-box__field"
+            >
+              <input
+                aria-activedescendant=""
+                aria-autocomplete="list"
+                aria-controls="downshift-3-menu"
+                aria-expanded="false"
+                aria-haspopup="listbox"
+                aria-labelledby="downshift-3-label"
+                autocomplete="off"
+                class="cds--text-input"
+                id="target_class"
+                name="target_class"
+                placeholder="<Choose>"
+                role="combobox"
+                tabindex="0"
+                title="<None>"
+                type="text"
+                value="<None>"
+              />
+              <button
+                aria-label="Clear selected item"
+                class="cds--list-box__selection"
+                tabindex="-1"
+                title="Clear selected item"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 32 32"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.4141 16 24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"
+                  />
+                </svg>
+              </button>
+              <button
+                aria-controls="downshift-3-menu"
+                aria-expanded="false"
+                aria-label="Open"
+                class="cds--list-box__menu-icon"
+                id="downshift-3-toggle-button"
+                tabindex="-1"
+                title="Open"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 11 3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                  />
+                </svg>
+              </button>
+            </div>
+            
+            <ul
+              aria-labelledby="downshift-3-label"
+              class="cds--list-box__menu"
+              id="downshift-3-menu"
+              role="listbox"
+            />
+          </div>
+        </div>
+        <p
+          class="automate-simulation-parameters"
+          id="simulationParameters"
+          name="simulationParameters"
+          style="font-size: 16px;"
+        >
+          Simulation Parameters
+        </p>
+        <div>
+          <div
+            class="cds--form-item cds--checkbox-wrapper automate-readonly"
+          >
+            <input
+              checked=""
+              class="cds--checkbox"
+              id="readonly"
+              name="readonly"
+              type="checkbox"
+              value=""
+            />
+            <label
+              class="cds--checkbox-label"
+              for="readonly"
+              title="Simulation parameters"
+            >
+              <div
+                class="cds--checkbox-label-text"
+                dir="auto"
+              >
+                Execute Methods
+                
+              </div>
+            </label>
+            <div
+              class="cds--checkbox__validation-msg"
+            />
+          </div>
+        </div>
+        <p
+          id="AttributeValuePairs"
+          name="AttributeValuePairs"
+          style="font-size: 16px;"
+        >
+          Attribute/Value Pairs
+        </p>
+        <fieldset
+          class="cds--fieldset formGroup-0-2-6"
+        >
+          <legend
+            class="cds--label"
+          />
+          <div>
+            No items
+            <div
+              class="addContainer-0-2-4"
+            >
+              <button
+                class="add-0-2-3 cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary"
+                id="add-attrs"
+                type="button"
+              >
+                Add
+                <svg
+                  aria-hidden="true"
+                  class="cds--btn__icon"
+                  fill="currentColor"
+                  focusable="false"
+                  height="32"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 32 32"
+                  width="32"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M16,4c6.6,0,12,5.4,12,12s-5.4,12-12,12S4,22.6,4,16S9.4,4,16,4 M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14 S23.7,2,16,2z"
+                  />
+                  <path
+                    d="M24 15 17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </fieldset>
+        <div
+          class="custom-button-wrapper"
+        >
+          <button
+            class="btnRight cds--btn cds--btn--primary cds--btn--disabled"
+            disabled=""
+            type="submit"
+          >
+            Save
+          </button>
+          <button
+            class="cds--btn cds--btn--secondary"
+            type="button"
+          >
+            Reset
+          </button>
+        </div>
+      </form>
     </div>
     <div
-      className="automate-simulation-summary"
+      class="automate-simulation-summary-wrapper"
     >
-      <AutomationSimulation
-        data={
-          Object {
-            "notice": "Enter Automation Simulation options on the left and press Submit",
-          }
-        }
-      />
+      <div
+        class="simulation-title-text"
+      >
+        Simulation
+      </div>
+      <div
+        class="automate-simulation-summary"
+      >
+        <div
+          class="miq-notification-message-container alert alert-info"
+        >
+          <span
+            class="pficon pficon-info"
+          />
+          <strong>
+            Enter Automation Simulation options on the left and press Submit
+          </strong>
+        </div>
+      </div>
     </div>
   </div>
 </div>

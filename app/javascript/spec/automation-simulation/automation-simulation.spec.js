@@ -1,6 +1,5 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-import toJson from 'enzyme-to-json';
+import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import AutomationSimulation from '../../components/AutomationSimulation';
@@ -9,6 +8,9 @@ import {
 } from './automation-simulation.data';
 
 ManageIQ.redux.addReducer = ManageIQ.redux.store.injectReducers;
+
+// Mock jQuery xmlDisplay plugin - extend existing jQuery from jest setup
+$.fn.xmlDisplay = jest.fn();
 
 describe('AutomationSimulation Component', () => {
   const mockStore = configureStore();
@@ -20,42 +22,39 @@ describe('AutomationSimulation Component', () => {
     tab3: { text: __('Xml View'), rows: xmlData },
   };
 
+  const renderWithStore = (component) => render(<Provider store={store}>{component}</Provider>);
+
   it('renders component without crashing', () => {
-    const wrapper = shallow(<AutomationSimulation data={sampleData} />);
-    expect(wrapper.exists()).toBe(true);
+    const { container } = renderWithStore(<AutomationSimulation data={sampleData} />);
+    expect(container.firstChild).toBeInTheDocument();
   });
 
   it('renders notification message when notice is present', () => {
-    const wrapper = shallow(<AutomationSimulation data={notice} />);
-    expect(wrapper.find('NotificationMessage').exists()).toBe(true);
+    const { container } = renderWithStore(<AutomationSimulation data={notice} />);
+    expect(container.querySelector('.miq-notification-message-container')).toBeInTheDocument();
   });
 
   it('renders tabs and tab contents correctly', () => {
-    const wrapper = shallow(<AutomationSimulation data={sampleData} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const { container } = renderWithStore(<AutomationSimulation data={sampleData} />);
+    expect(container).toMatchSnapshot();
   });
 
   it('renders component with tabs correctly', () => {
-    const wrapper = mount(
-      <Provider store={store}>
-        <AutomationSimulation data={sampleData} />
-      </Provider>
-    );
-    expect(wrapper.find('.automation_simulation_tab').exists()).toBe(true);
-    const tabs = wrapper.find('TabList').find('button[role="tab"]');
+    const { container } = renderWithStore(<AutomationSimulation data={sampleData} />);
+
+    expect(container.querySelector('.automation_simulation_tab')).toBeInTheDocument();
+
+    const tabs = screen.getAllByRole('tab');
     expect(tabs.length).toBe(3);
-    expect(tabs.at(0).text()).toBe(__('Tree View'));
-    expect(tabs.at(1).text()).toBe(__('Object Info'));
-    expect(tabs.at(2).text()).toBe(__('Xml View'));
+    expect(tabs[0]).toHaveTextContent(__('Tree View'));
+    expect(tabs[1]).toHaveTextContent(__('Object Info'));
+    expect(tabs[2]).toHaveTextContent(__('Xml View'));
   });
 
   it('renders tab contents correctly based on data', () => {
-    const wrapper = mount(
-      <Provider store={store}>
-        <AutomationSimulation data={sampleData} />
-      </Provider>
-    );
-    expect(wrapper.find('MiqStructuredList').length).toBe(3);
-    expect(wrapper.find('NotificationMessage').exists()).toBe(false);
+    const { container } = renderWithStore(<AutomationSimulation data={sampleData} />);
+    const structuredLists = container.querySelectorAll('.miq-structured-list');
+    expect(structuredLists.length).toBe(3);
+    expect(container.querySelector('.miq-notification-message-container')).not.toBeInTheDocument();
   });
 });
